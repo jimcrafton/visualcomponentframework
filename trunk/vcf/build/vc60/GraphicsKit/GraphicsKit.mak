@@ -33,27 +33,15 @@ INTDIR=.\ReleaseS\obj
 OutDir=.\..\..\..\lib
 # End Custom Macros
 
-!IF "$(RECURSE)" == "0" 
-
 ALL : "$(OUTDIR)\GraphicsKit_s.lib"
 
-!ELSE 
 
-ALL : "FoundationKit - Win32 Release" "$(OUTDIR)\GraphicsKit_s.lib"
-
-!ENDIF 
-
-!IF "$(RECURSE)" == "1" 
-CLEAN :"FoundationKit - Win32 ReleaseCLEAN" 
-!ELSE 
 CLEAN :
-!ENDIF 
 	-@erase "$(INTDIR)\AbstractImage.obj"
-	-@erase "$(INTDIR)\AlphaGamma.obj"
+	-@erase "$(INTDIR)\ArtStroke.obj"
 	-@erase "$(INTDIR)\BasicFill.obj"
 	-@erase "$(INTDIR)\BasicStroke.obj"
 	-@erase "$(INTDIR)\Color.obj"
-	-@erase "$(INTDIR)\DrawToolkit.obj"
 	-@erase "$(INTDIR)\Font.obj"
 	-@erase "$(INTDIR)\FontState.obj"
 	-@erase "$(INTDIR)\GlyphCollection.obj"
@@ -61,19 +49,17 @@ CLEAN :
 	-@erase "$(INTDIR)\GraphicsKit.obj"
 	-@erase "$(INTDIR)\GraphicsKit.pch"
 	-@erase "$(INTDIR)\GraphicsObject.obj"
+	-@erase "$(INTDIR)\GraphicsToolKit.obj"
 	-@erase "$(INTDIR)\ImageEvent.obj"
 	-@erase "$(INTDIR)\Matrix2D.obj"
-	-@erase "$(INTDIR)\MicroTiles.obj"
 	-@erase "$(INTDIR)\OpenGLContext.obj"
-	-@erase "$(INTDIR)\PixelBuffer.obj"
 	-@erase "$(INTDIR)\Polygon.obj"
-	-@erase "$(INTDIR)\RenderPaths.obj"
-	-@erase "$(INTDIR)\UIGraphicsToolKit.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\Vector2D.obj"
 	-@erase "$(INTDIR)\Win32Context.obj"
 	-@erase "$(INTDIR)\Win32Font.obj"
 	-@erase "$(INTDIR)\Win32FontManager.obj"
+	-@erase "$(INTDIR)\Win32GraphicsToolkit.obj"
 	-@erase "$(INTDIR)\Win32Image.obj"
 	-@erase "$(INTDIR)\Win32OpenGLPeer.obj"
 	-@erase "$(OUTDIR)\GraphicsKit_s.lib"
@@ -126,32 +112,28 @@ LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\GraphicsKit_s.lib" 
 LIB32_OBJS= \
 	"$(INTDIR)\AbstractImage.obj" \
-	"$(INTDIR)\AlphaGamma.obj" \
+	"$(INTDIR)\ArtStroke.obj" \
 	"$(INTDIR)\BasicFill.obj" \
 	"$(INTDIR)\BasicStroke.obj" \
 	"$(INTDIR)\Color.obj" \
-	"$(INTDIR)\DrawToolkit.obj" \
 	"$(INTDIR)\Font.obj" \
 	"$(INTDIR)\FontState.obj" \
 	"$(INTDIR)\GlyphCollection.obj" \
 	"$(INTDIR)\GraphicsContext.obj" \
 	"$(INTDIR)\GraphicsKit.obj" \
 	"$(INTDIR)\GraphicsObject.obj" \
+	"$(INTDIR)\GraphicsToolKit.obj" \
 	"$(INTDIR)\ImageEvent.obj" \
 	"$(INTDIR)\Matrix2D.obj" \
-	"$(INTDIR)\MicroTiles.obj" \
 	"$(INTDIR)\OpenGLContext.obj" \
-	"$(INTDIR)\PixelBuffer.obj" \
 	"$(INTDIR)\Polygon.obj" \
-	"$(INTDIR)\RenderPaths.obj" \
-	"$(INTDIR)\UIGraphicsToolKit.obj" \
 	"$(INTDIR)\Vector2D.obj" \
 	"$(INTDIR)\Win32Context.obj" \
 	"$(INTDIR)\Win32Font.obj" \
 	"$(INTDIR)\Win32FontManager.obj" \
+	"$(INTDIR)\Win32GraphicsToolkit.obj" \
 	"$(INTDIR)\Win32Image.obj" \
-	"$(INTDIR)\Win32OpenGLPeer.obj" \
-	"$(OUTDIR)\FoundationKit_s.lib"
+	"$(INTDIR)\Win32OpenGLPeer.obj"
 
 "$(OUTDIR)\GraphicsKit_s.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -166,27 +148,15 @@ INTDIR=.\DebugS\obj
 OutDir=.\..\..\..\lib
 # End Custom Macros
 
-!IF "$(RECURSE)" == "0" 
-
 ALL : "$(OUTDIR)\GraphicsKit_sd.lib"
 
-!ELSE 
 
-ALL : "FoundationKit - Win32 Debug" "$(OUTDIR)\GraphicsKit_sd.lib"
-
-!ENDIF 
-
-!IF "$(RECURSE)" == "1" 
-CLEAN :"FoundationKit - Win32 DebugCLEAN" 
-!ELSE 
 CLEAN :
-!ENDIF 
 	-@erase "$(INTDIR)\AbstractImage.obj"
-	-@erase "$(INTDIR)\AlphaGamma.obj"
+	-@erase "$(INTDIR)\ArtStroke.obj"
 	-@erase "$(INTDIR)\BasicFill.obj"
 	-@erase "$(INTDIR)\BasicStroke.obj"
 	-@erase "$(INTDIR)\Color.obj"
-	-@erase "$(INTDIR)\DrawToolkit.obj"
 	-@erase "$(INTDIR)\Font.obj"
 	-@erase "$(INTDIR)\FontState.obj"
 	-@erase "$(INTDIR)\GlyphCollection.obj"
@@ -194,20 +164,18 @@ CLEAN :
 	-@erase "$(INTDIR)\GraphicsKit.obj"
 	-@erase "$(INTDIR)\GraphicsKit.pch"
 	-@erase "$(INTDIR)\GraphicsObject.obj"
+	-@erase "$(INTDIR)\GraphicsToolKit.obj"
 	-@erase "$(INTDIR)\ImageEvent.obj"
 	-@erase "$(INTDIR)\Matrix2D.obj"
-	-@erase "$(INTDIR)\MicroTiles.obj"
 	-@erase "$(INTDIR)\OpenGLContext.obj"
-	-@erase "$(INTDIR)\PixelBuffer.obj"
 	-@erase "$(INTDIR)\Polygon.obj"
-	-@erase "$(INTDIR)\RenderPaths.obj"
-	-@erase "$(INTDIR)\UIGraphicsToolKit.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(INTDIR)\Vector2D.obj"
 	-@erase "$(INTDIR)\Win32Context.obj"
 	-@erase "$(INTDIR)\Win32Font.obj"
 	-@erase "$(INTDIR)\Win32FontManager.obj"
+	-@erase "$(INTDIR)\Win32GraphicsToolkit.obj"
 	-@erase "$(INTDIR)\Win32Image.obj"
 	-@erase "$(INTDIR)\Win32OpenGLPeer.obj"
 	-@erase "$(OUTDIR)\GraphicsKit_sd.lib"
@@ -260,32 +228,28 @@ LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\GraphicsKit_sd.lib" 
 LIB32_OBJS= \
 	"$(INTDIR)\AbstractImage.obj" \
-	"$(INTDIR)\AlphaGamma.obj" \
+	"$(INTDIR)\ArtStroke.obj" \
 	"$(INTDIR)\BasicFill.obj" \
 	"$(INTDIR)\BasicStroke.obj" \
 	"$(INTDIR)\Color.obj" \
-	"$(INTDIR)\DrawToolkit.obj" \
 	"$(INTDIR)\Font.obj" \
 	"$(INTDIR)\FontState.obj" \
 	"$(INTDIR)\GlyphCollection.obj" \
 	"$(INTDIR)\GraphicsContext.obj" \
 	"$(INTDIR)\GraphicsKit.obj" \
 	"$(INTDIR)\GraphicsObject.obj" \
+	"$(INTDIR)\GraphicsToolKit.obj" \
 	"$(INTDIR)\ImageEvent.obj" \
 	"$(INTDIR)\Matrix2D.obj" \
-	"$(INTDIR)\MicroTiles.obj" \
 	"$(INTDIR)\OpenGLContext.obj" \
-	"$(INTDIR)\PixelBuffer.obj" \
 	"$(INTDIR)\Polygon.obj" \
-	"$(INTDIR)\RenderPaths.obj" \
-	"$(INTDIR)\UIGraphicsToolKit.obj" \
 	"$(INTDIR)\Vector2D.obj" \
 	"$(INTDIR)\Win32Context.obj" \
 	"$(INTDIR)\Win32Font.obj" \
 	"$(INTDIR)\Win32FontManager.obj" \
+	"$(INTDIR)\Win32GraphicsToolkit.obj" \
 	"$(INTDIR)\Win32Image.obj" \
-	"$(INTDIR)\Win32OpenGLPeer.obj" \
-	"$(OUTDIR)\FoundationKit_sd.lib"
+	"$(INTDIR)\Win32OpenGLPeer.obj"
 
 "$(OUTDIR)\GraphicsKit_sd.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -311,9 +275,9 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Graphics\AlphaGamma.cpp
+SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 
-"$(INTDIR)\AlphaGamma.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
+"$(INTDIR)\ArtStroke.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -332,12 +296,6 @@ SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
 SOURCE=..\..\..\src\Graphics\Color.cpp
 
 "$(INTDIR)\Color.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Graphics\DrawToolkit.cpp
-
-"$(INTDIR)\DrawToolkit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -395,6 +353,12 @@ SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
+
+"$(INTDIR)\GraphicsToolKit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\Events\ImageEvent.cpp
 
 "$(INTDIR)\ImageEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
@@ -407,39 +371,15 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
-
-"$(INTDIR)\MicroTiles.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 
 "$(INTDIR)\OpenGLContext.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
-
-"$(INTDIR)\PixelBuffer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
 
 "$(INTDIR)\Polygon.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
-
-"$(INTDIR)\RenderPaths.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Utils\UIGraphicsToolKit.cpp
-
-"$(INTDIR)\UIGraphicsToolKit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -467,6 +407,12 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
+
+"$(INTDIR)\Win32GraphicsToolkit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 
 "$(INTDIR)\Win32Image.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
@@ -478,32 +424,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp
 "$(INTDIR)\Win32OpenGLPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-"FoundationKit - Win32 Release" : 
-   cd "\code\vcf\build\vc60\FoundationKit"
-   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKit.mak CFG="FoundationKit - Win32 Release" 
-   cd "..\GraphicsKit"
-
-"FoundationKit - Win32 ReleaseCLEAN" : 
-   cd "\code\vcf\build\vc60\FoundationKit"
-   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKit.mak CFG="FoundationKit - Win32 Release" RECURSE=1 CLEAN 
-   cd "..\GraphicsKit"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-"FoundationKit - Win32 Debug" : 
-   cd "\code\vcf\build\vc60\FoundationKit"
-   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKit.mak CFG="FoundationKit - Win32 Debug" 
-   cd "..\GraphicsKit"
-
-"FoundationKit - Win32 DebugCLEAN" : 
-   cd "\code\vcf\build\vc60\FoundationKit"
-   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKit.mak CFG="FoundationKit - Win32 Debug" RECURSE=1 CLEAN 
-   cd "..\GraphicsKit"
-
-!ENDIF 
 
 
 !ENDIF 

@@ -48,13 +48,17 @@ CLEAN :"FoundationKit - Win32 ReleaseCLEAN" "GraphicsKit - Win32 ReleaseCLEAN"
 !ELSE 
 CLEAN :
 !ENDIF 
+	-@erase "$(INTDIR)\AbstractApplication.obj"
 	-@erase "$(INTDIR)\AbstractCommand.obj"
+	-@erase "$(INTDIR)\AbstractComponentEditor.obj"
 	-@erase "$(INTDIR)\AbstractContainer.obj"
 	-@erase "$(INTDIR)\AbstractListModel.obj"
+	-@erase "$(INTDIR)\AbstractScrollable.obj"
 	-@erase "$(INTDIR)\AbstractTableModel.obj"
 	-@erase "$(INTDIR)\AbstractTextModel.obj"
 	-@erase "$(INTDIR)\AbstractTreeModel.obj"
 	-@erase "$(INTDIR)\AbstractWin32Component.obj"
+	-@erase "$(INTDIR)\AcceleratorKey.obj"
 	-@erase "$(INTDIR)\Application.obj"
 	-@erase "$(INTDIR)\ApplicationKit.obj"
 	-@erase "$(INTDIR)\ApplicationKit.pch"
@@ -65,6 +69,8 @@ CLEAN :
 	-@erase "$(INTDIR)\Clipboard.obj"
 	-@erase "$(INTDIR)\ClipboardDataObject.obj"
 	-@erase "$(INTDIR)\ClipboardEvent.obj"
+	-@erase "$(INTDIR)\ColumnItemEvent.obj"
+	-@erase "$(INTDIR)\ColumnModelEvent.obj"
 	-@erase "$(INTDIR)\ComboBoxControl.obj"
 	-@erase "$(INTDIR)\COMDataObject.obj"
 	-@erase "$(INTDIR)\COMDropTarget.obj"
@@ -79,14 +85,19 @@ CLEAN :
 	-@erase "$(INTDIR)\CommonPrint.obj"
 	-@erase "$(INTDIR)\COMObject.obj"
 	-@erase "$(INTDIR)\Component.obj"
+	-@erase "$(INTDIR)\ComponentEditorManager.obj"
 	-@erase "$(INTDIR)\ComponentInfo.obj"
 	-@erase "$(INTDIR)\COMUtils.obj"
 	-@erase "$(INTDIR)\Control.obj"
 	-@erase "$(INTDIR)\ControlContainer.obj"
 	-@erase "$(INTDIR)\ControlEvent.obj"
 	-@erase "$(INTDIR)\ControlGraphicsContext.obj"
+	-@erase "$(INTDIR)\Cursor.obj"
+	-@erase "$(INTDIR)\CursorManager.obj"
 	-@erase "$(INTDIR)\CustomControl.obj"
 	-@erase "$(INTDIR)\DataType.obj"
+	-@erase "$(INTDIR)\DefaultColumnItem.obj"
+	-@erase "$(INTDIR)\DefaultColumnModel.obj"
 	-@erase "$(INTDIR)\DefaultListItem.obj"
 	-@erase "$(INTDIR)\DefaultListModel.obj"
 	-@erase "$(INTDIR)\DefaultMenuItem.obj"
@@ -104,12 +115,18 @@ CLEAN :
 	-@erase "$(INTDIR)\DragSource.obj"
 	-@erase "$(INTDIR)\DropEvent.obj"
 	-@erase "$(INTDIR)\DropTarget.obj"
+	-@erase "$(INTDIR)\FocusEvent.obj"
 	-@erase "$(INTDIR)\Frame.obj"
+	-@erase "$(INTDIR)\HeaderControl.obj"
+	-@erase "$(INTDIR)\HelpEvent.obj"
+	-@erase "$(INTDIR)\HTMLBrowserControl.obj"
+	-@erase "$(INTDIR)\ImageControl.obj"
 	-@erase "$(INTDIR)\ImageList.obj"
 	-@erase "$(INTDIR)\ImageListEvent.obj"
 	-@erase "$(INTDIR)\ItemEvent.obj"
 	-@erase "$(INTDIR)\KeyboardEvent.obj"
 	-@erase "$(INTDIR)\Label.obj"
+	-@erase "$(INTDIR)\LibraryApplication.obj"
 	-@erase "$(INTDIR)\Light3DBorder.obj"
 	-@erase "$(INTDIR)\LightweightComponent.obj"
 	-@erase "$(INTDIR)\ListBoxControl.obj"
@@ -118,7 +135,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Menu.obj"
 	-@erase "$(INTDIR)\MenuBar.obj"
 	-@erase "$(INTDIR)\MenuItemEvent.obj"
-	-@erase "$(INTDIR)\MenuItemShortcut.obj"
 	-@erase "$(INTDIR)\Model.obj"
 	-@erase "$(INTDIR)\MouseEvent.obj"
 	-@erase "$(INTDIR)\MultilineTextControl.obj"
@@ -127,19 +143,26 @@ CLEAN :
 	-@erase "$(INTDIR)\Panel.obj"
 	-@erase "$(INTDIR)\PopupMenu.obj"
 	-@erase "$(INTDIR)\PropertyEditorManager.obj"
+	-@erase "$(INTDIR)\PushButton.obj"
+	-@erase "$(INTDIR)\RadioButtonControl.obj"
 	-@erase "$(INTDIR)\Resource.obj"
 	-@erase "$(INTDIR)\ResourceStream.obj"
 	-@erase "$(INTDIR)\Splitter.obj"
+	-@erase "$(INTDIR)\StatusBar.obj"
 	-@erase "$(INTDIR)\TabbedPages.obj"
 	-@erase "$(INTDIR)\TableControl.obj"
 	-@erase "$(INTDIR)\TableModelEvent.obj"
 	-@erase "$(INTDIR)\TabModelEvent.obj"
 	-@erase "$(INTDIR)\TextControl.obj"
 	-@erase "$(INTDIR)\TextEvent.obj"
+	-@erase "$(INTDIR)\TimerComponent.obj"
+	-@erase "$(INTDIR)\TimerEvent.obj"
+	-@erase "$(INTDIR)\ToggledButton.obj"
 	-@erase "$(INTDIR)\Toolbar.obj"
 	-@erase "$(INTDIR)\ToolbarButton.obj"
 	-@erase "$(INTDIR)\ToolbarDock.obj"
 	-@erase "$(INTDIR)\ToolbarSeparator.obj"
+	-@erase "$(INTDIR)\ToolTipEvent.obj"
 	-@erase "$(INTDIR)\TreeControl.obj"
 	-@erase "$(INTDIR)\TreeListControl.obj"
 	-@erase "$(INTDIR)\TreeModelEvent.obj"
@@ -150,13 +173,14 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\VFFInputStream.obj"
 	-@erase "$(INTDIR)\VFFOutputStream.obj"
+	-@erase "$(INTDIR)\WhatsThisHelpEvent.obj"
 	-@erase "$(INTDIR)\Win32Application.obj"
 	-@erase "$(INTDIR)\Win32Button.obj"
+	-@erase "$(INTDIR)\Win32Clipboard.obj"
 	-@erase "$(INTDIR)\Win32ColorDialog.obj"
-	-@erase "$(INTDIR)\Win32ComboBox.obj"
 	-@erase "$(INTDIR)\Win32Component.obj"
 	-@erase "$(INTDIR)\Win32ControlContext.obj"
-	-@erase "$(INTDIR)\Win32CustomControl.obj"
+	-@erase "$(INTDIR)\Win32CursorPeer.obj"
 	-@erase "$(INTDIR)\Win32Desktop.obj"
 	-@erase "$(INTDIR)\Win32Dialog.obj"
 	-@erase "$(INTDIR)\Win32DropTargetPeer.obj"
@@ -165,7 +189,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32FileSaveDialog.obj"
 	-@erase "$(INTDIR)\Win32FolderBrowseDialog.obj"
 	-@erase "$(INTDIR)\Win32FontDialog.obj"
-	-@erase "$(INTDIR)\Win32ListBox.obj"
 	-@erase "$(INTDIR)\Win32Listview.obj"
 	-@erase "$(INTDIR)\Win32MenuBar.obj"
 	-@erase "$(INTDIR)\Win32MenuItem.obj"
@@ -173,6 +196,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32PopupMenu.obj"
 	-@erase "$(INTDIR)\Win32ResourceBundle.obj"
 	-@erase "$(INTDIR)\Win32ResourceStream.obj"
+	-@erase "$(INTDIR)\Win32ScrollPeer.obj"
 	-@erase "$(INTDIR)\Win32ToolKit.obj"
 	-@erase "$(INTDIR)\Win32Tree.obj"
 	-@erase "$(INTDIR)\Win32Window.obj"
@@ -227,13 +251,17 @@ BSC32_SBRS= \
 LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\ApplicationKit_s.lib" 
 LIB32_OBJS= \
+	"$(INTDIR)\AbstractApplication.obj" \
 	"$(INTDIR)\AbstractCommand.obj" \
+	"$(INTDIR)\AbstractComponentEditor.obj" \
 	"$(INTDIR)\AbstractContainer.obj" \
 	"$(INTDIR)\AbstractListModel.obj" \
+	"$(INTDIR)\AbstractScrollable.obj" \
 	"$(INTDIR)\AbstractTableModel.obj" \
 	"$(INTDIR)\AbstractTextModel.obj" \
 	"$(INTDIR)\AbstractTreeModel.obj" \
 	"$(INTDIR)\AbstractWin32Component.obj" \
+	"$(INTDIR)\AcceleratorKey.obj" \
 	"$(INTDIR)\Application.obj" \
 	"$(INTDIR)\ApplicationKit.obj" \
 	"$(INTDIR)\Basic3DBorder.obj" \
@@ -243,6 +271,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\Clipboard.obj" \
 	"$(INTDIR)\ClipboardDataObject.obj" \
 	"$(INTDIR)\ClipboardEvent.obj" \
+	"$(INTDIR)\ColumnItemEvent.obj" \
+	"$(INTDIR)\ColumnModelEvent.obj" \
 	"$(INTDIR)\ComboBoxControl.obj" \
 	"$(INTDIR)\COMDataObject.obj" \
 	"$(INTDIR)\COMDropTarget.obj" \
@@ -257,14 +287,19 @@ LIB32_OBJS= \
 	"$(INTDIR)\CommonPrint.obj" \
 	"$(INTDIR)\COMObject.obj" \
 	"$(INTDIR)\Component.obj" \
+	"$(INTDIR)\ComponentEditorManager.obj" \
 	"$(INTDIR)\ComponentInfo.obj" \
 	"$(INTDIR)\COMUtils.obj" \
 	"$(INTDIR)\Control.obj" \
 	"$(INTDIR)\ControlContainer.obj" \
 	"$(INTDIR)\ControlEvent.obj" \
 	"$(INTDIR)\ControlGraphicsContext.obj" \
+	"$(INTDIR)\Cursor.obj" \
+	"$(INTDIR)\CursorManager.obj" \
 	"$(INTDIR)\CustomControl.obj" \
 	"$(INTDIR)\DataType.obj" \
+	"$(INTDIR)\DefaultColumnItem.obj" \
+	"$(INTDIR)\DefaultColumnModel.obj" \
 	"$(INTDIR)\DefaultListItem.obj" \
 	"$(INTDIR)\DefaultListModel.obj" \
 	"$(INTDIR)\DefaultMenuItem.obj" \
@@ -282,12 +317,18 @@ LIB32_OBJS= \
 	"$(INTDIR)\DragSource.obj" \
 	"$(INTDIR)\DropEvent.obj" \
 	"$(INTDIR)\DropTarget.obj" \
+	"$(INTDIR)\FocusEvent.obj" \
 	"$(INTDIR)\Frame.obj" \
+	"$(INTDIR)\HeaderControl.obj" \
+	"$(INTDIR)\HelpEvent.obj" \
+	"$(INTDIR)\HTMLBrowserControl.obj" \
+	"$(INTDIR)\ImageControl.obj" \
 	"$(INTDIR)\ImageList.obj" \
 	"$(INTDIR)\ImageListEvent.obj" \
 	"$(INTDIR)\ItemEvent.obj" \
 	"$(INTDIR)\KeyboardEvent.obj" \
 	"$(INTDIR)\Label.obj" \
+	"$(INTDIR)\LibraryApplication.obj" \
 	"$(INTDIR)\Light3DBorder.obj" \
 	"$(INTDIR)\LightweightComponent.obj" \
 	"$(INTDIR)\ListBoxControl.obj" \
@@ -296,7 +337,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Menu.obj" \
 	"$(INTDIR)\MenuBar.obj" \
 	"$(INTDIR)\MenuItemEvent.obj" \
-	"$(INTDIR)\MenuItemShortcut.obj" \
 	"$(INTDIR)\Model.obj" \
 	"$(INTDIR)\MouseEvent.obj" \
 	"$(INTDIR)\MultilineTextControl.obj" \
@@ -305,19 +345,26 @@ LIB32_OBJS= \
 	"$(INTDIR)\Panel.obj" \
 	"$(INTDIR)\PopupMenu.obj" \
 	"$(INTDIR)\PropertyEditorManager.obj" \
+	"$(INTDIR)\PushButton.obj" \
+	"$(INTDIR)\RadioButtonControl.obj" \
 	"$(INTDIR)\Resource.obj" \
 	"$(INTDIR)\ResourceStream.obj" \
 	"$(INTDIR)\Splitter.obj" \
+	"$(INTDIR)\StatusBar.obj" \
 	"$(INTDIR)\TabbedPages.obj" \
 	"$(INTDIR)\TableControl.obj" \
 	"$(INTDIR)\TableModelEvent.obj" \
 	"$(INTDIR)\TabModelEvent.obj" \
 	"$(INTDIR)\TextControl.obj" \
 	"$(INTDIR)\TextEvent.obj" \
+	"$(INTDIR)\TimerComponent.obj" \
+	"$(INTDIR)\TimerEvent.obj" \
+	"$(INTDIR)\ToggledButton.obj" \
 	"$(INTDIR)\Toolbar.obj" \
 	"$(INTDIR)\ToolbarButton.obj" \
 	"$(INTDIR)\ToolbarDock.obj" \
 	"$(INTDIR)\ToolbarSeparator.obj" \
+	"$(INTDIR)\ToolTipEvent.obj" \
 	"$(INTDIR)\TreeControl.obj" \
 	"$(INTDIR)\TreeListControl.obj" \
 	"$(INTDIR)\TreeModelEvent.obj" \
@@ -327,13 +374,14 @@ LIB32_OBJS= \
 	"$(INTDIR)\ValidationEvent.obj" \
 	"$(INTDIR)\VFFInputStream.obj" \
 	"$(INTDIR)\VFFOutputStream.obj" \
+	"$(INTDIR)\WhatsThisHelpEvent.obj" \
 	"$(INTDIR)\Win32Application.obj" \
 	"$(INTDIR)\Win32Button.obj" \
+	"$(INTDIR)\Win32Clipboard.obj" \
 	"$(INTDIR)\Win32ColorDialog.obj" \
-	"$(INTDIR)\Win32ComboBox.obj" \
 	"$(INTDIR)\Win32Component.obj" \
 	"$(INTDIR)\Win32ControlContext.obj" \
-	"$(INTDIR)\Win32CustomControl.obj" \
+	"$(INTDIR)\Win32CursorPeer.obj" \
 	"$(INTDIR)\Win32Desktop.obj" \
 	"$(INTDIR)\Win32Dialog.obj" \
 	"$(INTDIR)\Win32DropTargetPeer.obj" \
@@ -342,7 +390,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32FileSaveDialog.obj" \
 	"$(INTDIR)\Win32FolderBrowseDialog.obj" \
 	"$(INTDIR)\Win32FontDialog.obj" \
-	"$(INTDIR)\Win32ListBox.obj" \
 	"$(INTDIR)\Win32Listview.obj" \
 	"$(INTDIR)\Win32MenuBar.obj" \
 	"$(INTDIR)\Win32MenuItem.obj" \
@@ -350,6 +397,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32PopupMenu.obj" \
 	"$(INTDIR)\Win32ResourceBundle.obj" \
 	"$(INTDIR)\Win32ResourceStream.obj" \
+	"$(INTDIR)\Win32ScrollPeer.obj" \
 	"$(INTDIR)\Win32ToolKit.obj" \
 	"$(INTDIR)\Win32Tree.obj" \
 	"$(INTDIR)\Win32Window.obj" \
@@ -386,13 +434,17 @@ CLEAN :"FoundationKit - Win32 DebugCLEAN" "GraphicsKit - Win32 DebugCLEAN"
 !ELSE 
 CLEAN :
 !ENDIF 
+	-@erase "$(INTDIR)\AbstractApplication.obj"
 	-@erase "$(INTDIR)\AbstractCommand.obj"
+	-@erase "$(INTDIR)\AbstractComponentEditor.obj"
 	-@erase "$(INTDIR)\AbstractContainer.obj"
 	-@erase "$(INTDIR)\AbstractListModel.obj"
+	-@erase "$(INTDIR)\AbstractScrollable.obj"
 	-@erase "$(INTDIR)\AbstractTableModel.obj"
 	-@erase "$(INTDIR)\AbstractTextModel.obj"
 	-@erase "$(INTDIR)\AbstractTreeModel.obj"
 	-@erase "$(INTDIR)\AbstractWin32Component.obj"
+	-@erase "$(INTDIR)\AcceleratorKey.obj"
 	-@erase "$(INTDIR)\Application.obj"
 	-@erase "$(INTDIR)\ApplicationKit.obj"
 	-@erase "$(INTDIR)\ApplicationKit.pch"
@@ -403,6 +455,8 @@ CLEAN :
 	-@erase "$(INTDIR)\Clipboard.obj"
 	-@erase "$(INTDIR)\ClipboardDataObject.obj"
 	-@erase "$(INTDIR)\ClipboardEvent.obj"
+	-@erase "$(INTDIR)\ColumnItemEvent.obj"
+	-@erase "$(INTDIR)\ColumnModelEvent.obj"
 	-@erase "$(INTDIR)\ComboBoxControl.obj"
 	-@erase "$(INTDIR)\COMDataObject.obj"
 	-@erase "$(INTDIR)\COMDropTarget.obj"
@@ -417,14 +471,19 @@ CLEAN :
 	-@erase "$(INTDIR)\CommonPrint.obj"
 	-@erase "$(INTDIR)\COMObject.obj"
 	-@erase "$(INTDIR)\Component.obj"
+	-@erase "$(INTDIR)\ComponentEditorManager.obj"
 	-@erase "$(INTDIR)\ComponentInfo.obj"
 	-@erase "$(INTDIR)\COMUtils.obj"
 	-@erase "$(INTDIR)\Control.obj"
 	-@erase "$(INTDIR)\ControlContainer.obj"
 	-@erase "$(INTDIR)\ControlEvent.obj"
 	-@erase "$(INTDIR)\ControlGraphicsContext.obj"
+	-@erase "$(INTDIR)\Cursor.obj"
+	-@erase "$(INTDIR)\CursorManager.obj"
 	-@erase "$(INTDIR)\CustomControl.obj"
 	-@erase "$(INTDIR)\DataType.obj"
+	-@erase "$(INTDIR)\DefaultColumnItem.obj"
+	-@erase "$(INTDIR)\DefaultColumnModel.obj"
 	-@erase "$(INTDIR)\DefaultListItem.obj"
 	-@erase "$(INTDIR)\DefaultListModel.obj"
 	-@erase "$(INTDIR)\DefaultMenuItem.obj"
@@ -442,12 +501,18 @@ CLEAN :
 	-@erase "$(INTDIR)\DragSource.obj"
 	-@erase "$(INTDIR)\DropEvent.obj"
 	-@erase "$(INTDIR)\DropTarget.obj"
+	-@erase "$(INTDIR)\FocusEvent.obj"
 	-@erase "$(INTDIR)\Frame.obj"
+	-@erase "$(INTDIR)\HeaderControl.obj"
+	-@erase "$(INTDIR)\HelpEvent.obj"
+	-@erase "$(INTDIR)\HTMLBrowserControl.obj"
+	-@erase "$(INTDIR)\ImageControl.obj"
 	-@erase "$(INTDIR)\ImageList.obj"
 	-@erase "$(INTDIR)\ImageListEvent.obj"
 	-@erase "$(INTDIR)\ItemEvent.obj"
 	-@erase "$(INTDIR)\KeyboardEvent.obj"
 	-@erase "$(INTDIR)\Label.obj"
+	-@erase "$(INTDIR)\LibraryApplication.obj"
 	-@erase "$(INTDIR)\Light3DBorder.obj"
 	-@erase "$(INTDIR)\LightweightComponent.obj"
 	-@erase "$(INTDIR)\ListBoxControl.obj"
@@ -456,7 +521,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Menu.obj"
 	-@erase "$(INTDIR)\MenuBar.obj"
 	-@erase "$(INTDIR)\MenuItemEvent.obj"
-	-@erase "$(INTDIR)\MenuItemShortcut.obj"
 	-@erase "$(INTDIR)\Model.obj"
 	-@erase "$(INTDIR)\MouseEvent.obj"
 	-@erase "$(INTDIR)\MultilineTextControl.obj"
@@ -465,19 +529,26 @@ CLEAN :
 	-@erase "$(INTDIR)\Panel.obj"
 	-@erase "$(INTDIR)\PopupMenu.obj"
 	-@erase "$(INTDIR)\PropertyEditorManager.obj"
+	-@erase "$(INTDIR)\PushButton.obj"
+	-@erase "$(INTDIR)\RadioButtonControl.obj"
 	-@erase "$(INTDIR)\Resource.obj"
 	-@erase "$(INTDIR)\ResourceStream.obj"
 	-@erase "$(INTDIR)\Splitter.obj"
+	-@erase "$(INTDIR)\StatusBar.obj"
 	-@erase "$(INTDIR)\TabbedPages.obj"
 	-@erase "$(INTDIR)\TableControl.obj"
 	-@erase "$(INTDIR)\TableModelEvent.obj"
 	-@erase "$(INTDIR)\TabModelEvent.obj"
 	-@erase "$(INTDIR)\TextControl.obj"
 	-@erase "$(INTDIR)\TextEvent.obj"
+	-@erase "$(INTDIR)\TimerComponent.obj"
+	-@erase "$(INTDIR)\TimerEvent.obj"
+	-@erase "$(INTDIR)\ToggledButton.obj"
 	-@erase "$(INTDIR)\Toolbar.obj"
 	-@erase "$(INTDIR)\ToolbarButton.obj"
 	-@erase "$(INTDIR)\ToolbarDock.obj"
 	-@erase "$(INTDIR)\ToolbarSeparator.obj"
+	-@erase "$(INTDIR)\ToolTipEvent.obj"
 	-@erase "$(INTDIR)\TreeControl.obj"
 	-@erase "$(INTDIR)\TreeListControl.obj"
 	-@erase "$(INTDIR)\TreeModelEvent.obj"
@@ -489,13 +560,14 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(INTDIR)\VFFInputStream.obj"
 	-@erase "$(INTDIR)\VFFOutputStream.obj"
+	-@erase "$(INTDIR)\WhatsThisHelpEvent.obj"
 	-@erase "$(INTDIR)\Win32Application.obj"
 	-@erase "$(INTDIR)\Win32Button.obj"
+	-@erase "$(INTDIR)\Win32Clipboard.obj"
 	-@erase "$(INTDIR)\Win32ColorDialog.obj"
-	-@erase "$(INTDIR)\Win32ComboBox.obj"
 	-@erase "$(INTDIR)\Win32Component.obj"
 	-@erase "$(INTDIR)\Win32ControlContext.obj"
-	-@erase "$(INTDIR)\Win32CustomControl.obj"
+	-@erase "$(INTDIR)\Win32CursorPeer.obj"
 	-@erase "$(INTDIR)\Win32Desktop.obj"
 	-@erase "$(INTDIR)\Win32Dialog.obj"
 	-@erase "$(INTDIR)\Win32DropTargetPeer.obj"
@@ -504,7 +576,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32FileSaveDialog.obj"
 	-@erase "$(INTDIR)\Win32FolderBrowseDialog.obj"
 	-@erase "$(INTDIR)\Win32FontDialog.obj"
-	-@erase "$(INTDIR)\Win32ListBox.obj"
 	-@erase "$(INTDIR)\Win32Listview.obj"
 	-@erase "$(INTDIR)\Win32MenuBar.obj"
 	-@erase "$(INTDIR)\Win32MenuItem.obj"
@@ -512,6 +583,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32PopupMenu.obj"
 	-@erase "$(INTDIR)\Win32ResourceBundle.obj"
 	-@erase "$(INTDIR)\Win32ResourceStream.obj"
+	-@erase "$(INTDIR)\Win32ScrollPeer.obj"
 	-@erase "$(INTDIR)\Win32ToolKit.obj"
 	-@erase "$(INTDIR)\Win32Tree.obj"
 	-@erase "$(INTDIR)\Win32Window.obj"
@@ -566,13 +638,17 @@ BSC32_SBRS= \
 LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)\ApplicationKit_sd.lib" 
 LIB32_OBJS= \
+	"$(INTDIR)\AbstractApplication.obj" \
 	"$(INTDIR)\AbstractCommand.obj" \
+	"$(INTDIR)\AbstractComponentEditor.obj" \
 	"$(INTDIR)\AbstractContainer.obj" \
 	"$(INTDIR)\AbstractListModel.obj" \
+	"$(INTDIR)\AbstractScrollable.obj" \
 	"$(INTDIR)\AbstractTableModel.obj" \
 	"$(INTDIR)\AbstractTextModel.obj" \
 	"$(INTDIR)\AbstractTreeModel.obj" \
 	"$(INTDIR)\AbstractWin32Component.obj" \
+	"$(INTDIR)\AcceleratorKey.obj" \
 	"$(INTDIR)\Application.obj" \
 	"$(INTDIR)\ApplicationKit.obj" \
 	"$(INTDIR)\Basic3DBorder.obj" \
@@ -582,6 +658,8 @@ LIB32_OBJS= \
 	"$(INTDIR)\Clipboard.obj" \
 	"$(INTDIR)\ClipboardDataObject.obj" \
 	"$(INTDIR)\ClipboardEvent.obj" \
+	"$(INTDIR)\ColumnItemEvent.obj" \
+	"$(INTDIR)\ColumnModelEvent.obj" \
 	"$(INTDIR)\ComboBoxControl.obj" \
 	"$(INTDIR)\COMDataObject.obj" \
 	"$(INTDIR)\COMDropTarget.obj" \
@@ -596,14 +674,19 @@ LIB32_OBJS= \
 	"$(INTDIR)\CommonPrint.obj" \
 	"$(INTDIR)\COMObject.obj" \
 	"$(INTDIR)\Component.obj" \
+	"$(INTDIR)\ComponentEditorManager.obj" \
 	"$(INTDIR)\ComponentInfo.obj" \
 	"$(INTDIR)\COMUtils.obj" \
 	"$(INTDIR)\Control.obj" \
 	"$(INTDIR)\ControlContainer.obj" \
 	"$(INTDIR)\ControlEvent.obj" \
 	"$(INTDIR)\ControlGraphicsContext.obj" \
+	"$(INTDIR)\Cursor.obj" \
+	"$(INTDIR)\CursorManager.obj" \
 	"$(INTDIR)\CustomControl.obj" \
 	"$(INTDIR)\DataType.obj" \
+	"$(INTDIR)\DefaultColumnItem.obj" \
+	"$(INTDIR)\DefaultColumnModel.obj" \
 	"$(INTDIR)\DefaultListItem.obj" \
 	"$(INTDIR)\DefaultListModel.obj" \
 	"$(INTDIR)\DefaultMenuItem.obj" \
@@ -621,12 +704,18 @@ LIB32_OBJS= \
 	"$(INTDIR)\DragSource.obj" \
 	"$(INTDIR)\DropEvent.obj" \
 	"$(INTDIR)\DropTarget.obj" \
+	"$(INTDIR)\FocusEvent.obj" \
 	"$(INTDIR)\Frame.obj" \
+	"$(INTDIR)\HeaderControl.obj" \
+	"$(INTDIR)\HelpEvent.obj" \
+	"$(INTDIR)\HTMLBrowserControl.obj" \
+	"$(INTDIR)\ImageControl.obj" \
 	"$(INTDIR)\ImageList.obj" \
 	"$(INTDIR)\ImageListEvent.obj" \
 	"$(INTDIR)\ItemEvent.obj" \
 	"$(INTDIR)\KeyboardEvent.obj" \
 	"$(INTDIR)\Label.obj" \
+	"$(INTDIR)\LibraryApplication.obj" \
 	"$(INTDIR)\Light3DBorder.obj" \
 	"$(INTDIR)\LightweightComponent.obj" \
 	"$(INTDIR)\ListBoxControl.obj" \
@@ -635,7 +724,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Menu.obj" \
 	"$(INTDIR)\MenuBar.obj" \
 	"$(INTDIR)\MenuItemEvent.obj" \
-	"$(INTDIR)\MenuItemShortcut.obj" \
 	"$(INTDIR)\Model.obj" \
 	"$(INTDIR)\MouseEvent.obj" \
 	"$(INTDIR)\MultilineTextControl.obj" \
@@ -644,19 +732,26 @@ LIB32_OBJS= \
 	"$(INTDIR)\Panel.obj" \
 	"$(INTDIR)\PopupMenu.obj" \
 	"$(INTDIR)\PropertyEditorManager.obj" \
+	"$(INTDIR)\PushButton.obj" \
+	"$(INTDIR)\RadioButtonControl.obj" \
 	"$(INTDIR)\Resource.obj" \
 	"$(INTDIR)\ResourceStream.obj" \
 	"$(INTDIR)\Splitter.obj" \
+	"$(INTDIR)\StatusBar.obj" \
 	"$(INTDIR)\TabbedPages.obj" \
 	"$(INTDIR)\TableControl.obj" \
 	"$(INTDIR)\TableModelEvent.obj" \
 	"$(INTDIR)\TabModelEvent.obj" \
 	"$(INTDIR)\TextControl.obj" \
 	"$(INTDIR)\TextEvent.obj" \
+	"$(INTDIR)\TimerComponent.obj" \
+	"$(INTDIR)\TimerEvent.obj" \
+	"$(INTDIR)\ToggledButton.obj" \
 	"$(INTDIR)\Toolbar.obj" \
 	"$(INTDIR)\ToolbarButton.obj" \
 	"$(INTDIR)\ToolbarDock.obj" \
 	"$(INTDIR)\ToolbarSeparator.obj" \
+	"$(INTDIR)\ToolTipEvent.obj" \
 	"$(INTDIR)\TreeControl.obj" \
 	"$(INTDIR)\TreeListControl.obj" \
 	"$(INTDIR)\TreeModelEvent.obj" \
@@ -666,13 +761,14 @@ LIB32_OBJS= \
 	"$(INTDIR)\ValidationEvent.obj" \
 	"$(INTDIR)\VFFInputStream.obj" \
 	"$(INTDIR)\VFFOutputStream.obj" \
+	"$(INTDIR)\WhatsThisHelpEvent.obj" \
 	"$(INTDIR)\Win32Application.obj" \
 	"$(INTDIR)\Win32Button.obj" \
+	"$(INTDIR)\Win32Clipboard.obj" \
 	"$(INTDIR)\Win32ColorDialog.obj" \
-	"$(INTDIR)\Win32ComboBox.obj" \
 	"$(INTDIR)\Win32Component.obj" \
 	"$(INTDIR)\Win32ControlContext.obj" \
-	"$(INTDIR)\Win32CustomControl.obj" \
+	"$(INTDIR)\Win32CursorPeer.obj" \
 	"$(INTDIR)\Win32Desktop.obj" \
 	"$(INTDIR)\Win32Dialog.obj" \
 	"$(INTDIR)\Win32DropTargetPeer.obj" \
@@ -681,7 +777,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32FileSaveDialog.obj" \
 	"$(INTDIR)\Win32FolderBrowseDialog.obj" \
 	"$(INTDIR)\Win32FontDialog.obj" \
-	"$(INTDIR)\Win32ListBox.obj" \
 	"$(INTDIR)\Win32Listview.obj" \
 	"$(INTDIR)\Win32MenuBar.obj" \
 	"$(INTDIR)\Win32MenuItem.obj" \
@@ -689,6 +784,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32PopupMenu.obj" \
 	"$(INTDIR)\Win32ResourceBundle.obj" \
 	"$(INTDIR)\Win32ResourceStream.obj" \
+	"$(INTDIR)\Win32ScrollPeer.obj" \
 	"$(INTDIR)\Win32ToolKit.obj" \
 	"$(INTDIR)\Win32Tree.obj" \
 	"$(INTDIR)\Win32Window.obj" \
@@ -715,21 +811,57 @@ LIB32_OBJS= \
 
 
 !IF "$(CFG)" == "ApplicationKit - Win32 Release" || "$(CFG)" == "ApplicationKit - Win32 Debug"
+SOURCE=..\..\..\src\core\AbstractApplication.cpp
+
+"$(INTDIR)\AbstractApplication.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\core\AbstractCommand.cpp
 
 "$(INTDIR)\AbstractCommand.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\core\AbstractContainer.cpp
+SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
 
-"$(INTDIR)\AbstractContainer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+"$(INTDIR)\AbstractComponentEditor.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
+
+SOURCE=..\..\..\src\core\AbstractContainer.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\ApplicationKit.pch" /Yu"ApplicationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+"$(INTDIR)\AbstractContainer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\ApplicationKit.pch" /Yu"ApplicationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\AbstractContainer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
 
 SOURCE=..\..\..\src\core\AbstractListModel.cpp
 
 "$(INTDIR)\AbstractListModel.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\AbstractScrollable.cpp
+
+"$(INTDIR)\AbstractScrollable.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -754,6 +886,12 @@ SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
 SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
 
 "$(INTDIR)\AbstractWin32Component.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\AcceleratorKey.cpp
+
+"$(INTDIR)\AcceleratorKey.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -826,6 +964,18 @@ SOURCE=..\..\..\src\DragDrop\ClipboardDataObject.cpp
 SOURCE=..\..\..\src\DragDrop\ClipboardEvent.cpp
 
 "$(INTDIR)\ClipboardEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\ColumnItemEvent.cpp
+
+"$(INTDIR)\ColumnItemEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\ColumnModelEvent.cpp
+
+"$(INTDIR)\ColumnModelEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -913,6 +1063,12 @@ SOURCE=..\..\..\src\core\Component.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\core\ComponentEditorManager.cpp
+
+"$(INTDIR)\ComponentEditorManager.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\core\ComponentInfo.cpp
 
 "$(INTDIR)\ComponentInfo.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -949,6 +1105,18 @@ SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\core\Cursor.cpp
+
+"$(INTDIR)\Cursor.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\CursorManager.cpp
+
+"$(INTDIR)\CursorManager.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\core\CustomControl.cpp
 
 "$(INTDIR)\CustomControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -958,6 +1126,18 @@ SOURCE=..\..\..\src\core\CustomControl.cpp
 SOURCE=..\..\..\src\DragDrop\DataType.cpp
 
 "$(INTDIR)\DataType.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\DefaultColumnItem.cpp
+
+"$(INTDIR)\DefaultColumnItem.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\DefaultColumnModel.cpp
+
+"$(INTDIR)\DefaultColumnModel.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1063,9 +1243,39 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\Events\FocusEvent.cpp
+
+"$(INTDIR)\FocusEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\core\Frame.cpp
 
 "$(INTDIR)\Frame.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\HeaderControl.cpp
+
+"$(INTDIR)\HeaderControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\HelpEvent.cpp
+
+"$(INTDIR)\HelpEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\HTMLBrowserControl.cpp
+
+"$(INTDIR)\HTMLBrowserControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\ImageControl.cpp
+
+"$(INTDIR)\ImageControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1096,6 +1306,12 @@ SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
 SOURCE=..\..\..\src\core\Label.cpp
 
 "$(INTDIR)\Label.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\LibraryApplication.cpp
+
+"$(INTDIR)\LibraryApplication.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1147,12 +1363,6 @@ SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\core\MenuItemShortcut.cpp
-
-"$(INTDIR)\MenuItemShortcut.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\..\..\src\core\Model.cpp
 
 "$(INTDIR)\Model.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -1201,6 +1411,18 @@ SOURCE=..\..\..\src\core\PropertyEditorManager.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\core\PushButton.cpp
+
+"$(INTDIR)\PushButton.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\RadioButtonControl.cpp
+
+"$(INTDIR)\RadioButtonControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\Utils\Resource.cpp
 
 "$(INTDIR)\Resource.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -1216,6 +1438,12 @@ SOURCE=..\..\..\src\IO\ResourceStream.cpp
 SOURCE=..\..\..\src\core\Splitter.cpp
 
 "$(INTDIR)\Splitter.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\StatusBar.cpp
+
+"$(INTDIR)\StatusBar.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1255,6 +1483,24 @@ SOURCE=..\..\..\src\Events\TextEvent.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\core\TimerComponent.cpp
+
+"$(INTDIR)\TimerComponent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\TimerEvent.cpp
+
+"$(INTDIR)\TimerEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\ToggledButton.cpp
+
+"$(INTDIR)\ToggledButton.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\core\Toolbar.cpp
 
 "$(INTDIR)\Toolbar.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -1276,6 +1522,12 @@ SOURCE=..\..\..\src\core\ToolbarDock.cpp
 SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
 
 "$(INTDIR)\ToolbarSeparator.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\ToolTipEvent.cpp
+
+"$(INTDIR)\ToolTipEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1333,6 +1585,12 @@ SOURCE=..\..\..\src\IO\VFFOutputStream.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\Events\WhatsThisHelpEvent.cpp
+
+"$(INTDIR)\WhatsThisHelpEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
 
 "$(INTDIR)\Win32Application.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -1345,15 +1603,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Button.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32Clipboard.cpp
 
-"$(INTDIR)\Win32ColorDialog.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+"$(INTDIR)\Win32Clipboard.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ComboBox.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
 
-"$(INTDIR)\Win32ComboBox.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+"$(INTDIR)\Win32ColorDialog.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1369,9 +1627,9 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\ImplementerKit\Win32CustomControl.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32CursorPeer.cpp
 
-"$(INTDIR)\Win32CustomControl.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+"$(INTDIR)\Win32CursorPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1423,12 +1681,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FontDialog.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ListBox.cpp
-
-"$(INTDIR)\Win32ListBox.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\..\..\src\ImplementerKit\Win32Listview.cpp
 
 "$(INTDIR)\Win32Listview.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
@@ -1468,6 +1720,12 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
 
 "$(INTDIR)\Win32ResourceStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp
+
+"$(INTDIR)\Win32ScrollPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\ApplicationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
