@@ -221,16 +221,16 @@
 				RelativePath="..\..\..\include\core\CustomControl.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\HeaderControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\HeaderControl.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\HeaderControl.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\HeaderControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ImageControl.cpp">
@@ -432,18 +432,6 @@
 				RelativePath="..\..\..\include\core\DefaultMenuItem.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTableCellItem.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTableModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTableModel.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\DefaultTabModel.cpp">
 			</File>
 			<File
@@ -454,6 +442,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\DefaultTabPage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTableCellItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableModel.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTableModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\DefaultTextModel.cpp">
@@ -504,16 +504,16 @@
 				RelativePath="..\..\..\include\ModelViewKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\TableCellItem.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\TableModel.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\TabModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TabPage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TableCellItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TableModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TextModel.h">
@@ -619,16 +619,16 @@
 				RelativePath="..\..\..\include\events\ScrollEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\events\TableModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\TableModelEvent.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\events\TabModelEvent.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\events\TabModelEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\events\TableModelEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\TableModelEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\events\TextEvent.cpp">
@@ -686,9 +686,6 @@
 				RelativePath="..\..\..\include\implementerKit\AbstractWin32Component.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\ClipboardPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\implementerkit\COMDataObject.cpp">
 			</File>
 			<File
@@ -699,6 +696,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\COMUtils.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ClipboardPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\EnumObject.h">
@@ -857,16 +857,16 @@
 				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\implementerkit\Win32Toolbar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Toolbar.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\implementerkit\Win32ToolKit.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32ToolKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Toolbar.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Toolbar.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\implementerkit\Win32Tree.cpp">
@@ -1095,13 +1095,13 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\vcf-active\build\resources\win32;$(NoInherit)"/>
+						AdditionalIncludeDirectories="\code\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\vcf-active\build\resources\win32;$(NoInherit)"/>
+						AdditionalIncludeDirectories="\code\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File

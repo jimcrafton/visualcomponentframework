@@ -238,10 +238,10 @@
 				RelativePath="..\..\..\include\core\Point.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Printable.h">
+				RelativePath="..\..\..\include\graphics\PrintContext.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\PrintContext.h">
+				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Rect.h">

@@ -176,43 +176,37 @@
 			Name="RTTI"
 			Filter="">
 			<File
-				RelativePath="..\..\..\src\rtti\Class.cpp">
+				RelativePath="..\..\..\src\core\Class.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\Class.h">
+				RelativePath="..\..\..\include\core\Class.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\ClassInfo.h">
+				RelativePath="..\..\..\include\core\ClassInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\rtti\ClassRegistry.cpp">
+				RelativePath="..\..\..\src\core\ClassRegistry.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\ClassRegistry.h">
+				RelativePath="..\..\..\include\core\ClassRegistry.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\Enum.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\rtti\Field.h">
+				RelativePath="..\..\..\include\utils\Enum.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Interface.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\rtti\InterfaceClass.cpp">
+				RelativePath="..\..\..\src\core\InterfaceClass.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\InterfaceClass.h">
+				RelativePath="..\..\..\include\core\InterfaceClass.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\Method.h">
+				RelativePath="..\..\..\include\core\Method.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\rtti\Property.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\rtti\VCFRTTIImpl.h">
+				RelativePath="..\..\..\include\core\Property.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\VariantData.cpp">
