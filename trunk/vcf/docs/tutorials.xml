@@ -69,7 +69,7 @@ NB: This software will not save the world.
 			&sharedlibraries;
 		</section>		
 		
-		<section><title>Threads</title>
+		<section><title>Threads</title>			
 			&threadbasics;
 			
 			&threadsingui;
@@ -82,11 +82,20 @@ NB: This software will not save the world.
 		</section>
 		
 		<section><title>Internationalization and Unicode</title>
-		&localization;
+			&localization;			
 		</section>
 		
 		<section><title>Resource Loading</title>
-		&resources;
+			<formalpara><title>Discussion</title>
+			&resources;
+			</formalpara>
+			<example><title>Resources Example Code</title>
+				<programlisting>
+				
+&resources_code;
+				
+				</programlisting>
+			</example>
 		</section>
 	</section>
 	
@@ -272,6 +281,9 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.6  2004/12/02 04:53:46  ddiego
+added some more documentation to the graphics kit classes.
+
 Revision 1.5  2004/12/01 04:14:53  ddiego
 merged over devmain-0-6-6 code. Marcello did a kick ass job
 of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -64,6 +64,48 @@
 	<!ENTITY transformations SYSTEM "../examples/Transformations/Transformations.xml">
 	<!ENTITY systray SYSTEM "../examples/SysTray/SysTray.xml">
 	<!ENTITY resources SYSTEM "../examples/Resources/Resources.xml">
+	<!ENTITY imagebasics_code SYSTEM "../examples/ImageBasics/ImageBasics.cpp">
+	<!ENTITY threadbasics_code SYSTEM "../examples/ThreadBasics/ThreadBasics.cpp">
+	<!ENTITY helloworld3_code SYSTEM "../examples/HelloWorld3/HelloWorld3.cpp">
+	<!ENTITY textlayout_code SYSTEM "../examples/TextLayout/TextLayout.cpp">
+	<!ENTITY helloworld2_code SYSTEM "../examples/HelloWorld2/HelloWorld2.cpp">
+	<!ENTITY eventbasics_code SYSTEM "../examples/EventBasics/EventBasics.cpp">
+	<!ENTITY draganddrop_code SYSTEM "../examples/DragAndDrop/DragAndDrop.cpp">
+	<!ENTITY strokesandfills_code SYSTEM "../examples/StrokesAndFills/StrokesAndFills.cpp">
+	<!ENTITY graphicsbasics_code SYSTEM "../examples/GraphicsBasics/GraphicsBasics.cpp">
+	<!ENTITY copyandpaste_code SYSTEM "../examples/CopyAndPaste/CopyAndPaste.cpp">
+	<!ENTITY helloworld_code SYSTEM "../examples/HelloWorld/HelloWorld.cpp">
+	<!ENTITY threadsingui_code SYSTEM "../examples/ThreadsInGUI/ThreadsInGUI.cpp">
+	<!ENTITY imageviewer_code SYSTEM "../examples/ImageViewer/ImageViewer.cpp">
+	<!ENTITY workingwithenumerators_code SYSTEM "../examples/WorkingWithEnumerators/WorkingWithEnumerators.cpp">
+	<!ENTITY scrolling_code SYSTEM "../examples/Scrolling/Scrolling.cpp">
+	<!ENTITY sharedlibraries_code SYSTEM "../examples/SharedLibraries/SharedLibraries.cpp">
+	<!ENTITY heavyandlight_code SYSTEM "../examples/HeavyAndLight/HeavyAndLight.cpp">
+	<!ENTITY alignment_code SYSTEM "../examples/Alignment/Alignment.cpp">
+	<!ENTITY advancedalignment_code SYSTEM "../examples/AdvancedAlignment/AdvancedAlignment.cpp">
+	<!ENTITY anchors_code SYSTEM "../examples/Anchors/Anchors.cpp">
+	<!ENTITY sliders_code SYSTEM "../examples/Sliders/Sliders.cpp">
+	<!ENTITY progressbars_code SYSTEM "../examples/ProgressBars/ProgressBars.cpp">
+	<!ENTITY labels_code SYSTEM "../examples/Labels/Labels.cpp">
+	<!ENTITY dictionaries_code SYSTEM "../examples/Dictionaries/Dictionaries.cpp">
+	<!ENTITY actions_code SYSTEM "../examples/Actions/Actions.cpp">
+	<!ENTITY toolbars_code SYSTEM "../examples/Toolbars/Toolbars.cpp">
+	<!ENTITY datetimeui_code SYSTEM "../examples/DateTimeUI/DateTimeUI.cpp">
+	<!ENTITY datesandtime_code SYSTEM "../examples/DatesAndTime/DatesAndTime.cpp">
+	<!ENTITY conditions_code SYSTEM "../examples/Conditions/Conditions.cpp">
+	<!ENTITY localization_code SYSTEM "../examples/Localization/Localization.cpp">
+	<!ENTITY reflection_code SYSTEM "../examples/Reflection/Reflection.cpp">
+	<!ENTITY splitters_code SYSTEM "../examples/Splitters/Splitters.cpp">
+	<!ENTITY tables_code SYSTEM "../examples/Tables/Tables.cpp">
+	<!ENTITY visualformfiles_code SYSTEM "../examples/VisualFormFiles/VisualFormFiles.cpp">
+	<!ENTITY mvcbasics_code SYSTEM "../examples/MVCBasics/MVCBasics.cpp">
+	<!ENTITY dialogs_code SYSTEM "../examples/Dialogs/Dialogs.cpp">
+	<!ENTITY advancedui_code SYSTEM "../examples/AdvancedUI/AdvancedUI.cpp">
+	<!ENTITY docviewadvanced_code SYSTEM "../examples/DocViewAdvanced/DocViewAdvanced.cpp">
+	<!ENTITY printing_code SYSTEM "../examples/Printing/Printing.cpp">
+	<!ENTITY transformations_code SYSTEM "../examples/Transformations/Transformations.cpp">
+	<!ENTITY systray_code SYSTEM "../examples/SysTray/SysTray.cpp">
+	<!ENTITY resources_code SYSTEM "../examples/Resources/Resources.cpp">
 ]>
 
 
@@ -110,6 +152,9 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.6  2004/12/02 04:54:02  ddiego
+added some more documentation to the graphics kit classes.
+
 Revision 1.5  2004/12/01 04:14:53  ddiego
 merged over devmain-0-6-6 code. Marcello did a kick ass job
 of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -1,6 +1,25 @@
 a, body, div, table, td { font-family : Verdana, Geneva, Arial, Helvetica, sans-serif; font-size : small; }
 code, input, select, textarea { font-family : "Courier New", Courier, monospace; font-size : small; }
-body { background-color : #FFFFFF; color : #000000; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; }
+body { 
+	background-color : #FFFFFF; 
+	color : #000000; 
+	margin-left    : 0px; 
+	margin-right   : 0px; 
+	margin-top     : 0px; 
+	margin-bottom  : 0px;
+   padding-right  : 0px; 
+   padding-top    : 0px; 
+   padding-left   : 0px; 
+   padding-bottom : 0px; 
+}
+
+p {
+	padding-left   : 10px; 
+	padding-top    : 0px; 
+	padding-right  : 10px; 
+	padding-bottom : 0px; 
+}
+
 hr { color : #000000; }
 a { color : #000000; text-decoration : underline; }
 a:hover { color : #4682B4; text-decoration : underline; }
@@ -64,4 +83,28 @@ TD.indexvalue {
 tr.question {
 	font-style: italic; 
 	font-weight: bold;
+}
+
+div.example {
+  padding-left: 15px;
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 2px;
+  border-color: #4682B4;
+  margin-left    : 15px;
+  background: #f5f6f7;
+}
+
+pre {
+	border-style: solid;
+	border-width: 0px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-color: #4682B4;
+	
+  background: #f5f6f7;
+  margin-left   : 10px; 
+	margin-top    : 0px; 
+	margin-right  : 10px; 
+	margin-bottom : 0px; 
 }
