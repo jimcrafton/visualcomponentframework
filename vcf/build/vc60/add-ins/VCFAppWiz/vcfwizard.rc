@@ -125,23 +125,46 @@ STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,74,142,
-                    WS_EX_CLIENTEDGE
-    LTEXT           "This Wizard will createa simple Hello World Application, with a single window, that uses the VCF ApplicationKit.",
-                    IDC_STATIC,105,15,154,54
+                    WS_EX_STATICEDGE
+    LTEXT           "This Wizard will create a simple Hello World Application, with a single window, that uses the Visual Component Framework ApplicationKit.",
+                    IDC_STATIC,105,15,154,28
+    LTEXT           "You'll also be able to specify additional libraries to link with as well and select whether to link statically or dynamically to the VCF libraries.",
+                    IDC_STATIC,105,50,154,33
 END
 
-IDD_PAGE2 DIALOGEX 0, 0, 283, 152
+IDD_PAGE2 DIALOG DISCARDABLE  0, 0, 283, 152
 STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,74,142,
-                    WS_EX_CLIENTEDGE
     LTEXT           "Select whether to link to the Visual Component Framework through a static library or a dynamic library.",
                     IDC_STATIC,105,15,154,31
-    CONTROL         "Link to VCF through a Static Libary",IDC_RADIO1,"Button",
-                    BS_AUTORADIOBUTTON,107,52,117,10
-    CONTROL         "Link to VCF through a Dynamic Libary (.DLL)",IDC_RADIO2,
-                    "Button",BS_AUTORADIOBUTTON,107,68,146,10
+    CONTROL         "Link to VCF through a Static Libary",IDC_STATIC_LIB,
+                    "Button",BS_AUTORADIOBUTTON,107,52,117,10
+    CONTROL         "Link to VCF through a Dynamic Libary (.DLL)",
+                    IDC_DYNAMIC_LIB,"Button",BS_AUTORADIOBUTTON,107,68,146,
+                    10
+    CONTROL         119,IDC_IMAGE2,"Static",SS_BITMAP,3,3,51,107
+END
+
+IDD_PAGE3 DIALOG DISCARDABLE  0, 0, 283, 166
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "You can link to additional VCF Libraries as well, such as:",
+                    IDC_STATIC,105,15,154,21
+    CONTROL         119,IDC_IMAGE3,"Static",SS_BITMAP,3,3,72,140
+    CONTROL         "",IDC_VCFNET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,105,
+                    52,10,10
+    LTEXT           "VCFNet adds support for Sockets programming, as well as providing other useful networking classes",
+                    IDC_LABEL1,117,52,143,28
+    CONTROL         "",IDC_VCFREMOTE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    105,86,10,10
+    LTEXT           "VCFRemote adds support for distributed object to your application. Requires VCFNet as well.",
+                    IDC_STATIC,117,86,152,25
+    LTEXT           "In addition to VCF Libraries, you can also add support for OpenGL, for 3D graphics development, to application",
+                    IDC_STATIC,105,115,161,24
+    CONTROL         "OpenGL libraries",IDC_OPENGL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,105,144,67,10
 END
 
 
@@ -167,6 +190,14 @@ BEGIN
         RIGHTMARGIN, 280
         TOPMARGIN, 3
         BOTTOMMARGIN, 149
+    END
+
+    IDD_PAGE3, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 280
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 163
     END
 END
 #endif    // APSTUDIO_INVOKED

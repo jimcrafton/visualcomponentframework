@@ -136,6 +136,10 @@ SOURCE=.\Page2Dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Page3Dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -173,6 +177,10 @@ SOURCE=.\Page2Dlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Page3Dlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Resource.h
 # End Source File
 # Begin Source File
@@ -194,6 +202,10 @@ SOURCE=.\vcfwizardAw.h
 # Begin Source File
 
 SOURCE=.\res\bitmap1.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\splash1.bmp
 # End Source File
 # Begin Source File
 
