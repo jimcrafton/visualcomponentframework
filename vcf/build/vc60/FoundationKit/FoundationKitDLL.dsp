@@ -333,6 +333,10 @@ SOURCE=..\..\..\include\io\TextOutputStream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\ThreadPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\TypeCastException.h
 # End Source File
 # Begin Source File
@@ -366,6 +370,10 @@ SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Thread.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -482,6 +490,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\implementerkit\Win32Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Thread.cpp
 # End Source File
 # End Group
 # End Target
