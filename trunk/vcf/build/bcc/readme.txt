@@ -19,7 +19,12 @@ compiler:
 -L"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release";"C:\bcb6\lib\PSDK"
   Of course replace C:\bcb6\ part with appropriate path where you installed bcb.
 
-4. After you do all this preparations build libraries by issuing this command 
+4. Locate file ilink32.cfg in <PATH_TO_BCB_INST>\bin and make sure it looks like 
+   this:
+-L"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release";"C:\bcb6\lib\PSDK"
+  Of course replace C:\bcb6\ part with appropriate path where you installed bcb.
+
+5. After you do all this preparations build libraries by issuing this command 
    from <PATH_TO_VCF>\build\bcc :
    make -fvcfAllLibs.mak
    
