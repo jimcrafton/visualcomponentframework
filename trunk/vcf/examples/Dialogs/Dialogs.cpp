@@ -261,14 +261,14 @@ public:
 	modal dialog
 	*/
 	void example3( Event* e ) {
-		MyDialog* dialog = new MyDialog();
+		MyDialog dialog;// = new MyDialog();
 		UIToolkit::ModalReturnType result;
 
-		result = dialog->showModal();
+		result = dialog.showModal();
 
 		Dialog::showMessage( "You selected: " + modalReturnToString( result ) );
 
-		dialog->free();
+		//dialog->free();
 	}
 
 

@@ -84,10 +84,10 @@ Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; Dest
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
 
 Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
-Source: ..\..\docs\VCFDocs.0.6.4.chm; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFDocs.0.6.4.chi; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFSrcDocs.0.6.4.chm; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFSrcDocs.0.6.4.chi; DestDir: {app}\docs; Components: Help_Files
+Source: ..\..\docs\VCFDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files
+Source: ..\..\docs\VCFDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files
+Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files
+Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files
 Source: ..\..\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {app}
 Source: D:\Program Files\ISTool 4\psvince.dll; Flags: dontcopy
 Source: ..\..\build\resources\win32\vcf.ico; DestDir: {app}

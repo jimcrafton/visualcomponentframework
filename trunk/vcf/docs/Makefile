@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.13  2004/12/05 21:11:54  ddiego
+#dialog allowClose() fix in peer.
+#
 #Revision 1.12  2004/12/01 04:14:53  ddiego
 #merged over devmain-0-6-6 code. Marcello did a kick ass job
 #of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
@@ -111,7 +114,7 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = `cat ../VERSION`
+VERSION = 0.6.6
 
 
 #version number for the XMake program
@@ -291,7 +294,8 @@ tutorials : test_tools
 #doc chm. Finally we restore the altered .hhp and .hhc files to their
 #original contents
 
-coredocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
+#doxy doxy_hh
+coredocs_hh_with_source : $(VCF_DOCS) test_tools 
 	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml

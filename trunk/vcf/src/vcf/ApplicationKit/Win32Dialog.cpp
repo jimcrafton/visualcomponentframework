@@ -203,6 +203,11 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			}
+			else {
+				//result = true, don't handle further
+				wndProcResult = 0;
+				result = true;
+			}
 
 		}
 		break;
@@ -378,6 +383,9 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/05 21:11:55  ddiego
+*dialog allowClose() fix in peer.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
