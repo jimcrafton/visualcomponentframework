@@ -26,7 +26,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\Debug\DocViewAdvanced_vc70.pch"
+				PrecompiledHeaderFile=".\Debug\DocViewAdvanced.pch"
 				AssemblerListingLocation=".\Debug\"
 				ObjectFile=".\Debug\"
 				ProgramDataBaseFileName=".\Debug\"
@@ -40,12 +40,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\DocViewAdvanced.exe"
+				OutputFile=".\Debug\DocViewAdvanced.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug\DocViewAdvanced_vc70.pdb"
+				ProgramDatabaseFile=".\Debug\DocViewAdvanced.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -54,7 +54,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug\DocViewAdvanced_vc70.tlb"/>
+				TypeLibraryName=".\Debug\DocViewAdvanced.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -88,7 +88,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\Release\DocViewAdvanced_vc70.pch"
+				PrecompiledHeaderFile=".\Release\DocViewAdvanced.pch"
 				AssemblerListingLocation=".\Release\"
 				ObjectFile=".\Release\"
 				ProgramDataBaseFileName=".\Release\"
@@ -101,11 +101,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\DocViewAdvanced.exe"
+				OutputFile=".\Release\DocViewAdvanced.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release\DocViewAdvanced_vc70.pdb"
+				ProgramDatabaseFile=".\Release\DocViewAdvanced.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -114,7 +114,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release\DocViewAdvanced_vc70.tlb"/>
+				TypeLibraryName=".\Release\DocViewAdvanced.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

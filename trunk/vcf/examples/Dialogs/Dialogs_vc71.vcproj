@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Dialogs"
-	ProjectGUID="{EE5373EB-F785-43F6-9037-C4DEBF5133A6}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

@@ -11,6 +11,65 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc71\DebugDLL\"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\vc71\DebugDLL\OpenGLKitDLL_vc71_d.pch"
+				AssemblerListingLocation=".\vc71\DebugDLL\"
+				ObjectFile=".\vc71\DebugDLL\"
+				ProgramDataBaseFileName="..\..\..\bin\OpenGLKit_vc71_d.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib Rpcrt4.lib odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\bin\OpenGLKit_vc71_d.dll"
+				LinkIncremental="2"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\..\lib\"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="..\..\..\lib\OpenGLKit_vc71_d.pdb"
+				ImportLibrary=".\..\..\..\lib/OpenGLKit_vc71_d.lib"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName="..\..\..\lib\OpenGLKitDLL_vc71_d.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc71\ReleaseDLL\"
@@ -63,65 +122,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc71\DebugDLL\"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc71\DebugDLL\OpenGLKitDLL_vc71_d.pch"
-				AssemblerListingLocation=".\vc71\DebugDLL\"
-				ObjectFile=".\vc71\DebugDLL\"
-				ProgramDataBaseFileName=".\vc71\DebugDLL\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib Rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin\OpenGLKit_vc71_d.dll"
-				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib\"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="..\..\..\lib\OpenGLKit_vc71_d.pdb"
-				ImportLibrary=".\..\..\..\lib/OpenGLKit_vc71_d.lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\OpenGLKitDLL_vc71_d.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>

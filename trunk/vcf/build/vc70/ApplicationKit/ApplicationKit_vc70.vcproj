@@ -20,7 +20,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm220 "
+				AdditionalOptions="/Zm120 "
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
@@ -30,7 +30,7 @@
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\ApplicationKit\ApplicationKit.h"
+				PrecompiledHeaderThrough="vcf/ApplicationKit/ApplicationKit.h"
 				PrecompiledHeaderFile=".\vc70\ReleaseS\ApplicationKit_vc70_s.pch"
 				AssemblerListingLocation=".\vc70\ReleaseS\"
 				ObjectFile=".\vc70\ReleaseS\"
@@ -70,7 +70,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm220 "
+				AdditionalOptions="/Zm150 "
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,USE_GRAPHICSKIT_LIB"
@@ -78,7 +78,7 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\ApplicationKit\ApplicationKit.h"
+				PrecompiledHeaderThrough="vcf/ApplicationKit/ApplicationKit.h"
 				PrecompiledHeaderFile=".\vc70\DebugS\ApplicationKit_vc70_sd.pch"
 				AssemblerListingLocation=".\vc70\DebugS\"
 				ObjectFile=".\vc70\DebugS\"
@@ -138,12 +138,14 @@
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
-						Name="VCResourceCompilerTool"/>
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\Libraries\BSD\Vcf\vcf-active\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
-						Name="VCResourceCompilerTool"/>
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\Libraries\BSD\Vcf\vcf-active\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File

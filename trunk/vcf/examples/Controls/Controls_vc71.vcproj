@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Controls"
-	ProjectGUID="{149915CD-5D15-41C7-92E6-FF320D482928}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

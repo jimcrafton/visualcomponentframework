@@ -11,68 +11,6 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc70\ReleaseDLL\"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm220 "
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"
-				StringPooling="TRUE"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\ApplicationKit\ApplicationKit.h"
-				PrecompiledHeaderFile=".\vc70\ReleaseDLL\ApplicationKitDLL_vc70.pch"
-				AssemblerListingLocation=".\vc70\ReleaseDLL\"
-				ObjectFile=".\vc70\ReleaseDLL\"
-				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin\ApplicationKit_vc70.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib,..\..\..\xml\lib\"
-				ProgramDatabaseFile="..\..\..\lib\ApplicationKit_vc70.pdb"
-				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc70.lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\ApplicationKitDLL_vc70.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
-		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc70\DebugDLL\"
@@ -82,7 +20,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm220 "
+				AdditionalOptions="/Zm200 "
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"
@@ -90,7 +28,7 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\ApplicationKit\ApplicationKit.h"
+				PrecompiledHeaderThrough="vcf/ApplicationKit/ApplicationKit.h"
 				PrecompiledHeaderFile=".\vc70\DebugDLL\ApplicationKitDLL_vc70_d.pch"
 				AssemblerListingLocation=".\vc70\DebugDLL\"
 				ObjectFile=".\vc70\DebugDLL\"
@@ -134,6 +72,68 @@
 			<Tool
 				Name="VCWebDeploymentTool"/>
 		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc70\ReleaseDLL\"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="vcf/ApplicationKit/ApplicationKit.h"
+				PrecompiledHeaderFile=".\vc70\ReleaseDLL\ApplicationKitDLL_vc70.pch"
+				AssemblerListingLocation=".\vc70\ReleaseDLL\"
+				ObjectFile=".\vc70\ReleaseDLL\"
+				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\bin\ApplicationKit_vc70.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\..\lib,..\..\..\xml\lib\"
+				ProgramDatabaseFile="..\..\..\lib\ApplicationKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc70.lib"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName="..\..\..\lib\ApplicationKitDLL_vc70.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
@@ -160,6 +160,18 @@
 			Filter="*.rc;*.bmp;*.ico">
 			<File
 				RelativePath="..\..\resources\win32\ApplicationKit.rc">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\Libraries\BSD\Vcf\vcf-active\vcf\build\resources\win32;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\Libraries\BSD\Vcf\vcf-active\vcf\build\resources\win32;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\resources\win32\inform.bmp">
@@ -234,13 +246,13 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp">
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>

@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="TeXLabel"
-	ProjectGUID="{4C3057FE-AE07-4AFD-8E96-F40CF3707FAE}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

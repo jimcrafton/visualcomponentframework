@@ -28,7 +28,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc71\Release\Localization_vc71.pch"
+				PrecompiledHeaderFile=".\vc71\Release\Localization.pch"
 				AssemblerListingLocation=".\vc71\Release\"
 				ObjectFile=".\vc71\Release\"
 				ProgramDataBaseFileName=".\vc71\Release\"
@@ -41,11 +41,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Localization_vc71.exe"
+				OutputFile=".\Localization.exe\"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc71\Release\Localization_vc71.pdb"
+				ProgramDatabaseFile=".\Localization.pdb"
 				SubSystem="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -53,7 +53,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc71\Release\Localization_vc71.tlb"/>
+				TypeLibraryName=".\Localization.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -85,7 +85,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc71\Debug\Localization_vc71.pch"
+				PrecompiledHeaderFile=".\vc71\Debug\Localization.pch"
 				AssemblerListingLocation=".\vc71\Debug\"
 				ObjectFile=".\vc71\Debug\"
 				ProgramDataBaseFileName=".\vc71\Debug\"
@@ -99,12 +99,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Localization_vc71.exe"
+				OutputFile=".\Localization.exe\"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\vc71\Debug\Localization_vc71.pdb"
+				ProgramDatabaseFile=".\Localization.pdb"
 				SubSystem="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -112,7 +112,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc71\Debug\Localization_vc71.tlb"/>
+				TypeLibraryName=".\Localization.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Printing"
-	ProjectGUID="{C0AAC6E5-2BC4-4584-A0B3-884DC45A8176}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="AdvancedUI"
-	ProjectGUID="{E5C1B11A-01C0-4A39-882A-92F5B31DEC92}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
