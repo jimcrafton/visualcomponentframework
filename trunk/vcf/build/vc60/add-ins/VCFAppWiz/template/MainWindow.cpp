@@ -1,10 +1,10 @@
 //MainWindow.h
 #include "ApplicationKit.h"
 #include "MainWindow.h"
-#include "DefaultMenuItem.h"
+#include "core/DefaultMenuItem.h"
 
 #include "$$Root$$Application.h"
-#include "Command.h"
+
 
 $$IF(STD_HELP_MNU)
 #include "$$Root$$About.h"

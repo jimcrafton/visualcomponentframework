@@ -3,7 +3,7 @@
 
 #include "ApplicationKit.h"
 #include "$$Root$$Application.h"
-#include "UndoRedoStack.h"
+
 #include "$$MainWindow$$.h"
 
 

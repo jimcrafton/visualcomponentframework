@@ -153,18 +153,18 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				setting = "/D_CONSOLE";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
-				setting = "/DFRAMEWORK_DLL";
+				setting = "/DUSE_FRAMEWORK_DLL";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKit_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 
 					case release: {
-						setting = "FoundationKit.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 				}

@@ -144,18 +144,12 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
+						setting = "/GR /MDd /I$(VCF_INCLUDE)";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
+						setting = "/GR /MD /I$(VCF_INCLUDE)";
 					}
 					break;
 				}
@@ -166,6 +160,11 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				strRoot = "/D" + strRoot + "_EXPORTS";
 				setting = strRoot;
 				pConfig->AddToolSettings( tool, setting, reserved );
+
+				
+				setting = "/D \"USE_FRAMEWORK_DLL\" /D \"USE_GRAPHICSKIT_DLL\" /D \"USE_APPKIT_DLL\"";
+
+				pConfig->AddToolSettings( tool, setting, reserved );
 				
 				setting = "/YX";
 				pConfig->RemoveToolSettings( tool, setting, reserved );
@@ -173,7 +172,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKit_d.lib GraphicsKit_d.lib ApplicationKit_d.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "/libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Debug/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
@@ -184,7 +183,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					break;
 
 					case release: {
-						setting = "FoundationKit.lib GraphicsKit.lib ApplicationKit.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "/libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Release/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );

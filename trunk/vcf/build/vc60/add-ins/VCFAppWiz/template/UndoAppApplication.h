@@ -4,10 +4,6 @@
 #define _$$ROOT$$APPAPPLICATION_H__
 
 
-#include "VCF.h"
-#include "UndoRedoEvent.h"
-#include "UndoRedoListener.h"
-#include "UndoRedoStack.h"
 
 using namespace VCF;
 
@@ -23,11 +19,11 @@ public:
 
 	virtual bool initRunningApplication();
 	
-	UndoRedoStack* getCommandStack() {
+	VCF::UndoRedoStack* getCommandStack() {
 		return &m_commandStack;
 	}
 	
-	UndoRedoStack m_commandStack;
+	VCF::UndoRedoStack m_commandStack;
 
 	static $$Root$$Application* get$$Root$$Application() {
 		return ($$Root$$Application*)Application::getRunningInstance();

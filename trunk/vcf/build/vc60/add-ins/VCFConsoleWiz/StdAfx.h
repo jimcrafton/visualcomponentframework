@@ -14,7 +14,24 @@
 #include "debug.h"			// For ASSERT, VERIFY, and TRACE
 #include <customaw.h>		// Custom AppWizard interface
 
+#include "comdef.h"
+
+
+#include <ObjModel\addauto.h>
+#include "ObjModel\addguid.h"
+#include <ObjModel\appdefs.h>
+#include <ObjModel\appauto.h>
+#include <ObjModel\blddefs.h>
+#include <ObjModel\bldauto.h>
+#include <ObjModel\textdefs.h>
+#include <ObjModel\textauto.h>
+#include <ObjModel\dbgdefs.h>
+#include <ObjModel\dbgauto.h>
+
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+
 
 #endif // !defined(AFX_STDAFX_H__45AE1100_DDC5_4056_96D4_3D7B7CEABB43__INCLUDED_)

@@ -137,18 +137,12 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
+						setting = "/GR /MDd /I$(VCF_INCLUDE)";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
+						setting = "/GR /MD /I$(VCF_INCLUDE)";
 					}
 					break;
 				}
@@ -165,18 +159,18 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				int linkType = this->m_pChooser->GetLinkType();
 				if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
-					setting = "/DFRAMEWORK_DLL";
+					setting = "/DUSE_FRAMEWORK_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DGRAPHICSKIT_DLL";
+					setting = "/DUSE_GRAPHICSKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DAPPKIT_DLL";
+					setting = "/DUSE_APPKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				}
 				tool = "link.exe";
 				if ( linkType == VCF_DLL_LINK ) {
 					switch ( t ){
 						case debug: {
-							setting = "ApplicationKit_d.lib GraphicsKit_d.lib FoundationKit_d.lib ";
+							setting = "";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit_d.lib RemoteObjectKit_d.lib ";
 							}
@@ -192,7 +186,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						break;
 
 						case release: {
-							setting = "ApplicationKit.lib GraphicsKit.lib FoundationKit.lib ";
+							setting = "";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit.lib RemoteObjectKit.lib ";
 							}
@@ -212,7 +206,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					switch ( t ){
 						case debug: {
 							//NetworkKit_sd, NetworkKitDLL_d, NetworkKit_s, NetworkKitDLL, RemoteObjectKit_sd, RemoteObjectKit_s, RemoteObjectKitDLL_d, RemoteObjectKitDLL
-							setting = "ApplicationKit_sd.lib GraphicsKit_sd.lib FoundationKit_sd.lib libart_d.lib ";
+							setting = "";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit_sd.lib RemoteObjectKit_sd.lib ";
 							}
@@ -224,7 +218,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						break;
 
 						case release: {
-							setting = "ApplicationKit_s.lib GraphicsKit_s.lib FoundationKit_s.lib libart.lib ";
+							setting = "";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit_s.lib RemoteObjectKit_s.lib ";
 							}

@@ -1,7 +1,7 @@
 //SplashScreen.h
 #include "ApplicationKit.h"
 #include "SplashScreen.h"
-#include "Color.h"
+
 
 using namespace VCF;
 

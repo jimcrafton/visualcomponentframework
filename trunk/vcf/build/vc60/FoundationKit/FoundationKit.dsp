@@ -86,60 +86,153 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=..\..\..\src\Exceptions\BasicException.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\BasicInputStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\BasicOutputStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Class.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ClassRegistry.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\Directory.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\ErrorLog.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\Event.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\EventHandler.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\File.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\FilePath.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\FileStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\FileUtils.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+# ADD CPP /Yc"FoundationKit.h"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
 
@@ -151,142 +244,387 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\InterfaceClass.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Library.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Locales.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\MemoryStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Mutex.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Object.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ObjectWithEvents.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Parser.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Point.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\PropertyChangeEvent.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Rect.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Registry.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Semaphore.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\Stream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\StringUtils.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\System.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\SystemToolkit.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\TextInputStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\TextOutputStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Thread.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ThreadEvent.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\VCFMath.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\VCFProcess.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FilePeer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32LibraryPeer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ProcessPeer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Registry.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32SystemToolkit.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Thread.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\XMLParser.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"

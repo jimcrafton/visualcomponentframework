@@ -4,8 +4,6 @@
 #define _$$ROOT$$ABOUT_H__
 
 
-#include "VCF.h"
-#include "Dialog.h"
 
 
 /**

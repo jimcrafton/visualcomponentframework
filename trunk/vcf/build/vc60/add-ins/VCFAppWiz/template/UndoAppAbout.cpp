@@ -1,8 +1,8 @@
 //$$Root$$About.h
 #include "ApplicationKit.h"
+#include "ControlsKit.h"
 #include "$$Root$$About.h"
-#include "Label.h"
-#include "CommandButton.h"
+
 
 using namespace VCF;
 
