@@ -881,6 +881,10 @@ SOURCE=..\..\..\include\implementer\TextPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ToggledButton.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Toolbar.h
 # End Source File
 # Begin Source File
@@ -1490,6 +1494,10 @@ SOURCE=..\..\..\src\core\PushButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\RadioButtonControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Utils\Resource.cpp
 # End Source File
 # Begin Source File
@@ -1523,6 +1531,10 @@ SOURCE=..\..\..\src\core\TextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToggledButton.cpp
 # End Source File
 # Begin Source File
 
