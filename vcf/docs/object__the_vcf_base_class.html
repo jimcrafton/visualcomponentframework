@@ -43,7 +43,7 @@ Main body table
         </tr>
       </table>
       <p>The VCF::Object is the base class for the whole VCF. It is designed to
-      provide a few simple, common functions, some of which need to be overriden
+      provide a few simple, common functions, some of which need to be overridden
       to be useful. It provides for copying an instance of an object (though
       currently this remains largely un-implemented throughout the current
       framework), getting a string representation, getting the Class instance
@@ -96,7 +96,14 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>The&nbsp;</p>
+      <p>The&nbsp;VCF::Object has the following virtual methods that can or
+      should be overridden to provide useful functionality to your class:</p>
+      <ul>
+        <li>virtual unsigned long addRef( Object* owner=NULL)</li>
+        <li>virtual unsigned long release( Object* owner=NULL)</li>
+        <li>virtual bool isEqual( Object* object )</li>
+        <li>virtual&nbsp;</li>
+      </ul>
       <hr>
       <table border="0" width="100%">
         <tr>
