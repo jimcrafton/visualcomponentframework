@@ -9725,7 +9725,7 @@
 		5E9C1AC906B5F0D7006671C6 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = file;
+			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXLightweightControl.cpp;
 			path = ../../src/vcf/ApplicationKit/OSXLightweightControl.cpp;
 			refType = 2;
@@ -9734,7 +9734,7 @@
 		5E9C1ACA06B5F0D7006671C6 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = file;
+			lastKnownFileType = sourcecode.c.h;
 			name = OSXLightweightControl.h;
 			path = ../../src/vcf/ApplicationKit/OSXLightweightControl.h;
 			refType = 2;
