@@ -1,33 +1,37 @@
-//$$Root$$SplashScreen.h
+//SplashScreen.h
 
-#ifndef _$$ROOT$$SPLASHSCREEN_H__
-#define _$$ROOT$$SPLASHSCREEN_H__
+#ifndef _SPLASHSCREEN_H__
+#define _SPLASHSCREEN_H__
 
 
 #include "VCF.h"
 #include "Window.h"
+#include "Thread.h"
 
 
 using namespace VCF;
 
+
 /**
 *Class SplashScreen documentation
 */
-class $$Root$$SplashScreen : public VCF::Window { 
+class SplashScreen : public VCF::Window, public VCF::Runnable  { 
 public:
-	$$Root$$SplashScreen();
+	SplashScreen();
 
-	virtual ~$$Root$$SplashScreen();
+	virtual ~SplashScreen();
 
+	virtual bool run();
+
+	virtual void paint( GraphicsContext* context );
 protected:
 
 private:
+
+	VCF::ThreadLooper* m_thread;
 };
 
 
 #endif //_SPLASHSCREEN_H__
-
-
-
 
 

@@ -105,11 +105,15 @@ END
 NEWPROJ.INF             TEMPLATE DISCARDABLE    "template\\newproj.inf"
 CONFIRM.INF             TEMPLATE DISCARDABLE    "template\\confirm.inf"
 MAIN.CPP                TEMPLATE DISCARDABLE    "template\\main.cpp"
-TEST.cpp                TEMPLATE DISCARDABLE    "template\\test.cpp"
-ABOUT.CPP               TEMPLATE DISCARDABLE    "template\\About.cpp"
-ABOUT.H                 TEMPLATE DISCARDABLE    "template\\About.h"
 SPLASHSCREEN.CPP        TEMPLATE DISCARDABLE    "template\\SplashScreen.cpp"
 SPLASHSCREEN.H          TEMPLATE DISCARDABLE    "template\\SplashScreen.h"
+UNDOAPPAPPLICATION.H    TEMPLATE DISCARDABLE    "template\\UndoAppApplication.h"
+MAINWINDOW.H            TEMPLATE DISCARDABLE    "template\\MainWindow.h"
+UNDOAPP.CPP             TEMPLATE DISCARDABLE    "template\\UndoApp.cpp"
+UNDOAPPABOUT.CPP        TEMPLATE DISCARDABLE    "template\\UndoAppAbout.cpp"
+UNDOAPPABOUT.H          TEMPLATE DISCARDABLE    "template\\UndoAppAbout.h"
+UNDOAPPAPPLICATION.CPP  TEMPLATE DISCARDABLE    "template\\UndoAppApplication.cpp"
+MAINWINDOW.CPP          TEMPLATE DISCARDABLE    "template\\MainWindow.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

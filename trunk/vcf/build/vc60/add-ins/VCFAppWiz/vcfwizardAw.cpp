@@ -49,10 +49,13 @@ CAppWizStepDlg* CVcfwizardAppWiz::Next(CAppWizStepDlg* pDlg)
 		CString strRoot;
 		m_Dictionary.Lookup(_T("root"), strRoot);
 		
-		m_Dictionary[_T("SplashScreen")] = CString(strRoot+"SplashScreen");
+		m_Dictionary[_T("SplashScreen")] = CString("SplashScreen");
 
 		m_Dictionary[_T("About")] = CString(strRoot+"About");
 		
+		m_Dictionary[_T("MainWindow")] = CString("MainWindow");
+		m_Dictionary[_T("Application")] = CString(strRoot+"Application");
+
 		// Set value of $$Doc$$, $$DOC$$
 		CString strDoc = strRoot.Left(6);
 		m_Dictionary[_T("Doc")] = strDoc;
@@ -254,8 +257,13 @@ LPCTSTR CVcfwizardAppWiz::LoadTemplate( LPCTSTR lpszTemplateName, DWORD& rdwSize
 	if ( firstLoad ) {
 		firstLoad = false;
 		if ( m_pChooser->NeedsAdvancedFeatures() ) {
+			m_Dictionary["ADVANCED_FEATURES"] = "1";
 			if ( m_pChooser->NeedsSplashScreen() ) {
 				m_Dictionary["SPLASH_SCR"] = "1";
+			}
+
+			if ( m_pChooser->NeedsStdFileMenu() ) {
+				m_Dictionary["STD_FILE_MNU"] = "1";
 			}
 
 			if ( m_pChooser->NeedsHelpMenu() ) {
