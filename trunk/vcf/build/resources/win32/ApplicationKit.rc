@@ -4,3 +4,7 @@
 
 //ICON
 DefaultVCFIcon	ICON		"vcf.ico"
+stop			BITMAP		"stop.bmp"
+warning			BITMAP		"warning.bmp"
+inform			BITMAP		"inform.bmp"
+question			BITMAP		"question.bmp"
