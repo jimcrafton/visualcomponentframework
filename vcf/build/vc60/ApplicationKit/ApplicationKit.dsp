@@ -842,7 +842,15 @@ SOURCE=..\..\..\include\implementer\HeaderPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\exceptions\InvalidStateException.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Item.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ItemEditorEvent.h
 # End Source File
 # Begin Source File
 
