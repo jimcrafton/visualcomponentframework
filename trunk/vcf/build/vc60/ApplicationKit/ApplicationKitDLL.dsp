@@ -1299,22 +1299,6 @@ SOURCE=..\..\..\src\Events\TextEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Toolbar.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\ToolbarButton.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\ToolbarDock.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\TreeControl.cpp
 # End Source File
 # Begin Source File

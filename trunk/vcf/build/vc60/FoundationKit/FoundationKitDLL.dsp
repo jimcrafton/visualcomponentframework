@@ -288,7 +288,7 @@ SOURCE=..\..\..\include\core\Point.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ProcessException.h
+SOURCE=..\..\..\include\utils\ProcessException.h
 # End Source File
 # Begin Source File
 
@@ -377,6 +377,10 @@ SOURCE=..\..\..\include\implementer\ThreadPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\TypeCastException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\io\VariantDataStream.h
 # End Source File
 # Begin Source File
 
