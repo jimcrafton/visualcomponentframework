@@ -445,6 +445,10 @@ SOURCE=..\..\..\include\implementer\FillState.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\FlexTreeControl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\FocusEvent.h
 # End Source File
 # Begin Source File
@@ -885,6 +889,10 @@ SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Win32FolderBrowseDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32FontDialog.h
 # End Source File
 # Begin Source File
@@ -1165,6 +1173,10 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\FlexTreeControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Frame.cpp
 # End Source File
 # Begin Source File
@@ -1350,6 +1362,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32FolderBrowseDialog.cpp
 # End Source File
 # Begin Source File
 
