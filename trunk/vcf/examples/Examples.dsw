@@ -960,18 +960,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TextCrap"=..\..\..\..\junk\TextCrap\TextCrap.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "TextEdit"=.\TextEdit\TextEdit.dsp - Package Owner=<4>
 
 Package=<5>
