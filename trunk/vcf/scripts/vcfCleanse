@@ -1,0 +1,30 @@
+cd ../
+echo cleaning release and static build directories...
+cd build/vc60/
+cd ApplicationKit
+rm -r ReleaseDLL
+rm -r ReleaseS
+rm -r DebugS
+cd ..
+cd FoundationKit
+rm -r ReleaseDLL
+rm -r ReleaseS
+rm -r DebugS
+cd ..
+cd GraphicsKit
+rm -r Release
+rm -r ReleaseDLL
+rm -r ReleaseS
+rm -r DebugS
+cd ..
+cd NetworkKit
+rm -r Release
+rm -r ReleaseS
+rm -r DebugS
+cd ..
+cd RemoteObjectKit
+rm -r Release
+rm -r ReleaseS
+rm -r DebugS
+
+echo the VCF is now cleansed and ready to resume development
