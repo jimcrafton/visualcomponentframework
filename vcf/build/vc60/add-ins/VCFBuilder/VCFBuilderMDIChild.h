@@ -7,6 +7,19 @@
 // VCFBuilderMDIChild.h : header file
 //
 
+
+
+class VCFBuilderMDIChildWnd 
+{
+public:
+	static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
+	static TCHAR* WndClassName;
+
+	static void RegisterClass( HINSTANCE hInstance );
+};
+
+
 /////////////////////////////////////////////////////////////////////////////
 // VCFBuilderMDIChild frame
 

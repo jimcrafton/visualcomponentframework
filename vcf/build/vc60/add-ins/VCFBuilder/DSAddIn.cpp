@@ -9,6 +9,7 @@
 #include "VCFBuilderMDIChild.h"
 #include "VCFBuilderHostView.h"
 #include "DevStudioMDIClientWnd.h"
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,28 +64,44 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 
 	CDevStudioMainWnd::globalDevStudioMainWnd = new CDevStudioMainWnd(hDevStudioWnd);	
 
-	HWND hMDIWnd = NULL;
 	// find the MDI client area window
-    {
-        char cClassName[256];
+	HWND hMDIWnd = CDevStudioMainWnd::globalDevStudioMainWnd->GetMDIClientHWND();    
+	
 
-        hMDIWnd = CDevStudioMainWnd::globalDevStudioMainWnd->GetTopWindow()->m_hWnd;
-        ::GetClassName(hMDIWnd, (LPTSTR)cClassName, sizeof(cClassName));
-        while (strcmp(cClassName, "MDIClient") != 0)
-        {
-            hMDIWnd = ::GetNextWindow(hMDIWnd, GW_HWNDNEXT);
-            ASSERT(hMDIWnd);
-            GetClassName(hMDIWnd, (LPTSTR)cClassName, sizeof(cClassName));
-        }
-    }
-	if ( NULL != hMDIWnd ) {
-		CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = new CDevStudioMDIClientWnd(hMDIWnd, pApplication);
+	if ( (NULL != hMDIWnd) && (NULL != hDevStudioWnd) ) {
+		//CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = new CDevStudioMDIClientWnd(hMDIWnd, pApplication);
 		char tmp[256];
 		memset(tmp,0,256);
 		sprintf( tmp, "Found %x MDIClient hWnd\n", hMDIWnd );
+		
 		OutputDebugString( tmp );
+
+		VCFBuilderMDIChildWnd::RegisterClass( AfxGetApp()->m_hInstance );
+
+		RECT r = {0};
+		GetWindowRect( hMDIWnd, &r );
+		POINT* pt = (POINT*)&r;
+
+		ScreenToClient( hDevStudioWnd, pt );
+		pt ++;
+		ScreenToClient( hDevStudioWnd, pt );
+
+
+		HWND mdiChildWnd = CreateWindowEx( 0,//WS_EX_MDICHILD | WS_EX_WINDOWEDGE, 
+											VCFBuilderMDIChildWnd::WndClassName,
+											"VCFBuilderMDIChildWnd",
+											WS_BORDER | WS_CHILD,
+											r.left, r.top,
+											r.right-r.left, r.bottom-r.top,
+											hDevStudioWnd,
+											NULL, AfxGetApp()->m_hInstance,
+											0 );
+
+
+
 	}	
 
+	/*
 	CRuntimeClass* pRTDocClass = NULL;
 	bool addDocTemplate = false;
 	{
@@ -113,20 +130,8 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 			//}
 			
 		}
-		/*
-		if ( true == addDocTemplate ) {
-			CMultiDocTemplate* vcfBuilderDocTemplate =
-				 new CMultiDocTemplate( IDR_VCFBUILDERTYPE,
-									pRTDocClass,
-									RUNTIME_CLASS( VCFBuilderMDIChild ),
-									RUNTIME_CLASS( VCFBuilderHostView ) );
-			{
-				AFX_MANAGE_STATE( AfxGetAppModuleState() );
-				AfxGetApp()->AddDocTemplate( vcfBuilderDocTemplate );
-			}
-		}
-		*/
 	}
+	*/
 
 	//finished initializing.....
 	
@@ -148,8 +153,8 @@ STDMETHODIMP CDSAddIn::OnDisconnection(VARIANT_BOOL bLastTime)
 	delete CDevStudioMainWnd::globalDevStudioMainWnd;
 	CDevStudioMainWnd::globalDevStudioMainWnd = NULL;
 
-	delete CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr;
-	CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = NULL;
+	//delete CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr;
+	//CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = NULL;
 
 	m_pCommands->UnadviseFromEvents();
 	m_pCommands->Release();
@@ -169,13 +174,13 @@ bool CDSAddIn::initVCFBuilderAddInCommands( const bool& bFirstTime, IApplication
 	//  tooltip, command description, and other strings related to this
 	//  command are stored in the string table (IDS_CMD_STRING) and should
 	//  be localized.
-	LPCTSTR szCommand = _T("ActivateVCFBuilderEnvironmentCommand");
+	LPCTSTR szCommand = _T("ActivateDevStdioEnvironmentCommand");
 	VARIANT_BOOL bRet;
 	CString strCmdString;
-	strCmdString.LoadString(IDS_CMD_ACTIVATE_VCF_BUILDER_ENV);
+	strCmdString.LoadString(IDS_CMD_ACTIVATE_DEV_STDIO_ENV);
 	strCmdString = szCommand + strCmdString;
 	CComBSTR bszCmdString(strCmdString);
-	CComBSTR bszMethod(_T("ActivateVCFBuilderEnvironment"));
+	CComBSTR bszMethod(_T("ActivateDevStdioEnvironment"));
 	CComBSTR bszCmdName(szCommand);
 	m_cmdNames.push_back( bszCmdName );
 	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 0, m_dwCookie, &bRet));
@@ -188,6 +193,18 @@ bool CDSAddIn::initVCFBuilderAddInCommands( const bool& bFirstTime, IApplication
 	}
 
 
+	szCommand = _T("ActivateVCFBuilderEnvironmentCommand");
+	strCmdString.LoadString(IDS_CMD_ACTIVATE_VCF_BUILDER_ENV);
+	strCmdString = szCommand + strCmdString;
+	bszCmdString = strCmdString;
+	bszMethod = _T("ActivateVCFBuilderEnvironment");
+	bszCmdName = szCommand;
+	m_cmdNames.push_back( bszCmdName );
+	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 1, m_dwCookie, &bRet));
+	if ( VARIANT_FALSE == bRet ) {
+		result = false;
+	}
+
 	szCommand = _T("ActivateVCFBuilderEnvStandaloneCommand");
 	strCmdString.LoadString(IDS_CMD_ACTIVATE_VCF_BUILDER_ENV_STANDALONE);
 	strCmdString = szCommand + strCmdString;
@@ -195,7 +212,7 @@ bool CDSAddIn::initVCFBuilderAddInCommands( const bool& bFirstTime, IApplication
 	bszMethod = _T("ActivateVCFBuilderEnvStandalone");
 	bszCmdName = szCommand;
 	m_cmdNames.push_back( bszCmdName );
-	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 1, m_dwCookie, &bRet));
+	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 2, m_dwCookie, &bRet));
 	if ( VARIANT_FALSE == bRet ) {
 		result = false;
 	}
@@ -207,7 +224,7 @@ bool CDSAddIn::initVCFBuilderAddInCommands( const bool& bFirstTime, IApplication
 	bszMethod = _T("NewProject");
 	bszCmdName = szCommand;
 	m_cmdNames.push_back( bszCmdName );
-	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 2, m_dwCookie, &bRet));
+	VERIFY_OK(pApplication->AddCommand(bszCmdString, bszMethod, 3, m_dwCookie, &bRet));
 	if ( VARIANT_FALSE == bRet ) {
 		result = false;
 	}

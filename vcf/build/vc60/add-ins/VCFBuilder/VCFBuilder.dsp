@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 VCFBuilderUI.lib FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib /nologo /subsystem:windows /dll /machine:I386 /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
 
 !ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 VCFBuilderUI.lib FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin\VCFBuilder.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin\VCFBuilder.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
 
 !ENDIF 
 
@@ -131,10 +131,6 @@ SOURCE=.\VCFBuilder.odl
 # Begin Source File
 
 SOURCE=.\VCFBuilder.rc
-# End Source File
-# Begin Source File
-
-SOURCE=.\VCFBuilderHostView.cpp
 # End Source File
 # Begin Source File
 

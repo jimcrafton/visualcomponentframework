@@ -33,6 +33,8 @@ public:
 public:
 	virtual ~CDevStudioMainWnd();
 
+	HWND GetMDIClientHWND();
+
 	static CDevStudioMainWnd* globalDevStudioMainWnd;
 	// Generated message map functions
 protected:

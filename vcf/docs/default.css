@@ -1,102 +1,17 @@
-
- /* $MVD$:color("18","b5edfb","Code Orange","1") */
- /* $MVD$:fontset("Arial","Arial") */
- /* $MVD$:fontset("Verdana","Verdana") */
- /* $MVD$:fontset("Courier New","Courier New") */
- BODY { font-family : "Arial";
-        background-color : white;}
- .mvd-BODY { font-family : "Arial";
-             background-color : white;}
- H1 { font-family : "Verdana";
-      font-size : 18.0pt;}
- .mvd-H1 { font-family : "Verdana";
-           font-size : 18.0pt;}
- H2 { font-family : "Verdana";
-      font-weight : bold;
-      font-size : 18.0pt;}
- .mvd-H2 { font-family : "Verdana";
-           font-weight : bold;
-           font-size : 18.0pt;}
- H3 { font-family : "Verdana";
-      font-weight : bold;
-      font-size : 14.0pt;}
- .mvd-H3 { font-family : "Verdana";
-           font-weight : bold;
-           font-size : 14.0pt;}
- H4 { font-family : "Verdana";
-      font-weight : bold;
-      font-size : 12.0pt;}
- .mvd-H4 { font-family : "Verdana";
-           font-weight : bold;
-           font-size : 12.0pt;}
- H5 { font-family : "Verdana";
-      font-size : 12.0pt;}
- .mvd-H5 { font-family : "Verdana";
-           font-size : 12.0pt;}
- H6 { font-family : "Verdana";
-      font-size : 12.0pt;}
- .mvd-H6 { font-family : "Verdana";
-           font-size : 12.0pt;}
- P { font-family : "Verdana";
-     font-size : 10.0pt;}
- .mvd-P { font-family : "Verdana";
-          font-size : 10.0pt;}
- CITE.expandspot { font-style : normal;
-                   color : green;
-                   cursor: hand;}
- .mvd-CITE-expandspot { font-style : normal;
-                        color : green;
-                        cursor: hand;}
- DFN.collapsed { font-style : italic;
-                 font-weight : normal;
-                 display :      'none';
-                 color : red;}
- .mvd-DFN-collapsed { font-style : italic;
-                      font-weight : normal;
-                      display :      'none';
-                      color : red;}
- DFN.expanded { font-style : italic;
-                font-weight : normal;
-                color : red;}
- .mvd-DFN-expanded { font-style : italic;
-                     font-weight : normal;
-                     color : red;}
- EM.dropspot { color : green;
-               cursor: hand;}
- .mvd-EM-dropspot { color : green;
-                    cursor: hand;}
- CITE.glossterm { font-style : normal;
-                  color : maroon;
-                  cursor: hand;}
- .mvd-CITE-glossterm { font-style : normal;
-                       color : maroon;
-                       cursor: hand;}
- DFN.glosscollapsed { font-style : italic;
-                      font-weight : normal;
-                      display :      'none';
-                      color : blue;}
- .mvd-DFN-glosscollapsed { font-style : italic;
-                           font-weight : normal;
-                           display :      'none';
-                           color : blue;}
- DFN.glossexpanded { font-style : italic;
-                     font-weight : normal;
-                     color : blue;}
- .mvd-DFN-glossexpanded { font-style : italic;
-                          font-weight : normal;
-                          color : blue;}
- PRE { font-family : "Courier New";
-       font-size : 9.0pt;
-       background-color : #FBEDB5;}
- .mvd-PRE { font-family : "Courier New";
-            font-size : 9.0pt;
-            background-color : #FBEDB5;}
- CODE { font-family : "Courier New";
-        font-size : 9.0pt;}
- .mvd-CODE { font-family : "Courier New";
-             font-size : 9.0pt;}
- P.NoBackPreformatted { font-family : "Courier New";
-                        font-size : 9.0pt;}
- .mvd-P-NoBackPreformatted { font-family : "Courier New";
-                             font-size : 9.0pt;}
- 
+p            { font-family: Trebuchet MS; padding: 10 }
+body         { background-color: #FFFFFF; background-image: url('stripe3.jpg'); 
+               background-repeat: repeat-x; background-attachment: scroll; 
+               background-position: left top }
+h1           { font-family: Trebuchet MS; color: #808080 }
+h2           { font-family: Trebuchet MS }
+h3           { font-family: Trebuchet MS; color: #808080 }
+h4           { font-family: Trebuchet MS; color: #808080; font-style: italic; font-weight: 
+               bold }
+h5           { font-family: Trebuchet MS }
+h6           { font-family: Trebuchet MS }
+table        { font-family: Trebuchet MS }
+a            { font-family: Trebuchet MS; color: #0000FF }
+pre          { font-family: Courier New; font-weight: bold; background-color: #CEEFFF; 
+               border: 1 solid #0088B5 }
+              
+code 			{ font-family: Courier New; font-weight: bold; color: #808080 }            

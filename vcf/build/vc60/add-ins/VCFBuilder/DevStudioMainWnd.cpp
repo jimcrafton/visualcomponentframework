@@ -60,3 +60,20 @@ void CDevStudioMainWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized
 		TRACE( "CDevStudioMainWnd::OnActivate state = WA_ACTIVE\n" );
 	}
 }
+
+HWND CDevStudioMainWnd::GetMDIClientHWND()
+{
+	HWND result = NULL;
+	char cClassName[256];
+	
+	result = GetTopWindow()->m_hWnd;
+	::GetClassName(result, (LPTSTR)cClassName, sizeof(cClassName));
+	while (strcmp(cClassName, "MDIClient") != 0)
+	{
+		result = ::GetNextWindow(result, GW_HWNDNEXT);
+		ASSERT(result);
+		GetClassName(result, (LPTSTR)cClassName, sizeof(cClassName));
+	}
+	
+	return result;
+}

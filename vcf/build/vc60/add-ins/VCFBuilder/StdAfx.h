@@ -10,6 +10,7 @@
 
 
 //VCF Stuff
+/*
 #include "ApplicationKit.h"
 #include "Rect.h"
 #include "VCFBuilderUI.h"
@@ -18,6 +19,7 @@
 
 using namespace VCF;
 using namespace VCFBuilder;
+*/
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxdisp.h>

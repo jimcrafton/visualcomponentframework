@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Fri Jun 29 20:27:52 2001
+/* at Sat Aug 25 16:51:09 2001
  */
 /* Compiler settings for D:\code\vcf\build\vc60\add-ins\VCFBuilder\VCFBuilder.odl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
@@ -98,6 +98,8 @@ DEFINE_GUID(IID_ICommands,0xAAD052B9,0x5A96,0x4449,0xAA,0xE8,0x68,0xC8,0x5A,0x42
     ICommands : public IDispatch
     {
     public:
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE ActivateDevStdioEnvironment( void) = 0;
+        
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE ActivateVCFBuilderEnvironment( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE OpenProject( void) = 0;
@@ -160,6 +162,9 @@ DEFINE_GUID(IID_ICommands,0xAAD052B9,0x5A96,0x4449,0xAA,0xE8,0x68,0xC8,0x5A,0x42
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
             /* [out] */ UINT __RPC_FAR *puArgErr);
         
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ActivateDevStdioEnvironment )( 
+            ICommands __RPC_FAR * This);
+        
         /* [id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ActivateVCFBuilderEnvironment )( 
             ICommands __RPC_FAR * This);
         
@@ -217,6 +222,9 @@ DEFINE_GUID(IID_ICommands,0xAAD052B9,0x5A96,0x4449,0xAA,0xE8,0x68,0xC8,0x5A,0x42
     (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 
+#define ICommands_ActivateDevStdioEnvironment(This)	\
+    (This)->lpVtbl -> ActivateDevStdioEnvironment(This)
+
 #define ICommands_ActivateVCFBuilderEnvironment(This)	\
     (This)->lpVtbl -> ActivateVCFBuilderEnvironment(This)
 
@@ -243,6 +251,17 @@ DEFINE_GUID(IID_ICommands,0xAAD052B9,0x5A96,0x4449,0xAA,0xE8,0x68,0xC8,0x5A,0x42
 
 #endif 	/* C style interface */
 
+
+
+/* [id] */ HRESULT STDMETHODCALLTYPE ICommands_ActivateDevStdioEnvironment_Proxy( 
+    ICommands __RPC_FAR * This);
+
+
+void __RPC_STUB ICommands_ActivateDevStdioEnvironment_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
 
 
 /* [id] */ HRESULT STDMETHODCALLTYPE ICommands_ActivateVCFBuilderEnvironment_Proxy( 

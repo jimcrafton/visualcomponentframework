@@ -91,6 +91,7 @@ protected:
 	XDebuggerEventsObj* m_pDebuggerEventsObj;
 
 public:
+	STDMETHOD(ActivateDevStdioEnvironment)();
 	STDMETHOD(ActivateVCFBuilderEnvStandalone)();
 	STDMETHOD(NewForm)();
 	STDMETHOD(SaveProjectAs)();
