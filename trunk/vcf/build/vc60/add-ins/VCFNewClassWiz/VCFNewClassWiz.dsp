@@ -54,6 +54,17 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386
+# Begin Custom Build
+OutDir=.\Release
+TargetPath=.\Release\VCFNewClassWiz.dll
+InputPath=.\Release\VCFNewClassWiz.dll
+SOURCE="$(InputPath)"
+
+"$(OutDir)" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	echo Registering DLL 
+	regsvr32 $(TargetPath) 
+	
+# End Custom Build
 
 !ELSEIF  "$(CFG)" == "VCFNewClassWiz - Win32 Debug"
 

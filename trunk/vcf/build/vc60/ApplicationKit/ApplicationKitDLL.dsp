@@ -489,6 +489,10 @@ SOURCE=..\..\..\include\events\HelpListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\HTMLBrowserPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ImageControl.h
 # End Source File
 # Begin Source File
@@ -990,10 +994,6 @@ SOURCE=..\..\..\include\implementerKit\Win32FontDialog.h
 # Begin Source File
 
 SOURCE=..\..\..\include\ImplementerKit\Win32FontManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ListBox.h
 # End Source File
 # Begin Source File
 
@@ -1563,10 +1563,6 @@ SOURCE=..\..\..\src\implementerkit\Win32FolderBrowseDialog.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontDialog.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32ListBox.cpp
 # End Source File
 # Begin Source File
 

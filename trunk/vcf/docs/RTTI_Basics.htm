@@ -2,72 +2,97 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
-  <!-- $MVD$:fontset("Arial","Arial") -->
-  <!-- $MVD$:fontset("Verdana","Verdana") -->
-  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <!-- $MVD$:color("18","ffefce","Custom #1","0") -->
+  <!-- $MVD$:color("19","b58800","Custom #2","0") -->
+  <!-- $MVD$:color("20","333333","Custom #3","0") -->
+  <!-- $MVD$:color("21","ee4444","Custom #4","0") -->
+  <!-- $MVD$:color("22","ffcc99","Custom #5","0") -->
+  <!-- $MVD$:color("23","ff6600","Custom #6","0") -->
+  <!-- $MVD$:color("24","eeeeee","Custom #7","0") -->
+  <!-- $MVD$:color("25","204060","Custom #8","0") -->
+  <!-- $MVD$:color("26","80e0","Custom #9","0") -->
+  <!-- $MVD$:color("27","206080","Custom #10","0") -->
+  <!-- $MVD$:color("28","802000","Custom #11","0") -->
+  <!-- $MVD$:color("29","b5edfb","Code Orange","1") -->
+  <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
   <TITLE>RTTI Basics</TITLE>
   <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
-  <BODY >
-  <H1>
-   <IMG SRC="vcflogo.gif" width="230" height="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css">
+ <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <P>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></P>
   <H1>
    RTTI Basics</H1>
-  <p>RTTI, or Run Time Type Information, is used in the VCF to dynamically identify
-  objects during the execution of a program. Most large frameworks, or
-  object-oriented languages have some form of RTTI, some examples are Smalltalk,
-  ObjectiveC, CORBA, COM, ObjectPascal, and Java (in Java RTTI is frequently referred to as reflection,
-  and is defined in the java.lang.reflect package). RTTI can be used to identify
-  the object's class name, the methods of a class, the properties of a class,
-  and the events that the object fires. In addition, RTTI allows the dynamic
-  creation of objects at runtime without having direct (compile-time) knowledge
-  of the objects class definition. In the VCF this dynamic creation can take
-  place by either specifying the class name or UUID, or creating an instance
-  that supports a particular interface from the interface name or UUID. </p>
-  <p>Obviously C++ itself does not support many of these features. The RTTI that
-  is supported in the language standard allows for dynamic class identification,
-  and dynamically casting an object to a specific class such that if the object
-  does not derive from the class, a null pointer is returned. This allows us to
-  &quot;query&quot; for interfaces that a particular object instance may&nbsp;
-  support. To support the more advanced features mentioned above requires additional work on the part
-  of the programmer by using special functions and classes provided by the VCF
-  to accomplish this. Currently there are two approaches to add this
-  support to you classes, the first, which will be documented here, uses macros
-  that you add to your class definition. The second, newer, method uses the VCF RTTI
-  Compiler, which can parse the C++ headers of your choice and correctly
-  generate C++ code for you that will properly register all of your classes RTTI
-  data for you. No macros are necessary when using this method, which perhaps
-  results in slightly cleaner code and is potentially less error prone. </p>
-  <p>All data for RTTI is registered into a central repository, called the Class
-  Registry, and implemented in the class <code>VCF::ClassRegistry</code>. The <code>VCF::ClassRegistry</code>
-  has a single global instance that runs while your program is running. The
-  registration is performed through templated functions which create and add the
-  data to the <code>VCF::ClassRegistry</code>. </p>
-  <p>Before discussing the macros that are used to register the various RTTI
-  data, lets discuss further what each of the data types are. The initial RTTI
-  data type is described by the class <code>VCF::Class</code>, which contains
-  everything necessary to describe a&nbsp; object's class information at run
-  time. The <code> VCF::Class</code> holds the class name, the super class name, and the UUID
-  that identifies the class. In addition it contains methods which allow for
-  creating an instance of a class given only the class name or UUID. The <code>VCF::Class</code>
-  also contains methods to retrieve any associated methods, properties, events,
-  or implemented interfaces that further describe the class. A method is
-  described by the <code>VCF::Method</code> class which identifies the name of
-  the method, the number of arguments the method has, whether or not the method
-  has a return value, and the types of each of the arguments the method accepts
-  (if any). In addition, the <code>VCF::Method</code> may be invoked dynamically
-  via the <code>VCF::Method::invoke()</code> method. A property is described by
-  the <code>VCF::Property</code> class and contains methods to get and set the
-  property, as well as determine what type the property is (i.e. an integer,
-  double, Object, etc). Events are represented by the <code>VCF::EventProperty</code>
-  class which identifies the Event class, the method name that triggers the
-  event, and the event handler class name. Interfaces are defined as an abstract
-  class consisting of a virtual destructor, and zero or more public virtual pure
-  methods. An interface is represented by the <code>VCF::IntefaceClass</code>
-  class, and is quite similar to the VCF::Class class. It contains the name of
-  the interface, the UUID of the interface, and any of the methods of the
-  interface. </p>
-  <p>&nbsp; </p>
+  <P>
+   RTTI, or Run Time Type Information, is used in the VCF to dynamically 
+   identify objects during the execution of a program. Most large 
+   frameworks, or object-oriented languages have some form of RTTI, some 
+   examples are Smalltalk, ObjectiveC, CORBA, COM, ObjectPascal, and 
+   Java (in Java RTTI is frequently referred to as reflection, and is 
+   defined in the java.lang.reflect package). RTTI can be used to 
+   identify the object's class name, the methods of a class, the 
+   properties of a class, and the events that the object fires. In 
+   addition, RTTI allows the dynamic creation of objects at runtime 
+   without having direct (compile-time) knowledge of the objects class 
+   definition. In the VCF this dynamic creation can take place by either 
+   specifying the class name or UUID, or creating an instance that 
+   supports a particular interface from the interface name or UUID.</P>
+  <P>
+   Obviously C++ itself does not support many of these features. The 
+   RTTI that is supported in the language standard allows for dynamic 
+   class identification, and dynamically casting an object to a specific 
+   class such that if the object does not derive from the class, a null 
+   pointer is returned. This allows us to &quot;query&quot; for 
+   interfaces that a particular object instance may&nbsp; support. To 
+   support the more advanced features mentioned above requires 
+   additional work on the part of the programmer by using special 
+   functions and classes provided by the VCF to accomplish this. 
+   Currently there are two approaches to add this support to you 
+   classes, the first, which will be documented here, uses macros that 
+   you add to your class definition. The second, newer, method uses the 
+   VCF RTTI Compiler, which can parse the C++ headers of your choice and 
+   correctly generate C++ code for you that will properly register all 
+   of your classes RTTI data for you. No macros are necessary when using 
+   this method, which perhaps results in slightly cleaner code and is 
+   potentially less error prone.</P>
+  <P>
+   All data for RTTI is registered into a central repository, called the 
+   Class Registry, and implemented in the class <CODE>VCF::ClassRegistry</CODE>.
+    The <CODE>VCF::ClassRegistry</CODE> has a single global instance 
+   that runs while your program is running. The registration is 
+   performed through templated functions which create and add the data 
+   to the <CODE>VCF::ClassRegistry</CODE>.</P>
+  <P>
+   Before discussing the macros that are used to register the various 
+   RTTI data, lets discuss further what each of the data types are. The 
+   initial RTTI data type is described by the class <CODE>VCF::Class</CODE>,
+    which contains everything necessary to describe a&nbsp; object's 
+   class information at run time. The <CODE>VCF::Class</CODE> holds the 
+   class name, the super class name, and the UUID that identifies the 
+   class. In addition it contains methods which allow for creating an 
+   instance of a class given only the class name or UUID. The <CODE>VCF::Class</CODE> 
+   also contains methods to retrieve any associated methods, properties, 
+   events, or implemented interfaces that further describe the class. A 
+   method is described by the <CODE>VCF::Method</CODE> class which 
+   identifies the name of the method, the number of arguments the method 
+   has, whether or not the method has a return value, and the types of 
+   each of the arguments the method accepts (if any). In addition, the <CODE>VCF::Method</CODE> 
+   may be invoked dynamically via the <CODE>VCF::Method::invoke()</CODE> 
+   method. A property is described by the <CODE>VCF::Property</CODE> 
+   class and contains methods to get and set the property, as well as 
+   determine what type the property is (i.e. an integer, double, Object, 
+   etc). Events are represented by the <CODE>VCF::EventProperty</CODE> 
+   class which identifies the Event class, the method name that triggers 
+   the event, and the event handler class name. Interfaces are defined 
+   as an abstract class consisting of a virtual destructor, and zero or 
+   more public virtual pure methods. An interface is represented by the <CODE>VCF::IntefaceClass</CODE> 
+   class, and is quite similar to the VCF::Class class. It contains the 
+   name of the interface, the UUID of the interface, and any of the 
+   methods of the interface.</P>
+  <P>
+   &nbsp;
  </BODY>
 </HTML>
