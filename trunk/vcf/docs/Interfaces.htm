@@ -23,8 +23,43 @@
    implemented by a deriving class. Further more the interface class 
    must either derive from another interface class, the common VCF 
    interface class VCF::Interface, or nothing at all. This helps to 
-   prevent multiple inheritance problems (the &quot;deadly diamond&quot; effect).<A NAME="InterfaceDefined"></A> </P>
+   prevent multiple inheritance problems (the &quot;deadly diamond&quot; effect).<A NAME="InterfaceDefined"></A></P>
   <P>
-   Other than this
+   In addition, an interface does not define a constructor (the default 
+   C++ constructor is OK), and <SPAN STYLE="font-style : italic;font-weight : bold;">MUST</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;"> 
+   declare a destructor as </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;">virtual</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;">,
+    a requirement of the standard C++ RTTI dymanic typing system. The 
+   body of the constructor should also be declared in the header of the 
+   interface ( usually {} implementation is all that is neccessary)</SPAN></P>
+  <P>
+   <SPAN STYLE="font-style : normal;font-weight : normal;">As a naming 
+   standard, and to avoid method name collision, methods with common 
+   names should include the interface name as well, to more clearly 
+   indicate where the method belongs. For example:</SPAN></P><PRE><FONT
+    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//not the bes definition - notice the doIt() method</SPAN></FONT><BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN> SimpleInterface  {<BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimpleInterface(){}; </SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> </SPAN>void<SPAN STYLE="font-weight : normal;"> doIt() = </SPAN>0<SPAN STYLE="font-weight : normal;">;    </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this isn't a very good idea  </FONT></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">}</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"><FONT COLOR="BLUE"><SPAN STYLE="font-style : italic;">// this is the prefered way</SPAN></FONT></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;">class<SPAN STYLE="font-weight : normal;"> SimpleInterface {</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> </SPAN>void<SPAN STYLE="font-weight : normal;"> SimpleInterfaceDoIt() = </SPAN>0<SPAN STYLE="font-weight : normal;">; </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//better - prevents name collision in</FONT></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">                                             </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//implementing classes</FONT></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">};</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this is also OK - note the use of inheritance from the VCF::Interface class</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;">class<SPAN STYLE="font-weight : normal;"> SimpleInterface : </SPAN>public<SPAN STYLE="font-weight : normal;"> VCF::Interface{</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>...<SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//rest of interface declaration</FONT></SPAN><SPAN STYLE="font-weight : normal;"> </SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">};</SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"></SPAN></PRE><P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
  </BODY>
 </HTML>

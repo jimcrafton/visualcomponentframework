@@ -220,10 +220,6 @@ SOURCE=..\..\..\include\graphics\ImageBits.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ImageList.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\ImageLoader.h
 # End Source File
 # Begin Source File
@@ -396,14 +392,6 @@ SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ImageEvent.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\ImageList.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\ImageListEvent.cpp
 # End Source File
 # Begin Source File
 
