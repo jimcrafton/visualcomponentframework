@@ -86,17 +86,16 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 		pt ++;
 		ScreenToClient( hDevStudioWnd, pt );
 
+		MDICREATESTRUCT mcs = {0};
+		mcs.szTitle = "VCF Builder IDE";
+		mcs.szClass = VCFBuilderMDIChildWnd::WndClassName;
+		mcs.hOwner	= AfxGetApp()->m_hInstance;
+		mcs.x = mcs.cx = CW_USEDEFAULT;
+		mcs.y = mcs.cy = CW_USEDEFAULT;
+		mcs.style = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_SYSMENU | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
 
-		HWND mdiChildWnd = CreateWindowEx( 0,//WS_EX_MDICHILD | WS_EX_WINDOWEDGE, 
-											VCFBuilderMDIChildWnd::WndClassName,
-											"VCFBuilderMDIChildWnd",
-											WS_BORDER | WS_CHILD,
-											r.left, r.top,
-											r.right-r.left, r.bottom-r.top,
-											hDevStudioWnd,
-											NULL, AfxGetApp()->m_hInstance,
-											0 );
-
+		HWND hwnd = (HWND)SendMessage (hMDIWnd, WM_MDICREATE, 0,(LONG)(LPMDICREATESTRUCT)&mcs);
+		
 
 
 	}	

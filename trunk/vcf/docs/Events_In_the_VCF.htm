@@ -42,7 +42,7 @@
   and the observer, or object that wishes to receive notification when the event
   occurs. Each of these objects has to have certain responsibilities as
   described in the table below.</P>
-  <table border="0" width="100%" cellspacing="0" cellpadding="0">
+  <table border="1" width="100%" cellspacing="0" cellpadding="0">
     <tr>
       <td width="24%" bgcolor="#808080">Object</td>
       <td width="76%" bgcolor="#808080">Responsibilities&nbsp;</td>
@@ -50,23 +50,52 @@
     <tr>
       <td width="24%">Source object</td>
       <td width="76%">
-        <ul>
-          <li>The source must have methods for registering, and un-registering
-            the observer object(s)</li>
-        </ul>
+        The source must have methods for registering, and un-registering
+            the observer object(s)
       </td>
     </tr>
     <tr>
       <td width="24%">Event object</td>
       <td width="76%">The Event object must provide data to be used by the
         observer objects. For example, mouse event object would contain data
-        about the position of the mouse, the buttons that were held down</td>
+        about the position of the mouse, the buttons that were held down, etc.
+        In addition, the event must be able to expose who actually fired the
+        event, in other words provide a pointer back to the source of the event.</td>
     </tr>
     <tr>
       <td width="24%">Observer object</td>
-      <td width="76%"></td>
+      <td width="76%">The observer must define one or more callback methods that
+        will be invoked by the source object during the firing of specific
+        event.</td>
     </tr>
   </table>
+  <P>A source object that fires events may be any valid VCF object, in other
+  words any class that derives, directly or indirectly, from <code>VCF::Object</code>.
+  This source object usually declares a method for registration and
+  un-registration using the following naming pattern:</P><PRE>void add [Name of the event] Handler(
+
+void remove [Name of the event] Handler(</PRE>
+  <P>
+   A concrete example of this would be the following:</P><PRE>void Control::addMouseClickedHandler(
+
+void Control::removeMouseClickedHandler(</PRE><P>For the events themselves, all
+  event objects must derive, directly, or indirectly, from the common <code>VCF::Event</code>
+  class, which provides basic functionality, such as when the event occurred
+  (the <code>getTime()</code> method), and the source of the event (the <code>getSource()</code>
+  method).</P><P>The observer object may be any valid VCF object, in other words
+  any class that derives, directly or indirectly, from <code>VCF::Object</code>.
+  The callback methods are always member methods and may be <code><b>public</b></code>,
+  <code><b>protected</b></code>, or <code><b>private</b></code> in scope. They
+  are typically defined as follows:</P><PRE>void [Name of the callback method]([type of the event class]* event )</PRE>
+  <P>
+   So a real world example might look like this:</P><PRE>void onMyMouseClick( VCF::MouseEvent* event )</PRE><P>So
+  far we have discussed the three main players taht are involved when events are
+  fired, but we have not yet actually defined <i>how</i> the observer of the
+  event connects to the source object that is firing the event. To facilitate
+  this we have something called an event handler, which acts as the glue between
+  the source of the events being fired, and the observer of the events. In Java
+  this would have been referred to as some sort of Listener interface, in .NET
+  this is known as <i><b>delegate</b></i> object.&nbsp;</P>
   <P>
    To accomplish this in the VCF we have event handler that are implemented with
    the VCF::EventHandler class. The VCF::EventHandler is an abstract class that encapsulates a member method 
