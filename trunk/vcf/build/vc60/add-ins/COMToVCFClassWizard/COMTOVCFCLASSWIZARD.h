@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon Mar 25 21:54:32 2002
+/* at Sat Jun 22 15:42:54 2002
  */
-/* Compiler settings for E:\code\vcfdev\dev\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
+/* Compiler settings for E:\code\vcfdev\stable\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */
