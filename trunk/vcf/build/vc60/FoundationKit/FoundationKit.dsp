@@ -134,6 +134,7 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
+# ADD CPP /Yc"FoundationKit.h"
 # End Source File
 # Begin Source File
 
