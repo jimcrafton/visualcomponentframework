@@ -2,6 +2,10 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.3  2003/05/17 20:58:39  ddiego
+#removed some old files, mostly script junk that are no longer needed
+#----------------------------------------------------------------------
+#
 #Revision 1.2  2003/05/17 20:36:51  ddiego
 #this is the checkin for the 0.6.1 release - represents the merge over from
 #the devmain-0-6-0 branch plus a few minor bug fixes
@@ -35,7 +39,7 @@ XMAKE_VERSION = 1.0.5
 
 HTMLHELP_COMPILER = /bin/cat
 
-XSL_HTMLHELP_IMPORT = $(HOME)/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl
+XSL_HTMLHELP_IMPORT = d:/docbook/xsl/htmlhelp/htmlhelp.xsl
 
 RAW_CHM_FILENAME = vcf_docs.chm
 RAW_CHI_FILENAME = vcf_docs.chi

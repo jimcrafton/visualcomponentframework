@@ -1,7 +1,0 @@
-'------------------------------------------------------------------------------
-'FILE DESCRIPTION: makes the VCF code base in debug and release
-'------------------------------------------------------------------------------
-Sub MakeVCF()
-	Application
-	Application.Quit
-End Sub
