@@ -65,3 +65,5 @@ STDMETHODIMP CCOMToVCFClassWizard::OnDisconnection(VARIANT_BOOL bLastTime)
 
 	return S_OK;
 }
+
+

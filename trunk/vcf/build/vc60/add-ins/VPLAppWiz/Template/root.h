@@ -47,3 +47,5 @@ extern "C" $$ROOT_$$_API void initPackage();
 
 
 #endif //$$FILE_NAME_SYMBOL$$
+
+

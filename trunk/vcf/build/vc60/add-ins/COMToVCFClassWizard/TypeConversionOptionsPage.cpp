@@ -107,3 +107,5 @@ void TypeConversionOptionsPage::OnConstVariables()
 	this->m_constRefVariables = !m_constRefVariables;
 	UpdateData();
 }
+
+

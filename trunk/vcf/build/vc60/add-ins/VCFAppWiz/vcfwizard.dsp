@@ -23,8 +23,6 @@ CFG=vcfwizard - Win32 Pseudo-Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "vcfwizard"
-# PROP Scc_LocalPath "."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -347,3 +345,5 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
+
+

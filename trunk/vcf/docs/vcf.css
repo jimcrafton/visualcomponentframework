@@ -1,0 +1,261 @@
+/*************************************************
+*
+* Cascading Style Sheet for VCF
+* http://vcf.sourceforge.net/
+* By Tweakin
+*
+*************************************************/
+
+
+a, body, div, table, td 
+{ 
+    font-family			: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+div { 
+	margin-top				: 0pt; 
+	margin-bottom			: 0pt; 
+	margin-left				: 0pt; 
+	margin-right			: 0pt;
+	padding				: 0px 0px 0px 0px	}
+
+code, input, select, textarea 
+{ 
+    font-family			: "Courier New", Courier, monospace; 
+}
+
+a 
+{
+    background			: none;
+    color				: #000000;
+    text-decoration		: underline;
+}
+
+a:hover 
+{
+    background			: none;
+    color				: #333333;
+    text-decoration		: none;
+}
+
+a.menu 
+{
+    background			: none;
+    color				: #CCCCCC;
+    text-decoration		: none;
+    font-size			: 12px;
+}
+
+a.menu:hover 
+{
+    background			: none;
+    color				: #FFFFFF;
+    text-decoration		: none;
+    font-size			: 12px;
+}
+
+body 
+{
+    background-color	: #FFFFFF;
+    color				: #000000;
+    margin				: 0px 0px 0px 0px;
+	padding				: 0px 5px 5px 5px;
+	border				: 1px solid #000000;
+}
+
+hr
+{
+	width				: 100%;
+	height				: 2px;
+	background			: none;
+	color				: #000000;
+}
+
+.Xlargeblack
+{
+	background			: none;
+	color				: #000000;
+	font-size			: 16px;
+	font-weight			: bold;
+}
+
+.largeBlack
+{
+	background			: none;
+	color				: #000000;
+	font-size			: 14px;
+	font-weight			: bold;
+}
+
+.contentCellLeft
+{
+	background-color	: #FFFFFF;
+	color				: #000000;
+	border-right		: 1px solid #000000;
+    padding				: 10px 10px 10px 10px;  
+}
+
+.contentCell
+{
+	background-color	: #FFFFFF;
+	color				: #000000;
+    padding				: 10px 10px 10px 10px;    
+}
+
+.footerCell
+{
+	background-color	: #006699;
+	color				: #CCCCCC;
+	border-top			: 1px solid #000000;
+	border-bottom		: 1px solid #000000;
+	font-weight			: bold;
+	font-size			: 12px;
+}
+
+.footerCellAdv
+{
+	background-color	: #FFFFFF;
+	color				: #000000;
+}
+
+.headerCell
+{
+	background-image	: url("gfx/greybg.jpg");
+	background-repeat	: repeat;
+	color				: #006699;
+	font-weight			: bold;
+	font-size			: 12px;
+}
+
+.headerCellBanner
+{
+	background-image	: url("gfx/greybg.jpg");
+	background-repeat	: repeat;
+}
+
+.menuBar
+{
+	background-image	: url("gfx/left-mangle.jpg");
+	background-repeat	: no-repeat;
+	background-color	: #000000;
+	color				: #CCCCCC;
+	font-size			: 12px;
+}
+
+.menuBarLow
+{
+	background-color	: #006699;
+	color				: #FFFFFF;
+	border-bottom		: 1px solid #000000;
+	border-top			: 1px solid #000000;
+}
+
+/*
+Docbook specific tags
+*/
+
+thead {
+	background-color		: #CCCCCC;	
+	border-bottom		: 1px solid #000000;
+	border-top			: 1px solid #000000	
+}
+
+.note
+{
+	font-size			: 10px
+}
+
+.symbol 
+{
+	font-family			: "Courier New", Courier, monospace; 
+	background-color		: #CCCCCC
+}
+
+.programlisting
+{
+	font-family			: "Courier New", Courier, monospace; 
+	background-color		: #CCCCCC;
+	border-bottom		: 1px solid #000000;
+	border-top			: 1px solid #000000
+}
+
+
+
+/**
+these are all the extra tags used by doxygen
+*/
+
+CAPTION { font-weight: bold }
+
+A.qindex {}
+	
+A.qindexRef {}
+	
+A.el { text-decoration: none; font-weight: bold; color:#004B70 }
+
+A.elRef { font-weight: bold }
+
+A.code { text-decoration: none; font-weight: normal; color: #4444ee }
+
+A.codeRef { font-weight: normal; color: #4444ee }
+
+DL.el { margin-left: -1cm }
+
+DIV.fragment { width: 100%; border: none; background-color: #eeeeee }
+
+DIV.ah { background-color: black; font-weight: bold; color: #ffffff; margin-bottom: 3px; margin-top: 3px }
+
+TD.md { background-color: #CCCCCC; font-weight: bold; }
+
+TD.mdname1 { background-color: #CCCCCC; font-weight: bold; color: #006699; }
+
+TD.mdname { background-color: #CCCCCC; font-weight: bold; color: #006699; width: 600px; }
+
+DIV.groupHeader { margin-left: 16px; margin-top: 12px; margin-bottom: 6px; font-weight: bold }
+
+DIV.groupText { margin-left: 16px; font-style: italic; font-size: smaller }
+
+
+TD.indexkey { 
+   background-color: #eeeeff; 
+   font-weight: bold; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+
+TD.indexvalue { 
+   background-color: #eeeeff; 
+   font-style: italic; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+
+span.keyword       { color: #008000 }
+
+span.keywordtype   { color: #004E75 }
+
+span.keywordflow   { color: #e08000 }
+
+span.comment       { color: #800000 }
+
+span.preprocessor  { color: #806020 }
+
+span.stringliteral { color: #002080 }
+
+span.charliteral   { color: #008080 }
+eprocessor  { color: #806020 }
+
+span.stringliteral { color: #002080 }
+
+span.charliteral   { color: #008080 }

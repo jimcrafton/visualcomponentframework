@@ -84,3 +84,5 @@ void GetLastErrorDescription(CComBSTR& bstr);		// Defined in VCFBuilder.cpp
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_STDAFX_H__00CD78A4_68EA_427D_A89E_271068B90A13__INCLUDED)
+
+

@@ -302,3 +302,5 @@ inline void CTypeLibTreeView::OnTreeDeleteItem(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 }
+
+

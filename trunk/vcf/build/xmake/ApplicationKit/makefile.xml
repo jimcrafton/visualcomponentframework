@@ -334,7 +334,16 @@
 			<source name="$(SRC)/../build/resources\win32\ApplicationKit.rc" outputAs="ApplicationKit.res" tool="rc" partOfConfig="MinGW Debug|VC++ Debug"/>
 			
 			<!-- GTK -->
+			<source name="$(SRC)/ImplementerKit/GTKUIToolkit.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKDesktop.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKApplication.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/AbstractGTKControl.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKControl.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKWindow.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKControlContext.cpp" partOfConfig="GCC gtk"/>			
+			<source name="$(SRC)/ImplementerKit/GTKCursor.cpp" partOfConfig="GCC gtk"/>
 			
+
 			<!-- X11 -->
 			<source name="$(SRC)/ImplementerKit/X11UIToolkit.cpp" partOfConfig="GCC Debug|GCC Release"/>
 			<source name="$(SRC)/ImplementerKit/X11Desktop.cpp" partOfConfig="GCC Debug|GCC Release"/>

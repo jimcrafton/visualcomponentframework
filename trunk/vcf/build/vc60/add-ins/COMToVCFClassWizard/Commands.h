@@ -44,3 +44,5 @@ public:
 typedef CComObject<CCommands> CCommandsObj;
 
 #endif //__COMMANDS_H_
+
+

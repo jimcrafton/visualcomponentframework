@@ -260,3 +260,5 @@ bool CDSAddIn::initVCFBuilderAddInCommands( const bool& bFirstTime, IApplication
 
 	return result;
 }
+
+

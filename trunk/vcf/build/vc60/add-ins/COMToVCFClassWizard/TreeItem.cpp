@@ -1079,3 +1079,5 @@ CTreeItem::ITEM_TYPE CTreeItem::TypeKindToItemType( TYPEKIND tkind )
 
 	return t ;
 }
+
+

@@ -2,6 +2,17 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.3  2003/05/17 20:36:20  ddiego
+#this is the checkin for the 0.6.1 release - represents the merge over from
+#the devmain-0-6-0 branch plus a few minor bug fixes
+#
+#Revision 1.2.2.1  2003/04/19 22:21:43  ddiego
+#tested the code developed in windows using gtk in linux. Seems to work ok except for a
+#few minor compiler glitches. Had to comment out the partial specialization for
+#floating point image bits in include/graphics/ImageBits.h. Also made some
+#adjustments in the makefiles for building the GraphicsKit and ApplicationKit
+#from the build/make/Makefile.
+#
 #Revision 1.2  2003/02/26 04:30:25  ddiego
 #merge of code in the devmain-0-5-9 branch into the current tree.
 #most additions are in the area of the current linux port, but the major
@@ -45,9 +56,6 @@ $(OUTDIR_GK_D)/Color.o : $(SRC_GRF)/Color.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK_D)/Font.o : $(SRC_GRF)/Font.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/Font.cpp -o $(OUTDIR_GK_D)/Font.o
 	
-$(OUTDIR_GK_D)/FontState.o : $(SRC_GRF)/FontState.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/FontState.cpp -o $(OUTDIR_GK_D)/FontState.o
-	
 $(OUTDIR_GK_D)/GlyphCollection.o : $(SRC_GRF)/GlyphCollection.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/GlyphCollection.cpp -o $(OUTDIR_GK_D)/GlyphCollection.o
 	
@@ -72,17 +80,17 @@ $(OUTDIR_GK_D)/Polygon.o : $(SRC_GRF)/Polygon.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK_D)/Vector2D.o : $(SRC_GRF)/Vector2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/Vector2D.cpp -o $(OUTDIR_GK_D)/Vector2D.o
 	
-$(OUTDIR_GK_D)/X11Font.o : $(SRC_IMPLKIT)/X11Font.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Font.cpp -o $(OUTDIR_GK_D)/X11Font.o
+$(OUTDIR_GK_D)/GTKFont.o : $(SRC_IMPLKIT)/GTKFont.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKFont.cpp -o $(OUTDIR_GK_D)/GTKFont.o
 	
-$(OUTDIR_GK_D)/X11Image.o : $(SRC_IMPLKIT)/X11Image.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Image.cpp -o $(OUTDIR_GK_D)/X11Image.o
+$(OUTDIR_GK_D)/GTKImage.o : $(SRC_IMPLKIT)/GTKImage.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKImage.cpp -o $(OUTDIR_GK_D)/GTKImage.o
 	
-$(OUTDIR_GK_D)/X11Context.o : $(SRC_IMPLKIT)/X11Context.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Context.cpp -o $(OUTDIR_GK_D)/X11Context.o
+$(OUTDIR_GK_D)/GTKContext.o : $(SRC_IMPLKIT)/GTKContext.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKContext.cpp -o $(OUTDIR_GK_D)/GTKContext.o
 	
-$(OUTDIR_GK_D)/X11GraphicsToolkit.o : $(SRC_IMPLKIT)/X11GraphicsToolkit.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11GraphicsToolkit.cpp -o $(OUTDIR_GK_D)/X11GraphicsToolkit.o
+$(OUTDIR_GK_D)/GTKGraphicsToolkit.o : $(SRC_IMPLKIT)/GTKGraphicsToolkit.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKGraphicsToolkit.cpp -o $(OUTDIR_GK_D)/GTKGraphicsToolkit.o
 	
 $(OUTDIR_GK_D)/MgcBezierCurve2.o : $(SRC_GRF)/MgcBezierCurve2.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/MgcBezierCurve2.cpp -o $(OUTDIR_GK_D)/MgcBezierCurve2.o
@@ -128,9 +136,6 @@ $(OUTDIR_GK)/Color.o : $(SRC_GRF)/Color.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK)/Font.o : $(SRC_GRF)/Font.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/Font.cpp -o $(OUTDIR_GK)/Font.o
 	
-$(OUTDIR_GK)/FontState.o : $(SRC_GRF)/FontState.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/FontState.cpp -o $(OUTDIR_GK)/FontState.o
-	
 $(OUTDIR_GK)/GlyphCollection.o : $(SRC_GRF)/GlyphCollection.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/GlyphCollection.cpp -o $(OUTDIR_GK)/GlyphCollection.o
 	
@@ -155,17 +160,17 @@ $(OUTDIR_GK)/Polygon.o : $(SRC_GRF)/Polygon.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK)/Vector2D.o : $(SRC_GRF)/Vector2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/Vector2D.cpp -o $(OUTDIR_GK)/Vector2D.o
 	
-$(OUTDIR_GK)/X11Font.o : $(SRC_IMPLKIT)/X11Font.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/X11Font.cpp -o $(OUTDIR_GK)/X11Font.o
+$(OUTDIR_GK)/GTKFont.o : $(SRC_IMPLKIT)/GTKFont.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/GTKFont.cpp -o $(OUTDIR_GK)/GTKFont.o
 	
-$(OUTDIR_GK)/X11Image.o : $(SRC_IMPLKIT)/X11Image.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/X11Image.cpp -o $(OUTDIR_GK)/X11Image.o
+$(OUTDIR_GK)/GTKImage.o : $(SRC_IMPLKIT)/GTKImage.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/GTKImage.cpp -o $(OUTDIR_GK)/GTKImage.o
 	
-$(OUTDIR_GK)/X11Context.o : $(SRC_IMPLKIT)/X11Context.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/X11Context.cpp -o $(OUTDIR_GK)/X11Context.o
+$(OUTDIR_GK)/GTKContext.o : $(SRC_IMPLKIT)/GTKContext.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/GTKContext.cpp -o $(OUTDIR_GK)/GTKContext.o
 	
-$(OUTDIR_GK)/X11GraphicsToolkit.o : $(SRC_IMPLKIT)/X11GraphicsToolkit.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/X11GraphicsToolkit.cpp -o $(OUTDIR_GK)/X11GraphicsToolkit.o
+$(OUTDIR_GK)/GTKGraphicsToolkit.o : $(SRC_IMPLKIT)/GTKGraphicsToolkit.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_IMPLKIT)/GTKGraphicsToolkit.cpp -o $(OUTDIR_GK)/GTKGraphicsToolkit.o
 	
 $(OUTDIR_GK)/MgcBezierCurve2.o : $(SRC_GRF)/MgcBezierCurve2.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/MgcBezierCurve2.cpp -o $(OUTDIR_GK)/MgcBezierCurve2.o

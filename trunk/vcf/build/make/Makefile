@@ -2,6 +2,17 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.3  2003/05/17 20:36:20  ddiego
+#this is the checkin for the 0.6.1 release - represents the merge over from
+#the devmain-0-6-0 branch plus a few minor bug fixes
+#
+#Revision 1.2.2.1  2003/04/19 22:21:43  ddiego
+#tested the code developed in windows using gtk in linux. Seems to work ok except for a
+#few minor compiler glitches. Had to comment out the partial specialization for
+#floating point image bits in include/graphics/ImageBits.h. Also made some
+#adjustments in the makefiles for building the GraphicsKit and ApplicationKit
+#from the build/make/Makefile.
+#
 #Revision 1.2  2003/02/26 04:30:25  ddiego
 #merge of code in the devmain-0-5-9 branch into the current tree.
 #most additions are in the area of the current linux port, but the major
@@ -55,14 +66,16 @@ NETWORK_KIT_SO=$(BIN_OUT)/libNetworkKit.so
 #toolchain definitions
 CXX_FLAGS_D=-ggdb -D VCF_GCC -D_DEBUG -I $(CXX_INC) -c
 
-GK_CXX_FLAGS_D=-I $(X11_INC) -I $(IMLIB2_INC) -DVCF_X11 $(CXX_FLAGS_D)
+GTK_CXX_FLAGS = `pkg-config gtk+-2.0 --cflags`
+
+GK_CXX_FLAGS_D=$(GTK_CXX_FLAGS) -DVCF_GTK $(CXX_FLAGS_D)
 
 AK_CXX_FLAGS_D=$(GK_CXX_FLAGS_D)
 
 NK_CXX_FLAGS_D=$(CXX_FLAGS_D)
 
 CXX_FLAGS=-D VCF_GCC -I $(CXX_INC) -O2 -c
-GK_CXX_FLAGS=-I $(X11_INC) -I $(IMLIB2_INC) -DVCF_X11 $(CXX_FLAGS)
+GK_CXX_FLAGS=$(GTK_CXX_FLAGS) -DVCF_GTK $(CXX_FLAGS)
 
 AK_CXX_FLAGS=$(GK_CXX_FLAGS)
 
@@ -70,13 +83,14 @@ NK_CXX_FLAGS=$(CXX_FLAGS)
 
 
 LINKER_FLAGS_D=-ldl -shared -ggdb -o
-GK_LINKER_FLAGS_D=-L $(BIN_OUT) -L $(X11_LIB)  -lFoundationKit_d -lX11  -lttf -lImlib2 $(LINKER_FLAGS_D)
-AK_LINKER_FLAGS_D=-L $(BIN_OUT) -L $(X11_LIB)  -lFoundationKit_d -lGraphicsKit_d -lX11  -lttf -lImlib2 $(LINKER_FLAGS_D)
+GTK_LINKER_FLAGS = `pkg-config gtk+-2.0 --libs`
+GK_LINKER_FLAGS_D=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit_d $(LINKER_FLAGS_D)
+AK_LINKER_FLAGS_D=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit_d -lGraphicsKit_d $(LINKER_FLAGS_D)
 NK_LINKER_FLAGS_D=-L $(BIN_OUT) -lFoundationKit_d $(LINKER_FLAGS_D)
 
 LINKER_FLAGS=-ldl -shared -o
-GK_LINKER_FLAGS=-L $(BIN_OUT) -L $(X11_LIB)  -lFoundationKit -lX11  -lttf -lImlib2 $(LINKER_FLAGS)
-AK_LINKER_FLAGS=-L $(BIN_OUT) -L $(X11_LIB)  -lFoundationKit -lGraphicsKit -lX11  -lttf -lImlib2 $(LINKER_FLAGS)
+GK_LINKER_FLAGS=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit $(LINKER_FLAGS)
+AK_LINKER_FLAGS=-L $(BIN_OUT) $(GTK_LINKER_FLAGS)  -lFoundationKit -lGraphicsKit $(LINKER_FLAGS)
 NK_LINKER_FLAGS=-L $(BIN_OUT) -lFoundationKit $(LINKER_FLAGS)
 
 #debug object files.
@@ -201,7 +215,6 @@ GRAFKIT_OBJECT_FILES_D=$(OUTDIR_GK_D)/GraphicsKit.o \
 			$(OUTDIR_GK_D)/BasicStroke.o \
 			$(OUTDIR_GK_D)/Color.o \
 			$(OUTDIR_GK_D)/Font.o \
-			$(OUTDIR_GK_D)/FontState.o \
 			$(OUTDIR_GK_D)/GlyphCollection.o \
 			$(OUTDIR_GK_D)/GraphicsContext.o \
 			$(OUTDIR_GK_D)/GraphicsObject.o \
@@ -210,10 +223,10 @@ GRAFKIT_OBJECT_FILES_D=$(OUTDIR_GK_D)/GraphicsKit.o \
 			$(OUTDIR_GK_D)/Matrix2D.o \
 			$(OUTDIR_GK_D)/Polygon.o \
 			$(OUTDIR_GK_D)/Vector2D.o \
-			$(OUTDIR_GK_D)/X11Font.o \
-			$(OUTDIR_GK_D)/X11Image.o \
-			$(OUTDIR_GK_D)/X11Context.o \
-			$(OUTDIR_GK_D)/X11GraphicsToolkit.o \
+			$(OUTDIR_GK_D)/GTKFont.o \
+			$(OUTDIR_GK_D)/GTKImage.o \
+			$(OUTDIR_GK_D)/GTKContext.o \
+			$(OUTDIR_GK_D)/GTKGraphicsToolkit.o \
 			$(OUTDIR_GK_D)/MgcBezierCurve2.o \
 			$(OUTDIR_GK_D)/MgcCurve2.o \
 			$(OUTDIR_GK_D)/MgcVector2.o \
@@ -228,7 +241,6 @@ GRAFKIT_OBJECT_FILES=$(OUTDIR_GK)/GraphicsKit.o \
 			$(OUTDIR_GK)/BasicStroke.o \
 			$(OUTDIR_GK)/Color.o \
 			$(OUTDIR_GK)/Font.o \
-			$(OUTDIR_GK)/FontState.o \
 			$(OUTDIR_GK)/GlyphCollection.o \
 			$(OUTDIR_GK)/GraphicsContext.o \
 			$(OUTDIR_GK)/GraphicsObject.o \
@@ -237,10 +249,10 @@ GRAFKIT_OBJECT_FILES=$(OUTDIR_GK)/GraphicsKit.o \
 			$(OUTDIR_GK)/Matrix2D.o \
 			$(OUTDIR_GK)/Polygon.o \
 			$(OUTDIR_GK)/Vector2D.o \
-			$(OUTDIR_GK)/X11Font.o \
-			$(OUTDIR_GK)/X11Image.o \
-			$(OUTDIR_GK)/X11Context.o \
-			$(OUTDIR_GK)/X11GraphicsToolkit.o \
+			$(OUTDIR_GK)/GTKFont.o \
+			$(OUTDIR_GK)/GTKImage.o \
+			$(OUTDIR_GK)/GTKContext.o \
+			$(OUTDIR_GK)/GTKGraphicsToolkit.o \
 			$(OUTDIR_GK)/MgcBezierCurve2.o \
 			$(OUTDIR_GK)/MgcCurve2.o \
 			$(OUTDIR_GK)/MgcVector2.o \
@@ -373,14 +385,14 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/WhatsThisHelpEvent.o \
 			$(OUTDIR_AK_D)/Window.o \
 			$(OUTDIR_AK_D)/WindowEvent.o \
-			$(OUTDIR_AK_D)/X11UIToolkit.o \
-			$(OUTDIR_AK_D)/X11Desktop.o \
-			$(OUTDIR_AK_D)/X11Application.o \
-			$(OUTDIR_AK_D)/AbstractX11Control.o \
-			$(OUTDIR_AK_D)/X11Control.o \
-			$(OUTDIR_AK_D)/X11Window.o \
-			$(OUTDIR_AK_D)/X11ControlContext.o \
-			$(OUTDIR_AK_D)/X11Cursor.o 
+			$(OUTDIR_AK_D)/GTKUIToolkit.o \
+			$(OUTDIR_AK_D)/GTKDesktop.o \
+			$(OUTDIR_AK_D)/GTKApplication.o \
+			$(OUTDIR_AK_D)/AbstractGTKControl.o \
+			$(OUTDIR_AK_D)/GTKControl.o \
+			$(OUTDIR_AK_D)/GTKWindow.o \
+			$(OUTDIR_AK_D)/GTKControlContext.o \
+			$(OUTDIR_AK_D)/GTKCursor.o 
 
 
 APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
@@ -505,14 +517,14 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/WhatsThisHelpEvent.o \
 			$(OUTDIR_AK)/Window.o \
 			$(OUTDIR_AK)/WindowEvent.o \
-			$(OUTDIR_AK)/X11UIToolkit.o \
-			$(OUTDIR_AK)/X11Desktop.o \
-			$(OUTDIR_AK)/X11Application.o \
-			$(OUTDIR_AK)/AbstractX11Control.o \
-			$(OUTDIR_AK)/X11Control.o \
-			$(OUTDIR_AK)/X11Window.o \
-			$(OUTDIR_AK)/X11ControlContext.o \
-			$(OUTDIR_AK)/X11Cursor.o 
+			$(OUTDIR_AK)/GTKUIToolkit.o \
+			$(OUTDIR_AK)/GTKDesktop.o \
+			$(OUTDIR_AK)/GTKApplication.o \
+			$(OUTDIR_AK)/AbstractGTKControl.o \
+			$(OUTDIR_AK)/GTKControl.o \
+			$(OUTDIR_AK)/GTKWindow.o \
+			$(OUTDIR_AK)/GTKControlContext.o \
+			$(OUTDIR_AK)/GTKCursor.o 
 
 
 #NetworkKit objects
@@ -544,7 +556,7 @@ target :
 
 #debug target
 
-debug : FoundationKit_debug
+debug : FoundationKit_debug GraphicsKit_debug ApplicationKit_debug
 
 
 #release target
@@ -653,13 +665,13 @@ prep_dirs_NK:
 #all the OBJECT_FILES_D together
 
 $(FOUNDATION_KIT_SO_D) : $(FK_OBJECT_FILES_D)
-	$(LINKER) $(LINKER_FLAGS_D) $(FOUNDATION_KIT_SO_D) $(OBJECT_FILES_D)
+	$(LINKER) $(LINKER_FLAGS_D) $(FOUNDATION_KIT_SO_D) $(FK_OBJECT_FILES_D)
 
 
 #this is the release build target for the 
 #FoundationKit shared object library
 $(FOUNDATION_KIT_SO) : $(FK_OBJECT_FILES)
-	$(LINKER) $(LINKER_FLAGS) $(FOUNDATION_KIT_SO) $(OBJECT_FILES)
+	$(LINKER) $(LINKER_FLAGS) $(FOUNDATION_KIT_SO) $(FK_OBJECT_FILES)
 
 
 #this is the debug build target for the 
@@ -676,7 +688,7 @@ $(GRAPHICS_KIT_SO) : $(GRAFKIT_OBJECT_FILES)
 #this is the debug build target for the 
 #ApplicationKit shared object library
 $(APPLICATION_KIT_SO_D) : $(APPKIT_OBJECT_FILES_D)
-	$(LINKER) $(AK_LINKER_FLAGS_D) $(GRAPHICS_KIT_SO_D) $(APPKIT_OBJECT_FILES_D)
+	$(LINKER) $(AK_LINKER_FLAGS_D) $(APPLICATION_KIT_SO_D) $(APPKIT_OBJECT_FILES_D)
 
 
 #this is the release build target for the 

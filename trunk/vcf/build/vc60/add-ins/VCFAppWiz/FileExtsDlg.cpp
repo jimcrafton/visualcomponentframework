@@ -139,3 +139,4 @@ void FileExtsDlg::OnKeydownFileExtsList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+

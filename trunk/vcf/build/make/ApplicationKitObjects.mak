@@ -2,6 +2,17 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.3  2003/05/17 20:36:20  ddiego
+#this is the checkin for the 0.6.1 release - represents the merge over from
+#the devmain-0-6-0 branch plus a few minor bug fixes
+#
+#Revision 1.2.2.1  2003/04/19 22:21:43  ddiego
+#tested the code developed in windows using gtk in linux. Seems to work ok except for a
+#few minor compiler glitches. Had to comment out the partial specialization for
+#floating point image bits in include/graphics/ImageBits.h. Also made some
+#adjustments in the makefiles for building the GraphicsKit and ApplicationKit
+#from the build/make/Makefile.
+#
 #Revision 1.2  2003/02/26 04:30:25  ddiego
 #merge of code in the devmain-0-5-9 branch into the current tree.
 #most additions are in the area of the current linux port, but the major
@@ -52,7 +63,7 @@ $(OUTDIR_AK_D)/AbstractScrollable.o : $(SRC_CORE)/AbstractScrollable.cpp $(APPKI
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/AbstractScrollable.cpp -o $(OUTDIR_AK_D)/AbstractScrollable.o
 
 $(OUTDIR_AK_D)/AbstractTableModel.o : $(SRC_CORE)/AbstractTableModel.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/AbstractTableModelcpp -o $(OUTDIR_AK_D)/AbstractTableModel.o
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/AbstractTableModel.cpp -o $(OUTDIR_AK_D)/AbstractTableModel.o
 
 $(OUTDIR_AK_D)/AbstractTextModel.o : $(SRC_CORE)/AbstractTextModel.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/AbstractTextModel.cpp -o $(OUTDIR_AK_D)/AbstractTextModel.o
@@ -255,8 +266,8 @@ $(OUTDIR_AK_D)/LibraryApplication.o : $(SRC_CORE)/LibraryApplication.cpp $(APPKI
 $(OUTDIR_AK_D)/Light3DBorder.o : $(SRC_GRF)/Light3DBorder.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_GRF)/Light3DBorder.cpp -o $(OUTDIR_AK_D)/Light3DBorder.o
 
-$(OUTDIR_AK_D)/LightweightComponent.o : $(SRC_CORE)/LightweightComponent.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/LightweightComponent.cpp -o $(OUTDIR_AK_D)/LightweightComponent.o
+$(OUTDIR_AK_D)/LightweightComponent.o : $(SRC_IMPLKIT)/LightweightComponent.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/LightweightComponent.cpp -o $(OUTDIR_AK_D)/LightweightComponent.o
 
 $(OUTDIR_AK_D)/ListBoxControl.o : $(SRC_CORE)/ListBoxControl.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/ListBoxControl.cpp -o $(OUTDIR_AK_D)/ListBoxControl.o
@@ -393,29 +404,29 @@ $(OUTDIR_AK_D)/Window.o : $(SRC_CORE)/Window.cpp $(APPKIT_HDRS)
 $(OUTDIR_AK_D)/WindowEvent.o : $(SRC_EVENT)/WindowEvent.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_EVENT)/WindowEvent.cpp -o $(OUTDIR_AK_D)/WindowEvent.o
 
-$(OUTDIR_AK_D)/X11UIToolkit.o : $(SRC_IMPLKIT)/X11UIToolkit.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11UIToolkit.cpp -o $(OUTDIR_AK_D)/X11UIToolkit.o
+$(OUTDIR_AK_D)/GTKUIToolkit.o : $(SRC_IMPLKIT)/GTKUIToolkit.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKUIToolkit.cpp -o $(OUTDIR_AK_D)/GTKUIToolkit.o
 
-$(OUTDIR_AK_D)/X11Desktop.o : $(SRC_IMPLKIT)/X11Desktop.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Desktop.cpp -o $(OUTDIR_AK_D)/X11Desktop.o
+$(OUTDIR_AK_D)/GTKDesktop.o : $(SRC_IMPLKIT)/GTKDesktop.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKDesktop.cpp -o $(OUTDIR_AK_D)/GTKDesktop.o
 
-$(OUTDIR_AK_D)/X11Application.o : $(SRC_IMPLKIT)/X11Application.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Application.cpp -o $(OUTDIR_AK_D)/X11Application.o
+$(OUTDIR_AK_D)/GTKApplication.o : $(SRC_IMPLKIT)/GTKApplication.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKApplication.cpp -o $(OUTDIR_AK_D)/GTKApplication.o
 
-$(OUTDIR_AK_D)/AbstractX11Control.o : $(SRC_IMPLKIT)/AbstractX11Control.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/AbstractX11Control.cpp -o $(OUTDIR_AK_D)/AbstractX11Control.o
+$(OUTDIR_AK_D)/AbstractGTKControl.o : $(SRC_IMPLKIT)/AbstractGTKControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/AbstractGTKControl.cpp -o $(OUTDIR_AK_D)/AbstractGTKControl.o
 
-$(OUTDIR_AK_D)/X11Control.o : $(SRC_IMPLKIT)/X11Control.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Control.cpp -o $(OUTDIR_AK_D)/X11Control.o
+$(OUTDIR_AK_D)/GTKControl.o : $(SRC_IMPLKIT)/GTKControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKControl.cpp -o $(OUTDIR_AK_D)/GTKControl.o
 
-$(OUTDIR_AK_D)/X11Window.o : $(SRC_IMPLKIT)/X11Window.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Window.cpp -o $(OUTDIR_AK_D)/X11Window.o
+$(OUTDIR_AK_D)/GTKWindow.o : $(SRC_IMPLKIT)/GTKWindow.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKWindow.cpp -o $(OUTDIR_AK_D)/GTKWindow.o
 
-$(OUTDIR_AK_D)/X11ControlContext.o : $(SRC_IMPLKIT)/X11ControlContext.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11ControlContext.cpp -o $(OUTDIR_AK_D)/X11ControlContext.o
+$(OUTDIR_AK_D)/GTKControlContext.o : $(SRC_IMPLKIT)/GTKControlContext.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKControlContext.cpp -o $(OUTDIR_AK_D)/GTKControlContext.o
 
-$(OUTDIR_AK_D)/X11Cursor.o : $(SRC_IMPLKIT)/X11Cursor.cpp $(APPKIT_HDRS)
-	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/X11Cursor.cpp -o $(OUTDIR_AK_D)/X11Cursor.o
+$(OUTDIR_AK_D)/GTKCursor.o : $(SRC_IMPLKIT)/GTKCursor.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/GTKCursor.cpp -o $(OUTDIR_AK_D)/GTKCursor.o
 
 
 

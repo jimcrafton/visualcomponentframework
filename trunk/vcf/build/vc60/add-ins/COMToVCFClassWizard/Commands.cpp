@@ -72,3 +72,5 @@ STDMETHODIMP CCommands::ConvertActiveXControl()
 	}
 	return S_OK;
 }
+
+

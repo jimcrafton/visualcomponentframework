@@ -2,9 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="Win32HTMLBrowser_StaticLib"
-	SccProjectName="Win32HTMLBrowser_StaticLib"
-	SccLocalPath="..\..\..">
+	Name="Win32HTMLBrowser_StaticLib">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -129,3 +127,5 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
+

@@ -105,3 +105,5 @@ private:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_NEWCLASSDLG_H__18CF376C_F843_4E68_9602_4EF5BC012E75__INCLUDED_)
+
+

@@ -23,8 +23,8 @@ CFG=ApplicationKitDLL - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "ApplicationKitDLL"
-# PROP Scc_LocalPath "..\..\.."
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\bin\ApplicationKit_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6_d.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# ADD LINK32 comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6_d.dll" /libpath:"..\..\..\lib"
 
 !ENDIF 
 
@@ -130,10 +130,6 @@ SOURCE=..\..\..\include\core\AbstractTreeModel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractView.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
@@ -229,14 +225,6 @@ SOURCE=..\..\..\include\events\ComboBoxListener.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\com\COMDataObject.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\com\COMDropTarget.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Command.h
 # End Source File
 # Begin Source File
@@ -285,10 +273,6 @@ SOURCE=..\..\..\include\core\CommonPrint.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\com\COMObject.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Component.h
 # End Source File
 # Begin Source File
@@ -310,10 +294,6 @@ SOURCE=..\..\..\include\core\ComponentInfo.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ComponentListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\com\COMUtils.h
 # End Source File
 # Begin Source File
 
@@ -929,10 +909,6 @@ SOURCE=..\..\..\include\events\ValidationEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\com\VCFCOM.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\io\VFFInputStream.h
 # End Source File
 # Begin Source File
@@ -950,126 +926,6 @@ SOURCE=..\..\..\include\events\WhatsThisHelpEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\WhatsThisHelpListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Application.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Button.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Clipboard.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ColorDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Component.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32CursorPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32DragDropPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32DropTargetPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Edit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32FileOpenDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32FolderBrowseDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32FontDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\ImplementerKit\Win32FontManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Listview.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32MenuBar.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32MenuItem.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Object.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Peer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32PopupMenu.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ResourceBundle.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ResourceStream.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ScrollPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32ToolKit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Tree.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Window.h
 # End Source File
 # Begin Source File
 
@@ -1157,10 +1013,6 @@ SOURCE=..\..\..\src\core\AbstractView.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\AcceleratorKey.cpp
 # End Source File
 # Begin Source File
@@ -1218,18 +1070,6 @@ SOURCE=..\..\..\src\core\ComboBoxControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\COM\COMDataObject.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\COM\COMDragSource.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\COM\COMDropTarget.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\CommandButton.cpp
 # End Source File
 # Begin Source File
@@ -1266,10 +1106,6 @@ SOURCE=..\..\..\src\core\CommonPrint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\COM\COMObject.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\Component.cpp
 # End Source File
 # Begin Source File
@@ -1279,10 +1115,6 @@ SOURCE=..\..\..\src\core\ComponentEditorManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ComponentInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\COM\COMUtils.cpp
 # End Source File
 # Begin Source File
 
@@ -1643,7 +1475,71 @@ SOURCE=..\..\..\src\Events\WhatsThisHelpEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Window.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\WindowEvent.cpp
+# End Source File
+# End Group
+# Begin Group "Peers"
+
+# PROP Default_Filter "*.h;*.cpp"
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMDataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\com\COMDataObject.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMDragSource.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMDropTarget.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\com\COMDropTarget.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\com\COMObject.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMUtils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\com\COMUtils.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\com\VCFCOM.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Application.h
 # End Source File
 # Begin Source File
 
@@ -1651,7 +1547,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Button.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Button.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Clipboard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Clipboard.h
 # End Source File
 # Begin Source File
 
@@ -1659,7 +1563,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ColorDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Component.h
 # End Source File
 # Begin Source File
 
@@ -1667,7 +1579,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32CursorPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32CursorPeer.h
 # End Source File
 # Begin Source File
 
@@ -1675,7 +1595,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Desktop.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Dialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
 # End Source File
 # Begin Source File
 
@@ -1683,7 +1611,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32DragDropPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32DropTargetPeer.h
 # End Source File
 # Begin Source File
 
@@ -1691,7 +1627,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Edit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Edit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32FileOpenDialog.h
 # End Source File
 # Begin Source File
 
@@ -1699,7 +1643,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\implementerkit\Win32FolderBrowseDialog.cpp
+SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32FolderBrowseDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32FolderBrowseDialog.h
 # End Source File
 # Begin Source File
 
@@ -1707,7 +1659,19 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FontDialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32FontDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\ImplementerKit\Win32FontManager.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Listview.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Listview.h
 # End Source File
 # Begin Source File
 
@@ -1715,7 +1679,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32MenuBar.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32MenuBar.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32MenuItem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32MenuItem.h
 # End Source File
 # Begin Source File
 
@@ -1723,7 +1695,19 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\implementerkit\Win32PopupMenu.cpp
+SOURCE=..\..\..\include\implementerKit\Win32Object.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32PopupMenu.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32PopupMenu.h
 # End Source File
 # Begin Source File
 
@@ -1731,7 +1715,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ResourceBundle.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32ResourceStream.h
 # End Source File
 # Begin Source File
 
@@ -1739,7 +1731,19 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ScrollPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32ToolKit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32ToolKit.h
 # End Source File
 # Begin Source File
 
@@ -1747,15 +1751,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Tree.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Tree.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Window.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Window.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\WindowEvent.cpp
+SOURCE=..\..\..\include\implementerKit\Win32Window.h
 # End Source File
 # End Group
 # End Target

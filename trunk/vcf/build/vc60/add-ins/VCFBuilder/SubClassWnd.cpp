@@ -103,3 +103,5 @@ void CSubClassWnd::DoUnsubclass()
         m_bIsSubclassed = false;
     }
 }
+
+

@@ -53,3 +53,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_TYPECONVERSIONOPTIONSPAGE_H__70A536DA_92AA_4717_A900_67EBDE05F613__INCLUDED_)
+
+

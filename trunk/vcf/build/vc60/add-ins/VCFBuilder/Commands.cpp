@@ -248,3 +248,5 @@ STDMETHODIMP CCommands::ActivateVCFBuilderEnvStandalone()
 
 	return S_OK;
 }
+
+

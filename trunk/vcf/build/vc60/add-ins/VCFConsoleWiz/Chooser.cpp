@@ -55,3 +55,5 @@ CAppWizStepDlg* CDialogChooser::Back(CAppWizStepDlg* pDlg)
 	m_nCurrDlg--;
 	return m_pDlgs[m_nCurrDlg];
 }
+
+

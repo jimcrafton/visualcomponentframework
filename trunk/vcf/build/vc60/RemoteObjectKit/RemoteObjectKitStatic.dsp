@@ -23,8 +23,6 @@ CFG=RemoteObjectKitStatic - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "RemoteObjectKitStatic"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 RSC=rc.exe
 
@@ -163,3 +161,5 @@ SOURCE=..\..\..\include\remote\RemoteObjectKit.h
 # End Group
 # End Target
 # End Project
+
+

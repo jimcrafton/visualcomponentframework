@@ -31,3 +31,5 @@ extern CVPLAppWizAppWiz VPLAppWizaw;
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_VPLAPPWIZAW_H__22CECD32_1D44_459F_867F_87539928EB48__INCLUDED_)
+
+

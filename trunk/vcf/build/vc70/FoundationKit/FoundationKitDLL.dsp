@@ -23,8 +23,6 @@ CFG=FOUNDATIONKITDLL - WIN32 DEBUG
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "FoundationKitDLL"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -130,6 +128,14 @@ SOURCE=..\..\..\include\core\ClassRegistry.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\CommonDefines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\Condition.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\ConditionPeer.h
 # End Source File
 # Begin Source File
 
@@ -425,6 +431,10 @@ SOURCE=..\..\..\include\exceptions\TypeCastException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\VariantData.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\VariantDataStream.h
 # End Source File
 # Begin Source File
@@ -518,6 +528,10 @@ SOURCE=..\..\..\src\core\Class.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ClassRegistry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\Condition.cpp
 # End Source File
 # Begin Source File
 
@@ -707,3 +721,5 @@ SOURCE=..\..\..\src\Utils\XMLParser.cpp
 # End Group
 # End Target
 # End Project
+
+

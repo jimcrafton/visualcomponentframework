@@ -58,3 +58,5 @@ extern CComModule _Module;
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_STDAFX_H__6471BF92_35C4_4821_9122_962D7D390031__INCLUDED_)
+
+

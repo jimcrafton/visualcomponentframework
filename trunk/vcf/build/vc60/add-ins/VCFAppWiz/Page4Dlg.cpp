@@ -129,3 +129,5 @@ void Page4Dlg::OnSplashScr()
 	m_useSplashScreen = !m_useSplashScreen;
 	UpdateData( FALSE );
 }
+
+

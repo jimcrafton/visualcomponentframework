@@ -71,3 +71,5 @@ void TypeLibContents::OnOK()
 	
 	CDialog::OnOK();
 }
+
+

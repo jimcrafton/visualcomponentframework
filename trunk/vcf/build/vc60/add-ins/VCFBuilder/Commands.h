@@ -108,3 +108,5 @@ typedef CComObject<CCommands> CCommandsObj;
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_COMMANDS_H__DBFA0856_1D70_460D_AB15_CB5436CA26F1__INCLUDED)
+
+

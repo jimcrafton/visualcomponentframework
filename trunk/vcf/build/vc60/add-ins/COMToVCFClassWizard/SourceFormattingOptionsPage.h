@@ -61,3 +61,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_SOURCEFORMATTINGOPTIONSPAGE_H__A018D5EB_2FEB_4A2F_8BC5_51AF44DF6F86__INCLUDED_)
+
+

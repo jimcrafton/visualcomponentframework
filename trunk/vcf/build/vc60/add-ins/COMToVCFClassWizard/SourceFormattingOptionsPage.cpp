@@ -162,3 +162,5 @@ void SourceFormattingOptionsPage::OnUseJavadocParamComments()
 
 	UpdateData( FALSE );	
 }
+
+

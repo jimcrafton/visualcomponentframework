@@ -23,8 +23,6 @@ CFG=NetworkKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "NetworkKit"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 RSC=rc.exe
 
@@ -162,3 +160,5 @@ SOURCE=..\..\..\include\implementerKit\Win32SocketPeer.h
 # End Group
 # End Target
 # End Project
+
+

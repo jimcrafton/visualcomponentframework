@@ -3,8 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="vcfAllStaticLibs"
-	SccProjectName="vcfAllStaticLibs"
-	SccLocalPath="."
 	Keyword="MakeFileProj">
 	<Platforms>
 		<Platform
@@ -47,3 +45,5 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
+

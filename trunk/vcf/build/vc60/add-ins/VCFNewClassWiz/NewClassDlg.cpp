@@ -568,3 +568,5 @@ void NewClassDlg::OnInterfaceClass()
 	this->UpdateData();	
 	this->UpdateData(FALSE);	
 }
+
+

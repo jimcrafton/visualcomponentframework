@@ -1,0 +1,2559 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		5E4931B30465DE9C00A8020D = {
+			children = (
+				5E4931B60465DF9800A8020D,
+				5E4931B80465DFD500A8020D,
+			);
+			isa = PBXGroup;
+			name = "External Frameworks and Libs";
+			path = "";
+			refType = 4;
+		};
+		5E4931B60465DF9800A8020D = {
+			isa = PBXFileReference;
+			name = "libstdc++.a";
+			path = "/usr/lib/libstdc++.a";
+			refType = 0;
+		};
+		5E4931B70465DF9800A8020D = {
+			fileRef = 5E4931B60465DF9800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E4931B80465DFD500A8020D = {
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+		};
+		5E4931B90465DFD500A8020D = {
+			fileRef = 5E4931B80465DFD500A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6894F046D4B2E00A8020D = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			name = OSXSystemToolkit.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXSystemToolkit.h;
+			refType = 0;
+		};
+		5EA68950046D4B2E00A8020D = {
+			fileRef = 5EA6894F046D4B2E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68951046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXPeer.cpp;
+			refType = 0;
+		};
+		5EA68952046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXMutexPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXMutexPeer.cpp;
+			refType = 0;
+		};
+		5EA68953046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXLibraryPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXLibraryPeer.cpp;
+			refType = 0;
+		};
+		5EA68954046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXProcessPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXProcessPeer.cpp;
+			refType = 0;
+		};
+		5EA68955046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXFilePeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXFilePeer.cpp;
+			refType = 0;
+		};
+		5EA68956046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXFileStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXFileStream.cpp;
+			refType = 0;
+		};
+		5EA68957046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXConditionPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXConditionPeer.cpp;
+			refType = 0;
+		};
+		5EA68958046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXThread.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXThread.cpp;
+			refType = 0;
+		};
+		5EA68959046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXSystemToolkit.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXSystemToolkit.cpp;
+			refType = 0;
+		};
+		5EA6895A046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXSystemPeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXSystemPeer.cpp;
+			refType = 0;
+		};
+		5EA6895B046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXRegistry.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXRegistry.cpp;
+			refType = 0;
+		};
+		5EA6895C046D4E5100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXSemaphorePeer.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/ImplementerKit/OSXSemaphorePeer.cpp;
+			refType = 0;
+		};
+		5EA6895D046D4E5100A8020D = {
+			fileRef = 5EA68951046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6895E046D4E5100A8020D = {
+			fileRef = 5EA68952046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6895F046D4E5100A8020D = {
+			fileRef = 5EA68953046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68960046D4E5100A8020D = {
+			fileRef = 5EA68954046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68961046D4E5100A8020D = {
+			fileRef = 5EA68955046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68962046D4E5100A8020D = {
+			fileRef = 5EA68956046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68963046D4E5100A8020D = {
+			fileRef = 5EA68957046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68964046D4E5100A8020D = {
+			fileRef = 5EA68958046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68965046D4E5100A8020D = {
+			fileRef = 5EA68959046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68966046D4E5100A8020D = {
+			fileRef = 5EA6895A046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68967046D4E5100A8020D = {
+			fileRef = 5EA6895B046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68968046D4E5100A8020D = {
+			fileRef = 5EA6895C046D4E5100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68969046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXProcessPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXProcessPeer.h;
+			refType = 0;
+		};
+		5EA6896B046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXThread.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXThread.h;
+			refType = 0;
+		};
+		5EA6896C046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXMutexPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXMutexPeer.h;
+			refType = 0;
+		};
+		5EA6896D046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXFilePeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXFilePeer.h;
+			refType = 0;
+		};
+		5EA6896E046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXPeer.h;
+			refType = 0;
+		};
+		5EA6896F046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXLibraryPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXLibraryPeer.h;
+			refType = 0;
+		};
+		5EA68970046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXFileStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXFileStream.h;
+			refType = 0;
+		};
+		5EA68971046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXRegistry.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXRegistry.h;
+			refType = 0;
+		};
+		5EA68972046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXSystemPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXSystemPeer.h;
+			refType = 0;
+		};
+		5EA68973046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXConditionPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXConditionPeer.h;
+			refType = 0;
+		};
+		5EA68974046D4E7D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OSXSemaphorePeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementerKit/OSXSemaphorePeer.h;
+			refType = 0;
+		};
+		5EA68975046D4E7D00A8020D = {
+			fileRef = 5EA68969046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68977046D4E7D00A8020D = {
+			fileRef = 5EA6896B046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68978046D4E7D00A8020D = {
+			fileRef = 5EA6896C046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68979046D4E7D00A8020D = {
+			fileRef = 5EA6896D046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897A046D4E7D00A8020D = {
+			fileRef = 5EA6896E046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897B046D4E7D00A8020D = {
+			fileRef = 5EA6896F046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897C046D4E7D00A8020D = {
+			fileRef = 5EA68970046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897D046D4E7D00A8020D = {
+			fileRef = 5EA68971046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897E046D4E7D00A8020D = {
+			fileRef = 5EA68972046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA6897F046D4E7D00A8020D = {
+			fileRef = 5EA68973046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EA68980046D4E7D00A8020D = {
+			fileRef = 5EA68974046D4E7D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58EB20465D87900A8020D = {
+			children = (
+				5E4931B30465DE9C00A8020D,
+				5EC58EB70465D88800A8020D,
+				5EC58EB80465D89300A8020D,
+				5EC58EB90465D8A500A8020D,
+				5EC58EC10465D93300A8020D,
+			);
+			isa = PBXGroup;
+			refType = 4;
+		};
+		5EC58EB40465D87900A8020D = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		5EC58EB50465D87900A8020D = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+		5EC58EB60465D87900A8020D = {
+			buildStyles = (
+				5EC58EB40465D87900A8020D,
+				5EC58EB50465D87900A8020D,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 5EC58EB20465D87900A8020D;
+			productRefGroup = 5EC58EC10465D93300A8020D;
+			projectDirPath = "";
+			targets = (
+				5EC58EBF0465D93300A8020D,
+			);
+		};
+		5EC58EB70465D88800A8020D = {
+			children = (
+				5EC58F740465DBEF00A8020D,
+				5EC58F390465DAF900A8020D,
+				5EC58F380465DACF00A8020D,
+			);
+			isa = PBXGroup;
+			name = FoundationKit;
+			path = "";
+			refType = 4;
+		};
+		5EC58EB80465D89300A8020D = {
+			children = (
+			);
+			isa = PBXGroup;
+			name = GraphicsKit;
+			refType = 4;
+		};
+		5EC58EB90465D8A500A8020D = {
+			children = (
+			);
+			isa = PBXGroup;
+			name = ApplicationKit;
+			path = "";
+			refType = 4;
+		};
+		5EC58EBA0465D93300A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+				5EC58EC40465D96400A8020D,
+				5EC58EC50465D96400A8020D,
+				5EC58F250465DABB00A8020D,
+				5EC58F260465DABB00A8020D,
+				5EC58F270465DABB00A8020D,
+				5EC58F280465DABB00A8020D,
+				5EC58F290465DABB00A8020D,
+				5EC58F2A0465DABB00A8020D,
+				5EC58F2B0465DABB00A8020D,
+				5EC58F2C0465DABB00A8020D,
+				5EC58F2D0465DABB00A8020D,
+				5EC58F2E0465DABB00A8020D,
+				5EC58F2F0465DABB00A8020D,
+				5EC58F300465DABB00A8020D,
+				5EC58F310465DABB00A8020D,
+				5EC58F320465DABB00A8020D,
+				5EC58F330465DABB00A8020D,
+				5EC58F340465DABB00A8020D,
+				5EC58F350465DABB00A8020D,
+				5EC58F360465DABB00A8020D,
+				5EC58F370465DABB00A8020D,
+				5EC58F3E0465DB3E00A8020D,
+				5EC58F3F0465DB3E00A8020D,
+				5EC58F400465DB3E00A8020D,
+				5EC58F410465DB3E00A8020D,
+				5EC58F530465DB8400A8020D,
+				5EC58F540465DB8400A8020D,
+				5EC58F550465DB8400A8020D,
+				5EC58F560465DB8400A8020D,
+				5EC58F570465DB8400A8020D,
+				5EC58F580465DB8400A8020D,
+				5EC58F590465DB8400A8020D,
+				5EC58F5A0465DB8400A8020D,
+				5EC58F5B0465DB8400A8020D,
+				5EC58F5C0465DB8400A8020D,
+				5EC58F5D0465DB8400A8020D,
+				5EC58F5E0465DB8400A8020D,
+				5EC58F5F0465DB8400A8020D,
+				5EC58F600465DB8400A8020D,
+				5EC58F610465DB8400A8020D,
+				5EC58F620465DB8400A8020D,
+				5EC58F630465DB8400A8020D,
+				5EC58F6C0465DBDA00A8020D,
+				5EC58F6D0465DBDA00A8020D,
+				5EC58F6E0465DBDA00A8020D,
+				5EC58F6F0465DBDA00A8020D,
+				5EC58F700465DBDA00A8020D,
+				5EC58F710465DBDA00A8020D,
+				5EC58F720465DBDA00A8020D,
+				5EC58F730465DBDA00A8020D,
+				5EC58F860465DC1E00A8020D,
+				5EC58F870465DC1E00A8020D,
+				5EC58F880465DC1E00A8020D,
+				5EC58F890465DC1E00A8020D,
+				5EC58F8A0465DC1E00A8020D,
+				5EC58F8B0465DC1E00A8020D,
+				5EC58F8C0465DC1E00A8020D,
+				5EC58F8D0465DC1E00A8020D,
+				5EC58F8E0465DC1E00A8020D,
+				5EC58F8F0465DC1E00A8020D,
+				5EC58F900465DC1E00A8020D,
+				5EC58F910465DC1E00A8020D,
+				5EC58F920465DC1E00A8020D,
+				5EC58F930465DC1E00A8020D,
+				5EC58F940465DC1E00A8020D,
+				5EC58F950465DC1E00A8020D,
+				5EC58F960465DC1E00A8020D,
+				5EC58FAE0465DC6700A8020D,
+				5EC58FAF0465DC6700A8020D,
+				5EC58FB00465DC6700A8020D,
+				5EC58FB10465DC6700A8020D,
+				5EC58FB20465DC6700A8020D,
+				5EC58FB30465DC6700A8020D,
+				5EC58FB40465DC6700A8020D,
+				5EC58FB50465DC6700A8020D,
+				5EC58FB60465DC6700A8020D,
+				5EC58FB70465DC6700A8020D,
+				5EC58FB80465DC6700A8020D,
+				5EC58FB90465DC6700A8020D,
+				5EC58FBA0465DC6700A8020D,
+				5EC58FBB0465DC6700A8020D,
+				5EC58FBC0465DC6700A8020D,
+				5EC58FBD0465DC6700A8020D,
+				5EC58FBE0465DC6700A8020D,
+				5EC58FBF0465DC6700A8020D,
+				5EC58FC00465DC6700A8020D,
+				5EC58FC10465DC6700A8020D,
+				5EC58FC20465DC6700A8020D,
+				5EC58FC30465DC6700A8020D,
+				5EC58FC40465DC6700A8020D,
+				5EA68950046D4B2E00A8020D,
+				5EA68975046D4E7D00A8020D,
+				5EA68977046D4E7D00A8020D,
+				5EA68978046D4E7D00A8020D,
+				5EA68979046D4E7D00A8020D,
+				5EA6897A046D4E7D00A8020D,
+				5EA6897B046D4E7D00A8020D,
+				5EA6897C046D4E7D00A8020D,
+				5EA6897D046D4E7D00A8020D,
+				5EA6897E046D4E7D00A8020D,
+				5EA6897F046D4E7D00A8020D,
+				5EA68980046D4E7D00A8020D,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EC58EBB0465D93300A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EC58EBC0465D93300A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+				5EC58FCF0465DCE800A8020D,
+				5EC58FD00465DCE800A8020D,
+				5EC58FD10465DCE800A8020D,
+				5EC58FD20465DCE800A8020D,
+				5EC58FD30465DCE800A8020D,
+				5EC58FD40465DCE800A8020D,
+				5EC58FD50465DCE800A8020D,
+				5EC58FD60465DCE800A8020D,
+				5EC58FD70465DCE800A8020D,
+				5EC58FD80465DCE800A8020D,
+				5EC58FDD0465DD1100A8020D,
+				5EC58FDE0465DD1100A8020D,
+				5EC58FDF0465DD1100A8020D,
+				5EC58FE00465DD1100A8020D,
+				5EC58FE20465DD1D00A8020D,
+				5EC58FED0465DD4100A8020D,
+				5EC58FEE0465DD4100A8020D,
+				5EC58FEF0465DD4100A8020D,
+				5EC58FF00465DD4100A8020D,
+				5EC58FF10465DD4100A8020D,
+				5EC58FF20465DD4100A8020D,
+				5EC58FF30465DD4100A8020D,
+				5EC58FF40465DD4100A8020D,
+				5EC58FF50465DD4100A8020D,
+				5EC58FF60465DD4100A8020D,
+				5EC5900D0465DD7400A8020D,
+				5EC5900E0465DD7400A8020D,
+				5EC590120465DD7400A8020D,
+				5EC590130465DD7400A8020D,
+				5EC590150465DD7400A8020D,
+				5EC590160465DD7400A8020D,
+				5EC590170465DD7400A8020D,
+				5EC590180465DD7400A8020D,
+				5EC590190465DD7400A8020D,
+				5EC5901D0465DD7400A8020D,
+				5EC5901E0465DD7400A8020D,
+				5EC5901F0465DD7400A8020D,
+				5EC590200465DD7400A8020D,
+				5EC590210465DD7400A8020D,
+				5EC590220465DD7400A8020D,
+				5EA6895D046D4E5100A8020D,
+				5EA6895E046D4E5100A8020D,
+				5EA6895F046D4E5100A8020D,
+				5EA68960046D4E5100A8020D,
+				5EA68961046D4E5100A8020D,
+				5EA68962046D4E5100A8020D,
+				5EA68963046D4E5100A8020D,
+				5EA68964046D4E5100A8020D,
+				5EA68965046D4E5100A8020D,
+				5EA68966046D4E5100A8020D,
+				5EA68967046D4E5100A8020D,
+				5EA68968046D4E5100A8020D,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EC58EBD0465D93300A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+				5E4931B70465DF9800A8020D,
+				5E4931B90465DFD500A8020D,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EC58EBE0465D93300A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EC58EBF0465D93300A8020D = {
+			buildPhases = (
+				5EC58EBA0465D93300A8020D,
+				5EC58EBB0465D93300A8020D,
+				5EC58EBC0465D93300A8020D,
+				5EC58EBD0465D93300A8020D,
+				5EC58EBE0465D93300A8020D,
+			);
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOL_FLAGS = "";
+				OTHER_REZFLAGS = "";
+				PREFIX_HEADER = "$(VCF_INCLUDE)/FoundationKit.h";
+				PRINCIPAL_CLASS = "";
+				PRODUCT_NAME = FoundationKit;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = framework;
+			};
+			dependencies = (
+			);
+			isa = PBXFrameworkTarget;
+			name = FoundationKit;
+			productInstallPath = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+			productName = FoundationKit;
+			productReference = 5EC58EC00465D93300A8020D;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string></string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+</dict>
+</plist>
+";
+		};
+		5EC58EC00465D93300A8020D = {
+			isa = PBXFrameworkReference;
+			path = FoundationKit.framework;
+			refType = 3;
+		};
+		5EC58EC10465D93300A8020D = {
+			children = (
+				5EC58EC00465D93300A8020D,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+		5EC58EC20465D96400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FoundationKit.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/FoundationKit.h;
+			refType = 0;
+		};
+		5EC58EC30465D96400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FoundationKitPrivate.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/FoundationKitPrivate.h;
+			refType = 0;
+		};
+		5EC58EC40465D96400A8020D = {
+			fileRef = 5EC58EC20465D96400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58EC50465D96400A8020D = {
+			fileRef = 5EC58EC30465D96400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F120465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFMath.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/VCFMath.h;
+			refType = 0;
+		};
+		5EC58F130465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Property.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Property.h;
+			refType = 0;
+		};
+		5EC58F140465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Method.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Method.h;
+			refType = 0;
+		};
+		5EC58F150465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InterfaceClass.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/InterfaceClass.h;
+			refType = 0;
+		};
+		5EC58F160465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Interface.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Interface.h;
+			refType = 0;
+		};
+		5EC58F170465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Locales.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Locales.h;
+			refType = 0;
+		};
+		5EC58F180465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FoundationKitSelectLib.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/FoundationKitSelectLib.h;
+			refType = 0;
+		};
+		5EC58F190465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Class.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Class.h;
+			refType = 0;
+		};
+		5EC58F1A0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VariantData.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/VariantData.h;
+			refType = 0;
+		};
+		5EC58F1B0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ObjectWithEvents.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/ObjectWithEvents.h;
+			refType = 0;
+		};
+		5EC58F1C0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Object.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Object.h;
+			refType = 0;
+		};
+		5EC58F1D0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Rect.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Rect.h;
+			refType = 0;
+		};
+		5EC58F1E0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ClassInfo.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/ClassInfo.h;
+			refType = 0;
+		};
+		5EC58F1F0465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ClassRegistry.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/ClassRegistry.h;
+			refType = 0;
+		};
+		5EC58F200465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCF.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/VCF.h;
+			refType = 0;
+		};
+		5EC58F210465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Size.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Size.h;
+			refType = 0;
+		};
+		5EC58F220465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = CommonDefines.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/CommonDefines.h;
+			refType = 0;
+		};
+		5EC58F230465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FrameworkConfig.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/FrameworkConfig.h;
+			refType = 0;
+		};
+		5EC58F240465DABB00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Point.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/core/Point.h;
+			refType = 0;
+		};
+		5EC58F250465DABB00A8020D = {
+			fileRef = 5EC58F120465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F260465DABB00A8020D = {
+			fileRef = 5EC58F130465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F270465DABB00A8020D = {
+			fileRef = 5EC58F140465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F280465DABB00A8020D = {
+			fileRef = 5EC58F150465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F290465DABB00A8020D = {
+			fileRef = 5EC58F160465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2A0465DABB00A8020D = {
+			fileRef = 5EC58F170465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2B0465DABB00A8020D = {
+			fileRef = 5EC58F180465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2C0465DABB00A8020D = {
+			fileRef = 5EC58F190465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2D0465DABB00A8020D = {
+			fileRef = 5EC58F1A0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2E0465DABB00A8020D = {
+			fileRef = 5EC58F1B0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F2F0465DABB00A8020D = {
+			fileRef = 5EC58F1C0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F300465DABB00A8020D = {
+			fileRef = 5EC58F1D0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F310465DABB00A8020D = {
+			fileRef = 5EC58F1E0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F320465DABB00A8020D = {
+			fileRef = 5EC58F1F0465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F330465DABB00A8020D = {
+			fileRef = 5EC58F200465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F340465DABB00A8020D = {
+			fileRef = 5EC58F210465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F350465DABB00A8020D = {
+			fileRef = 5EC58F220465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F360465DABB00A8020D = {
+			fileRef = 5EC58F230465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F370465DABB00A8020D = {
+			fileRef = 5EC58F240465DABB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F380465DACF00A8020D = {
+			children = (
+				5EC58F970465DC6700A8020D,
+				5EC58F980465DC6700A8020D,
+				5EC58F990465DC6700A8020D,
+				5EC58F9A0465DC6700A8020D,
+				5EC58F9B0465DC6700A8020D,
+				5EC58F9C0465DC6700A8020D,
+				5EC58F9D0465DC6700A8020D,
+				5EC58F9E0465DC6700A8020D,
+				5EC58F9F0465DC6700A8020D,
+				5EC58FA00465DC6700A8020D,
+				5EC58FA10465DC6700A8020D,
+				5EC58FA20465DC6700A8020D,
+				5EC58FA30465DC6700A8020D,
+				5EC58FA40465DC6700A8020D,
+				5EC58FA50465DC6700A8020D,
+				5EC58FA60465DC6700A8020D,
+				5EC58FA70465DC6700A8020D,
+				5EC58FA80465DC6700A8020D,
+				5EC58FA90465DC6700A8020D,
+				5EC58FAA0465DC6700A8020D,
+				5EC58FAB0465DC6700A8020D,
+				5EC58FAC0465DC6700A8020D,
+				5EC58FAD0465DC6700A8020D,
+				5EC58F750465DC1E00A8020D,
+				5EC58F760465DC1E00A8020D,
+				5EC58F770465DC1E00A8020D,
+				5EC58F780465DC1E00A8020D,
+				5EC58F790465DC1E00A8020D,
+				5EC58F7A0465DC1E00A8020D,
+				5EC58F7B0465DC1E00A8020D,
+				5EC58F7C0465DC1E00A8020D,
+				5EC58F7D0465DC1E00A8020D,
+				5EC58F7E0465DC1E00A8020D,
+				5EC58F7F0465DC1E00A8020D,
+				5EC58F800465DC1E00A8020D,
+				5EC58F810465DC1E00A8020D,
+				5EC58F820465DC1E00A8020D,
+				5EC58F830465DC1E00A8020D,
+				5EC58F840465DC1E00A8020D,
+				5EC58F850465DC1E00A8020D,
+				5EC58F640465DBDA00A8020D,
+				5EC58F650465DBDA00A8020D,
+				5EC58F660465DBDA00A8020D,
+				5EC58F670465DBDA00A8020D,
+				5EC58F680465DBDA00A8020D,
+				5EC58F690465DBDA00A8020D,
+				5EC58F6A0465DBDA00A8020D,
+				5EC58F6B0465DBDA00A8020D,
+				5EC58F420465DB8400A8020D,
+				5EC58F430465DB8400A8020D,
+				5EC58F440465DB8400A8020D,
+				5EC58F450465DB8400A8020D,
+				5EC58F460465DB8400A8020D,
+				5EC58F470465DB8400A8020D,
+				5EC58F480465DB8400A8020D,
+				5EC58F490465DB8400A8020D,
+				5EC58F4A0465DB8400A8020D,
+				5EC58F4B0465DB8400A8020D,
+				5EC58F4C0465DB8400A8020D,
+				5EC58F4D0465DB8400A8020D,
+				5EC58F4E0465DB8400A8020D,
+				5EC58F4F0465DB8400A8020D,
+				5EC58F500465DB8400A8020D,
+				5EC58F510465DB8400A8020D,
+				5EC58F520465DB8400A8020D,
+				5EC58F3A0465DB3E00A8020D,
+				5EC58F3B0465DB3E00A8020D,
+				5EC58F3C0465DB3E00A8020D,
+				5EC58F3D0465DB3E00A8020D,
+				5EC58F120465DABB00A8020D,
+				5EC58F130465DABB00A8020D,
+				5EC58F140465DABB00A8020D,
+				5EC58F150465DABB00A8020D,
+				5EC58F160465DABB00A8020D,
+				5EC58F170465DABB00A8020D,
+				5EC58F180465DABB00A8020D,
+				5EC58F190465DABB00A8020D,
+				5EC58F1A0465DABB00A8020D,
+				5EC58F1B0465DABB00A8020D,
+				5EC58F1C0465DABB00A8020D,
+				5EC58F1D0465DABB00A8020D,
+				5EC58F1E0465DABB00A8020D,
+				5EC58F1F0465DABB00A8020D,
+				5EC58F200465DABB00A8020D,
+				5EC58F210465DABB00A8020D,
+				5EC58F220465DABB00A8020D,
+				5EC58F230465DABB00A8020D,
+				5EC58F240465DABB00A8020D,
+				5EC58EC20465D96400A8020D,
+				5EC58EC30465D96400A8020D,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			path = "";
+			refType = 4;
+		};
+		5EC58F390465DAF900A8020D = {
+			children = (
+				5EC58FF70465DD7400A8020D,
+				5EC58FF80465DD7400A8020D,
+				5EC58FFC0465DD7400A8020D,
+				5EC58FFD0465DD7400A8020D,
+				5EC58FFF0465DD7400A8020D,
+				5EC590000465DD7400A8020D,
+				5EC590010465DD7400A8020D,
+				5EC590020465DD7400A8020D,
+				5EC590030465DD7400A8020D,
+				5EC590070465DD7400A8020D,
+				5EC590080465DD7400A8020D,
+				5EC590090465DD7400A8020D,
+				5EC5900A0465DD7400A8020D,
+				5EC5900B0465DD7400A8020D,
+				5EC5900C0465DD7400A8020D,
+				5EC58FE30465DD4100A8020D,
+				5EC58FE40465DD4100A8020D,
+				5EC58FE50465DD4100A8020D,
+				5EC58FE60465DD4100A8020D,
+				5EC58FE70465DD4100A8020D,
+				5EC58FE80465DD4100A8020D,
+				5EC58FE90465DD4100A8020D,
+				5EC58FEA0465DD4100A8020D,
+				5EC58FEB0465DD4100A8020D,
+				5EC58FEC0465DD4100A8020D,
+				5EC58FE10465DD1D00A8020D,
+				5EC58FD90465DD1100A8020D,
+				5EC58FDA0465DD1100A8020D,
+				5EC58FDB0465DD1100A8020D,
+				5EC58FDC0465DD1100A8020D,
+				5EC58FC50465DCE800A8020D,
+				5EC58FC60465DCE800A8020D,
+				5EC58FC70465DCE800A8020D,
+				5EC58FC80465DCE800A8020D,
+				5EC58FC90465DCE800A8020D,
+				5EC58FCA0465DCE800A8020D,
+				5EC58FCB0465DCE800A8020D,
+				5EC58FCC0465DCE800A8020D,
+				5EC58FCD0465DCE800A8020D,
+				5EC58FCE0465DCE800A8020D,
+			);
+			isa = PBXGroup;
+			name = Source;
+			path = "";
+			refType = 4;
+		};
+		5EC58F3A0465DB3E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Delegate.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/events/Delegate.h;
+			refType = 0;
+		};
+		5EC58F3B0465DB3E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = NotifyEvent.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/events/NotifyEvent.h;
+			refType = 0;
+		};
+		5EC58F3C0465DB3E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Event.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/events/Event.h;
+			refType = 0;
+		};
+		5EC58F3D0465DB3E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = EventHandler.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/events/EventHandler.h;
+			refType = 0;
+		};
+		5EC58F3E0465DB3E00A8020D = {
+			fileRef = 5EC58F3A0465DB3E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F3F0465DB3E00A8020D = {
+			fileRef = 5EC58F3B0465DB3E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F400465DB3E00A8020D = {
+			fileRef = 5EC58F3C0465DB3E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F410465DB3E00A8020D = {
+			fileRef = 5EC58F3D0465DB3E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F420465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = NoImplementerFoundException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/NoImplementerFoundException.h;
+			refType = 0;
+		};
+		5EC58F430465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = OutOfBoundsException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/OutOfBoundsException.h;
+			refType = 0;
+		};
+		5EC58F440465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = CantCreateObjectException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/CantCreateObjectException.h;
+			refType = 0;
+		};
+		5EC58F450465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/BasicException.h;
+			refType = 0;
+		};
+		5EC58F460465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = NoPeerFoundException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/NoPeerFoundException.h;
+			refType = 0;
+		};
+		5EC58F470465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InvalidPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/InvalidPeer.h;
+			refType = 0;
+		};
+		5EC58F480465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InvalidPointerException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/InvalidPointerException.h;
+			refType = 0;
+		};
+		5EC58F490465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ErrorStrings.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/ErrorStrings.h;
+			refType = 0;
+		};
+		5EC58F4A0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ClassNotFound.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/ClassNotFound.h;
+			refType = 0;
+		};
+		5EC58F4B0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = NoSuchElementException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/NoSuchElementException.h;
+			refType = 0;
+		};
+		5EC58F4C0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ProcessException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/ProcessException.h;
+			refType = 0;
+		};
+		5EC58F4D0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = TypeCastException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/TypeCastException.h;
+			refType = 0;
+		};
+		5EC58F4E0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = NoFreeMemException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/NoFreeMemException.h;
+			refType = 0;
+		};
+		5EC58F4F0465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InvalidStateException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/InvalidStateException.h;
+			refType = 0;
+		};
+		5EC58F500465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ThreadException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/ThreadException.h;
+			refType = 0;
+		};
+		5EC58F510465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = PropertyChangeException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/PropertyChangeException.h;
+			refType = 0;
+		};
+		5EC58F520465DB8400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = RuntimeException.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/exceptions/RuntimeException.h;
+			refType = 0;
+		};
+		5EC58F530465DB8400A8020D = {
+			fileRef = 5EC58F420465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F540465DB8400A8020D = {
+			fileRef = 5EC58F430465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F550465DB8400A8020D = {
+			fileRef = 5EC58F440465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F560465DB8400A8020D = {
+			fileRef = 5EC58F450465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F570465DB8400A8020D = {
+			fileRef = 5EC58F460465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F580465DB8400A8020D = {
+			fileRef = 5EC58F470465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F590465DB8400A8020D = {
+			fileRef = 5EC58F480465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5A0465DB8400A8020D = {
+			fileRef = 5EC58F490465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5B0465DB8400A8020D = {
+			fileRef = 5EC58F4A0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5C0465DB8400A8020D = {
+			fileRef = 5EC58F4B0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5D0465DB8400A8020D = {
+			fileRef = 5EC58F4C0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5E0465DB8400A8020D = {
+			fileRef = 5EC58F4D0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F5F0465DB8400A8020D = {
+			fileRef = 5EC58F4E0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F600465DB8400A8020D = {
+			fileRef = 5EC58F4F0465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F610465DB8400A8020D = {
+			fileRef = 5EC58F500465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F620465DB8400A8020D = {
+			fileRef = 5EC58F510465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F630465DB8400A8020D = {
+			fileRef = 5EC58F520465DB8400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F640465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ConditionPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/ConditionPeer.h;
+			refType = 0;
+		};
+		5EC58F650465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ThreadPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/ThreadPeer.h;
+			refType = 0;
+		};
+		5EC58F660465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = RegistryPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/RegistryPeer.h;
+			refType = 0;
+		};
+		5EC58F670465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ProcessPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/ProcessPeer.h;
+			refType = 0;
+		};
+		5EC58F680465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ProcessIORedirectionPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/ProcessIORedirectionPeer.h;
+			refType = 0;
+		};
+		5EC58F690465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MutexPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/MutexPeer.h;
+			refType = 0;
+		};
+		5EC58F6A0465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FilePeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/FilePeer.h;
+			refType = 0;
+		};
+		5EC58F6B0465DBDA00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = LibraryPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/implementer/LibraryPeer.h;
+			refType = 0;
+		};
+		5EC58F6C0465DBDA00A8020D = {
+			fileRef = 5EC58F640465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F6D0465DBDA00A8020D = {
+			fileRef = 5EC58F650465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F6E0465DBDA00A8020D = {
+			fileRef = 5EC58F660465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F6F0465DBDA00A8020D = {
+			fileRef = 5EC58F670465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F700465DBDA00A8020D = {
+			fileRef = 5EC58F680465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F710465DBDA00A8020D = {
+			fileRef = 5EC58F690465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F720465DBDA00A8020D = {
+			fileRef = 5EC58F6A0465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F730465DBDA00A8020D = {
+			fileRef = 5EC58F6B0465DBDA00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F740465DBEF00A8020D = {
+			children = (
+				5EA68951046D4E5100A8020D,
+				5EA68952046D4E5100A8020D,
+				5EA68953046D4E5100A8020D,
+				5EA68954046D4E5100A8020D,
+				5EA68955046D4E5100A8020D,
+				5EA68956046D4E5100A8020D,
+				5EA68957046D4E5100A8020D,
+				5EA68958046D4E5100A8020D,
+				5EA68959046D4E5100A8020D,
+				5EA6895A046D4E5100A8020D,
+				5EA6895B046D4E5100A8020D,
+				5EA6895C046D4E5100A8020D,
+				5EA6894F046D4B2E00A8020D,
+				5EA68969046D4E7D00A8020D,
+				5EA6896B046D4E7D00A8020D,
+				5EA6896C046D4E7D00A8020D,
+				5EA6896D046D4E7D00A8020D,
+				5EA6896E046D4E7D00A8020D,
+				5EA6896F046D4E7D00A8020D,
+				5EA68970046D4E7D00A8020D,
+				5EA68971046D4E7D00A8020D,
+				5EA68972046D4E7D00A8020D,
+				5EA68973046D4E7D00A8020D,
+				5EA68974046D4E7D00A8020D,
+			);
+			isa = PBXGroup;
+			name = Peers;
+			refType = 4;
+		};
+		5EC58F750465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MemStreamUtils.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/MemStreamUtils.h;
+			refType = 0;
+		};
+		5EC58F760465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MemoryStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/MemoryStream.h;
+			refType = 0;
+		};
+		5EC58F770465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = TextOutputStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/TextOutputStream.h;
+			refType = 0;
+		};
+		5EC58F780465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Directory.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/Directory.h;
+			refType = 0;
+		};
+		5EC58F790465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicInputStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/BasicInputStream.h;
+			refType = 0;
+		};
+		5EC58F7A0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = TextInputStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/TextInputStream.h;
+			refType = 0;
+		};
+		5EC58F7B0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Stream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/Stream.h;
+			refType = 0;
+		};
+		5EC58F7C0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileUtils.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/FileUtils.h;
+			refType = 0;
+		};
+		5EC58F7D0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileStreamPeer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/FileStreamPeer.h;
+			refType = 0;
+		};
+		5EC58F7E0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/FileStream.h;
+			refType = 0;
+		};
+		5EC58F7F0465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileIOError.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/FileIOError.h;
+			refType = 0;
+		};
+		5EC58F800465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicFileError.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/BasicFileError.h;
+			refType = 0;
+		};
+		5EC58F810465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicOutputStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/BasicOutputStream.h;
+			refType = 0;
+		};
+		5EC58F820465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = File.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/File.h;
+			refType = 0;
+		};
+		5EC58F830465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VariantDataStream.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/VariantDataStream.h;
+			refType = 0;
+		};
+		5EC58F840465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Persistable.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/Persistable.h;
+			refType = 0;
+		};
+		5EC58F850465DC1E00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileNotFound.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/io/FileNotFound.h;
+			refType = 0;
+		};
+		5EC58F860465DC1E00A8020D = {
+			fileRef = 5EC58F750465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F870465DC1E00A8020D = {
+			fileRef = 5EC58F760465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F880465DC1E00A8020D = {
+			fileRef = 5EC58F770465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F890465DC1E00A8020D = {
+			fileRef = 5EC58F780465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8A0465DC1E00A8020D = {
+			fileRef = 5EC58F790465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8B0465DC1E00A8020D = {
+			fileRef = 5EC58F7A0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8C0465DC1E00A8020D = {
+			fileRef = 5EC58F7B0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8D0465DC1E00A8020D = {
+			fileRef = 5EC58F7C0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8E0465DC1E00A8020D = {
+			fileRef = 5EC58F7D0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F8F0465DC1E00A8020D = {
+			fileRef = 5EC58F7E0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F900465DC1E00A8020D = {
+			fileRef = 5EC58F7F0465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F910465DC1E00A8020D = {
+			fileRef = 5EC58F800465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F920465DC1E00A8020D = {
+			fileRef = 5EC58F810465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F930465DC1E00A8020D = {
+			fileRef = 5EC58F820465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F940465DC1E00A8020D = {
+			fileRef = 5EC58F830465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F950465DC1E00A8020D = {
+			fileRef = 5EC58F840465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F960465DC1E00A8020D = {
+			fileRef = 5EC58F850465DC1E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58F970465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Condition.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Condition.h;
+			refType = 0;
+		};
+		5EC58F980465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = StringTokenizer.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/StringTokenizer.h;
+			refType = 0;
+		};
+		5EC58F990465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Enum.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Enum.h;
+			refType = 0;
+		};
+		5EC58F9A0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFString.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/VCFString.h;
+			refType = 0;
+		};
+		5EC58F9B0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFProcess.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/VCFProcess.h;
+			refType = 0;
+		};
+		5EC58F9C0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ErrorLog.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/ErrorLog.h;
+			refType = 0;
+		};
+		5EC58F9D0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Library.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Library.h;
+			refType = 0;
+		};
+		5EC58F9E0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = System.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/System.h;
+			refType = 0;
+		};
+		5EC58F9F0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFChar.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/VCFChar.h;
+			refType = 0;
+		};
+		5EC58FA00465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Parser.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Parser.h;
+			refType = 0;
+		};
+		5EC58FA10465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Registry.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Registry.h;
+			refType = 0;
+		};
+		5EC58FA20465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FilePath.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/FilePath.h;
+			refType = 0;
+		};
+		5EC58FA30465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SynchObject.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/SynchObject.h;
+			refType = 0;
+		};
+		5EC58FA40465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Mutex.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Mutex.h;
+			refType = 0;
+		};
+		5EC58FA50465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Thread.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Thread.h;
+			refType = 0;
+		};
+		5EC58FA60465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = XMLParser.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/XMLParser.h;
+			refType = 0;
+		};
+		5EC58FA70465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Lock.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Lock.h;
+			refType = 0;
+		};
+		5EC58FA80465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = StringUtils.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/StringUtils.h;
+			refType = 0;
+		};
+		5EC58FA90465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Semaphore.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Semaphore.h;
+			refType = 0;
+		};
+		5EC58FAA0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SystemToolkit.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/SystemToolkit.h;
+			refType = 0;
+		};
+		5EC58FAB0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Enumerator.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Enumerator.h;
+			refType = 0;
+		};
+		5EC58FAC0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Runnable.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/Runnable.h;
+			refType = 0;
+		};
+		5EC58FAD0465DC6700A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ProcessWithRedirectedIO.h;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/include/utils/ProcessWithRedirectedIO.h;
+			refType = 0;
+		};
+		5EC58FAE0465DC6700A8020D = {
+			fileRef = 5EC58F970465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FAF0465DC6700A8020D = {
+			fileRef = 5EC58F980465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB00465DC6700A8020D = {
+			fileRef = 5EC58F990465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB10465DC6700A8020D = {
+			fileRef = 5EC58F9A0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB20465DC6700A8020D = {
+			fileRef = 5EC58F9B0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB30465DC6700A8020D = {
+			fileRef = 5EC58F9C0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB40465DC6700A8020D = {
+			fileRef = 5EC58F9D0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB50465DC6700A8020D = {
+			fileRef = 5EC58F9E0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB60465DC6700A8020D = {
+			fileRef = 5EC58F9F0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB70465DC6700A8020D = {
+			fileRef = 5EC58FA00465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB80465DC6700A8020D = {
+			fileRef = 5EC58FA10465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FB90465DC6700A8020D = {
+			fileRef = 5EC58FA20465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBA0465DC6700A8020D = {
+			fileRef = 5EC58FA30465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBB0465DC6700A8020D = {
+			fileRef = 5EC58FA40465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBC0465DC6700A8020D = {
+			fileRef = 5EC58FA50465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBD0465DC6700A8020D = {
+			fileRef = 5EC58FA60465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBE0465DC6700A8020D = {
+			fileRef = 5EC58FA70465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FBF0465DC6700A8020D = {
+			fileRef = 5EC58FA80465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC00465DC6700A8020D = {
+			fileRef = 5EC58FA90465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC10465DC6700A8020D = {
+			fileRef = 5EC58FAA0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC20465DC6700A8020D = {
+			fileRef = 5EC58FAB0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC30465DC6700A8020D = {
+			fileRef = 5EC58FAC0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC40465DC6700A8020D = {
+			fileRef = 5EC58FAD0465DC6700A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FC50465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InterfaceClass.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/InterfaceClass.cpp;
+			refType = 0;
+		};
+		5EC58FC60465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ClassRegistry.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/ClassRegistry.cpp;
+			refType = 0;
+		};
+		5EC58FC70465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Class.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/Class.cpp;
+			refType = 0;
+		};
+		5EC58FC80465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Locales.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/Locales.cpp;
+			refType = 0;
+		};
+		5EC58FC90465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FoundationKit.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/FoundationKit.cpp;
+			refType = 0;
+		};
+		5EC58FCA0465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Rect.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/Rect.cpp;
+			refType = 0;
+		};
+		5EC58FCB0465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ObjectWithEvents.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/ObjectWithEvents.cpp;
+			refType = 0;
+		};
+		5EC58FCC0465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Object.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/Object.cpp;
+			refType = 0;
+		};
+		5EC58FCD0465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFMath.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/VCFMath.cpp;
+			refType = 0;
+		};
+		5EC58FCE0465DCE800A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Point.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/core/Point.cpp;
+			refType = 0;
+		};
+		5EC58FCF0465DCE800A8020D = {
+			fileRef = 5EC58FC50465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD00465DCE800A8020D = {
+			fileRef = 5EC58FC60465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD10465DCE800A8020D = {
+			fileRef = 5EC58FC70465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD20465DCE800A8020D = {
+			fileRef = 5EC58FC80465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD30465DCE800A8020D = {
+			fileRef = 5EC58FC90465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD40465DCE800A8020D = {
+			fileRef = 5EC58FCA0465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD50465DCE800A8020D = {
+			fileRef = 5EC58FCB0465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD60465DCE800A8020D = {
+			fileRef = 5EC58FCC0465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD70465DCE800A8020D = {
+			fileRef = 5EC58FCD0465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD80465DCE800A8020D = {
+			fileRef = 5EC58FCE0465DCE800A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FD90465DD1100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = PropertyChangeEvent.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Events/PropertyChangeEvent.cpp;
+			refType = 0;
+		};
+		5EC58FDA0465DD1100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ThreadEvent.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Events/ThreadEvent.cpp;
+			refType = 0;
+		};
+		5EC58FDB0465DD1100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = EventHandler.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Events/EventHandler.cpp;
+			refType = 0;
+		};
+		5EC58FDC0465DD1100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Event.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Events/Event.cpp;
+			refType = 0;
+		};
+		5EC58FDD0465DD1100A8020D = {
+			fileRef = 5EC58FD90465DD1100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FDE0465DD1100A8020D = {
+			fileRef = 5EC58FDA0465DD1100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FDF0465DD1100A8020D = {
+			fileRef = 5EC58FDB0465DD1100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FE00465DD1100A8020D = {
+			fileRef = 5EC58FDC0465DD1100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FE10465DD1D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicException.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Exceptions/BasicException.cpp;
+			refType = 0;
+		};
+		5EC58FE20465DD1D00A8020D = {
+			fileRef = 5EC58FE10465DD1D00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FE30465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MemoryStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/MemoryStream.cpp;
+			refType = 0;
+		};
+		5EC58FE40465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = TextOutputStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/TextOutputStream.cpp;
+			refType = 0;
+		};
+		5EC58FE50465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = TextInputStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/TextInputStream.cpp;
+			refType = 0;
+		};
+		5EC58FE60465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/FileStream.cpp;
+			refType = 0;
+		};
+		5EC58FE70465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = File.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/File.cpp;
+			refType = 0;
+		};
+		5EC58FE80465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicOutputStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/BasicOutputStream.cpp;
+			refType = 0;
+		};
+		5EC58FE90465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Directory.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/Directory.cpp;
+			refType = 0;
+		};
+		5EC58FEA0465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FileUtils.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/FileUtils.cpp;
+			refType = 0;
+		};
+		5EC58FEB0465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BasicInputStream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/BasicInputStream.cpp;
+			refType = 0;
+		};
+		5EC58FEC0465DD4100A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Stream.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/IO/Stream.cpp;
+			refType = 0;
+		};
+		5EC58FED0465DD4100A8020D = {
+			fileRef = 5EC58FE30465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FEE0465DD4100A8020D = {
+			fileRef = 5EC58FE40465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FEF0465DD4100A8020D = {
+			fileRef = 5EC58FE50465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF00465DD4100A8020D = {
+			fileRef = 5EC58FE60465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF10465DD4100A8020D = {
+			fileRef = 5EC58FE70465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF20465DD4100A8020D = {
+			fileRef = 5EC58FE80465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF30465DD4100A8020D = {
+			fileRef = 5EC58FE90465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF40465DD4100A8020D = {
+			fileRef = 5EC58FEA0465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF50465DD4100A8020D = {
+			fileRef = 5EC58FEB0465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF60465DD4100A8020D = {
+			fileRef = 5EC58FEC0465DD4100A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC58FF70465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = XMLParser.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/XMLParser.cpp;
+			refType = 0;
+		};
+		5EC58FF80465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SystemToolkit.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/SystemToolkit.cpp;
+			refType = 0;
+		};
+		5EC58FFC0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = StringUtils.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/StringUtils.cpp;
+			refType = 0;
+		};
+		5EC58FFD0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Thread.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Thread.cpp;
+			refType = 0;
+		};
+		5EC58FFF0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Parser.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Parser.cpp;
+			refType = 0;
+		};
+		5EC590000465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = VCFProcess.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/VCFProcess.cpp;
+			refType = 0;
+		};
+		5EC590010465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Library.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Library.cpp;
+			refType = 0;
+		};
+		5EC590020465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Condition.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Condition.cpp;
+			refType = 0;
+		};
+		5EC590030465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = System.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/System.cpp;
+			refType = 0;
+		};
+		5EC590070465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Registry.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Registry.cpp;
+			refType = 0;
+		};
+		5EC590080465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ProcessWithRedirectedIO.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/ProcessWithRedirectedIO.cpp;
+			refType = 0;
+		};
+		5EC590090465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Semaphore.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Semaphore.cpp;
+			refType = 0;
+		};
+		5EC5900A0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ErrorLog.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/ErrorLog.cpp;
+			refType = 0;
+		};
+		5EC5900B0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Mutex.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/Mutex.cpp;
+			refType = 0;
+		};
+		5EC5900C0465DD7400A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FilePath.cpp;
+			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/Utils/FilePath.cpp;
+			refType = 0;
+		};
+		5EC5900D0465DD7400A8020D = {
+			fileRef = 5EC58FF70465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC5900E0465DD7400A8020D = {
+			fileRef = 5EC58FF80465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590120465DD7400A8020D = {
+			fileRef = 5EC58FFC0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590130465DD7400A8020D = {
+			fileRef = 5EC58FFD0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590150465DD7400A8020D = {
+			fileRef = 5EC58FFF0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590160465DD7400A8020D = {
+			fileRef = 5EC590000465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590170465DD7400A8020D = {
+			fileRef = 5EC590010465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590180465DD7400A8020D = {
+			fileRef = 5EC590020465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590190465DD7400A8020D = {
+			fileRef = 5EC590030465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC5901D0465DD7400A8020D = {
+			fileRef = 5EC590070465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC5901E0465DD7400A8020D = {
+			fileRef = 5EC590080465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC5901F0465DD7400A8020D = {
+			fileRef = 5EC590090465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590200465DD7400A8020D = {
+			fileRef = 5EC5900A0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590210465DD7400A8020D = {
+			fileRef = 5EC5900B0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EC590220465DD7400A8020D = {
+			fileRef = 5EC5900C0465DD7400A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 5EC58EB60465D87900A8020D;
+}

@@ -192,3 +192,4 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 //  global VCFConsoleWizaw.
 CVCFConsoleWizAppWiz VCFConsoleWizaw;
 
+
