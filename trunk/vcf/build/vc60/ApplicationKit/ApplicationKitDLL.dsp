@@ -561,10 +561,6 @@ SOURCE=..\..\..\include\implementer\ListBoxPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\Listener.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ListItem.h
 # End Source File
 # Begin Source File
