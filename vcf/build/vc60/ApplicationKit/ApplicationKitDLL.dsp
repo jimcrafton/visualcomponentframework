@@ -537,10 +537,6 @@ SOURCE=..\..\..\include\implementer\HTMLBrowserPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\HTMLBrowserPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ImageControl.h
 # End Source File
 # Begin Source File
