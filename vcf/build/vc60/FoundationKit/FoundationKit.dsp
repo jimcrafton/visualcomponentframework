@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"FoundationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"FoundationKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"FoundationKit.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -134,7 +134,17 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
 # ADD CPP /Yc"FoundationKit.h"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+# ADD CPP /Yc"FoundationKit.h"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -378,7 +388,7 @@ SOURCE=..\..\..\include\io\FileUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\FoundationKit.h
+SOURCE=..\..\..\include\FoundationKit.h
 # End Source File
 # Begin Source File
 

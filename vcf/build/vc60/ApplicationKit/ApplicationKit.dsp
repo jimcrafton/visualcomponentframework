@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -98,19 +98,14 @@ SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractContainer.cpp
-
-!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
-
-# ADD CPP /Yu
-
-!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractListModel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\AbstractPropertyEditor.cpp
 # End Source File
 # Begin Source File
 
@@ -147,7 +142,17 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
 # ADD CPP /Yc"ApplicationKit.h"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+# ADD CPP /Yc"ApplicationKit.h"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -167,15 +172,15 @@ SOURCE=..\..\..\src\core\CheckBoxControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\Clipboard.cpp
+SOURCE=..\..\..\src\core\Clipboard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\ClipboardDataObject.cpp
+SOURCE=..\..\..\src\core\ClipboardDataObject.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\ClipboardEvent.cpp
+SOURCE=..\..\..\src\Events\ClipboardEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -283,7 +288,7 @@ SOURCE=..\..\..\src\core\CustomControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\DataType.cpp
+SOURCE=..\..\..\src\core\DataType.cpp
 # End Source File
 # Begin Source File
 
@@ -347,7 +352,7 @@ SOURCE=..\..\..\src\core\Dialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\DragEvent.cpp
+SOURCE=..\..\..\src\Events\DragEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -355,7 +360,7 @@ SOURCE=..\..\..\src\DragDrop\DragSource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\DropEvent.cpp
+SOURCE=..\..\..\src\Events\DropEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -723,6 +728,10 @@ SOURCE=..\..\..\include\core\AbstractListModel.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractPropertyEditor.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\AbstractScrollable.h
 # End Source File
 # Begin Source File
@@ -736,6 +745,10 @@ SOURCE=..\..\..\include\core\AbstractTextModel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractTreeModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\AbstractView.h
 # End Source File
 # Begin Source File
 
@@ -759,7 +772,11 @@ SOURCE=..\..\..\include\exceptions\ApplicationException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ApplicationKit.h
+SOURCE=..\..\..\include\ApplicationKit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\ApplicationKitPrivate.h
 # End Source File
 # Begin Source File
 
@@ -844,10 +861,6 @@ SOURCE=..\..\..\include\core\ComboBoxControl.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ComboBoxListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementer\ComboBoxPeer.h
 # End Source File
 # Begin Source File
 
@@ -975,6 +988,10 @@ SOURCE=..\..\..\include\implementer\ControlPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\ControlsKit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Cursor.h
 # End Source File
 # Begin Source File
@@ -1072,42 +1089,6 @@ SOURCE=..\..\..\include\core\Dialog.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\DialogPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DragDropPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DragEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DragScrollEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DragSource.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DragSourceListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DropEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DropTarget.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DropTargetListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DropTargetPeer.h
 # End Source File
 # Begin Source File
 
@@ -1296,6 +1277,10 @@ SOURCE=..\..\..\include\events\ModelListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ModelValidationListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\ModelViewKit.h
 # End Source File
 # Begin Source File
 
@@ -1512,10 +1497,6 @@ SOURCE=..\..\..\include\core\ToolbarButton.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\ToolbarDock.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementer\ToolbarPeer.h
 # End Source File
 # Begin Source File
 
@@ -1746,5 +1727,21 @@ SOURCE=..\..\resources\win32\ApplicationKit.rc
 SOURCE=..\..\resources\win32\vcf.ico
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\..\resources\win32\inform.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\question.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\stop.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\warning.bmp
+# End Source File
 # End Target
 # End Project

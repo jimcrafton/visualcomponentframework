@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Building the VCF</title>
+<link rel="stylesheet" type="text/css" href="vcf_2.css">
+</head>
+
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF" style="font-family: Trebuchet MS">
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0" height="199">
+  <tr>
+    <td width="663"><img border="0" src="logo.jpg" width="663" height="199"></td>
+    <td.docTop width="100%" align="right" valign="bottom" align="right">
+    <td background="top-background.jpg" valign="bottom" align="right">Hosted by:
+      <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=6796&amp;type=1" border="0" alt="SourceForge Logo"></a></td>
+  </tr>
+</table>
+<!--
+Main body table
+-->
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="docLeft" width="117" valign="top" align="left"><img src="left_sidebar.jpg" width="120" height="1024"></td>
+    <td valign="top">
+    	<table bgcolor="#0D4D99" border="0" cellspacing="0" cellpadding="0" width="100%" >
+		<tr>
+    		<td><a class="docTopic" href="main.html">Documentation Home</a></td>
+		</tr>
+		</table>
+		
+      <h1><a name="TopicTitle">Building the VCF</a></h1>
+      <h2><a name="Introduction">Introduction</a></h2>
+        <p>Building the VCF is easy. This assumes that you have downloaded it
+        and, if necessary, set up any environment variables (if you're not sure
+        about this please read <a href="installing_the_vcf.html">this</a>).&nbsp;
+        The following sections will discuss building the VCF on specific
+        platforms.</p>
+        <h3>Win32</h3>
+        <h4>Required software:</h4>
+        <p>Microsoft Visual C++ 6.x</p>
+        <p>Build the <a href="building_the_microsoft_vc.html">Wizards and
+        Add-ins</a> first. Once this is done you should build the VCF framework
+        itself. Open the vcf/build/vc60/vcfAll.dsw workspace. This workspace has
+        all the various framework projects, both as static .lib files and DLL
+        projects. To build all the DLL projects select the &quot;<b>vcfAll</b>&quot;
+        project and make it the active project. Building this project will
+        automatically build the FoundationKit, GraphicsKit, ApplicationKit,
+        NetworkKit, and RemoteObjectKit. To build all the core static libraries
+        select the &quot;<b>vcfAllStaticLibs</b>&quot; project and make it the
+        active project.&nbsp;</p>
+        <p>There are several additional projects you can build as well for
+        additional features.</p>
+        <ul>
+          <li>&nbsp;The <b>ImageFormats</b> project, which adds support for a
+            wide variety of image formats by using the <a href="http://www.6ixsoft.com/">FreeImage</a>
+            library. Build this if you would like to add this support to your
+            project.&nbsp;
+          <li>The <b>Win32HTMLBrowser</b> (and <b>Win32HTMLBrowser_StaticLib</b>)
+            project, for an HTML browser peer (currently implemented using the
+            Internet Explorer IWebBrowser COM interface, though experiments have
+            been done using the Gecko component from <a href="http://www.mozilla.org/projects/embedding/">mozilla</a>.&nbsp;</li>
+        </ul>
+        <p>The build will take a bit, so now would be a good time for coffee,
+        tea, or perhaps reading some Dostoevsky...</p>
+        <p>Once the build is finished you are ready to go ! All binaries will be
+        put in the vcf/bin directory when built.</p>
+        <h3>Linux</h3>
+        <h4>Required software:</h4>
+        <p>GCC 2.95 or greater</p>
+        <p>Currently all that builds on linux is the FoundationKit. You need
+        xmake to build this. </p>
+        <p>[More information here]</p>
+        <h3>Mac OS</h3>
+        <!-- end content -->
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+</body>

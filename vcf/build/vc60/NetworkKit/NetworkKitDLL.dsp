@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NETWORKKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -69,8 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NETWORKKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NO_MFC" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "NO_MFC" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -91,6 +90,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=..\..\..\src\net\DatagramSocket.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\net\NetToolkit.cpp
@@ -117,6 +120,10 @@ SOURCE=..\..\..\src\net\URL.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32DatagramSocketPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32SocketPeer.cpp
 # End Source File
 # End Group
@@ -125,15 +132,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32SocketPeer.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\..\include\net\DatagramSocket.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\net\NetToolkit.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\net\ServerSocketEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\net\ServerSocketListener.h
 # End Source File
 # Begin Source File
 
@@ -165,12 +172,12 @@ SOURCE=..\..\..\include\net\URL.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32DatagramSocketPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32SocketPeer.h
 # End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project

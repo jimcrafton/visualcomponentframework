@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Features</title>
+<link rel="stylesheet" type="text/css" href="vcf_2.css">
+</head>
+
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF" style="font-family: Trebuchet MS">
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0" height="199">
+  <tr>
+    <td width="663"><img border="0" src="logo.jpg" width="663" height="199"></td>
+    <td.docTop width="100%" align="right" valign="bottom" align="right">
+    <td background="top-background.jpg" valign="bottom" align="right">Hosted by:
+      <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=6796&amp;type=1" border="0" alt="SourceForge Logo"></a></td>
+  </tr>
+</table>
+<!--
+Main body table
+-->
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="docLeft" width="117" valign="top" align="left"><img src="left_sidebar.jpg" width="120" height="1024"></td>
+    <td valign="top">
+      <table bgcolor="#0D4D99" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+          <td><a class="docTopic" href="main.html">Documentation Home</a></td>
+        </tr>
+      </table>
+      <h1><a name="TopicTitle">Features</a></h1>
+      <h2><a name="Introduction">Introduction</a></h2>
+      <p>The VCF features an easy to use programming API and class hierarchy.
+      Below is a list briefly describing the key features in the framework.</p>
+      <h3>Features of the Visual Component Framework</h3>
+      <ul>
+        <li>A rich class hierarchy for easily accomplishing your application's
+          programming needs
+        <li>Classes that cover the basic needs such as threading, files,
+          streaming, error logging, traces, and common string utility functions.
+        <li>Advanced RTTI features that allow for such things as dynamic object
+          creation given a registered class name or a registered UUID string
+          that represents the class, dynamic introspection of a given object's
+          class and listing such data as the class name, super class, the
+          properties of the class, member methods, and implemented interfaces.
+        <li>Memory leak detection in debug mode for catching VCF::Object derived
+          classes that have not been freed. This can be turned completely off in
+          debug by recompiling the libraries
+        <li>Standard event architecture that can be used in console applications
+          as well as GUI based applications. Allows for connecting class member
+          functions to events that another object (or objects) may fire off.
+        <li>Graphics classes for easily drawing on a graphics context, as well
+          as working with images. This include easily manipulating things like
+          the current color, pen and brush attributes, and current
+          transformation matrix
+        <li>A simple image loading architecture that allows multiple formats to
+          be registered for loading up a variety of different graphics formats.
+          On Win32 systems the default image loading support is limited to
+          &gt;BMP files, but by using the ImageFormats library (also a part of
+          the VCF) a wide variety of additional image types are also supported.
+          Currently the ImageFormats library uses <a href="http://www.6ixsoft.com">FreeImage</a>
+          to support a image types such as .TIFF, .TGA, .PSD, .PNG, .PCX, .SGI,
+          .MNG, .RAS, .PBM, .PPM. and many others.
+        <li>More advanced classes for customizing the drawing process with
+          application defined behaviors
+        <li>A complete set of GUI classes, including a common set of base
+          classes enabling advanced custom control creation. Some of the control
+          classes include tree controls, list controls, check box and radio
+          controls, push buttons, single line and multi line text controls, and
+          many others.
+        <li>A standard set of application classes for things like resources,
+          loading windows or forms dynamically at application startup, saving of
+          application state, a registry class for common storage of system and
+          application information
+        <li>Other application classes include a simple Undo/Redo architecture
+          based on commands that allows for undoing and redoing commands as well
+          as notifying other objects of the events
+        <li>GUI controls that support both alignment and anchoring. Any control
+          may be aligned to the top, bottom, left or right of it's parent
+          container control.&nbsp; Alternately controls may use their anchoring
+          properties to anchor themselves to the left, right, top and/or bottom
+          sides of their parent container control.
+        <li>The GUI provides a set of Model and View classes for using in MVC
+          patterns. A series of models like the ListModel, TreeModel, and&nbsp;
+          TextModel are used in controls to provide separation of the data from
+          the UI presentation code. Because a View can be dynamically attached
+          to a Control at runtime, it will be possible to develop
+          &quot;themes&quot; in the future.
+        <li>Because of the RTTI features and the event handlers, the VCF easily
+          supports component programming. Objects can easily register event
+          handlers with other object in the system at runtime, without knowing
+          the specifics of each other.
+        <li>As much as possible, VCF tries to be as flexible as possible,
+          allowing you to use the parts you want, and allowing for
+          interoperability with other frameworks. Thus VCF controls can be used
+          inside of an MFC app if you like.
+        <li>No need of special preprocessor tools - if you have a reasonably
+          complete C++ compiler then you're all set to go.
+        <li>Heavy use of the Standard Template Library throughout the VCF, as
+          well as templates, that make up the RTTI extensions the VCF
+          implements.
+        <li>Ability to access the low level handles for most native objects. For
+          example, by accessing the Thread's peer class, you can get a handle to
+          the native thread handle itself. For a control, you can access the
+          control's peer and get a handle id that represents the windowing
+          systems native handle for a window/widget. This allows you to use
+          platform specific calls when neccessary.</li>
+      </ul>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+</body>

@@ -130,18 +130,12 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+						setting = "/GR /MDd /I$(VCF_INCLUDE)";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events "\
-								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+						setting = "/GR /MD /I$(VCF_INCLUDE)";
 					}
 					break;
 				}

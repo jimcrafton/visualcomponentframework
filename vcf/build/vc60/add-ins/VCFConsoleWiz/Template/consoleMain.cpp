@@ -6,11 +6,11 @@ using namespace VCF;
 
 int main( int argc, char** argv ){
 
-	initFoundationKit();
+	FoundationKit::init();
 
 	
 
-	terminateFoundationKit();
+	FoundationKit::terminate();
 	return 0;
 }
 
