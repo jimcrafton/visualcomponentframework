@@ -17,7 +17,7 @@ code         { font-family: Courier New; color: #333333; font-weight: bold }
 li            { font-family: Trebuchet MS; padding: 10 }
 
 td.docTop { background-image: url('top-background.jpg'); background-repeat: repeat-x }
-td.docLeft { background-image: url('left_sidebar.jpg'); background-repeat: no-repeat; background-position: left top }
+td.docLeft { background-image: url('left_sidebar_strip.jpg'); background-repeat: repeat-y }
 A.qindex {}
 A.qindexRef {}
 A.el { text-decoration: none; font-weight: bold }
