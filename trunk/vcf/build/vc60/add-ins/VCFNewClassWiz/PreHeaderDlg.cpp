@@ -29,14 +29,32 @@ CString GPLText =
 	
 
 
-CString VCFLicenseText = 
-	"This program is free software; you can redistribute it and/or\r"\
-	"modify it as you choose. In fact, you can do anything you would like\r"\
-	"with it, so long as credit is given if used in commercial applications.\r"\
-	"This program is distributed in the hope that it will be useful,\r"\
-	"but WITHOUT ANY WARRANTY; without even the implied warranty of\r"\
-	"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\r"\
-	"\rNB: This software will not save the world.\r";
+CString VCFLicenseText = "Copyright (c) 2000-2001, Jim Crafton\r"\
+						"All rights reserved.\r"\
+						"Redistribution and use in source and binary forms, with or without\r"\
+						"modification, are permitted provided that the following conditions\r"\
+						"are met:\r"\
+						"	Redistributions of source code must retain the above copyright\r"\
+						"	notice, this list of conditions and the following disclaimer.\r"\
+						"\r"\
+						"	Redistributions in binary form must reproduce the above copyright\r"\
+						"	notice, this list of conditions and the following disclaimer in \r"\
+						"	the documentation and/or other materials provided with the distribution.\r"\
+						"\r"\
+						"THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \r"\
+						"AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\r"\
+						"LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\r"\
+						"A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS\r"\
+						"OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,\r"\
+						"EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,\r"\
+						"PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR\r"\
+						"PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF\r"\
+						"LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING\r"\
+						"NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS \r"\
+						"SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\r"\
+						"\r"\
+						"NB: This software will not save the world.\r";
+
 
 /////////////////////////////////////////////////////////////////////////////
 // PreHeaderDlg dialog
