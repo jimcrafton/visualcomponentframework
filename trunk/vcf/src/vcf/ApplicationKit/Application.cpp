@@ -9,6 +9,8 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationPeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundle.h"
+#include "vcf/ApplicationKit/ApplicationResourceBundle.h"
 
 using namespace VCF;
 
@@ -70,6 +72,11 @@ Application::Application( int argc, char** argv ):
 	WindowEventHandler<Application>* wh =
 		new WindowEventHandler<Application>( this,&Application::onMainWindowClose, "AppWindowHandler" );
 
+	//install a new resource bundle
+	//this new resource bundle is aware of the 
+	//application resource handle, which may be different if the app is the 
+	//main app instance (like it is here), or if it's a library application
+	System::internal_replaceResourceBundleInstance( new ApplicationResourceBundle(this) );
 }
 
 Application::~Application()
@@ -433,6 +440,13 @@ void Application::setAutoLoadSaveAppState( const bool& autoLoadSaveState )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

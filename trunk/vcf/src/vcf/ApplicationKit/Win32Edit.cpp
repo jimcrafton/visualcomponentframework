@@ -100,7 +100,10 @@ void Win32Edit::create( Control* owningControl )
 
 	
 	styleMask_ &= ~WS_VISIBLE;
-	DWORD style = styleMask_ | ES_AUTOHSCROLL | ES_SAVESEL | ES_NOHIDESEL;
+	// this is a temporary solution: it would be better to implement
+	// a method giving the option to the user, and painting the selection
+	// in an unfocused control with a light gray on the background - MP.
+	DWORD style = styleMask_ | ES_AUTOHSCROLL | ES_SAVESEL /*| ES_NOHIDESEL*/;
 	if ( true == isMultiLined_ ) {
 		style |= ES_MULTILINE | WS_HSCROLL | WS_VSCROLL;// | ES_WANTRETURN;
 	}
@@ -1091,6 +1094,12 @@ void Win32Edit::onControlModelChanged( Event* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/22 03:32:19  marcelloptr
+*we need to hide the selection when the focus is lost
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

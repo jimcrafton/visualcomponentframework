@@ -478,7 +478,7 @@ void Win32MenuItem::setCaption( const String& caption )
 
 }
 
-ulong32 Win32MenuItem::getMenuID()
+OSHandleID Win32MenuItem::getMenuID()
 {
 	if ( NULL != menuItem_ ){
 		//throw exception !!!
@@ -525,7 +525,7 @@ ulong32 Win32MenuItem::getMenuID()
 			}
 		}
 	}
-	return (ulong32)itemHandle_;
+	return (OSHandleID)itemHandle_;
 }
 
 MenuItem* Win32MenuItem::getMenuItemFromID( const uint32 id )
@@ -812,6 +812,14 @@ void Win32MenuItem::drawMenuItemText( HDC dc, RECT rc, COLORREF color )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/19 04:05:00  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

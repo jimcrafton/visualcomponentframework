@@ -62,7 +62,7 @@ public:
 	*are platform specific. On Win32 systems this is the HANDLE
 	*returned by the CreateThread/_beginthreadex() calls
 	*/
-	virtual uint32 getHandleID() = 0;
+	virtual OSHandleID getHandleID() = 0;
 
 	virtual bool isActive() = 0;
 
@@ -79,6 +79,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.4.1  2004/12/19 04:05:02  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

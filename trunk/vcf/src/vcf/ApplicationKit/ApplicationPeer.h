@@ -65,9 +65,9 @@ public:
 	*Application. Under Win32 this corresponds to the hInstance that is used in
 	*an application or in-process DLL.
 	*/
-	virtual long getHandleID()  = 0;
+	virtual OSHandleID getHandleID()  = 0;
 
-	virtual void setHandleID( const long& handleID ) = 0;
+	virtual void setHandleID( OSHandleID handleID ) = 0;
 };
 
 
@@ -77,6 +77,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

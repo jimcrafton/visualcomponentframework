@@ -1,5 +1,18 @@
 #ifndef XMLPARTICLERESOURCEHANDLER_H
 #define XMLPARTICLERESOURCEHANDLER_H
+//XMLParticleResourceHandler.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
 
 #include "vcf/FoundationKit/XMLParser.h"
 
@@ -207,11 +220,16 @@ public:
 	}
 };
 
-#endif
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:18  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.2.1  2004/12/21 01:24:32  marcelloptr
+*added cvs log section
+*
 *Revision 1.2  2004/12/01 04:15:10  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
@@ -224,5 +242,8 @@ public:
 *Initial checkin of the particle editor example.  Just shows off a more complex opengl application using the VCF.
 *
 */
+
+
+#endif // XMLPARTICLERESOURCEHANDLER_H
 
 

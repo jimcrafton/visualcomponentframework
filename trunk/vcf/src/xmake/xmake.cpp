@@ -1,5 +1,11 @@
 // XMLMake.cpp : Defines the entry point for the console application.
-//
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
 
 /**
 platforms
@@ -35,13 +41,6 @@ _MSC_VER - the Microsoft Visaul C++ compiler
 #include "CmdLine.h"
 #include "FilePath.h"
 
-// MP - moved to xmake.h
-//#ifdef WIN32
-//	#include <windows.h>
-//    #include <io.h>
-//    #include <stdio.h>
-//	#include <process.h>
-//#endif 
 
 #include "DependencyNodes.h"
 #include "xmakeUtils.h"
@@ -2786,5 +2785,18 @@ StringList XMLMake::getConfigs()
 
 	return result;
 }
+
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2005/01/02 03:04:27  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/21 01:25:17  marcelloptr
+*added cvs log section
+*
+*/
 
 

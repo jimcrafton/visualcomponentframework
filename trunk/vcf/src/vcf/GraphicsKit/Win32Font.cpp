@@ -229,9 +229,9 @@ void Win32Font::init()
 	Win32FontManager::initializeFont( this );
 }
 
-ulong32 Win32Font::getFontHandleID()
+OSHandleID Win32Font::getFontHandleID()
 {
-	return (ulong32)logFont_;
+	return (OSHandleID)logFont_;
 }
 
 void Win32Font::updateTextMetrics()
@@ -904,6 +904,14 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:26  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:05:05  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

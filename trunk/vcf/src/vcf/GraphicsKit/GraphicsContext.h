@@ -85,7 +85,7 @@ public:
 	Create a new context based on a context ID. See ContextPeer getContextID()
 	Doing this should caryy over any of the current settings of the context that the contextID represents.
 	*/
-	GraphicsContext( const unsigned long& contextID );
+	GraphicsContext( OSHandleID contextID );
 
 	virtual ~GraphicsContext( );
 
@@ -790,6 +790,14 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:25  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.1  2004/12/19 04:05:03  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.4  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

@@ -525,8 +525,7 @@ void Control::handleEvent( Event* event )
 				if (mouseEvent->hasLeftButton() || mouseEvent->hasRightButton() || mouseEvent->hasMiddleButton() ) {
 					if ( (true == autoStartDragDrop_) ) { //&& (false == dragDropStarted_) ) {
 						if ( true == canBeginDragDrop( mouseEvent->getPoint() ) ) {
-							//dragDropStarted_ = true;
-
+							//dragDropStarted_ = true;							
 							if ( beginDragDrop ( mouseEvent ) ) {
 								return;
 							}
@@ -664,19 +663,29 @@ bool Control::canBeginDragDrop( Point* point )
 
 	Size dragDropDelta = UIToolkit::getDragDropDelta();
 
-	//clickPt_ gets set on a mousedown
-	//so make a rect around it
-	Rect r( clickPt_.x_ - dragDropDelta.width_ /2.0,
+	/**
+	clickPt_ gets set on a mousedown
+	so make a rect around it
+	r1 will be the inner  rect
+	r2 will be the outer rect
+	if the drag is outside the bounds of r1 and within r2
+	then we can do a drag, otherwise forget it
+	*/
+	Rect r1( clickPt_.x_ - dragDropDelta.width_ /2.0,
 			clickPt_.y_ - dragDropDelta.height_ /2.0,
 			clickPt_.x_ + dragDropDelta.width_ /2.0,
 			clickPt_.y_ + dragDropDelta.height_ /2.0 );
+
+	Rect r2 = r1;
+
+	r2.inflate( dragDropDelta.width_, dragDropDelta.height_ );
 
 	//we are only ready to to begin a drag drop operation
 	//if the point is NOT, I repeat, NOT, within the bounds of the
 	//drag-drop rect. This prevents us from starting too early.
 	//changing the dragDropDelta value allows us to control the 
 	//sensitivity of how we reacto to drag-drop starts
-	result = !r.containsPt( point );
+	result = (!r1.containsPt( point )) && (r2.containsPt( point ));	
 
 	return result;
 }
@@ -1457,8 +1466,22 @@ void Control::paintBorder( GraphicsContext * context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
 *Revision 1.5  2004/12/10 03:32:51  ddiego
 *fixed a heap overwrite error in the delegate-event handler code.
+*
+*Revision 1.4.2.3  2005/01/01 20:31:07  ddiego
+*made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.
+*
+*Revision 1.4.2.2  2004/12/31 17:41:23  ddiego
+*fixes a drag-drop bug, initially listed under the vcfbuilders
+*bug list
+*
+*Revision 1.4.2.1  2004/12/31 17:39:47  ddiego
+*fixes a drag-drop bug, initially listed under the vcfbuilders
+*bug list
 *
 *Revision 1.4  2004/12/01 04:31:20  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
@@ -1512,7 +1535,6 @@ void Control::paintBorder( GraphicsContext * context )
 *Revision 1.3  2004/08/19 02:24:54  ddiego
 *fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 *
->>>>>>> 1.2.2.10
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

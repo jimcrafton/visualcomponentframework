@@ -109,10 +109,10 @@ void AbstractWin32Component::init()
 	
 }
 
-long AbstractWin32Component::getHandleID()
+OSHandleID AbstractWin32Component::getHandleID()
 {
-	long result = 0;
-	result = (long)hwnd_;
+	OSHandleID result = 0;
+	result = (OSHandleID)hwnd_;
 	return result;
 }
 
@@ -361,7 +361,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 		
 		if ( peerControl_->isUsingRenderBuffer() ) {
 			
-			ctx->getPeer()->setContextID( (long)paintDC );
+			ctx->getPeer()->setContextID( (OSHandleID)paintDC );
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
 			ctx->getDrawingArea()->getImageContext()->setViewableBounds(ctx->getViewableBounds());
@@ -435,7 +435,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			* HDC for the Graphics context because we are 
 			* doing double buffering.
 			*/
-			ctx->getPeer()->setContextID( (long)memDC_ );
+			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );				
 			
 			// save the state of Graphics control so to be fully restored after the paint.
@@ -480,7 +480,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			* the HDC and the viewport, as this is done here using 
 			* the DC given by the system with the message itself.
 			*/
-			ctx->getPeer()->setContextID( (long)paintDC );
+			ctx->getPeer()->setContextID( (OSHandleID)paintDC );
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
 
 			if ( NULL != exclusionRect ) {
@@ -777,7 +777,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 						itemPeer->drawDefaultMenuItem( idCtl, *drawItemStruct );
 
-						GraphicsContext gc( (long)drawItemStruct->hDC );
+						GraphicsContext gc( (OSHandleID)drawItemStruct->hDC );
 						foundItem->paint( &gc, &Rect(drawItemStruct->rcItem.left, drawItemStruct->rcItem.top,
 														drawItemStruct->rcItem.right, drawItemStruct->rcItem.bottom) );
 						gc.getPeer()->setContextID(0);
@@ -1375,6 +1375,14 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.5.2.1  2004/12/19 04:04:58  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.5  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

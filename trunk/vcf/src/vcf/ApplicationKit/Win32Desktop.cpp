@@ -52,14 +52,14 @@ void Win32Desktop::desktopBeginPainting( Rect* clippingRect )
 	if ( NULL == dc ) {
 		//throw exception !!
 	}
-	desktop_->getContext()->getPeer()->setContextID( (long)dc );
+	desktop_->getContext()->getPeer()->setContextID( (OSHandleID)dc );
 }
 
 void Win32Desktop::desktopEndPainting()
 {
 	::LockWindowUpdate( NULL );//unlocks the window update
 	HDC dc = (HDC)desktop_->getContext()->getPeer()->getContextID();
-	desktop_->getContext()->getPeer()->setContextID( (long)0 );
+	desktop_->getContext()->getPeer()->setContextID( (OSHandleID)0 );
 	ReleaseDC( ::GetDesktopWindow(), dc );
 	if ( NULL != hClipRgn_ ) {
 		DeleteObject( hClipRgn_ );
@@ -123,12 +123,12 @@ String Win32Desktop::desktopGetDirectory()
 	return result;
 }
 
-ulong32 Win32Desktop::desktopGetHandleID()
+OSHandleID Win32Desktop::desktopGetHandleID()
 {
-	return (ulong32)GetDesktopWindow();
+	return (OSHandleID)GetDesktopWindow();
 }
 
-ulong32 Win32Desktop::desktopGetGraphicsContextHandleID()
+OSHandleID Win32Desktop::desktopGetGraphicsContextHandleID()
 {
 	return 0;
 }
@@ -182,6 +182,14 @@ Rect Win32Desktop::desktopGetUsableBounds()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

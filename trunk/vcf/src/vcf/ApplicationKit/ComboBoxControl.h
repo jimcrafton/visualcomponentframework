@@ -31,7 +31,7 @@ where you installed the VCF.
 
 
 
-namespace VCF  {
+namespace VCF {
 
 class TextControl;
 
@@ -285,12 +285,16 @@ protected:
 	void onFocusGained( FocusEvent* event );
 
 	void onPostSelect( ItemEvent* e );
+
+	virtual void destroy();
+
+protected:
 	Window* dropDown_;
 	ListModel* listModel_;
 	ListItem* selectedItem_;
 	ulong32 selectedIndex_;
 	bool arrowPressed_;
-	Rect arrowRect_;
+	//Rect arrowRect_;
 	Rect viewRect_;
 	bool mouseOver_;
 	ComboBoxStyleType comboBoxStyle_;
@@ -302,18 +306,23 @@ protected:
 	bool dropDownSelected_;
 	bool autoLookup_;
 	bool autoLookupIgnoreCase_;
-
-
-
-	virtual void destroy();
 };
 
-};
+}; //namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2004/12/21 21:58:05  marcelloptr
+*bugfix [ 1089382 ] ComboBox fires a SelectionChanged msg when loosing focus
+*
+*Revision 1.2.4.1  2004/12/20 21:58:00  ddiego
+*committing cheeseheads patches for the combobox control.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -67,6 +67,8 @@ void Win32Dialog::create( Control* owningControl )
 
 	String caption = dialogComponent_->getCaption();
 
+	HICON icon = NULL;
+
 	if ( System::isUnicodeEnabled() ) {
 		hwnd_ = ::CreateWindowExW( exStyleMask_,
 		                             className.c_str(),
@@ -80,6 +82,8 @@ void Win32Dialog::create( Control* owningControl )
 									 NULL,
 									 ::GetModuleHandleW(NULL),
 									 NULL );
+
+		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
 	}
 	else {
 		hwnd_ = ::CreateWindowExA( exStyleMask_,
@@ -94,11 +98,17 @@ void Win32Dialog::create( Control* owningControl )
 									 NULL,
 									 ::GetModuleHandleA(NULL),
 									 NULL );
+
+		icon = LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
 	}
 
 
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
+		if ( NULL != icon ) {		
+			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
+		}
+
 		HMENU sysMenu = ::GetSystemMenu( hwnd_, FALSE );
 		if ( NULL != sysMenu ) 	{
 			::RemoveMenu ( sysMenu, SC_MAXIMIZE, MF_BYCOMMAND );
@@ -383,6 +393,12 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.1  2004/12/10 21:14:00  ddiego
+*fixed bug 1082362 App Icons do not appear.
+*
 *Revision 1.4  2004/12/05 21:11:55  ddiego
 *dialog allowClose() fix in peer.
 *

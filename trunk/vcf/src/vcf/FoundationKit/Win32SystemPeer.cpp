@@ -99,6 +99,58 @@ String Win32SystemPeer::getEnvironmentVariable( const String& variableName )
 	return result;
 }
 
+
+void Win32SystemPeer::setEnvironmentVariable( const String& variableName, const String& newValue )
+{
+	if ( System::isUnicodeEnabled() ) {
+		SetEnvironmentVariableW( variableName.c_str(), newValue.c_str() );
+	}
+	else {
+		SetEnvironmentVariableA( variableName.ansi_c_str(), newValue.ansi_c_str() );
+	}
+	
+}
+
+void Win32SystemPeer::addPathDirectory( const String& directory )
+{
+	String tmpDir = StringUtils::trimRight( directory, '\\' );
+	
+	if ( System::isUnicodeEnabled() ) {
+		String newValue;
+		String variableName = L"PATH";
+		VCFChar path[4096];
+		memset( path, 0, 4096*sizeof(VCFChar) );
+		
+		if ( ::GetEnvironmentVariableW( variableName.c_str(), path, (4096-1)*sizeof(VCFChar) ) ) {
+			newValue = path;
+			newValue += ";" + tmpDir;
+
+			if ( newValue.size() > 256 ) { //is 256 really the correct value to check for here?
+				//warn about the path potentially being too long
+				StringUtils::trace( "WARNING: Path being assigned is greater than 256 characters!\n" ); 
+			}
+			SetEnvironmentVariableW( variableName.c_str(), newValue.c_str() );
+		}	
+	}
+	else {
+		AnsiString newValue;
+		AnsiString variableName = "PATH";
+		char path[4096];
+		memset( path, 0, 4096*sizeof(char) );
+		
+		if ( ::GetEnvironmentVariableA( variableName.c_str(), path, (4096-1)*sizeof(char) ) ) {
+			newValue = path;
+			newValue += ";" + tmpDir;
+
+			if ( newValue.size() > 256 ) { //is 256 really the correct value to check for here?
+				//warn about the path potentially being too long
+				StringUtils::trace( "WARNING: Path being assigned is greater than 256 characters!\n" ); 
+			}
+			SetEnvironmentVariableA( variableName.c_str(), newValue.c_str() );
+		}
+	}
+}
+
 String Win32SystemPeer::getCurrentWorkingDirectory()
 {
 	String result;
@@ -327,6 +379,14 @@ ProgramInfo* Win32SystemPeer::getProgramInfoFromFileName( const String& fileName
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:24  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:05:02  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

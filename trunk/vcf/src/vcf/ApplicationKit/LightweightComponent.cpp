@@ -35,9 +35,9 @@ void LightweightComponent::destroyControl()
 
 }
 
-long LightweightComponent::getHandleID()
+OSHandleID LightweightComponent::getHandleID()
 {
-	long result = -1;
+	OSHandleID result = 0;
 	VCF::Control* parent = getHeavyWeightParent();
 	if ( NULL != parent ) {
 		result = parent->getPeer()->getHandleID();
@@ -302,6 +302,14 @@ void LightweightComponent::translateFromScreenCoords( Point* pt )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1,5 +1,13 @@
 #ifndef _XMAKE_WARNINGS_OFF_H
 #define _XMAKE_WARNINGS_OFF_H
+//xmake_warnings_off.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
 
 
 #ifdef _MSC_VER
@@ -32,3 +40,17 @@
 
 
 #endif // _XMAKE_WARNINGS_OFF_H
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/01/02 03:04:27  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/21 01:25:17  marcelloptr
+*added cvs log section
+*
+*/
+
+

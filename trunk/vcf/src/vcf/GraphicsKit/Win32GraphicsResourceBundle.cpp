@@ -91,17 +91,6 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 		}
 	}
 
-	
-
-	if ( NULL == result ) {
-		bool fileExists = false;
-		String fileName = System::findResourceDirectory() +	resourceName;
-		
-		if ( File::exists( fileName ) ) {
-			result = GraphicsToolkit::createImage( fileName );
-		}
-	}
-
 
 	return result;
 }
@@ -114,6 +103,13 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:26  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.2.1  2004/12/19 07:09:20  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.2  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

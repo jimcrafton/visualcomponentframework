@@ -131,6 +131,8 @@ public:
 	\endcode
 	*/
 	static String findResourceDirectory();
+
+	static String findResourceDirectoryForExecutable( const String& fileName );
 	
 
 
@@ -240,6 +242,19 @@ public:
 	static String getEnvironmentVariable( const String& variableName );
 
 	/**
+	Modifies (or creates) an enviroment variable for the current process. This modification
+	is only good for the lifetime of the process.
+	*/
+	static void setEnvironmentVariable( const String& variableName, const String& newValue );
+
+	/**
+	Adds a directory to the current process's PATH environment variable. If no such environment
+	variable exists, then it does nothing. Note that some systems may not even have 
+	anything resembling a PATH.
+	*/
+	static void addPathDirectory( const String& directory );
+
+	/**
 	Returns the current working directory.
 	*/
 	static String getCurrentWorkingDirectory();
@@ -307,6 +322,26 @@ public:
 	*/
 	static ProgramInfo* getProgramInfoFromFileName( const String& fileName );
 
+
+	/**
+	Returns a string that is the package directory for the
+	executable file name. If the file name is not a bundle, then an
+	empty string is returned. For example, if passed in a file name such as 
+	"c:\Program Files\MyApp\Contents\WindowsNT\MyApp.exe", the function
+	would return "c:\Program Files\MyApp\" as the result. 
+	*/
+	static String getBundlePathFromExecutableName( const String& fileName );
+
+	/**
+	This attempts to return the complete path to the executable content in the
+	bundle, as specified by the bundle program info. Attempts are made to 
+	drill down into succesively deeper directories, first the immediate bundle 
+	dir, then the Contents directory, then Contents/<OS-Name>, then 
+	Contents/<OS-Name>/<compiler>
+	*/
+	static String getExecutableNameFromBundlePath( const String& fileName );
+
+
 	static void internal_replaceResourceBundleInstance( ResourceBundle* newInstance );
 protected:
 	System();
@@ -320,6 +355,8 @@ protected:
 	Locale* locale_;
 	bool unicodeEnabled_;
 	ResourceBundle* resBundle_;
+
+	static String getInfoFileFromFileName( const String& fileName );
 };
 
 };
@@ -328,6 +365,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.2  2004/12/19 07:09:20  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
+*Revision 1.4.2.1  2004/12/19 04:05:01  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.4  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

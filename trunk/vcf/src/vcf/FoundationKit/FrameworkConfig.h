@@ -43,9 +43,9 @@ compilers
 
 _MSC_VER - compiling with Microsoft's Visual C++ compiler (at least version 6)
 VCF_MSC
-VCF_VC5
-VCF_VC6
-VCF_VC7
+VCF_VC50
+VCF_VC60
+VCF_VC70
 VCF_VC71
 
 VCF_GCC - compiling with GCC's C++ compiler
@@ -71,17 +71,17 @@ VCF_BCC - compiling with Borland's C++ compiler
 #	undef VCF_COMPILER_NAME
 #	define VCF_COMPILER_NAME	"VC71"
 #elif (_MSC_VER >= 1300)
-#	define VCF_VC7
+#	define VCF_VC70
 #	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC7"
+#	define VCF_COMPILER_NAME	"VC70"
 #elif (_MSC_VER >= 1200)
-#	define VCF_VC6
+#	define VCF_VC60
 #	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC6"
+#	define VCF_COMPILER_NAME	"VC60"
 #elif (_MSC_VER >= 1100)
-#	define VCF_VC5
+#	define VCF_VC50
 #	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC6"
+#	define VCF_COMPILER_NAME	"VC60"
 #endif
 
 #ifdef __DMC__
@@ -616,6 +616,13 @@ The same is with BCC.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.4  2004/12/22 03:38:43  marcelloptr
+*fixed VCF_COMPILER_NAME macro so less error prone.
+*This also makes getExecutableNameFromBundlePath() to work right.
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

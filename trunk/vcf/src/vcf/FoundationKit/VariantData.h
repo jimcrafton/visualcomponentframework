@@ -71,6 +71,14 @@ public:
 	};
 
 	/**
+	*creates a VariantData initialized by an unsigned int value
+	*/
+	VariantData( const unsigned int& val ) {
+		UIntVal = val;
+		type = pdUInt;
+	};
+
+	/**
 	*creates a VariantData initialized by a long value
 	*/
 	VariantData( const long& val ) {
@@ -202,8 +210,8 @@ public:
 
 	/**
 	*defines the data type of the VariantData, where type can represent
-	*an int, long, unsigned long, short, char, double, float, bool, string,
-	*Enum pointer, or Object pointer.
+	* an int, unsigned int, long, unsigned long, short, char, 
+	* double, float, bool, string, Enum pointer, or Object pointer.
 	*/
 	PropertyDescriptorType type;
 
@@ -211,6 +219,7 @@ public:
 			int IntVal;
 			long LongVal;
 			short ShortVal;
+			unsigned int UIntVal;
 			unsigned long ULongVal;
 			float FloatVal;
 			char CharVal;
@@ -229,98 +238,105 @@ public:
 	/**
 	*converts the VariantData to an int
 	*/
-	operator int () {
+	operator int () const {
 		return IntVal;
 	};
 
 	/**
 	*converts the VariantData to an long
 	*/
-	operator long () {
+	operator long () const {
 		return LongVal;
 	};
 
 	/**
 	*converts the VariantData to an short
 	*/
-	operator short () {
+	operator short () const {
 		return ShortVal;
+	};
+
+	/**
+	*converts the VariantData to an unsigned int
+	*/
+	operator unsigned int () const {
+		return UIntVal;
 	};
 
 	/**
 	*converts the VariantData to an unsigned long
 	*/
-	operator unsigned long () {
+	operator unsigned long () const {
 		return ULongVal;
 	};
 
 	/**
 	*converts the VariantData to an float
 	*/
-	operator float () {
+	operator float () const {
 		return FloatVal;
 	};
 
 	/**
 	*converts the VariantData to an char
 	*/
-	operator char () {
+	operator char () const {
 		return CharVal;
 	};
 
 	/**
 	*converts the VariantData to an double
 	*/
-	operator double () {
+	operator double () const {
 		return DblVal;
 	};
 
 	/**
 	*converts the VariantData to an Interface pointer
 	*/
-	operator Interface* (){
+	operator Interface* () const {
 		return InterfaceVal;
 	}
 
 	/**
 	*converts the VariantData to an Object pointer
 	*/
-	operator Object* (){
+	operator Object* () const {
 		return ObjVal;
 	};
 
 	/**
 	*converts the VariantData to an Object reference
 	*/
-	operator Object& (){
+	operator Object& () const {
 		return *ObjVal;
 	};
 
 	/**
 	*converts the VariantData to an String
 	*/
-	operator String () {
+	operator String () const {
 		return StringVal;
 	};
 
 	/**
 	*converts the VariantData to a bool
 	*/
-	operator bool ()  {
+	operator bool () const {
 		return BoolVal;
 	};
 
 	/**
 	*converts the VariantData to an Enum pointer
 	*/
-	operator Enum* (){
+	operator Enum* () const {
 		return EnumVal.getEnum();
 	};
 
 	/**
 	*converts the VariantData to an Enum reference
 	*/
-	operator Enum& (){
+	operator Enum& () const {
 		return *EnumVal.getEnum();
 	};
 
@@ -348,6 +364,15 @@ public:
 	VariantData& operator=( const short& newValue ){
 		ShortVal = newValue;
 		type = pdShort;
+		return *this;
+	};
+
+	/**
+	*Assigns an unsigned int value to the VariantData
+	*/
+	VariantData& operator=( const unsigned int& newValue ){
+		UIntVal = newValue;
+		type = pdUInt;
 		return *this;
 	};
 
@@ -478,7 +503,8 @@ public:
 	*if they support Persistable, otherwise the Object's toString()
 	*method is invoked.
 	*/
-	virtual String toString();
+	virtual String toString() const;
+
 	/**
 	*Assigns the VariantData's data from a string. The conversion
 	*process is dependent on the type of the VariantData.
@@ -497,6 +523,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2004/12/24 04:53:59  marcelloptr
+*added support for unsigned int in VariantData. Fixed other glitches of this class.
+*
+*Revision 1.2.4.1  2004/12/24 00:59:28  marcelloptr
+*VariantData::toString() made const
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -81,6 +81,7 @@ CPPFILES=AbstractApplication.cpp \
 	Action.cpp \
 	Application.cpp \
 	ApplicationKit.cpp \
+	ApplicationResourceBundle.cpp \
 	Basic3DBorder.cpp \
 	BasicTableItemEditor.cpp \
 	Clipboard.cpp \
@@ -158,7 +159,8 @@ CPPFILES=AbstractApplication.cpp \
 	Win32Toolbar.cpp \
 	Win32ToolKit.cpp \
 	Win32Tree.cpp \
-	Win32Window.cpp \	
+	Win32Window.cpp \
+	Win32AppResourceBundle.cpp \	
 	ButtonEvent.cpp \
 	ClipboardEvent.cpp \
 	ColumnItemEvent.cpp \

@@ -287,6 +287,9 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\NoSuchElementException.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\NotImplementedException.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h">
 			</File>
 			<File
@@ -702,6 +705,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Field.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Interface.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\InterfaceClass.cpp">

@@ -83,7 +83,6 @@ CPPFILES=GraphicsKit.cpp \
 	Point.cpp \
 	PrintSession.cpp \
 	Rect.cpp \
-	Vector2D.cpp \
 	Win32Context.cpp \
 	Win32Font.cpp \
 	Win32FontManager.cpp \

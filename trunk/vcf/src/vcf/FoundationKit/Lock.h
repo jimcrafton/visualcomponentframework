@@ -40,13 +40,30 @@ public:
 protected:
 	bool validSynchObject_;
 	VCF::SynchObject& synchObject_;
+
+private:
+	/**
+	* we forbid to copy a lock, as it would probably
+	* cause some trouble.
+	* Plus it would be impossible to define an explicit 
+	* assignment operator with a reference. With this
+	* the CodeWarrior doesn't complain anymore.
+	*/
+	Lock& operator = ( const Lock& lock ) { return *this; };
+
 };
-} // end of namespace VCF
+} // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.3  2004/12/20 23:49:02  marcelloptr
+*forbidden assignment operator for the Lock class
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

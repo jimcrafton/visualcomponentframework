@@ -58,16 +58,8 @@ void Library::load( const String& libraryFilename )
 	{
 		File libFile(libraryFilename);
 		if ( libFile.isDirectory() ) {
-			ProgramInfo* info = System::getProgramInfoFromFileName( libraryFilename );
-			if ( NULL != info ) {
-
-				fullLibraryName = info->getProgramFileName();				
-
-				info->free();
-			}
-			else {
-				fullLibraryName = "";
-			}
+			
+			fullLibraryName = System::getExecutableNameFromBundlePath( libraryFilename );			
 
 			if ( fullLibraryName.empty() ) {
 				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name. Points to a directory with no program/library information available.") );
@@ -136,6 +128,13 @@ void* Library::getFunction( const String& functionName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:19  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

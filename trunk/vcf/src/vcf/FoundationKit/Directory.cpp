@@ -68,38 +68,37 @@ Directory::Finder::~Finder()
 
 void Directory::Finder::reset()
 {
-	fileInfos_								.setName( L"" );
+	fileInfos_.setName( L"" );
 
 	subfinders_ = NULL;
 	subdirs_ = NULL;
-	owningDirectory_					= NULL;
-	recursionLevel_						= 0;
-	recursionLevelMax_				= -1;
-	subdirs_									= NULL;
+	owningDirectory_ = NULL;
+	recursionLevel_ = 0;
+	recursionLevelMax_ = -1;
+	subdirs_ = NULL;
 
-	goSearchAgain_						= false;
-	currentElement_						= NULL;
-	searchHasMoreElements_		= ( NULL != currentElement_ );
+	goSearchAgain_ = false;
+	currentElement_	= NULL;
+	searchHasMoreElements_ = ( NULL != currentElement_ );
 
-	searchFilterFileObject_ 	= NULL;
-	ownFilterFileObject_			= false;
-	maskFilterFileAttribs_		= File::faMaskAll;
-	statMask_		    					= File::smMaskAll;
+	searchFilterFileObject_ = NULL;
+	ownFilterFileObject_ = false;
+	maskFilterFileAttribs_ = File::faMaskAll;
+	statMask_ = File::smMaskAll;
 
-	displayMode_							= Directory::Finder::dmAny; // no limitations normally
-	displayOrder_							= Directory::Finder::dmAny; // unsorted by default ( search in only one step )
-	displayOrderCurrent_			= displayOrder_;
+	displayMode_ = Directory::Finder::dmAny; // no limitations normally
+	displayOrder_ = Directory::Finder::dmAny; // unsorted by default ( search in only one step )
+	displayOrderCurrent_ = displayOrder_;
 
-	allowSpecialDirs_					= false; // normally the dot dirs are useless ( "." and ".." )
-	keepOSSpecificFormat_			= false; // by default we keep the native format
+	allowSpecialDirs_ = false; // normally the dot dirs are useless ( "." and ".." )
+	keepOSSpecificFormat_ = false; // by default we keep the native format
 
-	recurse_									= false;
+	recurse_ = false;
 
-	rootSearchFinder_ 				= this;	// initialized for normal non-recursive use
-	activeFinder_ 						= this;	// initialized for normal non-recursive use
-	childFinder_  						= NULL;
-	parentFinder_ 						= NULL;
-
+	rootSearchFinder_ = this;	// initialized for normal non-recursive use
+	activeFinder_ = this;	// initialized for normal non-recursive use
+	childFinder_ = NULL;
+	parentFinder_ = NULL;
 }
 
 void Directory::Finder::setDisplayMode( DisplayMode displayMode )
@@ -464,22 +463,17 @@ bool Directory::Finder::nextElement()
 Directory::Directory( const String& fileName )
 : File( FilePath::makeDirectoryName( fileName ) )
 {
-	//finder_ = NULL;
+	
 }
 
 Directory::Directory( const FilePath& filePath )
 : File( FilePath::makeDirectoryName( filePath.getFileName() ) )
 {
-	//finder_ = NULL;
+	
 }
 
 Directory::~Directory()
 {
-	/*
-	if ( NULL != finder_ ) {
-		delete finder_;
-	}
-	*/
 }
 
 
@@ -612,6 +606,13 @@ File* FileSearchFilterStandard::passSearchFilter( const File* file, const Direct
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/10 22:32:42  ddiego
+*fixed bug in the Win32 file peer class that was not properly
+*creating directories.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

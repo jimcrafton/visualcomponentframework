@@ -10,10 +10,13 @@ where you installed the VCF.
 //LibraryApplication.h
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundle.h"
+#include "vcf/ApplicationKit/ApplicationResourceBundle.h"
 
 using namespace VCF;
 
-LibraryApplication::LibraryApplication()
+LibraryApplication::LibraryApplication():
+	resourceBundle_(NULL)
 {
 	ApplicationKit::init(0, NULL);
 
@@ -37,6 +40,11 @@ LibraryApplication::LibraryApplication()
 
 LibraryApplication::~LibraryApplication()
 {
+	if ( NULL != resourceBundle_ ) {
+		resourceBundle_->free();
+	}
+	resourceBundle_ = NULL;
+
 	delete applicationPeer_;
 	applicationPeer_ = NULL;
 
@@ -51,6 +59,16 @@ void LibraryApplication::setName( const String& name )
 	if ( found != LibraryApplication::namedLibraryAppMap->end() ) {
 		(*LibraryApplication::namedLibraryAppMap)[ applicationName_ ] = this;
 	}
+}
+
+GraphicsResourceBundle* LibraryApplication::getResourceBundle()
+{
+	if ( NULL == resourceBundle_ ) {
+		//create it on demand
+		resourceBundle_ = new ApplicationResourceBundle(this);
+	}
+
+	return resourceBundle_;
 }
 
 Enumerator<VCF::LibraryApplication*>* LibraryApplication::getRegisteredLibraries()
@@ -115,6 +133,13 @@ void LibraryApplication::clearLibraryRegistrar()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

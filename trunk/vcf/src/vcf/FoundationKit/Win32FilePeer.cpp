@@ -48,13 +48,14 @@ void Win32FilePeer::setFile( File* file )
 
 void Win32FilePeer::create(  ulong32 openFlags  )
 {
-	String filename = getName();
-
+	FilePath fp = getName();
+	String filename = fp.transformToOSSpecific();
+	
 	if ( false == filename.empty() ){
 		if ( NULL != fileHandle_ ){
 			::CloseHandle( fileHandle_ );
 		}
-		if ( filename[filename.size()-1] == '\\' ) {
+		if ( FilePath::isDirectoryName( filename ) ) {
 			fileHandle_ = NULL;
 			std::vector<String> dirPaths;
 			String tmp = filename;
@@ -81,10 +82,10 @@ void Win32FilePeer::create(  ulong32 openFlags  )
 
 				BOOL res = FALSE;
 				if ( System::isUnicodeEnabled() ) {
-					::CreateDirectoryW( dirPath.c_str(), NULL );
+					res = ::CreateDirectoryW( dirPath.c_str(), NULL );
 				}
 				else {
-					::CreateDirectoryA( dirPath.ansi_c_str(), NULL );
+					res = ::CreateDirectoryA( dirPath.ansi_c_str(), NULL );
 				}
 
 				if ( !res ) {
@@ -531,7 +532,10 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 {
 	// this is very similar to updateFindDataInfos but using a different data structure
 
-	VCF_ASSERT( !FilePath::getPathName( getName(), true ).empty() );	
+	String fileName = getName();
+
+	//VCF_ASSERT( !FilePath::getPathName( fileName, true ).empty() );	
+	VCF_ASSERT( !fileName.empty() );	
 
 	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
 
@@ -863,15 +867,19 @@ void Win32FilePeer::copyTo( const String& copyFileName )
 {
 	BOOL res = FALSE;
 
+	String src = FilePath::transformToOSSpecific( getName() );
+	String dest = FilePath::transformToOSSpecific( copyFileName );
+
 	if ( System::isUnicodeEnabled() ) {
-		res = ::CopyFileW( getName().c_str(), FilePath::transformToOSSpecific( copyFileName ).c_str(), FALSE );
+		res = ::CopyFileW( src.c_str(), dest.c_str(), FALSE );
 	}
 	else {
-		res = ::CopyFileA( getName().ansi_c_str(), FilePath::transformToOSSpecific( copyFileName ).ansi_c_str(), FALSE );
+		res = ::CopyFileA( src.ansi_c_str(), dest.ansi_c_str(), FALSE );
 	}
 
 	if ( ! res ) {
-		throw BasicFileError( MAKE_ERROR_MSG_2("File \"" + copyFileName + "\" already exists.") );
+		
+		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to copy \"" + src + "\" to \"" + copyFileName + "\".") );
 	}
 
 }
@@ -963,6 +971,18 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.2  2004/12/11 17:50:00  ddiego
+*added 2 new projects that are command line tools. One is for
+*creating the basic shell for app bundles, the other is for filling in, or
+*updating an info.plist (or info.xml) file.
+*
+*Revision 1.3.2.1  2004/12/10 22:32:53  ddiego
+*fixed bug in the Win32 file peer class that was not properly
+*creating directories.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

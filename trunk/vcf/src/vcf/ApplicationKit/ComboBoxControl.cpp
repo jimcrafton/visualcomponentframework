@@ -27,7 +27,13 @@ public:
 		// Remark: selectedItem_ differs from comboBoxControl->getListModel()->getSelectedItem() because of the DropDownListBox::mouseMove() action
 		comboBoxControl->selectItems( false );
 
-		setDefaultItemHeight( comboBoxControl->getHeight() );
+		
+		GraphicsContext* context = getContext();
+		
+		Font* font = context->getCurrentFont();
+
+		UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
+		setDefaultItemHeight( mgr->getDefaultHeightFor( UIMetricsManager::htListItemHeight ) );//context->getTextHeight("EM") ); //font->getPixelSize() );
 
 		ScrollbarManager* scrollBarMgr = new ScrollbarManager();
 		scrollBarMgr->setTarget( this );
@@ -141,8 +147,8 @@ public:
 		ulong32 desktopW = Desktop::getDesktop()->getWidth();
 
 		int count = minVal<>( listBox_->getListModel()->getCount(), comboBoxControl_->getDropDownCount() );
-
-		int winHeight = ( itemRect.getHeight() ) * count;
+		
+		int winHeight = ( listBox_->getDefaultItemHeight() ) * count;
 		if ( desktopH < winHeight ) {
 			winHeight = desktopH;
 		}
@@ -420,58 +426,19 @@ void ComboBoxControl::mouseLeave( MouseEvent* event )
 void ComboBoxControl::paint( GraphicsContext* context )
 {
 	CustomControl::paint( context );
-
+/*
 	Rect clientRect = getClientBounds();
 
 	arrowRect_ = clientRect;
 
-	Size sz = UIToolkit::getUIMetricsManager()->getDefaultVerticalScrollButtonDimensions();
+	
 
 	arrowRect_.left_ = clientRect.right_ - sz.width_;
-
-	/*
-	Color* hilight = GraphicsToolkit::getSystemColor( SYSCOLOR_HIGHLIGHT );
-	Color* shadow = GraphicsToolkit::getSystemColor( SYSCOLOR_SHADOW );
-	Color* face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
-
-	double h = this->getHeight();
-	double x = this->getWidth() - h;
-	double y = 3.0;
-	Rect paintRect( 0, 0, getWidth(), getHeight() );
-	context->setColor( face );
-	context->rectangle( &paintRect );
-	context->fillPath();
-
-	arrowRect_ = paintRect;
-
-	arrowRect_.left_ = arrowRect_.getWidth() - arrowRect_.getHeight();
-	arrowRect_.inflate( -2, -2 );
-
-	viewRect_ = paintRect;
-	viewRect_.right_ = arrowRect_.left_-1;
-
-	//Light3DBorder bdr;
-	//bdr.setInverted( true );
-	//bdr.paint( &paintRect, context );
-	*/
-
-	///////////////
-	//FIX ME!!!!!
-	///////////////
+*/
 	
-	//context->drawVerticalScrollButtonRect( &arrowRect_, false, arrowPressed_ );
-
-/*
-	viewRect_.inflate( -2, -2 );
-	viewRect_.right_ += 2;
-
-	context->setColor( getColor() );
-	context->rectangle( &viewRect_ );
-	context->fillPath();
-	*/
-
 
 	ButtonState state;
+	Rect clientRect = getClientBounds();
 
 	state.setActive( this->isActive() );
 	state.setEnabled( this->isEnabled() );
@@ -487,7 +454,10 @@ void ComboBoxControl::paint( GraphicsContext* context )
 
 	if ( NULL != selectedItem ){		
 		if ( selectedItem->canPaint() ) {
-			selectedItem->paint( context, &viewRect_ );
+			Rect r = clientRect;
+			Size sz = UIToolkit::getUIMetricsManager()->getDefaultVerticalScrollButtonDimensions();
+			r.right_ -= sz.width_;
+			selectedItem->paint( context, &r );
 		}
 	}
 
@@ -542,9 +512,12 @@ void ComboBoxControl::closeDropDown( Event* event )
 		dropDown_->close();
 
 		if ( NULL != selectedItem  ) {
-			setDropDownSelected( true );
-			setSelectedItem( selectedItem );
-			setDropDownSelected( false );
+			// not when we just lost the focus
+			if ( event->getType() != 888999 ) {
+				setDropDownSelected( true );
+				setSelectedItem( selectedItem );
+				setDropDownSelected( false );
+			}
 		}
 		if ( cbsDropDownWithEdit == comboBoxStyle_ ) {
 			ListItem* item = getSelectedItem();
@@ -579,7 +552,13 @@ void ComboBoxControl::mouseDown( MouseEvent* event )
 {
 	CustomControl::mouseDown( event );
 
-	this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+	//this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+
+	this->keepMouseEvents();
+
+	Rect clientRect = getClientBounds();
+	this->arrowPressed_ = clientRect.containsPt( event->getPoint() );
+
 	if ( true == arrowPressed_ ){
 		if ( dropDown_ != NULL ) {
 			//drop down is still up, this will close it
@@ -618,7 +597,10 @@ void ComboBoxControl::mouseMove( MouseEvent* event )
 {
 	CustomControl::mouseMove( event );
 	if ( event->hasLeftButton() ){
-		this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+		//this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+		Rect clientRect = getClientBounds();
+		this->arrowPressed_ = clientRect.containsPt( event->getPoint() );
+
 		this->repaint();
 	}
 }
@@ -626,6 +608,7 @@ void ComboBoxControl::mouseMove( MouseEvent* event )
 void ComboBoxControl::mouseUp( MouseEvent* event )
 {
 	CustomControl::mouseUp( event );
+	this->releaseMouseEvents();
 	arrowPressed_ = false;
 	this->repaint();
 }
@@ -684,10 +667,10 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 	selectedItem_ = selectedItem;
 	if ( NULL != selectedItem_ ) {
 		selectedItem_->setSelected( true );
-		//ItemEvent* event = new ItemEvent( selectedItem_, ITEM_EVENT_SELECTED );
-		//UIToolkit::postEvent(
-		//	new ItemEventHandler<ComboBoxControl>( this, &ComboBoxControl::onPostSelect ), event );
-		ItemEvent event( selectedItem_, ITEM_EVENT_SELECTED );
+		
+		setFocused();
+
+ 		ItemEvent event( selectedItem_, ITEM_EVENT_SELECTED );
 		SelectionChanged.fireEvent( &event );
 	}
 	repaint();
@@ -954,6 +937,18 @@ void ComboBoxControl::selectItems( const bool& select )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2004/12/21 21:58:05  marcelloptr
+*bugfix [ 1089382 ] ComboBox fires a SelectionChanged msg when loosing focus
+*
+*Revision 1.3.2.2  2004/12/20 21:57:50  ddiego
+*committing cheeseheads patches for the combobox control.
+*
+*Revision 1.3.2.1  2004/12/20 05:01:47  ddiego
+*fixed combobox draw bug for selected item
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

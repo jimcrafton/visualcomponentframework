@@ -61,6 +61,8 @@ void Win32Window::create( Control* owningControl )
 		parent = (HWND)owner_->getPeer()->getHandleID();
 	}
 
+	HICON icon = NULL;
+
 	if ( System::isUnicodeEnabled() ) {
 		hwnd_ = ::CreateWindowExW( exStyleMask_,
 		                             className.c_str(),
@@ -72,6 +74,8 @@ void Win32Window::create( Control* owningControl )
 									 0,
 									 parent,
 									 NULL, ::GetModuleHandleW(NULL), NULL );
+
+		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
 	}
 	else {
 		hwnd_ = ::CreateWindowExA( exStyleMask_,
@@ -84,12 +88,20 @@ void Win32Window::create( Control* owningControl )
 									 0,
 									 parent,
 									 NULL, ::GetModuleHandleA(NULL), NULL );
+
+		icon = LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
+		//Do we need to destroy the icon????
 	}
 
 
 
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
+
+		if ( NULL != icon ) {		
+			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
+		}
+
 	}
 	else {
 		//throw exception
@@ -630,9 +642,20 @@ void Win32Window::setIconImage( Image* icon )
 
 	HICON winIcon = win32Img->convertToIcon();
 
-	SetClassLong (hwnd_, GCL_HICON, (LONG)winIcon);
+	//JC - I got rid of this - I don't know why it was 
+	//here????
+	//SetClassLong (hwnd_, GCL_HICON, (LONG)winIcon);
+	
+	SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM)winIcon );
 
-	::DestroyIcon( winIcon );
+	RedrawWindow( hwnd_, NULL, 0, RDW_FRAME | RDW_INVALIDATE );
+
+
+	//JC I commented this out. If this get's called
+	//just before the window is made visible for the first time
+	//then it ends up making everything (all the icons) disapear
+	//in the TaskManager
+	//::DestroyIcon( winIcon );
 }
 
 bool Win32Window::isActiveWindow()
@@ -655,6 +678,12 @@ void Win32Window::setText( const VCF::String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/10 21:14:00  ddiego
+*fixed bug 1082362 App Icons do not appear.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

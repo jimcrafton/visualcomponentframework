@@ -70,7 +70,14 @@ String System::findResourceDirectory()
 	
 	CommandLine cmdLine = FoundationKit::getCommandLine();
 
-	FilePath appPath = cmdLine.getArgument(0);
+	return System::findResourceDirectoryForExecutable( cmdLine.getArgument(0) );
+}
+
+String System::findResourceDirectoryForExecutable( const String& fileName )
+{
+	String result;	
+
+	FilePath appPath = fileName;
 
 	UnicodeString appDir = appPath.getPathName(true);
 
@@ -119,6 +126,7 @@ String System::findResourceDirectory()
 
 	return result;
 }
+
 
 unsigned long System::getTickCount()
 {
@@ -257,6 +265,16 @@ String System::getEnvironmentVariable( const String& variableName )
 	return System::systemInstance->systemPeer_->getEnvironmentVariable( variableName );
 }
 
+void System::setEnvironmentVariable( const String& variableName, const String& newValue )
+{
+	System::systemInstance->systemPeer_->setEnvironmentVariable( variableName, newValue );
+}
+
+void System::addPathDirectory( const String& directory )
+{
+	System::systemInstance->systemPeer_->addPathDirectory( directory );
+}
+
 String System::getCurrentWorkingDirectory()
 {
 	return System::systemInstance->systemPeer_->getCurrentWorkingDirectory();
@@ -311,6 +329,107 @@ ResourceBundle* System::getResourceBundle()
 	return System::systemInstance->resBundle_;
 }
 
+String System::getInfoFileFromFileName( const String& fileName )
+{
+	String result;
+	
+
+	bool isDir = false;
+	{
+		File file(fileName);
+		if ( file.isDirectory() ) {
+			isDir = true;
+		}
+	}
+	
+	bool found = false;
+	
+	FilePath fp = fileName;
+
+	if ( isDir ) {
+		
+		if ( !fp.isDirectoryName() ) {
+			fp = fp.getFileName() + FilePath::getDirectorySeparator();
+		}
+		
+		String infoFilename = fp + "Info.plist";
+		
+		if ( File::exists( infoFilename ) ) {
+			result = infoFilename;
+		}
+		else {
+			infoFilename = fp + "Info.xml";
+			if ( File::exists( infoFilename ) ) {
+				result = infoFilename;
+			}
+		}
+		
+		if ( !found ) {
+			//try Contents dir!
+			infoFilename = fp + "Contents/Info.plist";
+			if ( File::exists( infoFilename ) ) {
+				result = infoFilename;
+			}
+			else {
+				infoFilename = fp + "Contents/Info.xml";
+				if ( File::exists( infoFilename ) ) {
+					result = infoFilename;
+				}
+			}
+		}
+	}
+	else {
+		std::vector<String> pathComponents = fp.getPathComponents();
+		std::vector<String>::reverse_iterator it = pathComponents.rbegin();
+		int depth = 0;
+		
+		String fileDir = fp.getPathName(true);
+		
+		while ( it != pathComponents.rend() && (depth < 4) ) {
+			const String& dirComponent = *it;
+			
+			int length = dirComponent.length();// + FilePath::getDirectorySeparator().length();		
+						
+			String infoFilename = fileDir + "Info.plist";
+
+			if ( File::exists( infoFilename) ) {
+				result = infoFilename;
+				break;
+			}
+			else {
+				infoFilename = fileDir + "Info.xml";
+				if ( File::exists( infoFilename) ) {
+					result = infoFilename;
+					break;
+				}
+				infoFilename = fileDir + "Contents/Info.plist";
+				if ( File::exists( infoFilename ) ) {
+					result = infoFilename;					
+					break;
+				}
+				else {
+					infoFilename = fileDir + "Contents/Info.xml";
+					if ( File::exists( infoFilename ) ) {
+						result = infoFilename;
+						break;
+					}
+				}
+			}
+			
+			fileDir.erase( fileDir.length()-length, length );
+
+			depth ++;
+			it ++;
+		}
+	}
+
+
+	
+
+	return result;
+}
+
+
 ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
 {
 	ProgramInfo* result = NULL;
@@ -318,120 +437,113 @@ ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
 	result = System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
 
 	if ( NULL == result ) {
-		bool isDir = false;
-		{
-			File file(fileName);
-			if ( file.isDirectory() ) {
-				isDir = true;
-			}
-		}
-
-		if ( isDir ) {
-			FilePath fp = fileName;
-			if ( !fp.isDirectoryName() ) {
-				fp = fp.getFileName() + FilePath::getDirectorySeparator();
-			}
-
-			String infoFilename = fp + "Info.plist";
-			bool found = false;
-			if ( File::exists( infoFilename ) ) {
-				found = true;
-			}
-			else {
-				infoFilename = fp + "Info.xml";
-				if ( File::exists( infoFilename ) ) {
-					found = true;
+		bool found = false;
+			
+		String infoFilename = System::getInfoFileFromFileName( fileName );
+		
+		if ( !infoFilename.empty() ) {
+			String name;
+			String programFileName;
+			String author;
+			String copyright;
+			String company;
+			String description;
+			String programVersion;
+			String fileVersion;				
+			
+			XMLParser xmlParser;
+			FileInputStream fs(infoFilename);
+			xmlParser.parse( &fs );				
+			fs.close();
+			
+			XMLNode* dictNode = NULL;
+			Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
+			while ( nodes->hasMoreElements() ) {
+				XMLNode* node = nodes->nextElement();
+				if ( node->getName() == L"plist" ) {
+					dictNode = node->getNodeByName( L"dict" );
+					break;
 				}
-			}	
-
-			if ( found ) {
-				String name;
-				String programFileName;
-				String author;
-				String copyright;
-				String company;
-				String description;
-				String programVersion;
-				String fileVersion;				
-
-				XMLParser xmlParser;
-				FileInputStream fs(infoFilename);
-				xmlParser.parse( &fs );				
-				fs.close();
-
-				XMLNode* dictNode = NULL;
-				Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
+			}
+			
+			if ( NULL != dictNode ) {
+				nodes = dictNode->getChildNodes();
 				while ( nodes->hasMoreElements() ) {
 					XMLNode* node = nodes->nextElement();
-					if ( node->getName() == L"plist" ) {
-						dictNode = node->getNodeByName( L"dict" );
-						break;
+					XMLNode* val = NULL;
+					
+					if ( nodes->hasMoreElements() ) {
+						val = nodes->nextElement();
+					}
+					
+					if ( (NULL != val) && (node->getName() == "key") ) {
+						String cdata = node->getCDATA();
+						StringUtils::trimWhiteSpaces( cdata );
+
+						if ( cdata == "CFBundleName" ) {
+							name = val->getCDATA();
+							StringUtils::trimWhiteSpaces( name );
+						}
+						else if ( cdata == "CFBundleDisplayName" ) {
+							name = val->getCDATA();
+							StringUtils::trimWhiteSpaces( name );
+						}
+						else if ( cdata == "CFBundleVersion" ) {
+							fileVersion = programVersion = val->getCDATA();
+							StringUtils::trimWhiteSpaces( fileVersion );
+						}
+						else if ( cdata == "CFBundleGetInfoString" ) {
+							copyright = programVersion = val->getCDATA();
+							StringUtils::trimWhiteSpaces( copyright );
+						}
+						else if ( cdata == "NSHumanReadableCopyright" ) {
+							copyright = programVersion = val->getCDATA();	
+							StringUtils::trimWhiteSpaces( copyright );
+						}
+						else if ( cdata == "CFBundleExecutable" ) {
+							programFileName = programVersion = val->getCDATA();
+							StringUtils::trimWhiteSpaces( programFileName );
+						}
+						
+						
+						//VCF cross platform keys
+						else if ( cdata == "ProgramVersion" ) {
+							programVersion = val->getCDATA();
+							StringUtils::trimWhiteSpaces( programVersion );
+						}
+						else if ( cdata == "FileVersion" ) {
+							programVersion = val->getCDATA();
+							StringUtils::trimWhiteSpaces( programVersion );
+						}
+						else if ( cdata == "ProductName" ) {
+							name = val->getCDATA();
+							StringUtils::trimWhiteSpaces( name );
+						}
+						else if ( cdata == "Copyright" ) {
+							copyright = val->getCDATA();
+							StringUtils::trimWhiteSpaces( copyright );
+						}
+						else if ( cdata == "Author" ) {
+							author = val->getCDATA();
+							StringUtils::trimWhiteSpaces( author );
+						}
+						else if ( cdata == "Company" ) {
+							author = val->getCDATA();
+							StringUtils::trimWhiteSpaces( author );
+						}
+						else if ( cdata == "Description" ) {
+							description = val->getCDATA();
+							StringUtils::trimWhiteSpaces( description );
+						}
+						else if ( cdata == "Executable" ) {
+							programFileName = val->getCDATA();
+							StringUtils::trimWhiteSpaces( programFileName );
+						}
 					}
 				}
-
-				if ( NULL != dictNode ) {
-					nodes = dictNode->getChildNodes();
-					while ( nodes->hasMoreElements() ) {
-						XMLNode* node = nodes->nextElement();
-						XMLNode* val = NULL;
-
-						if ( nodes->hasMoreElements() ) {
-							val = nodes->nextElement();
-						}
-
-						if ( (NULL != val) && (node->getName() == "key") ) {
-							if ( node->getCDATA() == "CFBundleName" ) {
-								name = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "CFBundleDisplayName" ) {
-								name = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "CFBundleVersion" ) {
-								fileVersion = programVersion = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "CFBundleGetInfoString" ) {
-								copyright = programVersion = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "NSHumanReadableCopyright" ) {
-								copyright = programVersion = val->getCDATA();							
-							}
-							else if ( node->getCDATA() == "CFBundleExecutable" ) {
-								programFileName = programVersion = val->getCDATA();							
-							}
-
-							
-							//VCF cross platform keys
-							else if ( node->getCDATA() == "ProgramVersion" ) {
-								programVersion = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "FileVersion" ) {
-								programVersion = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "ProductName" ) {
-								name = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "Copyright" ) {
-								copyright = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "Author" ) {
-								author = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "Company" ) {
-								author = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "Description" ) {
-								description = val->getCDATA();
-							}
-							else if ( node->getCDATA() == "Executable" ) {
-								programFileName = val->getCDATA();
-							}
-						}
-					}
-
-					result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
-				}
+				
+				result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
 			}
-
 		}		
 	}
 	return result;
@@ -463,9 +575,135 @@ String System::getCompiler()
 	return result;
 }
 
+String System::getBundlePathFromExecutableName( const String& fileName )
+{
+	String result ;
+
+	ProgramInfo* info = System::getProgramInfoFromFileName( fileName );
+	if ( NULL == info ) {
+		return result;
+	}
+
+
+
+	String bundleName = info->getProgramName();
+	//unfortunately ::GetModuleFileNameW gives a
+	// lowercase path under vc70, but not under vc6 !!
+	bundleName = StringUtils::lowerCase( bundleName );
+
+	//done with bundle !
+	info->free();
+
+	VCF_ASSERT( !bundleName.empty() );
+
+	if ( bundleName.empty() ) {
+		return result;
+	}
+
+	FilePath appPath = fileName;
+	String appDir = appPath.getPathName(true);
+	appPath = StringUtils::lowerCase( appPath );
+	
+	std::vector<String> pathComponents = appPath.getPathComponents();
+	std::vector<String>::reverse_iterator it = pathComponents.rbegin();
+	int depth = 0;
+	
+	while ( it != pathComponents.rend() && (depth < 4) ) {
+		String dirComponent = *it;
+
+		int length = dirComponent.length();// + FilePath::getDirectorySeparator().length();
+		
+		dirComponent.erase( dirComponent.size()-1, 1 );//trim off trailing "/"
+
+		
+		//the match is not an equals, because the bundle might be
+		//called "Foo", and the current dir might be "Foo.app"
+		if ( dirComponent.find(bundleName) != String::npos ) {
+			result = appDir;
+			break;
+		}
+		
+		appDir.erase( appDir.length()-length, length );
+
+		depth ++;
+		it ++;
+	}
+
+	return result;
+}
+
+String System::getExecutableNameFromBundlePath( const String& fileName )
+{
+	String result;
+
+	File file(fileName);
+	if ( !file.isDirectory() ) {
+		result = fileName;
+		return result;
+	}
+
+	ProgramInfo* info = System::getProgramInfoFromFileName( fileName );
+	if ( NULL == info ) {
+		return result;
+	}
+
+	String executableName = info->getProgramFileName();
+
+	info->free();
+
+	if ( executableName.empty() ) {
+		return result;
+	}
+
+	FilePath fp = FilePath::makeDirectoryName( fileName );
+	//attempt 1
+	result = fp + executableName;
+	if ( !File::exists( result ) ) {
+		//attempt 2!
+		result = fp + "Contents/" + executableName;
+		if ( !File::exists( result ) ) {
+			//attempt 3
+			result = fp + "Contents/" + System::getOSName() + FilePath::getDirectorySeparator() + executableName;
+			if ( !File::exists( result ) ) {
+				//attempt 4
+				result = fp + "Contents/" + System::getOSName() + FilePath::getDirectorySeparator() + 
+							System::getCompiler() + FilePath::getDirectorySeparator() + executableName;
+			}
+		}
+	}
+
+	if ( !File::exists( result ) ) {
+		result = "";
+	}
+
+	return result;
+
+}	
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.4  2004/12/22 03:26:14  marcelloptr
+*fixed bug in getBundlePathFromExecutableName() coming from the fact
+*that GetModuleFileNameW gives a lowercase path under vc70, but not under vc6
+*
+*Revision 1.3.2.3  2004/12/19 07:09:20  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
+*Revision 1.3.2.2  2004/12/19 04:05:01  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.3.2.1  2004/12/11 17:49:59  ddiego
+*added 2 new projects that are command line tools. One is for
+*creating the basic shell for app bundles, the other is for filling in, or
+*updating an info.plist (or info.xml) file.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
