@@ -26,6 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.4  2003/12/19 21:19:49  ddiego
+*** empty log message ***
+
 Revision 1.3  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 
@@ -62,6 +65,7 @@ generation
 
 	<xsl:param name="htmlhelp.hhc.generate.source.chm.link" select="0"/>
 	<xsl:param name="htmlhelp.hhc.binary" select="1"/>
+	<xsl:param name="htmlhelp.chi.create" select="1"/>
 	<xsl:param name="htmlhelp.hhp" select="'vcf-docbook-with-src.hhp'"></xsl:param>
 
 	<xsl:param name="htmlhelp.chm" select="'vcf-docbook-with-src.chm'"/>

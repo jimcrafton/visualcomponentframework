@@ -10,7 +10,7 @@ INSTALL_FILE=../installers/win32/VCFFullInstaller.iss
 
 
 
-./installFiles
+#./installFiles
 
 
 
@@ -18,17 +18,23 @@ echo Starting build of all binaries and installation executable for
 echo Visual Component Framework $FULL_VCF_DOT_VERSION
 
 
-msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Debug" /REBUILD /OUT vcfAll-debug.stat.log
-cat vcfAll-debug.stat.log
+#msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Debug" /REBUILD /OUT vcfAll-debug.stat.log
+#cat vcfAll-debug.stat.log
 
-msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Release" /REBUILD /OUT vcfAll-release.stat.log
-cat vcfAll-release.stat.log
+#msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Release" /REBUILD /OUT vcfAll-release.stat.log
+#cat vcfAll-release.stat.log
 
-msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Debug" /REBUILD /OUT vcfAll-debug-static.stat.log
-cat vcfAll-debug-static.stat.log
+#msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Debug" /REBUILD /OUT vcfAll-debug-static.stat.log
+#cat vcfAll-debug-static.stat.log
 
-msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Release" /REBUILD /OUT vcfAll-release-static.stat.log
-cat vcfAll-release-static.stat.log
+#msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Release" /REBUILD /OUT vcfAll-release-static.stat.log
+#cat vcfAll-release-static.stat.log
+
+msdev ../build/vc60/add-ins/all.dsw /MAKE "all - Win32 Release" /REBUILD /OUT vcfAddins-release.stat.log
+cat vcfAddins-release.stat.log
+
+msdev ../thirdparty/win32/MSDNIntegrator/MSDNIntegrator.dsw /MAKE "MSDNIntegrator - Win32 Release" /REBUILD /OUT MSDNIntegrator-release.stat.log
+cat MSDNIntegrator-release.stat.log
 
 echo done building binaries, preparing to build installer
 
