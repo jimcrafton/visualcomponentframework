@@ -100,6 +100,10 @@ SOURCE=.\DevStudioMainWnd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DevStudioMDIClientWnd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DSAddIn.cpp
 # End Source File
 # Begin Source File
@@ -147,6 +151,10 @@ SOURCE=.\Commands.h
 # Begin Source File
 
 SOURCE=.\DevStudioMainWnd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DevStudioMDIClientWnd.h
 # End Source File
 # Begin Source File
 

@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Fri Jun 29 16:19:42 2001
+/* at Fri Jun 29 20:27:52 2001
  */
 /* Compiler settings for D:\code\vcf\build\vc60\add-ins\VCFBuilder\VCFBuilder.odl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext

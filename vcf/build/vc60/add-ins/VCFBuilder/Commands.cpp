@@ -142,18 +142,28 @@ HRESULT CCommands::XApplicationEvents::WindowDeactivate(IDispatch* theWindow)
 HRESULT CCommands::XApplicationEvents::WorkspaceOpen()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	OutputDebugString( "CCommands::XApplicationEvents::WorkspaceOpen()\n" );
+	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
+	}
 	return S_OK;
 }
 
 HRESULT CCommands::XApplicationEvents::WorkspaceClose()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
+	}
 	return S_OK;
 }
 
 HRESULT CCommands::XApplicationEvents::NewWorkspace()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
+	}
 	return S_OK;
 }
 

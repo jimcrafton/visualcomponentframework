@@ -136,6 +136,7 @@ BEGIN
     IDS_CMD_ACTIVATE_VCF_BUILDER_ENV_STANDALONE 
                             "\nActivate the standaloneVCF Builder Environment\nActivates the standalone VCFBuilder Environment\nActivateVCFBuilderStandalone Command"
     IDS_CMD_NEW_PROJECT     "\nNew VCF Builder Project\nNew VCF Builder Project\nNewProject Command"
+    IDR_VCFBUILDERTYPE      "\nProject\nVCFBuilderProject\nVCF Builder Projects (*.proj)\n.proj\n MyProject\nVCFBuilder Project"
 END
 
 #endif    // English (U.S.) resources
