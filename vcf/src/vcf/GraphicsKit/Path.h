@@ -82,7 +82,19 @@ public:
 				(type_ == pt.type_);
 	};
 
+	/**
+	The x,y coordinate of the point. 
+	*/
 	Point point_;
+
+	/**
+	The path type - the type may be one of 
+		\li ptMoveTo
+		\li ptLineTo
+		\li ptQuadTo
+		\li ptCubicTo
+		\li ptClose
+	*/
 	PointType type_;
 };
 
@@ -127,6 +139,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 02:26:24  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
