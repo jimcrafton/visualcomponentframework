@@ -277,6 +277,10 @@ SOURCE=..\..\..\include\graphics\PrintContext.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\RenderableArea.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Stroke.h
 # End Source File
 # Begin Source File
