@@ -124,6 +124,10 @@ LINK32=link.exe
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractApplication.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\AbstractCommand.h
 # End Source File
 # Begin Source File
@@ -488,6 +492,10 @@ SOURCE=..\..\..\include\implementer\HeaderPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ImageControl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\ImageList.h
 # End Source File
 # Begin Source File
@@ -533,6 +541,10 @@ SOURCE=..\..\..\include\events\KeyboardListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Label.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\LibraryApplication.h
 # End Source File
 # Begin Source File
 
@@ -1040,6 +1052,10 @@ SOURCE=..\..\..\include\implementer\WindowPeer.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractApplication.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractCommand.cpp
 # End Source File
 # Begin Source File
@@ -1277,6 +1293,10 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\ImageControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\ImageList.cpp
 # End Source File
 # Begin Source File
@@ -1294,6 +1314,10 @@ SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\LibraryApplication.cpp
 # End Source File
 # Begin Source File
 
