@@ -129,6 +129,7 @@ Name: {group}\VCF Website; Filename: http://vcf.sf.net; IconFilename: {app}\vcf.
 Name: msdnintegrate; Description: Integrate VCF Documentation with MSDN; Components: Help_Files
 Name: addvc6dirs; Description: Add VCF Include and Library path to Microsoft's Visual C++
 Name: addenvpaths; Description: Add VCF environment variables, and to your Path
+Name: installwizards; Description: Install VC6 Project Wizards
 
 [Run]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -add -title ""VCF Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files
@@ -198,4 +199,31 @@ end;
 function BackButtonClick(CurPage: Integer): Boolean;
 begin
   Result := ScriptDlgPages(CurPage, True);
+end;
+
+
+procedure CurPageChanged(CurPage: Integer);
+var
+  vc6Key:String;
+  VsCommonDir:String;
+  templatesDir:String;
+  tasks:String;
+  components:String;
+begin
+  if ( CurPage = wpFinished ) then begin
+    components := WizardSelectedComponents( false );
+    tasks := WizardSelectedTasks( false );
+    if ( (Pos( 'installwizards', tasks ) > 0) and (Pos( 'vc_wizards', components ) > 0) ) then begin
+
+      vc6Key := 'SOFTWARE\Microsoft\VisualStudio\6.0\Setup';
+	  if ( RegValueExists( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir' ) )then begin
+	    RegQueryStringValue( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir', VsCommonDir );
+	    templatesDir := VsCommonDir + '\MSDev98\Template\';
+	    FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VPLAppWiz.awx', templatesDir + 'VPLAppWiz.awx', true );
+        FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFLibraryAppWizard.awx', templatesDir + 'VCFLibraryAppWizard.awx', true );
+        FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFConsoleWiz.awx', templatesDir + 'VCFConsoleWiz.awx', true );
+        FileCopy( ExpandConstant('{app}\VC6-Addins') + '\vcfwizard.awx', templatesDir + 'vcfwizard.awx', true );
+	  end
+    end
+  end
 end;
