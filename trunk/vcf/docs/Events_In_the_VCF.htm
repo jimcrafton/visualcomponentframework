@@ -37,6 +37,37 @@
    interested in being notified when a particular event happens, as well 
    as telling the same object that we no longer want to be notified.</P>
   <P>
+   To accomplish this in the VCF we have three main players: the source, or
+  object that fires the event, the event, which itself represented by an object,
+  and the observer, or object that wishes to receive notification when the event
+  occurs. Each of these objects has to have certain responsibilities as
+  described in the table below.</P>
+  <table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="24%" bgcolor="#808080">Object</td>
+      <td width="76%" bgcolor="#808080">Responsibilities&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="24%">Source object</td>
+      <td width="76%">
+        <ul>
+          <li>The source must have methods for registering, and un-registering
+            the observer object(s)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="24%">Event object</td>
+      <td width="76%">The Event object must provide data to be used by the
+        observer objects. For example, mouse event object would contain data
+        about the position of the mouse, the buttons that were held down</td>
+    </tr>
+    <tr>
+      <td width="24%">Observer object</td>
+      <td width="76%"></td>
+    </tr>
+  </table>
+  <P>
    To accomplish this in the VCF we have event handler that are implemented with
    the VCF::EventHandler class. The VCF::EventHandler is an abstract class that encapsulates a member method 
    on some other object that will be called when the event happens, in 
@@ -103,8 +134,8 @@ wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Window,ClickEvent&gt;( w
   the instance referred to by the <code>wind</code> variable), and create a new
   EventHandlerInstance, passing in the source object that will receive the
   notification, the callback method, and the name of the event handler. In our
-  example above we are assuming our imaginary Window object has a <code>addClickedHandler()</code>
-  method, and that is fires off events of type <code>ClickEvent</code>. If we
+  example above we are assuming our imaginary Window object has an <code>addClickedHandler()</code>
+  method, and that it fires off events of type <code>ClickEvent</code>. If we
   repeat this we can add our other two objects as well, like so:</p>
   <PRE>Window* wind = ...
 Obj1* obj1 = ...
@@ -121,10 +152,10 @@ wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Obj2,ClickEvent&gt;( obj
   <p>To simplify things a bit further, in the core framework, particularly the
   ApplicationKit, there are event handler classes defined for most of the
   corresponding event classes. For example, all mouse events, such as mouseClick,
-  mouseDown, etc, use the VCF::MouseEvent class when the event is fired off. So
-  a special event handler class is also defined, called, predictably,
-  VCF::MouseEventHandler, which derives from the VCF::EventHandlerInstance as
-  follows:</p>
+  mouseDown, etc, use the <code>VCF::MouseEvent</code> class when the event is
+  fired off. So a special event handler class is also defined, called,
+  predictably, <code>VCF::MouseEventHandler</code>, which derives from the <code>VCF::EventHandlerInstance</code>
+  as follows:</p>
   <PRE>template &lt;class SOURCE&gt; class MouseEventHandler: public EventHandlerInstance&lt;SOURCE,MouseEvent&gt;{
      public:
      MouseEventHandler( SOURCE* source, 
@@ -134,11 +165,12 @@ wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Obj2,ClickEvent&gt;( obj
      .
      .
 }</PRE>
-  <p>Note the difference from the VCF::EventHandlerInstance class: when using
-  VCF::MouseEventHandler class you only need to specify the SOURCE template
-  type, then EVENT type is supplied for you. Of course you don't have to use the
-  class, but it makes things a bit simpler. Let's look at a real world example,
-  where an application wants to get notified when a menu item is clicked on</p>
+  <p>Note the difference from the <code>VCF::EventHandlerInstance</code> class:
+  when using <code>VCF::MouseEventHandler</code> class you only need to specify
+  the SOURCE template type, then EVENT type is supplied for you. Of course you
+  don't have to use the class, but it makes things a bit simpler. Let's look at
+  a real world example, where an application wants to get notified when a menu
+  item is clicked on</p>
   <PRE>//class declaration
 class MyApplication : public VCF::Application {
 public:
