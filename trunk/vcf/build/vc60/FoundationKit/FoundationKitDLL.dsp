@@ -133,6 +133,10 @@ SOURCE=..\..\..\include\core\CommonDefines.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\io\Directory.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\Enum.h
 # End Source File
 # Begin Source File
@@ -442,6 +446,10 @@ SOURCE=..\..\..\src\core\Class.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ClassRegistry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\IO\Directory.cpp
 # End Source File
 # Begin Source File
 
