@@ -1,12 +1,13 @@
-// VPLAppWizaw.cpp : implementation file
+// VCFLibraryAppWizardaw.cpp : implementation file
 //
 
 #include "stdafx.h"
-#include "VPLAppWiz.h"
-#include "VPLAppWizaw.h"
+#include "VCFLibraryAppWizard.h"
+#include "VCFLibraryAppWizardaw.h"
+#include "chooser.h"
 #include <comdef.h>
 #include <atlbase.h>
-#include "Chooser.h"
+
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -15,35 +16,36 @@ static char THIS_FILE[] = __FILE__;
 
 // This is called immediately after the custom AppWizard is loaded.  Initialize
 //  the state of the custom AppWizard here.
-void CVPLAppWizAppWiz::InitCustomAppWiz()
+void CVCFLibraryAppWizardAppWiz::InitCustomAppWiz()
 {
+	// Create a new dialog chooser; CDialogChooser's constructor initializes
+	//  its internal array with pointers to the steps.
 	m_pChooser = new CDialogChooser;
 
-	// There are no steps in this custom AppWizard.
+	// Set the maximum number of steps.
 	SetNumberOfSteps(LAST_DLG);
 
-	// Add build step to .hpj if there is one
-	m_Dictionary[_T("HELP")] = _T("1");
-
-	// Inform AppWizard that we're making a DLL.
-	m_Dictionary[_T("PROJTYPE_DLL")] = _T("1");
-
-	// TODO: Add any other custom AppWizard-wide initialization here.	
+	// TODO: Add any other custom AppWizard-wide initialization here.
 }
 
 // This is called just before the custom AppWizard is unloaded.
-void CVPLAppWizAppWiz::ExitCustomAppWiz()
+void CVCFLibraryAppWizardAppWiz::ExitCustomAppWiz()
 {
+	// Deallocate memory used for the dialog chooser
 	ASSERT(m_pChooser != NULL);
 	delete m_pChooser;
 	m_pChooser = NULL;
+
+	// TODO: Add code here to deallocate resources used by the custom AppWizard
 }
 
 // This is called when the user clicks "Create..." on the New Project dialog
-CAppWizStepDlg* CVPLAppWizAppWiz::Next(CAppWizStepDlg* pDlg)
+//  or "Next" on one of the custom AppWizard's steps.
+CAppWizStepDlg* CVCFLibraryAppWizardAppWiz::Next(CAppWizStepDlg* pDlg)
 {
-	CAppWizStepDlg* result = m_pChooser->Next(pDlg);
-	
+	// Delegate to the dialog chooser
+	CAppWizStepDlg* result = m_pChooser->Next(pDlg);	
+
 	if ( pDlg == NULL) {	// By default, this custom AppWizard has no steps
 		
 		// Set template macros based on the project name entered by the user.
@@ -57,12 +59,7 @@ CAppWizStepDlg* CVPLAppWizAppWiz::Next(CAppWizStepDlg* pDlg)
 		m_Dictionary[_T("Doc")] = strDoc;
 		strDoc.MakeUpper();
 		m_Dictionary[_T("DOC")] = strDoc;
-		CString tmp = strRoot;
-		tmp.MakeUpper();
-		m_Dictionary[_T("ROOT_")] = tmp;
-		CString includeFile; 
-		includeFile = "\"" + strRoot + ".h\"";
-		m_Dictionary[_T("ROOT_INCLUDE")] = includeFile;
+		
 		// Set value of $$MAC_TYPE$$
 		strRoot = strRoot.Left(4);
 		int nLen = strRoot.GetLength();
@@ -77,18 +74,19 @@ CAppWizStepDlg* CVPLAppWizAppWiz::Next(CAppWizStepDlg* pDlg)
 		// Return NULL to indicate there are no more steps.  (In this case, there are
 		//  no steps at all.)
 	}
+
 	return result;
 }
 
 // This is called when the user clicks "Back" on one of the custom
 //  AppWizard's steps.
-CAppWizStepDlg* CVPLAppWizAppWiz::Back(CAppWizStepDlg* pDlg)
+CAppWizStepDlg* CVCFLibraryAppWizardAppWiz::Back(CAppWizStepDlg* pDlg)
 {
 	// Delegate to the dialog chooser
 	return m_pChooser->Back(pDlg);
 }
 
-void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
+void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 {
 	// TODO: Add code here to customize the project.  If you don't wish
 	//  to customize project, you may remove this virtual override.
@@ -146,18 +144,18 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
+						setting = "/GR /MDd /DNO_MFC /D_USRDLL /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_XML_INCLUDE)";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
+						setting = "/GR /MD /DNO_MFC /D_USRDLL /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_XML_INCLUDE)";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
 					}
 					break;
 				}
@@ -175,23 +173,23 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKitDLL_d.lib GraphicsKitDLL_d.lib ApplicationKitDLL_d.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKitDLL_d.lib GraphicsKitDLL_d.lib ApplicationKitDLL_d.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
-						setting = "/out:\"Debug/" + rootName + ".vpl\"";
+						setting = "/dll /out:\"Debug/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
 
-						setting = "/out:\"Debug/" + rootName + ".vpl\"";
+						setting = "/dll /out:\"Debug/" + rootName + ".dll\"";
 						pConfig->AddToolSettings( tool, setting, reserved );
 					}
 					break;
 
 					case release: {
-						setting = "FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib xerces-c_1.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
-						setting = "/out:\"Release/" + rootName + ".vpl\"";
+						setting = "/dll /out:\"Release/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
 
-						setting = "/out:\"Release/" + rootName + ".vpl\"";
+						setting = "/dll /out:\"Release/" + rootName + ".dll\"";
 						pConfig->AddToolSettings( tool, setting, reserved );
 					}
 					break;
@@ -208,8 +206,8 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 }
 
 
-// Here we define one instance of the CVPLAppWizAppWiz class.  You can access
+// Here we define one instance of the CVCFLibraryAppWizardAppWiz class.  You can access
 //  m_Dictionary and any other public members of this class through the
-//  global VPLAppWizaw.
-CVPLAppWizAppWiz VPLAppWizaw;
+//  global VCFLibraryAppWizardaw.
+CVCFLibraryAppWizardAppWiz VCFLibraryAppWizardaw;
 

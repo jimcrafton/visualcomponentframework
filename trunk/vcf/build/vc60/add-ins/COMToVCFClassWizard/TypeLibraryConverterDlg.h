@@ -32,6 +32,7 @@ public:
 class TypeLibHolder;
 class CoClassHolder;
 class InterfaceHolder;
+class MethodHolder;
 
 /////////////////////////////////////////////////////////////////////////////
 // TypeLibraryConverterDlg dialog
@@ -80,6 +81,7 @@ protected:
 
 	void GenerateSingleUnitperClassImpl( TypeLibHolder* pTypeLibHolder );
 
+	CString GenerateMethodComments( MethodHolder* pMethod, int indent );
 	CString GenerateCoClassHeader( CoClassHolder* pCoClass, TypeLibHolder* pTypeLibHolder );
 	CString GenerateCoClassImpl( CoClassHolder* pCoClass, TypeLibHolder* pTypeLibHolder );
 
@@ -102,11 +104,18 @@ protected:
 	CString	m_memberPrefix;
 	BOOL	m_singleUnitPerClass;
 	CString	m_classPrefix;
+	CString	m_baseClass;
 
 	BOOL	m_convertCoClasses;
 	BOOL	m_useATLForCoClassImpl;
 	BOOL	m_useTLBAsNamespace;
 	
+	
+	BOOL	m_useFunctionComments;	
+	BOOL	m_useCPPComments;
+	BOOL	m_useLowerCaseFuncNames;
+	BOOL	m_useJavaDocParamComments;
+
 	int m_fileDistributionType;
 
 	CImageList m_imageList;

@@ -16,6 +16,7 @@
 #define IDR_TOOLBAR_LARGE               137
 #define IDD_TYPE_OPTIONS                138
 #define IDD_CONVERT_TYPE                139
+#define IDD_SOURCE_FORMATTING           141
 #define IDD_UNDOCUMENTEDVC              1000
 #define IDC_TYPELIB_LIST                1001
 #define IDC_CONVERT                     1002
@@ -49,14 +50,25 @@
 #define IDC_TYPELIST                    1028
 #define IDC_EDIT_TYPE                   1029
 #define IDC_TYPE_TO_CONVERT_TO          1030
+#define IDC_CONST_VARIABLES             1031
+#define IDC_USE_LOWER_CASE_FUNC_NAMES   1032
+#define IDC_FUNCTION_COMMENTS           1033
+#define IDC_USE_CPP_COMMENTS            1034
+#define IDC_FUNCTION_LABEL              1035
+#define IDC_FUNCTION_COMMENTS_LABEL     1036
+#define IDC_COMMENTS_LABEL              1037
+#define IDC_USE_JAVADOC_PARAM_COMMENTS  1038
+#define IDC_JAVADOC_COMMENTS_LABEL      1039
+#define IDC_BASE_CLASS                  1039
+#define IDC_USE_VCF_RTTI                1040
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1031
+#define _APS_NEXT_CONTROL_VALUE         1041
 #define _APS_NEXT_SYMED_VALUE           1009
 #endif
 #endif
