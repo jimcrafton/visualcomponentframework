@@ -114,6 +114,10 @@ SOURCE=..\..\..\src\IO\FileStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\io\FileUtils.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\MemoryStream.cpp
 # End Source File
 # Begin Source File
@@ -227,6 +231,10 @@ SOURCE=..\..\..\include\io\FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileStreamPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\io\FileUtils.h
 # End Source File
 # Begin Source File
 
