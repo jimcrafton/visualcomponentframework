@@ -37,11 +37,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -49,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_s.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 Debug"
 
@@ -60,11 +60,11 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "\vcf\Debug"
-# PROP Intermediate_Dir "\vcf\Debug\obj"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_WINDOWS" /D "_USRDLL" /D "NO_MFC" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /YX"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /YX"stdafx.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -72,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_sd.lib"
 
 !ENDIF 
 
@@ -97,7 +97,19 @@ SOURCE=..\..\..\src\net\Socket.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\net\SocketEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\net\SocketListeningLoop.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\net\URL.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SocketPeer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -118,6 +130,22 @@ SOURCE=..\..\..\include\net\ServerSocketListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\net\Socket.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketListeningLoop.h
 # End Source File
 # Begin Source File
 
