@@ -4,9 +4,6 @@
 #define _MAINWINDOW_H__
 
 
-#include "VCF.h"
-#include "Window.h"
-
 
 /**
 *Class MainWindow documentation

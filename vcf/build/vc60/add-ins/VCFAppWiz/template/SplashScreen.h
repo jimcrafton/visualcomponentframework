@@ -4,11 +4,6 @@
 #define _SPLASHSCREEN_H__
 
 
-#include "VCF.h"
-#include "Window.h"
-#include "Thread.h"
-
-
 using namespace VCF;
 
 
@@ -23,9 +18,9 @@ public:
 
 	virtual bool run();
 
-	virtual void paint( GraphicsContext* context );
+	virtual void paint( VCF::GraphicsContext* context );
 protected:
-	Image* m_splashImage;
+	VCF::Image* m_splashImage;
 private:
 
 	VCF::ThreadLooper* m_thread;

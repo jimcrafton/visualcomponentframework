@@ -7,6 +7,10 @@ Project: "COMToVCFClassWizard"=".\COMToVCFClassWizard\COMToVCFClassWizard.dsp" -
 
 Package=<5>
 {{{
+    begin source code control
+    COMToVCFClassWizard
+    .\comtovcfclasswizard
+    end source code control
 }}}
 
 Package=<4>
@@ -19,6 +23,10 @@ Project: "VCFConsoleWiz"=".\VCFConsoleWiz\VCFConsoleWiz.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    VCFConsoleWiz
+    .\vcfconsolewiz
+    end source code control
 }}}
 
 Package=<4>
@@ -31,6 +39,10 @@ Project: "VCFLibraryAppWizard"=".\VCFLibraryAppWizard\VCFLibraryAppWizard.dsp" -
 
 Package=<5>
 {{{
+    begin source code control
+    VCFLibraryAppWizard
+    .\vcflibraryappwizard
+    end source code control
 }}}
 
 Package=<4>
@@ -43,6 +55,10 @@ Project: "VCFNewClassWiz"=".\VCFNewClassWiz\VCFNewClassWiz.dsp" - Package Owner=
 
 Package=<5>
 {{{
+    begin source code control
+    VCFNewClassWiz
+    .\vcfnewclasswiz
+    end source code control
 }}}
 
 Package=<4>
@@ -55,6 +71,10 @@ Project: "VPLAppWiz"=".\VPLAppWiz\VPLAppWiz.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    VPLAppWiz
+    .\vplappwiz
+    end source code control
 }}}
 
 Package=<4>
@@ -67,6 +87,10 @@ Project: "all"=".\all.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    all
+    .
+    end source code control
 }}}
 
 Package=<4>
@@ -97,6 +121,10 @@ Project: "vcfwizard"=".\VCFAppWiz\vcfwizard.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    vcfwizard
+    .\vcfappwiz
+    end source code control
 }}}
 
 Package=<4>
