@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Setting up CVS</title>
+<link rel="stylesheet" type="text/css" href="vcf_2.css">
+</head>
+
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF" style="font-family: Trebuchet MS">
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0" height="199">
+  <tr>
+    <td width="663"><img border="0" src="logo.jpg" width="663" height="199"></td>
+    <td.docTop width="100%" align="right" valign="bottom" align="right">
+    <td background="top-background.jpg" valign="bottom" align="right">Hosted by:
+      <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=6796&amp;type=1" border="0" alt="SourceForge Logo"></a></td>
+  </tr>
+</table>
+<!--
+Main body table
+-->
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="docLeft" width="117" valign="top" align="left"><img src="left_sidebar.jpg" width="120" height="1024"></td>
+    <td valign="top">
+      <table bgcolor="#0D4D99" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+          <td><a class="docTopic" href="main.html">Documentation Home</a></td>
+        </tr>
+      </table>
+      <h1><a name="TopicTitle">Setting up CVS and SSH</a></h1>
+      <h2><a name="Introduction">Introduction</a></h2>
+      <p>Once you have <a href="registering_as_a_user_at_sf.html">signed up</a>,
+      you then have to setup your machine to use CVS and SSH. CVS and SSH are <b><i>must
+      have</i></b> tools, without these you'll not be able to check source code
+      in or out from CVS, which is the standard version control program used by
+      all Source Forge projects. You can get both of these tools from a variety
+      of places, including the VCF Installer, as well as a smaller installer on
+      the project that only installs CVS and SSH, and also configures your
+      system to use them ( you can get this installer <a href="http://telia.dl.sourceforge.net/vcf/CVS-SSH.1.exe">here</a>).&nbsp;For
+      documentation on how to use SSH on your Win32 system, Source Forge has
+      some great <a href="http://sourceforge.net/docman/index.php?group_id=1">articles</a>,
+      as well as some specific stuff just for Win32 (<a href="http://sourceforge.net/docman/display_doc.php?docid=766&amp;group_id=1">here</a>,
+      and <a href="http://sourceforge.net/docman/display_doc.php?docid=767&amp;group_id=1">here</a>).
+      There are some things you'll need to check for to make sure CVS and SSH
+      will work together correctly so please verify the following:</p>
+      <ul>
+        <li>You'll need a CVSROOT variable that&nbsp;<br>
+          equals &quot;:ext:&lt;your username&gt;@cvs.vcf.sourceforge.net:/cvsroot/vcf&quot;
+        <li>You'll need a CVS_RSH that equals &quot;ssh&quot;
+        <li>A HOME variable that points to wherever you'd like you home
+          directory to be
+        <li>A HOMEPATH variable that should read the same as the HOME variable
+          above</li>
+      </ul>
+      <p>[a brief discussion on how to setup environment variables on
+      linux/windows would be great here]</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+</body>
