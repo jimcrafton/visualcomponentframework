@@ -101,6 +101,10 @@ SOURCE=..\..\..\include\core\AbstractCommand.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractComponentEditor.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\AbstractListModel.h
 # End Source File
 # Begin Source File
@@ -270,6 +274,14 @@ SOURCE=..\..\..\include\com\COMObject.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ComponentEditor.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ComponentEditorManager.h
 # End Source File
 # Begin Source File
 
@@ -1073,6 +1085,10 @@ SOURCE=..\..\..\src\core\AbstractCommand.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractContainer.cpp
 # End Source File
 # Begin Source File
@@ -1191,6 +1207,10 @@ SOURCE=..\..\..\src\COM\COMObject.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ComponentEditorManager.cpp
 # End Source File
 # Begin Source File
 
