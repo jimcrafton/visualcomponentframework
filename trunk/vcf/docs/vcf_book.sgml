@@ -26,6 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.3  2003/05/18 23:09:37  ddiego
+fixes some mistakes in the docs/Makefile and adds some extra documentation.
+
 Revision 1.2  2003/05/17 20:36:55  ddiego
 this is the checkin for the 0.6.1 release - represents the merge over from
 the devmain-0-6-0 branch plus a few minor bug fixes
@@ -48,7 +51,7 @@ put together or in separate books. Made to changes to Makefile
 
 -->
 
-<title>The VCF Book (0.6.1)</title>
+<title>The VCF Book (VERSION-NUMBER)</title>
 	<titleabbrev>VCF Documentation (0.6.1)</titleabbrev>
 	<bookinfo>
 		<legalnotice>
@@ -200,6 +203,56 @@ put together or in separate books. Made to changes to Makefile
 				<member>Endre Somogyi</member>
 			</simplelist>
 			If we missed someone please let us know about it!
+			</para>
+			<para>
+			We'd also like to give credit where credit is due, and would like to provide this list of 
+			third party libraries that the VCF uses
+			<itemizedlist>
+				<listitem>
+					<para>
+					<ulink url="http://www.gtk.org">GTK2</ulink> - The backend library used as the basis for the Linux port.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+					<ulink url="http://freeimage.sourceforge.net/">FreeImage</ulink> - Graphics library that supports a 
+					wide variety of image formats
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.stlport.org/">STL</ulink> - The C++ Standard Template Library
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.pcre.org/">PCRE - Perl Compatible Regular Expressions</ulink> - 
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://bazar.conectiva.com.br/~niemeyer/projects/regexx/">Regexx</ulink> - 
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.antigrain.com/">Anti Grain Geometry</ulink> - A superb 2D rendering
+					library for vector paths.
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.scintilla.org">Scintilla</ulink> - A syntax highlighting text editor
+					component, used for the VCF Builder's text editor.
+					</para>
+				</listitem>
+				
+			</itemizedlist>
 			</para>
 		</section>
 	</chapter>	

@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.4  2003/05/18 23:09:37  ddiego
+#fixes some mistakes in the docs/Makefile and adds some extra documentation.
+#
 #Revision 1.3  2003/05/17 20:58:39  ddiego
 #removed some old files, mostly script junk that are no longer needed
 #----------------------------------------------------------------------
@@ -37,7 +40,7 @@ VCFB_VERSION = 1.0.5
 XMAKE_VERSION = 1.0.5
 
 
-HTMLHELP_COMPILER = /bin/cat
+HTMLHELP_COMPILER = "D:/Program Files/HTML Help Workshop/hhc.exe"
 
 XSL_HTMLHELP_IMPORT = d:/docbook/xsl/htmlhelp/htmlhelp.xsl
 
@@ -65,6 +68,9 @@ HTML_TAR_FILENAME = VCFDocs-$(VERSION).tar
 
 ONLINE_SRC_DOC_DIR = srcdocs
 ONLINE_DOCS_REF_DIR = docs/ref
+
+UPLOADS_DIR	= ../uploadToSF
+
 FULL_ONLINE_SRC_DOC_DIR = $(ONLINE_DOCS_REF_DIR)/$(ONLINE_SRC_DOC_DIR)
 
 
@@ -268,8 +274,34 @@ alldocs_hh_with_source : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS
 	if ( test -f $(RAW_CHI_FILENAME) )\
 	then\
 		mv $(RAW_CHI_FILENAME) $(VERSIONED_CHI_FILENAME);\
-	fi	
-
+	fi
+	
+	if ( test -d $(UPLOADS_DIR) )\
+	then \
+		mkdir tmp;\
+		mkdir tmp/vcf-$(VERSION);\
+		mkdir tmp/vcf-$(VERSION)/docs;\
+		cp $(VERSIONED_CHM_FILENAME) tmp/vcf-$(VERSION)/docs/;\
+		if ( test -f $(VERSIONED_CHI_FILENAME) )\
+		then\
+			cp $(VERSIONED_CHI_FILENAME) tmp/vcf-$(VERSION)/docs/;\
+		fi;\
+		if ( test -f $(VERSIONED_SRC_CHM_FILENAME) )\
+		then\
+			cp $(VERSIONED_SRC_CHM_FILENAME) tmp/vcf-$(VERSION)/docs/;\
+		fi;\
+		if ( test -f $(VERSIONED_SRC_CHI_FILENAME) )\
+		then\
+			cp $(VERSIONED_SRC_CHI_FILENAME) tmp/vcf-$(VERSION)/docs/;\
+		fi;\
+		cd tmp;\
+		tar -cf vcf-$(VERSION)-htmlhelp.tar vcf-$(VERSION)/;\
+		gzip -f vcf-$(VERSION)-htmlhelp.tar;\
+		cd ../;\
+		mv tmp/vcf-$(VERSION)-htmlhelp.tar.gz $(UPLOADS_DIR)/;\
+		rm -rf tmp;\
+	fi
+		
 
 
 vcf_builder_docs : $(VCF_BUILDER_DOCS) test_tools
@@ -351,6 +383,7 @@ doxy :
 	doxygen
 	mv Doxyfile.bak Doxyfile
 	cp -r gfx/ doxy_html/
+	cp vcf.css doxy_html/
 
 online_doxy : stripper hrefmunger imgmunger
 	cp Doxyfile.online Doxyfile.bak
@@ -451,7 +484,10 @@ dist_all_online : alldocs_online strip_online_docs online_doxy
 	rm -r gfx/*.*
 	cp gfx_bak/*.* gfx/ 
 	rm -rf gfx_bak/
-	
+
+
+
+
 clean :
 	mv doxy_footer.html doxy_footer.html.bak
 	mv doxy_header.html doxy_header.html.bak
