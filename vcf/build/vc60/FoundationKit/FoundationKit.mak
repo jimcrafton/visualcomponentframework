@@ -42,16 +42,20 @@ CLEAN :
 	-@erase "$(INTDIR)\BasicOutputStream.obj"
 	-@erase "$(INTDIR)\Class.obj"
 	-@erase "$(INTDIR)\ClassRegistry.obj"
+	-@erase "$(INTDIR)\Directory.obj"
 	-@erase "$(INTDIR)\ErrorLog.obj"
 	-@erase "$(INTDIR)\Event.obj"
+	-@erase "$(INTDIR)\EventHandler.obj"
 	-@erase "$(INTDIR)\File.obj"
 	-@erase "$(INTDIR)\FileStream.obj"
 	-@erase "$(INTDIR)\FileUtils.obj"
 	-@erase "$(INTDIR)\FoundationKit.obj"
 	-@erase "$(INTDIR)\FoundationKit.pch"
+	-@erase "$(INTDIR)\InterfaceClass.obj"
 	-@erase "$(INTDIR)\Library.obj"
 	-@erase "$(INTDIR)\Locales.obj"
 	-@erase "$(INTDIR)\MemoryStream.obj"
+	-@erase "$(INTDIR)\Mutex.obj"
 	-@erase "$(INTDIR)\Object.obj"
 	-@erase "$(INTDIR)\ObjectWithEvents.obj"
 	-@erase "$(INTDIR)\Parser.obj"
@@ -73,11 +77,13 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32FilePeer.obj"
 	-@erase "$(INTDIR)\Win32FileStream.obj"
 	-@erase "$(INTDIR)\Win32LibraryPeer.obj"
+	-@erase "$(INTDIR)\Win32Mutex.obj"
 	-@erase "$(INTDIR)\Win32Peer.obj"
 	-@erase "$(INTDIR)\Win32ProcessPeer.obj"
 	-@erase "$(INTDIR)\Win32Registry.obj"
 	-@erase "$(INTDIR)\Win32SystemPeer.obj"
 	-@erase "$(INTDIR)\Win32Thread.obj"
+	-@erase "$(INTDIR)\XMLParser.obj"
 	-@erase "$(OUTDIR)\FoundationKit_s.lib"
 
 "$(OUTDIR)" :
@@ -132,15 +138,19 @@ LIB32_OBJS= \
 	"$(INTDIR)\BasicOutputStream.obj" \
 	"$(INTDIR)\Class.obj" \
 	"$(INTDIR)\ClassRegistry.obj" \
+	"$(INTDIR)\Directory.obj" \
 	"$(INTDIR)\ErrorLog.obj" \
 	"$(INTDIR)\Event.obj" \
+	"$(INTDIR)\EventHandler.obj" \
 	"$(INTDIR)\File.obj" \
 	"$(INTDIR)\FileStream.obj" \
 	"$(INTDIR)\FileUtils.obj" \
 	"$(INTDIR)\FoundationKit.obj" \
+	"$(INTDIR)\InterfaceClass.obj" \
 	"$(INTDIR)\Library.obj" \
 	"$(INTDIR)\Locales.obj" \
 	"$(INTDIR)\MemoryStream.obj" \
+	"$(INTDIR)\Mutex.obj" \
 	"$(INTDIR)\Object.obj" \
 	"$(INTDIR)\ObjectWithEvents.obj" \
 	"$(INTDIR)\Parser.obj" \
@@ -161,11 +171,13 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32FilePeer.obj" \
 	"$(INTDIR)\Win32FileStream.obj" \
 	"$(INTDIR)\Win32LibraryPeer.obj" \
+	"$(INTDIR)\Win32Mutex.obj" \
 	"$(INTDIR)\Win32Peer.obj" \
 	"$(INTDIR)\Win32ProcessPeer.obj" \
 	"$(INTDIR)\Win32Registry.obj" \
 	"$(INTDIR)\Win32SystemPeer.obj" \
-	"$(INTDIR)\Win32Thread.obj"
+	"$(INTDIR)\Win32Thread.obj" \
+	"$(INTDIR)\XMLParser.obj"
 
 "$(OUTDIR)\FoundationKit_s.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -189,16 +201,20 @@ CLEAN :
 	-@erase "$(INTDIR)\BasicOutputStream.obj"
 	-@erase "$(INTDIR)\Class.obj"
 	-@erase "$(INTDIR)\ClassRegistry.obj"
+	-@erase "$(INTDIR)\Directory.obj"
 	-@erase "$(INTDIR)\ErrorLog.obj"
 	-@erase "$(INTDIR)\Event.obj"
+	-@erase "$(INTDIR)\EventHandler.obj"
 	-@erase "$(INTDIR)\File.obj"
 	-@erase "$(INTDIR)\FileStream.obj"
 	-@erase "$(INTDIR)\FileUtils.obj"
 	-@erase "$(INTDIR)\FoundationKit.obj"
 	-@erase "$(INTDIR)\FoundationKit.pch"
+	-@erase "$(INTDIR)\InterfaceClass.obj"
 	-@erase "$(INTDIR)\Library.obj"
 	-@erase "$(INTDIR)\Locales.obj"
 	-@erase "$(INTDIR)\MemoryStream.obj"
+	-@erase "$(INTDIR)\Mutex.obj"
 	-@erase "$(INTDIR)\Object.obj"
 	-@erase "$(INTDIR)\ObjectWithEvents.obj"
 	-@erase "$(INTDIR)\Parser.obj"
@@ -221,11 +237,13 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32FilePeer.obj"
 	-@erase "$(INTDIR)\Win32FileStream.obj"
 	-@erase "$(INTDIR)\Win32LibraryPeer.obj"
+	-@erase "$(INTDIR)\Win32Mutex.obj"
 	-@erase "$(INTDIR)\Win32Peer.obj"
 	-@erase "$(INTDIR)\Win32ProcessPeer.obj"
 	-@erase "$(INTDIR)\Win32Registry.obj"
 	-@erase "$(INTDIR)\Win32SystemPeer.obj"
 	-@erase "$(INTDIR)\Win32Thread.obj"
+	-@erase "$(INTDIR)\XMLParser.obj"
 	-@erase "$(OUTDIR)\FoundationKit_sd.lib"
 
 "$(OUTDIR)" :
@@ -280,15 +298,19 @@ LIB32_OBJS= \
 	"$(INTDIR)\BasicOutputStream.obj" \
 	"$(INTDIR)\Class.obj" \
 	"$(INTDIR)\ClassRegistry.obj" \
+	"$(INTDIR)\Directory.obj" \
 	"$(INTDIR)\ErrorLog.obj" \
 	"$(INTDIR)\Event.obj" \
+	"$(INTDIR)\EventHandler.obj" \
 	"$(INTDIR)\File.obj" \
 	"$(INTDIR)\FileStream.obj" \
 	"$(INTDIR)\FileUtils.obj" \
 	"$(INTDIR)\FoundationKit.obj" \
+	"$(INTDIR)\InterfaceClass.obj" \
 	"$(INTDIR)\Library.obj" \
 	"$(INTDIR)\Locales.obj" \
 	"$(INTDIR)\MemoryStream.obj" \
+	"$(INTDIR)\Mutex.obj" \
 	"$(INTDIR)\Object.obj" \
 	"$(INTDIR)\ObjectWithEvents.obj" \
 	"$(INTDIR)\Parser.obj" \
@@ -309,11 +331,13 @@ LIB32_OBJS= \
 	"$(INTDIR)\Win32FilePeer.obj" \
 	"$(INTDIR)\Win32FileStream.obj" \
 	"$(INTDIR)\Win32LibraryPeer.obj" \
+	"$(INTDIR)\Win32Mutex.obj" \
 	"$(INTDIR)\Win32Peer.obj" \
 	"$(INTDIR)\Win32ProcessPeer.obj" \
 	"$(INTDIR)\Win32Registry.obj" \
 	"$(INTDIR)\Win32SystemPeer.obj" \
-	"$(INTDIR)\Win32Thread.obj"
+	"$(INTDIR)\Win32Thread.obj" \
+	"$(INTDIR)\XMLParser.obj"
 
 "$(OUTDIR)\FoundationKit_sd.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -363,6 +387,12 @@ SOURCE=..\..\..\src\core\ClassRegistry.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\IO\Directory.cpp
+
+"$(INTDIR)\Directory.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\Utils\ErrorLog.cpp
 
 "$(INTDIR)\ErrorLog.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
@@ -372,6 +402,12 @@ SOURCE=..\..\..\src\Utils\ErrorLog.cpp
 SOURCE=..\..\..\src\Events\Event.cpp
 
 "$(INTDIR)\Event.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Events\EventHandler.cpp
+
+"$(INTDIR)\EventHandler.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -397,7 +433,7 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yc /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yc"FoundationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\FoundationKit.obj"	"$(INTDIR)\FoundationKit.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -417,6 +453,12 @@ CPP_SWITCHES=/nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core"
 
 !ENDIF 
 
+SOURCE=..\..\..\src\core\InterfaceClass.cpp
+
+"$(INTDIR)\InterfaceClass.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\Utils\Library.cpp
 
 "$(INTDIR)\Library.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
@@ -432,6 +474,12 @@ SOURCE=..\..\..\src\core\Locales.cpp
 SOURCE=..\..\..\src\IO\MemoryStream.cpp
 
 "$(INTDIR)\MemoryStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\Mutex.cpp
+
+"$(INTDIR)\Mutex.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -555,6 +603,12 @@ SOURCE=..\..\..\src\ImplementerKit\Win32LibraryPeer.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
+SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
+
+"$(INTDIR)\Win32Mutex.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
 
 "$(INTDIR)\Win32Peer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
@@ -582,6 +636,12 @@ SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
 SOURCE=..\..\..\src\ImplementerKit\Win32Thread.cpp
 
 "$(INTDIR)\Win32Thread.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\XMLParser.cpp
+
+"$(INTDIR)\XMLParser.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

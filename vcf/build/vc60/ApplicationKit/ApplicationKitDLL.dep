@@ -1,0 +1,3697 @@
+# Microsoft Developer Studio Generated Dependency File, included by ApplicationKitDLL.mak
+
+..\..\..\src\core\AbstractApplication.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\io\VFFInputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractCommand.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractCommand.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Command.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\UndoRedoStack.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\UndoRedoEvent.h"\
+	"..\..\..\include\events\UndoRedoListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractComponentEditor.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractComponentEditor.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComponentEditor.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\io\VFFOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractContainer.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractListModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractScrollable.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractScrollable.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ScrollPeer.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractTableModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTableModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TableModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TableModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractTextModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTextModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AbstractTreeModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTreeModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\AbstractWin32Component.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ScrollPeer.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Font.h"\
+	"..\..\..\include\ImplementerKit\Win32FontManager.h"\
+	"..\..\..\include\implementerKit\Win32MenuItem.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32ScrollPeer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\AcceleratorKey.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Application.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ApplicationKit.cpp : \
+	"..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AbstractTextModel.h"\
+	"..\..\..\include\core\AbstractTreeModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\Application.h"\
+	"..\..\..\include\core\ApplicationKit.h"\
+	"..\..\..\include\core\ApplicationPeer.h"\
+	"..\..\..\include\core\Button.h"\
+	"..\..\..\include\core\CheckBoxControl.h"\
+	"..\..\..\include\core\Class.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ClassRegistry.h"\
+	"..\..\..\include\core\ComboBoxControl.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\CommonColor.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\CommonDialog.h"\
+	"..\..\..\include\core\CommonFileDialog.h"\
+	"..\..\..\include\core\CommonFileOpen.h"\
+	"..\..\..\include\core\CommonFileSave.h"\
+	"..\..\..\include\core\CommonFont.h"\
+	"..\..\..\include\core\CommonPrint.h"\
+	"..\..\..\include\core\Component.h"\
+	"..\..\..\include\core\ComponentEditorManager.h"\
+	"..\..\..\include\core\Container.h"\
+	"..\..\..\include\core\ControlContainer.h"\
+	"..\..\..\include\core\Controller.h"\
+	"..\..\..\include\core\Cursor.h"\
+	"..\..\..\include\core\CursorManager.h"\
+	"..\..\..\include\core\CustomControl.h"\
+	"..\..\..\include\core\DefaultListItem.h"\
+	"..\..\..\include\core\DefaultListModel.h"\
+	"..\..\..\include\core\DefaultPropertyEditors.h"\
+	"..\..\..\include\core\DefaultTextModel.h"\
+	"..\..\..\include\core\DefaultTreeItem.h"\
+	"..\..\..\include\core\DefaultTreeModel.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Dialog.h"\
+	"..\..\..\include\core\FoundationKit.h"\
+	"..\..\..\include\core\FrameworkConfig.h"\
+	"..\..\..\include\core\HTMLBrowserControl.h"\
+	"..\..\..\include\core\ImageControl.h"\
+	"..\..\..\include\core\Interface.h"\
+	"..\..\..\include\core\InterfaceClass.h"\
+	"..\..\..\include\core\Item.h"\
+	"..\..\..\include\core\Label.h"\
+	"..\..\..\include\core\LibraryApplication.h"\
+	"..\..\..\include\core\ListBoxControl.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\ListViewControl.h"\
+	"..\..\..\include\core\Locales.h"\
+	"..\..\..\include\core\Menu.h"\
+	"..\..\..\include\core\MenuBar.h"\
+	"..\..\..\include\core\MenuItem.h"\
+	"..\..\..\include\core\Method.h"\
+	"..\..\..\include\core\Model.h"\
+	"..\..\..\include\core\MultilineTextControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\ObjectWithEvents.h"\
+	"..\..\..\include\core\OpenGLControl.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\Point.h"\
+	"..\..\..\include\core\PopupMenu.h"\
+	"..\..\..\include\core\Property.h"\
+	"..\..\..\include\core\PropertyEditor.h"\
+	"..\..\..\include\core\PropertyEditorManager.h"\
+	"..\..\..\include\core\RadioButtonControl.h"\
+	"..\..\..\include\core\Rect.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\Size.h"\
+	"..\..\..\include\core\TabbedPages.h"\
+	"..\..\..\include\core\TabModel.h"\
+	"..\..\..\include\core\TabPage.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\ToggledButton.h"\
+	"..\..\..\include\core\ToolbarDock.h"\
+	"..\..\..\include\core\TreeControl.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\core\View.h"\
+	"..\..\..\include\core\Window.h"\
+	"..\..\..\include\dragdrop\Clipboard.h"\
+	"..\..\..\include\dragdrop\ClipboardDataObject.h"\
+	"..\..\..\include\dragdrop\ClipboardEvent.h"\
+	"..\..\..\include\dragdrop\ClipboardListener.h"\
+	"..\..\..\include\dragdrop\ClipboardPeer.h"\
+	"..\..\..\include\dragdrop\DataObjectPeer.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\dragdrop\DragDropPeer.h"\
+	"..\..\..\include\dragdrop\DragEvent.h"\
+	"..\..\..\include\dragdrop\DragScrollEvent.h"\
+	"..\..\..\include\dragdrop\DragSource.h"\
+	"..\..\..\include\dragdrop\DragSourceListener.h"\
+	"..\..\..\include\dragdrop\DropEvent.h"\
+	"..\..\..\include\dragdrop\DropTarget.h"\
+	"..\..\..\include\dragdrop\DropTargetListener.h"\
+	"..\..\..\include\dragdrop\DropTargetPeer.h"\
+	"..\..\..\include\events\ButtonEvent.h"\
+	"..\..\..\include\events\ButtonListener.h"\
+	"..\..\..\include\events\ComboBoxListener.h"\
+	"..\..\..\include\events\ComponentEvent.h"\
+	"..\..\..\include\events\ComponentListener.h"\
+	"..\..\..\include\events\ControlEvent.h"\
+	"..\..\..\include\events\ControlListener.h"\
+	"..\..\..\include\events\Event.h"\
+	"..\..\..\include\events\EventHandler.h"\
+	"..\..\..\include\events\FocusEvent.h"\
+	"..\..\..\include\events\FocusListener.h"\
+	"..\..\..\include\events\HelpEvent.h"\
+	"..\..\..\include\events\HelpListener.h"\
+	"..\..\..\include\events\imageevent.h"\
+	"..\..\..\include\events\imagelistener.h"\
+	"..\..\..\include\events\ImageListEvent.h"\
+	"..\..\..\include\events\ImageListListener.h"\
+	"..\..\..\include\events\ItemEditorEvent.h"\
+	"..\..\..\include\events\ItemEditorListener.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ItemListener.h"\
+	"..\..\..\include\events\KeyboardEvent.h"\
+	"..\..\..\include\events\KeyboardListener.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\events\MenuItemEvent.h"\
+	"..\..\..\include\events\MenuItemListener.h"\
+	"..\..\..\include\events\MenuListener.h"\
+	"..\..\..\include\events\ModelEvent.h"\
+	"..\..\..\include\events\ModelListener.h"\
+	"..\..\..\include\events\ModelValidationListener.h"\
+	"..\..\..\include\events\MouseEvent.h"\
+	"..\..\..\include\events\MouseListener.h"\
+	"..\..\..\include\events\NotifyEvent.h"\
+	"..\..\..\include\events\NotifyListener.h"\
+	"..\..\..\include\events\PropertyChangeEvent.h"\
+	"..\..\..\include\events\PropertyListener.h"\
+	"..\..\..\include\events\ScrollEvent.h"\
+	"..\..\..\include\events\TabModelEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\events\ToolTipEvent.h"\
+	"..\..\..\include\events\ToolTipListener.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\events\ValidationEvent.h"\
+	"..\..\..\include\events\WhatsThisHelpEvent.h"\
+	"..\..\..\include\events\WhatsThisHelpListener.h"\
+	"..\..\..\include\events\WindowEvent.h"\
+	"..\..\..\include\events\WindowListener.h"\
+	"..\..\..\include\exceptions\ApplicationException.h"\
+	"..\..\..\include\exceptions\BadComponentStateException.h"\
+	"..\..\..\include\exceptions\BadModelStateException.h"\
+	"..\..\..\include\exceptions\BasicException.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\ClassNotFound.h"\
+	"..\..\..\include\exceptions\DataTypeNotSupportedException.h"\
+	"..\..\..\include\exceptions\ErrorStrings.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPeer.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\InvalidStateException.h"\
+	"..\..\..\include\exceptions\NoFreeMemException.h"\
+	"..\..\..\include\exceptions\nographicstoolkitfoundexception.h"\
+	"..\..\..\include\exceptions\NoPeerFoundException.h"\
+	"..\..\..\include\exceptions\NoSuchElementException.h"\
+	"..\..\..\include\exceptions\NoToolKitFoundException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\PropertyChangeException.h"\
+	"..\..\..\include\exceptions\ResourceException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\exceptions\TypeCastException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Circle.h"\
+	"..\..\..\include\graphics\ClippingRegion.h"\
+	"..\..\..\include\graphics\Color.h"\
+	"..\..\..\include\graphics\ControlGraphicsContext.h"\
+	"..\..\..\include\graphics\Curve.h"\
+	"..\..\..\include\graphics\Ellipse.h"\
+	"..\..\..\include\graphics\Fill.h"\
+	"..\..\..\include\graphics\Font.h"\
+	"..\..\..\include\graphics\FontPeer.h"\
+	"..\..\..\include\graphics\GraphicsContext.h"\
+	"..\..\..\include\graphics\GraphicsKit.h"\
+	"..\..\..\include\graphics\Image.h"\
+	"..\..\..\include\graphics\ImageBits.h"\
+	"..\..\..\include\graphics\ImageList.h"\
+	"..\..\..\include\graphics\ImageLoader.h"\
+	"..\..\..\include\graphics\Matrix2D.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\graphics\OpenGLControlContext.h"\
+	"..\..\..\include\graphics\Path.h"\
+	"..\..\..\include\graphics\PathEnumerator.h"\
+	"..\..\..\include\graphics\Polygon.h"\
+	"..\..\..\include\graphics\Printable.h"\
+	"..\..\..\include\graphics\PrintContext.h"\
+	"..\..\..\include\graphics\Stroke.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\ControlPeer.h"\
+	"..\..\..\include\implementer\CursorPeer.h"\
+	"..\..\..\include\implementer\FillState.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementer\OpenGLPeer.h"\
+	"..\..\..\include\implementer\StrokeState.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\BasicInputStream.h"\
+	"..\..\..\include\io\BasicOutputStream.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\File.h"\
+	"..\..\..\include\io\FileIOError.h"\
+	"..\..\..\include\io\FileNotFound.h"\
+	"..\..\..\include\io\FileStream.h"\
+	"..\..\..\include\io\MemStreamUtils.h"\
+	"..\..\..\include\io\Persistable.h"\
+	"..\..\..\include\io\ResourceStream.h"\
+	"..\..\..\include\io\resourcestreampeer.h"\
+	"..\..\..\include\io\Stream.h"\
+	"..\..\..\include\io\TextInputStream.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Enum.h"\
+	"..\..\..\include\utils\Enumerator.h"\
+	"..\..\..\include\utils\GraphicsToolKit.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\Resource.h"\
+	"..\..\..\include\utils\ResourceBundle.h"\
+	"..\..\..\include\utils\Runnable.h"\
+	"..\..\..\include\utils\StringUtils.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\UIToolkit.h"\
+	"..\..\..\include\utils\VCFChar.h"\
+	"..\..\..\include\utils\VCFString.h"\
+	
+
+..\..\..\src\Graphics\Basic3DBorder.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\BasicTableItemEditor.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\BasicTableItemEditor.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TableCellItem.h"\
+	"..\..\..\include\core\TableItemEditor.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\events\TextModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ButtonEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CheckBoxControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\CheckBoxControl.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ToggledButton.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\Clipboard.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\ClipboardDataObject.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\ClipboardEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ColumnItemEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnItemEvent.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ColumnModelEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnModelEvent.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ComboBoxControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AbstractScrollable.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComboBoxControl.h"\
+	"..\..\..\include\core\DefaultListItem.h"\
+	"..\..\..\include\core\DefaultListModel.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\ListBoxControl.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\events\ListModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\COM\COMDataObject.cpp : \
+	"..\..\..\include\com\COMDataObject.h"\
+	"..\..\..\include\com\COMObject.h"\
+	"..\..\..\include\com\COMUtils.h"\
+	"..\..\..\include\COM\EnumObject.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\MemoryStream.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\COM\COMDropTarget.cpp : \
+	"..\..\..\include\com\COMDropTarget.h"\
+	"..\..\..\include\com\COMObject.h"\
+	"..\..\..\include\com\COMUtils.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommandButton.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\ButtonPeer.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommandGroup.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractCommand.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Command.h"\
+	"..\..\..\include\core\CommandGroup.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonColor.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonFileBrowse.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonFileBrowse.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonFileDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonFileOpen.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonFileSave.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonFont.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CommonPrint.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\COM\COMObject.cpp : \
+	"..\..\..\include\com\COMObject.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Component.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ComponentEditorManager.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComponentEditor.h"\
+	"..\..\..\include\core\ComponentEditorManager.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ComponentInfo.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComponentInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\COM\COMUtils.cpp : \
+	"..\..\..\include\com\COMUtils.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Clipboard.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Control.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ControlContainer.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ControlEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Graphics\ControlGraphicsContext.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Cursor.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CursorManager.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\CustomControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\DataType.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultColumnItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\DefaultColumnItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultColumnModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\DefaultColumnModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnModelEvent.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultListItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultListItem.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultListModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultListModel.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultMenuItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultMenuItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultPropertyEditors.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComboBoxControl.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\DefaultListItem.h"\
+	"..\..\..\include\core\DefaultPropertyEditors.h"\
+	"..\..\..\include\core\Label.h"\
+	"..\..\..\include\core\ListBoxControl.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\PropertyEditor.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ComboBoxListener.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTableCellItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\BasicTableItemEditor.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTableCellItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TableCellItem.h"\
+	"..\..\..\include\core\TableItemEditor.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTableModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTableModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTableCellItem.h"\
+	"..\..\..\include\core\DefaultTableModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TableCellItem.h"\
+	"..\..\..\include\core\TableModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TableModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTabModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTabModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TabModel.h"\
+	"..\..\..\include\core\TabPage.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TabModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTabPage.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTabPage.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TabPage.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTextModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTextModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTextModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTreeItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTreeItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\DefaultTreeModel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTreeModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTreeItem.h"\
+	"..\..\..\include\core\DefaultTreeModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Desktop.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\DesktopPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Dialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\DialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\DragEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\DragSource.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\DropEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\DragDrop\DropTarget.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\FocusEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Frame.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\HeaderControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\DefaultColumnItem.h"\
+	"..\..\..\include\core\DefaultColumnModel.h"\
+	"..\..\..\include\core\HeaderControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnModelEvent.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\HelpEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\HTMLBrowserControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\HTMLBrowserControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\HTMLBrowserPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ImageControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\DefaultPropertyEditors.h"\
+	"..\..\..\include\core\ImageControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\PropertyEditor.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ComboBoxListener.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Graphics\ImageList.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ImageListEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ItemEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\KeyboardEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Label.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Label.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\LibraryApplication.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\LibraryApplication.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Graphics\Light3DBorder.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\LightweightComponent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ListBoxControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultListModel.h"\
+	"..\..\..\include\core\ListBoxControl.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\events\ListModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ListModelEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ListViewControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractListModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\DefaultColumnItem.h"\
+	"..\..\..\include\core\DefaultColumnModel.h"\
+	"..\..\..\include\core\DefaultListItem.h"\
+	"..\..\..\include\core\DefaultListModel.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\ListViewControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnModelEvent.h"\
+	"..\..\..\include\events\ColumnModelEventHandler.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\ListModelEvent.h"\
+	"..\..\..\include\events\ListModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\ListviewPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Menu.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\MenuBar.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultMenuItem.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\MenuBarPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\MenuItemEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Model.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\MouseEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\MultilineTextControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\MultilineTextControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\TextPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\OpenGLControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\OpenGLControl.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\VCFOpenGL.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Graphics\OpenGLControlContext.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Panel.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\PopupMenu.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\PopupMenuPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\PropertyEditorManager.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\PropertyEditor.h"\
+	"..\..\..\include\core\PropertyEditorManager.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\PushButton.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\PushButton.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\RadioButtonControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\RadioButtonControl.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ToggledButton.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Utils\Resource.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\IO\ResourceStream.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Splitter.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\Splitter.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\StatusBar.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\StatusBar.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TabbedPages.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTabModel.h"\
+	"..\..\..\include\core\DefaultTabPage.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TabbedPages.h"\
+	"..\..\..\include\core\TabModel.h"\
+	"..\..\..\include\core\TabPage.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TabModelEvent.h"\
+	"..\..\..\include\events\TabModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Basic3DBorder.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TableControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTableModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTableModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TableCellItem.h"\
+	"..\..\..\include\core\TableControl.h"\
+	"..\..\..\include\core\TableItemEditor.h"\
+	"..\..\..\include\core\TableModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TableModelEvent.h"\
+	"..\..\..\include\events\TableModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\TableModelEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TableModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\TabModelEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TabModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TextControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTextModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTextModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\TextPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\TextEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TimerComponent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TimerComponent.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TimerEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Thread.h"\
+	
+
+..\..\..\src\Events\TimerEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TimerEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ToggledButton.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ToggledButton.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Toolbar.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\Toolbar.h"\
+	"..\..\..\include\core\ToolbarButton.h"\
+	"..\..\..\include\core\ToolbarDock.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ToolbarButton.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ToolbarButton.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ToolbarDock.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\Toolbar.h"\
+	"..\..\..\include\core\ToolbarDock.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\ToolbarSeparator.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ToolbarSeparator.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ToolTipEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TreeControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTreeModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\DefaultTreeItem.h"\
+	"..\..\..\include\core\DefaultTreeModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeControl.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\events\TreeModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\TreePeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\TreeListControl.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AbstractTreeModel.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\DefaultColumnItem.h"\
+	"..\..\..\include\core\DefaultColumnModel.h"\
+	"..\..\..\include\core\DefaultTreeItem.h"\
+	"..\..\..\include\core\DefaultTreeModel.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeListControl.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ColumnModelEvent.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\events\TreeModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\graphics\Light3DBorder.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\TreeModelEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TreeModelEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Utils\UIToolkit.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ComponentInfo.h"\
+	"..\..\..\include\core\DefaultPropertyEditors.h"\
+	"..\..\..\include\core\ImageControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Panel.h"\
+	"..\..\..\include\core\PropertyEditor.h"\
+	"..\..\..\include\core\PropertyEditorManager.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ComboBoxListener.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\UndoRedoEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\UndoRedoEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\UndoRedoStack.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Command.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\UndoRedoStack.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\UndoRedoEvent.h"\
+	"..\..\..\include\events\UndoRedoListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\ValidationEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\IO\VFFInputStream.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\io\VFFInputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\IO\VFFOutputStream.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\io\VFFOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\WhatsThisHelpEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Application.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\LibraryApplication.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Application.h"\
+	"..\..\..\include\implementerKit\Win32ResourceBundle.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Button.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommandButton.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\ButtonPeer.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Button.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Clipboard.cpp : \
+	"..\..\..\include\com\COMDataObject.h"\
+	"..\..\..\include\com\COMObject.h"\
+	"..\..\..\include\com\COMUtils.h"\
+	"..\..\..\include\COM\EnumObject.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Clipboard.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ColorDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\WindowPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32ColorDialog.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Component.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Component.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ControlContext.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\WindowPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerkit\Win32ControlContext.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32CursorPeer.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32CursorPeer.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Desktop.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\DesktopPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Desktop.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Dialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\LibraryApplication.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\DialogPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Dialog.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp : \
+	"..\..\..\include\com\COMDropTarget.h"\
+	"..\..\..\include\com\COMObject.h"\
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32DropTargetPeer.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Edit.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TextControl.h"\
+	"..\..\..\include\core\TextModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TextEvent.h"\
+	"..\..\..\include\events\TextModelListener.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\TextPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Edit.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32FileOpenDialog.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32FileSaveDialog.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\implementerkit\Win32FolderBrowseDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32FolderBrowseDialog.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FontDialog.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32FontDialog.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Listview.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ColumnItem.h"\
+	"..\..\..\include\core\ColumnModel.h"\
+	"..\..\..\include\core\ListItem.h"\
+	"..\..\..\include\core\ListModel.h"\
+	"..\..\..\include\core\ListViewControl.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\ListviewPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\implementerKit\Win32Listview.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32MenuBar.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\MenuBarPeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32MenuBar.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32MenuItem.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32MenuItem.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Object.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\implementerkit\Win32PopupMenu.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementer\PopupMenuPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32MenuItem.h"\
+	"..\..\..\include\implementerKit\Win32PopupMenu.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\implementerKit\Win32ResourceBundle.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ResourceStream.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32ResourceStream.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ScrollPeer.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32ScrollPeer.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32ToolKit.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Desktop.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\ScrollPeer.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\events\TimerEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\ButtonPeer.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\DesktopPeer.h"\
+	"..\..\..\include\implementer\DialogPeer.h"\
+	"..\..\..\include\implementer\HTMLBrowserPeer.h"\
+	"..\..\..\include\implementer\ListviewPeer.h"\
+	"..\..\..\include\implementer\MenuBarPeer.h"\
+	"..\..\..\include\implementer\MenuItemPeer.h"\
+	"..\..\..\include\implementer\PopupMenuPeer.h"\
+	"..\..\..\include\implementer\TextPeer.h"\
+	"..\..\..\include\implementer\TreePeer.h"\
+	"..\..\..\include\implementer\WindowPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Application.h"\
+	"..\..\..\include\implementerKit\Win32Button.h"\
+	"..\..\..\include\implementerKit\Win32Clipboard.h"\
+	"..\..\..\include\implementerKit\Win32ColorDialog.h"\
+	"..\..\..\include\implementerKit\Win32Component.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerkit\Win32ControlContext.h"\
+	"..\..\..\include\implementerKit\Win32CursorPeer.h"\
+	"..\..\..\include\implementerKit\Win32Desktop.h"\
+	"..\..\..\include\implementerKit\Win32Dialog.h"\
+	"..\..\..\include\implementerKit\Win32DropTargetPeer.h"\
+	"..\..\..\include\implementerKit\Win32Edit.h"\
+	"..\..\..\include\implementerKit\Win32FileOpenDialog.h"\
+	"..\..\..\include\implementerKit\Win32FileSaveDialog.h"\
+	"..\..\..\include\implementerKit\Win32FolderBrowseDialog.h"\
+	"..\..\..\include\implementerKit\Win32FontDialog.h"\
+	"..\..\..\include\implementerKit\Win32Listview.h"\
+	"..\..\..\include\implementerKit\Win32MenuBar.h"\
+	"..\..\..\include\implementerKit\Win32MenuItem.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32PopupMenu.h"\
+	"..\..\..\include\implementerKit\Win32ScrollPeer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\implementerKit\Win32Tree.h"\
+	"..\..\..\include\implementerKit\Win32Window.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Tree.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\TreeControl.h"\
+	"..\..\..\include\core\TreeItem.h"\
+	"..\..\..\include\core\TreeModel.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\TreePeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\implementerKit\Win32Tree.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Window.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\WindowPeer.h"\
+	"..\..\..\include\implementerKit\AbstractWin32Component.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\implementerKit\Win32Object.h"\
+	"..\..\..\include\implementerKit\Win32ToolKit.h"\
+	"..\..\..\include\implementerKit\Win32Window.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\core\Window.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementer\WindowPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
+
+..\..\..\src\Events\WindowEvent.cpp : \
+	"..\..\..\include\core\AbstractApplication.h"\
+	"..\..\..\include\core\AcceleratorKey.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\Scrollable.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\dragdrop\DataType.h"\
+	"..\..\..\include\events\ItemEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\Border.h"\
+	"..\..\..\include\implementer\CommonDialogPeer.h"\
+	"..\..\..\include\implementerKit\LightweightComponent.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	
