@@ -1,12 +1,12 @@
 echo building VCF source code documentation...
-rm ./docs/vcf.css
-rm ./docs/html/bannerLogo.jpg
-rm ./docs/html/stripe3.jpg
-rm ./docs/html/doxygen_logo.jpg
-cp ../../websites/VCF/doxygen_logo.jpg ./docs/html/doxygen_logo.jpg
-cp ../../websites/VCF/stripe3.jpg ./docs/html/stripe3.jpg
-cp ../../websites/VCF/vcf.css ./docs/vcf.css
-cp ../../websites/VCF/bannerLogo.jpg ./docs/html/bannerLogo.jpg
+cp ./docs/doxygen_logo.jpg ./docs/html/
+cp ./docs/logo.jpg ./docs/html/
+cp ./docs/top-background.jpg ./docs/html/
+cp ./docs/introTop.jpg ./docs/html/
+cp ./docs/introTop2.jpg ./docs/html/
+cp ./docs/left_sidebar.jpg ./docs/html/
+cp ./docs/left_sidebar_strip.jpg ./docs/html/
+cp ./docs/vcf_2.css ./docs/html/
 doxygen > doxyOut.txt
 echo result of doxygen are...
 notepad doxyOut.txt &

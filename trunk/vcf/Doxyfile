@@ -23,7 +23,7 @@ PROJECT_NAME           = "Visual Component Framework"
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 0.5.1
+PROJECT_NUMBER         = 0.5.4
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -420,7 +420,7 @@ HTML_FOOTER            = ./docs/VCFDocFooter.html
 # fine-tune the look of the HTML output. If the tag is left blank doxygen 
 # will generate a default style sheet
 
-HTML_STYLESHEET        = ./docs/vcf.css
+HTML_STYLESHEET        = ./docs/vcf_2.css
 
 # If the HTML_ALIGN_MEMBERS tag is set to YES, the members of classes, 
 # files or namespaces will be aligned in HTML using tables. If set to 
