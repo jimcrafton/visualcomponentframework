@@ -71,7 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /Ze /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -82,7 +82,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\Debug/FoundationKitDLL_d.dll" /pdbtype:sept
+# ADD LINK32 Rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\Debug/FoundationKitDLL_d.dll" /pdbtype:sept
 
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Fake Debug"
 
@@ -301,6 +301,14 @@ SOURCE=..\..\..\include\core\Rect.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\RegistryPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\RuntimeException.h
 # End Source File
 # Begin Source File
@@ -354,6 +362,10 @@ SOURCE=..\..\..\include\implementerKit\Win32FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32Registry.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -429,6 +441,10 @@ SOURCE=..\..\..\src\core\Rect.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\Registry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\Stream.cpp
 # End Source File
 # Begin Source File
@@ -470,6 +486,10 @@ SOURCE=..\..\..\src\implementerkit\Win32LibraryPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32Registry.cpp
 # End Source File
 # End Group
 # End Target
