@@ -266,6 +266,10 @@ SOURCE=..\..\..\src\Core\DefaultTreeModel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=\vcf\src\core\Desktop.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Core\Dialog.cpp
 # End Source File
 # Begin Source File
@@ -799,6 +803,10 @@ SOURCE=..\..\..\include\core\DefaultTreeItem.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\DefaultTreeModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Desktop.h
 # End Source File
 # Begin Source File
 
