@@ -411,6 +411,10 @@ SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
 
 SOURCE=..\..\..\include\implementerKit\Win32Thread.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\XMLParser.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -579,6 +583,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Thread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\XMLParser.cpp
 # End Source File
 # End Group
 # End Target
