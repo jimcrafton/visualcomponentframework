@@ -63,8 +63,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "\vcf\Debug"
 # PROP Intermediate_Dir "\vcf\Debug\obj"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX"stdafx.h" /FD /GZ  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\net" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_WINDOWS" /D "_USRDLL" /D "NO_MFC" /D "FRAMEWORK_DLL" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /YX"stdafx.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -99,10 +99,6 @@ SOURCE=..\..\..\src\net\Socket.cpp
 
 SOURCE=..\..\..\src\net\URL.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32SocketImplementer.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -125,7 +121,7 @@ SOURCE=..\..\..\include\net\Socket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\net\SocketImplementer.h
+SOURCE=..\..\..\include\net\SocketPeer.h
 # End Source File
 # Begin Source File
 
@@ -133,7 +129,7 @@ SOURCE=..\..\..\include\net\URL.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32SocketImplementer.h
+SOURCE=..\..\..\include\implementerKit\Win32SocketPeer.h
 # End Source File
 # End Group
 # End Target
