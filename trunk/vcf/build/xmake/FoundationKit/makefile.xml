@@ -6,6 +6,8 @@
 		<variable name="GCC_INC" value="-I d:/cygwin/usr/include -I d:/cygwin/usr/include/g++-3"/>
 		<variable name="BCC_INC" value="G:\Borland\BCC55\include"/>
 		<variable name="BCC_LIB" value="G:\Borland\BCC55\lib"/>
+		<variable name="LIB_OUT" value="../../../lib"/>
+		<variable name="BIN_OUT" value="../../../bin"/>
 	</substitutions>
 
 	
@@ -14,24 +16,21 @@
 			<config name="GCC Debug" srcBinaryExt=".o">
 				<compiler name="g++" >
 					<flags>
-						<flag value="-I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptions -I $(INC)/io"/>
-						<flag value="-I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerKit -I $(INC)/graphics"/>
-						<flag value="$(GCC_INC)"/>						
-						<flag value="-c -DVCF_GCC"/>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -D_DEBUG -fPIC"/>
 					</flags>
 				</compiler>	
 
 				<linker name="g++">
 					<flags>
-						<flag value="-shared -o libFoundationKit_shared.so"/>
+						<flag value="-shared -o $(BIN_OUT)/libFoundationKit.so"/>
 					</flags>
 				</linker>
 			</config>
 			<config name="VC++ Debug" srcBinaryExt=".obj">
 				<compiler name="cl" >
 					<flags>
-						<flag value="/I $(INC)/core /I $(INC)/events /I $(INC)/dragdrop /I $(INC)/exceptions /I $(INC)/io"/>
-						<flag value="/I $(INC)/utils /I $(INC)/implementer /I $(INC)/implementerKit /I $(INC)/graphics"/>
+						<flag value="/I $(INC)"/>
 						<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od"/>
 						<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FRAMEWORK_DLL /D FRAMEWORK_EXPORTS"/>
 						<flag value="/c"/>
@@ -93,9 +92,10 @@
 			<source name="$(SRC)/Events/ThreadEvent.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
 			<source name="$(SRC)/core/VCFMath.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
 			<source name="$(SRC)/Utils/VCFProcess.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSystemToolkit.cpp" partOfConfig="GCC Debug"/>
 		</sources>
 	</project>
 </make>
