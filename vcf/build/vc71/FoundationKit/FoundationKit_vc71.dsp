@@ -99,11 +99,6 @@ SOURCE=../../../include/core/FoundationKitSelectLib.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-
-SOURCE=../../../src/utils/Dictionary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=../../../src/core/FoundationKit.cpp
 # ADD CPP /Yc"FoundationKit.h"
 # End Source File
@@ -493,6 +488,10 @@ SOURCE=../../../include/utils/DateTime.h
 # End Source File
 # Begin Source File
 
+SOURCE=../../../src/utils/Dictionary.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=../../../include/utils/Dictionary.h
 # End Source File
 # Begin Source File
@@ -508,7 +507,6 @@ SOURCE=../../../src/Utils/ErrorLog.cpp
 SOURCE=../../../include/utils/ErrorLog.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../src/Utils/FilePath.cpp
 # End Source File
@@ -642,14 +640,12 @@ SOURCE=../../../src/core/VCFMath.cpp
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../src/Utils/VCFProcess.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=../../../include/utils/VCFProcess.h
 # End Source File
-
 # Begin Source File
 
 SOURCE=../../../src/utils/VCFString.cpp
@@ -664,11 +660,9 @@ SOURCE=../../../include/utils/VCFulong64.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/utils/Waitable.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../src/Utils/XMLParser.cpp
 # End Source File
@@ -682,45 +676,33 @@ SOURCE=../../../include/utils/XMLParser.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-
 SOURCE=../../../include/core/CommonDefines.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/core/FrameworkConfig.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/core/Locales.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../src/core/Object.cpp
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/core/Object.h
 # End Source File
-# End Group
-# Begin Group "Peer Interfaces"
-
-# PROP Default_Filter "*.h"
 # Begin Source File
-
 
 SOURCE=../../../src/core/ObjectWithEvents.cpp
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/core/ObjectWithEvents.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/core/VCF.h
 # End Source File
@@ -742,54 +724,40 @@ SOURCE=../../../include/implementer/ConditionPeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/implementer/LibraryPeer.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/implementer/LocalePeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/implementer/MutexPeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/implementer/ProcessIORedirectionPeer.h
 # End Source File
-# End Group
-# Begin Group "RTTI"
-
-# PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
-
 
 SOURCE=../../../include/implementer/ProcessPeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/implementer/RegistryPeer.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/utils/SemaphorePeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/utils/SystemPeer.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/implementer/ThreadPeer.h
 # End Source File
-
 # End Group
 # Begin Group "RTTI"
 
@@ -816,46 +784,37 @@ SOURCE=../../../include/rtti/ClassRegistry.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/rtti/Enum.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/rtti/Field.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../src/rtti/InterfaceClass.cpp
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/rtti/InterfaceClass.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/rtti/Method.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/rtti/Property.h
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../src/core/VariantData.cpp
 # End Source File
 # Begin Source File
 
-
 SOURCE=../../../include/core/VariantData.h
 # End Source File
 # Begin Source File
-
 
 SOURCE=../../../include/rtti/VCFRTTIImpl.h
 # End Source File
