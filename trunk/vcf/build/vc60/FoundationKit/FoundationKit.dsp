@@ -163,47 +163,47 @@ SOURCE=..\..\..\include\core\WarningsOffVc.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Class.cpp
+SOURCE=..\..\..\src\rtti\Class.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Class.h
+SOURCE=..\..\..\include\rtti\Class.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ClassInfo.h
+SOURCE=..\..\..\include\rtti\ClassInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ClassRegistry.cpp
+SOURCE=..\..\..\src\rtti\ClassRegistry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ClassRegistry.h
+SOURCE=..\..\..\include\rtti\ClassRegistry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\Enum.h
+SOURCE=..\..\..\include\rtti\Enum.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Interface.h
+SOURCE=..\..\..\include\rtti\Field.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\InterfaceClass.cpp
+SOURCE=..\..\..\src\rtti\InterfaceClass.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\InterfaceClass.h
+SOURCE=..\..\..\include\rtti\InterfaceClass.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Method.h
+SOURCE=..\..\..\include\rtti\Method.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Property.h
+SOURCE=..\..\..\include\rtti\Property.h
 # End Source File
 # Begin Source File
 
@@ -212,6 +212,10 @@ SOURCE=..\..\..\src\core\VariantData.cpp
 # Begin Source File
 
 SOURCE=..\..\..\include\core\VariantData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\VCFRTTIImpl.h
 # End Source File
 # End Group
 # Begin Group "Utils"

@@ -222,6 +222,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "OSNewsArticle"=..\..\..\..\..\junk\OSNewsArticle\OSNewsArticle.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RegExx"=.\FOUNDATIONKIT\RegExx.dsp - Package Owner=<4>
 
 Package=<5>

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 echo Preparing list of files for vcf version $1...
 #cd to vcf root dir
@@ -6,7 +6,7 @@ cd ../
 
 #find all files
 
-SRC_DIRS=../../include ../../src ../../ImageFormats ../../build ../../AppServer ../../xmake ../../ClassServer ../../thirdparty
+SRC_DIRS=./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty
 
 find $SRC_DIRS -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' \
 	-o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.xml' \
