@@ -95,6 +95,13 @@
 			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxThread.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxLibraryPeer.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxMutex.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxProcessPeer.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxRegistry.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSemaphorePeer.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSystemPeer.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/LinuxSystemToolkit.cpp" partOfConfig="GCC Debug"/>
 		</sources>
 	</project>
