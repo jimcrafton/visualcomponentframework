@@ -19,7 +19,6 @@ CFG=COMToVCFClassWizard - Win32 Debug
 !MESSAGE 
 !MESSAGE "COMToVCFClassWizard - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "COMToVCFClassWizard - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "COMToVCFClassWizard - Win32 Fake Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -81,39 +80,12 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
 
-!ELSEIF  "$(CFG)" == "COMToVCFClassWizard - Win32 Fake Debug"
-
-# PROP BASE Use_MFC 2
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Fake Debug"
-# PROP BASE Intermediate_Dir "Fake Debug"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 2
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Fake Debug"
-# PROP Intermediate_Dir "Fake Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_AFXEXT" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /ZI /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_AFXEXT" /Yu"stdafx.h" /FD /c
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386
-
 !ENDIF 
 
 # Begin Target
 
 # Name "COMToVCFClassWizard - Win32 Release"
 # Name "COMToVCFClassWizard - Win32 Debug"
-# Name "COMToVCFClassWizard - Win32 Fake Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
