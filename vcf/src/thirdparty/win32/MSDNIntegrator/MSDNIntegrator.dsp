@@ -23,6 +23,8 @@ CFG=MSDNIntegrator - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -51,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /machine:I386 /out:"MSDNIntegrator-cmdline.exe"
+# ADD LINK32 /nologo /subsystem:windows /machine:I386 /out:"MSDNIntegrator.exe"
 
 !ELSEIF  "$(CFG)" == "MSDNIntegrator - Win32 Debug"
 
@@ -77,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /out:"Debug\MSDNIntegrator-cmdline.exe"
+# ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /out:"Debug\MSDNIntegrator.exe"
 
 !ENDIF 
 

@@ -6,16 +6,14 @@ Name: VC_Addins; Description: VCF Visual Studio 6 Addins; Types: full custom
 Name: Help_Files; Description: VCF Help files; Types: full custom compact
 Name: VC_Wizards; Description: MS Visual C++ 6 Appwizards; Types: full custom
 Name: Src; Description: VCF include files and source code; Types: full custom compact
-Name: Tutorials; Description: VCF Tutorials and test projects; Types: full custom
+Name: Examples; Description: VCF Example projects; Types: full custom
 
 [Dirs]
 Name: {app}\bin
 Name: {app}\lib
-Name: {app}\include; Components: Src
 Name: {app}\src; Components: Src
 Name: {app}\build; Components: Src
-Name: {app}\test; Components: Src
-Name: {app}\examples; Components: Src
+Name: {app}\examples; Components: Examples
 Name: {app}\VC6-Addins; Components: VC_Addins
 
 
@@ -38,9 +36,9 @@ Source: ..\..\docs\VCFDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Hel
 Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files
 Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files
 Source: ..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {app}
-Source: D:\Program Files\ISTool 4\psvince.dll; Flags: dontcopy
+Source: psvince.dll; Flags: dontcopy
 Source: ..\..\build\resources\win32\vcf.ico; DestDir: {app}
-Source: ..\..\..\..\RegEnVar.exe; DestDir: {app}
+Source: ..\..\src\thirdparty\win32\RegEnVar\RegEnVar.exe; DestDir: {app}
 
 [Setup]
 OutputDir=..\..\uploadToSF

@@ -173,34 +173,78 @@ where you installed the VCF.
 
 namespace VCF{
 	/**
-	*initializes the Foundation Kit runtime.
-	*This includes registering the basic classes in the runtime system
-	*this declared this way for consistencies sake
-	*FoundationKit::init() MUST be called at start up before anything else in the
-	*VCF is used.
-	*FoundationKit::terminate() MUST be called to free up any resources used by the
-	*FoundationKit
+	\par
+	The FoundationKit class is used to initialize the Foundation Kit runtime.
+	This includes registering the basic classes in the runtime system, such as the 
+	correct SystemToolkit implementation, and the ClassRegistry.
+	\par
+	FoundationKit::init() MUST be called at start up before anything else in the
+	VCF is used.
+	FoundationKit::terminate() MUST be called to free up any resources used by the
+	FoundationKit.
+	\par
+	An example of proper usage looks like this:
+	\code
+	int main( int argc, char** argv ) 
+	{
+		VCF::FoundationKit::init(argc, argv);
+
+		//your code here
+
+		VCF::FoundationKit::terminate();
+
+		return 0;
+	}
+	\endcode
+
+	\par
+	The FoundationKit is cannot be instantiated nor can it be derived from.
+	@see SystemToolkit
+	@see ClassRegistry
 	*/
 	class FOUNDATIONKIT_API FoundationKit {
 	public:
 		/**
-		*Initialization takes place here, plus creating the various
-		*system resources and peer instances
+		Initialization takes place here, plus creating the various
+		system resources and peer instances.
 		*/
 		static void init( int argc, char** argv );
 
 		/**
-		*Frees up any resource allocated in init();
+		Frees up any resources allocated in the FoundationKit::init() function.
 		*/
 		static void terminate();
 
 		/**
 		returns the CommandLine contents as passed into
-		the FoundationKit::init() function
+		the FoundationKit::init() function. The CommandLine allows you
+		easy access to any command like arguments passed into your application.
+		See the CommandLine class for examples of how to use this class. 
+		@see CommandLine
 		*/
 		static CommandLine getCommandLine();
 
+		/**
+		\par
+		Use this to cause an assert to be fired. Currently an assert is implemented 
+		by throwing an exception. An assert is triggered if the condition is false.
+		\par
+		As a general rule you don't need to call this directly, instead use the VCF_ASSERT 
+		macro's because in addition to a message the macro will be able to also include
+		the file and line number where the assertion was triggered, which is more useful.
+		@param bool the condition - if this value is false, then an assert is triggered
+		and an excpetion is thrown.
+		@param failureMessage a string message indicating what failed.
+		@see VCF_ASSERT
+		*/
 		static void assertCondition( bool condition, const String& failureMessage );
+
+
+	private :
+		FoundationKit();
+		FoundationKit( const FoundationKit& );
+		~FoundationKit();
+
 	};
 }; // end of namespace
 
@@ -208,6 +252,9 @@ namespace VCF{
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -16,7 +16,12 @@ where you installed the VCF.
 
 namespace VCF {
 
-
+/**
+The DictionaryEnumerator simply iterates through all of the items in a 
+Dictionary.
+@see Dictionary
+@see Enumerator
+*/
 class DictionaryEnumerator : public Enumerator< std::pair<const String,VariantData> >{
 public:
 
@@ -190,6 +195,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

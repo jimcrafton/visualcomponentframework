@@ -75,8 +75,17 @@ public:
 	virtual void init();
 
 	/**
-	*call this method to free up the memory of the class
-	*for heap based objects
+	Call this method to free up the memory of the class
+	for heap based objects. Use this instead of calling the 
+	operator delete. For example:
+	\code
+	Mutex*  m = new Mutex();
+	m->free();
+	\endcode
+	This will ensure that the destroy() method is called 
+	\em before calling operator delete which allows a 
+	deriving class to override the destroy methods and safely
+	call virtual methods from within it.
 	*/
 	void free();
 
@@ -104,13 +113,13 @@ public:
 	}
 
     /**
-     * returns a string representation of the object
+    returns a string representation of the object
      */
     virtual String toString();
 
     /**
-     * returns the class name of the object.
-     */
+    returns the class name of the object.
+    */
     String getClassName();
 
 	/**
@@ -328,6 +337,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

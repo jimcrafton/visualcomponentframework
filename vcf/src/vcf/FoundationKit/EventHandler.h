@@ -17,12 +17,21 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
-*EventHandler's form the back bone of the event
-*model in the VCF. The EventHandler base class
-*provides a clean way to invoke the class
-*specific member function pointers in the
-*derived EventHandlerInstance template class.
-*
+\par
+EventHandler's form the back bone of the event
+model in the VCF. The EventHandler base class
+provides a clean way to invoke the class
+specific member function pointers in the
+derived EventHandlerInstance template class.
+\par
+The EventHandler is an abstract class an cannot be created.
+Instead you need to derive your own custom class from it
+and implement the invoke() method. Typically you can 
+just use one of the already provided class, either the 
+StaticEventHandlerInstance for wrapping static (or "C" style functions),
+or the various template derived classes that wrap a classes 
+member function. 
+
 */
 class FOUNDATIONKIT_API EventHandler : public VCF::Object {
 public:
@@ -162,6 +171,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

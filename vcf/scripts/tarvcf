@@ -1,12 +1,14 @@
 #!/usr/bin/bash
 
-echo Preparing list of files for vcf version $1...
+VERSION=`cat ../VERSION`
+
+echo Preparing list of files for vcf version $VERSION...
 #cd to vcf root dir
 cd ../
 
 #find all files
 
-SRC_DIRS=./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty
+SRC_DIRS=./src ./build
 
 find $SRC_DIRS -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' \
 	-o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.xml' \
@@ -27,12 +29,14 @@ find ./examples -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' \
 	-o -iname '*.odl' -o -iname '*.vff' -o -iname '*.html' -o -iname '*.xml' > examples.out
 
 MAKE_FILES="./build/make/Makefile \n\
-./build/make/ApplicationKitObjects.mak \n\
-./build/make/FoundationKitObjects.mak \n\
-./build/make/GraphicsKitObjects.mak \n\
-./build/make/LibAGGObjects.mak \n\
-./build/make/NetworkKitObjects.mak \n\
-./build/make/common.mak "
+./build/make/ApplicationKit.mak \n\
+./build/make/FoundationKit.mak \n\
+./build/make/GraphicsKit.mak \n\
+./build/make/LibAGG.mak \n\
+./build/make/RemoteObjectKit.mak \n\
+./build/make/NetworkKit.mak \n\
+./build/make/OpenGLKit.mak \n\
+./build/make/Makefile.mak "
 
 
 #combine the outoput into a master list
@@ -45,30 +49,30 @@ rm srcfiles.out srcfiles1.out srcfiles2.out tests.out examples.out mkfiles.out
 notepad files.out
 
 mkdir tmp
-mkdir tmp/vcf-$1
+mkdir tmp/vcf-$VERSION
 
-tar -cf tmp/vcf-$1/tmp.tar -T files.out
+tar -cf tmp/vcf-$VERSION/tmp.tar -T files.out
 
-tar -xf tmp/vcf-$1/tmp.tar -C tmp/vcf-$1/
+tar -xf tmp/vcf-$VERSION/tmp.tar -C tmp/vcf-$VERSION/
 
 rm files.out
-rm tmp/vcf-$1/tmp.tar
+rm tmp/vcf-$VERSION/tmp.tar
 
-cp --parents readme.txt tmp/vcf-$1/
-cp --parents license.txt tmp/vcf-$1/
+cp --parents readme.txt tmp/vcf-$VERSION/
+cp --parents license.txt tmp/vcf-$VERSION/
 
 echo Creating tar file...
 cd tmp
-tar -cf vcf-$1.tar vcf-$1/
+tar -cf vcf-$VERSION.tar vcf-$VERSION/
 
 echo Compressing tar file with gzip...
-gzip -f vcf-$1.tar
+gzip -f vcf-$VERSION.tar
 
 if ( test -d ../uploadToSF/ )
 then 
-	mv vcf-$1.tar.gz ../uploadToSF/vcf-$1.tar.gz
+	mv vcf-$VERSION.tar.gz ../uploadToSF/vcf-$VERSION.tar.gz
 else
-	mv vcf-$1.tar.gz ../
+	mv vcf-$VERSION.tar.gz ../
 fi
 
 cd ../

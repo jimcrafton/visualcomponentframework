@@ -20,6 +20,8 @@ namespace VCF {
 class MIMEType documentation
 Specification for this MIME Types may be found at
 RFC 2045 http://www.faqs.org/rfcs/rfc2045.html.
+This is a simple class that makes it easy to deal with 
+strings that signify mime-type information.
 */
 class FOUNDATIONKIT_API MIMEType {
 public:
@@ -102,6 +104,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

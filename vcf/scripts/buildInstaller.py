@@ -33,6 +33,7 @@ def main():
 
 	INSTALL_FILE_LISTING= '../installers/win32/vcfSrcFiles.iss'
 	INSTALL_FILE = '../installers/win32/VCFFullInstaller.iss'
+	
 
 
 
@@ -64,7 +65,7 @@ def main():
 		os.remove( 'vcfSrcFiles.iss' )
 	
 	print( 'preparing list of all files for distribution in installer...' )
-	SRC_DIRS= "../../include", "../../src", "../../ImageFormats", "../../build", "../../xmake", "../../thirdparty"
+	SRC_DIRS= "../../src", "../../build"
 	
 	extensions = [".h", '.hpp', '.c', '.dsw', '.dsp', '.bmp', '.rgs', '.rc', '.xml', '.idl',
 			'.def', '.vcfdir', '.vcp', '.ico', '.rc2', '.odl', '.inl',
@@ -142,7 +143,7 @@ def main():
 		srcFile = string.replace( afile,  "/", "\\" );
 		destDir = string.replace( os.path.dirname( afile ),  "/", "\\" )
 		destDir = string.replace( destDir, dirFront, "" )
-		line = "Source: " + srcFile + "; DestDir: {app}\\" + destDir + "; Components: Src\r\n"
+		line = "Source: " + srcFile + "; DestDir: {app}\\" + destDir + "; Components: Examples\r\n"
 		vcfSrcFiles = vcfSrcFiles + line;
 	
 	
@@ -174,8 +175,12 @@ def main():
 	print "Done building VC6 Add-in binaries. Read vcfAddins-release.stat.log for more."
 	
 	print "Building MSDNIntegrator binaries..."
-	os.system( "msdev ../thirdparty/win32/MSDNIntegrator/MSDNIntegrator.dsw /MAKE \"MSDNIntegrator - Win32 Release\" /REBUILD /OUT MSDNIntegrator-release.stat.log" )
+	os.system( "msdev ../src/thirdparty/win32/MSDNIntegrator/MSDNIntegrator.dsw /MAKE \"MSDNIntegrator - Win32 Release\" /REBUILD /OUT MSDNIntegrator-release.stat.log" )
 	print "Done building MSDNIntegrator binaries. Read MSDNIntegrator-release.stat.log for more."
+	
+	print "Building RegEnVar binaries..."
+	os.system( "msdev ../src/thirdparty/win32/RegEnVar/RegEnVar.dsw /MAKE \"RegEnVar - Win32 Release\" /REBUILD /OUT RegEnVar-release.stat.log" )
+	print "Done building RegEnVar binaries. Read RegEnVar-release.stat.log for more."
 
 	
 	print "Done building binaries, preparing to build installer."

@@ -80,7 +80,29 @@ assert, and a string describing the reason for the assert
 		\
 
 /**
+Instead of calling FoundationKit::assertCondition() use this macro or VCF_ASSERT2.
+Use this macro to assert if a certain condtion is false, which will cause an exception to
+be thrown. For example:
+\code
+int doCalc( int p1, int p2 ) 
+{
+	VCF_ASSERT( p1 > 0 );
+	
+	return p2 / p1;
+}
+\endcode
+
+\par
+If the assert fails (i.e. in this if p1 equals 0) the message will look something like 
+\code
+	p1 > 0
+	Assertion in file: foo.cpp at line: 200
+
+\endcode
+
+\par
 Many thanks to Marcello for contributing this!!
+@see VCF_ASSERT2
 */
 	#define VCF_ASSERT(condition) VCF_ASSERT2( (condition), VCF_WIDEN( #condition ) )
 
@@ -94,6 +116,9 @@ Many thanks to Marcello for contributing this!!
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.10  2004/08/08 22:09:31  ddiego
+#final checkin before the 0-6-5 release
+#
 #Revision 1.9  2004/08/07 02:46:51  ddiego
 #merged in the devmain-0-6-5 branch to stable
 #
@@ -97,7 +100,7 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.4
+VERSION = 0.6.5
 
 
 #version number for the XMake program

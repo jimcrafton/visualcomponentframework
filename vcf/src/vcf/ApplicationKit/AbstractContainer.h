@@ -33,13 +33,15 @@ class Rect;
 AbstractContainer implements the basics of a
 container with the exception of actual layout rules,
 therefore resizeChildren is not implemented. It
-isleft to implementers to decide on there own
-layout rules for resizeChildren().
+is left to implementers to decide on their own
+what the layout rules for resizeChildren() are.
+\par
 It responds to all mouse and paint events
 of the Control to which is attached to, and forwards
-them correctly to the child controls. This is event
+them correctly to the child controls. This event
 forwarding only takes place if the child control
 is a lighweight control.
+\par
 When the attached control is resized, the AbstractContainer
 will detect this as well and call resizeChildren() where
 appropriate.
@@ -109,6 +111,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:32  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
