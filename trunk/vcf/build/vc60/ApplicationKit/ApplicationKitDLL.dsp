@@ -1353,7 +1353,7 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FocusEvent.cpp
+SOURCE=..\..\..\src\Events\FocusEvent.cpp
 # End Source File
 # Begin Source File
 
