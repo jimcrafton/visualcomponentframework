@@ -2,6 +2,7 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
@@ -16,6 +17,67 @@
   <H1>
    Tutorial 4</H1>
   <P>
-   Type topic text here.
+   This tutorial will focus on how to write a simple application using 
+   the VCF.</P>
+  <P>
+   Creating windows and controls in the VCF is extremely simple so let's 
+   dive write in and look at a sample &quot;Hello World&quot; program 
+   that displays a window with &quot;Hello World&quot; in it's title bar.</P><PRE><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">1</FONT>  int</SPAN> main( <SPAN STYLE="font-weight : bold;">int</SPAN> argc, <SPAN STYLE="font-weight : bold;">char</SPAN> *argv[] )<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">2</FONT></SPAN>  {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">3</FONT></SPAN>      Application app;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">4</FONT></SPAN>      Window* helloWorldWindow = <SPAN STYLE="font-weight : bold;">new</SPAN> Window();<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">5</SPAN></FONT><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN>      helloWorldWindow-&gt;setCaption( <FONT COLOR="RED">&quot;Hello World&quot;</FONT> );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">7</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">8</FONT></SPAN>      app.setMainWindow( helloWorldWindow );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">9</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">10</FONT></SPAN>     Application::appMain( argc, argv );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">12</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">13</FONT></SPAN>     <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">14</FONT></SPAN>  }</PRE><P>
+   Cool ! Our first Window in only a few lines of code! The first thing 
+   we do is to create an Application instance on the stack call app 
+   (line 3). We then create a window by creating a new instance of a 
+   Window class and call it helloWorldWindow(line 4). This is <SPAN STYLE="font-style : italic;font-weight : bold;">always</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;"> 
+   done on the heap, using the </SPAN><SPAN STYLE="font-style : normal;font-weight : bold;">new</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;"> 
+   operator. There are a variety of reasons for this, but for now just 
+   take my word for it (we'll look into it later). </SPAN>Next we set 
+   the Window's caption via the setCaption() method, and pass in the 
+   string &quot;Hello World&quot; (line 6). The Application's 
+   setMainWindow() is called and the helloWorldWindow is passed in (line 
+   8). Doing this ensures that the Application has a pointer to a main 
+   window, which in turn allows the Application to be notified when the 
+   main window closes, which in turn shuts down the Application. The 
+   final step is to invoke the static method Application::appMain(), 
+   passing in the arguments that the <SPAN STYLE="font-weight : bold;">main()</SPAN> 
+   function received. This method starts the Application, which will 
+   continue to run until it's main window is closed. </P>
+  <P>
+   Now that wasn't too painful was it ? </P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P><PRE><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">1</SPAN></FONT> <SPAN STYLE="font-weight : bold;"> class</SPAN> SimpleApp : <SPAN STYLE="font-weight : bold;">public</SPAN> Application  {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">2</FONT>  public</SPAN>:<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">3</SPAN></FONT>  <SPAN STYLE="font-weight : bold;">     virtual</SPAN> <SPAN STYLE="font-weight : bold;">bool</SPAN> initRunningApplication() {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">4</FONT></SPAN>            Window* helloWorldWindow = <SPAN STYLE="font-weight : bold;">new</SPAN> Window();<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">5</SPAN></FONT><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN>            helloWorldWindow-&gt;setCaption( <FONT COLOR="RED">&quot;Hello World&quot;</FONT> );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">7</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">8</FONT></SPAN>           <SPAN STYLE="font-weight : bold;">this</SPAN>-&gt;setMainWindow( helloWorldWindow );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">9</FONT></SPAN>      }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">10</FONT></SPAN>  };<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">11</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">12</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">13</FONT>  int</SPAN> main( <SPAN STYLE="font-weight : bold;">int</SPAN> argc, <SPAN STYLE="font-weight : bold;">char</SPAN> *argv[] )<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">14</FONT></SPAN>  {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">15</FONT></SPAN>      SimpleApp app;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">16</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">17</FONT></SPAN>      Application::appMain( argc, argv );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">18</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">19</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">20</FONT></SPAN>     <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">21</FONT></SPAN>  }</PRE><P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
  </BODY>
 </HTML>

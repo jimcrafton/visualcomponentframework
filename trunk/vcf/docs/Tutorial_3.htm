@@ -299,8 +299,7 @@
    18-19). Next we add the adapters as listeners to the bob Employee 
    object (calling the addEmployeeListener() function) and add each 
    adapter to it's respective manager object, which in turn ensures that 
-   the adapaters will get cleaned up when the Manager objects are 
-   destroyed. </P>
+   the adapaters will get cleaned up when the Manager objects are destroyed.</P>
   <P>
    Now that we have everything hooked up lets walk through what will 
    happen as we change bob's age. The first change (line 6) doesn't 
@@ -313,7 +312,7 @@
    associated with. Both calls result in no action being taken since in 
    the case of the first Manager(bobsEvilManager) the age is less than 
    160, and in the case of the second (bobsNiceManager) the 
-   m_evilManager member is set to false. </P>
+   m_evilManager member is set to false.</P>
   <P>
    On the next age change (line 32) the same things happen, except when 
    we get to the bobsEvilManager onEmployeeGetsOlder() call, we see that 
@@ -323,7 +322,13 @@
    the Manager to take this job and..., but we'll leave that as an 
    exercise to the reader !</P>
   <P>
-   <!-- $MVD$:spaceretainer() -->&nbsp;
+   And there you have it ! Events VCF style. Again, those of who have 
+   worked with Java will recognize much of this, while those from a COM 
+   background may recognize the design as being similar to COM's 
+   ConnectionPoint architecture. </P>
+  <P>
+   Now let's move on to our next tutorial where we will begin to use 
+   what we have learned to write a simple app that has a GUI using the VCF.
  <OBJECT
  CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
  ID="hhctrl"

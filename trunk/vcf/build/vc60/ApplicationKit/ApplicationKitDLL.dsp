@@ -24,8 +24,8 @@ CFG=ApplicationKitDLL - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_ProjName "ApplicationKitDLL"
+# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -141,10 +141,6 @@ SOURCE=..\..\..\include\core\AbstractTreeModel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AppKitCommon.h
 # End Source File
 # Begin Source File
 
@@ -452,10 +448,6 @@ SOURCE=..\..\..\include\implementer\FillState.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\FlexTreeControl.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\events\FocusEvent.h
 # End Source File
 # Begin Source File
@@ -536,7 +528,7 @@ SOURCE=..\..\..\include\implementer\ListBoxPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Listener.h
+SOURCE=..\..\..\include\events\Listener.h
 # End Source File
 # Begin Source File
 
@@ -680,7 +672,7 @@ SOURCE=..\..\..\include\utils\ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ResourceException.h
+SOURCE=..\..\..\include\exceptions\ResourceException.h
 # End Source File
 # Begin Source File
 
@@ -908,7 +900,7 @@ SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Win32FolderBrowseDialog.h
+SOURCE=..\..\..\include\implementerKit\Win32FolderBrowseDialog.h
 # End Source File
 # Begin Source File
 
@@ -944,7 +936,7 @@ SOURCE=..\..\..\include\implementerKit\Win32Peer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Win32PopupMenu.h
+SOURCE=..\..\..\include\implementerKit\Win32PopupMenu.h
 # End Source File
 # Begin Source File
 
