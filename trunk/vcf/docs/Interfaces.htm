@@ -6,10 +6,13 @@
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <!-- $MVD$:fontset("Untitled Font Set 1","d") -->
   <TITLE>Interfaces</TITLE>
   <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css">
+ <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <H1>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
@@ -29,59 +32,29 @@
    declare a destructor as </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;">virtual</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;">,
     a requirement of the standard C++ RTTI dynamic typing system. The 
    body of the constructor should also be declared in the header of the 
-   interface ( usually <font face="d"> {}</font> implementation is all that is neccessary)</SPAN></P>
+   interface ( usually <FONT FACE="d">{}</FONT> implementation is all 
+   that is neccessary)</SPAN></P>
   <P>
    <SPAN STYLE="font-style : normal;font-weight : normal;">As a naming 
    standard, and to avoid method name collision, methods with common 
    names should include the interface name as well, to more clearly 
    indicate where the method belongs. For example:</SPAN></P><PRE><FONT
-    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//not the bes definition - notice the doIt() method</SPAN></FONT>
-<SPAN
-    STYLE="font-weight : bold;">class</SPAN> SimpleInterface  {
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimpleInterface(){}; </SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> </SPAN>void<SPAN STYLE="font-weight : normal;"> doIt() = </SPAN>0<SPAN STYLE="font-weight : normal;">;    </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this isn't a very good idea  </FONT></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">}</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"><FONT COLOR="BLUE"><SPAN STYLE="font-style : italic;">// this is the prefered way</SPAN></FONT></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;">class<SPAN STYLE="font-weight : normal;"> SimpleInterface {</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> </SPAN>void<SPAN STYLE="font-weight : normal;"> SimpleInterfaceDoIt() = </SPAN>0<SPAN STYLE="font-weight : normal;">; </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//better - prevents name collision in</FONT></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">                                             </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//implementing classes</FONT></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">};</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this is also OK - note the use of inheritance from the VCF::Interface class</FONT></SPAN>
-<SPAN
-    STYLE="font-weight : bold;">class<SPAN STYLE="font-weight : normal;"> SimpleInterface : </SPAN>public<SPAN STYLE="font-weight : normal;"> VCF::Interface{</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>virtual<SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">     </SPAN>...<SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//rest of interface declaration</FONT></SPAN><SPAN STYLE="font-weight : normal;"> </SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;">};</SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"><SPAN STYLE="font-weight : normal;"></SPAN></SPAN>
-<SPAN
-    STYLE="font-weight : bold;"></SPAN></PRE><P>
+    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//not the best definition - notice the doIt() method</SPAN></FONT><BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN> SimpleInterface  {<BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">virtual</SPAN><SPAN STYLE="font-weight : normal;"> ~SimpleInterface(){}; </SPAN><BR><BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">virtual</SPAN><SPAN STYLE="font-weight : normal;"> </SPAN><SPAN STYLE="font-weight : bold;">void</SPAN><SPAN STYLE="font-weight : normal;"> doIt() = </SPAN><SPAN STYLE="font-weight : bold;">0</SPAN><SPAN STYLE="font-weight : normal;">;    </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this isn't a very good idea  </FONT></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">}</SPAN><BR><BR><SPAN
+    STYLE="font-weight : normal;"><FONT COLOR="BLUE"><SPAN STYLE="font-style : italic;">// this is the prefered way</SPAN></FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN><SPAN STYLE="font-weight : normal;"> SimpleInterface {</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">virtual</SPAN><SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN><BR><BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">virtual</SPAN><SPAN STYLE="font-weight : normal;"> </SPAN><SPAN STYLE="font-weight : bold;">void</SPAN><SPAN STYLE="font-weight : normal;"> SimpleInterfaceDoIt() = </SPAN><SPAN STYLE="font-weight : bold;">0</SPAN><SPAN STYLE="font-weight : normal;">; </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//better - prevents name collision in</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">                                             </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//implementing classes</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">};</SPAN><BR><BR><BR><SPAN
+    STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//this is also OK - note the use of inheritance from the VCF::Interface class</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN><SPAN STYLE="font-weight : normal;"> SimpleInterface : </SPAN><SPAN STYLE="font-weight : bold;">public</SPAN><SPAN STYLE="font-weight : normal;"> VCF::Interface{</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">virtual</SPAN><SPAN STYLE="font-weight : normal;"> ~SimeplInterface(){};</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">     </SPAN><SPAN STYLE="font-weight : bold;">...</SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//rest of interface declaration</FONT></SPAN><SPAN STYLE="font-weight : normal;"> </SPAN><BR><SPAN
+    STYLE="font-weight : normal;">};</SPAN><BR><BR><BR></PRE><P>
    <!-- $MVD$:spaceretainer() -->&nbsp;
  </BODY>
 </HTML>

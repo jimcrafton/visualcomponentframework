@@ -1,0 +1,32 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
+  <!-- $MVD$:fontset("Arial","Arial") -->
+  <!-- $MVD$:fontset("Verdana","Verdana") -->
+  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <TITLE>Deriving your own classes</TITLE>
+  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <H1>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+  <H1>
+   Deriving your own classes</H1>
+  <P>
+   Most classes in the VCF can be safely derived from. Often you'll find 
+   all you need is to derive from VCF::Object. If you think your class 
+   will need to support the firing of events and the ability of allowing 
+   other object to respond to these events, then deriving from 
+   VCF::ObjectWithEvent may be more appropriate. In terms of size 
+   difference, Object requires 8 bytes of memory, while ObjectWithEvents 
+   weighs in at 48 bytes. There are a variety of reasons for this, 
+   almost all relating to event handling. For more information on this 
+   please see <A HREF="Events_In_the_VCF.htm">Events</A>.</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
+ </BODY>
+</HTML>
