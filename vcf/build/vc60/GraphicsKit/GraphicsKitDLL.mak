@@ -30,17 +30,24 @@ NULL=nul
 
 OUTDIR=.\..\..\..\lib
 INTDIR=.\ReleaseDLL\obj
-# Begin Custom Macros
-OutDir=.\..\..\..\lib
-# End Custom Macros
 
-ALL : "$(OUTDIR)\GraphicsKitDLL.dll"
+!IF "$(RECURSE)" == "0" 
 
+ALL : "..\..\..\bin\GraphicsKitDLL.dll"
 
+!ELSE 
+
+ALL : "FoundationKitDLL - Win32 Release" "..\..\..\bin\GraphicsKitDLL.dll"
+
+!ENDIF 
+
+!IF "$(RECURSE)" == "1" 
+CLEAN :"FoundationKitDLL - Win32 ReleaseCLEAN" 
+!ELSE 
 CLEAN :
+!ENDIF 
 	-@erase "$(INTDIR)\AbstractImage.obj"
 	-@erase "$(INTDIR)\AlphaGamma.obj"
-	-@erase "$(INTDIR)\ArtStroke.obj"
 	-@erase "$(INTDIR)\BasicFill.obj"
 	-@erase "$(INTDIR)\BasicStroke.obj"
 	-@erase "$(INTDIR)\Color.obj"
@@ -50,10 +57,9 @@ CLEAN :
 	-@erase "$(INTDIR)\GlyphCollection.obj"
 	-@erase "$(INTDIR)\GraphicsContext.obj"
 	-@erase "$(INTDIR)\GraphicsKit.obj"
+	-@erase "$(INTDIR)\GraphicsKitDLL.pch"
 	-@erase "$(INTDIR)\GraphicsObject.obj"
 	-@erase "$(INTDIR)\ImageEvent.obj"
-	-@erase "$(INTDIR)\ImageList.obj"
-	-@erase "$(INTDIR)\ImageListEvent.obj"
 	-@erase "$(INTDIR)\Matrix2D.obj"
 	-@erase "$(INTDIR)\MicroTiles.obj"
 	-@erase "$(INTDIR)\OpenGLContext.obj"
@@ -68,9 +74,9 @@ CLEAN :
 	-@erase "$(INTDIR)\Win32FontManager.obj"
 	-@erase "$(INTDIR)\Win32Image.obj"
 	-@erase "$(INTDIR)\Win32OpenGLPeer.obj"
-	-@erase "$(OUTDIR)\GraphicsKitDLL.dll"
 	-@erase "$(OUTDIR)\GraphicsKitDLL.exp"
 	-@erase "$(OUTDIR)\GraphicsKitDLL.lib"
+	-@erase "..\..\..\bin\GraphicsKitDLL.dll"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -79,7 +85,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fp"$(INTDIR)\GraphicsKitDLL.pch" /Yu"GraphicsKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -119,11 +125,10 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\GraphicsKitDLL.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=FoundationKitDLL.lib opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\GraphicsKitDLL.pdb" /machine:I386 /out:"$(OUTDIR)\GraphicsKitDLL.dll" /implib:"$(OUTDIR)\GraphicsKitDLL.lib" /libpath:"\vcf\lib" 
+LINK32_FLAGS=FoundationKitDLL.lib opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\GraphicsKitDLL.pdb" /machine:I386 /out:"..\..\..\bin/GraphicsKitDLL.dll" /implib:"$(OUTDIR)\GraphicsKitDLL.lib" /libpath:"..\..\..\lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\AbstractImage.obj" \
 	"$(INTDIR)\AlphaGamma.obj" \
-	"$(INTDIR)\ArtStroke.obj" \
 	"$(INTDIR)\BasicFill.obj" \
 	"$(INTDIR)\BasicStroke.obj" \
 	"$(INTDIR)\Color.obj" \
@@ -135,8 +140,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\GraphicsKit.obj" \
 	"$(INTDIR)\GraphicsObject.obj" \
 	"$(INTDIR)\ImageEvent.obj" \
-	"$(INTDIR)\ImageList.obj" \
-	"$(INTDIR)\ImageListEvent.obj" \
 	"$(INTDIR)\Matrix2D.obj" \
 	"$(INTDIR)\MicroTiles.obj" \
 	"$(INTDIR)\OpenGLContext.obj" \
@@ -149,9 +152,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\Win32Font.obj" \
 	"$(INTDIR)\Win32FontManager.obj" \
 	"$(INTDIR)\Win32Image.obj" \
-	"$(INTDIR)\Win32OpenGLPeer.obj"
+	"$(INTDIR)\Win32OpenGLPeer.obj" \
+	"$(OUTDIR)\FoundationKitDLL.lib"
 
-"$(OUTDIR)\GraphicsKitDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"..\..\..\bin\GraphicsKitDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -161,13 +165,23 @@ LINK32_OBJS= \
 OUTDIR=.\..\..\..\lib
 INTDIR=.\DebugDLL\obj
 
-ALL : "..\..\..\Debug\GraphicsKitDLL_d.dll"
+!IF "$(RECURSE)" == "0" 
 
+ALL : "..\..\..\bin\GraphicsKitDLL_d.dll"
 
+!ELSE 
+
+ALL : "FoundationKitDLL - Win32 Debug" "..\..\..\bin\GraphicsKitDLL_d.dll"
+
+!ENDIF 
+
+!IF "$(RECURSE)" == "1" 
+CLEAN :"FoundationKitDLL - Win32 DebugCLEAN" 
+!ELSE 
 CLEAN :
+!ENDIF 
 	-@erase "$(INTDIR)\AbstractImage.obj"
 	-@erase "$(INTDIR)\AlphaGamma.obj"
-	-@erase "$(INTDIR)\ArtStroke.obj"
 	-@erase "$(INTDIR)\BasicFill.obj"
 	-@erase "$(INTDIR)\BasicStroke.obj"
 	-@erase "$(INTDIR)\Color.obj"
@@ -177,10 +191,9 @@ CLEAN :
 	-@erase "$(INTDIR)\GlyphCollection.obj"
 	-@erase "$(INTDIR)\GraphicsContext.obj"
 	-@erase "$(INTDIR)\GraphicsKit.obj"
+	-@erase "$(INTDIR)\GraphicsKitDLL.pch"
 	-@erase "$(INTDIR)\GraphicsObject.obj"
 	-@erase "$(INTDIR)\ImageEvent.obj"
-	-@erase "$(INTDIR)\ImageList.obj"
-	-@erase "$(INTDIR)\ImageListEvent.obj"
 	-@erase "$(INTDIR)\Matrix2D.obj"
 	-@erase "$(INTDIR)\MicroTiles.obj"
 	-@erase "$(INTDIR)\OpenGLContext.obj"
@@ -199,8 +212,8 @@ CLEAN :
 	-@erase "$(OUTDIR)\GraphicsKitDLL_d.exp"
 	-@erase "$(OUTDIR)\GraphicsKitDLL_d.lib"
 	-@erase "$(OUTDIR)\GraphicsKitDLL_d.pdb"
-	-@erase "..\..\..\Debug\GraphicsKitDLL_d.dll"
-	-@erase "..\..\..\Debug\GraphicsKitDLL_d.ilk"
+	-@erase "..\..\..\bin\GraphicsKitDLL_d.dll"
+	-@erase "..\..\..\bin\GraphicsKitDLL_d.ilk"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -209,7 +222,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\libart" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /D "LIBART_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fp"$(INTDIR)\GraphicsKitDLL.pch" /Yu"GraphicsKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -249,11 +262,10 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\GraphicsKitDLL.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=FoundationKitDLL_d.lib opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\GraphicsKitDLL_d.pdb" /debug /machine:I386 /out:"..\..\..\Debug/GraphicsKitDLL_d.dll" /implib:"$(OUTDIR)\GraphicsKitDLL_d.lib" /pdbtype:sept /libpath:"..\..\..\lib" 
+LINK32_FLAGS=FoundationKitDLL_d.lib opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\GraphicsKitDLL_d.pdb" /debug /machine:I386 /out:"..\..\..\bin/GraphicsKitDLL_d.dll" /implib:"$(OUTDIR)\GraphicsKitDLL_d.lib" /pdbtype:sept /libpath:"..\..\..\lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\AbstractImage.obj" \
 	"$(INTDIR)\AlphaGamma.obj" \
-	"$(INTDIR)\ArtStroke.obj" \
 	"$(INTDIR)\BasicFill.obj" \
 	"$(INTDIR)\BasicStroke.obj" \
 	"$(INTDIR)\Color.obj" \
@@ -265,8 +277,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\GraphicsKit.obj" \
 	"$(INTDIR)\GraphicsObject.obj" \
 	"$(INTDIR)\ImageEvent.obj" \
-	"$(INTDIR)\ImageList.obj" \
-	"$(INTDIR)\ImageListEvent.obj" \
 	"$(INTDIR)\Matrix2D.obj" \
 	"$(INTDIR)\MicroTiles.obj" \
 	"$(INTDIR)\OpenGLContext.obj" \
@@ -279,9 +289,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\Win32Font.obj" \
 	"$(INTDIR)\Win32FontManager.obj" \
 	"$(INTDIR)\Win32Image.obj" \
-	"$(INTDIR)\Win32OpenGLPeer.obj"
+	"$(INTDIR)\Win32OpenGLPeer.obj" \
+	"$(OUTDIR)\FoundationKitDLL_d.lib"
 
-"..\..\..\Debug\GraphicsKitDLL_d.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"..\..\..\bin\GraphicsKitDLL_d.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -294,13 +305,23 @@ INTDIR=.\Fake_Debug
 OutDir=.\..\..\..\lib
 # End Custom Macros
 
+!IF "$(RECURSE)" == "0" 
+
 ALL : "$(OUTDIR)\GraphicsKitDLL.dll"
 
+!ELSE 
 
+ALL : "FoundationKitDLL - Win32 Fake Debug" "$(OUTDIR)\GraphicsKitDLL.dll"
+
+!ENDIF 
+
+!IF "$(RECURSE)" == "1" 
+CLEAN :"FoundationKitDLL - Win32 Fake DebugCLEAN" 
+!ELSE 
 CLEAN :
+!ENDIF 
 	-@erase "$(INTDIR)\AbstractImage.obj"
 	-@erase "$(INTDIR)\AlphaGamma.obj"
-	-@erase "$(INTDIR)\ArtStroke.obj"
 	-@erase "$(INTDIR)\BasicFill.obj"
 	-@erase "$(INTDIR)\BasicStroke.obj"
 	-@erase "$(INTDIR)\Color.obj"
@@ -312,8 +333,6 @@ CLEAN :
 	-@erase "$(INTDIR)\GraphicsKit.obj"
 	-@erase "$(INTDIR)\GraphicsObject.obj"
 	-@erase "$(INTDIR)\ImageEvent.obj"
-	-@erase "$(INTDIR)\ImageList.obj"
-	-@erase "$(INTDIR)\ImageListEvent.obj"
 	-@erase "$(INTDIR)\Matrix2D.obj"
 	-@erase "$(INTDIR)\MicroTiles.obj"
 	-@erase "$(INTDIR)\OpenGLContext.obj"
@@ -385,7 +404,6 @@ LINK32_FLAGS=FoundationKitDLL.lib opengl32.lib glu32.lib glaux.lib kernel32.lib 
 LINK32_OBJS= \
 	"$(INTDIR)\AbstractImage.obj" \
 	"$(INTDIR)\AlphaGamma.obj" \
-	"$(INTDIR)\ArtStroke.obj" \
 	"$(INTDIR)\BasicFill.obj" \
 	"$(INTDIR)\BasicStroke.obj" \
 	"$(INTDIR)\Color.obj" \
@@ -397,8 +415,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\GraphicsKit.obj" \
 	"$(INTDIR)\GraphicsObject.obj" \
 	"$(INTDIR)\ImageEvent.obj" \
-	"$(INTDIR)\ImageList.obj" \
-	"$(INTDIR)\ImageListEvent.obj" \
 	"$(INTDIR)\Matrix2D.obj" \
 	"$(INTDIR)\MicroTiles.obj" \
 	"$(INTDIR)\OpenGLContext.obj" \
@@ -411,7 +427,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\Win32Font.obj" \
 	"$(INTDIR)\Win32FontManager.obj" \
 	"$(INTDIR)\Win32Image.obj" \
-	"$(INTDIR)\Win32OpenGLPeer.obj"
+	"$(INTDIR)\Win32OpenGLPeer.obj" \
+	"$(OUTDIR)\FoundationKitDLL.lib"
 
 "$(OUTDIR)\GraphicsKitDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -433,177 +450,225 @@ LINK32_OBJS= \
 !IF "$(CFG)" == "GraphicsKitDLL - Win32 Release" || "$(CFG)" == "GraphicsKitDLL - Win32 Debug" || "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
 SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 
-"$(INTDIR)\AbstractImage.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\AbstractImage.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\graphics\AlphaGamma.cpp
 
-"$(INTDIR)\AlphaGamma.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
-
-"$(INTDIR)\ArtStroke.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\AlphaGamma.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\BasicFill.cpp
 
-"$(INTDIR)\BasicFill.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\BasicFill.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
 
-"$(INTDIR)\BasicStroke.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\BasicStroke.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\Color.cpp
 
-"$(INTDIR)\Color.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Color.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\DrawToolkit.cpp
 
-"$(INTDIR)\DrawToolkit.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\DrawToolkit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\Font.cpp
 
-"$(INTDIR)\Font.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Font.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\FontState.cpp
 
-"$(INTDIR)\FontState.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\FontState.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
 
-"$(INTDIR)\GlyphCollection.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\GlyphCollection.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 
-"$(INTDIR)\GraphicsContext.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\GraphicsContext.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
 
-"$(INTDIR)\GraphicsKit.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fp"$(INTDIR)\GraphicsKitDLL.pch" /Yc"GraphicsKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+"$(INTDIR)\GraphicsKit.obj"	"$(INTDIR)\GraphicsKitDLL.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fp"$(INTDIR)\GraphicsKitDLL.pch" /Yc"GraphicsKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\GraphicsKit.obj"	"$(INTDIR)\GraphicsKitDLL.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /Zi /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+"$(INTDIR)\GraphicsKit.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
 
 SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 
-"$(INTDIR)\GraphicsObject.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\GraphicsObject.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Events\ImageEvent.cpp
 
-"$(INTDIR)\ImageEvent.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Graphics\ImageList.cpp
-
-"$(INTDIR)\ImageList.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\..\src\Events\ImageListEvent.cpp
-
-"$(INTDIR)\ImageListEvent.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ImageEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 
-"$(INTDIR)\Matrix2D.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Matrix2D.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
 
-"$(INTDIR)\MicroTiles.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\MicroTiles.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 
-"$(INTDIR)\OpenGLContext.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\OpenGLContext.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
 
-"$(INTDIR)\PixelBuffer.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\PixelBuffer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
 
-"$(INTDIR)\Polygon.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Polygon.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 
-"$(INTDIR)\RenderPaths.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\RenderPaths.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Utils\UIGraphicsToolKit.cpp
 
-"$(INTDIR)\UIGraphicsToolKit.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\UIGraphicsToolKit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Graphics\Vector2D.cpp
 
-"$(INTDIR)\Vector2D.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Vector2D.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Context.cpp
 
-"$(INTDIR)\Win32Context.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32Context.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
 
-"$(INTDIR)\Win32Font.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32Font.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
 
-"$(INTDIR)\Win32FontManager.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32FontManager.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 
-"$(INTDIR)\Win32Image.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32Image.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp
 
-"$(INTDIR)\Win32OpenGLPeer.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32OpenGLPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\GraphicsKitDLL.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+"FoundationKitDLL - Win32 Release" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Release" 
+   cd "..\GraphicsKit"
+
+"FoundationKitDLL - Win32 ReleaseCLEAN" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Release" RECURSE=1 CLEAN 
+   cd "..\GraphicsKit"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+"FoundationKitDLL - Win32 Debug" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Debug" 
+   cd "..\GraphicsKit"
+
+"FoundationKitDLL - Win32 DebugCLEAN" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Debug" RECURSE=1 CLEAN 
+   cd "..\GraphicsKit"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+"FoundationKitDLL - Win32 Fake Debug" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Fake Debug" 
+   cd "..\GraphicsKit"
+
+"FoundationKitDLL - Win32 Fake DebugCLEAN" : 
+   cd "\code\vcf\build\vc60\FoundationKit"
+   $(MAKE) /$(MAKEFLAGS) /F .\FoundationKitDLL.mak CFG="FoundationKitDLL - Win32 Fake Debug" RECURSE=1 CLEAN 
+   cd "..\GraphicsKit"
+
+!ENDIF 
 
 
 !ENDIF 
