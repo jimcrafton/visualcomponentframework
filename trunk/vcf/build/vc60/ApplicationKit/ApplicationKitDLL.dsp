@@ -125,6 +125,10 @@ SOURCE=..\..\..\include\core\AbstractTreeModel.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractView.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
@@ -1154,6 +1158,10 @@ SOURCE=..\..\..\src\core\AbstractTextModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\AbstractView.cpp
 # End Source File
 # Begin Source File
 
