@@ -44,7 +44,6 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /Yu"FoundationKit.h" /FD /c
-# SUBTRACT CPP /Z<none>
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -171,6 +170,10 @@ SOURCE=..\..\..\include\io\FileIOError.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileNotFound.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\FilePath.h
 # End Source File
 # Begin Source File
 
@@ -503,6 +506,10 @@ SOURCE=..\..\..\src\Events\EventHandler.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\io\File.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\FilePath.cpp
 # End Source File
 # Begin Source File
 
