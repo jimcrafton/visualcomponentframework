@@ -2,6 +2,9 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.5  2003/12/19 05:48:34  ddiego
+#made some adjustments in the makefiles to compile and link correctly
+#
 #Revision 1.4  2003/12/18 05:15:47  ddiego
 #merge from devmain-0-6-2 branch into the stable branch
 #
@@ -282,6 +285,15 @@ $(OUTDIR_AK_D)/LibraryApplication.o : $(SRC_CORE)/LibraryApplication.cpp $(APPKI
 
 $(OUTDIR_AK_D)/Light3DBorder.o : $(SRC_GRF)/Light3DBorder.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_GRF)/Light3DBorder.cpp -o $(OUTDIR_AK_D)/Light3DBorder.o
+	
+$(OUTDIR_AK_D)/EtchedBorder.o : $(SRC_GRF)/EtchedBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_GRF)/EtchedBorder.cpp -o $(OUTDIR_AK_D)/EtchedBorder.o
+	
+$(OUTDIR_AK_D)/ColorEtchedBorder.o : $(SRC_GRF)/ColorEtchedBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_GRF)/ColorEtchedBorder.cpp -o $(OUTDIR_AK_D)/ColorEtchedBorder.o		
+	
+$(OUTDIR_AK_D)/TitledBorder.o : $(SRC_GRF)/TitledBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_GRF)/TitledBorder.cpp -o $(OUTDIR_AK_D)/TitledBorder.o			
 
 $(OUTDIR_AK_D)/LightweightComponent.o : $(SRC_IMPLKIT)/LightweightComponent.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IMPLKIT)/LightweightComponent.cpp -o $(OUTDIR_AK_D)/LightweightComponent.o
@@ -319,6 +331,9 @@ $(OUTDIR_AK_D)/Panel.o : $(SRC_CORE)/Panel.cpp $(APPKIT_HDRS)
 $(OUTDIR_AK_D)/PopupMenu.o : $(SRC_CORE)/PopupMenu.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/PopupMenu.cpp -o $(OUTDIR_AK_D)/PopupMenu.o
 
+$(OUTDIR_AK_D)/ProgressControl.o : $(SRC_CORE)/ProgressControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/ProgressControl.cpp -o $(OUTDIR_AK_D)/ProgressControl.o	
+	
 $(OUTDIR_AK_D)/PropertyEditorManager.o : $(SRC_CORE)/PropertyEditorManager.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/PropertyEditorManager.cpp -o $(OUTDIR_AK_D)/PropertyEditorManager.o
 
@@ -334,9 +349,12 @@ $(OUTDIR_AK_D)/Resource.o : $(SRC_UTILS)/Resource.cpp $(APPKIT_HDRS)
 $(OUTDIR_AK_D)/ResourceStream.o : $(SRC_IO)/ResourceStream.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_IO)/ResourceStream.cpp -o $(OUTDIR_AK_D)/ResourceStream.o
 
+$(OUTDIR_AK_D)/SliderControl.o : $(SRC_CORE)/SliderControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/SliderControl.cpp -o $(OUTDIR_AK_D)/SliderControl.o
+
 $(OUTDIR_AK_D)/ScrollbarManager.o : $(SRC_CORE)/ScrollbarManager.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/ScrollbarManager.cpp -o $(OUTDIR_AK_D)/ScrollbarManager.o
-
+	
 $(OUTDIR_AK_D)/Splitter.o : $(SRC_CORE)/Splitter.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS_D) $(SRC_CORE)/Splitter.cpp -o $(OUTDIR_AK_D)/Splitter.o
 
@@ -704,6 +722,15 @@ $(OUTDIR_AK)/LibraryApplication.o : $(SRC_CORE)/LibraryApplication.cpp $(APPKIT_
 
 $(OUTDIR_AK)/Light3DBorder.o : $(SRC_GRF)/Light3DBorder.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_GRF)/Light3DBorder.cpp -o $(OUTDIR_AK)/Light3DBorder.o
+	
+$(OUTDIR_AK)/EtchedBorder.o : $(SRC_GRF)/EtchedBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS) $(SRC_GRF)/EtchedBorder.cpp -o $(OUTDIR_AK)/EtchedBorder.o	
+	
+$(OUTDIR_AK)/ColorEtchedBorder.o : $(SRC_GRF)/ColorEtchedBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS) $(SRC_GRF)/ColorEtchedBorder.cpp -o $(OUTDIR_AK)/ColorEtchedBorder.o		
+	
+$(OUTDIR_AK)/TitledBorder.o : $(SRC_GRF)/TitledBorder.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS) $(SRC_GRF)/TitledBorder.cpp -o $(OUTDIR_AK)/TitledBorder.o		
 
 $(OUTDIR_AK)/LightweightComponent.o : $(SRC_IMPLKIT)/LightweightComponent.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_IMPLKIT)/LightweightComponent.cpp -o $(OUTDIR_AK)/LightweightComponent.o
@@ -740,6 +767,9 @@ $(OUTDIR_AK)/Panel.o : $(SRC_CORE)/Panel.cpp $(APPKIT_HDRS)
 
 $(OUTDIR_AK)/PopupMenu.o : $(SRC_CORE)/PopupMenu.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/PopupMenu.cpp -o $(OUTDIR_AK)/PopupMenu.o
+	
+$(OUTDIR_AK)/ProgressControl.o : $(SRC_CORE)/ProgressControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/ProgressControl.cpp -o $(OUTDIR_AK)/ProgressControl.o	
 
 $(OUTDIR_AK)/PropertyEditorManager.o : $(SRC_CORE)/PropertyEditorManager.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/PropertyEditorManager.cpp -o $(OUTDIR_AK)/PropertyEditorManager.o
@@ -759,6 +789,9 @@ $(OUTDIR_AK)/ResourceStream.o : $(SRC_IO)/ResourceStream.cpp $(APPKIT_HDRS)
 $(OUTDIR_AK)/ScrollbarManager.o : $(SRC_CORE)/ScrollbarManager.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/ScrollbarManager.cpp -o $(OUTDIR_AK)/ScrollbarManager.o
 
+$(OUTDIR_AK)/SliderControl.o : $(SRC_CORE)/SliderControl.cpp $(APPKIT_HDRS)
+	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/SliderControl.cpp -o $(OUTDIR_AK)/SliderControl.o
+	
 $(OUTDIR_AK)/Splitter.o : $(SRC_CORE)/Splitter.cpp $(APPKIT_HDRS)
 	$(CXX) $(AK_CXX_FLAGS) $(SRC_CORE)/Splitter.cpp -o $(OUTDIR_AK)/Splitter.o
 
