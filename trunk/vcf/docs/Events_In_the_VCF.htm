@@ -89,48 +89,68 @@ void Control::removeMouseClickedHandler(</PRE><P>For the events themselves, all
   are typically defined as follows:</P><PRE>void [Name of the callback method]([type of the event class]* event )</PRE>
   <P>
    So a real world example might look like this:</P><PRE>void onMyMouseClick( VCF::MouseEvent* event )</PRE><P>So
-  far we have discussed the three main players taht are involved when events are
+  far we have discussed the three main players that are involved when events are
   fired, but we have not yet actually defined <i>how</i> the observer of the
   event connects to the source object that is firing the event. To facilitate
-  this we have something called an event handler, which acts as the glue between
+  this the VCF uses something called an event handler, which acts as the glue between
   the source of the events being fired, and the observer of the events. In Java
   this would have been referred to as some sort of Listener interface, in .NET
-  this is known as <i><b>delegate</b></i> object.&nbsp;</P>
-  <P>
-   To accomplish this in the VCF we have event handler that are implemented with
-   the VCF::EventHandler class. The VCF::EventHandler is an abstract class that encapsulates a member method 
-   on some other object that will be called when the event happens, in 
-   other words a callback function. The VCF::EventHandler serves as a base 
+  this is known as <i><b>delegate</b></i>  object.&nbsp;Event handlers are
+  described by
+   the <code> VCF::EventHandler</code> class, and implemented by derived classes
+  of <code>VCF::EventHandler</code>. The <code> VCF::EventHandler</code> is an abstract class that encapsulates a member method 
+   on the observer object that will be called when the event happens, in 
+   other words a callback function. The <code> VCF::EventHandler</code> serves as a base 
    class for other classes to derive from. But wait - what are these 
-   other classes ? In order to make the method pointer work, the VCF has 
-   a special template class called VCF::EventHandlerInstance which requires a 
-   template types specializing the Source class type, and the Event 
-   class type. It is declared like this:</P><PRE>template &lt;class SOURCE, class EVENT&gt; class EventHandlerInstance : public EventHandler {
+   other classes ? In order to make the method pointer work cleanly, the VCF
+  uses a special template class called <code> VCF::EventHandlerInstance</code> which requires
+  template types that specialize the Observer class type, and the Event 
+   class type. It is declared like this:</P>
+  <PRE>template &lt;class OBSERVER, class EVENT&gt; class EventHandlerInstance : public EventHandler {
      public:
-     EventHandlerInstance( SOURCE* source, 
-                           OnEventHandlerMethod handlerMethod, 
-                           const String&amp; handlerName=&quot;&quot; )
+     	EventHandlerInstance( SOURCE* source, 
+                           	OnEventHandlerMethod handlerMethod, 
+                           	const String&amp; handlerName=&quot;&quot; )
      .
      .
      .
 }</PRE><P>
-   The SOURCE type is used to create a typedef for the member function 
-   pointer, of the form:</P><PRE>void (SOURCE::*MethodPtr)( EVENT* event );</PRE><P>
-   Because we specify the exact SOURCE type and EVENT type as template 
-   arguments, we can make a type safe method typedef, and do not have to 
+   The OBSERVER type is used to create a <code> typedef</code> for the member function 
+   pointer, of the form:</P><PRE>void (OBSERVER::*MethodPtr)( EVENT* event );</PRE><P>
+   Because we specify the exact OBSERVER type and EVENT type as template 
+   arguments, we can make a type safe method <code>typedef</code>, and do not have to 
    rely on typecasts to force the function pointer to be correctly assigned.</P>
   <P>
-   To construct an VCF::EventHandlerInstance we must pass in the source 
+   To construct an <code> VCF::EventHandlerInstance</code> we must pass in the source 
    object that will receive the event callbacks, a method pointer of the 
    source object, and an optional name for the event handler. If we specify a name for the event handler, and the source object derives 
-   from VCF::ObjectWithEvents, then the event handler will automatically be 
+   from <code>VCF::ObjectWithEvents</code>, then the event handler will automatically be 
    added to the source object's list of event handlers. This will allow 
    you to retrieve it later, as well as reclaim the memory for the event 
    handlers when the source object is destroyed. Because of this 
-   instances of class EventHandlerInstance must <SPAN STYLE="font-style : italic;font-weight : bold;">always</SPAN> 
-   be created on the heap.</P>
-  <H4>
-   <!-- $MVD$:spaceretainer() -->&nbsp;</H4>
+   instances of class <code> VCF::EventHandlerInstance </code>must <SPAN STYLE="font-style : italic;font-weight : bold;">always</SPAN> 
+   be created on the heap.<!-- $MVD$:spaceretainer() -->&nbsp;A concrete example
+   of this would be an object being notified when a mouse click happens on a
+   control:</P>
+  <PRE>	.
+	.
+	.
+	Control* someControl = ....
+	someControl-&gt;addMouseClickedHandler( 
+				new EventHandlerInstance&lt;Foo,MouseEvent&gt;( this, Foo::onMyMouseClick, &quot;FooMouseHandler&quot; ) );
+	.
+	.
+	.
+}
+
+void Foo::onMyMouseClick( MouseEvent* event )
+{
+	.
+	.
+	.
+}</PRE>
+  <P>
+   &nbsp;</P>
   <H4>
    Why do it this way ?</H4>
   <P>Typically in most frameworks, a single method is registered as the 
@@ -151,14 +171,14 @@ void Control::removeMouseClickedHandler(</PRE><P>For the events themselves, all
   diagrammed visually in Figure 2, below:<P>Figure 2<br>
   <img border="0" src="vcf_event_handling.gif" width="492" height="434"><P>This
   allows us to scale up much easier and with very little code on the part of the
-  developer. Let's take things a bit further and see exactly how much code is
-  neccessary to hook these pieces together.<PRE>Window* wind = ...
+  developer. Let's take things a bit further and see exactly how much code is necessary
+  to hook these pieces together.<PRE>Window* wind = ...
 .
 .
 .
 wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Window,ClickEvent&gt;( wind, Window::onClick, &quot;windClickHandler&quot; ) );
 </PRE>
-  <p>As you can see it doesn't take much - just call the appropriate add<i><b>XXX</b></i>Handler
+  <p>As you can see it doesn't take much - just call the appropriate <code> add<b><i>XXX</i></b>Handler</code>
   method on the object that fires the events you're interested in (in this case
   the instance referred to by the <code>wind</code> variable), and create a new
   EventHandlerInstance, passing in the source object that will receive the
@@ -258,5 +278,10 @@ fileOpenItem-&gt;addMenuItemClickedHandler( new VCF::EventHandlerInstance&lt;MyA
   registered with multiple objects. Figure 3, below, diagrams this relationship.</p>
   <p>Figure 3<br>
   <img border="0" src="shared_event_handlers.gif" width="381" height="386"></p>
+  <p>This means that the functionality of a particular event handler method can
+  be shared and reused for multiple events. One example might be a series of
+  menu items that when clicked on, activate a specific type of tool. These menu
+  items could share the functionality of their handler code, as the only
+  difference would be the tool being selected. Since all the menu items have a </p>
  </BODY>
 </HTML>
