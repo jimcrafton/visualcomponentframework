@@ -602,6 +602,10 @@ SOURCE=..\..\..\include\core\ComboBoxControl.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\ComboBoxListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ComboBoxPeer.h
 # End Source File
 # Begin Source File
