@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "TypelibDump.h"
+#include "TypeLibraryConverterDlg.h"
 
 
 // Stolen from OLEMISC.CPP in the MFC 3.0 source.  Function names
@@ -387,8 +388,13 @@ BSTR VTtoString( VARTYPE vt )
 {
 	_bstr_t str("") ;
 	vt &= ~0xF000 ;
-	if (vt <= VT_CLSID)
-	   str = g_rgszVT[vt]  ;
+	if (vt <= VT_CLSID) {
+		str = g_rgszVT[vt]  ;
+		std::map<CString,CString>::iterator found = TypeLibraryConverterDlg::g_TypeConversionMap.find( CString((TCHAR*)str) );
+		if ( found != TypeLibraryConverterDlg::g_TypeConversionMap.end() ) {
+			str = found->second;
+		}
+	}
 	else
 	   str = "BAD VARTYPE" ;
 

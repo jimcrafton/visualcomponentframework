@@ -117,6 +117,11 @@ IDR_COMMANDS            REGISTRY DISCARDABLE    "Commands.rgs"
 
 IDR_TOOLBAR_MEDIUM      BITMAP  MOVEABLE PURE   "res\\TBarMedm.bmp"
 IDR_TOOLBAR_LARGE       BITMAP  MOVEABLE PURE   "res\\TBarLrge.bmp"
+IDB_TYPELIB             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDB_INTERFACE           BITMAP  DISCARDABLE     "res\\bitmap2.bmp"
+IDB_COCLASS             BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
+IDB_INSERTABLE_COCLASS  BITMAP  DISCARDABLE     "res\\bitmap4.bmp"
+IDB_IMAGELIST           BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -126,14 +131,6 @@ IDR_TOOLBAR_LARGE       BITMAP  MOVEABLE PURE   "res\\TBarLrge.bmp"
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO DISCARDABLE 
 BEGIN
-    IDD_ABOUTBOX, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 228
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 48
-    END
-
     IDD_TYPELIB_CONVERTER, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -147,15 +144,32 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 342
         TOPMARGIN, 7
-        BOTTOMMARGIN, 250
+        BOTTOMMARGIN, 249
+        BOTTOMMARGIN, 249
     END
 
     IDD_OPTIONS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 307
+        RIGHTMARGIN, 252
         TOPMARGIN, 7
-        BOTTOMMARGIN, 223
+        BOTTOMMARGIN, 224
+    END
+
+    IDD_TYPE_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 252
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
+    END
+
+    IDD_CONVERT_TYPE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 264
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 43
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -173,17 +187,6 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About Test"
-FONT 8, "MS Sans Serif"
-BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Test Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2001",IDC_STATIC,40,25,119,8
-    DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
-END
-
 IDD_TYPELIB_CONVERTER DIALOGEX 0, 0, 390, 197
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
@@ -194,22 +197,24 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,333,24,50,14
     CONTROL         "List2",IDC_TYPELIB_LIST,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
-                    WS_TABSTOP,7,63,318,102,WS_EX_CLIENTEDGE
+                    WS_TABSTOP,7,79,318,86,WS_EX_CLIENTEDGE
     LTEXT           "Select a Type Library to convert and then click on the Convert button.",
-                    IDC_STATIC,7,54,283,8
-    PUSHBUTTON      "Convert...",IDC_CONVERT,279,170,46,14
+                    IDC_STATIC,7,70,283,8
+    PUSHBUTTON      "Convert...",IDC_CONVERT,281,170,46,14
     PUSHBUTTON      "Options...",IDC_OPTIONS,333,41,50,14
     CONTROL         "Progress1",IDC_CONVERT_PROGRESS,"msctls_progress32",NOT 
                     WS_VISIBLE,185,172,89,10
     CONTROL         "Static",IDC_PROGRESS_LABEL,"Static",SS_LEFTNOWORDWRAP | 
                     NOT WS_VISIBLE | WS_GROUP,7,172,178,8
-    RTEXT           ".h Directory:",IDC_STATIC,20,17,42,8
-    EDITTEXT        IDC_HEADER_DIR,67,16,216,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_BROWSE_FOR_HDR_DIR,285,16,17,12
-    RTEXT           ".cpp Directory:",IDC_STATIC,13,34,49,8
-    EDITTEXT        IDC_CPP_DIR,67,33,216,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_BROWSE_FOR_CPP_DIR,285,33,17,12
-    GROUPBOX        "Source Directories",IDC_STATIC,7,7,318,41
+    RTEXT           ".h Directory:",IDC_STATIC,20,18,42,8
+    EDITTEXT        IDC_HEADER_DIR,67,17,216,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE_FOR_HDR_DIR,285,17,17,12
+    RTEXT           ".cpp Directory:",IDC_STATIC,13,35,49,8
+    EDITTEXT        IDC_CPP_DIR,67,34,216,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE_FOR_CPP_DIR,285,34,17,12
+    GROUPBOX        "Source Directories",IDC_STATIC,7,7,318,45
+    CONTROL         "Add to Project",IDC_ADD_TO_PROJECT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,56,132,10
 END
 
 IDD_TYPELIB_CONTENTS DIALOG DISCARDABLE  0, 0, 349, 257
@@ -221,7 +226,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,290,24,52,14
     LTEXT           "Static",IDC_TYPELIB_LABEL,7,7,270,25,SS_SUNKEN
     CONTROL         "",IDC_TYPELIB_CONTENT_HOLDER,"Static",SS_ETCHEDFRAME,7,
-                    87,270,163
+                    86,270,163
     GROUPBOX        "Conversion Options",IDC_STATIC,7,35,270,47
     CONTROL         "Convert CoClasses",IDC_CONVERT_COCLASSES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,12,46,74,10
@@ -232,13 +237,11 @@ BEGIN
                     WS_TABSTOP,12,64,126,10
 END
 
-IDD_OPTIONS DIALOG DISCARDABLE  0, 0, 314, 230
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Options"
+IDD_OPTIONS DIALOG DISCARDABLE  0, 0, 259, 231
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "General Options"
 FONT 8, "Tahoma"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,257,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,257,24,50,14
     GROUPBOX        "Prefixes",IDC_STATIC,7,7,244,48
     RTEXT           "Member Variables:",IDC_STATIC,14,20,65,8
     COMBOBOX        IDC_MEMBER_PREFIXS,86,18,83,52,CBS_DROPDOWN | WS_VSCROLL | 
@@ -252,7 +255,7 @@ BEGIN
     RTEXT           """Setter"" method:",IDC_STATIC,16,92,63,8
     COMBOBOX        IDC_SET_METHOD,84,90,86,51,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
-    GROUPBOX        "Source Code",IDC_STATIC,7,143,244,80
+    GROUPBOX        "Source Code",IDC_STATIC,7,144,244,80
     CONTROL         "Single .h/.cpp per CoClass/Interface",
                     IDC_SINGLE_UNIT_PER_CLASS,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,21,154,158,10
@@ -272,16 +275,33 @@ BEGIN
                     BS_AUTORADIOBUTTON,30,201,207,10
 END
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
+IDD_TYPE_OPTIONS DIALOGEX 0, 0, 259, 178
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Type Conversion Options"
+FONT 8, "Tahoma"
+BEGIN
+    CONTROL         "List1",IDC_TYPELIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,32,245,
+                    100,WS_EX_CLIENTEDGE
+    LTEXT           "This list displays the various types and what to convert them to.\nDouble click on an item to edit its conversion type.",
+                    IDC_STATIC,7,7,245,17
+    PUSHBUTTON      "Edit...",IDC_EDIT_TYPE,202,136,50,14
+END
 
-IDB_TYPELIB             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
-IDB_INTERFACE           BITMAP  DISCARDABLE     "res\\bitmap2.bmp"
-IDB_COCLASS             BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
-IDB_INSERTABLE_COCLASS  BITMAP  DISCARDABLE     "res\\bitmap4.bmp"
-IDB_IMAGELIST           BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+IDD_CONVERT_TYPE DIALOG DISCARDABLE  0, 0, 271, 50
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Convert Type to"
+FONT 8, "Tahoma"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,214,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,214,24,50,14
+    RTEXT           "Type:",IDC_STATIC,37,7,19,8
+    EDITTEXT        IDC_TYPE_EDT,61,7,141,12,ES_AUTOHSCROLL | WS_DISABLED
+    RTEXT           "Convert to:",IDC_STATIC,18,30,38,8
+    COMBOBOX        IDC_TYPE_TO_CONVERT_TO,61,28,141,83,CBS_DROPDOWN | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -319,13 +339,29 @@ BEGIN
     0
 END
 
+IDD_CONVERT_TYPE DLGINIT
+BEGIN
+    IDC_TYPE_TO_CONVERT_TO, 0x403, 12, 0
+0x4356, 0x3a46, 0x533a, 0x7274, 0x6e69, 0x0067, 
+    IDC_TYPE_TO_CONVERT_TO, 0x403, 17, 0
+0x4356, 0x3a46, 0x563a, 0x7261, 0x6169, 0x746e, 0x6144, 0x6174, "\000" 
+    IDC_TYPE_TO_CONVERT_TO, 0x403, 12, 0
+0x4356, 0x3a46, 0x4f3a, 0x6a62, 0x6365, 0x0074, 
+    IDC_TYPE_TO_CONVERT_TO, 0x403, 15, 0
+0x4356, 0x3a46, 0x493a, 0x746e, 0x7265, 0x6166, 0x6563, "\000" 
+    IDC_TYPE_TO_CONVERT_TO, 0x403, 6, 0
+0x6f76, 0x6469, 0x002a, 
+    0
+END
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
 STRINGTABLE DISCARDABLE 
-BEGIN    
+BEGIN
     IDS_REG_SETTINGS        "Software\\VCF\\DevStudio\\Addins\\COMToVCFClassWizard\\"
 END
 

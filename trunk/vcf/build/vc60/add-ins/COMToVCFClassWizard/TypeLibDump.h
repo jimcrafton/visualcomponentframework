@@ -9,6 +9,8 @@
 class MethodHolder;
 class InterfaceHolder;
 
+
+
 class CoClassHolder {
 public:
 	virtual ~CoClassHolder();

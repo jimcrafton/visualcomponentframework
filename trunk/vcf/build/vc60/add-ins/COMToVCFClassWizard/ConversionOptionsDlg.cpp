@@ -14,9 +14,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // ConversionOptionsDlg dialog
 
+IMPLEMENT_DYNCREATE(ConversionOptionsDlg, CPropertyPage)
 
-ConversionOptionsDlg::ConversionOptionsDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(ConversionOptionsDlg::IDD, pParent)
+ConversionOptionsDlg::ConversionOptionsDlg()
+	: CPropertyPage(ConversionOptionsDlg::IDD)
 {
 	//{{AFX_DATA_INIT(ConversionOptionsDlg)
 	m_getMethodPrefix = _T("get");
@@ -33,7 +34,7 @@ ConversionOptionsDlg::ConversionOptionsDlg(CWnd* pParent /*=NULL*/)
 
 void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(ConversionOptionsDlg)
 	DDX_CBString(pDX, IDC_GET_METHOD, m_getMethodPrefix);
 	DDX_CBString(pDX, IDC_SET_METHOD, m_setMethodPrefix);
@@ -95,7 +96,7 @@ void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(ConversionOptionsDlg, CDialog)
+BEGIN_MESSAGE_MAP(ConversionOptionsDlg, CPropertyPage)
 	//{{AFX_MSG_MAP(ConversionOptionsDlg)
 	ON_BN_CLICKED(IDC_SINGLE_UNIT_PER_CLASS, OnSingleUnitPerClass)
 	//}}AFX_MSG_MAP
@@ -106,7 +107,7 @@ END_MESSAGE_MAP()
 
 BOOL ConversionOptionsDlg::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CPropertyPage::OnInitDialog();
 	
 	
 	UpdateData(FALSE);
