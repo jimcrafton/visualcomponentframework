@@ -1,0 +1,101 @@
+<make>
+
+	<substitutions>
+		<variable name="INC" value="../../../include"/>
+		<variable name="SRC" value="../../../src"/>
+		<variable name="GCC_INC" value="-I d:/cygwin/usr/include -I d:/cygwin/usr/include/g++-3"/>
+		<variable name="BCC_INC" value="G:\Borland\BCC55\include"/>
+		<variable name="BCC_LIB" value="G:\Borland\BCC55\lib"/>
+	</substitutions>
+
+	
+	<project name="FoundationKit" >
+		<configurations>
+			<config name="GCC Debug" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptions -I $(INC)/io"/>
+						<flag value="-I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerKit -I $(INC)/graphics"/>
+						<flag value="$(GCC_INC)"/>						
+						<flag value="-c -DVCF_GCC"/>
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<flag value="-shared -o libFoundationKit_shared.so"/>
+					</flags>
+				</linker>
+			</config>
+			<config name="VC++ Debug" srcBinaryExt=".obj">
+				<compiler name="cl" >
+					<flags>
+						<flag value="/I $(INC)/core /I $(INC)/events /I $(INC)/dragdrop /I $(INC)/exceptions /I $(INC)/io"/>
+						<flag value="/I $(INC)/utils /I $(INC)/implementer /I $(INC)/implementerKit /I $(INC)/graphics"/>
+						<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od"/>
+						<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FRAMEWORK_DLL /D FRAMEWORK_EXPORTS"/>
+						<flag value="/c"/>
+					</flags>
+				</compiler>	
+			</config>
+			<config name="BCC55 Debug" srcBinaryExt=".obj">
+				<compiler name="bcc32" >
+					<flags>
+						<flag value="-I$(INC)"/>
+<!--
+/core -I$(INC)/events -I$(INC)/dragdrop -I$(INC)/exceptions -I$(INC)/io"/>
+						<flag value="-I$(INC)/utils -I$(INC)/implementer -I$(INC)/implementerKit -I$(INC)/graphics"/>
+-->
+						<flag value="-I$(BCC_INC)"/>				
+						<flag value="-RT"/>						
+						<flag value="-DWIN32 -D_DEBUG -D_CONSOLE -D_MBCS -DFRAMEWORK_DLL -DFRAMEWORK_EXPORTS"/>
+						<flag value="-c"/>
+						<flag value="-L$(BCC_LIB)"/>
+					</flags>
+				</compiler>	
+			</config>
+
+		</configurations>
+
+		<sources>
+			<source name="$(SRC)/Exceptions/BasicException.cpp" partOfConfig="GCC Debug|VC++ Debug|BCC55 Debug"/>
+			<source name="$(SRC)/IO/BasicInputStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/BasicOutputStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Class.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/ClassRegistry.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/Directory.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/ErrorLog.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Events/Event.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Events/EventHandler.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/File.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/FileStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/FileUtils.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/FoundationKit.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/InterfaceClass.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Library.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Locales.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/MemoryStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Mutex.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Object.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/ObjectWithEvents.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Parser.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Point.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Events/PropertyChangeEvent.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Rect.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Registry.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/Stream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/StringUtils.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/System.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/SystemToolkit.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/TextInputStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/IO/TextOutputStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Thread.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Events/ThreadEvent.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/VCFMath.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/VCFProcess.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+		</sources>
+	</project>
+</make>
