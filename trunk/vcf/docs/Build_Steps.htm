@@ -7,7 +7,7 @@
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
   <TITLE>Build Steps</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css"></HEAD>
@@ -16,33 +16,7 @@
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
   <H1>
    Build Steps</H1>
-  <P>
-   Building the full VCF requires an XML parser used in the reading of 
-   Visual Form Files (VFF). Currently I am using the Xerces XML Pareser 
-   from Apache. It can downloaded at the Xerces site, or click below for 
-   a zip file of just the headers, libs, and dlls you need for the VCF. 
-   Please make sure it is installed in the following directory relative 
-   to the VCF root</P>
   <P CLASS="NoBackPreformatted">
-   root<BR>
-   &nbsp; |<BR>
-   &nbsp; |<BR>
-   &nbsp; +-- vcf<BR>
-   &nbsp; |<BR>
-   &nbsp; |<BR>
-   &nbsp; +--include<BR>
-   &nbsp; |<BR>
-   &nbsp; |... rest of VCF directories<BR>
-   &nbsp; |<BR>
-   &nbsp; |<BR>
-   &nbsp; +--bin<BR>
-   &nbsp; |<BR>
-   &nbsp; |<BR>
-   &nbsp; +--include<BR>
-   &nbsp; |<BR>
-   &nbsp; | ....rest of directories under include<BR>
-   &nbsp; |<BR>
-   &nbsp; +--lib<BR>
    &nbsp;</P>
   <H6>
    Building</H6>
@@ -60,8 +34,8 @@
     Code generation is Multi threaded DLL</P>
    <LI CLASS="mvd-P">
    <P>
-    Pre compiled headers are turned off generally, though I am 
-    experimenting with using them on my current build (as of 12/21/2000).</P>
+    Pre compiled headers are turned on generally, at least for the core
+    projects, FoundationKit, ApplicationKit, and GraphicsKit.</P>
    <LI CLASS="mvd-P">
    <P>
     The following defines are neccessary:</P>

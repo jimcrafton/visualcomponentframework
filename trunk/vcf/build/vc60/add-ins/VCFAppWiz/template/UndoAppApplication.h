@@ -5,6 +5,8 @@
 
 
 #include "VCF.h"
+#include "UndoRedoEvent.h"
+#include "UndoRedoListener.h"
 #include "UndoRedoStack.h"
 
 using namespace VCF;

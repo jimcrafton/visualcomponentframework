@@ -140,7 +140,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
 					}
 					break;
 
@@ -148,7 +148,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
 					}
 					break;
 				}

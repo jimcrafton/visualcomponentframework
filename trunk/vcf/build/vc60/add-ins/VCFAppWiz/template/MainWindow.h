@@ -33,7 +33,7 @@ $$IF(UNDO_REDO)
 	void onEditRedoUpdate( VCF::MenuItemEvent* e );
 $$ENDIF
 $$IF(STD_HELP_MNU)
-	void onHelpAbout( MenuItemEvent* e );
+	void onHelpAbout( VCF::MenuItemEvent* e );
 $$ENDIF
 protected:
 
