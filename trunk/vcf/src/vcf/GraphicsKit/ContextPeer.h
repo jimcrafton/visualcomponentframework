@@ -122,6 +122,10 @@ public:
 	virtual void rectangle( const double & x1, const double & y1,
 								const double & x2, const double & y2 ) = 0;
 
+	virtual void roundRect( const double & x1, const double & y1,
+								const double & x2, const double & y2,
+								const double & xc, const double & yc ) = 0;
+
 	virtual void ellipse( const double & x1, const double & y1,
 							const double & x2, const double & y2 ) = 0;
 
@@ -275,6 +279,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/13 18:43:07  ddiego
+*fixed missing roundrect functionality, and incorrect value in vc70/71 projects
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

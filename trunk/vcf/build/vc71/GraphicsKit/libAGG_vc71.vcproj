@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -74,7 +74,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
+				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -177,6 +177,14 @@
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_affine_matrix.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -193,19 +201,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_bspline.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -222,19 +230,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_curves.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -251,19 +259,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_gen_stroke.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -280,19 +288,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_gsv_text.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -309,19 +317,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_path_storage.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -338,19 +346,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_scanline_aa.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -367,19 +375,19 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_scanline_u8.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -396,14 +404,6 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 		</Filter>
