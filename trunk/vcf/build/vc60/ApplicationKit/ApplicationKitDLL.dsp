@@ -71,8 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPLICATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /Yu"ApplicationKit.h" /FD /GZ /Zm120 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -82,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 FoundationKitDLL_d.lib GraphicsKitDLL_d.lib opengl32.lib glu32.lib glaux.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  FoundationKitDLL_d.lib GraphicsKitDLL_d.lib opengl32.lib glu32.lib glaux.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin/ApplicationKitDLL_d.dll" /pdbtype:sept /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# ADD LINK32 FoundationKitDLL_d.lib GraphicsKitDLL_d.lib opengl32.lib glu32.lib glaux.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib FoundationKitDLL_d.lib GraphicsKitDLL_d.lib opengl32.lib glu32.lib glaux.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin/ApplicationKitDLL_d.dll" /pdbtype:sept /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
 
 !ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Fake Debug"
 
@@ -621,6 +620,10 @@ SOURCE=..\..\..\include\events\MouseListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\NotifyEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\NotifyListener.h
 # End Source File
 # Begin Source File
@@ -997,6 +1000,10 @@ SOURCE=..\..\..\src\core\AbstractListModel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractTableModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractTextModel.cpp
 # End Source File
 # Begin Source File
@@ -1014,6 +1021,17 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
+
+# ADD CPP /Yc"ApplicationKit.h"
+
+!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
