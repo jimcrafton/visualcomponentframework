@@ -7,6 +7,8 @@
 #include "Commands.h"
 #include "DevStudioMainWnd.h"
 #include "VCFBuilderMDIChild.h"
+#include "VCFBuilderHostView.h"
+#include "DevStudioMDIClientWnd.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -61,6 +63,70 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 
 	CDevStudioMainWnd::globalDevStudioMainWnd = new CDevStudioMainWnd(hDevStudioWnd);	
 
+	HWND hMDIWnd = NULL;
+	// find the MDI client area window
+    {
+        char cClassName[256];
+
+        hMDIWnd = CDevStudioMainWnd::globalDevStudioMainWnd->GetTopWindow()->m_hWnd;
+        ::GetClassName(hMDIWnd, (LPTSTR)cClassName, sizeof(cClassName));
+        while (strcmp(cClassName, "MDIClient") != 0)
+        {
+            hMDIWnd = ::GetNextWindow(hMDIWnd, GW_HWNDNEXT);
+            ASSERT(hMDIWnd);
+            GetClassName(hMDIWnd, (LPTSTR)cClassName, sizeof(cClassName));
+        }
+    }
+	if ( NULL != hMDIWnd ) {
+		CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = new CDevStudioMDIClientWnd(hMDIWnd, pApplication);
+		char tmp[256];
+		memset(tmp,0,256);
+		sprintf( tmp, "Found %x MDIClient hWnd\n", hMDIWnd );
+		OutputDebugString( tmp );
+	}	
+
+	CRuntimeClass* pRTDocClass = NULL;
+	bool addDocTemplate = false;
+	{
+		AFX_MANAGE_STATE( AfxGetAppModuleState() );
+		POSITION pos = AfxGetApp()->GetFirstDocTemplatePosition();
+		while ( (NULL != pos) && (!addDocTemplate) ) {
+			CDocTemplate* docTemplate = AfxGetApp()->GetNextDocTemplate( pos );
+			CString docTemplateClassName = docTemplate->GetRuntimeClass()->m_lpszClassName;
+			//if ( docTemplateClassName == "CTextDocTemplate" ) {
+				char tmp[256];
+				sprintf( tmp,"docTemplate class name: \"%s\"\n", docTemplate->GetRuntimeClass()->m_lpszClassName );
+				
+				OutputDebugString( tmp );
+				POSITION pos2 = docTemplate->GetFirstDocPosition();
+				while ( NULL != pos2 ) {
+					CDocument* doc = docTemplate->GetNextDoc( pos2 );
+					CString docClassName = doc->GetRuntimeClass()->m_lpszClassName;
+					if ( docClassName == "CWorkspaceDoc" ) {
+						pRTDocClass = doc->GetRuntimeClass();
+						addDocTemplate = true;
+					}
+					
+					sprintf( tmp,"doc class name: \"%s\"\n", doc->GetRuntimeClass()->m_lpszClassName );
+					OutputDebugString( tmp );
+				}
+			//}
+			
+		}
+		/*
+		if ( true == addDocTemplate ) {
+			CMultiDocTemplate* vcfBuilderDocTemplate =
+				 new CMultiDocTemplate( IDR_VCFBUILDERTYPE,
+									pRTDocClass,
+									RUNTIME_CLASS( VCFBuilderMDIChild ),
+									RUNTIME_CLASS( VCFBuilderHostView ) );
+			{
+				AFX_MANAGE_STATE( AfxGetAppModuleState() );
+				AfxGetApp()->AddDocTemplate( vcfBuilderDocTemplate );
+			}
+		}
+		*/
+	}
 
 	//finished initializing.....
 	
@@ -80,6 +146,10 @@ STDMETHODIMP CDSAddIn::OnDisconnection(VARIANT_BOOL bLastTime)
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	
 	delete CDevStudioMainWnd::globalDevStudioMainWnd;
+	CDevStudioMainWnd::globalDevStudioMainWnd = NULL;
+
+	delete CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr;
+	CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = NULL;
 
 	m_pCommands->UnadviseFromEvents();
 	m_pCommands->Release();

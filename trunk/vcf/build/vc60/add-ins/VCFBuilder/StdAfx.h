@@ -8,6 +8,8 @@
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
+
+//VCF Stuff
 #include "ApplicationKit.h"
 #include "Rect.h"
 #include "VCFBuilderUI.h"
@@ -37,7 +39,9 @@ extern CComModule _Module;
 #include <ObjModel\dbgdefs.h>
 #include <ObjModel\dbgauto.h>
 
-//VCF Stuff
+#include <comdef.h>
+
+
 
 
 
