@@ -1,0 +1,13 @@
+echo preparing top tar and gz tests and tutorials files $1 ...
+echo Preparing list of files...
+find ./tests -iname *.h -o -iname *.cpp -o -iname *.CPP -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl -o -iname *.def -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.html > tests.out
+echo Creating tar file...
+notepad tests.out &
+tar -cf ./vcfTestAndTutorials.$1.tar -T tests.out
+tar -rf ./vcfTestAndTutorials.$1.tar readme.txt
+tar -rf ./vcfTestAndTutorials.$1.tar vcfLicense.txt
+rm tests.out
+echo Compressing tar file with gzip...
+gzip -f ./vcfTestAndTutorials.$1.tar
+mv ./vcfTestAndTutorials.$1.tar.gz ./uploadToSF/vcfTestAndTutorials.$1.tar.gz
+echo Done ! 

@@ -1,0 +1,3 @@
+echo making docs version $1
+sh ./makeDocs
+sh ./tarvcfDocs $1

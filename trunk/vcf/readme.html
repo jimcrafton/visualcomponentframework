@@ -1,0 +1,40 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>README</title>
+</head>
+
+<body>
+
+<h1>Visual Component Framework 0.2.6&nbsp;</h1>
+<h2>Readme</h2>
+<h3>Known issues:</h3>
+<ol>
+  <li>There may be path problems when trying to run executable that link with
+    the VCF Runtime DLL's ( FoundationKit.dll, GraphicsKit.dll, and
+    ApplicationKit.dll). These require a path variable called VCF_BIN to be
+    added to your system PATH variable. The installer adds this to your user
+    PATH but if this does not work then it will probably need to added to you
+    local PATH. For this you'll need Administrator privileges. If you know of a
+    better solution please contact <a href="mailto:ddiego@one.net">me</a>
+    !&nbsp;&nbsp;</li>
+  <li>Add-ins sometimes do not get added automatically to Dev Studio. These can
+    be added manually by clicking the &quot;Tools &gt; Customize...&quot; menu
+    item and selecting the &quot;Add-ins and macro files&quot; tab page. Click
+    on the &quot;Browse...&quot; button and look in the vcf\build\vc60\add-ins
+    directory and then go to the specific add in project you want to add
+    (generally VCFNewClassWiz\Release\VCFNewClassWiz.dll for now). Select the
+    dll and click OK. The add-in will be plugged into Dev Studio for you. If
+    there are no dlls then just build the add and repeat the previous
+    steps.&nbsp;</li>
+</ol>
+<p>People experiencing any problems during or after the install should go to <a href="http://sourceforge.net/tracker/?func=add&amp;group_id=6796&amp;atid=106796">VCF
+Bugs</a> and submit a bug report.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>
