@@ -130,17 +130,6 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-# ADD CPP /Yc"GraphicsKit.h"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-# ADD CPP /Yc"GraphicsKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
