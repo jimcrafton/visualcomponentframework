@@ -2,6 +2,9 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.5  2003/12/19 05:48:35  ddiego
+#made some adjustments in the makefiles to compile and link correctly
+#
 #Revision 1.4  2003/12/18 05:15:47  ddiego
 #merge from devmain-0-6-2 branch into the stable branch
 #
@@ -401,6 +404,9 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/Dialog.o \
 			$(OUTDIR_AK_D)/DragSource.o \
 			$(OUTDIR_AK_D)/DropTarget.o \
+			$(OUTDIR_AK_D)/EtchedBorder.o \
+			$(OUTDIR_AK_D)/ColorEtchedBorder.o \
+			$(OUTDIR_AK_D)/TitledBorder.o \
 			$(OUTDIR_AK_D)/FocusEvent.o \
 			$(OUTDIR_AK_D)/Frame.o \
 			$(OUTDIR_AK_D)/HeaderControl.o \
@@ -426,12 +432,14 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/MultilineTextControl.o \
 			$(OUTDIR_AK_D)/Panel.o \
 			$(OUTDIR_AK_D)/PopupMenu.o \
+			$(OUTDIR_AK_D)/ProgressControl.o \
 			$(OUTDIR_AK_D)/PropertyEditorManager.o \
 			$(OUTDIR_AK_D)/PushButton.o \
 			$(OUTDIR_AK_D)/RadioButtonControl.o \
 			$(OUTDIR_AK_D)/Resource.o \
 			$(OUTDIR_AK_D)/ResourceStream.o \
 			$(OUTDIR_AK_D)/ScrollbarManager.o \
+			$(OUTDIR_AK_D)/SliderControl.o \
 			$(OUTDIR_AK_D)/Splitter.o \
 			$(OUTDIR_AK_D)/StatusBar.o \
 			$(OUTDIR_AK_D)/TabbedPages.o \
@@ -538,6 +546,9 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/Dialog.o \
 			$(OUTDIR_AK)/DragSource.o \
 			$(OUTDIR_AK)/DropTarget.o \
+			$(OUTDIR_AK)/EtchedBorder.o \
+			$(OUTDIR_AK)/ColorEtchedBorder.o \
+			$(OUTDIR_AK)/TitledBorder.o \
 			$(OUTDIR_AK)/FocusEvent.o \
 			$(OUTDIR_AK)/Frame.o \
 			$(OUTDIR_AK)/HeaderControl.o \
@@ -563,6 +574,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/MultilineTextControl.o \
 			$(OUTDIR_AK)/Panel.o \
 			$(OUTDIR_AK)/PopupMenu.o \
+			$(OUTDIR_AK)/ProgressControl.o \
 			$(OUTDIR_AK)/PropertyEditorManager.o \
 			$(OUTDIR_AK)/PushButton.o \
 			$(OUTDIR_AK)/RadioButtonControl.o \
@@ -570,6 +582,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/ResourceStream.o \
 			$(OUTDIR_AK)/ScrollbarManager.o \
 			$(OUTDIR_AK)/Splitter.o \
+			$(OUTDIR_AK_D)/SliderControl.o \
 			$(OUTDIR_AK)/StatusBar.o \
 			$(OUTDIR_AK)/TabbedPages.o \
 			$(OUTDIR_AK)/TableControl.o \
