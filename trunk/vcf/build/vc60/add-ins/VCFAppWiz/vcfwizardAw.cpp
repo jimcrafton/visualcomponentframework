@@ -219,7 +219,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							else if ( m_pChooser->NeedVCFNet() ) {
 								setting += "NetworkKit_sd.lib ";
 							}
-							setting += "comctl32.lib rpcrt4.lib opengl32.lib glu32.lib glaux.lib /libpath:$(VCF_LIB)";
+							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 						}
 						break;
 
@@ -231,7 +231,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							else if ( m_pChooser->NeedVCFNet() ) {
 								setting += "NetworkKit_s.lib ";
 							}
-							setting += "comctl32.lib rpcrt4.lib opengl32.lib glu32.lib glaux.lib /libpath:$(VCF_LIB)";
+							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 						}
 						break;
 					}

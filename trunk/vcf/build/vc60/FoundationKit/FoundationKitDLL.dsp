@@ -445,6 +445,10 @@ SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32SystemToolkit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32Thread.h
 # End Source File
 # Begin Source File
@@ -635,6 +639,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
