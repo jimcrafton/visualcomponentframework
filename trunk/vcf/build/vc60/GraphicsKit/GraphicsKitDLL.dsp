@@ -121,10 +121,6 @@ SOURCE=..\..\..\include\graphics\BasicStroke.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Bitmap.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\Border.h
 # End Source File
 # Begin Source File
@@ -141,10 +137,6 @@ SOURCE=..\..\..\include\graphics\Color.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Composition.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\implementer\Contextpeer.h
 # End Source File
 # Begin Source File
@@ -154,10 +146,6 @@ SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\Curve.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\DrawToolkit.h
 # End Source File
 # Begin Source File
 
@@ -225,18 +213,6 @@ SOURCE=..\..\..\include\graphics\ImageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ImageTile.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\Kernel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\Layer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\Matrix.h
 # End Source File
 # Begin Source File
@@ -246,10 +222,6 @@ SOURCE=..\..\..\include\graphics\Matrix2D.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\MatrixFunction.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\MicroTiles.h
 # End Source File
 # Begin Source File
 
@@ -269,10 +241,6 @@ SOURCE=..\..\..\include\graphics\PathEnumerator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\PixelBuffer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\Polygon.h
 # End Source File
 # Begin Source File
@@ -285,23 +253,7 @@ SOURCE=..\..\..\include\graphics\PrintContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\RenderableArea.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\RenderPaths.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\Stroke.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\TileManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\UVMap.h
 # End Source File
 # Begin Source File
 
@@ -341,10 +293,6 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\graphics\AlphaGamma.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 # End Source File
 # Begin Source File
@@ -358,10 +306,6 @@ SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Color.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\DrawToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -402,23 +346,11 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 
