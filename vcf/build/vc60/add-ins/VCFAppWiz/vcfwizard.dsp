@@ -128,6 +128,14 @@ SOURCE=.\Debug.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FileExtensionPropDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FileExtsDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Page1Dlg.cpp
 # End Source File
 # Begin Source File
@@ -137,6 +145,10 @@ SOURCE=.\Page2Dlg.cpp
 # Begin Source File
 
 SOURCE=.\Page3Dlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Page4Dlg.cpp
 # End Source File
 # Begin Source File
 
@@ -169,6 +181,14 @@ SOURCE=.\Debug.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FileExtensionPropDlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FileExtsDlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Page1Dlg.h
 # End Source File
 # Begin Source File
@@ -178,6 +198,10 @@ SOURCE=.\Page2Dlg.h
 # Begin Source File
 
 SOURCE=.\Page3Dlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Page4Dlg.h
 # End Source File
 # Begin Source File
 
@@ -221,6 +245,20 @@ SOURCE=.\res\vcfwizard.ico
 # PROP Default_Filter "<templates>"
 # Begin Source File
 
+SOURCE=.\template\About.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\About.h
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Template\confirm.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
@@ -236,6 +274,27 @@ SOURCE=.\Template\main.cpp
 # Begin Source File
 
 SOURCE=.\Template\newproj.inf
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\SplashScreen.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\SplashScreen.h
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\test.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1

@@ -7,6 +7,7 @@
 #include "Page1Dlg.h"
 #include "Page2Dlg.h"
 #include "Page3Dlg.h"
+#include "Page4Dlg.h"
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -23,6 +24,8 @@ CDialogChooser::CDialogChooser()
 	m_pDlgs[2] = new Page2Dlg;
 
 	m_pDlgs[3] = new Page3Dlg;
+
+	m_pDlgs[4] = new Page4Dlg;
 
 	m_nCurrDlg = 0;
 }
@@ -84,4 +87,46 @@ BOOL CDialogChooser::NeedsOpenGLSupport()
 {
 	Page3Dlg* dlg = (Page3Dlg*)m_pDlgs[3];
 	return dlg->m_useOpenGL;
+}
+
+BOOL CDialogChooser::NeedsAdvancedFeatures()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_useAdvanced;
+}
+
+BOOL CDialogChooser::NeedsUndoRedo()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_useUndoRedo;
+}
+
+BOOL CDialogChooser::NeedsStdFileMenu()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_useStdFileMenu;
+}
+
+std::vector<CString>& CDialogChooser::GetFileExts()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_extsList;
+}
+
+std::vector<CString>& CDialogChooser::GetFileExtDecriptions()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_extDescsList;
+}
+
+BOOL CDialogChooser::NeedsHelpMenu()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_useHelpMenu;
+}
+
+BOOL CDialogChooser::NeedsSplashScreen()
+{
+	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
+	return dlg->m_useSplashScreen;
 }

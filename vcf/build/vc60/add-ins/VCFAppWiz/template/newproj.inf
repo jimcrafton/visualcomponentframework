@@ -16,4 +16,14 @@ $$//	if name starts with / => create new subdir
 
 MAIN.CPP	$$Root$$.cpp
 
+$$IF(SPLASH_SCR)
+SplashScreen.CPP	$$SplashScreen$$.cpp
+SplashScreen.h	$$SplashScreen$$.h
+$$ENDIF
+
+$$IF(STD_HELP_MNU)
+About.CPP	$$About$$.cpp
+About.h	$$About$$.h
+$$ENDIF
+
 

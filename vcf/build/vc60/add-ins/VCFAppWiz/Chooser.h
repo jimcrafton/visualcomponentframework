@@ -4,7 +4,10 @@
 // chooser.h : declaration of the CDialogChooser class
 //             This class keeps track of what dialogs to pop up when.
 
-#define LAST_DLG 3
+#define LAST_DLG 4
+
+#include <vector>
+
 
 class CDialogChooser
 {
@@ -26,6 +29,20 @@ public:
 	BOOL NeedVCFRemote();
 
 	BOOL NeedsOpenGLSupport();
+
+	BOOL NeedsAdvancedFeatures();
+
+	BOOL NeedsUndoRedo();
+
+	BOOL NeedsStdFileMenu();
+
+	std::vector<CString>& GetFileExts();
+	
+	std::vector<CString>& GetFileExtDecriptions();
+
+	BOOL NeedsHelpMenu();
+
+	BOOL NeedsSplashScreen();
 protected:
 	// Current step's index into the internal array m_pDlgs
 	int m_nCurrDlg;
