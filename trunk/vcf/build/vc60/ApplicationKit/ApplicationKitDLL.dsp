@@ -129,6 +129,10 @@ SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AcceleratorKey.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\AppKitPeerConfig.h
 # End Source File
 # Begin Source File
@@ -1158,6 +1162,10 @@ SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\AcceleratorKey.cpp
 # End Source File
 # Begin Source File
 

@@ -130,7 +130,6 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
-# ADD CPP /Yc"ApplicationKit.h"
 # End Source File
 # Begin Source File
 
@@ -462,6 +461,10 @@ SOURCE=..\..\..\src\core\PushButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\RadioButtonControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Utils\Resource.cpp
 # End Source File
 # Begin Source File
@@ -471,6 +474,10 @@ SOURCE=..\..\..\src\IO\ResourceStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Splitter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\StatusBar.cpp
 # End Source File
 # Begin Source File
 
@@ -495,6 +502,10 @@ SOURCE=..\..\..\src\core\TextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToggledButton.cpp
 # End Source File
 # Begin Source File
 
@@ -563,6 +574,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Button.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Clipboard.cpp
 # End Source File
 # Begin Source File
 
@@ -1114,10 +1129,6 @@ SOURCE=..\..\..\include\implementer\HTMLBrowserPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\HTMLBrowserPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ImageControl.h
 # End Source File
 # Begin Source File
@@ -1386,6 +1397,10 @@ SOURCE=..\..\..\include\core\Splitter.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\StatusBar.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\StrokeState.h
 # End Source File
 # Begin Source File
@@ -1455,6 +1470,10 @@ SOURCE=..\..\..\include\events\TextModelListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\TextPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ToggledButton.h
 # End Source File
 # Begin Source File
 
@@ -1563,6 +1582,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Application.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Button.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Clipboard.h
 # End Source File
 # Begin Source File
 
