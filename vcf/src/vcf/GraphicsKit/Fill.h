@@ -26,15 +26,52 @@ class GraphicsContext;
 class Path;
 
 /**
-*Fill
+\par
+The Fill class is a high level class used to fill in a Path. A fill is
+set on the current graphics context, and then a path is drawn.
+\code
+Fill* myFill = new MyFill();
+GraphicsContext* ctx = getSomeGraphiceContext();//imaginary function to get a graphics context
+
+Path* path = getSomePath();//imaginary function to get a path
+
+//sets the fill
+ctx->setCurrrentFill( myFill );
+
+//draws the path!
+ctx->draw( path );
+
+delete myFill;
+delete path;
+
+\endcode
+
+See the StrokesAndFills example (in vcf/examples/StrokesAndFills ) for a more
+complete example of this.
+
+\par
+The interface is quite simple, and more concrete details are completely up to the 
+implement of the interface.
+@see BasicFill
+@see GraphicsContext
+@see Path
 */
 class GRAPHICSKIT_API Fill : public Interface{
 public:
 
 	virtual ~Fill(){};
 
+	/**
+	sets the context for the fill. The GraphicsContext will
+	call this when the GraphicsContext::setCurrrentFill() method is 
+	called.
+	*/
 	virtual void setContext( GraphicsContext* context ) = 0;
 
+	/**
+	renders the fill using the current path. The fill can retrieve the points for the
+	path by calling either Path::getPoints() or Path::flattenPoints().
+	*/
     virtual void render( Path* path ) = 0;
 };
 
@@ -44,6 +81,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

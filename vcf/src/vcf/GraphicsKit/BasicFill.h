@@ -17,7 +17,13 @@ where you installed the VCF.
 namespace VCF{
 
 /**
-*
+This class is a basic implementation of the Fill interface. It is suitable for 
+rendering a solid color fill with optional alpha and anti-aliasing support.
+If anti-aliasing is turned on then an attempt will be made to render the
+fill using <a href="http://www.antigrain.com/">AGG</a>, assuming a render
+buffer for the GraphicsContext is available. Alpha support is only used if 
+the rendering is performed by AGG, otherwise it is ignored.
+@see Fill
 */
 class GRAPHICSKIT_API BasicFill : public Object, public Fill {
 public:
@@ -31,26 +37,49 @@ public:
 
     virtual void render( Path* path );
 
+	/**
+	Gets the color for the fill
+	*/
 	Color getColor() {
 		return color_;
 	}
 
+	/**
+	Sets the color for the fill
+	*/
 	void setColor( Color color ) {
 		color_ = color;
 	}
 
+	/**
+	returns the opacity. 
+	@return double the opacity of the fill. the value will be in the range
+	of 1.0 to 0.0, where 1.0 is completely opaque, and 0.0 is completely
+	transparent.
+	*/
 	double getOpacity() {
 		return opacity_;
 	}
 
+	/**
+	Sets the fill opacity value. 
+	@param double the opacity to change the fill to. This value is 
+	clamped to the range of 1.0 to 0.0 inclusive.
+	*/
 	void setOpacity( const double& val ) {
 		opacity_ = minVal<>( maxVal<>( val, 0.0 ), 1.0 );
 	}
 
+	/**
+	returns whether or not to allow antialiasing when rendering the fill
+	*/
 	bool allowAntiAlias() {
 		return antiAlias_;
 	}
 
+	/**
+	toggles whether or not to perform anti-aliasing when rendering the fill.
+	*/
 	void setAllowAntiAlias( bool val ) {
 		antiAlias_ = val;
 	}
@@ -68,6 +97,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

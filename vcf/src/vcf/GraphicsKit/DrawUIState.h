@@ -16,38 +16,166 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+A set of values for different states. These are masked together to form a 
+single value that represents the actual state of a UI element such as a
+button.
+*/
 class DrawStates{
 public:
 	enum {
+		/**
+		No state is indicated
+		*/
 		dsNone							= 0x00000000,
+
+		/**
+		The element is "active" - the precise specifics of this may be 
+		windowing-platform specific.
+		*/
 		dsActive						= 0x00000001,
+
+		/**
+		The element is "enabled" and can receive user input.
+		*/
 		dsEnabled						= 0x00000002,
+
+		/**
+		The element has the keyboard focus and is eligible for keyboard input. In
+		general, on most windowing platforms only one UI element can have the keyboard 
+		focus at any moment.
+		*/
 		dsFocused						= 0x00000004,
+
+		/**
+		The element is highlighted.
+		*/
 		dsHighlighted					= 0x00000008,
+
+		/**
+		The element is verticallly aligned. The exact meaning depends on the UI element
+		in question
+		*/
 		dsVertical						= 0x00000010,
+
+		/**
+		The element is selected.
+		*/
 		dsSelected						= 0x00000020,
+
+		/**
+		The element is "pressed" - this typically only means something 
+		with UI elements that are buttons.
+		*/
 		dsPressed						= 0x00000040,
+
+		/**
+		The element is a slider and has tick marks either on the top (if
+		it's a horizontal slider) or the left (if it's a vertical slider).
+		*/
 		dsTickMarksOnTopLeft			= 0x00000080,
+
+		/**
+		The element is a slider and has tick marks either on the bottom (if
+		it's a horizontal slider) or the right (if it's a vertical slider).
+		*/
 		dsTickMarksOnBottomRight		= 0x00000100,
+
+		/**
+		The tab items (or pages) should be on the top of the tab control
+		*/
 		dsTabOnTop						= 0x00000200,
+
+		/**
+		The tab items (or pages) should be on the bottom of the tab control
+		*/
 		dsTabOnBottom					= 0x00000400,
+
+		/**
+		The tab items (or pages) should be on the left of the tab control
+		*/
 		dsTabOnLeft						= 0x00000800,
+
+		/**
+		The tab items (or pages) should be on the right of the tab control
+		*/
 		dsTabOnRight					= 0x00001000,
+
+		/**
+		The tab element is in front of all other tabs
+		*/
 		dsTabInFront					= 0x00002000,
+
+		/**
+		the scroll bar increment button has been pressed
+		*/
 		dsScrollBarIncrArrowPressed		= 0x00004000,
+
+		/**
+		the scroll bar decrement button has been pressed
+		*/
 		dsScrollBarDecrArrowPressed		= 0x00008000,
+
+		/**
+		the scroll bar "thumb" button has been pressed
+		*/
 		dsScrollBarThumbPressed			= 0x00010000,
+
+		/**
+		The disclose element is "closed". On OS X this is usually
+		represented by a triangle that points horizontally to the right.
+		On Win32 this is usually a "+" sign.
+		*/
 		dsDisclosureClosed				= 0x00020000,
+
+		/**
+		
+		*/
 		dsDisclosurePartialOpened		= 0x00040000,
+
+		/**
+		The disclose element is "open". On OS X this is usually
+		represented by a triangle that points down.
+		On Win32 this is usually a "-" sign.
+		*/
 		dsDisclosureOpened				= 0x00080000,
+
+		/**
+		The element is "toggled" in the affirmative. In a check box this
+		would typically cause the "check" mark to be visible.
+		*/
 		dsToggledYes					= 0x00100000,
+
+		/**
+		The element is "toggled" in the negative. In a check box this
+		would typically cause the "check" mark to be cleared.
+		*/
 		dsToggledNo						= 0x00200000,
+
+		/**
+		The ui element is a menu item separator
+		*/
 		dsMenuItemSeparator				= 0x00400000,
+
+		/**
+		The element is a the default button. Usually, on most windowing platforms,
+		the default button is the button that will be "clicked" if the user hits the 
+		enter or return key.
+		*/
 		dsDefaultButton					= 0x00800000
 	};	
 };
 
-
+/**
+\par
+The DrawUIState is a utility class to make it easy to indicate the user interface state of 
+a GUI element, such as a button. The base settings indicate whether the element is active,
+enabled, focused, or highlighted.
+\par
+The various sub classes of DrawUIState simply make it easier to identify the state of the
+element, as well as adding a few more states, and optionally storing additional state information
+like the text or caption of the control.
+*/
 class DrawUIState {
 public:
 	DrawUIState(): state_(0){}

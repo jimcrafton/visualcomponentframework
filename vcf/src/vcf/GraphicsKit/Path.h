@@ -99,6 +99,16 @@ public:
 };
 
 
+/**
+A Path is an abstract class that represents a series of points used to 
+draw one or more shapes. The path instance is used in conjuntion with a 
+fill and/or a stroke instance to actually render the shape on the 
+graphics context.
+
+@see GraphicsContext
+@see Fill
+@see Stroke
+*/
 class GRAPHICSKIT_API Path : public Interface{
 public:
 	enum WindingRule {
@@ -108,24 +118,80 @@ public:
 
 	virtual ~Path(){};
 
+	/**
+	Applies the transform to the path
+	*/
 	virtual void applyTransform( const Matrix2D& transform ) = 0;
 
+	/**
+	Returns true or false, depending on whether or not the path
+	includes, or contains, the specified rectangle. 
+	@return bool Returns true if the rect is within the bounds of the
+	shape, otherwise false.
+	*/
     virtual bool contains(const Rect& rect ) = 0;
 
+
+	/**
+	Returns true or false, depending on whether or not the path
+	includes, or contains, the specified point. 
+	@return bool Returns true if the point is within the bounds of the
+	shape, otherwise false.
+	*/
     virtual bool contains( const Point& pt ) = 0;
 
+
+	/**
+	Returns true or false, depending on whether or not the 
+	specified point intersects any part of the path. 
+	@return bool Returns true if the point intersects 
+	the shape, otherwise false.
+	*/
     virtual bool intersects( const Point& pt ) = 0;
 
+	/**
+	Returns true or false, depending on whether or not the 
+	specified rectangle intersects any part of the path. 
+	@return bool Returns true if the rectangle intersects 
+	the shape, otherwise false.
+	*/
     virtual bool intersects( const Rect& rect ) = 0;
 
+	/**
+	returns the smallest rectangular bounds that fully enclose this path
+	*/
     virtual Rect getBounds() = 0;
 
+	/**
+	Returns the winding rule for the path. This affects how the path get rendered.
+	*/
 	virtual WindingRule getWindingRule() = 0;
 
 	virtual void setWindingRule( WindingRule rule ) = 0;
 
+	/**
+	This fills in the points vector with a series of all the points that make 
+	up the path. If the path were to describe a rectangle, then more than 
+	likely the points parameter would be filled with 4 points for the 4 corners 
+	of the rectangle.
+	@param std::vector<PathPoint>
+	@param Matrix2D a pointer to an affine matrix. This matrix is used to apply a 
+	transformation to the returned points. It does \em not modify the path. The 
+	matrix instance is optional, and may be NULL.
+	@return bool returns true if the points vector is non empty 
+	(i.e. points.emtpy() == false).
+	*/
 	virtual bool getPoints( std::vector<PathPoint>& points, Matrix2D* transform ) = 0;
 
+	/**
+	This does the same thing as getPoints(), only it "flattens" the path if 
+	neccessary.	For example, if you had a path that was a bezier curve, it might 
+	be made of 4 points, the start point, 1st control point, 2nd control point, 
+	and end point. Calling getPoints would returns these 4 points, where as 
+	calling flattenPoints() would "flatten" the curve, and return a series of 
+	points that approximate the curve. How closely the flattened points approximate
+	the curve is entirely up to the implementor of the Path class.
+	*/
 	virtual void flattenPoints( std::vector<Point>& flattenedPoints ) = 0;
 };
 
@@ -139,6 +205,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.3  2004/12/02 02:26:24  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

@@ -17,7 +17,9 @@ where you installed the VCF.
 namespace VCF {
 
 /**
-class BezierCurve documentation
+The BezierCurve is a basic implementation of the Path interface and provides
+methods to create lines, rectangles, polylines, and curves.
+@see Path
 */
 class GRAPHICSKIT_API BezierCurve : public VCF::Object, public VCF::Path {
 public:
@@ -49,27 +51,73 @@ public:
 
 	virtual void flattenPoints( std::vector<Point>& flattenedPoints );
 
+	/**
+	Adds a curve to path, using the last point in path as the start point for the
+	curve. 
+	@param double represents the x coordinate of the 1st control point
+	@param double represents the y coordinate of the 1st control point
+	@param double represents the x coordinate of the 2nd control point
+	@param double represents the y coordinate of the 2nd control point
+	@param double represents the x coordinate of the end point of the curve
+	@param double represents the y coordinate of the end point of the curve
+	*/
 	void curveTo( const double& cx1, const double& cy1,
 					const double& cx2, const double& cy2,
 					const double& x, const double& y);
 
+	/**
+	Adds a curve to path.
+	@param double represents the x coordinate of the start point of the curve
+	@param double represents the y coordinate of the start point of the curve
+	@param double represents the x coordinate of the 1st control point
+	@param double represents the y coordinate of the 1st control point
+	@param double represents the x coordinate of the 2nd control point
+	@param double represents the y coordinate of the 2nd control point
+	@param double represents the x coordinate of the end point of the curve
+	@param double represents the y coordinate of the end point of the curve
+	*/
 	void curve( const double& x1, const double& y1,
 					const double& cx1, const double& cy1,
 					const double& cx2, const double& cy2,
 					const double& x2, const double& y2);
 
+	/**
+	makes a line from the last point in the path
+	*/
 	void lineTo( const double& x, const double& y );
 
+	/**
+	adds a non connected point to the path
+	
+	*/
 	void moveTo( const double& x, const double& y );
 
+	/**
+	adds a rectangle to the path
+	*/
 	void rectangle( const Rect& rectangle );
 
+	/**
+	adds a series of lines to the path in the form of a polyline starting with 
+	the last point in the path.
+	@param std::vector<Point> the points to add to the path
+	*/
 	void polyTo( std::vector<Point>& points );
 
+	/**
+	adds a series of lines to the path in the form of a polyline.
+	@param std::vector<Point> the points to add to the path
+	*/
 	void polyline( std::vector<Point>& points );
 
+	/**
+	closes the path.
+	*/
 	void close();
 
+	/**
+	removes all points from the path
+	*/
 	void clear();
 protected:
 	Path::WindingRule windingRule_;
@@ -86,6 +134,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

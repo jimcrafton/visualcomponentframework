@@ -362,7 +362,7 @@ public:
 	*draws a path. See Path for more info. Basically this simple enumerates all the
 	*path points and uses the current stroke and fill to render the shape
 	*/
-		void draw(Path * path );
+	void draw(Path * path );
 
 	/**
 	*draws an image at the x,y, coordinates
@@ -790,6 +790,9 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -27,7 +27,115 @@ class GraphicsContext;
 
 
 /**
-*interface Image
+\par
+The image class is an abstract class that defines how you can work with and 
+manipulate an image.
+\par
+An image provides access to information such as the pixel layout, the number 
+of color channels in the image, the number of bits in each channel, and whether 
+or not the channel data is floating point or integer based. You can get or set 
+the height or width of an image. You can manipulate the bits of the image as well. 
+Setting the size will destroy any existing data in the image.
+\par
+Image bits are manipulated through the ImageBits class. Each image has an ImageBits 
+instance - the ImageBits holds a pointer to the buffer of data for the image. 
+Depending on the system the buffer may be allocated by the VCF or it may be 
+allocated by the platform. In other words, *don't* reallocate or delete this 
+memory - it's not your's to play with! Feel to modify the pixel values to your 
+heart's content though. 
+
+\code
+Image* img = //... get the image from somewhere
+
+SysPixelType* pixels = img->getImageBits()->pixels_;
+//assume a 4 color channel image
+int sz = img->getHeight() * img->getWidth();
+for (int i=0;i<sz;i++ ) {
+	pixels[i].b = //...determine some cool blue value
+	pixels[i].g = //...determine some cool green value
+	pixels[i].r = //...determine some cool red value
+	pixels[i].a = //...determine some cool alpha value
+}
+\endcode
+
+\par
+Each platform defines a specific type of SysPixelType. For example on Win32 
+it's defined as BGRAPixel<unsigned char>, which means that each pixel type 
+is laid out in blue, green, red, alpha order, and each unit (of b,g,r,a) is 
+an unsigned char (8 bits). By default, the ImageBits data uses this as it unit 
+of storage in it's buffer.
+
+\par
+To support AGG integration, the ImageBits has a renderBuffer_ member. You can 
+initialize this like so :
+\code
+img->getImageBits()->attachRenderBuffer( img->getWidth(), img->getHeight() );
+\endcode
+
+\par
+Once initialized, you can use the render buffer in AGG operations 
+(see <a href="http://www.antigrain.com/doc/index.html">http://www.antigrain.com/doc/index.html</a>
+ for more on AGG).
+
+\par
+Unlike many of the other classes in the VCF, the Image class does not use a 
+peer. Instead a concrete platform implementation is provided for each platform 
+the VCF is ported to. So what you have is (on Win32, for example):
+\verbatim
+
+ Image
+  |
+  +--- AbstractImage
+               |
+               +--- Win32Image
+\endverbatim
+
+\par
+Thus any instance of an Image that you deal with on the Win32 platform is 
+ultimately a Win32Image instance. The AbstractImage is used to implement the 
+basic housekeeping methods that are almost certainly guaranteed to be the 
+same no matter the platform. The rest are then implemented in the concrete 
+platform class.
+
+\par
+Part of the idea behind the ImageBits class is to support a number of 
+different image types. The idea being that we would have 4 channel color images, 
+or 1 channel grey scale images, with potentially different channel sizes and 
+pixel layout order. This is currently accomplished through the use of templates.
+
+\note
+Currently while we have the potential to support grey scale images, we do not in 
+practice actually do so yet. Nor do we fully support alpha blending - we do have 
+the data there, we just don't make any use of it yet.
+\par
+We do support a *sort* of transparency. The image has ability to set a transparency 
+color, and then toggle whether or not this should be used (see 
+Image::setTransparencyColor() and Image::setIsTransparent() ) .
+
+Drawing images is done by creating an image and then calling the various image 
+drawing methods on the GraphicsContext.
+
+\par
+Drawing an image (on Win32) means we take a couple of things into consideration:
+\li 1) do we have a current transform in the GraphicsContext that is not an identity 
+set? An identity set means that nothing needs to be transformed.
+
+\li 2) is the image transparent (Image::isTransparent() returns true)?
+
+\par
+If the current transform is *not* "default" i.e. it's an identity set, then we do 
+the more complex code that uses AGG to transform the image and then blend it with 
+the underlying bits that belong to the graphics context HDC.
+
+\par
+If the transform is default then we create a sub image and transfer whatever pixels 
+we need that are within our image bounds rect. Then if the image is transparent 
+we execute some insane code that uses a 1 bit mask to clear out, or render invisible 
+(using extra HBITMAP's and ROP code magic) and pixels in the image that correspond 
+to the image's transparent color. So if an image has it's transparent color set to 
+"green" then any green pixels in the image will become invisible and the underlying 
+pixels of the graphics context will show through.
+
 */
 class GRAPHICSKIT_API Image {
 public:
@@ -278,6 +386,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
