@@ -804,7 +804,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name RemoteObjectKit
+    Project_Dep_Name ApplicationKitDLL
     End Project Dependency
 }}}
 
@@ -819,7 +819,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name RemoteObjectKitStatic
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
