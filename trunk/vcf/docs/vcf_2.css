@@ -18,6 +18,12 @@ li            { font-family: Trebuchet MS; padding: 10 }
 
 td.docTop { background-image: url('top-background.jpg'); background-repeat: repeat-x }
 td.docLeft { background-image: url('left_sidebar_strip.jpg'); background-repeat: repeat-y }
+A.docTopic { font-weight: bold; color: #808080; font-style: italic }
+
+A.docTopic:hover { font-weight: bold; color: #C0C0C0; background-color: #004CFF; 
+			border-style: solid; 
+			border-color: #2F4E97 #2F4E97 #00B9F7 #00B9F7	}
+
 A.qindex {}
 A.qindexRef {}
 A.el { text-decoration: none; font-weight: bold }
