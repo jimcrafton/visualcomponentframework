@@ -130,6 +130,10 @@ SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractView.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
 # End Source File
 # Begin Source File
