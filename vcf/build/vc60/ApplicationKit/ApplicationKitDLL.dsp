@@ -899,6 +899,14 @@ SOURCE=..\..\..\include\com\VCFCOM.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\io\VFFInputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\io\VFFOutputStream.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\View.h
 # End Source File
 # Begin Source File
@@ -1445,6 +1453,14 @@ SOURCE=..\..\..\src\core\UndoRedoStack.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ValidationEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\IO\VFFInputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\IO\VFFOutputStream.cpp
 # End Source File
 # Begin Source File
 

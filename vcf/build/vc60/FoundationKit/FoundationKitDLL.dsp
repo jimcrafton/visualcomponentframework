@@ -284,6 +284,10 @@ SOURCE=..\..\..\include\exceptions\OutOfBoundsException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\Persistable.h
 # End Source File
 # Begin Source File
@@ -514,6 +518,10 @@ SOURCE=..\..\..\src\core\Object.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ObjectWithEvents.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\Parser.cpp
 # End Source File
 # Begin Source File
 
