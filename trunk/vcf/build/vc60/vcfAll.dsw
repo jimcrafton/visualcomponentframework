@@ -12,9 +12,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FoundationKit
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name GraphicsKit
     End Project Dependency
 }}}
@@ -29,9 +26,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name FoundationKitDLL
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name GraphicsKitDLL
     End Project Dependency
@@ -63,7 +57,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FreeImageLib"=..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeImageLib.dsp - Package Owner=<4>
+Project: "FreeImageLib"=..\..\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -116,6 +110,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -128,9 +125,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name GraphicsKitDLL
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name FreeImageLib
     End Project Dependency
@@ -150,7 +144,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"=..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+Project: "LibJPEG"=..\..\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -162,7 +156,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibMNG"=..\..\ImageFormats\FreeImage\Source\LibMNG\LibMNG.dsp - Package Owner=<4>
+Project: "LibMNG"=..\..\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -174,7 +168,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"=..\..\ImageFormats\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
+Project: "LibPNG"=..\..\thirdparty\common\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -186,7 +180,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"=..\..\ImageFormats\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
+Project: "LibTIFF"=..\..\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -249,9 +243,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FoundationKitDLL
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name NetworkKitDLL
     End Project Dependency
 }}}
@@ -266,9 +257,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name FoundationKit
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name NetworkKit
     End Project Dependency
@@ -300,7 +288,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"=..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
+Project: "ZLib"=..\..\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"=.\GraphicsKit\libAGG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -322,15 +322,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name FoundationKitDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name GraphicsKitDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name NetworkKitDLL
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKit
@@ -355,15 +346,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ApplicationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name FoundationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name GraphicsKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name NetworkKit
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic

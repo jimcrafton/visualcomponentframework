@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 {
 	$$Root$$Application app;
 
-	Application::appMain( argc, argv );
+	Application::main( argc, argv );
 	
 	return 0;
 }

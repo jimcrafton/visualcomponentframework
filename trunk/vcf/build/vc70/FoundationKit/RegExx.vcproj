@@ -27,7 +27,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc7/DebugS\obj/RegExx.pch"
 				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile=".\vc7/DebugS\obj/"
+				ObjectFile="vc7/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/RegExx_vc7_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -75,7 +75,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/RegExx.pch"
 				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile=".\vc7/ReleaseS\obj/"
+				ObjectFile="vc7/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -145,5 +145,3 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-

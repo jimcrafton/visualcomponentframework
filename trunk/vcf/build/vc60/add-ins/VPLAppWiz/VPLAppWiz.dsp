@@ -40,6 +40,7 @@ RSC=rc.exe
 # PROP Output_Dir "vc6/Release"
 # PROP Intermediate_Dir "vc6/Release"
 # PROP Target_Ext "awx"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_AFXEXT" /Fo"vc6/Release/" /Yu"stdafx.h" /FD /c
@@ -49,15 +50,15 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"vc6/Release\VPLAppWiz_vc6.bsc" 
+# ADD BSC32 /nologo /o"vc6/Release\VPLAppWiz_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /out:"vc6/Release/VPLAppWiz_vc6.dll" /machine:I386
+# ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"vc6/Release/VPLAppWiz_vc6.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
-OutDir=.\Release
-TargetPath=.\Release\VPLAppWiz.awx
-TargetName=VPLAppWiz
-InputPath=.\Release\VPLAppWiz.awx
+OutDir=.\vc6/Release
+TargetPath=.\vc6\Release\VPLAppWiz_vc6.awx
+TargetName=VPLAppWiz_vc6
+InputPath=.\vc6\Release\VPLAppWiz_vc6.awx
 SOURCE="$(InputPath)"
 
 "$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -82,17 +83,17 @@ SOURCE="$(InputPath)"
 # PROP Target_Ext "awx"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_PSEUDO_DEBUG" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_PSEUDO_DEBUG" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_AFXEXT" /FR"vc6/Debug/" /Fo"vc6/Debug/" /Fd"vc6/Debug/VPLAppWiz_vc6_d.pdb" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_PSEUDO_DEBUG" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_AFXEXT" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Yu"stdafx.h" /Fd"vc6/Debug/VPLAppWiz_vc6_d.pdb" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_PSEUDO_DEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_PSEUDO_DEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"vc6/Debug\VPLAppWiz_vc6_d.bsc" 
+# ADD BSC32 /nologo /o"vc6/Debug\VPLAppWiz_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /incremental:yes /debug /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /incremental:yes /debug /out:"vc6/Debug/VPLAppWiz_vc6_d.dll" /machine:I386
+# ADD LINK32 /nologo /subsystem:windows /dll /incremental:yes /debug /machine:I386 /out:"vc6/Debug/VPLAppWiz_vc6_d.dll"
 
 !ENDIF 
 
@@ -215,5 +216,3 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
-
-

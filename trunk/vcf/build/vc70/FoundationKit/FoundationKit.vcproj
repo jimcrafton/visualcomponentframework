@@ -20,7 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,BUILD_FRAMEWORK_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -28,7 +28,7 @@
 				PrecompiledHeaderThrough="FoundationKit.h"
 				PrecompiledHeaderFile=".\vc7/DebugS\obj/FoundationKit.pch"
 				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile=".\vc7/DebugS\obj/"
+				ObjectFile="vc7/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/FoundationKit_vc7_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -69,7 +69,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC"
+				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC,BUILD_FRAMEWORK_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -78,7 +78,7 @@
 				PrecompiledHeaderThrough="FoundationKit.h"
 				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/FoundationKit.pch"
 				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile=".\vc7/ReleaseS\obj/"
+				ObjectFile="vc7/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
 				WarningLevel="3"
 				WarnAsError="TRUE"
@@ -108,22 +108,72 @@
 	</Configurations>
 	<Files>
 		<Filter
-			Name="Header Files"
+			Name="Peer Interfaces"
 			Filter="">
 			<File
-				RelativePath="..\..\..\include\exceptions\BasicException.h">
+				RelativePath="..\..\..\include\implementer\ConditionPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\io\BasicFileError.h">
+				RelativePath="..\..\..\include\implementer\LibraryPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\io\BasicInputStream.h">
+				RelativePath="..\..\..\include\implementer\MutexPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\io\BasicOutputStream.h">
+				RelativePath="..\..\..\include\implementer\ProcessIORedirectionPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\exceptions\CantCreateObjectException.h">
+				RelativePath="..\..\..\include\implementer\ProcessPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\RegistryPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\SemaphorePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\SystemPeer.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Core"
+			Filter="">
+			<File
+				RelativePath="..\..\..\include\core\CommonDefines.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\FrameworkConfig.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Locales.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\Object.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Object.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\ObjectWithEvents.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\ObjectWithEvents.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\VCF.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\VCFMath.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\WarningsOffVc.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="RTTI"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\core\Class.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Class.h">
@@ -132,58 +182,192 @@
 				RelativePath="..\..\..\include\core\ClassInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\exceptions\ClassNotFound.h">
+				RelativePath="..\..\..\src\core\ClassRegistry.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\ClassRegistry.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\CommonDefines.h">
+				RelativePath="..\..\..\include\utils\Enum.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Interface.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\InterfaceClass.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\InterfaceClass.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Method.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Property.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\VariantData.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Utils"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\utils\CommandLine.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\CommandLine.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Condition.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\Condition.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\ConditionPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\Delegate.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\Directory.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Enum.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\utils\Enumerator.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\ErrorLog.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\ErrorLog.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\exceptions\ErrorStrings.h">
+				RelativePath="..\..\..\src\utils\FilePath.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\events\Event.h">
+				RelativePath="..\..\..\src\io\FileUtils.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\events\EventHandler.h">
+				RelativePath="..\..\..\include\utils\Library.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Lock.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Mutex.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Mutex.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Parser.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Parser.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\ProcessWithRedirectedIO.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\ProcessWithRedirectedIO.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Registry.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Registry.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Runnable.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Semaphore.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Semaphore.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\StringTokenizer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\StringUtils.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\StringUtils.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\SynchObject.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\System.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\System.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\SystemToolkit.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\SystemToolkit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\Thread.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\Thread.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ThreadPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\VCFChar.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\VCFMath.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\VCFProcess.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\VCFProcess.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\VCFString.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\utils\XMLParser.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\utils\XMLParser.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="IO"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\io\BasicInputStream.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\BasicInputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\BasicOutputStream.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\BasicOutputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\Directory.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\Directory.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\File.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\io\File.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\FileIOError.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\FileNotFound.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\FilePath.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\Implementer\FilePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\FileStream.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\io\FileStream.h">
@@ -195,55 +379,108 @@
 				RelativePath="..\..\..\include\io\FileUtils.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\FoundationKit.h">
+				RelativePath="..\..\..\include\io\MemStreamUtils.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\FoundationKitPrivate.h">
+				RelativePath="..\..\..\src\io\MemoryStream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\FoundationKitSelectLib.h">
+				RelativePath="..\..\..\include\io\MemoryStream.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\FrameworkConfig.h">
+				RelativePath="..\..\..\include\io\Persistable.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\Interface.h">
+				RelativePath="..\..\..\src\io\Stream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\InterfaceClass.h">
+				RelativePath="..\..\..\include\io\Stream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\TextInputStream.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\TextInputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\io\TextOutputStream.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\TextOutputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\VariantDataStream.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Events"
+			Filter="">
+			<File
+				RelativePath="..\..\..\include\events\Delegate.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\events\Event.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\Event.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\events\EventHandler.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\EventHandler.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\NotifyEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\OutputReadyEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\events\PropertyChangeEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\PropertyChangeEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\events\ThreadEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\ThreadEvent.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Exceptions"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\exceptions\BasicException.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\exceptions\BasicException.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\BasicFileError.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\exceptions\CantCreateObjectException.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\exceptions\ClassNotFound.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\exceptions\ErrorStrings.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\FileIOError.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\FileNotFound.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\InvalidPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\InvalidPointerException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Library.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\LibraryPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Locales.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Lock.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\MemStreamUtils.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\MemoryStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Method.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Mutex.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\MutexPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\NoFreeMemException.h">
@@ -255,219 +492,100 @@
 				RelativePath="..\..\..\include\exceptions\NoSuchElementException.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\events\NotifyEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\NotifyListener.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Object.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\ObjectWithEvents.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\exceptions\OutOfBoundsException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\OutputReadyEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Parser.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\Persistable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Point.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\ProcessException.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\ProcessIORedirectionPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\ProcessPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\ProcessWithRedirectedIO.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Property.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\PropertyChangeEvent.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\exceptions\PropertyChangeException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\PropertyListener.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Rect.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Registry.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\RegistryPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Runnable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\RuntimeException.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\utils\Semaphore.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\SemaphorePeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Size.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\Stream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\StringUtils.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\SynchObject.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\System.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\SystemPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\SystemToolkit.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\TextInputStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\TextOutputStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\Thread.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\ThreadEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\ThreadPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\exceptions\TypeCastException.h">
 			</File>
+		</Filter>
+		<Filter
+			Name="Peers"
+			Filter="">
 			<File
-				RelativePath="..\..\..\include\core\VCF.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\VCFChar.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\VCFMath.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\VCFProcess.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\utils\VCFString.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\VariantData.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\VariantDataStream.h">
+				RelativePath="..\..\..\src\implementerkit\Win32FilePeer.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\ImplementerKit\Win32FilePeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32FileStream.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerKit\Win32FileStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32LibraryPeer.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerkit\Win32LibraryPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Mutex.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerKit\Win32Mutex.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Peer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Peer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32ProcessIORedirector.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32ProcessIORedirector.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32ProcessPeer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerkit\Win32ProcessPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Registry.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerkit\Win32Registry.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32SemaphorePeer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerKit\Win32SemaphorePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32SystemPeer.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32SystemToolkit.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerKit\Win32SystemToolkit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Thread.h">
+				RelativePath="..\..\..\src\implementerkit\Win32Thread.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\utils\XMLParser.h">
+				RelativePath="..\..\..\include\implementerKit\Win32Thread.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"
 			Filter="">
-			<File
-				RelativePath="..\..\..\src\Exceptions\BasicException.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\BasicInputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\BasicOutputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Class.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ClassRegistry.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Condition.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\Directory.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\ErrorLog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\Event.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\EventHandler.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\File.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\FilePath.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\FileStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\FileUtils.cpp">
-			</File>
 			<File
 				RelativePath="..\..\..\src\core\FoundationKit.cpp">
 				<FileConfiguration
@@ -478,120 +596,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\InterfaceClass.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Library.cpp">
+				RelativePath="..\..\..\src\utils\Library.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Locales.cpp">
 			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="">
 			<File
-				RelativePath="..\..\..\src\IO\MemoryStream.cpp">
+				RelativePath="..\..\..\include\FoundationKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\Utils\Mutex.cpp">
+				RelativePath="..\..\..\include\FoundationKitPrivate.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\Object.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ObjectWithEvents.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Parser.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Point.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\ProcessWithRedirectedIO.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\PropertyChangeEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Rect.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Registry.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Semaphore.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\Stream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\StringUtils.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\System.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\SystemToolkit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\TextInputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\TextOutputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Thread.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ThreadEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\VCFMath.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\VCFProcess.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FilePeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FileStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32LibraryPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Mutex.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Peer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ProcessIORedirector.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ProcessPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Registry.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32SystemPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32SystemToolkit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Thread.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\XMLParser.cpp">
+				RelativePath="..\..\..\include\core\FoundationKitSelectLib.h">
 			</File>
 		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AppServer"=..\..\AppServer\AppServer.dsp - Package Owner=<4>
+Project: "ApplicationKit"=".\ApplicationKit\ApplicationKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -11,11 +11,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKit
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ApplicationKit"=.\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
+Project: "ApplicationKitDLL"=".\ApplicationKit\ApplicationKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,11 +26,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"=.\ApplicationKit\ApplicationKitDLL.dsp - Package Owner=<4>
+Project: "FoundationKit"=".\FoundationKit\FoundationKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +45,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "BBTest"=..\..\BlackBox\BBTest\BBTest.dsp - Package Owner=<4>
+Project: "FoundationKitDLL"=".\FoundationKit\FoundationKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +57,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "BlackBox"=..\..\BlackBox\BlackBox.dsp - Package Owner=<4>
+Project: "FreeImageLib"="..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeImageLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -59,11 +65,26 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibMNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Borders"=..\..\tests\Borders\Borders.dsp - Package Owner=<4>
+Project: "GraphicsKit"=".\GraphicsKit\GraphicsKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -71,11 +92,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Browser"=..\..\VCFBuilder2\Packages\CPPParser\Browser\Browser.dsp - Package Owner=<4>
+Project: "GraphicsKitDLL"=".\GraphicsKit\GraphicsKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -83,11 +107,17 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "COMToVCFClassWizard"=".\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.dsp" - Package Owner=<4>
+Project: "ImageFormats"=".\GraphicsKit\ImageFormats.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -95,11 +125,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FreeImageLib
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "CPPParser"=..\..\VCFBuilder2\Packages\CPPParser\CPPParser.dsp - Package Owner=<4>
+Project: "Interfaces"="..\..\tests\Interfaces\Interfaces.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -111,7 +144,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ClassServer"=..\..\ClassServer\ClassServer.dsp - Package Owner=<4>
+Project: "LibJPEG"="..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,7 +156,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ClientTest"=..\..\tests\RemoteObjects\ClientTest\ClientTest.dsp - Package Owner=<4>
+Project: "LibMNG"="..\..\ImageFormats\FreeImage\Source\LibMNG\LibMNG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -135,7 +168,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Components"=..\..\tests\Components\Components.dsp - Package Owner=<4>
+Project: "LibPNG"="..\..\ImageFormats\FreeImage\Source\LibPNG\LibPNG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -147,7 +180,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CopyPaste"=..\..\tests\CopyPaste\CopyPaste.dsp - Package Owner=<4>
+Project: "LibTIFF"="..\..\ImageFormats\FreeImage\Source\LibTIFF\LibTIFF.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -159,7 +192,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DatagramSocketReceiver"=..\..\tests\DatagramSocketTest\DatagramSocketReceiver\DatagramSocketReceiver.dsp - Package Owner=<4>
+Project: "NetworkKit"=".\NetworkKit\NetworkKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -167,11 +200,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DatagramSocketSender"=..\..\tests\DatagramSocketTest\DatagramSocketSender\DatagramSocketSender.dsp - Package Owner=<4>
+Project: "NetworkKitDLL"=".\NetworkKit\NetworkKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -179,11 +215,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Delegates"=..\..\tests\Delegates\Delegates.dsp - Package Owner=<4>
+Project: "RegExx"=".\FOUNDATIONKIT\RegExx.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -195,7 +234,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dialogs"=..\..\tests\Dialogs\Dialogs.dsp - Package Owner=<4>
+Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -203,11 +242,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DragNDrop"=..\..\tests\DragNDrop\DragNDrop.dsp - Package Owner=<4>
+Project: "RemoteObjectKitStatic"=".\REMOTEOBJECTKIT\RemoteObjectKitStatic.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -215,11 +257,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Drawing"=..\..\tests\Drawing\Drawing.dsp - Package Owner=<4>
+Project: "Win32HTMLBrowser"=".\Win32HTMLBrowser\Win32HTMLBrowser.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -231,7 +276,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ErrorLogging"=..\..\tests\ErrorLogging\ErrorLogging.dsp - Package Owner=<4>
+Project: "Win32HTMLBrowser_StaticLib"=".\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -243,7 +288,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "EventHandlers"=..\..\tests\EventHandlers\EventHandlers.dsp - Package Owner=<4>
+Project: "ZLib"="..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -255,7 +300,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FilePaths"=..\..\tests\FilePaths\FilePaths.dsp - Package Owner=<4>
+Project: "libAGG"=".\GraphicsKit\libAGG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -267,7 +312,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FileStreaming"=..\..\tests\FileStreaming\FileStreaming.dsp - Package Owner=<4>
+Project: "vcfAll"=".\vcfAll.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -275,11 +320,23 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Win32HTMLBrowser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageFormats
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Files"=..\..\tests\Files\Files.dsp - Package Owner=<4>
+Project: "vcfAllStaticLibs"=".\vcfAllStaticLibs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -287,714 +344,18 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "FoundationKit"=.\FoundationKit\FoundationKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "FoundationKitDLL"=.\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "FreeImageLib"=..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeImageLib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "GUIThreads"=..\..\tests\GUIThreads\GUIThreads.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "GraphicsKit"=.\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "GraphicsKitDLL"=.\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HTMLBrowserSample"=..\..\tests\HTMLBrowserSample\HTMLBrowserSample.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld"=..\..\tests\HelloWorld\HelloWorld.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld2"=..\..\tests\HelloWorld2\HelloWorld2.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld3"=..\..\tests\HelloWorld3\HelloWorld3.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HtmlBrowser"=..\..\tests\HtmlBrowser\HtmlBrowser.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ImageFormats"=.\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Interfaces"=..\..\tests\Interfaces\Interfaces.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Layout"=..\..\tests\Layout\Layout.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibJPEG"=..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibMNG"=..\..\ImageFormats\FreeImage\Source\LibMNG\LibMNG.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibPNG"=..\..\ImageFormats\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibTIFF"=..\..\ImageFormats\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ListControls"=..\..\tests\ListControls\ListControls.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Menus"=..\..\tests\Menus\Menus.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MyServer"=..\..\tests\RemoteObjects\MyServer\MyServer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "NetworkKit"=.\NetworkKit\NetworkKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "NetworkKitDLL"=.\NetworkKit\NetworkKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Persistence"=..\..\tests\Persistence\Persistence.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RTTI"=..\..\tests\RTTI\RTTI.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RegExx"=.\FoundationKit\RegExx.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKit"=.\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKitStatic"=.\RemoteObjectKit\RemoteObjectKitStatic.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Resources"=..\..\tests\Resources\Resources.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SciLexer"=..\..\VCFBuilder2\Packages\TextEditor\scintilla\vcbuild\SciLexer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Scribble"=..\..\tests\Scribble\Scribble.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SocketTest"=..\..\tests\SocketTest\SocketTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SplashTest"=..\..\tests\SplashTest\SplashTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SystemStuff"=..\..\tests\SystemStuff\SystemStuff.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Tabs"=..\..\tests\Tabs\Tabs.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TextEditor"=..\..\VCFBuilder2\Packages\TextEditor\TextEditor.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TextStuff"=..\..\tests\TextStuff\TextStuff.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Threads"=..\..\tests\Threads\Threads.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Timer"=..\..\tests\Timer\Timer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Toolbars"=..\..\tests\Toolbars\Toolbars.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TreeList"=..\..\tests\TreeList\TreeList.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Trees"=..\..\tests\Trees\Trees.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "UndoRedo"=..\..\tests\UndoRedo\UndoRedo.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFBuilder"=".\add-ins\VCFBuilder\VCFBuilder.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFBuilder2"=..\..\VCFBuilder2\VCFBuilder2.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFBuilderUI"=..\..\VCFBuilder2\Packages\VCFBuilderUI\VCFBuilderUI.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFConsoleWiz"=".\add-ins\VCFConsoleWiz\VCFConsoleWiz.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFLibraryAppWizard"=".\add-ins\VCFLibraryAppWizard\VCFLibraryAppWizard.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VCFNewClassWiz"=".\add-ins\VCFNewClassWiz\VCFNewClassWiz.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VPLAppWiz"=".\add-ins\VPLAppWiz\VPLAppWiz.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Win32API"=..\..\tests\Win32API\Win32API.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser"=.\Win32HTMLBrowser\Win32HTMLBrowser.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"=.\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "XmlTest"=..\..\tests\XmlTest\xmltest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ZLib"=..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "libXmake"=..\..\xmake\libXmake.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "libart"=.\GraphicsKit\libart.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "vcfwizard"=".\add-ins\VCFAppWiz\vcfwizard.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "xmake"=..\..\xmake\xmake.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKitStatic
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageFormats
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Win32HTMLBrowser_StaticLib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1010,5 +371,4 @@ Package=<3>
 }}}
 
 ###############################################################################
-
 

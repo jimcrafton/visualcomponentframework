@@ -20,7 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,BUILD_NETWORKKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -28,7 +28,7 @@
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\vc7/DebugS\obj/NetworkKit.pch"
 				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile=".\vc7/DebugS\obj/"
+				ObjectFile="vc7/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/NetworkKit_vc7_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -68,7 +68,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_LIB"
+				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,BUILD_NETWORKKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -76,7 +76,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/NetworkKit.pch"
 				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile=".\vc7/ReleaseS\obj/"
+				ObjectFile="vc7/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -170,5 +170,3 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-

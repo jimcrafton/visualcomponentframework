@@ -105,9 +105,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FoundationKit
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name GraphicsKit
     End Project Dependency
 }}}
@@ -194,6 +191,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -208,6 +208,21 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DrawingWin32"=.\DrawingWin32\DrawingWin32.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
     End Project Dependency
 }}}
 
@@ -269,6 +284,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -283,9 +304,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name libart
     End Project Dependency
 }}}
 
@@ -339,6 +357,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ImageFormats"=..\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Interfaces"=..\..\..\tests\Interfaces\Interfaces.dsp - Package Owner=<4>
 
 Package=<5>
@@ -375,21 +405,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MenuBarTest"=..\..\..\..\..\junk\MenuBarTest\MenuBarTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Menus"=..\..\..\TESTS\Menus\Menus.dsp - Package Owner=<4>
 
 Package=<5>
@@ -415,6 +430,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Persistence"=..\..\..\TESTS\Persistence\Persistence.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "QTPlayer"=..\..\..\tests\QTPlayer\QTPlayer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -478,18 +505,6 @@ Package=<4>
 ###############################################################################
 
 Project: "SplashTest"=..\..\..\TESTS\SplashTest\SplashTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Streams"=..\..\..\tests\Streams\Streams.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -654,7 +669,31 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libart"=..\GraphicsKit\libart.dsp - Package Owner=<4>
+Project: "circles"=..\..\..\thirdparty\common\agg\examples\win32_api\circles\circles.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"=..\GRAPHICSKIT\libAGG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pure_api"=..\..\..\thirdparty\common\agg\examples\win32_api\pure_api\pure_api.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -677,5 +716,4 @@ Package=<3>
 }}}
 
 ###############################################################################
-
 

@@ -26,6 +26,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.4  2003/08/09 02:56:41  ddiego
+merge over from the devmain-0-6-1 branch
+Changes
+Features:
+-Added additional implementation to better support the MVC architecture in
+the VCF
+
+-Added a Document/View architecure that is similar to MFC's or NextSteps's
+Doc/View architectures
+
+-Integrated the Anti Grain Graphics library into the GraphicsKit. There is
+now basic support for it in terms of drawing vector shapes
+(fills and strokes). Image support will come in the next release
+
+-Added several documented graphics tutorials
+
+Bugfixes:
+
+[ 775744 ] wrong buttons on a dialog
+[ 585239 ] Painting weirdness in a modal dialog ?
+[ 585238 ] Modal dialog which makes a modal Dialog
+[ 509004 ] Opening a modal Dialog causes flicker
+[ 524878 ] onDropped not called for MLTcontrol
+
+Plus an issue with some focus and getting the right popup window to activate
+has also been fixed
+
+Revision 1.3.2.1  2003/06/23 23:16:54  ddiego
+added some furtther implementation for the osx port
+
 Revision 1.3  2003/05/18 23:09:37  ddiego
 fixes some mistakes in the docs/Makefile and adds some extra documentation.
 
@@ -73,7 +103,7 @@ and images
  <!--
  this uses a local path - may need to be modified for others
  -->
-	<xsl:import href="d:/docbook/xsl/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="/Users/jimcrafton/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
