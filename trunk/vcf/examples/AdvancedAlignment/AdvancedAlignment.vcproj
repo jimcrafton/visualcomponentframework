@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="AdvancedAlignment"
-	ProjectGUID="{7DA7CCAC-179F-420A-BB27-681F76087D10}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -29,9 +28,8 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Debug/AdvancedAlignment.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="vc70/Debug/"
-				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -91,7 +89,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Release/AdvancedAlignment.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"

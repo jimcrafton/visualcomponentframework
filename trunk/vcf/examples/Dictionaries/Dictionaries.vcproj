@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Dictionaries"
-	ProjectGUID="{266530EE-EB77-4257-AE3D-2E83B8CC7E78}"
+	ProjectGUID="{D5E80CEC-01DB-44E9-98E0-8BA7A1EA9A77}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -13,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc7/Debug"
-			IntermediateDirectory=".\vc7/Debug"
+			OutputDirectory=".\vc70/Debug"
+			IntermediateDirectory=".\vc70/Debug"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -27,11 +27,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc7/Debug/Dictionaries.pch"
-				AssemblerListingLocation=".\vc7/Debug/"
-				ObjectFile="vc7/Debug/"
-				ProgramDataBaseFileName="vc7/Debug/"
-				BrowseInformation="1"
+				PrecompiledHeaderFile=".\vc70/Debug/Dictionaries.pch"
+				AssemblerListingLocation=".\vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
+				ProgramDataBaseFileName="vc70/Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -42,12 +41,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="vc7/Debug/Dictionaries_vc7.exe"
+				OutputFile="vc70/Debug/Dictionaries_vc70.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc7/Debug/Dictionaries_vc7.pdb"
+				ProgramDatabaseFile="vc70/Debug/Dictionaries_vc70.pdb"
 				SubSystem="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -55,7 +54,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc7/Debug/Dictionaries.tlb"/>
+				TypeLibraryName=".\vc70/Debug/Dictionaries.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -73,8 +72,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc7/Release"
-			IntermediateDirectory=".\vc7/Release"
+			OutputDirectory=".\vc70/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -88,10 +87,10 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc7/Release/Dictionaries.pch"
-				AssemblerListingLocation=".\vc7/Release/"
-				ObjectFile="vc7/Release/"
-				ProgramDataBaseFileName=".\vc7/Release/"
+				PrecompiledHeaderFile=".\vc70/Release/Dictionaries.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile=".\vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -101,11 +100,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="vc7/Release/Dictionaries_vc7.exe"
+				OutputFile="vc70/Release/Dictionaries_vc70.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc7/Release/Dictionaries_vc7.pdb"
+				ProgramDatabaseFile=".\vc70/Release/Dictionaries_vc70.pdb"
 				SubSystem="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -113,7 +112,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc7/Release/Dictionaries.tlb"/>
+				TypeLibraryName=".\vc70/Release/Dictionaries.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

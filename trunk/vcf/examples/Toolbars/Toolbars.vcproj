@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Toolbars"
-	ProjectGUID="{B10FA4F7-0E6F-4BF0-9E26-62249311D9F0}"
+	ProjectGUID="{5A51E286-7D2D-4854-BC2B-21538416E012}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -30,7 +30,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Release/Toolbars.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -88,9 +88,8 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Debug/Toolbars.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="vc70/Debug/"
-				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -148,6 +147,18 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
 				RelativePath=".\bmp1.bmp">
+			</File>
+			<File
+				RelativePath=".\icon1.bmp">
+			</File>
+			<File
+				RelativePath=".\icon3.bmp">
+			</File>
+			<File
+				RelativePath=".\icon4.bmp">
+			</File>
+			<File
+				RelativePath=".\icon5.bmp">
 			</File>
 		</Filter>
 		<Filter

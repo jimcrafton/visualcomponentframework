@@ -45,6 +45,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AlignmentGtk"=".\Alignment\Alignment-gtk.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitGtk
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Anchors"=.\Anchors\Anchors.dsp - Package Owner=<4>
 
 Package=<5>
@@ -82,6 +97,21 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ApplicationKitGtk"="..\build\gtk\ApplicationKit\ApplicationKit-gtk.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitGtk
     End Project Dependency
 }}}
 
@@ -134,6 +164,21 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "Fields"=..\..\..\..\junk\Fields\Fields.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -204,6 +249,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "GraphicsKitGtk"="..\build\gtk\GraphicsKit\GraphicsKit-gtk.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGGGtk
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "HeavyAndLight"=.\HeavyAndLight\HeavyAndLight.dsp - Package Owner=<4>
 
 Package=<5>
@@ -241,6 +304,18 @@ Package=<4>
 ###############################################################################
 
 Project: "HelloWorld3"=.\HelloWorld3\HelloWorld3.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorldGtk"="..\tests\HelloWorld\HelloWorld-gtk.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -311,6 +386,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "QTPlayer"=.\QTPlayer\QTPlayer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -468,7 +555,34 @@ Package=<4>
 
 ###############################################################################
 
+Project: "VisualFormFiles"=.\VisualFormFiles\VisualFormFiles.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "WorkingWithEnumerators"=.\WorkingWithEnumerators\WorkingWithEnumerators.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGGGtk"="..\build\gtk\GraphicsKit\libAGG-gtk.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

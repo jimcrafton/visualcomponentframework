@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Strings"
-	ProjectGUID="{06376067-1FEA-4FD3-A171-17A0DEC06DB7}"
+	ProjectGUID="{707622CD-B85A-42CA-BC0D-2E24E3E4FAD8}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -30,9 +30,8 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc70/Debug/Strings.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="vc70/Debug/"
-				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -86,7 +85,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc70/Release/Strings.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"/>
