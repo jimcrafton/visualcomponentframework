@@ -7,6 +7,10 @@ Project: "VCFNewClassWiz"=".\VCFNewClassWiz.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
+    begin source code control
+    VCFNewClassWiz
+    .
+    end source code control
 }}}
 
 Package=<4>

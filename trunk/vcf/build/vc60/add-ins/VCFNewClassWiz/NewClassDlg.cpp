@@ -6,6 +6,8 @@
 #include "NewClassDlg.h"
 #include "Rpcdce.h" //make sure to link with Rpcrt4.lib
 #include "PropertyInfoDlg.h"
+#include "PreHeaderDlg.h"
+#include "PostHeaderDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,8 +29,12 @@ NewClassDlg::NewClassDlg(CWnd* pParent /*=NULL*/)
 	m_headerName = _T("");
 	m_supportsRTTI = TRUE;
 	m_abstractClass = FALSE;
+	m_useNameSpace = FALSE;
+	m_nameSpaceText = _T("VCF");
+	m_isClassAnInterface = FALSE;
 	//}}AFX_DATA_INIT
-
+	this->m_postHdrText = "";
+	this->m_preHdrText = "";
 	m_headerDir = "";
 	m_cppDir = "";
 }
@@ -38,6 +44,7 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(NewClassDlg)
+	DDX_Control(pDX, IDC_NAMESPACE_NAME, m_nameSpace);
 	DDX_Control(pDX, IDC_CPP, m_cppEdit);
 	DDX_Control(pDX, IDC_HEADER, m_headerEdit);
 	DDX_Control(pDX, IDC_PROP_LIST, m_propList);
@@ -48,11 +55,14 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_HEADER, m_headerName);
 	DDX_Check(pDX, IDC_SUPPORTS_VCF_RTTI, m_supportsRTTI);
 	DDX_Check(pDX, IDC_ABSTRACT_CLASS, m_abstractClass);
+	DDX_Check(pDX, IDC_USE_NAMESPACE, m_useNameSpace);
+	DDX_CBString(pDX, IDC_NAMESPACE_NAME, m_nameSpaceText);
+	DDX_Check(pDX, IDC_INTERFACE_CLASS, m_isClassAnInterface);
 	//}}AFX_DATA_MAP
 
-	if ( pDX->m_bSaveAndValidate ){
+	if ( pDX->m_bSaveAndValidate ){		
 		m_classDecl = "";
-
+		
 		UUID id;
 		CString classid;
 		if ( RPC_S_OK == ::UuidCreate( &id ) ){
@@ -73,8 +83,12 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 
 		CString defName = m_className;
 		defName.MakeUpper();
+
 		defName = "_" + defName + "_H__";
 		m_classDecl = "//" + m_className + ".h\n\n";
+		if ( m_preHdrText.GetLength() > 0 ) {
+			m_classDecl += "/**\n" + m_preHdrText + "\n*/\n\n";
+		}
 		m_classDecl += "#ifndef " + defName + "\n";
 		m_classDecl += "#define " + defName + "\n\n\n";
 
@@ -86,7 +100,20 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 		if ( this->m_supportsRTTI ){
 			m_classDecl += "#define " + classIDName + "\t\t\"" + classid + "\"\n\n\n";
 		}
-		m_classDecl += "class " + m_className + " : public " + m_derivesFrom + " { \n";
+		if ( TRUE == this->m_useNameSpace ) {
+			m_classDecl += "namespace " + m_nameSpaceText + "  {\n\n";
+		}
+		m_classDecl += "/**\n*Class " + m_className + " documentation\n*/\n";
+
+		m_classDecl += "class " + m_className;
+		
+		if ( FALSE == this->m_isClassAnInterface ) {
+			m_classDecl += " : public " + m_derivesFrom + " { \n";
+		}
+		else {
+			m_classDecl += " { \n";
+		}
+
 		m_classDecl += "public:\n";
 		if ( this->m_supportsRTTI ){
 			if ( this->m_abstractClass ){
@@ -99,7 +126,9 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 			m_classDecl += "\tEND_CLASSINFO(" + m_className + ")\n\n";
 			
 		}
-		m_classDecl += "\t" + m_className + "();\n\n";
+		if ( FALSE == this->m_isClassAnInterface ) {
+			m_classDecl += "\t" + m_className + "();\n\n";
+		}
 		m_classDecl += "\tvirtual ~" + m_className + "();\n\n";
 
 		fillInPropMethods();
@@ -110,19 +139,38 @@ void NewClassDlg::DoDataExchange(CDataExchange* pDX)
 
 		m_classDecl += "};\n\n\n";
 
+		if ( TRUE == this->m_useNameSpace ) {
+			m_classDecl += "}; //end of namespace " + m_nameSpaceText + "\n\n";
+		}
+
 		m_classDecl += "#endif //" + defName + "\n\n\n";
 
-		this->m_classImpl = "//" + m_className + ".h\n\n";
+		if ( m_postHdrText.GetLength() > 0 ) {
+			m_classDecl += "/**\n" + m_postHdrText + "\n*/\n\n";
+		}
 
-		m_classImpl += "#include \"" + m_className + ".h\"\n\n";
-
-		m_classImpl += "using namespace VCF;\n\n\n";
-
-		m_classImpl += m_className + "::" + m_className + "()\n{\n\n}\n\n";
-
-		m_classImpl += m_className + "::~" + m_className + "()\n{\n\n}\n\n";
-		
-		fillInPropMethodsImpl();
+		this->m_classImpl = "";
+		if ( FALSE == this->m_isClassAnInterface ) {
+			this->m_classImpl = "//" + m_className + ".h\n";
+			
+			if ( m_preHdrText.GetLength() > 0 ) {
+				m_classImpl += "/**\n" + m_preHdrText + "\n*/\n\n";
+			}		
+			
+			m_classImpl += "#include \"" + m_className + ".h\"\n\n";
+			
+			m_classImpl += "using namespace VCF;\n";
+			
+			if ( (TRUE == this->m_useNameSpace) && (m_nameSpaceText != "VCF") ) { 
+				m_classImpl += "\nusing namespace " + m_nameSpaceText + ";\n\n\n";
+			}
+			
+			m_classImpl += m_className + "::" + m_className + "()\n{\n\n}\n\n";
+			
+			m_classImpl += m_className + "::~" + m_className + "()\n{\n\n}\n\n";
+			
+			fillInPropMethodsImpl();
+		}
 	}
 }
 
@@ -141,6 +189,10 @@ BEGIN_MESSAGE_MAP(NewClassDlg, CDialog)
 	ON_WM_CREATE()
 	ON_UPDATE_COMMAND_UI(ID_PROPSPOPUP_EDIT, OnUpdatePropspopupEdit)
 	ON_UPDATE_COMMAND_UI(ID_PROPSPOPUP_REMOVE, OnUpdatePropspopupRemove)
+	ON_BN_CLICKED(IDC_EDIT_PRE_HDR, OnEditPreHdr)
+	ON_BN_CLICKED(IDC_EDIT_POST_HDR, OnEditPostHdr)
+	ON_BN_CLICKED(IDC_USE_NAMESPACE, OnUseNamespace)
+	ON_BN_CLICKED(IDC_INTERFACE_CLASS, OnInterfaceClass)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -480,4 +532,40 @@ void NewClassDlg::OnUpdatePropspopupRemove(CCmdUI* pCmdUI)
 {
 	//int index = this->m_propList.GetSelectionMark();
 	//pCmdUI->Enable( (this->m_propList.GetItemCount() > 0) && (index > -1) );	
+}
+
+void NewClassDlg::OnEditPreHdr() 
+{
+	PreHeaderDlg dlg;
+	dlg.m_preHdrText = m_preHdrText;
+	if ( IDOK == dlg.DoModal() ) {		
+		m_preHdrText = dlg.m_preHdrText;		
+		this->UpdateData();
+	}	
+}
+
+void NewClassDlg::OnEditPostHdr() 
+{
+	PostHeaderDlg dlg;
+	dlg.m_postHeaderText = m_postHdrText;
+	if ( IDOK == dlg.DoModal() ) {		
+		m_postHdrText = dlg.m_postHeaderText;		
+	}
+}
+
+void NewClassDlg::OnUseNamespace() 
+{
+	this->UpdateData();
+	this->m_nameSpace.EnableWindow( m_useNameSpace );
+}
+
+void NewClassDlg::OnInterfaceClass() 
+{
+	this->UpdateData();	
+	if ( TRUE == this->m_isClassAnInterface ) {
+		this->m_abstractClass = FALSE;
+		this->m_supportsRTTI = FALSE;
+	}
+	this->UpdateData();	
+	this->UpdateData(FALSE);	
 }
