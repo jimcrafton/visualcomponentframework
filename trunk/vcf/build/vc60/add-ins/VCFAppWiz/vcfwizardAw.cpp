@@ -49,6 +49,10 @@ CAppWizStepDlg* CVcfwizardAppWiz::Next(CAppWizStepDlg* pDlg)
 		CString strRoot;
 		m_Dictionary.Lookup(_T("root"), strRoot);
 		
+		m_Dictionary[_T("SplashScreen")] = CString(strRoot+"SplashScreen");
+
+		m_Dictionary[_T("About")] = CString(strRoot+"About");
+		
 		// Set value of $$Doc$$, $$DOC$$
 		CString strDoc = strRoot.Left(6);
 		m_Dictionary[_T("Doc")] = strDoc;
@@ -65,6 +69,7 @@ CAppWizStepDlg* CVcfwizardAppWiz::Next(CAppWizStepDlg* pDlg)
 		}
 		strRoot.MakeUpper();
 		m_Dictionary[_T("MAC_TYPE")] = strRoot;
+		
 		
 		// Return NULL to indicate there are no more steps.  (In this case, there are
 		//  no steps at all.)
@@ -242,8 +247,32 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 }
 
 
+static bool firstLoad = true;
+
+LPCTSTR CVcfwizardAppWiz::LoadTemplate( LPCTSTR lpszTemplateName, DWORD& rdwSize, HINSTANCE hInstance )
+{
+	if ( firstLoad ) {
+		firstLoad = false;
+		if ( m_pChooser->NeedsAdvancedFeatures() ) {
+			if ( m_pChooser->NeedsSplashScreen() ) {
+				m_Dictionary["SPLASH_SCR"] = "1";
+			}
+
+			if ( m_pChooser->NeedsHelpMenu() ) {
+				m_Dictionary["STD_HELP_MNU"] = "1";
+			}
+
+			if ( m_pChooser->NeedsUndoRedo() ) {
+				m_Dictionary["UNDO_REDO"] = "1";
+			}
+		}	
+	}
+	return CCustomAppWiz::LoadTemplate( lpszTemplateName, rdwSize, hInstance );
+}
+
 // Here we define one instance of the CVcfwizardAppWiz class.  You can access
 //  m_Dictionary and any other public members of this class through the
 //  global Vcfwizardaw.
 CVcfwizardAppWiz Vcfwizardaw;
+
 

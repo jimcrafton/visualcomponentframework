@@ -20,6 +20,8 @@ public:
 	virtual void CustomizeProject(IBuildProject* pProject);
 	virtual CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
 
+	virtual LPCTSTR LoadTemplate( LPCTSTR lpszTemplateName, DWORD& rdwSize, HINSTANCE hInstance = NULL );
+
 	CDialogChooser *m_pChooser;
 };
 

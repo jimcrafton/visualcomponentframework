@@ -136,6 +136,10 @@ SOURCE=..\..\..\include\core\AbstractListModel.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractScrollable.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\AbstractTableModel.h
 # End Source File
 # Begin Source File
@@ -732,6 +736,10 @@ SOURCE=..\..\..\include\implementer\RichTextPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Scrollable.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ScrollBarControl.h
 # End Source File
 # Begin Source File
@@ -745,6 +753,10 @@ SOURCE=..\..\..\include\events\ScrollEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ScrollListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ScrollPeer.h
 # End Source File
 # Begin Source File
 
@@ -1016,6 +1028,10 @@ SOURCE=..\..\..\include\implementerKit\Win32ResourceStream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ScrollPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
 # End Source File
 # Begin Source File
@@ -1065,6 +1081,10 @@ SOURCE=..\..\..\src\core\AbstractContainer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractListModel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\AbstractScrollable.cpp
 # End Source File
 # Begin Source File
 
@@ -1566,6 +1586,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp
 # End Source File
 # Begin Source File
 

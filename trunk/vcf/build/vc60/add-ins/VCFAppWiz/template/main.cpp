@@ -3,6 +3,13 @@
 
 #include "ApplicationKit.h"
 
+$$IF(SPLASH_SCR)
+#include "$$SplashScreen$$.h"
+$$ENDIF
+$$IF(STD_HELP_MNU)
+#include "$$About$$.h"
+$$ENDIF
+
 using namespace VCF;
 
 
@@ -26,9 +33,9 @@ public:
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
-		Window* helloWorldWindow = new $$Root$$Window();
-		setMainWindow(helloWorldWindow);
-		helloWorldWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		Window* mainWindow = new $$Root$$Window();
+		setMainWindow(mainWindow);
+		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 
 		return result;
 	}
