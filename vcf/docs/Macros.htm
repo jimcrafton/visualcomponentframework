@@ -2,13 +2,15 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
   <TITLE>Macros</TITLE>
   <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <H1>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
@@ -33,12 +35,16 @@
    fully qualified name is preferred. The classID is a string that 
    represents a <A HREF="JavaScript:hhctrl.TextPopup('A Universally Unique IDentifier that is guaranteed to be unique across computers. In COM this is known as GUID. Commonly used in distributed architectures like CORBA to identify objects or classes.','Arial,8',10,10,00000000,0xc0ffff)">UUID</A>.</P>
   <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
    BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, 
    classID )</P>
   <P>
    This is similar to the BEGIN_CLASSINFO macro, but allows for RTTI 
    information that supports abstract classes. Calls to the 
    ClassRegistry's newInstance() method will fail for classes of this type.</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
   <P>
    END_CLASSINFO( ClassType )</P>
   <P>

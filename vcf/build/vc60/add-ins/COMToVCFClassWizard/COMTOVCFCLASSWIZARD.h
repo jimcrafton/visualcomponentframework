@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Sat Jul 28 16:18:17 2001
+/* at Mon Aug 06 20:49:14 2001
  */
 /* Compiler settings for D:\code\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
@@ -90,7 +90,9 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
     ICommands : public IDispatch
     {
     public:
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SampleCommand( void) = 0;
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ConvertCOMTypeLib( void) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ConvertActiveXControl( void) = 0;
         
     };
     
@@ -140,7 +142,10 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
             /* [out] */ UINT __RPC_FAR *puArgErr);
         
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SampleCommand )( 
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ConvertCOMTypeLib )( 
+            ICommands __RPC_FAR * This);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ConvertActiveXControl )( 
             ICommands __RPC_FAR * This);
         
         END_INTERFACE
@@ -179,8 +184,11 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
     (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 
-#define ICommands_SampleCommand(This)	\
-    (This)->lpVtbl -> SampleCommand(This)
+#define ICommands_ConvertCOMTypeLib(This)	\
+    (This)->lpVtbl -> ConvertCOMTypeLib(This)
+
+#define ICommands_ConvertActiveXControl(This)	\
+    (This)->lpVtbl -> ConvertActiveXControl(This)
 
 #endif /* COBJMACROS */
 
@@ -189,11 +197,22 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
 
 
 
-/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ICommands_SampleCommand_Proxy( 
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ICommands_ConvertCOMTypeLib_Proxy( 
     ICommands __RPC_FAR * This);
 
 
-void __RPC_STUB ICommands_SampleCommand_Stub(
+void __RPC_STUB ICommands_ConvertCOMTypeLib_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ICommands_ConvertActiveXControl_Proxy( 
+    ICommands __RPC_FAR * This);
+
+
+void __RPC_STUB ICommands_ConvertActiveXControl_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,

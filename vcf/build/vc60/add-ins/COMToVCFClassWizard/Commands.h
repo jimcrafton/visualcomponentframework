@@ -37,7 +37,8 @@ public:
 
 // ICommands
 public:
-	STDMETHOD(SampleCommand)();
+	STDMETHOD(ConvertActiveXControl)();
+	STDMETHOD(ConvertCOMTypeLib)();
 };
 
 typedef CComObject<CCommands> CCommandsObj;

@@ -937,14 +937,6 @@ BSTR GenerateClassHeaderFromCOMCLSID( const CLSID& clsid )
 	return body.copy();
 }
 
-
-BSTR GenerateInterfaceDefinition( ITypeLib* pTypeLib, const CLSID& clsid )
-{
-	_bstr_t interfaceDefinition;
-
-	return interfaceDefinition.copy();
-}
-
 /*
 int main(int argc, char* argv[])
 {

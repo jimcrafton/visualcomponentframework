@@ -17,6 +17,8 @@
 #define IDD_TYPE_OPTIONS                138
 #define IDD_CONVERT_TYPE                139
 #define IDD_SOURCE_FORMATTING           141
+#define IDD_CONVERT_AX_CTRL             144
+#define IDB_AX_CTRL                     145
 #define IDD_UNDOCUMENTEDVC              1000
 #define IDC_TYPELIB_LIST                1001
 #define IDC_CONVERT                     1002
@@ -61,14 +63,15 @@
 #define IDC_JAVADOC_COMMENTS_LABEL      1039
 #define IDC_BASE_CLASS                  1039
 #define IDC_USE_VCF_RTTI                1040
+#define IDC_ACTIVEX_CTRL_LIST           1041
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        142
+#define _APS_NEXT_RESOURCE_VALUE        146
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1041
+#define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           1009
 #endif
 #endif

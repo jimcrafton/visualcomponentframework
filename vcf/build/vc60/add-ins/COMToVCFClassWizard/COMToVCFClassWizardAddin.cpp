@@ -28,16 +28,26 @@ STDMETHODIMP CCOMToVCFClassWizard::OnConnection(IApplication* piApplication, VAR
 	// register our commands with VC
 	VARIANT_BOOL bRet;
 	_bstr_t		 bstrCmd,
-					 bstrSampleCommand = "SampleCommand";
+					 bstrSampleCommand = "ConvertCOMTypeLib";
 
-	// SampleCommand
-	bstrCmd = "SampleCommand\nSampleCommand\nA Sample Addin Command\nSampleCommand";
+	// ConvertCOMTypeLib
+	bstrCmd = "ConvertCOMTypeLib\nConvert COMTypeLib\nConverts a COM Type Library into VCF Object stubs\nConvert COM Type Lib";
 	if (FAILED(piApplication->AddCommand(bstrCmd, bstrSampleCommand, 0, dwCookie, &bRet) || VARIANT_FALSE == bRet))
+		return S_OK;
+
+
+	bstrSampleCommand = "ConvertActiveXControl";
+	bstrCmd = "ConvertActiveXControl\nConvert ActiveX Control\nConverts and wraps an ActiveX Control into a VCF compatible object\nConvert ActiveX Control";
+	if (FAILED(piApplication->AddCommand(bstrCmd, bstrSampleCommand, 1, dwCookie, &bRet) || VARIANT_FALSE == bRet))
 		return S_OK;
 
 	// create toolbar:
 	if (VARIANT_TRUE == bFirstTime)
 	{
+		bstrSampleCommand = "ConvertCOMTypeLib";
+		piApplication->AddCommandBarButton(dsGlyph, bstrSampleCommand, dwCookie);
+
+		bstrSampleCommand = "ConvertActiveXControl";
 		piApplication->AddCommandBarButton(dsGlyph, bstrSampleCommand, dwCookie);
 	}
 
