@@ -1,4 +1,5 @@
 
+ /* $MVD$:color("18","b5edfb","Code Orange","1") */
  /* $MVD$:fontset("Arial","Arial") */
  /* $MVD$:fontset("Verdana","Verdana") */
  /* $MVD$:fontset("Courier New","Courier New") */
@@ -48,11 +49,11 @@
                         cursor: hand;}
  DFN.collapsed { font-style : italic;
                  font-weight : normal;
-                 display :    'none';
+                 display :     'none';
                  color : red;}
  .mvd-DFN-collapsed { font-style : italic;
                       font-weight : normal;
-                      display :    'none';
+                      display :     'none';
                       color : red;}
  DFN.expanded { font-style : italic;
                 font-weight : normal;
@@ -72,11 +73,11 @@
                        cursor: hand;}
  DFN.glosscollapsed { font-style : italic;
                       font-weight : normal;
-                      display :    'none';
+                      display :     'none';
                       color : blue;}
  .mvd-DFN-glosscollapsed { font-style : italic;
                            font-weight : normal;
-                           display :    'none';
+                           display :     'none';
                            color : blue;}
  DFN.glossexpanded { font-style : italic;
                      font-weight : normal;
@@ -86,10 +87,10 @@
                           color : blue;}
  PRE { font-family : "Courier New";
        font-size : 9.0pt;
-       color : C;}
+       background-color : #FBEDB5;}
  .mvd-PRE { font-family : "Courier New";
             font-size : 9.0pt;
-            color : C;}
+            background-color : #FBEDB5;}
  CODE { font-family : "Courier New";
         font-size : 9.0pt;}
  .mvd-CODE { font-family : "Courier New";
