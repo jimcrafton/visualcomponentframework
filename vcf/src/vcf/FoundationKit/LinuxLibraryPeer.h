@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXLIBRARYPEER_H__
-#define _VCF_LINUXLIBRARYPEER_H__
+#define _VCF_LINUXLIBRARYPEER_H__ 
 //LinuxLibraryPeer.h
 
 /*
@@ -8,10 +8,11 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+namespace VCF
+{
 
-namespace VCF {
-
-class LinuxLibraryPeer : public LibraryPeer {
+class LinuxLibraryPeer : public LibraryPeer
+{
 
 public:
 	LinuxLibraryPeer();
@@ -26,16 +27,17 @@ public:
 
 protected:
 	void* libHandle_;
-
-
 };
 
-}; //end of namespace VCF
+} //end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

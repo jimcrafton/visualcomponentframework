@@ -24,22 +24,21 @@ GTKControl::GTKControl( Control* control )
 
 GTKControl::~GTKControl()
 {
-
 }
 
 
 
 void GTKControl::create( Control* owningControl )
 {
-	GTKGraphicsToolkit* grafToolkit = (GTKGraphicsToolkit*)GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	GTKUIToolkit* toolkit = (GTKUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
+	GTKGraphicsToolkit * grafToolkit = ( GTKGraphicsToolkit* ) GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+	GTKUIToolkit* toolkit = ( GTKUIToolkit* ) UIToolkit::internal_getDefaultUIToolkit();
 
-	wndHandle_ = AbstractGTKControl::Container::create(NULL, this);	//gtk_layout_new( NULL, NULL );
+	wndHandle_ = AbstractGTKControl::Container::create( NULL, this );	//gtk_layout_new( NULL, NULL );
 
-		//
+	//
 
 	if ( NULL == wndHandle_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("gtk_layout_new() failed") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "gtk_layout_new() failed" ) );
 	}
 
 	gtk_container_add( GTK_CONTAINER( toolkit->getDefaultParent() ), wndHandle_ );
@@ -49,10 +48,15 @@ void GTKControl::create( Control* owningControl )
 
 }
 
+void GTKControl::setBorder( Border* border )
+{}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
@@ -80,7 +84,7 @@ void GTKControl::create( Control* owningControl )
 *plus created a new include/rtti and src/rtti directories and moved the
 *various rtti related code to the appropriate directories
 *
-
+ 
 *Revision 1.8  2003/12/18 05:16:01  ddiego
 *merge from devmain-0-6-2 branch into the stable branch
 *

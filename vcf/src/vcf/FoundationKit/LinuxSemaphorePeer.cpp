@@ -6,27 +6,22 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 // LinuxSemaphorePeer.cpp: implementation of the LinuxSemaphorePeer class.
 // LinuxSemaphorePeer.h: interface for the LinuxSemaphorePeer class.
-
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
 using namespace VCF;
 
-LinuxSemaphorePeer::LinuxSemaphorePeer(long initialCount/* = 1*/, long maxCount /*= 1*/)
-{
-
-}
+LinuxSemaphorePeer::LinuxSemaphorePeer( long initialCount, long maxCount )
+		: handle_( 0 )
+{}
 
 LinuxSemaphorePeer::~LinuxSemaphorePeer()
-{
+{}
 
-}
-
-bool LinuxSemaphorePeer::lock()
+bool LinuxSemaphorePeer::lock ()
 {
 	return false;
 }
@@ -40,6 +35,9 @@ bool LinuxSemaphorePeer::unlock()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

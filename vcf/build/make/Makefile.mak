@@ -14,6 +14,10 @@ LDFLAGS  += -lpthread -ldl -shared
 
 ARFLAGS   = -cru
 
+## FoundationKit
+ifeq ($(KIT), FoundationKit)
+   LDFLAGS += -lpcre
+endif
 
 ## GraphicsKit
 ifeq ($(KIT), GraphicsKit)
@@ -64,8 +68,8 @@ all: debug release
 
 -include $(SOURCES:.cpp=.dep)
 
-debug:   CXXFLAGS += -ggdb -D_DEBUG
-debug:   LDFLAGS  += -ggdb
+debug:   CXXFLAGS += -ggdb3 -D_DEBUG
+debug:   LDFLAGS  += -ggdb3
 debug:   LDFLAGS  := $(LDFLAGS:Kit=Kit_d)
 debug:   $(TARGET)
 

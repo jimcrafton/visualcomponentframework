@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXPROCESSIOREDIRECTOR_H__
-#define _VCF_LINUXPROCESSIOREDIRECTOR_H__
+#define _VCF_LINUXPROCESSIOREDIRECTOR_H__ 
 //LinuxProcessIORedirector.h
 
 /*
@@ -8,43 +8,43 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 //LinuxProcessIORedirector
 
-
-
-
-namespace VCF {
-
-
+namespace VCF
+{
 
 /**
 Win32 (NT or better) implementation of ProcessIORedirectionPeer
 original code swiped from:  (c) 2002 Andreas Saurwein - saurwein@uniwares.com
 Any mistakes are mine due to the "port" over into the VCF.
 */
-class LinuxProcessIORedirector  : public Object, public ProcessIORedirectionPeer {
+class LinuxProcessIORedirector : public Object, public ProcessIORedirectionPeer
+{
 public:
 	LinuxProcessIORedirector();
 
 	virtual ~LinuxProcessIORedirector();
 
-	virtual void addOutputReadyHandler( EventHandler* eventHandler ) {
+	virtual void addOutputReadyHandler( EventHandler* eventHandler )
+	{
 		outputReady_.addHandler( eventHandler );
 	}
 
-	virtual void removeOutputReadyHandler( EventHandler* eventHandler ) {
+	virtual void removeOutputReadyHandler( EventHandler* eventHandler )
+	{
 		outputReady_.removeHandler( eventHandler );
 	}
 
-	virtual int getProcessID() {
+	virtual int getProcessID()
+	{
 		return processID_;
 	}
 
 	/**
 	*returns the process's main thread ID
 	*/
-	virtual int getProcessThreadID() {
+	virtual int getProcessThreadID()
+	{
 		return processThreadID_;
 	}
 
@@ -63,19 +63,23 @@ public:
 	*returns the fully qualified file name of the process the
 	*object represents.
 	*/
-	virtual String getProcessFileName() {
+	virtual String getProcessFileName()
+	{
 		return commandLine_;
 	}
 
-	virtual ulong32 getHandleID() {
-		return childProcess_;
+	virtual OSHandleID getHandleID()
+	{
+		return ( OSHandleID ) childProcess_;
 	}
 
-	virtual void setProcess( ProcessWithRedirectedIO* process ) {
+	virtual void setProcess( ProcessWithRedirectedIO* process )
+	{
 		process_ = process;
 	}
 
 	virtual ulong32 terminate();
+	
 protected:
 	//this is the handle to the child process that gets started
 	ulong32 childProcess_;
@@ -86,13 +90,14 @@ protected:
 	Delegate outputReady_;
 };
 
-
-};
-
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

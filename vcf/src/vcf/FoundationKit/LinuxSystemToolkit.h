@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXSYSTEMTOOLKIT_H__
-#define _VCF_LINUXSYSTEMTOOLKIT_H__
+#define _VCF_LINUXSYSTEMTOOLKIT_H__ 
 //LinuxSystemToolkit.h
 
 /*
@@ -8,10 +8,11 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+namespace VCF
+{
 
-namespace VCF {
-
-class LinuxSystemToolkit : public SystemToolkit{
+class LinuxSystemToolkit : public SystemToolkit
+{
 public:
 
 	LinuxSystemToolkit();
@@ -23,7 +24,8 @@ public:
 	*/
 	virtual ProcessPeer* internal_createProcessPeer( Process* process );
 
-	virtual ProcessIORedirectionPeer* internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process );
+	virtual ProcessIORedirectionPeer*
+	internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process );
 	/**
 	*creates a new ThreadPeer instance
 	*/
@@ -34,7 +36,8 @@ public:
 	*/
 	virtual SystemPeer* internal_createSystemPeer();
 
-	virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount, long maxCount );
+	virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount,
+	                                                     long maxCount );
 
 	virtual RegistryPeer* internal_createRegistryPeer( Registry* registry );
 
@@ -46,19 +49,25 @@ public:
 
 	virtual FilePeer* internal_createFilePeer( File* file );
 
-	virtual FileStreamPeer* internal_createFileStreamPeer( const String& filename, const FileStreamAccessType& accessType );
-	
+	virtual FileStreamPeer*
+	internal_createFileStreamPeer( const String& filename,
+	                               const FileStreamAccessType& accessType );
+
 	virtual FileStreamPeer* internal_createFileStreamPeer( File* file );
 
 	virtual LocalePeer* internal_createLocalePeer();
+
+	virtual ResourceBundlePeer* internal_createResourceBundlePeer();
 };
 
-};
-
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

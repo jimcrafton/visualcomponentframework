@@ -6,57 +6,80 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/GraphicsKit/GraphicsKit.h"
-#include "vcf/GraphicsKit/GraphicsKitPrivate.h"
-#include "vcf/GraphicsKit/MgcBezierCurve2.h"
+#include "vcf/GraphicsKit/GraphicsKitPrivate.h" 
+//#include "vcf/FoundationKit/VCFMath.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
-GTKContext::GTKContext():
-	drawable_(NULL),
-	gdkGC_(NULL),
-	pixmapWidth_(0),
-	pixmapHeight_(0),
-	isMemoryCtx_(false),
-	parentImage_(NULL),
-	pangoCtx_(NULL),
-	pangoLayout_(NULL),
-	inFillPath_(false),
-	isXORModeOn_(false)
+GTKContext::GTKContext()
+		: drawable_( 0 )
+		, gdkGC_( 0 )
+		, pangoCtx_( 0 )
+		, pangoLayout_( 0 )
+		, pixmapWidth_( 0 )
+		, pixmapHeight_( 0 )
+		//, pathOperations_()
+		//, textOperations_()
+		, currentMoveTo_()
+		, oldOrigin_()
+		, origin_()
+		, inFillPath_( false )
+		, isMemoryCtx_( false )
+		//, pathStarted_(false)
+		, isXORModeOn_( false )
+		, alignToBaseline_( false )
+		, context_( 0 )
+		, parentImage_( 0 )
 {
-	init();
+	this->init();
 }
 
-GTKContext::GTKContext( const unsigned long& width, const unsigned long& height ):
-	drawable_(NULL),
-	gdkGC_(NULL),
-	pixmapWidth_(width),
-	pixmapHeight_(height),
-	isMemoryCtx_(true),
-	parentImage_(NULL),
-	pangoCtx_(NULL),
-	pangoLayout_(NULL),
-	inFillPath_(false),
-	isXORModeOn_(false)
+GTKContext::GTKContext( const unsigned long& width, const unsigned long& height )
+		: drawable_( 0 )
+		, gdkGC_( 0 )
+		, pangoCtx_( 0 )
+		, pangoLayout_( 0 )
+		, pixmapWidth_( width )
+		, pixmapHeight_( height )
+		//, pathOperations_()
+		//, textOperations_()
+		, currentMoveTo_()
+		, oldOrigin_()
+		, origin_()
+		, inFillPath_( false )
+		, isMemoryCtx_( false )
+		//, pathStarted_(false)
+		, isXORModeOn_( false )
+		, alignToBaseline_( false )
+		, context_( 0 )
+		, parentImage_( 0 )
 {
-	init();
+	this->init();
 }
 
-GTKContext::GTKContext( const unsigned long& contextID ):
-	drawable_(NULL),
-	gdkGC_(NULL),
-	pixmapWidth_(0),
-	pixmapHeight_(0),
-	isMemoryCtx_(false),
-	parentImage_(NULL),
-	pangoCtx_(NULL),
-	pangoLayout_(NULL),
-	inFillPath_(false),
-	isXORModeOn_(false)
+GTKContext::GTKContext( OSHandleID contextID )
+		: drawable_( reinterpret_cast<GdkDrawable*>( contextID ) )
+		, gdkGC_( 0 )
+		, pangoCtx_( 0 )
+		, pangoLayout_( 0 )
+		, pixmapWidth_( 0 )
+		, pixmapHeight_( 0 )
+		//, pathOperations_()
+		//, textOperations_()
+		, currentMoveTo_()
+		, oldOrigin_()
+		, origin_()
+		, inFillPath_( false )
+		, isMemoryCtx_( false )
+		//, pathStarted_(false)
+		, isXORModeOn_( false )
+		, alignToBaseline_( false )
+		, context_( 0 )
+		, parentImage_( 0 )
 {
-	drawable_ = (GdkDrawable*)contextID;
-	init();
+	this->init();
 }
 
 GTKContext::~GTKContext()
@@ -67,24 +90,27 @@ GTKContext::~GTKContext()
 
 	g_object_unref( gdkGC_ );
 
-
-
-	if ( NULL != pangoLayout_ ) {
+	if ( pangoLayout_ ) {
 		g_object_unref( pangoLayout_ );
 	}
 }
 
-void GTKContext:: init()
+void GTKContext::init()
 {
-	if ( (NULL == drawable_) && (pixmapWidth_>0) && (pixmapHeight_>0) ) {
+	if ( ( ! drawable_ ) and ( pixmapWidth_ > 0 ) and ( pixmapHeight_ > 0 ) ) {
 		//create a new one, let gdk determine the depth from the root window
-		drawable_ = gdk_pixmap_new( gdk_get_default_root_window(), pixmapWidth_, pixmapHeight_, -1 );
+		drawable_ = gdk_pixmap_new( gdk_get_default_root_window(),
+		                            pixmapWidth_,
+		                            pixmapHeight_,
+		                            -1 );
 	}
-	if ( NULL != drawable_ ) {
-		gdkGC_ = gdk_gc_new ( drawable_ );
+	if ( drawable_ ) {
+		gdkGC_ = gdk_gc_new( drawable_ );
 	}
 
-	GTKGraphicsToolkit* toolkit = (GTKGraphicsToolkit*)GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+	GTKGraphicsToolkit* toolkit =
+	    static_cast<GTKGraphicsToolkit*>(
+	        GraphicsToolkit::internal_getDefaultGraphicsToolkit() );
 
 	pangoCtx_ = toolkit->getGTKPangoContext();
 
@@ -101,301 +127,311 @@ GraphicsContext* GTKContext::getContext()
 	return context_;
 }
 
-
-unsigned long GTKContext::getContextID()
+OSHandleID GTKContext::getContextID()
 {
-	return (unsigned long)drawable_;
+	return reinterpret_cast<OSHandleID>( drawable_ );
 }
 
-void GTKContext::setContextID( const unsigned long& handle )
+void GTKContext::setContextID( OSHandleID contextID )
 {
 	if ( isMemoryCtx_ ) {
 		g_object_unref( drawable_ );
 		isMemoryCtx_ = false;
 	}
-	drawable_ = (GdkDrawable*)handle;
 
-	if ( NULL != drawable_ ) {
-		if ( NULL != gdkGC_ ) {
+	drawable_ = reinterpret_cast<GdkDrawable*>( contextID );
+	if ( drawable_ ) {
+		if ( gdkGC_ ) {
 			g_object_unref( gdkGC_ );
 		}
-		gdkGC_ = gdk_gc_new ( drawable_ );
+		gdkGC_ = gdk_gc_new( drawable_ );
 	}
 }
 
-
 void GTKContext::setClippingPath( Path* clippingPath )
 {
-	checkHandle();
+	this->checkHandle();
 
 	std::vector<Point> points;
 	clippingPath->flattenPoints( points );
 
-	std::vector<Point>::iterator it = points.begin();
 	std::vector<GdkPoint> pts;
-	while ( it != points.end() ) {
+	for ( std::vector<Point>::iterator pt = points.begin();
+	        pt != points.end();
+	        ++pt ) {
 		GdkPoint aPt;
-		Point& pt = *it;
-		aPt.x = (gint)(pt.x_ + origin_.x_);
-		aPt.y = (gint)(pt.y_ + origin_.y_);
+		aPt.x = gint( ( *pt ).x_ + origin_.x_ );
+		aPt.y = gint( ( *pt ).y_ + origin_.y_ );
 		pts.push_back( aPt );
-		it ++;
 	}
 
-	GdkRegion* rgn = gdk_region_polygon( &pts[0], pts.size(),
-											clippingPath->getWindingRule() == Path::wrEvenOdd ? GDK_EVEN_ODD_RULE : GDK_WINDING_RULE );
+	GdkRegion* rgn =
+	    gdk_region_polygon( &pts[ 0 ],
+	                        pts.size(),
+	                        ( clippingPath->getWindingRule() == Path::wrEvenOdd )
+	                        ? GDK_EVEN_ODD_RULE
+	                        : GDK_WINDING_RULE );
 
 	gdk_gc_set_clip_region( gdkGC_, rgn );
 
-
-	releaseHandle();
+	this->releaseHandle();
 }
 
 void GTKContext::setClippingRect( Rect* clipRect )
 {
-	checkHandle();
+	this->checkHandle();
 
 	GdkRectangle rect;
-	rect.x = (gint)clipRect->left_;
-	rect.y = (gint)clipRect->top_;
-	rect.width = (gint)clipRect->getWidth();
-	rect.height = (gint)clipRect->getHeight();
+	rect.x = gint( clipRect->left_ );
+	rect.y = gint( clipRect->top_ );
+	rect.width = gint( clipRect->getWidth() );
+	rect.height = gint( clipRect->getHeight() );
 
 	gdk_gc_set_clip_rectangle( gdkGC_, &rect );
 
-	releaseHandle();
+	this->releaseHandle();
 }
 
 
-void GTKContext::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image )
+void GTKContext::drawImage( const double& x,
+                            const double& y,
+                            Rect* imageBounds,
+                            Image* image )
 {
-	GTKImage* gtkImg = reinterpret_cast<GTKImage*>(image);
+	GTKImage * gtkImg = reinterpret_cast<GTKImage*>( image );
 	GdkPixbuf* pb = gtkImg->getPixbuf();
 
-	if ( ((ulong32)imageBounds->getWidth() > image->getWidth()) ||
-			((ulong32)imageBounds->getHeight() > image->getHeight()) ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Dimensions of image bounds exceed the image itself") );
+	if ( ulong32( imageBounds->getWidth() ) > image->getWidth()
+	        or ulong32( imageBounds->getHeight() ) > image->getHeight() ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2(
+		                            "Dimensions of image bounds exceed the "
+		                            "image itself" ) );
 	}
 
-
-	gdk_draw_pixbuf( drawable_, gdkGC_, pb,
-					(gint)imageBounds->left_,
-					(gint)imageBounds->top_,
-					(gint)(x + origin_.x_),
-					(gint)(y + origin_.y_),
-					(gint)imageBounds->getWidth(),
-					(gint)imageBounds->getHeight(), GDK_RGB_DITHER_NORMAL, 0, 0 );
-
+	gdk_draw_pixbuf( drawable_,
+	                 gdkGC_,
+	                 pb,
+	                 gint( imageBounds->left_ ),
+	                 gint( imageBounds->top_ ),
+	                 gint( x + origin_.x_ ),
+	                 gint( y + origin_.y_ ),
+	                 gint( imageBounds->getWidth() ),
+	                 gint( imageBounds->getHeight() ),
+	                 GDK_RGB_DITHER_NORMAL,
+	                 0,
+	                 0 );
 }
 
-void GTKContext::textAt(const Rect& bounds, const String & text, const long& drawOptions )
+void GTKContext::textAt( const Rect& bounds,
+                         const String & text,
+                         const long& drawOptions )
 {
-	pango_layout_set_text ( pangoLayout_, (char *)text.ansi_c_str(), text.size());
+	pango_layout_set_text( pangoLayout_, text.ansi_c_str(), text.size() );
 
-	PangoFontDescription* pf = (PangoFontDescription*)context_->getCurrentFont()->getFontPeer()->getFontHandleID();
+	PangoFontDescription* pf =
+	    reinterpret_cast<PangoFontDescription*>( context_->getCurrentFont()
+	                                             ->getFontPeer()
+	                                             ->getFontHandleID() );
 
 	pango_context_set_font_description( pangoCtx_, pf );
 
 	PangoAlignment alignment = PANGO_ALIGN_LEFT;
 
-	gint x = (gint)bounds.left_;
-	gint y = (gint)bounds.top_;
+	gint x = gint( bounds.left_ );
+	gint y = gint( bounds.top_ );
 
 	if ( drawOptions & GraphicsContext::tdoLeftAlign ) {
 		alignment = PANGO_ALIGN_LEFT;
-	}
-	else if ( drawOptions & GraphicsContext::tdoCenterHorzAlign ) {
+	} else if ( drawOptions & GraphicsContext::tdoCenterHorzAlign ) {
 		alignment = PANGO_ALIGN_CENTER;
-	}
-	else if ( drawOptions & GraphicsContext::tdoRightAlign ) {
+	} else if ( drawOptions & GraphicsContext::tdoRightAlign ) {
 		alignment = PANGO_ALIGN_RIGHT;
 	}
 
-	pango_layout_set_alignment ( pangoLayout_, alignment );
+	pango_layout_set_alignment( pangoLayout_, alignment );
 
 	if ( drawOptions & GraphicsContext::tdoWordWrap ) {
-		pango_layout_set_width( pangoLayout_, (gint)bounds.getWidth() );
-	}
-	else {
+		pango_layout_set_width( pangoLayout_, gint( bounds.getWidth() ) );
+	} else {
 		pango_layout_set_width( pangoLayout_, -1 );
 	}
 
-
-	pango_layout_context_changed ( pangoLayout_ );
-
+	pango_layout_context_changed( pangoLayout_ );
 
 	if ( drawOptions & GraphicsContext::tdoTopAlign ) {
 		//formatOptions |= DT_TOP;
-	}
-	else if ( drawOptions & GraphicsContext::tdoCenterVertAlign ) {
+	} else if ( drawOptions & GraphicsContext::tdoCenterVertAlign ) {
 		int height = 0;
-		pango_layout_get_pixel_size (pangoLayout_, NULL, &height );
+		pango_layout_get_pixel_size( pangoLayout_, 0, &height );
 
-		y = (gint)(bounds.left_ + ( bounds.getHeight()/2.0 - (double)height/2.0 ));
+		y = gint( bounds.left_
+		          + ( double( bounds.getHeight() ) / 2.0
+		              - double( height ) / 2.0 ) );
 		//formatOptions |= DT_VCENTER;
-	}
-	else if ( drawOptions & GraphicsContext::tdoBottomAlign ) {
+	} else if ( drawOptions & GraphicsContext::tdoBottomAlign ) {
 		int height = 0;
-		pango_layout_get_pixel_size (pangoLayout_, NULL, &height );
+		pango_layout_get_pixel_size( pangoLayout_, 0, &height );
 
-		y = (gint)(bounds.left_ + ( bounds.getHeight() - (double)height ));
+		y = gint( bounds.left_ + ( bounds.getHeight() - height ) );
 	}
 
 	gdk_draw_layout( drawable_, gdkGC_, x, y, pangoLayout_ );
-
 }
-
 
 double GTKContext::getTextWidth( const String& text )
 {
-	pango_layout_set_text ( pangoLayout_, (char *)text.ansi_c_str(), text.size());
+	pango_layout_set_text( pangoLayout_, text.ansi_c_str(), text.size() );
 	int width = 0;
-	pango_layout_get_pixel_size (pangoLayout_, &width, NULL);
+	pango_layout_get_pixel_size( pangoLayout_, &width, 0 );
 	return width;
 }
 
 double GTKContext::getTextHeight( const String& text )
 {
 	int height = 0;
-	pango_layout_get_pixel_size (pangoLayout_, NULL, &height );
+	pango_layout_get_pixel_size( pangoLayout_, 0, &height );
 	return height;
 }
 
-void GTKContext::rectangle(const double & x1, const double & y1, const double & x2, const double & y2)
+void GTKContext::rectangle( const double & x1,
+                            const double & y1,
+                            const double & x2,
+                            const double & y2 )
 {
-	Rect r(x1,y1,x2,y2);
-
+	Rect r( x1, y1, x2, y2 );
 	r.offset( origin_.x_, origin_.y_ );
-
 	gdk_draw_rectangle( drawable_,
-						gdkGC_,
-						inFillPath_,
-						(gint)r.left_,
-						(gint)r.top_,
-						(gint)r.getWidth(),
-						(gint)r.getHeight() );
+	                    gdkGC_,
+	                    inFillPath_,
+	                    gint( r.left_ ),
+	                    gint( r.top_ ),
+	                    gint( r.getWidth() ),
+	                    gint( r.getHeight() ) );
 }
 
-
-void GTKContext::ellipse( const double & x1, const double & y1, const double & x2, const double & y2 )
+void GTKContext::ellipse( const double & x1,
+                          const double & y1,
+                          const double & x2,
+                          const double & y2 )
 {
-	Rect r(x1,y1,x2,y2);
-
+	Rect r( x1, y1, x2, y2 );
 	r.offset( origin_.x_, origin_.y_ );
-
-	gdk_draw_arc(  drawable_,
-					gdkGC_,
-					inFillPath_,
-					(gint)r.left_,
-					(gint)r.top_,
-					(gint)r.getWidth(),
-					(gint)r.getHeight(), 0, 360*64 );
+	gdk_draw_arc( drawable_,
+	              gdkGC_,
+	              inFillPath_,
+	              gint( r.left_ ),
+	              gint( r.top_ ),
+	              gint( r.getWidth() ),
+	              gint( r.getHeight() ),
+	              0,
+	              360 * 64 );
 }
 
-void GTKContext::arc( const double & x1, const double & y1, const double & x2, const double & y2,
-				  const double & x3, const double & y3, const double & x4, const double & y4 )
+void GTKContext::arc( const double & x1,
+                      const double & y1,
+                      const double & x2,
+                      const double & y2,
+                      const double & x3,
+                      const double & y3,
+                      const double & x4,
+                      const double & y4 )
 {
-	//swap out the values to ensure they are normalized since windows is brain dead about this
-
-
+	//swap out the values to ensure they are normalized since windows is
+	//brain dead about this
 }
 
-
-void GTKContext::polyline( const std::vector<Point>& pts)
+void GTKContext::polyline( const std::vector<Point>& pts )
 {
-	std::vector<Point>::const_iterator it = pts.begin();
-
 	std::vector<GdkPoint> xPts;
-	std::vector<GdkPoint>::iterator ptIt = xPts.begin();
-
 	xPts.resize( pts.size(), GdkPoint() );
-
-	while ( it != pts.end() ){
-		(*ptIt).x = (gint)((*it).x_ + origin_.x_);
-		(*ptIt).y = (gint)((*it).y_ + origin_.y_);
-		ptIt ++;
-		it++;
+	std::vector<GdkPoint>::iterator ptIt = xPts.begin();
+	for ( std::vector<Point>::const_iterator it = pts.begin();
+	        it != pts.end();
+	        ++it, ++ptIt ) {
+		( *ptIt ).x = gint( ( *it ).x_ + origin_.x_ );
+		( *ptIt ).y = gint( ( *it ).y_ + origin_.y_ );
 	}
 
 	if ( !xPts.empty() ) {
 		if ( inFillPath_ ) {
-			gdk_draw_polygon( drawable_, gdkGC_, TRUE, (GdkPoint*)&xPts[0], xPts.size() );
-		}
-		else {
-			gdk_draw_lines( drawable_, gdkGC_, (GdkPoint*)&xPts[0], xPts.size() );
+			gdk_draw_polygon( drawable_,
+			                  gdkGC_,
+			                  TRUE,
+			                  &xPts[ 0 ],
+			                  xPts.size() );
+		} else {
+			gdk_draw_lines( drawable_,
+			                gdkGC_,
+			                &xPts[ 0 ],
+			                xPts.size() );
 		}
 	}
 }
 
-void GTKContext::curve(const double & x1, const double & y1, const double & x2, const double & y2,
-					 const double & x3, const double & y3, const double & x4, const double & y4)
+void GTKContext::curve( const double & x1,
+                        const double & y1,
+                        const double & x2,
+                        const double & y2,
+                        const double & x3,
+                        const double & y3,
+                        const double & x4,
+                        const double & y4 )
 {
-	int degree = 3; //3rd degree bezier poly - needs 4 controls
-	Mgc::Vector2* bezPts = new Mgc::Vector2[4];
-	bezPts[0][0] = (long)(x1 + origin_.x_);
-	bezPts[0][1] = (long)(y1 + origin_.y_);
-
-	bezPts[1][0] = (long)(x2 + origin_.x_);
-	bezPts[1][1] = (long)(y2 + origin_.y_);
-
-	bezPts[2][0] = (long)(x3 + origin_.x_);
-	bezPts[2][1] = (long)(y3 + origin_.y_);
-
-	bezPts[3][0] = (long)(x4 + origin_.x_);
-	bezPts[3][1] = (long)(y4 + origin_.y_);
-
-
-	Mgc::BezierCurve2 bezCurve( degree, bezPts );
-
-	//get the length over the duration of the curve from
-	//t= 0.0 to t=1.0
-	double length = bezCurve.GetLength(0.0, 0.1250 );
-	double max = bezCurve.GetMaxTime();
-	double min = bezCurve.GetMinTime();
-	double t = min;
-	std::vector<GdkPoint> xPts;
-
-	double dt = (max - min) / length;
-	while ( t < max ) {
-		Mgc::Vector2 vec = bezCurve.GetPosition( t );
-		GdkPoint pt = {0};
-		pt.x = (gint)vec[0];
-		pt.y = (gint)vec[1];
-		xPts.push_back( pt );
-		t += dt;
-	}
-
-	if ( !xPts.empty() ) {
-		if ( inFillPath_ ) {
-			gdk_draw_polygon( drawable_, gdkGC_, TRUE, &xPts[0], xPts.size() );
-		}
-		else {
-			gdk_draw_lines( drawable_, gdkGC_, &xPts[0], xPts.size() );
-		}
-
-	}
+	// 	int degree = 3; //3rd degree bezier poly - needs 4 controls
+	// 	Mgc::Vector2* bezPts = new Mgc::Vector2[ 4 ];
+	// 	bezPts[ 0 ][ 0 ] = long( x1 + origin_.x_ );
+	// 	bezPts[ 0 ][ 1 ] = long( y1 + origin_.y_ );
+	// 	bezPts[ 1 ][ 0 ] = long( x2 + origin_.x_ );
+	// 	bezPts[ 1 ][ 1 ] = long( y2 + origin_.y_ );
+	// 	bezPts[ 2 ][ 0 ] = long( x3 + origin_.x_ );
+	// 	bezPts[ 2 ][ 1 ] = long( y3 + origin_.y_ );
+	// 	bezPts[ 3 ][ 0 ] = long( x4 + origin_.x_ );
+	// 	bezPts[ 3 ][ 1 ] = long( y4 + origin_.y_ );
+	//
+	// 	Mgc::BezierCurve2 bezCurve( degree, bezPts );
+	//
+	// 	//get the length over the duration of the curve from
+	// 	//t= 0.0 to t=1.0
+	// 	double length = bezCurve.GetLength( 0.0, 0.1250 );
+	// 	double max = bezCurve.GetMaxTime();
+	// 	double min = bezCurve.GetMinTime();
+	// 	double dt = ( max - min ) / length;
+	//
+	// 	std::vector<GdkPoint> xPts;
+	// 	for ( double t = min ; t < max; t += dt ) {
+	// 		Mgc::Vector2 vec = bezCurve.GetPosition( t );
+	// 		GdkPoint pt;
+	// 		pt.x = gint( vec[ 0 ] );
+	// 		pt.y = gint( vec[ 1 ] );
+	// 		xPts.push_back( pt );
+	// 	}
+	//
+	// 	if ( !xPts.empty() ) {
+	// 		if ( inFillPath_ ) {
+	// 			gdk_draw_polygon( drawable_, gdkGC_, TRUE, &xPts[ 0 ], xPts.size() );
+	// 		} else {
+	// 			gdk_draw_lines( drawable_, gdkGC_, &xPts[ 0 ], xPts.size() );
+	// 		}
+	// 	}
 }
 
-void GTKContext::lineTo(const double & x, const double & y)
+void GTKContext::lineTo( const double & x, const double & y )
 {
-
 	gdk_draw_line( drawable_, gdkGC_,
-					(int)(currentMoveTo_.x_ + origin_.x_),
-					(int)(currentMoveTo_.y_ + origin_.y_),
-					(int)(x + origin_.x_),
-					(int)(y + origin_.y_) );
+	               int( currentMoveTo_.x_ + origin_.x_ ),
+	               int( currentMoveTo_.y_ + origin_.y_ ),
+	               int( x + origin_.x_ ),
+	               int( y + origin_.y_ ) );
 
 	currentMoveTo_.x_ = x;
 	currentMoveTo_.y_ = y;
 }
 
-void GTKContext::moveTo(const double & x, const double & y)
+void GTKContext::moveTo( const double & x, const double & y )
 {
-
 	currentMoveTo_.x_ = x;
 	currentMoveTo_.y_ = y;
 }
-
 
 void GTKContext::setOrigin( const double& x, const double& y )
 {
@@ -409,19 +445,22 @@ Point GTKContext::getOrigin()
 }
 
 void GTKContext::copyContext( const Rect& sourceRect,
-								const Rect& destRect,
-								ContextPeer* sourceContext )
+                              const Rect& destRect,
+                              ContextPeer* sourceContext )
 {
-	if ( NULL != sourceContext ){
-		checkHandle();
+	if ( sourceContext ) {
+		this->checkHandle();
 
-		gdk_draw_drawable( drawable_, gdkGC_,
-						(GdkDrawable*)sourceContext->getContextID(),
-						(gint)sourceRect.left_, (gint)sourceRect.top_,
-						(gint)(destRect.left_ + origin_.x_ ),
-						(gint)(destRect.top_ + origin_.y_ ),
-						(gint)destRect.getWidth(),
-						(gint)destRect.getHeight() );
+		gdk_draw_drawable( drawable_,
+		                   gdkGC_,
+		                   reinterpret_cast<GdkDrawable*>(
+		                       sourceContext->getContextID() ),
+		                   gint( sourceRect.left_ ),
+		                   gint( sourceRect.top_ ),
+		                   gint( destRect.left_ + origin_.x_ ),
+		                   gint( destRect.top_ + origin_.y_ ),
+		                   gint( destRect.getWidth() ),
+		                   gint( destRect.getHeight() ) );
 
 		releaseHandle();
 	}
@@ -434,14 +473,14 @@ bool GTKContext::isMemoryContext()
 
 void GTKContext::checkHandle()
 {
-	if ( NULL != parentImage_ ) {
+	if ( parentImage_ ) {
 		parentImage_->updatePixmapFromImageBits();
 	}
 }
 
 void GTKContext::releaseHandle()
 {
-	if ( NULL != parentImage_ ) {
+	if ( parentImage_ ) {
 		parentImage_->updateImageBitsFromPixmap();
 	}
 }
@@ -468,382 +507,446 @@ bool GTKContext::isTextAlignedToBaseline()
 
 GtkStyle* GTKContext::getGTKStyle( GtkWidget* widget )
 {
-	GtkStyle* result = NULL;
-
-	if ( (NULL != widget) && GTK_IS_WIDGET(widget) ) {
-		result = widget->style;
+	if ( widget and GTK_IS_WIDGET( widget ) ) {
+		return widget->style;
+	} else {
+		GTKGraphicsToolkit* toolkit =
+		    static_cast<GTKGraphicsToolkit*>(
+		        GraphicsToolkit::internal_getDefaultGraphicsToolkit() );
+		return toolkit->getDefaultGTKStyle();
 	}
-	else {
-		GTKGraphicsToolkit* toolkit = (GTKGraphicsToolkit*)GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-		result = toolkit->getDefaultGTKStyle();
-	}
 
-	return result;
 }
 
 GtkStateType GTKContext::getGTKState( GtkWidget* widget )
 {
 	GtkStateType result = GTK_STATE_NORMAL;
 
-	if ( (NULL != widget) && GTK_IS_WIDGET(widget) ) {
-		result = (GtkStateType)GTK_WIDGET_STATE(widget);
+	if ( widget and GTK_IS_WIDGET( widget ) ) {
+		result = GtkStateType( GTK_WIDGET_STATE( widget ) );
 	}
 
 	return result;
 }
 
-void GTKContext::drawSelectionRect( Rect* rect )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
+// void GTKContext::drawSelectionRect( Rect* rect )
+// {
+// 	GdkRectangle r = { gint( rect->left_ ),
+// 	                   gint( rect->top_ ),
+// 	                   gint( rect->getWidth() ),
+// 	                   gint( rect->getHeight() ) };
+//
+// 	GtkWidget* widget = 0;
+// 	gdk_window_get_user_data( drawable_, &widget );
+// 	GtkStyle* style = getGTKStyle( widget );
+//
+// 	gtk_paint_focus( style,
+// 	                 drawable_,
+// 	                 getGTKState( widget ),
+// 	                 &r,
+// 	                 widget,
+// 	                 0,
+// 	                 r.x,
+// 	                 r.y,
+// 	                 r.width,
+// 	                 r.height );
+// }
 
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
+// void GTKContext::drawButtonRect( Rect* rect, const bool& isPressed )
+// {
+// 		GdkRectangle r = { gint( rect->left_ ),
+// 		                   gint( rect->top_ ),
+// 		                   gint( rect->getWidth() ),
+// 		                   gint( rect->getHeight() ) };
+//
+// 	GtkWidget * widget = 0;
+// 	gdk_window_get_user_data( drawable_, &widget );
+// 	GtkStyle* style = getGTKStyle( widget );
+//
+// 	gtk_paint_box( style, drawable_,
+// 	               getGTKState( widget ),
+// 	               ( isPressed ) ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
+// 	               &r,
+// 	               widget,
+// 	               "button",
+// 	               r.x,
+// 	               r.y,
+// 	               r.width,
+// 	               r.height );
+//
+// }
+
+// void GTKContext::drawCheckboxRect( Rect* rect, const bool& isPressed )
+// {
+// 	GdkRectangle r = { gint( rect->left_ ),
+// 	                   gint( rect->top_ ),
+// 	                   gint( rect->getWidth() ),
+// 	                   gint( rect->getHeight() ) };
+//
+// 	GtkWidget* widget = 0;
+// 	gdk_window_get_user_data( drawable_, &widget );
+// 	GtkStyle* style = getGTKStyle( widget );
+//
+// 	gtk_paint_check( style, drawable_,
+// 	                 getGTKState( widget ),
+// 	                 ( isPressed ) ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
+// 	                 &r,
+// 	                 widget,
+// 	                 "button",
+// 	                 r.x,
+// 	                 r.y,
+// 	                 r.width,
+// 	                 r.height );
+// }
+
+void GTKContext::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
+{
+	GdkRectangle r = { gint( rect->left_ ),
+	                   gint( rect->top_ ),
+	                   gint( rect->getWidth() ),
+	                   gint( rect->getHeight() ) };
+
+	gpointer widgetPtr = 0;
+	gdk_window_get_user_data( drawable_, &widgetPtr );
+	GtkWidget* widget = reinterpret_cast<GtkWidget*>( &widgetPtr );
 	GtkStyle* style = getGTKStyle( widget );
 
-	gtk_paint_focus ( style, drawable_,
-						getGTKState(widget),
-						&r,
-						widget,
-						NULL,
-						r.x,
-						r.y,
-						r.width,
-						r.height );
+	gtk_paint_option( style, drawable_,
+	                  getGTKState( widget ),
+	                  ( state.isPressed() ) ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
+	                  &r,
+	                  widget,
+	                  "button",
+	                  r.x,
+	                  r.y,
+	                  r.width,
+	                  r.height );
 }
 
-void GTKContext::drawButtonRect( Rect* rect, const bool& isPressed )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
+void GTKContext::drawThemeProgress( Rect* rect, ProgressState& state )
+{}
 
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
+// void GTKContext::drawVerticalScrollButtonRect( Rect* rect,
+//                                                const bool& topButton,
+//                                                const bool& isPressed )
+// {}
+
+// void GTKContext::drawDisclosureButton( Rect* rect, const long& state )
+// {}
+
+// void GTKContext::drawHorizontalScrollButtonRect( Rect* rect,
+//                                                  const bool& leftButton,
+//                                                  const bool& isPressed )
+// {}
+
+// void GTKContext::drawTab( Rect* rect, const bool& selected, const String& caption )
+// {}
+
+// void GTKContext::drawTabPage( Rect* rect )
+// {}
+
+// void GTKContext::drawTickMarks( Rect* rect, const SliderInfo& sliderInfo )
+// {}
+
+// void GTKContext::drawSliderThumb( Rect* rect, const SliderInfo& sliderInfo )
+// {}
+
+// void GTKContext::drawSlider( Rect* rect, const SliderInfo& sliderInfo )
+// {}
+
+// void GTKContext::drawHeader( Rect* rect )
+// {}
+
+// void GTKContext::drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle )
+// {
+// 	GdkRectangle r = { gint( rect->left_ ),
+// 	                   gint( rect->top_ ),
+// 	                   gint( rect->getWidth() ),
+// 	                   gint( rect->getHeight() ) };
+//
+// 	GtkWidget* widget = 0;
+// 	gdk_window_get_user_data( drawable_, &widget );
+// 	GtkStyle* style = getGTKStyle( widget );
+//
+// 	GtkShadowType shadow = GTK_SHADOW_NONE;
+//
+// 	switch ( edgeStyle ) {
+// 		case GraphicsContext::etRecessed : {
+// 				shadow = GTK_SHADOW_IN;
+// 			}
+// 			break;
+//
+// 		case GraphicsContext::etEtched : {
+// 				shadow = GTK_SHADOW_ETCHED_IN;
+// 			}
+// 			break;
+//
+// 		case GraphicsContext::etRaised : {
+// 				shadow = GTK_SHADOW_ETCHED_OUT;
+// 			}
+// 			break;
+//
+// 		case GraphicsContext::etSunken : {
+// 				shadow = GTK_SHADOW_OUT;
+// 			}
+// 			break;
+// 	}
+//
+// 	if ( GTK_SHADOW_NONE == shadow ) {
+// 		return ;
+// 	}
+//
+// 	if ( edgeSides & GraphicsContext::etLeftSide
+// 	        and edgeSides & GraphicsContext::etRightSide
+// 	        and edgeSides & GraphicsContext::etTopSide
+// 	        and edgeSides & GraphicsContext::etBottomSide ) {
+//
+// 		gtk_paint_box( style, drawable_,
+// 		               getGTKState( widget ),
+// 		               shadow,
+// 		               &r,
+// 		               widget,
+// 		               "button",
+// 		               r.x,
+// 		               r.y,
+// 		               r.width,
+// 		               r.height );
+// 	} else {
+// 		if ( edgeSides & GraphicsContext::etLeftSide ) {
+// 			gtk_paint_vline( style, drawable_, getGTKState( widget ),
+// 			                 &r, widget, "",
+// 			                 r.y, r.y + r.height, r.x );
+// 		}
+//
+// 		if ( edgeSides & GraphicsContext::etRightSide ) {
+// 			gtk_paint_vline( style, drawable_, getGTKState( widget ),
+// 			                 &r, widget, "",
+// 			                 r.y, r.y + r.height, r.x + r.width );
+// 		}
+//
+// 		if ( edgeSides & GraphicsContext::etTopSide ) {
+// 			gtk_paint_hline( style, drawable_, getGTKState( widget ),
+// 			                 &r, widget, "",
+// 			                 r.x, r.x + r.width, r.y );
+// 		}
+//
+// 		if ( edgeSides & GraphicsContext::etBottomSide ) {
+// 			gtk_paint_hline( style, drawable_, getGTKState( widget ),
+// 			                 &r, widget, "",
+// 			                 r.x, r.x + r.width, r.y + r.height );
+// 		}
+// 	}
+// }
+
+// void GTKContext::drawSizeGripper( Rect* rect )
+// {}
+
+// void GTKContext::drawControlBackground( Rect* rect )
+// {
+// 	GdkRectangle r = { gint( rect->left_ ),
+// 	                   gint( rect->top_ ),
+// 	                   gint( rect->getWidth() ),
+// 	                   gint( rect->getHeight() ) };
+//
+// 	GtkWidget* widget = 0;
+// 	gdk_window_get_user_data( drawable_, &widget );
+// 	GtkStyle* style = getGTKStyle( widget );
+//
+// 	gtk_style_apply_default_background( style, widget->window, FALSE,
+// 	                                    getGTKState( widget ),
+// 	                                    &r, r.x, r.y, r.width, r.height );
+// }
+
+void GTKContext::drawThemeBackground( Rect* rect, BackgroundState& state )
+{
+	GdkRectangle r = { gint( rect->left_ ),
+	                   gint( rect->top_ ),
+	                   gint( rect->getWidth() ),
+	                   gint( rect->getHeight() ) };
+
+	gpointer widgetPtr = 0;
+	gdk_window_get_user_data( drawable_, &widgetPtr );
+	GtkWidget* widget = reinterpret_cast<GtkWidget*>( &widgetPtr );
 	GtkStyle* style = getGTKStyle( widget );
 
-	gtk_paint_box ( style, drawable_,
-						getGTKState(widget),
-						isPressed ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
-						&r,
-						widget,
-						"button",
-						r.x,
-						r.y,
-						r.width,
-						r.height );
-
+	gtk_style_apply_default_background( style,
+	                                    widget->window,
+	                                    FALSE,
+	                                    getGTKState( widget ),
+	                                    &r,
+	                                    r.x,
+	                                    r.y,
+	                                    r.width,
+	                                    r.height );
 }
 
-void GTKContext::drawCheckboxRect( Rect* rect, const bool& isPressed )
+void GTKContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 {
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
+	GdkRectangle r = { gint( rect->left_ ),
+	                   gint( rect->top_ ),
+	                   gint( rect->getWidth() ),
+	                   gint( rect->getHeight() ) };
 
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
+	gpointer widgetPtr = 0;
+	gdk_window_get_user_data( drawable_, &widgetPtr );
+	GtkWidget* widget = reinterpret_cast<GtkWidget*>( &widgetPtr );
 	GtkStyle* style = getGTKStyle( widget );
 
-	gtk_paint_check ( style, drawable_,
-						getGTKState(widget),
-						isPressed ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
-						&r,
-						widget,
-						"button",
-						r.x,
-						r.y,
-						r.width,
-						r.height );
+	gtk_style_apply_default_background( style,
+	                                    widget->window,
+	                                    FALSE,
+	                                    getGTKState( widget ),
+	                                    &r,
+	                                    r.x,
+	                                    r.y,
+	                                    r.width,
+	                                    r.height );
 }
-
-void GTKContext::drawRadioButtonRect( Rect* rect, const bool& isPressed )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
-
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
-	GtkStyle* style = getGTKStyle( widget );
-
-	gtk_paint_option ( style, drawable_,
-						getGTKState(widget),
-						isPressed ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
-						&r,
-						widget,
-						"button",
-						r.x,
-						r.y,
-						r.width,
-						r.height );
-}
-
-void GTKContext::drawVerticalScrollButtonRect( Rect* rect, const bool& topButton, const bool& isPressed )
-{
-
-}
-
-void GTKContext::drawDisclosureButton( Rect* rect, const long& state )
-{
-
-}
-
-void GTKContext::drawHorizontalScrollButtonRect( Rect* rect, const bool& leftButton, const bool& isPressed )
-{
-
-}
-
-void GTKContext::drawTab( Rect* rect, const bool& selected, const String& caption )
-{
-
-}
-
-void GTKContext::drawTabPage( Rect* rect )
-{
-
-}
-
-void GTKContext::drawTickMarks( Rect* rect, const SliderInfo& sliderInfo  )
-{
-
-}
-
-void GTKContext::drawSliderThumb( Rect* rect, const SliderInfo& sliderInfo )
-{
-
-}
-
-void GTKContext::drawSlider( Rect* rect, const SliderInfo& sliderInfo )
-{
-
-}
-
-void GTKContext::drawHeader( Rect* rect )
-{
-
-}
-
-void GTKContext::drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
-
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
-	GtkStyle* style = getGTKStyle( widget );
-
-	GtkShadowType shadow = GTK_SHADOW_NONE;
-
-	switch ( edgeStyle ) {
-		case GraphicsContext::etRecessed : {
-			shadow = GTK_SHADOW_IN;
-		}
-		break;
-
-		case GraphicsContext::etEtched : {
-			shadow = GTK_SHADOW_ETCHED_IN;
-		}
-		break;
-
-		case GraphicsContext::etRaised : {
-			shadow = GTK_SHADOW_ETCHED_OUT;
-		}
-		break;
-
-		case GraphicsContext::etSunken : {
-			shadow = GTK_SHADOW_OUT;
-		}
-		break;
-	}
-
-	if ( GTK_SHADOW_NONE == shadow ) {
-		return ;
-	}
-
-	if ( (edgeSides & GraphicsContext::etLeftSide) &&
-			(edgeSides & GraphicsContext::etRightSide) &&
-			(edgeSides & GraphicsContext::etTopSide) &&
-			(edgeSides & GraphicsContext::etBottomSide) ) {
-
-		gtk_paint_box( style, drawable_,
-						getGTKState(widget), shadow, &r,
-						widget,
-						"button",
-						r.x,
-						r.y,
-						r.width,
-						r.height );
-	}
-	else {
-		if ( edgeSides & GraphicsContext::etLeftSide ) {
-			gtk_paint_vline( style, drawable_, getGTKState(widget),
-							&r,	widget,	"",
-							r.y, r.y + r.height, r.x );
-		}
-
-		if ( edgeSides & GraphicsContext::etRightSide ) {
-			gtk_paint_vline( style, drawable_, getGTKState(widget),
-							&r,	widget,	"",
-							r.y, r.y + r.height, r.x + r.width );
-		}
-
-		if ( edgeSides & GraphicsContext::etTopSide ) {
-			gtk_paint_hline( style, drawable_, getGTKState(widget),
-							&r,	widget,	"",
-							r.x, r.x + r.width, r.y );
-		}
-
-		if ( edgeSides & GraphicsContext::etBottomSide ) {
-			gtk_paint_hline( style, drawable_, getGTKState(widget),
-							&r,	widget,	"",
-							r.x, r.x + r.width, r.y + r.height );
-		}
-	}
-}
-
-void GTKContext::drawSizeGripper( Rect* rect )
-{
-
-}
-
-void GTKContext::drawControlBackground( Rect* rect )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
-
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
-	GtkStyle* style = getGTKStyle( widget );
-
-	gtk_style_apply_default_background ( style,widget->window, FALSE,
-                                             getGTKState(widget),
-                                             &r, r.x, r.y, r.width, r.height);
-}
-
-void GTKContext::drawWindowBackground( Rect* rect )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
-
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
-	GtkStyle* style = getGTKStyle( widget );
-
-	gtk_style_apply_default_background ( style,widget->window, FALSE,
-                                             getGTKState(widget),
-                                             &r, r.x, r.y, r.width, r.height);
-}
-
-void GTKContext::drawMenuItemBackground( Rect* rect, const bool& selected )
-{
-	GdkRectangle r = {(gint)rect->left_, (gint)rect->top_, (gint)rect->getWidth(), (gint)rect->getHeight() };
-
-	GtkWidget* widget = NULL;
-	gdk_window_get_user_data( drawable_, (gpointer*)&widget );
-	GtkStyle* style = getGTKStyle( widget );
-
-	gtk_style_apply_default_background ( style,widget->window, FALSE,
-                                             getGTKState(widget),
-                                             &r, r.x, r.y, r.width, r.height);
-}
-
 
 bool GTKContext::prepareForDrawing( long drawingOperation )
 {
-	bool result = false;
-
-	checkHandle();
-
+	this->checkHandle();
 	inFillPath_ = false;
 
-	if ( NULL != gdkGC_ ){
-
-		Color* current = context_->getColor();
-
+	if ( gdkGC_ ) {
+		Color * current = context_->getColor();
 		GdkColor color;
-		color.red = (guint16)(current->getRed() * 65535.0);
-		color.green = (guint16)(current->getGreen() * 65535.0);
-		color.blue = (guint16)(current->getBlue() * 65535.0);
-
+		color.red = guint16( current->getRed() * 65535.0 );
+		color.green = guint16( current->getGreen() * 65535.0 );
+		color.blue = guint16( current->getBlue() * 65535.0 );
 		gdk_gc_set_rgb_fg_color( gdkGC_, &color );
-
 		gdk_gc_set_fill( gdkGC_, GDK_SOLID );
 
+		GdkGCValues values;
+		values.function = ( isXORModeOn_ )
+		                  ? GDK_XOR
+		                  : GDK_COPY;
 
-		if ( isXORModeOn_ ) {
-			GdkGCValues values;
-			values.function = GDK_XOR;
+		gdk_gc_set_values( gdkGC_, &values, GDK_GC_FUNCTION );
 
-			gdk_gc_set_values( gdkGC_, &values, GDK_GC_FUNCTION );
-		}
-		else {
-			GdkGCValues values;
-			values.function = GDK_COPY;
-
-			gdk_gc_set_values( gdkGC_, &values, GDK_GC_FUNCTION );
-		}
-
-		GraphicsContext::DrawingOperation op = (GraphicsContext::DrawingOperation)drawingOperation;
-
-
+		GraphicsContext::DrawingOperation op =
+		    GraphicsContext::DrawingOperation( drawingOperation );
 
 		switch ( op ) {
 			case GraphicsContext::doStroke : {
-
-
-				gdk_gc_set_line_attributes( gdkGC_, (gint)context_->getStrokeWidth(), GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER );
-
-
-
-			}
-			break;
+					gdk_gc_set_line_attributes( gdkGC_,
+					                            gint( context_->getStrokeWidth() ),
+					                            GDK_LINE_SOLID,
+					                            GDK_CAP_BUTT,
+					                            GDK_JOIN_MITER );
+				}
+				break;
 
 			case GraphicsContext::doFill : {
-
-
-				inFillPath_ = true;
-			}
-			break;
+					inFillPath_ = true;
+				}
+				break;
 
 			case GraphicsContext::doText : {
+					Font* ctxFont = context_->getCurrentFont();
+					Color* fontColor = ctxFont->getColor();
+					color.red = guint16( fontColor->getRed() * 65535.0 );
+					color.green = guint16( fontColor->getGreen() * 65535.0 );
+					color.blue = guint16( fontColor->getBlue() * 65535.0 );
+					gdk_gc_set_rgb_fg_color( gdkGC_, &color );
 
-				Font* ctxFont = context_->getCurrentFont();
+				}
+				break;
 
-				Color* fontColor = ctxFont->getColor();
-
-				color.red = (guint16)(fontColor->getRed() * 65535.0);
-				color.green = (guint16)(fontColor->getGreen() * 65535.0);
-				color.blue = (guint16)(fontColor->getBlue() * 65535.0);
-
-				gdk_gc_set_rgb_fg_color( gdkGC_, &color );
-
-			}
-			break;
-
-			case GraphicsContext::doImage : {
-
-			}
-			break;
+			case GraphicsContext::doImage : {}
+				break;
 		}
-
-
-		result = true;
+		return true;
 	}
-
-	return result;
+	return false;
 }
 
 void GTKContext::finishedDrawing( long drawingOperation )
 {
-	if ( NULL == gdkGC_ ){
-		throw InvalidPointerException( MAKE_ERROR_MSG_2("GdkGC handle is NULL!!!") );
+	if ( ! gdkGC_ ) {
+		throw InvalidPointerException( MAKE_ERROR_MSG_2(
+		                                   "GdkGC handle is 0!!!" ) );
 	}
-
 	pango_layout_set_width( pangoLayout_, -1 );
-
-	releaseHandle();
+	this->releaseHandle();
 }
 
+void GTKContext::roundRect( const double & x1,
+                            const double & y1,
+                            const double & x2,
+                            const double & y2,
+                            const double & xc,
+                            const double & yc )
+{}
+
+bool GTKContext::isAntiAliasingOn()
+{}
+
+void GTKContext::setAntiAliasingOn( bool antiAliasingOn )
+{}
+
+void GTKContext::drawThemeSelectionRect( Rect* rect, DrawUIState& state )
+{}
+
+void GTKContext::drawThemeFocusRect( Rect* rect, DrawUIState& state )
+{}
+
+void GTKContext::drawThemeButtonRect( Rect* rect, ButtonState& state )
+{}
+
+void GTKContext::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
+{}
+
+void GTKContext::drawThemeComboboxRect( Rect* rect, ButtonState& state )
+{}
+
+void GTKContext::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state )
+{}
+
+void GTKContext::drawThemeDisclosureButton( Rect* rect,
+                                            DisclosureButtonState& state )
+{}
+
+void GTKContext::drawThemeTab( Rect* rect, TabState& state )
+{}
+
+void GTKContext::drawThemeTabPage( Rect* rect, DrawUIState& state )
+{}
+
+void GTKContext::drawThemeTickMarks( Rect* rect, SliderState& state )
+{}
+
+void GTKContext::drawThemeSlider( Rect* rect, SliderState& state )
+{}
+
+void GTKContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
+{}
+
+void GTKContext::drawThemeHeader( Rect* rect, ButtonState& state )
+{}
+
+void GTKContext::drawThemeEdge( Rect* rect, DrawUIState& state,
+                                const long& edgeSides,
+                                const long& edgeStyle )
+{}
+
+void GTKContext::drawThemeSizeGripper( Rect* rect, DrawUIState& state )
+{}
+
+void GTKContext::drawThemeText( Rect* rect, TextState& state )
+{}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
 *Revision 1.1.2.3  2004/06/09 21:12:50  thrysoee
-*Fix VCF::String (Unicode) related segfaults on Linux
+*Fix VCF::String(Unicode) related segfaults on Linux
 *
 *Revision 1.1.2.2  2004/04/29 04:10:27  marcelloptr
 *reformatting of source files: macros and csvlog and copyright sections
@@ -908,7 +1011,7 @@ void GTKContext::finishedDrawing( long drawingOperation )
 *added the commandLine class
 *changed the intialization functions for teh FoundationKit, GraphicsKit, and
 *ApplicationKit to take command line parameters
-*FoundationKit now allows you to retreive the commandline (it's stored)
+*FoundationKit now allows you to retreive the commandline(it's stored)
 *start up has changed from appMain() to main()
 *added a custom GTK widget class for use in the various GTK peers - this will
 *allow us to specify absolute positioning and let the VCF handle layout
@@ -949,7 +1052,7 @@ void GTKContext::finishedDrawing( long drawingOperation )
 *Revision 1.2  2003/02/26 04:30:48  ddiego
 *merge of code in the devmain-0-5-9 branch into the current tree.
 *most additions are in the area of the current linux port, but the major
-*addition to this release is the addition of a Condition class (currently
+*addition to this release is the addition of a Condition class(currently
 *still under development) and the change over to using the Delegate class
 *exclusively from the older event handler macros.
 *
@@ -958,7 +1061,7 @@ void GTKContext::finishedDrawing( long drawingOperation )
 *
 *Revision 1.1.2.1  2003/02/20 02:46:03  ddiego
 *added in the base files for supporting a GTK peer implementation. Core parts
-*of the GTKContext work (basic line primitives), and working on the GTKImage
+*of the GTKContext work(basic line primitives), and working on the GTKImage
 *class.
 *
 Auto generated C++ implementation for class GTKContext

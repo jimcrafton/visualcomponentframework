@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKTOOLBAR_H__
-#define _VCF_GTKTOOLBAR_H__
+#define _VCF_GTKTOOLBAR_H__ 
 //GTKToolbar.h
 
 /*
@@ -8,36 +8,30 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
 #ifndef _VCF_TOOLBARPEER_H__
 #	include "vcf/ApplicationKit/ToolbarPeer.h"
 #endif // _VCF_TOOLBARPEER_H__
 
-
-
-namespace VCF  {
+namespace VCF
+{
 
 class ToolbarItem;
 class ImageList;
 
-
-class GTKToolbar : public AbstractGTKControl, public ToolbarPeer {
+class GTKToolbar : public AbstractGTKControl, public ToolbarPeer
+{
 public:
 
-	GTKToolbar(Control* control);
-
+	GTKToolbar( Control* control );
 
 	virtual void create( Control* control );
 
 	virtual gboolean handleEvent( GdkEvent* gtkEvent );
 
+	void insertToolbarButton( const ulong32& index,
+	                          ToolbarItem* item,
+	                          bool showCaption = false );
 
-	void insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption=false );
 	void removeToolbarButton( ToolbarItem* item );
 
 	virtual void setImageList( ImageList* imageList );
@@ -48,22 +42,26 @@ public:
 
 	virtual void setButtonSize( const Size& buttonSize );
 
+	virtual void setBorder( Border* border );
+
+	virtual bool isAutoResizeEnabled();
+
+	virtual void setEnableAutoResize( const bool& val );
+
 protected:
 	void onModelChanged( ModelEvent* e );
 	bool currentlyModifyingItem_;
 	void onImageListImageChanged( ImageListEvent* e );
 };
 
-
-
-
-
-};
-
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

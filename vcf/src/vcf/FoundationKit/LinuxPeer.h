@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXPEER_H__
-#define _VCF_LINUXPEER_H__
+#define _VCF_LINUXPEER_H__ 
 //LinuxPeer.h
 
 /*
@@ -8,33 +8,34 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 /**
 *Main header for implementation object that Linux headers
 */
 
-
-
-
-namespace VCFLinux {
+namespace VCFLinux
+{
+/**
+*General purpose utility class
+*/
+class LinuxUtils
+{
+public:
 	/**
-	*General purpose utility class
+	*returns a string that represents the error code.
+	*this functions expects to have the represent the current
+	*value of errno
 	*/
-	class LinuxUtils {
-	public:
-		/**
-		*returns a string that represents the error code.
-		*this functions expects to have the represent the current
-		*value of errno
-		*/
-		static VCF::String getErrorString( const int& errorCode );
-	};
+	static VCF::String getErrorString( const int& errorCode );
 };
 
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

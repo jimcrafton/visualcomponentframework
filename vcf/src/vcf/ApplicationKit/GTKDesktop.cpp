@@ -15,18 +15,15 @@ using namespace VCF;
 
 GTKDesktop::GTKDesktop( Desktop* desktop )
 {
-
 }
 
 GTKDesktop::~GTKDesktop()
 {
-
 }
 
 
 void GTKDesktop::desktopBeginPainting( Rect* clippingRect )
 {
-
 }
 
 /**
@@ -35,7 +32,6 @@ void GTKDesktop::desktopBeginPainting( Rect* clippingRect )
 */
 void GTKDesktop::desktopEndPainting()
 {
-
 }
 
 bool GTKDesktop::desktopSupportsVirtualDirectories()
@@ -57,24 +53,18 @@ String GTKDesktop::desktopGetDirectory()
 	return "";
 }
 
-ulong32 GTKDesktop::desktopGetHandleID()
+OSHandleID GTKDesktop::desktopGetHandleID()
 {
-	ulong32 result = 0;
-
-	result = (ulong32) gdk_get_default_root_window();
-
-	return result;
+	return gdk_get_default_root_window();
 }
 
-ulong32 GTKDesktop::desktopGetGraphicsContextHandleID()
+OSHandleID GTKDesktop::desktopGetGraphicsContextHandleID()
 {
-
 	return desktopGetHandleID();
 }
 
 void GTKDesktop::desktopSetDesktop( Desktop* desktop )
 {
-
 }
 
 ulong32 GTKDesktop::desktopGetWidth()
@@ -106,6 +96,9 @@ Rect GTKDesktop::desktopGetUsableBounds()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

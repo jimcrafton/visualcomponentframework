@@ -39,8 +39,8 @@ public:
 		return threadID_;
 	}
 
-	virtual uint32 getHandleID() {
-		return threadID_;
+	virtual OSHandleID getHandleID() {
+		return (OSHandleID)threadID_;
 	}
 
     /* Returns process that created thread.  Is this useful? */
@@ -81,6 +81,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

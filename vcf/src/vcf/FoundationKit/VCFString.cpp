@@ -261,7 +261,7 @@ UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeSt
 		throw RuntimeException( L"size < 0 wctomb() failed" );
 	}
 
-	UnicodeString::AnsiChar tmp = new UnicodeString::AnsiChar[size+1];
+	UnicodeString::AnsiChar* tmp = new UnicodeString::AnsiChar[size+1];
 
 	if ( wctomb( tmp, c ) < 0 ) {
 		throw RuntimeException( L"wctomb() failed" );
@@ -815,6 +815,9 @@ int UnicodeString::compare(UnicodeString::size_type p0, UnicodeString::size_type
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

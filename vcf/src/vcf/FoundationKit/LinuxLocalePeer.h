@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXLOCALEPEER_H__
-#define _VCF_LINUXLOCALEPEER_H__
+#define _VCF_LINUXLOCALEPEER_H__ 
 //LinuxLocalePeer.h
 
 /*
@@ -8,22 +8,25 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+namespace VCF
+{
 
-namespace VCF {
-
-
-class LinuxLocalePeer : public LocalePeer {
+class LinuxLocalePeer : public LocalePeer
+{
 public:
 	LinuxLocalePeer();
 
 
-	virtual void setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant );
+	virtual void setLocale( const UnicodeString& language,
+	                        const UnicodeString& country,
+	                        const UnicodeString& variant );
 
 	virtual ulong32 getLanguageCode();
 	virtual ulong32 getCountryCode();
 
 	virtual int collate( const UnicodeString& s1, const UnicodeString& s2 );
-	virtual int collateCaseInsensitive( const UnicodeString& s1, const UnicodeString& s2 );
+	virtual int collateCaseInsensitive( const UnicodeString& s1,
+	                                    const UnicodeString& s2 );
 
 	virtual UnicodeString toString( const int& val );
 	virtual UnicodeString toString( const unsigned int& val );
@@ -32,8 +35,11 @@ public:
 	virtual UnicodeString toString( const double& val );
 	virtual UnicodeString toString( const float& val );
 
-	virtual UnicodeString toStringFromDate( const DateTime& val, const UnicodeString& format );
-	virtual UnicodeString toStringFromTime( const DateTime& val, const UnicodeString& format );
+	virtual UnicodeString toStringFromDate( const DateTime& val,
+	                                        const UnicodeString& format );
+
+	virtual UnicodeString toStringFromTime( const DateTime& val,
+	                                        const UnicodeString& format );
 
 
 	virtual UnicodeString toStringFromCurrency( const double& val );
@@ -61,22 +67,23 @@ public:
 
 	virtual UnicodeString translate( const UnicodeString& id );
 
-	virtual ulong32 getHandleID() {
-		return (ulong32)0;
+	virtual OSHandleID getHandleID()
+	{
+		return ( OSHandleID ) 0;
 	}
 protected:
 	UnicodeString crtLocaleStr_;
 };
 
-
-
-
-};
+}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

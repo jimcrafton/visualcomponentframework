@@ -14,12 +14,11 @@ where you installed the VCF.
 
 using namespace VCF;
 
-GTKCursor::GTKCursor( Cursor* cursor ):
-	cursorID_(CursorManager::UNREGISTERED_ID),
-	cursor_(cursor),
-	gtkCursor_(0)
+GTKCursor::GTKCursor( Cursor* cursor ) :
+		cursorID_( CursorManager::UNREGISTERED_ID ),
+		cursor_( cursor ),
+		gtkCursor_( 0 )
 {
-
 }
 
 GTKCursor::~GTKCursor()
@@ -31,100 +30,102 @@ GTKCursor::~GTKCursor()
 
 void GTKCursor::createFromImage( Image* cursorImage, Point* hotSpot )
 {
-
 }
 
 void GTKCursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor )
 {
 
-	GdkCursorType id = (GdkCursorType)0;
+	GdkCursorType id = ( GdkCursorType ) 0;
 
-	cursorID_ = (long)systemCursor;
+	cursorID_ = ( long ) systemCursor;
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
-			id = GDK_LEFT_PTR;
-		}
-		break;
+				id = GDK_LEFT_PTR;
+			}
+			break;
 
 		case Cursor::SCT_SPLIT_VERT : {
-			id = GDK_SB_V_DOUBLE_ARROW;
-		}
-		break;
+				id = GDK_SB_V_DOUBLE_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_SPLIT_HORZ : {
-			id = GDK_SB_H_DOUBLE_ARROW;
-		}
-		break;
+				id = GDK_SB_H_DOUBLE_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_SIZE_HORZ : {
-			id = GDK_SB_H_DOUBLE_ARROW;
-		}
-		break;
+				id = GDK_SB_H_DOUBLE_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_SIZE_VERT : {
-			id = GDK_SB_V_DOUBLE_ARROW;
-		}
-		break;
+				id = GDK_SB_V_DOUBLE_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_SIZE_NE_SW : {
-			id = GDK_TOP_LEFT_ARROW;
-		}
-		break;
+				id = GDK_TOP_LEFT_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_SIZE_NW_SE : {
-			id = GDK_TOP_RIGHT_CORNER;
-		}
-		break;
+				id = GDK_TOP_RIGHT_CORNER;
+			}
+			break;
 
 		case Cursor::SCT_TEXT : {
-			id = GDK_XTERM;
-		}
-		break;
+				id = GDK_XTERM;
+			}
+			break;
 
 		case Cursor::SCT_HELP : {
-			id = GDK_QUESTION_ARROW;
-		}
-		break;
+				id = GDK_QUESTION_ARROW;
+			}
+			break;
 
 		case Cursor::SCT_WAIT : {
-			id = GDK_WATCH;
-		}
-		break;
+				id = GDK_WATCH;
+			}
+			break;
 
 		case Cursor::SCT_WAITING : {
-			id = GDK_WATCH;
-		}
-		break;
+				id = GDK_WATCH;
+			}
+			break;
 
 		case Cursor::SCT_NOWAYHOSER : {
-			id = GDK_X_CURSOR;
-		}
-		break;
+				id = GDK_X_CURSOR;
+			}
+			break;
 
 		case Cursor::SCT_CROSSHAIRS : {
-			id = GDK_CROSSHAIR;
-		}
-		break;
+				id = GDK_CROSSHAIR;
+			}
+			break;
 
 		case Cursor::SCT_POINTING_HAND : {
-			id = GDK_HAND2;
-		}
-		break;
+				id = GDK_HAND2;
+			}
+			break;
 	}
 
 	gtkCursor_ = gdk_cursor_new ( id );
 
 }
 
-void GTKCursor::createFromResourceName( const String& cursorName, const ulong32& instanceHandle )
+void GTKCursor::createFromResourceName( const String& cursorName,
+                                        OSHandleID instanceHandle )
 {
-
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

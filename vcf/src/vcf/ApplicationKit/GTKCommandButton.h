@@ -8,17 +8,13 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
+#ifndef _VCF_DRAWUISTATE_H__
+#	include "vcf/GraphicsKit/DrawUIState.h"
+#endif // _VCF_DRAWUISTATE_H__
 
 #ifndef _VCF_BUTTONPEER_H__
 #	include "vcf/ApplicationKit/ButtonPeer.h"
 #endif // _VCF_BUTTONPEER_H__
-
-
 
 namespace VCF {
 
@@ -37,7 +33,7 @@ public:
 
     virtual void setImage( Image* image );
 
-    virtual ulong32 getState();
+    virtual ButtonState getState();
 
     virtual void setState( const ulong32& state );
 
@@ -47,21 +43,24 @@ public:
 
 	virtual gboolean handleEvent( GdkEvent* gtkEvent );
 
+	virtual void setBorder( Border* border );
+
 protected:
+	ButtonState state_;
 	GtkButton* gtkButton_;
 	CommandButton* commandButton_;
 
 	static void gtkButtonClicked( GtkButton* button,  gpointer data );
 };
 
-
-
-};
-
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -6,83 +6,95 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
-#include <unistd.h>
-
-
+#include <cstdlib>
 
 using namespace VCF;
-
 
 struct timezone LinuxSystemPeer::timeZone;
 struct timeval LinuxSystemPeer::time;
 
 LinuxSystemPeer::LinuxSystemPeer()
 {
- 	::gettimeofday( &LinuxSystemPeer::time, &LinuxSystemPeer::timeZone );
+	::gettimeofday( &LinuxSystemPeer::time, &LinuxSystemPeer::timeZone );
 }
 
 LinuxSystemPeer::~LinuxSystemPeer()
-{
-
-}
+{}
 
 unsigned long LinuxSystemPeer::getTickCount()
 {
-	struct timeval now = {0};
-	struct	timezone timeZone;
+	struct timeval now;
+	struct timezone timeZone;
 	::gettimeofday( &now, &timeZone );
 
-	double t1, t2;
+	double t1 = double( LinuxSystemPeer::time.tv_sec * 1000 ) +
+	            double( LinuxSystemPeer::time.tv_usec / ( 1000 ) );
 
-	t1 =  (double)(LinuxSystemPeer::time.tv_sec * 1000) +
-		(double)LinuxSystemPeer::time.tv_usec/(1000);
+	double t2 = double( now.tv_sec * 1000 ) +
+	            double( now.tv_usec / ( 1000 ) ); //convert to Milliseconds
 
-	t2 =  (double)(now.tv_sec * 1000) + (double)now.tv_usec/(1000); //convert to Milliseconds
-
-
-	unsigned long result = (unsigned long)(t2 - t1);
-
-	return result;
+	return ( unsigned long ) ( t2 - t1 );
 }
 
 void LinuxSystemPeer::sleep( const uint32& milliseconds )
 {
 	if ( 0 == milliseconds ) {
-  	return;
+		return ;
 	}
-	struct timespec req = {0};
-	struct timespec rem = {0};
+	struct timespec req, rem;
 	req.tv_sec = milliseconds / 1000;
-	req.tv_nsec = (milliseconds % 1000) * 1000;
+	req.tv_nsec = ( milliseconds % 1000 ) * 1000;
 	::nanosleep( &req, &rem );
+}
+
+void LinuxSystemPeer::setEnvironmentVariable( const String& variableName,
+                                              const String& newValue )
+{
+	if ( 0 != ::setenv( variableName.ansi_c_str(), newValue.ansi_c_str(), 1 ) ) {
+		throw RuntimeException( "Failed to set variable " + variableName
+		                        + " with value " + newValue );
+	}
 }
 
 bool LinuxSystemPeer::doesFileExist( const String& fileName )
 {
-	return false;
+	FILE * f = ::fopen( fileName.ansi_c_str(), "r" );
+	bool fileExist = ( f ) ? true : false;
+	if ( f ) {
+		::fclose( f );
+	}
+	return fileExist;
 }
 
 String LinuxSystemPeer::getCurrentWorkingDirectory()
 {
-	char tmp[PATH_MAX+1];
-	getcwd( tmp, PATH_MAX );
-	String result = tmp;
-	return result;
+	std::vector<char> buffer( PATH_MAX + 1, '\0' ) ;
+	::getcwd( &buffer[ 0 ], buffer.size() - 1 );
+	return String( &buffer[ 0 ] );
 }
 
 String LinuxSystemPeer::getEnvironmentVariable( const String& variableName )
 {
-	String result;
-
-	const char* env = getenv( variableName.ansi_c_str() );
-	if ( NULL != env ) {
-		result = env;
+	char const * env = ::getenv( variableName.ansi_c_str() );
+	if ( env ) {
+		return String( env );
 	}
+	return String();
+}
 
-	return result;
+void LinuxSystemPeer::addPathDirectory( const String& directory )
+{
+	char const * env = ::getenv( "PATH" );
+	if ( env ) {
+		String newPath = env;
+		newPath += ":" + directory;
+		if ( 0 == ::setenv( "PATH", newPath.ansi_c_str(), 1 ) ) {
+			return;
+		}
+	}
+	throw RuntimeException( "Failed to add to PATH value " + directory );
 }
 
 void LinuxSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
@@ -91,31 +103,39 @@ void LinuxSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory
 }
 
 void LinuxSystemPeer::setDateToSystemTime( DateTime* date )
-{
+{}
 
+String LinuxSystemPeer::getOSName()
+{
+	return "GNU/Linux";
+}
+
+
+String LinuxSystemPeer::getOSVersion()
+{
+	return "";
+}
+
+ProgramInfo* LinuxSystemPeer::getProgramInfoFromFileName( const String& fileName )
+{
+	return 0; //LinuxResourceBundle::getProgramInfo( fileName );
 }
 
 void LinuxSystemPeer::setDateToLocalTime( DateTime* date )
-{
-
-}
+{}
 
 void LinuxSystemPeer::setCurrentThreadLocale( Locale* locale )
-{
-
-}
+{}
 
 DateTime LinuxSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 {
 	DateTime result;
-	
 	return result;
 }
 
 DateTime LinuxSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 {
 	DateTime result;
-	
 	return result;
 }
 
@@ -123,6 +143,9 @@ DateTime LinuxSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

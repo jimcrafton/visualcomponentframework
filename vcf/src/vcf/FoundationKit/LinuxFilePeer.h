@@ -1,6 +1,5 @@
 #ifndef _VCF_LINUXFILEPEER_H__
-#define _VCF_LINUXFILEPEER_H__
-//LinuxFilePeer.h
+#define _VCF_LINUXFILEPEER_H__ 
 
 /*
 Copyright 2000-2004 The VCF Project.
@@ -8,22 +7,29 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+namespace VCF
+{
 
+class LinuxFilePeer : public Object, public FilePeer
+{
+public:
+	class FileSearchData
+	{
+	public:
+		FileSearchData()
+		{
+		}
+	};
 
+	LinuxFilePeer( File* file );
 
-namespace VCF {
-
-class LinuxFilePeer : public Object, public FilePeer{
-
-public:	
-	LinuxFilePeer( File* file, const String& fileName="" );
-	
 	virtual ~LinuxFilePeer();
 
-	String getName(){
+	String getName()
+	{
 		return file_->getName();
-	};	
-	
+	}
+
 	virtual void setFile( File* file );
 
 	/**
@@ -44,7 +50,6 @@ public:
 	*/
 	virtual void setFileAttributes( const File::FileAttributes fileAttributes );
 
-
 	virtual bool isExecutable();
 
 	/**
@@ -52,7 +57,6 @@ public:
 	*@param date the desired modification date
 	*/
 	virtual void setDateModified( const DateTime& dateModified );
-
 
 	virtual DateTime getDateModified();
 	virtual DateTime getDateCreated();
@@ -65,7 +69,8 @@ public:
 	*@param openFlags
 	*@param shareFlags
 	*/
-	virtual void open( const String& fileName, ulong32 openFlags = File::ofRead, File::ShareFlags shareFlags = File::shMaskAny );
+	virtual void open( const String& fileName, ulong32 openFlags = File::ofRead,
+	                   File::ShareFlags shareFlags = File::shMaskAny );
 
 	/**
 	* closes the file if open
@@ -77,7 +82,7 @@ public:
 	creates a new file
 	if the last character in the filename is a
 	directory character, then a directory is created
-	instead of a file. The file name is omitted here as this is stored in the 
+	instead of a file. The file name is omitted here as this is stored in the
 	File instance kept by the peer.
 	*/
 	virtual void create( ulong32 openFlags );
@@ -90,7 +95,7 @@ public:
 	/**
 	* renames/moves a file
 	*@param newFileName the filename
-	*/
+	*/ 
 	//void rename( const String& newFileName );
 	//virtual void rename( const String& newFileName ); //renames the file
 	virtual void move( const String& newFileName );   //renames/moves the file
@@ -102,7 +107,6 @@ public:
 	virtual void copyTo( const String& copyFileName );
 
 
-
 	/* Directory::Finder support functions */
 
 	virtual void initFileSearch( Directory::Finder* finder );
@@ -110,22 +114,34 @@ public:
 	virtual File* findNextFileInSearch( Directory::Finder* finder );
 
 	virtual void endFileSearch( Directory::Finder* finder );
-	
-	int getFileHandle() {
-		return fileHandle_;
+
+	int getFileHandle()
+	{
+		return ( fileHandle_ > 1 )
+		       ? fileHandle_
+		       : 0;
 	}
-	
-private:	
+
+private:
 	int fileHandle_;
-	File* file_;	
+	File* file_;
+	bool searchStarted_;
+	std::vector<String> searchFilters_;
+	std::vector<String>::iterator searchFilterIterator_;
+	std::map<Directory::Finder*,FileSearchData> searchMap_;
+
+	void buildSearchFilters( const String& searchFilter );
 };
 
-}; //end of namespace VCF
+} //end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -6,7 +6,6 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include <errno.h>
@@ -16,168 +15,149 @@ where you installed the VCF.
 #include <dirent.h>
 #include <sys/stat.h>
 
-
 using namespace VCF;
 using namespace VCFLinux;
 
-
-LinuxFileStream::LinuxFileStream( const String& filename, const FileStreamAccessType& accessType ):
-fileHandle_(0),
-file_(NULL)
+LinuxFileStream::LinuxFileStream( const String& filename,
+                                  const FileStreamAccessType& accessType )
+		: fileHandle_( -1 )
+		, file_( 0 )
+		, filename_( filename )
 {
-	filename_ = filename;
-	
 	int oflags = 0;
-	
-	switch ( accessType ){
+	switch ( accessType ) {
 		case fsRead : {
-			oflags = O_RDONLY;
-		}
-		break;
+				oflags = O_RDONLY;
+			}
+			break;
 
 		case fsWrite : {
-			oflags = O_WRONLY;
-		}
-		break;
+				oflags = O_WRONLY;
+			}
+			break;
 
-		case fsReadWrite : case fsDontCare : {
-			oflags = O_CREAT | O_TRUNC | O_RDWR;
-		}
-		break;
+		case fsReadWrite :
+		case fsDontCare : {
+				oflags = O_CREAT | O_TRUNC | O_RDWR;
+			}
+			break;
 	}
 	
 	fileHandle_ = ::open( filename_.ansi_c_str(), oflags );
-	
-	if (fileHandle_ < 0)	{
-		fileHandle_ = 0;
-		throw FileIOError( CANT_ACCESS_FILE + filename  );
-	}
-	else {
+	if ( fileHandle_ > 0 ) {
 		::lseek( fileHandle_, 0, SEEK_SET );
+	} else {
+		throw FileIOError( CANT_ACCESS_FILE + filename_ );
 	}
 }
 
-LinuxFileStream::LinuxFileStream( File* file ):
-	fileHandle_(0),
-	file_(file)
+LinuxFileStream::LinuxFileStream( File* file )
+		: fileHandle_( -1 )
+		, file_( file )
+		, filename_( file_->getName() )
 {
-	filename_ = file_->getName();	
-	
-	LinuxFilePeer* filePeer = (LinuxFilePeer*)file_->getPeer();
+	LinuxFilePeer * filePeer = static_cast<LinuxFilePeer*>( file_->getPeer() );
 	fileHandle_ = filePeer->getFileHandle();
-	
-	if (fileHandle_ < 0)	{
-		fileHandle_ = 0;
-		throw FileIOError( CANT_ACCESS_FILE + filename_  );
-	}
-	else {
+	if ( fileHandle_ > 0 ) {
 		::lseek( fileHandle_, 0, SEEK_SET );
+	} else {
+		throw FileIOError( CANT_ACCESS_FILE + filename_ );
 	}
-	
 }
 
 LinuxFileStream::~LinuxFileStream()
 {
-
-	if ((file_ == NULL) && (fileHandle_ != 0)) {
+	if ( ( ! file_ ) and ( fileHandle_ > 0 ) ) {
 		::close( fileHandle_ );
 	}
 }
 
-void LinuxFileStream::seek(const unsigned long& offset, const SeekType& offsetFrom)
+void LinuxFileStream::seek( const unsigned long& offset,
+                            const SeekType& offsetFrom )
 {
+	if ( fileHandle_ < 0 ) {
+		return;
+	}
 	int seekType = translateSeekTypeToMoveType( offsetFrom );
-
-	int err = ::lseek( fileHandle_, offset, seekType );
-
-	if (err < 0 ) {
-		int errorCode = errno;
-		String errMsg = "Error attempting to seek in stream.\n" + LinuxUtils::getErrorString( errorCode );
-		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
+	if ( ::lseek( fileHandle_, offset, seekType ) < 0 ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+		                       "Error attempting to seek in stream.\n"
+		                       + LinuxUtils::getErrorString( errno ) ) );
 	}
 }
 
 unsigned long LinuxFileStream::getSize()
 {
-	unsigned long result = 0;
-	
-	struct stat st = {0};
+	if ( fileHandle_ < 0 ) {
+		return 0;
+	}
+	struct stat st;
+	::memset( &st, '\0', sizeof( struct stat ) );
 	if ( -1 != fstat( fileHandle_, &st ) ) {
-		result = st.st_size;
-	}	
-	
-	return result;
+		return st.st_size;
+	}
+	return 0;
 }
 
 void LinuxFileStream::read( char* bytesToRead, unsigned long sizeOfBytes )
 {
-	int bytesRead = 0;
-	ssize_t err = ::read( fileHandle_, bytesToRead, sizeOfBytes );
-
-	if (err < 0)	{
-		// TODO: peer error string
-		int errorCode = errno;
-		String errMsg = "Error reading data from file stream.\n" + LinuxUtils::getErrorString( errorCode );
-		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
+	if ( fileHandle_ < 0 ) {
+		return;
 	}
-	else
-	{
-		bytesRead = err;
+	int bytesRead =::read( fileHandle_, bytesToRead, sizeOfBytes );
+	if ( bytesRead < 0 ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+		                       "Error reading data from file stream.\n"
+		                       + LinuxUtils::getErrorString( errno ) ) );
 	}
-
-	if ( bytesRead != sizeOfBytes ){ //error if we are not read /writing asynchronously !
-								  //throw exception ?
+	//error if we are not reading/writing asynchronously !
+	if ( bytesRead != sizeOfBytes ) {
+		//throw exception ?
 	}
 }
 
 void LinuxFileStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
 {
-	int bytesWritten = 0;
-	ssize_t err = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
-
-	if (err < 0)
-	{
-		int errorCode = errno;
-		String errMsg = CANT_WRITE_TO_FILE + filename_ + "\n" + LinuxUtils::getErrorString( errorCode );
-
-		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
+	if ( fileHandle_ < 0 ) {
+		return;
+	}	
+	int bytesWritten = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
+	if ( bytesWritten < 0 ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+		                       CANT_WRITE_TO_FILE + filename_ + "\n"
+		                       + LinuxUtils::getErrorString( errno ) ) );
 	}
-	else
-	{
-		bytesWritten = err;
-	}
-
-	if ( bytesWritten != sizeOfBytes ){//error if we are not read /writing asynchronously !
-									//throw exception ?
-		 //throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
+	//error if we are not reading/writing asynchronously !
+	if ( bytesWritten != sizeOfBytes ) {
+		//throw exception ?
+		//throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
 	}
 }
 
 char* LinuxFileStream::getBuffer()
 {
 	// ???
-	return NULL;
+	return 0;
 }
 
 
 int LinuxFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 {
 	int result = 0;
-
-	switch ( offsetFrom ){
+	switch ( offsetFrom ) {
 		case stSeekFromStart : {
-			result = SEEK_SET;
-		}
+				result = SEEK_SET;
+			}
 			break;
 
 		case stSeekFromRelative : {
-			result = SEEK_CUR;
-		}
+				result = SEEK_CUR;
+			}
 			break;
 
 		case stSeekFromEnd : {
-			result = SEEK_END;
-		}
+				result = SEEK_END;
+			}
 			break;
 	}
 	return result;
@@ -187,6 +167,9 @@ int LinuxFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

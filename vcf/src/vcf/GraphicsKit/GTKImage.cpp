@@ -12,31 +12,31 @@ where you installed the VCF.
 
 using namespace VCF;
 
-GTKImage::GTKImage( const String& fileName ):
-	AbstractImage(false),
-	pixmap_(NULL),
-	pixBuf_(NULL),
-	bitmap_(NULL)
+GTKImage::GTKImage( const String& fileName ) :
+		AbstractImage( false ),
+		pixmap_( NULL ),
+		pixBuf_( NULL ),
+		bitmap_( NULL )
 {
 	init();
 }
 
-GTKImage::GTKImage( const unsigned long& width, const unsigned long& height ):
-	AbstractImage(false),
-	pixmap_(NULL),
-	pixBuf_(NULL),
-	bitmap_(NULL)
+GTKImage::GTKImage( const unsigned long& width, const unsigned long& height ) :
+		AbstractImage( false ),
+		pixmap_( NULL ),
+		pixBuf_( NULL ),
+		bitmap_( NULL )
 {
 	init();
 	createImage( width, height );
 	AbstractImage::setSize( width, height );
 }
 
-GTKImage::GTKImage( GraphicsContext* context, Rect* rect ):
-	AbstractImage(false),
-	pixmap_(NULL),
-	pixBuf_(NULL),
-	bitmap_(NULL)
+GTKImage::GTKImage( GraphicsContext* context, Rect* rect ) :
+		AbstractImage( false ),
+		pixmap_( NULL ),
+		pixBuf_( NULL ),
+		bitmap_( NULL )
 {
 	init();
 }
@@ -58,9 +58,8 @@ GTKImage::~GTKImage()
 
 void GTKImage::init()
 {
-
-	context_ = new GraphicsContext( (unsigned long) gdk_get_default_root_window() );
-	GTKContext* gtkCtx = (GTKContext*)context_->getPeer();
+	context_ = new GraphicsContext( gdk_get_default_root_window() );
+	GTKContext* gtkCtx = ( GTKContext* ) context_->getPeer();
 	gtkCtx->setParentImage( this );
 }
 
@@ -98,50 +97,51 @@ void GTKImage::createImage( const unsigned long & width, const unsigned long & h
 
 
 	if ( NULL == pixBuf_ ) {
-		throw InvalidPointerException( MAKE_ERROR_MSG_2("gdk_pixbuf_new returned a NULL pixbuf handle") );
+		throw InvalidPointerException( MAKE_ERROR_MSG_2( "gdk_pixbuf_new returned a NULL pixbuf handle" ) );
 	}
 
 	gdk_pixbuf_fill( pixBuf_, 0xFFFFFFFF );
 
 	gdk_pixbuf_render_pixmap_and_mask( pixBuf_, &pixmap_, &bitmap_, 255 );
 
-	context_->getPeer()->setContextID( (unsigned long)pixmap_ );
+	context_->getPeer() ->setContextID( pixmap_ );
 
-	imageBits_->pixels_ = (SysPixelType*)gdk_pixbuf_get_pixels( pixBuf_ );
+	imageBits_->pixels_ = ( SysPixelType* ) gdk_pixbuf_get_pixels( pixBuf_ );
 
 }
 
 void GTKImage::updatePixmapFromImageBits()
 {
-	GTKContext* gtkCtx = (GTKContext*)context_->getPeer();
+	GTKContext * gtkCtx = ( GTKContext* ) context_->getPeer();
 
 	gdk_draw_pixbuf( pixmap_, gtkCtx->getGC(), pixBuf_, 0, 0, 0, 0,
-					getWidth(), getHeight(), GDK_RGB_DITHER_NORMAL, 0, 0 );
+	                 getWidth(), getHeight(), GDK_RGB_DITHER_NORMAL, 0, 0 );
 }
 
 void GTKImage::updateImageBitsFromPixmap()
 {
-	GdkColormap* colorMap = gdk_drawable_get_colormap( pixmap_ );
+	GdkColormap * colorMap = gdk_drawable_get_colormap( pixmap_ );
 	GdkPixbuf* pb = gdk_pixbuf_get_from_drawable( pixBuf_, pixmap_, colorMap, 0, 0, 0, 0,
-													getWidth(), getHeight() );
+	                                              getWidth(), getHeight() );
 
 }
 
 
 void GTKImage::beginDrawing()
 {
-
 }
 
 void GTKImage::finishedDrawing()
 {
-
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:23  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKUITOOLKIT_H__
-#define _VCF_GTKUITOOLKIT_H__
+#define _VCF_GTKUITOOLKIT_H__ 
 //GTKUIToolkit.h
 
 /*
@@ -8,32 +8,21 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
 #include <deque>
 
-
-
-
-
-namespace VCF {
-
-
-
+namespace VCF
+{
 
 class AbstractX11Control;
-
 
 /**
 this class is used as a wrapper around an XEvent.
 */
-class GTKEventMsg {
+class GTKEventMsg
+{
 public:
-	GTKEventMsg( GdkEvent* event, Control* control ): gdkEvent_(event), control_(control) {}
+	GTKEventMsg( GdkEvent* event, Control* control ) : gdkEvent_( event ), control_( control )
+	{}
 
 
 	GdkEvent* gdkEvent_;
@@ -42,11 +31,11 @@ public:
 
 
 
-class TimeOutHandler {
+class TimeOutHandler
+{
 public:
-	TimeOutHandler():source_(NULL), handler_(NULL), timerID_(0) {
-
-	}
+	TimeOutHandler() : source_( NULL ), handler_( NULL ), timerID_( 0 )
+	{}
 
 	Object* source_;
 	EventHandler* handler_;
@@ -55,7 +44,8 @@ public:
 
 /**
 */
-class GTKUIToolkit :  public UIToolkit {
+class GTKUIToolkit : public UIToolkit
+{
 public:
 
 	GTKUIToolkit();
@@ -64,19 +54,14 @@ public:
 
 	virtual ApplicationPeer* internal_createApplicationPeer();
 
-	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType=CT_DEFAULT);
-
-	virtual TreePeer* internal_createTreePeer( TreeControl* component, ComponentType componentType=CT_DEFAULT);
-
-	virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component, ComponentType componentType=CT_DEFAULT);
-
-	virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component, ComponentType componentType=CT_DEFAULT );
+	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType = CT_DEFAULT );
 
 	virtual DialogPeer* internal_createDialogPeer();
 
-	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType);
+	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType );
 
-	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner, ComponentType componentType);
+	virtual WindowPeer* internal_createWindowPeer( Control* component,
+	                                               Control* owner );
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 
@@ -85,8 +70,6 @@ public:
 	virtual MenuBarPeer* internal_createMenuBarPeer( MenuBar* menuBar );
 
 	virtual PopupMenuPeer* internal_createPopupMenuPeer( PopupMenu* popupMenu );
-
-	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component, ComponentType componentType);
 
 	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control );
 
@@ -116,7 +99,7 @@ public:
 
 	virtual ClipboardPeer* internal_createClipboardPeer();
 
-	virtual bool internal_createCaret( Control* owningControl, Image* caretImage  );
+	virtual bool internal_createCaret( Control* owningControl, Image* caretImage );
 
 	virtual bool internal_destroyCaret( Control* owningControl );
 
@@ -144,12 +127,31 @@ public:
 
 	virtual Size internal_getDragDropDelta();
 
-	GtkWidget* getDefaultParent() {
+	GtkWidget* getDefaultParent()
+	{
 		return defaultParent_;
 	}
-	static void  internal_gdkEventHandler( GdkEvent* gdkEvent, gpointer data);
 
-	static gboolean internal_gdkIdleHandler(gpointer data);
+	virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component );
+
+	virtual TreePeer* internal_createTreePeer( TreeControl* component );
+
+	virtual TextPeer* internal_createTextPeer( TextControl* component,
+	                                           const bool& isMultiLineControl );
+
+	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component );
+
+	virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component );
+
+	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner );
+
+	virtual SystemTrayPeer* internal_createSystemTrayPeer();
+
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app );
+
+	static void internal_gdkEventHandler( GdkEvent* gdkEvent, gpointer data );
+
+	static gboolean internal_gdkIdleHandler( gpointer data );
 
 protected:
 	VirtualKeyCode translateKeyCode( guint code );
@@ -159,18 +161,21 @@ protected:
 	bool handleGdkEvent( GdkEvent* gdkEvent );
 	void createDefaultParentWnd();
 	GtkWidget* defaultParent_;
-	static gboolean gtkTimeOutHandler(gpointer data);
+	static gboolean gtkTimeOutHandler( gpointer data );
 
-	std::map<EventHandler*,TimeOutHandler> timeoutHandlers_;
+	std::map<EventHandler*, TimeOutHandler> timeoutHandlers_;
 };
 
 
-}; //end of namespace VCF
+} //end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

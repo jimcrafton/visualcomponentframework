@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXREGISTRY_H__
-#define _VCF_LINUXREGISTRY_H__
+#define _VCF_LINUXREGISTRY_H__ 
 //LinuxRegistry.h
 
 /*
@@ -9,10 +9,11 @@ where you installed the VCF.
 */
 
 
-namespace VCF {
+namespace VCF
+{
 
-class LinuxRegistry : public Object, public RegistryPeer{
-
+class LinuxRegistry : public Object, public RegistryPeer
+{
 public:
 	LinuxRegistry();
 
@@ -30,7 +31,9 @@ public:
 
 	virtual bool setValue( const bool& value, const String& valuename );
 
-	virtual bool setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename );
+	virtual bool setValue( void* dataBuffer,
+	                       const uint32& dataBufferSize,
+	                       const String& valuename );
 
 	virtual String getStringValue( const String& valuename );
 
@@ -38,7 +41,9 @@ public:
 
 	virtual bool getBoolValue( const String& valuename );
 
-	virtual void getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
+	virtual void getDataBufValue( const String& valuename,
+	                              uint32& dataBufferSize,
+	                              void** dataBuffer );
 
 	virtual Enumerator<String>* getKeyNames();
 
@@ -48,18 +53,22 @@ public:
 private:
 	std::vector<RegistryValueInfo*> values_;
 	std::vector<String> keys_;
-	EnumeratorContainer<std::vector<RegistryValueInfo*>,RegistryValueInfo*> valuesContainer_;
-	EnumeratorContainer<std::vector<String>,String> keysContainer_;
+	EnumeratorContainer<std::vector<RegistryValueInfo*>,
+	                    RegistryValueInfo* > valuesContainer_;
+	EnumeratorContainer<std::vector<String>, String> keysContainer_;
 	RegistryKeyType rootKeyType_;
 	String currentRegKey_;
 };
 
-}; //end of namespace VCF
+} //end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

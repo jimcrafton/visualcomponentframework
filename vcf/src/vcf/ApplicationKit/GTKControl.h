@@ -8,20 +8,11 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
 #ifndef _VCF_ABSTRACTGTKCONTROL_H__
 #	include "vcf/ApplicationKit/AbstractGTKControl.h"
 #endif // _VCF_ABSTRACTGTKCONTROL_H__
 
-
-
 namespace VCF {
-
 
 /**
 
@@ -35,18 +26,20 @@ public:
 
 	virtual void create( Control* owningControl );
 
+	virtual void setBorder( Border* border );
+
 protected:
 
 };
 
-
-
-};
-
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

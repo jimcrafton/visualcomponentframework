@@ -13,16 +13,13 @@ where you installed the VCF.
 
 using namespace VCF;
 
-LinuxProcessPeer::LinuxProcessPeer():
-	processHandle_(0)
-{
-
-}
+LinuxProcessPeer::LinuxProcessPeer()
+		: processHandle_( 0 )
+		, processFileName_()
+{}
 
 LinuxProcessPeer::~LinuxProcessPeer()
-{
-
-}
+{}
 
 int LinuxProcessPeer::getProcessID()
 {
@@ -37,7 +34,6 @@ int LinuxProcessPeer::getProcessThreadID()
 bool LinuxProcessPeer::createProcess( const String& processName, const String& arguments )
 {
 	bool result = false;
-
 	return result;
 }
 
@@ -46,9 +42,9 @@ String LinuxProcessPeer::getProcessFileName()
 	return processFileName_;
 }
 
-ulong32 LinuxProcessPeer::getHandleID()
+OSHandleID LinuxProcessPeer::getHandleID()
 {
-	return processHandle_;
+	return reinterpret_cast<OSHandleID>( processHandle_ );
 }
 
 ulong32 LinuxProcessPeer::terminate()
@@ -60,6 +56,9 @@ ulong32 LinuxProcessPeer::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

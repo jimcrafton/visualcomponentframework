@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKCURSOR_H__
-#define _VCF_GTKCURSOR_H__
+#define _VCF_GTKCURSOR_H__ 
 //GTKCursor.h
 
 /*
@@ -8,49 +8,52 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
-namespace VCF {
+namespace VCF
+{
 
 /**
-
+ 
 */
-class GTKCursor : public Object, public CursorPeer {
+class GTKCursor : public Object, public CursorPeer
+{
 public:
 
 	GTKCursor( Cursor* cursor );
 
 	virtual ~GTKCursor();
 
-	virtual ulong32 getCursorHandleID(){
-		return (ulong32)gtkCursor_;
+	virtual OSHandleID getCursorHandleID()
+	{
+		return gtkCursor_;
 	}
 
 	virtual void createFromImage( Image* cursorImage, Point* hotSpot );
 
 	virtual void createSystemCursor( const Cursor::SystemCursorType& systemCursor );
 
-	virtual void createFromResourceName( const String& cursorName, const ulong32& instanceHandle=0 );
-
-	virtual long getCursorID() {
+	virtual long getCursorID()
+	{
 		return cursorID_;
 	}
 
-	virtual void setCursorID( const long& cursorID ) {
+	virtual void setCursorID( const long& cursorID )
+	{
 		cursorID_ = cursorID;
 	}
 
-	virtual Cursor* getCursor() {
-		return  cursor_;
+	virtual Cursor* getCursor()
+	{
+		return cursor_;
 	}
 
-	virtual void setCursor( Cursor* cursor ) {
+	virtual void setCursor( Cursor* cursor )
+	{
 		cursor_ = cursor;
 	}
+
+	virtual void createFromResourceName( const String& cursorName,
+	                                     OSHandleID instanceHandle = 0 );
+
 protected:
 
 	long cursorID_;
@@ -65,6 +68,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
