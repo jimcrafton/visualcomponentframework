@@ -42,7 +42,6 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /c
-# SUBTRACT CPP /Z<none>
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -449,14 +448,6 @@ SOURCE=..\..\..\src\Events\MouseEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\MultilineTextControl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\OpenGLControl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\OpenGLControlContext.cpp
 # End Source File
 # Begin Source File
 
