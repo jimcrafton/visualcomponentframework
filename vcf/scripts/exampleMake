@@ -17,11 +17,11 @@ MAKE_CONTENTS="#makefile for $PROJ\n"\
 "OBJECTFILES = \$(RELEASE_OUT)/$FILES.o\n"\
 "\n"\
 "\n"\
-"GTK_CXX_FLAGS = `pkg-config gtk+-2.0 --cflags`\n"\
+"GTK_CXX_FLAGS = \`pkg-config gtk+-2.0 --cflags\`\n"\
 "CXX_FLAGS_D=-ggdb -DVCF_GCC -DVCF_GTK -DVCF_POSIX -D_DEBUG -I \$(VCF_INCLUDE) \$(GTK_CXX_FLAGS) -c\n"\
 "CXX_FLAGS=-DVCF_GCC -DVCF_GTK -DVCF_POSIX -I \$(VCF_INCLUDE) \$(GTK_CXX_FLAGS) -O2 -c\n"\
 "\n"\
-"GTK_LINKER_FLAGS = `pkg-config gtk+-2.0 --libs`\n"\
+"GTK_LINKER_FLAGS = \`pkg-config gtk+-2.0 --libs\`\n"\
 "APPKIT_LIBS_D = -lpthread -lFoundationKit_d -lGraphicsKit_d -lApplicationKit_d\n"\
 "APPKIT_LIBS = -lpthread -lFoundationKit -lGraphicsKit -lApplicationKit\n"\
 "LINKER_FLAGS_D = -L\$(VCF_LIB) -L\$(VCF_BIN) \$(GTK_LINKER_FLAGS) \$(APPKIT_LIBS_D) -ggdb -o \n"\
