@@ -17,7 +17,7 @@
   <p>RTTI, or Run Time Type Information, is used in the VCF to dynamically identify
   objects during the execution of a program. Most large frameworks, or
   object-oriented languages have some form of RTTI, some examples are Smalltalk,
-  ObjectiveC, and Java (in Java RTTI is frequently referred to as reflection,
+  ObjectiveC, CORBA, COM, ObjectPascal, and Java (in Java RTTI is frequently referred to as reflection,
   and is defined in the java.lang.reflect package). RTTI can be used to identify
   the object's class name, the methods of a class, the properties of a class,
   and the events that the object fires. In addition, RTTI allows the dynamic
@@ -26,12 +26,14 @@
   place by either specifying the class name or UUID, or creating an instance
   that supports a particular interface from the interface name or UUID. </p>
   <p>Obviously C++ itself does not support many of these features. The RTTI that
-  is supported in the language itself allows for dynamic class identification,
+  is supported in the language standard allows for dynamic class identification,
   and dynamically casting an object to a specific class such that if the object
   does not derive from the class, a null pointer is returned. This allows us to
-  &quot;query&quot; for the interfaces a particular object instance may&nbsp;
+  &quot;query&quot; for interfaces that a particular object instance may&nbsp;
   support. To support these other features requires additional work on the part
   of the programmer by using special functions and classes provided by the VCF
-  to accomplish just this. </p>
+  to accomplish just this. Currently there are two approaches to add this
+  support to you classes, the first, which will be documented here, uses macros
+  that you add to your class definition. The second, newer method </p>
  </BODY>
 </HTML>
