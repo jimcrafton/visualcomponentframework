@@ -435,6 +435,9 @@ Package=<4>
     Project_Dep_Name Tables
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Tabs
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name TeXLabel
     End Project Dependency
     Begin Project Dependency
@@ -984,30 +987,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SciLexer"="..\..\src\thirdparty\common\scintilla\vcbuild\SciLexer.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ScintillaKit"=".\ScintillaKit\ScintillaKit.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Scrolling"="..\..\examples\Scrolling\Scrolling.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1105,6 +1084,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Tables"="..\..\examples\Tables\Tables.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tabs"="..\..\examples\Tabs\Tabs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

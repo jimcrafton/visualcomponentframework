@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_FOUNDATIONKIT_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPLICATIONKIT_DLL" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -99,6 +99,38 @@ SOURCE=AppResources.cpp
 # Begin Group "Resources"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Group "en_US"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=Resources\en_US\brushed-metal.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=Resources\en_US\WhatIsVCF.txt
+# End Source File
+# End Group
+# Begin Group "de_DE"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=Resources\de_DE\brushed-metal.bmp
+# End Source File
+# End Group
+# Begin Group "it_IT"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=Resources\it_IT\brushed-metal.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=Resources\it_IT\WhatIsVCF.txt
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=Resources\brushed-metal.bmp

@@ -248,9 +248,6 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Circle.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ClippingRegion.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Color.cpp">
 			</File>
 			<File
@@ -372,12 +369,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Stroke.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Vector2D.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Vector2D.h">
 			</File>
 		</Filter>
 		<Filter
