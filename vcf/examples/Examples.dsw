@@ -435,9 +435,6 @@ Package=<4>
     Project_Dep_Name Tables
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name Tabs
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TeXLabel
     End Project Dependency
     Begin Project Dependency
@@ -940,18 +937,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Tables"=".\Tables\Tables.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Tabs"=".\Tabs\Tabs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
