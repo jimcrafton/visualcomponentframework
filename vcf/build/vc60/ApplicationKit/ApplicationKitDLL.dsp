@@ -721,6 +721,10 @@ SOURCE=..\..\..\include\core\PropertyEditorManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\PushButton.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\RadioButtonControl.h
 # End Source File
 # Begin Source File
@@ -1435,6 +1439,10 @@ SOURCE=..\..\..\src\core\PopupMenu.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\PropertyEditorManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\PushButton.cpp
 # End Source File
 # Begin Source File
 
