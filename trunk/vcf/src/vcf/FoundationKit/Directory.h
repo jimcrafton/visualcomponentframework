@@ -82,7 +82,7 @@ class FileSearchFilter;
 *      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
 *      Directory::Finder* finder = dir.findFiles( filterFilesObj, filterDirsObj );
 *      finder->setDisplayMode( Directory::Finder::dmAny );
-*      finder->setRecursion( true, true, 10 );
+*      finder->setRecursion( true, 10 );
 *      while ( finder->nextElement() ) {
 *        file = finder->getCurrentElement();
 *        filename = file->getName();
@@ -702,6 +702,9 @@ inline void Directory::setName( const String& fileName ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/10 16:59:14  marcelloptr
+*updated a comment
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
