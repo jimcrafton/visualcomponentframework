@@ -473,6 +473,14 @@ SOURCE=..\..\..\include\core\Frame.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerkit\GTKPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\GTKToolkit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\HeaderControl.h
 # End Source File
 # Begin Source File
