@@ -37,11 +37,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release\obj"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -49,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit.lib"
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_s.lib"
 
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
@@ -60,12 +60,11 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
-# PROP Intermediate_Dir "Debug\obj"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_d.lib"
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_sd.lib"
 
 !ENDIF 
 
@@ -86,451 +85,1327 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\AbstractContainer.cpp
+SOURCE=..\..\..\src\core\AbstractContainer.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\AbstractListModel.cpp
+SOURCE=..\..\..\src\core\AbstractListModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractTableModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\AbstractTextModel.cpp
+SOURCE=..\..\..\src\core\AbstractTextModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\AbstractTreeModel.cpp
+SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Application.cpp
+SOURCE=..\..\..\src\core\Application.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+# ADD CPP /Yc"ApplicationKit.h"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+# ADD CPP /Yc""
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Basic3DBorder.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\BasicTableItemEditor.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ButtonEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CheckBoxControl.cpp
+SOURCE=..\..\..\src\core\CheckBoxControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\Clipboard.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\ClipboardDataObject.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\ClipboardEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\ComboBoxControl.cpp
+SOURCE=..\..\..\src\core\ComboBoxControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMDataObject.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMDropTarget.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommandButton.cpp
+SOURCE=..\..\..\src\core\CommandButton.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonColor.cpp
+SOURCE=..\..\..\src\core\CommonColor.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonFileBrowse.cpp
+SOURCE=..\..\..\src\core\CommonFileBrowse.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonFileDialog.cpp
+SOURCE=..\..\..\src\core\CommonFileDialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonFileOpen.cpp
+SOURCE=..\..\..\src\core\CommonFileOpen.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonFileSave.cpp
+SOURCE=..\..\..\src\core\CommonFileSave.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CommonPrint.cpp
+SOURCE=..\..\..\src\core\CommonFont.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\CommonPrint.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMObject.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Component.cpp
+SOURCE=..\..\..\src\core\Component.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\ComponentInputStream.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\ComponentOutputStream.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMUtils.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Control.cpp
+SOURCE=..\..\..\src\core\Control.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ControlEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\CustomControl.cpp
+SOURCE=..\..\..\src\core\CustomControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DataType.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultListItem.cpp
+SOURCE=..\..\..\src\core\DefaultListItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultListModel.cpp
+SOURCE=..\..\..\src\core\DefaultListModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\DefaultMenuItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultPropertyEditors.cpp
+SOURCE=..\..\..\src\core\DefaultPropertyEditors.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\DefaultTableCellItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\DefaultTableModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultTabModel.cpp
+SOURCE=..\..\..\src\core\DefaultTabModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultTabPage.cpp
+SOURCE=..\..\..\src\core\DefaultTabPage.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultTextModel.cpp
+SOURCE=..\..\..\src\core\DefaultTextModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultTreeItem.cpp
+SOURCE=..\..\..\src\core\DefaultTreeItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\DefaultTreeModel.cpp
+SOURCE=..\..\..\src\core\DefaultTreeModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=\vcf\src\core\Desktop.cpp
+SOURCE=..\..\..\src\core\Desktop.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Dialog.cpp
+SOURCE=..\..\..\src\core\Dialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DragEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DragSource.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DropEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Frame.cpp
+SOURCE=..\..\..\src\core\Frame.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\ImageList.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\ImageListEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ItemEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Label.cpp
+SOURCE=..\..\..\src\core\Label.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Light3DBorder.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\LightweightComponent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\ListBoxControl.cpp
+SOURCE=..\..\..\src\core\ListBoxControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ListModelEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\ListViewControl.cpp
-# End Source File
-# Begin Source File
+SOURCE=..\..\..\src\core\ListViewControl.cpp
 
-SOURCE=..\..\..\src\Core\Locales.cpp
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Menu.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\MenuBar.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\MenuItemShortcut.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\MouseEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\OpenGLControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\graphics\OpenGLControlContext.cpp
+SOURCE=..\..\..\src\Graphics\OpenGLControlContext.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Panel.cpp
+SOURCE=..\..\..\src\core\Panel.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\PropertyEditorManager.cpp
+SOURCE=..\..\..\src\core\PopupMenu.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\PropertyEditorManager.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Resource.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\ResourceStream.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\System.cpp
+SOURCE=..\..\..\src\core\Splitter.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\TabbedPages.cpp
+SOURCE=..\..\..\src\core\TabbedPages.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\TableControl.cpp
+SOURCE=..\..\..\src\core\TableControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\events\TableModelEvent.cpp
+SOURCE=..\..\..\src\Events\TableModelEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TabModelEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\TextControl.cpp
+SOURCE=..\..\..\src\core\TextControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\ToolbarButton.cpp
+SOURCE=..\..\..\src\core\Toolbar.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\TreeControl.cpp
+SOURCE=..\..\..\src\core\ToolbarButton.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\TreeListControl.cpp
+SOURCE=..\..\..\src\core\ToolbarDock.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\TreeControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\TreeListControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TreeModelEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\UIToolkit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ValidationEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Button.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ComboBox.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\implementerkit\Win32ControlContext.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32CustomControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Desktop.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Dialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Edit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32FolderBrowseDialog.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontDialog.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ListBox.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Listview.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32MenuBar.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32MenuItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Object.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32PopupMenu.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ToolKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Tree.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Window.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Core\Window.cpp
+SOURCE=..\..\..\src\core\Window.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\WindowEvent.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -678,6 +1553,10 @@ SOURCE=..\..\..\include\core\CommonFileSave.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\CommonFont.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\CommonPrint.h
 # End Source File
 # Begin Source File
@@ -726,7 +1605,7 @@ SOURCE=..\..\..\include\events\ControlEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=\vcf\include\graphics\ControlGraphicsContext.h
+SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
 # End Source File
 # Begin Source File
 
@@ -810,6 +1689,10 @@ SOURCE=..\..\..\include\core\Desktop.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\DesktopPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Dialog.h
 # End Source File
 # Begin Source File
@@ -882,6 +1765,18 @@ SOURCE=..\..\..\include\implementer\HeaderPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\ImageList.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ImageListEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ImageListListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\InvalidStateException.h
 # End Source File
 # Begin Source File
@@ -894,7 +1789,7 @@ SOURCE=..\..\..\include\events\ItemEditorEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=\vcf\include\events\ItemEditorListener.h
+SOURCE=..\..\..\include\events\ItemEditorListener.h
 # End Source File
 # Begin Source File
 
@@ -918,6 +1813,10 @@ SOURCE=..\..\..\include\core\Label.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\Light3DBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\LightweightComponent.h
 # End Source File
 # Begin Source File
@@ -930,7 +1829,7 @@ SOURCE=..\..\..\include\implementer\ListBoxPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Listener.h
+SOURCE=..\..\..\include\events\Listener.h
 # End Source File
 # Begin Source File
 
@@ -1014,6 +1913,10 @@ SOURCE=..\..\..\include\events\MouseListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\NotifyEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\NotifyListener.h
 # End Source File
 # Begin Source File
@@ -1035,6 +1938,10 @@ SOURCE=..\..\..\include\core\Panel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\PopupMenu.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\PopupMenuPeer.h
 # End Source File
 # Begin Source File
 
@@ -1063,6 +1970,10 @@ SOURCE=..\..\..\include\utils\Resource.h
 # Begin Source File
 
 SOURCE=..\..\..\include\utils\ResourceBundle.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\exceptions\ResourceException.h
 # End Source File
 # Begin Source File
 
@@ -1098,15 +2009,11 @@ SOURCE=..\..\..\include\events\SelectionListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Splitter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\StrokeState.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\utils\System.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\utils\SystemPeer.h
 # End Source File
 # Begin Source File
 
@@ -1186,7 +2093,15 @@ SOURCE=..\..\..\include\core\ToolbarButton.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ToolbarDock.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ToolbarPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ToolbarSeparator.h
 # End Source File
 # Begin Source File
 
@@ -1262,6 +2177,10 @@ SOURCE=..\..\..\include\implementerKit\Win32CustomControl.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
 # End Source File
 # Begin Source File
@@ -1279,6 +2198,10 @@ SOURCE=..\..\..\include\implementerKit\Win32FileOpenDialog.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32FolderBrowseDialog.h
 # End Source File
 # Begin Source File
 
@@ -1311,6 +2234,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Object.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32PopupMenu.h
 # End Source File
 # Begin Source File
 

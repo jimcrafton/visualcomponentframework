@@ -37,11 +37,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release\obj"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -49,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_s.lib"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
 
@@ -60,12 +60,11 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
-# PROP Intermediate_Dir "Debug\obj"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D _WIN32_WINNT=0x400 /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_d.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_sd.lib"
 
 !ENDIF 
 
@@ -90,7 +89,7 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\Basic3DBorder.cpp
+SOURCE=..\..\..\src\Graphics\AlphaGamma.cpp
 # End Source File
 # Begin Source File
 
@@ -127,6 +126,7 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+# ADD CPP /Yc"GraphicsKit.h"
 # End Source File
 # Begin Source File
 
@@ -138,23 +138,27 @@ SOURCE=..\..\..\src\Events\ImageEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\ImageList.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\ImageListEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\graphics\OpenGLContext.cpp
+SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 
@@ -174,11 +178,15 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\implementerkit\Win32OpenGLPeer.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -190,15 +198,11 @@ SOURCE=..\..\..\include\graphics\AbstractImage.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Basic3DBorder.h
+SOURCE=..\..\..\include\graphics\AlphaGamma.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicFill.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\BasicFont.h
 # End Source File
 # Begin Source File
 
@@ -207,10 +211,6 @@ SOURCE=..\..\..\include\graphics\BasicRectangle.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicStroke.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\Border.h
 # End Source File
 # Begin Source File
 
@@ -290,10 +290,6 @@ SOURCE=..\..\..\include\graphics\ImageBits.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ImageList.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\ImageLoader.h
 # End Source File
 # Begin Source File
@@ -318,6 +314,10 @@ SOURCE=..\..\..\include\graphics\MatrixFunction.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\MicroTiles.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\OpenGLContext.h
 # End Source File
 # Begin Source File
@@ -334,6 +334,10 @@ SOURCE=..\..\..\include\graphics\PathEnumerator.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\PixelBuffer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Polygon.h
 # End Source File
 # Begin Source File
@@ -343,6 +347,14 @@ SOURCE=..\..\..\include\graphics\Printable.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\PrintContext.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\RenderableArea.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\RenderPaths.h
 # End Source File
 # Begin Source File
 

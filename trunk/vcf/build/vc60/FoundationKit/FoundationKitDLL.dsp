@@ -44,8 +44,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /Yu"FoundationKit.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -276,6 +275,10 @@ SOURCE=..\..\..\include\core\Object.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ObjectWithEvents.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\OutOfBoundsException.h
 # End Source File
 # Begin Source File
@@ -480,6 +483,8 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !IF  "$(CFG)" == "FoundationKitDLL - Win32 Release"
 
+# ADD CPP /Yc"FoundationKit.h"
+
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
 
 # ADD CPP /Yc"FoundationKit.h"
@@ -504,6 +509,10 @@ SOURCE=..\..\..\src\IO\MemoryStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Object.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ObjectWithEvents.cpp
 # End Source File
 # Begin Source File
 
