@@ -3,7 +3,8 @@
 # Makefile for FoundationKit of the Visual Component Framework
 #
 # Copyright 2000 by Endre Somogyi
-# please mail any questions to etsomogy@ouray.cudenver.edu
+# please mail any questions to etsomogy@ouray.cudenver.edu,
+# ddiego@users.sourceforge.net, or cesarmello@users.sourceforge.net
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -20,7 +21,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA.
 #
-# Please report all bugs and problems to "fltk-bugs@fltk.org".
 #
 
 SHELL=/bin/sh
