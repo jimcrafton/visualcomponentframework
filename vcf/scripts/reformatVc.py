@@ -696,6 +696,11 @@ class FileUtils:
         if ( not os.path.exists( source ) ) :
             raise Exception( 'replaceFile() - the source file \'%s\' does not exist!' % source )
 
+        sourceDir = os.path.dirname( source )
+        destDir = os.path.dirname( destination )
+        if ( sourceDir != destDir ):
+            FileUtils.createDirForFilename( destDir )
+
         if ( os.path.exists( destination ) ) :
             if ( not filecmp.cmp( source, destination ) ):
                 # some changes
@@ -717,6 +722,21 @@ class FileUtils:
 
         return ( changedFiles, unchangedFiles, createdFiles )
     replaceFile = staticmethod(replaceFile)
+
+    def createDirForFilename( filename ):
+        # creates the dir if it doesn't exists
+        created = False
+
+        fileDir = os.path.dirname( filename )
+        if ( not FileUtils.isAbsolutePath( fileDir ) ):
+            raise Exception( "createDirForFilename: trying to save a file with a relative path. Please implement this case with the current working dir: app.currentdir" )
+        if ( not os.path.exists(fileDir) ):
+            print 'creating dir: ' + fileDir
+            os.makedirs( fileDir )
+            created = True
+
+        return created
+    createDirForFilename = staticmethod(createDirForFilename)
 
 
     def sameDrive( path1, path2 ):
@@ -2680,8 +2700,8 @@ class GenericProjectFile( GenericFile ):
             filename = filename[:i] + ncplSep + filename[i+locs:]
 
             fn = os.path.dirname( filename )
-            if ( not os.path.exists(fn) ):
-                os.makedirs( fn )
+            #if ( not os.path.exists(fn) ):
+            #    os.makedirs( fn ) # not here because we pass relative paths too to this function !
 
         if ( True ): # else
             # copied into a _ncpl file in the same directory
@@ -2844,6 +2864,8 @@ class GenericProjectFile( GenericFile ):
             #print 'tmpFilename ' + tmpFilename
             if ( os.path.exists( tmpFilename ) ) :
                 os.remove( tmpFilename )
+            else:
+                FileUtils.createDirForFilename( tmpFilename )
 
             fd = file( tmpFilename, 'w' )
             fd.writelines( self.lines )
@@ -3597,6 +3619,8 @@ class DspFile( GenericProjectFile ):
         if ( app.options.enableProjectFilesModif ):
             if ( os.path.exists( tmpFilename ) ) :
                 os.remove( tmpFilename )
+            else:
+                FileUtils.createDirForFilename( tmpFilename )
 
             fd = file( tmpFilename, 'w' )
             fd.writelines( configurationSection )
@@ -8371,25 +8395,34 @@ class Workspace( DspFile ):
             if ( 0 == len( wspOld.prjConfigFullNameList ) ):
                 raise Exception( 'updateSlnProjectEntries: wspOld.prjConfigFullNameList is empty. File: \'%s\'' % ( self.filename ) )
             for configFullName in wspOld.prjConfigFullNameList:
+                addLine = False
                 dict = slnPrjData.prjConfigFullNameExCfgPlatfAssocDict
                 if ( 0 == len( dict ) ):
                     dict = referenceSolution.dictSlnProjectDataByName[ prjNameLwr ].prjConfigFullNameExCfgPlatfAssocDict
                 if ( dict.has_key( configFullName ) ):
                     confignamePlatf = dict[ configFullName ]
+                    addLine = True
                 else:
-                    configName = configFullName.split( ' ' )[-1]
-                    confignamePlatf = dict[ configName ]
+                    # not sure why I was using only the last part !
+                    #configName = configFullName.split( ' ' )[-1]
+                    #if ( not dict.has_key(configName) ):
+                    #    configName = configFullName
+                    configName = configFullName
+                    if ( dict.has_key(configName) ):
+                        confignamePlatf = dict[ configName ]
+                        addLine = True
 
-                if ( g_options_showNamesForUuids ):
-                    line = '\t\t{%s}.%s.ActiveCfg = %s : {%s}\n' % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
-                    lines.append( line )
-                    #line = '\t\t{%s}.%s.Build.0 = %s : {%s}\n'   % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
-                    #lines.append( line )
-                else:
-                    line = '\t\t{%s}.%s.ActiveCfg = %s\n'        % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
-                    lines.append( line )
-                    #line = '\t\t{%s}.%s.Build.0 = %s\n'          % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
-                    #lines.append( line )
+                if ( addLine ):
+                    if ( g_options_showNamesForUuids ):
+                        line = '\t\t{%s}.%s.ActiveCfg = %s : {%s}\n' % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
+                        lines.append( line )
+                        #line = '\t\t{%s}.%s.Build.0 = %s : {%s}\n'   % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
+                        #lines.append( line )
+                    else:
+                        line = '\t\t{%s}.%s.ActiveCfg = %s\n'        % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
+                        lines.append( line )
+                        #line = '\t\t{%s}.%s.Build.0 = %s\n'          % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
+                        #lines.append( line )
 
         lines.append( '\tEndGlobalSection\n' )
 
@@ -8616,6 +8649,13 @@ class Workspace( DspFile ):
                 prjPath = StringUtils.trimQuotes( prjPath )
                 if ( newCompiler ):
                     newPath = DspFile.makeDuplicateVcFilename( prjPath, wsp.compiler, newCompiler, g_internal_unixStyle, True )
+
+                    # creates the dir if it doesn't exists
+                    #newPathDir = os.path.dirname( newPath )
+                    #baseDir = os.path.dirname( self.filename )
+                    #newPathDirAbs = FileUtils.absolutePath( baseDir, newPathDir, g_internal_unixStyle )
+                    #if ( not os.path.exists(newPathDirAbs) ):
+                    #    os.makedirs( newPathDirAbs )
                 else:
                     # we need to do this first otherwise problems under Cygwin when g_internal_unixStyle=True but the path starts with r'.\'
                     newPath = FileUtils.normPathSimple( prjPath, g_internal_unixStyle )
@@ -8723,6 +8763,8 @@ class Workspace( DspFile ):
         if ( app.options.enableProjectFilesModif ):
             if ( os.path.exists( self.filename ) ):
                 os.remove( self.filename )
+            else:
+                FileUtils.createDirForFilename( self.filename )
 
             fd = file( self.filename, 'w' )
             fd.writelines( self.lines ) # @@@@
