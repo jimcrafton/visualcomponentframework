@@ -21,7 +21,11 @@ where you installed the VCF.
 namespace VCF{
 
 
-
+/**
+The Matrix2D is used for transforming 2D shapes or images.
+@see GraphicsContext
+@see Path
+*/
 class GRAPHICSKIT_API Matrix2D : public Object {
 public:
 	/**
@@ -197,6 +201,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 02:26:24  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
