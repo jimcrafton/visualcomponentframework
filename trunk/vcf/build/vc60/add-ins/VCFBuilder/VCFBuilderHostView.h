@@ -10,8 +10,6 @@
 
 
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // VCFBuilderHostView view
 
@@ -54,8 +52,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-	//VCF::Control* m_vcfBuilderUIPanel;
-	//VCFBuilder::MainUIPanel * m_vcfBuilderUIPanel;
+	
+	VCFBuilder::MainUIPanel * m_vcfBuilderUIPanel;
 };
 
 /////////////////////////////////////////////////////////////////////////////

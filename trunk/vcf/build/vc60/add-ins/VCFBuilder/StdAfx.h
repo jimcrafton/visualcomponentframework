@@ -9,17 +9,9 @@
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
 
-//VCF Stuff
-/*
-#include "ApplicationKit.h"
-#include "Rect.h"
-#include "VCFBuilderUI.h"
-#include "MainUIPanel.h"
 
 
-using namespace VCF;
-using namespace VCFBuilder;
-*/
+#pragma warning (disable:4786)
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxdisp.h>
@@ -43,8 +35,10 @@ extern CComModule _Module;
 
 #include <comdef.h>
 
-
-
+//VCF Stuff
+#include "ApplicationKit.h"
+#include "VCFBuilderUI.h"
+#include "MainUIPanel.h"
 
 
 /////////////////////////////////////////////////////////////////////////////

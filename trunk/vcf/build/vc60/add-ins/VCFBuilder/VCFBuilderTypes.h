@@ -1,12 +1,18 @@
+
+#pragma warning( disable: 4049 )  /* more than 64k source lines */
+
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
-/* File created by MIDL compiler version 5.01.0164 */
-/* at Sat Aug 25 16:51:09 2001
+ /* File created by MIDL compiler version 5.03.0280 */
+/* at Sat Sep 08 15:23:17 2001
  */
 /* Compiler settings for D:\code\vcf\build\vc60\add-ins\VCFBuilder\VCFBuilder.odl:
-    Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
+    Os (OptLev=s), W1, Zp8, env=Win32 (32b run), ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
+    VC __declspec() decoration level: 
+         __declspec(uuid()), __declspec(selectany), __declspec(novtable)
+         DECLSPEC_UUID(), MIDL_INTERFACE()
 */
 //@@MIDL_FILE_HEADING(  )
 
@@ -21,10 +27,6 @@
 
 #ifndef __VCFBuilderTypes_h__
 #define __VCFBuilderTypes_h__
-
-#ifdef __cplusplus
-extern "C"{
-#endif 
 
 /* Forward Declarations */ 
 
@@ -69,6 +71,10 @@ typedef struct DebuggerEvents DebuggerEvents;
 
 #endif 	/* __DebuggerEvents_FWD_DEFINED__ */
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif 
 
 void __RPC_FAR * __RPC_USER MIDL_user_allocate(size_t);
 void __RPC_USER MIDL_user_free( void __RPC_FAR * ); 
@@ -379,3 +385,5 @@ DebuggerEvents;
 #endif
 
 #endif
+
+

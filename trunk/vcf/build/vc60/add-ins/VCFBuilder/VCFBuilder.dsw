@@ -3,31 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"="..\..\ApplicationKit\ApplicationKitDLL.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "FoundationKitDLL"="..\..\FoundationKit\FoundationKitDLL.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "GraphicsKitDLL"="..\..\GraphicsKit\GraphicsKitDLL.dsp" - Package Owner=<4>
+Project: "TextEditor"="..\..\..\..\VCFBuilder2\Packages\TextEditor\TextEditor.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "VCFBuilderUI"="..\..\..\..\VCFBuilder2\Packages\VCFBuilderUI\VCFBuilderUI.dsp" - Package Owner=<4>
+Project: "VCFBuilderUI"="..\..\..\..\VCFBuilder2\PACKAGES\VCFBuilderUI\VCFBuilderUI.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

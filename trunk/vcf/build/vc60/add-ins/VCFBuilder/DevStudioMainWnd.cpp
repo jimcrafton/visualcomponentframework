@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "DevStudioMainWnd.h"
+#include "VCFBuilderHostView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -20,10 +21,7 @@ CDevStudioMainWnd::CDevStudioMainWnd(HWND hWndSubclass):
 {
 	DoSubclass();
 
-	TCHAR tmp[256];
-	::GetWindowText( hWndSubclass, tmp, 256 );
-	OutputDebugString( tmp );
-
+	m_vcfBuilderHost = NULL;
 }
 
 CDevStudioMainWnd::~CDevStudioMainWnd()
@@ -32,9 +30,7 @@ CDevStudioMainWnd::~CDevStudioMainWnd()
 
 
 BEGIN_MESSAGE_MAP(CDevStudioMainWnd, CSubClassWnd)
-	//{{AFX_MSG_MAP(CDevStudioMainWnd)
-	ON_WM_MDIACTIVATE()
-	ON_WM_ACTIVATE()
+	//{{AFX_MSG_MAP(CDevStudioMainWnd)	
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -42,24 +38,6 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDevStudioMainWnd message handlers
 
-void CDevStudioMainWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 
-{
-	CSubClassWnd::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
-	
-	TRACE( "CDevStudioMainWnd::OnMDIActivate\n" );	
-}
-
-void CDevStudioMainWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized) 
-{
-	CSubClassWnd::OnActivate(nState, pWndOther, bMinimized);
-	
-	if ( WA_INACTIVE ==	nState ) {
-		TRACE( "CDevStudioMainWnd::OnActivate state = WA_INACTIVE\n" );
-	}
-	else if ( WA_ACTIVE == nState ) {
-		TRACE( "CDevStudioMainWnd::OnActivate state = WA_ACTIVE\n" );
-	}
-}
 
 HWND CDevStudioMainWnd::GetMDIClientHWND()
 {
@@ -76,4 +54,31 @@ HWND CDevStudioMainWnd::GetMDIClientHWND()
 	}
 	
 	return result;
+}
+
+void CDevStudioMainWnd::CreateVCFHost()
+{
+	m_vcfBuilderHost = new VCFBuilderHostView();
+	m_vcfBuilderHost->Create( NULL, NULL, WS_CHILD | WS_VISIBLE, CRect(0,0,0,0), this, (UINT)-1, NULL );
+}
+
+void CDevStudioMainWnd::SetVCFHostVisible( bool visible )
+{
+	if ( NULL != m_vcfBuilderHost ) {
+		if ( true == visible ) {
+			m_vcfBuilderHost->ShowWindow( SW_NORMAL );
+		}
+		else {
+			m_vcfBuilderHost->ShowWindow( SW_HIDE );
+		}
+		CRect r(0,0,0,0);
+		m_vcfBuilderHost->GetWindowRect( r );
+		ScreenToClient( &r );
+		if ( TRUE == m_vcfBuilderHost->IsWindowVisible() ) {
+			m_vcfBuilderHost->SetWindowPos( &CWnd::wndTop, r.left, r.top, r.Width(), r.Height(), 0);
+		}
+		else {
+			m_vcfBuilderHost->SetWindowPos( &CWnd::wndBottom, r.left, r.top, r.Width(), r.Height(), 0);
+		}
+	}
 }

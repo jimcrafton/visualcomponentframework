@@ -1,15 +1,15 @@
 // AddInMod.cpp : implementation file
 //
 
+
 #include "stdafx.h"
 #include "VCFBuilder.h"
 #include "DSAddIn.h"
 #include "Commands.h"
 #include "DevStudioMainWnd.h"
-#include "VCFBuilderMDIChild.h"
 #include "VCFBuilderHostView.h"
-#include "DevStudioMDIClientWnd.h"
 #include <vector>
+#include <map>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,11 +17,67 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+HWND g_hMDIWnd = NULL;
+
+HHOOK g_MessageHook = NULL;
+
+LRESULT CALLBACK CDSAddIn_MsgProc( int nCode, WPARAM wParam, LPARAM lParam )
+{
+	CWPSTRUCT* msg = (CWPSTRUCT*)lParam;
+	if ( g_hMDIWnd == msg->hwnd ) {
+		VCFBuilderHostView* vcfBuilderHost = 
+					CDevStudioMainWnd::globalDevStudioMainWnd->GetVCFBuilderHost();
+		if ( NULL != vcfBuilderHost ) {
+			switch( msg->message ) {
+				case WM_SIZE : {									
+					int nWidth = LOWORD(msg->lParam);  // width of client area 
+					int nHeight = HIWORD(msg->lParam); // height of client area 				
+					CWnd* parent = vcfBuilderHost->GetParent();
+					CRect r(0,0,0,0);
+					vcfBuilderHost->GetWindowRect( r );
+					parent->ScreenToClient( &r );
+					if ( TRUE == vcfBuilderHost->IsWindowVisible() ) {
+						vcfBuilderHost->SetWindowPos( &CWnd::wndTop, r.left, r.top, nWidth, nHeight, 0);
+					}
+					else {
+						vcfBuilderHost->SetWindowPos( &CWnd::wndBottom, r.left, r.top, nWidth, nHeight, 0);
+					}
+					//g_vcfBuilderHost->MoveWindow( r.left, r.top, nWidth, nHeight );
+				}
+				break;			
+
+				case WM_MOVE : {
+					int xPos = (int)(short) LOWORD(msg->lParam);    // horizontal position 
+					int yPos = (int)(short) HIWORD(msg->lParam);    
+					
+					CRect r(0,0,0,0);				
+					vcfBuilderHost->GetWindowRect( r );
+					
+					if ( TRUE == vcfBuilderHost->IsWindowVisible() ) {
+						vcfBuilderHost->SetWindowPos( &CWnd::wndTop, xPos, yPos, r.Width(), r.Height(), 0);
+					}
+					else {
+						vcfBuilderHost->SetWindowPos( &CWnd::wndBottom, xPos, yPos, r.Width(), r.Height(), 0);
+					}
+					//g_vcfBuilderHost->MoveWindow( xPos, yPos, r.Width(), r.Height() );
+				}
+				break;	
+			}
+		}
+	}
+
+	return CallNextHookEx( g_MessageHook, nCode, wParam, lParam );
+}
+ 
+
 // This is called when the user first loads the add-in, and on start-up
 //  of each subsequent Developer Studio session
 STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 		long dwCookie, VARIANT_BOOL* OnConnection)
 {
+	HINSTANCE hInst = AfxGetApp()->m_hInstance;
+	DWORD threadID = AfxGetApp()->m_nThreadID;
+
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	
 	// Store info passed to us
@@ -50,7 +106,7 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 
 	// Inform DevStudio of the commands we implement
 
-	VCFBuilderMDIChild::globalVCFBuilderIcon = AfxGetApp()->LoadIcon(IDI_VCFBUILDER);
+//	VCFBuilderMDIChild::globalVCFBuilderIcon = AfxGetApp()->LoadIcon(IDI_VCFBUILDER);
 
 	//Initialize the DevStdio global subclass window 
 	HWND hWnd = ::GetActiveWindow();
@@ -65,72 +121,30 @@ STDMETHODIMP CDSAddIn::OnConnection(IApplication* pApp, VARIANT_BOOL bFirstTime,
 	CDevStudioMainWnd::globalDevStudioMainWnd = new CDevStudioMainWnd(hDevStudioWnd);	
 
 	// find the MDI client area window
-	HWND hMDIWnd = CDevStudioMainWnd::globalDevStudioMainWnd->GetMDIClientHWND();    
+	g_hMDIWnd = CDevStudioMainWnd::globalDevStudioMainWnd->GetMDIClientHWND();    
 	
 
-	if ( (NULL != hMDIWnd) && (NULL != hDevStudioWnd) ) {
+	if ( (NULL != g_hMDIWnd) && (NULL != hDevStudioWnd) ) {
 		//CDevStudioMDIClientWnd::globalDevStudioMDIChildMgr = new CDevStudioMDIClientWnd(hMDIWnd, pApplication);
 		char tmp[256];
 		memset(tmp,0,256);
-		sprintf( tmp, "Found %x MDIClient hWnd\n", hMDIWnd );
+		sprintf( tmp, "Found %x MDIClient hWnd\n", g_hMDIWnd );
 		
-		OutputDebugString( tmp );
-
-		VCFBuilderMDIChildWnd::RegisterClass( AfxGetApp()->m_hInstance );
+		OutputDebugString( tmp );		
 
 		RECT r = {0};
-		GetWindowRect( hMDIWnd, &r );
+		GetWindowRect( g_hMDIWnd, &r );
 		POINT* pt = (POINT*)&r;
 
 		ScreenToClient( hDevStudioWnd, pt );
 		pt ++;
-		ScreenToClient( hDevStudioWnd, pt );
+		ScreenToClient( hDevStudioWnd, pt );				
 
-		MDICREATESTRUCT mcs = {0};
-		mcs.szTitle = "VCF Builder IDE";
-		mcs.szClass = VCFBuilderMDIChildWnd::WndClassName;
-		mcs.hOwner	= AfxGetApp()->m_hInstance;
-		mcs.x = mcs.cx = CW_USEDEFAULT;
-		mcs.y = mcs.cy = CW_USEDEFAULT;
-		mcs.style = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_SYSMENU | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
+		CDevStudioMainWnd::globalDevStudioMainWnd->CreateVCFHost();
 
-		HWND hwnd = (HWND)SendMessage (hMDIWnd, WM_MDICREATE, 0,(LONG)(LPMDICREATESTRUCT)&mcs);
+		g_MessageHook = SetWindowsHookEx( WH_CALLWNDPROC, CDSAddIn_MsgProc, hInst, threadID );
 		
-
-
-	}	
-
-	/*
-	CRuntimeClass* pRTDocClass = NULL;
-	bool addDocTemplate = false;
-	{
-		AFX_MANAGE_STATE( AfxGetAppModuleState() );
-		POSITION pos = AfxGetApp()->GetFirstDocTemplatePosition();
-		while ( (NULL != pos) && (!addDocTemplate) ) {
-			CDocTemplate* docTemplate = AfxGetApp()->GetNextDocTemplate( pos );
-			CString docTemplateClassName = docTemplate->GetRuntimeClass()->m_lpszClassName;
-			//if ( docTemplateClassName == "CTextDocTemplate" ) {
-				char tmp[256];
-				sprintf( tmp,"docTemplate class name: \"%s\"\n", docTemplate->GetRuntimeClass()->m_lpszClassName );
-				
-				OutputDebugString( tmp );
-				POSITION pos2 = docTemplate->GetFirstDocPosition();
-				while ( NULL != pos2 ) {
-					CDocument* doc = docTemplate->GetNextDoc( pos2 );
-					CString docClassName = doc->GetRuntimeClass()->m_lpszClassName;
-					if ( docClassName == "CWorkspaceDoc" ) {
-						pRTDocClass = doc->GetRuntimeClass();
-						addDocTemplate = true;
-					}
-					
-					sprintf( tmp,"doc class name: \"%s\"\n", doc->GetRuntimeClass()->m_lpszClassName );
-					OutputDebugString( tmp );
-				}
-			//}
-			
-		}
 	}
-	*/
 
 	//finished initializing.....
 	
@@ -149,6 +163,10 @@ STDMETHODIMP CDSAddIn::OnDisconnection(VARIANT_BOOL bLastTime)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	
+	if ( NULL != g_MessageHook ) {
+		UnhookWindowsHookEx( g_MessageHook );
+	}
+
 	delete CDevStudioMainWnd::globalDevStudioMainWnd;
 	CDevStudioMainWnd::globalDevStudioMainWnd = NULL;
 

@@ -7,7 +7,10 @@
 
 #include "VCFBuilderHostView.h"
 
-//#include "MainUIPanel.h"
+
+
+
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -15,6 +18,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+using namespace VCF;
+using namespace VCFBuilder;
 
 
 
@@ -25,7 +30,7 @@ IMPLEMENT_DYNCREATE(VCFBuilderHostView, CView)
 
 VCFBuilderHostView::VCFBuilderHostView()
 {
-	m_vcfBuilderUIPanel = NULL;
+	//m_vcfBuilderUIPanel = NULL;
 }
 
 VCFBuilderHostView::~VCFBuilderHostView()
@@ -45,7 +50,11 @@ END_MESSAGE_MAP()
 
 void VCFBuilderHostView::OnDraw(CDC* pDC)
 {
-	
+	CRect r(0,0,0,0);
+	GetClientRect( r );
+	CBrush back;
+	back.CreateSolidBrush( GetSysColor( COLOR_WINDOW ) );
+	pDC->FillRect( r, &back );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -96,7 +105,7 @@ int VCFBuilderHostView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	::SetParent( hWnd, this->m_hWnd );
 
 
-	Control* c = NULL;
+	//Control* c = NULL;
 	
 	return 0;
 }
@@ -109,7 +118,6 @@ void VCFBuilderHostView::OnSize(UINT nType, int cx, int cy)
 		m_vcfBuilderUIPanel->setBounds( &Rect(0,0,cx,cy) );
 	}
 }
-
 void VCFBuilderHostView::newProject()
 {
 	if ( NULL != m_vcfBuilderUIPanel )	{

@@ -117,7 +117,7 @@ LRESULT CALLBACK VCFBuilderMDIChildWnd::WindowProc( HWND hwnd, UINT uMsg, WPARAM
 		break;
 
 		default : {
-			result = DefMDIChildProc( hwnd, uMsg, wParam, lParam );
+			result = DefWindowProc( hwnd, uMsg, wParam, lParam );
 		}
 		break;
 	}
