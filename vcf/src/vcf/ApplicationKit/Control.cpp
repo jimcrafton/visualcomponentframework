@@ -176,7 +176,7 @@ Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
 		lightweightParent = parent->isLightWeight();
 	}
 
-	if ( lightweightParent ) {
+	if ( lightweightParent && !isLightWeight() ) {
 		*bounds_ = peer_->getBounds();
 
 		Rect tmpBounds = *bounds_;
@@ -335,7 +335,7 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**t
 		lightweightParent = parent->isLightWeight();
 	}
 
-	if ( lightweightParent ) {
+	if ( lightweightParent && !isLightWeight() ) {
 		Control* realParent = parent;
 		while ( NULL != realParent ) {
 			if ( !realParent->isLightWeight() ) {
@@ -779,7 +779,7 @@ void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME
 
 		parent->addComponent( this );
 
-		if ( parent_->isLightWeight() ) {
+		if ( parent_->isLightWeight() && !isLightWeight() ) {
 
 			Rect tmp = peer_->getBounds();
 			Rect tmp2 = tmp;
@@ -1447,6 +1447,9 @@ void Control::setViewModel( Model* viewModel )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/19 02:24:54  ddiego
+*fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

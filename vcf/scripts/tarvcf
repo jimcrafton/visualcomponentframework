@@ -16,7 +16,7 @@ find $SRC_DIRS -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' \
 	
 find $SRC_DIRS -iname '*.def' -o -iname '*.vcfdir' -o -iname '*.vcp' \
 	-o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.vff' \
-	-o -iname '*.inf' -o -iname '*.vcproj' > srcfiles1.out
+	-o -iname '*.inf' -o -iname '*.vcproj' -o -iname '*.sln' > srcfiles1.out
 	
 find $SRC_DIRS -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.HPP' \
 	-o -iname *.cxx -o -iname '*.CXX' -o -iname '*.cur' \
@@ -38,12 +38,13 @@ MAKE_FILES="./build/make/Makefile \n\
 ./build/make/OpenGLKit.mak \n\
 ./build/make/Makefile.mak "
 
+find ./build/bcc -iname '*.mak' -o -iname '*.txt' -o -iname '*.inc' > bcc-makefiles.out
 
 #combine the outoput into a master list
 echo -e $MAKE_FILES > mkfiles.out
-cat srcfiles.out srcfiles1.out srcfiles2.out tests.out examples.out mkfiles.out > files.out
+cat srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out > files.out
 
-rm srcfiles.out srcfiles1.out srcfiles2.out tests.out examples.out mkfiles.out
+rm srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out
 
 #display in notepad
 notepad files.out

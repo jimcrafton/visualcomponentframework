@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.11  2004/08/19 02:24:52  ddiego
+#fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+#
 #Revision 1.10  2004/08/08 22:09:31  ddiego
 #final checkin before the 0-6-5 release
 #
@@ -100,7 +103,7 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.5
+VERSION = `cat ../VERSION`
 
 
 #version number for the XMake program

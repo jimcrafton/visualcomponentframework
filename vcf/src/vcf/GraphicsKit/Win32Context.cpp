@@ -865,18 +865,29 @@ void Win32Context::setClippingRect( Rect* clipRect )
 	checkHandle();
 
 	if ( NULL != clipRGN_ ) {
-		::DeleteObject( clipRGN_ );
+		if ( !::DeleteObject( clipRGN_ ) ) {
+			StringUtils::traceWithArgs( "Error in DeleteObject( %p )\n", clipRGN_, GetLastError() );
+		}
 	}
 
 	clipRGN_ = NULL;
 
 	if ( NULL != clipRect ) {
-
-		clipRGN_ = CreateRectRgn( (long)clipRect->left_, (long)clipRect->top_, (long)clipRect->right_, (long)clipRect->bottom_ );
+		if ( !clipRect->isNull() ) {
+			clipRGN_ = CreateRectRgn( (long)clipRect->left_ + origin_.x_, 
+										(long)clipRect->top_ + origin_.y_, 
+										(long)clipRect->right_ + origin_.x_, 
+										(long)clipRect->bottom_  + origin_.y_);			
+		}
+		else {
+			clipRGN_ = NULL;
+		}
 	}
 
 
-	::SelectClipRgn( dc_, clipRGN_ );
+	if ( ERROR == ::SelectClipRgn( dc_, clipRGN_ ) ){
+		StringUtils::traceWithArgs( "Error in SelectClipRgn( %p, %p )\n", dc_, clipRGN_, GetLastError() );
+	}
 
 	releaseHandle();
 }
@@ -906,12 +917,12 @@ void Win32Context::setClippingPath( Path* clippingPath )
 
 			switch ( pt.type_ ){
 				case PathPoint::ptMoveTo: {
-					MoveToEx( dc_, (long)pt.point_.x_, (long)pt.point_.y_, NULL );
+					MoveToEx( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_, NULL );
 				}
 				break;
 
 				case PathPoint::ptLineTo: {
-					LineTo( dc_, (long)pt.point_.x_, (long)pt.point_.y_ );
+					LineTo( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_ );
 				}
 				break;
 
@@ -926,7 +937,7 @@ void Win32Context::setClippingPath( Path* clippingPath )
 				break;
 
 				case PathPoint::ptClose: {
-					LineTo( dc_, (long)pt.point_.x_, (long)pt.point_.y_ );
+					LineTo( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_ );
 				}
 				break;
 			}
@@ -2189,6 +2200,9 @@ void Win32Context::finishedDrawing( long drawingOperation )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/19 02:24:54  ddiego
+*fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
