@@ -7,10 +7,6 @@ Project: "ApplicationKit"=.\ApplicationKit\ApplicationKit.dsp - Package Owner=<4
 
 Package=<5>
 {{{
-    begin source code control
-    ApplicationKit
-    .\applicationkit
-    end source code control
 }}}
 
 Package=<4>
@@ -29,10 +25,6 @@ Project: "ApplicationKitDLL"=.\ApplicationKit\ApplicationKitDLL.dsp - Package Ow
 
 Package=<5>
 {{{
-    begin source code control
-    ApplicationKitDLL
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -51,10 +43,6 @@ Project: "FoundationKit"=.\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    FoundationKit
-    .\foundationkit
-    end source code control
 }}}
 
 Package=<4>
@@ -67,10 +55,6 @@ Project: "FoundationKitDLL"=.\FoundationKit\FoundationKitDLL.dsp - Package Owner
 
 Package=<5>
 {{{
-    begin source code control
-    FoundationKitDLL
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -83,10 +67,6 @@ Project: "FreeImageLib"=..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeIma
 
 Package=<5>
 {{{
-    begin source code control
-    FreeImageLib
-    ..\..\imageformats\freeimage\source
-    end source code control
 }}}
 
 Package=<4>
@@ -114,10 +94,6 @@ Project: "GraphicsKit"=.\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    GraphicsKit
-    .\graphicskit
-    end source code control
 }}}
 
 Package=<4>
@@ -133,10 +109,6 @@ Project: "GraphicsKitDLL"=.\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    GraphicsKitDLL
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -155,10 +127,6 @@ Project: "ImageFormats"=.\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    ImageFormats
-    .\graphicskit
-    end source code control
 }}}
 
 Package=<4>
@@ -177,10 +145,6 @@ Project: "LibJPEG"=..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp - Pac
 
 Package=<5>
 {{{
-    begin source code control
-    "$/FreeImage/LibJPEG", IHAAAAAA
-    ..\..\imageformats\freeimage\source\libjpeg
-    end source code control
 }}}
 
 Package=<4>
@@ -193,10 +157,6 @@ Project: "LibMNG"=..\..\ImageFormats\FreeImage\Source\LibMNG\LibMNG.dsp - Packag
 
 Package=<5>
 {{{
-    begin source code control
-    LibMNG
-    ..\..\imageformats\freeimage\source\libmng
-    end source code control
 }}}
 
 Package=<4>
@@ -209,10 +169,6 @@ Project: "LibPNG"=..\..\ImageFormats\FreeImage\Source\LibPNG\LibPNG.dsp - Packag
 
 Package=<5>
 {{{
-    begin source code control
-    "$/FreeImage/LibPNG", PJAAAAAA
-    ..\..\imageformats\freeimage\source\libpng
-    end source code control
 }}}
 
 Package=<4>
@@ -225,10 +181,6 @@ Project: "LibTIFF"=..\..\ImageFormats\FreeImage\Source\LibTIFF\LibTIFF.dsp - Pac
 
 Package=<5>
 {{{
-    begin source code control
-    "$/FreeImage/LibTIFF", MKAAAAAA
-    ..\..\imageformats\freeimage\source\libtiff
-    end source code control
 }}}
 
 Package=<4>
@@ -241,10 +193,6 @@ Project: "NetworkKit"=.\NetworkKit\NetworkKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    NetworkKit
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -260,10 +208,6 @@ Project: "NetworkKitDLL"=.\NetworkKit\NetworkKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    NetworkKitDLL
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -275,14 +219,22 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RegExx"=.\FOUNDATIONKIT\RegExx.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RemoteObjectKit"=.\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    RemoteObjectKit
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -301,10 +253,6 @@ Project: "RemoteObjectKitStatic"=.\REMOTEOBJECTKIT\RemoteObjectKitStatic.dsp - P
 
 Package=<5>
 {{{
-    begin source code control
-    RemoteObjectKitStatic
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -323,10 +271,6 @@ Project: "Win32HTMLBrowser"=.\Win32HTMLBrowser\Win32HTMLBrowser.dsp - Package Ow
 
 Package=<5>
 {{{
-    begin source code control
-    Win32HTMLBrowser
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -339,10 +283,6 @@ Project: "Win32HTMLBrowser_StaticLib"=.\Win32HTMLBrowser\Win32HTMLBrowser_Static
 
 Package=<5>
 {{{
-    begin source code control
-    Win32HTMLBrowser_StaticLib
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -355,10 +295,6 @@ Project: "ZLib"=..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp - Package Owne
 
 Package=<5>
 {{{
-    begin source code control
-    "$/FreeImage/ZLib", KNAAAAAA
-    ..\..\imageformats\freeimage\source\zlib
-    end source code control
 }}}
 
 Package=<4>
@@ -371,10 +307,6 @@ Project: "libart"=.\GRAPHICSKIT\libart.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    libart
-    ..\..
-    end source code control
 }}}
 
 Package=<4>
@@ -387,10 +319,6 @@ Project: "vcfAll"=.\vcfAll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    vcfAll
-    .
-    end source code control
 }}}
 
 Package=<4>
@@ -424,10 +352,6 @@ Project: "vcfAllStaticLibs"=.\vcfAllStaticLibs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
-    begin source code control
-    vcfAllStaticLibs
-    .
-    end source code control
 }}}
 
 Package=<4>

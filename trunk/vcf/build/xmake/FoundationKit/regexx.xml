@@ -1,0 +1,47 @@
+<make>
+
+	<substitutions>
+		<variable name="INC" value="../../../include"/>
+		<variable name="SRC" value="../../../src"/>		
+		<variable name="LIB_OUT" value="../../../lib"/>
+		<variable name="BIN_OUT" value="../../../bin"/>
+	</substitutions>
+
+	
+	<project name="RegExx" >
+		<configurations>
+			<config name="GCC Debug" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -D_DEBUG"/>
+					</flags>
+				</compiler>	
+
+				<linker name="ar">
+					<flags>						
+						<flag value="-cru $(LIB_OUT)/libRegExx_sd.a"/>
+					</flags>
+				</linker>
+			</config>
+			<config name="VC++ Debug" srcBinaryExt=".obj">
+				<compiler name="cl" >
+					<flags>
+						<flag value="/I $(INC)"/>
+						<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od"/>
+						<flag value="/D WIN32 /D _DEBUG /D _MBCS /D _LIB"/>
+						<flag value="/c"/>
+					</flags>
+				</compiler>	
+			</config>
+		</configurations>
+
+		<sources>
+			<source name="$(SRC)/Utils/get.c" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/maketables.c" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/pcre.c" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/study.c" partOfConfig="GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Utils/regexx.cpp" partOfConfig="GCC Debug|VC++ Debug"/>
+		</sources>
+	</project>
+</make>
