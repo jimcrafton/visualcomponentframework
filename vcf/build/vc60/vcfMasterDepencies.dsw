@@ -210,10 +210,10 @@ Package=<4>
     Project_Dep_Name CopyAndPaste
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name DatesAndTime
+    Project_Dep_Name DateTimeUI
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name DateTimeUI
+    Project_Dep_Name DatesAndTime
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Dictionaries
@@ -642,13 +642,43 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKit
+    Project_Dep_Name FoundationKit
     End Project Dependency
 }}}
 
 ###############################################################################
 
 Project: "NetworkKitDLL"="./NetworkKit/NetworkKitDLL.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKit"="./OpenGLKit/OpenGLKit.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKitDLL"="./OpenGLKit/OpenGLKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -948,16 +978,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser_StaticLib
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name ImageFormats
+    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
 }}}
 
@@ -1025,6 +1052,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name libXmake
+    End Project Dependency
 }}}
 
 ###############################################################################
