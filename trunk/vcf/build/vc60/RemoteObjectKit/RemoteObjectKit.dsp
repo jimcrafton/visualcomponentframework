@@ -108,6 +108,10 @@ SOURCE=..\..\..\src\remote\DistributedClassRegistry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\remote\DistributedException.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\remote\InstanceID.cpp
 # End Source File
 # Begin Source File
@@ -116,7 +120,7 @@ SOURCE=..\..\..\src\remote\Proxy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RemoteObjectKit.cpp
+SOURCE=..\..\..\src\remote\RemoteObjectKit.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -137,6 +141,10 @@ SOURCE=..\..\..\include\remote\ClassServerInstance.h
 # Begin Source File
 
 SOURCE=..\..\..\include\remote\DistributedClassRegistry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\remote\DistributedException.h
 # End Source File
 # Begin Source File
 
