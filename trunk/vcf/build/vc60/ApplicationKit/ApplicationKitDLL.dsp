@@ -625,6 +625,10 @@ SOURCE=..\..\..\include\core\PopupMenu.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\PopupMenuPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\PrintContextPeer.h
 # End Source File
 # Begin Source File
@@ -910,6 +914,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Object.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Win32PopupMenu.h
 # End Source File
 # Begin Source File
 
@@ -1221,6 +1229,10 @@ SOURCE=..\..\..\src\core\Panel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\PopupMenu.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\PropertyEditorManager.cpp
 # End Source File
 # Begin Source File
@@ -1362,6 +1374,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32MenuItem.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Object.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32PopupMenu.cpp
 # End Source File
 # Begin Source File
 
