@@ -440,6 +440,9 @@
 				RelativePath="..\..\..\include\utils\Condition.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\utils\DateTime.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\utils\Enumerator.h">
 			</File>
 			<File
@@ -570,9 +573,6 @@
 				RelativePath="..\..\..\include\rtti\Field.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\Interface.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\rtti\InterfaceClass.cpp">
 			</File>
 			<File
@@ -589,9 +589,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\VariantData.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\VariantData.h">
 			</File>
 		</Filter>
 		<Filter

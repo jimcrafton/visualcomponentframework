@@ -399,13 +399,13 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\vcf-active\build\resources\win32;$(NoInherit)"/>
+						AdditionalIncludeDirectories="\code\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\vcf-active\build\resources\win32;$(NoInherit)"/>
+						AdditionalIncludeDirectories="\code\vcf\build\resources\win32;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -620,8 +620,7 @@
 				RelativePath="..\..\..\src\IO\VFFOutputStream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\Window.cpp"
-				DeploymentContent="TRUE">
+				RelativePath="..\..\..\src\core\Window.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\WindowEvent.cpp">
@@ -635,9 +634,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\AbstractWin32Component.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\ClipboardPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\ImplementerKit\COMDataObject.cpp">
