@@ -1,6 +1,6 @@
 ; VCFNewClassWiz.def : Declares the module parameters for the DLL.
 
-LIBRARY      "VCFNewClassWiz"
+;LIBRARY      "VCFNewClassWiz"
 DESCRIPTION  'VCFNewClassWiz Windows Dynamic Link Library'
 
 EXPORTS

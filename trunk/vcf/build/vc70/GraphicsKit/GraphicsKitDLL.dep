@@ -1,0 +1,340 @@
+# Microsoft Developer Studio Generated Dependency File, included by GraphicsKitDLL.mak
+
+..\..\..\src\Graphics\AbstractImage.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\ArtStroke.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\art_affine.h"\
+	"..\..\..\include\graphics\art_alphagamma.h"\
+	"..\..\..\include\graphics\art_bpath.h"\
+	"..\..\..\include\graphics\art_config.h"\
+	"..\..\..\include\graphics\art_filterlevel.h"\
+	"..\..\..\include\graphics\art_gray_svp.h"\
+	"..\..\..\include\graphics\art_misc.h"\
+	"..\..\..\include\graphics\art_pathcode.h"\
+	"..\..\..\include\graphics\art_pixbuf.h"\
+	"..\..\..\include\graphics\art_point.h"\
+	"..\..\..\include\graphics\art_rect.h"\
+	"..\..\..\include\graphics\art_rect_svp.h"\
+	"..\..\..\include\graphics\art_rect_uta.h"\
+	"..\..\..\include\graphics\art_rgb.h"\
+	"..\..\..\include\graphics\art_rgb_affine.h"\
+	"..\..\..\include\graphics\art_rgb_bitmap_affine.h"\
+	"..\..\..\include\graphics\art_rgb_pixbuf_affine.h"\
+	"..\..\..\include\graphics\art_rgb_rgba_affine.h"\
+	"..\..\..\include\graphics\art_rgb_svp.h"\
+	"..\..\..\include\graphics\art_svp.h"\
+	"..\..\..\include\graphics\art_svp_ops.h"\
+	"..\..\..\include\graphics\art_svp_point.h"\
+	"..\..\..\include\graphics\art_svp_render_aa.h"\
+	"..\..\..\include\graphics\art_svp_vpath.h"\
+	"..\..\..\include\graphics\art_svp_vpath_stroke.h"\
+	"..\..\..\include\graphics\art_svp_wind.h"\
+	"..\..\..\include\graphics\art_uta.h"\
+	"..\..\..\include\graphics\art_uta_ops.h"\
+	"..\..\..\include\graphics\art_uta_rect.h"\
+	"..\..\..\include\graphics\art_uta_svp.h"\
+	"..\..\..\include\graphics\art_uta_vpath.h"\
+	"..\..\..\include\graphics\art_vpath.h"\
+	"..\..\..\include\graphics\art_vpath_bpath.h"\
+	"..\..\..\include\graphics\art_vpath_dash.h"\
+	"..\..\..\include\graphics\art_vpath_svp.h"\
+	"..\..\..\include\graphics\ArtStroke.h"\
+	"..\..\..\include\graphics\libart.h"\
+	"..\..\..\include\graphics\LibArtDLL.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\BasicFill.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\BasicFill.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\BasicStroke.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\BasicStroke.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\Color.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\Font.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\FontState.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\GlyphCollection.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\GlyphCollection.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\GraphicsContext.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\GraphicsKit.cpp : \
+	"..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	"..\..\..\include\core\Class.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ClassRegistry.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\FoundationKit.h"\
+	"..\..\..\include\core\FrameworkConfig.h"\
+	"..\..\..\include\core\Interface.h"\
+	"..\..\..\include\core\InterfaceClass.h"\
+	"..\..\..\include\core\Locales.h"\
+	"..\..\..\include\core\Method.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\ObjectWithEvents.h"\
+	"..\..\..\include\core\Point.h"\
+	"..\..\..\include\core\Property.h"\
+	"..\..\..\include\core\Rect.h"\
+	"..\..\..\include\core\Size.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\events\Event.h"\
+	"..\..\..\include\events\EventHandler.h"\
+	"..\..\..\include\events\imageevent.h"\
+	"..\..\..\include\events\imagelistener.h"\
+	"..\..\..\include\events\NotifyEvent.h"\
+	"..\..\..\include\events\NotifyListener.h"\
+	"..\..\..\include\events\PropertyChangeEvent.h"\
+	"..\..\..\include\events\PropertyListener.h"\
+	"..\..\..\include\exceptions\BasicException.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\ClassNotFound.h"\
+	"..\..\..\include\exceptions\ErrorStrings.h"\
+	"..\..\..\include\exceptions\invalidimage.h"\
+	"..\..\..\include\exceptions\InvalidPeer.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\NoFreeMemException.h"\
+	"..\..\..\include\exceptions\nographicstoolkitfoundexception.h"\
+	"..\..\..\include\exceptions\NoPeerFoundException.h"\
+	"..\..\..\include\exceptions\NoSuchElementException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\PropertyChangeException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\exceptions\TypeCastException.h"\
+	"..\..\..\include\graphics\Circle.h"\
+	"..\..\..\include\graphics\ClippingRegion.h"\
+	"..\..\..\include\graphics\Color.h"\
+	"..\..\..\include\graphics\Curve.h"\
+	"..\..\..\include\graphics\Ellipse.h"\
+	"..\..\..\include\graphics\Fill.h"\
+	"..\..\..\include\graphics\Font.h"\
+	"..\..\..\include\graphics\FontPeer.h"\
+	"..\..\..\include\graphics\GraphicsContext.h"\
+	"..\..\..\include\graphics\GraphicsKit.h"\
+	"..\..\..\include\graphics\Image.h"\
+	"..\..\..\include\graphics\ImageBits.h"\
+	"..\..\..\include\graphics\ImageLoader.h"\
+	"..\..\..\include\graphics\Matrix2D.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\graphics\Path.h"\
+	"..\..\..\include\graphics\PathEnumerator.h"\
+	"..\..\..\include\graphics\Polygon.h"\
+	"..\..\..\include\graphics\Printable.h"\
+	"..\..\..\include\graphics\PrintContext.h"\
+	"..\..\..\include\graphics\Stroke.h"\
+	"..\..\..\include\implementer\FillState.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementer\OpenGLPeer.h"\
+	"..\..\..\include\implementer\StrokeState.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\BasicInputStream.h"\
+	"..\..\..\include\io\BasicOutputStream.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\File.h"\
+	"..\..\..\include\io\FileIOError.h"\
+	"..\..\..\include\io\FileNotFound.h"\
+	"..\..\..\include\io\FileStream.h"\
+	"..\..\..\include\io\MemStreamUtils.h"\
+	"..\..\..\include\io\Persistable.h"\
+	"..\..\..\include\io\Stream.h"\
+	"..\..\..\include\io\TextInputStream.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\utils\Enum.h"\
+	"..\..\..\include\utils\Enumerator.h"\
+	"..\..\..\include\utils\GraphicsToolKit.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\Runnable.h"\
+	"..\..\..\include\utils\StringUtils.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\VCFChar.h"\
+	"..\..\..\include\utils\VCFString.h"\
+	
+
+..\..\..\src\Graphics\GraphicsObject.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\GraphicsObject.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Utils\GraphicsToolKit.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32GraphicsToolkit.h"\
+	
+
+..\..\..\src\Events\ImageEvent.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\Matrix2D.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\OpenGLContext.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\Polygon.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\Graphics\Vector2D.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\graphics\Vector2D.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Context.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Font.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Font.h"\
+	"..\..\..\include\ImplementerKit\Win32FontManager.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FontManager.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Font.h"\
+	"..\..\..\include\ImplementerKit\Win32FontManager.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerKit\Win32Font.h"\
+	"..\..\..\include\ImplementerKit\Win32FontManager.h"\
+	"..\..\..\include\implementerKit\Win32GraphicsToolkit.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	"..\..\..\include\implementerkit\Win32OpenGLPeer.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Image.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\AbstractImage.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerKit\Win32Image.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp : \
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\graphics\OpenGLContext.h"\
+	"..\..\..\include\graphics\VCFOpenGL.h"\
+	"..\..\..\include\implementer\Contextpeer.h"\
+	"..\..\..\include\implementer\FontState.h"\
+	"..\..\..\include\implementerKit\Win32Context.h"\
+	"..\..\..\include\implementerkit\Win32OpenGLPeer.h"\
+	

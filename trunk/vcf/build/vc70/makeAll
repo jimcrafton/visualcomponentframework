@@ -1,0 +1,30 @@
+cd ./FoundationKit
+nmake /f FoundationKitDll.mak CFG="FoundationKitDLL - Win32 Debug"
+nmake /f FoundationKitDll.mak CFG="FoundationKitDLL - Win32 Release"
+nmake /f FoundationKit.mak CFG="FoundationKit - Win32 Debug"
+nmake /f FoundationKit.mak CFG="FoundationKit - Win32 Release"
+echo FoundationKit completed
+cd ..
+cd ./GraphicsKit
+nmake /f GraphicsKitDll.mak CFG="GraphicsKitDLL - Win32 Debug"
+nmake /f GraphicsKitDll.mak CFG="GraphicsKitDLL - Win32 Release"
+nmake /f GraphicsKit.mak CFG="GraphicsKit - Win32 Debug"
+nmake /f GraphicsKit.mak CFG="GraphicsKit - Win32 Release"
+echo GraphicsKit completed
+cd ..
+cd ./ApplicationKit
+nmake /f ApplicationKitDll.mak CFG="ApplicationKitDLL - Win32 Debug"
+nmake /f ApplicationKitDll.mak CFG="ApplicationKitDLL - Win32 Release"
+nmake /f ApplicationKit.mak CFG="ApplicationKit - Win32 Debug"
+nmake /f ApplicationKit.mak CFG="ApplicationKit - Win32 Release"
+echo ApplicationKit completed
+cd ..
+cd ../../
+
+find ./include ./lib ./bin -iname *.lib -o -iname *.dll -o -iname *.h > files.out
+echo Creating tar file...
+tar -cf ./vcfBin.tar -T files.out
+rm files.out
+echo Compressing tar file with gzip...
+gzip -f ./vcfBin.tar
+echo Done !

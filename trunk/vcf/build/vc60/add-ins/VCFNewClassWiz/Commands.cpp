@@ -38,30 +38,76 @@ STDMETHODIMP CCommands::NewVCFClass()
 		
 		NewClassDlg dlg;
 		
+		CComBSTR projPath;
+		proj->get_FullName( &projPath );
+
+
 		if ( IDOK == dlg.DoModal() ){
+					
+			char drive[_MAX_DRIVE];
+			char dir[_MAX_DIR];
+			char fname[_MAX_FNAME];
+			char ext[_MAX_EXT];
+			
+			CString headerFilename = dlg.m_headerName;
+
+			_splitpath( dlg.m_headerName, drive, dir, fname, ext );
+
+			if ( strlen(dir) <= 0 ) {
+				headerFilename = projPath;
+					
+				_splitpath( headerFilename, drive, dir, fname, ext );
+
+				headerFilename = drive;
+				headerFilename += dir;
+
+				_splitpath( dlg.m_headerName, drive, dir, fname, ext );
+
+				headerFilename += fname;
+				headerFilename += ext;
+			}
+			
+			
 			CString s = dlg.GetClassDecl();
-			CString tmp1 = dlg.m_headerName;
-			CString tmp2 = dlg.m_CPPName;
-			
-			CString filename = dlg.m_headerName;
-			
-			CFile file( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+
+			CFile file( headerFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
 			file.Write( s.GetBuffer(0), s.GetLength() );
 			
+			CString CPPFilename = dlg.m_CPPName;
+
+			_splitpath( dlg.m_CPPName, drive, dir, fname, ext );
+
+			if ( strlen(dir) <= 0 ) {
+				CPPFilename = projPath;
+					
+				_splitpath( CPPFilename, drive, dir, fname, ext );
+
+				CPPFilename = drive;
+				CPPFilename += dir;
+
+				_splitpath( dlg.m_CPPName, drive, dir, fname, ext );
+
+				CPPFilename += fname;
+				CPPFilename += ext;
+			}
+			
+
 			if ( FALSE == dlg.m_isClassAnInterface ) {
-				filename = dlg.m_CPPName;
+				
 				s = dlg.GetClassImpl();
-				CFile file2( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+				CFile file2( CPPFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
 				file2.Write( s.GetBuffer(0), s.GetLength() );
 			}
 			
 			CComBSTR cppFile;
-			cppFile = dlg.m_CPPName;
+			cppFile = CPPFilename;
 			_variant_t reserved;
 			if ( FALSE == dlg.m_isClassAnInterface ) {
 				proj->AddFile( cppFile, reserved );
 			}
-			CComBSTR headerFile = dlg.m_headerName;
+
+
+			CComBSTR headerFile = headerFilename;
 			
 			proj->AddFile( headerFile, reserved );			
 			

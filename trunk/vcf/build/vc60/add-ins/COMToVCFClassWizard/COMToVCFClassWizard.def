@@ -1,6 +1,6 @@
 ; COMToVCFClassWizard.def : Declares the module parameters for the DLL.
 
-LIBRARY      "COMToVCFClassWizard"
+;LIBRARY      "COMToVCFClassWizard"
 DESCRIPTION  'COMToVCFClassWizard Windows Dynamic Link Library'
 
 EXPORTS

@@ -1,0 +1,829 @@
+# Microsoft Developer Studio Generated Dependency File, included by FoundationKitDLL.mak
+
+..\..\..\src\Exceptions\BasicException.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\BasicInputStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\BasicOutputStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\Class.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\ClassRegistry.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\Directory.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\Implementer\FilePeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\ErrorLog.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\ErrorLog.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Events\Event.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Events\EventHandler.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\io\File.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\Implementer\FilePeer.h"\
+	"..\..\..\include\ImplementerKit\Win32FilePeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\FileStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32FileStream.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\FileStreamPeer.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\FileUtils.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\FileUtils.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\FoundationKit.cpp : \
+	"..\..\..\..\..\program files\microsoft visual studio\vc98\include\basetsd.h"\
+	"..\..\..\include\core\Class.h"\
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\ClassRegistry.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\FoundationKit.h"\
+	"..\..\..\include\core\FrameworkConfig.h"\
+	"..\..\..\include\core\Interface.h"\
+	"..\..\..\include\core\InterfaceClass.h"\
+	"..\..\..\include\core\Locales.h"\
+	"..\..\..\include\core\Method.h"\
+	"..\..\..\include\core\Object.h"\
+	"..\..\..\include\core\ObjectWithEvents.h"\
+	"..\..\..\include\core\Point.h"\
+	"..\..\..\include\core\Property.h"\
+	"..\..\..\include\core\Rect.h"\
+	"..\..\..\include\core\Size.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\events\Event.h"\
+	"..\..\..\include\events\EventHandler.h"\
+	"..\..\..\include\events\NotifyEvent.h"\
+	"..\..\..\include\events\NotifyListener.h"\
+	"..\..\..\include\events\PropertyChangeEvent.h"\
+	"..\..\..\include\events\PropertyListener.h"\
+	"..\..\..\include\exceptions\BasicException.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\ClassNotFound.h"\
+	"..\..\..\include\exceptions\ErrorStrings.h"\
+	"..\..\..\include\exceptions\InvalidPeer.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\NoFreeMemException.h"\
+	"..\..\..\include\exceptions\NoPeerFoundException.h"\
+	"..\..\..\include\exceptions\NoSuchElementException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\PropertyChangeException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\exceptions\TypeCastException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\BasicInputStream.h"\
+	"..\..\..\include\io\BasicOutputStream.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\File.h"\
+	"..\..\..\include\io\FileIOError.h"\
+	"..\..\..\include\io\FileNotFound.h"\
+	"..\..\..\include\io\FileStream.h"\
+	"..\..\..\include\io\MemStreamUtils.h"\
+	"..\..\..\include\io\Persistable.h"\
+	"..\..\..\include\io\Stream.h"\
+	"..\..\..\include\io\TextInputStream.h"\
+	"..\..\..\include\io\TextOutputStream.h"\
+	"..\..\..\include\io\VariantDataStream.h"\
+	"..\..\..\include\utils\Enum.h"\
+	"..\..\..\include\utils\Enumerator.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\Runnable.h"\
+	"..\..\..\include\utils\StringUtils.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\SystemToolkit.h"\
+	"..\..\..\include\utils\VCFChar.h"\
+	"..\..\..\include\utils\VCFString.h"\
+	
+
+..\..\..\src\core\InterfaceClass.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\utils\Library.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\LibraryPeer.h"\
+	"..\..\..\include\implementerkit\Win32LibraryPeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\Locales.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\MemoryStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\MemoryStream.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\Mutex.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\MutexPeer.h"\
+	"..\..\..\include\implementerKit\Win32Mutex.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Mutex.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\Object.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\ObjectWithEvents.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\Parser.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\Point.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Events\PropertyChangeEvent.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\Rect.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\Registry.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\RegistryPeer.h"\
+	"..\..\..\include\implementerkit\Win32Registry.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\Stream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\StringUtils.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\System.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\ErrorLog.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\SystemPeer.h"\
+	"..\..\..\include\utils\SystemToolkit.h"\
+	
+
+..\..\..\src\utils\SystemToolkit.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\ProcessPeer.h"\
+	"..\..\..\include\implementer\ThreadPeer.h"\
+	"..\..\..\include\implementerkit\Win32ProcessPeer.h"\
+	"..\..\..\include\implementerKit\Win32SystemPeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\SystemPeer.h"\
+	"..\..\..\include\utils\SystemToolkit.h"\
+	"..\..\..\include\utils\VCFProcess.h"\
+	
+
+..\..\..\src\IO\TextInputStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\IO\TextOutputStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\Thread.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\ThreadPeer.h"\
+	"..\..\..\include\implementerKit\Win32Thread.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\Thread.h"\
+	
+
+..\..\..\src\Events\ThreadEvent.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\events\ThreadEvent.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\core\VCFMath.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\Utils\VCFProcess.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\ProcessException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\ProcessPeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\SystemToolkit.h"\
+	"..\..\..\include\utils\VCFProcess.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FilePeer.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\Implementer\FilePeer.h"\
+	"..\..\..\include\ImplementerKit\Win32FilePeer.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32FileStream.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32FileStream.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\io\FileStreamPeer.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\implementerkit\Win32LibraryPeer.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\LibraryPeer.h"\
+	"..\..\..\include\implementerkit\Win32LibraryPeer.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Mutex.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\MutexPeer.h"\
+	"..\..\..\include\implementerKit\Win32Mutex.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Peer.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\implementerkit\Win32ProcessPeer.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\ProcessPeer.h"\
+	"..\..\..\include\implementerkit\Win32ProcessPeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\implementerkit\Win32Registry.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\RegistryPeer.h"\
+	"..\..\..\include\implementerkit\Win32Registry.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32SystemPeer.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32SystemPeer.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\SystemPeer.h"\
+	
+
+..\..\..\src\ImplementerKit\Win32Thread.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\implementer\ThreadPeer.h"\
+	"..\..\..\include\implementerKit\Win32Peer.h"\
+	"..\..\..\include\implementerKit\Win32Thread.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\Thread.h"\
+	
+
+..\..\..\src\Utils\XMLParser.cpp : \
+	"..\..\..\include\core\ClassInfo.h"\
+	"..\..\..\include\core\CommonDefines.h"\
+	"..\..\..\include\core\VCF.h"\
+	"..\..\..\include\core\VCFMath.h"\
+	"..\..\..\include\exceptions\CantCreateObjectException.h"\
+	"..\..\..\include\exceptions\InvalidPointerException.h"\
+	"..\..\..\include\exceptions\OutOfBoundsException.h"\
+	"..\..\..\include\exceptions\RuntimeException.h"\
+	"..\..\..\include\io\BasicFileError.h"\
+	"..\..\..\include\io\Directory.h"\
+	"..\..\..\include\utils\Library.h"\
+	"..\..\..\include\utils\Registry.h"\
+	"..\..\..\include\utils\System.h"\
+	"..\..\..\include\utils\XMLParser.h"\
+	
