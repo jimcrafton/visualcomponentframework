@@ -144,18 +144,18 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /DNO_MFC /D_USRDLL /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
+						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /DNO_MFC /D_USRDLL /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
+						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
 							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
-								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
+								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io /I$(VCF_INCLUDE)\\com";
 					}
 					break;
 				}
@@ -173,7 +173,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKitDLL_d.lib GraphicsKitDLL_d.lib ApplicationKitDLL_d.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKit_d.lib GraphicsKit_d.lib ApplicationKit_d.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Debug/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
@@ -184,7 +184,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					break;
 
 					case release: {
-						setting = "FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKit.lib GraphicsKit.lib ApplicationKit.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Release/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );

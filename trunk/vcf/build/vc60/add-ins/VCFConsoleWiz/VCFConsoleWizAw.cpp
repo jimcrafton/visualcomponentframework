@@ -165,12 +165,12 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKitDLL_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKit_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 
 					case release: {
-						setting = "FoundationKitDLL.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "FoundationKit.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 				}

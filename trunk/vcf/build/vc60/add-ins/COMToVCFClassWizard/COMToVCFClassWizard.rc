@@ -242,7 +242,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,151,46,115,10
     CONTROL         "Use ATL for CoClass implementation",
                     IDC_USE_ATL_FOR_COCLASS_IMPL,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,12,64,126,10
+                    WS_TABSTOP,12,64,126,10
 END
 
 IDD_OPTIONS DIALOG DISCARDABLE  0, 0, 259, 259

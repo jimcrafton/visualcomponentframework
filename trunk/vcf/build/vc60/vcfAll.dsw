@@ -101,6 +101,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libart
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -172,18 +175,6 @@ Package=<4>
 ###############################################################################
 
 Project: "libart"=.\GRAPHICSKIT\libart.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "testApp"=.\testApp\testApp.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
