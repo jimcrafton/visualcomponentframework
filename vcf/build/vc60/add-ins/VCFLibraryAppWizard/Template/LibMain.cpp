@@ -1,8 +1,11 @@
 //$$root$$.cpp
 
-#include "Win32Peer.h"
+
 #include "ApplicationKit.h"
 #include "LibraryApplication.h"
+#include "Win32Peer.h"
+
+
 
 
 class $$Root$$Application : public LibraryApplication {
@@ -31,6 +34,14 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 			single$$Root$$ApplicationInstance->setName( "$$Root$$" );
 
 			LibraryApplication::registerLibrary( single$$Root$$ApplicationInstance );
+
+			if ( false == single$$Root$$ApplicationInstance->initRunningApplication() ) {
+				single$$Root$$ApplicationInstance->terminateRunningApplication();
+
+				delete single$$Root$$ApplicationInstance;
+
+				single$$Root$$ApplicationInstance = NULL;
+			}
 		}
 		break;
 

@@ -63,6 +63,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FreeImageLib"=..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeImageLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibMNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "GraphicsKit"=.\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -92,6 +119,72 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libart
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImageFormats"=.\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FreeImageLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LibJPEG"=..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibMNG"=..\..\ImageFormats\FreeImage\Source\LibMNG\LibMNG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibPNG"=..\..\ImageFormats\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibTIFF"=..\..\ImageFormats\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -158,6 +251,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name NetworkKit
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZLib"=..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

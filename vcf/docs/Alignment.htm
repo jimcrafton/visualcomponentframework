@@ -16,7 +16,7 @@
   <!-- $MVD$:color("29","802000","Custom #11","0") -->
   <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
   <TITLE>Alignment</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css"></HEAD>
@@ -25,7 +25,14 @@
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></P>
   <H1>
    Alignment</H1>
-  <P>
+  <P>Alignment allows you to specify sizing behavior for a control. Alignment
+  takes into consideration the control's geometry as well as the parents size,
+  and the other controls surrounding the aligned control. It does not offer the
+  finer grain control that setting the anchor value does, and is mutually
+  exclusive with the anchor value, that is setting the anchor value of a control
+  will automatically set the control's alignment to ALIGN_NONE, while changing
+  the control's alignment will automatically set the control's anchor value to
+  ANCHOR_NONE.&nbsp;
    <TABLE WIDTH="100%" CELLPADDING="2" CELLSPACING="0" BORDER="1" BORDERCOLOR="#C0C0C0">
     <TR>
      <TD WIDTH="20%" BGCOLOR="GRAY" VALIGN=TOP>
@@ -35,6 +42,16 @@
       <P>
        Meaning</TD>
     </TR>
+    <tr>
+     <TD WIDTH="20%" VALIGN=TOP>
+      <P>
+       <code>ALIGN_NONE</code></TD>
+     <TD WIDTH="80%" VALIGN=TOP>
+      <P>
+       The default value for a control's alignment. The control's top, left,
+       width, and height are what determine it's position, regardless of
+       surrounding controls.</TD>
+    </tr>
     <TR>
      <TD WIDTH="20%" VALIGN=TOP>
       <P>
