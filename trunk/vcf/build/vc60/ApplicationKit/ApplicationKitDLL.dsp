@@ -356,6 +356,18 @@ SOURCE=..\..\..\include\implementer\ControlPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Cursor.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\CursorManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\CursorPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\CustomControl.h
 # End Source File
 # Begin Source File
@@ -968,10 +980,6 @@ SOURCE=..\..\..\include\implementerKit\Win32ColorDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ComboBox.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\implementerKit\Win32Component.h
 # End Source File
 # Begin Source File
@@ -980,7 +988,7 @@ SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32CustomControl.h
+SOURCE=..\..\..\include\implementerKit\Win32CursorPeer.h
 # End Source File
 # Begin Source File
 
@@ -1258,6 +1266,14 @@ SOURCE=..\..\..\src\Events\ControlEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\Cursor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\CursorManager.cpp
 # End Source File
 # Begin Source File
 
@@ -1553,10 +1569,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ComboBox.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
 # End Source File
 # Begin Source File
@@ -1565,7 +1577,7 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32CustomControl.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32CursorPeer.cpp
 # End Source File
 # Begin Source File
 
