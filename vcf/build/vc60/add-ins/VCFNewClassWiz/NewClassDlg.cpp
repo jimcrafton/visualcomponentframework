@@ -139,6 +139,8 @@ BEGIN_MESSAGE_MAP(NewClassDlg, CDialog)
 	ON_COMMAND(ID_PROPSPOPUP_REMOVE, OnPropspopupRemove)
 	ON_COMMAND(ID_PROPSPOPUP_ADD, OnPropspopupAdd)
 	ON_WM_CREATE()
+	ON_UPDATE_COMMAND_UI(ID_PROPSPOPUP_EDIT, OnUpdatePropspopupEdit)
+	ON_UPDATE_COMMAND_UI(ID_PROPSPOPUP_REMOVE, OnUpdatePropspopupRemove)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -226,14 +228,45 @@ void NewClassDlg::OnRclickPropList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void NewClassDlg::OnPropspopupEdit() 
 {
-	// TODO: Add your command handler code here
-	
+	int index = this->m_propList.GetSelectionMark();
+	if ( index > -1 ){
+		PropertyInfoDlg dlg;
+		
+		dlg.m_propName = m_propList.GetItemText( index, 0 );
+		dlg.m_propType = m_propList.GetItemText( index, 1 );
+		CString readOnly = m_propList.GetItemText( index, 2 );
+		dlg.m_readOnlyProp = (readOnly == "Yes") ? TRUE : FALSE;
+		if ( IDOK == dlg.DoModal() ){
+			CString name = dlg.m_propName;
+			CString type = dlg.m_propType;
+				
+			PropInfo* info = (PropInfo*)m_propList.GetItemData( index );
+			info->Name = name;
+			info->Type = type;
+			info->readOnly = (bool)dlg.m_readOnlyProp;
+			
+			m_propList.SetItemText( index, 0, name );
+			
+			m_propList.SetItemText( index, 1, type );
+			CString readOnly = dlg.m_readOnlyProp ? "Yes" : "No";
+				
+			m_propList.SetItemText( index, 2, readOnly );				
+		}	
+	}
 }
 
 void NewClassDlg::OnPropspopupRemove() 
 {
-	// TODO: Add your command handler code here
-	
+	int index = this->m_propList.GetSelectionMark();
+	if ( index > -1 ){
+		PropInfo* info = (PropInfo*)m_propList.GetItemData( index );
+		if ( NULL != info ){
+			delete info;
+			info = NULL;
+		}
+
+		m_propList.DeleteItem( index );
+	}
 }
 
 void NewClassDlg::OnPropspopupAdd() 
@@ -435,4 +468,16 @@ void NewClassDlg::fillInPropMemberVars()
 			}	
 		}
 	}
+}
+
+void NewClassDlg::OnUpdatePropspopupEdit(CCmdUI* pCmdUI) 
+{
+	//int index = this->m_propList.GetSelectionMark();
+	//pCmdUI->Enable( (this->m_propList.GetItemCount() > 0) && (index > -1) );	
+}
+
+void NewClassDlg::OnUpdatePropspopupRemove(CCmdUI* pCmdUI) 
+{
+	//int index = this->m_propList.GetSelectionMark();
+	//pCmdUI->Enable( (this->m_propList.GetItemCount() > 0) && (index > -1) );	
 }

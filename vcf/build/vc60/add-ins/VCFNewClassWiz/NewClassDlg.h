@@ -74,6 +74,8 @@ protected:
 	afx_msg void OnPropspopupAdd();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnUpdatePropspopupEdit(CCmdUI* pCmdUI);
+	afx_msg void OnUpdatePropspopupRemove(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
