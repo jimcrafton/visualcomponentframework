@@ -129,7 +129,7 @@ SOURCE=..\..\..\include\graphics\AbstractImage.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AlphaGamma.h
+SOURCE=..\..\..\include\graphics\AlphaGamma.h
 # End Source File
 # Begin Source File
 
@@ -342,6 +342,10 @@ SOURCE=..\..\..\include\implementerkit\Win32OpenGLPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\graphics\AlphaGamma.cpp
 # End Source File
 # Begin Source File
 
