@@ -126,6 +126,10 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 # End Source File
 # Begin Source File
@@ -263,6 +267,10 @@ SOURCE=..\..\..\include\graphics\GlyphCollection.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\GraphicsContext.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\GraphicsKit.h
 # End Source File
 # Begin Source File
 

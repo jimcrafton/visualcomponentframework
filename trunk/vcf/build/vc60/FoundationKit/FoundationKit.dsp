@@ -118,6 +118,10 @@ SOURCE=..\..\..\src\io\FileUtils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\FoundationKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\MemoryStream.cpp
 # End Source File
 # Begin Source File
@@ -155,6 +159,10 @@ SOURCE=..\..\..\src\IO\TextOutputStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -235,6 +243,10 @@ SOURCE=..\..\..\include\io\FileStreamPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileUtils.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\FoundationKit.h
 # End Source File
 # Begin Source File
 
