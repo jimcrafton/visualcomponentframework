@@ -237,6 +237,14 @@ SOURCE=..\..\..\include\core\Method.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Mutex.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\MutexPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\NoFreeMemException.h
 # End Source File
 # Begin Source File
@@ -405,6 +413,10 @@ SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Mutex.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerkit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
@@ -498,6 +510,10 @@ SOURCE=..\..\..\src\IO\MemoryStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\Mutex.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Object.cpp
 # End Source File
 # Begin Source File
@@ -575,6 +591,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\implementerkit\Win32LibraryPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
 # End Source File
 # Begin Source File
 
