@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.5  2003/08/09 21:01:40  ddiego
+#minor changes to doc makefile
+#
 #Revision 1.4  2003/05/18 23:09:37  ddiego
 #fixes some mistakes in the docs/Makefile and adds some extra documentation.
 #
@@ -31,7 +34,7 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.1
+VERSION = 0.6.2
 
 #version number for the VCF Builder
 VCFB_VERSION = 1.0.5
@@ -64,6 +67,7 @@ VERSIONED_SRC_CHM_FILENAME = VCFSrcDocs.$(VERSION).chm
 VERSIONED_SRC_CHI_FILENAME = VCFSrcDocs.$(VERSION).chi
 
 HTML_TAR_FILENAME = VCFDocs-$(VERSION).tar
+HTML_ONLINE_TAR_FILENAME = VCFDocs-online-$(VERSION).tar
 
 
 ONLINE_SRC_DOC_DIR = srcdocs
@@ -413,17 +417,17 @@ doxy_hh : doxy_html/index.hhp
 	mv doxy_html/$(VERSIONED_SRC_CHI_FILENAME) ./
 	
 
-dist : coredocs hh 
-	find *.html > files.out
-	find gfx/ -type f -name '*' > images.out
-	cat files.out images.out > all.out
-	echo Creating tar file...
-	tar -cf $(HTML_TAR_FILENAME) -T all.out
-	gzip $(HTML_TAR_FILENAME)
-	echo HTML files tarred and compressed as $(HTML_TAR_FILENAME).gz		
-	rm all.out
-	rm files.out
-	rm images.out
+#dist : coredocs hh 
+#	find *.html > files.out
+#	find gfx/ -type f -name '*' > images.out
+#	cat files.out images.out > all.out
+#	echo Creating tar file...
+#	tar -cf $(HTML_TAR_FILENAME) -T all.out
+#	gzip $(HTML_TAR_FILENAME)
+#	echo HTML files tarred and compressed as $(HTML_TAR_FILENAME).gz		
+#	rm all.out
+#	rm files.out
+#	rm images.out
 
 dist_all : alldocs
 	-mkdir VCFDocs-$(VERSION)	
@@ -433,11 +437,18 @@ dist_all : alldocs
 	tar -cf VCFDocs-$(VERSION).tar VCFDocs-$(VERSION)/ 
 	gzip VCFDocs-$(VERSION).tar
 	rm -rf VCFDocs-$(VERSION)/
+	if ( test -d $(UPLOADS_DIR) )\
+	then \
+		mv VCFDocs-$(VERSION).tar.gz $(UPLOADS_DIR)/;\
+	fi
+	
+
+	
 	
 dist_all_hh : alldocs_hh
 	-mkdir VCFDocs-$(VERSION)	
 	cp $(VERSIONED_CHM_FILENAME) VCFDocs-$(VERSION)/
-	cp $(VERSIONED_CHI_FILENAME) VCFDocs-$(VERSION)/	
+	-cp $(VERSIONED_CHI_FILENAME) VCFDocs-$(VERSION)/	
 	tar -cf VCFHtmlHelpDocs-$(VERSION).tar VCFDocs-$(VERSION)/ 
 	gzip VCFHtmlHelpDocs-$(VERSION).tar
 	rm -rf VCFDocs-$(VERSION)/	
@@ -447,10 +458,10 @@ dist_online : coredocs_online strip_online_docs
 	find gfx/ -type f -name '*' > images.out
 	cat files.out images.out > all.out
 	echo Creating tar file...
-	tar -cf $(HTML_TAR_FILENAME) -T all.out
-	rm -f $(HTML_TAR_FILENAME).gz
-	gzip $(HTML_TAR_FILENAME)
-	echo HTML files tarred and compressed as $(HTML_TAR_FILENAME).gz		
+	tar -cf $(HTML_ONLINE_TAR_FILENAME) -T all.out
+	rm -f $(HTML_ONLINE_TAR_FILENAME).gz
+	gzip $(HTML_ONLINE_TAR_FILENAME)
+	echo HTML files tarred and compressed as $(HTML_ONLINE_TAR_FILENAME).gz		
 	rm all.out
 	rm files.out
 	rm images.out
@@ -472,10 +483,10 @@ dist_all_online : alldocs_online strip_online_docs online_doxy
 	find $(FULL_ONLINE_SRC_DOC_DIR)/ -type f -name '*.html' > srcdocs.out
 	cat files.out images.out srcdocs.out > all.out
 	echo Creating tar file...
-	tar -cf $(HTML_TAR_FILENAME) -T all.out
-	rm -f $(HTML_TAR_FILENAME).gz
-	gzip $(HTML_TAR_FILENAME)
-	echo HTML files tarred and compressed as $(HTML_TAR_FILENAME).gz		
+	tar -cf $(HTML_ONLINE_TAR_FILENAME) -T all.out
+	rm -f $(HTML_ONLINE_TAR_FILENAME).gz
+	gzip $(HTML_ONLINE_TAR_FILENAME)
+	echo HTML files tarred and compressed as $(HTML_ONLINE_TAR_FILENAME).gz		
 	rm all.out
 	rm files.out
 	rm images.out
@@ -484,15 +495,21 @@ dist_all_online : alldocs_online strip_online_docs online_doxy
 	rm -r gfx/*.*
 	cp gfx_bak/*.* gfx/ 
 	rm -rf gfx_bak/
+	if ( test -d $(UPLOADS_DIR) )\
+	then \
+		mv $(HTML_ONLINE_TAR_FILENAME).gz $(UPLOADS_DIR)/;\
+	fi
 
 
-
+dist : dist_all_online alldocs_hh_with_source dist_all
+	
 
 clean :
 	mv doxy_footer.html doxy_footer.html.bak
 	mv doxy_header.html doxy_header.html.bak
 	rm -f *.html
 	rm -f $(HTML_TAR_FILENAME).gz
+	rm -f $(HTML_ONLINE_TAR_FILENAME).gz
 	rm -f $(VERSIONED_SRC_CHM_FILENAME)
 	rm -f $(VERSIONED_CHM_FILENAME)
 	rm -f *.hhp

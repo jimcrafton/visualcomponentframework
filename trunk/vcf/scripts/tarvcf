@@ -11,12 +11,13 @@ find ./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./
 find ./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.HPP' -o -iname *.cxx -o -iname '*.CXX' -o -iname '*.cur' -o -iname '*.CUR' > srcfiles2.out
 
 find ./tests -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.rgs' -o -iname '*.rc' -o -iname '*.idl' -o -iname '*.def' -o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.vff' -o -iname '*.html' > tests.out
+find ./examples -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.rgs' -o -iname '*.rc' -o -iname '*.idl' -o -iname '*.def' -o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.vff' -o -iname '*.html' > examples.out
 
 
 #combine the outoput into a master list
-cat srcfiles.out srcfiles1.out srcfiles2.out tests.out > files.out
+cat srcfiles.out srcfiles1.out srcfiles2.out tests.out examples.out> files.out
 
-rm srcfiles.out srcfiles1.out srcfiles2.out tests.out
+rm srcfiles.out srcfiles1.out srcfiles2.out tests.out examples.out
 
 #display in notepad
 notepad files.out
