@@ -72,6 +72,7 @@ CVCFBuilderApp::CVCFBuilderApp()
 
 BOOL CVCFBuilderApp::InitInstance()
 {
+	initApplicationKit();
 	_Module.Init(ObjectMap, m_hInstance);
 	return CWinApp::InitInstance();
 }

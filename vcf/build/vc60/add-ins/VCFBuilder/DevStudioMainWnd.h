@@ -8,6 +8,7 @@
 //
 
 #include "SubClassWnd.h"
+class VCFBuilderHostView;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDevStudioMainWnd window
@@ -35,14 +36,22 @@ public:
 
 	HWND GetMDIClientHWND();
 
+	VCFBuilderHostView* GetVCFBuilderHost() {
+		return m_vcfBuilderHost;
+	}
+
+	void CreateVCFHost();
+
+	void SetVCFHostVisible( bool visible );
+
 	static CDevStudioMainWnd* globalDevStudioMainWnd;
 	// Generated message map functions
 protected:
-	//{{AFX_MSG(CDevStudioMainWnd)
-	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
-	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
+	//{{AFX_MSG(CDevStudioMainWnd)	
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
+	VCFBuilderHostView*	m_vcfBuilderHost;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -4,8 +4,8 @@
 #include "stdafx.h"
 #include "VCFBuilder.h"
 #include "Commands.h"
-#include "VCFBuilderMDIChild.h"
-
+#include "DevStudioMainWnd.h"
+#include "VCFBuilderHostView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -143,27 +143,27 @@ HRESULT CCommands::XApplicationEvents::WorkspaceOpen()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	OutputDebugString( "CCommands::XApplicationEvents::WorkspaceOpen()\n" );
-	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+	//if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
 		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
-	}
+	//}
 	return S_OK;
 }
 
 HRESULT CCommands::XApplicationEvents::WorkspaceClose()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+	//if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
 		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
-	}
+	//}
 	return S_OK;
 }
 
 HRESULT CCommands::XApplicationEvents::NewWorkspace()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
+//	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) {
 		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->DestroyWindow();
-	}
+//	}
 	return S_OK;
 }
 
@@ -181,44 +181,13 @@ HRESULT CCommands::XDebuggerEvents::BreakpointHit(IDispatch* pBreakpoint)
 
 STDMETHODIMP CCommands::ActivateDevStdioEnvironment() 
 {
+	CDevStudioMainWnd::globalDevStudioMainWnd->SetVCFHostVisible( false );
 	return S_OK;
 }
 
 STDMETHODIMP CCommands::ActivateVCFBuilderEnvironment() 
 {
-	//
-
-	// TODO: Replace this with the actual code to execute this command
-	//  Use m_pApplication to access the Developer Studio Application object,
-	//  and VERIFY_OK to see error strings in DEBUG builds of your add-in
-	//  (see stdafx.h)
-
-	//VERIFY_OK(m_pApplication->EnableModeless(VARIANT_FALSE));
-	//::MessageBox(NULL, "VCFBuilder Command invoked.", "VCFBuilder", MB_OK | MB_ICONINFORMATION);
-	//VERIFY_OK(m_pApplication->EnableModeless(VARIANT_TRUE));
-
-	AFX_MANAGE_STATE(AfxGetAppModuleState());
-	CMDIFrameWnd* frame = (CMDIFrameWnd*)AfxGetApp()->GetMainWnd();
-	if ( NULL != frame ) {
-		if ( NULL != frame->GetSafeHwnd() )	{			
-			if ( NULL == VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) 	{
-				VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd = (VCFBuilderMDIChild*)frame->CreateNewChild( RUNTIME_CLASS(VCFBuilderMDIChild), IDR_VCF_MDICHILD, NULL, NULL );
-				VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->MDIMaximize();
-				VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->ActivateFrame();
-				VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->SetTitle( "VCF Builder" );
-				VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->SetWindowText( "VCF Builder" );
-				frame->DrawMenuBar();
-			}
-			else {
-				if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->GetSafeHwnd() )	{	
-					VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->MDIMaximize();
-					VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->ActivateFrame();
-					frame->DrawMenuBar();
-				}
-			}
-		}
-	}
-
+	CDevStudioMainWnd::globalDevStudioMainWnd->SetVCFHostVisible( true );
 	return S_OK;
 }
 
@@ -234,9 +203,9 @@ STDMETHODIMP CCommands::OpenProject()
 STDMETHODIMP CCommands::NewProject()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState())
-
-	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) 	{
-		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->newProject();
+	VCFBuilderHostView* vcfBuilderHost = CDevStudioMainWnd::globalDevStudioMainWnd->GetVCFBuilderHost();
+	if ( NULL != vcfBuilderHost ) 	{
+		vcfBuilderHost->newProject();
 	}
 
 	return S_OK;
