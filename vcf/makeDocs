@@ -1,0 +1,20 @@
+echo building VCF source code documentation...
+rm ./docs/vcf.css
+rm ./docs/html/bannerLogo.jpg
+rm ./docs/html/stripe3.jpg
+rm ./docs/html/doxygen_logo.jpg
+cp ../../websites/VCF/doxygen_logo.jpg ./docs/html/doxygen_logo.jpg
+cp ../../websites/VCF/stripe3.jpg ./docs/html/stripe3.jpg
+cp ../../websites/VCF/vcf.css ./docs/vcf.css
+cp ../../websites/VCF/bannerLogo.jpg ./docs/html/bannerLogo.jpg
+doxygen > doxyOut.txt
+echo result of doxygen are...
+notepad doxyOut.txt &
+echo compiling the HTML Help project...
+cd ./docs/html
+hhc index.hhp
+cp index.chm ../index.chm
+cp index.chi ../index.chi
+cd ..
+hhc WorkingInVCF.hhp
+
