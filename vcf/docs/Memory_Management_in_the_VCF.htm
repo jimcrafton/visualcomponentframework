@@ -1,32 +1,65 @@
-<html>
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
-<meta name="ProgId" content="FrontPage.Editor.Document">
-<LINK REL="StyleSheet" HREF="default.css">
-<title>Memory Management in the VCF</title>
-<SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
-</SCRIPT></head>
-
-<body ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
-
-<p>
-   <IMG SRC="vcflogo.gif" width="230" height="172" VSPACE="0" HSPACE="0" BORDER="0"></p>
-<h1>Memory Management with the VCF</h1>
-<p>Object creation and destruction</p>
-<p>using C++ new and delete operators vs. the VCF create() / free() pattern</p>
-<p>what advantages are there to the create() / free() pattern</p>
-<p>precedents - VCF is not the only one to look for a solution to the problem</p>
-<p>the problem - virtual method calls not allowed within C++ constructors and
-destructors</p>
-<p>The Stack vs. the Heap&nbsp; how does this affect the create() / free()
-pattern</p>
-<p>Do I have to use the create() / free() pattern ? If not what do I need to do
-in it's place ?</p>
-<p>Object ownership: Strong ownership vs. Weak ownership</p>
-<p>&nbsp;</p>
-
-</body>
-
-</html>
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","ffefce","Custom #1","0") -->
+  <!-- $MVD$:color("19","b58800","Custom #2","0") -->
+  <!-- $MVD$:color("20","333333","Custom #3","0") -->
+  <!-- $MVD$:color("21","ee4444","Custom #4","0") -->
+  <!-- $MVD$:color("22","ffcc99","Custom #5","0") -->
+  <!-- $MVD$:color("23","ff6600","Custom #6","0") -->
+  <!-- $MVD$:color("24","eeeeee","Custom #7","0") -->
+  <!-- $MVD$:color("25","204060","Custom #8","0") -->
+  <!-- $MVD$:color("26","80e0","Custom #9","0") -->
+  <!-- $MVD$:color("27","206080","Custom #10","0") -->
+  <!-- $MVD$:color("28","802000","Custom #11","0") -->
+  <!-- $MVD$:color("29","b5edfb","Code Orange","1") -->
+  <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
+  <TITLE>Memory Management in the VCF</TITLE>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+  <META NAME="GENERATOR" CONTENT="Microsoft FrontPage 4.0">
+  <META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+</SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css">
+ <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <P>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></P>
+  <H1>
+   Memory Management with the VCF</H1>
+  <P>
+   You can create objects in two ways: on the heap or on the stack. 
+   However some objects should be <SPAN STYLE="font-style : italic;font-weight : bold;">never<SPAN STYLE="font-style : normal;font-weight : normal;"> 
+   be created on the stack. The following table explains this:</SPAN></SPAN></P>
+  <P>
+   <TABLE WIDTH="100%" CELLPADDING="2" CELLSPACING="0" BORDER="0">
+    <TR>
+     <TD WIDTH="50%" BGCOLOR="GRAY" VALIGN=TOP>
+      <P>
+       Class</TD>
+     <TD WIDTH="50%" BGCOLOR="GRAY" VALIGN=TOP>
+      <P>
+       Allows allocation on the stack</TD>
+    </TR>
+    <TR>
+     <TD WIDTH="50%" VALIGN=TOP>
+      <P>
+       classes that derive from VCF::Component</TD>
+     <TD WIDTH="50%" VALIGN=TOP>
+      <P>
+       No except for Dialog</TD>
+    </TR>
+    <TR>
+     <TD WIDTH="50%" VALIGN=TOP>
+      <P>
+       classes that derive from VCF::Dialog</TD>
+     <TD WIDTH="50%" VALIGN=TOP>
+      <P>
+       Yes provided that they are used for modal dialogs </TD>
+    </TR>
+   </TABLE></P>
+  <P>
+   &nbsp;
+ </BODY>
+</HTML>
