@@ -712,14 +712,6 @@ SOURCE=..\..\..\include\implementer\StrokeState.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\System.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\utils\SystemPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\TabbedPages.h
 # End Source File
 # Begin Source File
@@ -1283,10 +1275,6 @@ SOURCE=..\..\..\src\IO\ResourceStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\System.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\TabbedPages.cpp
 # End Source File
 # Begin Source File
@@ -1308,6 +1296,10 @@ SOURCE=..\..\..\src\core\TextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\Toolbar.cpp
 # End Source File
 # Begin Source File
 
@@ -1428,10 +1420,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
 # End Source File
 # Begin Source File
 

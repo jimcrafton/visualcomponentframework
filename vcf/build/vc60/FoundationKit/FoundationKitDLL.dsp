@@ -172,6 +172,10 @@ SOURCE=..\..\..\include\utils\Enumerator.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\ErrorLog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\ErrorStrings.h
 # End Source File
 # Begin Source File
@@ -284,6 +288,10 @@ SOURCE=..\..\..\include\core\Point.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ProcessException.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ProcessPeer.h
 # End Source File
 # Begin Source File
@@ -333,6 +341,14 @@ SOURCE=..\..\..\include\io\Stream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\utils\StringUtils.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\System.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\SystemPeer.h
 # End Source File
 # Begin Source File
 
@@ -404,6 +420,10 @@ SOURCE=..\..\..\include\implementerkit\Win32Registry.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32Thread.h
 # End Source File
 # End Group
@@ -429,6 +449,10 @@ SOURCE=..\..\..\src\core\Class.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ClassRegistry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\ErrorLog.cpp
 # End Source File
 # Begin Source File
 
@@ -503,6 +527,10 @@ SOURCE=..\..\..\src\Utils\StringUtils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\System.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\utils\SystemToolkit.cpp
 # End Source File
 # Begin Source File
@@ -552,6 +580,10 @@ SOURCE=..\..\..\src\implementerkit\Win32ProcessPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\implementerkit\Win32Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
 # End Source File
 # Begin Source File
 
