@@ -1,0 +1,13 @@
+//BITMAP
+play	BITMAP	"play.bmp"
+pause	BITMAP	"pause.bmp"
+stop	BITMAP	"stop.bmp"
+reset	BITMAP	"reset.bmp"
+open	BITMAP	"open.bmp"
+
+viewnormal	BITMAP	"view-normal.bmp"
+view200		BITMAP	"view200.bmp"
+view50		BITMAP	"view-half.bmp"
+
+fullvol		BITMAP	"fullvol.bmp"
+mute		BITMAP	"mute.bmp"
