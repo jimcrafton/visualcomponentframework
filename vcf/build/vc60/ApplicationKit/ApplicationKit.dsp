@@ -114,6 +114,10 @@ SOURCE=..\..\..\src\Core\Application.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\BasicTableItemEditor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\ButtonEvent.cpp
 # End Source File
 # Begin Source File
@@ -550,6 +554,10 @@ SOURCE=..\..\..\include\exceptions\BadModelStateException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\BasicTableItemEditor.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Button.h
 # End Source File
 # Begin Source File
@@ -835,6 +843,10 @@ SOURCE=..\..\..\include\implementer\HeaderPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Item.h
+# End Source File
+# Begin Source File
+
+SOURCE=\vcf\include\events\ItemEditorListener.h
 # End Source File
 # Begin Source File
 
