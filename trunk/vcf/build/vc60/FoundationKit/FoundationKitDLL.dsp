@@ -224,6 +224,10 @@ SOURCE=..\..\..\include\core\Interface.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\InterfaceClass.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\InvalidPeer.h
 # End Source File
 # Begin Source File
@@ -498,6 +502,10 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\InterfaceClass.cpp
 # End Source File
 # Begin Source File
 
