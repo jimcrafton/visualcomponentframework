@@ -360,10 +360,10 @@ Package=<4>
     Project_Dep_Name RemoteObjectKitStatic
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser
+    Project_Dep_Name ImageFormats
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name ImageFormats
+    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
 }}}
 
