@@ -145,21 +145,21 @@ public:
 		add(topPanel,AlignTop);
 
 		CommandButton *cube=new CommandButton();
-		EventHandler* cubeButton=new ButtonEventHandler<OpenGLShapes>(this,OpenGLShapes::cube,"cube");
+		EventHandler* cubeButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::cube,"cube");
 		cube->addButtonClickHandler(cubeButton);
 		cube->setCaption("Cube");
 		cube->setWidth(100);
 		topPanel->add(cube,AlignRight);
 
 		CommandButton *tetrahedron=new CommandButton();
-		EventHandler* tetrahedronButton=new ButtonEventHandler<OpenGLShapes>(this,OpenGLShapes::tetrahedron,"tetrahedron");
+		EventHandler* tetrahedronButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::tetrahedron,"tetrahedron");
 		tetrahedron->addButtonClickHandler(tetrahedronButton);
 		tetrahedron->setCaption("Tetrahedron");
 		tetrahedron->setWidth(100);
 		topPanel->add(tetrahedron,AlignClient);
 
 		CommandButton *sphere=new CommandButton();
-		EventHandler* sphereButton=new ButtonEventHandler<OpenGLShapes>(this,OpenGLShapes::sphere,"sphere");
+		EventHandler* sphereButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::sphere,"sphere");
 		sphere->addButtonClickHandler(sphereButton);
 		sphere->setCaption("Sphere");
 		sphere->setWidth(100);
