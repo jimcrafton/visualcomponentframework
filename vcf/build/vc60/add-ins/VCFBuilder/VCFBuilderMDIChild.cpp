@@ -78,6 +78,7 @@ LRESULT CALLBACK VCFBuilderMDIChildWnd::WindowProc( HWND hwnd, UINT uMsg, WPARAM
 	LRESULT result = 0;
 
 	switch ( uMsg ) {  
+		/*
 		case WM_MDIACTIVATE : {
 			HWND hwndChildDeact = (HWND) wParam;
 			HWND hwndChildAct = (HWND) lParam;          
@@ -101,7 +102,7 @@ LRESULT CALLBACK VCFBuilderMDIChildWnd::WindowProc( HWND hwnd, UINT uMsg, WPARAM
 			result = DefWindowProc( hwnd, uMsg, wParam, lParam );
 		}
 		break;
-
+		*/
 		case WM_PAINT : {
 			PAINTSTRUCT ps = {0};
 			::BeginPaint( hwnd, &ps );
@@ -116,7 +117,7 @@ LRESULT CALLBACK VCFBuilderMDIChildWnd::WindowProc( HWND hwnd, UINT uMsg, WPARAM
 		break;
 
 		default : {
-			result = DefWindowProc( hwnd, uMsg, wParam, lParam );
+			result = DefMDIChildProc( hwnd, uMsg, wParam, lParam );
 		}
 		break;
 	}
@@ -133,6 +134,8 @@ void VCFBuilderMDIChildWnd::RegisterClass( HINSTANCE hInstance )
 	wndClass.hInstance = hInstance;
 	wndClass.hCursor = LoadCursor( NULL, IDC_ARROW );
 	wndClass.lpszClassName = VCFBuilderMDIChildWnd::WndClassName;
+	
+	//VCFBuilderMDIChild::globalVCFBuilderIcon
 
 	RegisterClassEx( &wndClass );
 }
