@@ -25,7 +25,7 @@ public:
 
 	virtual void paint( GraphicsContext* context );
 protected:
-
+	Image* m_splashImage;
 private:
 
 	VCF::ThreadLooper* m_thread;

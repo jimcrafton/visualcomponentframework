@@ -229,6 +229,18 @@ SOURCE=.\res\bitmap1.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bitmap2.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap3.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap4.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\splash1.bmp
 # End Source File
 # Begin Source File
@@ -243,6 +255,13 @@ SOURCE=.\res\vcfwizard.ico
 # Begin Group "Template Files"
 
 # PROP Default_Filter "<templates>"
+# Begin Source File
+
+SOURCE=.\template\app.rc
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
 # Begin Source File
 
 SOURCE=.\Template\confirm.inf
@@ -274,6 +293,13 @@ SOURCE=.\template\MainWindow.h
 # Begin Source File
 
 SOURCE=.\Template\newproj.inf
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\splash.bmp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
