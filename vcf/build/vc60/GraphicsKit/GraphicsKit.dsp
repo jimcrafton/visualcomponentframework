@@ -89,10 +89,6 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\AlphaGamma.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 # End Source File
 # Begin Source File
@@ -106,10 +102,6 @@ SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Color.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\DrawToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -130,7 +122,15 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+
+!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
+
 # ADD CPP /Yc"GraphicsKit.h"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -150,23 +150,11 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 

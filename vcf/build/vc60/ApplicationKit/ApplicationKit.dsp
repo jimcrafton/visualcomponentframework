@@ -134,7 +134,15 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
 # ADD CPP /Yc"ApplicationKit.h"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -423,10 +431,6 @@ SOURCE=..\..\..\src\core\MenuBar.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\MenuItemShortcut.cpp
 # End Source File
 # Begin Source File
 
@@ -1262,10 +1266,6 @@ SOURCE=..\..\..\include\implementer\MenuItemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\MenuItemShortcut.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\events\MenuListener.h
 # End Source File
 # Begin Source File
@@ -1386,19 +1386,11 @@ SOURCE=..\..\..\include\events\ScrollEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ScrollListener.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ScrollPeer.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Selectable.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\events\SelectionListener.h
 # End Source File
 # Begin Source File
 

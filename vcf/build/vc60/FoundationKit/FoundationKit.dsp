@@ -134,7 +134,15 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
+
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
 # ADD CPP /Yc"FoundationKit.h"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
