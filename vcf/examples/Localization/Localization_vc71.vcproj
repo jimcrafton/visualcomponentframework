@@ -12,7 +12,7 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc71\Release\"
+			OutputDirectory=".\"
 			IntermediateDirectory=".\vc71\Release\"
 			ConfigurationType="1"
 			UseOfMFC="0"
@@ -71,7 +71,7 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc71\Debug\"
+			OutputDirectory=".\"
 			IntermediateDirectory=".\vc71\Debug\"
 			ConfigurationType="1"
 			UseOfMFC="0"
