@@ -5,6 +5,7 @@
 #include "VPLAppWiz.h"
 #include "VPLAppWizaw.h"
 #include <comdef.h>
+#include <atlbase.h>
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -98,18 +99,35 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 			IConfiguration* pConfig = NULL;
 			long t = i+1;
 			_variant_t index = t;
+			CComBSTR configName;		
+
 			const int debug = 1;
 			const int release = 2;
-			if ( SUCCEEDED(pConfigs->Item( index, &pConfig )) ){
+			if ( SUCCEEDED(pConfigs->Item( index, &pConfig )) ){				
+
 				_bstr_t tool = "mfc";
+
+				pConfig->get_Name( (BSTR*)&configName );
+
+				CString s = configName;
+				if ( s.Find( "Release" ) != -1 ){
+					t = 2;
+				}
+				else if ( s.Find( "Debug" ) != -1 ){
+					t = 1;
+				}
+
 				_variant_t reserved;
 				pConfig->AddToolSettings( tool, 0, reserved );
 				
 				tool = "cl.exe";
 				_bstr_t setting = "";				
 				CString strRoot;
+				
 				m_Dictionary.Lookup(_T("root"), strRoot);
 				
+				_bstr_t rootName = strRoot;
+
 				switch ( t ){
 					case debug: {
 						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
@@ -142,18 +160,29 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				switch ( t ){
 					case debug: {
 						setting = "FoundationKitDLL_d.lib GraphicsKitDLL_d.lib ApplicationKitDLL_d.lib xerces-c_1D.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						pConfig->AddToolSettings( tool, setting, reserved );
+						setting = "/out:\"Debug/" + rootName + ".dll\"";
+						pConfig->RemoveToolSettings( tool, setting, reserved );
+
+						setting = "/out:\"Debug/" + rootName + ".vpl\"";
+						pConfig->AddToolSettings( tool, setting, reserved );
 					}
 					break;
 
 					case release: {
 						setting = "FoundationKitDLL.lib GraphicsKitDLL.lib ApplicationKitDLL.lib xerces-c_1.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /libpath:$(VCF_LIB)";
+						pConfig->AddToolSettings( tool, setting, reserved );
+						setting = "/out:\"Release/" + rootName + ".dll\"";
+						pConfig->RemoveToolSettings( tool, setting, reserved );
+
+						setting = "/out:\"Release/" + rootName + ".vpl\"";
+						pConfig->AddToolSettings( tool, setting, reserved );
 					}
 					break;
 				}
 
-				if ( ! SUCCEEDED( pConfig->AddToolSettings( tool, setting, reserved ) ) ){
-					TRACE( "failed to set linker variables\n" );
-				}
+				//setting = "/out:\"Debug/VPLAppWiz.awx\""; 
+				
 				
 				pConfig->Release();
 			}
