@@ -1332,6 +1332,10 @@ SOURCE=..\..\..\src\core\MenuItemShortcut.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Model.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\MouseEvent.cpp
 # End Source File
 # Begin Source File
