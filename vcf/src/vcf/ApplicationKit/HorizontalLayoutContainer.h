@@ -124,12 +124,42 @@ public:
 
 		cell.bottom_ = cell.top_ + maxRowHeight_;
 
+		
+
 		int rowCount = (controls_.size() / columns_.size()) + (controls_.size() % columns_.size());
 		int row = 0;
+
+		//calculate row heights so that thigns don't get "scrunched" together
+		std::vector<double> rowHeights(rowCount);
+		double h = maxRowHeight_;
+		while ( it != controls_.end() ) {
+			Control* control = *it;
+			
+			h = maxVal<>( h, control->getPreferredHeight() );
+
+			col ++;
+			if ( col >= colCount ) {
+				col = 0;				
+				
+				rowHeights[row] = h;
+
+				h = maxRowHeight_;
+				row ++;
+			}
+
+			it ++;
+		}
+
+		row = 0;
+
+		it = controls_.begin();
+
 		while ( it != controls_.end() ) {
 
 			Control* control = *it;
 
+
+			cell.bottom_ = cell.top_ + rowHeights[row];
 
 			if ( col == (colCount-1) ) {
 				cell.right_ = clientBounds.right_;
@@ -150,7 +180,7 @@ public:
 				col = 0;
 				tween = 0;
 
-				cell.offset( 0, maxRowHeight_ + rowSpacerHeight_ );
+				cell.offset( 0, rowHeights[row] + rowSpacerHeight_ );
 
 				cell.left_ = clientBounds.left_;
 
@@ -201,6 +231,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/02/26 14:44:03  ddiego
+*checked in changes from dev for horz container.
+*
+*Revision 1.2.2.1  2005/02/10 20:59:37  ddiego
+*fixed a layout error in horz layout container
+*
 *Revision 1.2  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
