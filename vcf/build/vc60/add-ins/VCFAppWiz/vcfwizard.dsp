@@ -245,20 +245,6 @@ SOURCE=.\res\vcfwizard.ico
 # PROP Default_Filter "<templates>"
 # Begin Source File
 
-SOURCE=.\template\About.cpp
-# PROP Exclude_From_Scan -1
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\template\About.h
-# PROP Exclude_From_Scan -1
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Template\confirm.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
@@ -267,6 +253,20 @@ SOURCE=.\Template\confirm.inf
 # Begin Source File
 
 SOURCE=.\Template\main.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\MainWindow.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\MainWindow.h
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -294,7 +294,35 @@ SOURCE=.\template\SplashScreen.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\template\test.cpp
+SOURCE=.\template\UndoApp.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\UndoAppAbout.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\UndoAppAbout.h
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\UndoAppApplication.cpp
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\template\UndoAppApplication.h
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1

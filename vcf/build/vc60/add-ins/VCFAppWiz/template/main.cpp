@@ -3,12 +3,6 @@
 
 #include "ApplicationKit.h"
 
-$$IF(SPLASH_SCR)
-#include "$$SplashScreen$$.h"
-$$ENDIF
-$$IF(STD_HELP_MNU)
-#include "$$About$$.h"
-$$ENDIF
 
 using namespace VCF;
 
