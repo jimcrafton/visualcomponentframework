@@ -393,8 +393,16 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 
 			memDCState_ = ::SaveDC( memDC_ );
 			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
-		
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, NULL );
+
+			POINT oldOrg = {0};
+			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+
+			StringUtils::traceWithArgs( "before paint, control( %p, %s ), paintRect[%d,%d,%d,%d], oldOrg[%d,%d]\n",
+										peerControl_, peerControl_->getName().c_str(),
+										paintRect.left,paintRect.top,paintRect.right,paintRect.bottom,
+										oldOrg.x, oldOrg.y );
+
+
 
 			//this is really dippy to have to do this here ?
 			//by setting the owning control to NULL we
@@ -415,7 +423,12 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 
 
 			//reset back to original origin
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, NULL );
+			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+
+			StringUtils::traceWithArgs( "after paint, control( %p, %s ), paintRect[%d,%d,%d,%d], oldOrg[%d,%d]\n",
+										peerControl_, peerControl_->getName().c_str(),
+										paintRect.left,paintRect.top,paintRect.right,paintRect.bottom,
+										oldOrg.x, oldOrg.y );
 
 			result = memDC_;
 		
@@ -1306,6 +1319,9 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/19 02:24:54  ddiego
+*fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

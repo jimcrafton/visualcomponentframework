@@ -28,8 +28,8 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book 0.6.4</title>
-	<titleabbrev>VCF Documentation 0.6.4</titleabbrev>
+<title>The VCF Book VERSION-NUMBER</title>
+	<titleabbrev>VCF Documentation VERSION-NUMBER</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
@@ -119,6 +119,16 @@ NB: This software will not save the world.
 			  <authorinitials>JC</authorinitials>
 			  <revremark>Updates for 0-6-4 changes. Added a few more examples</revremark>
 			</revision>
+			<revision>
+			  <revnumber>0.6.5</revnumber>
+			  <date>8 August 2004</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Updates for 0-6-5 changes. Added a few more examples. Big thanks to
+				Ed Monjay for starting to help out with the docs. This should make it big improvement
+				in the very near future!
+				</revremark>
+			</revision>
+
 		</revhistory>
 	</bookinfo>
 
@@ -190,7 +200,13 @@ NB: This software will not save the world.
 				<member>Abelardo Gutierrez</member>
 				<member>Sorin Ionescu</member>
 				<member>Marcus Portmann</member>
-				
+				<member>jacmoe</member>
+				<member>Doug Tinkham</member>
+				<member>Ed Monjay</member>
+				<member>kiklop</member>
+				<member>Marc Weber</member>
+				<member>Jess Thrysoee</member>
+				<member>Alan Fischer</member>				
 			</simplelist>
 			If we missed someone please let us know about it!
 			</para>
@@ -252,6 +268,9 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.4  2004/08/19 02:24:52  ddiego
+fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+
 Revision 1.3  2004/04/03 15:48:26  ddiego
 Merged over code from the 0-6-3 branch.
 
@@ -294,3 +313,4 @@ added some more docs and broke apart the various "books" so they can be all
 put together or in separate books. Made to changes to Makefile
 
 -->
+

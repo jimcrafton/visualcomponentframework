@@ -86,7 +86,7 @@ Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b0
 
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_BIN ""{app}\bin"""; Components: Src; Tasks: addenvpaths
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_LIB ""{app}\lib"""; Components: Src; Tasks: addenvpaths
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\include"""; Components: Src; Tasks: addenvpaths
+Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\src"""; Components: Src; Tasks: addenvpaths
 Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_BIN%; Components: Src; Tasks: addenvpaths
 
 [UninstallRun]

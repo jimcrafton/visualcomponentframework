@@ -277,26 +277,53 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 	
 	Scrollable* scrollable = controlContainer_->getScrollable();
 
+	Rect oldClipRect = context->getClippingRect();
+
+	Rect mainBounds;
+	if ( controlContainer_->getParent() ) {
+		mainBounds = controlContainer_->getBounds();
+		mainBounds.offset( -controlContainer_->getLeft(), -controlContainer_->getTop() );
+	}
+	else {
+		mainBounds = controlContainer_->getClientBounds();
+	}
+
+	Rect childClipRect;
+	Rect bounds;
+
 	while ( true == children->hasMoreElements() ){
 		Control* child = children->nextElement();
-		if ( NULL != child ){
-			if ( (true == child->isLightWeight()) && (true == child->getVisible()) ){
-				Rect bounds = child->getBounds();
-				Point oldOrigin = context->getOrigin();
-				originX = bounds.left_ + oldOrigin.x_;
-				originY = bounds.top_ + oldOrigin.y_;
-				if ( NULL != scrollable ) {
-					originX += 	scrollable->getHorizontalPosition();
-					originY += 	scrollable->getVerticalPosition();
-				}
-				context->setOrigin( originX, originY );
+		VCF_ASSERT( NULL != child );
 
-				child->paint( context );
+		if ( child->isLightWeight() && child->getVisible() ){
+			bounds = child->getBounds();			
+			
+			childClipRect.left_ = maxVal<>(bounds.left_,mainBounds.left_);
+			childClipRect.top_ = maxVal<>(bounds.top_,mainBounds.top_);
+			childClipRect.right_ = minVal<>(bounds.right_,mainBounds.right_);
+			childClipRect.bottom_ = minVal<>(bounds.bottom_,mainBounds.bottom_);
+			
 
-				context->setOrigin( oldOrigin.x_, oldOrigin.y_ );
+			childClipRect.offset( -bounds.left_, -bounds.top_ );
+
+			Point oldOrigin = context->getOrigin();
+			originX = bounds.left_ + oldOrigin.x_;
+			originY = bounds.top_ + oldOrigin.y_;
+			if ( NULL != scrollable ) {
+				originX += 	scrollable->getHorizontalPosition();
+				originY += 	scrollable->getVerticalPosition();
 			}
-		}
-	}
+
+
+			context->setOrigin( originX, originY );
+			context->setClippingRect( &childClipRect );			
+			
+			child->paint( context );
+			
+			context->setOrigin( oldOrigin.x_, oldOrigin.y_ );
+			context->setClippingRect( &oldClipRect );
+		}		
+	}	
 }
 
 Enumerator<Control*>* AbstractContainer::getChildren()
@@ -521,6 +548,9 @@ void AbstractContainer::setContainerControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/19 02:24:53  ddiego
+*fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
