@@ -1,0 +1,6 @@
+//ApplicationKit.rc
+//DO NOT LET VC++ CHANGE THIS FILE !!!!!!!!!
+
+
+//ICON
+DefaultVCFIcon	ICON		"vcf.ico"
