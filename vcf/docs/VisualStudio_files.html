@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>File organization for vc6 and vc7 </title>
+	</head>
+	<body>
+		<h3>
+			No conflicts between vc6 and vc7 (.NET)</h3>
+		<p>
+			It is possible now to compile the vcf files with both vc6 and vc7 without any 
+			conflicts.
+		</p>
+		<blockquote>
+			<p>
+				The subdirectory [debug] and [release] and similar ones, where the subproducts 
+				of the compilation are located, are now located under the directories [vc6] and 
+				[vc7] of each project.
+			</p>
+			<p>
+				For the sake of clarity, the libraries are located under the [vc60] and [vc70] 
+				subdirectories of the [build] directory.
+			</p>
+			<p>
+				The primary output have now the additional suffix _vc6 or _vc7.<br>
+				For example bin/ApplicationKit_d.dll takes now the name 
+				bin/ApplicationKit_vc6_d.dll if compiled under vc6
+			</p>
+		</blockquote>
+		<h3>
+			Automatic library selection</h3>
+		<blockquote>
+			<p>
+				The libraries are automatically selected by using two macros BUILD_APPKIT_LIB 
+				and USE_APPKIT_DLL<br>
+				BUILD_APPKIT_LIB is only used when building the library (static or dynamic)<br>
+				USE_APPKIT_DLL is only used when using the dynamic version of the library
+			</p>
+		</blockquote>
+	</body>
+</html>

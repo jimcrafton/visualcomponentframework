@@ -38,18 +38,18 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "ReleaseS\obj"
+# PROP Intermediate_Dir "vc6/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo /o"..\..\..\lib\GraphicsKit_vc6_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
 
@@ -61,18 +61,18 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "DebugS\obj"
+# PROP Intermediate_Dir "vc6/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\lib/GraphicsKit_vc6_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo /o"..\..\..\lib\GraphicsKit_vc6_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc6_sd.lib"
 
 !ENDIF 
 
@@ -82,14 +82,10 @@ LIB32=link.exe -lib
 # Name "GraphicsKit - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 # End Source File
 # Begin Source File
 
@@ -124,8 +120,6 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
 
 !IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-# ADD CPP /Yc"GraphicsKit.h"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
 
@@ -181,7 +175,7 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\AbstractImage.h

@@ -38,18 +38,18 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "ReleaseS\obj"
+# PROP Intermediate_Dir "vc6/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_APPKIT_LIB" /Yu"ApplicationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc6_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
@@ -61,18 +61,18 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "DebugS\obj"
+# PROP Intermediate_Dir "vc6/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"ApplicationKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_APPKIT_LIB" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\Lib/ApplicationKit_vc6_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc6_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_sd.lib"
 
 !ENDIF 
 
@@ -82,7 +82,7 @@ LIB32=link.exe -lib
 # Name "ApplicationKit - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractApplication.cpp
@@ -145,8 +145,6 @@ SOURCE=..\..\..\src\core\ApplicationKit.cpp
 
 !IF  "$(CFG)" == "ApplicationKit - Win32 Release"
 
-# ADD CPP /Yc"ApplicationKit.h"
-
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
 # ADD CPP /Yc"ApplicationKit.h"
@@ -197,6 +195,10 @@ SOURCE=..\..\..\src\core\ComboBoxControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMDataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMDragSource.cpp
 # End Source File
 # Begin Source File
 
@@ -632,6 +634,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Dialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp
 # End Source File
 # Begin Source File
@@ -707,9 +713,21 @@ SOURCE=..\..\..\src\core\Window.cpp
 SOURCE=..\..\..\src\Events\WindowEvent.cpp
 # End Source File
 # End Group
+# Begin Group "Res"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\resources\win32\ApplicationKit.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\vcf.ico
+# End Source File
+# End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractApplication.h
@@ -813,26 +831,6 @@ SOURCE=..\..\..\include\implementer\ButtonPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\CheckBoxControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\Clipboard.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardDataObject.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardPeer.h
 # End Source File
 # Begin Source File
 
@@ -1092,6 +1090,14 @@ SOURCE=..\..\..\include\implementer\DialogPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\dragdrop\DragSource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\dragdrop\DropTarget.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\FillState.h
 # End Source File
 # Begin Source File
@@ -1109,6 +1115,10 @@ SOURCE=..\..\..\include\implementer\FontState.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Frame.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\FrameEvent.h
 # End Source File
 # Begin Source File
 
@@ -1368,10 +1378,6 @@ SOURCE=..\..\..\include\io\ResourceStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\RichTextPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Scrollable.h
 # End Source File
 # Begin Source File
@@ -1409,10 +1415,6 @@ SOURCE=..\..\..\include\implementer\StrokeState.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\TabbedPages.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementer\TabbedPagesPeer.h
 # End Source File
 # Begin Source File
 
@@ -1620,6 +1622,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32DragDropPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32DropTargetPeer.h
 # End Source File
 # Begin Source File
@@ -1713,18 +1719,6 @@ SOURCE=..\..\..\include\events\WindowListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\WindowPeer.h
-# End Source File
-# End Group
-# Begin Group "Res"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\..\resources\win32\ApplicationKit.rc
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\resources\win32\vcf.ico
 # End Source File
 # End Group
 # Begin Source File

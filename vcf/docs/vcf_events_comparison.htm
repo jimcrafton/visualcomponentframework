@@ -1,0 +1,186 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>VCF Events comparison</title>
+</head>
+
+<body>
+
+<p>Events in the VCF</p>
+<p>Events in the VCF allow any object to fire an event and allow for one or more
+&quot;listeners&quot; to be notified when the event happens. This is slightly
+different than most event systems which tend to only allow the event to be
+received by a single listener. In many frameworks event handling is done through
+callbacks, and there are many different ways to approach this. In C++ this gets
+a bit tricky due to the nature of C++ member functions, so we need a way to wrap
+the callback function, which itself, generally, needs to be a member function.
+In addition, we need a consistent way to let the objects that fire the events
+know that we are interested in being notified when a particular event happens,
+as well as telling the same object when we are no longer interested in the
+notifications.</p>
+<p>VCF events are conceptually similar to .NET. Basically you have some object that wants to fire off events to interested parties. The
+interested parties register a concrete instance of the <code>VCF::EventHandler</code> class, which
+basically wraps a C++ member function. To allow other objects to "register" their event handlers, the class that
+will fire the event needs to have public &quot;addXXXHander&quot; and "removeXXXHandler"  methods where you pass in
+a valid instance of an EventHandler. Then, when the object fires off an event, it simply creates an Event object on the stack, and iterates
+through it's collection of registered event handlers. To simplify all of the
+adding and removing of handlers as well as fire the event and routing it to all
+the handlers, there is a <code>VCF::Delegate</code> class that has methods for adding and
+removing event handlers, and a method fire an <code>VCF::Event</code> off to all the handlers.</p>
+<p>For a method to qualify as usable for an event handler to wrap around, it
+must have a specific signature. The method must return <code>void</code>, and
+must take a single argument, the <i>event</i>, which must be a pointer to an <code>VCF::Event</code>
+instance or some instance derived (directly or indirectly) from <code>VCF::Event</code>.
+In other words it would look like this:</p>
+<p><code>void MyObject::onSomeEvent( VCF::Event* event )</code></p>
+<p>The <code>VCF::Event</code> class itself provides a fair amount of
+information, such as who sent the event, the time it was sent, a <code><b>void*</b></code>
+for user specific data, and so on. It can be derived from for more specific
+information, for example, the <code>VCF::MouseEvent</code>, which contains
+information about the current mouse position, what combination of the CTRL, ALT,
+or SHIFT keys are being held down, and more.</p>
+<p>In .NET this is all wrapped in the delegate, which is basically a glorified
+method pointer as an object. This works because the .NET framework is <b><i>not</i></b>
+at all C++ standards compliant so the compiler has been modified to
+&quot;cheat&quot;, allowing for things like delegates. The VCF <b><i>is</i></b> based
+on standard C++ and as such the event mechanism it uses is about as close as you
+can come to something similar to .NET in standard C++.&nbsp;</p>
+<p>Another feature to note about the VCF event mechanism - it is entirely
+independent of a GUI event loop - making it suitable for use in non GUI
+applications and for non GUI classes.</p>
+<p>Several other toolkits out there also have event mechanisms so lets briefly
+compare them to the VCF's:</p>
+<p><a href="http://www.trolltech.com">Qt</a></p>
+<p>Qt uses the idea of signals and slots. This is similar to the VCF's event
+mechanism, in that a signal (an event) is emitted and then routed off to one or
+more slots (method callbacks) handle it. On problem is that none of this will
+work without first running all your code through Qt's MOC program (Meta Object
+Compiler), which changes the nonstandard <code>slots</code> and <code>signals</code>
+keyword/macro into viable C++. This is an annoying step that the VCF does not
+require. All you need is a good C++ compiler and you're set to go. Qt's
+mechanism also requires more internal traversal (by their own admission, it is
+around 10 times slower than a direct call) than the VCF one (from the time the
+VCF::Delegate's fireEvent() is called to the actual method invocation is about 3
+calls). Also because the VCF uses templates for the specific event handler that
+is created, the member method binding is type safe - no type casting is
+involved.</p>
+<p><a href="http://www.fox-toolkit.org/fox.html">FOX</a></p>
+<p>The FOX toolkit uses a mechanism borrowed from NeXT's ObjectiveC framework,
+massaged into C++ usage. A target and a selector are identified as well as a
+call back method (referred to as a <i>message</i>). Together these form a a way
+for a any widget to get notified of a change. In addition the FOX framework uses
+a series of macros to glue the various messages together, similar to MFC's
+message maps. Like VCF events, FOX has a predetermined set of arguments that the
+message methods must confirm to. What's nice about the VCF's way of handling
+things is that there are NO message map macros, and it is very simple to add
+event handlers. Also the VCF event mechanism does not need message ID's at all.
+They are used, because in some instance they are useful, but in many cases they
+are completely unnecessary, whereas FOX does require (to the best of my
+knowledge) you to keep track of the actual ID value's.</p>
+<p><a href="http://msdn.microsoft.com/library/default.asp?url=/nhp/Default.asp?contentid=28000451">Microsoft
+.NET</a></p>
+<p>Microsoft's new .NET framework uses the concept of a delegate object, a
+construct that is basically a merging of the VCF::EventHandler and VCF::Delegate
+all together. In .NET a delegate can notify a single object or it can work in
+multi-cast mode and notify more than one object. Because of the alteration to
+the language the syntax for using delegates is very nice, but of course this
+results in non standard C++ (in addition to a number of other restrictions that
+are imposed by the CLR, such as no managed C++ objects on the stack), that is
+useless beyond the Microsoft toolset.</p>
+<p>Microsoft Foundation Classes (MFC)</p>
+<p>MFC is an old C++ framework and provides only the thinnest layer of
+abstraction on top of the Win32 API. It deals with events a macro system similar
+to FOX's, in which a message ID (like WM_PAINT, or WM_COMMAND) is associated
+with a function. On top of the complete lack of dynamic connecting, MFC's
+approach limits you to a single window that gets notified of a message. A single
+change cannot be easily routed to multiple &quot;listeners&quot; without writing
+some appropriate code to do this. In addition the classes generally have to be
+window derived, making it unsuitable for non GUI applications. In addition, the
+implementation of the macros leads to non-type safe method binding, which can
+lead to bugs in code, such as when calling conventions differ in the implemented
+message handling method (something that will often slide by in debug builds and
+then crash spectacularly in a release build! ).</p>
+<p>&nbsp;</p>
+<p>To get an idea for how things actually work, lets look at a very simple example:</p>
+
+<pre>
+<b>class</b> Employee : <b>public</b> VCF::Object {
+<b>public</b>:
+    Employee() {}
+
+    VCF::String getName() {
+        <b>return</b> m_name;
+    }
+    
+    <b>void</b> setName( const VCF::String&amp; name ) {
+        m_name = name;
+       Event event( this );
+       changed.fireEvent( &amp;event );
+    }
+
+    VCF::Delegate changed;
+<b>protected</b>:
+    VCF::String m_name;
+};
+</pre>
+
+<p>
+OK so this class, <code>Employee</code>, will fire off events to whoever is interested, whenever the name changes.
+We make our Delgate a public member so it can be conveniently reached,
+alternately we could have written a method to grant access to it, but this is
+simpler.
+</p>
+
+<p>
+So to use this is a window:
+</p>
+
+<pre>
+<b>class</b> MyWindow : <b>public</b> VCF::Window {
+<b>public</b>:
+
+    <b>void</b> onEmployeeNameChanged( Event* e ) {
+        Employee* employee = (Employee*)e-&gt;getSource();
+
+        setCaption( &quot;Name changed to &quot; +  employee-&gt;getName() );
+    }
+};
+</pre>
+
+<p>MyWindow::onEmployeeNameChanged will be our method that will get called
+whenever the Employee's name is changed. To see all of this in action let's make
+a quick little program that demonstrates hooking up our MyWindow instance to an
+Employee.</p>
+
+<pre>
+<b>int</b> main( <b>int</b> argc, <b>char</b>** argv ) {
+        Application app;
+        MyWindow* mainWnd = new MyWindow();
+        app.setMainWindow( mainWnd );
+
+        Employee employee;
+        
+        <i>//create our event handler</i>
+        EventHandler* ev =
+            <b>new</b> GenericEventHandler<MyWindow>( mainWnd, MyWindow::onEmployeeNameChanged, &quot;nameChanged&quot; ) ;
+            
+        <i>//add the handler to the Employee's changed Delegate</i>    
+        employee.changed.addHandler( ev );
+        <i>//presto ! Now whenever we call employee.setName(), the MyWindow::onEmployeeNameChanged 
+        //member method will get called
+</i>
+        <i>//show the main window</i>
+        mainWindow-&gt;show();
+
+        <i>//starts the app's windowing event loop, among other things</i>
+        Application::appMain( argc, argv );
+        <b>return</b> 0;
+}
+</pre>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

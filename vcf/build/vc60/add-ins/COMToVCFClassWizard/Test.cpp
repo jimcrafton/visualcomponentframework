@@ -48,11 +48,13 @@ BOOL CTestApp::InitInstance()
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
 
-#ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
-#else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
-#endif
+#	if (_MSC_VER < 1300)	//obsolete with .NET : Enable3dControls and Enable3dControlsStatic are no longer necessary.
+#		ifdef _AFXDLL
+			Enable3dControls();			// Call this when using MFC in a shared DLL
+#		else
+			Enable3dControlsStatic();	// Call this when linking to MFC statically
+#		endif
+#	endif
 
 	TypeLibraryConverterDlg dlg;
 	m_pMainWnd = &dlg;
