@@ -145,6 +145,10 @@ SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AppKitCommon.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Application.h
 # End Source File
 # Begin Source File
