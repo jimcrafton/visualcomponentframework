@@ -236,6 +236,10 @@ SOURCE=..\..\..\include\graphics\GraphicsResourceMgr.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\GraphicsToolKit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Image.h
 # End Source File
 # Begin Source File
@@ -328,10 +332,6 @@ SOURCE=..\..\..\include\graphics\TileManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\UIGraphicsToolKit.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\UVMap.h
 # End Source File
 # Begin Source File
@@ -349,6 +349,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Context.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Font.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32GraphicsToolkit.h
 # End Source File
 # Begin Source File
 
@@ -429,6 +433,10 @@ SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\ImageEvent.cpp
 # End Source File
 # Begin Source File
@@ -457,10 +465,6 @@ SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\UIGraphicsToolKit.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\Vector2D.cpp
 # End Source File
 # Begin Source File
@@ -474,6 +478,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
 # End Source File
 # Begin Source File
 
