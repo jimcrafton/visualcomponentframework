@@ -113,3 +113,5 @@ BSTR TYPEDESCtoString( ITypeInfo* pti, TYPEDESC* ptdesc );
 HRESULT GenerateTypeLibHolder( ITypeLib* pTypeLib, TypeLibHolder& typeLibHolder );
 
 #endif //_TYPELIBDUMP_H__
+
+

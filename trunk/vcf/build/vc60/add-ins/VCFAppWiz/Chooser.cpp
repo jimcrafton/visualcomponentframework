@@ -130,3 +130,6 @@ BOOL CDialogChooser::NeedsSplashScreen()
 	Page4Dlg* dlg = (Page4Dlg*)m_pDlgs[4];
 	return dlg->m_useSplashScreen;
 }
+
+
+

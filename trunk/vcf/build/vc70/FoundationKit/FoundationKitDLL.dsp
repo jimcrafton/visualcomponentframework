@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "BUILD_FRAMEWORK_LIB" /Yu"FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /Yu"FoundationKit.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "BUILD_FRAMEWORK_LIB" /FR /Yu"FoundationKit.h" /Fd"..\..\..\bin/FoundationKit_vc7_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /FR /Yu"FoundationKit.h" /Fd"..\..\..\bin/FoundationKit_vc7_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -130,6 +130,10 @@ SOURCE=..\..\..\include\core\ClassRegistry.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\CommonDefines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\Delegate.h
 # End Source File
 # Begin Source File
 
@@ -194,6 +198,14 @@ SOURCE=..\..\..\include\io\FileUtils.h
 # Begin Source File
 
 SOURCE=..\..\..\include\FoundationKit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\FoundationKitPrivate.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\FoundationKitSelectLib.h
 # End Source File
 # Begin Source File
 
@@ -265,6 +277,10 @@ SOURCE=..\..\..\include\exceptions\NoSuchElementException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\NotifyEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\NotifyListener.h
 # End Source File
 # Begin Source File
@@ -278,6 +294,10 @@ SOURCE=..\..\..\include\core\ObjectWithEvents.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\OutOfBoundsException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
@@ -297,7 +317,15 @@ SOURCE=..\..\..\include\exceptions\ProcessException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\ProcessIORedirectionPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ProcessPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\ProcessWithRedirectedIO.h
 # End Source File
 # Begin Source File
 
@@ -437,6 +465,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Mutex.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ProcessIORedirector.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerkit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
@@ -562,6 +594,10 @@ SOURCE=..\..\..\src\core\Point.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\ProcessWithRedirectedIO.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\PropertyChangeEvent.cpp
 # End Source File
 # Begin Source File
@@ -635,6 +671,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32ProcessIORedirector.cpp
 # End Source File
 # Begin Source File
 

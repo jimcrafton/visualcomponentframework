@@ -1,0 +1,61 @@
+<make>
+
+	<substitutions>
+		<variable name="INC" value="../../../include"/>
+		<variable name="SRC" value="../../../src"/>
+		<variable name="LIB_OUT" value="../../../lib"/>
+		<variable name="BIN_OUT" value="../../../bin"/>		
+	</substitutions>
+
+	
+	<project name="NetworkKit" >
+		<configurations>
+			<config name="GCC Debug" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -D_DEBUG -ggdb"/><!-- -fPIC"/ -->
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-ggdb -lFoundationKit_d -shared -o $(BIN_OUT)/libNetworkKit_d.so"/>
+					</flags>
+				</linker>
+			</config>
+			
+			<config name="GCC Release" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -O3"/><!-- -fPIC"/ -->
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-lFoundationKit -shared -o $(BIN_OUT)/libNetworkKit.so"/>
+					</flags>
+				</linker>
+			</config>			
+		</configurations>
+
+		<sources>
+			<source name="$(SRC)/net/DatagramSocket.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug|BCC55 Debug"/>
+			<source name="$(SRC)/net/NetToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/net/ServerSocketEvent.cpp" partOfConfig="MinGW Debug|GCC Release|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/net/Socket.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/net/SocketEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/net/SocketListeningLoop.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/net/URL.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+
+			<!--Win32 Peers-->
+			
+			<!--Linux Peers-->
+			
+		</sources>
+	</project>
+</make>

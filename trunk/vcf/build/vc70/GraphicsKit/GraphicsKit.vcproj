@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC,BUILD_GRAPHICSKIT_LIB"
+				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -69,7 +69,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,BUILD_GRAPHICSKIT_LIB"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -112,9 +112,6 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
 				RelativePath="..\..\..\src\Graphics\AbstractImage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\ArtStroke.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Graphics\BasicFill.cpp">

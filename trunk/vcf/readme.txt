@@ -1,3 +1,12 @@
+Visual Component Framework 0.5.9 
+
+Readme
+
+Known issues:
+
+
+
+
 Visual Component Framework 0.5.4 
 
 Readme

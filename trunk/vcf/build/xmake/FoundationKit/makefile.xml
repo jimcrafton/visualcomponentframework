@@ -38,18 +38,35 @@
 			<config name="GCC Debug" srcBinaryExt=".o">
 				<compiler name="g++" >
 					<flags>
-						<flag value="-I $(INC)"/>						
-						<flag value="-c -DVCF_GCC -D_DEBUG -fPIC"/>
+						<flag value="-I $(INC)"/>
+						<flag value="-c -DVCF_GCC -D_DEBUG -ggdb"/><!-- -fPIC"/ -->
 					</flags>
 				</compiler>	
 
 				<linker name="g++">
 					<flags>
 						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
-						<flag value="-ldl -shared -o $(BIN_OUT)/libFoundationKit.so"/>
+						<flag value="-ggdb -ldl -lpthread -shared -o $(BIN_OUT)/libFoundationKit_d.so"/>
 					</flags>
 				</linker>
 			</config>
+			
+			<config name="GCC Release" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -O2"/><!-- -fPIC"/ -->
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-ldl -lpthread -shared -o $(BIN_OUT)/libFoundationKit.so"/>
+					</flags>
+				</linker>
+			</config>
+			
 			<config name="GCC Static" srcBinaryExt=".o">
 				<compiler name="g++" >
 					<flags>
@@ -89,43 +106,43 @@
 		</configurations>
 
 		<sources>
-			<source name="$(SRC)/Exceptions/BasicException.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug|BCC55 Debug"/>
-			<source name="$(SRC)/IO/BasicInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/BasicOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Class.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ClassRegistry.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/Directory.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/ErrorLog.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/Event.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/EventHandler.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/File.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/FilePath.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/FileStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/FileUtils.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/FoundationKit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/InterfaceClass.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Library.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Locales.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/MemoryStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Mutex.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Object.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ObjectWithEvents.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Parser.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Point.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/PropertyChangeEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Rect.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Registry.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/Stream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/StringUtils.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/System.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/SystemToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/TextInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/TextOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Thread.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ThreadEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/VCFMath.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>			
-			<source name="$(SRC)/Utils/VCFProcess.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/XMLParser.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Exceptions/BasicException.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug|BCC55 Debug"/>
+			<source name="$(SRC)/IO/BasicInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/BasicOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Class.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ClassRegistry.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/Directory.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/ErrorLog.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/Event.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/EventHandler.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/File.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/FilePath.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/FileStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/FileUtils.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/FoundationKit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/InterfaceClass.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Library.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Locales.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/MemoryStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Mutex.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Object.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ObjectWithEvents.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Parser.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Point.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/PropertyChangeEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Rect.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Registry.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/Stream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/StringUtils.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/System.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/SystemToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/TextInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/TextOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Thread.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ThreadEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/VCFMath.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>			
+			<source name="$(SRC)/Utils/VCFProcess.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/XMLParser.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC Release|VC++ Debug"/>
 
 			<!--Win32 Peers-->
 			<source name="$(SRC)/ImplementerKit/Win32Peer.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
@@ -141,18 +158,19 @@
 			<source name="$(SRC)/ImplementerKit/Win32SystemToolkit.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
 
 			<!--Linux Peers-->
-			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxThread.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxLibraryPeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxMutex.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxProcessPeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxRegistry.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxSemaphorePeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxSystemPeer.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxSystemToolkit.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/LinuxProcessIORedirector.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxPeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFilePeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxFileStream.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/PosixThread.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxLibraryPeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxMutex.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxProcessPeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxRegistry.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSemaphorePeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSystemPeer.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxSystemToolkit.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/LinuxProcessIORedirector.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			
 		</sources>
 	</project>
 </make>

@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\lib/GraphicsKit_vc6_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\lib/GraphicsKit_vc6_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -80,91 +80,6 @@ LIB32=link.exe -lib
 
 # Name "GraphicsKit - Win32 Release"
 # Name "GraphicsKit - Win32 Debug"
-# Begin Group "Source Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\BasicFill.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\Color.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\Font.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\FontState.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
-# ADD CPP /Yc"GraphicsKit.h"
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\ImageEvent.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\Polygon.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\Vector2D.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
-# End Source File
-# End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
@@ -355,6 +270,99 @@ SOURCE=..\..\..\include\implementerKit\Win32Image.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32OpenGLPeer.h
+# End Source File
+# End Group
+# Begin Group "Source Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\BasicFill.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Color.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Font.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\FontState.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+
+!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
+
+# ADD CPP /Yc"GraphicsKit.h"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\ImageEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Polygon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Vector2D.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Context.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 # End Source File
 # End Group
 # End Target

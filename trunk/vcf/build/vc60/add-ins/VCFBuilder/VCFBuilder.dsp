@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
@@ -69,7 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /FR /Yu"stdafx.h" /Fd"..\..\..\..\VCFBuilder2\Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /FR /Yu"stdafx.h" /Fd"..\..\..\..\VCFBuilder2\Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -131,6 +131,15 @@ SOURCE=.\VCFBuilder.cpp
 # Begin Source File
 
 SOURCE=.\VCFBuilder.def
+
+!IF  "$(CFG)" == "VCFBuilder - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

@@ -7,6 +7,7 @@
 		<variable name="BIN_OUT" value="../../../bin"/>
 		<variable name="X11_INC" value="/usr/X11R6/include"/>
 		<variable name="X11_LIB" value="/usr/X11R6/lib"/>
+		<variable name="IMLIB2_INC" value="/usr/local/include/imlib2"/>		
 
 		<!-- Note that this is a hack not sure what the correct thing to do 
 		here for MINGW_INC, perhaps this should be an env variable ?-->
@@ -43,8 +44,8 @@
 				<compiler name="g++" >
 					<flags>
 						<flag value="-I $(INC)"/>
-						<flag value="-I $(X11_INC)"/>
-						<flag value="-c -DVCF_GCC -DVCF_X11 -D_DEBUG -fPIC"/>
+						<flag value="-I $(X11_INC) -I $(IMLIB2_INC)"/>
+						<flag value="-c -DVCF_GCC -DVCF_X11 -D_DEBUG -fPIC -ggdb"/>
 					</flags>
 				</compiler>	
 
@@ -53,10 +54,47 @@
 						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
 						<flag value="-ldl"/>
 						<flag value="-L$(X11_LIB)"/>
+						<flag value=" -L $(BIN_OUT) -lFoundationKit_d -lX11 -lttf -lImlib2 -shared -o $(BIN_OUT)/libGraphicsKit_d.so"/>
+					</flags>
+				</linker>
+			</config>
+			
+			<config name="GCC gtk" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>
+						<flag value="`pkg-config gtk+-2.0 --cflags`"/>
+						<flag value="-c -DVCF_GCC -DVCF_GTK"/>
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>						
+						<flag value="`pkg-config gtk+-2.0 --libs`"/>
+						<flag value=" -L $(BIN_OUT) -lFoundationKit -shared -o $(BIN_OUT)/libGraphicsKit_gtk.so"/>
+					</flags>
+				</linker>
+			</config>
+			
+			<config name="GCC Release" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>
+						<flag value="-I $(X11_INC)"/>
+						<flag value="-c -DVCF_GCC -DVCF_X11 -fPIC -O2"/>
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-02 -ldl"/>
+						<flag value="-L$(X11_LIB)"/>
 						<flag value=" -L $(BIN_OUT) -lFoundationKit -lX11 -shared -o $(BIN_OUT)/libGraphicsKit.so"/>
 					</flags>
 				</linker>
 			</config>
+			
 			<config name="GCC Static" srcBinaryExt=".o">
 				<compiler name="g++" >
 					<flags>
@@ -91,21 +129,21 @@
 		</configurations>
 
 		<sources>
-			<source name="$(SRC)/Graphics/GraphicsKit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/AbstractImage.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/BasicFill.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/BasicStroke.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Color.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Font.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/FontState.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/GlyphCollection.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/GraphicsContext.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/GraphicsObject.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/GraphicsToolKit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ImageEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Matrix2D.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Polygon.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Vector2D.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/GraphicsKit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/AbstractImage.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/BasicFill.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/BasicStroke.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Color.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Font.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/FontState.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/GlyphCollection.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/GraphicsContext.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/GraphicsObject.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/GraphicsToolKit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ImageEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Matrix2D.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Polygon.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Vector2D.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
 
 			<!-- Win32 -->
 			<source name="$(SRC)/ImplementerKit/Win32Font.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
@@ -113,17 +151,26 @@
 			<source name="$(SRC)/ImplementerKit/Win32Context.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
 			<source name="$(SRC)/ImplementerKit/Win32GraphicsToolkit.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
 
+			<!-- GTK -->
+			<source name="$(SRC)/ImplementerKit/GTKGraphicsToolkit.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKContext.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKImage.cpp" partOfConfig="GCC gtk"/>
+			<source name="$(SRC)/ImplementerKit/GTKFont.cpp" partOfConfig="GCC gtk"/>
+			
+			
 			<!-- X11 -->
-			<source name="$(SRC)/ImplementerKit/X11Font.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/X11Image.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/X11Context.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/ImplementerKit/X11GraphicsToolkit.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcBezierCurve2.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcCurve2.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcVector2.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcIntegrate.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcSingleCurve2.cpp" partOfConfig="GCC Debug"/>
-			<source name="$(SRC)/Graphics/MgcMath.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/X11Font.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Image.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Context.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11GraphicsToolkit.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			
+			
+			<source name="$(SRC)/Graphics/MgcBezierCurve2.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
+			<source name="$(SRC)/Graphics/MgcCurve2.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
+			<source name="$(SRC)/Graphics/MgcVector2.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
+			<source name="$(SRC)/Graphics/MgcIntegrate.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
+			<source name="$(SRC)/Graphics/MgcSingleCurve2.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
+			<source name="$(SRC)/Graphics/MgcMath.cpp" partOfConfig="GCC gtk|GCC Debug|GCC Release"/>
 		</sources>
 	</project>
 </make>

@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc7/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc7/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\lib/GraphicsKit_vc7_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\lib/GraphicsKit_vc7_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -86,10 +86,6 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 # End Source File
 # Begin Source File
 

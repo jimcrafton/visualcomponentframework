@@ -42,8 +42,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc7/ReleaseDLL\obj"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPLICATIONKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /Yu"ApplicationKit.h" /FD /Zm120 /Zm120 /c
+# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPKIT_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /Yu"ApplicationKit.h" /FD /Zm120 /Zm120 /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -69,8 +69,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "vc7/DebugDLL\obj"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPLICATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\bin/ApplicationKit_vc7_d.pdb" /FD /GZ /Zm120 /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPKIT_EXPORTS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\bin/ApplicationKit_vc7_d.pdb" /FD /GZ /Zm120 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -197,23 +197,7 @@ SOURCE=..\..\..\include\core\CheckBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\dragdrop\Clipboard.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardDataObject.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\ClipboardPeer.h
+SOURCE=..\..\..\include\graphics\ColorEtchedBorder.h
 # End Source File
 # Begin Source File
 
@@ -337,10 +321,6 @@ SOURCE=..\..\..\include\core\Container.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\Contextpeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Control.h
 # End Source File
 # Begin Source File
@@ -390,14 +370,6 @@ SOURCE=..\..\..\include\core\CustomControl.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\CustomControlPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DataObjectPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DataType.h
 # End Source File
 # Begin Source File
 
@@ -473,6 +445,18 @@ SOURCE=..\..\..\include\implementer\DialogPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\dragdrop\DragSource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\dragdrop\DropTarget.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\EtchedBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\FillState.h
 # End Source File
 # Begin Source File
@@ -490,6 +474,10 @@ SOURCE=..\..\..\include\implementer\FontState.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Frame.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\FrameEvent.h
 # End Source File
 # Begin Source File
 
@@ -585,10 +573,6 @@ SOURCE=..\..\..\include\core\ListBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ListBoxPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ListItem.h
 # End Source File
 # Begin Source File
@@ -642,6 +626,10 @@ SOURCE=..\..\..\include\implementer\MenuItemPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\MenuListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\MessageDialog.h
 # End Source File
 # Begin Source File
 
@@ -749,10 +737,6 @@ SOURCE=..\..\..\include\io\ResourceStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\RichTextPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Scrollable.h
 # End Source File
 # Begin Source File
@@ -790,10 +774,6 @@ SOURCE=..\..\..\include\implementer\StrokeState.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\TabbedPages.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementer\TabbedPagesPeer.h
 # End Source File
 # Begin Source File
 
@@ -865,6 +845,10 @@ SOURCE=..\..\..\include\events\TimerEvent.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\TitledBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ToggledButton.h
 # End Source File
 # Begin Source File
@@ -918,6 +902,10 @@ SOURCE=..\..\..\include\events\TreeModelListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\TreePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\UIMetricsManager.h
 # End Source File
 # Begin Source File
 
@@ -998,6 +986,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32DragDropPeer.h
 # End Source File
 # Begin Source File
 
@@ -1095,6 +1087,26 @@ SOURCE=..\..\..\include\events\WindowListener.h
 
 SOURCE=..\..\..\include\implementer\WindowPeer.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Wizard.h
+# End Source File
+# End Group
+# Begin Group "Res"
+
+# PROP Default_Filter "*.rc;*.bmp;*.ico"
+# Begin Source File
+
+SOURCE=..\..\resources\win32\ApplicationKit.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\inform.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\vcf.ico
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -1190,6 +1202,10 @@ SOURCE=..\..\..\src\Events\ClipboardEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\ColorEtchedBorder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\ColumnItemEvent.cpp
 # End Source File
 # Begin Source File
@@ -1203,6 +1219,10 @@ SOURCE=..\..\..\src\core\ComboBoxControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\COM\COMDataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\COM\COMDragSource.cpp
 # End Source File
 # Begin Source File
 
@@ -1374,6 +1394,10 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\EtchedBorder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\FocusEvent.cpp
 # End Source File
 # Begin Source File
@@ -1463,6 +1487,10 @@ SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\MessageDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Model.cpp
 # End Source File
 # Begin Source File
@@ -1544,6 +1572,10 @@ SOURCE=..\..\..\src\core\TimerComponent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TimerEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\TitledBorder.cpp
 # End Source File
 # Begin Source File
 
@@ -1647,6 +1679,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Dialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp
 # End Source File
 # Begin Source File
@@ -1720,18 +1756,6 @@ SOURCE=..\..\..\src\core\Window.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\WindowEvent.cpp
-# End Source File
-# End Group
-# Begin Group "Res"
-
-# PROP Default_Filter "*.rc;*.bmp;*.ico"
-# Begin Source File
-
-SOURCE=..\..\resources\win32\ApplicationKit.rc
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\resources\win32\vcf.ico
 # End Source File
 # End Group
 # End Target

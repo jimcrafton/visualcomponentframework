@@ -1,7 +1,7 @@
 echo Preparing list of files for vcf version $1...
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./ClassServer -iname *.h -o -iname *.hpp -o -iname *.c -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl > srcfiles.out
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./ClassServer -iname *.def -o -iname *.vcfdir -o -iname *.vcp -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.inf -o -iname *.vcproj > srcfiles1.out
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./ClassServer -iname *.cpp -o -iname *.CPP -o -iname *.HPP -o -iname *.cxx -o -iname *.CXX -o -iname *.cur -o -iname *.CUR > srcfiles2.out
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.h -o -iname *.hpp -o -iname *.c -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl > srcfiles.out
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.def -o -iname *.vcfdir -o -iname *.vcp -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.inf -o -iname *.vcproj > srcfiles1.out
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.cpp -o -iname *.CPP -o -iname *.HPP -o -iname *.cxx -o -iname *.CXX -o -iname *.cur -o -iname *.CUR > srcfiles2.out
 
 find ./tests -iname *.h -o -iname *.cpp -o -iname *.CPP -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl -o -iname *.def -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.html > tests.out
 cat srcfiles.out srcfiles1.out srcfiles2.out tests.out > files.out

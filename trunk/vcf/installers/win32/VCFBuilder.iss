@@ -2,21 +2,22 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 [Setup]
-AppName=VCF Builder 1.0.2 Alpha
-AppVerName=VCF Builder 1.0.2 Alpha
+AppName=VCF Builder 1.0.3 Alpha
+AppVerName=VCF Builder 1.0.3 Alpha
 AppPublisher=Diegoware
 AppPublisherURL=http://vcf.sourceforge.net
 AppSupportURL=http://vcf.sourceforge.net
 AppUpdatesURL=http://vcf.sourceforge.net
-DefaultDirName={pf}\VCFBuilder.1.0.2Alpha
-DefaultGroupName=VCF Builder 1.0.2 Alpha
-OutputDir=e:\code\vcfdev\dev\vcf\installers\win32
-OutputBaseFilename=VCFBuilder1.0.2.alpha
-AppCopyright=©2002
+DefaultDirName={pf}\VCFBuilder.1.0.3Alpha
+DefaultGroupName=VCF Builder 1.0.3 Alpha
+OutputDir=E:\code\vcfdev\stable\vcf\uploadToSF
+OutputBaseFilename=VCFBuilder1.0.3.alpha
+AppCopyright=©2002 Jim Crafton
 
 
 
-LicenseFile=E:\code\vcfdev\dev\vcf\vcfLicense.txt
+LicenseFile=E:\code\vcfdev\stable\vcf\vcfLicense.txt
+UninstallDisplayIcon={app}\VCFBuilder2_vc6.exe
 
 ; uncomment the following line if you want your installation to run on NT 3.51 too.
 ; MinVersion=4,3.51
@@ -25,17 +26,9 @@ LicenseFile=E:\code\vcfdev\dev\vcf\vcfLicense.txt
 Name: desktopicon; Description: Create a &desktop icon; GroupDescription: Additional icons:; MinVersion: 4,4
 
 [Files]
-Source: ..\..\VCFBuilder2\Bin\VCFBuilder2_vc6.exe; DestDir: {app}; Components: Application_Core
 Source: ..\..\BlackBox\BlackBox.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\VCFBuilder2\Bin\CPPParser_vc6.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\VCFBuilder2\Bin\SciLexer.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\VCFBuilder2\Bin\TextEditor_vc6.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\VCFBuilder2\Bin\VCFBuilderUI_vc6.dll; DestDir: {app}; Components: Application_Core
 Source: ..\..\BlackBox\lib\dbghelp.dll; DestDir: {app}; Components: Application_Core
 Source: ..\..\BlackBox\lib\psapi.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\bin\ApplicationKit_vc6.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\bin\FoundationKit_vc6.dll; DestDir: {app}; Components: Application_Core
-Source: ..\..\bin\GraphicsKit_vc6.dll; DestDir: {app}; Components: Application_Core
 Source: ..\..\bin\Win32HTMLBrowser_vc6.dll; DestDir: {app}; Components: Application_Core
 Source: ..\..\VCFBuilder2\Bin\help\back-pattern.jpg; DestDir: {app}\help; Components: Help
 Source: ..\..\VCFBuilder2\Bin\help\bannerLogo.jpg; DestDir: {app}\help; Components: Help
@@ -53,17 +46,6 @@ Source: ..\..\VCFBuilder2\Bin\help\features.html; DestDir: {app}\help; Component
 Source: ..\..\VCFBuilder2\Bin\help\getting_help.html; DestDir: {app}\help; Components: Help
 Source: ..\..\VCFBuilder2\Bin\help\intro.html; DestDir: {app}\help; Components: Help
 Source: ..\..\VCFBuilder2\Bin\help\tutorial1.html; DestDir: {app}\help; Components: Help
-Source: ..\..\lib\ApplicationKit_vc6.pdb; DestDir: {app}
-Source: ..\..\lib\FoundationKit_vc6.pdb; DestDir: {app}
-Source: ..\..\lib\GraphicsKit_vc6.pdb; DestDir: {app}
-Source: ..\..\VCFBuilder2\Bin\CPPParser_vc6.map; DestDir: {app}
-Source: ..\..\VCFBuilder2\Bin\VCFBuilder2_vc6.map; DestDir: {app}
-Source: ..\..\VCFBuilder2\Bin\TextEditor_vc6.map; DestDir: {app}
-Source: ..\..\VCFBuilder2\Bin\VCFBuilderUI_vc6.map; DestDir: {app}
-Source: ..\..\bin\GraphicsKit_vc6.map; DestDir: {app}
-Source: ..\..\bin\FoundationKit_vc6.map; DestDir: {app}
-Source: ..\..\bin\ApplicationKit_vc6.map; DestDir: {app}
-Source: ..\..\VCFBuilder2\Bin\ObjectRepository\class_xml.xml; DestDir: {app}\ObjectRepository
 Source: ..\..\VCFBuilder2\Bin\ObjectRepository\Form1.vff; DestDir: {app}\ObjectRepository
 Source: ..\..\VCFBuilder2\Bin\ObjectRepository\project1.vcp; DestDir: {app}\ObjectRepository
 Source: ..\..\VCFBuilder2\Bin\ObjectRepository\console.vcp; DestDir: {app}\ObjectRepository
@@ -92,11 +74,33 @@ Source: ..\..\xmake\xmake_documentation.html; DestDir: {app}\help
 Source: ..\..\VCFBuilder2\Bin\readme.txt; DestDir: {app}; Flags: isreadme
 Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}
 Source: C:\WINNT\system32\msvcrt.dll; DestDir: {sys}; CopyMode: alwaysskipifsameorolder; Flags: restartreplace
+Source: ..\..\VCFBuilder2\Bin\CPPParser_vc6.dll; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\CPPParser_vc6.map; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\CPPParser_vc6.pdb; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\TextEditor_vc6.dll; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\TextEditor_vc6.map; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\TextEditor_vc6.pdb; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilder2_vc6.exe; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilder2_vc6.map; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilder2_vc6.pdb; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilderUI_vc6.dll; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilderUI_vc6.map; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\VCFBuilderUI_vc6.pdb; DestDir: {app}
+Source: ..\..\bin\GraphicsKit_vc6.map; DestDir: {app}
+Source: ..\..\bin\ApplicationKit_vc6.map; DestDir: {app}
+Source: ..\..\bin\ApplicationKit_vc6.pdb; DestDir: {app}
+Source: ..\..\bin\FoundationKit_vc6.dll; DestDir: {app}
+Source: ..\..\bin\FoundationKit_vc6.map; DestDir: {app}
+Source: ..\..\bin\FoundationKit_vc6.pdb; DestDir: {app}
+Source: ..\..\bin\GraphicsKit_vc6.dll; DestDir: {app}
+Source: ..\..\bin\ApplicationKit_vc6.dll; DestDir: {app}
+Source: ..\..\bin\GraphicsKit_vc6.pdb; DestDir: {app}
+Source: ..\..\VCFBuilder2\Bin\SciLexer.dll; DestDir: {app}
 
 [Icons]
-Name: {group}\VCF Builder 1.0.2 Alpha; Filename: {app}\VCFBuilder2_vc6.exe; IconIndex: 0
-Name: {userdesktop}\VCF Builder 1.0.2 Alpha; Filename: {app}\VCFBuilder2_vc6.exe; MinVersion: 4,4; Tasks: desktopicon; IconIndex: 0
-Name: {group}\Uninstall VCF Builder1.0.2.alpha; Filename: {uninstallexe}
+Name: {group}\VCF Builder 1.0.3 Alpha; Filename: {app}\VCFBuilder2_vc6.exe; IconIndex: 0
+Name: {userdesktop}\VCF Builder 1.0.3 Alpha; Filename: {app}\VCFBuilder2_vc6.exe; MinVersion: 4,4; Tasks: desktopicon; IconIndex: 0
+Name: {group}\Uninstall VCF Builder1.0.3.alpha; Filename: {uninstallexe}
 Name: {group}\Submit a Bug !; Filename: http://sourceforge.net/tracker/?func=add&group_id=6796&atid=106796
 Name: {group}\VCF's XMake Documentation; Filename: {app}\help\xmake_documentation.html; IconFilename: {app}\ApplicationKit_vc6.dll; IconIndex: 0
 Name: {group}\VCF Builder Readme; Filename: {app}\readme.txt

@@ -139,3 +139,5 @@ void VCFBuilderMDIChildWnd::RegisterClass( HINSTANCE hInstance )
 
 	RegisterClassEx( &wndClass );
 }
+
+

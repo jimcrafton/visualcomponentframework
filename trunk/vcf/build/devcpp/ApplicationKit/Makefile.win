@@ -1,0 +1,506 @@
+# Project: ApplicationKitDLL
+# Makefile created by Dev-C++ 4.9.6.0
+
+CC   = g++.exe
+WINDRES = windres.exe
+RES  = ApplicationKitDLL_private.res
+OBJ  = ../ApplicationKit/AbstractApplication.o ../ApplicationKit/AbstractCommand.o ../ApplicationKit/AbstractComponentEditor.o ../ApplicationKit/AbstractContainer.o ../ApplicationKit/AbstractListModel.o ../ApplicationKit/AbstractPropertyEditor.o ../ApplicationKit/AbstractScrollable.o ../ApplicationKit/AbstractTableModel.o ../ApplicationKit/AbstractTextModel.o ../ApplicationKit/AbstractTreeModel.o ../ApplicationKit/AbstractView.o ../ApplicationKit/AbstractWin32Component.o ../ApplicationKit/AcceleratorKey.o ../ApplicationKit/Application.o ../ApplicationKit/ApplicationKit.o ../ApplicationKit/Basic3DBorder.o ../ApplicationKit/BasicTableItemEditor.o ../ApplicationKit/ButtonEvent.o ../ApplicationKit/CheckBoxControl.o ../ApplicationKit/Clipboard.o ../ApplicationKit/ClipboardDataObject.o ../ApplicationKit/ClipboardEvent.o ../ApplicationKit/ColorEtchedBorder.o ../ApplicationKit/ColumnItemEvent.o ../ApplicationKit/ColumnModelEvent.o ../ApplicationKit/ComboBoxControl.o ../ApplicationKit/COMDataObject.o ../ApplicationKit/COMDragSource.o ../ApplicationKit/COMDropTarget.o ../ApplicationKit/CommandButton.o ../ApplicationKit/CommandGroup.o ../ApplicationKit/CommonColor.o ../ApplicationKit/CommonFileBrowse.o ../ApplicationKit/CommonFileDialog.o ../ApplicationKit/CommonFileOpen.o ../ApplicationKit/CommonFileSave.o ../ApplicationKit/CommonFont.o ../ApplicationKit/CommonPrint.o ../ApplicationKit/COMObject.o ../ApplicationKit/Component.o ../ApplicationKit/ComponentEditorManager.o ../ApplicationKit/ComponentInfo.o ../ApplicationKit/COMUtils.o ../ApplicationKit/Control.o ../ApplicationKit/ControlContainer.o ../ApplicationKit/ControlEvent.o ../ApplicationKit/ControlGraphicsContext.o ../ApplicationKit/Cursor.o ../ApplicationKit/CursorManager.o ../ApplicationKit/CustomControl.o ../ApplicationKit/DataType.o ../ApplicationKit/DefaultColumnItem.o ../ApplicationKit/DefaultColumnModel.o ../ApplicationKit/DefaultListItem.o ../ApplicationKit/DefaultListModel.o ../ApplicationKit/DefaultMenuItem.o ../ApplicationKit/DefaultPropertyEditors.o ../ApplicationKit/DefaultTableCellItem.o ../ApplicationKit/DefaultTableModel.o ../ApplicationKit/DefaultTabModel.o ../ApplicationKit/DefaultTabPage.o ../ApplicationKit/DefaultTextModel.o ../ApplicationKit/DefaultTreeItem.o ../ApplicationKit/DefaultTreeModel.o ../ApplicationKit/Desktop.o ../ApplicationKit/Dialog.o ../ApplicationKit/DragEvent.o ../ApplicationKit/DragSource.o ../ApplicationKit/DropEvent.o ../ApplicationKit/DropTarget.o ../ApplicationKit/EtchedBorder.o ../ApplicationKit/FocusEvent.o ../ApplicationKit/Frame.o ../ApplicationKit/HeaderControl.o ../ApplicationKit/HelpEvent.o ../ApplicationKit/HTMLBrowserControl.o ../ApplicationKit/ImageControl.o ../ApplicationKit/ImageList.o ../ApplicationKit/ImageListEvent.o ../ApplicationKit/ItemEvent.o ../ApplicationKit/KeyboardEvent.o ../ApplicationKit/Label.o ../ApplicationKit/LibraryApplication.o ../ApplicationKit/Light3DBorder.o ../ApplicationKit/LightweightComponent.o ../ApplicationKit/ListBoxControl.o ../ApplicationKit/ListModelEvent.o ../ApplicationKit/ListViewControl.o ../ApplicationKit/Menu.o ../ApplicationKit/MenuBar.o ../ApplicationKit/MenuItemEvent.o ../ApplicationKit/MessageDialog.o ../ApplicationKit/Model.o ../ApplicationKit/MouseEvent.o ../ApplicationKit/MultilineTextControl.o ../ApplicationKit/Panel.o ../ApplicationKit/PopupMenu.o ../ApplicationKit/PropertyEditorManager.o ../ApplicationKit/PushButton.o ../ApplicationKit/RadioButtonControl.o ../ApplicationKit/Resource.o ../ApplicationKit/ResourceStream.o ../ApplicationKit/ScrollbarManager.o ../ApplicationKit/Splitter.o ../ApplicationKit/StatusBar.o ../ApplicationKit/TabbedPages.o ../ApplicationKit/TableControl.o ../ApplicationKit/TableModelEvent.o ../ApplicationKit/TabModelEvent.o ../ApplicationKit/TextControl.o ../ApplicationKit/TextEvent.o ../ApplicationKit/TimerComponent.o ../ApplicationKit/TimerEvent.o ../ApplicationKit/TitledBorder.o ../ApplicationKit/ToggledButton.o ../ApplicationKit/Toolbar.o ../ApplicationKit/ToolbarButton.o ../ApplicationKit/ToolbarDock.o ../ApplicationKit/ToolbarSeparator.o ../ApplicationKit/ToolTipEvent.o ../ApplicationKit/TreeControl.o ../ApplicationKit/TreeListControl.o ../ApplicationKit/TreeModelEvent.o ../ApplicationKit/UIToolkit.o ../ApplicationKit/UndoRedoEvent.o ../ApplicationKit/UndoRedoStack.o ../ApplicationKit/ValidationEvent.o ../ApplicationKit/VFFInputStream.o ../ApplicationKit/VFFOutputStream.o ../ApplicationKit/WhatsThisHelpEvent.o ../ApplicationKit/Win32Application.o ../ApplicationKit/Win32Button.o ../ApplicationKit/Win32Clipboard.o ../ApplicationKit/Win32ColorDialog.o ../ApplicationKit/Win32Component.o ../ApplicationKit/Win32ControlContext.o ../ApplicationKit/Win32CursorPeer.o ../ApplicationKit/Win32Desktop.o ../ApplicationKit/Win32Dialog.o ../ApplicationKit/Win32DragDropPeer.o ../ApplicationKit/Win32DropTargetPeer.o ../ApplicationKit/Win32Edit.o ../ApplicationKit/Win32FileOpenDialog.o ../ApplicationKit/Win32FileSaveDialog.o ../ApplicationKit/Win32FolderBrowseDialog.o ../ApplicationKit/Win32FontDialog.o ../ApplicationKit/Win32Listview.o ../ApplicationKit/Win32MenuBar.o ../ApplicationKit/Win32MenuItem.o ../ApplicationKit/Win32Object.o ../ApplicationKit/Win32PopupMenu.o ../ApplicationKit/Win32ResourceBundle.o ../ApplicationKit/Win32ResourceStream.o ../ApplicationKit/Win32ScrollPeer.o ../ApplicationKit/Win32ToolKit.o ../ApplicationKit/Win32Tree.o ../ApplicationKit/Win32Window.o ../ApplicationKit/Window.o ../ApplicationKit/WindowEvent.o $(RES)
+LIBS =  -L"d:/Dev-Cpp/lib" -L"../../../lib" -L"../../../xml/lib" -lcomctl32 -lrpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lFoundationKit_mingw_d -lGraphicsKit_mingw_d --implib ../../../lib/libApplicationKit_mingw_d.a
+INCS =  -I"d:/Dev-Cpp/include"  -I"d:/Dev-Cpp/include/g++-3"  -I"d:/Dev-Cpp/include"  -I"../../../include" 
+BIN  = ../../../bin/ApplicationKit_mingw_d.dll
+CFLAGS = $(INCS) -DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DUSE_FRAMEWORK_DLL -DUSE_GRAPHICSKIT_DLL -DAPPKIT_DLL -DAPPKIT_EXPORTS -DBUILD_APPKIT_LIB -fvtable-thunks -fpermissive -s
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before ../../../bin/ApplicationKit_mingw_d.dll all-after
+
+
+clean: clean-custom
+	rm -f $(OBJ) $(BIN)
+
+DLLWRAP=dllwrap.exe
+DEFFILE=libApplicationKit_mingw_d.def
+STATICLIB=libApplicationKit_mingw_d.a
+
+$(BIN): $(OBJ)
+	$(DLLWRAP) --output-def $(DEFFILE) --driver-name c++ --implib $(STATICLIB) $(OBJ) $(LIBS) -o $(BIN)
+
+../ApplicationKit/AbstractApplication.o: ../../../src/core/AbstractApplication.cpp
+	$(CC) -c ../../../src/core/AbstractApplication.cpp -o ../ApplicationKit/AbstractApplication.o $(CFLAGS)
+
+../ApplicationKit/AbstractCommand.o: ../../../src/core/AbstractCommand.cpp
+	$(CC) -c ../../../src/core/AbstractCommand.cpp -o ../ApplicationKit/AbstractCommand.o $(CFLAGS)
+
+../ApplicationKit/AbstractComponentEditor.o: ../../../src/core/AbstractComponentEditor.cpp
+	$(CC) -c ../../../src/core/AbstractComponentEditor.cpp -o ../ApplicationKit/AbstractComponentEditor.o $(CFLAGS)
+
+../ApplicationKit/AbstractContainer.o: ../../../src/core/AbstractContainer.cpp
+	$(CC) -c ../../../src/core/AbstractContainer.cpp -o ../ApplicationKit/AbstractContainer.o $(CFLAGS)
+
+../ApplicationKit/AbstractListModel.o: ../../../src/core/AbstractListModel.cpp
+	$(CC) -c ../../../src/core/AbstractListModel.cpp -o ../ApplicationKit/AbstractListModel.o $(CFLAGS)
+
+../ApplicationKit/AbstractPropertyEditor.o: ../../../src/core/AbstractPropertyEditor.cpp
+	$(CC) -c ../../../src/core/AbstractPropertyEditor.cpp -o ../ApplicationKit/AbstractPropertyEditor.o $(CFLAGS)
+
+../ApplicationKit/AbstractScrollable.o: ../../../src/core/AbstractScrollable.cpp
+	$(CC) -c ../../../src/core/AbstractScrollable.cpp -o ../ApplicationKit/AbstractScrollable.o $(CFLAGS)
+
+../ApplicationKit/AbstractTableModel.o: ../../../src/core/AbstractTableModel.cpp
+	$(CC) -c ../../../src/core/AbstractTableModel.cpp -o ../ApplicationKit/AbstractTableModel.o $(CFLAGS)
+
+../ApplicationKit/AbstractTextModel.o: ../../../src/core/AbstractTextModel.cpp
+	$(CC) -c ../../../src/core/AbstractTextModel.cpp -o ../ApplicationKit/AbstractTextModel.o $(CFLAGS)
+
+../ApplicationKit/AbstractTreeModel.o: ../../../src/core/AbstractTreeModel.cpp
+	$(CC) -c ../../../src/core/AbstractTreeModel.cpp -o ../ApplicationKit/AbstractTreeModel.o $(CFLAGS)
+
+../ApplicationKit/AbstractView.o: ../../../src/core/AbstractView.cpp
+	$(CC) -c ../../../src/core/AbstractView.cpp -o ../ApplicationKit/AbstractView.o $(CFLAGS)
+
+../ApplicationKit/AbstractWin32Component.o: ../../../src/ImplementerKit/AbstractWin32Component.cpp
+	$(CC) -c ../../../src/ImplementerKit/AbstractWin32Component.cpp -o ../ApplicationKit/AbstractWin32Component.o $(CFLAGS)
+
+../ApplicationKit/AcceleratorKey.o: ../../../src/core/AcceleratorKey.cpp
+	$(CC) -c ../../../src/core/AcceleratorKey.cpp -o ../ApplicationKit/AcceleratorKey.o $(CFLAGS)
+
+../ApplicationKit/Application.o: ../../../src/core/Application.cpp
+	$(CC) -c ../../../src/core/Application.cpp -o ../ApplicationKit/Application.o $(CFLAGS)
+
+../ApplicationKit/ApplicationKit.o: ../../../src/core/ApplicationKit.cpp
+	$(CC) -c ../../../src/core/ApplicationKit.cpp -o ../ApplicationKit/ApplicationKit.o $(CFLAGS)
+
+../ApplicationKit/Basic3DBorder.o: ../../../src/Graphics/Basic3DBorder.cpp
+	$(CC) -c ../../../src/Graphics/Basic3DBorder.cpp -o ../ApplicationKit/Basic3DBorder.o $(CFLAGS)
+
+../ApplicationKit/BasicTableItemEditor.o: ../../../src/core/BasicTableItemEditor.cpp
+	$(CC) -c ../../../src/core/BasicTableItemEditor.cpp -o ../ApplicationKit/BasicTableItemEditor.o $(CFLAGS)
+
+../ApplicationKit/ButtonEvent.o: ../../../src/Events/ButtonEvent.cpp
+	$(CC) -c ../../../src/Events/ButtonEvent.cpp -o ../ApplicationKit/ButtonEvent.o $(CFLAGS)
+
+../ApplicationKit/CheckBoxControl.o: ../../../src/core/CheckBoxControl.cpp
+	$(CC) -c ../../../src/core/CheckBoxControl.cpp -o ../ApplicationKit/CheckBoxControl.o $(CFLAGS)
+
+../ApplicationKit/Clipboard.o: ../../../src/core/Clipboard.cpp
+	$(CC) -c ../../../src/core/Clipboard.cpp -o ../ApplicationKit/Clipboard.o $(CFLAGS)
+
+../ApplicationKit/ClipboardDataObject.o: ../../../src/core/ClipboardDataObject.cpp
+	$(CC) -c ../../../src/core/ClipboardDataObject.cpp -o ../ApplicationKit/ClipboardDataObject.o $(CFLAGS)
+
+../ApplicationKit/ClipboardEvent.o: ../../../src/Events/ClipboardEvent.cpp
+	$(CC) -c ../../../src/Events/ClipboardEvent.cpp -o ../ApplicationKit/ClipboardEvent.o $(CFLAGS)
+
+../ApplicationKit/ColorEtchedBorder.o: ../../../src/Graphics/ColorEtchedBorder.cpp
+	$(CC) -c ../../../src/Graphics/ColorEtchedBorder.cpp -o ../ApplicationKit/ColorEtchedBorder.o $(CFLAGS)
+
+../ApplicationKit/ColumnItemEvent.o: ../../../src/Events/ColumnItemEvent.cpp
+	$(CC) -c ../../../src/Events/ColumnItemEvent.cpp -o ../ApplicationKit/ColumnItemEvent.o $(CFLAGS)
+
+../ApplicationKit/ColumnModelEvent.o: ../../../src/Events/ColumnModelEvent.cpp
+	$(CC) -c ../../../src/Events/ColumnModelEvent.cpp -o ../ApplicationKit/ColumnModelEvent.o $(CFLAGS)
+
+../ApplicationKit/ComboBoxControl.o: ../../../src/core/ComboBoxControl.cpp
+	$(CC) -c ../../../src/core/ComboBoxControl.cpp -o ../ApplicationKit/ComboBoxControl.o $(CFLAGS)
+
+../ApplicationKit/COMDataObject.o: ../../../src/COM/COMDataObject.cpp
+	$(CC) -c ../../../src/COM/COMDataObject.cpp -o ../ApplicationKit/COMDataObject.o $(CFLAGS)
+
+../ApplicationKit/COMDragSource.o: ../../../src/COM/COMDragSource.cpp
+	$(CC) -c ../../../src/COM/COMDragSource.cpp -o ../ApplicationKit/COMDragSource.o $(CFLAGS)
+
+../ApplicationKit/COMDropTarget.o: ../../../src/COM/COMDropTarget.cpp
+	$(CC) -c ../../../src/COM/COMDropTarget.cpp -o ../ApplicationKit/COMDropTarget.o $(CFLAGS)
+
+../ApplicationKit/CommandButton.o: ../../../src/core/CommandButton.cpp
+	$(CC) -c ../../../src/core/CommandButton.cpp -o ../ApplicationKit/CommandButton.o $(CFLAGS)
+
+../ApplicationKit/CommandGroup.o: ../../../src/core/CommandGroup.cpp
+	$(CC) -c ../../../src/core/CommandGroup.cpp -o ../ApplicationKit/CommandGroup.o $(CFLAGS)
+
+../ApplicationKit/CommonColor.o: ../../../src/core/CommonColor.cpp
+	$(CC) -c ../../../src/core/CommonColor.cpp -o ../ApplicationKit/CommonColor.o $(CFLAGS)
+
+../ApplicationKit/CommonFileBrowse.o: ../../../src/core/CommonFileBrowse.cpp
+	$(CC) -c ../../../src/core/CommonFileBrowse.cpp -o ../ApplicationKit/CommonFileBrowse.o $(CFLAGS)
+
+../ApplicationKit/CommonFileDialog.o: ../../../src/core/CommonFileDialog.cpp
+	$(CC) -c ../../../src/core/CommonFileDialog.cpp -o ../ApplicationKit/CommonFileDialog.o $(CFLAGS)
+
+../ApplicationKit/CommonFileOpen.o: ../../../src/core/CommonFileOpen.cpp
+	$(CC) -c ../../../src/core/CommonFileOpen.cpp -o ../ApplicationKit/CommonFileOpen.o $(CFLAGS)
+
+../ApplicationKit/CommonFileSave.o: ../../../src/core/CommonFileSave.cpp
+	$(CC) -c ../../../src/core/CommonFileSave.cpp -o ../ApplicationKit/CommonFileSave.o $(CFLAGS)
+
+../ApplicationKit/CommonFont.o: ../../../src/core/CommonFont.cpp
+	$(CC) -c ../../../src/core/CommonFont.cpp -o ../ApplicationKit/CommonFont.o $(CFLAGS)
+
+../ApplicationKit/CommonPrint.o: ../../../src/core/CommonPrint.cpp
+	$(CC) -c ../../../src/core/CommonPrint.cpp -o ../ApplicationKit/CommonPrint.o $(CFLAGS)
+
+../ApplicationKit/COMObject.o: ../../../src/COM/COMObject.cpp
+	$(CC) -c ../../../src/COM/COMObject.cpp -o ../ApplicationKit/COMObject.o $(CFLAGS)
+
+../ApplicationKit/Component.o: ../../../src/core/Component.cpp
+	$(CC) -c ../../../src/core/Component.cpp -o ../ApplicationKit/Component.o $(CFLAGS)
+
+../ApplicationKit/ComponentEditorManager.o: ../../../src/core/ComponentEditorManager.cpp
+	$(CC) -c ../../../src/core/ComponentEditorManager.cpp -o ../ApplicationKit/ComponentEditorManager.o $(CFLAGS)
+
+../ApplicationKit/ComponentInfo.o: ../../../src/core/ComponentInfo.cpp
+	$(CC) -c ../../../src/core/ComponentInfo.cpp -o ../ApplicationKit/ComponentInfo.o $(CFLAGS)
+
+../ApplicationKit/COMUtils.o: ../../../src/COM/COMUtils.cpp
+	$(CC) -c ../../../src/COM/COMUtils.cpp -o ../ApplicationKit/COMUtils.o $(CFLAGS)
+
+../ApplicationKit/Control.o: ../../../src/core/Control.cpp
+	$(CC) -c ../../../src/core/Control.cpp -o ../ApplicationKit/Control.o $(CFLAGS)
+
+../ApplicationKit/ControlContainer.o: ../../../src/core/ControlContainer.cpp
+	$(CC) -c ../../../src/core/ControlContainer.cpp -o ../ApplicationKit/ControlContainer.o $(CFLAGS)
+
+../ApplicationKit/ControlEvent.o: ../../../src/Events/ControlEvent.cpp
+	$(CC) -c ../../../src/Events/ControlEvent.cpp -o ../ApplicationKit/ControlEvent.o $(CFLAGS)
+
+../ApplicationKit/ControlGraphicsContext.o: ../../../src/Graphics/ControlGraphicsContext.cpp
+	$(CC) -c ../../../src/Graphics/ControlGraphicsContext.cpp -o ../ApplicationKit/ControlGraphicsContext.o $(CFLAGS)
+
+../ApplicationKit/Cursor.o: ../../../src/core/Cursor.cpp
+	$(CC) -c ../../../src/core/Cursor.cpp -o ../ApplicationKit/Cursor.o $(CFLAGS)
+
+../ApplicationKit/CursorManager.o: ../../../src/core/CursorManager.cpp
+	$(CC) -c ../../../src/core/CursorManager.cpp -o ../ApplicationKit/CursorManager.o $(CFLAGS)
+
+../ApplicationKit/CustomControl.o: ../../../src/core/CustomControl.cpp
+	$(CC) -c ../../../src/core/CustomControl.cpp -o ../ApplicationKit/CustomControl.o $(CFLAGS)
+
+../ApplicationKit/DataType.o: ../../../src/core/DataType.cpp
+	$(CC) -c ../../../src/core/DataType.cpp -o ../ApplicationKit/DataType.o $(CFLAGS)
+
+../ApplicationKit/DefaultColumnItem.o: ../../../src/core/DefaultColumnItem.cpp
+	$(CC) -c ../../../src/core/DefaultColumnItem.cpp -o ../ApplicationKit/DefaultColumnItem.o $(CFLAGS)
+
+../ApplicationKit/DefaultColumnModel.o: ../../../src/core/DefaultColumnModel.cpp
+	$(CC) -c ../../../src/core/DefaultColumnModel.cpp -o ../ApplicationKit/DefaultColumnModel.o $(CFLAGS)
+
+../ApplicationKit/DefaultListItem.o: ../../../src/core/DefaultListItem.cpp
+	$(CC) -c ../../../src/core/DefaultListItem.cpp -o ../ApplicationKit/DefaultListItem.o $(CFLAGS)
+
+../ApplicationKit/DefaultListModel.o: ../../../src/core/DefaultListModel.cpp
+	$(CC) -c ../../../src/core/DefaultListModel.cpp -o ../ApplicationKit/DefaultListModel.o $(CFLAGS)
+
+../ApplicationKit/DefaultMenuItem.o: ../../../src/core/DefaultMenuItem.cpp
+	$(CC) -c ../../../src/core/DefaultMenuItem.cpp -o ../ApplicationKit/DefaultMenuItem.o $(CFLAGS)
+
+../ApplicationKit/DefaultPropertyEditors.o: ../../../src/core/DefaultPropertyEditors.cpp
+	$(CC) -c ../../../src/core/DefaultPropertyEditors.cpp -o ../ApplicationKit/DefaultPropertyEditors.o $(CFLAGS)
+
+../ApplicationKit/DefaultTableCellItem.o: ../../../src/core/DefaultTableCellItem.cpp
+	$(CC) -c ../../../src/core/DefaultTableCellItem.cpp -o ../ApplicationKit/DefaultTableCellItem.o $(CFLAGS)
+
+../ApplicationKit/DefaultTableModel.o: ../../../src/core/DefaultTableModel.cpp
+	$(CC) -c ../../../src/core/DefaultTableModel.cpp -o ../ApplicationKit/DefaultTableModel.o $(CFLAGS)
+
+../ApplicationKit/DefaultTabModel.o: ../../../src/core/DefaultTabModel.cpp
+	$(CC) -c ../../../src/core/DefaultTabModel.cpp -o ../ApplicationKit/DefaultTabModel.o $(CFLAGS)
+
+../ApplicationKit/DefaultTabPage.o: ../../../src/core/DefaultTabPage.cpp
+	$(CC) -c ../../../src/core/DefaultTabPage.cpp -o ../ApplicationKit/DefaultTabPage.o $(CFLAGS)
+
+../ApplicationKit/DefaultTextModel.o: ../../../src/core/DefaultTextModel.cpp
+	$(CC) -c ../../../src/core/DefaultTextModel.cpp -o ../ApplicationKit/DefaultTextModel.o $(CFLAGS)
+
+../ApplicationKit/DefaultTreeItem.o: ../../../src/core/DefaultTreeItem.cpp
+	$(CC) -c ../../../src/core/DefaultTreeItem.cpp -o ../ApplicationKit/DefaultTreeItem.o $(CFLAGS)
+
+../ApplicationKit/DefaultTreeModel.o: ../../../src/core/DefaultTreeModel.cpp
+	$(CC) -c ../../../src/core/DefaultTreeModel.cpp -o ../ApplicationKit/DefaultTreeModel.o $(CFLAGS)
+
+../ApplicationKit/Desktop.o: ../../../src/core/Desktop.cpp
+	$(CC) -c ../../../src/core/Desktop.cpp -o ../ApplicationKit/Desktop.o $(CFLAGS)
+
+../ApplicationKit/Dialog.o: ../../../src/core/Dialog.cpp
+	$(CC) -c ../../../src/core/Dialog.cpp -o ../ApplicationKit/Dialog.o $(CFLAGS)
+
+../ApplicationKit/DragEvent.o: ../../../src/Events/DragEvent.cpp
+	$(CC) -c ../../../src/Events/DragEvent.cpp -o ../ApplicationKit/DragEvent.o $(CFLAGS)
+
+../ApplicationKit/DragSource.o: ../../../src/DragDrop/DragSource.cpp
+	$(CC) -c ../../../src/DragDrop/DragSource.cpp -o ../ApplicationKit/DragSource.o $(CFLAGS)
+
+../ApplicationKit/DropEvent.o: ../../../src/Events/DropEvent.cpp
+	$(CC) -c ../../../src/Events/DropEvent.cpp -o ../ApplicationKit/DropEvent.o $(CFLAGS)
+
+../ApplicationKit/DropTarget.o: ../../../src/DragDrop/DropTarget.cpp
+	$(CC) -c ../../../src/DragDrop/DropTarget.cpp -o ../ApplicationKit/DropTarget.o $(CFLAGS)
+
+../ApplicationKit/EtchedBorder.o: ../../../src/Graphics/EtchedBorder.cpp
+	$(CC) -c ../../../src/Graphics/EtchedBorder.cpp -o ../ApplicationKit/EtchedBorder.o $(CFLAGS)
+
+../ApplicationKit/FocusEvent.o: ../../../src/Events/FocusEvent.cpp
+	$(CC) -c ../../../src/Events/FocusEvent.cpp -o ../ApplicationKit/FocusEvent.o $(CFLAGS)
+
+../ApplicationKit/Frame.o: ../../../src/core/Frame.cpp
+	$(CC) -c ../../../src/core/Frame.cpp -o ../ApplicationKit/Frame.o $(CFLAGS)
+
+../ApplicationKit/HeaderControl.o: ../../../src/core/HeaderControl.cpp
+	$(CC) -c ../../../src/core/HeaderControl.cpp -o ../ApplicationKit/HeaderControl.o $(CFLAGS)
+
+../ApplicationKit/HelpEvent.o: ../../../src/Events/HelpEvent.cpp
+	$(CC) -c ../../../src/Events/HelpEvent.cpp -o ../ApplicationKit/HelpEvent.o $(CFLAGS)
+
+../ApplicationKit/HTMLBrowserControl.o: ../../../src/core/HTMLBrowserControl.cpp
+	$(CC) -c ../../../src/core/HTMLBrowserControl.cpp -o ../ApplicationKit/HTMLBrowserControl.o $(CFLAGS)
+
+../ApplicationKit/ImageControl.o: ../../../src/core/ImageControl.cpp
+	$(CC) -c ../../../src/core/ImageControl.cpp -o ../ApplicationKit/ImageControl.o $(CFLAGS)
+
+../ApplicationKit/ImageList.o: ../../../src/Graphics/ImageList.cpp
+	$(CC) -c ../../../src/Graphics/ImageList.cpp -o ../ApplicationKit/ImageList.o $(CFLAGS)
+
+../ApplicationKit/ImageListEvent.o: ../../../src/Events/ImageListEvent.cpp
+	$(CC) -c ../../../src/Events/ImageListEvent.cpp -o ../ApplicationKit/ImageListEvent.o $(CFLAGS)
+
+../ApplicationKit/ItemEvent.o: ../../../src/Events/ItemEvent.cpp
+	$(CC) -c ../../../src/Events/ItemEvent.cpp -o ../ApplicationKit/ItemEvent.o $(CFLAGS)
+
+../ApplicationKit/KeyboardEvent.o: ../../../src/Events/KeyboardEvent.cpp
+	$(CC) -c ../../../src/Events/KeyboardEvent.cpp -o ../ApplicationKit/KeyboardEvent.o $(CFLAGS)
+
+../ApplicationKit/Label.o: ../../../src/core/Label.cpp
+	$(CC) -c ../../../src/core/Label.cpp -o ../ApplicationKit/Label.o $(CFLAGS)
+
+../ApplicationKit/LibraryApplication.o: ../../../src/core/LibraryApplication.cpp
+	$(CC) -c ../../../src/core/LibraryApplication.cpp -o ../ApplicationKit/LibraryApplication.o $(CFLAGS)
+
+../ApplicationKit/Light3DBorder.o: ../../../src/Graphics/Light3DBorder.cpp
+	$(CC) -c ../../../src/Graphics/Light3DBorder.cpp -o ../ApplicationKit/Light3DBorder.o $(CFLAGS)
+
+../ApplicationKit/LightweightComponent.o: ../../../src/ImplementerKit/LightweightComponent.cpp
+	$(CC) -c ../../../src/ImplementerKit/LightweightComponent.cpp -o ../ApplicationKit/LightweightComponent.o $(CFLAGS)
+
+../ApplicationKit/ListBoxControl.o: ../../../src/core/ListBoxControl.cpp
+	$(CC) -c ../../../src/core/ListBoxControl.cpp -o ../ApplicationKit/ListBoxControl.o $(CFLAGS)
+
+../ApplicationKit/ListModelEvent.o: ../../../src/Events/ListModelEvent.cpp
+	$(CC) -c ../../../src/Events/ListModelEvent.cpp -o ../ApplicationKit/ListModelEvent.o $(CFLAGS)
+
+../ApplicationKit/ListViewControl.o: ../../../src/core/ListViewControl.cpp
+	$(CC) -c ../../../src/core/ListViewControl.cpp -o ../ApplicationKit/ListViewControl.o $(CFLAGS)
+
+../ApplicationKit/Menu.o: ../../../src/core/Menu.cpp
+	$(CC) -c ../../../src/core/Menu.cpp -o ../ApplicationKit/Menu.o $(CFLAGS)
+
+../ApplicationKit/MenuBar.o: ../../../src/core/MenuBar.cpp
+	$(CC) -c ../../../src/core/MenuBar.cpp -o ../ApplicationKit/MenuBar.o $(CFLAGS)
+
+../ApplicationKit/MenuItemEvent.o: ../../../src/Events/MenuItemEvent.cpp
+	$(CC) -c ../../../src/Events/MenuItemEvent.cpp -o ../ApplicationKit/MenuItemEvent.o $(CFLAGS)
+
+../ApplicationKit/MessageDialog.o: ../../../src/core/MessageDialog.cpp
+	$(CC) -c ../../../src/core/MessageDialog.cpp -o ../ApplicationKit/MessageDialog.o $(CFLAGS)
+
+../ApplicationKit/Model.o: ../../../src/core/Model.cpp
+	$(CC) -c ../../../src/core/Model.cpp -o ../ApplicationKit/Model.o $(CFLAGS)
+
+../ApplicationKit/MouseEvent.o: ../../../src/Events/MouseEvent.cpp
+	$(CC) -c ../../../src/Events/MouseEvent.cpp -o ../ApplicationKit/MouseEvent.o $(CFLAGS)
+
+../ApplicationKit/MultilineTextControl.o: ../../../src/core/MultilineTextControl.cpp
+	$(CC) -c ../../../src/core/MultilineTextControl.cpp -o ../ApplicationKit/MultilineTextControl.o $(CFLAGS)
+
+../ApplicationKit/Panel.o: ../../../src/core/Panel.cpp
+	$(CC) -c ../../../src/core/Panel.cpp -o ../ApplicationKit/Panel.o $(CFLAGS)
+
+../ApplicationKit/PopupMenu.o: ../../../src/core/PopupMenu.cpp
+	$(CC) -c ../../../src/core/PopupMenu.cpp -o ../ApplicationKit/PopupMenu.o $(CFLAGS)
+
+../ApplicationKit/PropertyEditorManager.o: ../../../src/core/PropertyEditorManager.cpp
+	$(CC) -c ../../../src/core/PropertyEditorManager.cpp -o ../ApplicationKit/PropertyEditorManager.o $(CFLAGS)
+
+../ApplicationKit/PushButton.o: ../../../src/core/PushButton.cpp
+	$(CC) -c ../../../src/core/PushButton.cpp -o ../ApplicationKit/PushButton.o $(CFLAGS)
+
+../ApplicationKit/RadioButtonControl.o: ../../../src/core/RadioButtonControl.cpp
+	$(CC) -c ../../../src/core/RadioButtonControl.cpp -o ../ApplicationKit/RadioButtonControl.o $(CFLAGS)
+
+../ApplicationKit/Resource.o: ../../../src/Utils/Resource.cpp
+	$(CC) -c ../../../src/Utils/Resource.cpp -o ../ApplicationKit/Resource.o $(CFLAGS)
+
+../ApplicationKit/ResourceStream.o: ../../../src/IO/ResourceStream.cpp
+	$(CC) -c ../../../src/IO/ResourceStream.cpp -o ../ApplicationKit/ResourceStream.o $(CFLAGS)
+
+../ApplicationKit/ScrollbarManager.o: ../../../src/core/ScrollbarManager.cpp
+	$(CC) -c ../../../src/core/ScrollbarManager.cpp -o ../ApplicationKit/ScrollbarManager.o $(CFLAGS)
+
+../ApplicationKit/Splitter.o: ../../../src/core/Splitter.cpp
+	$(CC) -c ../../../src/core/Splitter.cpp -o ../ApplicationKit/Splitter.o $(CFLAGS)
+
+../ApplicationKit/StatusBar.o: ../../../src/core/StatusBar.cpp
+	$(CC) -c ../../../src/core/StatusBar.cpp -o ../ApplicationKit/StatusBar.o $(CFLAGS)
+
+../ApplicationKit/TabbedPages.o: ../../../src/core/TabbedPages.cpp
+	$(CC) -c ../../../src/core/TabbedPages.cpp -o ../ApplicationKit/TabbedPages.o $(CFLAGS)
+
+../ApplicationKit/TableControl.o: ../../../src/core/TableControl.cpp
+	$(CC) -c ../../../src/core/TableControl.cpp -o ../ApplicationKit/TableControl.o $(CFLAGS)
+
+../ApplicationKit/TableModelEvent.o: ../../../src/Events/TableModelEvent.cpp
+	$(CC) -c ../../../src/Events/TableModelEvent.cpp -o ../ApplicationKit/TableModelEvent.o $(CFLAGS)
+
+../ApplicationKit/TabModelEvent.o: ../../../src/Events/TabModelEvent.cpp
+	$(CC) -c ../../../src/Events/TabModelEvent.cpp -o ../ApplicationKit/TabModelEvent.o $(CFLAGS)
+
+../ApplicationKit/TextControl.o: ../../../src/core/TextControl.cpp
+	$(CC) -c ../../../src/core/TextControl.cpp -o ../ApplicationKit/TextControl.o $(CFLAGS)
+
+../ApplicationKit/TextEvent.o: ../../../src/Events/TextEvent.cpp
+	$(CC) -c ../../../src/Events/TextEvent.cpp -o ../ApplicationKit/TextEvent.o $(CFLAGS)
+
+../ApplicationKit/TimerComponent.o: ../../../src/core/TimerComponent.cpp
+	$(CC) -c ../../../src/core/TimerComponent.cpp -o ../ApplicationKit/TimerComponent.o $(CFLAGS)
+
+../ApplicationKit/TimerEvent.o: ../../../src/Events/TimerEvent.cpp
+	$(CC) -c ../../../src/Events/TimerEvent.cpp -o ../ApplicationKit/TimerEvent.o $(CFLAGS)
+
+../ApplicationKit/TitledBorder.o: ../../../src/Graphics/TitledBorder.cpp
+	$(CC) -c ../../../src/Graphics/TitledBorder.cpp -o ../ApplicationKit/TitledBorder.o $(CFLAGS)
+
+../ApplicationKit/ToggledButton.o: ../../../src/core/ToggledButton.cpp
+	$(CC) -c ../../../src/core/ToggledButton.cpp -o ../ApplicationKit/ToggledButton.o $(CFLAGS)
+
+../ApplicationKit/Toolbar.o: ../../../src/core/Toolbar.cpp
+	$(CC) -c ../../../src/core/Toolbar.cpp -o ../ApplicationKit/Toolbar.o $(CFLAGS)
+
+../ApplicationKit/ToolbarButton.o: ../../../src/core/ToolbarButton.cpp
+	$(CC) -c ../../../src/core/ToolbarButton.cpp -o ../ApplicationKit/ToolbarButton.o $(CFLAGS)
+
+../ApplicationKit/ToolbarDock.o: ../../../src/core/ToolbarDock.cpp
+	$(CC) -c ../../../src/core/ToolbarDock.cpp -o ../ApplicationKit/ToolbarDock.o $(CFLAGS)
+
+../ApplicationKit/ToolbarSeparator.o: ../../../src/core/ToolbarSeparator.cpp
+	$(CC) -c ../../../src/core/ToolbarSeparator.cpp -o ../ApplicationKit/ToolbarSeparator.o $(CFLAGS)
+
+../ApplicationKit/ToolTipEvent.o: ../../../src/Events/ToolTipEvent.cpp
+	$(CC) -c ../../../src/Events/ToolTipEvent.cpp -o ../ApplicationKit/ToolTipEvent.o $(CFLAGS)
+
+../ApplicationKit/TreeControl.o: ../../../src/core/TreeControl.cpp
+	$(CC) -c ../../../src/core/TreeControl.cpp -o ../ApplicationKit/TreeControl.o $(CFLAGS)
+
+../ApplicationKit/TreeListControl.o: ../../../src/core/TreeListControl.cpp
+	$(CC) -c ../../../src/core/TreeListControl.cpp -o ../ApplicationKit/TreeListControl.o $(CFLAGS)
+
+../ApplicationKit/TreeModelEvent.o: ../../../src/Events/TreeModelEvent.cpp
+	$(CC) -c ../../../src/Events/TreeModelEvent.cpp -o ../ApplicationKit/TreeModelEvent.o $(CFLAGS)
+
+../ApplicationKit/UIToolkit.o: ../../../src/Utils/UIToolkit.cpp
+	$(CC) -c ../../../src/Utils/UIToolkit.cpp -o ../ApplicationKit/UIToolkit.o $(CFLAGS)
+
+../ApplicationKit/UndoRedoEvent.o: ../../../src/Events/UndoRedoEvent.cpp
+	$(CC) -c ../../../src/Events/UndoRedoEvent.cpp -o ../ApplicationKit/UndoRedoEvent.o $(CFLAGS)
+
+../ApplicationKit/UndoRedoStack.o: ../../../src/core/UndoRedoStack.cpp
+	$(CC) -c ../../../src/core/UndoRedoStack.cpp -o ../ApplicationKit/UndoRedoStack.o $(CFLAGS)
+
+../ApplicationKit/ValidationEvent.o: ../../../src/Events/ValidationEvent.cpp
+	$(CC) -c ../../../src/Events/ValidationEvent.cpp -o ../ApplicationKit/ValidationEvent.o $(CFLAGS)
+
+../ApplicationKit/VFFInputStream.o: ../../../src/IO/VFFInputStream.cpp
+	$(CC) -c ../../../src/IO/VFFInputStream.cpp -o ../ApplicationKit/VFFInputStream.o $(CFLAGS)
+
+../ApplicationKit/VFFOutputStream.o: ../../../src/IO/VFFOutputStream.cpp
+	$(CC) -c ../../../src/IO/VFFOutputStream.cpp -o ../ApplicationKit/VFFOutputStream.o $(CFLAGS)
+
+../ApplicationKit/WhatsThisHelpEvent.o: ../../../src/Events/WhatsThisHelpEvent.cpp
+	$(CC) -c ../../../src/Events/WhatsThisHelpEvent.cpp -o ../ApplicationKit/WhatsThisHelpEvent.o $(CFLAGS)
+
+../ApplicationKit/Win32Application.o: ../../../src/ImplementerKit/Win32Application.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Application.cpp -o ../ApplicationKit/Win32Application.o $(CFLAGS)
+
+../ApplicationKit/Win32Button.o: ../../../src/ImplementerKit/Win32Button.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Button.cpp -o ../ApplicationKit/Win32Button.o $(CFLAGS)
+
+../ApplicationKit/Win32Clipboard.o: ../../../src/ImplementerKit/Win32Clipboard.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Clipboard.cpp -o ../ApplicationKit/Win32Clipboard.o $(CFLAGS)
+
+../ApplicationKit/Win32ColorDialog.o: ../../../src/ImplementerKit/Win32ColorDialog.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ColorDialog.cpp -o ../ApplicationKit/Win32ColorDialog.o $(CFLAGS)
+
+../ApplicationKit/Win32Component.o: ../../../src/ImplementerKit/Win32Component.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Component.cpp -o ../ApplicationKit/Win32Component.o $(CFLAGS)
+
+../ApplicationKit/Win32ControlContext.o: ../../../src/ImplementerKit/Win32ControlContext.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ControlContext.cpp -o ../ApplicationKit/Win32ControlContext.o $(CFLAGS)
+
+../ApplicationKit/Win32CursorPeer.o: ../../../src/ImplementerKit/Win32CursorPeer.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32CursorPeer.cpp -o ../ApplicationKit/Win32CursorPeer.o $(CFLAGS)
+
+../ApplicationKit/Win32Desktop.o: ../../../src/ImplementerKit/Win32Desktop.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Desktop.cpp -o ../ApplicationKit/Win32Desktop.o $(CFLAGS)
+
+../ApplicationKit/Win32Dialog.o: ../../../src/ImplementerKit/Win32Dialog.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Dialog.cpp -o ../ApplicationKit/Win32Dialog.o $(CFLAGS)
+
+../ApplicationKit/Win32DragDropPeer.o: ../../../src/ImplementerKit/Win32DragDropPeer.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32DragDropPeer.cpp -o ../ApplicationKit/Win32DragDropPeer.o $(CFLAGS)
+
+../ApplicationKit/Win32DropTargetPeer.o: ../../../src/ImplementerKit/Win32DropTargetPeer.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32DropTargetPeer.cpp -o ../ApplicationKit/Win32DropTargetPeer.o $(CFLAGS)
+
+../ApplicationKit/Win32Edit.o: ../../../src/ImplementerKit/Win32Edit.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Edit.cpp -o ../ApplicationKit/Win32Edit.o $(CFLAGS)
+
+../ApplicationKit/Win32FileOpenDialog.o: ../../../src/ImplementerKit/Win32FileOpenDialog.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32FileOpenDialog.cpp -o ../ApplicationKit/Win32FileOpenDialog.o $(CFLAGS)
+
+../ApplicationKit/Win32FileSaveDialog.o: ../../../src/ImplementerKit/Win32FileSaveDialog.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32FileSaveDialog.cpp -o ../ApplicationKit/Win32FileSaveDialog.o $(CFLAGS)
+
+../ApplicationKit/Win32FolderBrowseDialog.o: ../../../src/implementerkit/Win32FolderBrowseDialog.cpp
+	$(CC) -c ../../../src/implementerkit/Win32FolderBrowseDialog.cpp -o ../ApplicationKit/Win32FolderBrowseDialog.o $(CFLAGS)
+
+../ApplicationKit/Win32FontDialog.o: ../../../src/ImplementerKit/Win32FontDialog.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32FontDialog.cpp -o ../ApplicationKit/Win32FontDialog.o $(CFLAGS)
+
+../ApplicationKit/Win32Listview.o: ../../../src/ImplementerKit/Win32Listview.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Listview.cpp -o ../ApplicationKit/Win32Listview.o $(CFLAGS)
+
+../ApplicationKit/Win32MenuBar.o: ../../../src/ImplementerKit/Win32MenuBar.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32MenuBar.cpp -o ../ApplicationKit/Win32MenuBar.o $(CFLAGS)
+
+../ApplicationKit/Win32MenuItem.o: ../../../src/ImplementerKit/Win32MenuItem.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32MenuItem.cpp -o ../ApplicationKit/Win32MenuItem.o $(CFLAGS)
+
+../ApplicationKit/Win32Object.o: ../../../src/ImplementerKit/Win32Object.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Object.cpp -o ../ApplicationKit/Win32Object.o $(CFLAGS)
+
+../ApplicationKit/Win32PopupMenu.o: ../../../src/implementerkit/Win32PopupMenu.cpp
+	$(CC) -c ../../../src/implementerkit/Win32PopupMenu.cpp -o ../ApplicationKit/Win32PopupMenu.o $(CFLAGS)
+
+../ApplicationKit/Win32ResourceBundle.o: ../../../src/ImplementerKit/Win32ResourceBundle.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ResourceBundle.cpp -o ../ApplicationKit/Win32ResourceBundle.o $(CFLAGS)
+
+../ApplicationKit/Win32ResourceStream.o: ../../../src/ImplementerKit/Win32ResourceStream.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ResourceStream.cpp -o ../ApplicationKit/Win32ResourceStream.o $(CFLAGS)
+
+../ApplicationKit/Win32ScrollPeer.o: ../../../src/ImplementerKit/Win32ScrollPeer.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ScrollPeer.cpp -o ../ApplicationKit/Win32ScrollPeer.o $(CFLAGS)
+
+../ApplicationKit/Win32ToolKit.o: ../../../src/ImplementerKit/Win32ToolKit.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32ToolKit.cpp -o ../ApplicationKit/Win32ToolKit.o $(CFLAGS)
+
+../ApplicationKit/Win32Tree.o: ../../../src/ImplementerKit/Win32Tree.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Tree.cpp -o ../ApplicationKit/Win32Tree.o $(CFLAGS)
+
+../ApplicationKit/Win32Window.o: ../../../src/ImplementerKit/Win32Window.cpp
+	$(CC) -c ../../../src/ImplementerKit/Win32Window.cpp -o ../ApplicationKit/Win32Window.o $(CFLAGS)
+
+../ApplicationKit/Window.o: ../../../src/core/Window.cpp
+	$(CC) -c ../../../src/core/Window.cpp -o ../ApplicationKit/Window.o $(CFLAGS)
+
+../ApplicationKit/WindowEvent.o: ../../../src/Events/WindowEvent.cpp
+	$(CC) -c ../../../src/Events/WindowEvent.cpp -o ../ApplicationKit/WindowEvent.o $(CFLAGS)
+
+ApplicationKitDLL_private.res: 
+	$(WINDRES) -i APPLIC~1.RC -I rc -o ApplicationKitDLL_private.res -O coff  --include-dir ../../resources/win32/
