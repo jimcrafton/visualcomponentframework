@@ -54,7 +54,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 FoundationKitDLL.lib GraphicsKitDLL.lib opengl32.lib glu32.lib glaux.lib xerces-c_1.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin/ApplicationKitDLL.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# ADD LINK32 FoundationKitDLL.lib GraphicsKitDLL.lib opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin/ApplicationKitDLL.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
 

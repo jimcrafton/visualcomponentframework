@@ -132,6 +132,10 @@ SOURCE=.\Page1Dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Page2Dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -162,6 +166,10 @@ SOURCE=.\Debug.h
 # Begin Source File
 
 SOURCE=.\Page1Dlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Page2Dlg.h
 # End Source File
 # Begin Source File
 
