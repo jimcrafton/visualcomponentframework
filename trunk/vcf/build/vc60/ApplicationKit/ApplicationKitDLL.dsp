@@ -589,10 +589,6 @@ SOURCE=..\..\..\include\implementer\ListviewPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Locales.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Menu.h
 # End Source File
 # Begin Source File
