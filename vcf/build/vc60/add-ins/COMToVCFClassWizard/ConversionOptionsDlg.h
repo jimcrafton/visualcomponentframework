@@ -16,11 +16,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // ConversionOptionsDlg dialog
 
-class ConversionOptionsDlg : public CDialog
+class ConversionOptionsDlg : public CPropertyPage
 {
+	DECLARE_DYNCREATE(ConversionOptionsDlg)
 // Construction
 public:
-	ConversionOptionsDlg(CWnd* pParent = NULL);   // standard constructor
+	ConversionOptionsDlg();   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(ConversionOptionsDlg)

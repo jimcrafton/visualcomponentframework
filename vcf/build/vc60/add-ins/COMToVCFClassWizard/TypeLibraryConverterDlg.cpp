@@ -8,6 +8,7 @@
 #include <comdef.h>
 #include "ConversionOptionsDlg.h"
 #include "TypelibDump.h"
+#include "TypeConversionOptionsPage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -15,6 +16,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+std::map<CString,CString> TypeLibraryConverterDlg::g_TypeConversionMap;
 
 /////////////////////////////////////////////////////////////////////////////
 // TypeLibraryConverterDlg dialog
@@ -25,6 +27,7 @@ TypeLibraryConverterDlg::TypeLibraryConverterDlg(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(TypeLibraryConverterDlg)
 	m_cppDir = _T("");
 	m_headerDir = _T("");
+	m_addToProject = FALSE;
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -47,6 +50,7 @@ void TypeLibraryConverterDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TYPELIB_LIST, m_typeLibList);
 	DDX_Text(pDX, IDC_CPP_DIR, m_cppDir);
 	DDX_Text(pDX, IDC_HEADER_DIR, m_headerDir);
+	DDX_Check(pDX, IDC_ADD_TO_PROJECT, m_addToProject);
 	//}}AFX_DATA_MAP
 }
 
@@ -60,6 +64,7 @@ BEGIN_MESSAGE_MAP(TypeLibraryConverterDlg, CDialog)
 	ON_BN_CLICKED(IDC_OPTIONS, OnOptions)
 	ON_BN_CLICKED(IDC_BROWSE_FOR_HDR_DIR, OnBrowseForHdrDir)
 	ON_BN_CLICKED(IDC_BROWSE_FOR_CPP_DIR, OnBrowseForCppDir)
+	ON_BN_CLICKED(IDC_ADD_TO_PROJECT, OnAddToProject)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -71,6 +76,12 @@ BOOL TypeLibraryConverterDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	LoadSettingsFromRegistry();
+
+	g_TypeConversionMap[ CString("VARIANT") ] = CString("VCF::VariantData");
+	g_TypeConversionMap[ CString("BSTR") ] = CString("VCF::String");
+	g_TypeConversionMap[ CString("IUnknown") ] = CString("VCF::Object");
+	g_TypeConversionMap[ CString("IDispatch") ] = CString("VCF::Object");
+	g_TypeConversionMap[ CString("HRESULT") ] = CString("unsigned long");
 
 	m_imageList.Create( 16, 16, ILC_COLOR4 | ILC_MASK, 0, 5 );
 	CBitmap bmp;
@@ -287,20 +298,28 @@ void TypeLibraryConverterDlg::OnDestroy()
 
 void TypeLibraryConverterDlg::OnOptions() 
 {
-	ConversionOptionsDlg dlg;
-	dlg.m_classPrefix = this->m_classPrefix;
-	dlg.m_getMethodPrefix = this->m_getMethodPrefix;
-	dlg.m_memberPrefix = this->m_memberPrefix;
-	dlg.m_setMethodPrefix = this->m_setMethodPrefix;
-	dlg.m_singleUnitPerClass = this->m_singleUnitPerClass;
-	dlg.m_fileDistributionType = this->m_fileDistributionType;
+	CPropertySheet dlg;
+
+	ConversionOptionsDlg page1;
+	TypeConversionOptionsPage page2;
+
+	dlg.AddPage( &page1 );
+	dlg.AddPage( &page2 );
+	dlg.SetTitle( "Options" );
+
+	page1.m_classPrefix = this->m_classPrefix;
+	page1.m_getMethodPrefix = this->m_getMethodPrefix;
+	page1.m_memberPrefix = this->m_memberPrefix;
+	page1.m_setMethodPrefix = this->m_setMethodPrefix;
+	page1.m_singleUnitPerClass = this->m_singleUnitPerClass;
+	page1.m_fileDistributionType = this->m_fileDistributionType;
 	if ( IDOK == dlg.DoModal() ) {
-		this->m_classPrefix = dlg.m_classPrefix;
-		this->m_getMethodPrefix = dlg.m_getMethodPrefix;
-		this->m_memberPrefix = dlg.m_memberPrefix;
-		this->m_setMethodPrefix = dlg.m_setMethodPrefix;
-		this->m_singleUnitPerClass = dlg.m_singleUnitPerClass;
-		this->m_fileDistributionType = dlg.m_fileDistributionType;
+		this->m_classPrefix = page1.m_classPrefix;
+		this->m_getMethodPrefix = page1.m_getMethodPrefix;
+		this->m_memberPrefix = page1.m_memberPrefix;
+		this->m_setMethodPrefix = page1.m_setMethodPrefix;
+		this->m_singleUnitPerClass = page1.m_singleUnitPerClass;
+		this->m_fileDistributionType = page1.m_fileDistributionType;
 		this->SaveSettingsToRegistry();
 	}
 }
@@ -579,6 +598,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 	headerFile.WriteString( header.GetBuffer(0) );
 	header.ReleaseBuffer();
 	headerFile.Close();
+	m_fileList.push_back( headerFileName );
 	
 	//do interfaces
 	header = "";
@@ -628,6 +648,8 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 	headerFile.WriteString( header.GetBuffer(0) );
 	header.ReleaseBuffer();
 	headerFile.Close();
+	m_fileList.push_back( headerFileName );
+
 	
 	//do coClasses
 	int coClassCount = pTypeLibHolder->m_coClasses.size();
@@ -643,6 +665,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 		headerFile.WriteString( header.GetBuffer(0) );
 		header.ReleaseBuffer();
 		headerFile.Close();
+		m_fileList.push_back( headerFileName );
 
 		CString coClassImpl = GenerateCoClassImpl( pCoClass, pTypeLibHolder );
 		
@@ -653,6 +676,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 		headerFile.WriteString( coClassImpl.GetBuffer(0) );
 		coClassImpl.ReleaseBuffer();
 		headerFile.Close(); 
+		m_fileList.push_back( headerFileName );
 	}
 
 	CString tlbImpl = GenerateTLBImpl( pTypeLibHolder );
@@ -663,6 +687,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 	headerFile.WriteString( tlbImpl.GetBuffer(0) );
 	tlbImpl.ReleaseBuffer();
 	headerFile.Close();	
+	m_fileList.push_back( headerFileName );
 }
 
 void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibHolder )
@@ -839,6 +864,8 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 	headerFile.WriteString( header.GetBuffer(0) );
 	header.ReleaseBuffer();
 	headerFile.Close();
+	m_fileList.push_back( headerFileName );
+
 
 	CString tlbImpl = GenerateTLBImpl( pTypeLibHolder );
 	headerFileName = m_cppDir;
@@ -848,6 +875,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 	headerFile.WriteString( tlbImpl.GetBuffer(0) );
 	tlbImpl.ReleaseBuffer();
 	headerFile.Close();	
+	m_fileList.push_back( headerFileName );
 }
 
 void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeLibHolder* pTypeLibHolder )
@@ -910,6 +938,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeL
 	headerFile.WriteString( header.GetBuffer(0) );
 	header.ReleaseBuffer();
 	headerFile.Close();
+	m_fileList.push_back( headerFileName );
 
 	//do coClasses
 	int coClassCount = pTypeLibHolder->m_coClasses.size();
@@ -925,6 +954,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeL
 		headerFile.WriteString( header.GetBuffer(0) );
 		header.ReleaseBuffer();
 		headerFile.Close();
+		m_fileList.push_back( headerFileName );
 
 		CString coClassImpl = GenerateCoClassImpl( pCoClass, pTypeLibHolder );
 
@@ -935,6 +965,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeL
 		headerFile.WriteString( coClassImpl.GetBuffer(0) );
 		coClassImpl.ReleaseBuffer();
 		headerFile.Close();
+		m_fileList.push_back( headerFileName );
 	}
 
 	CString tlbImpl = GenerateTLBImpl( pTypeLibHolder );
@@ -945,6 +976,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeL
 	headerFile.WriteString( tlbImpl.GetBuffer(0) );
 	tlbImpl.ReleaseBuffer();
 	headerFile.Close();	
+	m_fileList.push_back( headerFileName );
 	
 }
 
@@ -1313,4 +1345,10 @@ void TypeLibraryConverterDlg::OnBrowseForCppDir()
 	}
 
 	title.ReleaseBuffer();
+}
+
+void TypeLibraryConverterDlg::OnAddToProject() 
+{
+	this->m_addToProject = !m_addToProject;
+	UpdateData();
 }

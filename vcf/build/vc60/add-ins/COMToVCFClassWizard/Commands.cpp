@@ -35,7 +35,20 @@ STDMETHODIMP CCommands::SampleCommand()
 	//
 	TypeLibraryConverterDlg dlg;
 	if ( IDOK == dlg.DoModal() ) {
-
+		if ( TRUE == dlg.m_addToProject ) {
+			CComPtr<IBuildProject> proj;
+			if ( SUCCEEDED( this->m_piApplication->get_ActiveProject( (IDispatch**)&proj ) ) ){
+				std::vector<CString>::iterator it = dlg.m_fileList.begin();
+				CComBSTR fileName;
+				_variant_t reserved;
+				while ( it != dlg.m_fileList.end() ) {
+					CString s = *it;
+					fileName = s;
+					proj->AddFile( fileName, reserved );
+					it++;
+				}			
+			}
+		}
 	}
 
 	return S_OK;

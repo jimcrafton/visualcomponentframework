@@ -147,6 +147,10 @@ SOURCE=.\ConversionOptionsDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ConvertTypeDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\shadow.cpp
 # End Source File
 # Begin Source File
@@ -157,6 +161,10 @@ SOURCE=.\StdAfx.cpp
 # Begin Source File
 
 SOURCE=.\TreeItem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TypeConversionOptionsPage.cpp
 # End Source File
 # Begin Source File
 
@@ -200,6 +208,10 @@ SOURCE=.\ConversionOptionsDlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ConvertTypeDlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\resource.h
 # End Source File
 # Begin Source File
@@ -213,6 +225,10 @@ SOURCE=.\StdAfx.h
 # Begin Source File
 
 SOURCE=.\TreeItem.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TypeConversionOptionsPage.h
 # End Source File
 # Begin Source File
 

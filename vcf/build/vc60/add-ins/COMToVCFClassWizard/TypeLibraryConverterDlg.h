@@ -9,6 +9,9 @@
 #endif // _MSC_VER > 1000
 
 #include <vector>
+#include <map>
+
+#include "resource.h"
 
 class TypeLibEntry{
 public:
@@ -36,8 +39,11 @@ class TypeLibraryConverterDlg : public CDialog
 {
 // Construction
 public:
+	static std::map<CString,CString> g_TypeConversionMap;
+
 	TypeLibraryConverterDlg(CWnd* pParent = NULL);	// standard constructor
 
+	std::vector<CString> m_fileList;
 	void GenerateImplementation( TypeLibHolder* pTypeLibHolder );
 // Dialog Data
 	//{{AFX_DATA(TypeLibraryConverterDlg)
@@ -47,6 +53,7 @@ public:
 	CListCtrl	m_typeLibList;
 	CString	m_cppDir;
 	CString	m_headerDir;
+	BOOL	m_addToProject;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -116,6 +123,7 @@ protected:
 	afx_msg void OnOptions();
 	afx_msg void OnBrowseForHdrDir();
 	afx_msg void OnBrowseForCppDir();
+	afx_msg void OnAddToProject();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()	
 };
