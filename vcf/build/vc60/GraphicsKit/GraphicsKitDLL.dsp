@@ -129,6 +129,10 @@ SOURCE=..\..\..\include\graphics\AbstractImage.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AlphaGamma.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\BasicFill.h
 # End Source File
 # Begin Source File
@@ -249,6 +253,10 @@ SOURCE=..\..\..\include\graphics\MatrixFunction.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\MicroTiles.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\OpenGLContext.h
 # End Source File
 # Begin Source File
@@ -265,7 +273,7 @@ SOURCE=..\..\..\include\graphics\PathEnumerator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PixelBuffer.h
+SOURCE=..\..\..\include\graphics\PixelBuffer.h
 # End Source File
 # Begin Source File
 
@@ -282,6 +290,10 @@ SOURCE=..\..\..\include\graphics\PrintContext.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\RenderableArea.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\RenderPaths.h
 # End Source File
 # Begin Source File
 
@@ -389,11 +401,19 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 
