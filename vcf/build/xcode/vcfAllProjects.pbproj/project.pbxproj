@@ -3513,72 +3513,72 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
 			name = chartables.c;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/chartables.c;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/chartables.c;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821906420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
 			name = get.c;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/get.c;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/get.c;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821A06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = internal.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/internal.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/internal.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821B06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
 			name = maketables.c;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/maketables.c;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/maketables.c;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821C06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
 			name = pcre.c;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/pcre.c;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/pcre.c;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821D06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = pcre.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/pcre.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/pcre.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821E06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = pcreposix.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/pcreposix.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/pcreposix.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C821F06420CE200A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
 			name = study.c;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/common/pcre/study.c;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/common/pcre/study.c;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2C822006420CE200A8020D = {
 			fileRef = 5E2C821806420CE200A8020D;
@@ -4429,9 +4429,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractApplication.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractApplication.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractApplication.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE7C0648693B00A8020D = {
 			fileEncoding = 30;
@@ -4447,9 +4447,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractCommand.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractCommand.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractCommand.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE7E0648693B00A8020D = {
 			fileEncoding = 30;
@@ -4465,9 +4465,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractComponentEditor.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractComponentEditor.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractComponentEditor.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE800648693B00A8020D = {
 			fileEncoding = 30;
@@ -4483,9 +4483,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractContainer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractContainer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractContainer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE820648693B00A8020D = {
 			fileEncoding = 30;
@@ -4501,36 +4501,36 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractListModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractListModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractListModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE860648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractListModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractListModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractListModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE870648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE880648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractPropertyEditor.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractPropertyEditor.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractPropertyEditor.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE890648693B00A8020D = {
 			fileEncoding = 30;
@@ -4546,9 +4546,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractScrollable.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractScrollable.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractScrollable.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE8B0648693B00A8020D = {
 			fileEncoding = 30;
@@ -4564,81 +4564,81 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractTableModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTableModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTableModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE8D0648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractTableModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTableModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTableModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE8E0648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractTextModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTextModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTextModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE8F0648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractTextModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTextModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTextModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE900648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractTreeModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTreeModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE910648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractTreeModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractTreeModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractTreeModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE920648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AbstractView.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractView.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractView.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE930648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractView.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AbstractView.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AbstractView.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE980648693B00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AcceleratorKey.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/AcceleratorKey.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/AcceleratorKey.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE990648693B00A8020D = {
 			fileEncoding = 30;
@@ -4654,9 +4654,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Action.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Action.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Action.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDE9B0648693B00A8020D = {
 			fileEncoding = 30;
@@ -4690,9 +4690,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Application.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Application.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Application.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEA00648693B00A8020D = {
 			fileEncoding = 30;
@@ -4717,9 +4717,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ApplicationKit.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ApplicationKit.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ApplicationKit.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEA30648693B00A8020D = {
 			fileEncoding = 30;
@@ -4744,9 +4744,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = text;
 			name = ApplicationKitRTTI.inl;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ApplicationKitRTTI.inl;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ApplicationKitRTTI.inl;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEA70648693B00A8020D = {
 			fileEncoding = 30;
@@ -4789,9 +4789,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Basic3DBorder.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Basic3DBorder.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Basic3DBorder.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEAC0648693C00A8020D = {
 			fileEncoding = 30;
@@ -4807,9 +4807,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = BasicTableItemEditor.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/BasicTableItemEditor.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/BasicTableItemEditor.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEAE0648693C00A8020D = {
 			fileEncoding = 30;
@@ -4834,18 +4834,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Button.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Button.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Button.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB10648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ButtonEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ButtonEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ButtonEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB20648693C00A8020D = {
 			fileEncoding = 30;
@@ -4870,27 +4870,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CheckBoxControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CheckBoxControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CheckBoxControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB50648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CheckBoxControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CheckBoxControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CheckBoxControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB60648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Clipboard.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Clipboard.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Clipboard.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB70648693C00A8020D = {
 			fileEncoding = 30;
@@ -4906,9 +4906,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ClipboardEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ClipboardEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ClipboardEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEB90648693C00A8020D = {
 			fileEncoding = 30;
@@ -4933,9 +4933,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ColorEtchedBorder.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ColorEtchedBorder.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEBC0648693C00A8020D = {
 			fileEncoding = 30;
@@ -4951,18 +4951,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ColumnItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ColumnItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ColumnItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEBE0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ColumnItemEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ColumnItemEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ColumnItemEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEBF0648693C00A8020D = {
 			fileEncoding = 30;
@@ -4987,18 +4987,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ColumnModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ColumnModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ColumnModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEC20648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ColumnModelEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ColumnModelEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ColumnModelEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEC30648693C00A8020D = {
 			fileEncoding = 30;
@@ -5014,9 +5014,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ComboBoxControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ComboBoxControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ComboBoxControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEC50648693C00A8020D = {
 			fileEncoding = 30;
@@ -5041,27 +5041,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandButton.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommandButton.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommandButton.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDECB0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CommandButton.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommandButton.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommandButton.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDECC0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandGroup.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommandGroup.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommandGroup.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDECD0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5077,9 +5077,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonColor.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonColor.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonColor.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDECF0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5113,9 +5113,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonFileBrowse.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonFileBrowse.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonFileBrowse.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDED30648693C00A8020D = {
 			fileEncoding = 30;
@@ -5131,9 +5131,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonFileDialog.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonFileDialog.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonFileDialog.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDED50648693C00A8020D = {
 			fileEncoding = 30;
@@ -5149,9 +5149,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonFileOpen.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonFileOpen.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonFileOpen.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDED70648693C00A8020D = {
 			fileEncoding = 30;
@@ -5167,9 +5167,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonFileSave.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonFileSave.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonFileSave.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDED90648693C00A8020D = {
 			fileEncoding = 30;
@@ -5185,9 +5185,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonFont.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonFont.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonFont.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEDB0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5203,9 +5203,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommonPrint.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CommonPrint.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CommonPrint.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEDD0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5221,9 +5221,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Component.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Component.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Component.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEDF0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5248,9 +5248,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ComponentEditorManager.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ComponentEditorManager.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ComponentEditorManager.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEE20648693C00A8020D = {
 			fileEncoding = 30;
@@ -5275,9 +5275,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ComponentInfo.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ComponentInfo.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ComponentInfo.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEE50648693C00A8020D = {
 			fileEncoding = 30;
@@ -5302,9 +5302,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Containers.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Containers.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Containers.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEEE0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5320,9 +5320,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Control.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Control.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Control.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF00648693C00A8020D = {
 			fileEncoding = 30;
@@ -5338,27 +5338,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ControlContainer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ControlContainer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ControlContainer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF20648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ControlContainer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ControlContainer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ControlContainer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF30648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ControlEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ControlEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ControlEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF40648693C00A8020D = {
 			fileEncoding = 30;
@@ -5374,9 +5374,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ControlGraphicsContext.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ControlGraphicsContext.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ControlGraphicsContext.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF60648693C00A8020D = {
 			fileEncoding = 30;
@@ -5401,18 +5401,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ControlsKit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ControlsKit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ControlsKit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEF90648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Cursor.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Cursor.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Cursor.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEFA0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5428,9 +5428,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CursorManager.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CursorManager.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CursorManager.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEFC0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5455,27 +5455,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CustomControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CustomControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CustomControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDEFF0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CustomControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/CustomControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/CustomControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF050648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DataObject.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DataObject.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DataObject.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF060648693C00A8020D = {
 			fileEncoding = 30;
@@ -5509,99 +5509,99 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultColumnItem.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultColumnItem.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultColumnItem.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultColumnItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultColumnItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultColumnItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0B0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultColumnModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultColumnModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultColumnModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0C0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultColumnModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultColumnModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultColumnModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultListItem.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultListItem.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultListItem.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0E0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultListItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultListItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultListItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF0F0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultListModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultListModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultListModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF100648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultListModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultListModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultListModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF110648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultMenuItem.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultMenuItem.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultMenuItem.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF120648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultMenuItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultMenuItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultMenuItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF130648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultPropertyEditors.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultPropertyEditors.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultPropertyEditors.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF140648693C00A8020D = {
 			fileEncoding = 30;
@@ -5617,135 +5617,135 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTableCellItem.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTableCellItem.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTableCellItem.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF160648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTableCellItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTableCellItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTableCellItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF170648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTableModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTableModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTableModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF180648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTableModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTableModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTableModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF190648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTabModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTabModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTabModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTabModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTabModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTabModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1B0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTabPage.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTabPage.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTabPage.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1C0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTabPage.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTabPage.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTabPage.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTextModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTextModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTextModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1E0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTextModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTextModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTextModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF1F0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTreeItem.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTreeItem.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTreeItem.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF200648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTreeItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTreeItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTreeItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF210648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DefaultTreeModel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTreeModel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF220648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DefaultTreeModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DefaultTreeModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DefaultTreeModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF230648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Desktop.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Desktop.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Desktop.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF240648693C00A8020D = {
 			fileEncoding = 30;
@@ -5770,9 +5770,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Dialog.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Dialog.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Dialog.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF270648693C00A8020D = {
 			fileEncoding = 30;
@@ -5797,45 +5797,45 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DocManagerPolicy.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DocManagerPolicy.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DocManagerPolicy.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF2A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Document.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Document.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Document.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF2B0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DocumentBasedApplication.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DocumentBasedApplication.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DocumentBasedApplication.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF2C0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DocumentManager.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DocumentManager.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DocumentManager.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF2D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DocumentManager.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DocumentManager.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DocumentManager.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF2E0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5869,9 +5869,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DragSource.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DragSource.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DragSource.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF320648693C00A8020D = {
 			fileEncoding = 30;
@@ -5896,9 +5896,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DropTarget.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/DropTarget.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/DropTarget.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF350648693C00A8020D = {
 			fileEncoding = 30;
@@ -5932,9 +5932,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = EtchedBorder.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/EtchedBorder.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/EtchedBorder.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF390648693C00A8020D = {
 			fileEncoding = 30;
@@ -5950,9 +5950,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = FocusEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/FocusEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/FocusEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF3B0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5968,9 +5968,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Frame.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Frame.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Frame.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF3D0648693C00A8020D = {
 			fileEncoding = 30;
@@ -5995,27 +5995,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = HeaderControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/HeaderControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/HeaderControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF590648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = HeaderControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/HeaderControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/HeaderControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF5A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = HelpEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/HelpEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/HelpEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF5B0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6031,18 +6031,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = HTMLBrowserControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/HTMLBrowserControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/HTMLBrowserControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF5D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = HTMLBrowserControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/HTMLBrowserControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/HTMLBrowserControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF5E0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6058,27 +6058,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ImageControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ImageControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ImageControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF600648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ImageControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ImageControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ImageControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF610648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ImageList.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ImageList.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ImageList.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF620648693C00A8020D = {
 			fileEncoding = 30;
@@ -6094,9 +6094,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ImageListEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ImageListEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ImageListEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF640648693C00A8020D = {
 			fileEncoding = 30;
@@ -6112,9 +6112,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Item.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Item.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Item.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF660648693C00A8020D = {
 			fileEncoding = 30;
@@ -6130,9 +6130,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ItemEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ItemEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ItemEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF680648693C00A8020D = {
 			fileEncoding = 30;
@@ -6148,9 +6148,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = KeyboardEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/KeyboardEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/KeyboardEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF6A0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6166,27 +6166,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Label.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Label.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Label.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF6C0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Label.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Label.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Label.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF6D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LibraryApplication.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/LibraryApplication.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/LibraryApplication.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF6E0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6202,9 +6202,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Light3DBorder.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Light3DBorder.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Light3DBorder.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF700648693C00A8020D = {
 			fileEncoding = 30;
@@ -6220,63 +6220,63 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightweightComponent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/LightweightComponent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/LightweightComponent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF720648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = LightweightComponent.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/LightweightComponent.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/LightweightComponent.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF730648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ListBoxControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListBoxControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListBoxControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF740648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ListBoxControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListBoxControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListBoxControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF750648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ListItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF760648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ListModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF770648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ListModelEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListModelEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListModelEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF780648693C00A8020D = {
 			fileEncoding = 30;
@@ -6292,18 +6292,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ListViewControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListViewControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListViewControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF7A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ListViewControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ListViewControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ListViewControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF7B0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6319,9 +6319,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Menu.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Menu.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Menu.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF7D0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6337,9 +6337,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MenuBar.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuBar.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MenuBar.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF7F0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6364,18 +6364,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MenuItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MenuItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF820648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MenuItemEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuItemEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MenuItemEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF830648693C00A8020D = {
 			fileEncoding = 30;
@@ -6400,9 +6400,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MessageDialog.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MessageDialog.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MessageDialog.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF880648693C00A8020D = {
 			fileEncoding = 30;
@@ -6418,18 +6418,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Model.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Model.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Model.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF8A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Model.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Model.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Model.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF8B0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6445,18 +6445,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ModelViewKit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ModelViewKit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ModelViewKit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF8D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MouseEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MouseEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MouseEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF8E0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6472,189 +6472,189 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MultilineTextControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MultilineTextControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MultilineTextControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF900648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MultilineTextControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MultilineTextControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/MultilineTextControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF930648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXApplicationPeer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXApplicationPeer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXApplicationPeer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF940648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXApplicationPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXApplicationPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXApplicationPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF950648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF960648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF970648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXControlContextPeer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXControlContextPeer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXControlContextPeer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF980648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXControlContextPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXControlContextPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXControlContextPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF990648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXCursorPeer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXCursorPeer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXCursorPeer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9A0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXCursorPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXCursorPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXCursorPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9B0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXDesktopPeer.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXDesktopPeer.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXDesktopPeer.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9C0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXDesktopPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXDesktopPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXDesktopPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9D0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXDialog.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXDialog.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXDialog.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9E0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXDialog.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXDialog.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXDialog.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDF9F0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXUIToolkit.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXUIToolkit.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXUIToolkit.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA00648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXUIToolkit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXUIToolkit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXUIToolkit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA10648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXWindow.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXWindow.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXWindow.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA20648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXWindow.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXWindow.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXWindow.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA30648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Panel.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Panel.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Panel.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA40648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Panel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Panel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Panel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA50648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PopupMenu.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/PopupMenu.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/PopupMenu.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFA60648693C00A8020D = {
 			fileEncoding = 30;
@@ -6697,18 +6697,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ProgressControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ProgressControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ProgressControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFAB0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ProgressControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ProgressControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ProgressControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFAC0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6724,9 +6724,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropertyEditorManager.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/PropertyEditorManager.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/PropertyEditorManager.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFAE0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6742,45 +6742,45 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PushButton.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/PushButton.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/PushButton.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB00648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = PushButton.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/PushButton.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/PushButton.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB10648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = RadioButtonControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/RadioButtonControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/RadioButtonControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB20648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = RadioButtonControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/RadioButtonControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/RadioButtonControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB30648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Resource.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Resource.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Resource.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB40648693C00A8020D = {
 			fileEncoding = 30;
@@ -6814,9 +6814,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ResourceStream.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ResourceStream.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ResourceStream.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFB90648693C00A8020D = {
 			fileEncoding = 30;
@@ -6850,18 +6850,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ScrollBarControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ScrollBarControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ScrollBarControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFBD0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScrollbarManager.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ScrollbarManager.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ScrollbarManager.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFBE0648693C00A8020D = {
 			fileEncoding = 30;
@@ -6922,99 +6922,99 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SliderControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/SliderControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/SliderControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFC50648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = SliderControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/SliderControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/SliderControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFC60648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Splitter.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Splitter.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Splitter.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFC70648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Splitter.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Splitter.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Splitter.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFC80648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StatusBar.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/StatusBar.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/StatusBar.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFC90648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = StatusBar.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/StatusBar.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/StatusBar.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCA0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TabbedPages.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TabbedPages.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TabbedPages.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCB0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TabbedPages.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TabbedPages.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TabbedPages.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCC0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TableCellItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TableCellItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TableCellItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCD0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TableControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TableControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TableControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCE0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TableControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TableControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TableControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFCF0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7030,18 +7030,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TableModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TableModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TableModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD10648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TableModelEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TableModelEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TableModelEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD20648693C00A8020D = {
 			fileEncoding = 30;
@@ -7057,18 +7057,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TabModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TabModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TabModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD40648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TabModelEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TabModelEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TabModelEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD50648693C00A8020D = {
 			fileEncoding = 30;
@@ -7084,36 +7084,36 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TabPage.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TabPage.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TabPage.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD70648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TextControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TextControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TextControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD80648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TextControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TextControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TextControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFD90648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TextEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TextEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TextEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFDA0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7129,9 +7129,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TextModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TextModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TextModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFDC0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7147,9 +7147,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimerComponent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TimerComponent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TimerComponent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFDE0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7165,9 +7165,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimerEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TimerEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TimerEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE00648693C00A8020D = {
 			fileEncoding = 30;
@@ -7183,9 +7183,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TitledBorder.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TitledBorder.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TitledBorder.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE20648693C00A8020D = {
 			fileEncoding = 30;
@@ -7201,54 +7201,54 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ToggledButton.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ToggledButton.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ToggledButton.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE40648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ToggledButton.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ToggledButton.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ToggledButton.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE50648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Toolbar.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Toolbar.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Toolbar.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE60648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Toolbar.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Toolbar.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Toolbar.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE70648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ToolbarDock.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ToolbarDock.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ToolbarDock.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE80648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ToolbarDock.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ToolbarDock.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ToolbarDock.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFE90648693C00A8020D = {
 			fileEncoding = 30;
@@ -7264,9 +7264,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ToolTipEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ToolTipEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ToolTipEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFEB0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7282,63 +7282,63 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TreeControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFED0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TreeControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFEE0648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TreeItem.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeItem.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeItem.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFF00648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TreeListControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeListControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeListControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFF10648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TreeListControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeListControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeListControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFF20648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TreeModel.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeModel.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeModel.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFF30648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TreeModelEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/TreeModelEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/TreeModelEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFF40648693C00A8020D = {
 			fileEncoding = 30;
@@ -7390,9 +7390,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = UIToolkit.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/UIToolkit.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/UIToolkit.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFFB0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7408,9 +7408,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = UndoRedoEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/UndoRedoEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/UndoRedoEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFFD0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7426,9 +7426,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = UndoRedoStack.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/UndoRedoStack.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/UndoRedoStack.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CDFFF0648693C00A8020D = {
 			fileEncoding = 30;
@@ -7444,9 +7444,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ValidationEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/ValidationEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/ValidationEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0010648693C00A8020D = {
 			fileEncoding = 30;
@@ -7462,9 +7462,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = VFFInputStream.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/VFFInputStream.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/VFFInputStream.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0040648693C00A8020D = {
 			fileEncoding = 30;
@@ -7480,9 +7480,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = VFFOutputStream.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/VFFOutputStream.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/VFFOutputStream.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0060648693C00A8020D = {
 			fileEncoding = 30;
@@ -7498,18 +7498,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = View.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/View.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/View.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0080648693C00A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WhatsThisHelpEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/WhatsThisHelpEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/WhatsThisHelpEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0090648693C00A8020D = {
 			fileEncoding = 30;
@@ -7525,9 +7525,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Window.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/Window.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/Window.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0520648693C00A8020D = {
 			fileEncoding = 30;
@@ -7543,9 +7543,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WindowEvent.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/WindowEvent.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/WindowEvent.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E2CE0540648693C00A8020D = {
 			fileEncoding = 30;
@@ -9725,20 +9725,20 @@
 		5E9C1AC906B5F0D7006671C6 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
+			lastKnownFileType = file;
 			name = OSXLightweightControl.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXLightweightControl.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXLightweightControl.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E9C1ACA06B5F0D7006671C6 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
+			lastKnownFileType = file;
 			name = OSXLightweightControl.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/OSXLightweightControl.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/ApplicationKit/OSXLightweightControl.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5E9C1AF906B5F0D8006671C6 = {
 			fileRef = 5E9C1AC906B5F0D7006671C6;
@@ -10351,18 +10351,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AbstractImage.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/AbstractImage.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/AbstractImage.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D1D0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AggCommon.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/AggCommon.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/AggCommon.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D200647393800A8020D = {
 			fileEncoding = 30;
@@ -10378,18 +10378,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = BasicFill.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/BasicFill.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/BasicFill.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D220647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = BasicRectangle.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/BasicRectangle.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/BasicRectangle.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D230647393800A8020D = {
 			fileEncoding = 30;
@@ -10405,9 +10405,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = BasicStroke.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/BasicStroke.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/BasicStroke.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D250647393800A8020D = {
 			fileEncoding = 30;
@@ -10423,18 +10423,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = BezierCurve.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/BezierCurve.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/BezierCurve.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D270647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Circle.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Circle.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Circle.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D290647393800A8020D = {
 			fileEncoding = 30;
@@ -10450,27 +10450,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Color.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Color.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Color.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D2C0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ContextPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/ContextPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/ContextPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D2F0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Fill.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Fill.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Fill.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D310647393800A8020D = {
 			fileEncoding = 30;
@@ -10486,27 +10486,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Font.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Font.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Font.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D330647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = FontPeer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/FontPeer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/FontPeer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D340647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Glyph.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Glyph.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Glyph.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D350647393800A8020D = {
 			fileEncoding = 30;
@@ -10522,9 +10522,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = GlyphCollection.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/GlyphCollection.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/GlyphCollection.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D370647393800A8020D = {
 			fileEncoding = 30;
@@ -10540,9 +10540,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = GraphicsContext.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/GraphicsContext.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/GraphicsContext.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D390647393800A8020D = {
 			fileEncoding = 30;
@@ -10558,18 +10558,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = GraphicsKit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/GraphicsKit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/GraphicsKit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D3B0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = GraphicsKitPrivate.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/GraphicsKitPrivate.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/GraphicsKitPrivate.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D3C0647393800A8020D = {
 			fileEncoding = 30;
@@ -10594,27 +10594,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = GraphicsToolKit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/GraphicsToolKit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/GraphicsToolKit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D480647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Image.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Image.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Image.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D490647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ImageBits.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/ImageBits.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/ImageBits.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D4A0647393800A8020D = {
 			fileEncoding = 30;
@@ -10630,54 +10630,54 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ImageEvent.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/ImageEvent.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/ImageEvent.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D4C0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ImageLoader.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/ImageLoader.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/ImageLoader.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D4D0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ImageLoaderException.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/ImageLoaderException.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/ImageLoaderException.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D4F0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = InvalidImage.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/InvalidImage.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/InvalidImage.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D510647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Layer.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Layer.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Layer.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D520647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MagicFMLibType.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MagicFMLibType.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MagicFMLibType.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D530647393800A8020D = {
 			fileEncoding = 30;
@@ -10693,18 +10693,18 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Matrix2D.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Matrix2D.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Matrix2D.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D550647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MatrixFunction.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MatrixFunction.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MatrixFunction.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D560647393800A8020D = {
 			fileEncoding = 30;
@@ -10720,9 +10720,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcBezierCurve2.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcBezierCurve2.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcBezierCurve2.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D580647393800A8020D = {
 			fileEncoding = 30;
@@ -10747,9 +10747,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcCurve2.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcCurve2.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcCurve2.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D5B0647393800A8020D = {
 			fileEncoding = 30;
@@ -10774,9 +10774,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcIntegrate.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcIntegrate.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcIntegrate.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D5E0647393800A8020D = {
 			fileEncoding = 30;
@@ -10792,9 +10792,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcMath.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcMath.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcMath.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D600647393800A8020D = {
 			fileEncoding = 30;
@@ -10810,9 +10810,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcRTLib.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcRTLib.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcRTLib.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D620647393800A8020D = {
 			fileEncoding = 30;
@@ -10828,9 +10828,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcSingleCurve2.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcSingleCurve2.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcSingleCurve2.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D640647393800A8020D = {
 			fileEncoding = 30;
@@ -10846,9 +10846,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MgcVector2.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/MgcVector2.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/MgcVector2.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D660647393800A8020D = {
 			fileEncoding = 30;
@@ -10864,99 +10864,99 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = NoGraphicsToolkitFoundException.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/NoGraphicsToolkitFoundException.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/NoGraphicsToolkitFoundException.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6A0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXContext.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXContext.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXContext.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6B0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXContext.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXContext.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXContext.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6C0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXFont.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXFont.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXFont.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6D0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXFont.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXFont.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXFont.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6E0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXGraphicsToolkit.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXGraphicsToolkit.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXGraphicsToolkit.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D6F0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXGraphicsToolkit.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXGraphicsToolkit.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXGraphicsToolkit.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D700647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = OSXImage.cpp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXImage.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXImage.cpp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D710647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OSXImage.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXImage.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/OSXImage.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D720647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Path.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Path.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Path.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D750647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = PixelFormats.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/PixelFormats.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/PixelFormats.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D760647393800A8020D = {
 			fileEncoding = 30;
@@ -10972,27 +10972,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Point.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Point.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Point.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D780647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Printable.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Printable.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Printable.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D790647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = PrintContext.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/PrintContext.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/PrintContext.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D7A0647393800A8020D = {
 			fileEncoding = 30;
@@ -11008,27 +11008,27 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Rect.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Rect.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Rect.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D7E0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Size.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Size.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Size.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D7F0647393800A8020D = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Stroke.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Stroke.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Stroke.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D820647393800A8020D = {
 			fileEncoding = 30;
@@ -11044,9 +11044,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Vector2D.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/Vector2D.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/Vector2D.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA3D8E0647393800A8020D = {
 			fileRef = 5EAA3D1B0647393800A8020D;
@@ -16441,9 +16441,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = "GraphicsKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/GraphicsKit-debug.framework";
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = "../../bin/GraphicsKit-debug.framework";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EB2564E0673DF4800DA4A17 = {
 			fileRef = 5EB2564D0673DF4800DA4A17;
@@ -16552,9 +16552,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DrawUIState.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/DrawUIState.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/vcf/GraphicsKit/DrawUIState.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EBA1BA90697C07700434360 = {
 			children = (
@@ -16728,72 +16728,72 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TCarbonEvent.cp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TCarbonEvent.cp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TCarbonEvent.cp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A026064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TCarbonEvent.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TCarbonEvent.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TCarbonEvent.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A027064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TObject.cp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TObject.cp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TObject.cp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A028064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TObject.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TObject.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TObject.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A029064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TRect.cp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TRect.cp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TRect.cp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A02A064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TRect.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TRect.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TRect.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A02B064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TView.cp;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TView.cp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TView.cp;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A02C064DD84E00345023 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = TView.h;
-			path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/thirdparty/macOSX/HIView/TView.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../../src/thirdparty/macOSX/HIView/TView.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		5EC5A02D064DD84E00345023 = {
 			fileRef = 5EC5A025064DD84E00345023;
