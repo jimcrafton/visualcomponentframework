@@ -38,7 +38,7 @@ public:
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 
-		ToolManager::init();
+		ToolManager::initialize();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
 		docMgr->DocumentInitialized += new GenericEventHandler<SketchIt>( this,
@@ -251,6 +251,14 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2004/12/01 04:15:13  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.5.2.1  2004/11/15 05:41:27  ddiego
+*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
+*
 *Revision 1.5  2004/08/07 02:47:36  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

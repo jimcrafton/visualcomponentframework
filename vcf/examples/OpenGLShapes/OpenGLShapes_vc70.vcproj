@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="OpenGLShapes"
-	ProjectGUID="{9BC43640-4B5D-4FE5-A12F-7DBF133EA98A}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

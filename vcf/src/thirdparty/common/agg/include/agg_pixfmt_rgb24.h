@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -17,190 +17,399 @@
 #define AGG_PIXFMT_RGB24_INCLUDED
 
 #include <string.h>
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_color_rgba8.h"
+#include "agg_basics.h"
+#include "agg_color_rgba8.h"
+#include "agg_rendering_buffer.h"
+#include "agg_bitset_iterator.h"
 
 namespace agg
 {
-    struct order_rgb24 { enum { R=0, G=1, B=2 }; };
-    struct order_bgr24 { enum { B=0, G=1, R=2 }; };
+    
+    struct order_rgb24 { enum { R=0, G=1, B=2, rgb24_tag }; }; //----order_rgb24
+    struct order_bgr24 { enum { B=0, G=1, R=2, rgb24_tag }; }; //----order_bgr24
 
-    //========================================================================
+    //=====================================================pixel_formats_rgb24
     template<class Order> class pixel_formats_rgb24
     {
     public:
         typedef rgba8 color_type;
 
         //--------------------------------------------------------------------
-        static void pixel(int8u* p, int x, const color_type& c)
+        pixel_formats_rgb24(rendering_buffer& rb)
+            : m_rbuf(&rb)
         {
-            p += x + x + x;
-            p[Order::R] = c.r;
-            p[Order::G] = c.g;
-            p[Order::B] = c.b;
         }
 
         //--------------------------------------------------------------------
-        static color_type pixel(int8u* p, int x)
+        unsigned width()  const { return m_rbuf->width();  }
+        unsigned height() const { return m_rbuf->height(); }
+
+        //--------------------------------------------------------------------
+        color_type pixel(int x, int y)
         {
-            p += x + x + x;
+            int8u* p = m_rbuf->row(y) + x + x + x;
             return color_type(p[Order::R], p[Order::G], p[Order::B]);
         }
 
         //--------------------------------------------------------------------
-        static void pixel(int8u* p, int x, 
-                          const color_type& c, 
-                          int alpha)
+        void copy_pixel(int x, int y, const color_type& c)
         {
-            p += x + x + x;
-            alpha *= c.a;
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            p[Order::R] = (int8u)c.r;
+            p[Order::G] = (int8u)c.g;
+            p[Order::B] = (int8u)c.b;
+        }
 
+        //--------------------------------------------------------------------
+        void blend_pixel(int x, int y, const color_type& c, int8u cover)
+        {
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            int alpha = int(cover) * c.a;
             if(alpha == 255*255)
             {
-                p[Order::R] = c.r;
-                p[Order::G] = c.g;
-                p[Order::B] = c.b;
+                p[Order::R] = (int8u)c.r;
+                p[Order::G] = (int8u)c.g;
+                p[Order::B] = (int8u)c.b;
             }
             else
             {
                 int r = p[Order::R];
                 int g = p[Order::G];
                 int b = p[Order::B];
-                p[Order::R] = (((c.r - r) * alpha) + (r << 16)) >> 16;
-                p[Order::G] = (((c.g - g) * alpha) + (g << 16)) >> 16;
-                p[Order::B] = (((c.b - b) * alpha) + (b << 16)) >> 16;
+                p[Order::R] = (int8u)((((c.r - r) * alpha) + (r << 16)) >> 16);
+                p[Order::G] = (int8u)((((c.g - g) * alpha) + (g << 16)) >> 16);
+                p[Order::B] = (int8u)((((c.b - b) * alpha) + (b << 16)) >> 16);
             }
         }
 
+
         //--------------------------------------------------------------------
-        static void hline(int8u* p, int x, 
-                          unsigned count, 
-                          const color_type& c)
+        void copy_hline(int x, int y, 
+                        unsigned len, 
+                        const color_type& c)
         {
-            p += x + x + x;
+            int8u* p = m_rbuf->row(y) + x + x + x;
             do
             {
-                p[Order::R] = c.r; 
-                p[Order::G] = c.g; 
-                p[Order::B] = c.b;
+                p[Order::R] = (int8u)c.r; 
+                p[Order::G] = (int8u)c.g; 
+                p[Order::B] = (int8u)c.b;
                 p += 3;
             }
-            while(--count);
+            while(--len);
         }
 
+
         //--------------------------------------------------------------------
-        static void vline(int8u* p, int x, 
-                          int stride, 
-                          unsigned count, 
-                          const color_type& c)
+        void copy_vline(int x, int y,
+                        unsigned len, 
+                        const color_type& c)
         {
-            p += x + x + x;
+            int8u* p = m_rbuf->row(y) + x + x + x;
             do
             {
-                p[Order::R] = c.r; 
-                p[Order::G] = c.g; 
-                p[Order::B] = c.b;
-                p += stride;
+                p[Order::R] = (int8u)c.r; 
+                p[Order::G] = (int8u)c.g; 
+                p[Order::B] = (int8u)c.b;
+                p += m_rbuf->stride();
             }
-            while(--count);
-        }
-
-        //--------------------------------------------------------------------
-        static void copy(int8u* dst, 
-                         const int8u* src, 
-                         int xdst, 
-                         int xsrc,
-                         unsigned len)
-        {
-            memmove(dst + xdst * 3, src + xsrc * 3, len * 3);
+            while(--len);
         }
 
 
         //--------------------------------------------------------------------
-        template<class SpanInterpolator>
-        void span(int8u* ptr, 
-                  int x, int,
-                  unsigned count, 
-                  SpanInterpolator& span)
+        void blend_hline(int x, int y,
+                         unsigned len, 
+                         const color_type& c,
+                         int8u cover)
         {
-            int8u* p = ptr + x + x + x;
-            int alpha = span.a();
-            if(alpha)
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            int alpha = int(cover) * c.a;
+            if(alpha == 255*255)
             {
-                if(alpha == 255)
+                do
                 {
-                    do 
-                    {
-                        span.calculate();
-                        p[Order::R] = span.r();
-                        p[Order::G] = span.g();
-                        p[Order::B] = span.b();
-                        span.step();
-                        p += 3;
-                    }
-                    while(--count);
+                    p[Order::R] = (int8u)c.r; 
+                    p[Order::G] = (int8u)c.g; 
+                    p[Order::B] = (int8u)c.b;
+                    p += 3;
                 }
-                else
+                while(--len);
+            }
+            else
+            {
+                do
                 {
-                    do 
-                    {
-                        span.calculate();
-                        int r = p[Order::R];
-                        int g = p[Order::G];
-                        int b = p[Order::B];
-                        p[Order::R] = (((span.r() - r) * alpha) + (r << 8)) >> 8;
-                        p[Order::G] = (((span.g() - g) * alpha) + (g << 8)) >> 8;
-                        p[Order::B] = (((span.b() - b) * alpha) + (b << 8)) >> 8;
-                        span.step();
-                        p += 3;
-                    }
-                    while(--count);
+                    int r = p[Order::R];
+                    int g = p[Order::G];
+                    int b = p[Order::B];
+                    p[Order::R] = (int8u)((((c.r - r) * alpha) + (r << 16)) >> 16);
+                    p[Order::G] = (int8u)((((c.g - g) * alpha) + (g << 16)) >> 16);
+                    p[Order::B] = (int8u)((((c.b - b) * alpha) + (b << 16)) >> 16);
+                    p += 3;
                 }
+                while(--len);
             }
         }
 
 
         //--------------------------------------------------------------------
-        template<class SpanInterpolator>
-        void span(int8u* ptr, 
-                  int x, int,
-                  unsigned count, 
-                  const int8u* covers,
-                  SpanInterpolator& span)
+        void blend_vline(int x, int y,
+                         unsigned len, 
+                         const color_type& c,
+                         int8u cover)
         {
-            int8u* p = ptr + x + x + x;
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            int alpha = int(cover) * c.a;
+            if(alpha == 255*255)
+            {
+                do
+                {
+                    p[Order::R] = (int8u)c.r; 
+                    p[Order::G] = (int8u)c.g; 
+                    p[Order::B] = (int8u)c.b;
+                    p += m_rbuf->stride();
+                }
+                while(--len);
+            }
+            else
+            {
+                do
+                {
+                    int r = p[Order::R];
+                    int g = p[Order::G];
+                    int b = p[Order::B];
+                    p[Order::R] = (int8u)((((c.r - r) * alpha) + (r << 16)) >> 16);
+                    p[Order::G] = (int8u)((((c.g - g) * alpha) + (g << 16)) >> 16);
+                    p[Order::B] = (int8u)((((c.b - b) * alpha) + (b << 16)) >> 16);
+                    p += m_rbuf->stride();
+                }
+                while(--len);
+            }
+        }
+
+
+        //--------------------------------------------------------------------
+        void copy_from(const rendering_buffer& from, 
+                       int xdst, int ydst,
+                       int xsrc, int ysrc,
+                       unsigned len)
+        {
+            memmove(m_rbuf->row(ydst) + xdst * 3, 
+                    (const void*)(from.row(ysrc) + xsrc * 3), len * 3);
+        }
+
+
+        //--------------------------------------------------------------------
+        void blend_solid_hspan(int x, int y,
+                               unsigned len, 
+                               const color_type& c,
+                               const int8u* covers)
+        {
+            int8u* p = m_rbuf->row(y) + x + x + x;
             do 
             {
-                span.calculate();
-                int alpha = (*covers++) * span.a();
+                int alpha = int(*covers++) * c.a;
 
                 if(alpha)
                 {
                     if(alpha == 255*255)
                     {
-                        p[Order::R] = span.r();
-                        p[Order::G] = span.g();
-                        p[Order::B] = span.b();
+                        p[Order::R] = (int8u)c.r;
+                        p[Order::G] = (int8u)c.g;
+                        p[Order::B] = (int8u)c.b;
+                    }
+                    else
+                    {
+                        int r = (int8u)p[Order::R];
+                        int g = (int8u)p[Order::G];
+                        int b = (int8u)p[Order::B];
+                        p[Order::R] = (int8u)((((c.r - r) * alpha) + (r << 16)) >> 16);
+                        p[Order::G] = (int8u)((((c.g - g) * alpha) + (g << 16)) >> 16);
+                        p[Order::B] = (int8u)((((c.b - b) * alpha) + (b << 16)) >> 16);
+                    }
+                }
+                p += 3;
+            }
+            while(--len);
+        }
+
+
+        //--------------------------------------------------------------------
+        void blend_solid_vspan(int x, int y,
+                               unsigned len, 
+                               const color_type& c,
+                               const int8u* covers)
+        {
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            do 
+            {
+                int alpha = int(*covers++) * c.a;
+
+                if(alpha)
+                {
+                    if(alpha == 255*255)
+                    {
+                        p[Order::R] = (int8u)c.r;
+                        p[Order::G] = (int8u)c.g;
+                        p[Order::B] = (int8u)c.b;
                     }
                     else
                     {
                         int r = p[Order::R];
                         int g = p[Order::G];
                         int b = p[Order::B];
-                        p[Order::R] = (((span.r() - r) * alpha) + (r << 16)) >> 16;
-                        p[Order::G] = (((span.g() - g) * alpha) + (g << 16)) >> 16;
-                        p[Order::B] = (((span.b() - b) * alpha) + (b << 16)) >> 16;
+                        p[Order::R] = (int8u)((((c.r - r) * alpha) + (r << 16)) >> 16);
+                        p[Order::G] = (int8u)((((c.g - g) * alpha) + (g << 16)) >> 16);
+                        p[Order::B] = (int8u)((((c.b - b) * alpha) + (b << 16)) >> 16);
                     }
                 }
-                span.step();
-                p += 3;
+                p += m_rbuf->stride();
             }
-            while(--count);
+            while(--len);
         }
+
+
+        //--------------------------------------------------------------------
+        void blend_color_hspan(int x, int y,
+                               unsigned len, 
+                               const color_type* colors,
+                               const int8u* covers)
+        {
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            if(covers)
+            {
+                do 
+                {
+                    int alpha = int(*covers++) * colors->a;
+
+                    if(alpha)
+                    {
+                        if(alpha == 255*255)
+                        {
+                            p[Order::R] = (int8u)colors->r;
+                            p[Order::G] = (int8u)colors->g;
+                            p[Order::B] = (int8u)colors->b;
+                        }
+                        else
+                        {
+                            int r = p[Order::R];
+                            int g = p[Order::G];
+                            int b = p[Order::B];
+                            p[Order::R] = (int8u)((((colors->r - r) * alpha) + (r << 16)) >> 16);
+                            p[Order::G] = (int8u)((((colors->g - g) * alpha) + (g << 16)) >> 16);
+                            p[Order::B] = (int8u)((((colors->b - b) * alpha) + (b << 16)) >> 16);
+                        }
+                    }
+                    p += 3;
+                    ++colors;
+                }
+                while(--len);
+            }
+            else
+            {
+                do 
+                {
+                    if(colors->a)
+                    {
+                        if(colors->a == 255)
+                        {
+                            p[Order::R] = (int8u)colors->r;
+                            p[Order::G] = (int8u)colors->g;
+                            p[Order::B] = (int8u)colors->b;
+                        }
+                        else
+                        {
+                            int r = p[Order::R];
+                            int g = p[Order::G];
+                            int b = p[Order::B];
+                            p[Order::R] = (int8u)((((colors->r - r) * colors->a) + (r << 8)) >> 8);
+                            p[Order::G] = (int8u)((((colors->g - g) * colors->a) + (g << 8)) >> 8);
+                            p[Order::B] = (int8u)((((colors->b - b) * colors->a) + (b << 8)) >> 8);
+                        }
+                    }
+                    p += 3;
+                    ++colors;
+                }
+                while(--len);
+            }
+        }
+
+
+
+        //--------------------------------------------------------------------
+        void blend_color_vspan(int x, int y,
+                               unsigned len, 
+                               const color_type* colors,
+                               const int8u* covers)
+        {
+            int8u* p = m_rbuf->row(y) + x + x + x;
+            if(covers)
+            {
+                do 
+                {
+                    int alpha = int(*covers++) * colors->a;
+
+                    if(alpha)
+                    {
+                        if(alpha == 255*255)
+                        {
+                            p[Order::R] = (int8u)colors->r;
+                            p[Order::G] = (int8u)colors->g;
+                            p[Order::B] = (int8u)colors->b;
+                        }
+                        else
+                        {
+                            int r = p[Order::R];
+                            int g = p[Order::G];
+                            int b = p[Order::B];
+                            p[Order::R] = (int8u)((((colors->r - r) * alpha) + (r << 16)) >> 16);
+                            p[Order::G] = (int8u)((((colors->g - g) * alpha) + (g << 16)) >> 16);
+                            p[Order::B] = (int8u)((((colors->b - b) * alpha) + (b << 16)) >> 16);
+                        }
+                    }
+                    p += m_rbuf->stride();
+                    ++colors;
+                }
+                while(--len);
+            }
+            else
+            {
+                do 
+                {
+                    if(colors->a)
+                    {
+                        if(colors->a == 255)
+                        {
+                            p[Order::R] = (int8u)colors->r;
+                            p[Order::G] = (int8u)colors->g;
+                            p[Order::B] = (int8u)colors->b;
+                        }
+                        else
+                        {
+                            int r = p[Order::R];
+                            int g = p[Order::G];
+                            int b = p[Order::B];
+                            p[Order::R] = (int8u)((((colors->r - r) * colors->a) + (r << 8)) >> 8);
+                            p[Order::G] = (int8u)((((colors->g - g) * colors->a) + (g << 8)) >> 8);
+                            p[Order::B] = (int8u)((((colors->b - b) * colors->a) + (b << 8)) >> 8);
+                        }
+                    }
+                    p += m_rbuf->stride();
+                    ++colors;
+                }
+                while(--len);
+            }
+        }
+
+    private:
+        rendering_buffer* m_rbuf;
+
     };
 
-    typedef pixel_formats_rgb24<order_rgb24> pixfmt_rgb24;
-    typedef pixel_formats_rgb24<order_bgr24> pixfmt_bgr24;
+
+    typedef pixel_formats_rgb24<order_rgb24> pixfmt_rgb24;    //----pixfmt_rgb24
+    typedef pixel_formats_rgb24<order_bgr24> pixfmt_bgr24;    //----pixfmt_bgr24
 
 }
 

@@ -11,12 +11,14 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 
+#include "vcf/ApplicationKit/DefaultListItem.h"
+
 using namespace VCF;
 
 
 class ScrollingWindow : public Window {
 public:
-	ScrollingWindow(): currentImage_(NULL) {
+	ScrollingWindow(): currentImage_(NULL), listBox_(NULL) {
 		setCaption( "Scrolling" );
 		setVisible( true );
 
@@ -38,11 +40,33 @@ public:
 		*/
 		MenuItem* fileMenu = new DefaultMenuItem( "File", menuBar->getRootMenuItem(), menuBar );
 		MenuItem* fileOpenImageMenu = new DefaultMenuItem( "Open Image...", fileMenu, menuBar );
+		MenuItem* fileOpenListboxMenu = new DefaultMenuItem( "Open ListBox", fileMenu, menuBar );
 
 		//add our event handler to the menu item
 		fileOpenImageMenu->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this,ScrollingWindow::openImage, "ScrollingWindow::openImage" ) );
+			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" ) );
+		fileOpenListboxMenu->addMenuItemClickedHandler(
+			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openListboxMenu, "ScrollingWindow::openListboxMenu" ) );
 
+		// Scrollbar menu
+		MenuItem* scrollMenu = new DefaultMenuItem( "FrameScrollbars", menuBar->getRootMenuItem(), menuBar );
+		hasHorzScrollbarMenu_ = new DefaultMenuItem( "Horizontal", scrollMenu, menuBar );
+		hasVertScrollbarMenu_ = new DefaultMenuItem( "Vertical", scrollMenu, menuBar );
+		MenuItem* separator = new DefaultMenuItem( "", scrollMenu, menuBar );
+		separator->setSeparator(true);
+		separator->setEnabled( true );
+		keepHorzScrollbarVisibleMenu_   = new DefaultMenuItem( "Keep horizontal visible", scrollMenu, menuBar );
+		keepVertScrollbarVisibleMenu_   = new DefaultMenuItem( "Keep vertical visible", scrollMenu, menuBar );
+
+		//add our event handler to the scrollbar menu
+		hasHorzScrollbarMenu_->addMenuItemClickedHandler(
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasHorzScrollbar, "ScrollingWindow::hasHorzScrollbar" ) );
+		hasVertScrollbarMenu_->addMenuItemClickedHandler(
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasVertScrollbar, "ScrollingWindow::hasVertScrollbar" ) );
+		keepHorzScrollbarVisibleMenu_->addMenuItemClickedHandler(
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepHorzScrollbarVisible, "ScrollingWindow::keepHorzScrollbarVisible" ) );
+		keepVertScrollbarVisibleMenu_->addMenuItemClickedHandler(
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepVertScrollbarVisible, "ScrollingWindow::keepVertScrollbarVisible" ) );
 
 
 		//set the border of the window, this will give us a nice etched border
@@ -58,7 +82,11 @@ public:
 
 		scrollBarMgr_->setHasHorizontalScrollbar( true );
 		scrollBarMgr_->setHasVerticalScrollbar( true );
-		scrollBarMgr_->setKeepScrollbarsVisible( true );
+		scrollBarMgr_->setKeepScrollbarsVisible( true, true );
+		updateMenuHasHorzScrollbar();
+		updateMenuHasVertScrollbar();
+		updateMenuKeepHorzScrollbarVisible();
+		updateMenuKeepVertScrollbarVisible();
 
 		scrollBarMgr_->setHorizontalLeftScrollSpace( 200 );
 
@@ -130,7 +158,52 @@ public:
 		}
 	}
 
+	void openListboxMenu( MenuItemEvent* e ) {
+		if ( NULL != currentImage_ ) {
+			delete currentImage_;
+			currentImage_ = NULL;
+		}
+
+		/* hide the scrollbars of the main window 
+		as the scrollbars of the listbox will be use */
+		scrollBarMgr_->setHasHorizontalScrollbar( false );
+		scrollBarMgr_->setHasVerticalScrollbar( false );
+		updateMenuHasHorzScrollbar();
+		updateMenuHasVertScrollbar();
+
+		//add a ListBoxControl
+		listBox_ = new ListBoxControl();		
+		listBox_->setBorder( new Basic3DBorder( true ) );
+		listBox_->setAllowsMultiSelect( false );
+		//add scrollbar to listBox_
+		ScrollbarManager* scrollbarManagerSingle = new ScrollbarManager();
+		addComponent( scrollbarManagerSingle );
+		scrollbarManagerSingle->setHasVerticalScrollbar( true );
+		scrollbarManagerSingle->setHasHorizontalScrollbar( true );		
+		scrollbarManagerSingle->setTarget( listBox_ );
+		scrollbarManagerSingle->setKeepScrollbarsVisible( true, true );
+		scrollbarManagerSingle->setVirtualViewVertStep( 17 );
+		
+		this->add( listBox_, AlignClient );
+		
+		//add some items to listBox_
+		ListModel* listBoxModel = listBox_->getListModel();	
+		for(int j=0; j<20; j++){
+			String indx = StringUtils::toString(j);
+			String capt = L"Very Ultra Hyper Extra Long ListItem " + indx;		
+			listBoxModel->addItem( new DefaultListItem( listBoxModel, capt ) );			
+		}
+	}
+
 	void openImage( MenuItemEvent* e ) {
+		if ( NULL != listBox_ ) {
+			 // try to comment out this !
+			this->remove( listBox_ );
+			listBox_->getOwner()->removeComponent( listBox_ );
+			listBox_->free();
+			listBox_ = NULL;
+		}
+
 		CommonFileOpen dlg( this );
 
 		//get the available image loader extensions
@@ -165,9 +238,9 @@ public:
 
 			//create a new image from the file name
 			currentImage_ = GraphicsToolkit::createImage( dlg.getFileName() );
+			
+			scrollBarMgr_->setVirtualViewSize(  currentImage_->getWidth(), currentImage_->getHeight() ); 
 
-			scrollBarMgr_->setVirtualViewWidth( currentImage_->getWidth() );
-			scrollBarMgr_->setVirtualViewHeight( currentImage_->getHeight() );
 			repaint(); //repaint ourselves to update the new image
 
 			FilePath fp = dlg.getFileName();
@@ -178,11 +251,65 @@ public:
 		}
 	}
 
+	void hasHorzScrollbar( MenuItemEvent* e ) {
+		scrollBarMgr_->setHasHorizontalScrollbar( !scrollBarMgr_->hasHorizontalScrollBar() );
+		updateMenuHasHorzScrollbar();
+		repaint();
+	}
+
+	void hasVertScrollbar( MenuItemEvent* e ) {
+		scrollBarMgr_->setHasVerticalScrollbar( !scrollBarMgr_->hasVerticalScrollBar() );
+		updateMenuHasVertScrollbar();
+		repaint();
+	}
+
+	void keepHorzScrollbarVisible( MenuItemEvent* e ) {
+		scrollBarMgr_->setKeepScrollbarsVisible( !scrollBarMgr_->getKeepHorzScrollbarVisible(), scrollBarMgr_->getKeepVertScrollbarVisible() );
+		updateMenuKeepHorzScrollbarVisible();
+		repaint();
+	}
+
+	void keepVertScrollbarVisible( MenuItemEvent* e ) {
+		scrollBarMgr_->setKeepScrollbarsVisible( scrollBarMgr_->getKeepHorzScrollbarVisible(), !scrollBarMgr_->getKeepVertScrollbarVisible() );
+		updateMenuKeepVertScrollbarVisible();
+		repaint();
+	}
+
+	void updateMenuHasHorzScrollbar() {
+		bool has = scrollBarMgr_->hasHorizontalScrollBar();
+		hasHorzScrollbarMenu_->setChecked( has );
+		keepHorzScrollbarVisibleMenu_->setEnabled( has );
+	}
+
+	void updateMenuHasVertScrollbar() {
+		bool has = scrollBarMgr_->hasVerticalScrollBar();
+		hasVertScrollbarMenu_->setChecked( has );
+		keepVertScrollbarVisibleMenu_->setEnabled( has );
+	}
+
+	void updateMenuKeepHorzScrollbarVisible() {
+		bool visible = scrollBarMgr_->getKeepHorzScrollbarVisible();
+		keepHorzScrollbarVisibleMenu_->setChecked( visible );
+	}
+
+	void updateMenuKeepVertScrollbarVisible() {
+		bool visible = scrollBarMgr_->getKeepVertScrollbarVisible();
+		keepVertScrollbarVisibleMenu_->setChecked( visible );
+	}
+
+public:
 	Image* currentImage_;
 	Panel* panel_;
 
 	Label* infoLabel_;
 	ScrollbarManager* scrollBarMgr_;
+
+	MenuItem* hasHorzScrollbarMenu_;
+	MenuItem* hasVertScrollbarMenu_;
+	MenuItem* keepHorzScrollbarVisibleMenu_;
+	MenuItem* keepVertScrollbarVisibleMenu_;
+
+	VCF::ListBoxControl* listBox_;
 };
 
 
@@ -222,6 +349,41 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2004/12/01 04:15:12  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.4.2.11  2004/10/07 15:03:33  kiklop74
+*Fixed building issues with bcb
+*
+*Revision 1.4.2.10  2004/09/21 22:47:50  marcelloptr
+*added setVirtualViewStep functions for the scrollbars and other minor changes
+*
+*Revision 1.4.2.9  2004/09/21 22:26:28  marcelloptr
+*added setVirtualViewStep functions for the scrollbars and other minor changes
+*
+*Revision 1.4.2.8  2004/09/21 05:55:21  dougtinkham
+*replaced updateVirtualViewSize
+*
+*Revision 1.4.2.7  2004/09/19 22:06:12  marcelloptr
+*fixed bug in listbox and image removal
+*
+*Revision 1.4.2.6  2004/09/19 20:01:04  marcelloptr
+*scrollbars transitory changes
+*
+*Revision 1.4.2.4  2004/09/17 11:38:05  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.4.2.3  2004/09/16 15:24:29  marcelloptr
+*changed a name to the menu
+*
+*Revision 1.4.2.2  2004/09/15 22:18:37  dougtinkham
+*replaced setVirtualViewWidth/Height with updateVirtualViewSize
+*
+*Revision 1.4.2.1  2004/09/15 14:19:13  marcelloptr
+*added scrollbar menu
+*
 *Revision 1.4  2004/08/07 02:47:36  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -20,11 +20,11 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm120 "
+				AdditionalOptions="/Zm220 "
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NO_MFC;USE_FOUNDATIONKIT_LIB;USE_GRAPHICSKIT_LIB;USE_WIN32HTMLBROWSER_LIB;BUILD_APPLICATIONKIT_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NO_MFC;USE_GRAPHICSKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -75,10 +75,10 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm150 "
+				AdditionalOptions="/Zm220 "
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NO_MFC;USE_FOUNDATIONKIT_LIB;USE_GRAPHICSKIT_LIB;USE_WIN32HTMLBROWSER_LIB;BUILD_APPLICATIONKIT_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NO_MFC;USE_GRAPHICSKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -127,37 +127,10 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractCommand.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Action.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AppKitPeerConfig.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Application.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationException.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.h">
@@ -167,204 +140,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\BadComponentStateException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\BadModelStateException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\BasicTableItemEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Clipboard.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Command.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommandGroup.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowse.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpen.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSave.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFont.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrint.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Component.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentInfo.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Container.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Containers.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Control.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Cursor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CursorManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DataObject.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DragEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DropEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\EtchedBorder.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Frame.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Item.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\LibraryApplication.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Light3DBorder.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\LightweightComponent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Menu.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuBar.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuItem.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenu.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Resource.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceBundle.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceException.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Scrollable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Selectable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TableItemEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TitledBorder.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIToolkit.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFInputStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\View.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Window.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Wizard.h">
 			</File>
 		</Filter>
 		<Filter
@@ -424,6 +199,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractCommand.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -442,6 +220,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractCommand.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.cpp">
@@ -464,6 +245,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -482,6 +266,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.cpp">
@@ -504,6 +291,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -522,6 +312,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp">
@@ -544,6 +337,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Action.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -564,6 +360,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Action.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Application.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -582,6 +381,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationException.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp">
@@ -607,6 +409,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKitRTTI.inl">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\BadComponentStateException.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\BadModelStateException.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Basic3DBorder.cpp">
@@ -652,6 +460,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\BasicTableItemEditor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Border.h">
 			</File>
 			<File
@@ -675,6 +486,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Clipboard.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -693,6 +507,15 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Command.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommandGroup.cpp">
@@ -715,6 +538,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommandGroup.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColor.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -733,6 +559,12 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColor.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowse.cpp">
@@ -755,6 +587,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowse.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -773,6 +608,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpen.cpp">
@@ -795,6 +633,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpen.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSave.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -813,6 +654,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSave.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFont.cpp">
@@ -835,6 +679,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFont.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrint.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -853,6 +700,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrint.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Component.cpp">
@@ -875,6 +725,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Component.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -893,6 +749,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentInfo.cpp">
@@ -915,6 +774,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentInfo.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Container.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Containers.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -933,6 +798,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Containers.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Control.cpp">
@@ -955,6 +823,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Control.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -973,6 +844,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Cursor.cpp">
@@ -995,6 +869,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Cursor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CursorManager.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1013,6 +890,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CursorManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DataObject.cpp">
@@ -1035,6 +915,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DataObject.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1053,6 +939,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.cpp">
@@ -1075,6 +964,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1093,6 +985,12 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DragEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.cpp">
@@ -1115,6 +1013,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropEvent.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1133,6 +1037,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\EtchedBorder.cpp">
@@ -1155,6 +1062,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\EtchedBorder.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Frame.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1173,6 +1083,12 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Frame.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\HorizontalLayoutContainer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.cpp">
@@ -1195,6 +1111,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageListEvent.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1213,6 +1132,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Item.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\KeyboardEvent.cpp">
@@ -1255,6 +1177,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\LibraryApplication.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1273,6 +1198,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Light3DBorder.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\LightweightComponent.cpp">
@@ -1295,6 +1223,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\LightweightComponent.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Menu.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1313,6 +1244,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Menu.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuBar.cpp">
@@ -1335,6 +1269,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuBar.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuItem.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1353,6 +1293,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp">
@@ -1395,6 +1338,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenu.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditor.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1415,44 +1364,19 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Resource.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
+				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceStream.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
+				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Scrollable.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Selectable.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TableItemEditor.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp">
@@ -1475,6 +1399,15 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TitledBorder.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1493,6 +1426,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIToolkit.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp">
@@ -1515,6 +1451,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFInputStream.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1533,6 +1472,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFInputStream.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFOutputStream.cpp">
@@ -1555,6 +1497,18 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\View.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Window.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1575,6 +1529,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Window.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\WindowEvent.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -1593,6 +1550,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Wizard.h">
 			</File>
 		</Filter>
 		<Filter
@@ -1672,6 +1632,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\EnumObject.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\SystemTray.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\VCFCOM.h">
@@ -2160,52 +2123,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ResourceBundle.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ResourceBundle.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ResourceStream.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ResourceStream.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -2227,6 +2144,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Toolbar.cpp">
@@ -3708,6 +3631,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\StatusBar.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\SystemTray.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TabbedPages.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -3964,16 +3890,13 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenuPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PrintContextPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PrintPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceStreamPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ScrollPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\SystemTrayPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TextPeer.h">

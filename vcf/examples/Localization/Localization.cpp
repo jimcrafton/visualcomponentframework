@@ -230,6 +230,7 @@ class HiResClock {
 public:
 
 	HiResClock(){
+		QueryPerformanceFrequency( &frequency_ );
 		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
 		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
 	}
@@ -254,12 +255,10 @@ public:
 	}
 
 	double duration() const {
-		LARGE_INTEGER frequency;
-		QueryPerformanceFrequency( &frequency );
-
-		return (double)(performanceCounter2_.LowPart - performanceCounter1_.LowPart)/(double)frequency.LowPart;
+		return (double)(performanceCounter2_.LowPart - performanceCounter1_.LowPart)/(double)frequency_.LowPart;
 	}
 protected:
+	LARGE_INTEGER frequency_;
 	LARGE_INTEGER performanceCounter1_;
 	LARGE_INTEGER performanceCounter2_;
 private:
@@ -419,7 +418,6 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-
 	/**
 	register your custom codec
 	*/
@@ -486,9 +484,12 @@ int main( int argc, char** argv ){
 		*/
 		UnicodeString s2;
 		s2 = "Hello";
-		const char* s2_ansi = s2.decode_ansi( TextCodec::getCodec( "MyTextCodec" ) );
+		
+		char s2_ansi[256];
+		size_t len = sizeof(s2_ansi);
+		s2.decode_ansi( TextCodec::getCodec( "MyTextCodec" ), s2_ansi, len );
 
-		printf( "s2_ansi: %s\n", s2_ansi );
+		printf( "s2_ansi: %s, len: %d\n", s2_ansi, len );
 	}
 
 
@@ -740,9 +741,12 @@ int main( int argc, char** argv ){
 		testTime( StringUtils::format("Test 12 - std::string assignment, %d times %d characters long", count, length ), clock );
 	}
 
+	
+	System::println( "This example ran on " + System::getOSName() + " " + System::getOSVersion() + " built with compiler: " +
+						System::getCompiler() );
 
-
-
+	
+	
 	FoundationKit::terminate();
 	return 0;
 }
@@ -751,6 +755,25 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:15:08  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3.2.4  2004/09/16 03:26:25  ddiego
+*fixed it so we can now get program information from a resource bundle. This can be embedded in the exe like in windows, or read from an external file a la OS X info.plist xml files.
+*
+*Revision 1.3.2.3  2004/09/15 04:25:51  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.3.2.2  2004/09/06 03:33:20  ddiego
+*updated the graphic context code to support image transforms.
+*
+*Revision 1.3.2.1  2004/08/31 04:12:10  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
 *Revision 1.3  2004/08/07 02:47:30  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

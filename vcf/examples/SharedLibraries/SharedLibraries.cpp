@@ -37,17 +37,22 @@ int main( int argc, char** argv )
 	//throw an exception
 	try {
 		lib.load( "SimpleDLL.so" );
-
+		
 		//make a typedef of our function prototype
 		//you can see this in the SimpleDLL.h header
 		typedef int (*GetInt)(int,double);
-
+		
 		GetInt func;
 		//this will get the function address from the loaded library
 		//if the library has not been loaded this method will throw
 		//an exception
-	 	func = (GetInt)lib.getFunction( "getAnInteger" );
-
+		try {
+			func = (GetInt)lib.getFunction( "getAnInteger" );
+		}
+		catch ( BasicException& e ) {
+			System::print( e.getMessage() );
+		}
+		
 		int i = -1;
 		if ( func ) {
 			//invoke the function
@@ -55,13 +60,13 @@ int main( int argc, char** argv )
 		}
 		//print out some info
 		System::print( "The value of i: %d, from calling func @ %p\n", i, func );
-
+		
 		//unload the library. You can specify for the library to unload automatically
 		//in the constructor of the Library if you want
 		lib.unload();
-  }
+	}
 	catch ( BasicException& e ) {
-  	System::print( e.getMessage() + "\n" );
+		System::println( e.getMessage() );
 	}
 	//clean up the FoundationKit by telling it to terminate
 	FoundationKit::terminate();
@@ -72,6 +77,14 @@ int main( int argc, char** argv )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:15:12  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3.2.1  2004/09/15 04:41:23  ddiego
+*made some minor changes to the SharedLibraries example, and the init and term code of the Library class.
+*
 *Revision 1.3  2004/08/07 02:47:36  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -54,44 +54,50 @@ LIBNAME=GraphicsKit_bcc_s$(DBG).lib
 DLLNAME=GraphicsKit_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\GraphicsKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_GRAPHICSKIT_LIB;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\AbstractImage.obj \
-	$(OBJ)\BasicFill.obj \
-	$(OBJ)\BasicStroke.obj \
-	$(OBJ)\BezierCurve.obj \
-	$(OBJ)\Color.obj \
-	$(OBJ)\Font.obj \
-	$(OBJ)\GlyphCollection.obj \
-	$(OBJ)\GraphicsContext.obj \
-	$(OBJ)\GraphicsKit.obj \
-	$(OBJ)\GraphicsToolKit.obj \
-	$(OBJ)\ImageEvent.obj \
-	$(OBJ)\Matrix2D.obj \
-	$(OBJ)\Point.obj \
-	$(OBJ)\Rect.obj \
-	$(OBJ)\Vector2D.obj \
-	$(OBJ)\Win32Context.obj \
-	$(OBJ)\Win32Font.obj \
-	$(OBJ)\Win32FontManager.obj \
-	$(OBJ)\Win32GraphicsToolkit.obj \
-	$(OBJ)\Win32Image.obj
-         
+CPPFILES=GraphicsKit.cpp \
+	GraphicsToolKit.cpp \
+	AbstractImage.cpp \
+	BasicFill.cpp \
+	BasicStroke.cpp \
+	BezierCurve.cpp \
+	Color.cpp \
+	Font.cpp \
+	GlyphCollection.cpp \
+	GraphicsContext.cpp \
+	GraphicsResourceBundle.cpp \
+	ImageEvent.cpp \
+	Matrix2D.cpp \
+	Point.cpp \
+	PrintSession.cpp \
+	Rect.cpp \
+	Vector2D.cpp \
+	Win32Context.cpp \
+	Win32Font.cpp \
+	Win32FontManager.cpp \
+	Win32GraphicsResourceBundle.cpp \
+	Win32GraphicsToolkit.cpp \
+	Win32Image.cpp \
+	Win32PrintSession.cpp
+	
+OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=ODBC32.LIB UUID.LIB
 DEFFILE=
-ALLOBJS=$(OBJFILES)
 BCC32STARTUP=c0d32.obj
-ALLOBJS2=$(BCC32STARTUP) $(OBJFILES)
-ALLLIBS2=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
 
 all: dirs $(RESFILE) $(PROJECT)
 
@@ -108,51 +114,37 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\GraphicsKit_bcc$(DBGDLL).lib del ..\..\..\lib\GraphicsKit_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAMS) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+$(PROJECT1):: $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS2) 
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
-    $(ALLLIBS2)
+    $(ALLLIBS)
     $(DEFFILE)
     $(RESFILE)
 
 |
     @if exist $(BIN)\GraphicsKit_bcc$(DBGDLL).lib move $(BIN)\GraphicsKit_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\AbstractImage.obj:           ..\..\..\src\vcf\GraphicsKit\AbstractImage.cpp             
-$(OBJ)\BasicFill.obj:               ..\..\..\src\vcf\GraphicsKit\BasicFill.cpp                 
-$(OBJ)\BasicStroke.obj:             ..\..\..\src\vcf\GraphicsKit\BasicStroke.cpp               
-$(OBJ)\BezierCurve.obj:             ..\..\..\src\vcf\GraphicsKit\BezierCurve.cpp               
-$(OBJ)\Color.obj:                   ..\..\..\src\vcf\GraphicsKit\Color.cpp                     
-$(OBJ)\Font.obj:                    ..\..\..\src\vcf\GraphicsKit\Font.cpp                      
-$(OBJ)\GlyphCollection.obj:         ..\..\..\src\vcf\GraphicsKit\GlyphCollection.cpp           
-$(OBJ)\GraphicsContext.obj:         ..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp           
-$(OBJ)\GraphicsKit.obj:             ..\..\..\src\vcf\GraphicsKit\GraphicsKit.cpp               
-$(OBJ)\GraphicsToolKit.obj:         ..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp              
-$(OBJ)\ImageEvent.obj:              ..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp                  
-$(OBJ)\Matrix2D.obj:                ..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp                  
-$(OBJ)\Point.obj:                   ..\..\..\src\vcf\GraphicsKit\Point.cpp                         
-$(OBJ)\Rect.obj:                    ..\..\..\src\vcf\GraphicsKit\Rect.cpp                          
-$(OBJ)\Vector2D.obj:                ..\..\..\src\vcf\GraphicsKit\Vector2D.cpp                  
-$(OBJ)\Win32Context.obj:            ..\..\..\src\vcf\GraphicsKit\Win32Context.cpp        
-$(OBJ)\Win32Font.obj:               ..\..\..\src\vcf\GraphicsKit\Win32Font.cpp           
-$(OBJ)\Win32FontManager.obj:        ..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp    
-$(OBJ)\Win32GraphicsToolkit.obj:    ..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.cpp
-$(OBJ)\Win32Image.obj:              ..\..\..\src\vcf\GraphicsKit\Win32Image.cpp          
-

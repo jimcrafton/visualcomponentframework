@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -13,47 +13,56 @@
 //          http://www.antigrain.com
 //----------------------------------------------------------------------------
 //
-// Clipped polygon generator
+// Polygon clipping converter
+// There an optimized Liang-Basky algorithm is used. 
+// The algorithm doesn't optimize the degenerate edges, i.e. it will never
+// break a closed polygon into two or more ones, instead, there will be 
+// degenerate edges coinciding with the respective clipping boundaries.
+// This is a sub-optimal solution, because that optimization would require 
+// extra, rather expensive math while the rasterizer tolerates it quite well, 
+// without any considerable overhead.
 //
 //----------------------------------------------------------------------------
 #ifndef AGG_CONV_CLIP_POLYGON_INCLUDED
 #define AGG_CONV_CLIP_POLYGON_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_gen_clip_polygon.h"
-#include "thirdparty/common/agg/include/agg_conv_generator.h"
-
+#include "agg_basics.h"
+#include "agg_conv_adaptor_vpgen.h"
+#include "agg_vpgen_clip_polygon.h"
+#include "agg_vertex_iterator.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //=======================================================conv_clip_polygon
     template<class VertexSource> 
-    struct conv_clip_polygon : public conv_generator<VertexSource, gen_clip_polygon>
+    struct conv_clip_polygon : public conv_adaptor_vpgen<VertexSource, vpgen_clip_polygon>
     {
+        typedef conv_adaptor_vpgen<VertexSource, vpgen_clip_polygon> base_type;
+
         conv_clip_polygon(VertexSource& vs) : 
-            conv_generator<VertexSource, gen_clip_polygon>(vs)
-        {
-        }
+            conv_adaptor_vpgen<VertexSource, vpgen_clip_polygon>(vs) {}
 
         void clip_box(double x1, double y1, double x2, double y2)
         {
-            generator().clip_box(x1, y1, x2, y2);
+            base_type::vpgen().clip_box(x1, y1, x2, y2);
         }
 
-        void x1(double x1_) { generator().x1(x1_); }
-        void y1(double y1_) { generator().y1(y1_); }
-        void x2(double x2_) { generator().x2(x2_); }
-        void y2(double y2_) { generator().y2(y2_); }
+        double x1() const { return base_type::vpgen().x1(); }
+        double y1() const { return base_type::vpgen().y1(); }
+        double x2() const { return base_type::vpgen().x2(); }
+        double y2() const { return base_type::vpgen().y2(); }
 
-        double x1() const { return generator().x1(); }
-        double y1() const { return generator().y1(); }
-        double x2() const { return generator().x2(); }
-        double y2() const { return generator().y2(); }
+        typedef conv_clip_polygon<VertexSource> source_type;
+        typedef vertex_iterator<source_type> iterator;
+        iterator begin(unsigned id) { return iterator(*this, id); }
+        iterator end() { return iterator(path_cmd_stop); }
 
+    private:
+        conv_clip_polygon(const conv_clip_polygon<VertexSource>&);
+        const conv_clip_polygon<VertexSource>& 
+            operator = (const conv_clip_polygon<VertexSource>&);
     };
-
-
 
 }
 

@@ -23,7 +23,7 @@ CFG=FoundationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-CPP=cl.exe
+CPP=xicl6.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
@@ -39,13 +39,14 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc71\ReleaseS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FOUNDATIONKIT_LIB" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /c
+# SUBTRACT CPP /WX /FR
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo /o"../../../lib/FoundationKit_vc71_s.bsc"
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"../../../lib/FoundationKit_vc71_s.lib"
 
@@ -62,13 +63,14 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc71\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FOUNDATIONKIT_LIB" /Fd"..\..\..\lib\FoundationKit_vc71_sd.pdb" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fd"..\..\..\lib\FoundationKit_vc71_sd.pdb" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /GZ /c
+# SUBTRACT CPP /WX /FR
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo /o"../../../lib/FoundationKit_vc71_sd.bsc"
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"../../../lib/FoundationKit_vc71_sd.lib"
 
@@ -93,6 +95,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -105,10 +111,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -193,6 +195,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.h
 # End Source File
 # Begin Source File
 
@@ -301,6 +311,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ProcessException.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceException.h
 # End Source File
 # Begin Source File
 
@@ -512,11 +526,11 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Library.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Locales.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.h
 # End Source File
 # Begin Source File
 
@@ -696,7 +710,7 @@ SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Locales.cpp
 # End Source File
 # Begin Source File
 
@@ -717,6 +731,26 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ProgramInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Resource.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.h
 # End Source File
 # Begin Source File
 
@@ -761,6 +795,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ProcessPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\RegistryPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h
 # End Source File
 # Begin Source File
 

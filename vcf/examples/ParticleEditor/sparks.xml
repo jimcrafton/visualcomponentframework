@@ -1,0 +1,64 @@
+<ParticleResource >
+	<Type >
+		0
+		<dummy />
+	</Type>
+	<Alignment >
+		0
+		<dummy />
+	</Alignment>
+	<Amount >
+		20
+		<dummy />
+	</Amount>
+	<ParticleLife >
+		1.00000
+		<dummy />
+	</ParticleLife>
+	<SystemLife >
+		0.10000
+		<dummy />
+	</SystemLife>
+	<GradualStart >
+		false
+		<dummy />
+	</GradualStart>
+	<InitialSpeed >
+		1.00000
+		<dummy />
+	</InitialSpeed>
+	<InitialVariance >
+		5.00000
+		<dummy />
+	</InitialVariance>
+	<Gravity >
+		1.00000
+		<dummy />
+	</Gravity>
+	<GravityVariance >
+		0.10000
+		<dummy />
+	</GravityVariance>
+	<Blending >
+		0
+		<dummy />
+	</Blending>
+	<DepthTest >
+		false
+		<dummy />
+	</DepthTest>
+	<StartColor >
+		1.00000 0.00000 0.00000 1.00000
+		<dummy />
+	</StartColor>
+	<EndColor >
+		1.00000 0.00000 0.00000 1.00000
+		<dummy />
+	</EndColor>
+	<TrailingSystem >
+		<dummy />
+	</TrailingSystem>
+	<EndingSystem >
+		<dummy />
+	</EndingSystem>
+</ParticleResource>

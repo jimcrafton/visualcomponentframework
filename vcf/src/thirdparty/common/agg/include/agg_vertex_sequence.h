@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,15 +19,15 @@
 #ifndef AGG_VERTEX_SEQUENCE_INCLUDED
 #define AGG_VERTEX_SEQUENCE_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_array.h"
-#include "thirdparty/common/agg/include/agg_math.h"
+#include "agg_basics.h"
+#include "agg_array.h"
+#include "agg_math.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
-    // Modified agg::array. The data is interpreted as a sequence of vertices.
+    //----------------------------------------------------------vertex_sequence
+    // Modified agg::pod_deque. The data is interpreted as a sequence of vertices.
     // It means that the type T must expose:
     //
     // bool operator() (const T& val)
@@ -64,9 +64,11 @@ namespace agg
     // necessary.
     //------------------------------------------------------------------------
     template<class T, unsigned S=6> 
-    class vertex_sequence : public array<T, S>
+    class vertex_sequence : public pod_deque<T, S>
     {
     public:
+        typedef pod_deque<T, S> base_type;
+
         void add(const T& val);
         void modify_last(const T& val);
         void close(bool remove_flag);
@@ -78,11 +80,14 @@ namespace agg
     template<class T, unsigned S> 
     void vertex_sequence<T, S>::add(const T& val)
     {
-        array<T,S>::add(val);
-        if(size() > 1)
+        if(base_type::size() > 1)
         {
-            if(!(*this)[size() - 2]((*this)[size() - 1])) remove_last();
+            if(!(*this)[base_type::size() - 2]((*this)[base_type::size() - 1])) 
+            {
+                base_type::remove_last();
+            }
         }
+        base_type::add(val);
     }
 
 
@@ -90,7 +95,7 @@ namespace agg
     template<class T, unsigned S> 
     void vertex_sequence<T, S>::modify_last(const T& val)
     {
-        array<T,S>::remove_last();
+        base_type::remove_last();
         add(val);
     }
 
@@ -98,27 +103,35 @@ namespace agg
 
     //------------------------------------------------------------------------
     template<class T, unsigned S> 
-    void vertex_sequence<T, S>::close(bool remove_flag)
+    void vertex_sequence<T, S>::close(bool closed)
     {
-        if(size() > 1)
+        while(base_type::size() > 1)
         {
-            T* ptr = &(*this)[size() - 1];
-            if(!(*ptr)((*this)[0]))
+            if((*this)[base_type::size() - 2]((*this)[base_type::size() - 1])) break;
+            T t = (*this)[base_type::size() - 1];
+            base_type::remove_last();
+            modify_last(t);
+        }
+
+        if(closed)
+        {
+            while(base_type::size() > 1)
             {
-                if(remove_flag) remove_last();
+                if((*this)[base_type::size() - 1]((*this)[0])) break;
+                base_type::remove_last();
             }
         }
     }
 
 
 
-
     // Coinciding points maximal distance (Epsilon)
-    const double vertex_dist_epsilon = 1e-30;
+    const double vertex_dist_epsilon = 1e-14;
 
-    //------------------------------------------------------------------------
+    //-------------------------------------------------------------vertex_dist
     // Vertex (x, y) with the distance to the next one. The last vertex has 
-    // the distance between the last and the first points
+    // distance between the last and the first points if the polygon is closed
+    // and 0.0 if it's a polyline.
     struct vertex_dist
     {
         double   x;
@@ -142,6 +155,20 @@ namespace agg
     };
 
 
+
+    //--------------------------------------------------------vertex_dist_cmd
+    // Save as the above but with additional "command" value
+    struct vertex_dist_cmd : public vertex_dist
+    {
+        unsigned cmd;
+
+        vertex_dist_cmd() {}
+        vertex_dist_cmd(double x_, double y_, unsigned cmd_) :
+            vertex_dist(x_, y_),
+            cmd(cmd_)
+        {
+        }
+    };
 
 
 }

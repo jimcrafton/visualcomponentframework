@@ -17,7 +17,7 @@ class ToolbarsWindow : public Window {
 public:
 	ToolbarsWindow() {
 		setCaption( "Toolbars" );
-		setVisible( true );
+		
 
 		EventHandler* ev = new ButtonEventHandler<ToolbarsWindow>( this, &ToolbarsWindow::onItemClicked, "ToolbarsWindow::onItemClicked" );
 
@@ -34,7 +34,7 @@ public:
 
 		tb->setImageList( il );
 
-		ResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
+		GraphicsResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
 		Image* img = resBundle->getImage( "bmp1" );
 		il->addImage( img );
 		delete img;
@@ -67,9 +67,15 @@ public:
 		item = tb->addToolBarButton( "tbn3" );
 		item->setEnabled( false );
 
-		TextControl* tc = new TextControl();
-		tc->setWidth( 175 );
-		item->setItemControl( tc );
+		ComboBoxControl* cb = new ComboBoxControl();
+		//TextControl* tc = new TextControl();
+		cb->setWidth( 175 );
+		cb->addItem( "Item 1" );
+		cb->addItem( "Item 2" );
+		cb->addItem( "Item 3" );
+		cb->addItem( "Item 4" );
+
+		item->setItemControl( cb );
 
 
 
@@ -181,6 +187,7 @@ public:
 		Window* mainWindow = new ToolbarsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 800.0, 500.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -201,6 +208,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2004/12/01 04:15:34  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.4.2.1  2004/08/21 21:06:51  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.4  2004/08/07 02:47:41  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

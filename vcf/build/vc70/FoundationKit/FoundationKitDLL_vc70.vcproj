@@ -23,7 +23,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;BUILD_FOUNDATIONKIT_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="rpcrt4.lib odbc32.lib odbccp32.lib"
+				AdditionalDependencies="rpcrt4.lib odbc32.lib odbccp32.lib version.lib"
 				OutputFile="..\..\..\bin\FoundationKit_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -82,7 +82,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;BUILD_FOUNDATIONKIT_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -91,7 +91,7 @@
 				PrecompiledHeaderFile=".\vc70\DebugDLL\FoundationKitDLL_vc70_d.pch"
 				AssemblerListingLocation=".\vc70\DebugDLL\"
 				ObjectFile=".\vc70\DebugDLL\"
-				ProgramDataBaseFileName=".\vc70\DebugDLL\"
+				ProgramDataBaseFileName="..\..\..\bin\FoundationKit_vc70_d.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -101,7 +101,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="Rpcrt4.lib odbc32.lib odbccp32.lib"
+				AdditionalDependencies="Rpcrt4.lib odbc32.lib odbccp32.lib version.lib"
 				OutputFile="..\..\..\bin\FoundationKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -144,6 +144,9 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h">
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"
@@ -151,13 +154,13 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKit.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
@@ -165,9 +168,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -232,6 +232,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Registry.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp">
@@ -314,6 +320,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeException.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceException.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RuntimeException.h">
@@ -475,10 +484,10 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\ErrorLog.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Library.h">
+				RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Locales.cpp">
+				RelativePath="..\..\..\src\vcf\FoundationKit\Library.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Lock.h">
@@ -614,7 +623,7 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h">
+				RelativePath="..\..\..\src\vcf\FoundationKit\Locales.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Locales.h">
@@ -630,6 +639,21 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ProgramInfo.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Resource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Resource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCF.h">
@@ -664,6 +688,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RegistryPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SemaphorePeer.h">

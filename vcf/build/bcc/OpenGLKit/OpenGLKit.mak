@@ -53,28 +53,31 @@ LIBNAME=OpenGLKit_bcc_s$(DBG).lib
 DLLNAME=OpenGLKit_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\OpenGLKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_OPENGLKIT_LIB;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\OpenGLControl.obj \
-	 $(OBJ)\OpenGLControlContext.obj \
-	 $(OBJ)\OpenGLToolkit.obj \
-	 $(OBJ)\Win32OpenGLPeer.obj
+CPPFILES=OpenGLControl.cpp \
+	OpenGLControlContext.cpp \
+	OpenGLToolkit.cpp \
+	Win32OpenGLPeer.cpp
+	
+OBJFILES=$(CPPFILES:.cpp=.obj^ )
          
 LIBFILES=UUID.LIB
 DEFFILE=
-ALLOBJS=$(OBJFILES)
 BCC32STARTUP=c0d32.obj
-ALLOBJS2=$(BCC32STARTUP) $(OBJFILES)
-ALLLIBS2=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
 
 all: dirs $(RESFILE) $(PROJECT)
 
@@ -91,36 +94,39 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\OpenGLKit_bcc$(DBGDLL).lib del ..\..\..\lib\OpenGLKit_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAM) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+$(PROJECT1):: $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS2) 
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
-    $(ALLLIBS2)
+    $(ALLLIBS)
     $(DEFFILE)
     $(RESFILE)
 
 |
     @if exist $(BIN)\OpenGLKit_bcc$(DBGDLL).lib move $(BIN)\OpenGLKit_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\OpenGLControl.obj:        ..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp       
-$(OBJ)\OpenGLControlContext.obj: ..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
-$(OBJ)\OpenGLToolkit.obj:        ..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp       
-$(OBJ)\Win32OpenGLPeer.obj:      ..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp     
 
 

@@ -2,8 +2,16 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.12  2004/12/01 04:14:53  ddiego
+#merged over devmain-0-6-6 code. Marcello did a kick ass job
+#of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+#that he found. Many, many thanks for this Marcello.
+#
 #Revision 1.11  2004/08/19 02:24:52  ddiego
 #fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+#
+#Revision 1.10.2.1  2004/11/17 05:25:05  ddiego
+#updated the docbook to pull in the new examples. now all we have to do is actually put some content in there...
 #
 #Revision 1.10  2004/08/08 22:09:31  ddiego
 #final checkin before the 0-6-5 release
@@ -256,7 +264,7 @@ coredocs_online :  $(VCF_DOCS) test_tools
 	mv vcf_book.xml.bak vcf_book.xml
 
 
-coredocs_hh : vcf-docbook.hhp coredocs
+coredocs_hh : coredocs vcf-docbook.hhp 
 	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
 	mv $(RAW_CHI_FILENAME) $(VERSIONED_CHI_FILENAME)

@@ -40,25 +40,28 @@ LIBNAME=libAGG_bcc_s$(DBG).lib
 DLLNAME=
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\thirdparty\common\agg\src
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)         
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\agg_affine_matrix.obj \
-	$(OBJ)\agg_bspline.obj \
-	$(OBJ)\agg_curves.obj \
-	$(OBJ)\agg_gen_stroke.obj \
-	$(OBJ)\agg_gsv_text.obj \
-	$(OBJ)\agg_path_storage.obj \
-	$(OBJ)\agg_rasterizer_scanline_aa.obj \
-	$(OBJ)\agg_scanline_u8.obj
+OBJFILES=agg_arc.obj  \
+	agg_bezier_arc.obj  \
+	agg_bspline.obj  \
+	agg_curves.obj  \
+	agg_path_storage.obj  \
+	agg_rasterizer_scanline_aa.obj  \
+	agg_trans_affine.obj  \
+	agg_vcgen_bspline.obj  \
+	agg_vcgen_stroke.obj
          
 LIBFILES=ODBC32.LIB UUID.LIB
 DEFFILE=
@@ -84,23 +87,20 @@ clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAMS) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+$(PROJECT1):: $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
     
-#Dependencies - explicit rules
-$(OBJ)\agg_affine_matrix.obj:           ..\..\..\src\thirdparty\common\agg\src\agg_affine_matrix.cpp         
-$(OBJ)\agg_bspline.obj:                 ..\..\..\src\thirdparty\common\agg\src\agg_bspline.cpp               
-$(OBJ)\agg_curves.obj:                  ..\..\..\src\thirdparty\common\agg\src\agg_curves.cpp                
-$(OBJ)\agg_gen_stroke.obj:              ..\..\..\src\thirdparty\common\agg\src\agg_gen_stroke.cpp            
-$(OBJ)\agg_gsv_text.obj:                ..\..\..\src\thirdparty\common\agg\src\agg_gsv_text.cpp              
-$(OBJ)\agg_path_storage.obj:            ..\..\..\src\thirdparty\common\agg\src\agg_path_storage.cpp          
-$(OBJ)\agg_rasterizer_scanline_aa.obj:  ..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_scanline_aa.cpp
-$(OBJ)\agg_scanline_u8.obj:             ..\..\..\src\thirdparty\common\agg\src\agg_scanline_u8.cpp           

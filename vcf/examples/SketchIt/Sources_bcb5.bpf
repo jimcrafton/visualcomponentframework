@@ -1,0 +1,10 @@
+USEUNIT("SketchIt.cpp");
+USEUNIT("SketchWindow.cpp");
+USEUNIT("SketchDocument.cpp");
+USEUNIT("SketchTools.cpp");
+USEUNIT("SketchView.cpp");
+//---------------------------------------------------------------------------
+This file is used by the project manager only and should be treated like the project file
+
+
+WinMain

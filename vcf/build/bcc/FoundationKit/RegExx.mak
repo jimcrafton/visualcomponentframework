@@ -17,7 +17,6 @@ BMODE = RELEASE
 
 !include <..\defaultmake.inc>
 
-PROJECT=$(PROJECT1)
 OUTDIR=..\..\..\lib
 
 !if $(BMODE) == RELEASE
@@ -33,28 +32,29 @@ OUTDIR=..\..\..\lib
 LIBNAME=RegExx_bcc_s$(DBG).lib
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\FoundationKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
-RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;_LIB;$(SYSDEFINES)
+
+.path.cpp=$(SRC)
+.path.c=..\..\..\src\thirdparty\common\pcre
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
-PROJECT1=$(BIN)\$(LIBNAME)
-OBJFILES=$(OBJ)\get.obj \
-	$(OBJ)\maketables.obj \
-	$(OBJ)\pcre.obj \
-	$(OBJ)\pcreposix.obj \
-	$(OBJ)\regexx.obj \
-	$(OBJ)\study.obj
-         
-LIBFILES=
-DEFFILE=
-ALLOBJS=$(OBJFILES)
+PROJECT=$(OUTDIR)\$(LIBNAME)
+CFILES=	get.c        \
+	maketables.c \
+	pcre.c       \
+	pcreposix.c  \
+	study.c
+CPPFILES=regexx.cpp
+	
+OBJFILES=$(CFILES:.c=.obj^ ) $(CPPFILES:.cpp=.obj^ )
 
-all: dirs $(RESFILE) $(PROJECT)
+all: dirs $(PROJECT)
 
 cleanobj:: 
 	-@echo Deleting intermediate files for project
@@ -74,21 +74,19 @@ clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(BIN)\$(LIBNAME) /a$(OBJFILES)
-
-    
-#Dependencies - explicit rules
-$(OBJ)\get.obj:         ..\..\..\src\thirdparty\common\pcre\get.c       
-$(OBJ)\maketables.obj:  ..\..\..\src\thirdparty\common\pcre\maketables.c
-$(OBJ)\pcre.obj:        ..\..\..\src\thirdparty\common\pcre\pcre.c      
-$(OBJ)\pcreposix.obj:   ..\..\..\src\thirdparty\common\pcre\pcreposix.c 
-$(OBJ)\regexx.obj:      ..\..\..\src\vcf\FoundationKit\regexx.cpp               
-$(OBJ)\study.obj:       ..\..\..\src\thirdparty\common\pcre\study.c     
+$(PROJECT): $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
+  
 

@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -12,234 +12,327 @@
 //          mcseemagg@yahoo.com
 //          http://www.antigrain.com
 //----------------------------------------------------------------------------
-//
-// class renderer_scanline
-//
-//----------------------------------------------------------------------------
 
 #ifndef AGG_RENDERER_SCANLINE_INCLUDED
 #define AGG_RENDERER_SCANLINE_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_renderer_base.h"
+#include "agg_basics.h"
+#include "agg_renderer_base.h"
 
 namespace agg
 {
 
-    //========================================================================
-    template<class SpanInterpolator, class PixelRenderer> 
-    class renderer_scanline : public renderer_base<PixelRenderer>
+    //=====================================================renderer_scanline_u
+    template<class BaseRenderer, class SpanGenerator> class renderer_scanline_u
     {
     public:
-        typedef renderer_base<PixelRenderer> base_type;
-        typedef typename SpanInterpolator::attr_type attr_type;
+        typedef BaseRenderer base_ren_type;
 
         //--------------------------------------------------------------------
-        renderer_scanline(rendering_buffer& rbuf) :
-            base_type(rbuf)
+        renderer_scanline_u(base_ren_type& ren, SpanGenerator& span_gen) :
+            m_ren(&ren),
+            m_span_gen(&span_gen)
         {
         }
         
         //--------------------------------------------------------------------
-        void attribute(const attr_type& attr) 
+        void prepare(unsigned max_span_len) 
         { 
-            m_attr = attr;
-        }
-        
-        //--------------------------------------------------------------------
-        const attr_type& attribute() const 
-        { 
-            return m_attr;
+            m_span_gen->prepare(max_span_len); 
         }
 
-        //--------------------------------------------------------------------
-        void prepare()
-        {
-            m_span.prepare(m_attr);
-        }
-        
         //--------------------------------------------------------------------
         template<class Scanline> void render(const Scanline& sl)
         {
-            rect cb = rbuf().clip_box();
             int y = sl.y();
-
-            m_span.prepare_y(y);
-
-            if(y < cb.y1 || y > cb.y2)
+            m_ren->first_clip_box();
+            do
             {
-                return;
-            }
+                int xmin = m_ren->xmin();
+                int xmax = m_ren->xmax();
 
+                if(y >= m_ren->ymin() && y <= m_ren->ymax())
+                {
+                    unsigned num_spans = sl.num_spans();
+                    typename Scanline::const_iterator span = sl.begin();
+                    do
+                    {
+                        int x = span->x;
+                        int len = span->len;
+                        const typename Scanline::cover_u_type* covers = span->covers;
+
+                        if(x < xmin)
+                        {
+                            len -= xmin - x;
+                            covers += xmin - x;
+                            x = xmin;
+                        }
+                        if(len > 0)
+                        {
+                            if(x + len > xmax)
+                            {
+                                len = xmax - x + 1;
+                            }
+                            if(len > 0)
+                            {
+                                m_ren->blend_color_hspan_no_clip(
+                                    x, y, len, 
+                                    m_span_gen->generate(x, y, len),
+                                    covers);
+                            }
+                        }
+                        ++span;
+                    }
+                    while(--num_spans);
+                }
+            }
+            while(m_ren->next_clip_box());
+        }
+        
+    private:
+        base_ren_type* m_ren;
+        SpanGenerator* m_span_gen;
+    };
+
+
+
+    //===============================================renderer_scanline_p_solid
+    template<class BaseRenderer> class renderer_scanline_p_solid
+    {
+    public:
+        typedef BaseRenderer base_ren_type;
+        typedef typename base_ren_type::color_type color_type;
+
+        //--------------------------------------------------------------------
+        renderer_scanline_p_solid(base_ren_type& ren) :
+            m_ren(&ren)
+        {
+        }
+        
+        //--------------------------------------------------------------------
+        void color(const color_type& c) { m_color = c; }
+        const color_type& color() const { return m_color; }
+
+        //--------------------------------------------------------------------
+        void prepare(unsigned) {}
+
+        //--------------------------------------------------------------------
+        template<class Scanline> void render(const Scanline& sl)
+        {
+            int y = sl.y();
             unsigned num_spans = sl.num_spans();
-            int base_x = sl.base_x();
-            int8u* row = rbuf().row(y);
-            typename Scanline::const_iterator span(sl);
+            typename Scanline::const_iterator span = sl.begin();
 
             do
             {
-                int x = span.next() + base_x;
-                const typename Scanline::cover_type* covers = span.covers();
-                int num_pix = span.num_pix();
-
-                m_span.prepare_x(x, num_pix);
-
-                if(x < cb.x1)
+                int x = span->x;
+                if(span->len > 0)
                 {
-                    num_pix -= cb.x1 - x;
-                    if(num_pix <= 0) continue;
-                    covers += cb.x1 - x;
-                    x = cb.x1;
+                    m_ren->blend_solid_hspan(x, y, (unsigned)span->len, 
+                                             m_color, 
+                                             span->covers);
                 }
-                if(x + num_pix > cb.x2)
+                else
                 {
-                    num_pix -= x + num_pix - cb.x2 - 1;
-                    if(num_pix <= 0) continue;
+                    m_ren->blend_hline(x, y, (unsigned)(x - span->len - 1), 
+                                       m_color, 
+                                       *(span->covers));
                 }
-                typename SpanInterpolator::interpolator si = m_span.begin(x, y, num_pix, m_attr);
-                ren().span(row, x, y, unsigned(num_pix), covers, si);
+                ++span;
             }
             while(--num_spans);
         }
         
     private:
-        attr_type         m_attr;
-        SpanInterpolator  m_span;
+        base_ren_type* m_ren;
+        color_type m_color;
     };
 
 
 
 
-    //========================================================================
-    template<class SpanInterpolator, class PixelRenderer> 
-    class renderer_scanline_bin : public renderer_base<PixelRenderer>
+    //===============================================renderer_scanline_u_solid
+    template<class BaseRenderer> class renderer_scanline_u_solid
     {
     public:
-        typedef renderer_base<PixelRenderer> base_type;
-        typedef typename SpanInterpolator::attr_type attr_type;
+        typedef BaseRenderer base_ren_type;
+        typedef typename base_ren_type::color_type color_type;
 
         //--------------------------------------------------------------------
-        renderer_scanline_bin(rendering_buffer& rbuf) :
-            base_type(rbuf)
+        renderer_scanline_u_solid(base_ren_type& ren) :
+            m_ren(&ren)
         {
         }
         
         //--------------------------------------------------------------------
-        void attribute(const attr_type& attr) 
-        { 
-            m_attr = attr;
-        }
-        
-        //--------------------------------------------------------------------
-        const attr_type& attribute() const 
-        { 
-            return m_attr;
-        }
+        void color(const color_type& c) { m_color = c; }
+        const color_type& color() const { return m_color; }
 
         //--------------------------------------------------------------------
-        void prepare()
-        {
-            m_span.prepare(m_attr);
-        }
-        
+        void prepare(unsigned) {}
+
         //--------------------------------------------------------------------
         template<class Scanline> void render(const Scanline& sl)
         {
-            rect cb = rbuf().clip_box();
             int y = sl.y();
-
-            m_span.prepare_y(y);
-
-            if(y < cb.y1 || y > cb.y2)
-            {
-                return;
-            }
-
             unsigned num_spans = sl.num_spans();
-            int8u* row = rbuf().row(y);
-            const typename Scanline::span* cur_span = sl.spans();
+            typename Scanline::const_iterator span = sl.begin();
 
             do
             {
-                int x = cur_span->x;
-                int num_pix = cur_span->len;
-
-                m_span.prepare_x(x, num_pix);
-
-                if(x < cb.x1)
-                {
-                    num_pix -= cb.x1 - x;
-                    if(num_pix <= 0) continue;
-                    x = cb.x1;
-                }
-                if(x + num_pix > cb.x2)
-                {
-                    num_pix -= x + num_pix - cb.x2 - 1;
-                    if(num_pix <= 0) continue;
-                }
-                typename SpanInterpolator::interpolator si = m_span.begin(x, y, num_pix, m_attr);
-                ren().span(row, x, y, unsigned(num_pix), si);
-                ++cur_span;
+                const typename Scanline::cover_u_type* covers = span->covers;
+                m_ren->blend_solid_hspan(span->x, y, span->len, 
+                                         m_color, covers);
+                ++span;
             }
             while(--num_spans);
         }
         
     private:
-        attr_type         m_attr;
-        SpanInterpolator  m_span;
+        base_ren_type* m_ren;
+        color_type m_color;
     };
 
 
 
 
 
-    //========================================================================
-    template<class PixelRenderer> 
-    class renderer_scanline_bin_solid : public renderer_base<PixelRenderer>
+
+
+    //===================================================renderer_scanline_bin
+    template<class BaseRenderer, class SpanGenerator> class renderer_scanline_bin
     {
     public:
-        typedef renderer_base<PixelRenderer> base_type;
-        typedef typename PixelRenderer::color_type attr_type;
+        typedef BaseRenderer base_ren_type;
 
         //--------------------------------------------------------------------
-        renderer_scanline_bin_solid(rendering_buffer& rbuf) :
-            base_type(rbuf)
+        renderer_scanline_bin(base_ren_type& ren, SpanGenerator& span_gen) :
+            m_ren(&ren),
+            m_span_gen(&span_gen)
         {
         }
         
         //--------------------------------------------------------------------
-        void attribute(const attr_type& attr) 
+        void prepare(unsigned max_span_len) 
         { 
-            m_attr = attr;
-        }
-        
-        //--------------------------------------------------------------------
-        const attr_type& attribute() const 
-        { 
-            return m_attr;
+            m_span_gen->prepare(max_span_len); 
         }
 
         //--------------------------------------------------------------------
-        void prepare() {}
+        template<class Scanline> void render(const Scanline& sl)
+        {
+            int y = sl.y();
+            m_ren->first_clip_box();
+            do
+            {
+                int xmin = m_ren->xmin();
+                int xmax = m_ren->xmax();
+
+                if(y >= m_ren->ymin() && y <= m_ren->ymax())
+                {
+                    unsigned num_spans = sl.num_spans();
+                    typename Scanline::const_iterator span = sl.begin();
+                    do
+                    {
+                        int x = span->x;
+                        int len = span->len;
+
+                        if(len < 0) len = -len;
+                        if(x < xmin)
+                        {
+                            len -= xmin - x;
+                            x = xmin;
+                        }
+                        if(len > 0)
+                        {
+                            if(x + len > xmax)
+                            {
+                                len = xmax - x + 1;
+                            }
+                            if(len > 0)
+                            {
+                                m_ren->blend_color_hspan_no_clip(
+                                    x, y, len, 
+                                    m_span_gen->generate(x, y, len),
+                                    0);
+                            }
+                        }
+                        ++span;
+                    }
+                    while(--num_spans);
+                }
+            }
+            while(m_ren->next_clip_box());
+        }
         
+    private:
+        base_ren_type* m_ren;
+        SpanGenerator* m_span_gen;
+    };
+
+
+
+    //=============================================renderer_scanline_bin_solid
+    template<class BaseRenderer> class renderer_scanline_bin_solid
+    {
+    public:
+        typedef BaseRenderer base_ren_type;
+        typedef typename base_ren_type::color_type color_type;
+
+        //--------------------------------------------------------------------
+        renderer_scanline_bin_solid(base_ren_type& ren) :
+            m_ren(&ren)
+        {
+        }
+        
+        //--------------------------------------------------------------------
+        void color(const color_type& c) { m_color = c; }
+        const color_type& color() const { return m_color; }
+
+        //--------------------------------------------------------------------
+        void prepare(unsigned) {}
+
         //--------------------------------------------------------------------
         template<class Scanline> void render(const Scanline& sl)
         {
             unsigned num_spans = sl.num_spans();
-            int y = sl.y();
-            const typename Scanline::span* cur_span = sl.spans();
-
+            typename Scanline::const_iterator span = sl.begin();
             do
             {
-                hline(cur_span->x, y, cur_span->x + cur_span->len - 1, m_attr);
-                ++cur_span;
+                m_ren->blend_hline(span->x, 
+                                   sl.y(), 
+                                   span->x - 1 + ((span->len < 0) ? 
+                                                     -span->len : 
+                                                      span->len), 
+                                   m_color, 
+                                   cover_full);
+                ++span;
             }
             while(--num_spans);
         }
         
     private:
-        attr_type m_attr;
+        base_ren_type* m_ren;
+        color_type m_color;
     };
+
+
+    //======================================================renderer_scanlines
+    template<class Rasterizer, class Scanline, class Renderer>
+    void render_scanlines(Rasterizer& ras, Scanline& sl, Renderer& ren)
+    {
+        if(ras.rewind_scanlines())
+        {
+            sl.reset(ras.min_x(), ras.max_x());
+            ren.prepare(unsigned(ras.max_x() - ras.min_x() + 2));
+
+            while(ras.sweep_scanline(sl))
+            {
+                ren.render(sl);
+            }
+        }
+    }
+
 
 }
 

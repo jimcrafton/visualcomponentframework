@@ -53,25 +53,27 @@ LIBNAME=Win32HTMLBrowser_bcc_s$(DBG).lib
 DLLNAME=Win32HTMLBrowser_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src;$(MAKEDIR)\..\include\atl
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\ApplicationKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_WIN32HTMLBROWSER_LIB;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\Win32HTMLBrowser.obj
+CPPFILES=Win32HTMLBrowser.cpp
+OBJFILES=$(CPPFILES:.cpp=.obj^ )
          
 LIBFILES=UUID.LIB comsupp.lib
 DEFFILE=
-ALLOBJS=$(OBJFILES)
 BCC32STARTUP=c0d32.obj
-ALLOBJS2=$(BCC32STARTUP) $(OBJFILES)
-ALLLIBS2=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
 
 all: dirs $(RESFILE) $(PROJECT)
 
@@ -88,33 +90,39 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\Win32HTMLBrowser_bcc$(DBGDLL).lib del ..\..\..\lib\Win32HTMLBrowser_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAM) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+$(PROJECT1):: $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS2) 
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
-    $(ALLLIBS2)
+    $(ALLLIBS)
     $(DEFFILE)
     $(RESFILE)
 
 |
     @if exist $(BIN)\Win32HTMLBrowser_bcc$(DBGDLL).lib move $(BIN)\Win32HTMLBrowser_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\Win32HTMLBrowser.obj: ..\..\..\src\vcf\ApplicationKit\Win32HTMLBrowser.cpp
 
 

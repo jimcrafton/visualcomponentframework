@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Directories"
-	ProjectGUID="{9A9B4D40-EB03-40C1-B680-F05E4162A19A}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -127,8 +126,7 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCWebDeploymentTool"
-				ExcludedFromBuild="TRUE"/>
+				Name="VCWebDeploymentTool"/>
 		</Configuration>
 	</Configurations>
 	<Files>

@@ -1484,6 +1484,10 @@ class DspApp:
         self.projectsNoPostfixIfUnderCompilerDirMainNameLwrList = []
         self.projectsNoPostfixIfUnderCompilerDirMainNameLwrDict = {}
 
+        self.projectsOutputOnProjectDirList = []
+        self.projectsOutputOnProjectDirMainNameLwrList = []
+        self.projectsOutputOnProjectDirMainNameLwrDict = {}
+
         self.staticLibrariesList = []
         self.staticLibrariesListLwr = []
         self.dynamicLibrariesList = []
@@ -1754,6 +1758,9 @@ class DspApp:
         print '   ' + 'projectsNoPostfixIfUnderCompilerDirList:'
         print '   ' + '  ' + str( self.projectsNoPostfixIfUnderCompilerDirList )
 
+        print '   ' + 'projectsOutputOnProjectDirList:'
+        print '   ' + '  ' + str( self.projectsOutputOnProjectDirList )
+
         print ''
 
         # giving time to see the output
@@ -1857,6 +1864,7 @@ class DspApp:
                     section_projectsNoPostfix                   = self.configGetStr ( comm_sect, 'section_projectsNoPostfix'      )
                     section_projectsNoPostfixOutput             = self.configGetStr ( comm_sect, 'section_projectsNoPostfixOutput')
                     section_projectsNoPostfixIfUnderCompilerDir = self.configGetStr ( comm_sect, 'section_projectsNoPostfixIfUnderCompilerDir' )
+                    section_projectsOutputOnProjectDir          = self.configGetStr ( comm_sect, 'section_projectsOutputOnProjectDir'          )
 
                     self.options.filename                       = self.getOptionValue( [ 'filename', 'f' ]                   , comm_sect, 'filename'                       , "string"    )
 
@@ -2000,6 +2008,13 @@ class DspApp:
                 self.makeProjectsNoPostfixIfUnderCompilerDirList( section_projectsNoPostfixIfUnderCompilerDir )
             else:
                 raise Exception( 'The section \'%s\' in the config file \'%s\' does not exists !' % ( section_projectsNoPostfixIfUnderCompilerDir, self.options.config ) )
+
+        if ( section_projectsOutputOnProjectDir ):
+            if ( self.config.has_section( section_projectsOutputOnProjectDir ) ):
+                self.makeProjectsOutputOnProjectDirList( section_projectsOutputOnProjectDir )
+            else:
+                raise Exception( 'The section \'%s\' in the config file \'%s\' does not exists !' % ( section_projectsOutputOnProjectDir, self.options.config ) )
+
 
         if ( self.options.createWorkspaces ):
             if ( self.config.has_section( section_createWorkspaces ) ):
@@ -2260,6 +2275,47 @@ class DspApp:
 
         return
 
+    def makeProjectsOutputOnProjectDirList( self, section ):
+        # splits entries like [ c# = proj: lib1, lib2, libn ]
+        pairs = self.config.items( section )
+
+        # shorter names
+        libList = self.projectsOutputOnProjectDirList
+        lmLwrList = self.projectsOutputOnProjectDirMainNameLwrList
+        libDict = self.projectsOutputOnProjectDirMainNameLwrDict
+
+        # resettting the lists
+        libList = []
+        lmLwrList = []
+        libDict = {}
+
+        for pair in pairs:
+            ( name, item ) = pair
+
+            # project1, "project12", project1n
+            list = item
+            list = StringUtils.stripComment( list )
+            list = StringUtils.trimQuotes( list )
+            list = list.strip()
+
+            ls = list.split( ',' )
+            for lib in ls:
+                lib = lib.strip()
+
+                ( ( lp, lf ), ( lb, le ), ( li, lm, lmLwr, cpl ), ( ls, ld ) ) = DspFile.splitPostfixComponents( lib, '' )
+                if ( not lm ):
+                    continue
+
+                libList.append( lib )
+                lmLwr = lm.lower()
+                lmLwrList.append( lmLwr )
+                libDict[ lmLwr ] = ( lm, le, lib )
+
+            self.projectsOutputOnProjectDirList = libList
+            self.projectsOutputOnProjectDirMainNameLwrList = lmLwrList
+            self.projectsOutputOnProjectDirMainNameLwrDict = libDict
+
+        return
 
     def addProject( self, prjName, prjNameLwr, baseDir, relPath ):
         if ( not self.allProjectNamesLwrDict.has_key( prjNameLwr ) ):
@@ -5996,6 +6052,18 @@ class DspFile( GenericProjectFile ):
 
         return isInList
 
+    def isInProjectsOutputOnProjectDirList( self ):
+        isInList = False
+
+        if ( app.projectsOutputOnProjectDirList ):
+
+            ( ( sp, sf ), ( sb, se ), ( si, sm, smLwr, cpl ), ( ss, sd ) ) = DspFile.splitPostfixComponents( self.filename, self.compiler )
+            if ( sm ):
+                if ( app.projectsOutputOnProjectDirMainNameLwrDict.has_key( smLwr ) ):
+                    isInList = True
+
+        return isInList
+
     def translateConfigurationType( value ):
         #val = enumAppTypeUnknown
 
@@ -6498,15 +6566,17 @@ class DspFile( GenericProjectFile ):
                 self.warning_done_dirs_different_between_cfgs = True
                 temp = self.OutputDirOut.lower().replace( self.configNameList[self.nCfg].lower(), self.configNameList[0].lower() )
                 if ( temp != self.OutputDirOutList[0].lower() ):
-                    print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
+                    if ( not self.isInProjectsOutputOnProjectDirList() ):
+                        print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
 
         if ( self.appType == enumAppTypeExe ):
             if ( self.OutputDirOut != self.PropIntermeDir ):
                 if ( self.filename.lower().find( g_subdir_examples ) != -1 ):
                     # automatically fixed because it is a very common mistake
-                    print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
-                    self.OutputDirOut = self.PropOutputDir
-                    self.OutputDirOutList[self.nCfg] = self.PropOutputDir
+                    if ( not self.isInProjectsOutputOnProjectDirList() ):
+                        print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
+                        self.OutputDirOut = self.PropOutputDir
+                        self.OutputDirOutList[self.nCfg] = self.PropOutputDir
                 else:
                     if ( 0 < app.options.warning ):
                         if ( not self.warning_done_dir_out_different_than_dir_prop and self.OutputDirOut == './' or self.OutputDirOut == '\\'  ):
@@ -9082,7 +9152,7 @@ Notes:
         This can be easily fixed. See the function checkSetDebug
 
     8) Dependencies: they are only managed by copy from the app.options.dependenciesWorkspace
-        Which is a master workspace created only for this purpose.
+        Which is a master workspace created only for this purpose. ( see dependenciesWorkspace in reformatVc.ini )
         this doesn't let the program to ensure certain dependency are always there, but it is
         the simplest way to manage them in the correct way.
 

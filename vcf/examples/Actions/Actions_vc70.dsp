@@ -106,6 +106,10 @@ SOURCE=Actions.rc
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=copy.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=open.bmp
 # End Source File
 # End Group

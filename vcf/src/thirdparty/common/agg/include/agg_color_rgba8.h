@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,13 +20,13 @@
 #ifndef AGG_COLOR_RGBA8_INCLUDED
 #define AGG_COLOR_RGBA8_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_color_rgba.h"
+#include "agg_basics.h"
+#include "agg_color_rgba.h"
 
 namespace agg
 {
 
-    //========================================================================
+    //==================================================================rgba8
     struct rgba8 
     {
         enum order { rgb, bgr };
@@ -45,31 +45,103 @@ namespace agg
 
         //--------------------------------------------------------------------
         rgba8(const rgba& c) :
-            r(int8u(c.r*255.0)), 
-            g(int8u(c.g*255.0)), 
-            b(int8u(c.b*255.0)), 
-            a(int8u(c.a*255.0)) {}
+            r(int8u(c.r * 255.0 + 0.5)), 
+            g(int8u(c.g * 255.0 + 0.5)), 
+            b(int8u(c.b * 255.0 + 0.5)), 
+            a(int8u(c.a * 255.0 + 0.5)) {}
         
+        //--------------------------------------------------------------------
+        rgba8(const rgba8& c, unsigned a) :
+            r(int8u(c.r)), 
+            g(int8u(c.g)), 
+            b(int8u(c.b)), 
+            a(int8u(a)) {}
 
         //--------------------------------------------------------------------
         rgba8(unsigned packed, order o) : 
-            r((o == rgb) ? ((packed >> 16) & 0xFF) : (packed & 0xFF)),
-            g((packed >> 8)  & 0xFF),
-            b((o == rgb) ? (packed & 0xFF) : ((packed >> 16) & 0xFF)),
+            r(int8u((o == rgb) ? ((packed >> 16) & 0xFF) : (packed & 0xFF))),
+            g(int8u((packed >> 8)  & 0xFF)),
+            b(int8u((o == rgb) ? (packed & 0xFF) : ((packed >> 16) & 0xFF))),
             a(255) {}
 
         //--------------------------------------------------------------------
-        void opacity(double a_)
+        void clear()
+        {
+            r = g = b = a = 0;
+        }
+        
+        //--------------------------------------------------------------------
+        const rgba8& transparent()
+        {
+            a = 0;
+            return *this;
+        }
+
+        //--------------------------------------------------------------------
+        const rgba8& opacity(double a_)
         {
             if(a_ < 0.0) a_ = 0.0;
             if(a_ > 1.0) a_ = 1.0;
-            a = int8u(a_ * 255.0);
+            a = int8u(a_ * 255.0 + 0.5);
+            return *this;
         }
 
         //--------------------------------------------------------------------
         double opacity() const
         {
             return double(a) / 255.0;
+        }
+
+        //--------------------------------------------------------------------
+        const rgba8& premultiply()
+        {
+            if(a == 255) return *this;
+            if(a == 0)
+            {
+                r = g = b = 0;
+                return *this;
+            }
+            r = (r * a) >> 8;
+            g = (g * a) >> 8;
+            b = (b * a) >> 8;
+            return *this;
+        }
+
+        //--------------------------------------------------------------------
+        const rgba8& premultiply(unsigned a_)
+        {
+            if(a == 255 && a_ == 255) return *this;
+            if(a == 0   || a_ == 0)
+            {
+                r = g = b = a = 0;
+                return *this;
+            }
+            unsigned r_ = (r * a_) / a;
+            unsigned g_ = (g * a_) / a;
+            unsigned b_ = (b * a_) / a;
+            r = (r_ > 255) ? 255 : r_;
+            g = (g_ > 255) ? 255 : g_;
+            b = (b_ > 255) ? 255 : b_;
+            a = a_;
+            return *this;
+        }
+
+        //--------------------------------------------------------------------
+        const rgba8& demultiply()
+        {
+            if(a == 255) return *this;
+            if(a == 0)
+            {
+                r = g = b = 0;
+                return *this;
+            }
+            unsigned r_ = (r * 255) / a;
+            unsigned g_ = (g * 255) / a;
+            unsigned b_ = (b * 255) / a;
+            r = (r_ > 255) ? 255 : r_;
+            g = (g_ > 255) ? 255 : g_;
+            b = (b_ > 255) ? 255 : b_;
+            return *this;
         }
 
         //--------------------------------------------------------------------
@@ -84,11 +156,8 @@ namespace agg
             return ret;
         }
 
-        rgba8 pre() const
-        {
-            return rgba8((r*a) >> 8, (g*a) >> 8, (b*a) >> 8, a);
-        }
-
+        //--------------------------------------------------------------------
+        static rgba8 no_color() { return rgba8(0,0,0,0); }
     };
 
 

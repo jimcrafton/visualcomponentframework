@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,13 +20,13 @@
 #ifndef AGG_ELLIPSE_INCLUDED
 #define AGG_ELLIPSE_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 #include <math.h>
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //----------------------------------------------------------------ellipse
     class ellipse
     {
     public:
@@ -35,6 +35,7 @@ namespace agg
             : m_x(x), m_y(y), m_rx(rx), m_ry(ry), m_num(num_steps), m_step(0) {}
 
         void init(double x, double y, double rx, double ry, unsigned num_steps);
+        void approximation_scale(double scale);
         void rewind(unsigned id);
         unsigned vertex(double* x, double* y);
 
@@ -60,6 +61,13 @@ namespace agg
     }
 
     //------------------------------------------------------------------------
+    inline void ellipse::approximation_scale(double scale)
+    {   
+       m_num = unsigned((fabs(m_rx) + fabs(m_ry) + 6.0) * scale);
+       if(m_num < 6) m_num = 6;
+    }
+
+    //------------------------------------------------------------------------
     inline void ellipse::rewind(unsigned)
     {
         m_step = 0;
@@ -68,12 +76,17 @@ namespace agg
     //------------------------------------------------------------------------
     inline unsigned ellipse::vertex(double* x, double* y)
     {
-        if(m_step >= m_num) return path_cmd_stop;
+        if(m_step == m_num) 
+        {
+            ++m_step;
+            return path_cmd_end_poly | path_flags_close | path_flags_ccw;
+        }
+        if(m_step > m_num) return path_cmd_stop;
         double angle = double(m_step) / double(m_num) * 2.0 * pi;
         *x = m_x + cos(angle) * m_rx;
         *y = m_y + sin(angle) * m_ry;
         m_step++;
-        return ((m_step == 1) ? path_cmd_move_to : path_cmd_line_to) | path_flags_close;
+        return ((m_step == 1) ? path_cmd_move_to : path_cmd_line_to);
     }
 
 }

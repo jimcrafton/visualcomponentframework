@@ -53,33 +53,35 @@ LIBNAME=NetworkKit_bcc_s$(DBG).lib
 DLLNAME=NetworkKit_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\NetworkKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_NETWORKKIT_LIB;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\DatagramSocket.obj \
-	$(OBJ)\NetToolkit.obj \
-	$(OBJ)\ServerSocketEvent.obj \
-	$(OBJ)\Socket.obj \
-	$(OBJ)\SocketEvent.obj \
-	$(OBJ)\SocketListeningLoop.obj \
-	$(OBJ)\URL.obj \
-	$(OBJ)\Win32DatagramSocketPeer.obj \
-	$(OBJ)\Win32SocketPeer.obj
-         
+CPPFILES=DatagramSocket.cpp  \
+	NetToolkit.cpp  \
+	ServerSocketEvent.cpp  \
+	Socket.cpp  \
+	SocketEvent.cpp  \
+	SocketListeningLoop.cpp  \
+	URL.cpp  \
+	Win32DatagramSocketPeer.cpp  \
+	Win32SocketPeer.cpp 
+
+OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=UUID.LIB WS2_32.LIB
 DEFFILE=
-ALLOBJS=$(OBJFILES)
 BCC32STARTUP=c0d32.obj
-ALLOBJS2=$(BCC32STARTUP) $(OBJFILES)
-ALLLIBS2=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
 
 all: dirs $(RESFILE) $(PROJECT)
 
@@ -96,40 +98,38 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\NetworkKit_bcc$(DBGDLL).lib del ..\..\..\lib\NetworkKit_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
 $(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAM) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS2) 
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
-    $(ALLLIBS2)
+    $(ALLLIBS)
     $(DEFFILE)
     $(RESFILE)
 
 |
     @if exist $(BIN)\NetworkKit_bcc$(DBGDLL).lib move $(BIN)\NetworkKit_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\DatagramSocket.obj:          ..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp
-$(OBJ)\NetToolkit.obj:              ..\..\..\src\vcf\NetworkKit\NetToolkit.cpp
-$(OBJ)\ServerSocketEvent.obj:       ..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp
-$(OBJ)\Socket.obj:                  ..\..\..\src\vcf\NetworkKit\Socket.cpp
-$(OBJ)\SocketEvent.obj:             ..\..\..\src\vcf\NetworkKit\SocketEvent.cpp
-$(OBJ)\SocketListeningLoop.obj:     ..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp
-$(OBJ)\URL.obj:                     ..\..\..\src\vcf\NetworkKit\URL.cpp
-$(OBJ)\Win32DatagramSocketPeer.obj: ..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp
-$(OBJ)\Win32SocketPeer.obj:         ..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp
 

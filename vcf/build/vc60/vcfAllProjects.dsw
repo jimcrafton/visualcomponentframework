@@ -27,6 +27,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AdvancedUI"="..\..\examples\AdvancedUI\AdvancedUI.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Alignment"="..\..\examples\Alignment\Alignment.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -40,6 +52,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Anchors"="..\..\examples\Anchors\Anchors.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AppResources"="..\..\examples\AppResources\AppResources.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -93,7 +117,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Colors"="..\..\examples\Colors\Colors.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Conditions"="..\..\examples\Conditions\Conditions.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Controls"="..\..\examples\Controls\Controls.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -130,6 +178,18 @@ Package=<4>
 ###############################################################################
 
 Project: "DatesAndTime"="..\..\examples\DatesAndTime\DatesAndTime.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Dialogs"="..\..\examples\Dialogs\Dialogs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -231,16 +291,28 @@ Package=<4>
     Project_Dep_Name AdvancedAlignment
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name AdvancedUI
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Alignment
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Anchors
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name AppResources
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ApplicationIcons
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Colors
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Conditions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Controls
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CopyAndPaste
@@ -250,6 +322,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name DatesAndTime
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Dialogs
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Dictionaries
@@ -312,6 +387,12 @@ Package=<4>
     Project_Dep_Name OpenGLShapes
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name ParticleEditor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Printing
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Processes
     End Project Dependency
     Begin Project Dependency
@@ -322,6 +403,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Resources
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Scrolling
@@ -345,7 +429,16 @@ Package=<4>
     Project_Dep_Name StrokesAndFills
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name SysTray
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Tables
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TeXLabel
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TextEdit
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TextLayout
@@ -358,6 +451,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Toolbars
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Transformations
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TreeListControls
@@ -392,9 +488,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -407,9 +500,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -476,6 +566,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FoundationKit
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -490,6 +583,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
     End Project Dependency
 }}}
 
@@ -750,6 +846,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ParticleEditor"="..\..\examples\ParticleEditor\ParticleEditor.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Printing"="..\..\examples\Printing\Printing.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Processes"="..\..\examples\Processes\Processes.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -787,6 +907,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Reflection"="..\..\examples\Reflection\Reflection.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegEnVar"="..\..\src\thirdparty\win32\RegEnVar\RegEnVar.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -836,6 +968,42 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name NetworkKit
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Resources"="..\..\examples\Resources\Resources.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SciLexer"="..\..\src\thirdparty\common\scintilla\vcbuild\SciLexer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ScintillaKit"=".\ScintillaKit\ScintillaKit.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -924,7 +1092,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SysTray"="..\..\examples\SysTray\SysTray.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Tables"="..\..\examples\Tables\Tables.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TeXLabel"="..\..\examples\TeXLabel\TeXLabel.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextEdit"="..\..\examples\TextEdit\TextEdit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -973,6 +1177,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Toolbars"="..\..\examples\Toolbars\Toolbars.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Transformations"="..\..\examples\Transformations\Transformations.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1106,6 +1322,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ImageFormats
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1144,6 +1363,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Win32HTMLBrowser_StaticLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKit
     End Project Dependency
 }}}
 

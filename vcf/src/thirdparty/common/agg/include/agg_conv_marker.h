@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,21 +19,21 @@
 #ifndef AGG_CONV_MARKER_INCLUDED
 #define AGG_CONV_MARKER_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_affine_matrix.h"
-#include "thirdparty/common/agg/include/agg_vertex_iterator.h"
+#include "agg_basics.h"
+#include "agg_trans_affine.h"
+#include "agg_vertex_iterator.h"
 
 namespace agg
 {
-    //------------------------------------------------------------------------
+    //-------------------------------------------------------------conv_marker
     template<class MarkerLocator, class MarkerShapes>
     class conv_marker
     {
     public:
         conv_marker(MarkerLocator& ml, MarkerShapes& ms);
 
-        affine_matrix& transform() { return m_transform; }
-        const affine_matrix& transform() const { return m_transform; }
+        trans_affine& transform() { return m_transform; }
+        const trans_affine& transform() const { return m_transform; }
 
         void rewind(unsigned id);
         unsigned vertex(double* x, double* y);
@@ -44,6 +44,10 @@ namespace agg
         iterator end() { return iterator(path_cmd_stop); }
 
     private:
+        conv_marker(const conv_marker<MarkerLocator, MarkerShapes>&);
+        const conv_marker<MarkerLocator, MarkerShapes>& 
+            operator = (const conv_marker<MarkerLocator, MarkerShapes>&);
+
         enum status_e 
         {
             initial,
@@ -54,8 +58,8 @@ namespace agg
 
         MarkerLocator* m_marker_locator;
         MarkerShapes*  m_marker_shapes;
-        affine_matrix  m_transform;
-        affine_matrix  m_mtx;
+        trans_affine   m_transform;
+        trans_affine   m_mtx;
         status_e       m_status;
         unsigned       m_marker;
         unsigned       m_num_markers;
@@ -119,8 +123,8 @@ namespace agg
                 }
                 ++m_num_markers;
                 m_mtx = m_transform;
-                m_mtx *= rotation_matrix(atan2(y2 - y1, x2 - x1));
-                m_mtx *= translation_matrix(x1, y1);
+                m_mtx *= trans_affine_rotation(atan2(y2 - y1, x2 - x1));
+                m_mtx *= trans_affine_translation(x1, y1);
                 m_marker_shapes->rewind(m_marker - 1);
                 m_status = polygon;
 

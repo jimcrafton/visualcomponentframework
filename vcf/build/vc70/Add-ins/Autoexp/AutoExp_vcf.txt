@@ -1,0 +1,5 @@
+
+; VCF additions
+VCF::DateTime=$ADDIN(D:\Code\vcf\build\vc70\Add-ins\Autoexp\Debug\AutoExp.dll,_VCF_DateTimeEvaluate@28)
+VCF::DateTimeSpan=$ADDIN(D:\Code\vcf\build\vc70\Add-ins\Autoexp\Debug\AutoExp.dll,_VCF_DateTimeSpanEvaluate@28)
+VCF::Color=$ADDIN(D:\Code\vcf\build\vc70\Add-ins\Autoexp\Debug\AutoExp.dll,_VCF_ColorEvaluate@28)

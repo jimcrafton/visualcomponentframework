@@ -3,11 +3,12 @@
 ILINK32=ilink32
 LB=tlib
 CC=bcc32
+RC=brcc32
 
 #C/C++ compile/link flags
 CFLAGS=-q -6 -tWD -tWR -tWM -VF -w-aus -w-sus -w-pia -w-rch -w-ccc -w-eff -D$(USERDEFINES);$(SYSDEFINES)
 CPPFLAGS=-q -6 -tWD  -tWR -tWM -VF -RT -x -a8 -b -X- -D$(USERDEFINES);$(SYSDEFINES)
-LINKFLAGS=-q -aa -Tpd -Gn -Gi -c -Af:0x1000 -Ao:0x1000 -L$(LIBDIR)
+LINKFLAGS=-q -aa -Tpd -Gn -Gi -c -Af:0x1000 -Ao:0x1000 -L$(LIBDIR) -j$(OBJ)
 BCC32RTLIB=cw32mti.lib
 
 !if $(BMODE) == RELEASE
@@ -25,8 +26,11 @@ DBGDLL=_d
 !endif
 
 .cpp.obj:
-      @$(CC) $(CPPFLAGS) -I$(INCDIR) /c -o$@ $<
+      @$(CC) $(CPPFLAGS) -I$(INCDIR) -n$(OBJ) /c $<
 
 .c.obj:
-      @$(CC) $(CFLAGS) -I$(INCDIR) /c -o$@ $<
+      @$(CC) $(CFLAGS) -I$(INCDIR) -n$(OBJ) /c $<
 
+.rc.res:
+      @echo Compiling $(<F)
+      @$(RC) $(RFLAGS) -fo$@ $< > NUL:

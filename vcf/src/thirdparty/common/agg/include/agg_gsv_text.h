@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,15 +20,18 @@
 #ifndef AGG_GSV_TEXT_INCLUDED
 #define AGG_GSV_TEXT_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_conv_stroke.h"
-#include "thirdparty/common/agg/include/agg_conv_transform.h"
+#include "agg_basics.h"
+#include "agg_conv_stroke.h"
+#include "agg_conv_transform.h"
 
 namespace agg
 {
 
 
-    //-------------------------------------------------------------------------
+    //---------------------------------------------------------------gsv_text
+    //
+    // See Implementation agg_gsv_text.cpp 
+    //
     class gsv_text
     {
         enum status
@@ -106,8 +109,8 @@ namespace agg
 
 
 
-    //-------------------------------------------------------------------------
-    template<class Transformer = affine_matrix> class gsv_text_outline
+    //--------------------------------------------------------gsv_text_outline
+    template<class Transformer = trans_affine> class gsv_text_outline
     {
     public:
         gsv_text_outline(gsv_text& text, const Transformer& trans) :
@@ -129,8 +132,8 @@ namespace agg
         void rewind(unsigned id) 
         { 
             m_trans.rewind(id); 
-            m_polyline.line_join(gen_stroke::round_join);
-            m_polyline.line_cap(gen_stroke::round_cap);
+            m_polyline.line_join(vcgen_stroke::round_join);
+            m_polyline.line_cap(vcgen_stroke::round_cap);
         }
 
         unsigned vertex(double* x, double* y)

@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,13 +20,13 @@
 #ifndef AGG_RENDERER_MARKERS_INCLUDED
 #define AGG_RENDERER_MARKERS_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_renderer_primitives.h"
+#include "agg_basics.h"
+#include "agg_renderer_primitives.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------------------------marker_e
     enum marker_e
     {
         marker_square,
@@ -46,46 +46,49 @@ namespace agg
         marker_x,
         marker_dash,
         marker_dot,
+        marker_pixel,
         
         end_of_markers
     };
 
 
 
-    //------------------------------------------------------------------------
-    template<class PixelRenderer> 
-    class renderer_markers : public renderer_primitives<PixelRenderer>
+    //--------------------------------------------------------renderer_markers
+    template<class BaseRenderer> class renderer_markers :
+    public renderer_primitives<BaseRenderer>
     {
     public:
-        typedef renderer_primitives<PixelRenderer> base_type;
+        typedef renderer_primitives<BaseRenderer> base_type;
+        typedef BaseRenderer base_ren_type;
+        typedef typename base_ren_type::color_type color_type;
 
         //--------------------------------------------------------------------
-        renderer_markers(rendering_buffer& rbuf) :
+        renderer_markers(base_ren_type& rbuf) :
             base_type(rbuf)
         {
         }
 
         //--------------------------------------------------------------------
-        bool clipped(int x, int y, int r) const
+        bool visible(int x, int y, int r) const
         {
             rect rc(x-r, y-r, x+y, y+r);
-            return !rc.clip(rbuf().clip_box());  
+            return rc.clip(base_type::ren().bounding_clip_box());  
         }
 
         //--------------------------------------------------------------------
         void square(int x, int y, int r)
         {
-            if(!clipped(x, y, r)) 
+            if(visible(x, y, r)) 
             {  
-                if(r) outlined_rectangle(x-r, y-r, x+r, y+r);
-                else  pixel(x, y, fill_color());
+                if(r) base_type::outlined_rectangle(x-r, y-r, x+r, y+r);
+                else  base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
             }
         }
 
         //--------------------------------------------------------------------
         void diamond(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -93,15 +96,15 @@ namespace agg
                     int dx = 0;
                     do
                     {
-                        pixel(x - dx, y + dy, line_color());
-                        pixel(x + dx, y + dy, line_color());
-                        pixel(x - dx, y - dy, line_color());
-                        pixel(x + dx, y - dy, line_color());
+                        base_type::ren().blend_pixel(x - dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dx, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y - dy, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            hline(x-dx+1, y+dy, x+dx-1, fill_color());
-                            hline(x-dx+1, y-dy, x+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y+dy, x+dx-1, base_type::fill_color(), cover_full);
+                            base_type::ren().blend_hline(x-dx+1, y-dy, x+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         ++dx;
@@ -110,7 +113,7 @@ namespace agg
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -118,10 +121,10 @@ namespace agg
         //--------------------------------------------------------------------
         void circle(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
-                if(r) outlined_ellipse(x, y, r, r);
-                else  pixel(x, y, fill_color());
+                if(r) base_type::outlined_ellipse(x, y, r, r);
+                else  base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
             }
         }
 
@@ -130,22 +133,22 @@ namespace agg
         //--------------------------------------------------------------------
         void crossed_circle(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
-                    outlined_ellipse(x, y, r, r);
+                    base_type::outlined_ellipse(x, y, r, r);
                     int r6 = r + (r >> 1);
                     if(r <= 2) r6++;
                     r >>= 1;
-                    hline(x-r6, y, x-r,  line_color());
-                    hline(x+r,  y, x+r6, line_color());
-                    vline(x, y-r6, y-r,  line_color());
-                    vline(x, y+r,  y+r6, line_color());
+                    base_type::ren().blend_hline(x-r6, y, x-r,  base_type::line_color(), cover_full);
+                    base_type::ren().blend_hline(x+r,  y, x+r6, base_type::line_color(), cover_full);
+                    base_type::ren().blend_vline(x, y-r6, y-r,  base_type::line_color(), cover_full);
+                    base_type::ren().blend_vline(x, y+r,  y+r6, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -154,7 +157,7 @@ namespace agg
         //------------------------------------------------------------------------
         void semiellipse_left(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -167,21 +170,21 @@ namespace agg
                         dx += ei.dx();
                         dy += ei.dy();
                         
-                        pixel(x + dy, y + dx, line_color());
-                        pixel(x + dy, y - dx, line_color());
+                        base_type::ren().blend_pixel(x + dy, y + dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dy, y - dx, base_type::line_color(), cover_full);
                         
                         if(ei.dy() && dx)
                         {
-                            vline(x+dy, y-dx+1, y+dx-1, fill_color());
+                            base_type::ren().blend_vline(x+dy, y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++ei;
                     }
                     while(dy < r8);
-                    vline(x+dy, y-dx, y+dx, line_color());
+                    base_type::ren().blend_vline(x+dy, y-dx, y+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -190,7 +193,7 @@ namespace agg
         //--------------------------------------------------------------------
         void semiellipse_right(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -203,21 +206,21 @@ namespace agg
                         dx += ei.dx();
                         dy += ei.dy();
                         
-                        pixel(x - dy, y + dx, line_color());
-                        pixel(x - dy, y - dx, line_color());
+                        base_type::ren().blend_pixel(x - dy, y + dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y - dx, base_type::line_color(), cover_full);
                         
                         if(ei.dy() && dx)
                         {
-                            vline(x-dy, y-dx+1, y+dx-1, fill_color());
+                            base_type::ren().blend_vline(x-dy, y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++ei;
                     }
                     while(dy < r8);
-                    vline(x-dy, y-dx, y+dx, line_color());
+                    base_type::ren().blend_vline(x-dy, y-dx, y+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -226,7 +229,7 @@ namespace agg
         //--------------------------------------------------------------------
         void semiellipse_up(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -239,21 +242,21 @@ namespace agg
                         dx += ei.dx();
                         dy += ei.dy();
                         
-                        pixel(x + dx, y - dy, line_color());
-                        pixel(x - dx, y - dy, line_color());
+                        base_type::ren().blend_pixel(x + dx, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dx, y - dy, base_type::line_color(), cover_full);
                         
                         if(ei.dy() && dx)
                         {
-                            hline(x-dx+1, y-dy, x+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y-dy, x+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++ei;
                     }
                     while(dy < r8);
-                    hline(x-dx, y-dy-1, x+dx, line_color());
+                    base_type::ren().blend_hline(x-dx, y-dy-1, x+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -262,7 +265,7 @@ namespace agg
         //--------------------------------------------------------------------
         void semiellipse_down(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -275,21 +278,21 @@ namespace agg
                         dx += ei.dx();
                         dy += ei.dy();
                         
-                        pixel(x + dx, y + dy, line_color());
-                        pixel(x - dx, y + dy, line_color());
+                        base_type::ren().blend_pixel(x + dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dx, y + dy, base_type::line_color(), cover_full);
                         
                         if(ei.dy() && dx)
                         {
-                            hline(x-dx+1, y+dy, x+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y+dy, x+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++ei;
                     }
                     while(dy < r8);
-                    hline(x-dx, y+dy+1, x+dx, line_color());
+                    base_type::ren().blend_hline(x-dx, y+dy+1, x+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -298,7 +301,7 @@ namespace agg
         //--------------------------------------------------------------------
         void triangle_left(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -308,23 +311,23 @@ namespace agg
                     int r6 = r * 3 / 5;
                     do
                     {
-                        pixel(x + dy, y - dx, line_color());
-                        pixel(x + dy, y + dx, line_color());
+                        base_type::ren().blend_pixel(x + dy, y - dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dy, y + dx, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            vline(x+dy, y-dx+1, y+dx-1, fill_color());
+                            base_type::ren().blend_vline(x+dy, y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         dx += flip;
                         flip ^= 1;
                     }
                     while(dy < r6);
-                    vline(x+dy, y-dx, y+dx, line_color());
+                    base_type::ren().blend_vline(x+dy, y-dx, y+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -333,7 +336,7 @@ namespace agg
         //--------------------------------------------------------------------
         void triangle_right(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -343,23 +346,23 @@ namespace agg
                     int r6 = r * 3 / 5;
                     do
                     {
-                        pixel(x - dy, y - dx, line_color());
-                        pixel(x - dy, y + dx, line_color());
+                        base_type::ren().blend_pixel(x - dy, y - dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y + dx, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            vline(x-dy, y-dx+1, y+dx-1, fill_color());
+                            base_type::ren().blend_vline(x-dy, y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         dx += flip;
                         flip ^= 1;
                     }
                     while(dy < r6);
-                    vline(x-dy, y-dx, y+dx, line_color());
+                    base_type::ren().blend_vline(x-dy, y-dx, y+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -368,7 +371,7 @@ namespace agg
         //--------------------------------------------------------------------
         void triangle_up(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -378,23 +381,23 @@ namespace agg
                     int r6 = r * 3 / 5;
                     do
                     {
-                        pixel(x - dx, y - dy, line_color());
-                        pixel(x + dx, y - dy, line_color());
+                        base_type::ren().blend_pixel(x - dx, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y - dy, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            hline(x-dx+1, y-dy, x+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y-dy, x+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         dx += flip;
                         flip ^= 1;
                     }
                     while(dy < r6);
-                    hline(x-dx, y-dy, x+dx, line_color());
+                    base_type::ren().blend_hline(x-dx, y-dy, x+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -403,7 +406,7 @@ namespace agg
         //--------------------------------------------------------------------
         void triangle_down(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -413,23 +416,23 @@ namespace agg
                     int r6 = r * 3 / 5;
                     do
                     {
-                        pixel(x - dx, y + dy, line_color());
-                        pixel(x + dx, y + dy, line_color());
+                        base_type::ren().blend_pixel(x - dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y + dy, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            hline(x-dx+1, y+dy, x+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y+dy, x+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         dx += flip;
                         flip ^= 1;
                     }
                     while(dy < r6);
-                    hline(x-dx, y+dy, x+dx, line_color());
+                    base_type::ren().blend_hline(x-dx, y+dy, x+dx, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -438,7 +441,7 @@ namespace agg
         //--------------------------------------------------------------------
         void four_rays(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
@@ -448,32 +451,32 @@ namespace agg
                     int r3 = -(r / 3);
                     do
                     {
-                        pixel(x - dx, y + dy, line_color());
-                        pixel(x + dx, y + dy, line_color());
-                        pixel(x - dx, y - dy, line_color());
-                        pixel(x + dx, y - dy, line_color());
-                        pixel(x + dy, y - dx, line_color());
-                        pixel(x + dy, y + dx, line_color());
-                        pixel(x - dy, y - dx, line_color());
-                        pixel(x - dy, y + dx, line_color());
+                        base_type::ren().blend_pixel(x - dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dx, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dx, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dy, y - dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dy, y + dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y - dx, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y + dx, base_type::line_color(), cover_full);
                         
                         if(dx)
                         {
-                            hline(x-dx+1, y+dy,   x+dx-1, fill_color());
-                            hline(x-dx+1, y-dy,   x+dx-1, fill_color());
-                            vline(x+dy,   y-dx+1, y+dx-1, fill_color());
-                            vline(x-dy,   y-dx+1, y+dx-1, fill_color());
+                            base_type::ren().blend_hline(x-dx+1, y+dy,   x+dx-1, base_type::fill_color(), cover_full);
+                            base_type::ren().blend_hline(x-dx+1, y-dy,   x+dx-1, base_type::fill_color(), cover_full);
+                            base_type::ren().blend_vline(x+dy,   y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
+                            base_type::ren().blend_vline(x-dy,   y-dx+1, y+dx-1, base_type::fill_color(), cover_full);
                         }
                         ++dy;
                         dx += flip;
                         flip ^= 1;
                     }
                     while(dy <= r3);
-                    solid_rectangle(x+r3+1, y+r3+1, x-r3-1, y-r3-1);
+                    base_type::solid_rectangle(x+r3+1, y+r3+1, x-r3-1, y-r3-1);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -482,16 +485,16 @@ namespace agg
         //--------------------------------------------------------------------
         void cross(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
-                    vline(x, y-r, y+r, line_color());
-                    hline(x-r, y, x+r, line_color());
+                    base_type::ren().blend_vline(x, y-r, y+r, base_type::line_color(), cover_full);
+                    base_type::ren().blend_hline(x-r, y, x+r, base_type::line_color(), cover_full);
                 }
                 else
                 {
-                    pixel(x, y, fill_color());
+                    base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
                 }
             }
         }
@@ -500,22 +503,22 @@ namespace agg
         //--------------------------------------------------------------------
         void xing(int x, int y, int r)
         {
-            if(!clipped(x, y, r))
+            if(visible(x, y, r))
             {
                 if(r)
                 {
                     int dy = -r * 7 / 10;
                     do
                     {
-                        pixel(x + dy, y + dy, line_color());
-                        pixel(x - dy, y + dy, line_color());
-                        pixel(x + dy, y - dy, line_color());
-                        pixel(x - dy, y - dy, line_color());
+                        base_type::ren().blend_pixel(x + dy, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y + dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x + dy, y - dy, base_type::line_color(), cover_full);
+                        base_type::ren().blend_pixel(x - dy, y - dy, base_type::line_color(), cover_full);
                         ++dy;
                     }
                     while(dy < 0);
                 }
-                pixel(x, y, fill_color());
+                base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
             }
         }
         
@@ -523,10 +526,10 @@ namespace agg
         //--------------------------------------------------------------------
         void dash(int x, int y, int r)
         {
-            if(!clipped(x, y, r)) 
+            if(visible(x, y, r)) 
             {
-                if(r) hline(x-r, y, x+r, line_color());
-                else  pixel(x, y, fill_color());
+                if(r) base_type::ren().blend_hline(x-r, y, x+r, base_type::line_color(), cover_full);
+                else  base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
             }
         }
         
@@ -534,13 +537,18 @@ namespace agg
         //--------------------------------------------------------------------
         void dot(int x, int y, int r)
         {
-            if(!clipped(x, y, r)) 
+            if(visible(x, y, r)) 
             {
-                if(r) solid_ellipse(x, y, r, r);
-                else  pixel(x, y, fill_color());
+                if(r) base_type::solid_ellipse(x, y, r, r);
+                else  base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
             }
         }
         
+        //--------------------------------------------------------------------
+        void pixel(int x, int y, int)
+        {
+            base_type::ren().blend_pixel(x, y, base_type::fill_color(), cover_full);
+        }
         
         //--------------------------------------------------------------------
         void marker(int x, int y, int r, marker_e type)
@@ -564,20 +572,21 @@ namespace agg
                 case marker_x:                 xing(x, y, r);              break;
                 case marker_dash:              dash(x, y, r);              break;
                 case marker_dot:               dot(x, y, r);               break;
+                case marker_pixel:             pixel(x, y, r);             break;
             }
         }
 
 
         //--------------------------------------------------------------------
         template<class T>
-        void marker(int n, const T* x, const T* y, T r, marker_e type)
+        void markers(int n, const T* x, const T* y, T r, marker_e type)
         {
             if(n <= 0) return;
             if(r == 0)
             {
                 do
                 {
-                    pixel(int(*x), int(*y), fill_color());
+                    base_type::ren().blend_pixel(int(*x), int(*y), base_type::fill_color(), cover_full);
                     ++x;
                     ++y;
                 }
@@ -604,12 +613,13 @@ namespace agg
                 case marker_x:                 do { xing             (int(*x), int(*y), int(r)); ++x; ++y; } while(--n); break;
                 case marker_dash:              do { dash             (int(*x), int(*y), int(r)); ++x; ++y; } while(--n); break;
                 case marker_dot:               do { dot              (int(*x), int(*y), int(r)); ++x; ++y; } while(--n); break;
+                case marker_pixel:             do { pixel            (int(*x), int(*y), int(r)); ++x; ++y; } while(--n); break;
             }                                                                                  
         }
         
         //--------------------------------------------------------------------
         template<class T>
-        void marker(int n, const T* x, const T* y, const T* r, marker_e type)
+        void markers(int n, const T* x, const T* y, const T* r, marker_e type)
         {
             if(n <= 0) return;
             switch(type)
@@ -631,60 +641,63 @@ namespace agg
                 case marker_x:                 do { xing             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; } while(--n); break;
                 case marker_dash:              do { dash             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; } while(--n); break;
                 case marker_dot:               do { dot              (int(*x), int(*y), int(*r)); ++x; ++y; ++r; } while(--n); break;
+                case marker_pixel:             do { pixel            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; } while(--n); break;
             }                                                                                  
         }
         
         //--------------------------------------------------------------------
         template<class T>
-        void marker(int n, const T* x, const T* y, const T* r, const color_type* fc, marker_e type)
+        void markers(int n, const T* x, const T* y, const T* r, const color_type* fc, marker_e type)
         {
             if(n <= 0) return;
             switch(type)
             {
-                case marker_square:            do { fill_color(*fc); square           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_diamond:           do { fill_color(*fc); diamond          (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_circle:            do { fill_color(*fc); circle           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_crossed_circle:    do { fill_color(*fc); crossed_circle   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_semiellipse_left:  do { fill_color(*fc); semiellipse_left (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_semiellipse_right: do { fill_color(*fc); semiellipse_right(int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_semiellipse_up:    do { fill_color(*fc); semiellipse_up   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_semiellipse_down:  do { fill_color(*fc); semiellipse_down (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_triangle_left:     do { fill_color(*fc); triangle_left    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_triangle_right:    do { fill_color(*fc); triangle_right   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_triangle_up:       do { fill_color(*fc); triangle_up      (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_triangle_down:     do { fill_color(*fc); triangle_down    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_four_rays:         do { fill_color(*fc); four_rays        (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_cross:             do { fill_color(*fc); cross            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_x:                 do { fill_color(*fc); xing             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_dash:              do { fill_color(*fc); dash             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
-                case marker_dot:               do { fill_color(*fc); dot              (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_square:            do { base_type::fill_color(*fc); square           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_diamond:           do { base_type::fill_color(*fc); diamond          (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_circle:            do { base_type::fill_color(*fc); circle           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_crossed_circle:    do { base_type::fill_color(*fc); crossed_circle   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_semiellipse_left:  do { base_type::fill_color(*fc); semiellipse_left (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_semiellipse_right: do { base_type::fill_color(*fc); semiellipse_right(int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_semiellipse_up:    do { base_type::fill_color(*fc); semiellipse_up   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_semiellipse_down:  do { base_type::fill_color(*fc); semiellipse_down (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_triangle_left:     do { base_type::fill_color(*fc); triangle_left    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_triangle_right:    do { base_type::fill_color(*fc); triangle_right   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_triangle_up:       do { base_type::fill_color(*fc); triangle_up      (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_triangle_down:     do { base_type::fill_color(*fc); triangle_down    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_four_rays:         do { base_type::fill_color(*fc); four_rays        (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_cross:             do { base_type::fill_color(*fc); cross            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_x:                 do { base_type::fill_color(*fc); xing             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_dash:              do { base_type::fill_color(*fc); dash             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_dot:               do { base_type::fill_color(*fc); dot              (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
+                case marker_pixel:             do { base_type::fill_color(*fc); pixel            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; } while(--n); break;
             }
         }
         
         //--------------------------------------------------------------------
         template<class T>
-        void marker(int n, const T* x, const T* y, const T* r, const color_type* fc, const color_type* lc, marker_e type)
+        void markers(int n, const T* x, const T* y, const T* r, const color_type* fc, const color_type* lc, marker_e type)
         {
             if(n <= 0) return;
             switch(type)
             {
-                case marker_square:            do { fill_color(*fc); line_color(*lc); square           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_diamond:           do { fill_color(*fc); line_color(*lc); diamond          (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_circle:            do { fill_color(*fc); line_color(*lc); circle           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_crossed_circle:    do { fill_color(*fc); line_color(*lc); crossed_circle   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_semiellipse_left:  do { fill_color(*fc); line_color(*lc); semiellipse_left (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_semiellipse_right: do { fill_color(*fc); line_color(*lc); semiellipse_right(int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_semiellipse_up:    do { fill_color(*fc); line_color(*lc); semiellipse_up   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_semiellipse_down:  do { fill_color(*fc); line_color(*lc); semiellipse_down (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_triangle_left:     do { fill_color(*fc); line_color(*lc); triangle_left    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_triangle_right:    do { fill_color(*fc); line_color(*lc); triangle_right   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_triangle_up:       do { fill_color(*fc); line_color(*lc); triangle_up      (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_triangle_down:     do { fill_color(*fc); line_color(*lc); triangle_down    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_four_rays:         do { fill_color(*fc); line_color(*lc); four_rays        (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_cross:             do { fill_color(*fc); line_color(*lc); cross            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_x:                 do { fill_color(*fc); line_color(*lc); xing             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_dash:              do { fill_color(*fc); line_color(*lc); dash             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
-                case marker_dot:               do { fill_color(*fc); line_color(*lc); dot              (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_square:            do { base_type::fill_color(*fc); base_type::line_color(*lc); square           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_diamond:           do { base_type::fill_color(*fc); base_type::line_color(*lc); diamond          (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_circle:            do { base_type::fill_color(*fc); base_type::line_color(*lc); circle           (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_crossed_circle:    do { base_type::fill_color(*fc); base_type::line_color(*lc); crossed_circle   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_semiellipse_left:  do { base_type::fill_color(*fc); base_type::line_color(*lc); semiellipse_left (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_semiellipse_right: do { base_type::fill_color(*fc); base_type::line_color(*lc); semiellipse_right(int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_semiellipse_up:    do { base_type::fill_color(*fc); base_type::line_color(*lc); semiellipse_up   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_semiellipse_down:  do { base_type::fill_color(*fc); base_type::line_color(*lc); semiellipse_down (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_triangle_left:     do { base_type::fill_color(*fc); base_type::line_color(*lc); triangle_left    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_triangle_right:    do { base_type::fill_color(*fc); base_type::line_color(*lc); triangle_right   (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_triangle_up:       do { base_type::fill_color(*fc); base_type::line_color(*lc); triangle_up      (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_triangle_down:     do { base_type::fill_color(*fc); base_type::line_color(*lc); triangle_down    (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_four_rays:         do { base_type::fill_color(*fc); base_type::line_color(*lc); four_rays        (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_cross:             do { base_type::fill_color(*fc); base_type::line_color(*lc); cross            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_x:                 do { base_type::fill_color(*fc); base_type::line_color(*lc); xing             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_dash:              do { base_type::fill_color(*fc); base_type::line_color(*lc); dash             (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_dot:               do { base_type::fill_color(*fc); base_type::line_color(*lc); dot              (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
+                case marker_pixel:             do { base_type::fill_color(*fc); base_type::line_color(*lc); pixel            (int(*x), int(*y), int(*r)); ++x; ++y; ++r; ++fc; ++lc; } while(--n); break;
             }
         }
     };

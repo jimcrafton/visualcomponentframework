@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -21,16 +21,19 @@
 #define AGG_ARC_INCLUDED
 
 #include <math.h>
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //=====================================================================arc
+    //
+    // See Implementation agg_arc.cpp 
+    //
     class arc
     {
     public:
-        arc() : m_scale(1.0) {}
+        arc() : m_scale(1.0), m_initialized(false) {}
         arc(double x,  double y, 
             double rx, double ry, 
             double a1, double a2, 
@@ -41,7 +44,7 @@ namespace agg
                   double a1, double a2, 
                   bool ccw=true);
 
-        void approximation_scale(double s) { m_scale = s; }
+        void approximation_scale(double s);
         double approximation_scale() const { return m_scale;  }
 
         void rewind(unsigned);
@@ -60,6 +63,7 @@ namespace agg
         double   m_scale;
         double   m_da;
         bool     m_ccw;
+        bool     m_initialized;
         unsigned m_path_cmd;
     };
 

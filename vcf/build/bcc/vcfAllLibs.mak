@@ -25,6 +25,9 @@ dynamic_libs::
 dynamic_libs_rel:
 	@$(MK) -fvcfAllDynStatLibs.mak -DTARGET=DLL -DBMODE=RELEASE
 
+dynamic_libs_dbg:
+	@$(MK) -fvcfAllDynStatLibs.mak -DTARGET=DLL -DBMODE=DEBUG
+
 static_libs_clean::
 	@$(MK) -fvcfAllDynStatLibs.mak -DTARGET=LIB -DBMODE=DEBUG clean
 	@$(MK) -fvcfAllDynStatLibs.mak -DTARGET=LIB -DBMODE=RELEASE clean

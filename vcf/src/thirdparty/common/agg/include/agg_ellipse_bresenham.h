@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -21,12 +21,13 @@
 #define AGG_ELLIPSE_BRESENHAM_INCLUDED
 
 
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 
 namespace agg
 {
 
+    //------------------------------------------ellipse_bresenham_interpolator
     class ellipse_bresenham_interpolator
     {
     public:

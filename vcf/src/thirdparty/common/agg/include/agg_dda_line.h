@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -21,12 +21,12 @@
 #define AGG_DDA_LINE_INCLUDED
 
 #include <stdlib.h>
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 namespace agg
 {
 
-    //========================================================================
+    //===================================================dda_line_interpolator
     template<int FractionShift, int YShift=0> class dda_line_interpolator
     {
     public:
@@ -39,12 +39,6 @@ namespace agg
             m_inc(((y2 - y1) << FractionShift) / int(count)),
             m_dy(0)
         {
-        }
-
-        //--------------------------------------------------------------------
-        void init(int x1, int y1, int x2, int y2)
-        {
-            *this = dda_line_interpolator<FractionShift>(x1, y1, x2, y2);
         }
 
         //--------------------------------------------------------------------
@@ -87,7 +81,7 @@ namespace agg
 
 
 
-    //========================================================================
+    //=================================================dda2_line_interpolator
     class dda2_line_interpolator
     {
     public:
@@ -97,7 +91,7 @@ namespace agg
         //--------------------------------------------------------------------
         dda2_line_interpolator() {}
 
-        //-------------------------------------------- Forward-step line
+        //-------------------------------------------- Forward-adjusted line
         dda2_line_interpolator(int y1, int y2, int count) :
             m_cnt(count <= 0 ? 1 : count),
             m_lft((y2 - y1) / m_cnt),
@@ -114,13 +108,29 @@ namespace agg
             m_mod -= count;
         }
 
-        //-------------------------------------------- Backward-step line
+        //-------------------------------------------- Backward-adjusted line
         dda2_line_interpolator(int y1, int y2, int count, int) :
             m_cnt(count <= 0 ? 1 : count),
-            m_lft((y2 - y1) / count),
-            m_rem((y2 - y1) % count),
+            m_lft((y2 - y1) / m_cnt),
+            m_rem((y2 - y1) % m_cnt),
             m_mod(m_rem),
             m_y(y1)
+        {
+            if(m_mod <= 0)
+            {
+                m_mod += count;
+                m_rem += count;
+                m_lft--;
+            }
+        }
+
+        //-------------------------------------------- Backward-adjusted line
+        dda2_line_interpolator(int y, int count) :
+            m_cnt(count <= 0 ? 1 : count),
+            m_lft(y / m_cnt),
+            m_rem(y % m_cnt),
+            m_mod(m_rem),
+            m_y(0)
         {
             if(m_mod <= 0)
             {
@@ -203,7 +213,7 @@ namespace agg
 
 
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------line_bresenham_interpolator
     class line_bresenham_interpolator
     {
     public:

@@ -1,0 +1,11 @@
+
+<documentTypes>
+	<document classname="TextEditDocument" classid="e0d4c047-60f1-4397-b3af-9e467057b7c4">
+		<property name="mimetype" value="application/x-mydoc"/>
+		<property name="role" value="editor"/>
+		<property name="extension" value=".txt;.xml"/>
+		<property name="description" value="TextEditDocument Document"/>
+		
+		<property name="window" value="TextEditWindow"/>
+	</document>
+</documentTypes>

@@ -70,7 +70,7 @@ int main( int argc, char** argv ){
 		dict.clear();
 
 		//read in the dictionary from the stream
-		tis >> &dict;
+		tis >> static_cast<VCF::Persistable*>(&dict);
 	}
 
 
@@ -91,6 +91,14 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2004/12/01 04:15:01  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.6.2.1  2004/10/07 15:03:24  kiklop74
+*Fixed building issues with bcb
+*
 *Revision 1.6  2004/08/07 02:46:58  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

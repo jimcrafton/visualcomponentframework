@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,36 +19,47 @@
 #ifndef AGG_CONV_DASH_INCLUDED
 #define AGG_CONV_DASH_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_gen_dash.h"
-#include "thirdparty/common/agg/include/agg_conv_generator.h"
+#include "agg_basics.h"
+#include "agg_vcgen_dash.h"
+#include "agg_conv_adaptor_vcgen.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------------------------conv_dash
     template<class VertexSource, class Markers=null_markers> 
-    struct conv_dash : public conv_generator<VertexSource, gen_dash, Markers>
+    struct conv_dash : public conv_adaptor_vcgen<VertexSource, vcgen_dash, Markers>
     {
+        typedef Markers marker_type;
+        typedef conv_adaptor_vcgen<VertexSource, vcgen_dash, Markers> base_type;
+
         conv_dash(VertexSource& vs) : 
-            conv_generator<VertexSource, gen_dash, Markers>(vs)
+            conv_adaptor_vcgen<VertexSource, vcgen_dash, Markers>(vs)
         {
         }
 
         void remove_all_dashes() 
         { 
-            generator().remove_all_dashes(); 
+            base_type::generator().remove_all_dashes(); 
         }
 
         void add_dash(double dash_len, double gap_len) 
         { 
-            generator().add_dash(dash_len, gap_len); 
+            base_type::generator().add_dash(dash_len, gap_len); 
         }
 
         void dash_start(double ds) 
         { 
-            generator().dash_start(ds); 
+            base_type::generator().dash_start(ds); 
         }
+
+        void shorten(double s) { base_type::generator().shorten(s); }
+        double shorten() const { return base_type::generator().shorten(); }
+
+    private:
+        conv_dash(const conv_dash<VertexSource, Markers>&);
+        const conv_dash<VertexSource, Markers>& 
+            operator = (const conv_dash<VertexSource, Markers>&);
     };
 
 

@@ -1,3 +1,4 @@
+cd ../
 for i in `find ./ -iname *.dsp`
 do
   unix2dos $i

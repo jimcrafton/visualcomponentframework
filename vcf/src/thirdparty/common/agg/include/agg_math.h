@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -12,23 +12,19 @@
 //          mcseemagg@yahoo.com
 //          http://www.antigrain.com
 //----------------------------------------------------------------------------
-//
-// math stuff
-//
-//----------------------------------------------------------------------------
 
 #ifndef AGG_MATH_INCLUDED
 #define AGG_MATH_INCLUDED
 
 #include <math.h>
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 namespace agg
 {
 
     const double intersection_epsilon = 1.0e-8;
 
-    //------------------------------------------------------------------------
+    //------------------------------------------------------calc_point_location
     inline double calc_point_location(double x1, double y1, 
                                       double x2, double y2, 
                                       double x,  double y)
@@ -37,7 +33,7 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
+    //--------------------------------------------------------point_in_triangle
     inline bool point_in_triangle(double x1, double y1, 
                                   double x2, double y2, 
                                   double x3, double y3, 
@@ -50,7 +46,7 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
+    //-----------------------------------------------------------calc_distance
     inline double calc_distance(double x1, double y1, double x2, double y2)
     {
         double dx = x2-x1;
@@ -59,7 +55,7 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
+    //------------------------------------------------calc_point_line_distance
     inline double calc_point_line_distance(double x1, double y1, 
                                            double x2, double y2, 
                                            double x,  double y)
@@ -70,8 +66,8 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
-    inline bool calc_intersection(double ax, double ay, double bx, double by,  
+    //-------------------------------------------------------calc_intersection
+    inline bool calc_intersection(double ax, double ay, double bx, double by,
                                   double cx, double cy, double dx, double dy,
                                   double* x, double* y)
     {
@@ -85,10 +81,10 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
-    inline void calc_orthogonal(double thickness, 
-                                double x1, double y1, 
-                                double x2, double y2, 
+    //--------------------------------------------------------calc_orthogonal
+    inline void calc_orthogonal(double thickness,
+                                double x1, double y1,
+                                double x2, double y2,
                                 double* x, double* y)
     {
         double dx = x2 - x1;
@@ -99,24 +95,30 @@ namespace agg
     }
 
 
-    //------------------------------------------------------------------------
-    inline void extend_triangle(double x1, double y1,
+    //--------------------------------------------------------dilate_triangle
+    inline void dilate_triangle(double x1, double y1,
                                 double x2, double y2,
                                 double x3, double y3,
                                 double *x, double* y,
                                 double d)
     {
-        if(calc_point_location(x1, y1, x2, y2, x3, y3) > 0.0) 
+        double dx1=0.0;
+        double dy1=0.0; 
+        double dx2=0.0;
+        double dy2=0.0; 
+        double dx3=0.0;
+        double dy3=0.0; 
+        double loc = calc_point_location(x1, y1, x2, y2, x3, y3);
+        if(fabs(loc) > intersection_epsilon)
         {
-            d = -d;
+            if(calc_point_location(x1, y1, x2, y2, x3, y3) > 0.0) 
+            {
+                d = -d;
+            }
+            calc_orthogonal(d, x1, y1, x2, y2, &dx1, &dy1);
+            calc_orthogonal(d, x2, y2, x3, y3, &dx2, &dy2);
+            calc_orthogonal(d, x3, y3, x1, y1, &dx3, &dy3);
         }
-        double dx1, dy1; 
-        double dx2, dy2; 
-        double dx3, dy3; 
-        calc_orthogonal(d, x1, y1, x2, y2, &dx1, &dy1);
-        calc_orthogonal(d, x2, y2, x3, y3, &dx2, &dy2);
-        calc_orthogonal(d, x3, y3, x1, y1, &dx3, &dy3);
-
         *x++ = x1 + dx1;  *y++ = y1 - dy1;
         *x++ = x2 + dx1;  *y++ = y2 - dy1;
         *x++ = x2 + dx2;  *y++ = y2 - dy2;
@@ -125,7 +127,7 @@ namespace agg
         *x++ = x1 + dx3;  *y++ = y1 - dy3;
     }
 
-    //------------------------------------------------------------------------
+    //-------------------------------------------------------calc_polygon_area
     template<class Storage> double calc_polygon_area(const Storage& st)
     {
         unsigned i;
@@ -146,14 +148,12 @@ namespace agg
     }
 
     //------------------------------------------------------------------------
-    //Tables for fast sqrt
-    extern unsigned short g_sqrt_table[1024];
-    #if !(defined(_M_IX86) && defined(_MSC_VER))
-    extern signed char g_elder_bit_table[256];
-    #endif
+    // Tables for fast sqrt
+    extern int16u g_sqrt_table[1024];
+    extern int8   g_elder_bit_table[256];
 
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------------------------fast_sqrt
     //Fast integer Sqrt - really fast: no cycles, divisions or multiplications
     #if defined(_MSC_VER)
     #pragma warning(push)
@@ -161,7 +161,7 @@ namespace agg
     #endif
     inline unsigned fast_sqrt(unsigned val)
     {
-    #if defined(_M_IX86) && defined(_MSC_VER)
+    #if defined(_M_IX86) && defined(_MSC_VER) && !defined(AGG_NO_ASM)
         //For Ix86 family processors this assembler code is used. 
         //The key command here is bsr - determination the number of the most 
         //significant bit of the value. For other processors
@@ -195,9 +195,8 @@ namespace agg
         //The following piece of code is just an emulation of the
         //Ix86 assembler command "bsr" (see above). However on old
         //Intels (like Intel MMX 233MHz) this code is about twice 
-        //faster (sic!) then just one "bsr". On new PIII and PIV the
-        //bsr is optimized quite well, so let us do not consider
-        //outdated hardware :-)
+        //faster (sic!) then just one "bsr". On PIII and PIV the
+        //bsr is optimized quite well.
         bit = t >> 24;
         if(bit)
         {
