@@ -703,7 +703,7 @@ public:
 
 		sbm->setHasHorizontalScrollbar( true );
 		sbm->setHasVerticalScrollbar( true );
-		sbm->setKeepScrollbarsVisible( true );
+		sbm->setKeepScrollbarsVisible( true ,true);
 
 
 		//create our custom menus here
@@ -720,11 +720,15 @@ public:
 
 
 	void onDocInitialized( Event* e ) {
-		CircleDocument* doc = (CircleDocument*)e->getSource();		
+		CircleDocument* doc = (CircleDocument*)e->getSource();
 
-		controller_->setModel( doc );
-		doc->addView( info_ );		
-		doc->addView( circlePanel_->getView() );
+		//is this our document?
+		if ( doc->getWindow() == this ) {
+			
+			controller_->setModel( doc );
+			doc->addView( info_ );		
+			doc->addView( circlePanel_->getView() );
+		}
 	}
 
 	Panel* circlePanel_;
@@ -735,10 +739,10 @@ public:
 
 
 
-class DocViewAdvancedApplication : public SDIDocumentBasedApplication {
+class DocViewAdvancedApplication : public MDIDocumentBasedApplication {
 public:
 
-	DocViewAdvancedApplication( int argc, char** argv ) : SDIDocumentBasedApplication(argc, argv) {
+	DocViewAdvancedApplication( int argc, char** argv ) : MDIDocumentBasedApplication(argc, argv) {
 
 	}
 
@@ -747,7 +751,7 @@ public:
 		REGISTER_CLASSINFO( CircleDocument );
 		REGISTER_CLASSINFO( DocViewAdvancedWindow );
 
-		bool result = SDIDocumentBasedApplication::initRunningApplication();
+		bool result = MDIDocumentBasedApplication::initRunningApplication();
 
 		newDefaultDocument();
 

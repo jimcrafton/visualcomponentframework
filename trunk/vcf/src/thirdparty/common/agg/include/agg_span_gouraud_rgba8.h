@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -16,61 +16,33 @@
 #ifndef AGG_SPAN_GOURAUD_RGBA8_INCLUDED
 #define AGG_SPAN_GOURAUD_RGBA8_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_color_rgba8.h"
-#include "thirdparty/common/agg/include/agg_gouraud_attr.h"
-#include "thirdparty/common/agg/include/agg_dda_line.h"
-#include "thirdparty/common/agg/include/agg_math.h"
+#include "agg_basics.h"
+#include "agg_color_rgba8.h"
+#include "agg_dda_line.h"
+#include "agg_span_gouraud.h"
 
 namespace agg
 {
 
-    //========================================================================
-    class span_gouraud_rgba8
+    //======================================================span_gouraud_rgba8
+    template<class Allocator = span_allocator<rgba8> >
+    class span_gouraud_rgba8 : public span_gouraud<rgba8, Allocator>
     {
     public:
-        typedef gouraud_attr<rgba8> attr_type;
-        typedef attr_type::gouraud_coord coord_type;
+        typedef Allocator alloc_type;
+        typedef rgba8 color_type;
+        typedef span_gouraud<color_type, alloc_type> base_type;
+        typedef typename base_type::coord_type coord_type;
 
-        class interpolator
-        {
-        public:
-            interpolator(const rgba8& c1, 
-                         const rgba8& c2, 
-                         unsigned count) :
-                m_r(c1.r, c2.r, count),
-                m_g(c1.g, c2.g, count),
-                m_b(c1.b, c2.b, count),
-                m_a(c1.a, c2.a, count)
-            {
-            }
-
-            static void calculate() {}
-
-            void step()
-            {
-                ++m_r; ++m_g; ++m_b; ++m_a;
-            }
-
-            int r() const { return m_r.y(); }
-            int g() const { return m_g.y(); }
-            int b() const { return m_b.y(); }
-            int a() const { return m_a.y(); }
-
-        private:
-            dda_line_interpolator<16> m_r;
-            dda_line_interpolator<16> m_g;
-            dda_line_interpolator<16> m_b;
-            dda_line_interpolator<16> m_a;
-        };
-
+    private:
+        //--------------------------------------------------------------------
         struct rgba_calc
         {
             void init(const coord_type& c1, const coord_type& c2)
             {
                 m_x1 = c1.x;
                 m_y1 = c1.y;
-                m_dx = 1.0 / (c2.x - c1.x);
+                m_dx = c2.x - c1.x;
                 m_dy = 1.0 / (c2.y - c1.y);
                 m_r1 = c1.color.r;
                 m_g1 = c1.color.g;
@@ -82,16 +54,16 @@ namespace agg
                 m_da = c2.color.a - m_a1;
             }
 
-            rgba8 calc(int y) const
+            void calc(int y)
             {
                 double k = 0.0;
                 if(y > m_y1) k = (y - m_y1) * m_dy;
                 rgba8 rgba;
-                rgba.r = m_r1 + int(m_dr * k);
-                rgba.g = m_g1 + int(m_dg * k);
-                rgba.b = m_b1 + int(m_db * k);
-                rgba.a = m_a1 + int(m_da * k);
-                return rgba;
+                m_r = m_r1 + int(m_dr * k);
+                m_g = m_g1 + int(m_dg * k);
+                m_b = m_b1 + int(m_db * k);
+                m_a = m_a1 + int(m_da * k);
+                m_x = int(m_x1 + m_dx * k);
             }
 
             double m_x1;
@@ -106,48 +78,38 @@ namespace agg
             int    m_dg;
             int    m_db;
             int    m_da;
+            int    m_r;
+            int    m_g;
+            int    m_b;
+            int    m_a;
+            int    m_x;
         };
 
-
-    protected:
-        bool       m_swap;
-        int        m_y2;
-        int        m_span_x;
-        int        m_span_count;
-        rgba_calc  m_rgba1;
-        rgba_calc  m_rgba2;
-        rgba_calc  m_rgba3;
-
     public:
-        void prepare(const attr_type& attr) 
+
+        //--------------------------------------------------------------------
+        span_gouraud_rgba8(alloc_type& alloc) : base_type(alloc) {}
+
+        //--------------------------------------------------------------------
+        span_gouraud_rgba8(alloc_type& alloc, 
+                           const color_type& c1, 
+                           const color_type& c2, 
+                           const color_type& c3,
+                           double x1, double y1, 
+                           double x2, double y2,
+                           double x3, double y3, 
+                           double d = 0) : 
+            base_type(alloc, c1, c2, c3, x1, y1, x2, y2, x3, y3, d)
+        {}
+
+        //--------------------------------------------------------------------
+        void prepare(unsigned max_span_len)
         {
+            base_type::prepare(max_span_len);
+
             coord_type coord[3];
+            arrange_vertices(coord);
 
-            coord[0] = attr.m_coord[0];
-            coord[1] = attr.m_coord[1];
-            coord[2] = attr.m_coord[2];
-
-            if(attr.m_coord[0].y > attr.m_coord[2].y)
-            {
-                coord[0] = attr.m_coord[2]; 
-                coord[2] = attr.m_coord[0];
-            }
-
-            attr_type::gouraud_coord tmp;
-            if(coord[0].y > coord[1].y)
-            {
-                tmp      = coord[1];
-                coord[1] = coord[0];
-                coord[0] = tmp;
-            }
-
-            if(coord[1].y > coord[2].y)
-            {
-                tmp      = coord[2];
-                coord[2] = coord[1];
-                coord[1] = tmp;
-            }
-            
             m_y2 = int(coord[1].y);
 
             m_swap = calc_point_location(coord[0].x, coord[0].y, 
@@ -159,51 +121,75 @@ namespace agg
             m_rgba3.init(coord[1], coord[2]);
         }
 
-
-        void prepare_y(int y) 
+        //--------------------------------------------------------------------
+        color_type* generate(int x, int y, unsigned len)
         {
-        }
-
-        void prepare_x(int x, unsigned count) 
-        {
-            m_span_x = x;
-            m_span_count = count;
-        }
-
-
-        interpolator begin(int x, int y, unsigned, const attr_type&)
-        {
-
-            rgba8 c1(m_rgba1.calc(y));
-            rgba8 c2;
+            m_rgba1.calc(y);
+            const rgba_calc* pc1 = &m_rgba1;
+            const rgba_calc* pc2 = &m_rgba2;
 
             if(y < m_y2)
             {
-                c2 = m_rgba2.calc(y+1);
+                m_rgba2.calc(y+1);
             }
             else
             {
-                c2 = m_rgba3.calc(y);
+                m_rgba3.calc(y);
+                pc2 = &m_rgba3;
             }
 
-            const rgba8* pc1 = &c1;
-            const rgba8* pc2 = &c2;
             if(m_swap)
             {
-                pc1 = &c2;
-                pc2 = &c1;
+                const rgba_calc* t = pc2;
+                pc2 = pc1;
+                pc1 = t;
             }
 
-            interpolator span(*pc1, *pc2, m_span_count);
-            while(m_span_x < x)
+            int nx = pc1->m_x;
+            unsigned nlen = pc2->m_x - pc1->m_x + 1;
+
+            if(nlen < len) nlen = len;
+
+            dda_line_interpolator<16> r(pc1->m_r, pc2->m_r, nlen);
+            dda_line_interpolator<16> g(pc1->m_g, pc2->m_g, nlen);
+            dda_line_interpolator<16> b(pc1->m_b, pc2->m_b, nlen);
+            dda_line_interpolator<16> a(pc1->m_a, pc2->m_a, nlen);
+
+            if(nx < x)
             {
-                ++m_span_x;
-                span.step();
+                unsigned d = unsigned(x - nx);
+                r += d; 
+                g += d; 
+                b += d; 
+                a += d;
             }
-            return span;
+
+            color_type* span = base_type::allocator().span();
+            do
+            {
+                span->r = (int8u)r.y();
+                span->g = (int8u)g.y();
+                span->b = (int8u)b.y();
+                span->a = (int8u)a.y();
+                ++r; 
+                ++g; 
+                ++b; 
+                ++a;
+                ++span;
+            }
+            while(--len);
+            return base_type::allocator().span();
         }
 
+
+    private:
+        bool      m_swap;
+        int       m_y2;
+        rgba_calc m_rgba1;
+        rgba_calc m_rgba2;
+        rgba_calc m_rgba3;
     };
+
 
 
 }

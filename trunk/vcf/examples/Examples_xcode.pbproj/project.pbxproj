@@ -117,7 +117,7 @@
 		};
 		5E006DC1068FD70300D3415B = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "Alignment-Info.plist";
 			path = "Alignment/Alignment-Info.plist";
 			refType = 2;
@@ -208,8 +208,6 @@
 			sourceTree = "<group>";
 		};
 		5E2C820D06420A1E00A8020D = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -222,8 +220,6 @@
 			name = Development;
 		};
 		5E2C820E06420A1E00A8020D = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -450,7 +446,7 @@
 		};
 		5E8E2C8D06BDED9C007602E7 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "DateTimeUI-Info.plist";
 			path = "DateTimeUI/DateTimeUI-Info.plist";
 			refType = 2;
@@ -601,7 +597,7 @@
 		};
 		5E8E2D0B06BDF135007602E7 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "GraphicsBasics-Info.plist";
 			path = "GraphicsBasics/GraphicsBasics-Info.plist";
 			refType = 2;
@@ -762,7 +758,7 @@
 		};
 		5E8E2D4806BDF35B007602E7 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "TextLayout-Info.plist";
 			path = "TextLayout/TextLayout-Info.plist";
 			refType = 2;
@@ -923,7 +919,7 @@
 		};
 		5E8E2D7106BDF457007602E7 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "ProgressBars-Info.plist";
 			path = "ProgressBars/ProgressBars-Info.plist";
 			refType = 2;
@@ -1094,7 +1090,7 @@
 		};
 		5E8E2D9F06BDF539007602E7 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "Labels-Info.plist";
 			path = "Labels/Labels-Info.plist";
 			refType = 2;
@@ -1193,8 +1189,7 @@
 		};
 		5EA82992064537F700A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = FilesAndDirectories;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1424,8 +1419,7 @@
 		};
 		5EA829A70645391500A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = ThreadBasics;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1490,8 +1484,7 @@
 		};
 		5EA829AE0645392800A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = WorkingWithEnumerators;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1556,8 +1549,7 @@
 		};
 		5EA829B50645393F00A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Strings;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1622,8 +1614,7 @@
 		};
 		5EA829BC0645395200A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = SharedLibraries;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1689,8 +1680,7 @@
 		};
 		5EA829C30645396900A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Reflection;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1753,8 +1743,7 @@
 		};
 		5EA829CA0645397600A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Processes;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1817,8 +1806,7 @@
 		};
 		5EA829D10645398900A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Localization;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1883,8 +1871,7 @@
 		};
 		5EA829D80645399800A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = EventBasics;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1949,8 +1936,7 @@
 		};
 		5EA829DF064539B000A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = DatesAndTime;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -2014,8 +2000,7 @@
 		};
 		5EA829E6064539C100A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Dictionaries;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -2080,8 +2065,7 @@
 		};
 		5EA829ED064539D800A8020D = {
 			explicitFileType = "compiled.mach-o.executable";
-			fallbackIsa = PBXFileReference;
-			isa = PBXExecutableFileReference;
+			isa = PBXFileReference;
 			path = Conditions;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;

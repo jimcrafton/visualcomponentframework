@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,18 +20,21 @@
 #ifndef AGG_ROUNDED_RECT_INCLUDED
 #define AGG_ROUNDED_RECT_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_arc.h"
-#include "thirdparty/common/agg/include/agg_vertex_iterator.h"
+#include "agg_basics.h"
+#include "agg_arc.h"
+#include "agg_vertex_iterator.h"
 
 
 namespace agg
 {
-    //------------------------------------------------------------------------
+    //------------------------------------------------------------rounded_rect
+    //
+    // See Implemantation agg_rounded_rect.cpp
+    //
     class rounded_rect
     {
     public:
-        rounded_rect() : m_scale(1.0) {}
+        rounded_rect() {}
         rounded_rect(double x1, double y1, double x2, double y2, double r);
 
         void rect(double x1, double y1, double x2, double y2);
@@ -42,8 +45,8 @@ namespace agg
                     double rx3, double ry3, double rx4, double ry4);
         void normalize_radius();
 
-        void approximation_scale(double s) { m_scale = s; }
-        double approximation_scale() const { return m_scale;  }
+        void approximation_scale(double s) { m_arc.approximation_scale(s); }
+        double approximation_scale() const { return m_arc.approximation_scale(); }
 
         void rewind(unsigned);
         unsigned vertex(double* x, double* y);
@@ -66,7 +69,6 @@ namespace agg
         double m_ry3;
         double m_rx4;
         double m_ry4;
-        double m_scale;
         unsigned m_status;
         arc      m_arc;
     };

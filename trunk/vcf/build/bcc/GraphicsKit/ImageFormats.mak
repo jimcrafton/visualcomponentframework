@@ -36,18 +36,21 @@ LIBNAME=
 DLLNAME=ImageFormats_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\ImageFormats
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)         
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\ImageFormats.obj 
+CPPFILES=ImageFormats.cpp
+OBJFILES=$(CPPFILES:.cpp=.obj^ )
 
 LIBFILES=ODBC32.LIB UUID.LIB
 DEFFILE=
@@ -70,23 +73,31 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\ImageFormats_bcc$(DBGDLL).lib del ..\..\..\lib\ImageFormats_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
-$(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAMS) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+$(PROJECT1):: $(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
     $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
     $(ALLLIBS)
@@ -96,5 +107,3 @@ $(PROJECT2):: $(OBJFILES)
 |
     @if exist $(BIN)\ImageFormats_bcc$(DBGDLL).lib move $(BIN)\ImageFormats_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\ImageFormats.obj:    ..\..\..\src\ImageFormats\ImageFormats.cpp  

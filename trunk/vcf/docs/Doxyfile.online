@@ -243,10 +243,13 @@ GENERATE_BUGLIST       = YES
 # You can put \n's in the value part of an alias to insert newlines.
 
 ALIASES                = "delegate=\par Event Delegate:\n" \
-					"delegates=\par Event Delegates for this class:\n" \
-					"del=\li" \
-					"eventtype=<br><b>event type</b>:" \
-					"event=<br><b>event class:</b>"
+                         "delegates=\par Event Delegates for this class:\n" \
+                         "del=\li" \
+                         "eventtype=<br><b>event type</b>:" \
+                         "event=<br><b>event class:</b>" \
+                         "fire=<br><b>fire event:</b>:" \
+                         "fires=\par Fires events:\n" \
+                         "fir=\li"
 
 # The MAX_INITIALIZER_LINES tag determines the maximum number of lines 
 # the initial value of a variable or define consist of for it to appear in 

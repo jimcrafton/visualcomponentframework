@@ -1,0 +1,65 @@
+!!ARBvp1.0
+
+ATTRIB  index = vertex.attrib[0];
+ATTRIB  pos = vertex.attrib[1];
+ATTRIB  vel = vertex.attrib[2];
+ATTRIB  col = vertex.attrib[3];
+ATTRIB  size = vertex.attrib[4];
+ATTRIB  posb = vertex.attrib[5];
+ATTRIB  velb = vertex.attrib[6];
+
+PARAM   mv[4] = { state.matrix.modelview };
+PARAM   mvp[4] = { state.matrix.mvp };
+PARAM   offset[8] = { program.local[0..7] };
+PARAM   light[1] = { state.light[0].position };
+PARAM   gravity[1] = { program.local[8] };
+
+ADDRESS A0;
+
+# Add additional parameters here
+
+OUTPUT  opos = result.position;
+OUTPUT  ocol = result.color;
+OUTPUT  otc  = result.texcoord[0];
+
+TEMP    newpos;
+
+TEMP    norm;
+TEMP    right;
+TEMP    up;
+
+# Get unnormalized right
+XPD     right,vel,gravity[0];
+# Normalize right
+DP3     norm.x,right,right;
+RSQ     norm.x,norm.x;
+MUL     right,right,norm.x;
+# Reverse vel for up
+MUL     up,vel,offset[0].x;
+# Normalize final up
+DP3     norm.x,up,up;
+RSQ     norm.x,norm.x;
+MUL     up,up,norm.x;
+
+ARL     A0.x,index.x;
+MUL     newpos.xyz,offset[A0.x].x,right;
+MAD     newpos.xyz,offset[A0.x].y,up,newpos;
+MUL     newpos,newpos,size;
+ADD     newpos,newpos,pos;
+MOV     newpos.w,1;
+
+# Dont calculate the lighting
+#XPD     norm,right,up;
+#DP3     norm.x,norm,light[0];
+#MUL     ocol,col,norm.x;
+MOV     ocol,col;
+
+# Transform the vertex to clip coordinates.   
+DP4     opos.x, mvp[0], newpos;
+DP4     opos.y, mvp[1], newpos;
+DP4     opos.z, mvp[2], newpos;
+DP4     opos.w, mvp[3], newpos;
+
+MOV     otc, vertex.texcoord[0];
+
+END

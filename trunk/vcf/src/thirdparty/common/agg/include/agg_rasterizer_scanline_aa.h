@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -26,8 +26,11 @@
 
 #include <string.h>
 #include <math.h>
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_math.h"
+#include "agg_basics.h"
+#include "agg_math.h"
+#include "agg_gamma_functions.h"
+#include "agg_clip_liang_barsky.h"
+
 
 namespace agg
 {
@@ -40,18 +43,18 @@ namespace agg
     // 8-bits fractional part the capacity is 16 bits or [-32768...32767].
     enum
     {
-        poly_base_shift = 8,
-        poly_base_size  = 1 << poly_base_shift,
-        poly_base_mask  = poly_base_size - 1
+        poly_base_shift = 8,                       //----poly_base_shift
+        poly_base_size  = 1 << poly_base_shift,    //----poly_base_size 
+        poly_base_mask  = poly_base_size - 1       //----poly_base_mask 
     };
     
-    //------------------------------------------------------------------------
+    //--------------------------------------------------------------poly_coord
     inline int poly_coord(double c)
     {
         return int(c * poly_base_size);
     }
 
-    //------------------------------------------------------------------------
+    //-----------------------------------------------------------------cell_aa
     // A pixel cell. There're no constructors defined and it was done 
     // intentionally in order to avoid extra overhead when allocating an 
     // array of cells.
@@ -70,7 +73,7 @@ namespace agg
     };
 
 
-    //------------------------------------------------------------------------
+    //--------------------------------------------------------------outline_aa
     // An internal class that implements the main rasterization algorithm.
     // Used in the rasterizer. Should not be used direcly.
     class outline_aa
@@ -99,8 +102,9 @@ namespace agg
         int max_x() const { return m_max_x; }
         int max_y() const { return m_max_y; }
 
-        unsigned num_cells() const {return m_num_cells; }
         const cell_aa* const* cells();
+        unsigned num_cells() { cells(); return m_num_cells; }
+        bool sorted() const { return m_sorted; }
 
     private:
         outline_aa(const outline_aa&);
@@ -109,7 +113,7 @@ namespace agg
         void set_cur_cell(int x, int y);
         void add_cur_cell();
         void sort_cells();
-        void render_scanline(int ey, int x1, int y1, int x2, int y2);
+        void render_hline(int ey, int x1, int y1, int x2, int y2);
         void render_line(int x1, int y1, int x2, int y2);
         void allocate_block();
         
@@ -127,97 +131,51 @@ namespace agg
         cell_aa   m_cur_cell;
         int       m_cur_x;
         int       m_cur_y;
-        int       m_close_x;
-        int       m_close_y;
         int       m_min_x;
         int       m_min_y;
         int       m_max_x;
         int       m_max_y;
-        unsigned  m_flags;
+        bool      m_sorted;
     };
 
 
-    //----------------------------------------------------------------------------
+    //----------------------------------------------------------filling_rule_e
     enum filling_rule_e
     {
         fill_non_zero,
         fill_even_odd
     };
+
+
     
-    //----------------------------------------------------------------------------
-    struct null_gamma
+    //----------------------------------------------------------clipping_flags
+    // Determine the clipping code of the vertex according to the 
+    // Cyrus-Beck line clipping algorithm
+    //
+    //        |        |
+    //  0110  |  0010  | 0011
+    //        |        |
+    // -------+--------+-------- clip_box.y2
+    //        |        |
+    //  0100  |  0000  | 0001
+    //        |        |
+    // -------+--------+-------- clip_box.y1
+    //        |        |
+    //  1100  |  1000  | 1001
+    //        |        |
+    //  clip_box.x1  clip_box.x2
+    //
+    // 
+    inline unsigned clipping_flags(int x, int y, const rect& clip_box)
     {
-        static int calculate(int val) { return val; }
-    };
-    
-
-    //----------------------------------------------------------------------------
-    class gamma8
-    {
-    public:
-        gamma8() 
-        { 
-            memcpy(m_gamma, s_default_gamma, sizeof(m_gamma)); 
-        }
-
-        void copy_from(const unsigned char* gamma)
-        {
-            memcpy(m_gamma, gamma, sizeof(m_gamma));
-        }
-
-        void gamma(double g)
-        {
-            unsigned i;
-            for(i = 0; i < 256; i++)
-            {
-                m_gamma[i] = (unsigned char)(pow(double(i) / 255.0, g) * 255.0);
-            }
-        }
-
-        int calculate(int val) const { return m_gamma[val]; }
-
-    private:
-        unsigned char m_gamma[256];
-        static unsigned char s_default_gamma[];
-    };
+        return  (x > clip_box.x2) |
+               ((y > clip_box.y2) << 1) |
+               ((x < clip_box.x1) << 2) |
+               ((y < clip_box.y1) << 3);
+    }
 
 
-    //----------------------------------------------------------------------------
-    class gamma_bin8
-    {
-    public:
-        gamma_bin8() : m_threshold(128) {}
-
-        void threshold(double t) 
-        { 
-            m_threshold = int(t * 255); 
-            if(m_threshold == 0) m_threshold = 1; 
-        }
-
-        double threshold() const 
-        { 
-            return double(m_threshold) / 255.0; 
-        }
-
-        int calculate(int val) const 
-        { 
-            return (val >= m_threshold) ? 255 : 0; 
-        }
-
-    private:
-        int m_threshold;
-    };
-
-
-
-    void extend_triangle(double x1, double y1,
-                         double x2, double y2,
-                         double x3, double y3,
-                         double* x, double* y,
-                         double d);
-
-
-    //========================================================================
+    //==================================================rasterizer_scanline_aa
     // Polygon rasterizer that is used to render filled polygons with 
     // high-quality Anti-Aliasing. Internally, by default, the class uses 
     // integer coordinates in format 24.8, i.e. 24 bits for integer part 
@@ -248,64 +206,103 @@ namespace agg
     //
     // filling_rule() and gamma() can be called anytime before "sweeping".
     //------------------------------------------------------------------------
-    template<class Scanline, class GammaFunction=null_gamma> 
-    class rasterizer_scanline_aa
+    template<unsigned AA_Shift=8> class rasterizer_scanline_aa
     {
+        enum status
+        {
+            status_initial,
+            status_line_to,
+            status_closed
+        };
+
+        struct iterator
+        {
+            const cell_aa* const* cells;
+            int                   cover;
+            int                   last_y;
+        };
+
     public:
         enum
         {
-            aa_shift = Scanline::aa_shift,
+            aa_shift = AA_Shift,
             aa_num   = 1 << aa_shift,
             aa_mask  = aa_num - 1,
             aa_2num  = aa_num * 2,
             aa_2mask = aa_2num - 1
         };
-        typedef typename Scanline::alpha_mask_type alpha_mask_type;
-        rasterizer_scanline_aa() : m_filling_rule(fill_non_zero) {}
-        rasterizer_scanline_aa(alpha_mask_type& am) :
-            m_scanline(am),
-            m_filling_rule(fill_non_zero)
+
+        //--------------------------------------------------------------------
+        rasterizer_scanline_aa() : 
+            m_filling_rule(fill_non_zero),
+            m_clipped_start_x(0),
+            m_clipped_start_y(0),
+            m_start_x(0),
+            m_start_y(0),
+            m_prev_x(0),
+            m_prev_y(0),
+            m_prev_flags(0),
+            m_status(status_initial),
+            m_clipping(false)
         {
+            int i;
+            for(i = 0; i < aa_num; i++) m_gamma[i] = i;
         }
 
+        //--------------------------------------------------------------------
+        template<class GammaF> 
+        rasterizer_scanline_aa(const GammaF& gamma_function) : 
+            m_filling_rule(fill_non_zero),
+            m_clipped_start_x(0),
+            m_clipped_start_y(0),
+            m_start_x(0),
+            m_start_y(0),
+            m_prev_x(0),
+            m_prev_y(0),
+            m_prev_flags(0),
+            m_status(status_initial),
+            m_clipping(false)
+        {
+            gamma(gamma_function);
+        }
 
-        //------------------------------------------------------------------------
-        void reset() { m_outline.reset(); }
+        //--------------------------------------------------------------------
+        void reset(); 
+        void filling_rule(filling_rule_e filling_rule);
+        void clip_box(double x1, double y1, double x2, double y2);
+        void reset_clipping();
 
-        //------------------------------------------------------------------------
-        void filling_rule(filling_rule_e filling_rule) 
+        //--------------------------------------------------------------------
+        template<class GammaF> void gamma(const GammaF& gamma_function)
         { 
-            m_filling_rule = filling_rule; 
+            int i;
+            for(i = 0; i < aa_num; i++)
+            {
+                m_gamma[i] = int(floor(gamma_function(double(i) / aa_mask) * aa_mask + 0.5));
+            }
         }
 
-        //------------------------------------------------------------------------
-        GammaFunction& gamma()    { return m_gamma;    }
-        Scanline&      scanline() { return m_scanline; }
+        //--------------------------------------------------------------------
+        unsigned apply_gamma(unsigned cover) const 
+        { 
+            return m_gamma[cover]; 
+        }
 
-        //------------------------------------------------------------------------
-        void move_to(int x, int y) { m_outline.move_to(x, y); }
-        void line_to(int x, int y) { m_outline.line_to(x, y); }
-
-        //------------------------------------------------------------------------
-        void move_to_d(double x, double y) { m_outline.move_to(poly_coord(x), 
-                                                               poly_coord(y)); }
-        void line_to_d(double x, double y) { m_outline.line_to(poly_coord(x), 
-                                                               poly_coord(y)); }
-
-        //------------------------------------------------------------------------
+        //--------------------------------------------------------------------
+        void add_vertex(double x, double y, unsigned cmd);
+        void move_to(int x, int y);
+        void line_to(int x, int y);
+        void close_polygon();
+        void move_to_d(double x, double y);
+        void line_to_d(double x, double y);
+        
+        //--------------------------------------------------------------------
         int min_x() const { return m_outline.min_x(); }
         int min_y() const { return m_outline.min_y(); }
         int max_x() const { return m_outline.max_x(); }
         int max_y() const { return m_outline.max_y(); }
 
-        //------------------------------------------------------------------------
-        rect bounding_box() const
-        {
-            return rect(m_outline.min_x(), m_outline.min_y(),
-                        m_outline.max_x(), m_outline.max_y());
-        }
-
-        //------------------------------------------------------------------------
+        //--------------------------------------------------------------------
         unsigned calculate_alpha(int area) const
         {
             int cover = area >> (poly_base_shift*2 + 1 - aa_shift);
@@ -320,39 +317,41 @@ namespace agg
                 }
             }
             if(cover > aa_mask) cover = aa_mask;
-            return m_gamma.calculate(cover);
+            return m_gamma[cover];
         }
 
-
-        //------------------------------------------------------------------------
-        template<class Renderer> void render(Renderer& r, int dx=0, int dy=0)
+        //--------------------------------------------------------------------
+        void sort()
         {
-            if(m_outline.num_cells() == 0) return;
+            m_outline.cells();
+        }
+        
+        //--------------------------------------------------------------------
+        template<class Scanline, class Renderer> 
+        void render(Scanline& sl, Renderer& r, int dx=0, int dy=0)
+        {
+            close_polygon();
             const cell_aa* const* cells = m_outline.cells();
-            if(cells == 0) return;
+            if(m_outline.num_cells() == 0) return;
 
-            int x, y;
-            int cover;
-            int alpha;
-            int area;
+            sl.reset(min_x() + dx, max_x() + dx);
+            r.prepare(unsigned(max_x() - min_x() + 2));
 
-            m_scanline.reset(m_outline.min_x(), m_outline.max_x(), dx, dy);
-            r.prepare();
-
-            cover = 0;
             const cell_aa* cur_cell = *cells++;
+            int            cover    = 0;
+            int            last_y   = cur_cell->y;
+
             for(;;)
             {
-                const cell_aa* start_cell = cur_cell;
-
                 int coord  = cur_cell->packed_coord;
-                x = cur_cell->x;
-                y = cur_cell->y;
+                int x = cur_cell->x;
+                int y = cur_cell->y;
+                int alpha;
 
-                area   = start_cell->area;
-                cover += start_cell->cover;
+                int area   = cur_cell->area;
+                cover     += cur_cell->cover;
 
-                //accumulate all start cells
+                //accumulate all cells with the same coordinates
                 while((cur_cell = *cells++) != 0)
                 {
                     if(cur_cell->packed_coord != coord) break;
@@ -365,93 +364,156 @@ namespace agg
                     alpha = calculate_alpha((cover << (poly_base_shift + 1)) - area);
                     if(alpha)
                     {
-                        if(m_scanline.is_ready(y))
+                        if(sl.num_spans() && y != last_y)
                         {
-                            m_scanline.alpha_mask();
-                            r.render(m_scanline);
-                            m_scanline.reset_spans();
+                            sl.finalize(last_y + dy);
+                            r.render(sl);
+                            sl.reset_spans();
                         }
-                        m_scanline.add_cell(x, y, alpha);//m_gamma.calculate(alpha));
+                        sl.add_cell(x + dx, alpha);
+                        last_y = y;
                     }
-                    x++;
+                    ++x;
                 }
 
-                if(!cur_cell) break;
+                if(cur_cell == 0) break;
 
                 if(cur_cell->x > x)
                 {
                     alpha = calculate_alpha(cover << (poly_base_shift + 1));
                     if(alpha)
                     {
-                        if(m_scanline.is_ready(y))
+                        if(sl.num_spans() && y != last_y)
                         {
-                            m_scanline.alpha_mask();
-                            r.render(m_scanline);
-                            m_scanline.reset_spans();
+                            sl.finalize(last_y + dy);
+                            r.render(sl);
+                            sl.reset_spans();
                         }
-                        m_scanline.add_span(x, y, 
-                                            cur_cell->x - x, 
-                                            alpha);//m_gamma.calculate(alpha));
+                        sl.add_span(x + dx, cur_cell->x - x, alpha);
+                        last_y = y;
                     }
                 }
             } 
         
-            if(m_scanline.num_spans())
+            if(sl.num_spans())
             {
-                m_scanline.alpha_mask();
-                r.render(m_scanline);
+                sl.finalize(last_y + dy);
+                r.render(sl);
             }
         }
 
 
-        //------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------
+        bool rewind_scanlines()
+        {
+            close_polygon();
+            m_iterator.cells = m_outline.cells();
+            if(m_outline.num_cells() == 0) 
+            {
+                return false;
+            }
+            m_iterator.cover  = 0;
+            m_iterator.last_y = (*m_iterator.cells)->y;
+            return true;
+        }
+
+
+        //--------------------------------------------------------------------
+        template<class Scanline> bool sweep_scanline(Scanline& sl)
+        {
+            sl.reset_spans();
+            for(;;)
+            {
+                const cell_aa* cur_cell = *m_iterator.cells;
+                if(cur_cell == 0) return false;
+                ++m_iterator.cells;
+                m_iterator.last_y = cur_cell->y;
+
+                for(;;)
+                {
+                    int coord  = cur_cell->packed_coord;
+                    int area   = cur_cell->area; 
+                    int last_x = cur_cell->x;
+
+                    m_iterator.cover += cur_cell->cover;
+
+                    //accumulate all cells with the same coordinates
+                    for(; (cur_cell = *m_iterator.cells) != 0; ++m_iterator.cells)
+                    {
+                        if(cur_cell->packed_coord != coord) break;
+                        area             += cur_cell->area;
+                        m_iterator.cover += cur_cell->cover;
+                    }
+
+                    int alpha;
+                    if(cur_cell == 0 || cur_cell->y != m_iterator.last_y)
+                    {
+
+                        if(area)
+                        {
+                            alpha = calculate_alpha((m_iterator.cover << (poly_base_shift + 1)) - area);
+                            if(alpha)
+                            {
+                                sl.add_cell(last_x, alpha);
+                            }
+                            ++last_x;
+                        }
+                        break;
+                    }
+
+                    ++m_iterator.cells;
+
+                    if(area)
+                    {
+                        alpha = calculate_alpha((m_iterator.cover << (poly_base_shift + 1)) - area);
+                        if(alpha)
+                        {
+                            sl.add_cell(last_x, alpha);
+                        }
+                        ++last_x;
+                    }
+
+                    if(cur_cell->x > last_x)
+                    {
+                        alpha = calculate_alpha(m_iterator.cover << (poly_base_shift + 1));
+                        if(alpha)
+                        {
+                            sl.add_span(last_x, cur_cell->x - last_x, alpha);
+                        }
+                    }
+                }
+                if(sl.num_spans()) 
+                {
+                    sl.finalize(m_iterator.last_y);
+                    break;
+                }
+            }
+            return true;
+        }
+
+
+
+        //--------------------------------------------------------------------
         bool hit_test(int tx, int ty);
 
 
-        //------------------------------------------------------------------------
-        template<class Renderer, class Attr>
-        void render_gouraud(Renderer& r, Attr attr, double d=0.0)
+        //--------------------------------------------------------------------
+        void add_xy(const double* x, const double* y, unsigned n)
         {
-            if(d == 0.0)
+            if(n > 2)
             {
-                move_to_d(attr.m_coord[0].x, attr.m_coord[0].y);
-                line_to_d(attr.m_coord[1].x, attr.m_coord[1].y);
-                line_to_d(attr.m_coord[2].x, attr.m_coord[2].y);
+                move_to_d(*x++, *y++);
+                --n;
+                do
+                {
+                    line_to_d(*x++, *y++);
+                }
+                while(--n);
             }
-            else
-            {
-                double x[6];
-                double y[6];
-                extend_triangle(attr.m_coord[0].x, attr.m_coord[0].y,
-                                attr.m_coord[1].x, attr.m_coord[1].y,
-                                attr.m_coord[2].x, attr.m_coord[2].y,
-                                x, y, d);
-
-                calc_intersection(x[4], y[4], x[5], y[5],
-                                  x[0], y[0], x[1], y[1],
-                                  &attr.m_coord[0].x, &attr.m_coord[0].y);
-
-                calc_intersection(x[0], y[0], x[1], y[1],
-                                  x[2], y[2], x[3], y[3],
-                                  &attr.m_coord[1].x, &attr.m_coord[1].y);
-
-                calc_intersection(x[2], y[2], x[3], y[3],
-                                  x[4], y[4], x[5], y[5],
-                                  &attr.m_coord[2].x, &attr.m_coord[2].y);
-
-                move_to_d(x[0], y[0]);
-                line_to_d(x[1], y[1]);
-                line_to_d(x[2], y[2]);
-                line_to_d(x[3], y[3]);
-                line_to_d(x[4], y[4]);
-                line_to_d(x[5], y[5]);
-            }
-            r.attribute(attr);
-            render(r);
         }
 
-
-        //------------------------------------------------------------------------
+        //-------------------------------------------------------------------
         template<class VertexSource>
         void add_path(VertexSource& vs, unsigned id=0)
         {
@@ -462,19 +524,12 @@ namespace agg
             vs.rewind(id);
             while(!is_stop(cmd = vs.vertex(&x, &y)))
             {
-                if(is_move_to(cmd)) 
-                {
-                    m_outline.move_to(poly_coord(x), poly_coord(y));
-                }
-                else 
-                {
-                    m_outline.line_to(poly_coord(x), poly_coord(y));
-                }
+                add_vertex(x, y, cmd);
             }
         }
 
 
-        //------------------------------------------------------------------------
+        //--------------------------------------------------------------------
         template<class VertexSource>
         void add_path(VertexSource& vs, double dx, double dy, unsigned id=0)
         {
@@ -487,19 +542,12 @@ namespace agg
             {
                 x += dx;
                 y += dy;
-                if(is_move_to(cmd)) 
-                {
-                    m_outline.move_to(poly_coord(x), poly_coord(y));
-                }
-                else 
-                {
-                    m_outline.line_to(poly_coord(x), poly_coord(y));
-                }
+                add_vertex(x, y, cmd);
             }
         }
 
 
-        //------------------------------------------------------------------------
+        //--------------------------------------------------------------------
         template<class VertexIterator>
         void add_path(VertexIterator begin, VertexIterator end, 
                       double dx=0, double dy=0)
@@ -508,25 +556,19 @@ namespace agg
             {
                 double x = begin->x + dx;
                 double y = begin->y + dy;
-
-                if(is_move_to(begin->cmd)) 
-                {
-                    m_outline.move_to(poly_coord(x), poly_coord(y));
-                }
-                else 
-                {
-                    m_outline.line_to(poly_coord(x), poly_coord(y));
-                }
+                add_vertex(x, y, begin->cmd);
                 ++begin;
             }
         }
 
 
-        //------------------------------------------------------------------------
-        template<class Renderer, class VertexSource, class AttrStorage, class PathId>
-        void render_all_paths(Renderer& r, 
+        //--------------------------------------------------------------------
+        template<class Scanline, class Renderer, 
+                 class VertexSource, class ColorStorage, class PathId>
+        void render_all_paths(Scanline& sl,
+                              Renderer& r, 
                               VertexSource& vs, 
-                              const AttrStorage& as, 
+                              const ColorStorage& as, 
                               const PathId& id,
                               unsigned num_paths)
         {
@@ -534,17 +576,19 @@ namespace agg
             {
                 reset();
                 add_path(vs, id[i]);
-                r.attribute(as[i]);
-                render(r);
+                r.color(as[i]);
+                render(sl, r);
             }
         }
 
 
-        //------------------------------------------------------------------------
-        template<class Renderer, class VertexSource, class AttrStorage, class PathId>
-        void render_all_paths(Renderer& r, 
+        //--------------------------------------------------------------------
+        template<class Scanline, class Renderer, 
+                 class VertexSource, class ColorStorage, class PathId>
+        void render_all_paths(Scanline& sl,
+                              Renderer& r, 
                               VertexSource& vs, 
-                              const AttrStorage& as, 
+                              const ColorStorage& as, 
                               const PathId& id,
                               unsigned num_paths,
                               double dx,
@@ -554,69 +598,307 @@ namespace agg
             {
                 reset();
                 add_path(vs, dx, dy, id[i]);
-                r.attribute(as[i]);
-                render(r);
+                r.color(as[i]);
+                render(sl, r);
             }
         }
 
 
 
-        //------------------------------------------------------------------------
-        template<class Renderer, class Ctrl> void render_ctrl(Renderer& r, Ctrl& c)
+        //--------------------------------------------------------------------
+        template<class Scanline, class Renderer, class Ctrl> 
+        void render_ctrl(Scanline& sl, Renderer& r, Ctrl& c)
         {
             unsigned i;
             for(i = 0; i < c.num_paths(); i++)
             {
                 reset();
                 add_path(c, i);
-                r.attribute(c.color(i));
-                render(r);
+                r.color(c.color(i));
+                render(sl, r);
             }
         }
 
 
     private:
-        rasterizer_scanline_aa(const rasterizer_scanline_aa&);
-        const rasterizer_scanline_aa& operator = (const rasterizer_scanline_aa&);
+        //--------------------------------------------------------------------
+        // Disable copying
+        rasterizer_scanline_aa(const rasterizer_scanline_aa<AA_Shift>&);
+        const rasterizer_scanline_aa<AA_Shift>& 
+            operator = (const rasterizer_scanline_aa<AA_Shift>&);
+
+        //--------------------------------------------------------------------
+        void move_to_no_clip(int x, int y);
+        void line_to_no_clip(int x, int y);
+        void close_polygon_no_clip();
+        void clip_segment(int x, int y);
 
     private:
         outline_aa     m_outline;
-        Scanline       m_scanline;
-        GammaFunction  m_gamma;
+        int            m_gamma[aa_num];
         filling_rule_e m_filling_rule;
+        int            m_clipped_start_x;
+        int            m_clipped_start_y;
+        int            m_start_x;
+        int            m_start_y;
+        int            m_prev_x;
+        int            m_prev_y;
+        unsigned       m_prev_flags;
+        unsigned       m_status;
+        rect           m_clip_box;
+        bool           m_clipping;
+        iterator       m_iterator;
     };
 
 
 
 
 
-    //----------------------------------------------------------------------------
-    template<class S, class G> 
-    bool rasterizer_scanline_aa<S, G>::hit_test(int tx, int ty)
+
+
+
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::reset() 
+    { 
+        m_outline.reset(); 
+        m_status = status_initial;
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::filling_rule(filling_rule_e filling_rule) 
+    { 
+        m_filling_rule = filling_rule; 
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::clip_box(double x1, double y1, double x2, double y2)
     {
-        if(m_outline.num_cells() == 0) return false;
+        reset();
+        m_clip_box = rect(poly_coord(x1), poly_coord(y1),
+                          poly_coord(x2), poly_coord(y2));
+        m_clip_box.normalize();
+        m_clipping = true;
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::reset_clipping()
+    {
+        reset();
+        m_clipping = false;
+    }
+
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::move_to_no_clip(int x, int y)
+    {
+        if(m_status == status_line_to)
+        {
+            close_polygon_no_clip();
+        }
+        m_outline.move_to(x, y); 
+        m_clipped_start_x = x;
+        m_clipped_start_y = y;
+        m_status = status_line_to;
+    }
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::line_to_no_clip(int x, int y)
+    {
+        if(m_status != status_initial)
+        {
+            m_outline.line_to(x, y); 
+            m_status = status_line_to;
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::close_polygon_no_clip()
+    {
+        if(m_status == status_line_to)
+        {
+            m_outline.line_to(m_clipped_start_x, m_clipped_start_y);
+            m_status = status_closed;
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::clip_segment(int x, int y) 
+    {
+        unsigned flags = clipping_flags(x, y, m_clip_box);
+        if(m_prev_flags == flags)
+        {
+            if(flags == 0)
+            {
+                if(m_status == status_initial)
+                {
+                    move_to_no_clip(x, y);
+                }
+                else
+                {
+                    line_to_no_clip(x, y);
+                }
+            }
+        }
+        else
+        {
+            int cx[4];
+            int cy[4];
+            unsigned n = clip_liang_barsky(m_prev_x, m_prev_y, 
+                                           x, y, 
+                                           m_clip_box, 
+                                           cx, cy);
+            const int* px = cx;
+            const int* py = cy;
+            while(n--)
+            {
+                if(m_status == status_initial)
+                {
+                    move_to_no_clip(*px++, *py++);
+                }
+                else
+                {
+                    line_to_no_clip(*px++, *py++);
+                }
+            }
+        }
+        m_prev_flags = flags;
+        m_prev_x = x;
+        m_prev_y = y;
+    }
+
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::add_vertex(double x, double y, unsigned cmd)
+    {
+        if(is_close(cmd))
+        {
+            close_polygon();
+        }
+        else
+        {
+            if(is_move_to(cmd)) 
+            {
+                move_to(poly_coord(x), poly_coord(y));
+            }
+            else 
+            {
+                if(is_vertex(cmd))
+                {
+                    line_to(poly_coord(x), poly_coord(y));
+                }
+            }
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::move_to(int x, int y) 
+    { 
+        if(m_clipping)
+        {
+            if(m_outline.sorted()) 
+            {
+                reset();
+            }
+            if(m_status == status_line_to)
+            {
+                close_polygon();
+            }
+            m_prev_x = m_start_x = x;
+            m_prev_y = m_start_y = y;
+            m_status = status_initial;
+            m_prev_flags = clipping_flags(x, y, m_clip_box);
+            if(m_prev_flags == 0)
+            {
+                move_to_no_clip(x, y);
+            }
+        }
+        else
+        {
+            move_to_no_clip(x, y);
+        }
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::line_to(int x, int y) 
+    { 
+        if(m_clipping)
+        {
+            clip_segment(x, y);
+        }
+        else
+        {
+            line_to_no_clip(x, y);
+        }
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::close_polygon() 
+    { 
+        if(m_clipping)
+        {
+            clip_segment(m_start_x, m_start_y);
+        }
+        close_polygon_no_clip();
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::move_to_d(double x, double y) 
+    { 
+        move_to(poly_coord(x), poly_coord(y)); 
+    }
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    void rasterizer_scanline_aa<AA_Shift>::line_to_d(double x, double y) 
+    { 
+        line_to(poly_coord(x), poly_coord(y)); 
+    }
+
+
+    //------------------------------------------------------------------------
+    template<unsigned AA_Shift> 
+    bool rasterizer_scanline_aa<AA_Shift>::hit_test(int tx, int ty)
+    {
+        close_polygon();
         const cell_aa* const* cells = m_outline.cells();
-        if(cells == 0) return false;
+        if(m_outline.num_cells() == 0) return false;
 
-        int x, y;
-        int cover;
-        int alpha;
-        int area;
+        int cover = 0;
 
-        cover = 0;
         const cell_aa* cur_cell = *cells++;
         for(;;)
         {
-            const cell_aa* start_cell = cur_cell;
-
+            int alpha;
             int coord  = cur_cell->packed_coord;
-            x = cur_cell->x;
-            y = cur_cell->y;
+            int x = cur_cell->x;
+            int y = cur_cell->y;
 
             if(y > ty) return false;
 
-            area   = start_cell->area;
-            cover += start_cell->cover;
+            int area   = cur_cell->area;
+            cover     += cur_cell->cover;
 
             while((cur_cell = *cells++) != 0)
             {
@@ -648,9 +930,6 @@ namespace agg
         }
         return false;
     }
-
-
-
 
 }
 

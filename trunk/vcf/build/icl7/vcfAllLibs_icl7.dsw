@@ -41,9 +41,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -56,9 +53,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -101,6 +95,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FoundationKit
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -115,6 +112,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
     End Project Dependency
 }}}
 
@@ -329,6 +329,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ImageFormats
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -367,6 +370,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Win32HTMLBrowser_StaticLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKit
     End Project Dependency
 }}}
 

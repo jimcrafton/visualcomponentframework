@@ -1,0 +1,243 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = Actions_bcb5_d.exe AdvancedAlignment_bcb5_d.exe \
+  AdvancedUI_bcb5_d.exe Alignment_bcb5_d.exe Anchors_bcb5_d.exe \
+  ApplicationIcons_bcb5_d.exe Colors_bcb5_d.exe Conditions_bcb5_d.exe \
+  Controls_bcb5_d.exe CopyAndPaste_bcb5_d.exe DatesAndTime_bcb5_d.exe \
+  DateTimeUI_bcb5_d.exe Dictionaries_bcb5_d.exe Directories_bcb5_d.exe \
+  DocViewAdvanced_bcb5_d.exe DocViewBasics_bcb5_d.exe DragAndDrop_bcb5_d.exe \
+  EventBasics_bcb5_d.exe FilesAndDirectories_bcb5_d.exe \
+  GraphicsAndMouseMoves_bcb5_d.exe GraphicsBasics_bcb5_d.exe \
+  HeavyAndLight_bcb5_d.exe HelloWorld_bcb5_d.exe HelloWorld2_bcb5_d.exe \
+  HelloWorld3_bcb5_d.exe ImageBasics_bcb5_d.exe ImageViewer_bcb5_d.exe \
+  Labels_bcb5_d.exe Localization_bcb5_d.exe MVCBasics_bcb5_d.exe \
+  OpenGLShapes_bcb5_d.exe ParticleEditor_bcb5_d.exe Printing_bcb5_d.exe \
+  Processes_bcb5_d.exe ProgressBars_bcb5_d.exe Reflection_bcb5_d.exe \
+  Scrolling_bcb5_d.exe SketchIt_bcb5_d.exe Sliders_bcb5_d.exe \
+  Splitters_bcb5_d.exe Strings_bcb5_d.exe StrokesAndFills_bcb5_d.exe \
+  SysTray_bcb5_d.exe Tables_bcb5_d.exe TextLayout_bcb5_d.exe \
+  ThreadBasics_bcb5_d.exe ThreadsInGUI_bcb5_d.exe Toolbars_bcb5_d.exe \
+  Transformations_bcb5_d.exe TreeListControls_bcb5_d.exe \
+  VisualFormFiles_bcb5_d.exe WorkingWithEnumerators_bcb5_d.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+Actions_bcb5_d.exe: Actions\Actions_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+AdvancedAlignment_bcb5_d.exe: AdvancedAlignment\AdvancedAlignment_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+AdvancedUI_bcb5_d.exe: AdvancedUI\AdvancedUI_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Alignment_bcb5_d.exe: Alignment\Alignment_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Anchors_bcb5_d.exe: Anchors\Anchors_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ApplicationIcons_bcb5_d.exe: ApplicationIcons\ApplicationIcons_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Colors_bcb5_d.exe: Colors\Colors_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Conditions_bcb5_d.exe: Conditions\Conditions_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Controls_bcb5_d.exe: Controls\Controls_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+CopyAndPaste_bcb5_d.exe: CopyAndPaste\CopyAndPaste_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+DatesAndTime_bcb5_d.exe: DatesAndTime\DatesAndTime_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+DateTimeUI_bcb5_d.exe: DateTimeUI\DateTimeUI_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Dictionaries_bcb5_d.exe: Dictionaries\Dictionaries_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Directories_bcb5_d.exe: Directories\Directories_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+DocViewAdvanced_bcb5_d.exe: DocViewAdvanced\DocViewAdvanced_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+DocViewBasics_bcb5_d.exe: DocViewBasics\DocViewBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+DragAndDrop_bcb5_d.exe: DragAndDrop\DragAndDrop_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+EventBasics_bcb5_d.exe: EventBasics\EventBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+FilesAndDirectories_bcb5_d.exe: FilesAndDirectories\FilesAndDirectories_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+GraphicsAndMouseMoves_bcb5_d.exe: GraphicsAndMouseMoves\GraphicsAndMouseMoves_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+GraphicsBasics_bcb5_d.exe: GraphicsBasics\GraphicsBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+HeavyAndLight_bcb5_d.exe: HeavyAndLight\HeavyAndLight_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+HelloWorld_bcb5_d.exe: HelloWorld\HelloWorld_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+HelloWorld2_bcb5_d.exe: HelloWorld2\HelloWorld2_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+HelloWorld3_bcb5_d.exe: HelloWorld3\HelloWorld3_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ImageBasics_bcb5_d.exe: ImageBasics\ImageBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ImageViewer_bcb5_d.exe: ImageViewer\ImageViewer_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Labels_bcb5_d.exe: Labels\Labels_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Localization_bcb5_d.exe: Localization\Localization_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+MVCBasics_bcb5_d.exe: MVCBasics\MVCBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+OpenGLShapes_bcb5_d.exe: OpenGLShapes\OpenGLShapes_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Printing_bcb5_d.exe: Printing\Printing_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Processes_bcb5_d.exe: Processes\Processes_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ProgressBars_bcb5_d.exe: ProgressBars\ProgressBars_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Reflection_bcb5_d.exe: Reflection\Reflection_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Scrolling_bcb5_d.exe: Scrolling\Scrolling_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+SketchIt_bcb5_d.exe: SketchIt\SketchIt_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Sliders_bcb5_d.exe: Sliders\Sliders_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Splitters_bcb5_d.exe: Splitters\Splitters_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Strings_bcb5_d.exe: Strings\Strings_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+StrokesAndFills_bcb5_d.exe: StrokesAndFills\StrokesAndFills_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+SysTray_bcb5_d.exe: SysTray\SysTray_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Tables_bcb5_d.exe: Tables\Tables_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+TextLayout_bcb5_d.exe: TextLayout\TextLayout_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ThreadBasics_bcb5_d.exe: ThreadBasics\ThreadBasics_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ThreadsInGUI_bcb5_d.exe: ThreadsInGUI\ThreadsInGUI_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Toolbars_bcb5_d.exe: Toolbars\Toolbars_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+Transformations_bcb5_d.exe: Transformations\Transformations_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+TreeListControls_bcb5_d.exe: TreeListControls\TreeListControls_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+VisualFormFiles_bcb5_d.exe: VisualFormFiles\VisualFormFiles_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+WorkingWithEnumerators_bcb5_d.exe: WorkingWithEnumerators\WorkingWithEnumerators_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+ParticleEditor_bcb5_d.exe: ParticleEditor\ParticleEditor_bcb5_d.bpr
+  $(ROOT)\bin\bpr2mak $**
+  $(ROOT)\bin\make -$(MAKEFLAGS) -f$*.mak
+
+

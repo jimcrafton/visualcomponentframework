@@ -11,7 +11,7 @@
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/ApplicationKit/DefaultListItem.h"
 #include "vcf/ApplicationKit/DefaultTreeItem.h"
-
+#include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 
 
 using namespace VCF;
@@ -88,7 +88,7 @@ END_CLASSINFO( PlayListDictionary )
 class PlayListItem : public DefaultListItem {
 public:
 	PlayListItem( Control* control, const String& caption, 
-					Model* model ):
+					ListModel* model ):
 	  DefaultListItem( model, caption ),control_(control) {
 
 	}
@@ -315,7 +315,7 @@ protected:
 
 
 
-
+/*
 class HorizontalLayoutContainer : public StandardContainer {
 public:
 
@@ -434,7 +434,7 @@ public:
 	double maxRowHeight_;
 	double rowSpacerHeight_;
 };
-
+*/
 
 
 class MediaInfoPanel : public Panel {
@@ -613,7 +613,7 @@ void MainQTWindow::buildUI()
 	il->setTransparentColor( &Color( 0.0, 1.0, 0.0) );
 	addComponent( il );
 
-	ResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
+	GraphicsResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
 	Image* img = resBundle->getImage( "open" );
 	il->addImage( img );
 	delete img;
@@ -1676,7 +1676,7 @@ void MainQTWindow::onPlaylistItemSelected( VCF::Event* e )
 
 	if ( NULL != selectedItem ) {
 		ListModel* lm = playListCtrl_->getListModel();
-		lm->empty();
+		playListCtrl_->getViewModel()->empty();
 
 		PlayListDictionary* list = playListDict_->get( selectedItem->getID() );
 		VCF_ASSERT( NULL != list );
@@ -2012,7 +2012,7 @@ void MainQTWindow::onPlayListTreeKeyPressed( VCF::KeyboardEvent* e )
 			playListTree_->getTreeModel()->deleteNodeItem( selectedItem );
 			
 
-			playListCtrl_->getListModel()->empty();
+			playListCtrl_->getViewModel()->empty();
 		}
 		
 	}

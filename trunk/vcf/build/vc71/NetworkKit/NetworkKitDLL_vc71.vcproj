@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -91,7 +91,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_LIB;NETKIT_DLL;NETKIT_EXPORTS"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -161,7 +161,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -169,7 +169,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -181,7 +181,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -190,7 +190,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
@@ -203,7 +203,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -211,7 +211,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -223,7 +223,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -231,7 +231,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -243,7 +243,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -251,7 +251,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -263,7 +263,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -271,7 +271,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -283,7 +283,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -291,7 +291,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -303,7 +303,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -311,7 +311,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>
@@ -323,7 +323,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -331,7 +331,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL;BUILD_NETWORKKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 			</File>

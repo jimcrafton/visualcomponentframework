@@ -1,0 +1,9 @@
+USEUNIT("Controls.cpp");
+USEUNIT("ControlsAbout.cpp");
+USEUNIT("ControlsApplication.cpp");
+USEUNIT("MainWindow.cpp");
+//---------------------------------------------------------------------------
+This file is used by the project manager only and should be treated like the project file
+
+
+WinMain

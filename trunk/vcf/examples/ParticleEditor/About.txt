@@ -1,0 +1,23 @@
+Particle Editor VCF example application, by Alan Fischer:
+
+To see it in action, load one of the sample particle effects from the File menu, such as:
+
+fireworks.xml
+fountain.xml
+papers.xml
+
+(smoke.xml and sparks.xml are part of the fireworks)
+
+There is the option to build it with and without GLEW.  If built with GLEW, it will use
+vertex programs if available.  The only difference is the ones with vertex programs will
+probably be faster.  They will look the same.
+
+The Trailing System is the name of a particle system to attach to each particle in the current
+system.
+
+The Ending System is the name of a particle system to fire at the end of each particles life in
+the current system.
+
+See fireworks.xml for an example of this.
+
+Save a particle effect with the File, Save option.

@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -91,7 +91,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -161,7 +161,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -170,7 +170,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -181,7 +181,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -190,7 +190,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -201,7 +201,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -210,7 +210,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -221,7 +221,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -230,7 +230,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -241,7 +241,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -250,7 +250,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -261,7 +261,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -270,7 +270,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -281,7 +281,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -290,7 +290,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -301,7 +301,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
@@ -311,7 +311,7 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;USE_FOUNDATIONKIT_DLL;BUILD_REMOTEOBJECTKIT_LIB;$(NoInherit)"
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_NETKIT_DLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>

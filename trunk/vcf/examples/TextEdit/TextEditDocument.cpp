@@ -1,0 +1,467 @@
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "TextEditDocument.h"
+
+using namespace VCF;
+
+
+
+
+
+
+TextEditDocument::AddText::AddText( TextEditDocument* doc, 
+												VCF::ulong32 pos, 
+												const VCF::String& text ):
+			doc_(doc), pos_(pos), text_(text) 
+{
+	isUndoable_ = true;
+	commandName_ = "Added Text";
+}
+
+void TextEditDocument::AddText::undo()
+{
+	doc_->internal_removeText( pos_, text_.size() );
+	doc_->setSelectionRange( pos_ , 0 );
+}
+
+void TextEditDocument::AddText::redo()
+{
+	doc_->internal_insertText( pos_, text_ );
+	doc_->setSelectionRange( pos_ + text_.size(), 0 );	
+}
+
+void TextEditDocument::AddText::execute()
+{
+	doc_->internal_insertText( pos_, text_ );
+}
+
+
+
+
+TextEditDocument::RemoveText::RemoveText( TextEditDocument* doc, 
+												VCF::ulong32 pos, 
+												const VCF::String& text ):
+	doc_(doc), pos_(pos), text_(text) 
+{
+	isUndoable_ = true;
+	commandName_ = "Deleted Text";
+}
+
+void TextEditDocument::RemoveText::undo()
+{
+	doc_->internal_insertText( pos_, text_ );
+	doc_->setSelectionRange( pos_ + text_.size(), 0 );
+}
+
+void TextEditDocument::RemoveText::redo()
+{
+	doc_->internal_removeText( pos_, text_.size() );
+	doc_->setSelectionRange( pos_ , 0 );
+}
+
+void TextEditDocument::RemoveText::execute()
+{
+	doc_->internal_removeText( pos_, text_.size() );
+}
+
+
+
+
+
+
+VCF::ulong32 findString( const FindInfo& findInfo, const String& inText )
+{
+	int start = findInfo.position_ == 0 ? 0 : findInfo.position_ + 1;
+
+	int result = String::npos;
+
+	
+	if ( findInfo.caseSensitive_ ) {
+		result = inText.find( findInfo.searchString_, start );
+	}
+	else {
+		/**
+		This is HORRIBLY inefficient, but it will have to suffice for now
+		*/
+		String tmpText = StringUtils::lowerCase( inText );
+		String tmpFind = StringUtils::lowerCase( findInfo.searchString_ );
+
+		result = tmpText.find( tmpFind, start );
+	}
+
+	if ( result != String::npos ) {
+		if ( findInfo.matchWordOnly_ ) {
+			int prevChar = 0;
+			if ( result > 0 ) {
+				prevChar = inText[result-1];
+			}
+
+			int lastChar = 0;
+			if ( result+1+findInfo.searchString_.size() < inText.size() ) {
+				lastChar = inText[result+1+findInfo.searchString_.size()];
+			}
+
+			bool wordMatch = false;
+
+			if ( (prevChar != 0) && ( (prevChar == ' ') || (prevChar == '.') || (prevChar == '(')
+				|| (prevChar == ')') ) ) {
+				wordMatch = true;
+			}
+
+			if ( wordMatch ) {
+				if ( lastChar != 0 ) {
+					if ( (prevChar == ' ') || (prevChar == '.') || (prevChar == '(')
+							|| (prevChar == ')') ) {
+						wordMatch = true;
+					}
+					else {
+						wordMatch = false;
+					}
+				}
+			}
+
+
+			if ( !wordMatch ) {
+				result = String::npos;
+			}
+		}
+	}
+
+	return result;
+}
+
+
+
+
+
+
+
+
+TextEditDocument::TextEditDocument():
+	Document(),
+	selectionStart_(0),
+	selectionLength_(0)
+{
+	addSupportedClipboardFormat( STRING_DATA_TYPE );
+}
+
+TextEditDocument::~TextEditDocument()
+{
+
+}
+
+void TextEditDocument::initNew()
+{
+	textData_ = "";
+	selectionStart_ = 0;
+	selectionLength_ = 0;
+}
+
+
+
+
+void TextEditDocument::empty()
+{
+	textData_ = "";
+
+	selectionStart_ = 0;
+	selectionLength_ = 0;
+	
+
+	Document::empty();
+}
+
+bool TextEditDocument::canCutFromDocument()
+{
+	return (selectionLength_ != 0) ? true : false;
+}
+
+bool TextEditDocument::canCopyFromDocument()
+{
+	return (selectionLength_ != 0) ? true : false;
+}
+
+bool TextEditDocument::canPasteToDocument()
+{
+	Clipboard* clipboard = UIToolkit::getSystemClipboard();
+	return clipboard->hasDataType( STRING_DATA_TYPE );
+}
+
+bool TextEditDocument::saveAsType( const VCF::String& fileName, const VCF::String& fileType )
+{
+	long oldSelStart = selectionStart_;
+	selectionStart_ = -1;
+
+	bool result = Document::saveAsType( fileName, fileType );
+
+	selectionStart_ = oldSelStart;
+
+	return result;
+}
+
+bool TextEditDocument::saveAsType( const VCF::String& fileType, VCF::OutputStream& stream )
+{
+	AnsiString tmp = textData_;
+	stream.write( tmp.c_str(), tmp.size() );
+	return true;
+}
+
+bool TextEditDocument::openFromType( const VCF::String& fileType, VCF::InputStream& stream )
+{
+	//textData_ = "";
+	
+	empty();
+
+	String text;
+
+	stream.read( text );
+
+	setText( text );
+
+	return true;
+}
+
+
+
+bool TextEditDocument::find( FindInfo& findInfo )
+{
+	int start = findInfo.position_ == 0 ? 0 : findInfo.position_ + 1;
+
+	VCF::ulong32 pos = findString( findInfo, textData_ );
+	
+	findInfo.position_ = pos;
+
+	if ( String::npos == findInfo.position_ ) {
+		if ( start <= (textData_.size() - findInfo.searchString_.size()) ) {
+			findInfo.atEnd_ = true;
+		}
+	}
+	else {
+		findInfo.atEnd_ = false;
+	}
+	return String::npos != findInfo.position_;
+}
+
+bool TextEditDocument::findAll( FindInfo& findInfo, std::vector<FoundEntry>& foundEntries )
+{
+	int start = 0;
+	start = textData_.find( findInfo.searchString_, start );
+	while ( start != String::npos ) {
+		FoundEntry entry;
+		entry.document_ = this;
+		entry.position_ = start;
+
+		foundEntries.push_back(entry);
+		start = textData_.find( findInfo.searchString_, start+1 );
+	}
+
+	return !foundEntries.empty();
+}
+
+bool TextEditDocument::replace( ReplaceInfo& replaceInfo )
+{
+	if ( replaceInfo.position_ > textData_.size() ) {
+		return false;
+	}
+
+	deleteText( replaceInfo.position_, replaceInfo.searchString_.size() );
+
+	insertText( replaceInfo.position_, replaceInfo.replaceString_ );
+
+	return true;
+}
+
+bool TextEditDocument::replaceAll( ReplaceInfo& replaceInfo )
+{
+	bool result = false;
+	int start = 0;
+	start = textData_.find( replaceInfo.searchString_, start );
+	while ( start != String::npos ) {
+		deleteText( start, replaceInfo.searchString_.size() );
+
+		insertText( start, replaceInfo.replaceString_ );
+		
+		start = textData_.find( replaceInfo.searchString_, start+replaceInfo.replaceString_.size() );
+		result = true;
+	}
+
+	return result;
+}
+
+VCF::String TextEditDocument::getText( const VCF::ulong32 pos, const VCF::ulong32 length  )
+{
+	
+	return textData_.substr( pos, length );
+}
+
+VCF::String TextEditDocument::getText()
+{
+	
+	return textData_;
+}
+
+void TextEditDocument::setText(const VCF::String& text)
+{
+
+	CommandGroup* setTextGrp = new CommandGroup();
+	setTextGrp->setName( "Change Text" );
+
+	setTextGrp->addCommand( new RemoveText( this, 0, textData_ ) );
+	setTextGrp->addCommand( new AddText( this, 0, text ) );
+
+	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( setTextGrp );
+}
+
+void TextEditDocument::insertText( const VCF::ulong32& index, const VCF::String& text )
+{
+	
+	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new AddText( this, index, text ) );
+}
+
+void TextEditDocument::deleteText( const VCF::ulong32& pos, const VCF::ulong32& length )
+{
+	
+	String text = textData_.substr( pos, length );
+
+	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new RemoveText( this, pos, text ) );
+}
+
+void TextEditDocument::appendText( const String& text )
+{
+
+}
+
+void TextEditDocument::replaceText( const unsigned long& index, const unsigned long& len, const String& text )
+{
+
+}
+
+void TextEditDocument::setSelectionRange( const long pos, const VCF::ulong32 length  )
+{	
+	
+	selectionStart_ = pos;
+	selectionLength_ = length;
+
+	
+	ModelEvent e( this, TextEditDocument::teTextSelectionChanged );
+	ModelChanged.fireEvent( &e );
+
+
+	TextModelChanged.fireEvent( &e );
+
+	updateAllViews();
+}
+
+VCF::String TextEditDocument::getSelection()
+{
+	String result = textData_.substr( selectionStart_, selectionLength_ );
+
+	return result;
+}
+
+void TextEditDocument::setSelection( const VCF::String& selectionText )
+{
+	insertText( selectionStart_, selectionText );
+}
+
+DataObject* TextEditDocument::cut()
+{
+	DataObject* result = copy();
+
+	if ( -1 == selectionStart_ ) {
+		empty();
+	}
+	else {
+		deleteText( selectionStart_, this->selectionLength_ );		
+	}	
+
+	setSelectionRange( selectionStart_, 0 );
+
+	return result;
+}
+
+DataObject* TextEditDocument::copy()
+{
+	DataObject* result = NULL;	
+
+	String text;
+	if ( -1 == selectionStart_ ) {
+		text = textData_;
+	}
+	else {
+		text = textData_.substr( selectionStart_, selectionLength_ );
+	}	
+
+	result = new TextDataObject(text);	
+
+	return result;
+}
+
+bool TextEditDocument::paste( DataObject* data )
+{
+	BasicOutputStream bos;
+	
+	bool result = data->saveToStream( STRING_DATA_TYPE, &bos );
+
+	if ( !result ) {
+		return result;
+	}
+	
+	BasicInputStream bis( bos.getBuffer(), bos.getSize() );
+	
+	String text;
+	bis >> text;
+
+	if ( -1 == selectionStart_ ) {
+		setText( text );
+		//textData_ = text;
+	}
+	else {
+		if ( selectionLength_ > 0 ) {
+			deleteText( selectionStart_, selectionLength_ );	
+		}
+		insertText( selectionStart_, text ); 
+		setSelectionRange( selectionStart_ + text.size(), 0 );
+	}
+
+	return true;
+}
+
+void TextEditDocument::internal_insertText( const VCF::ulong32& pos, const VCF::String& text )
+{
+	textData_.insert( pos, text );
+
+	setModified( true );
+	
+
+	TextEditDocumentEvent e( this, TextEditDocument::teTextAdded );
+	e.text_ = text;
+	e.start_ = pos;
+	
+	ModelChanged.fireEvent( &e );
+
+	TextEvent event( this, text );
+
+	TextModelChanged.fireEvent( &event );
+
+	updateAllViews();
+}
+
+void TextEditDocument::internal_removeText( const VCF::ulong32& pos, const VCF::ulong32& length )
+{
+	TextEditDocumentEvent e( this, TextEditDocument::teTextRemoved );
+
+	e.text_ = textData_.substr( pos, length );
+	e.start_ = pos;
+
+	textData_.erase( pos, length );
+
+	setModified( true );
+	
+	ModelChanged.fireEvent( &e );
+
+	TextEvent event( this, e.text_ );
+
+	TextModelChanged.fireEvent( &event );
+
+	updateAllViews();
+}

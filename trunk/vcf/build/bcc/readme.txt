@@ -6,6 +6,9 @@ compiler:
    To obtain this update go to registered users section at www.borland.com and
    download appropriate patch.
 
+1a. To add new info on this: library has been tested with BCB 6, BCB 5 with and 
+    without SP and it works.
+
 2. Since Borland did not ship glaux.lib and comsupp.lib with their compiler I 
    had to supply these lib's. Fortunately I did that quite some time ago.
    Interested people can take a look at http://makefiles.lebeausoftware.org/

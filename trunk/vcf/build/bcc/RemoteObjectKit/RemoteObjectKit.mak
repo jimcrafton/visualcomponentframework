@@ -52,32 +52,34 @@ LIBNAME=RemoteObjectKit_bcc_s$(DBG).lib
 DLLNAME=RemoteObjectKit_bcc$(DBGDLL).dll
 INCDIR=..\..\..\src
 LIBDIR=..\..\..\lib
-SRC=
+SRC=..\..\..\src\vcf\RemoteObjectKit
 OBJ=.\$(OBJDIR)
 BIN=.\$(OUTDIR)
 RESFILE=
 SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_REMOTEOBJECTKIT_LIB;$(SYSDEFINES)
+.path.cpp=$(SRC)
+.path.obj=$(OBJ)
 
 ################################
 # Target
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-OBJFILES=$(OBJ)\AbstractDistributedApplication.obj \
-	$(OBJ)\ClassRegistryEntry.obj \
-	$(OBJ)\ClassServerInstance.obj \
-	$(OBJ)\DistributedClassRegistry.obj \
-	$(OBJ)\DistributedException.obj \
-	$(OBJ)\InstanceID.obj \
-	$(OBJ)\Proxy.obj \
-	$(OBJ)\RemoteObjectKit.obj
-         
+CPPFILES=AbstractDistributedApplication.cpp \
+	ClassRegistryEntry.cpp \
+	ClassServerInstance.cpp \
+	DistributedClassRegistry.cpp \
+	DistributedException.cpp \
+	InstanceID.cpp \
+	Proxy.cpp \
+	RemoteObjectKit.cpp
+
+OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=
 DEFFILE=
-ALLOBJS=$(OBJFILES)
 BCC32STARTUP=c0d32.obj
-ALLOBJS2=$(BCC32STARTUP) $(OBJFILES)
-ALLLIBS2=$(LIBFILES) import32.lib $(BCC32RTLIB)
+ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
+ALLLIBS=$(LIBFILES) import32.lib $(BCC32RTLIB)
 
 all: dirs $(RESFILE) $(PROJECT)
 
@@ -94,40 +96,39 @@ cleanobj::
 cleantgt::
 	-@echo Deleting output files for project
 	-@if exist $(PROJECT) del $(PROJECT)
+	-@if exist ..\..\..\lib\RemoteObjectKit_bcc$(DBGDLL).lib del ..\..\..\lib\RemoteObjectKit_bcc$(DBGDLL).lib
 
 clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@md bcc
-	-@md $(OBJ)
-	-@md $(BIN)
+	-@if not exist bcc md bcc
+	-@if not exist $(OBJ) md $(OBJ)
+	-@if not exist $(BIN) md $(BIN)
 	
 ##################################
 # Output
 ##################################
 $(PROJECT1): $(OBJFILES)
-  @$(LB) $(LPARAM) $(BIN)\$(LIBNAME) /a$(OBJFILES)
+   @echo Linking $(<F) static library
+   @$(LB) @&&|
+   $< $(LPARAM) &
+   -+$(?: = &^
+   -+)
+   
+| > NUL:
 
 $(PROJECT2):: $(OBJFILES)
-    $(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS2) 
+    @echo Linking $(<F) dynamic library
+    @$(ILINK32) @&&|
+    $(LINKFLAGS) $(ALLOBJS) 
     $<,$*
-    $(ALLLIBS2)
+    $(ALLLIBS)
     $(DEFFILE)
     $(RESFILE)
 
 |
     @if exist $(BIN)\RemoteObjectKit_bcc$(DBGDLL).lib move $(BIN)\RemoteObjectKit_bcc$(DBGDLL).lib $(LIBDIR)
     
-#Dependencies - explicit rules
-$(OBJ)\AbstractDistributedApplication.obj: ..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.cpp
-$(OBJ)\ClassRegistryEntry.obj:             ..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.cpp            
-$(OBJ)\ClassServerInstance.obj:            ..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.cpp           
-$(OBJ)\DistributedClassRegistry.obj:       ..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.cpp      
-$(OBJ)\DistributedException.obj:           ..\..\..\src\vcf\RemoteObjectKit\DistributedException.cpp          
-$(OBJ)\InstanceID.obj:                     ..\..\..\src\vcf\RemoteObjectKit\InstanceID.cpp                    
-$(OBJ)\Proxy.obj:                          ..\..\..\src\vcf\RemoteObjectKit\Proxy.cpp                         
-$(OBJ)\RemoteObjectKit.obj:                ..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.cpp               
 
 

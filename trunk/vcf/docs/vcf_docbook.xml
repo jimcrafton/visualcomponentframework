@@ -56,9 +56,14 @@
 	<!ENTITY tables SYSTEM "../examples/Tables/Tables.xml">
 	<!ENTITY visualformfiles SYSTEM "../examples/VisualFormFiles/VisualFormFiles.xml">
 	<!ENTITY mvcbasics SYSTEM "../examples/MVCBasics/MVCBasics.xml">
-	
-	
-
+	<!ENTITY dialogs SYSTEM "../examples/Dialogs/Dialogs.xml">
+	<!ENTITY advancedui SYSTEM "../examples/AdvancedUI/AdvancedUI.xml">
+	<!ENTITY docviewadvanced SYSTEM "../examples/DocViewAdvanced/DocViewAdvanced.xml">
+	<!ENTITY docviewbasics SYSTEM "../examples/DocViewBasics/DocViewBasics.xml">
+	<!ENTITY printing SYSTEM "../examples/Printing/Printing.xml">
+	<!ENTITY transformations SYSTEM "../examples/Transformations/Transformations.xml">
+	<!ENTITY systray SYSTEM "../examples/SysTray/SysTray.xml">
+	<!ENTITY resources SYSTEM "../examples/Resources/Resources.xml">
 ]>
 
 
@@ -105,6 +110,14 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.5  2004/12/01 04:14:53  ddiego
+merged over devmain-0-6-6 code. Marcello did a kick ass job
+of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+that he found. Many, many thanks for this Marcello.
+
+Revision 1.4.2.1  2004/11/17 05:25:06  ddiego
+updated the docbook to pull in the new examples. now all we have to do is actually put some content in there...
+
 Revision 1.4  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 

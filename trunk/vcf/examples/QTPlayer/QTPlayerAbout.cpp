@@ -16,7 +16,8 @@ QTPlayerAbout::QTPlayerAbout()
 
 	Rect clientRect = getClientBounds();
 	
-	CommandButton* okBtn = new CommandButton();
+	CommandButton* okBtn = new CommandButton();	
+
 	okBtn->setWidth( okBtn->getPreferredWidth() );
 	okBtn->setHeight( okBtn->getPreferredHeight() );
 

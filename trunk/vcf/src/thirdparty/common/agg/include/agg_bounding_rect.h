@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,35 +19,33 @@
 #ifndef AGG_BOUNDING_RECT_INCLUDED
 #define AGG_BOUNDING_RECT_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 namespace agg
 {
 
+    //-----------------------------------------------------------bounding_rect
     template<class VertexSource, class GetId> 
-    void bounding_rect(VertexSource& vs, GetId& gi, 
+    bool bounding_rect(VertexSource& vs, GetId& gi, 
                        unsigned start, unsigned num, 
                        double* x1, double* y1, double* x2, double* y2)
     {
         unsigned i;
         double x;
         double y;
-        bool first = true;
 
-        *x1 = *y1 = *x2 = *y2 = 0.0;
+        *x1 =  1e100;
+        *y1 =  1e100;
+        *x2 = -1e100;
+        *y2 = -1e100;
 
         for(i = 0; i < num; i++)
         {
             vs.rewind(gi[start + i]);
-            while(!is_stop(vs.vertex(&x, &y)))
+            unsigned cmd;
+            while(!is_stop(cmd = vs.vertex(&x, &y)))
             {
-                if(first)
-                {
-                    *x1 = *x2 = x;
-                    *y1 = *y2 = y;
-                    first = false;
-                }
-                else
+                if(is_vertex(cmd))
                 {
                     if(x < *x1) *x1 = x;
                     if(y < *y1) *y1 = y;
@@ -56,7 +54,38 @@ namespace agg
                 }
             }
         }
+        return *x1 <= *x2 && *y1 <= *y2;
     }
+
+
+    //-----------------------------------------------------bounding_rect_single
+    template<class VertexSource> 
+    bool bounding_rect_single(VertexSource& vs, unsigned path_id,
+                              double* x1, double* y1, double* x2, double* y2)
+    {
+        double x;
+        double y;
+
+        *x1 =  1e100;
+        *y1 =  1e100;
+        *x2 = -1e100;
+        *y2 = -1e100;
+
+        vs.rewind(path_id);
+        unsigned cmd;
+        while(!is_stop(cmd = vs.vertex(&x, &y)))
+        {
+            if(is_vertex(cmd))
+            {
+                if(x < *x1) *x1 = x;
+                if(y < *y1) *y1 = y;
+                if(x > *x2) *x2 = x;
+                if(y > *y2) *y2 = y;
+            }
+        }
+        return *x1 <= *x2 && *y1 <= *y2;
+    }
+
 
 }
 

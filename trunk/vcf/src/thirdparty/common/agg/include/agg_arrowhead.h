@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,12 +19,15 @@
 #ifndef AGG_ARROWHEAD_INCLUDED
 #define AGG_ARROWHEAD_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //===============================================================arrowhead
+    //
+    // See implementation agg_arrowhead.cpp 
+    //
     class arrowhead
     {
     public:
@@ -68,7 +71,7 @@ namespace agg
         double   m_tail_d4;
         bool     m_head_flag;
         bool     m_tail_flag;
-        double   m_coord[12];
+        double   m_coord[16];
         unsigned m_cmd[8];
         unsigned m_curr_id;
         unsigned m_curr_coord;

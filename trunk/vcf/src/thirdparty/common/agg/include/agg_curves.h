@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,18 +20,29 @@
 #ifndef AGG_CURVES_INCLUDED
 #define AGG_CURVES_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_vertex_iterator.h"
+#include "agg_basics.h"
+#include "agg_vertex_iterator.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    // See Implemantation agg_curves.cpp
+
+    
+    //------------------------------------------------------------------curve3
     class curve3
     {
     public:
         curve3() :
           m_num_steps(0), m_step(0), m_scale(1.0) { }
+
+        curve3(double x1, double y1, 
+               double x2, double y2, 
+               double x3, double y3) :
+          m_num_steps(0), m_step(0), m_scale(1.0) 
+        { 
+            init(x1, y1, x2, y2, x3, y3);
+        }
 
         void reset() { m_num_steps = 0; m_step = -1; }
         void init(double x1, double y1, 
@@ -74,12 +85,21 @@ namespace agg
 
 
 
-    //------------------------------------------------------------------------
+    //-----------------------------------------------------------------curve4
     class curve4
     {
     public:
         curve4() :
           m_num_steps(0), m_step(0), m_scale(1.0) { }
+
+        curve4(double x1, double y1, 
+               double x2, double y2, 
+               double x3, double y3,
+               double x4, double y4) :
+          m_num_steps(0), m_step(0), m_scale(1.0) 
+        { 
+            init(x1, y1, x2, y2, x3, y3, x4, y4);
+        }
 
         void reset() { m_num_steps = 0; m_step = -1; }
         void init(double x1, double y1, 

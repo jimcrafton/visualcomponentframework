@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE  book  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+	<!ENTITY $1 SYSTEM "TextEdit.xml">
+]>
+
+
+<article>
+  &TextEdit;	
+</article>

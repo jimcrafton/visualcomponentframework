@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,23 +20,23 @@
 #ifndef AGG_RENDERER_PRIMITIVES_INCLUDED
 #define AGG_RENDERER_PRIMITIVES_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_renderer_base.h"
-#include "thirdparty/common/agg/include/agg_dda_line.h"
-#include "thirdparty/common/agg/include/agg_ellipse_bresenham.h"
+#include "agg_basics.h"
+#include "agg_renderer_base.h"
+#include "agg_dda_line.h"
+#include "agg_ellipse_bresenham.h"
 
 namespace agg
 {
-    //------------------------------------------------------------------------
-    template<class PixelRenderer> 
-    class renderer_primitives : public renderer_base<PixelRenderer>
+    //-----------------------------------------------------renderer_primitives
+    template<class BaseRenderer> class renderer_primitives
     {
     public:
-        typedef renderer_base<PixelRenderer> base_type;
+        typedef BaseRenderer base_ren_type;
+        typedef typename base_ren_type::color_type color_type;
 
         //--------------------------------------------------------------------
-        renderer_primitives(rendering_buffer& rbuf) :
-            base_type(rbuf),
+        renderer_primitives(base_ren_type& ren) :
+            m_ren(&ren),
             m_fill_color(),
             m_line_color(),
             m_curr_x(0),
@@ -59,23 +59,23 @@ namespace agg
         //--------------------------------------------------------------------
         void rectangle(int x1, int y1, int x2, int y2)
         {
-            hline(x1,   y1,   x2-1, m_line_color);
-            vline(x2,   y1,   y2-1, m_line_color);
-            hline(x1+1, y2,   x2,   m_line_color);
-            vline(x1,   y1+1, y2,   m_line_color);
+            m_ren->blend_hline(x1,   y1,   x2-1, m_line_color, cover_full);
+            m_ren->blend_vline(x2,   y1,   y2-1, m_line_color, cover_full);
+            m_ren->blend_hline(x1+1, y2,   x2,   m_line_color, cover_full);
+            m_ren->blend_vline(x1,   y1+1, y2,   m_line_color, cover_full);
         }
 
         //--------------------------------------------------------------------
         void solid_rectangle(int x1, int y1, int x2, int y2)
         {
-            bar(x1, y1, x2, y2, m_fill_color);
+            m_ren->blend_bar(x1, y1, x2, y2, m_fill_color, cover_full);
         }
 
         //--------------------------------------------------------------------
         void outlined_rectangle(int x1, int y1, int x2, int y2) 
         {
             rectangle(x1, y1, x2, y2);
-            bar(x1+1, y1+1, x2-1, y2-1, m_fill_color);
+            m_ren->blend_bar(x1+1, y1+1, x2-1, y2-1, m_fill_color, cover_full);
         }
 
         //--------------------------------------------------------------------
@@ -88,10 +88,10 @@ namespace agg
             {
                 dx += ei.dx();
                 dy += ei.dy();
-                pixel(x + dx, y + dy, m_line_color);
-                pixel(x + dx, y - dy, m_line_color);
-                pixel(x - dx, y - dy, m_line_color);
-                pixel(x - dx, y + dy, m_line_color);
+                m_ren->blend_pixel(x + dx, y + dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x + dx, y - dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x - dx, y - dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x - dx, y + dy, m_line_color, cover_full);
                 ++ei;
             }
             while(dy < 0);
@@ -113,15 +113,15 @@ namespace agg
 
                 if(dy != dy0)
                 {
-                    hline(x-dx0, y+dy0, x+dx0, m_fill_color);
-                    hline(x-dx0, y-dy0, x+dx0, m_fill_color);
+                    m_ren->blend_hline(x-dx0, y+dy0, x+dx0, m_fill_color, cover_full);
+                    m_ren->blend_hline(x-dx0, y-dy0, x+dx0, m_fill_color, cover_full);
                 }
                 dx0 = dx;
                 dy0 = dy;
                 ++ei;
             }
             while(dy < 0);
-            hline(x-dx0, y+dy0, x+dx0, m_fill_color);
+            m_ren->blend_hline(x-dx0, y+dy0, x+dx0, m_fill_color, cover_full);
         }
 
         //--------------------------------------------------------------------
@@ -136,15 +136,15 @@ namespace agg
                 dx += ei.dx();
                 dy += ei.dy();
 
-                pixel(x + dx, y + dy, m_line_color);
-                pixel(x + dx, y - dy, m_line_color);
-                pixel(x - dx, y - dy, m_line_color);
-                pixel(x - dx, y + dy, m_line_color);
+                m_ren->blend_pixel(x + dx, y + dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x + dx, y - dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x - dx, y - dy, m_line_color, cover_full);
+                m_ren->blend_pixel(x - dx, y + dy, m_line_color, cover_full);
 
                 if(ei.dy() && dx)
                 {
-                   hline(x-dx+1, y+dy, x+dx-1, m_fill_color);
-                   hline(x-dx+1, y-dy, x+dx-1, m_fill_color);
+                   m_ren->blend_hline(x-dx+1, y+dy, x+dx-1, m_fill_color, cover_full);
+                   m_ren->blend_hline(x-dx+1, y-dy, x+dx-1, m_fill_color, cover_full);
                 }
                 ++ei;
             }
@@ -161,7 +161,7 @@ namespace agg
             {
                 if(last)
                 {
-                    pixel(li.line_lr(x1), li.line_lr(y1), m_line_color);
+                    m_ren->blend_pixel(li.line_lr(x1), li.line_lr(y1), m_line_color, cover_full);
                 }
                 return;
             }
@@ -172,7 +172,7 @@ namespace agg
             {
                 do
                 {
-                    pixel(li.x2(), li.y1(), m_line_color);
+                    m_ren->blend_pixel(li.x2(), li.y1(), m_line_color, cover_full);
                     li.vstep();
                 }
                 while(--len);
@@ -181,7 +181,7 @@ namespace agg
             {
                 do
                 {
-                    pixel(li.x1(), li.y2(), m_line_color);
+                    m_ren->blend_pixel(li.x1(), li.y2(), m_line_color, cover_full);
                     li.hstep();
                 }
                 while(--len);
@@ -203,7 +203,16 @@ namespace agg
             m_curr_y = y;
         }
 
-    protected:
+        //--------------------------------------------------------------------
+        const base_ren_type& ren() const { return *m_ren; }        
+        base_ren_type& ren() { return *m_ren; }        
+
+        //--------------------------------------------------------------------
+        const rendering_buffer& rbuf() const { return m_ren->rbuf(); }
+        rendering_buffer& rbuf() { return m_ren->rbuf(); }
+
+    private:
+        base_ren_type* m_ren;
         color_type m_fill_color;
         color_type m_line_color;
         int m_curr_x;

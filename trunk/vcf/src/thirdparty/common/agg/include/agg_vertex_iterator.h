@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -21,13 +21,13 @@
 #ifndef AGG_VERTEX_ITERATOR_INCLUDED
 #define AGG_VERTEX_ITERATOR_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
+#include "agg_basics.h"
 
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------------------vertex_iterator
     template<class VertexSource> class vertex_iterator
     {
     public:
@@ -59,7 +59,7 @@ namespace agg
     };
 
 
-    //------------------------------------------------------------------------
+    //---------------------------------------------------vertex_source_adaptor
     template<class VertexContainer> class vertex_source_adaptor
     {
     public:
@@ -93,7 +93,7 @@ namespace agg
 
 
 
-    //------------------------------------------------------------------------
+    //-------------------------------------------vertex_source_adaptor_with_id
     template<class VertexContainer> class vertex_source_adaptor_with_id
     {
     public:

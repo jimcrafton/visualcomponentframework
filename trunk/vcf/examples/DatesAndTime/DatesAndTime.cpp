@@ -135,13 +135,13 @@ int main( int argc, char** argv ){
 
 	DateTimeSpan howLong = dt3 - dt4;
 
-	System::println( "Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %s seconds!",
+	System::println( "Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %ls seconds!",
 						howLong.getYears(),
 						howLong.getMonths(),
 						howLong.getDays(),
 						howLong.getHours(),
 						howLong.getMinutes(),
-						System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ).ansi_c_str() );
+						System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ).c_str() );
 
 
 	/**
@@ -167,7 +167,7 @@ int main( int argc, char** argv ){
 	{
 		FileInputStream fs( "datetime.out" );
 
-		fs >> &loadMe;
+		fs >> static_cast<VCF::Persistable*>(&loadMe);
 
 		System::println( "loadMe (%ls) loaded!", loadMe.toString().c_str() );
 	}
@@ -181,6 +181,14 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:15:01  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3.2.1  2004/10/07 13:15:27  kiklop74
+*Fixed building issues with bcb
+*
 *Revision 1.3  2004/08/07 02:46:58  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

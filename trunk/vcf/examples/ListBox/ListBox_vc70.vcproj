@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="ListBox"
-	ProjectGUID="{3B28BDB0-5E23-4876-8E35-C74FF4563571}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

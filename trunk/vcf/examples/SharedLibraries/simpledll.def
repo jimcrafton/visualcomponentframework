@@ -1,0 +1,6 @@
+LIBRARY     SIMPLEDLL.SO
+
+EXPORTS
+    getAnInteger=_getAnInteger
+    _vpl_init
+    _vpl_terminate

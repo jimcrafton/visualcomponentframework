@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -19,30 +19,37 @@
 #ifndef AGG_CONV_CONTOUR_INCLUDED
 #define AGG_CONV_CONTOUR_INCLUDED
 
-#include "thirdparty/common/agg/include/agg_basics.h"
-#include "thirdparty/common/agg/include/agg_gen_contour.h"
-#include "thirdparty/common/agg/include/agg_conv_generator.h"
+#include "agg_basics.h"
+#include "agg_vcgen_contour.h"
+#include "agg_conv_adaptor_vcgen.h"
 
 namespace agg
 {
 
-    //------------------------------------------------------------------------
+    //-----------------------------------------------------------conv_contour
     template<class VertexSource> 
-    struct conv_contour : public conv_generator<VertexSource, gen_contour>
+    struct conv_contour : public conv_adaptor_vcgen<VertexSource, vcgen_contour>
     {
+        typedef conv_adaptor_vcgen<VertexSource, vcgen_contour> base_type;
+
         conv_contour(VertexSource& vs) : 
-            conv_generator<VertexSource, gen_contour>(vs)
+            conv_adaptor_vcgen<VertexSource, vcgen_contour>(vs)
         {
         }
 
-        void width(double w) { generator().width(w); }
-        void miter_limit(double ml) { generator().miter_limit(ml); }
-        void miter_limit_theta(double t) { generator().miter_limit_theta(t); }
-        void auto_detect_orientation(bool v) { generator().auto_detect_orientation(v); }
+        void width(double w) { base_type::generator().width(w); }
+        void miter_limit(double ml) { base_type::generator().miter_limit(ml); }
+        void miter_limit_theta(double t) { base_type::generator().miter_limit_theta(t); }
+        void auto_detect_orientation(bool v) { base_type::generator().auto_detect_orientation(v); }
 
-        double width() const { return generator().width(); }
-        double miter_limit() const { return generator().miter_limit(); }
-        bool auto_detect_orientation() const { return generator().auto_detect_orientation(); }
+        double width() const { return base_type::generator().width(); }
+        double miter_limit() const { return base_type::generator().miter_limit(); }
+        bool auto_detect_orientation() const { return base_type::generator().auto_detect_orientation(); }
+
+    private:
+        conv_contour(const conv_contour<VertexSource>&);
+        const conv_contour<VertexSource>& 
+            operator = (const conv_contour<VertexSource>&);
     };
 
 }
