@@ -1737,6 +1737,10 @@ SOURCE=..\..\..\include\implementer\WindowPeer.h
 
 SOURCE=..\..\resources\win32\ApplicationKit.rc
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\vcf.ico
+# End Source File
 # End Group
 # End Target
 # End Project
