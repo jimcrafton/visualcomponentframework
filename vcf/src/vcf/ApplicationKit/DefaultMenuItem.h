@@ -258,8 +258,9 @@ protected:
 
 
 
-
-
+/**
+* a class to help creating a separator menu item
+*/
 class APPLICATIONKIT_API SeparatorMenuItem : public DefaultMenuItem {
 public:
 	SeparatorMenuItem( MenuItem* parent, Menu* menuOwner=NULL ) :
@@ -269,12 +270,18 @@ public:
 };
 
 
-}; //end of namespace VCF
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/20 23:15:55  marcelloptr
+*some documentation
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

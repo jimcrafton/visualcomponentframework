@@ -702,7 +702,14 @@ inline void Directory::setName( const String& fileName ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+
 *Revision 1.4  2004/12/10 16:59:14  marcelloptr
+*updated a comment
+*
+*Revision 1.3.2.1  2004/12/06 22:01:40  marcelloptr
 *updated a comment
 *
 *Revision 1.3  2004/12/01 04:31:40  ddiego

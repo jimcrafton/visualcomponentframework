@@ -42,6 +42,10 @@ public:
 
 	virtual String getEnvironmentVariable( const String& variableName ) = 0;
 
+	virtual void setEnvironmentVariable( const String& variableName, const String& newValue ) = 0;
+
+	virtual void addPathDirectory( const String& directory ) = 0;
+
 	virtual String getCurrentWorkingDirectory() = 0;
 
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory ) = 0;
@@ -70,6 +74,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:05:02  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

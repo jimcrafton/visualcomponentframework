@@ -356,6 +356,7 @@ void TextControl::handleEvent( Event* event )
 						}
 						break;
 
+
 						/**
 						JC - added this to account for tab entry - 
 						sometimes you'd end up with a tab character entered when all you 
@@ -468,6 +469,20 @@ void TextControl::setReadOnly( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4  2004/12/16 04:10:43  ddiego
+*fixes for bug 1081652, the actual fix came from Marcello.
+*
+*Revision 1.3.2.2  2004/12/21 00:25:37  marcelloptr
+*comments
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.4  2004/12/16 04:10:43  ddiego
 *fixes for bug 1081652, the actual fix came from Marcello.
 *

@@ -171,6 +171,14 @@ public:
 	virtual uint32 getPageCount() {
 		return pages_.size();
 	}
+
+	bool isFirstPage( TabPage* page );
+
+	bool isLastPage( TabPage* page );
+
+	TabPage* nextPage( TabPage* page );
+
+	TabPage* previousPage( TabPage* page );
 protected:
 	std::vector<TabPage*> pages_;
 	EnumeratorContainer<std::vector<TabPage*>, TabPage*> container_;
@@ -183,6 +191,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2005/01/01 20:31:07  ddiego
+*made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -239,6 +239,12 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKitRTTI.inl">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\BadComponentStateException.h">
 			</File>
 			<File
@@ -594,9 +600,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractWin32Component.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ClipboardPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\COMDataObject.cpp">
 			</File>
 			<File
@@ -622,6 +625,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Application.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Button.cpp">
@@ -1282,6 +1291,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ButtonPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ClipboardPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonDialogPeer.h">
 			</File>
 			<File
@@ -1319,9 +1331,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenuPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ResourceStreamPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ScrollPeer.h">

@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-namespace VCF{
+namespace VCF {
 
 class TreeItem;
 
@@ -40,7 +40,7 @@ public:
 	};
 
 
-    virtual Enumerator<TreeItem*>* getRootItems() = 0;
+	virtual Enumerator<TreeItem*>* getRootItems() = 0;
 
 	virtual void addTreeRootNodeChangedHandler( EventHandler* handler ) = 0;
 
@@ -54,22 +54,29 @@ public:
 
 	virtual void removeTreeNodeDeletedHandler( EventHandler* handler ) = 0;
 
-    virtual void insertNodeItem( TreeItem * node, TreeItem * nodeToInsertAfter ) = 0;
+	virtual void insertNodeItem( TreeItem * node, TreeItem * nodeToInsertAfter ) = 0;
 
 
-    virtual void deleteNodeItem( TreeItem * nodeToDelete ) = 0;
+	virtual void deleteNodeItem( TreeItem * nodeToDelete ) = 0;
 
-    virtual void addNodeItem( TreeItem * node, TreeItem * nodeParent=NULL ) = 0;
+	virtual void addNodeItem( TreeItem * node, TreeItem * nodeParent=NULL ) = 0;
 
-    virtual void sort() = 0;
+	virtual void sort() = 0;
 };
 
-};
+
+}; //namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/22 03:27:36  marcelloptr
+*just reformatting
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -178,7 +178,7 @@ PrintContext* Win32PrintSession::beginPrintingDocument()
 		return NULL;
 	}
 
-	PrintContext* result = new PrintContext((ulong32)printerDC_);
+	PrintContext* result = new PrintContext((OSHandleID)printerDC_);
 
 	return result;
 }

@@ -108,7 +108,11 @@ void Win32Object::registerWin32Class( const String& className, WNDPROC wndProc )
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= (HINSTANCE)::GetModuleHandle(NULL);
-		wcex.hIcon			= LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
+		
+		//This is taken care of in the Win32Window::create class, via
+		//sending a WM_SETICON message
+		wcex.hIcon			= NULL;
+
 		wcex.hCursor		= NULL;//LoadCursor(NULL, IDC_ARROW);
 		wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 		wcex.lpszMenuName	= NULL;
@@ -127,7 +131,7 @@ void Win32Object::registerWin32Class( const String& className, WNDPROC wndProc )
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= (HINSTANCE)::GetModuleHandle(NULL);
-		wcex.hIcon			= LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
+		wcex.hIcon			= NULL;
 		wcex.hCursor		= NULL;//LoadCursor(NULL, IDC_ARROW);
 		wcex.hbrBackground	= NULL;//(HBRUSH)(COLOR_WINDOW+1);
 		wcex.lpszMenuName	= NULL;
@@ -262,6 +266,12 @@ Control* Win32Object::getPeerControl()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/10 21:14:00  ddiego
+*fixed bug 1082362 App Icons do not appear.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

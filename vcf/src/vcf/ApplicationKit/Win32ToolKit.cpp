@@ -41,6 +41,11 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/SystemTrayPeer.h"
 
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/Win32ResourceBundle.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/ApplicationKit/Win32AppResourceBundle.h"
+
 #include <shellapi.h>
 #include "vcf/ApplicationKit/Win32SystemTrayPeer.h"
 
@@ -409,14 +414,14 @@ public:
 
 			case UIMetricsManager::htComboBoxHeight : {
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,14), f );
+				Point pt = DLUToPixel( Point(0,12), f );
 				result = pt.y_;				
 			}
 			break;
 
 			case UIMetricsManager::htListItemHeight : {
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,14), f );
+				Point pt = DLUToPixel( Point(0,9), f );
 				result = pt.y_;
 			}
 			break;
@@ -425,7 +430,7 @@ public:
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 				result = (f.getHeight() * 1.75) + 2.50;
 
-				Point pt = DLUToPixel( Point(0,15), f );
+				Point pt = DLUToPixel( Point(0,14), f );
 				result = pt.y_;
 			}
 			break;
@@ -1451,6 +1456,11 @@ SystemTrayPeer* Win32ToolKit::internal_createSystemTrayPeer()
 	return new Win32SystemTrayPeer();
 }
 
+GraphicsResourceBundlePeer* Win32ToolKit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
+{
+	return new Win32AppResourceBundle( app );
+}
+
 bool Win32ToolKit::internal_createCaret( Control* owningControl, Image* caretImage  )
 {
 	return false;
@@ -2062,12 +2072,13 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 
 void Win32ToolKit::internal_quitCurrentEventLoop()
 {
-	if (!PostMessage( dummyParentWnd_, WM_QUIT, 0, 0 )) {
-		StringUtils::traceWithArgs( "GetLastError(): %d\n", GetLastError() );
-	}
-	else {
-		StringUtils::traceWithArgs( "internal_quitCurrentEventLoop called, PostMessage(WM_QUIT) sent\n" );
-	}
+	PostQuitMessage(0);
+	//if (!PostMessage( dummyParentWnd_, WM_QUIT, 0, 0 )) {
+	//	StringUtils::traceWithArgs( "GetLastError(): %d\n", GetLastError() );
+	//}
+	//else {
+	//	StringUtils::traceWithArgs( "internal_quitCurrentEventLoop called, PostMessage(WM_QUIT) sent\n" );
+	//}
 }
 
 Size Win32ToolKit::internal_getDragDropDelta()
@@ -2084,8 +2095,21 @@ Size Win32ToolKit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
 *Revision 1.4  2004/12/10 03:32:51  ddiego
 *fixed a heap overwrite error in the delegate-event handler code.
+*
+*Revision 1.3.2.3  2005/01/01 20:31:07  ddiego
+*made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.
+*
+*Revision 1.3.2.2  2004/12/20 21:58:00  ddiego
+*committing cheeseheads patches for the combobox control.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
 *
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

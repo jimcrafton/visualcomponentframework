@@ -169,7 +169,7 @@ public:
 	calls the GraphicsToolkit's createContextPeer().
 	@see GraphicsToolkit::createContextPeer
 	*/
-	static ContextPeer* createContextPeer( const long& contextID );
+	static ContextPeer* createContextPeer( OSHandleID contextID );
 
 	/**
 	creates a memory based context peer given a width and height.
@@ -262,6 +262,8 @@ public:
 	static CursorPeer* createCursorPeer( Cursor* cursor );
 
 	static SystemTrayPeer* createSystemTrayPeer();
+
+	static GraphicsResourceBundlePeer* createGraphicsResourceBundlePeer( AbstractApplication* app );
 
 	static bool createCaret( Control* owningControl, Image* caretImage  );
 
@@ -392,7 +394,7 @@ protected:
 
 	virtual ContextPeer* internal_createContextPeer( Control* component );
 
-	virtual ContextPeer* internal_createContextPeer( const long& contextID );
+	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID );
 
 	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
 
@@ -452,6 +454,8 @@ protected:
 	virtual CursorPeer* internal_createCursorPeer( Cursor* cursor ) = 0;
 
 	virtual SystemTrayPeer* internal_createSystemTrayPeer() = 0;
+
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app ) = 0;
 
 	virtual bool internal_createCaret( Control* owningControl, Image* caretImage  ) = 0;
 
@@ -559,6 +563,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.2  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

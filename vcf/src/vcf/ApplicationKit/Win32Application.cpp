@@ -21,7 +21,7 @@ using namespace VCFWin32;
 using namespace VCF;
 
 
-
+/*
 class Win32ApplicationResBundle : public Win32GraphicsResourceBundle {
 public:
 	Win32ApplicationResBundle( ApplicationPeer* peer ): Win32GraphicsResourceBundle(), appPeer_(peer){
@@ -54,12 +54,13 @@ public:
 		peer_ = dynamic_cast<ResourceBundlePeer*>( graphicsResPeer_ );
 	}
 };
+*/
 
 
 
 Win32Application::Win32Application()
 {
-	System::internal_replaceResourceBundleInstance( new AppKitGraphicsResourceBundle(this) );
+	//System::internal_replaceResourceBundleInstance( new AppKitGraphicsResourceBundle(this) );
 
 
 	instanceHandle_ = NULL;
@@ -136,12 +137,12 @@ String Win32Application::getFileName()
 }
 
 
-long Win32Application::getHandleID()
+OSHandleID Win32Application::getHandleID()
 {
-	return (long)instanceHandle_;
+	return (OSHandleID)instanceHandle_;
 }
 
-void Win32Application::setHandleID( const long& handleID )
+void Win32Application::setHandleID( OSHandleID handleID )
 {
 	instanceHandle_ = (HINSTANCE)handleID;
 }
@@ -150,6 +151,18 @@ void Win32Application::setHandleID( const long& handleID )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.2  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

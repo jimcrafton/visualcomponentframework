@@ -641,7 +641,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 						}
 
-						GraphicsContext gc( (ulong32)drawItem->hDC );
+						GraphicsContext gc( (OSHandleID)drawItem->hDC );
 						Rect rect( drawItem->rcItem.left, drawItem->rcItem.top, drawItem->rcItem.right, drawItem->rcItem.bottom );
 						item->paint( &gc, &rect );
 						gc.getPeer()->setContextID( 0 );
@@ -723,7 +723,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			ctx->setViewableBounds( Rect(r.left, r.top,
 											r.right, r.bottom ) );
 
-			ctx->getPeer()->setContextID( (long)memDC_ );
+			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );				
 
 			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
@@ -2378,6 +2378,14 @@ void Win32Listview::setDisplayOptions( const long& displayOptions )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

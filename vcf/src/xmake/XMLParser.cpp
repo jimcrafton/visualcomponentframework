@@ -1,87 +1,11 @@
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:20  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.1  2004/04/28 04:07:36  ddiego
-*migration towards new directory structure
-*
-*Revision 1.7  2003/12/18 05:16:08  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.6.4.1  2003/10/30 17:54:06  ddiego
-*updated the xml parser to support attributes better (be more
-*forgiving with syntax) and handle !ENTITY and (most importantly)
-*handle ![CDATA[ ]]> tags, as well as simple support for entity parsing
-*like &amp; or &lt;
-*
-*Revision 1.6  2003/05/17 20:38:13  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.5.2.2  2003/03/23 03:24:13  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.5.2.1  2003/03/12 03:13:36  ddiego
-*switched all member variable that used the "m_"<name> prefix to
-* <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
-*
-*Revision 1.5  2003/02/26 04:31:16  ddiego
-*merge of code in the devmain-0-5-9 branch into the current tree.
-*most additions are in the area of the current linux port, but the major
-*addition to this release is the addition of a Condition class (currently
-*still under development) and the change over to using the Delegate class
-*exclusively from the older event handler macros.
-*
-*Revision 1.4.8.4  2002/12/28 01:56:22  marcelloptr
-*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
-*
-*Revision 1.4.8.3  2002/12/28 00:53:28  marcelloptr
-*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
-*
-*Revision 1.4.8.2  2002/12/27 23:05:44  marcelloptr
-*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
-*
-*Revision 1.4.8.1  2002/12/11 16:55:46  ddiego
-*added dependency generation for projects. You can now specify
-*which projects depend on each other
-*
-*Revision 1.4  2002/09/12 03:26:12  ddiego
-*merged over the changes from the devmain-0-5-5b branch
-*
-*Revision 1.3.6.1  2002/07/16 15:52:48  ddiego
-*mods to xmake to separate it into a lib file and
-*command line program. This means there is now a
-*separate libXmake for using in other programs
-*also moved all the xmake classes into their
-*own xmake namespace.
-*Changes made to the makefile as well as a new
-*dsp for the libXmake
-*
-*Revision 1.3  2002/05/09 03:10:49  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
-*
-*Revision 1.2.4.1  2002/03/27 04:13:21  cesarmello
-*Linux bugfixes
-*
-*Revision 1.2  2002/03/15 16:33:22  ddiego
-*gcc compile fixes
-*
-*Revision 1.1  2002/02/25 05:01:53  ddiego
-*added the xmake project
-*
-*Revision 1.7  2002/01/24 01:46:49  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
+//XMLParser.cpp
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
 */
 
-//XMLParser.h
 
 #include "xmake.h"
 #include "XMLParser.h"
@@ -807,5 +731,96 @@ void XMLParser::resortParsedNodes()
 
 	addChildren( first );
 }
+
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/01/02 03:04:27  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/21 01:25:17  marcelloptr
+*added cvs log section
+*
+*Revision 1.2  2004/08/07 02:49:20  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.1.2.1  2004/04/28 04:07:36  ddiego
+*migration towards new directory structure
+*
+*Revision 1.7  2003/12/18 05:16:08  ddiego
+*merge from devmain-0-6-2 branch into the stable branch
+*
+*Revision 1.6.4.1  2003/10/30 17:54:06  ddiego
+*updated the xml parser to support attributes better (be more
+*forgiving with syntax) and handle !ENTITY and (most importantly)
+*handle ![CDATA[ ]]> tags, as well as simple support for entity parsing
+*like &amp; or &lt;
+*
+*Revision 1.6  2003/05/17 20:38:13  ddiego
+*this is the checkin for the 0.6.1 release - represents the merge over from
+*the devmain-0-6-0 branch plus a few minor bug fixes
+*
+*Revision 1.5.2.2  2003/03/23 03:24:13  marcelloptr
+*3 empty lines at the end of the files
+*
+*Revision 1.5.2.1  2003/03/12 03:13:36  ddiego
+*switched all member variable that used the "m_"<name> prefix to
+* <name>"_" suffix nameing standard.
+*Also changed all vcf builder files to accomadate this.
+*Changes were made to the Stream classes to NOT multiple inheritance and to
+*be a little more correct. Changes include breaking the FileStream into two
+*distinct classes, one for input and one for output.
+*
+*Revision 1.5  2003/02/26 04:31:16  ddiego
+*merge of code in the devmain-0-5-9 branch into the current tree.
+*most additions are in the area of the current linux port, but the major
+*addition to this release is the addition of a Condition class (currently
+*still under development) and the change over to using the Delegate class
+*exclusively from the older event handler macros.
+*
+*Revision 1.4.8.4  2002/12/28 01:56:22  marcelloptr
+*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
+*
+*Revision 1.4.8.3  2002/12/28 00:53:28  marcelloptr
+*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
+*
+*Revision 1.4.8.2  2002/12/27 23:05:44  marcelloptr
+*Improved macros for automatic import/export of libraries. - Warning fixes. - Other Minor Changes.
+*
+*Revision 1.4.8.1  2002/12/11 16:55:46  ddiego
+*added dependency generation for projects. You can now specify
+*which projects depend on each other
+*
+*Revision 1.4  2002/09/12 03:26:12  ddiego
+*merged over the changes from the devmain-0-5-5b branch
+*
+*Revision 1.3.6.1  2002/07/16 15:52:48  ddiego
+*mods to xmake to separate it into a lib file and
+*command line program. This means there is now a
+*separate libXmake for using in other programs
+*also moved all the xmake classes into their
+*own xmake namespace.
+*Changes made to the makefile as well as a new
+*dsp for the libXmake
+*
+*Revision 1.3  2002/05/09 03:10:49  ddiego
+*merged over code from development branch devmain-0-5-1a into the main CVS trunk
+*
+*Revision 1.2.4.1  2002/03/27 04:13:21  cesarmello
+*Linux bugfixes
+*
+*Revision 1.2  2002/03/15 16:33:22  ddiego
+*gcc compile fixes
+*
+*Revision 1.1  2002/02/25 05:01:53  ddiego
+*added the xmake project
+*
+*Revision 1.7  2002/01/24 01:46:49  ddiego
+*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
+*to facilitate change tracking
+*
+*/
 
 

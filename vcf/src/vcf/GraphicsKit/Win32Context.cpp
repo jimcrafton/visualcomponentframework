@@ -54,7 +54,7 @@ Win32Context::Win32Context( const unsigned long& width, const unsigned long& hei
 	}
 }
 
-Win32Context::Win32Context( const unsigned long& contextID )
+Win32Context::Win32Context( OSHandleID contextID )
 {
 	init();
 	dc_ = (HDC)contextID;
@@ -625,9 +625,9 @@ void Win32Context::moveTo(const double & x, const double & y)
 
 
 
-unsigned long Win32Context::getContextID()
+OSHandleID Win32Context::getContextID()
 {
-	return (unsigned long)dc_;
+	return (OSHandleID)dc_;
 }
 
 void Win32Context::setOrigin( const double& x, const double& y )
@@ -709,7 +709,7 @@ GraphicsContext* Win32Context::getContext()
 	return context_;
 }
 
-void Win32Context::setContextID( const unsigned long& handle )
+void Win32Context::setContextID( OSHandleID handle )
 {
 	dc_ = (HDC)handle;
 }
@@ -1507,7 +1507,10 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 	flags |= DFCS_SCROLLDOWN;
 
 	if ( state.isPressed() ) {
-		flags |= DFCS_PUSHED;	
+		// Native win32 pressed combobox buttons are always flat, so
+		// we're going to do our best to make it look flat in our
+		// combobox emulation too
+		flags |= DFCS_PUSHED | DFCS_FLAT;
 	}
 
 	if ( !state.isEnabled() ) {
@@ -2489,6 +2492,17 @@ void Win32Context::finishedDrawing( long drawingOperation )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:26  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.2  2004/12/20 21:59:09  ddiego
+*committing cheeseheads patches for the combobox control.
+*
+*Revision 1.4.2.1  2004/12/19 04:05:04  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.4  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

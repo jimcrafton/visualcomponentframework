@@ -720,7 +720,7 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 		case DLL_PROCESS_ATTACH:  {
 			singleImageFormatsApplicationInstance = new ImageFormatsApplication();
 
-			singleImageFormatsApplicationInstance->getPeer()->setHandleID( (long)hModule );
+			singleImageFormatsApplicationInstance->getPeer()->setHandleID( hModule );
 			
 			singleImageFormatsApplicationInstance->setName( "ImageFormats" );
 

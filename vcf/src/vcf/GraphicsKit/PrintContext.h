@@ -32,7 +32,7 @@ namespace VCF{
 	
 	class GRAPHICSKIT_API PrintContext : public VCF::GraphicsContext {	
 	public:
-		PrintContext( ulong32 contextID ):GraphicsContext(contextID) {};
+		PrintContext( OSHandleID contextID ):GraphicsContext(contextID) {};
 
 
 	};
@@ -43,6 +43,14 @@ namespace VCF{
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/01/02 03:04:26  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.1  2004/12/19 04:05:04  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
 *Revision 1.4  2004/12/02 04:54:02  ddiego
 *added some more documentation to the graphics kit classes.
 *

@@ -213,6 +213,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitRTTI.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\BadComponentStateException.h
 # End Source File
 # Begin Source File
@@ -685,10 +693,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ClipboardPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\COMDataObject.cpp
 # End Source File
 # Begin Source File
@@ -722,6 +726,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Application.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.h
 # End Source File
 # Begin Source File
 
@@ -1597,6 +1609,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ButtonPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ClipboardPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\CommonDialogPeer.h
 # End Source File
 # Begin Source File
@@ -1646,10 +1662,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\MenuItemPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\PopupMenuPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ResourceStreamPeer.h
 # End Source File
 # Begin Source File
 

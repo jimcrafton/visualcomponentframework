@@ -171,10 +171,66 @@ void DefaultTabModel::tabPageChange( ItemEvent* e )
 	updateAllViews();
 }
 
+bool DefaultTabModel::isFirstPage( TabPage* page ) 
+{
+	bool result = false;
+	if ( !pages_.empty() ) {
+		if ( pages_.front() == page ) {
+			result = true;
+		}
+	}
+	return result;
+}
 
+bool DefaultTabModel::isLastPage( TabPage* page )
+{
+	bool result = false;
+	if ( !pages_.empty() ) {
+		if ( pages_.back() == page ) {
+			result = true;
+		}
+	}
+	return result;
+}
+
+TabPage* DefaultTabModel::nextPage( TabPage* page ) 
+{
+	TabPage* result = NULL;
+	
+	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
+	if ( found != pages_.end() ) {
+		found ++;
+		if ( found != pages_.end() ) {							
+			result = *found;
+		}
+	}
+	
+	return result;
+}
+
+TabPage* DefaultTabModel::previousPage( TabPage* page ) 
+{
+	TabPage* result = NULL;
+	
+	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
+	if ( found != pages_.end() ) {
+		found --;
+		if ( found >= pages_.begin() ) {
+			result = *found;
+		}
+	}
+	
+	return result;
+}
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2005/01/01 20:31:07  ddiego
+*made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -46,6 +46,12 @@ public:
 	Resource* getResource( const String& resourceName );
 
 	ProgramInfo* getProgramInfo();
+
+	/**
+	Returns the resource directory for this bundle if it exists,
+	otherwise returns an empty string. 
+	*/
+	virtual String getResourcesDirectory();
 protected:
 	ResourceBundlePeer* peer_;
 
@@ -58,6 +64,13 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:23  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.2.1  2004/12/19 07:09:20  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.2  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

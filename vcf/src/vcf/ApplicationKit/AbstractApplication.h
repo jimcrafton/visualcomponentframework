@@ -87,7 +87,19 @@ public:
 	ApplicationPeer* getPeer();
 	
 
-	GraphicsResourceBundle* getResourceBundle();
+	/**
+	\par
+	This returns the application's resource bundle. If the application in question
+	is the application instance that represents the running process/program (
+	in other words, the instance returned by Application::getRunningInstance() )
+	then the resource bundle returned is the same that you would get by calling
+	System::getResourceBundle(). However, if the application instance is
+	a LibraryApplication, then the resource bundle is unique to that library, and
+	independant from that of the main application's resource bundle.
+	\par
+	This is re-implemented in LibraryApplication class.
+	*/
+	virtual GraphicsResourceBundle* getResourceBundle();
 
 	/**
 	*returns the full path for the application executable
@@ -160,6 +172,13 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:20  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:18  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

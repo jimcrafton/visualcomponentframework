@@ -34,7 +34,7 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF {
 
 
 class TreePeer;
@@ -68,29 +68,29 @@ public:
 
 	double getItemIndent();
 
-    void setItemIndent( const double& indent );
+	void setItemIndent( const double& indent );
 
-    void setTreeModel(TreeModel * model);
+	void setTreeModel(TreeModel * model);
 
 	TreeModel* getTreeModel();
 
-    ImageList* getImageList();
+	ImageList* getImageList();
 
 	ImageList* getStateImageList();
 
-    void setImageList( ImageList* imageList );
+	void setImageList( ImageList* imageList );
 
 	void setStateImageList( ImageList* imageList );
 
 	virtual void paint( GraphicsContext * context );
 
-	void init();	
+	void init();
 
 	TreeItem* findItem( Point* pt );
 
 	void addItem( TreeItem* parent, TreeItem* item );
 
-	TreeItem* addItem( TreeItem* parent, const String& caption="", const ulong32 imageIndex=0 );
+	TreeItem* addItem( TreeItem* parent, const String& caption=L"", const ulong32 imageIndex=0 );
 
 	void removeItem( TreeItem* item );
 
@@ -115,8 +115,8 @@ protected:
 	void onModelEmptied( ModelEvent* event );
 
 
-    TreePeer * treePeer_;
-    ImageList* imageList_;
+	TreePeer * treePeer_;
+	ImageList* imageList_;
 	ImageList* stateImageList_;
 	TreeModel* treeModel_;
 	TreeItem* currentSelectedItem_;
@@ -124,12 +124,18 @@ protected:
 
 };
 
-};
+}; //namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/02 03:04:21  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2004/12/22 03:35:21  marcelloptr
+*just reformatting
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -298,6 +298,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\NoSuchElementException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\NotImplementedException.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h
 # End Source File
 # Begin Source File
@@ -843,6 +847,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Enum.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Field.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Interface.h
 # End Source File
 # Begin Source File
 

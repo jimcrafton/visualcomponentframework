@@ -116,6 +116,8 @@ public:
 
 	virtual SystemTrayPeer* internal_createSystemTrayPeer();
 
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app );
+
 	virtual bool internal_createCaret( Control* owningControl, Image* caretImage  );
 
 	virtual bool internal_destroyCaret( Control* owningControl );
@@ -178,6 +180,13 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/02 03:04:22  ddiego
+*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 07:09:19  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
