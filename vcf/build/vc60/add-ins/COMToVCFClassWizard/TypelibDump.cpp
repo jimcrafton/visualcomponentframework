@@ -637,7 +637,7 @@ BSTR GenerateStructEnumUnion(  ITypeInfo* pEnumTypeInfo, long indent )
 					else {
 						typeDefs += varValue.bstrVal;
 					}
-					if ( ei == pEnumAttr->cVars-1 ) {
+					if ( ei == (UINT)(pEnumAttr->cVars-1) ) {
 						typeDefs += "\n";
 					}
 					else {
@@ -668,8 +668,8 @@ BSTR GenerateClassTypeDefs( ITypeLib* pTypeLib, long indent )
 	for ( int i=0;i<indent;i++){
 		indentStr += "\t";
 	}
-	UINT tic = pTypeLib->GetTypeInfoCount();
-	for (int ti=0;ti<tic;ti++) {
+	int tic = pTypeLib->GetTypeInfoCount();
+	for (int ti=0;ti<(int)tic;ti++) {
 		ITypeInfo* pEnumTypeInfo = NULL;
 		hr = pTypeLib->GetTypeInfo( ti, &pEnumTypeInfo );
 		if ( SUCCEEDED(hr) ) {
@@ -752,7 +752,7 @@ BSTR GenerateClassMethod( ITypeInfo* pMethodTypeInfo, long methodID )
 	method += rgbstrNames[0];
 	method += "( ";
 	
-	for ( UINT p=0;p<pfuncdesc->cParams;p++) {
+	for ( int p=0;p<pfuncdesc->cParams;p++) {
 		bool paramIsPointer = false;
 		if ( pfuncdesc->lprgelemdescParam ) {
 			if ( pfuncdesc->lprgelemdescParam[p].idldesc.wIDLFlags ) {
@@ -1026,7 +1026,7 @@ HRESULT GenerateTypeLibHolder( ITypeLib* pTypeLib, TypeLibHolder& typeLibHolder 
 	for ( int i=0;i<indent;i++){
 		indentStr += "\t";
 	}
-	UINT tic = pTypeLib->GetTypeInfoCount();
+	int tic = pTypeLib->GetTypeInfoCount();
 	for (int ti=0;ti<tic;ti++) {
 		ITypeInfo* pTypeInfo = NULL;
 		hr = pTypeLib->GetTypeInfo( ti, &pTypeInfo );
@@ -1137,7 +1137,7 @@ HRESULT GenerateMethod( ITypeInfo* pMethodTypeInfo, long methodID, MethodHolder*
 	method += rgbstrNames[0];
 	method += "( ";
 	
-	for ( UINT p=0;p<pfuncdesc->cParams;p++) {
+	for ( int p=0;p<pfuncdesc->cParams;p++) {
 		bool paramIsPointer = false;
 		if ( pfuncdesc->lprgelemdescParam ) {
 			if ( pfuncdesc->lprgelemdescParam[p].idldesc.wIDLFlags ) {
@@ -1243,3 +1243,5 @@ HRESULT GenerateInterface( ITypeInfo* pTypeInfo, TYPEATTR* pTypeAttr, InterfaceH
 	}
 	return hr;
 }
+
+

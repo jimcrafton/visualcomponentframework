@@ -43,7 +43,7 @@ void FileExtsDlg::DoDataExchange(CDataExchange* pDX)
 	else
 	{
 		m_fileExtsList.DeleteAllItems();
-		for ( int i=0;i<m_extsList.size();i++) {
+		for ( int i=0;i<(int)m_extsList.size();i++) {
 			m_fileExtsList.InsertItem( i, m_extsList[i] );
 			m_fileExtsList.SetItemText( i, 1, m_extDescsList[i] );
 		}

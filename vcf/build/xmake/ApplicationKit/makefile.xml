@@ -6,6 +6,8 @@
 		<variable name="LIB_OUT" value="../../../lib"/>
 		<variable name="BIN_OUT" value="../../../bin"/>
 		<variable name="X11_LIB" value="/usr/X11R6/lib"/>
+		<variable name="X11_INC" value="/usr/X11R6/include"/>
+		<variable name="IMLIB2_INC" value="/usr/local/include/imlib2"/>
 		<!-- Note that this is a hack not sure what the correct thing to do 
 		here for MINGW_INC, perhaps this should be an env variable ?-->
 		<variable name="MINGW_INC" value="E:/mingw/include"/>
@@ -45,10 +47,18 @@
 			</config>
 
 			<config name="GCC Debug" srcBinaryExt=".o">
+				<includes>
+					<include path="$(INC)"/>
+				</includes>
 				<compiler name="g++" >
 					<flags>
-						<flag value="-I $(INC)"/>						
-						<flag value="-c -DVCF_GCC -DVCF_X11 -D_DEBUG -fPIC"/>
+						<!--turn off all warnings, for now -->
+						<!-- 
+						<flag value="-w"/>  
+						-->
+						<flag value="-I $(INC)"/>
+						<flag value="-I $(X11_INC) -I $(IMLIB2_INC)"/>
+						<flag value="-c -DVCF_GCC -DVCF_X11 -D_DEBUG -fPIC -ggdb"/>
 					</flags>
 				</compiler>	
 
@@ -57,10 +67,50 @@
 						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
 						<flag value="-ldl"/>
 						<flag value="-L$(X11_LIB)"/>
-						<flag value=" -L $(BIN_OUT) -lFoundationKit -lGraphicsKit -lX11 -shared -o $(BIN_OUT)/libApplicationKit.so"/>
+						<flag value=" -L $(BIN_OUT) -lFoundationKit_d -lGraphicsKit_d -lX11  -lttf -lImlib2 -shared -o $(BIN_OUT)/libApplicationKit_d.so"/>
 					</flags>
 				</linker>
 			</config>
+			
+			-DVCF_GTK
+			
+			<config name="GCC Release" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-I $(X11_INC) -I $(IMLIB2_INC)"/>
+						<flag value="-c -DVCF_GCC -DVCF_X11 -fPIC -O2"/>
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-O2 -ldl"/>
+						<flag value="-L$(X11_LIB)"/>
+						<flag value=" -L $(BIN_OUT) -lFoundationKit -lGraphicsKit -lX11  -lttf -lImlib2 -shared -o $(BIN_OUT)/libApplicationKit.so"/>
+					</flags>
+				</linker>
+			</config>			
+			
+			<config name="GCC gtk" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="`pkg-config gtk+-2.0 --cflags`"/>
+						<flag value="-c -DVCF_GCC -DVCF_GTK"/>
+					</flags>
+				</compiler>	
+
+				<linker name="g++">
+					<flags>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="`pkg-config gtk+-2.0 --libs`"/>
+						<flag value=" -L $(BIN_OUT) -lFoundationKit -lGraphicsKit -shared -o $(BIN_OUT)/libApplicationKit.so"/>
+					</flags>
+				</linker>
+			</config>
+			
 			<config name="GCC Static" srcBinaryExt=".o">
 				<compiler name="g++" >
 					<flags>
@@ -121,136 +171,136 @@
 		</configurations>
 
 		<sources>			
-			<source name="$(SRC)/core/ApplicationKit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/ApplicationKit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
 
-			<source name="$(SRC)/core/AbstractApplication.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractCommand.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractComponentEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractContainer.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractListModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractPropertyEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractScrollable.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractTableModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractTextModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractTreeModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/AbstractView.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractApplication.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractCommand.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractComponentEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractContainer.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractListModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractPropertyEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractScrollable.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractTableModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractTextModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractTreeModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/AbstractView.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
 			
-			<source name="$(SRC)/core/AcceleratorKey.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Application.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/AcceleratorKey.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Application.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
 			
-			<source name="$(SRC)/Graphics/Basic3DBorder.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/BasicTableItemEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ButtonEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CheckBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Clipboard.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ClipboardDataObject.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ClipboardEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ColumnItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ColumnModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ComboBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/COM/COMDataObject.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/COM/COMDragSource.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/COM/COMDropTarget.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommandButton.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommandGroup.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonColor.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonFileBrowse.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonFileDialog.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonFileOpen.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonFileSave.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonFont.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CommonPrint.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/COM/COMObject.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Component.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ComponentEditorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ComponentInfo.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/COM/COMUtils.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Control.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ControlContainer.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ControlEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/ControlGraphicsContext.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Cursor.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CursorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/CustomControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DataType.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultColumnItem.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultColumnModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultListItem.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultListModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultMenuItem.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultPropertyEditors.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTableCellItem.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTableModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTabModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTabPage.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTextModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTreeItem.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/DefaultTreeModel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Desktop.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Dialog.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/DragEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/DragDrop/DragSource.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/DropEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/DragDrop/DropTarget.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/FocusEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Frame.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/HeaderControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/HelpEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/HTMLBrowserControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ImageControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/ImageList.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ImageListEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/KeyboardEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Label.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/LibraryApplication.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Graphics/Light3DBorder.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/LightweightComponent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ListBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ListModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ListViewControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Menu.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/MenuBar.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/MenuItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Model.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/MouseEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/MultilineTextControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Panel.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/PopupMenu.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/PropertyEditorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/PushButton.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/RadioButtonControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/Resource.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/ResourceStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ScrollbarManager.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Splitter.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/StatusBar.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TabbedPages.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TableControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/TableModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/TabModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TextControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/TextEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TimerComponent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/TimerEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ToggledButton.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Toolbar.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ToolbarButton.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ToolbarDock.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/ToolbarSeparator.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ToolTipEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TreeControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/TreeListControl.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/TreeModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Utils/UIToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/UndoRedoEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/UndoRedoStack.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/ValidationEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/VFFInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/IO/VFFOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/WhatsThisHelpEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/core/Window.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
-			<source name="$(SRC)/Events/WindowEvent.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Basic3DBorder.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/BasicTableItemEditor.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ButtonEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CheckBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Clipboard.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ClipboardDataObject.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ClipboardEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ColumnItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ColumnModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ComboBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/COM/COMDataObject.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/COM/COMDragSource.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/COM/COMDropTarget.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/CommandButton.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommandGroup.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonColor.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonFileBrowse.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonFileDialog.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonFileOpen.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonFileSave.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonFont.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CommonPrint.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/COM/COMObject.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Component.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ComponentEditorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ComponentInfo.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/COM/COMUtils.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/core/Control.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ControlContainer.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ControlEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/ControlGraphicsContext.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Cursor.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CursorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/CustomControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DataType.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultColumnItem.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultColumnModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultListItem.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultListModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultMenuItem.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultPropertyEditors.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTableCellItem.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTableModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTabModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTabPage.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTextModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTreeItem.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/DefaultTreeModel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Desktop.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Dialog.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/DragEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/DragDrop/DragSource.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/DropEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/DragDrop/DropTarget.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/FocusEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Frame.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/HeaderControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/HelpEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/HTMLBrowserControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ImageControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/ImageList.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ImageListEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/KeyboardEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Label.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/LibraryApplication.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Graphics/Light3DBorder.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/LightweightComponent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ListBoxControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ListModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ListViewControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Menu.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/MenuBar.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/MenuItemEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Model.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/MouseEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/MultilineTextControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Panel.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/PopupMenu.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/PropertyEditorManager.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/PushButton.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/RadioButtonControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/Resource.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/ResourceStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ScrollbarManager.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Splitter.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/StatusBar.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TabbedPages.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TableControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/TableModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/TabModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TextControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/TextEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TimerComponent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/TimerEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ToggledButton.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Toolbar.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ToolbarButton.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ToolbarDock.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/ToolbarSeparator.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ToolTipEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TreeControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/TreeListControl.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/TreeModelEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Utils/UIToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/UndoRedoEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/UndoRedoStack.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/ValidationEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/VFFInputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/IO/VFFOutputStream.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/WhatsThisHelpEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/core/Window.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
+			<source name="$(SRC)/Events/WindowEvent.cpp" partOfConfig="MinGW Debug|GCC Debug|GCC gtk|GCC Release|VC++ Debug"/>
 			
 			<!-- Win32 -->
 			<source name="$(SRC)/ImplementerKit/AbstractWin32Component.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
@@ -282,7 +332,20 @@
 			<source name="$(SRC)/ImplementerKit/Win32Tree.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
 			<source name="$(SRC)/ImplementerKit/Win32Window.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>			
 			<source name="$(SRC)/../build/resources\win32\ApplicationKit.rc" outputAs="ApplicationKit.res" tool="rc" partOfConfig="MinGW Debug|VC++ Debug"/>
+			
+			<!-- GTK -->
+			
 			<!-- X11 -->
+			<source name="$(SRC)/ImplementerKit/X11UIToolkit.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Desktop.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Application.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/AbstractX11Control.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Control.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Window.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11ControlContext.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Dialog.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11Cursor.cpp" partOfConfig="GCC Debug|GCC Release"/>
+			<source name="$(SRC)/ImplementerKit/X11SimpleTextControl.cpp" partOfConfig="GCC Debug|GCC Release"/>
 			
 		</sources>
 	</project>

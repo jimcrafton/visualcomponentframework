@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC,BUILD_APPKIT_LIB"
+				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC,USE_FRAMEWORK_LIB,USE_GRAPHICSKIT_LIB,USE_WIN32HTMLBROWSER_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -69,7 +69,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,BUILD_APPKIT_LIB"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,NO_MFC,USE_FRAMEWORK_LIB,USE_GRAPHICSKIT_LIB,USE_WIN32HTMLBROWSER_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -180,6 +180,9 @@
 				RelativePath="..\..\..\src\COM\COMDataObject.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\COM\COMDragSource.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\COM\COMDropTarget.cpp">
 			</File>
 			<File
@@ -199,6 +202,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\ClipboardEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\ColorEtchedBorder.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\ColumnItemEvent.cpp">
@@ -327,6 +333,9 @@
 				RelativePath="..\..\..\src\DragDrop\DropTarget.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\Graphics\EtchedBorder.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\Events\FocusEvent.cpp">
 			</File>
 			<File
@@ -385,6 +394,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\MenuItemEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\MessageDialog.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Model.cpp">
@@ -448,6 +460,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\TimerEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\TitledBorder.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ToggledButton.cpp">
@@ -525,6 +540,9 @@
 				RelativePath="..\..\..\src\ImplementerKit\Win32Dialog.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp">
 			</File>
 			<File
@@ -580,6 +598,31 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\WindowEvent.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Res"
+			Filter="">
+			<File
+				RelativePath="..\..\resources\win32\ApplicationKit.rc">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\Vcf-Active\build\resources\win32;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCResourceCompilerTool"
+						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\Vcf-Active\build\resources\win32;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\resources\win32\inform.bmp">
+			</File>
+			<File
+				RelativePath="..\..\resources\win32\vcf.ico">
 			</File>
 		</Filter>
 		<Filter
@@ -674,21 +717,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\CheckBoxControl.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\dragdrop\Clipboard.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\dragdrop\ClipboardDataObject.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\dragdrop\ClipboardEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\dragdrop\ClipboardListener.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\dragdrop\ClipboardPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\ColumnItem.h">
@@ -871,6 +899,12 @@
 				RelativePath="..\..\..\include\implementer\DialogPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\dragdrop\DragSource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\dragdrop\DropTarget.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementer\FillState.h">
 			</File>
 			<File
@@ -884,6 +918,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Frame.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\FrameEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
@@ -1078,9 +1115,6 @@
 				RelativePath="..\..\..\include\io\ResourceStream.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\RichTextPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\ScrollBarControl.h">
 			</File>
 			<File
@@ -1121,9 +1155,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TabbedPages.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\TabbedPagesPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TableCellItem.h">
@@ -1267,6 +1298,9 @@
 				RelativePath="..\..\..\include\implementerKit\Win32Dialog.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\implementerKit\Win32DragDropPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\implementerKit\Win32DropTargetPeer.h">
 			</File>
 			<File
@@ -1339,40 +1373,6 @@
 				RelativePath="..\..\..\include\implementer\WindowPeer.h">
 			</File>
 		</Filter>
-		<Filter
-			Name="Res"
-			Filter="">
-			<File
-				RelativePath="..\..\resources\win32\ApplicationKit.rc">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\Vcf-Active\build\resources\win32;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\Projs\GShell\Libraries\Vcf\Vcf-Active\build\resources\win32;$(NoInherit)"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\resources\win32\vcf.ico">
-			</File>
-		</Filter>
-		<File
-			RelativePath="..\..\resources\win32\inform.bmp">
-		</File>
-		<File
-			RelativePath="..\..\resources\win32\question.bmp">
-		</File>
-		<File
-			RelativePath="..\..\resources\win32\stop.bmp">
-		</File>
-		<File
-			RelativePath="..\..\resources\win32\warning.bmp">
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

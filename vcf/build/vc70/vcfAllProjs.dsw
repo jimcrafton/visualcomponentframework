@@ -63,6 +63,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Borders"="..\..\tests\Borders\Borders.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Browser"="..\..\VCFBuilder2\Packages\CPPParser\Browser\Browser.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -147,6 +159,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DatagramSocketReceiver"="..\..\tests\DatagramSocketTest\DatagramSocketReceiver\DatagramSocketReceiver.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DatagramSocketSender"="..\..\tests\DatagramSocketTest\DatagramSocketSender\DatagramSocketSender.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Delegates"="..\..\tests\Delegates\Delegates.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -219,6 +255,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FilePaths"="..\..\tests\FilePaths\FilePaths.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FileStreaming"="..\..\tests\FileStreaming\FileStreaming.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Files"="..\..\tests\Files\Files.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "FoundationKit"=".\FoundationKit\FoundationKit.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -244,6 +316,18 @@ Package=<4>
 ###############################################################################
 
 Project: "FreeImageLib"="..\..\ImageFormats\FreeImage\Source\FreeImageLib\FreeImageLib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GUIThreads"="..\..\tests\GUIThreads\GUIThreads.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -507,6 +591,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTTI"="..\..\RTTI Compiler\RTTI.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RegExx"=".\FoundationKit\RegExx.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -603,7 +699,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SyncClass"="..\..\..\..\..\..\6\C++\Trading\Cyber\CyberTraderAPI\SyncClass\SyncClass.dsp" - Package Owner=<4>
+Project: "SystemStuff"="..\..\tests\SystemStuff\SystemStuff.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -831,7 +927,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "XmlMain"="..\..\tests\XmlTest\xmltest.dsp" - Package Owner=<4>
+Project: "XmlTest"="..\..\tests\XmlTest\xmltest.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -844,6 +940,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"="..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libXmake"="..\..\xmake\libXmake.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

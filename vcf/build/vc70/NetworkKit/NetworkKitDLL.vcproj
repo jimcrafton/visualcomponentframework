@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NO_MFC;USE_FRAMEWORK_DLL;NETKIT_DLL;NETKIT_EXPORTS;BUILD_NETWORKKIT_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FRAMEWORK_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -82,7 +82,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;NETKIT_DLL;NETKIT_EXPORTS;BUILD_NETWORKKIT_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FRAMEWORK_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -169,6 +169,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\net\NetToolkit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\NetworkKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\net\NetworkKitSelectLib.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\net\ServerSocketEvent.h">

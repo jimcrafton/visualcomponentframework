@@ -4,7 +4,8 @@
 	Version="7.00"
 	Name="Win32HTMLBrowser"
 	SccProjectName="Win32HTMLBrowser"
-	SccLocalPath="..\..\..">
+	SccLocalPath="..\..\.."
+	Keyword="AtlProj">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -16,13 +17,14 @@
 			IntermediateDirectory=".\vc7/Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
+			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS,_USRDLL,WIN32HTMLBROWSER_EXPORTS,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL,BUILD_WIN32HTMLBROWSER_LIB"
+				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS,_USRDLL,WIN32HTMLBROWSER_DLL,WIN32HTMLBROWSER_EXPORTS,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -39,7 +41,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
 				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc7.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -75,13 +77,14 @@
 			IntermediateDirectory=".\vc7/Debug"
 			ConfigurationType="2"
 			UseOfMFC="0"
+			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS,_USRDLL,NO_MFC,WIN32HTMLBROWSER_EXPORTS,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL,BUILD_WIN32HTMLBROWSER_LIB"
+				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS,_USRDLL,WIN32HTMLBROWSER_DLL,WIN32HTMLBROWSER_EXPORTS,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -99,7 +102,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
 				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc7_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -150,9 +153,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h">
-			</File>
-			<File
-				RelativePath="..\..\..\..\Vcf-Active_0.5.4\include\implementerKit\Win32HTMLBrowserSelectLib.h">
 			</File>
 		</Filter>
 		<Filter

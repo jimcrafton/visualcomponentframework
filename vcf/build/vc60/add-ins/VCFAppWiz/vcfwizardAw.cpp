@@ -265,7 +265,7 @@ LPCTSTR CVcfwizardAppWiz::LoadTemplate( LPCTSTR lpszTemplateName, DWORD& rdwSize
 				size.Format( "%d", extDescs.size() );
 				
 				m_Dictionary[_T("EXT_SIZE")] = size;
-				for (int i=0;i<extDescs.size();i++) {
+				for (int i=0;i<(int)extDescs.size();i++) {
 					CString s1;
 					s1.Format( "EXT_%d", i );
 					m_Dictionary[s1] = exts[i];

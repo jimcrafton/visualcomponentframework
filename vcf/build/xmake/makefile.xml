@@ -1,0 +1,5 @@
+<make>	
+	<project name="FoundationKit" externalFileName="FoundationKit/makefile.xml" />
+	<project name="GraphicsKit" externalFileName="GraphicsKit/makefile.xml" />
+	<project name="ApplicationKit" externalFileName="ApplicationKit/makefile.xml" />
+</make>
