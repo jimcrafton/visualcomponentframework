@@ -6097,7 +6097,7 @@ class DspFile( GenericProjectFile ):
         pf = StringUtils.replace( pf, 'release' + sep, '', True )
         pf = StringUtils.replace( pf, oldCompiler + sep, '', True )
         pf = StringUtils.replace( pf, newCompiler + sep, '', True )
-        pf = FileUtils.normPath( pf, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+        pf = FileUtils.normPath( pf, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_False )
 
 #       pathname = FileUtils.normPath( pathname, g_internal_unixStyle )
 #
