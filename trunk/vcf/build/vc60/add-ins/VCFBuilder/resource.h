@@ -10,6 +10,7 @@
 #define IDS_CMD_ACTIVATE_VCF_BUILDER_ENV_STANDALONE 5
 #define IDS_CMD_NEW_PROJECT             6
 #define IDR_VCFBUILDERTYPE              7
+#define IDS_CMD_ACTIVATE_DEV_STDIO_ENV  8
 #define IDR_TOOLBAR_MEDIUM              128
 #define IDR_TOOLBAR_LARGE               129
 #define IDI_VCFBUILDER                  129

@@ -212,7 +212,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					switch ( t ){
 						case debug: {
 							//NetworkKit_sd, NetworkKitDLL_d, NetworkKit_s, NetworkKitDLL, RemoteObjectKit_sd, RemoteObjectKit_s, RemoteObjectKitDLL_d, RemoteObjectKitDLL
-							setting = "ApplicationKit_sd.lib GraphicsKit_sd.lib FoundationKit_sd.lib ";
+							setting = "ApplicationKit_sd.lib GraphicsKit_sd.lib FoundationKit_sd.lib libart_d.lib ";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit_sd.lib RemoteObjectKit_sd.lib ";
 							}
@@ -224,7 +224,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						break;
 
 						case release: {
-							setting = "ApplicationKit_s.lib GraphicsKit_s.lib FoundationKit_s.lib ";
+							setting = "ApplicationKit_s.lib GraphicsKit_s.lib FoundationKit_s.lib libart.lib ";
 							if ( m_pChooser->NeedVCFRemote() ) {
 								setting += "NetworkKit_s.lib RemoteObjectKit_s.lib ";
 							}

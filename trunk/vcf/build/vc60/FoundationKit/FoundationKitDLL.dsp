@@ -217,10 +217,6 @@ SOURCE=..\..\..\include\implementer\LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\Listener.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Locales.h
 # End Source File
 # Begin Source File

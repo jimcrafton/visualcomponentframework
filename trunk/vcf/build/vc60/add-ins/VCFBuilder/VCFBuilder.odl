@@ -28,14 +28,14 @@ library VCFBuilder
 	interface ICommands : IDispatch
 	{
 		// methods
-		[id(1)]
-		HRESULT ActivateVCFBuilderEnvironment();
-		[id(2), helpstring("method OpenProject")] HRESULT OpenProject();
-		[id(3), helpstring("method NewProject")] HRESULT NewProject();
-		[id(4), helpstring("method SaveProject")] HRESULT SaveProject();
-		[id(5), helpstring("method SaveProjectAs")] HRESULT SaveProjectAs();
-		[id(6), helpstring("method NewForm")] HRESULT NewForm();
-		[id(7), helpstring("method ActivateVCFBuilderEnvStandalone")] HRESULT ActivateVCFBuilderEnvStandalone();
+		[id(1)]HRESULT ActivateDevStdioEnvironment();
+		[id(2)]HRESULT ActivateVCFBuilderEnvironment();
+		[id(3), helpstring("method OpenProject")] HRESULT OpenProject();
+		[id(4), helpstring("method NewProject")] HRESULT NewProject();
+		[id(5), helpstring("method SaveProject")] HRESULT SaveProject();
+		[id(6), helpstring("method SaveProjectAs")] HRESULT SaveProjectAs();
+		[id(7), helpstring("method NewForm")] HRESULT NewForm();
+		[id(8), helpstring("method ActivateVCFBuilderEnvStandalone")] HRESULT ActivateVCFBuilderEnvStandalone();
 	};
 
 	//  Class information for CCommands

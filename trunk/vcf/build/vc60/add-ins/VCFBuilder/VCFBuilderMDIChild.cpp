@@ -12,6 +12,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+TCHAR* VCFBuilderMDIChildWnd::WndClassName = "VCFBuilderMDIChildWnd";
 
 VCFBuilderMDIChild* VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd = NULL;
 
@@ -59,14 +60,79 @@ int VCFBuilderMDIChild::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	SetWindowText( "VCF Builder" );
 	this->SetTitle( "VCF Builder" );
-	VCFBuilderHostView* vcfViewHost = new VCFBuilderHostView();
-	vcfViewHost->Create( NULL, NULL, WS_CHILD | WS_VISIBLE, CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST );
+
+	//VCFBuilderHostView* vcfViewHost = new VCFBuilderHostView();
+	//vcfViewHost->Create( NULL, NULL, WS_CHILD | WS_VISIBLE, CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST );
 	
 	return 0;
 }
 
 void VCFBuilderMDIChild::newProject()
 {
-	VCFBuilderHostView* vcfViewHost = (VCFBuilderHostView*)GetActiveView();
-	vcfViewHost->newProject();
+	//VCFBuilderHostView* vcfViewHost = (VCFBuilderHostView*)GetActiveView();
+	//vcfViewHost->newProject();
+}
+
+LRESULT CALLBACK VCFBuilderMDIChildWnd::WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+{
+	LRESULT result = 0;
+
+	switch ( uMsg ) {  
+		case WM_MDIACTIVATE : {
+			HWND hwndChildDeact = (HWND) wParam;
+			HWND hwndChildAct = (HWND) lParam;          
+			TCHAR tmp[256];
+			sprintf( tmp, "VCFBuilderMDIChildWnd - WM_MDIACTIVATE hwndChildAct = %p hwndChildDeact = %p, hwnd = %p\n",
+							hwndChildAct, hwndChildDeact, hwnd );
+
+			if ( hwndChildDeact == hwnd ) {
+				OutputDebugString( "VCFBuilderMDIChildWnd deactivated\n" );
+			}
+			result = DefWindowProc( hwnd, uMsg, wParam, lParam ); 
+		}
+		break;
+
+		case WM_ACTIVATE : {
+			int fActive = LOWORD(wParam);
+			TCHAR tmp[256];
+			if ( WA_INACTIVE == fActive ) {
+				OutputDebugString( "VCFBuilderMDIChildWnd deactivated\n" );
+			}
+			result = DefWindowProc( hwnd, uMsg, wParam, lParam );
+		}
+		break;
+
+		case WM_PAINT : {
+			PAINTSTRUCT ps = {0};
+			::BeginPaint( hwnd, &ps );
+			HBRUSH brush = CreateSolidBrush( GetSysColor( COLOR_WINDOW ) );
+
+			FillRect( ps.hdc, &ps.rcPaint, brush );
+
+			DeleteObject( brush );
+			
+			EndPaint( hwnd, &ps );
+		}
+		break;
+
+		default : {
+			result = DefWindowProc( hwnd, uMsg, wParam, lParam );
+		}
+		break;
+	}
+
+	return result;
+}
+
+void VCFBuilderMDIChildWnd::RegisterClass( HINSTANCE hInstance )
+{
+	WNDCLASSEX wndClass = {0};
+	wndClass.cbSize = sizeof(WNDCLASSEX);
+	wndClass.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc  = VCFBuilderMDIChildWnd::WindowProc;
+	wndClass.hInstance = hInstance;
+	wndClass.hCursor = LoadCursor( NULL, IDC_ARROW );
+	wndClass.lpszClassName = VCFBuilderMDIChildWnd::WndClassName;
+
+	RegisterClassEx( &wndClass );
 }

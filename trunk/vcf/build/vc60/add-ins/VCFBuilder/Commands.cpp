@@ -179,6 +179,11 @@ HRESULT CCommands::XDebuggerEvents::BreakpointHit(IDispatch* pBreakpoint)
 /////////////////////////////////////////////////////////////////////////////
 // CCommands methods
 
+STDMETHODIMP CCommands::ActivateDevStdioEnvironment() 
+{
+	return S_OK;
+}
+
 STDMETHODIMP CCommands::ActivateVCFBuilderEnvironment() 
 {
 	//
@@ -231,7 +236,7 @@ STDMETHODIMP CCommands::NewProject()
 	AFX_MANAGE_STATE(AfxGetStaticModuleState())
 
 	if ( NULL != VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd ) 	{
-		VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->newProject();
+		//VCFBuilderMDIChild::globalVCFBuilderMDIChildWnd->newProject();
 	}
 
 	return S_OK;
