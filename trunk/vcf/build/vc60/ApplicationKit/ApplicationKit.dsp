@@ -93,6 +93,10 @@ SOURCE=..\..\..\src\core\AbstractCommand.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractContainer.cpp
 # End Source File
 # Begin Source File
@@ -126,7 +130,6 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
-# ADD CPP /Yc"ApplicationKit.h"
 # End Source File
 # Begin Source File
 
@@ -211,6 +214,10 @@ SOURCE=..\..\..\src\COM\COMObject.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ComponentEditorManager.cpp
 # End Source File
 # Begin Source File
 
@@ -331,6 +338,10 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\HelpEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\HTMLBrowserControl.cpp
 # End Source File
 # Begin Source File
 

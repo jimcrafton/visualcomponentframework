@@ -105,6 +105,10 @@ SOURCE=..\..\..\src\core\ClassRegistry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\IO\Directory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Utils\ErrorLog.cpp
 # End Source File
 # Begin Source File
@@ -130,7 +134,6 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
-# ADD CPP /Yc"FoundationKit.h"
 # End Source File
 # Begin Source File
 
