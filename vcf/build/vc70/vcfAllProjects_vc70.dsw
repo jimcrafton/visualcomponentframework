@@ -39,18 +39,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AllTests"="./Tests/AllTests/AllTests_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Anchors"="../../examples/Anchors/Anchors_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
