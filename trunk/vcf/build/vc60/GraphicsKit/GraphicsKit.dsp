@@ -137,6 +137,8 @@ SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
 
+# ADD CPP /Yc"GraphicsKit.h"
+
 !ENDIF 
 
 # End Source File
