@@ -873,6 +873,14 @@ SOURCE=..\..\..\include\implementer\TextPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\TimerComponent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\TimerEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ToggledButton.h
 # End Source File
 # Begin Source File
@@ -1531,6 +1539,14 @@ SOURCE=..\..\..\src\core\TextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\TimerComponent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\TimerEvent.cpp
 # End Source File
 # Begin Source File
 
