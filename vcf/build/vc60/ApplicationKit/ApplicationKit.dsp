@@ -143,17 +143,7 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
-
-!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
-
 # ADD CPP /Yc"ApplicationKit.h"
-
-!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
-
-# ADD CPP /Yc"ApplicationKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -1738,6 +1728,14 @@ SOURCE=..\..\..\include\events\WindowListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\WindowPeer.h
+# End Source File
+# End Group
+# Begin Group "Res"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\resources\win32\ApplicationKit.rc
 # End Source File
 # End Group
 # End Target

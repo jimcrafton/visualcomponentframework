@@ -1738,5 +1738,17 @@ SOURCE=..\..\..\src\core\Window.cpp
 SOURCE=..\..\..\src\Events\WindowEvent.cpp
 # End Source File
 # End Group
+# Begin Group "Res"
+
+# PROP Default_Filter "*.rc;*.bmp;*.ico"
+# Begin Source File
+
+SOURCE=..\..\resources\win32\ApplicationKit.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\vcf.ico
+# End Source File
+# End Group
 # End Target
 # End Project
