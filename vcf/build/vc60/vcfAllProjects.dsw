@@ -165,6 +165,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CreateBundle"="..\..\src\createbundle\CreateBundle.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "DateTimeUI"="..\..\examples\DateTimeUI\DateTimeUI.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -433,9 +445,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Tables
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Tabs
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TeXLabel
@@ -1095,18 +1104,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Tabs"="..\..\examples\Tabs\Tabs.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "TeXLabel"="..\..\examples\TeXLabel\TeXLabel.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1258,6 +1255,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "createinfo"="..\..\src\createinfo\createinfo.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
