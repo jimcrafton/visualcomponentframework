@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXFILESTREAM_H__
-#define _VCF_LINUXFILESTREAM_H__
+#define _VCF_LINUXFILESTREAM_H__ 
 //LinuxFileStream.h
 
 /*
@@ -21,10 +21,11 @@ namespace VCF
 class FOUNDATIONKIT_API LinuxFileStream : public FileStreamPeer
 {
 public:
-	LinuxFileStream( const String& filename, const FileStreamAccessType& accessType );
+	LinuxFileStream( const String& filename,
+	                 const FileStreamAccessType& accessType );
 
 	LinuxFileStream( File* file );
-	
+
 	virtual ~LinuxFileStream();
 
 	virtual void seek( const unsigned long& offset, const SeekType& offsetFrom );
@@ -36,20 +37,25 @@ public:
 	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes );
 
 	virtual char* getBuffer();
+
 private:
 	int fileHandle_;
-	VCF::String filename_;
 	VCF::File* file_;
+	VCF::String filename_;
+	
 	int translateSeekTypeToMoveType( const SeekType& offsetFrom );
 };
 
 
-};
+}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

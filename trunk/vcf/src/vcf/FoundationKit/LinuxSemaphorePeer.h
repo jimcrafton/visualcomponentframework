@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXSEMAPHOREPEER_H__
-#define _VCF_LINUXSEMAPHOREPEER_H__
+#define _VCF_LINUXSEMAPHOREPEER_H__ 
 //LinuxSemaphorePeer.h
 
 /*
@@ -8,21 +8,17 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 // LinuxSemaphorePeer.h: interface for the LinuxSemaphorePeer class.
-
-
 
 namespace VCF
 {
-
 
 /**
 *Class LinuxSemaphorePeer documentation
 Implements the base SemaphorePeer class
 used for synchronizing access to threaded
 resources
-*/
+*/ 
 /**
 *Class LinuxSemaphorePeer
 *@author Jim Crafton, May 26 2002
@@ -30,7 +26,7 @@ resources
 class LinuxSemaphorePeer : public VCF::Object, public VCF::SemaphorePeer
 {
 public:
-	LinuxSemaphorePeer(long initialCount , long maxCount);
+	LinuxSemaphorePeer( long initialCount , long maxCount );
 
 	virtual ~LinuxSemaphorePeer();
 
@@ -38,19 +34,25 @@ public:
 
 	virtual bool unlock();
 
-	virtual uint32 getHandleID() {
-		return handle_;
+	virtual OSHandleID getHandleID()
+	{
+		return reinterpret_cast<OSHandleID>( handle_ );
 	}
+	
 protected:
 	uint32 handle_;
 
 };
+
 } // end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

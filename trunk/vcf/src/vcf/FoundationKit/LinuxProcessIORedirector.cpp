@@ -6,31 +6,22 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/ProcessWithRedirectedIO.h"
 #include "vcf/FoundationKit/LinuxProcessIORedirector.h"
 
-
 using namespace VCF;
 
-
 LinuxProcessIORedirector::LinuxProcessIORedirector()
-{
-
-}
+{}
 
 LinuxProcessIORedirector::~LinuxProcessIORedirector()
-{
+{}
 
-}
-
-
-
-bool LinuxProcessIORedirector::createProcess( const String& processName, const String& arguments )
+bool LinuxProcessIORedirector::createProcess( const String& processName,
+                                              const String& arguments )
 {
 	bool result = false;
-
 	return result;
 }
 
@@ -39,10 +30,12 @@ ulong32 LinuxProcessIORedirector::terminate()
 	return 0;
 }
 
-
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

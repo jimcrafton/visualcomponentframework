@@ -6,31 +6,22 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/LinuxLocalePeer.h"
 #include "vcf/FoundationKit/DateTime.h"
 
-
-
 using namespace VCF;
 
-
-
 LinuxLocalePeer::LinuxLocalePeer()
+{}
+
+void LinuxLocalePeer::setLocale( const UnicodeString& language,
+                                 const UnicodeString& country,
+                                 const UnicodeString& variant )
 {
-
-}
-
-void LinuxLocalePeer::setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant )
-{
-	if ( language.empty() && country.empty() ) {
-
-	}
-	else {
-
-	}
+	if ( language.empty() && country.empty() ) {}
+	else {}
 }
 
 int LinuxLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
@@ -38,17 +29,15 @@ int LinuxLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 	return 0;
 }
 
-
-int LinuxLocalePeer::collateCaseInsensitive( const UnicodeString& s1, const UnicodeString& s2 )
+int LinuxLocalePeer::collateCaseInsensitive( const UnicodeString& s1,
+                                             const UnicodeString& s2 )
 {
 	return 0;
 }
 
-
 UnicodeString LinuxLocalePeer::toString( const int& val )
 {
 	UnicodeString result;
-
 	return result;
 }
 
@@ -61,40 +50,32 @@ UnicodeString LinuxLocalePeer::toString( const unsigned int& val )
 UnicodeString LinuxLocalePeer::toString( const long& val )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toString( const unsigned long& val )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toString( const double& val )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toString( const float& val )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toStringFromCurrency( const double& val )
 {
 	UnicodeString result;
-
 	return result;
 }
-
-
-
 
 int LinuxLocalePeer::toInt( const UnicodeString& str )
 {
@@ -105,197 +86,174 @@ int LinuxLocalePeer::toInt( const UnicodeString& str )
 unsigned int LinuxLocalePeer::toUInt( const UnicodeString& str )
 {
 	unsigned int result;
-
 	return result;
 }
 
 double LinuxLocalePeer::toDouble( const UnicodeString& str )
 {
 	double result;
-
-
 	return result;
 }
 
 float LinuxLocalePeer::toFloat( const UnicodeString& str )
 {
 	float result;
-
-
 	return result;
 }
 
 double LinuxLocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 {
 	double result;
-
-
 	return result;
 }
-
-
 
 UnicodeString LinuxLocalePeer::toLowerCase( const UnicodeString& s )
 {
 	UnicodeString result;
-
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toUpperCase( const UnicodeString& s )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getNumberThousandsSeparator()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getNumberDecimalPoint()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getNumberGrouping()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getCurrencyDecimalPoint()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getCurrencyThousandsSeparator()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getCurrencySymbol()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 int LinuxLocalePeer::getCurrencyFractionalDigits()
 {
 	int result = 0;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getCurrencyPositiveSign()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::getCurrencyNegativeSign()
 {
 	UnicodeString result;
-
 	return result;
 }
 
 bool LinuxLocalePeer::isCharA( const long& charTypeMask, const VCFChar& c )
 {
+	UnicodeString oldLocaleStr = ::setlocale( LC_CTYPE, 0 );
+	::setlocale( LC_CTYPE, crtLocaleStr_.ansi_c_str() );
+
 	long mask = 0;
-
-	UnicodeString oldLocaleStr = setlocale( LC_CTYPE, NULL );
-
-	setlocale( LC_CTYPE, crtLocaleStr_.ansi_c_str() );
-
 	if ( charTypeMask & ctSpace ) {
-		if ( isspace( c ) ) {
+		if ( ::isspace( c ) ) {
 			mask |= ctSpace;
 		}
 	}
 
 	if ( charTypeMask & ctPrint ) {
-		if ( isprint( c ) ) {
+		if ( ::isprint( c ) ) {
 			mask |= ctPrint;
 		}
 	}
 
 	if ( charTypeMask & ctCntrl ) {
-		if ( isprint( c ) ) {
+		if ( ::isprint( c ) ) {
 			mask |= ctCntrl;
 		}
 	}
 
 	if ( charTypeMask & ctCntrl ) {
-		if ( iscntrl( c ) ) {
+		if ( ::iscntrl( c ) ) {
 			mask |= ctCntrl;
 		}
 	}
 
 	if ( charTypeMask & ctUpper ) {
-		if ( isupper( c ) ) {
+		if ( ::isupper( c ) ) {
 			mask |= ctUpper;
 		}
 	}
 
 	if ( charTypeMask & ctLower ) {
-		if ( islower( c ) ) {
+		if ( ::islower( c ) ) {
 			mask |= ctLower;
 		}
 	}
 
 	if ( charTypeMask & ctDigit ) {
-		if ( isdigit( c ) ) {
+		if ( ::isdigit( c ) ) {
 			mask |= ctDigit;
 		}
 	}
 
 	if ( charTypeMask & ctPunct ) {
-		if ( ispunct( c ) ) {
+		if ( ::ispunct( c ) ) {
 			mask |= ctPunct;
 		}
 	}
 
 	if ( charTypeMask & ctHexDigit ) {
-		if ( isxdigit( c ) ) {
+		if ( ::isxdigit( c ) ) {
 			mask |= ctHexDigit;
 		}
 	}
 
 	if ( charTypeMask & ctAlpha ) {
-		if ( isalpha( c ) ) {
+		if ( ::isalpha( c ) ) {
 			mask |= ctAlpha;
 		}
 	}
 
 	if ( charTypeMask & ctAlphaNumeric ) {
-		if ( isalnum( c ) ) {
+		if ( ::isalnum( c ) ) {
 			mask |= ctAlphaNumeric;
 		}
 	}
 
 	if ( charTypeMask & ctGraph ) {
-		if ( isgraph( c ) ) {
+		if ( ::isgraph( c ) ) {
 			mask |= ctGraph;
 		}
 	}
 
-	setlocale( LC_CTYPE, oldLocaleStr.ansi_c_str() );
+	::setlocale( LC_CTYPE, oldLocaleStr.ansi_c_str() );
 
-	return (0 == mask) ? false : true;
+	return ( 0 == mask ) ? false : true;
 }
 
 UnicodeString LinuxLocalePeer::translate( const UnicodeString& id )
@@ -307,28 +265,22 @@ UnicodeString LinuxLocalePeer::toStringFromDate( const DateTime& val, const Unic
 {
 
 	UnicodeString result;
-
 	return result;
 }
 
 UnicodeString LinuxLocalePeer::toStringFromTime( const DateTime& val, const UnicodeString& format )
 {
 	UnicodeString result;
-
 	return result;
 }
 
 ulong32 LinuxLocalePeer::getLanguageCode()
 {
 	return 0;
-
 }
-
-
 
 ulong32 LinuxLocalePeer::getCountryCode()
 {
-
 	return 0;
 }
 
@@ -336,6 +288,9 @@ ulong32 LinuxLocalePeer::getCountryCode()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

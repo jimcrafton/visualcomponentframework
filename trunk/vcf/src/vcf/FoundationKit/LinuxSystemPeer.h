@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXSYSTEMPEER_H__
-#define _VCF_LINUXSYSTEMPEER_H__
+#define _VCF_LINUXSYSTEMPEER_H__ 
 //LinuxSystemPeer.h
 
 /*
@@ -8,10 +8,7 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 // LinuxSystemPeer.h: interface for the LinuxSystemPeer class.
-
-
 
 #include <sys/time.h>
 
@@ -30,6 +27,16 @@ public:
 
 	virtual bool doesFileExist( const String& fileName );
 
+	virtual void setEnvironmentVariable( const String& variableName,
+	                                     const String& newValue );
+
+	virtual void addPathDirectory( const String& directory );
+
+	virtual String getOSName();
+	virtual String getOSVersion();
+
+	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
+
 	virtual String getCurrentWorkingDirectory();
 
 	virtual String getEnvironmentVariable( const String& variableName );
@@ -42,16 +49,17 @@ public:
 
 	virtual void setCurrentThreadLocale( Locale* locale );
 
-	virtual bool isUnicodeEnabled() {
+	virtual bool isUnicodeEnabled()
+	{
 		return false;
 	}
-	
-	virtual DateTime convertUTCTimeToLocalTime( const DateTime& date );	
+
+	virtual DateTime convertUTCTimeToLocalTime( const DateTime& date );
 
 	virtual DateTime convertLocalTimeToUTCTime( const DateTime& date );
 
 protected:
-  //WEIRDNESS! These member variables need to be
+	//WEIRDNESS! These member variables need to be
 	//declared as static to work right...sigh...
 	static struct timezone timeZone;
 	static struct timeval time;
@@ -63,6 +71,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -6,13 +6,11 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
-
 
 using namespace VCF;
 using namespace VCFLinux;
@@ -25,88 +23,98 @@ String LinuxUtils::getErrorString( const int& errorCode )
 	//assumes
 	switch ( errorCode ) {
 		case EFAULT: {
-    	result = "Path points outside your accessible address space.";
-		}
-		break;
+				result = "Path points outside your accessible address space.";
+			}
+			break;
 
 		case EACCES: {
-    	result = "Write access to the directory containing the pathname is not allowed\n"\
-								"for hte process's effective uid, or one of the directories in the pathname\n"\
-								"did not allow search (execute) permission.";
-		}
-		break;
+				result = "Write access to the directory containing the pathname "
+				         "is not allowed\nfor hte process's effective uid, or one "
+				         "of the directories in the pathname\ndid not allow search "
+				         "(execute) permission.";
+			}
+			break;
 
 		case EPERM: {
-    	result = "The directory that is represented by the path name has the sticky bit set\n"\
-								"and the process's effective uid is neither the uid of the file to be deleted\n"\
-								"nor that of the directory containing it.";
+				result = "The directory that is represented by the path name has "
+				         "the sticky bit set\nand the process's effective uid is "
+				         "neither the uid of the file to be deleted\nnor that of "
+				         "the directory containing it.";
 
-		}
-		break;
+			}
+			break;
 
 
 		case ENAMETOOLONG: {
-    	result = "The pathname was too long.";
-		}
-		break;
+				result = "The pathname was too long.";
+			}
+			break;
 
 		case ENOENT: {
-    	result = "A directory component in the pathname does not exist or is a dangling symbolic link.";
-		}
-		break;
+				result = "A directory component in the pathname does not exist or "
+				         "is a dangling symbolic link.";
+			}
+			break;
 
 		case ENOTDIR: {
-    	result = "A component used as a directpy in a path is not, in fact, a directory.";
-		}
-		break;
+				result = "A component used as a directpy in a path is not, "
+				         "in fact, a directory.";
+			}
+			break;
 
 		case ENOMEM: {
-    	result = "Insufficient kernel memory.";
-		}
-		break;
+				result = "Insufficient kernel memory.";
+			}
+			break;
 
 		case EROFS: {
-    	result = "Path refers to a file that is read-only.";
-		}
-		break;
+				result = "Path refers to a file that is read-only.";
+			}
+			break;
 
 		case EEXIST: {
-    	result = "Path refers to a file that already exists.";
-		}
-		break;
+				result = "Path refers to a file that already exists.";
+			}
+			break;
 
 		case EISDIR: {
-    	result = "Path refers to a file that is a directory and write access was requested.";
-		}
-		break;
+				result = "Path refers to a file that is a directory and write "
+				         "access was requested.";
+			}
+			break;
 
 		case ENXIO: {
-    	result = "O_NONBLOCK or O_WRONLY is set, the named file is a FIFO and no\n"\
-								"process has the file open for reading. Or, the file is a device\n"\
-								"special file and no corresponding device exists.";
-		}
-		break;
+				result = "O_NONBLOCK or O_WRONLY is set, the named file is a FIFO "
+				         "and no\nprocess has the file open for reading. Or, the "
+				         "file is a device\nspecial file and no corresponding "
+				         "device exists.";
+			}
+			break;
 
 		case ENODEV: {
-    	result = "Path refers to a device special file and no corresponding device exists.";
-		}
-		break;
+				result = "Path refers to a device special file and no "
+				         "corresponding device exists.";
+			}
+			break;
 
 		case ELOOP: {
-    	result = "Too many symbolic links were were encountered in resolving the pathname\n"\
-								"or O_NOFOLLOW was specified but the path was a symbolic link.";
-		}
-		break;
+				result = "Too many symbolic links were were encountered in "
+				         "resolving the pathname\nor O_NOFOLLOW was specified "
+				         "but the path was a symbolic link.";
+			}
+			break;
 
 		case ENFILE: {
-    	result = "The limit on the number of open file handles was reached for the OS.";
-		}
-		break;
+				result = "The limit on the number of open file handles was "
+				         "reached for the OS.";
+			}
+			break;
 
 		case EMFILE: {
-    	result = "The limit on the number of open file handles for the process was reached.";
-		}
-		break;
+				result = "The limit on the number of open file handles for the "
+				         "process was reached.";
+			}
+			break;
 	}
 	return result;
 }
@@ -115,6 +123,9 @@ String LinuxUtils::getErrorString( const int& errorCode )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

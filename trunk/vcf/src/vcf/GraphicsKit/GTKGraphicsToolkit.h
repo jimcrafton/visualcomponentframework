@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKGRAPHICSTOOLKIT_H__
-#define _VCF_GTKGRAPHICSTOOLKIT_H__
+#define _VCF_GTKGRAPHICSTOOLKIT_H__ 
 //GTKGraphicsToolkit.h
 
 /*
@@ -8,45 +8,47 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
-namespace VCF {
+namespace VCF
+{
 
 /**
-
+ 
 */
-class GRAPHICSKIT_API GTKGraphicsToolkit : public GraphicsToolkit {
+class GRAPHICSKIT_API GTKGraphicsToolkit : public GraphicsToolkit
+{
 public:
 
 	GTKGraphicsToolkit();
 
 	virtual ~GTKGraphicsToolkit();
 
-	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
+	virtual ContextPeer* internal_createContextPeer( const unsigned long& width,
+	                                                 const unsigned long& height );
 
-	virtual ContextPeer* internal_createContextPeer( const unsigned long& contextID );
+	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID );
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName );
 
-	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize );
+	virtual FontPeer* internal_createFontPeer( const String& fontName,
+	                                           const double& pointSize );
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height );
+	virtual Image* internal_createImage( const unsigned long& width,
+	                                     const unsigned long& height );
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect );
 
-	virtual Font* getDefaultSystemFont() {
+	virtual Font* getDefaultSystemFont()
+	{
 		return systemFont_;
 	}
 
-	PangoContext* getGTKPangoContext() {
+	PangoContext* getGTKPangoContext()
+	{
 		return gtkPangoContext_;
 	}
 
-	bool isInitialized() {
+	bool isInitialized()
+	{
 		return initialized_;
 	}
 
@@ -54,9 +56,17 @@ public:
 
 	virtual double getDPI();
 
-	GtkStyle* getDefaultGTKStyle() {
+	GtkStyle* getDefaultGTKStyle()
+	{
 		return defaultGTKStyle_;
 	}
+
+	virtual PrintSessionPeer* internal_createPrintSessionPeer();
+
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer();
+
+	virtual double internal_getDPI( GraphicsContext* context );
+	
 protected:
 	bool initialized_;
 	Font* systemFont_;
@@ -68,12 +78,16 @@ protected:
 };
 
 
-}; //end of namespace VCF
+}
+; //end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:23  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

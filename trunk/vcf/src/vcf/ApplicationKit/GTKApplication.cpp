@@ -14,16 +14,14 @@ where you installed the VCF.
 
 using namespace VCF;
 
-GTKApplication::GTKApplication():
-	app_(NULL),
-	handleID_(0)
+GTKApplication::GTKApplication() :
+		app_( NULL ),
+		handleID_( 0 )
 {
-
 }
 
 GTKApplication::~GTKApplication()
 {
-
 }
 
 
@@ -36,7 +34,7 @@ bool GTKApplication::initApp()
 
 
 	gdk_event_handler_set( GTKUIToolkit::internal_gdkEventHandler,
-							(gpointer)UIToolkit::internal_getDefaultUIToolkit(), NULL );
+	                       ( gpointer ) UIToolkit::internal_getDefaultUIToolkit(), NULL );
 
 	//g_idle_add( GTKUIToolkit::internal_gdkIdleHandler, (gpointer)UIToolkit::getDefaultUIToolkit() );
 
@@ -46,7 +44,6 @@ bool GTKApplication::initApp()
 
 void GTKApplication::terminateApp()
 {
-
 }
 
 
@@ -67,20 +64,23 @@ String GTKApplication::getFileName()
 	return result;
 }
 
-long GTKApplication::getHandleID()
+OSHandleID GTKApplication::getHandleID()
 {
-	return handleID_;
+	return reinterpret_cast<OSHandleID>( handleID_ );
 }
 
-void GTKApplication::setHandleID( const long& handleID )
+void GTKApplication::setHandleID( OSHandleID handleID )
 {
-	handleID_ = handleID;
+	handleID_ = reinterpret_cast<long>( handleID );
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

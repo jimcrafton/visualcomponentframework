@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKFONT_H__
-#define _VCF_GTKFONT_H__
+#define _VCF_GTKFONT_H__ 
 //GTKFont.h
 
 /*
@@ -8,18 +8,14 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
-namespace VCF {
+namespace VCF
+{
 
 /**
-
+ 
 */
-class GTKFont : public Object, public FontPeer {
+class GTKFont : public Object, public FontPeer
+{
 public:
 	GTKFont( const String& fontName );
 
@@ -29,84 +25,94 @@ public:
 
 	void init();
 
-	virtual ulong32 getFontHandleID() ;
+	virtual OSHandleID getFontHandleID();
 
-	virtual String getName() ;
+	virtual String getName();
 
 	virtual void setName( const String& name );
 
-	virtual bool isTrueType() ;
+	virtual bool isTrueType();
 
-	virtual double getPointSize() ;
+	virtual double getPointSize();
 
 	virtual void setPointSize( const double pointSize );
 
-	virtual double getPixelSize() ;
+	virtual double getPixelSize();
 
 	virtual void setPixelSize( const double pixelSize );
 
 	virtual void setBold( const bool& bold );
 
-	virtual bool getBold() ;
+	virtual bool getBold();
 
-	virtual bool getItalic() ;
+	virtual bool getItalic();
 
 	virtual void setItalic( const bool& italic );
 
-	virtual bool getUnderlined() ;
+	virtual bool getUnderlined();
 
 	virtual void setUnderlined( const bool& underlined );
 
-	virtual bool getStrikeOut() ;
+	virtual bool getStrikeOut();
 
 	virtual void setStrikeOut( const bool& strikeout );
 
-	virtual double getShear() ;
+	//virtual double getShear();
 
-	virtual void setShear(const double& shear );
+	//virtual void setShear( const double& shear );
 
-	virtual double getAngle() ;
+	//virtual double getAngle();
 
-	virtual void setAngle( const double& angle );
+	//virtual void setAngle( const double& angle );
+	
+	virtual void setAttributes( const double& pointSize,
+	                            const bool& bold,
+	                            const bool& italic,
+	                            const bool& underlined,
+	                            const bool& struckOut,
+	                            //const double& shear,
+	                            //const double& angle,
+	                            const String& name );
 
-	virtual void setAttributes( const double& pointSize, const bool& bold, const bool& italic,
-					const bool& underlined, const bool& struckOut, const double& shear,
-					const double& angle, const String& name );
+	virtual double getAscent();
 
-	virtual double getAscent() ;
+	virtual double getDescent();
 
-	virtual double getDescent() ;
+	//virtual double getExternalLeading();
 
-	virtual double getExternalLeading() ;
+	//virtual double getInternalLeading();
 
-	virtual double getInternalLeading() ;
+	//virtual double getHeight();
 
-	virtual double getHeight() ;
+	//virtual VCFChar getWordBreakCharacter();
 
-	virtual VCFChar getWordBreakCharacter() ;
+	//virtual VCFChar getFirstCharacter();
 
-	virtual VCFChar getFirstCharacter() ;
+	//virtual VCFChar getLastCharacter();
 
-	virtual VCFChar getLastCharacter() ;
+	virtual GlyphCollection* getGlyphCollection( const String& text );
 
-	virtual GlyphCollection* getGlyphCollection( const String& text ) ;
+	virtual void setFont( Font* font );
 
-	virtual bool isEqual( Object* object );
+	//virtual bool isEqual( Object* object );
 
-	PangoFontDescription* getPangoFontDescription() {
+	PangoFontDescription* getPangoFontDescription()
+	{
 		return fontDescriptor_;
 	}
 protected:
 	PangoFontDescription* fontDescriptor_;
 };
 
-
-};
+}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:23  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

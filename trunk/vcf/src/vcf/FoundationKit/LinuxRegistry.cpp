@@ -6,27 +6,25 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
 using namespace VCF;
 
 LinuxRegistry::LinuxRegistry()
-{
-
-
-}
+		: values_()
+		, keys_()
+		, valuesContainer_()
+		, keysContainer_()
+		, rootKeyType_()
+		, currentRegKey_()
+{}
 
 LinuxRegistry::~LinuxRegistry()
-{
-
-}
+{}
 
 void LinuxRegistry::setRoot( const RegistryKeyType& rootKey )
-{
-
-}
+{}
 
 RegistryKeyType LinuxRegistry::getRoot()
 {
@@ -36,9 +34,7 @@ RegistryKeyType LinuxRegistry::getRoot()
 bool LinuxRegistry::openKey( const String& keyname, const bool& createIfNonExistant )
 {
 	bool result = false;
-
 	return result;
-
 }
 
 bool LinuxRegistry::setValue( const String& value, const String& valuename )
@@ -48,7 +44,6 @@ bool LinuxRegistry::setValue( const String& value, const String& valuename )
 
 bool LinuxRegistry::setValue( const uint32& value, const String& valuename )
 {
-
 	return false;
 }
 
@@ -57,9 +52,10 @@ bool LinuxRegistry::setValue( const bool& value, const String& valuename )
 	return false;
 }
 
-bool LinuxRegistry::setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename )
+bool LinuxRegistry::setValue( void* dataBuffer,
+                              const uint32& dataBufferSize,
+                              const String& valuename )
 {
-
 	return false;
 }
 
@@ -77,21 +73,18 @@ uint32 LinuxRegistry::getIntValue( const String& valuename )
 bool LinuxRegistry::getBoolValue( const String& valuename )
 {
 	bool result = false;
-
 	return result;
 }
 
-void LinuxRegistry::getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer )
-{
-
-}
+void LinuxRegistry::getDataBufValue( const String& valuename,
+                                     uint32& dataBufferSize,
+                                     void** dataBuffer )
+{}
 
 Enumerator<String>* LinuxRegistry::getKeyNames()
 {
-
 	keys_.clear();
 	keysContainer_.initContainer( keys_ );
-
 	return keysContainer_.getEnumerator();
 }
 
@@ -99,7 +92,6 @@ Enumerator<RegistryValueInfo*>* LinuxRegistry::getValues()
 {
 	values_.clear();
 	valuesContainer_.initContainer( values_ );
-
 	return valuesContainer_.getEnumerator();
 }
 
@@ -112,6 +104,9 @@ String LinuxRegistry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

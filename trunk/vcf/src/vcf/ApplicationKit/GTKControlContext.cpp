@@ -22,21 +22,20 @@ GTKControlContext::GTKControlContext( ControlPeer* controlPeer )
 
 GTKControlContext::~GTKControlContext()
 {
-
 }
 
 
 void GTKControlContext::setContext( GraphicsContext* context )
 {
 	GTKContext::setContext ( context );
-	owningControlCtx_  = (ControlGraphicsContext*)( context );
+	owningControlCtx_ = ( ControlGraphicsContext* ) ( context );
 }
 
 Control* GTKControlContext::getOwningControl()
 {
-	Control* result = NULL;
+	Control * result = NULL;
 
-	if ( NULL != owningControlCtx_ ){
+	if ( NULL != owningControlCtx_ ) {
 		result = owningControlCtx_->getOwningControl();
 	}
 	return result;
@@ -52,10 +51,12 @@ void GTKControlContext::releaseHandle()
 	GTKContext::releaseHandle();
 }
 
-
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

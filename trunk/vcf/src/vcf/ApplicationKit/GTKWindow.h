@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKWINDOW_H__
-#define _VCF_GTKWINDOW_H__
+#define _VCF_GTKWINDOW_H__ 
 //GTKWindow.h
 
 /*
@@ -7,12 +7,6 @@ Copyright 2000-2004 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
-
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
 
 #ifndef _VCF_ABSTRACTGTKCONTROL_H__
 #	include "vcf/ApplicationKit/AbstractGTKControl.h"
@@ -22,27 +16,27 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/WindowPeer.h"
 #endif // _VCF_WINDOWPEER_H__
 
-
-namespace VCF {
-
+namespace VCF
+{
 
 /**
-
+ 
 */
-class GTKWindow : public AbstractGTKControl, public WindowPeer {
+class GTKWindow : public AbstractGTKControl, public WindowPeer
+{
 public:
 	enum WindowState{
-		wsNone = 0,
-		wsMaximized,
-		wsMinimized,
-		wsNormal
+	    wsNone = 0,
+	    wsMaximized,
+	    wsMinimized,
+	    wsNormal
 	};
 
 	GTKWindow( Control* control, Control* owner );
 
 	virtual ~GTKWindow();
 
-	virtual long getHandleID();
+	virtual OSHandleID getHandleID();
 
 	virtual void create( Control* owningControl );
 
@@ -52,7 +46,7 @@ public:
 
 	virtual Rect getClientBounds();
 
-	virtual void  setClientBounds( Rect* bounds );
+	virtual void setClientBounds( Rect* bounds );
 
 	virtual void close();
 
@@ -77,12 +71,19 @@ public:
 	virtual String getText();
 
 	virtual void setText( const String& text );
+
+	virtual void setBorder( Border* border );
+
+	virtual bool isActiveWindow();
+
 protected:
 	virtual void initGdkEventHandlers();
 
-	static gboolean onGdkEventForContainer( GtkWidget *widget, GdkEvent *event, gpointer user_data );
+	static gboolean onGdkEventForContainer( GtkWidget *widget,
+	                                        GdkEvent *event,
+	                                        gpointer user_data );
 
-	static gint deleteEvent( GtkWidget *widget, GdkEvent  *event, gpointer data );
+	static gint deleteEvent( GtkWidget *widget, GdkEvent *event, gpointer data );
 	static void destroyEvent( GtkWidget *widget, gpointer data );
 
 	Rect clientBounds_;
@@ -92,13 +93,14 @@ protected:
 	GtkWidget* containerWidget_;
 };
 
-
-}; //end of namespace VCF
-
+} //end of namespace VCF
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

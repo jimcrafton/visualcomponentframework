@@ -6,40 +6,29 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/ProcessIORedirectionPeer.h"
 #include "vcf/FoundationKit/LinuxProcessIORedirector.h"
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/LinuxLocalePeer.h"
+#include "vcf/FoundationKit/LinuxResourceBundle.h"
 
 using namespace VCF;
 
-
 LinuxSystemToolkit::LinuxSystemToolkit()
-{
-
-}
+{}
 
 LinuxSystemToolkit::~LinuxSystemToolkit()
-{
-
-}
+{}
 
 ProcessPeer* LinuxSystemToolkit::internal_createProcessPeer( Process* process )
 {
-	ProcessPeer* result = NULL;
-
-	result = new LinuxProcessPeer();
-
-	return result;
+	return new LinuxProcessPeer();
 }
 
 ThreadPeer* LinuxSystemToolkit::internal_createThreadPeer( Thread* thread )
 {
-	ThreadPeer* result = NULL;
-
 	return new PosixThread( thread );
 }
 
@@ -48,7 +37,8 @@ SystemPeer* LinuxSystemToolkit::internal_createSystemPeer()
 	return new LinuxSystemPeer();
 }
 
-SemaphorePeer* LinuxSystemToolkit::internal_createSemaphorePeer( long initialCount, long maxCount )
+SemaphorePeer* LinuxSystemToolkit::internal_createSemaphorePeer( long initialCount,
+                                                                 long maxCount )
 {
 	return new LinuxSemaphorePeer( initialCount, maxCount );
 }
@@ -63,9 +53,10 @@ MutexPeer* LinuxSystemToolkit::internal_createMutexPeer( Mutex* mutex )
 	return new PosixMutex();
 }
 
-ConditionPeer* LinuxSystemToolkit::internal_createConditionPeer( Condition* condition )
+ConditionPeer*
+LinuxSystemToolkit::internal_createConditionPeer( Condition* condition )
 {
-	return new PosixCondition(condition);
+	return new PosixCondition( condition );
 }
 
 LibraryPeer* LinuxSystemToolkit::internal_createLibraryPeer( Library* library )
@@ -78,7 +69,9 @@ FilePeer* LinuxSystemToolkit::internal_createFilePeer( File* file )
 	return new LinuxFilePeer( file );
 }
 
-FileStreamPeer* LinuxSystemToolkit::internal_createFileStreamPeer( const String& filename, const FileStreamAccessType& accessType )
+FileStreamPeer*
+LinuxSystemToolkit::internal_createFileStreamPeer( const String& filename,
+                                                   const FileStreamAccessType& accessType )
 {
 	return new LinuxFileStream( filename, accessType );
 }
@@ -88,24 +81,29 @@ FileStreamPeer* LinuxSystemToolkit::internal_createFileStreamPeer( File* file )
 	return new LinuxFileStream( file );
 }
 
-
 ProcessIORedirectionPeer* LinuxSystemToolkit::internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process )
 {
-	ProcessIORedirectionPeer* result = new LinuxProcessIORedirector();
+	ProcessIORedirectionPeer * result = new LinuxProcessIORedirector();
 	result->setProcess( process );
-	return 	result;
+	return result;
 }
-
 
 LocalePeer* LinuxSystemToolkit::internal_createLocalePeer()
 {
 	return new LinuxLocalePeer();
 }
 
+ResourceBundlePeer* LinuxSystemToolkit::internal_createResourceBundlePeer()
+{
+	return new LinuxResourceBundle();
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

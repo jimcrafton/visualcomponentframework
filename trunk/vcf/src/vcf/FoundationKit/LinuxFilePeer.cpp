@@ -6,262 +6,242 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
 #include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include <dirent.h>
+#include <sys/types.h>
 #include <sys/stat.h>
-#include <time.h>
+#include <unistd.h>
+#include <ctime>
 
 using namespace VCF;
 using namespace VCFLinux;
 
-
-using namespace VCF;
-
-LinuxFilePeer::LinuxFilePeer( File* file, const String& fileName )  :
-	fileHandle_(0),
-	file_(file)
-{
-	
-}
+LinuxFilePeer::LinuxFilePeer( File* file )
+		: fileHandle_( -1 )
+		, file_( file )
+		, searchStarted_( false )
+		, searchFilters_()
+		, searchFilterIterator_()
+		, searchMap_()
+{}
 
 LinuxFilePeer::~LinuxFilePeer()
 {
-	if ( 0 != fileHandle_ ) {
-		::close(fileHandle_);
-	}
+	this->close();
 }
 
 void LinuxFilePeer::setFile( File* file )
 {
+	this->close();
 	file_ = file;
 }
 
-
 ulong64 LinuxFilePeer::getSize()
 {
-	ulong64 result ;
-	struct stat st = {0};
-	if ( -1 != fstat( fileHandle_, &st ) ) {
-		result = st.st_size;
+	if ( -1 == fileHandle_ ) {
+		return 0;
 	}
-	
-	return result;
+	struct stat st;
+	::memset( &st, '\0', sizeof( struct stat ) );
+	if ( -1 != ::fstat( fileHandle_, &st ) ) {
+		return st.st_size;
+	}
+	return 0;
 }
 
 void LinuxFilePeer::updateStat( File::StatMask statMask )
-{
-
-}
+{}
 
 void LinuxFilePeer::setFileAttributes( const File::FileAttributes fileAttributes )
-{
-
-}
-
+{}
 
 bool LinuxFilePeer::isExecutable()
 {
-	bool result ;
-	
-	return result;
+	if ( -1 == fileHandle_ ) {
+		return false;
+	}
+	struct stat st;
+	::memset( &st, '\0', sizeof( struct stat ) );
+	if ( -1 != ::fstat( fileHandle_, &st ) ) {
+		return ( st.st_mode == S_IXUSR
+		         or st.st_mode == S_IXGRP
+		         or st.st_mode == S_IXOTH );
+	}
+	return false;
 }
 
 void LinuxFilePeer::setDateModified( const DateTime& dateModified )
-{
-
-}
+{}
 
 DateTime LinuxFilePeer::getDateModified()
 {
 	DateTime result ;
-	
-	struct stat st = {0};
-	if ( -1 != fstat( fileHandle_, &st ) ) {
-		result = st.st_mtime;
+	if ( -1 != fileHandle_ ) {
+		struct stat st;
+		::memset( &st, '\0', sizeof( struct stat ) );
+		if ( -1 != fstat( fileHandle_, &st ) ) {
+			result = st.st_mtime;
+		}
 	}
-	
 	return result;
 }
 
 DateTime LinuxFilePeer::getDateCreated()
-{   
-	DateTime result ;
-	
-	return result;
+{
+	return this->getDateModified();
 }
 
 DateTime LinuxFilePeer::getDateAccessed()
 {
 	DateTime result ;
-	
-	struct stat st = {0};
-	if ( -1 != fstat( fileHandle_, &st ) ) {
-		result = st.st_atime;
+	if ( -1 != fileHandle_ ) {
+		struct stat st;
+		::memset( &st, '\0', sizeof( struct stat ) );
+		if ( -1 != fstat( fileHandle_, &st ) ) {
+			result = st.st_atime;
+		}
 	}
-	
 	return result;
 }
 
-void LinuxFilePeer::open( const String& fileName, ulong32 openFlags, File::ShareFlags shareFlags)
+void LinuxFilePeer::open( const String& fileName, ulong32 openFlags,
+                          File::ShareFlags shareFlags )
 {
-	close();
+	this->close();
 	VCF_ASSERT( !fileName.empty() );
 	int oflags = 0;
 	if ( File::ofRead & openFlags ) {
 		oflags |= O_RDONLY;
 	}
-	
 	if ( File::ofWrite & openFlags ) {
 		oflags |= O_WRONLY;
 	}
-	
 	if ( File::ofWrite & openFlags && File::ofRead & openFlags ) {
 		oflags |= O_RDWR;
 	}
-	
 	fileHandle_ = ::open( fileName.ansi_c_str(), oflags );
 	if ( -1 == fileHandle_ ) {
-		fileHandle_ = 0;
-		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to open the specified file " + fileName));
+		throw BasicFileError( MAKE_ERROR_MSG_2(
+		                          "Unable to open the specified file "
+		                          + fileName ) );
 	}
 }
 
 void LinuxFilePeer::close()
 {
-	if ( 0 != fileHandle_ ) {
+	if ( -1 != fileHandle_ ) {
 		::close( fileHandle_ );
 	}
 }
 
 void LinuxFilePeer::create( ulong32 openFlags )
 {
-	close();
-	String fname = file_->getName();
-	VCF_ASSERT( !fname.empty() );
-	
-	FilePath fp = fname;
-	if ( fp.isDirectoryName() ) {
-		std::vector<String> dirPaths = fp.getPathComponents();
-		std::vector<String>::iterator it = dirPaths.begin();
+	this->close();
+	String fileName = file_->getName();
+	VCF_ASSERT( !fileName.empty() );
+	FilePath filePath = fileName;
+	if ( filePath.isDirectoryName() ) {
+		std::vector<String> dirPaths = filePath.getPathComponents();
 		String dirName;
-		while ( it != dirPaths.end() ){
+		for ( std::vector<String>::iterator it = dirPaths.begin();
+		        it != dirPaths.end();
+		        ++it ) {
 			dirName += *it;
 			DIR* dir = opendir( dirName.ansi_c_str() );
-			if ( NULL == dir ) {
+			if ( ! dir ) {
 				//try and create it?
 				mode_t mode = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 				::mkdir( dirName.ansi_c_str(), mode );
-			}
-			else {
+			} else {
 				::closedir( dir );
 			}
-			
-			it ++;
 		}
-		
-	}
-	else {
+	} else {
 		int oflags = O_CREAT | O_TRUNC;
 		if ( File::ofRead & openFlags ) {
 			oflags |= O_RDONLY;
 		}
-		
 		if ( File::ofWrite & openFlags ) {
 			oflags |= O_WRONLY;
 		}
-		
 		if ( File::ofWrite & openFlags && File::ofRead & openFlags ) {
 			oflags |= O_RDWR;
 		}
-		
-		fileHandle_ = ::open( fname.ansi_c_str(), oflags );
+		fileHandle_ = ::open( fileName.ansi_c_str(), oflags );
 		if ( -1 == fileHandle_ ) {
-			fileHandle_ = 0;
-			throw BasicFileError( MAKE_ERROR_MSG_2("Unable to open the specified file " + file_->getName()));
+			throw BasicFileError( MAKE_ERROR_MSG_2(
+			                          "Unable to open the specified file "
+			                          + file_->getName() ) );
 		}
-		
 		::lseek( fileHandle_, 0, SEEK_SET );
-	}	
+	}
 }
 
-void LinuxFilePeer::remove()
+void LinuxFilePeer::remove
+	()
 {
-	AnsiString fname = file_->getName();
-	VCF_ASSERT( !fname.empty() );
-	
-	::remove( fname.c_str() );
+	AnsiString fileName = file_->getName();
+	VCF_ASSERT( !fileName.empty() );
+	::remove
+		( fileName.c_str() );
 }
 
 void LinuxFilePeer::move( const String& newFileName )
 {
-	AnsiString fname = file_->getName();
-	VCF_ASSERT( !fname.empty() );
-	
-	::rename( fname.c_str(), newFileName.ansi_c_str() );
+	AnsiString fileName = file_->getName();
+	VCF_ASSERT( !fileName.empty() );
+	::rename( fileName.c_str(), newFileName.ansi_c_str() );
 }
 
 void LinuxFilePeer::copyTo( const String& copyFileName )
 {
-	AnsiString fname = file_->getName();
-
-	FILE* f = fopen( fname.c_str(), "rb" );
-	if ( NULL != f ) {
-		int size = 0;
-		
-		fseek( f, 0, SEEK_END );		
-		size = ftell(f);
-		fseek( f, 0, SEEK_SET );
-		
-		char* buffer = new char[size];
-		
-		fread( buffer, 1, size, f );
-		fclose(f);
-		
-		f = fopen( copyFileName.ansi_c_str(), "wb" );
-		if ( NULL != f ) {
-			fwrite( buffer, 1, size, f );
-			fclose(f);
+	AnsiString fileName = file_->getName();
+	FILE* f = ::fopen( fileName.c_str(), "rb" );
+	if ( f ) {
+		::fseek( f, 0, SEEK_END );
+		int size = ftell( f );
+		std::vector<char> buffer( size, '\0' );
+		::fseek( f, 0, SEEK_SET );
+		::fread( &buffer[ 0 ], 1, buffer.size(), f );
+		::fclose( f );
+		f = ::fopen( copyFileName.ansi_c_str(), "wb" );
+		if ( f ) {
+			::fwrite( &buffer[ 0 ], 1, buffer.size(), f );
+			::fclose( f );
+		} else {
+			throw BasicFileError( MAKE_ERROR_MSG_2(
+			                          "Unable to copy the specified file "
+			                          + file_->getName() ) );
 		}
-		else {
-			delete [] buffer;
-			throw BasicFileError( MAKE_ERROR_MSG_2("Unable to copy the specified file " + file_->getName()));	
-		}
-		
-		
-		delete [] buffer;		
-	}
-	else {
-		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to copy the specified file " + file_->getName()));	
+	} else {
+		throw BasicFileError( MAKE_ERROR_MSG_2(
+		                          "Unable to copy the specified file "
+		                          + file_->getName() ) );
 	}
 }
 
 void LinuxFilePeer::initFileSearch( Directory::Finder* finder )
-{
-
-}
+{}
 
 File* LinuxFilePeer::findNextFileInSearch( Directory::Finder* finder )
 {
-	File* result = NULL;
-	
+	File * result = 0;
 	return result;
 }
 
 void LinuxFilePeer::endFileSearch( Directory::Finder* finder )
-{
-
-}
+{}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

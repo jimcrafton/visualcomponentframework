@@ -13,37 +13,27 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/GTKCommandButton.h"
 #include "vcf/ApplicationKit/CommandButton.h"
 
-
 using namespace VCF;
-
-
-
 
 GTKCommandButton::GTKCommandButton( CommandButton* component )
 {
-	control_ = (Control*)component;
+	control_ = ( Control* ) component;
 	commandButton_ = component;
 	gtkButton_ = NULL;
 }
 
 GTKCommandButton::~GTKCommandButton()
-{
-
-}
-
-
+{}
 
 void GTKCommandButton::create( Control* owningControl )
 {
-	GTKGraphicsToolkit* grafToolkit = (GTKGraphicsToolkit*)GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	GTKUIToolkit* toolkit = (GTKUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
+	GTKGraphicsToolkit * grafToolkit = ( GTKGraphicsToolkit* ) GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+	GTKUIToolkit* toolkit = ( GTKUIToolkit* ) UIToolkit::internal_getDefaultUIToolkit();
 
-	wndHandle_ = gtk_button_new_with_label ("");
-
-
+	wndHandle_ = gtk_button_new_with_label ( "" );
 
 	if ( NULL == wndHandle_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("gtk_button_new_with_label() failed") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "gtk_button_new_with_label() failed" ) );
 	}
 
 	gtkButton_ = GTK_BUTTON( wndHandle_ );
@@ -52,39 +42,31 @@ void GTKCommandButton::create( Control* owningControl )
 
 	gtk_widget_show ( wndHandle_ );
 
-	g_signal_connect (G_OBJECT (gtkButton_), "clicked",
-		      G_CALLBACK (GTKCommandButton::gtkButtonClicked), (gpointer) this);
+	g_signal_connect ( G_OBJECT ( gtkButton_ ), "clicked",
+	                   G_CALLBACK ( GTKCommandButton::gtkButtonClicked ), ( gpointer ) this );
 
 	AbstractGTKControl::registerGTKControl( this );
 }
-
 
 Image* GTKCommandButton::getImage()
 {
 	return NULL;
 }
 
-
 void GTKCommandButton::setImage( Image* image )
+{}
+
+ButtonState GTKCommandButton::getState()
 {
-
+	return state_;
 }
-
-
-ulong32 GTKCommandButton::getState()
-{
-	return 0;
-}
-
 
 void GTKCommandButton::setState( const ulong32& state )
-{
+{}
 
-}
-
-void GTKCommandButton::gtkButtonClicked( GtkButton* button,  gpointer data )
+void GTKCommandButton::gtkButtonClicked( GtkButton* button, gpointer data )
 {
-	GTKCommandButton* thisPtr = (GTKCommandButton*)data;
+	GTKCommandButton * thisPtr = ( GTKCommandButton* ) data;
 	thisPtr->commandButton_->click();
 }
 
@@ -92,7 +74,7 @@ String GTKCommandButton::getText()
 {
 	String result;
 
-	result = gtk_button_get_label(gtkButton_);
+	result = gtk_button_get_label( gtkButton_ );
 	return result;
 }
 
@@ -101,30 +83,35 @@ void GTKCommandButton::setText( const String& text )
 	gtk_button_set_label( gtkButton_, text.ansi_c_str() );
 }
 
+void GTKCommandButton::setBorder( Border* border )
+{}
+
 gboolean GTKCommandButton::handleEvent( GdkEvent* gtkEvent )
 {
-	GTKUIToolkit* toolkit = reinterpret_cast<GTKUIToolkit*>(UIToolkit::internal_getDefaultUIToolkit());
+	GTKUIToolkit * toolkit = reinterpret_cast<GTKUIToolkit*>( UIToolkit::internal_getDefaultUIToolkit() );
 
 	gboolean result = FALSE;
 
 	switch ( gtkEvent->type ) {
 
 		case GDK_EXPOSE : {
-			AbstractGTKControl::handleEvent( gtkEvent );
+				AbstractGTKControl::handleEvent( gtkEvent );
 
-			return FALSE;
-		}
-		break;
+				return FALSE;
+			}
+			break;
 
-		case GDK_BUTTON_PRESS : case GDK_2BUTTON_PRESS : case GDK_3BUTTON_PRESS : {
-			result = AbstractGTKControl::handleEvent( gtkEvent );
-		}
-		break;
+		case GDK_BUTTON_PRESS :
+		case GDK_2BUTTON_PRESS :
+		case GDK_3BUTTON_PRESS : {
+				result = AbstractGTKControl::handleEvent( gtkEvent );
+			}
+			break;
 
 		default : {
-			result = AbstractGTKControl::handleEvent( gtkEvent );
-		}
-		break;
+				result = AbstractGTKControl::handleEvent( gtkEvent );
+			}
+			break;
 	}
 
 	return result;
@@ -134,6 +121,9 @@ gboolean GTKCommandButton::handleEvent( GdkEvent* gtkEvent )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -6,25 +6,18 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include <dlfcn.h>
 
-
 using namespace VCF;
 
-LinuxLibraryPeer::LinuxLibraryPeer():
-	libHandle_(NULL)
-{
-
-}
+LinuxLibraryPeer::LinuxLibraryPeer()
+		: libHandle_( 0 )
+{}
 
 LinuxLibraryPeer::~LinuxLibraryPeer()
-{
-
-}
-
+{}
 
 void LinuxLibraryPeer::load( const String& libraryFilename )
 {
@@ -35,29 +28,29 @@ void LinuxLibraryPeer::load( const String& libraryFilename )
 	//done
 	libHandle_ = ::dlopen( libraryFilename.ansi_c_str(), RTLD_LAZY );
 	StringUtils::traceWithArgs( "dlopen( %s ) returned %p\n",
-				libraryFilename.c_str(),  libHandle_ );
+	                            libraryFilename.c_str(), libHandle_ );
 
-	if ( NULL == libHandle_ ) {
-  	String errMessage = dlerror();
-		throw RuntimeException( MAKE_ERROR_MSG_2( errMessage ) );
+	if ( ! libHandle_ ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2( dlerror() ) );
 	}
 }
 
 void* LinuxLibraryPeer::getFunction( const String& functionName )
 {
-	void* result = NULL;
-	if ( NULL == libHandle_ ) {
-		throw InvalidPointerException( MAKE_ERROR_MSG_2( "You are trying to get function adress without a valid handle to a library" ) );
+	if ( ! libHandle_ ) {
+		throw InvalidPointerException( MAKE_ERROR_MSG_2(
+		                                   "You are trying to get function adress "
+		                                   "without a valid handle to a library" ) );
 	}
-	result = dlsym( libHandle_, functionName.ansi_c_str() );
+	void* result = dlsym( libHandle_, functionName.ansi_c_str() );
 	StringUtils::traceWithArgs( "error are: %s\n", dlerror() );
 	return result;
 }
 
 void LinuxLibraryPeer::unload()
 {
-	if ( NULL != libHandle_ ) {
-  	dlclose( libHandle_ );
+	if ( libHandle_ ) {
+		dlclose( libHandle_ );
 	}
 }
 
@@ -65,6 +58,9 @@ void LinuxLibraryPeer::unload()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

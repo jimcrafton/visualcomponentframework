@@ -17,43 +17,40 @@ where you installed the VCF.
 using namespace VCF;
 
 
-GTKTextControl::GTKTextControl( TextControl* component, const bool& isMultiLineControl ):
-	textControl_(component),
-	isMultiLineControl_(isMultiLineControl),
-	singleLine_(NULL),
-	multiLine_(NULL),
-	internalTextChange_(false)
+GTKTextControl::GTKTextControl( TextControl* component, const bool& isMultiLineControl ) :
+		textControl_( component ),
+		isMultiLineControl_( isMultiLineControl ),
+		singleLine_( NULL ),
+		multiLine_( NULL ),
+		internalTextChange_( false )
 {
-
 }
 
 GTKTextControl::~GTKTextControl()
 {
-
 }
 
 void GTKTextControl::create( Control* owningControl )
 {
 	control_ = owningControl;
 
-	GTKGraphicsToolkit* grafToolkit = (GTKGraphicsToolkit*)GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	GTKUIToolkit* toolkit = (GTKUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
+	GTKGraphicsToolkit* grafToolkit = ( GTKGraphicsToolkit* ) GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+	GTKUIToolkit* toolkit = ( GTKUIToolkit* ) UIToolkit::internal_getDefaultUIToolkit();
 
 	if ( isMultiLineControl_ ) {
 		wndHandle_ = gtk_text_view_new();
 
 		if ( NULL == wndHandle_ ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("gtk_text_view_new() failed") );
+			throw RuntimeException( MAKE_ERROR_MSG_2( "gtk_text_view_new() failed" ) );
 		}
 
 		multiLine_ = GTK_TEXT_VIEW( wndHandle_ );
 		gtk_text_view_set_wrap_mode ( multiLine_, GTK_WRAP_WORD );
-	}
-	else {
+	} else {
 		wndHandle_ = gtk_entry_new();
 
 		if ( NULL == wndHandle_ ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("gtk_entry_new() failed") );
+			throw RuntimeException( MAKE_ERROR_MSG_2( "gtk_entry_new() failed" ) );
 		}
 
 		singleLine_ = GTK_ENTRY( wndHandle_ );
@@ -64,7 +61,7 @@ void GTKTextControl::create( Control* owningControl )
 	gtk_widget_show ( wndHandle_ );
 
 	TextModelEventHandler<GTKTextControl>* tml =
-			new TextModelEventHandler<GTKTextControl>( this, &GTKTextControl::onTextModelTextChanged, "GTKTextControl::onTextModelTextChanged" );
+	    new TextModelEventHandler<GTKTextControl>( this, &GTKTextControl::onTextModelTextChanged, "GTKTextControl::onTextModelTextChanged" );
 
 
 	TextModel* tm = textControl_->getTextModel();
@@ -76,14 +73,14 @@ void GTKTextControl::create( Control* owningControl )
 void GTKTextControl::setRightMargin( const double & rightMargin )
 {
 	if ( isMultiLineControl_ ) {
-		gtk_text_view_set_right_margin( multiLine_, (gint)rightMargin );
+		gtk_text_view_set_right_margin( multiLine_, ( gint ) rightMargin );
 	}
 }
 
 void GTKTextControl::setLeftMargin( const double & leftMargin )
 {
 	if ( isMultiLineControl_ ) {
-		gtk_text_view_set_left_margin( multiLine_, (gint)leftMargin );
+		gtk_text_view_set_left_margin( multiLine_, ( gint ) leftMargin );
 	}
 }
 
@@ -91,8 +88,8 @@ unsigned long GTKTextControl::getLineCount()
 {
 	unsigned long result = 1;
 	if ( isMultiLineControl_ ) {
-		 GtkTextBuffer* buff = gtk_text_view_get_buffer( multiLine_ );
-		 result = (unsigned long) gtk_text_buffer_get_line_count( buff );
+		GtkTextBuffer * buff = gtk_text_view_get_buffer( multiLine_ );
+		result = ( unsigned long ) gtk_text_buffer_get_line_count( buff );
 	}
 	return result;
 }
@@ -127,7 +124,6 @@ double GTKTextControl::getRightMargin()
 Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 	return NULL;
 }
@@ -135,7 +131,6 @@ Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
 unsigned long GTKTextControl::getCharIndexFromPosition( Point* point )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 	return 0;
 }
@@ -144,10 +139,9 @@ unsigned long GTKTextControl::getCaretPosition()
 {
 	unsigned long result = 0;
 	if ( isMultiLineControl_ ) {
-
 	}
 	else {
-		GtkEditable* editable = GTK_EDITABLE( singleLine_ );
+		GtkEditable * editable = GTK_EDITABLE( singleLine_ );
 		result = gtk_editable_get_position( editable );
 	}
 
@@ -157,10 +151,9 @@ unsigned long GTKTextControl::getCaretPosition()
 void GTKTextControl::setCaretPosition( const unsigned long& caretPos )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 	else {
-		GtkEditable* editable = GTK_EDITABLE( singleLine_ );
+		GtkEditable * editable = GTK_EDITABLE( singleLine_ );
 		gtk_editable_set_position( editable, caretPos );
 	}
 }
@@ -169,13 +162,12 @@ unsigned long GTKTextControl::getSelectionStart()
 {
 	unsigned long result = 0;
 	if ( isMultiLineControl_ ) {
-
 	}
 	else {
-		GtkEditable* editable = GTK_EDITABLE( singleLine_ );
+		GtkEditable * editable = GTK_EDITABLE( singleLine_ );
 		int start = 0;
 		gtk_editable_get_selection_bounds( editable, &start, NULL );
-		result = (unsigned long)start;
+		result = ( unsigned long ) start;
 	}
 
 	return result;
@@ -186,14 +178,13 @@ unsigned long GTKTextControl::getSelectionCount()
 	unsigned long result = 0;
 
 	if ( isMultiLineControl_ ) {
-
 	}
 	else {
-		GtkEditable* editable = GTK_EDITABLE( singleLine_ );
+		GtkEditable * editable = GTK_EDITABLE( singleLine_ );
 		int start = 0;
 		int end = 0;
 		gtk_editable_get_selection_bounds( editable, &start, &end );
-		result = (unsigned long)(end - start);
+		result = ( unsigned long ) ( end - start );
 	}
 
 	return result;
@@ -202,7 +193,6 @@ unsigned long GTKTextControl::getSelectionCount()
 void GTKTextControl::setSelectionMark( const unsigned long& start, const unsigned long& count )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 	else {
 		gtk_entry_select_region( singleLine_, start, start + count );
@@ -213,21 +203,18 @@ void GTKTextControl::setSelectionMark( const unsigned long& start, const unsigne
 void GTKTextControl::setSelectionFont( Font* font )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 }
 
 void GTKTextControl::setParagraphAlignment( const TextAlignmentType& alignment )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 }
 
 void GTKTextControl::scrollToLine( const ulong32& lineIndex )
 {
 	if ( isMultiLineControl_ ) {
-
 	}
 }
 
@@ -235,14 +222,13 @@ void GTKTextControl::scrollToLine( const ulong32& lineIndex )
 void GTKTextControl::onTextModelTextChanged( TextEvent* e )
 {
 	if ( !internalTextChange_ ) {
-		TextModel* tm = textControl_->getTextModel();
+		TextModel * tm = textControl_->getTextModel();
 
 		if ( isMultiLineControl_ ) {
-			GtkTextBuffer* buff = gtk_text_view_get_buffer( multiLine_ );
+			GtkTextBuffer * buff = gtk_text_view_get_buffer( multiLine_ );
 			String text = tm->getText();
 			gtk_text_buffer_set_text( buff, text.ansi_c_str(), text.size() );
-		}
-		else {
+		} else {
 			gtk_entry_set_text( singleLine_, tm->getText().ansi_c_str() );
 		}
 	}
@@ -250,25 +236,25 @@ void GTKTextControl::onTextModelTextChanged( TextEvent* e )
 
 gboolean GTKTextControl::handleEvent( GdkEvent* gtkEvent )
 {
-	GTKUIToolkit* toolkit = reinterpret_cast<GTKUIToolkit*>(UIToolkit::internal_getDefaultUIToolkit());
+	GTKUIToolkit * toolkit = reinterpret_cast<GTKUIToolkit*>( UIToolkit::internal_getDefaultUIToolkit() );
 
 	gboolean result = FALSE;
 
 	switch ( gtkEvent->type ) {
 
 		case GDK_KEY_PRESS : {
-			internalTextChange_ = true;
+				internalTextChange_ = true;
 
-			result = AbstractGTKControl::handleEvent( gtkEvent );
+				result = AbstractGTKControl::handleEvent( gtkEvent );
 
-			internalTextChange_ = false;
-		}
-		break;
+				internalTextChange_ = false;
+			}
+			break;
 
 		default : {
-			result = AbstractGTKControl::handleEvent( gtkEvent );
-		}
-		break;
+				result = AbstractGTKControl::handleEvent( gtkEvent );
+			}
+			break;
 	}
 
 	return result;
@@ -289,8 +275,7 @@ String GTKTextControl::getText()
 		result = text;
 		//delete []  text;
 
-	}
-	else {
+	} else {
 		result = String( gtk_entry_get_text( singleLine_ ) );
 	}
 
@@ -299,24 +284,40 @@ String GTKTextControl::getText()
 
 void GTKTextControl::setText( const String& text )
 {
-	TextModel* tm = textControl_->getTextModel();
+	TextModel * tm = textControl_->getTextModel();
 	tm->setText( text );
 }
 
 void GTKTextControl::scrollToSelection( const bool& showEndSel )
 {
-
 }
 
 void GTKTextControl::setReadOnly( const bool& readonly )
 {
-
 }
 
+void GTKTextControl::setBorder( Border* border )
+{
+}
+
+ulong32 GTKTextControl::getTotalPrintablePageCount( PrintContext* context )
+{
+}
+
+void GTKTextControl::print( PrintContext* context, const long& page )
+{
+}
+
+void GTKTextControl::finishPrinting()
+{
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -22,29 +22,25 @@ static GtkContainerClass * internalVCFParentClass = NULL;
 
 
 
-AbstractGTKControl::AbstractGTKControl():
-	enabled_(false),
-	control_(NULL),
-	wndHandle_(NULL),
-	parent_(NULL),
-	repainted_(false)
+AbstractGTKControl::AbstractGTKControl() :
+		enabled_( false ),
+		control_( NULL ),
+		wndHandle_( NULL ),
+		parent_( NULL ),
+		repainted_( false )
 {
-
 }
 
 AbstractGTKControl::~AbstractGTKControl()
 {
-
 }
 
 void AbstractGTKControl::create( Control* owningControl )
 {
-
 }
 
 void AbstractGTKControl::destroyControl()
 {
-
 }
 
 String AbstractGTKControl::getText()
@@ -56,7 +52,6 @@ String AbstractGTKControl::getText()
 
 void AbstractGTKControl::setText( const String& text )
 {
-
 }
 
 void AbstractGTKControl::setBounds( Rect* rect )
@@ -65,17 +60,16 @@ void AbstractGTKControl::setBounds( Rect* rect )
 
 
 	if ( !GTK_IS_VCF_CONTAINER( wndHandle_ ) ) {
-		GtkWidget* gdkParent = gtk_widget_get_parent ( wndHandle_ );
+		GtkWidget * gdkParent = gtk_widget_get_parent ( wndHandle_ );
 
-		if ( !GTK_IS_VCF_CONTAINER(gdkParent) ) {
+		if ( !GTK_IS_VCF_CONTAINER( gdkParent ) ) {
 			//throw RuntimeException( MAKE_ERROR_MSG_2("Can't set bounds for gtk widget if it's not parented to a valid VCF widget!") );
-			return;
+			return ;
 		}
 
-		AbstractGTKControl::Container::moveChild( GTK_VCF_CONTAINER(gdkParent), wndHandle_, (int)rect->left_, (int)rect->top_, (int)rect->getWidth(), (int)rect->getHeight() );
-	}
-	else {
-		AbstractGTKControl::Container::move( wndHandle_, (int)rect->left_, (int)rect->top_, (int)rect->getWidth(), (int)rect->getHeight() );
+		AbstractGTKControl::Container::moveChild( GTK_VCF_CONTAINER( gdkParent ), wndHandle_, ( int ) rect->left_, ( int ) rect->top_, ( int ) rect->getWidth(), ( int ) rect->getHeight() );
+	} else {
+		AbstractGTKControl::Container::move( wndHandle_, ( int ) rect->left_, ( int ) rect->top_, ( int ) rect->getWidth(), ( int ) rect->getHeight() );
 	}
 
 }
@@ -87,7 +81,6 @@ bool AbstractGTKControl::beginSetBounds( const ulong32& numberOfChildren )
 
 void AbstractGTKControl::endSetBounds()
 {
-
 }
 
 Rect AbstractGTKControl::getBounds()
@@ -100,8 +93,7 @@ void AbstractGTKControl::setVisible( const bool& visible )
 	if ( GTK_WIDGET_REALIZED( wndHandle_ ) ) {
 		if ( visible ) {
 			gtk_widget_show ( wndHandle_ );
-		}
-		else {
+		} else {
 			gtk_widget_hide( wndHandle_ );
 		}
 	}
@@ -110,9 +102,9 @@ void AbstractGTKControl::setVisible( const bool& visible )
 bool AbstractGTKControl::getVisible()
 {
 	//if ( GTK_WIDGET_REALIZED( wndHandle_ ) ) {
-		//return gdk_window_is_visible( wndHandle_->window ) ? true : false;
+	//return gdk_window_is_visible( wndHandle_->window ) ? true : false;
 	//}
-	return GTK_WIDGET_VISIBLE(wndHandle_) ? true : false;
+	return GTK_WIDGET_VISIBLE( wndHandle_ ) ? true : false;
 }
 
 
@@ -128,27 +120,26 @@ void AbstractGTKControl::setControl( Control* component )
 
 void AbstractGTKControl::setCursor( Cursor* cursor )
 {
-	gdk_window_set_cursor( wndHandle_->window, (GdkCursor*)cursor->getPeer()->getCursorHandleID() );
+	gdk_window_set_cursor( wndHandle_->window, ( GdkCursor* ) cursor->getPeer() ->getCursorHandleID() );
 }
 
 void AbstractGTKControl::setParent( Control* parent )
 {
-	GtkWidget* gdkParent = (GtkWidget*)parent->getPeer()->getHandleID();
+	GtkWidget * gdkParent = ( GtkWidget* ) parent->getPeer() ->getHandleID();
 
-	if ( NULL == gtk_widget_get_parent(wndHandle_) ) {
-		gtk_container_add ( GTK_CONTAINER (gdkParent), wndHandle_ );
-	}
-	else {
+	if ( NULL == gtk_widget_get_parent( wndHandle_ ) ) {
+		gtk_container_add ( GTK_CONTAINER ( gdkParent ), wndHandle_ );
+	} else {
 		gtk_widget_reparent( wndHandle_, gdkParent );
 	}
 }
 
 Control* AbstractGTKControl::getParent()
 {
-	Control* result = NULL;
+	Control * result = NULL;
 
 	GtkWidget* gdkParent = gtk_widget_get_parent ( wndHandle_ );
-	AbstractGTKControl* parentCtrl =  getGTKControlFromWidget( gdkParent );
+	AbstractGTKControl* parentCtrl = getGTKControlFromWidget( gdkParent );
 	if ( NULL != parentCtrl ) {
 		result = parentCtrl->getControl();
 	}
@@ -165,7 +156,7 @@ bool AbstractGTKControl::isFocused()
 void AbstractGTKControl::setFocused()
 {
 	if ( GTK_WIDGET_CAN_FOCUS( wndHandle_ ) ) {
-		gtk_widget_grab_focus( wndHandle_ );//gdk_window_focus( wndHandle_->window, GDK_CURRENT_TIME );
+		gtk_widget_grab_focus( wndHandle_ ); //gdk_window_focus( wndHandle_->window, GDK_CURRENT_TIME );
 	}
 }
 
@@ -181,7 +172,7 @@ void AbstractGTKControl::setEnabled( const bool& enabled )
 
 void AbstractGTKControl::setFont( Font* font )
 {
-	GTKFont* peer = (GTKFont*)font->getFontPeer();
+	GTKFont * peer = ( GTKFont* ) font->getFontPeer();
 
 	gtk_widget_modify_font( wndHandle_, peer->getPangoFontDescription() );
 
@@ -192,26 +183,25 @@ void AbstractGTKControl::setFont( Font* font )
 void AbstractGTKControl::repaint( Rect* repaintRect )
 {
 	if ( repainted_ ) {
-		return;
+		return ;
 	}
 
 	repainted_ = true;
 
-	if ( GTK_WIDGET_DRAWABLE(wndHandle_) ) {
+	if ( GTK_WIDGET_DRAWABLE( wndHandle_ ) ) {
 
 		GdkRectangle rect;
 		if ( NULL != repaintRect ) {
-			rect.x = (int)repaintRect->left_;
-			rect.y = (int)repaintRect->top_;
-			rect.width = (int)repaintRect->getWidth();
-			rect.height = (int)repaintRect->getHeight();
-		}
-		else {
+			rect.x = ( int ) repaintRect->left_;
+			rect.y = ( int ) repaintRect->top_;
+			rect.width = ( int ) repaintRect->getWidth();
+			rect.height = ( int ) repaintRect->getHeight();
+		} else {
 
 			rect.x = 0;
 			rect.y = 0;
-			rect.width = (int)bounds_.getWidth();
-			rect.height = (int)bounds_.getHeight();
+			rect.width = ( int ) bounds_.getWidth();
+			rect.height = ( int ) bounds_.getHeight();
 		}
 
 		gdk_window_invalidate_rect( wndHandle_->window, &rect, FALSE );
@@ -221,16 +211,16 @@ void AbstractGTKControl::repaint( Rect* repaintRect )
 void AbstractGTKControl::keepMouseEvents()
 {
 	//return;
-	 //GdkEventMask eventMask = (GdkEventMask)
+	//GdkEventMask eventMask = (GdkEventMask)
 	//							(GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_RELEASE_MASK);
 
 	int eventMask = GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON2_MOTION_MASK | GDK_BUTTON3_MOTION_MASK;
-	int res = gdk_pointer_grab( wndHandle_->window, FALSE, (GdkEventMask)eventMask, NULL, NULL, GDK_CURRENT_TIME  );
+	int res = gdk_pointer_grab( wndHandle_->window, FALSE, ( GdkEventMask ) eventMask, NULL, NULL, GDK_CURRENT_TIME );
 
 	if ( res != GDK_GRAB_SUCCESS ) {
 		//report error throw exception here ????
 		StringUtils::traceWithArgs( "gdk_pointer_grab failed!\n" );
-		return;
+		return ;
 	}
 
 	gtk_grab_add ( wndHandle_ );
@@ -239,13 +229,13 @@ void AbstractGTKControl::keepMouseEvents()
 void AbstractGTKControl::releaseMouseEvents()
 {
 	//return;
-	GdkDisplay *display = gtk_widget_get_display (wndHandle_);
+	GdkDisplay * display = gtk_widget_get_display ( wndHandle_ );
 
-	gtk_grab_remove (wndHandle_);
+	gtk_grab_remove ( wndHandle_ );
 
-	if ( gdk_display_pointer_is_grabbed (display) ) {
+	if ( gdk_display_pointer_is_grabbed ( display ) ) {
 
-		gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
+		gdk_display_pointer_ungrab ( display, GDK_CURRENT_TIME );
 	}
 
 	gdk_pointer_ungrab( GDK_CURRENT_TIME );
@@ -260,178 +250,178 @@ String GTK_EventToString( GdkEvent* gtkEvent )
 
 	switch ( gtkEvent->type ) {
 		case GDK_NOTHING : {
-			result += "GDK_NOTHING";
-		}
-		break;
+				result += "GDK_NOTHING";
+			}
+			break;
 
 		case GDK_KEY_RELEASE : {
-			result += "GDK_KEY_RELEASE";
-		}
-		break;
+				result += "GDK_KEY_RELEASE";
+			}
+			break;
 
 		case GDK_ENTER_NOTIFY : {
-			result += "GDK_ENTER_NOTIFY";
-		}
-		break;
+				result += "GDK_ENTER_NOTIFY";
+			}
+			break;
 
 		case GDK_KEY_PRESS : {
-			result += "GDK_KEY_PRESS";
-		}
-		break;
+				result += "GDK_KEY_PRESS";
+			}
+			break;
 
 		case GDK_BUTTON_RELEASE : {
-			result += "GDK_BUTTON_RELEASE";
-		}
-		break;
+				result += "GDK_BUTTON_RELEASE";
+			}
+			break;
 
 		case GDK_3BUTTON_PRESS : {
-			result += "GDK_3BUTTON_PRESS";
-		}
-		break;
+				result += "GDK_3BUTTON_PRESS";
+			}
+			break;
 
 		case GDK_2BUTTON_PRESS : {
-			result += "GDK_2BUTTON_PRESS";
-		}
-		break;
+				result += "GDK_2BUTTON_PRESS";
+			}
+			break;
 
 		case GDK_BUTTON_PRESS : {
-			result += "GDK_BUTTON_PRESS";
-		}
-		break;
+				result += "GDK_BUTTON_PRESS";
+			}
+			break;
 
 		case GDK_MOTION_NOTIFY : {
-			result += "GDK_MOTION_NOTIFY";
-		}
-		break;
+				result += "GDK_MOTION_NOTIFY";
+			}
+			break;
 		case GDK_EXPOSE : {
-			result += "GDK_EXPOSE";
-		}
-		break;
+				result += "GDK_EXPOSE";
+			}
+			break;
 
 		case GDK_DESTROY : {
-			result += "GDK_DESTROY";
-		}
-		break;
+				result += "GDK_DESTROY";
+			}
+			break;
 
 		case GDK_DELETE : {
-			result += "GDK_DELETE";
-		}
-		break;
+				result += "GDK_DELETE";
+			}
+			break;
 
 		case GDK_SELECTION_REQUEST : {
-			result += "GDK_SELECTION_REQUEST";
-		}
-		break;
+				result += "GDK_SELECTION_REQUEST";
+			}
+			break;
 
 		case GDK_SELECTION_CLEAR : {
-			result += "GDK_SELECTION_CLEAR";
-		}
-		break;
+				result += "GDK_SELECTION_CLEAR";
+			}
+			break;
 
 		case GDK_PROPERTY_NOTIFY : {
-			result += "GDK_PROPERTY_NOTIFY";
-		}
-		break;
+				result += "GDK_PROPERTY_NOTIFY";
+			}
+			break;
 
 		case GDK_UNMAP : {
-			result += "GDK_UNMAP";
-		}
-		break;
+				result += "GDK_UNMAP";
+			}
+			break;
 
 		case GDK_MAP : {
-			result += "GDK_MAP";
-		}
-		break;
+				result += "GDK_MAP";
+			}
+			break;
 
 		case GDK_CONFIGURE : {
-			result += "GDK_CONFIGURE";
-		}
-		break;
+				result += "GDK_CONFIGURE";
+			}
+			break;
 
 		case GDK_FOCUS_CHANGE : {
-			result += "GDK_FOCUS_CHANGE";
-		}
-		break;
+				result += "GDK_FOCUS_CHANGE";
+			}
+			break;
 
 		case GDK_LEAVE_NOTIFY : {
-			result += "GDK_LEAVE_NOTIFY";
-		}
-		break;
+				result += "GDK_LEAVE_NOTIFY";
+			}
+			break;
 
 		case GDK_DRAG_MOTION : {
-			result += "GDK_DRAG_MOTION";
-		}
-		break;
+				result += "GDK_DRAG_MOTION";
+			}
+			break;
 
 		case GDK_DRAG_LEAVE : {
-			result += "GDK_DRAG_LEAVE";
-		}
-		break;
+				result += "GDK_DRAG_LEAVE";
+			}
+			break;
 
 		case GDK_DRAG_ENTER : {
-			result += "GDK_DRAG_ENTER";
-		}
-		break;
+				result += "GDK_DRAG_ENTER";
+			}
+			break;
 
 		case GDK_PROXIMITY_OUT : {
-			result += "GDK_PROXIMITY_OUT";
-		}
-		break;
+				result += "GDK_PROXIMITY_OUT";
+			}
+			break;
 
 		case GDK_PROXIMITY_IN : {
-			result += "GDK_PROXIMITY_IN";
-		}
-		break;
+				result += "GDK_PROXIMITY_IN";
+			}
+			break;
 
 		case GDK_SELECTION_NOTIFY : {
-			result += "GDK_SELECTION_NOTIFY";
-		}
-		break;
+				result += "GDK_SELECTION_NOTIFY";
+			}
+			break;
 
 		case GDK_NO_EXPOSE : {
-			result += "GDK_NO_EXPOSE";
-		}
-		break;
+				result += "GDK_NO_EXPOSE";
+			}
+			break;
 
 		case GDK_VISIBILITY_NOTIFY : {
-			result += "GDK_VISIBILITY_NOTIFY";
-		}
-		break;
+				result += "GDK_VISIBILITY_NOTIFY";
+			}
+			break;
 
 		case GDK_CLIENT_EVENT : {
-			result += "GDK_CLIENT_EVENT";
-		}
-		break;
+				result += "GDK_CLIENT_EVENT";
+			}
+			break;
 
 		case GDK_DROP_FINISHED : {
-			result += "GDK_DROP_FINISHED";
-		}
-		break;
+				result += "GDK_DROP_FINISHED";
+			}
+			break;
 
 		case GDK_DROP_START : {
-			result += "GDK_DROP_START";
-		}
-		break;
+				result += "GDK_DROP_START";
+			}
+			break;
 
 		case GDK_DRAG_STATUS : {
-			result += "GDK_DRAG_STATUS";
-		}
-		break;
+				result += "GDK_DRAG_STATUS";
+			}
+			break;
 
 		case GDK_SETTING : {
-			result += "GDK_SETTING";
-		}
-		break;
+				result += "GDK_SETTING";
+			}
+			break;
 
 		case GDK_WINDOW_STATE : {
-			result += "GDK_WINDOW_STATE";
-		}
-		break;
+				result += "GDK_WINDOW_STATE";
+			}
+			break;
 
 		case GDK_SCROLL : {
-			result += "GDK_SCROLL";
-		}
-		break;
+				result += "GDK_SCROLL";
+			}
+			break;
 	}
 
 	result += " count: " + StringUtils::toString( count );
@@ -456,13 +446,13 @@ gboolean AbstractGTKControl::handleEvent( GdkEvent* gtkEvent )
 	gboolean result = FALSE;
 
 	if ( gtkEvent->type == GDK_EXPOSE ) {
-		GdkEventExpose* gdkExposeEvent = (GdkEventExpose*)gtkEvent;
+		GdkEventExpose * gdkExposeEvent = ( GdkEventExpose* ) gtkEvent;
 
 		GraphicsContext* gc = control_->getContext();
 
-		gc->getPeer()->setContextID( (ulong32)wndHandle_->window );
+		gc->getPeer() ->setContextID( wndHandle_->window );
 
-		if ( GTK_WIDGET_NO_WINDOW(wndHandle_) ) {
+		if ( GTK_WIDGET_NO_WINDOW( wndHandle_ ) ) {
 
 			gc->setOrigin( bounds_.left_, bounds_.top_ );
 		}
@@ -471,14 +461,13 @@ gboolean AbstractGTKControl::handleEvent( GdkEvent* gtkEvent )
 		repainted_ = false;
 
 		return FALSE;
-	}
-	else if ( gtkEvent->type == GDK_CONFIGURE ) {
+	} else if ( gtkEvent->type == GDK_CONFIGURE ) {
 		//handle this explicitly here
 
 		int i = 0;
 		i++;
 
-		GdkEventConfigure* configEv = (GdkEventConfigure*)gtkEvent;
+		GdkEventConfigure* configEv = ( GdkEventConfigure* ) gtkEvent;
 
 		VCF::Point pt( configEv->x, configEv->y );
 
@@ -495,12 +484,11 @@ gboolean AbstractGTKControl::handleEvent( GdkEvent* gtkEvent )
 
 
 
-	}
-	else {
-		GTKEventMsg eventMsg( gtkEvent, this->control_  );
+	} else {
+		GTKEventMsg eventMsg( gtkEvent, this->control_ );
 
 
-		Event* event = UIToolkit::createEventFromNativeOSEventData( (void*)&eventMsg );
+		Event* event = UIToolkit::createEventFromNativeOSEventData( ( void* ) & eventMsg );
 
 		if ( NULL != event ) {
 			control_->handleEvent( event );
@@ -514,7 +502,7 @@ gboolean AbstractGTKControl::handleEvent( GdkEvent* gtkEvent )
 
 AbstractGTKControl* AbstractGTKControl::getGTKControlFromWidget( GtkWidget* wndHandle )
 {
-	AbstractGTKControl* result = NULL;
+	AbstractGTKControl * result = NULL;
 
 	AbstractGTKControl::GTKControlMap::iterator found = AbstractGTKControl::gtkControlMap.find( wndHandle );
 	if ( found != AbstractGTKControl::gtkControlMap.end() ) {
@@ -527,9 +515,9 @@ AbstractGTKControl* AbstractGTKControl::getGTKControlFromWidget( GtkWidget* wndH
 void AbstractGTKControl_onCreateEvent( ComponentEvent* e )
 {
 	if ( NULL != e ) {
-		Control* control = (Control*)e->getSource();
+		Control * control = ( Control* ) e->getSource();
 
-		GtkWidget* widget = (GtkWidget*)control->getPeer()->getHandleID();
+		GtkWidget* widget = ( GtkWidget* ) control->getPeer() ->getHandleID();
 		gtk_widget_set_name( widget, control->getClassName().ansi_c_str() );
 
 		control->handleEvent( e );
@@ -539,18 +527,18 @@ void AbstractGTKControl_onCreateEvent( ComponentEvent* e )
 void AbstractGTKControl::registerGTKControl( AbstractGTKControl* gtkControl )
 {
 	if ( NULL == gtkControl->wndHandle_ ) {
-		throw InvalidPointerException( MAKE_ERROR_MSG_2("Attemtping to register an invalid GtkWidget handle") );
+		throw InvalidPointerException( MAKE_ERROR_MSG_2( "Attemtping to register an invalid GtkWidget handle" ) );
 	}
 
 
-	GTKUIToolkit* toolkit = (GTKUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
+	GTKUIToolkit* toolkit = ( GTKUIToolkit* ) UIToolkit::internal_getDefaultUIToolkit();
 
-	AbstractGTKControl::gtkControlMap[gtkControl->wndHandle_] = gtkControl;
+	AbstractGTKControl::gtkControlMap[ gtkControl->wndHandle_ ] = gtkControl;
 	gtkControl->initGdkEventHandlers();
 
 	toolkit->postEvent( new StaticEventHandlerInstance<ComponentEvent>( &AbstractGTKControl_onCreateEvent, gtkControl, "AbstractGTKControl_onCreateEvent" ),
-						new VCF::ComponentEvent( gtkControl->getControl() , Component::COMPONENT_CREATED ),
-						true );
+	                    new VCF::ComponentEvent( gtkControl->getControl() , Component::COMPONENT_CREATED ),
+	                    true );
 }
 
 void AbstractGTKControl::unRegisterGTKControl( AbstractGTKControl* gtkControl )
@@ -563,7 +551,7 @@ void AbstractGTKControl::unRegisterGTKControl( AbstractGTKControl* gtkControl )
 
 void AbstractGTKControl::translateToScreenCoords( Point* pt )
 {
-	 //gtk_widget_translate_coordinates
+	//gtk_widget_translate_coordinates
 
 
 }
@@ -571,21 +559,20 @@ void AbstractGTKControl::translateToScreenCoords( Point* pt )
 
 void AbstractGTKControl::translateFromScreenCoords( Point* pt )
 {
-
 }
 
 void AbstractGTKControl::initGdkEventHandlers()
 {
 	gtk_widget_add_events( wndHandle_, GDK_ALL_EVENTS_MASK );
 
-	g_signal_connect ( G_OBJECT (wndHandle_), "event",
-						G_CALLBACK (AbstractGTKControl::onGdkEvent),
-						(gpointer)this );
+	g_signal_connect ( G_OBJECT ( wndHandle_ ), "event",
+	                   G_CALLBACK ( AbstractGTKControl::onGdkEvent ),
+	                   ( gpointer ) this );
 }
 
 gboolean AbstractGTKControl::onGdkEvent( GtkWidget *widget, GdkEvent *event, gpointer user_data )
 {
-	AbstractGTKControl* thisPtr = AbstractGTKControl::getGTKControlFromWidget( widget );
+	AbstractGTKControl * thisPtr = AbstractGTKControl::getGTKControlFromWidget( widget );
 
 	if ( NULL == thisPtr ) {
 		return FALSE;
@@ -593,7 +580,7 @@ gboolean AbstractGTKControl::onGdkEvent( GtkWidget *widget, GdkEvent *event, gpo
 
 	//AbstractGTKControl* thisPtr = (AbstractGTKControl*)user_data;
 	if ( widget != thisPtr->wndHandle_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Gdk event received for a widget that doesn't match the AbstractGTKControl's widget") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "Gdk event received for a widget that doesn't match the AbstractGTKControl's widget" ) );
 	}
 
 	return thisPtr->handleEvent( event );
@@ -615,32 +602,31 @@ GType AbstractGTKControl::getGTKType ()
 {
 	static GType container_type = 0;
 
-	if (!container_type) {
-		static const GTypeInfo container_info =
-		{
-			sizeof (AbstractGTKControl::ContainerClass),
-				NULL,
-				NULL,
-				(GClassInitFunc) AbstractGTKControl::ContainerClass::init,
-				NULL,
-				NULL,
-				sizeof (AbstractGTKControl::Container),
-				0,
-				(GInstanceInitFunc) AbstractGTKControl::Container::init,
-		};
+	if ( !container_type ) {
+		static const GTypeInfo container_info = {
+		                                            sizeof ( AbstractGTKControl::ContainerClass ),
+		                                            NULL,
+		                                            NULL,
+		                                            ( GClassInitFunc ) AbstractGTKControl::ContainerClass::init,
+		                                            NULL,
+		                                            NULL,
+		                                            sizeof ( AbstractGTKControl::Container ),
+		                                            0,
+		                                            ( GInstanceInitFunc ) AbstractGTKControl::Container::init,
+		                                        };
 
-		container_type = g_type_register_static (GTK_TYPE_CONTAINER, "AbstractGTKControl_Container", &container_info, (GTypeFlags)0);
-    }
+		container_type = g_type_register_static ( GTK_TYPE_CONTAINER, "AbstractGTKControl_Container", &container_info, ( GTypeFlags ) 0 );
+	}
 
 	return container_type;
 }
 
 
 void AbstractGTKControl::Container::move( GtkWidget* widget,
-				 int x,
-				 int y,
-				 int width,
-				 int height )
+                                          int x,
+                                          int y,
+                                          int width,
+                                          int height )
 {
 	/*
 	container->x = x;
@@ -653,77 +639,75 @@ void AbstractGTKControl::Container::move( GtkWidget* widget,
 
 	AbstractGTKControl* peer = AbstractGTKControl::Container::getControlPeer( widget );
 	if ( NULL == peer ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("no AbstractGTKControl instance associated with this widget!") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "no AbstractGTKControl instance associated with this widget!" ) );
 	}
 	peer->internal_setBounds( bounds );
 
-	if ( !GTK_IS_VCF_CONTAINER (widget) ) {
-		widget->allocation.x = bounds.left_;
-		widget->allocation.y = bounds.top_;
-		widget->allocation.width = bounds.getWidth();
-		widget->allocation.height = bounds.getHeight();
+	if ( !GTK_IS_VCF_CONTAINER ( widget ) ) {
+		widget->allocation.x = int( bounds.left_ );
+		widget->allocation.y = int( bounds.top_ );
+		widget->allocation.width = int( bounds.getWidth() );
+		widget->allocation.height = int( bounds.getHeight() );
 	}
 
-	if (GTK_WIDGET_REALIZED (widget))   {
-		GtkWidget* gdkParent = gtk_widget_get_parent ( widget );
+	if ( GTK_WIDGET_REALIZED ( widget ) ) {
+		GtkWidget * gdkParent = gtk_widget_get_parent ( widget );
 		gtk_widget_queue_resize( gdkParent );
-    }
+	}
 }
 
 
 GtkWidget* AbstractGTKControl::Container::create( GtkAdjustment *adjustment, AbstractGTKControl* gtkControlPeer )
 {
-	AbstractGTKControl::Container *container;
+	AbstractGTKControl::Container * container;
 
-	container = (AbstractGTKControl::Container*)g_object_new (AbstractGTKControl::getGTKType (), NULL);
+	container = ( AbstractGTKControl::Container* ) g_object_new ( AbstractGTKControl::getGTKType (), NULL );
 
-	if (!adjustment)
-		adjustment = (GtkAdjustment*) gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+	if ( !adjustment )
+		adjustment = ( GtkAdjustment* ) gtk_adjustment_new ( 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 );
 
-	AbstractGTKControl::Container::setAdjustment(container, adjustment);
+	AbstractGTKControl::Container::setAdjustment( container, adjustment );
 
 	container->gtkControlPeer_ = gtkControlPeer;
 
-	return GTK_WIDGET (container);
+	return GTK_WIDGET ( container );
 }
 
 /*
 GtkAdjustment* AbstractGTKControl::Container::getAdjustment( AbstractGTKControl::Container *container )
 {
-
+ 
 }
 */
 
 void AbstractGTKControl::Container::setUpdatePolicy( AbstractGTKControl::Container *container,
-							GtkUpdateType policy )
+                                                     GtkUpdateType policy )
 {
-
 }
 
 void AbstractGTKControl::Container::setAdjustment( AbstractGTKControl::Container *container,
-						  GtkAdjustment *adjustment )
+                                                   GtkAdjustment *adjustment )
 {
-	g_return_if_fail (container != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (container));
+	g_return_if_fail ( container != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( container ) );
 
-	if (container->adjustment)
-    {
-		g_signal_handlers_disconnect_by_func (GTK_OBJECT (container->adjustment),
-												NULL,
-												(gpointer) container);
+	if ( container->adjustment ) {
+		g_signal_handlers_disconnect_by_func ( GTK_OBJECT ( container->adjustment ),
+		                                       NULL,
+		                                       ( gpointer ) container );
 
-		g_object_unref (GTK_OBJECT (container->adjustment));
-    }
+		g_object_unref ( GTK_OBJECT ( container->adjustment ) );
+	}
 
 	container->adjustment = adjustment;
-	g_object_ref (GTK_OBJECT (container->adjustment));
+	g_object_ref ( GTK_OBJECT ( container->adjustment ) );
 
-	g_signal_connect (GTK_OBJECT (adjustment), "changed",
-		GTK_SIGNAL_FUNC (AbstractGTKControl::Container::adjustmentChanged),
-		(gpointer) container);
-	g_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		GTK_SIGNAL_FUNC (AbstractGTKControl::Container::adjustmentValueChanged),
-		(gpointer) container);
+	g_signal_connect ( GTK_OBJECT ( adjustment ), "changed",
+	                   GTK_SIGNAL_FUNC ( AbstractGTKControl::Container::adjustmentChanged ),
+	                   ( gpointer ) container );
+	g_signal_connect ( GTK_OBJECT ( adjustment ), "value_changed",
+	                   GTK_SIGNAL_FUNC ( AbstractGTKControl::Container::adjustmentValueChanged ),
+	                   ( gpointer ) container );
 }
 
 void AbstractGTKControl::Container::init( AbstractGTKControl::Container *container )
@@ -734,22 +718,22 @@ void AbstractGTKControl::Container::init( AbstractGTKControl::Container *contain
 
 void AbstractGTKControl::Container::destroy ( GtkObject *object )
 {
-	AbstractGTKControl::Container *container;
+	AbstractGTKControl::Container * container;
 
-	g_return_if_fail (object != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (object));
+	g_return_if_fail ( object != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( object ) );
 
 
 
-	container = GTK_VCF_CONTAINER (object);
+	container = GTK_VCF_CONTAINER ( object );
 
-	if (container->adjustment)   {
-		g_object_unref (GTK_OBJECT (container->adjustment));
+	if ( container->adjustment ) {
+		g_object_unref ( GTK_OBJECT ( container->adjustment ) );
 		container->adjustment = NULL;
-    }
+	}
 
-	if (GTK_OBJECT_CLASS (internalVCFParentClass)->destroy) {
-		(* GTK_OBJECT_CLASS (internalVCFParentClass)->destroy) (object);
+	if ( GTK_OBJECT_CLASS ( internalVCFParentClass ) ->destroy ) {
+		( * GTK_OBJECT_CLASS ( internalVCFParentClass ) ->destroy ) ( object );
 	}
 }
 
@@ -757,14 +741,13 @@ Rect AbstractGTKControl::Container::getBounds( GtkWidget* widget )
 {
 	Rect result;
 
-	if ( GTK_IS_VCF_CONTAINER (widget) ) {
-		AbstractGTKControl::Container *container = GTK_VCF_CONTAINER (widget);
+	if ( GTK_IS_VCF_CONTAINER ( widget ) ) {
+		AbstractGTKControl::Container * container = GTK_VCF_CONTAINER ( widget );
 		result = container->gtkControlPeer_->internal_getBounds();
-	}
-	else {
+	} else {
 		AbstractGTKControl* control = AbstractGTKControl::getGTKControlFromWidget( widget );
 		if ( NULL == control ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("AbstractGTKControl::getGTKControlFromWidget() returned NULL - no control associated with this GTK widget!") );
+			throw RuntimeException( MAKE_ERROR_MSG_2( "AbstractGTKControl::getGTKControlFromWidget() returned NULL - no control associated with this GTK widget!" ) );
 		}
 		result = control->internal_getBounds();
 	}
@@ -773,25 +756,25 @@ Rect AbstractGTKControl::Container::getBounds( GtkWidget* widget )
 }
 
 void AbstractGTKControl::Container::moveChild( AbstractGTKControl::Container *container,
-												GtkWidget* child,
-												int x,
-												int y,
-												int width,
-												int height )
+                                               GtkWidget* child,
+                                               int x,
+                                               int y,
+                                               int width,
+                                               int height )
 {
-	g_return_if_fail (container != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (container));
-	g_return_if_fail (child != NULL);
+	g_return_if_fail ( container != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( container ) );
+	g_return_if_fail ( child != NULL );
 
 	printf( "AbstractGTKControl::Container::moveChild called\n" );
 
 
 	GList *children = container->children;
 	ContainerChild* childObj = NULL;
-	while (children)  {
-		childObj = (ContainerChild*)children->data;
+	while ( children ) {
+		childObj = ( ContainerChild* ) children->data;
 
-		if (childObj->widget == child) {
+		if ( childObj->widget == child ) {
 			childObj->x = x;
 			childObj->y = y;
 			childObj->width = width;
@@ -808,13 +791,13 @@ void AbstractGTKControl::Container::moveChild( AbstractGTKControl::Container *co
 				peer->internal_setBounds( bounds );
 			}
 
-			gtk_widget_queue_resize (GTK_WIDGET (child));
+			gtk_widget_queue_resize ( GTK_WIDGET ( child ) );
 
 			break;
 		}
 
 		children = children->next;
-    }
+	}
 }
 
 Rect AbstractGTKControl::Container::getChildBounds( AbstractGTKControl::Container *container, GtkWidget* child )
@@ -823,10 +806,10 @@ Rect AbstractGTKControl::Container::getChildBounds( AbstractGTKControl::Containe
 
 	GList *children = container->children;
 	ContainerChild* childObj = NULL;
-	while (children)  {
-		childObj = (ContainerChild*)children->data;
+	while ( children ) {
+		childObj = ( ContainerChild* ) children->data;
 
-		if (childObj->widget == child) {
+		if ( childObj->widget == child ) {
 			result.left_ = childObj->x;
 			result.top_ = childObj->y;
 			result.right_ = result.left_ + childObj->width;
@@ -836,20 +819,19 @@ Rect AbstractGTKControl::Container::getChildBounds( AbstractGTKControl::Containe
 		}
 
 		children = children->next;
-    }
+	}
 
 	return result;
 }
 
 AbstractGTKControl* AbstractGTKControl::Container::getControlPeer( GtkWidget* widget )
 {
-	AbstractGTKControl* result= NULL;
+	AbstractGTKControl * result = NULL;
 
-	if ( GTK_IS_VCF_CONTAINER (widget) ) {
-		AbstractGTKControl::Container *container = GTK_VCF_CONTAINER (widget);
+	if ( GTK_IS_VCF_CONTAINER ( widget ) ) {
+		AbstractGTKControl::Container * container = GTK_VCF_CONTAINER ( widget );
 		result = container->gtkControlPeer_;
-	}
-	else {
+	} else {
 		result = AbstractGTKControl::getGTKControlFromWidget( widget );
 	}
 
@@ -858,17 +840,17 @@ AbstractGTKControl* AbstractGTKControl::Container::getControlPeer( GtkWidget* wi
 
 void AbstractGTKControl::Container::realize( GtkWidget *widget )
 {
-	AbstractGTKControl::Container* container;
+	AbstractGTKControl::Container * container;
 	//printf( "gtk_absolute_container_realize\n" );
 
 	GdkWindowAttr attributes;
 	gint attributes_mask;
 
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (widget));
+	g_return_if_fail ( widget != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( widget ) );
 
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-	container = GTK_VCF_CONTAINER (widget);
+	GTK_WIDGET_SET_FLAGS ( widget, GTK_REALIZED );
+	container = GTK_VCF_CONTAINER ( widget );
 
 	attributes.x = widget->allocation.x;
 	attributes.y = widget->allocation.y;
@@ -876,57 +858,57 @@ void AbstractGTKControl::Container::realize( GtkWidget *widget )
 	attributes.height = widget->allocation.height;
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.event_mask = gtk_widget_get_events (widget) |
-		GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK |
-		GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK |
-		GDK_POINTER_MOTION_HINT_MASK;
-	attributes.visual = gtk_widget_get_visual (widget);
-	attributes.colormap = gtk_widget_get_colormap (widget);
+	attributes.event_mask = gtk_widget_get_events ( widget ) |
+	                        GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK |
+	                        GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK |
+	                        GDK_POINTER_MOTION_HINT_MASK;
+	attributes.visual = gtk_widget_get_visual ( widget );
+	attributes.colormap = gtk_widget_get_colormap ( widget );
 
 	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
-	widget->window = gdk_window_new (widget->parent->window, &attributes, attributes_mask);
+	widget->window = gdk_window_new ( widget->parent->window, &attributes, attributes_mask );
 
-	widget->style = gtk_style_attach (widget->style, widget->window);
+	widget->style = gtk_style_attach ( widget->style, widget->window );
 
-	gdk_window_set_user_data (widget->window, widget);
+	gdk_window_set_user_data ( widget->window, widget );
 
-	gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
+	gtk_style_set_background ( widget->style, widget->window, GTK_STATE_ACTIVE );
 }
 
 void AbstractGTKControl::Container::sizeRequest( GtkWidget *widget, GtkRequisition *requisition )
 {
 	//printf( "gtk_absolute_container_size_request\n" );
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (widget));
-	g_return_if_fail (requisition != NULL);
+	g_return_if_fail ( widget != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( widget ) );
+	g_return_if_fail ( requisition != NULL );
 
 	StringUtils::traceWithArgs( "Container::sizeRequest widget: %p, name:%s\n", widget, widget->name );
 
 
 	Rect bounds = AbstractGTKControl::Container::getBounds( widget );
 
-	requisition->width = bounds.getWidth();
-	requisition->height = bounds.getHeight();
+	requisition->width = int( bounds.getWidth() );
+	requisition->height = int( bounds.getHeight() );
 
 
-	AbstractGTKControl::Container *container = GTK_VCF_CONTAINER (widget);
+	AbstractGTKControl::Container *container = GTK_VCF_CONTAINER ( widget );
 
 	GList* children = container->children;
 	AbstractGTKControl::ContainerChild* child = NULL;
 	GtkRequisition child_requisition;
-	while (children) {
-		child = (AbstractGTKControl::ContainerChild*)children->data;
+	while ( children ) {
+		child = ( AbstractGTKControl::ContainerChild* ) children->data;
 		children = children->next;
 
-		if (GTK_WIDGET_VISIBLE (child->widget)) {
+		if ( GTK_WIDGET_VISIBLE ( child->widget ) ) {
 			//StringUtils::traceWithArgs( "\tcalling gtk_widget_size_request for widget: %p, name:%s, parent: %p\n",
-				//							child->widget, child->widget->name, widget );
-			gtk_widget_size_request (child->widget, &child_requisition);
-/*
-			if ( child->widget->name == String("VCF::CommandButton") ) {
-				int i = 0;
-			}
-			*/
+			//							child->widget, child->widget->name, widget );
+			gtk_widget_size_request ( child->widget, &child_requisition );
+			/*
+						if ( child->widget->name == String("VCF::CommandButton") ) {
+							int i = 0;
+						}
+						*/
 		}
 	}
 
@@ -934,11 +916,11 @@ void AbstractGTKControl::Container::sizeRequest( GtkWidget *widget, GtkRequisiti
 
 void AbstractGTKControl::Container::sizeAllocate( GtkWidget *widget, GtkAllocation *allocation )
 {
-	g_return_if_fail (widget != NULL);
+	g_return_if_fail ( widget != NULL );
 
 	//g_return_if_fail (GTK_IS_VCF_CONTAINER (widget));
 
-	g_return_if_fail (allocation != NULL);
+	g_return_if_fail ( allocation != NULL );
 
 	StringUtils::traceWithArgs( "Container::sizeAllocate widget: %p, name:%s\n", widget, widget->name );
 
@@ -950,65 +932,65 @@ void AbstractGTKControl::Container::sizeAllocate( GtkWidget *widget, GtkAllocati
 
 	Rect bounds = AbstractGTKControl::Container::getBounds( widget );
 
-	allocation->x = bounds.left_;
-	allocation->y = bounds.top_;
-	allocation->width = bounds.getWidth();
-	allocation->height = bounds.getHeight();
+	allocation->x = int( bounds.left_ ) ;
+	allocation->y = int( bounds.top_ );
+	allocation->width = int( bounds.getWidth() );
+	allocation->height = int( bounds.getHeight() );
 
 
 
 	widget->allocation = *allocation;
 
 
-	if ( GTK_WIDGET_REALIZED (widget) )  {
+	if ( GTK_WIDGET_REALIZED ( widget ) ) {
 
-		gdk_window_move_resize (widget->window,
-			allocation->x, allocation->y,
-			allocation->width, allocation->height);
+		gdk_window_move_resize ( widget->window,
+		                         allocation->x, allocation->y,
+		                         allocation->width, allocation->height );
 
-    }
+	}
 
-	if ( GTK_IS_VCF_CONTAINER (widget) ) {
-		container = GTK_VCF_CONTAINER (widget);
+	if ( GTK_IS_VCF_CONTAINER ( widget ) ) {
+		container = GTK_VCF_CONTAINER ( widget );
 		GList* children = container->children;
 		AbstractGTKControl::ContainerChild* child = NULL;
 		GtkRequisition child_requisition;
 		GtkAllocation child_allocation;
-		while (children) {
-			child = (AbstractGTKControl::ContainerChild*)children->data;
+		while ( children ) {
+			child = ( AbstractGTKControl::ContainerChild* ) children->data;
 			children = children->next;
 
-			if (GTK_WIDGET_VISIBLE (widget)) {
+			if ( GTK_WIDGET_VISIBLE ( widget ) ) {
 				bounds = AbstractGTKControl::Container::getBounds( child->widget );
 				//StringUtils::traceWithArgs( "\tcalling gtk_widget_get_child_requisition for widget: %p, name:%s, parent: %p\n",
-					//						child->widget, child->widget->name, widget );
+				//						child->widget, child->widget->name, widget );
 
-				gtk_widget_get_child_requisition (child->widget, &child_requisition);
-				child_allocation.x = bounds.left_; //child->x;
-				child_allocation.y = bounds.top_; //child->y;
+				gtk_widget_get_child_requisition ( child->widget, &child_requisition );
+				child_allocation.x = int( bounds.left_ ); //child->x;
+				child_allocation.y = int( bounds.top_ ); //child->y;
 
-				if (GTK_WIDGET_NO_WINDOW (widget)) {
+				if ( GTK_WIDGET_NO_WINDOW ( widget ) ) {
 					child_allocation.x += widget->allocation.x;
 					child_allocation.y += widget->allocation.y;
 				}
 
-				child_allocation.width = bounds.getWidth();//child->width;// child_requisition.width;
-				child_allocation.height = bounds.getHeight();// child->height;//child_requisition.height;
+				child_allocation.width = int( bounds.getWidth() ); //child->width;// child_requisition.width;
+				child_allocation.height = int( bounds.getHeight() ); // child->height;//child_requisition.height;
 
 
 				StringUtils::traceWithArgs( "\tcalling gtk_widget_size_allocate for widget: %p, name:%s, parent: %p\n\t\tx:%d, y:%d, w:%d, h:%d\n",
-											child->widget, child->widget->name, widget,
-											child->x,
-											child->y,
-											child->width,
-											child->height);
-				gtk_widget_size_allocate (child->widget, &child_allocation);
+				                            child->widget, child->widget->name, widget,
+				                            child->x,
+				                            child->y,
+				                            child->width,
+				                            child->height );
+				gtk_widget_size_allocate ( child->widget, &child_allocation );
 
-/*
-				if ( child->widget->name == String("VCF::CommandButton") ) {
-					int i = 0;
-				}
-				*/
+				/*
+								if ( child->widget->name == String("VCF::CommandButton") ) {
+									int i = 0;
+								}
+								*/
 			}
 		}
 	}
@@ -1016,11 +998,11 @@ void AbstractGTKControl::Container::sizeAllocate( GtkWidget *widget, GtkAllocati
 
 gboolean AbstractGTKControl::Container::expose( GtkWidget *widget, GdkEventExpose *event )
 {
-	g_return_val_if_fail (GTK_IS_VCF_CONTAINER (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
+	g_return_val_if_fail ( GTK_IS_VCF_CONTAINER ( widget ), FALSE );
+	g_return_val_if_fail ( event != NULL, FALSE );
 
 
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if ( GTK_WIDGET_DRAWABLE ( widget ) ) {
 
 
 		//StringUtils::traceWithArgs( "AbstractGTKControl::Container::expose, widget: %p, name: %s\n",
@@ -1028,33 +1010,33 @@ gboolean AbstractGTKControl::Container::expose( GtkWidget *widget, GdkEventExpos
 
 
 
-		AbstractGTKControl::Container *absContainer = GTK_VCF_CONTAINER (widget);
+		AbstractGTKControl::Container * absContainer = GTK_VCF_CONTAINER ( widget );
 
 
 
 
 		GList *children = absContainer->children;
 		AbstractGTKControl::ContainerChild* childObj = NULL;
-		while (children)  {
-			childObj = (AbstractGTKControl::ContainerChild*)children->data;
+		while ( children ) {
+			childObj = ( AbstractGTKControl::ContainerChild* ) children->data;
 
-			if ( GTK_IS_WIDGET (childObj->widget) ) {
-				g_assert (childObj->widget->parent == widget);
-				if (GTK_WIDGET_DRAWABLE (childObj->widget) &&
-						GTK_WIDGET_NO_WINDOW (childObj->widget) &&
-						(childObj->widget->window == event->window))  {
+			if ( GTK_IS_WIDGET ( childObj->widget ) ) {
+				g_assert ( childObj->widget->parent == widget );
+				if ( GTK_WIDGET_DRAWABLE ( childObj->widget ) &&
+				        GTK_WIDGET_NO_WINDOW ( childObj->widget ) &&
+				        ( childObj->widget->window == event->window ) ) {
 
 
-					GdkEvent *child_event;
-					child_event = gdk_event_new (GDK_EXPOSE);
+					GdkEvent * child_event;
+					child_event = gdk_event_new ( GDK_EXPOSE );
 					child_event->expose = *event;
-					g_object_ref (child_event->expose.window);
+					g_object_ref ( child_event->expose.window );
 
 					child_event->expose.region =
-						gtk_widget_region_intersect (childObj->widget, event->region);
+					    gtk_widget_region_intersect ( childObj->widget, event->region );
 
-					if (!gdk_region_empty (child_event->expose.region))	{
-						gdk_region_get_clipbox (child_event->expose.region, &child_event->expose.area);
+					if ( !gdk_region_empty ( child_event->expose.region ) ) {
+						gdk_region_get_clipbox ( child_event->expose.region, &child_event->expose.area );
 
 
 						//StringUtils::traceWithArgs( "gtk_widget_send_expose( %p - %s )\n",
@@ -1062,45 +1044,44 @@ gboolean AbstractGTKControl::Container::expose( GtkWidget *widget, GdkEventExpos
 
 
 
-						gtk_widget_send_expose (childObj->widget, child_event);
+						gtk_widget_send_expose ( childObj->widget, child_event );
 
 					}
 
-					gdk_event_free (child_event);
+					gdk_event_free ( child_event );
 				}
 			}
 
 			children = children->next;
 		}
-    }
+	}
 
 	return FALSE;
 }
 
 void AbstractGTKControl::Container::adjustmentChanged( GtkAdjustment *adjustment, gpointer data )
 {
-
 }
 
 void AbstractGTKControl::Container::adjustmentValueChanged( GtkAdjustment *adjustment, gpointer data )
 {
-
 }
 
-void AbstractGTKControl::Container::add ( GtkContainer* container, GtkWidget* widget )
+void AbstractGTKControl::Container::add
+	( GtkContainer* container, GtkWidget* widget )
 {
 	//printf( "gtk_absolute_container_add\n" );
 
-	g_return_if_fail (container != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (container));
-	g_return_if_fail (widget != NULL);
+	g_return_if_fail ( container != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( container ) );
+	g_return_if_fail ( widget != NULL );
 
 	//StringUtils::traceWithArgs( "Container::add container: %p, widget: %p, name:%s\n",
-		//							container, widget, widget->name );
+	//							container, widget, widget->name );
 
 
 	AbstractGTKControl::Container *absContainer;
-	absContainer = GTK_VCF_CONTAINER (container);
+	absContainer = GTK_VCF_CONTAINER ( container );
 
 	AbstractGTKControl::ContainerChild* newChild = g_new( AbstractGTKControl::ContainerChild, 1 );
 
@@ -1112,69 +1093,70 @@ void AbstractGTKControl::Container::add ( GtkContainer* container, GtkWidget* wi
 
 	GtkRequisition child_requisition;
 
-	gtk_widget_size_request ( newChild->widget, &child_requisition);
+	gtk_widget_size_request ( newChild->widget, &child_requisition );
 
-	absContainer->children = g_list_append(absContainer->children, newChild);
+	absContainer->children = g_list_append( absContainer->children, newChild );
 
-	gtk_widget_set_parent (widget, GTK_WIDGET (container));
+	gtk_widget_set_parent ( widget, GTK_WIDGET ( container ) );
 }
 
-void AbstractGTKControl::Container::remove ( GtkContainer* container, GtkWidget* widget )
+void AbstractGTKControl::Container::remove
+	( GtkContainer* container, GtkWidget* widget )
 {
 	//printf( "gtk_absolute_container_remove\n" );
 
-	g_return_if_fail (container != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (container));
-	g_return_if_fail (widget != NULL);
+	g_return_if_fail ( container != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( container ) );
+	g_return_if_fail ( widget != NULL );
 
 	AbstractGTKControl::Container *absContainer;
-	absContainer = GTK_VCF_CONTAINER (container);
+	absContainer = GTK_VCF_CONTAINER ( container );
 
 	GList *children = absContainer->children;
 	AbstractGTKControl::ContainerChild* child = NULL;
-	while (children)  {
-		child = (AbstractGTKControl::ContainerChild*)children->data;
+	while ( children ) {
+		child = ( AbstractGTKControl::ContainerChild* ) children->data;
 
-		if (child->widget == widget) {
-			gboolean was_visible = GTK_WIDGET_VISIBLE (widget);
+		if ( child->widget == widget ) {
+			gboolean was_visible = GTK_WIDGET_VISIBLE ( widget );
 
-			gtk_widget_unparent (widget);
+			gtk_widget_unparent ( widget );
 
-			absContainer->children = g_list_remove_link (absContainer->children, children);
-			g_list_free (children);
+			absContainer->children = g_list_remove_link ( absContainer->children, children );
+			g_list_free ( children );
 			//g_free (child);
 
-			if ( was_visible && GTK_WIDGET_VISIBLE (container) ) {
-				gtk_widget_queue_resize (GTK_WIDGET (container));
+			if ( was_visible && GTK_WIDGET_VISIBLE ( container ) ) {
+				gtk_widget_queue_resize ( GTK_WIDGET ( container ) );
 			}
 			break;
 		}
 
 		children = children->next;
-    }
+	}
 }
 
 void AbstractGTKControl::Container::forall( GtkContainer* container,
-				   gboolean include_internals,
-				   GtkCallback callback,
-				   gpointer callback_data )
+                                            gboolean include_internals,
+                                            GtkCallback callback,
+                                            gpointer callback_data )
 {
 	//printf( "gtk_absolute_container_forall\n" );
-	g_return_if_fail (container != NULL);
-	g_return_if_fail (GTK_IS_VCF_CONTAINER (container));
-	g_return_if_fail (callback != NULL);
+	g_return_if_fail ( container != NULL );
+	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( container ) );
+	g_return_if_fail ( callback != NULL );
 
 	AbstractGTKControl::Container *absContainer;
-	absContainer = GTK_VCF_CONTAINER (container);
+	absContainer = GTK_VCF_CONTAINER ( container );
 
 	GList *children = absContainer->children;
 	AbstractGTKControl::ContainerChild* child = NULL;
 	while ( children ) {
-		child = (AbstractGTKControl::ContainerChild*)children->data;
+		child = ( AbstractGTKControl::ContainerChild* ) children->data;
 		children = children->next;
 
-		(* callback) (child->widget, callback_data);
-    }
+		( * callback ) ( child->widget, callback_data );
+	}
 }
 
 GType AbstractGTKControl::Container::getChildType( GtkContainer* container )
@@ -1187,15 +1169,15 @@ GType AbstractGTKControl::Container::getChildType( GtkContainer* container )
 
 void AbstractGTKControl::ContainerClass::init ( ContainerClass *clazz )
 {
-	GtkWidgetClass *widget_class;
+	GtkWidgetClass * widget_class;
 	GtkContainerClass *container_class;
 
 	GtkObjectClass *object_class;
-	object_class = (GtkObjectClass*) clazz;
-	widget_class = (GtkWidgetClass*) clazz;
-	container_class = (GtkContainerClass*) clazz;
+	object_class = ( GtkObjectClass* ) clazz;
+	widget_class = ( GtkWidgetClass* ) clazz;
+	container_class = ( GtkContainerClass* ) clazz;
 
-	internalVCFParentClass = (GtkContainerClass*)gtk_type_class (gtk_container_get_type ());
+	internalVCFParentClass = ( GtkContainerClass* ) gtk_type_class ( gtk_container_get_type () );
 
 	object_class->destroy = AbstractGTKControl::Container::destroy;
 
@@ -1205,8 +1187,12 @@ void AbstractGTKControl::ContainerClass::init ( ContainerClass *clazz )
 	widget_class->size_allocate = AbstractGTKControl::Container::sizeAllocate;
 
 
-	container_class->add = AbstractGTKControl::Container::add;
-	container_class->remove = AbstractGTKControl::Container::remove;
+	container_class->add
+	= AbstractGTKControl::Container::add
+		  ;
+	container_class->remove
+	= AbstractGTKControl::Container::remove
+		  ;
 	container_class->forall = AbstractGTKControl::Container::forall;
 	container_class->child_type = AbstractGTKControl::Container::getChildType;
 }
@@ -1215,6 +1201,9 @@ void AbstractGTKControl::ContainerClass::init ( ContainerClass *clazz )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -6,17 +6,15 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/GTKWindow.h"
 #include "vcf/ApplicationKit/GTKUIToolkit.h"
 
-
 using namespace VCF;
 
-GTKWindow::GTKWindow( Control* control, Control* owner ):
-	sizeState_(GTKWindow::wsNone)
+GTKWindow::GTKWindow( Control* control, Control* owner ) :
+		sizeState_( GTKWindow::wsNone )
 {
 
 	control_ = control;
@@ -24,42 +22,41 @@ GTKWindow::GTKWindow( Control* control, Control* owner ):
 
 GTKWindow::~GTKWindow()
 {
-
 }
 
 void GTKWindow::create( Control* owningControl )
 {
-	GTKGraphicsToolkit* grafToolkit = reinterpret_cast<GTKGraphicsToolkit*>(GraphicsToolkit::internal_getDefaultGraphicsToolkit());
-	GTKUIToolkit* toolkit = (GTKUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
+	GTKGraphicsToolkit * grafToolkit = reinterpret_cast<GTKGraphicsToolkit*>( GraphicsToolkit::internal_getDefaultGraphicsToolkit() );
+	GTKUIToolkit* toolkit = ( GTKUIToolkit* ) UIToolkit::internal_getDefaultUIToolkit();
 
-	wndHandle_ = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	wndHandle_ = gtk_window_new( GTK_WINDOW_TOPLEVEL );
 	if ( NULL == wndHandle_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("gtk_window_new() failed") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "gtk_window_new() failed" ) );
 	}
 	gtk_widget_realize ( wndHandle_ );
 
 
 
-	g_signal_connect (G_OBJECT (wndHandle_), "delete_event",
-		      G_CALLBACK (GTKWindow::deleteEvent), (gpointer)this);
+	g_signal_connect ( G_OBJECT ( wndHandle_ ), "delete_event",
+	                   G_CALLBACK ( GTKWindow::deleteEvent ), ( gpointer ) this );
 
-	g_signal_connect (G_OBJECT (wndHandle_), "destroy",
-		      G_CALLBACK (GTKWindow::destroyEvent), (gpointer)this);
+	g_signal_connect ( G_OBJECT ( wndHandle_ ), "destroy",
+	                   G_CALLBACK ( GTKWindow::destroyEvent ), ( gpointer ) this );
 
-	containerWidget_ = AbstractGTKControl::Container::create(NULL, this);	//gtk_layout_new( NULL, NULL );
+	containerWidget_ = AbstractGTKControl::Container::create( NULL, this );	//gtk_layout_new( NULL, NULL );
 
-		//
+	//
 	gtk_container_add( GTK_CONTAINER( wndHandle_ ), containerWidget_ );
 
-	GtkWindow* wnd = (GTK_WINDOW(wndHandle_) );
+	GtkWindow* wnd = ( GTK_WINDOW( wndHandle_ ) );
 
 	GdkGeometry geom;
-	memset( &geom, 0, sizeof(geom) );
+	memset( &geom, 0, sizeof( geom ) );
 	geom.min_width = 1;
 	geom.min_height = 1;
 
 	gtk_window_set_geometry_hints( wnd, wndHandle_, &geom,
-									(GdkWindowHints)(GDK_HINT_MIN_SIZE) );
+	                               ( GdkWindowHints ) ( GDK_HINT_MIN_SIZE ) );
 
 	AbstractGTKControl::registerGTKControl( this );
 
@@ -67,9 +64,9 @@ void GTKWindow::create( Control* owningControl )
 
 	gtk_widget_set_name ( containerWidget_, "VCF::WINDOW-Container" );
 
-	gtk_widget_show (containerWidget_);
+	gtk_widget_show ( containerWidget_ );
 
-	gtk_widget_set_app_paintable(wndHandle_, TRUE);
+	gtk_widget_set_app_paintable( wndHandle_, TRUE );
 }
 
 
@@ -77,29 +74,29 @@ void GTKWindow::initGdkEventHandlers()
 {
 	AbstractGTKControl::initGdkEventHandlers();
 
-	AbstractGTKControl::gtkControlMap[containerWidget_] = this;
+	AbstractGTKControl::gtkControlMap[ containerWidget_ ] = this;
 
 	gtk_widget_add_events( containerWidget_, GDK_ALL_EVENTS_MASK );
 
-	g_signal_connect ( G_OBJECT (containerWidget_), "event",
-						G_CALLBACK (GTKWindow::onGdkEventForContainer),
-						(gpointer)this );
+	g_signal_connect ( G_OBJECT ( containerWidget_ ), "event",
+	                   G_CALLBACK ( GTKWindow::onGdkEventForContainer ),
+	                   ( gpointer ) this );
 }
 
 gboolean GTKWindow::onGdkEventForContainer( GtkWidget *widget, GdkEvent *event, gpointer user_data )
 {
-	GTKWindow* thisPtr = (GTKWindow*)user_data;
+	GTKWindow * thisPtr = ( GTKWindow* ) user_data;
 	if ( widget != thisPtr->containerWidget_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Gdk event received for a widget that doesn't match the AbstractGTKControl's widget") );
+		throw RuntimeException( MAKE_ERROR_MSG_2( "Gdk event received for a widget that doesn't match the AbstractGTKControl's widget" ) );
 	}
 
 	return thisPtr->handleEvent( event );
 }
 
 
-long GTKWindow::getHandleID()
+OSHandleID GTKWindow::getHandleID()
 {
-	return (long)containerWidget_;
+	return containerWidget_;
 }
 
 Rect GTKWindow::getClientBounds()
@@ -109,7 +106,7 @@ Rect GTKWindow::getClientBounds()
 	return clientBounds_;
 }
 
-void  GTKWindow::setClientBounds( Rect* bounds )
+void GTKWindow::setClientBounds( Rect* bounds )
 {
 	setBounds( bounds );
 	clientBounds_ = *bounds;
@@ -117,16 +114,16 @@ void  GTKWindow::setClientBounds( Rect* bounds )
 
 void GTKWindow::setBounds( Rect* rect )
 {
-	if ( GTK_WIDGET_REALIZED (wndHandle_) )  {
+	if ( GTK_WIDGET_REALIZED ( wndHandle_ ) ) {
 
 		gdk_window_move_resize( wndHandle_->window,
-								(int)rect->left_,
-								(int)rect->top_,
-								(int)rect->getWidth(),
-								(int)rect->getHeight() );
+		                        ( int ) rect->left_,
+		                        ( int ) rect->top_,
+		                        ( int ) rect->getWidth(),
+		                        ( int ) rect->getHeight() );
 
 
-    }
+	}
 }
 
 void GTKWindow::close()
@@ -143,51 +140,50 @@ void GTKWindow::setFrameStyle( const FrameStyleType& frameStyle )
 	gboolean useDecorations = FALSE;
 	gboolean resizeable = TRUE;
 
-	switch ( frameStyle ){
-		case fstSizeable :{
-			resizeable = TRUE;
-		}
-		break;
+	switch ( frameStyle ) {
+		case fstSizeable : {
+				resizeable = TRUE;
+			}
+			break;
 
-		case fstNoBorder :{
-			useDecorations = FALSE;
-			resizeable = TRUE;
-		}
-		break;
+		case fstNoBorder : {
+				useDecorations = FALSE;
+				resizeable = TRUE;
+			}
+			break;
 
-		case fstFixed :{
-			useDecorations = TRUE;
-			resizeable = FALSE;
-		}
-		break;
+		case fstFixed : {
+				useDecorations = TRUE;
+				resizeable = FALSE;
+			}
+			break;
 
-		case fstNoBorderFixed :{
-			useDecorations = FALSE;
-			resizeable = FALSE;
-		}
-		break;
+		case fstNoBorderFixed : {
+				useDecorations = FALSE;
+				resizeable = FALSE;
+			}
+			break;
 
-		case fstToolbarBorder :{
-			useDecorations = TRUE;
-			resizeable = TRUE;
-		}
-		break;
+		case fstToolbarBorder : {
+				useDecorations = TRUE;
+				resizeable = TRUE;
+			}
+			break;
 
-		case fstToolbarBorderFixed :{
-			useDecorations = TRUE;
-			resizeable = FALSE;
-		}
-		break;
+		case fstToolbarBorderFixed : {
+				useDecorations = TRUE;
+				resizeable = FALSE;
+			}
+			break;
 
 	}
-	gtk_window_set_decorated( (GtkWindow*)wndHandle_, useDecorations );
-	gtk_window_set_resizable( (GtkWindow*)wndHandle_, resizeable );
+	gtk_window_set_decorated( ( GtkWindow* ) wndHandle_, useDecorations );
+	gtk_window_set_resizable( ( GtkWindow* ) wndHandle_, resizeable );
 }
 
 void GTKWindow::setFrameTopmost( const bool& isTopmost )
 {
 	if ( true == isTopmost ) {
-
 	}
 
 }
@@ -201,11 +197,10 @@ void GTKWindow::setMaximized( const bool maximised )
 {
 	if ( maximised ) {
 		sizeState_ = GTKWindow::wsMaximized;
-		gtk_window_maximize( (GtkWindow*)wndHandle_ );
-	}
-	else{
+		gtk_window_maximize( ( GtkWindow* ) wndHandle_ );
+	} else {
 		sizeState_ = GTKWindow::wsNormal;
-		gtk_window_unmaximize( (GtkWindow*)wndHandle_ );
+		gtk_window_unmaximize( ( GtkWindow* ) wndHandle_ );
 	}
 }
 
@@ -218,36 +213,33 @@ void GTKWindow::setMinimized( const bool& minimized )
 {
 	if ( minimized ) {
 		sizeState_ = GTKWindow::wsMinimized;
-		gtk_window_iconify ( (GtkWindow*)wndHandle_ );
-	}
-	else {
+		gtk_window_iconify ( ( GtkWindow* ) wndHandle_ );
+	} else {
 		sizeState_ = GTKWindow::wsMinimized;
-		gtk_window_deiconify( (GtkWindow*)wndHandle_ );
+		gtk_window_deiconify( ( GtkWindow* ) wndHandle_ );
 	}
 }
 
 void GTKWindow::restore()
 {
 	if ( isMaximized() ) {
-		gtk_window_unmaximize( (GtkWindow*)wndHandle_ );
-	}
-	else if ( isMinimized() ) {
-		gtk_window_deiconify( (GtkWindow*)wndHandle_ );
+		gtk_window_unmaximize( ( GtkWindow* ) wndHandle_ );
+	} else if ( isMinimized() ) {
+		gtk_window_deiconify( ( GtkWindow* ) wndHandle_ );
 	}
 	sizeState_ = GTKWindow::wsNormal;
 }
 
 void GTKWindow::setIconImage( Image* icon )
 {
-
 }
 
-gint GTKWindow::deleteEvent( GtkWidget *widget, GdkEvent  *event, gpointer data )
+gint GTKWindow::deleteEvent( GtkWidget *widget, GdkEvent *event, gpointer data )
 {
 	gint result = TRUE;
-	GTKWindow* gtkWnd = (GTKWindow*)data;
+	GTKWindow* gtkWnd = ( GTKWindow* ) data;
 
-	VCF::Window* window = (VCF::Window*)gtkWnd->getControl();
+	VCF::Window* window = ( VCF::Window* ) gtkWnd->getControl();
 
 	if ( window->allowClose() ) {
 
@@ -267,14 +259,14 @@ gint GTKWindow::deleteEvent( GtkWidget *widget, GdkEvent  *event, gpointer data 
 
 void GTKWindow::destroyEvent( GtkWidget *widget, gpointer data )
 {
-	GTKWindow* gtkWnd = (GTKWindow*)data;
+	GTKWindow * gtkWnd = ( GTKWindow* ) data;
 
-	VCF::Window* window = (VCF::Window*)gtkWnd->getControl();
+	VCF::Window* window = ( VCF::Window* ) gtkWnd->getControl();
 
 	Application* app = Application::getRunningInstance();
-	if ( NULL != app ){
-		Window* mainWindow = app->getMainWindow();
-		if ( mainWindow == gtkWnd->getControl() ){
+	if ( NULL != app ) {
+		Window * mainWindow = app->getMainWindow();
+		if ( mainWindow == gtkWnd->getControl() ) {
 			gtk_main_quit();
 		}
 	}
@@ -282,7 +274,7 @@ void GTKWindow::destroyEvent( GtkWidget *widget, gpointer data )
 
 gboolean GTKWindow::handleEvent( GdkEvent* gtkEvent )
 {
-	GTKUIToolkit* toolkit = reinterpret_cast<GTKUIToolkit*>(UIToolkit::internal_getDefaultUIToolkit());
+	GTKUIToolkit * toolkit = reinterpret_cast<GTKUIToolkit*>( UIToolkit::internal_getDefaultUIToolkit() );
 
 	gboolean result = FALSE;
 
@@ -292,67 +284,67 @@ gboolean GTKWindow::handleEvent( GdkEvent* gtkEvent )
 	switch ( gtkEvent->type ) {
 
 		case GDK_EXPOSE : {
-			if ( gtkEvent->any.window == containerWidget_->window ) {
-				GdkEventExpose* gdkExposeEvent = (GdkEventExpose*)gtkEvent;
+				if ( gtkEvent->any.window == containerWidget_->window ) {
+					GdkEventExpose * gdkExposeEvent = ( GdkEventExpose* ) gtkEvent;
 
-				GraphicsContext* gc = control_->getContext();
+					GraphicsContext* gc = control_->getContext();
 
-				gc->getPeer()->setContextID( (ulong32)containerWidget_->window );
+					gc->getPeer() ->setContextID( containerWidget_->window );
 
-				control_->paint( gc );
+					control_->paint( gc );
 
-				repainted_ = false;
-				//result = TRUE;
+					repainted_ = false;
+					//result = TRUE;
+				}
+
 			}
-
-		}
-		break;
+			break;
 
 		case GDK_CONFIGURE : {
-			if ( gtkEvent->any.window == wndHandle_->window ) {
-				printf( "GDK_CONFIGURE: gtkEvent->any.window == wndHandle_->window\n" );
-				GdkEventConfigure* configEv = (GdkEventConfigure*)gtkEvent;
+				if ( gtkEvent->any.window == wndHandle_->window ) {
+					printf( "GDK_CONFIGURE: gtkEvent->any.window == wndHandle_->window\n" );
+					GdkEventConfigure* configEv = ( GdkEventConfigure* ) gtkEvent;
 
-				gdk_window_move_resize( containerWidget_->window,
-								(int)0,
-								(int)0,
-								(int)configEv->width,
-								(int)configEv->height );
+					gdk_window_move_resize( containerWidget_->window,
+					                        ( int ) 0,
+					                        ( int ) 0,
+					                        ( int ) configEv->width,
+					                        ( int ) configEv->height );
 
-				AbstractGTKControl::Container::move( containerWidget_,
-
-
-											0, 0, configEv->width, configEv->height );
-
-				result = AbstractGTKControl::handleEvent( gtkEvent );
+					AbstractGTKControl::Container::move( containerWidget_,
 
 
+					                                     0, 0, configEv->width, configEv->height );
+
+					result = AbstractGTKControl::handleEvent( gtkEvent );
 
 
+
+
+				} else {
+					printf( "GDK_CONFIGURE: gtkEvent->any.window != wndHandle_->window\n" );
+					result = AbstractGTKControl::handleEvent( gtkEvent );
+				}
 			}
-			else {
-				printf( "GDK_CONFIGURE: gtkEvent->any.window != wndHandle_->window\n" );
-				result = AbstractGTKControl::handleEvent( gtkEvent );
-			}
-		}
-		break;
+			break;
 
-		case GDK_BUTTON_PRESS : case GDK_2BUTTON_PRESS : case GDK_3BUTTON_PRESS : {
-			if ( gtkEvent->any.window == wndHandle_->window ) {
-				result = TRUE;
+		case GDK_BUTTON_PRESS :
+		case GDK_2BUTTON_PRESS :
+		case GDK_3BUTTON_PRESS : {
+				if ( gtkEvent->any.window == wndHandle_->window ) {
+					result = TRUE;
+				} else {
+					result = AbstractGTKControl::handleEvent( gtkEvent );
+				}
 			}
-			else {
-				result = AbstractGTKControl::handleEvent( gtkEvent );
-			}
-		}
-		break;
+			break;
 
 		default : {
-			if ( gtkEvent->any.window == containerWidget_->window ) {
-				result = AbstractGTKControl::handleEvent( gtkEvent );
+				if ( gtkEvent->any.window == containerWidget_->window ) {
+					result = AbstractGTKControl::handleEvent( gtkEvent );
+				}
 			}
-		}
-		break;
+			break;
 	}
 
 	return result;
@@ -370,12 +362,12 @@ String GTKWindow::getText()
 void GTKWindow::setText( const String& text )
 {
 	if ( text == text_ ) {
-		return;
+		return ;
 	}
 
 	text_ = text;
 
-	gtk_window_set_title( (GtkWindow*)wndHandle_, text_.ansi_c_str() );
+	gtk_window_set_title( ( GtkWindow* ) wndHandle_, text_.ansi_c_str() );
 }
 
 
@@ -396,10 +388,18 @@ Rect GTKWindow::getBounds()
 	return result;
 }
 
+void GTKWindow::setBorder( Border* border )
+{}
+
+bool GTKWindow::isActiveWindow()
+{}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

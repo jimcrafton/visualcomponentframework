@@ -1,5 +1,5 @@
 #ifndef _VCF_GTKTEXTCONTROL_H__
-#define _VCF_GTKTEXTCONTROL_H__
+#define _VCF_GTKTEXTCONTROL_H__ 
 //GTKTextControl.h
 
 /*
@@ -8,25 +8,21 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
-#if _MSC_VER > 1000
-#   pragma once
-#endif
-
-
 #ifndef _VCF_TEXTPEER_H__
 #	include "vcf/ApplicationKit/TextPeer.h"
 #endif // _VCF_TEXTPEER_H__
 
 
-namespace VCF {
+namespace VCF
+{
 
 class TextEvent;
 
 /**
 class GTKTextControl documentation
 */
-class GTKTextControl : public AbstractGTKControl, public VCF::TextPeer {
+class GTKTextControl : public AbstractGTKControl, public VCF::TextPeer
+{
 public:
 	GTKTextControl( TextControl* component, const bool& isMultiLineControl );
 	virtual ~GTKTextControl();
@@ -37,17 +33,17 @@ public:
 
 	virtual void setLeftMargin( const double & leftMargin );
 
-    virtual unsigned long getLineCount();
+	virtual unsigned long getLineCount();
 
-    virtual unsigned long getCurrentLinePosition();
+	virtual unsigned long getCurrentLinePosition();
 
-    virtual double getLeftMargin();
+	virtual double getLeftMargin();
 
-    virtual double getRightMargin();
+	virtual double getRightMargin();
 
-    virtual Point* getPositionFromCharIndex( const unsigned long& index );
+	virtual Point* getPositionFromCharIndex( const unsigned long& index );
 
-    virtual unsigned long getCharIndexFromPosition( Point* point );
+	virtual unsigned long getCharIndexFromPosition( Point* point );
 
 	/**
 	*returns the current caret position with in the text control
@@ -73,7 +69,8 @@ public:
 	*/
 	virtual unsigned long getSelectionCount();
 
-	virtual void setSelectionMark( const unsigned long& start, const unsigned long& count );
+	virtual void setSelectionMark( const unsigned long& start,
+	                               const unsigned long& count );
 
 	virtual void setSelectionFont( Font* font );
 
@@ -85,11 +82,20 @@ public:
 
 	virtual String getText();
 
-    virtual void setText( const String& text );
+	virtual void setText( const String& text );
 
 	virtual void scrollToSelection( const bool& showEndSel = false );
 
 	virtual void setReadOnly( const bool& readonly );
+
+	virtual void setBorder( Border* border );
+
+	virtual ulong32 getTotalPrintablePageCount( PrintContext* context );
+
+	virtual void print( PrintContext* context, const long& page );
+
+	virtual void finishPrinting();
+
 protected:
 	TextControl* textControl_;
 	bool isMultiLineControl_;
@@ -111,6 +117,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

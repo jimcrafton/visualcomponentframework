@@ -397,30 +397,30 @@ void TextControl::handleEvent( Event* event )
 						sometimes you'd end up with a tab character entered when all you 
 						wanted was to tab to the next control
 						*/
-						case vkTab : {
-							if ( keepsTabKey() ) {
-								//process the tab
-								
-								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
-									ulong32 pos =  textPeer_->getCaretPosition();
-									String text;
-									text += ke->getKeyValue();
-									
-									//determnine if we have sleected text. If we 
-									//have, then delete the selection ant *then*
-									//add in the new character(s)
-									
-									ulong32 length = textPeer_->getSelectionCount();
-									if ( length > 0 ) {
-										model->deleteText( pos, length );
-									}
-									
-									
-									model->insertText( pos, text );
-								}
-							}
-						}
-						break;
+// 						case vkTab : {
+// 							if ( keepsTabKey() ) {
+// 								//process the tab
+// 								
+// 								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
+// 									ulong32 pos =  textPeer_->getCaretPosition();
+// 									String text;
+// 									text += ke->getKeyValue();
+// 									
+// 									//determnine if we have sleected text. If we 
+// 									//have, then delete the selection ant *then*
+// 									//add in the new character(s)
+// 									
+// 									ulong32 length = textPeer_->getSelectionCount();
+// 									if ( length > 0 ) {
+// 										model->deleteText( pos, length );
+// 									}
+// 									
+// 									
+// 									model->insertText( pos, text );
+// 								}
+// 							}
+// 						}
+// 						break;
 
 
 						case vkEnter : {
@@ -504,6 +504,9 @@ void TextControl::setReadOnly( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/04/05 23:44:22  jabelardo
+*a lot of fixes to compile on linux, it does not run but at least it compile
+*
 *Revision 1.6  2005/01/18 00:21:44  ddiego
 *merged in changes from dev for aromans text edit bug
 *
