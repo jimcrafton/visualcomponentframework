@@ -42,14 +42,31 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>&nbsp;</p>
-      <p>[</p>
-      <ul>
-        <li>Talks about the main features of the Object class</li>
-        <li>Discusses the main overridable functions&nbsp;</li>
-        <li>Explains when to derive from and why</li>
-      </ul>
-      <p>]</p>
+      <p>The VCF::Object is the base class for the whole VCF. It is designed to
+      provide a few simple, common functions, some of which need to be overriden
+      to be useful. It provides for copying an instance of an object (though
+      currently this remains largely un-implemented throughout the current
+      framework), getting a string representation, getting the Class instance
+      that represents the object's RTTI, and getting a hash value that
+      represents the object.&nbsp;</p>
+      <p>In addition the VCF::Object class overloads the <code>new</code> and <code>delete</code>
+      operators for memory diagnostics in debug builds. To help with this there
+      are static methods that can be used to dump the state of the allocation
+      list. Methods are also provided to turn this off programmatically at run
+      time if the programmer so chooses.</p>
+      <p>The VCF::Object class also has methods for reference counting built. In
+      addition it also has a slightly modified memory clean up scheme: users are
+      required to either use the release() method or free() method to clean up
+      memory, as opposed to just using operator delete directly. See the
+      detailed description section for more information about how and why to use
+      this.&nbsp;</p>
+      <p>As a rule of thumb, if you are developing classes that will interact
+      with the VCF classes, it is a good idea to at least derive from
+      VCF::Object, though in certain cases, for more advanced functionality you
+      may need to derive from other VCF classes. For example, if you want your
+      class to be able to easily handle event handlers, then deriving from
+      VCF::ObjectWithEvents is <b><i>strongly</i></b> recommended, as opposed to
+      directly deriving from VCF::Object.</p>
       <table border="0" width="100%">
         <tr>
           <td width="50%">
@@ -79,7 +96,7 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>&nbsp;</p>
+      <p>The&nbsp;</p>
       <hr>
       <table border="0" width="100%">
         <tr>
