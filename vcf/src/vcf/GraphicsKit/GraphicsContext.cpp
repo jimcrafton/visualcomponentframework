@@ -819,9 +819,16 @@ void GraphicsContext::execPathOperations()
 
 			case PointOperation::ptRoundRect :{
 
-				it += 2;
+				PointOperation& pt1 = *it;
+				it ++;
 
-				//remaingOps -= 2;
+				PointOperation& pt2 = *it;
+				it ++;
+				
+				PointOperation& pt3 = *it;
+				it ++;
+
+				contextPeer_->roundRect( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y );
 			}
 			break;
 
@@ -968,6 +975,9 @@ void GraphicsContext::flushDrawingArea()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/13 18:43:20  ddiego
+*fixed missing roundrect functionality, and incorrect value in vc70/71 projects
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
