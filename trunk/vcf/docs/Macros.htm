@@ -7,7 +7,7 @@
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
   <TITLE>Macros</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css"></HEAD>
@@ -18,12 +18,12 @@
    Macros</H1>
   <P>
    <!-- $MVD$:spaceretainer() -->&nbsp;</P>
-  <H6>
-   <SPAN STYLE="font-weight : bold;">Core Class macros</SPAN></H6>
+  <h4>
+   <SPAN STYLE="font-weight : bold;">Core Class macros</SPAN></h4>
   <P>
-   BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID )</P>
-  <P>
-   Use this to begin your class's RTTI definition. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
+   <code>
+   BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID )<br>
+   </code>Use this to begin your class's RTTI definition. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
    is the type of your class, the <SPAN STYLE="font-style : italic;">ClassName</SPAN> 
    is a String that will represent the name of you class in the 
    ClassRegistry. It is good practice to include the fully qualified 
@@ -36,59 +36,80 @@
    represents a <A HREF="JavaScript:hhctrl.TextPopup('A Universally Unique IDentifier that is guaranteed to be unique across computers. In COM this is known as GUID. Commonly used in distributed architectures like CORBA to identify objects or classes.','Arial,8',10,10,00000000,0xc0ffff)">UUID</A>.</P>
   <P>
    <!-- $MVD$:spaceretainer() -->&nbsp;</P>
-  <P>
+  <P><code>
    BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, 
-   classID )</P>
-  <P>
-   This is similar to the BEGIN_CLASSINFO macro, but allows for RTTI 
+   classID )<br>
+  </code>This is similar to the BEGIN_CLASSINFO macro, but allows for RTTI 
    information that supports abstract classes. Calls to the 
    ClassRegistry's newInstance() method will fail for classes of this type.</P>
-  <P>
-   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
-  <P>
-   END_CLASSINFO( ClassType )</P>
-  <P>
-   This ends the class's RTTI information entries. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
+  <P><code>END_CLASSINFO( ClassType )</code><br>
+  This ends the class's RTTI information entries. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
    must be the same type as used in the BEGIN_CLASSINFO or 
    BEGIN_ABSTRACT_CLASSINFO macro.</P>
+  <h4>
+   <SPAN STYLE="font-weight : bold;">Property RTTI macros</SPAN></h4>
+  <P><code>
+   PROPERTY( type, propName, getFunc, setFunc, propType )<br>
+  </code>Registers a read/write property for basic types ( int, long, bool,
+  char, short, double, float). The type argument is the primitive type, such as
+  an int or bool. The getFunc and setFunc arguments represent the corresponding
+  function pointers for getting and setting values of the property. The propType
+  argument identifies what the type of the property is to the VCF RTTI world.
+  Thus most primitives have corresponding types, such as a long corresponds to a
+  PROP_LONG, a char is a PROP_CHAR, and so forth.</P>
+  <P>Example:</P>
+  <PRE><font SIZE="2">	PROPERTY( double, &quot;left&quot;, Rect::getLeft, Rect::setLeft, PROP_DOUBLE )</font></PRE>
   <P>
-   <SPAN STYLE="font-weight : bold;">Property RTTI macros</SPAN></P>
+   <code>
+   READONLY_PROPERTY( type, propName, getFunc, propType )<br>
+   </code>This macros registers a read only property. It is identicial in usage
+   to the PROPERTY macro described above, except that the set&nbsp;</P>
   <P>
-   EVENT( 
-   eventClassName,eventMethodName,listenerClassName,adapterClassName )</P>
+   <code>
+   OBJECT_PROPERTY( type, propName, getFunc, setFunc )</code></P>
   <P>
-   PROPERTY( type, propName, getFunc, setFunc, propType )</P>
+   <code>
+   READONLY_OBJECT_PROPERTY( type, propName, getFunc )</code></P>
   <P>
-   READONLY_PROPERTY( type, propName, getFunc, propType )</P>
+   <code>
+   ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper)</code></P>
   <P>
-   OBJECT_PROPERTY( type, propName, getFunc, setFunc )</P>
-  <P>
-   READONLY_OBJECT_PROPERTY( type, propName, getFunc )</P>
-  <P>
-   ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper)</P>
-  <P>
+   <code>
    LABELED_ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper, 
-   count, enumNames)</P>
+   count, enumNames)</code></P>
   <P>
-   READONLY_ENUM_PROPERTY(type,propName,getFunc,lower, upper)</P>
+   <code>
+   READONLY_ENUM_PROPERTY(type,propName,getFunc,lower, upper)</code></P>
   <P>
+   <code>
    READONLY_LABELED_ENUM_PROPERTY(type,propName,getFunc,lower, upper, 
-   count, enumNames)</P>
+   count, enumNames)</code></P>
   <P>
-   COLLECTION_PROPERTY( type,propName,getFunc, propType )</P>
+   <code>
+   COLLECTION_PROPERTY( type,propName,getFunc, propType )</code></P>
   <P>
+   <code>
    OBJECT_COLLECTION_PROPERTY( type,propName,getFunc, addFunc, 
-   insertFunc, deleteFunc1, deleteFunc2 )</P>
-  <H6>
-   <SPAN STYLE="font-weight : bold;">Method RTTI macros</SPAN></H6>
+   insertFunc, deleteFunc1, deleteFunc2 )</code></P>
+  <h4>
+   <SPAN STYLE="font-weight : bold;">Method RTTI macros</SPAN></h4>
   <P>
-   METHOD_VOID( methodName, classType, methType, methodPtr )</P>
+   <code>
+   METHOD_VOID( methodName, classType, methType, methodPtr )</code></P>
   <P>
+   <code>
    METHOD_1VOID( methodName, classType, methType, argType, methodPtr, 
-   argTypeDesc )</P>
+   argTypeDesc )</code></P>
   <P>
+   <code>
    METHOD_2VOID( methodName, classType, methType, argType1, argType2, 
-   methodPtr, argTypeDesc )</P>
+   methodPtr, argTypeDesc )</code></P>
+  <P>
+   <code>
+   EVENT( 
+   eventClassName,eventMethodName,listenerClassName,adapterClassName )</code></P>
+  <P>
+   &nbsp;</P>
   <P>
    <!-- $MVD$:spaceretainer() -->&nbsp;
  <OBJECT
