@@ -306,7 +306,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 	Scrollable* scrollable = this->getScrollable();
 
 	Rect bounds = getClientBounds();
-	//ctx->setClippingRect( &bounds );
+	ctx->setClippingRect( &ctx->getViewableBounds() );
 
 	double width = bounds.getWidth();
 	double scrollW = 0;
@@ -679,6 +679,9 @@ void ListBoxControl::setTextBounded( const bool& istextbounded ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/08/20 23:59:16  ddiego
+*minor fix to listboxcontrol
+*
 *Revision 1.3  2004/08/19 02:24:54  ddiego
 *fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 *

@@ -62,6 +62,8 @@ public:
 	virtual void paint( GraphicsContext* ctx ) {
 		Window::paint(ctx);
 
+		ctx->setClippingRect( &ctx->getViewableBounds() );
+
 		Rect r = getClientBounds();
 
 		r.inflate( -5, -5 );
@@ -160,6 +162,9 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2004/08/20 23:59:16  ddiego
+*minor fix to listboxcontrol
+*
 *Revision 1.4  2004/08/07 02:47:29  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
