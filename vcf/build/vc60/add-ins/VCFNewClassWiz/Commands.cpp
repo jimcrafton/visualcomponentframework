@@ -48,21 +48,20 @@ STDMETHODIMP CCommands::NewVCFClass()
 			CFile file( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
 			file.Write( s.GetBuffer(0), s.GetLength() );
 			
-			filename = dlg.m_CPPName;
-			s = dlg.GetClassImpl();
-			CFile file2( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
-			file2.Write( s.GetBuffer(0), s.GetLength() );
-			
-			
-			
-			
+			if ( FALSE == dlg.m_isClassAnInterface ) {
+				filename = dlg.m_CPPName;
+				s = dlg.GetClassImpl();
+				CFile file2( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+				file2.Write( s.GetBuffer(0), s.GetLength() );
+			}
 			
 			CComBSTR cppFile;
-			cppFile = tmp1;
+			cppFile = dlg.m_CPPName;
 			_variant_t reserved;
-			proj->AddFile( cppFile, reserved );
-			
-			CComBSTR headerFile = tmp2;
+			if ( FALSE == dlg.m_isClassAnInterface ) {
+				proj->AddFile( cppFile, reserved );
+			}
+			CComBSTR headerFile = dlg.m_headerName;
 			
 			proj->AddFile( headerFile, reserved );			
 			

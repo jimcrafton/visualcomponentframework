@@ -40,6 +40,9 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 		if (!AfxInitExtensionModule(VCFNewClassWizDLL, hInstance))
 			return 0;
 
+		if ( !AfxInitRichEdit() )
+			return 0;
+
 		new CDynLinkLibrary(VCFNewClassWizDLL);
 
      _Module.Init(ObjectMap, hInstance, &LIBID_VCFNEWCLASSWIZLib);

@@ -252,6 +252,10 @@ SOURCE=..\..\..\include\io\MemStreamUtils.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Method.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\NoFreeMemException.h
 # End Source File
 # Begin Source File
@@ -277,6 +281,10 @@ SOURCE=..\..\..\include\io\Persistable.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Point.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\ProcessPeer.h
 # End Source File
 # Begin Source File
 
@@ -328,6 +336,10 @@ SOURCE=..\..\..\include\utils\StringUtils.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\SystemToolkit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\TextInputStream.h
 # End Source File
 # Begin Source File
@@ -364,6 +376,10 @@ SOURCE=..\..\..\include\core\VCFMath.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\VCFProcess.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\VCFString.h
 # End Source File
 # Begin Source File
@@ -377,6 +393,10 @@ SOURCE=..\..\..\include\implementerKit\Win32FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
 
@@ -483,6 +503,10 @@ SOURCE=..\..\..\src\Utils\StringUtils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\utils\SystemToolkit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\TextInputStream.cpp
 # End Source File
 # Begin Source File
@@ -503,6 +527,10 @@ SOURCE=..\..\..\src\core\VCFMath.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\VCFProcess.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32FilePeer.cpp
 # End Source File
 # Begin Source File
@@ -516,6 +544,10 @@ SOURCE=..\..\..\src\implementerkit\Win32LibraryPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32ProcessPeer.cpp
 # End Source File
 # Begin Source File
 

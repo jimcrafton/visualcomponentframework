@@ -38,6 +38,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(NewClassDlg)
 	enum { IDD = IDD_NEWCLASSDLG };
+	CComboBox	m_nameSpace;
 	CEdit	m_cppEdit;
 	CEdit	m_headerEdit;
 	CListCtrl	m_propList;
@@ -48,6 +49,9 @@ public:
 	CString	m_headerName;
 	BOOL	m_supportsRTTI;
 	BOOL	m_abstractClass;
+	BOOL	m_useNameSpace;
+	CString	m_nameSpaceText;
+	BOOL	m_isClassAnInterface;
 	//}}AFX_DATA
 
 
@@ -76,6 +80,10 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnUpdatePropspopupEdit(CCmdUI* pCmdUI);
 	afx_msg void OnUpdatePropspopupRemove(CCmdUI* pCmdUI);
+	afx_msg void OnEditPreHdr();
+	afx_msg void OnEditPostHdr();
+	afx_msg void OnUseNamespace();
+	afx_msg void OnInterfaceClass();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
@@ -83,6 +91,9 @@ private:
 	CString m_classImpl;
 	CString m_headerDir;
 	CString m_cppDir;	
+	CString m_preHdrText;
+	CString m_postHdrText;
+
 	void fillInPropInfo();
 	void fillInPropMethods();
 	void fillInPropMethodsImpl();

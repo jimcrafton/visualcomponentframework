@@ -24,8 +24,8 @@ CFG=VCFNewClassWiz - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_ProjName "VCFNewClassWiz"
+# PROP Scc_LocalPath "."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -128,6 +128,14 @@ SOURCE=.\NewClassDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PostHeaderDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PreHeaderDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PropertyInfoDlg.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +175,14 @@ SOURCE=.\Commands.h
 # Begin Source File
 
 SOURCE=.\NewClassDlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PostHeaderDlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PreHeaderDlg.h
 # End Source File
 # Begin Source File
 
