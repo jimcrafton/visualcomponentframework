@@ -28,30 +28,30 @@ Win32FontHandle::Win32FontHandle( HFONT font )
 {
 
 
-	this->refCount_ = 0;
-	this->fontHandle_ = NULL;
-	this->fontHandle_ = font;
-	this->incRef();
+	refCount_ = 0;
+	fontHandle_ = NULL;
+	fontHandle_ = font;
+	incRef();
 }
 
 Win32FontHandle::~Win32FontHandle()
 {
-	if ( this->fontHandle_ != NULL ){
-		DeleteObject( this->fontHandle_ );
+	if ( fontHandle_ != NULL ){
+		DeleteObject( fontHandle_ );
 	}
 }
 
 void Win32FontHandle::incRef()
 {
-	this->refCount_ ++;
+	refCount_ ++;
 }
 
 void Win32FontHandle::decRef()
 {
 	if ( refCount_ > 0 ){
-		this->refCount_ --;
-		if ( (this->refCount_ == 0) && (this->fontHandle_ != NULL) ){
-			DeleteObject( this->fontHandle_ );
+		refCount_ --;
+		if ( (refCount_ == 0) && (fontHandle_ != NULL) ){
+			DeleteObject( fontHandle_ );
 			fontHandle_ = NULL;
 		}
 	}
@@ -59,7 +59,7 @@ void Win32FontHandle::decRef()
 
 HFONT Win32FontHandle::getFontHandle()
 {
-	return this->fontHandle_;
+	return fontHandle_;
 }
 
 bool Win32FontHandle::isRefCountZero()
@@ -105,7 +105,7 @@ void Win32FontManager::addFont( Win32Font* font )
 	String fontID = makeStringID( font );
 	if ( fontID.size() > 0 ){
 
-		std::map<String,Win32FontHandle*>::iterator found = this->fontMap_.find( fontID );
+		std::map<String,Win32FontHandle*>::iterator found = fontMap_.find( fontID );
 		if ( found != fontMap_.end() ){
 			Win32FontHandle* win32FontHandle = found->second;
 			win32FontHandle->incRef();
@@ -122,7 +122,7 @@ void Win32FontManager::addFont( Win32Font* font )
 			else {
 				fontHandle = CreateFontIndirectA( (LOGFONTA*)font->getFontHandleID() );
 			}
-
+			
 
 			if ( NULL != fontHandle ){
 				fontMap_[fontID] = new Win32FontHandle( fontHandle );
@@ -138,10 +138,10 @@ String Win32FontManager::makeStringID(  Win32Font* font )
 		result = StringUtils::format( "%s%d%s%s%s%s",
 										font->getName().c_str(),
 										(int)font->getPixelSize(),
-										font->getBold() ? "true" : "false",
-										font->getUnderlined() ? "true" : "false",
-										font->getStrikeOut() ? "true" : "false",
-										font->getItalic() ? "true" : "false" );
+										font->getBold() ? L"true" : L"false",
+										font->getUnderlined() ? L"true" : L"false",
+										font->getStrikeOut() ? L"true" : L"false",
+										font->getItalic() ? L"true" : L"false" );
 
 	}
 	return result;
@@ -198,6 +198,7 @@ void Win32FontManager::removeFont( Win32Font* font )
 			fontHandle->decRef();
 
 			if ( true == fontHandle->isRefCountZero() ){
+				
 				delete fontHandle;
 				fontHandle = NULL;
 				Win32FontManager::win32FontMgr->fontMap_.erase( found );
@@ -210,6 +211,11 @@ void Win32FontManager::removeFont( Win32Font* font )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

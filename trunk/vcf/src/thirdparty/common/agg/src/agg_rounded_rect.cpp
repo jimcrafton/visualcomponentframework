@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -18,7 +18,7 @@
 //----------------------------------------------------------------------------
 
 #include <math.h>
-#include "thirdparty/common/agg/include/agg_rounded_rect.h"
+#include "agg_rounded_rect.h"
 
 
 namespace agg
@@ -27,8 +27,7 @@ namespace agg
     rounded_rect::rounded_rect(double x1, double y1, double x2, double y2, double r) :
         m_x1(x1), m_y1(y1), m_x2(x2), m_y2(y2),
         m_rx1(r), m_ry1(r), m_rx2(r), m_ry2(r), 
-        m_rx3(r), m_ry3(r), m_rx4(r), m_ry4(r),
-        m_scale(1.0)
+        m_rx3(r), m_ry3(r), m_rx4(r), m_ry4(r)
     {
         if(x1 > x2) { m_x1 = x2; m_x2 = x1; }
         if(y1 > y2) { m_y1 = y2; m_y2 = y1; }
@@ -109,7 +108,6 @@ namespace agg
         switch(m_status)
         {
         case 0:
-            m_arc.approximation_scale(m_scale);
             m_arc.init(m_x1 + m_rx1, m_y1 + m_ry1, m_rx1, m_ry1,
                        pi, pi+pi*0.5);
             m_arc.rewind(0);
@@ -118,10 +116,9 @@ namespace agg
         case 1:
             cmd = m_arc.vertex(x, y);
             if(is_stop(cmd)) m_status++;
-            else return cmd | path_flags_close;
+            else return cmd;
 
         case 2:
-            m_arc.approximation_scale(m_scale);
             m_arc.init(m_x2 - m_rx2, m_y1 + m_ry2, m_rx2, m_ry2,
                        pi+pi*0.5, 0.0);
             m_arc.rewind(0);
@@ -133,7 +130,6 @@ namespace agg
             else return path_cmd_line_to;
 
         case 4:
-            m_arc.approximation_scale(m_scale);
             m_arc.init(m_x2 - m_rx3, m_y2 - m_ry3, m_rx3, m_ry3,
                        0.0, pi*0.5);
             m_arc.rewind(0);
@@ -145,7 +141,6 @@ namespace agg
             else return path_cmd_line_to;
 
         case 6:
-            m_arc.approximation_scale(m_scale);
             m_arc.init(m_x1 + m_rx4, m_y2 - m_ry4, m_rx4, m_ry4,
                        pi*0.5, pi);
             m_arc.rewind(0);
@@ -155,6 +150,11 @@ namespace agg
             cmd = m_arc.vertex(x, y);
             if(is_stop(cmd)) m_status++;
             else return path_cmd_line_to;
+
+        case 8:
+            cmd = path_cmd_end_poly | path_flags_close | path_flags_ccw;
+            m_status++;
+            break;
         }
         return cmd;
     }

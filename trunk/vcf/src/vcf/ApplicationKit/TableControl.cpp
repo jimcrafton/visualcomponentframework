@@ -44,7 +44,7 @@ TableControl::TableControl( TableModel* model ):
 {
 	setContainerDelegate( this );
 
-	setViewModel( model );
+	setViewModel( dynamic_cast<Model*>(model) );
 
 	init();
 }
@@ -83,7 +83,7 @@ void TableControl::paint( GraphicsContext * context )
 		context->setViewableBounds( oldViewBounds );
 	}
 
-	TableModel* tm = (TableModel*) getViewModel();
+	TableModel* tm = this->getTableModel();
 	ulong32 rowCount = tm->getRowCount();
 	ulong32 columnCount = tm->getColumnCount();
 
@@ -288,7 +288,7 @@ void TableControl::paint( GraphicsContext * context )
 						rect.left_ = rect.right_+1;
 						rect.right_ = rect.left_ + colWidth-1;
 
-						StringUtils::traceWithArgs( "Cliprect: %s\n", clipRect.toString().c_str() );
+						//StringUtils::traceWithArgs( "Cliprect: %s\n", clipRect.toString().c_str() );
 
 						if (rect.left_ > clipRect.right_ ) {
 							break;        // gone past cliprect
@@ -398,7 +398,8 @@ void TableControl::init()
 
 	ModelEventHandler<TableControl>* modelHandler =
 		new ModelEventHandler<TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
-	model->addModelHandler( modelHandler );
+
+	getViewModel()->addModelHandler( modelHandler );
 
 	KeyboardEventHandler<TableControl>* kh =
 		new KeyboardEventHandler<TableControl>( this, &TableControl::onEditingControlKeyPressed, TABLECONTROL_KBRD_HANDLER );
@@ -458,9 +459,12 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 	//selectedCellItem_ = NULL;
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	EventHandler* itemHandler = getEventHandler(TABLECELL_HANDLER);
+	if ( NULL == itemHandler ) {
+		//itemHandler = new 
+	}
 	switch ( event->getType() ){
 		case COLUMNS_DELETED:{
 
@@ -482,7 +486,9 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 					Item* item = tm->getItem( row, col );
 					if ( NULL != item ){
-						item->addItemSelectedHandler( itemHandler );
+						if ( NULL != itemHandler ) {
+							item->addItemSelectedHandler( itemHandler );
+						}
 						item->setControl( this );
 					}
 				}
@@ -508,9 +514,11 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 					Item* item = tm->getItem( row, col );
 					if ( NULL != item ){
-						item->addItemSelectedHandler( itemHandler );
+						if ( NULL != itemHandler ) {
+							item->addItemSelectedHandler( itemHandler );
+						}
+						item->setControl( this );
 					}
-					item->setControl( this );
 				}
 			}
 
@@ -557,12 +565,12 @@ void TableControl::setDefaultColumnWidth( const uint32& defaultColumnWidth )
 
 TableModel* TableControl::getTableModel()
 {
-	return (TableModel*)getViewModel();
+	return dynamic_cast<TableModel*>(getViewModel());
 }
 
 void TableControl::setTableModel( TableModel* model )
 {
-	setViewModel( model );
+	setViewModel( dynamic_cast<Model*>(model) );
 }
 
 void TableControl::setColumnCount( const uint32& colCount )
@@ -602,7 +610,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 	finishEditing();
 
 	if ( event->hasLeftButton() ) {
-		TableModel* tm = (TableModel*)getViewModel();
+		TableModel* tm = getTableModel();
 
 
 		leftClickPoint_ = *event->getPoint();
@@ -960,7 +968,7 @@ Rect TableControl::getBoundsForItem( TableCellItem* item )
 {
 	Rect result;
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 	CellID cell = tm->getCellIDForItem( item );
 	for ( int row=0;row<cell.row;row++ ) {
 		result.bottom_ += rowHeights_[row];
@@ -1046,7 +1054,7 @@ void TableControl::mouseMove( MouseEvent* event ){
 
 					doSelection( currentCell );
 
-					TableModel* tm = (TableModel*) getViewModel();
+					TableModel* tm = getTableModel();
 
 					if ( (currentCell.column >= tm->getFixedColumnsCount() &&
 						currentCell.row >= tm->getFixedRowsCount()) ) {
@@ -1249,7 +1257,7 @@ void TableControl::mouseDblClick(  MouseEvent* event )
         repaint();
 	}
 	else if ( this->mouseState_ == TableControl::msNone ) {
-        TableModel* tm = (TableModel*)getViewModel();
+        TableModel* tm = getTableModel();
 
 		Point pointClickedRel = getClickedPoint( cell, pt );
 
@@ -1277,7 +1285,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 	if ( !cell.isValid() ) {
 		return;
 	}
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	if ( cell.row < tm->getFixedRowsCount() ||
 		cell.column < tm->getFixedColumnsCount() ) {
@@ -1502,7 +1510,7 @@ double TableControl::getColumnWidth( uint32 col )
 double TableControl::getFixedColumnWidth()
 {
 	double result = 0.0;
-	TableModel* tm = (TableModel*) getViewModel();
+	TableModel* tm = getTableModel();
 
 	for ( int i=0;i<tm->getFixedColumnsCount();i++ ) {
 		result += columnWidths_[i];
@@ -1513,7 +1521,7 @@ double TableControl::getFixedColumnWidth()
 double TableControl::getFixedRowHeight()
 {
 	double result = 0.0;
-	TableModel* tm = (TableModel*) getViewModel();
+	TableModel* tm = getTableModel();
 
 	for ( int i=0;i<tm->getFixedRowsCount();i++ ) {
 		result += rowHeights_[i];
@@ -1526,7 +1534,7 @@ CellID TableControl::getCellIDFromPoint( const Point& pt, bool allowFixedCellChe
 {
 	CellID result ;
 
-	TableModel* tm = (TableModel*) getViewModel();
+	TableModel* tm = getTableModel();
 
     CellID topLeft = getTopLeftNonFixedCell();
 
@@ -1618,7 +1626,7 @@ CellID TableControl::getCellIDFromPoint( const Point& pt, bool allowFixedCellChe
 
 TableCellItem* TableControl::getItem( const CellID& cell )
 {
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	TableCellItem* result = NULL;
 
@@ -1638,7 +1646,7 @@ CellID TableControl::setFocusedCell( const CellID& cell )
 
 	CellID prevCell = currentCell_;
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 	if ( (cell.row != -1) && (cell.row < tm->getFixedRowsCount()) ) {
 		result.row = tm->getFixedRowsCount();
 	}
@@ -1721,7 +1729,7 @@ bool TableControl::getCellOrigin( const CellID& cell, Point& pt )
 	CellID topLeft(0,0);
 
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 	uint32 fixedCols = tm->getFixedColumnsCount();
 	uint32 fixedRows = tm->getFixedRowsCount();
 
@@ -1796,7 +1804,7 @@ CellID TableControl::getTopLeftNonFixedCell( const bool& recalc )
 		hscrollPos = scrollable->getHorizontalPosition();
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	topLeftCell_.column = tm->getFixedColumnsCount();
 
@@ -1820,7 +1828,7 @@ CellID TableControl::getTopLeftNonFixedCell( const bool& recalc )
 
 CellRange TableControl::getVisibleNonFixedCellRange( Rect* rect, bool forceRecalculation )
 {
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	Rect clientBounds = getClientBounds();
 
@@ -1889,7 +1897,7 @@ void TableControl::clearSelectionRange()
 {
 	previouslySelectedCellMap_.clear();
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 	tm->clearSelection();
 }
 
@@ -1928,7 +1936,7 @@ void TableControl::selectAllCells()
         return;
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 	tm->setSelectedRange( true, tm->getFixedRowsCount(),
 							tm->getFixedColumnsCount(),
 							tm->getRowCount()-1,
@@ -1942,7 +1950,7 @@ void TableControl::selectColumns( CellID currentCell, bool forceRedraw, bool sel
         return;
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
     //if (currentCell.col == m_idCurrentCell.col) return;
     if ( currentCell.column < tm->getFixedColumnsCount() ) {
@@ -1978,7 +1986,7 @@ void TableControl::selectRows( CellID currentCell, bool forceRedraw, bool select
         return;
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
     if ( currentCell.row < tm->getFixedRowsCount() ) {
         return;
@@ -2010,7 +2018,7 @@ void TableControl::selectCells( CellID currentCell, bool forceRedraw, bool selec
         return;
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 
     int row = currentCell.row;
@@ -2053,7 +2061,7 @@ void TableControl::fixedRowClicked( CellID cell )
     }
 	*/
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	// Did the user click on a fixed column cell (so the cell was within the overlap of
 	// fixed row and column cells) - (fix by David Pritchard)
@@ -2075,7 +2083,7 @@ void TableControl::fixedColumnClicked( CellID cell )
         return;
 	}
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	// Did the user click on a fixed column cell (so the cell was within the overlap of
 	// fixed row and column cells) - (fix by David Pritchard)
@@ -2163,7 +2171,7 @@ void TableControl::onHorizontalScrolling( Event* e )
 bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=asoDefault*/,
 									bool resetScroll/*=true*/ )
 {
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	VCF_ASSERT( column >= 0 && column < tm->getColumnCount() );
 
@@ -2214,7 +2222,7 @@ bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=as
 
 bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
 {
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
     VCF_ASSERT(row >= 0 && row < tm->getRowCount() );
     if (row < 0 || row >= tm->getRowCount()) {
@@ -2256,7 +2264,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 {
 	CustomControl::keyDown( e );
 
-	TableModel* tm = (TableModel*)getViewModel();
+	TableModel* tm = getTableModel();
 
 	switch( e->getVirtualCode() ) {
 		case vkReturn : {
@@ -2312,6 +2320,25 @@ void TableControl::keyDown( KeyboardEvent* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.1  2004/08/31 04:12:12  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -27,9 +27,76 @@ class WindowPeer;
 #define DIALOG_CLASSID		"ED88C09A-26AB-11d4-B539-00C04F0196DA"
 
 
+class DialogEvent : public Event {
+public:
+	DialogEvent( Object* source, const ulong32& eventType ) : Event(source,eventType),
+		returnValue_(UIToolkit::mrNone){
+	
+	}
+	
+	DialogEvent( const DialogEvent& rhs ):Event(rhs) {		
+		*this = rhs;
+	}
+	
+	DialogEvent& operator=( const DialogEvent& rhs ) {
+		Event::operator =( rhs );
+
+		returnValue_ = rhs.returnValue_;
+		
+		return *this;
+	}
+	
+	virtual Object* clone( bool deep=false ) {
+		return new DialogEvent(*this);
+	}
+	
+	UIToolkit::ModalReturnType getModalResult() const {
+		return returnValue_;
+	}
+	
+	void setModalResult( UIToolkit::ModalReturnType val ) {
+		returnValue_ = val;
+	}
+	
+	
+protected:
+	
+	UIToolkit::ModalReturnType returnValue_;
+};
 
 /**
- * A frame with a close button, and optionally a help and system button as well. The caption is the standard height.
+\par
+A Dialog is a popup frame that is generally used for user input. 
+
+\par
+A Dialog has a special state variable that tells what the "mode"
+of the dialog is. This mode is determined not by how the dialog is 
+\em created but rather by how the dialog is displayed which is 
+done by calling either Dialog:show(), Dialog::showModal(), or 
+Dialog::showSheetModal(). Each of these sets the dialog's modal
+state to either modeless, modal, or sheet modal. A modeless dialog 
+is visible till the user closes the dialog, but it doesn't prevent
+the use from changing focus back to the orginal window that launched
+the dialog. A modal, or application modal, dialog, disables everything
+else, and enters into a modal event loop that does not end till the
+dialog is closed. Nothing else can be accomplished in the UI till the 
+dialog is closed. A sheet modal dialog is used to attach a dialog to 
+a specific window, and while the dialog is visible the window that launched
+(also known as the \em owner window) the dialog is disabled, but all other 
+UI activity can still take place. When the sheet modal dialog is closed the
+owner window is enabled again for UI input. 
+
+\par
+Think of a sheet modal dialog
+as a middle ground between modeless and application modal.
+
+\par
+A dialog's UI is normally a frame with a close button, and optionally a help and system 
+button as well. The caption is the standard height.
+
+@delegates
+	@del Dialog::SheetModalFinished
+	@del Dialog::ModalFinished
  */
 class APPLICATIONKIT_API Dialog : public Frame {
 public:
@@ -50,6 +117,36 @@ public:
 		mbRetryCancel = 32,
 		mbAbortRetryIgnore = 64
 	};
+	
+	enum DialogEvents {
+		deSheetModalFinished = CONTROL_EVENTS_LAST + 1241,
+		deModalFinished
+	};
+	
+	enum ModalState {
+		msNonModal	= 0,
+		msAppModal = 1,
+		msSheetModal = 2
+	};
+	
+	/**
+	@delegate SheetModalFinished this delegate is used to fire events when the dialog displayed
+	by calling showSheetModal is closed. The DialogEvent will contain the value of the 
+	modal result from closing the dialog.
+	@event DialogEvent
+	@eventtype Dialog::deSheetModalFinished
+	*/	
+	DELEGATE( SheetModalFinished );
+	
+	/**
+	@delegate ModalFinished This delegate is called to fire an event when the dialog 
+	is closed after being displayed by a call to showModal. The DialogEvent will contain 
+	the value of the modal result from closing the dialog.
+	@event DialogEvent
+	@eventtype Dialog::deModalFinished
+	*/	
+	DELEGATE( ModalFinished );
+	
 
 	Dialog( Control* owner=NULL );
 
@@ -68,7 +165,33 @@ public:
 
 	virtual void setClientBounds( Rect* bounds );
 
+	/**
+	This displays the dialog and enters into an application
+	modal state. This function will \em not return till the 
+	modal event loop is finished. The event loop can be finished
+	by the user clicking on the close button of the dialog (if
+	present), or by clicking on one of the button present on 
+	the dialog's UI. Alternately the user may hit the "Esc"
+	key and this will also close the dialog and quit the 
+	modal event loop. The same can be achieved programmatically
+	by calling the dialog's close() method.
+	*/
 	virtual UIToolkit::ModalReturnType showModal();
+
+	/**
+	This function returns once the dialog is displayed, but is considered
+	"modal" for the window that owns it. If this is called and no owner window
+	has been specified for the dialog, then an exception is thrown.
+	The idea is to have a dialog that is part or related to the functionality of a 
+	specific window (probabably a document window). Unlike showModal() which puts the
+	entire application into a modal state and does not return till the modal event
+	loop is finished, showSheetModal() returns. To get the "modal" result, you should
+	add a custom event handler to the SheetModalFinished delegate. When the dialog
+	is closed the SheetModalFinished delegate will fire an event that contains the modal
+	result value.
+	@see DialogEvent
+	*/
+	virtual void showSheetModal();
 
 	virtual void show();
 
@@ -110,7 +233,11 @@ public:
 	it returns false, indicating non-modal behaviour.
 	*/
 	bool isModal() {
-		return modal_;
+		return modal_ == msAppModal;
+	}
+	
+	bool isSheetModal() {
+		return modal_ == msSheetModal;
 	}
 
 	virtual void keyDown( KeyboardEvent* e );
@@ -120,7 +247,12 @@ protected:
 	Control* owner_;
 	Control* previousFocusedControl_;
 	UIToolkit::ModalReturnType returnValue_;
-	bool modal_;
+	ModalState modal_;
+
+	void onDialogClose( Event* event );
+	void onPostClose( Event* e );
+	
+	void showWithModalState( ModalState state );
 
 	virtual ~Dialog();
 };
@@ -131,6 +263,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/28 03:34:16  ddiego
+*more dialog updates for osx
+*
+*Revision 1.2.2.1  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

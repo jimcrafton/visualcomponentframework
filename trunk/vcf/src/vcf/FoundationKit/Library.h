@@ -33,10 +33,19 @@ public:
 	virtual ~Library();
 
 	/**
-	*dynamically loads the DLL/SO specified by the libraryFilename
-	*argument
-	*@param String the fully qualified file name of the DLL or SO to
-	*load
+	\par
+	Dynamically loads the DLL/SO specified by the libraryFilename argument.
+	\par
+	The default behaviour is to just load the library, assuming the libraryFilename is a
+	path to the library. However, we are now going to get a tad fancier!
+	If the libraryFilename is a directory, then we will try and locate the 
+	Info.plist/Info.xml file, read it, and, based on the info we get, 
+	attempt to use this to open the library inside.
+	@param String the fully qualified file name of the DLL or SO to
+	load, or a directory that includes a Info.plist/Info.xml file in it
+	identifying the library's ProgramInfo.
+	@see System::getProgramInfoFromFileName()
+	@see ProgramInfo
 	*/
 	void load( const String& libraryFilename );
 
@@ -77,6 +86,14 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3.2.1  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

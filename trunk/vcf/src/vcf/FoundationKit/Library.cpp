@@ -13,7 +13,8 @@ using namespace VCF;
 
 Library::Library( const String& libraryName, const bool& autoUnloadLib )
 {
-	currentLibName_ = libraryName;
+	currentLibName_ = libraryName;	
+
 	autoUnloadLib_ = autoUnloadLib;
 	init();
 }
@@ -52,12 +53,41 @@ void Library::init()
 
 void Library::load( const String& libraryFilename )
 {
-	libPeer_->load( libraryFilename );
-	currentLibName_ = libraryFilename;
+	String fullLibraryName = libraryFilename;
+
+	{
+		File libFile(libraryFilename);
+		if ( libFile.isDirectory() ) {
+			ProgramInfo* info = System::getProgramInfoFromFileName( libraryFilename );
+			if ( NULL != info ) {
+
+				fullLibraryName = info->getProgramFileName();				
+
+				info->free();
+			}
+			else {
+				fullLibraryName = "";
+			}
+
+			if ( fullLibraryName.empty() ) {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name. Points to a directory with no program/library information available.") );
+			}
+		}
+	}	
+
+
+	libPeer_->load( fullLibraryName );
+	currentLibName_ = fullLibraryName;
 
 	typedef void (*initFunc)(void);
 
-	initFunc _init = (initFunc) getFunction("_vpl_init");
+	initFunc _init = NULL;
+	try {
+		_init = (initFunc) getFunction( L"_vpl_init" );
+	}
+	catch ( BasicException& e ) {
+		System::errorPrint( &e );
+	}
 	if ( NULL != _init ) {
 		_init();
 	}
@@ -74,7 +104,15 @@ void Library::unload()
 {
 	typedef void (*terminateFunc)(void);
 
-	terminateFunc _terminate = (terminateFunc) getFunction("_vpl_terminate");
+	terminateFunc _terminate = NULL;
+
+	try {
+		_terminate = (terminateFunc) getFunction("_vpl_terminate");
+	}
+	catch  ( BasicException& e ) {
+		System::errorPrint( &e );
+	}
+
 	if ( NULL != _terminate ) {
 
 		_terminate();
@@ -98,6 +136,20 @@ void* Library::getFunction( const String& functionName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.2.2.2  2004/09/15 04:41:23  ddiego
+*made some minor changes to the SharedLibraries example, and the init and term code of the Library class.
+*
+*Revision 1.2.2.1  2004/08/27 19:55:44  marcelloptr
+*Color changes
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -97,14 +97,15 @@ bool Win32Registry::setValue( const String& value, const String& valuename )
 
 	LONG resVal = 0;
 
+	const unsigned char* val = NULL;
 	if ( System::isUnicodeEnabled() ) {
-		const unsigned char* val = (const unsigned char*)value.c_str();
-		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_DWORD, (BYTE*)&value, sizeof(VCFChar)*value.size() );
+		val = (const unsigned char*)value.c_str();
+		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_SZ, (BYTE*)val, sizeof(VCF::WideChar)*(value.size()+1) );
 	}
 	else {
 		AnsiString tmp = value;
-		const unsigned char* val = (const unsigned char*)tmp.c_str();
-		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_DWORD, (BYTE*)&val, tmp.size() );
+		val = (const unsigned char*)tmp.c_str();
+		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_SZ, (BYTE*)val, tmp.size()+1 );
 	}
 
 	return (resVal == ERROR_SUCCESS);
@@ -141,10 +142,10 @@ bool Win32Registry::setValue( void* dataBuffer, const uint32& dataBufferSize, co
 {
 	LONG resVal = 0;
 	if ( System::isUnicodeEnabled() ) {
-		RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
+		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
 	}
 	else {
-		RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
+		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
 	}
 	return (resVal == ERROR_SUCCESS);
 }
@@ -382,6 +383,17 @@ String Win32Registry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/15 17:49:14  ddiego
+*fixed win32 registry and a bug in the handling of the WM_CLOSE message that was introduced by the change in event handler signature last weekend.
+*
+*Revision 1.2.2.1  2004/09/15 03:08:40  ddiego
+*fixed win32 registry bug that was incorrectly writing out string values.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

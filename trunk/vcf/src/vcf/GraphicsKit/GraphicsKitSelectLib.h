@@ -48,36 +48,55 @@ where you installed the VCF.
 # endif
 
 
-//link to libAgg automatically here
-#	ifdef _DEBUG
-#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_sd.lib")
-#	else
-#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_s.lib")
-#	endif
+/**
+All of this is here so that if we use this kit in our programs, all we
+have to do is pull in this one file (OpenGLKit.h) and we'll automatically
+link to the correct library! This does mean that our app that uses this
+kit needs to have either "USE_OPENGLKIT_DLL" defined or "USE_OPENGLKIT_LIB"
+defined to use the DLL or static libraries.
+*/
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+
+	//link to libAgg automatically here
+	#	ifdef _DEBUG
+	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_sd.lib")
+	#	else
+	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_s.lib")
+	#	endif
 
 
-#ifdef USE_GRAPHICSKIT_DLL
-//	using dynamic link library
-#	ifdef _DEBUG
-#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_d.lib")
-#	else
-#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM".lib")
-#	endif
-#elif defined USE_GRAPHICSKIT_LIB
-//	using statically linked library
-#	ifdef _DEBUG
-#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_sd.lib")
-#	else
-#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_s.lib")
-#	endif
-#else
-//	creating the static or dynamic link library
-#endif // GRAPHICSKIT_LIB
+	#ifdef USE_GRAPHICSKIT_DLL
+	//	using dynamic link library
+	#	ifdef _DEBUG
+	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_d.lib")
+	#	else
+	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM".lib")
+	#	endif
+	#elif defined USE_GRAPHICSKIT_LIB
+	//	using statically linked library
+	#	ifdef _DEBUG
+	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_sd.lib")
+	#	else
+	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_s.lib")
+	#	endif
+	#else
+	//	creating the static or dynamic link library
+	#endif // GRAPHICSKIT_LIB
+
+#endif //_MSC_VER
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/01 18:17:02  marcelloptr
+*minor change on automatic lib selection
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

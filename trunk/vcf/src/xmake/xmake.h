@@ -41,6 +41,9 @@ Altered by Jim Crafton, Feb,8,2002
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #		endif
+#   ifdef __BORLANDC__
+#   define _LIB_CPLVERNUM "bcc"
+#   endif
 # endif
 
 
@@ -51,7 +54,7 @@ Altered by Jim Crafton, Feb,8,2002
 #	else
 #		pragma comment(lib, "libXmake_"_LIB_CPLVERNUM".lib")
 #	endif
-#elif USE_LIBXMAKE_LIB
+#elif defined USE_LIBXMAKE_LIB
 //	using statically linked library
 #	ifdef _DEBUG
 #		pragma comment(lib, "libXmake_"_LIB_CPLVERNUM"_sd.lib")
@@ -124,6 +127,10 @@ class XMLNode;
 /**
 *XMLMake is a just a class witha bunch of functions to keep thigns grouped together
 */
+#if defined (__BORLANDC__)
+#undef MAXPATH
+#endif
+
 class XMLMake {
 public:
 
@@ -133,8 +140,8 @@ public:
 	enum {
 		LINE_SIZE		=	256,	// Line size
 		NUM_FILE_EXT		= 	6,	// Number of source file extensions
-		MAX_INCLUDE_DEPTH	=	150,	// Maximum number of path.
-		MAXPATH			=	256	// Maximal size of path.
+		MAX_INCLUDE_DEPTH	=	150 ,	// Maximum number of path.
+		MAXPATH			=	256 // Maximal size of path.
 	};
 
 	enum NewConfig{

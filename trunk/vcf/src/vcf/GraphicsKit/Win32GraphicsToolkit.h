@@ -37,9 +37,15 @@ public:
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect );
 
+	virtual PrintSessionPeer* internal_createPrintSessionPeer();
+
 	virtual Font* internal_getDefaultSystemFont() {
 		return systemFont_;
 	}
+
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer();
+
+	virtual double internal_getDPI( GraphicsContext* context );
 protected:
 	void initSystemFont();
 	void loadSystemColors();
@@ -54,6 +60,19 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/08/27 03:50:48  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.1  2004/08/25 04:43:33  ddiego
+*migrated the core printing changes into the graphics kit
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

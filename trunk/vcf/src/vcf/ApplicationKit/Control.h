@@ -459,7 +459,8 @@ public:
     virtual void setHeight( const double& height ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
-	*determines whether or not the control is visible.
+	*determines whether or not the control is visible,
+	* and set it visible if it wasn't.
 	*@param bool true to show the control, false to hide it
 	*/
     virtual void setVisible( const bool& visible ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
@@ -511,6 +512,9 @@ public:
 	*/
 	virtual Control* getParent() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
+
+	void removeFromParent( const bool& freeInstance=true );
+
 	/**
 	*does this control currently have focus?
 	*@return bool true if the control has focus, otehr wise false. If a control
@@ -556,6 +560,16 @@ public:
 	*/
     virtual void paint( GraphicsContext * context )=0;
 
+	/**
+	Paints the border for the control. This is called by the framework during the 
+	painting of the control. Do not count on this being called at the same time as the
+	paint() method, as the order in which this is called is dependant on the 
+	underlying windowing system. For example, on Win32 systems this call may
+	be made by the framework outside of the WM_PAINT message handling, while on
+	Mac OS X this will be called in the same event handler that dispatches
+	the control's paint() method.
+	*/
+	void paintBorder( GraphicsContext * context );
 	/**
 	*Called when the mouse first enters the control's bounds.
 	*override this to provide specific behaviours when the control is
@@ -692,6 +706,7 @@ public:
 
 	/**
 	*returns the color used to fill the background of this control
+	*@see CustomControl::setUseColorForBackground
 	*/
 	Color* getColor();
 
@@ -1086,7 +1101,7 @@ public:
 		return tabStop_;
 	}
 
-	/*
+	/**
 	*sets the tab stop value of the control. The default value
 	*is true.
 	*@param bool the new value for the tab stop property
@@ -1272,6 +1287,32 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:20  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.5  2004/11/10 19:07:32  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.4  2004/11/07 19:32:18  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.3  2004/10/23 13:53:12  marcelloptr
+*comments for setUseColorForBackground; setActiveFrame renamed as internal
+*
+*Revision 1.2.2.2  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.1  2004/09/06 21:30:19  ddiego
+*added a separate paintBorder call to Control class
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

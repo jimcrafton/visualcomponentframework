@@ -1404,9 +1404,14 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 {
 	UnicodeString result;
 
+	unsigned long y = val.getYear();
+	if ( ( y < 1601 ) || ( 30827 < y ) ) {
+		throw RuntimeException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
+	}
+
 	SYSTEMTIME timeVal = {0};
 
-	timeVal.wYear = val.getYear();
+	timeVal.wYear = y;
 	timeVal.wMonth = val.getMonth();
 	timeVal.wDay = val.getDay();
 	timeVal.wDayOfWeek = val.getWeekDay();
@@ -1458,15 +1463,21 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 
 	SYSTEMTIME timeVal = {0};
 
-	timeVal.wYear = val.getYear();
-	timeVal.wMonth = val.getMonth();
-	timeVal.wDay = val.getDay();
-	timeVal.wDayOfWeek = val.getWeekDay();
-	timeVal.wHour = val.getHour();
-	timeVal.wMinute = val.getMinute();
-	timeVal.wSecond = val.getSecond();
-	timeVal.wMilliseconds = val.getMilliSecond();
+	unsigned long y, m, d, h, min, s, ms;
+	val.get( &y, &m, &d, &h, &min, &s, &ms );
 
+	if ( ( y < 1601 ) || ( 30827 < y ) ) {
+		throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
+	}
+
+	timeVal.wYear   = y;
+	timeVal.wMonth  = m;
+	timeVal.wDayOfWeek = val.getWeekDay();
+	timeVal.wDay    = d;
+	timeVal.wHour   = h;
+	timeVal.wMinute = min;
+	timeVal.wSecond = s;
+	timeVal.wMilliseconds = ms;
 
 
 	DWORD flags = (!format.empty()) ? 0 : LOCALE_NOUSEROVERRIDE;
@@ -2725,6 +2736,17 @@ Swahili is also used in Rwanda, in Burundi (for commercial purposes), and by a s
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/07 19:32:20  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.1  2004/08/26 04:05:48  marcelloptr
+*minor change on name of getMillisecond
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

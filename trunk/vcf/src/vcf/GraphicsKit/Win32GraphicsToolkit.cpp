@@ -11,6 +11,15 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 
+#include <commdlg.h>
+
+#include "vcf/GraphicsKit/PrintSessionPeer.h"
+#include "vcf/GraphicsKit/Win32PrintSession.h"
+#include "vcf/FoundationKit/ResourceBundle.h"
+
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/GraphicsKit/Win32GraphicsResourceBundle.h"
 
 using namespace VCF;
 
@@ -25,8 +34,7 @@ Win32GraphicsToolkit::Win32GraphicsToolkit()
 	loadSystemColors();
 	registerImageLoader( "image/bmp", new BMPLoader() );
 
-	initSystemFont();
-
+	initSystemFont();	
 }
 
 Win32GraphicsToolkit::~Win32GraphicsToolkit()
@@ -107,6 +115,24 @@ Image* Win32GraphicsToolkit::internal_createImage( GraphicsContext* context, Rec
 	}
 }
 
+double Win32GraphicsToolkit::internal_getDPI( GraphicsContext* context )
+{
+	double result = 0.0;
+	if ( NULL == context ) {
+		HDC dc = GetDC( ::GetDesktopWindow() );
+		result = (double)GetDeviceCaps( dc, LOGPIXELSY);
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
+	else {
+		result = (double) GetDeviceCaps( (HDC)context->getPeer()->getContextID(), LOGPIXELSY );
+	}
+	return result;
+}
+
+PrintSessionPeer* Win32GraphicsToolkit::internal_createPrintSessionPeer()
+{
+	return new Win32PrintSession();
+}
 
 void Win32GraphicsToolkit::loadSystemColors()
 {
@@ -185,10 +211,39 @@ void Win32GraphicsToolkit::loadSystemColors()
 
 }
 
+GraphicsResourceBundlePeer* Win32GraphicsToolkit::internal_createGraphicsResourceBundlePeer()
+{
+	return new Win32GraphicsResourceBundle();
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/08/31 04:12:13  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.3  2004/08/27 03:50:48  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.2  2004/08/25 04:43:33  ddiego
+*migrated the core printing changes into the graphics kit
+*
+*Revision 1.2.2.1  2004/08/21 21:07:10  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

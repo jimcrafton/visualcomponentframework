@@ -10,18 +10,189 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
+#include "thirdparty/common/agg/include/agg_ellipse.h"
+#include "thirdparty/common/agg/include/agg_arc.h"
 
 namespace VCF {
 
+/**
+* The structure used to fully save and restore the state of a Graphics context.
+*@see GraphicsContext::saveState()
+*/
+class GraphicsState {
+public:	
 
-GraphicsContext::GraphicsContext()
+	GraphicsState();
+	GraphicsState( const GraphicsState& rhs );
+	~GraphicsState();
+
+	GraphicsState& operator=( const GraphicsState& rhs );	
+
+	void compositeMatrix();
+
+public:
+	Fill* fill_;
+	Stroke* stroke_;	
+	Path* clippingPath_;
+	GraphicsContext* owningContext_;
+	Font font_;
+	Matrix2D transformMatrix_;
+	Point currentMoveTo_;
+	Color color_;
+
+	double rotation_;
+	double shearX_;
+	double shearY_;
+	double translateX_;
+	double translateY_;
+	double scaleX_;
+	double scaleY_;
+
+	double strokeWidth_;
+};
+
+
+
+
+
+GraphicsState::GraphicsState():
+	fill_(NULL),
+	stroke_(NULL),
+	clippingPath_(NULL),
+	owningContext_(NULL),
+	strokeWidth_(1.0),
+	rotation_(0.0),
+	shearX_(0.0),
+	shearY_(0.0),
+	translateX_(0.0),
+	translateY_(0.0),
+	scaleX_(1.0),
+	scaleY_(1.0)
 {
+	transformMatrix_.identity();
+}
+
+GraphicsState::GraphicsState( const GraphicsState& rhs ):
+	fill_(NULL),
+	stroke_(NULL),
+	clippingPath_(NULL),
+	owningContext_(NULL),
+	strokeWidth_(1.0),
+	rotation_(0.0),
+	shearX_(0.0),
+	shearY_(0.0),
+	translateX_(0.0),
+	translateY_(0.0),
+	scaleX_(1.0),
+	scaleY_(1.0)
+{
+	transformMatrix_.identity();
+	*this = rhs;
+}
+
+GraphicsState::~GraphicsState()
+{
+	
+	if ( NULL != clippingPath_ ) {
+		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+		pathObj->release();
+	}
+	clippingPath_ = NULL;
+	
+}
+
+GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
+{
+	strokeWidth_ = rhs.strokeWidth_;
+	fill_ = rhs.fill_;
+	stroke_ = rhs.stroke_;
+	font_ = rhs.font_;
+
+	if ( NULL != clippingPath_ ) { //release the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+		pathObj->release();
+	}
+
+	clippingPath_ = rhs.clippingPath_;
+
+	if ( NULL != clippingPath_ ) { //take ownership of the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+		pathObj->addRef();
+	}
+
+
+	owningContext_ = rhs.owningContext_;
+	transformMatrix_ = rhs.transformMatrix_;
+	currentMoveTo_ = rhs.currentMoveTo_;
+	color_ = rhs.color_;
+
+	rotation_ = rhs.rotation_;
+	shearX_ = rhs.shearX_;
+	shearY_ = rhs.shearY_;
+	translateX_ = rhs.translateX_;
+	translateY_ = rhs.translateY_;
+	scaleX_ = rhs.scaleX_;
+	scaleY_ = rhs.scaleY_;
+
+	return *this;
+}
+
+void GraphicsState::compositeMatrix()
+{
+	Matrix2D rotate;
+	rotate.rotate( rotation_ );
+
+	Matrix2D scale;
+	scale.scale( scaleX_, scaleY_ );
+
+	Matrix2D shear;
+	shear.shear( shearX_, shearY_ );
+
+	Matrix2D translation;
+	translation.translate( translateX_, translateY_ );
+
+	Matrix2D tmp;	
+	tmp.multiply( &scale, &rotate );
+	tmp.multiply( &tmp, &shear );
+	tmp.multiply( &tmp, &translation );
+	transformMatrix_ = tmp;
+}
+
+
+
+GraphicsContext::GraphicsContext():
+	currentDrawingState_(GraphicsContext::gsNone),
+	drawingArea_(NULL),	
+	contextPeer_(NULL),
+	renderBuffer_(NULL),
+	renderAreaDirty_(false),
+	graphicsStateIndex_(0),
+	currentGraphicsState_(NULL)
+{
+	GraphicsState* newState = new GraphicsState();
+	newState->owningContext_ = this;
+	stateCollection_.push_back( newState );
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
+
+	Font& font = currentGraphicsState_->font_;
+	font.setGraphicsContext( this );
+
 	init();
 }
 
-GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned long& height )
+GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned long& height ):
+	currentDrawingState_(GraphicsContext::gsNone),
+	drawingArea_(NULL),
+	contextPeer_(NULL),
+	renderBuffer_(NULL),
+	renderAreaDirty_(false),
+	graphicsStateIndex_(0),
+	currentGraphicsState_(NULL)
 {
-	init();
+	GraphicsState* newState = new GraphicsState();
+	newState->owningContext_ = this;
+	stateCollection_.push_back( newState );
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
 
 	contextPeer_ = GraphicsToolkit::createContextPeer( width, height );
 	if ( NULL == contextPeer_ ){
@@ -29,16 +200,38 @@ GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned lon
 	}
 
 	contextPeer_->setContext( this );
+	init();
+	Font& font = currentGraphicsState_->font_;
+	font.setGraphicsContext( this );
+
+	font.setPointSize( font.getPointSize() );
+
 }
 
-GraphicsContext::GraphicsContext( const unsigned long& contextID )
+GraphicsContext::GraphicsContext( const unsigned long& contextID ):
+	currentDrawingState_(GraphicsContext::gsNone),
+	drawingArea_(NULL),
+	contextPeer_(NULL),
+	renderBuffer_(NULL),
+	renderAreaDirty_(false),
+	graphicsStateIndex_(0),
+	currentGraphicsState_(NULL)
 {
-	init();
+	GraphicsState* newState = new GraphicsState();
+	newState->owningContext_ = this;
+	stateCollection_.push_back( newState );
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
+
 	contextPeer_ = GraphicsToolkit::createContextPeer( contextID );
 	if ( NULL == contextPeer_ ){
 		//throw exception
 	}
 	contextPeer_->setContext( this );
+	init();
+	Font& font = currentGraphicsState_->font_;
+	font.setGraphicsContext( this );
+
+	font.setPointSize( font.getPointSize() );
 }
 
 GraphicsContext::~GraphicsContext()
@@ -47,7 +240,7 @@ GraphicsContext::~GraphicsContext()
 		delete contextPeer_;
 	}
 	contextPeer_ = NULL;
-
+/*
 	if ( NULL != currentFill_ ){
 		delete currentFill_;
 	}
@@ -68,6 +261,7 @@ GraphicsContext::~GraphicsContext()
 		pathObj->release();
 	}
 	clippingPath_ = NULL;
+*/
 
 	if ( NULL != drawingArea_ ) {
 		delete drawingArea_;
@@ -76,62 +270,47 @@ GraphicsContext::~GraphicsContext()
 
 void GraphicsContext::init()
 {
-	currentState_ = GraphicsContext::gsNone;
+	//currentFont_ = new Font();
+	//currentFont_->setGraphicsContext( this );	
+	//currentFont_->setPointSize( currentFont_->getPointSize() );
 
-	drawingArea_ = NULL;
-
-	strokeWidth_ = 1.0;
-	contextPeer_ = NULL;
-	currentFill_ = NULL;
-	currentStroke_ = NULL;
-	currentFont_ = NULL;
-	clippingPath_ = NULL;
-
-	currentFont_ = new Font();
-
-	theta_ = 0.0;
-	xScale_ = 1.0;
-	yScale_ = 1.0;
-	xTranslate_ = 0.0;
-	yTranslate_ = 0.0;
-	xShear_ = 0.0;
-	yShear_ = 0.0;
-	transformMatrix_.identity();
-
-	renderBuffer_ = NULL;
-
-	renderAreaDirty_ = false;
+	//transformMatrix_.identity();
 }
 
 
 void GraphicsContext::setCurrentFont(Font * font)
 {
-	currentFont_->copy( font );
+	Font& currentFont = currentGraphicsState_->font_;
+	currentFont = *font;	
+	currentFont.setGraphicsContext( this );
+	currentFont.setPointSize( currentFont.getPointSize() );
 }
 
 void GraphicsContext::setCurrentFill(Fill * fill)
-{
-	currentFill_ = fill;
-	if ( NULL != currentFill_ ){
-		currentFill_->setContext( this );
+{	
+	if ( NULL != fill ){
+		fill->setContext( this );
 	}
+	currentGraphicsState_->fill_ = fill;
 }
 
 void GraphicsContext::setCurrentStroke(Stroke * stroke)
 {
-	currentStroke_ = stroke;
-	if ( NULL != currentStroke_ ){
-		currentStroke_->setContext( this );
+	if ( NULL != stroke ){
+		stroke->setContext( this );
 	}
+	currentGraphicsState_->stroke_ = stroke;
 }
 
 void GraphicsContext::draw(Path * path)
 {
-	if ( NULL != currentFill_ ){
-		currentFill_->render( path );
+	Fill* fill = currentGraphicsState_->fill_;
+	Stroke* stroke = currentGraphicsState_->stroke_;
+	if ( NULL != fill ){
+		fill->render( path );
 	}
-	if ( NULL != currentStroke_ ){
-		currentStroke_->render( path );
+	if ( NULL != stroke ){
+		stroke->render( path );
 	}
 }
 
@@ -181,18 +360,18 @@ void GraphicsContext::textWithStateAt( const double& x, const double& y, const S
 	else {
 		Color* shadow = GraphicsToolkit::getSystemColor( SYSCOLOR_SHADOW );
 		Color* hilight = GraphicsToolkit::getSystemColor( SYSCOLOR_HIGHLIGHT );
-		Color oldColor = *currentFont_->getColor();
+		Color oldColor = *currentGraphicsState_->font_.getColor();
 
-		currentFont_->setColor( hilight );
+		currentGraphicsState_->font_.setColor( hilight );
 
 		textAt( x+1, y+1, text );
 
-		currentFont_->setColor( shadow );
+		currentGraphicsState_->font_.setColor( shadow );
 
 		textAt( x, y, text );
 
 		//reset the original color
-		currentFont_->setColor( &oldColor );
+		currentGraphicsState_->font_.setColor( &oldColor );
 	}
 }
 
@@ -200,9 +379,21 @@ void GraphicsContext::textWithStateAt( const double& x, const double& y, const S
 void GraphicsContext::textAt(const double & x, const double & y, const String & text)
 {
 	Rect bounds( x, y, x + getTextWidth(text), y + getTextHeight(text) );
+	Rect tmp = bounds;
+
+	double xx = bounds.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
+							bounds.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+
+	double yy = bounds.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
+							bounds.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+
+	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
+
 
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
-		contextPeer_->textAt( bounds, text );
+		contextPeer_->textAt( tmp, text );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
@@ -211,6 +402,16 @@ void GraphicsContext::textAt(const double & x, const double & y, const String & 
 void GraphicsContext::textAt( const double & x, const double & y, const String& text, const long drawOptions )
 {
 	Rect bounds( x, y, x + getTextWidth(text), y + getTextHeight(text) );
+
+	double xx = x * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
+							y * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+
+	double yy = x * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
+							y * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+
+	bounds.offset( xx - bounds.left_, yy - bounds.top_ );
 
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
 
@@ -224,7 +425,7 @@ void GraphicsContext::textAt( const double & x, const double & y, const String& 
 void GraphicsContext::rectangle(const double & x1, const double & y1, const double & x2, const double & y2)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x1,y1,PointOperation::ptRect) );
 	pathOperations_.push_back( PointOperation(x2,y2,PointOperation::ptRect) );
@@ -234,7 +435,7 @@ void GraphicsContext::roundRect(const double & x1, const double & y1, const doub
 								const double & xc, const double & yc)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x1,y1,PointOperation::ptRoundRect) );
 	pathOperations_.push_back( PointOperation(x2,y2,PointOperation::ptRoundRect) );
@@ -249,29 +450,31 @@ void GraphicsContext::circle(const double & x, const double & y, const double & 
 void GraphicsContext::ellipse(const double & x1, const double & y1, const double & x2, const double & y2)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x1,y1,PointOperation::ptEllipse) );
 	pathOperations_.push_back( PointOperation(x2,y2,PointOperation::ptEllipse) );
 }
 
-void GraphicsContext::arc(const double & x1, const double & y1, const double & x2, const double & y2,
-                          const double & x3, const double & y3, const double & x4, const double & y4)
+
+void GraphicsContext::arc( const double& centerX,  const double& centerY, 
+				const double& radiusWidth, const double& radiusHeight, 
+				const double& startAngle, const double& endAngle)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
-	pathOperations_.push_back( PointOperation(x1,y1,PointOperation::ptArc) );
-	pathOperations_.push_back( PointOperation(x2,y2,PointOperation::ptArc) );
-	pathOperations_.push_back( PointOperation(x3,y3,PointOperation::ptArc) );
-	pathOperations_.push_back( PointOperation(x4,y4,PointOperation::ptArc) );
+	pathOperations_.push_back( PointOperation(centerX,centerY,PointOperation::ptArc) );
+	pathOperations_.push_back( PointOperation(radiusHeight,radiusHeight,PointOperation::ptArc) );
+	pathOperations_.push_back( PointOperation(startAngle,endAngle,PointOperation::ptArc) );
 }
+
 
 void GraphicsContext::pie(const double & x1, const double & y1, const double & x2, const double & y2,
                           const double & x3, const double & y3, const double & x4, const double & y4)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	//contextPeer_->pie( x1, y1, x2, y2, x3, y3, x4, y4 );
 }
@@ -280,7 +483,7 @@ void GraphicsContext::chord(const double & x1, const double & y1, const double &
                             const double & x3, const double & y3, const double & x4, const double & y4)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	//contextPeer_->chord( x1, y1, x2, y2, x3, y3, x4, y4 );
 }
@@ -289,13 +492,13 @@ void GraphicsContext::chord(const double & x1, const double & y1, const double &
 void GraphicsContext::polyline( const std::vector<Point>& pts )
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	std::vector<Point>::const_iterator it = pts.begin();
 	while ( it != pts.end() ) {
 		const Point& pt = *it;
 		pathOperations_.push_back( PointOperation(pt.x_, pt.y_, PointOperation::ptPolyLine) );
-		it ++;
+		++it;
 	}
 }
 
@@ -303,7 +506,7 @@ void GraphicsContext::curve(const double & x1, const double & y1, const double &
                             const double & x3, const double & y3, const double & x4, const double & y4)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x1,y1,PointOperation::ptBezier) );
 	pathOperations_.push_back( PointOperation(x2,y2,PointOperation::ptBezier) );
@@ -314,7 +517,7 @@ void GraphicsContext::curve(const double & x1, const double & y1, const double &
 void GraphicsContext::lineTo(const double & x, const double & y)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x,y,PointOperation::ptLineTo) );
 }
@@ -322,7 +525,7 @@ void GraphicsContext::lineTo(const double & x, const double & y)
 void GraphicsContext::moveTo(const double & x, const double & y)
 {
 	checkPathOperations();
-	currentState_ = GraphicsContext::gsAddingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
 
 	pathOperations_.push_back( PointOperation(x,y,PointOperation::ptMoveTo) );
 }
@@ -370,80 +573,126 @@ void GraphicsContext::copyContext( const Rect& sourceRect,
 	contextPeer_->copyContext( sourceRect, destRect, context->getPeer() );
 }
 
-void GraphicsContext::setCurrentTransform( Matrix2D* transform )
+void GraphicsContext::setCurrentTransform( const Matrix2D& transform )
 {
-	transformMatrix_ = *transform;
+	currentGraphicsState_->transformMatrix_ = transform;
 }
 
 Matrix2D* GraphicsContext::getCurrentTransform()
 {
-	compositeMatrices();
-	return &transformMatrix_;
+	return &currentGraphicsState_->transformMatrix_;
 }
 
 void GraphicsContext::setRotation( const double& theta )
-{
-	theta_ = theta;
+{	
+	currentGraphicsState_->rotation_  = theta;
+	currentGraphicsState_->compositeMatrix();
 }
 
 void GraphicsContext::setTranslation( const double transX, const double& transY )
 {
-	xTranslate_ = transX;
-	yTranslate_ = transY;
+	currentGraphicsState_->translateX_  = transX;
+	currentGraphicsState_->translateY_  = transY;
+	currentGraphicsState_->compositeMatrix();
 }
 
 void GraphicsContext::setShear( const double& shearX, const double& shearY )
 {
-	xShear_ = shearX;
-	yShear_ = shearY;
+	currentGraphicsState_->shearX_  = shearX;
+	currentGraphicsState_->shearY_  = shearY;
+	currentGraphicsState_->compositeMatrix();
 }
 
 void GraphicsContext::setScale( const double& scaleX, const double& scaleY )
 {
-	xScale_ = scaleX;
-	yScale_ = scaleY;
+	currentGraphicsState_->scaleX_  = scaleX;
+	currentGraphicsState_->scaleY_  = scaleY;
+	currentGraphicsState_->compositeMatrix();
 }
 
-void GraphicsContext::compositeMatrices()
+void GraphicsContext::concatRotation( const double& theta )
 {
+	currentGraphicsState_->rotation_  += theta;
 	Matrix2D rot;
-	rot.rotate( theta_ );
-	Matrix2D trans;
-	trans.translate( xTranslate_, yTranslate_ );
-	Matrix2D scale;
-	scale.scale( xScale_, yScale_ );
-	Matrix2D shear;
-	shear.shear( xShear_, yShear_ );
+	rot.rotate( currentGraphicsState_->rotation_ );
 	Matrix2D tmp;
-	tmp.multiply( &rot, &trans );
-	tmp.multiply( &tmp, &scale );
-	tmp.multiply( &tmp, &shear );
-	transformMatrix_ = tmp;
+	tmp.multiply( &rot, &currentGraphicsState_->transformMatrix_ );
+
+	currentGraphicsState_->transformMatrix_ = tmp;
+
+}
+
+void GraphicsContext::concatTranslation( const double transX, const double& transY )
+{
+	currentGraphicsState_->translateX_  += transX;
+	currentGraphicsState_->translateY_  += transY;
+	Matrix2D translation;
+	translation.translate( currentGraphicsState_->translateX_, currentGraphicsState_->translateY_);
+	Matrix2D tmp;
+	tmp.multiply( &translation, &currentGraphicsState_->transformMatrix_ );
+
+	currentGraphicsState_->transformMatrix_ = tmp;
+}
+
+void GraphicsContext::concatShear( const double& shearX, const double& shearY )
+{
+	currentGraphicsState_->shearX_  += shearX;
+	currentGraphicsState_->shearY_  += shearY;
+	Matrix2D shear;
+	shear.shear( currentGraphicsState_->shearX_, currentGraphicsState_->shearY_ );
+	Matrix2D tmp;
+	tmp.multiply( &shear, &currentGraphicsState_->transformMatrix_ );
+
+	currentGraphicsState_->transformMatrix_ = tmp;
+}
+
+void GraphicsContext::concatScale( const double& scaleX, const double& scaleY )
+{
+	currentGraphicsState_->scaleX_  += scaleX;
+	currentGraphicsState_->scaleY_  += scaleY;
+	Matrix2D scale;
+	scale.scale( currentGraphicsState_->scaleX_, currentGraphicsState_->scaleY_ );
+	Matrix2D tmp;
+	tmp.multiply( &scale, &currentGraphicsState_->transformMatrix_ );
+
+	currentGraphicsState_->transformMatrix_ = tmp;
 }
 
 Font* GraphicsContext::getCurrentFont()
 {
-	return currentFont_;
+	return &currentGraphicsState_->font_;
 }
 
 void GraphicsContext::setColor( Color* color )
-{
-	if ( NULL != color ){
-		color_.copy( color );
+{	
+	if ( NULL != color ) {
+		currentGraphicsState_->color_ = *color;
 	}
 }
 
 Color* GraphicsContext::getColor()
 {
-	return &color_;
+	return &currentGraphicsState_->color_;
 }
 
 
 void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const bool& wordWrap )
 {
 	long drawOptions = wordWrap ? GraphicsContext::tdoWordWrap : GraphicsContext::tdoNone;
+
+	Rect tmp = *bounds;
+	double xx = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
+							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+
+	double yy = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
+							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+
+	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
+
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
-		contextPeer_->textAt( *bounds, text, drawOptions );
+		contextPeer_->textAt( tmp, text, drawOptions );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
@@ -451,8 +700,19 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const boo
 
 void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const long drawOptions )
 {
+	Rect tmp = *bounds;
+	double xx = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
+							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+
+	double yy = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
+							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
+								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+
+	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
+
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
-		contextPeer_->textAt( *bounds, text, drawOptions );
+		contextPeer_->textAt( tmp, text, drawOptions );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
@@ -489,45 +749,55 @@ void GraphicsContext::setClippingRect( Rect* rect )
 		rectClipPath->lineTo( rect->left_, rect->bottom_ );
 		rectClipPath->close();
 	}
+	
+	Path* clipPath = currentGraphicsState_->clippingPath_;
 
-	if ( NULL != clippingPath_ ) { //release the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+	if ( NULL != clipPath ) { //release the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clipPath );
 		pathObj->release();
 	}
 
-	clippingPath_ = rectClipPath;
+	clipPath = rectClipPath;
 
-	if ( NULL != clippingPath_ ) { //take ownership of the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+	if ( NULL != clipPath ) { //take ownership of the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clipPath );
 		pathObj->addRef();
 	}
+
+	currentGraphicsState_->clippingPath_ = clipPath;
 
 	contextPeer_->setClippingRect( rect );
 }
 
 void GraphicsContext::setClippingPath( Path* clippingPath )
 {
-	if ( NULL != clippingPath_ ) { //release the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+	Path* clipPath = currentGraphicsState_->clippingPath_;
+
+	if ( NULL != clipPath ) { //release the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clipPath );
 		pathObj->release();
 	}
 
-	clippingPath_ = clippingPath;
+	clipPath = clippingPath;
 
-	if ( NULL != clippingPath_ ) { //take ownership of the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+	if ( NULL != clipPath ) { //take ownership of the underlying object instance
+		Object* pathObj = dynamic_cast<Object*>( clipPath );
 		pathObj->addRef();
 	}
 
-	contextPeer_->setClippingPath( clippingPath_ );
+	currentGraphicsState_->clippingPath_ = clipPath;
+
+	contextPeer_->setClippingPath( clipPath );
 }
 
 Rect GraphicsContext::getClippingRect()
 {
 	Rect result;
 
-	if ( NULL != clippingPath_ ) {
-		result = clippingPath_->getBounds();
+	Path* clipPath = currentGraphicsState_->clippingPath_;
+
+	if ( NULL != clipPath ) {
+		result = clipPath->getBounds();
 	}
 
 	return result;
@@ -535,100 +805,8 @@ Rect GraphicsContext::getClippingRect()
 
 Path* GraphicsContext::getClippingPath()
 {
-	return clippingPath_;
+	return currentGraphicsState_->clippingPath_;
 }
-
-/*
-void GraphicsContext::drawSelectionRect( Rect* rect )
-{
-	contextPeer_->drawSelectionRect( rect );
-}
-
-void GraphicsContext::drawButtonRect( Rect* rect, const bool& isPressed )
-{
-	contextPeer_->drawButtonRect( rect, isPressed );
-}
-
-void GraphicsContext::drawCheckboxRect( Rect* rect, const bool& isPressed )
-{
-	contextPeer_->drawCheckboxRect( rect, isPressed );
-}
-
-void GraphicsContext::drawRadioButtonRect( Rect* rect, const bool& isPressed )
-{
-	contextPeer_->drawRadioButtonRect( rect, isPressed );
-}
-
-void GraphicsContext::drawVerticalScrollButtonRect( Rect* rect, const bool& topButton, const bool& isPressed )
-{
-	contextPeer_->drawVerticalScrollButtonRect( rect, topButton, isPressed );
-}
-
-void GraphicsContext::drawHorizontalScrollButtonRect( Rect* rect, const bool& leftButton, const bool& isPressed )
-{
-	contextPeer_->drawHorizontalScrollButtonRect( rect, leftButton, isPressed );
-}
-
-void GraphicsContext::drawDisclosureButton( Rect* rect, const DisclosureStateType& state )
-{
-	contextPeer_->drawDisclosureButton( rect, state );
-}
-
-void GraphicsContext::drawTab( Rect* rect, const bool& selected, const String& caption )
-{
-	contextPeer_->drawTab( rect, selected, caption );
-}
-
-void GraphicsContext::drawTabPage( Rect* rect )
-{
-	contextPeer_->drawTabPage( rect );
-}
-
-void GraphicsContext::drawTickMarks( Rect* rect, const SliderInfo& sliderInfo )
-{
-	contextPeer_->drawTickMarks( rect, sliderInfo );
-}
-
-void GraphicsContext::drawSliderThumb( Rect* rect, const SliderInfo& sliderInfo )
-{
-	contextPeer_->drawSliderThumb( rect, sliderInfo );
-}
-
-void GraphicsContext::drawSlider( Rect* rect, const SliderInfo& sliderInfo )
-{
-	contextPeer_->drawSlider( rect, sliderInfo );
-}
-
-void GraphicsContext::drawHeader( Rect* rect )
-{
-	contextPeer_->drawHeader( rect );
-}
-
-void GraphicsContext::drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle )
-{
-	contextPeer_->drawEdge( rect, edgeSides, edgeStyle );
-}
-
-void GraphicsContext::drawSizeGripper( Rect* rect )
-{
-	contextPeer_->drawSizeGripper( rect );
-}
-
-void GraphicsContext::drawControlBackground( Rect* rect )
-{
-	contextPeer_->drawControlBackground( rect );
-}
-
-void GraphicsContext::drawWindowBackground( Rect* rect )
-{
-	contextPeer_->drawWindowBackground( rect );
-}
-
-void GraphicsContext::drawMenuItemBackground( Rect* rect, const bool& selected )
-{
-	contextPeer_->drawMenuItemBackground( rect, selected );
-}
-*/
 
 void GraphicsContext::drawThemeSelectionRect( Rect* rect, DrawUIState& state )
 {
@@ -733,31 +911,60 @@ void GraphicsContext::drawThemeText( Rect* rect, TextState& state )
 
 void GraphicsContext::setStrokeWidth( const double& width )
 {
-	strokeWidth_ = width;
+	currentGraphicsState_->strokeWidth_ = width;
 }
 
+double GraphicsContext::getStrokeWidth()
+{
+	return currentGraphicsState_->strokeWidth_;
+}
 
 void GraphicsContext::execPathOperations()
 {
-	currentState_ = GraphicsContext::gsExecutingGraphicsOps;
+	currentDrawingState_ = GraphicsContext::gsExecutingGraphicsOps;
 
 	std::vector<PointOperation>::iterator it = pathOperations_.begin();
+
+	double tmpX;
+	double tmpY;
+
+	
+	Matrix2D& transform = currentGraphicsState_->transformMatrix_;
 
 	while ( it != pathOperations_.end() ) {
 		PointOperation& pointOp = *it;
 
 		switch ( pointOp.primitive ){
-			case PointOperation::ptMoveTo :{
-				currentMoveTo_.x_ = pointOp.x;
-				currentMoveTo_.y_ = pointOp.y;
-				contextPeer_->moveTo( pointOp.x, pointOp.y );
-				it ++;
+			case PointOperation::ptMoveTo : {		
+				currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
+				currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
+
+				tmpX = pointOp.x * (transform[Matrix2D::mei00]) +
+							pointOp.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+				tmpY = pointOp.x * (transform[Matrix2D::mei01]) +
+							pointOp.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+
+				
+				contextPeer_->moveTo( tmpX, tmpY );
+				++it;
 			}
 			break;
 
 			case PointOperation::ptLineTo :{
-				contextPeer_->lineTo( pointOp.x, pointOp.y );
-				it ++;
+				tmpX = pointOp.x * (transform[Matrix2D::mei00]) +
+							pointOp.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+				tmpY = pointOp.x * (transform[Matrix2D::mei01]) +
+							pointOp.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+				contextPeer_->lineTo( tmpX, tmpY );
+				++it;
 			}
 			break;
 
@@ -768,8 +975,16 @@ void GraphicsContext::execPathOperations()
 				while ( (it != pathOperations_.end()) && (type == PointOperation::ptPolyLine) ) {
 					PointOperation& pt = *it;
 					type = pt.primitive;
-					tmpPts.push_back( Point(pt.x,pt.y) );
-					it++;
+					tmpX = pt.x * (transform[Matrix2D::mei00]) +
+							pt.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+					tmpY = pt.x * (transform[Matrix2D::mei01]) +
+							pt.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+					tmpPts.push_back( Point(tmpX,tmpY) );
+					++it;
 				}
 
 				contextPeer_->polyline( tmpPts );
@@ -786,20 +1001,57 @@ void GraphicsContext::execPathOperations()
 					throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
 				}
 
+				Point p1;
+				Point p2;
+				Point p3;
+				Point p4;
+
 				PointOperation& pt1 = *it;
-				it ++;
+				p1.x_ = pt1.x * (transform[Matrix2D::mei00]) +
+							pt1.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+				p1.y_ = pt1.x * (transform[Matrix2D::mei01]) +
+							pt1.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+				++it;
 
 				PointOperation& pt2 = *it;
-				it ++;
+				p2.x_ = pt2.x * (transform[Matrix2D::mei00]) +
+							pt2.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+				p2.y_ = pt2.x * (transform[Matrix2D::mei01]) +
+							pt2.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+				++it;
 
 				PointOperation& pt3 = *it;
-				it ++;
+				p3.x_ = pt3.x * (transform[Matrix2D::mei00]) +
+							pt3.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+				p3.y_ = pt3.x * (transform[Matrix2D::mei01]) +
+							pt3.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+				++it;
 
 				PointOperation& pt4 = *it;
-				it ++;
+				p4.x_ = pt4.x * (transform[Matrix2D::mei00]) +
+							pt4.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
 
-				contextPeer_->curve( pt1.x, pt1.y, pt2.x, pt2.y,
-										pt3.x, pt3.y, pt4.x, pt4.y );
+				p4.y_ = pt4.x * (transform[Matrix2D::mei01]) +
+							pt4.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+				++it;
+
+				contextPeer_->curve( p1.x_, p1.y_, p2.x_, p2.y_,
+										p3.x_, p3.y_, p4.x_, p4.y_ );
 
 
 			}
@@ -807,68 +1059,112 @@ void GraphicsContext::execPathOperations()
 
 			case PointOperation::ptRect:{
 
-				PointOperation& pt1 = *it;
-				it ++;
+				PointOperation& pt1 = *it;				
+				++it;
 
 				PointOperation& pt2 = *it;
-				it ++;
+				++it;
 
-				contextPeer_->rectangle( pt1.x, pt1.y, pt2.x, pt2.y );
+				
+				std::vector<Point> tmpPts(5);
+				tmpPts[0].x_ = pt1.x;
+				tmpPts[0].y_ = pt1.y;
+				tmpPts[1].x_ = pt2.x;
+				tmpPts[1].y_ = pt1.y;
+				tmpPts[2].x_ = pt2.x;
+				tmpPts[2].y_ = pt2.y;
+				tmpPts[3].x_ = pt1.x;
+				tmpPts[3].y_ = pt2.y;
+				tmpPts[4] = tmpPts[0];
+
+				std::vector<Point>::iterator ptIt = tmpPts.begin();
+
+				while ( ptIt != tmpPts.end() ) {
+					Point& p = *ptIt;
+					tmpX = p.x_ * (transform[Matrix2D::mei00]) +
+							p.y_ * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+					tmpY = p.x_ * (transform[Matrix2D::mei01]) +
+							p.y_ * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+					p.x_ = tmpX;
+					p.y_ = tmpY;
+					++ptIt;
+				}
+
+				contextPeer_->polyline( tmpPts );
+
+
+
+				//contextPeer_->rectangle( pt1.x, pt1.y, pt2.x, pt2.y );
 			}
 			break;
 
 			case PointOperation::ptRoundRect :{
 
+
+
 				PointOperation& pt1 = *it;
-				it ++;
+				++it;
 
 				PointOperation& pt2 = *it;
-				it ++;
+				++it;
 				
 				PointOperation& pt3 = *it;
-				it ++;
+				++it;
 
-				contextPeer_->roundRect( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y );
+				std::vector<Point> tmpPts;
+				buildRoundRect( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
+
+				contextPeer_->polyline( tmpPts );
+
 			}
 			break;
 
 			case PointOperation::ptEllipse : {
 				PointOperation& pt1 = *it;
-				it ++;
+				++it;
 
 				PointOperation& pt2 = *it;
-				it ++;
+				++it;
 
-				contextPeer_->ellipse( pt1.x, pt1.y, pt2.x, pt2.y );
+				//contextPeer_->ellipse( pt1.x, pt1.y, pt2.x, pt2.y );
+
+				std::vector<Point> tmpPts;
+				buildEllipse( pt1.x, pt1.y, pt2.x, pt2.y, tmpPts, transform );
+
+				contextPeer_->polyline( tmpPts );
 			}
 			break;
 
 			case PointOperation::ptArc :{
-				if ( (pathOperations_.end() - it) < 4 ) {
+				if ( (pathOperations_.end() - it) < 3 ) {
 					throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
 				}
 
 				PointOperation& pt1 = *it;
-				it ++;
+				++it;
 
 				PointOperation& pt2 = *it;
-				it ++;
+				++it;
 
 				PointOperation& pt3 = *it;
-				it ++;
+				++it;
 
-				PointOperation& pt4 = *it;
-				it ++;
 
-				contextPeer_->arc( pt1.x, pt1.y, pt2.x, pt2.y,
-										pt3.x, pt3.y, pt4.x, pt4.y );
+				std::vector<Point> tmpPts;
+				buildArc( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
+
+				contextPeer_->polyline( tmpPts );
 			}
 			break;
 
 			case PointOperation::ptClose : {
 				PointOperation& pt = *it;
 				contextPeer_->lineTo( pt.x, pt.y );
-				it ++;
+				++it;
 			}
 			break;
 
@@ -880,13 +1176,13 @@ void GraphicsContext::execPathOperations()
 		}
 	}
 
-	currentState_ = GraphicsContext::gsNone;
+	currentDrawingState_ = GraphicsContext::gsNone;
 }
 
 
 void GraphicsContext::checkPathOperations()
 {
-	if ( GraphicsContext::gsAddingGraphicsOps != currentState_ ) {
+	if ( GraphicsContext::gsAddingGraphicsOps != currentDrawingState_ ) {
 		pathOperations_.clear();
 	}
 }
@@ -957,10 +1253,11 @@ void GraphicsContext::flushDrawingArea()
 	}
 	else {
 
-		drawingArea_->getImageBits()->renderBuffer_->clip_box( agg::rect( viewableBounds_.left_,
-																			viewableBounds_.top_,
-																			viewableBounds_.right_,
-																			viewableBounds_.bottom_ ) );
+		//FIXME!!!!!!!
+		//drawingArea_->getImageBits()->renderBuffer_->clip_box( agg::rect( viewableBounds_.left_,
+		//																	viewableBounds_.top_,
+		//																	viewableBounds_.right_,
+		//																	viewableBounds_.bottom_ ) );
 
 		drawPartialImage(  viewableBounds_.getTopLeft(), &viewableBounds_, drawingArea_ );
 	}
@@ -968,6 +1265,233 @@ void GraphicsContext::flushDrawingArea()
 	renderAreaDirty_ = false;
 }
 
+void GraphicsContext::buildArc( double centerX,  double centerY, 
+            double radiusWidth, double radiusHeight, 
+            double startAngle, double endAngle, std::vector<Point>& pts, const Matrix2D& transform )
+{
+	agg::path_storage path;
+
+	agg::arc arcPath(centerX, 
+						centerY, 
+						radiusWidth, radiusHeight, 
+						Math::degreesToRadians(startAngle), Math::degreesToRadians(endAngle));
+
+	path.add_path( arcPath );
+
+	agg::path_storage::const_iterator it = path.begin();
+	
+	while ( it != path.end() ) {
+		const agg::vertex_type& vert = *it;
+		
+		Point pt;
+		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
+							vert.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
+							vert.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+		pts.push_back( pt );
+
+		++it;
+	}
+
+}
+
+
+void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2, 
+							double cornerArcWidth, double cornerArcHeight, 
+							std::vector<Point>& pts, const Matrix2D& transform )
+{
+	agg::path_storage path;
+
+	path.move_to( x1 + cornerArcWidth/2.0, y1 );
+	path.line_to( x2 - cornerArcWidth, y1 );
+	
+	agg::arc arc1(x2 - cornerArcWidth/2.0, 
+		y1 + cornerArcHeight/2.0, 
+		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+		Math::degreesToRadians(270), Math::degreesToRadians(0));
+	
+	path.add_path( arc1 );
+	
+	path.line_to( x2, y2 - cornerArcHeight/2.0 );
+	
+	agg::arc arc2(x2 - cornerArcWidth/2.0, 
+		y2 - cornerArcHeight/2.0, 
+		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+		Math::degreesToRadians(0), Math::degreesToRadians(90));
+	
+	path.add_path( arc2 );
+	
+	path.line_to( x1 + cornerArcWidth/2.0, y2 );
+	
+	agg::arc arc3(x1 + cornerArcWidth/2.0, 
+		y2 - cornerArcHeight/2.0, 
+		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+		Math::degreesToRadians(90), Math::degreesToRadians(180));
+	
+	path.add_path( arc3 );
+	
+	path.line_to( x1, y1 + cornerArcHeight/2.0 );
+	
+	agg::arc arc4(x1 + cornerArcWidth/2.0, 
+		y1 + cornerArcHeight/2.0, 
+		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+		Math::degreesToRadians(180), Math::degreesToRadians(270));
+	
+	path.add_path( arc4 );
+
+
+	agg::path_storage::const_iterator it = path.begin();
+	
+	while ( it != path.end() ) {
+		const agg::vertex_type& vert = *it;
+		
+		Point pt;
+		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
+							vert.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
+							vert.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+		pts.push_back( pt );
+
+		++it;
+	}
+}
+
+void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2, 
+							std::vector<Point>& pts, const Matrix2D& transform )
+{
+	agg::path_storage path;
+	agg::ellipse ellipseShape( x1 + ((x2-x1)/2.0), y1 + ((y2-y1)/2.0),
+								abs(static_cast<long>(x2-x1)), abs(static_cast<long>(y2-y1)), 100 );
+	path.add_path( ellipseShape );
+
+	agg::path_storage::const_iterator it = path.begin();
+	
+	while ( it != path.end() ) {
+		const agg::vertex_type& vert = *it;
+		
+		Point pt;
+		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
+							vert.y * (transform[Matrix2D::mei10]) +
+								(transform[Matrix2D::mei20]);
+
+		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
+							vert.y * (transform[Matrix2D::mei11]) +
+								(transform[Matrix2D::mei21]);
+
+		pts.push_back( pt );
+
+		++it;
+	}
+	
+	pts.back() = pts[0];
+}
+
+int GraphicsContext::saveState()
+{
+	GraphicsState* newState = new GraphicsState(*stateCollection_.back());
+
+	stateCollection_.push_back( newState );
+	graphicsStateIndex_ = stateCollection_.size() - 1;
+	
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
+
+	return graphicsStateIndex_;
+}
+
+void GraphicsContext::restoreState( int state )
+{
+	VCF_ASSERT( state < stateCollection_.size() );
+	VCF_ASSERT( state >= 0 );
+	if ( (stateCollection_.size() - state) > 0 ) {
+		for ( int i=state;i<stateCollection_.size();i++ ) {
+			delete stateCollection_[i];
+		}
+
+		stateCollection_.erase( stateCollection_.begin() + state,
+								stateCollection_.end() );
+	}
+	
+	graphicsStateIndex_ = maxVal<>(0,(state - 1));
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
+}
+
+bool GraphicsContext::isDefaultTransform()
+{
+	return (currentGraphicsState_->rotation_ == 0.0) &&
+			(currentGraphicsState_->translateX_ == 0.0) &&
+			(currentGraphicsState_->translateY_ == 0.0) &&
+			(currentGraphicsState_->shearX_ == 0.0) &&
+			(currentGraphicsState_->shearY_ == 0.0) &&
+			(currentGraphicsState_->scaleX_ == 1.0) &&
+			(currentGraphicsState_->scaleY_ == 1.0);
+}
+
+void GraphicsContext::makeDefaultTransform()
+{
+	currentGraphicsState_->rotation_ = 0.0;
+	currentGraphicsState_->translateX_ = 0.0;
+	currentGraphicsState_->translateY_ = 0.0;
+	currentGraphicsState_->shearX_ = 0.0;
+	currentGraphicsState_->shearY_ = 0.0;
+	currentGraphicsState_->scaleX_ = 1.0;
+	currentGraphicsState_->scaleY_ = 1.0;
+
+	currentGraphicsState_->compositeMatrix();
+}
+
+double GraphicsContext::getRotation()
+{
+	return currentGraphicsState_->rotation_;
+}
+
+double GraphicsContext::getTranslationX()
+{
+	return currentGraphicsState_->translateX_;
+}
+
+double GraphicsContext::getTranslationY()
+{
+	return currentGraphicsState_->translateY_;
+}
+
+double GraphicsContext::getShearX()
+{
+	return currentGraphicsState_->shearX_;
+}
+
+double GraphicsContext::getShearY()
+{
+	return currentGraphicsState_->shearY_;
+}
+
+double GraphicsContext::getScaleX()
+{
+	return currentGraphicsState_->scaleX_;
+}
+
+double GraphicsContext::getScaleY()
+{
+	return currentGraphicsState_->scaleY_;
+}
+
+bool GraphicsContext::isAntiAliasingOn()
+{
+	return contextPeer_->isAntiAliasingOn();
+}
+	
+void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
+{
+	contextPeer_->setAntiAliasingOn( antiAliasingOn );
+}
+	
 
 };	// namespace VCF
 
@@ -975,6 +1499,59 @@ void GraphicsContext::flushDrawingArea()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3  2004/08/13 18:43:20  ddiego
+*fixed missing roundrect functionality, and incorrect value in vc70/71 projects
+*
+*Revision 1.2.2.14  2004/11/07 19:32:20  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.13  2004/10/27 03:12:18  ddiego
+*integrated chrisk changes
+*
+*Revision 1.2.2.12  2004/10/04 15:50:49  kiklop74
+*Added explicit cast to avoid ambiquity on BCB6
+*
+*Revision 1.2.2.11  2004/09/09 03:09:26  marcelloptr
+*minor change for style
+*
+*Revision 1.2.2.10  2004/09/06 04:40:43  ddiego
+*added font rotation back in, this time with support for matching
+*the graphic contexts current transform.
+*
+*Revision 1.2.2.9  2004/09/06 03:33:21  ddiego
+*updated the graphic context code to support image transforms.
+*
+*Revision 1.2.2.8  2004/09/03 04:05:46  ddiego
+*fixes to add matrix transform support for images.
+*
+*Revision 1.2.2.7  2004/09/01 03:50:39  ddiego
+*fixed font drawing bug that tinkham pointed out.
+*
+*Revision 1.2.2.6  2004/08/31 21:12:07  ddiego
+*graphice save and restore state
+*
+*Revision 1.2.2.5  2004/08/31 10:24:15  marcelloptr
+*project changed postfix operator into prefix where not necessary so to eliminate agg warning
+*
+*Revision 1.2.2.4  2004/08/31 04:12:13  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.3  2004/08/26 01:44:40  ddiego
+*fixed font pix size bug that handled non true type fonts poorly.
+*
+*Revision 1.2.2.2  2004/08/24 04:29:58  ddiego
+*more printing work, still not yet integrated.
+*
+*Revision 1.2.2.1  2004/08/19 03:22:54  ddiego
+*updates so new system tray code compiles
+*
 *Revision 1.3  2004/08/13 18:43:20  ddiego
 *fixed missing roundrect functionality, and incorrect value in vc70/71 projects
 *

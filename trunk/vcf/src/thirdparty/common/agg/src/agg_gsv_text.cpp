@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -18,7 +18,7 @@
 //----------------------------------------------------------------------------
 #include <string.h>
 #include <stdio.h>
-#include "thirdparty/common/agg/include/agg_gsv_text.h"
+#include "agg_gsv_text.h"
 
 
 namespace agg

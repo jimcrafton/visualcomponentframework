@@ -10,7 +10,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ProgressControl.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
@@ -162,7 +162,29 @@ void ProgressControl::paint( GraphicsContext* ctx )
 
 		progressRect.right_ = progressRect.left_ + ((position_/(e-s)) * clientBounds.getWidth());
 	}
-
+/*
+JC : Note! This is the *right* way to draw this control - once it's working on the 
+Win32 side we can phase in this code
+	ProgressState state;
+	state.min_ = minVal_;
+	state.max_ = maxVal_;
+	state.position_ = position_;
+	state.setActive( isActive() );
+	state.setEnabled( isEnabled() );
+	state.setFocused( isFocused() && state.isActive() );
+	if ( displayProgressText_ ) {
+		String text;
+		if ( useProgressFormatString_ && (!progressFormatString_.empty()) ) {
+			text = StringUtils::format( progressFormatString_, position_ );
+		}
+		else {
+			text = StringUtils::format( "%0.1f %%", position_ );
+		}
+		state.progressCaption_ = text; 
+	}
+	state.setVertical( (paVertical == displayAlignment_) ? true : false );
+	ctx->drawThemeProgress( &clientBounds, 	state );
+*/
 
 
 	ctx->setColor( progressBarColor_ );
@@ -224,6 +246,14 @@ void ProgressControl::paint( GraphicsContext* ctx )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/15 05:41:28  ddiego
+*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

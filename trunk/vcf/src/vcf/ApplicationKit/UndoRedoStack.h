@@ -21,52 +21,146 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
-*Class UndoRedoStack documentation
+* stack class managing any undo redo operation.
+* It is possible to bypass the default undo redo
+* behaviour of this class, without deriving
+* form this class, through the use of its UndoCommand 
+* and RedoCommand delegates.
 */
 
 class APPLICATIONKIT_API UndoRedoStack : public ObjectWithEvents {
+public:
+	/**
+	* Used if the user desires to bypass the default behaviour of 
+	* this UndoRedoStack instance. In this case the user needs 
+	* to add an event handler to this delegate, and setAllowsUndo(false)
+	* inside this handler.
+	*/
+	DELEGATE(UndoCommand);
+
+	/**
+	* Used if the user desires to bypass the default action of 
+	* this UndoRedoStack instance. In this case the user needs 
+	* to add an event handler to this delegate, and setAllowsRedo(false)
+	* inside this handler.
+	*/
+	DELEGATE(RedoCommand);
+
+	/**
+	* to be notified that the stack is going to be be cleared.
+	* This is called foreward.
+	*/
+	DELEGATE(StackCleared);
+
+	/**
+	* to be notified that the stack has been changed.
+	* This is called afterward.
+	*/
+	DELEGATE(StackChanged);
+
+	/**
+	* to be notified that a command has been executed.
+	* This is called after the command has been added to the undo stack,
+	* and after the command has been executed
+	*/
+	DELEGATE(ExecuteCommand);
+
 public:
 	UndoRedoStack();
 
 	virtual ~UndoRedoStack();
 
+	/**
+	* undoes the last command.
+	* this default behaviour can be bypassed.
+	*@fire UndoCommand, before the default undo action is performed.
+	*@event UndoRedoEvent
+	*@eventtype UNDOREDO_EVENT_UNDO
+	*/
 	virtual void undo();
 
+	/**
+	* redoes the last command ( undoes the previous undo ).
+	* this default behaviour can be bypassed.
+	*@fire UndoCommand, before the default redo action is performed.
+	*@event UndoRedoEvent
+	*@eventtype UNDOREDO_EVENT_REDO
+	*/
 	virtual void redo();
 
+	/**
+	* tells if there is any undo item in the stack.
+	*/
 	virtual bool hasUndoableItems();
 
+	/**
+	* tells if there is any redo item in the stack.
+	*/
 	virtual bool hasRedoableItems();
 
+	/**
+	* adds a command to the undo stack and clears the redo stack.
+	* By default this also executes the command.
+	*@param Command* command, the instance representing
+	*the action which is potentially undoable.
+	*@const bool& autoExecute, true if the operation needs also 
+	*to be executed. This is the default.
+	*@fire ExecuteCommand, only if autoExecute==true, after the command has been executed.
+	*@event UndoRedoEvent
+	*@eventtype UNDOREDO_EVENT_EXECUTE.
+	*@fire StackChanged, after the command has been added.
+	*@event UndoRedoEvent
+	*@eventtype UNDOREDO_EVENT_STACK_CHANGED.
+	*/
 	virtual void addCommand( Command* command, const bool& autoExecute=true );
 
-	virtual Command* getCurrentUndoComand();
+	/**
+	* gets the first command to undo.
+	*/
+	virtual Command* getCurrentUndoCommand();
 
-	virtual Command* getCurrentRedoComand();
+	/**
+	* gets the first command to redo.
+	*/
+	virtual Command* getCurrentRedoCommand();
 
+	/**
+	* clears both the undo/redo stacks.
+	*@fire StackChanged, event before the stack is cleared.
+	*@event UndoRedoEvent
+	*@eventtype UNDOREDO_EVENT_STACK_CHANGED.
+	*/
 	void clearCommands();
 
-	DELEGATE(UndoCommand);
-	DELEGATE(RedoCommand);
-	DELEGATE(StackCleared);
-	DELEGATE(StackChanged);
-	DELEGATE(ExecuteCommand);
-
 protected:
+	/**
+	* MP ?
+	*/
 	void movetToRedoStack( Command* command );
 
+	/**
+	* the undo and redo internal stacks.
+	*/
 	std::deque<Command*> undoStack_;
 	std::deque<Command*> redoStack_;
 private:
 };
 
 
-}; //end of namespace VCF
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/13 22:30:42  marcelloptr
+*more documentation
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

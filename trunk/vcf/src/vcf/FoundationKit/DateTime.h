@@ -23,6 +23,12 @@ namespace VCF {
 
 class InputStream;
 class OutputStream;
+class DateTime;
+class DateTimeSpan;
+
+
+///////////////////////////////////////////////////////////////////////////////
+// DateTime exception classes
 
 /**
 This exception is thrown when a bad date format is used. An example
@@ -66,145 +72,9 @@ protected:
 };
 
 
-class DateTime;
 
-/**
-The DateTimeSpan represents an absolute delta value between two date time
-values. You can get the individual components of the span by calling the various
-getYears(), getMonths(), etc methods, or you can get the total amount of time
-this span covers in a praticular format, such the total minutes, or the total
-seconds. An example of this might look like so:
-<pre>
-DateTime dt1(2003,2,10); //2003, Feb 10th
-DateTime dt2(2003,2,23); //2003, Feb 23rd
-DateTimeSpan span = dt1 - dt2;
-int totalHours = span.getTotalHours();//returns 312 (or 24 * 13)
-int totalMinutes = span.getTotalMinutes(); //returns 18,720 (or 60 * 24 * 13)
-
-int days = span.getDays(); //returns 13
-int months = span.getMonths(); //returns 0
-int minutes = span.getMinutes(); //returns 0
-</pre>
-
-*/
-class FOUNDATIONKIT_API DateTimeSpan {
-public:
-	DateTimeSpan() :years_(0), months_(0), days_(0) {
-
-	}
-
-	DateTimeSpan( const DateTimeSpan& rhs ) {
-		*this = rhs;
-	}
-
-	DateTimeSpan& operator= ( const DateTimeSpan& rhs ) {
-		delta_ = rhs.delta_;
-		start_ = rhs.start_;
-		end_ = rhs.end_;
-		years_ = rhs.years_;
-		months_ = rhs.months_;
-		days_ = rhs.days_;
-
-		return *this;
-	}
-
-
-	operator ulong64() const {
-		return delta_;
-	}
-
-	/**
-	returns the number of years in this span of time
-	*/
-	unsigned long getYears() const ;
-
-	/**
-	returns the number of months in this span of time
-	*/
-	unsigned long getMonths() const ;
-
-	/**
-	returns the number of days in this span of time
-	*/
-	unsigned long getDays() const ;
-
-	/**
-	returns the number of hours in this span of time
-	*/
-	unsigned long getHours() const ;
-
-	/**
-	returns the number of minutes in this span of time
-	*/
-	unsigned long getMinutes() const ;
-
-	/**
-	returns the number of seconds in this span of time
-	*/
-	unsigned long getSeconds() const ;
-
-	/**
-	returns the number of milliseconds in this span of time
-	*/
-	unsigned long getMilliseconds() const ;
-
-
-	/**
-	returns the total number of whole months if this span of time
-	is evaluated in months as the unit of measurement
-	*/
-	unsigned long getTotalMonths() const ;
-
-	/**
-	returns the total number of whole days if this span of time
-	is evaluated in days as the unit of measurement
-	*/
-	unsigned long getTotalDays() const ;
-
-	/**
-	returns the total number of whole hours if this span of time
-	is evaluated in hours as the unit of measurement
-	*/
-	unsigned long getTotalHours() const ;
-
-	/**
-	returns the total number of whole minutes if this span of time
-	is evaluated in minutes as the unit of measurement
-	*/
-	unsigned long getTotalMinutes() const ;
-
-	/**
-	returns the total number of whole seconds if this span of time
-	is evaluated in seconds as the unit of measurement
-	*/
-	unsigned long getTotalSeconds() const ;
-
-	/**
-	returns the total number of whole milliseconds if this span of time
-	is evaluated in milliseconds as the unit of measurement
-	*/
-	ulong64 getTotalMilliseconds() const ;
-
-	friend class DateTime;
-protected:
-
-	void subtract( const DateTime& lhs, const DateTime& rhs );
-
-	DateTimeSpan& operator=( const ulong64& rhs ) {
-		delta_ = rhs;
-		return *this;
-	}
-	ulong64 delta_;
-
-	ulong64 start_;
-	ulong64 end_;
-	unsigned long years_;
-	unsigned long months_;
-	unsigned long days_;
-};
-
-
-
+///////////////////////////////////////////////////////////////////////////////
+// DateTime class declaration
 
 /**
 <p>
@@ -384,7 +254,7 @@ public:
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
 	@throw BadDateFormat
-    @throw BadTimeFormat
+	@throw BadTimeFormat
 	*/
 	void set( const unsigned long& year,
 				const unsigned long& month,
@@ -478,105 +348,19 @@ public:
 
 
 	/**
-	increments the year of this date object.
-	@param unsigned long the amount to increment the year by
-	*/
-	DateTime& incrYear(const unsigned long& by=1);
-
-	/**
-	increments the month of this date object. This takes into
-	account increments greater than 12 (which would then also increment the
-	year).  It also treats the end of the month as follows: if the day of
-	the object falls on the very last day of the month prior to the increment
-	then the algorithm will "pin" the day, shortening or lengthening it depending
-	on the newly incremented months value. For example, if the current date instance
-	is set to Jan 31, 2003, and you increment the month by 1 unit, then the
-	new value will be set to Feb 28, 2003.
-	@param unsigned long the amount to increment the month by
-	*/
-	DateTime& incrMonth(const unsigned long& by=1);
-
-	/**
-	increments the day of this date object.
-	@param unsigned long the amount to increment the day by
-	*/
-	DateTime& incrDay(const unsigned long& by=1);
-
-	/**
-	increments the hour of this date object.
-	@param unsigned long the amount to increment the hour by
-	*/
-	DateTime& incrHour(const unsigned long& by=1);
-
-	/**
-	increments the minute of this date object.
-	@param unsigned long the amount to increment the minute by
-	*/
-	DateTime& incrMinute(const unsigned long& by=1);
-
-	/**
-	increments the second of this date object.
-	@param unsigned long the amount to increment the second by
-	*/
-	DateTime& incrSecond(const unsigned long& by=1);
-
-	/**
-	increments the millisecond of this date object.
-	@param unsigned long the amount to increment the millisecond by
-	*/
-	DateTime& incrMilliSecond(const unsigned long& by=1);
-
-	/**
-	decrements the year of this date object
-	@param unsigned long the amount to decrement the millisecond by
-	*/
-	DateTime& decrYear(const unsigned long& by=1);
-
-	/**
-	decrements the month of this date object. See the incrMonth()
-	method for more details on the behaviour of this function.
-	@param unsigned long the amount to decrement the month by
-	@see incrMonth()
-	*/
-	DateTime& decrMonth(const unsigned long& by=1);
-
-	/**
-	decrements the day of this date object
-	@param unsigned long the amount to decrement the day by
-	*/
-	DateTime& decrDay(const unsigned long& by=1);
-
-	/**
-	decrements the hour of this date object
-	@param unsigned long the amount to decrement the hour by
-	*/
-	DateTime& decrHour(const unsigned long& by=1);
-
-	/**
-	decrements the minute of this date object
-	@param unsigned long the amount to decrement the minute by
-	*/
-	DateTime& decrMinute(const unsigned long& by=1);
-
-	/**
-	decrements the second of this date object
-	@param unsigned long the amount to decrement the second by
-	*/
-	DateTime& decrSecond(const unsigned long& by=1);
-
-	/**
-	decrements the millisecond of this date object
-	@param unsigned long the amount to decrement the millisecond by
-	*/
-	DateTime& decrMilliSecond(const unsigned long& by=1);
-
-	/**
 	allows for assignment between this date time object and
 	another.
 	*/
 	DateTime& operator =( const DateTime& rhs ) {
 		time_ = rhs.time_;
 		return *this;
+	}
+
+	/**
+	allows conversion to a ulong64 ( POD ) data type
+	*/
+	operator ulong64() const {
+		return time_;
 	}
 
 	/**
@@ -656,7 +440,7 @@ public:
 	unsigned long getHour() const;
 	unsigned long getMinute() const;
 	unsigned long getSecond() const;
-	unsigned long getMilliSecond() const;
+	unsigned long getMillisecond() const;
 
 	/*
 	* Gets the day of the week. Sunday is 0, Monday is 1, and so on. 
@@ -674,9 +458,137 @@ public:
 
 	unsigned long getWeeksInYear() const ;
 
+
+	virtual String toString();
+
 	virtual void loadFromStream( InputStream* stream );
 
 	virtual void saveToStream( OutputStream* stream );
+
+
+	static void getYearMonthDay( const DateTime& dt, 
+		                           unsigned long* year, unsigned long* month, unsigned long* day );
+
+	static void getHourMinuteSecond( const DateTime& dt, 
+	                                 unsigned long* hour, unsigned long* minute, unsigned long* second, 
+	                                 unsigned long* millsecond=NULL );
+
+	static unsigned long getNumberOfDaysInMonth( unsigned long year, Months month );
+
+	static bool isGregorianCalendarDate( const unsigned long& year, const unsigned long& month, const unsigned long& day );
+
+	static bool isGregorianCalendarDate( const DateTime& dt );
+
+	static bool isLeapYear( unsigned long year );
+
+
+	/**
+	increments the year of this date object.
+	@param unsigned long the amount to increment the year by
+	@return the object itself
+	*/
+	DateTime& incrYear(const unsigned long& by=1);
+
+	/**
+	increments the month of this date object. This takes into
+	account increments greater than 12 (which would then also increment the
+	year).  It also treats the end of the month as follows: if the day of
+	the object falls on the very last day of the month prior to the increment
+	then the algorithm will "pin" the day, shortening or lengthening it depending
+	on the newly incremented months value. For example, if the current date instance
+	is set to Jan 31, 2003, and you increment the month by 1 unit, then the
+	new value will be set to Feb 28, 2003.
+	@param unsigned long the amount to increment the month by
+	@return the object itself
+	*/
+	DateTime& incrMonth(const unsigned long& by=1);
+
+	/**
+	increments the day of this date object.
+	@param unsigned long the amount to increment the day by
+	@return the object itself
+	*/
+	DateTime& incrDay(const unsigned long& by=1);
+
+	/**
+	increments the hour of this date object.
+	@param unsigned long the amount to increment the hour by
+	@return the object itself
+	*/
+	DateTime& incrHour(const unsigned long& by=1);
+
+	/**
+	increments the minute of this date object.
+	@param unsigned long the amount to increment the minute by
+	@return the object itself
+	*/
+	DateTime& incrMinute(const unsigned long& by=1);
+
+	/**
+	increments the second of this date object.
+	@param unsigned long the amount to increment the second by
+	@return the object itself
+	*/
+	DateTime& incrSecond(const unsigned long& by=1);
+
+	/**
+	increments the millisecond of this date object.
+	@param unsigned long the amount to increment the millisecond by
+	@return the object itself
+	*/
+	DateTime& incrMilliSecond(const unsigned long& by=1);
+
+	/**
+	decrements the year of this date object
+	@param unsigned long the amount to decrement the millisecond by
+	@return the object itself
+	*/
+	DateTime& decrYear(const unsigned long& by=1);
+
+	/**
+	decrements the month of this date object. See the incrMonth()
+	method for more details on the behaviour of this function.
+	@param unsigned long the amount to decrement the month by
+	@see incrMonth()
+	@return the object itself
+	*/
+	DateTime& decrMonth(const unsigned long& by=1);
+
+	/**
+	decrements the day of this date object
+	@param unsigned long the amount to decrement the day by
+	@return the object itself
+	*/
+	DateTime& decrDay(const unsigned long& by=1);
+
+	/**
+	decrements the hour of this date object
+	@param unsigned long the amount to decrement the hour by
+	@return the object itself
+	*/
+	DateTime& decrHour(const unsigned long& by=1);
+
+	/**
+	decrements the minute of this date object
+	@param unsigned long the amount to decrement the minute by
+	@return the object itself
+	*/
+	DateTime& decrMinute(const unsigned long& by=1);
+
+	/**
+	decrements the second of this date object
+	@param unsigned long the amount to decrement the second by
+	@return the object itself
+	*/
+	DateTime& decrSecond(const unsigned long& by=1);
+
+	/**
+	decrements the millisecond of this date object
+	@param unsigned long the amount to decrement the millisecond by
+	@return the object itself
+	*/
+	DateTime& decrMilliSecond(const unsigned long& by=1);
+
 
 	/**
 	templatized class for iterating a date, either forward
@@ -687,18 +599,18 @@ public:
 	public:
 		static void incr( DateTime& dt, unsigned long offset );
 		static void decr( DateTime& dt, unsigned long offset );
-    };
+	};
 	</pre>
 	*/
 	template <typename DateLogic>
 	class Iterator 
-	#ifdef VCF_BCC
+	#if defined(VCF_BCC) || defined(__INTEL_COMPILER)
 	;
-	#else	
+	#else
 	{
 	public:
 
-		Iterator()  {
+		Iterator() {
 
 		}
 
@@ -747,36 +659,16 @@ public:
 	protected:
 		DateTime dt_;
 	};
-        #endif //VCF__BCC
-
-	virtual String toString();
-
-	static bool isLeapYear( unsigned long year );
-
-	static unsigned long getNumberOfDaysInMonth( unsigned long year, Months month );
-
-	static bool isGregorianCalendarDate( const unsigned long& year,
-											const unsigned long& month,
-											const unsigned long& day );
-
-	static bool isGregorianCalendarDate( const DateTime& dt );
-
-	static void getYearMonthDay( const DateTime& dt, unsigned long* year, unsigned long* month, unsigned long* day );
-
-	static void getHourMinuteSecond( const DateTime& dt, unsigned long* hour, unsigned long* minute, unsigned long* second, unsigned long* millsecond=NULL );
+	#endif //VCF__BCC
 
 
 	friend class DateTimeSpan;
+
 protected:
 
-
-	void setAndAdjustForGregorianDay( const unsigned long& year,
-				const unsigned long& month,
-				const unsigned long& day,
-				const unsigned long& hour,
-				const unsigned long& minutes,
-				const unsigned long& seconds,
-				const unsigned long& milliseconds );
+	void setAndAdjustForGregorianDay( const unsigned long& year, const unsigned long& month, const unsigned long& day,
+	                                  const unsigned long& hour, const unsigned long& minutes, const unsigned long& seconds,
+	                                  const unsigned long& milliseconds );
 
 	static void setCurrent( DateTime& dt );
 	/**
@@ -787,12 +679,13 @@ protected:
 	ulong64 time_;
 };
 
-#ifdef VCF_BCC
+
+#if defined(VCF_BCC) || defined(__INTEL_COMPILER)
 	template <typename DateLogic>
 	class DateTime::Iterator {
 	public:
 
-		Iterator()  {
+		Iterator() {
 
 		}
 
@@ -843,6 +736,7 @@ protected:
 	};
 #endif
 
+
 class FOUNDATIONKIT_API ByMillisecond {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
@@ -887,6 +781,151 @@ public :
 
 
 
+///////////////////////////////////////////////////////////////////////////////
+// DateTimeSpan class declaration
+
+/**
+The DateTimeSpan represents an absolute delta value between two date time
+values. You can get the individual components of the span by calling the various
+getYears(), getMonths(), etc methods, or you can get the total amount of time
+this span covers in a praticular format, such the total minutes, or the total
+seconds. An example of this might look like so:
+<pre>
+DateTime dt1(2003,2,10); //2003, Feb 10th
+DateTime dt2(2003,2,23); //2003, Feb 23rd
+DateTimeSpan span = dt1 - dt2;
+int totalHours = span.getTotalHours();//returns 312 (or 24 * 13)
+int totalMinutes = span.getTotalMinutes(); //returns 18,720 (or 60 * 24 * 13)
+
+int days = span.getDays(); //returns 13
+int months = span.getMonths(); //returns 0
+int minutes = span.getMinutes(); //returns 0
+</pre>
+
+*/
+class FOUNDATIONKIT_API DateTimeSpan {
+public:
+	DateTimeSpan() :years_(0), months_(0), days_(0) {
+
+	}
+
+	DateTimeSpan( const DateTimeSpan& rhs ) {
+		*this = rhs;
+	}
+
+	DateTimeSpan& operator= ( const DateTimeSpan& rhs ) {
+		delta_  = rhs.delta_ ;
+		start_  = rhs.start_ ;
+		end_    = rhs.end_   ;
+		years_  = rhs.years_ ;
+		months_ = rhs.months_;
+		days_   = rhs.days_  ;
+
+		return *this;
+	}
+
+	/**
+	allows conversion to a ulong64 ( POD ) data type
+	*/
+	operator ulong64() const {
+		return delta_;
+	}
+
+	/**
+	returns the number of years in this span of time
+	*/
+	unsigned long getYears() const ;
+
+	/**
+	returns the number of months in this span of time
+	*/
+	unsigned long getMonths() const ;
+
+	/**
+	returns the number of days in this span of time
+	*/
+	unsigned long getDays() const ;
+
+	/**
+	returns the number of hours in this span of time
+	*/
+	unsigned long getHours() const ;
+
+	/**
+	returns the number of minutes in this span of time
+	*/
+	unsigned long getMinutes() const ;
+
+	/**
+	returns the number of seconds in this span of time
+	*/
+	unsigned long getSeconds() const ;
+
+	/**
+	returns the number of milliseconds in this span of time
+	*/
+	unsigned long getMilliseconds() const ;
+
+
+	/**
+	returns the total number of whole months if this span of time
+	is evaluated in months as the unit of measurement
+	*/
+	unsigned long getTotalMonths() const ;
+
+	/**
+	returns the total number of whole days if this span of time
+	is evaluated in days as the unit of measurement
+	*/
+	unsigned long getTotalDays() const ;
+
+	/**
+	returns the total number of whole hours if this span of time
+	is evaluated in hours as the unit of measurement
+	*/
+	unsigned long getTotalHours() const ;
+
+	/**
+	returns the total number of whole minutes if this span of time
+	is evaluated in minutes as the unit of measurement
+	*/
+	unsigned long getTotalMinutes() const ;
+
+	/**
+	returns the total number of whole seconds if this span of time
+	is evaluated in seconds as the unit of measurement
+	*/
+	unsigned long getTotalSeconds() const ;
+
+	/**
+	returns the total number of whole milliseconds if this span of time
+	is evaluated in milliseconds as the unit of measurement
+	*/
+	ulong64 getTotalMilliseconds() const ;
+
+	friend class DateTime;
+protected:
+
+	void subtract( const DateTime& lhs, const DateTime& rhs );
+
+	DateTimeSpan& operator=( const ulong64& rhs ) {
+		delta_ = rhs;
+		return *this;
+	}
+	ulong64 delta_;
+
+	ulong64 start_;
+	ulong64 end_;
+	unsigned long years_;
+	unsigned long months_;
+	unsigned long days_;
+};
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// DateTime inlines
+
 inline void DateTime::getDate( unsigned long* year, unsigned long* month, unsigned long* day ) const {
 	getYearMonthDay( *this, year, month, day );
 }
@@ -909,6 +948,23 @@ inline void DateTime::get( unsigned long* year, unsigned long* month, unsigned l
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.5  2004/10/18 23:18:19  augusto_roman
+*Fixed DateTime iterator declaration to work with the intel compiler - aroman
+*
+*Revision 1.2.2.4  2004/08/26 04:05:47  marcelloptr
+*minor change on name of getMillisecond
+*
+*Revision 1.2.2.3  2004/08/23 21:24:04  marcelloptr
+*just moved some member declarations around
+*
+*Revision 1.2.2.1  2004/08/11 04:49:36  marcelloptr
+*added conversion operator to ulong64
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

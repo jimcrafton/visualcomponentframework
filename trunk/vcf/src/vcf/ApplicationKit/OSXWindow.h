@@ -24,6 +24,8 @@ public:
 		wsNormal
 	};
 
+	OSXWindow();
+
 	OSXWindow( Control* control, Control* owner );
 
 	virtual ~OSXWindow();
@@ -82,9 +84,7 @@ public:
 
 	virtual void translateFromScreenCoords( Point* pt );
 	
-	virtual void setBorder( Border* border );
-
-	static OSXWindow* getOSXWindowFromWindowRef( WindowRef windowRef );
+	virtual void setBorder( Border* border );	
 
 	Rect internal_getBounds() {
 		return bounds_;
@@ -120,41 +120,45 @@ public:
 	
 	virtual bool isActiveWindow();
 
-    OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
+    virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 
 	bool isComposited();
+	
+	static OSXWindow* getWindowFromWindowRef( WindowRef window );
+	
+	ControlRef getRootControl();
+	
+	unsigned long getCurrentMouseBtn() {
+		return currentMouseBtn_;
+	}
+	
+	virtual WindowAttributes getCreationWinAttrs();
+	
+	virtual WindowClass getCreationWinClass();
 protected:
 	static EventHandlerUPP getEventHandlerUPP();
 
-	typedef std::map<WindowRef,OSXWindow*> OSXWindowMap;
-
-	static void registerOSXWindow( OSXWindow* osxWindow );
-	static void unRegisterOSXWindow( OSXWindow* osxWindow );
-
-	static OSXWindowMap osxWindowMap;
-
-
 	WindowRef windowRef_;
-
 	Control* control_;
-
 	Rect bounds_;
     EventHandlerRef handlerRef_;
-	EventHandlerRef contentViewHandlerRef_;
-	
+	EventHandlerRef contentViewHandlerRef_;	
 	//RgnHandle mouseTrackRgn_;
-	MouseTrackingRef mouseTrackRef_;
+	MouseTrackingRef mouseTrackRef_;	
+	unsigned long currentMouseBtn_;
+	bool internalClose_;	
 
 	RgnHandle determineUnobscuredClientRgn();
-
-	void handleDraw( bool drawingEvent, EventRef event );
-
-    bool internalClose_;
-
-    static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
-    void updateWindow();
 	
-	Control* getControlForMouseEvent( VCF::Point& pt, VCF::Control* parent );
+    static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	
+   	Control* getControlForMouseEvent( EventRef event );
+	
+	static OSStatus wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	
+	OSStatus handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent );
+	
+	void copyControlsFromWndRef( WindowRef oldWndRef );
 };
 
 
@@ -164,6 +168,26 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.5  2004/10/28 03:34:16  ddiego
+*more dialog updates for osx
+*
+*Revision 1.2.2.4  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
+*Revision 1.2.2.3  2004/10/23 18:10:43  ddiego
+*mac osx updates, some more fixes for dialog code and for command button peer functionality
+*
+*Revision 1.2.2.2  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
+*Revision 1.2.2.1  2004/10/10 15:23:12  ddiego
+*updated os x code
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

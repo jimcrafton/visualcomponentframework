@@ -78,6 +78,10 @@ public:
 
 	void setBorderWidth( const double& borderWidth );
 
+	double getTabHeight();
+
+	void setTabHeight( const double& tabHeight );
+
 protected:
 	class ScrollButton : public PushButton {
 	public:
@@ -110,6 +114,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/08/16 20:46:59  dougtinkham
+*added getTabHeight and setTabHeight members
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

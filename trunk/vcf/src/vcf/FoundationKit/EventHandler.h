@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF  {
 
+class Delegate;
+
+
 /**
 \par
 EventHandler's form the back bone of the event
@@ -37,9 +40,9 @@ class FOUNDATIONKIT_API EventHandler : public VCF::Object {
 public:
 	typedef std::vector<EventHandler*> Vector;
 
-	EventHandler(){};
+	EventHandler():delegate_(NULL){};
 
-	virtual ~EventHandler(){};
+	virtual ~EventHandler();
 
 	/**
 	*called during the events dispatch cycle
@@ -70,6 +73,19 @@ public:
 	*from ObjectWithEvent for this to work successfully.
 	*/
 	static void addHandlerList( Object* eventOwner, EventHandler::Vector* handlerList );
+
+	void setDelegate( Delegate* delegate ) {
+		delegate_ = delegate;
+	}
+
+	Delegate* getDelegate() const {
+		return delegate_;
+	}
+protected:
+	/**
+	The delegate that this event handler belongs to
+	*/
+	Delegate* delegate_;
 };
 
 
@@ -171,6 +187,11 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

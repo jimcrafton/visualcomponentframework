@@ -17,7 +17,8 @@ using namespace VCF;
 OSXCursorPeer::OSXCursorPeer( Cursor* cursor ):
 	cursorID_(CursorManager::UNREGISTERED_ID),
 	cursor_(cursor),
-    cursorHandle_(0)
+    cursorHandle_(0),
+	isSystemCursor_(false)
 {
     cursorHandle_ = GetCCursor(0);
 }
@@ -38,74 +39,77 @@ void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCu
 {
 
 	cursorID_ = (long)systemCursor;
+	isSystemCursor_ = true;
+
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
-			//id = GDK_LEFT_PTR;
+			cursorID_ = kThemeArrowCursor;
 		}
 		break;
 
 		case Cursor::SCT_SPLIT_VERT : {
-			//id = GDK_SB_V_DOUBLE_ARROW;
+			cursorID_ = kThemeResizeLeftRightCursor;
 		}
 		break;
 
 		case Cursor::SCT_SPLIT_HORZ : {
-			//id = GDK_SB_H_DOUBLE_ARROW;
+			cursorID_ = kThemeResizeLeftRightCursor;  //Wrong mapping
 		}
 		break;
 
 		case Cursor::SCT_SIZE_HORZ : {
-			//id = GDK_SB_H_DOUBLE_ARROW;
+			cursorID_ = kThemeResizeLeftRightCursor;  //Wrong mapping
 		}
 		break;
 
 		case Cursor::SCT_SIZE_VERT : {
-			//id = GDK_SB_V_DOUBLE_ARROW;
+			cursorID_ = kThemeResizeLeftRightCursor;
 		}
 		break;
 
 		case Cursor::SCT_SIZE_NE_SW : {
-			//id = GDK_TOP_LEFT_ARROW;
+			cursorID_ = kThemeCrossCursor;
 		}
 		break;
 
 		case Cursor::SCT_SIZE_NW_SE : {
-			//id = GDK_TOP_RIGHT_CORNER;
+			cursorID_ = kThemeCrossCursor;
 		}
 		break;
 
 		case Cursor::SCT_TEXT : {
-			//id = GDK_XTERM;
+			cursorID_ = kThemeIBeamCursor;
 		}
 		break;
 
 		case Cursor::SCT_HELP : {
-			//id = GDK_QUESTION_ARROW;
+			cursorID_ = kThemeArrowCursor;    //Wrong mapping
 		}
 		break;
 
 		case Cursor::SCT_WAIT : {
-			//id = GDK_WATCH;
+			cursorID_ = kThemeSpinningCursor;
 		}
 		break;
 
 		case Cursor::SCT_WAITING : {
-			//id = GDK_WATCH;
+//			/cursorID_ = kThemeArrowCursor;    //Wrong mapping
+			cursorID_ = kThemeSpinningCursor;
 		}
 		break;
 
 		case Cursor::SCT_NOWAYHOSER : {
-			//id = GDK_X_CURSOR;
+			cursorID_ = kThemeArrowCursor;    //Wrong mapping
 		}
 		break;
 
 		case Cursor::SCT_CROSSHAIRS : {
-			//id = GDK_CROSSHAIR;
+			cursorID_ = kThemeCrossCursor;
 		}
 		break;
 
 		case Cursor::SCT_POINTING_HAND : {
-			//id = GDK_HAND2;
+			cursorID_ = kThemePointingHandCursor;
 		}
 		break;
 	}
@@ -122,6 +126,14 @@ void OSXCursorPeer::createFromResourceName( const String& cursorName, const ulon
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:37  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/27 03:11:40  ddiego
+*integrated chrisk changes
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -150,6 +150,10 @@ public:
 
 	virtual MenuItem* getChildAt( const unsigned long& index );
 
+	virtual MenuItem* findChildNamedSimilarTo( const String& name );
+
+	virtual MenuItem* findChildNamed( const String& name );
+
 	virtual bool isEnabled();
 
 	virtual void setEnabled( const bool& enabled );
@@ -225,15 +229,7 @@ public:
 	virtual AcceleratorKey* getAccelerator() {
 		return currentAccelerator_;
 	}
-
-	virtual long getTag() {
-		return tag_;
-	}
-
-	virtual void setTag( const long& tag ) {
-		tag_ = tag;
-	}
-
+	
 	virtual Object* clone(bool deep=false);
 
 	virtual void handleEvent( Event* event );
@@ -257,7 +253,6 @@ protected:
 	bool isEnabled_;
 	Rect bounds_;
 	AcceleratorKey* currentAccelerator_;
-	long tag_;
 
 };
 
@@ -280,6 +275,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/18 06:45:44  ddiego
+*updated toolbar btn bug, and added text edit sample.
+*
+*Revision 1.2.2.1  2004/09/07 00:49:12  ddiego
+*minor fixes in printg code in graphics kit, and added a 2 ways to print in the printing example.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

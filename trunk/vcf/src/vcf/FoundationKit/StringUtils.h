@@ -109,6 +109,36 @@ public:
 	static void trimWhiteSpaces( VCF::String& text );
 
 	/**
+	*gets a copy of the string that is having erased all its characters on the left 
+	*of the count-th occurrence of the character ch.
+	*If the character is not found, the result string is equal to the original one.
+	*@param String the source string
+	*@param const VCFChar& ch, the char to be searched
+	*@param const bool& included, includes the found char in the erasing. By default is false.
+	*@param const int& count, number of occurrences of the character to search for.
+	*A negative value means a search from the end of the string. Default is +1.
+	*in the string. A count = 0 means no erasing on the string. It the count exceeds the
+	*number of occurrences in the string then search stops at the last one.
+	*@return String, the modified string.
+	*/
+	static String eraseLeftOfChar( const String& s, const VCFChar& ch, const bool& included=false, const int& count=1 );
+
+	/**
+	*gets a copy of the string that is having erased all its characters on the right 
+	*of the count-th occurrence of the character ch.
+	*If the character is not found, the result string is equal to the original one.
+	*@param String the source string
+	*@param const VCFChar& ch, the char to be searched
+	*@param const bool& included, includes the found char in the erasing. By default is false.
+	*@param const int& count, number of occurrences of the character to search for.
+	*A negative value means a search from the end of the string. Default is +1.
+	*in the string. A count = 0 means no erasing on the string. It the count exceeds the
+	*number of occurrences in the string then search stops at the last one.
+	*@return String, the modified string.
+	*/
+	static String eraseRightOfChar( const String& s, const VCFChar& ch, const bool& included=false, const int& count=1 );
+
+	/**
 	*converts the string to lower case
 	*@param String the text to convert
 	*@return String the converted string
@@ -442,6 +472,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/23 12:20:00  marcelloptr
+*bugfix [1048400] menus are now merged regardless of their shortcut key
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

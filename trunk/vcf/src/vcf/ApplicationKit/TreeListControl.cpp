@@ -46,7 +46,7 @@ TreeListControl::TreeListControl():
 TreeListControl::~TreeListControl()
 {
 	if ( NULL != treeModel_ ) {
-		treeModel_->release();
+//		treeModel_->release();
 	}
 }
 
@@ -100,24 +100,29 @@ void TreeListControl::setTreeModel(TreeModel * model)
 			treeModel_->removeTreeNodeAddedHandler( handler );
 			treeModel_->removeTreeNodeDeletedHandler( handler );
 		}
-		treeModel_->removeView( this );
-		treeModel_->release();
+		getViewModel()->removeView( this );
 	}
 
 	treeModel_ = model;
 
-	this->setViewModel( treeModel_ );
-
 	if ( NULL != treeModel_ ) {
-		treeModel_->addRef();
-		treeModel_->addView( this );
+		Model* tm = dynamic_cast<Model*>(treeModel_);
+
+		tm->addView( this );
+
 		EventHandler* handler = getEventHandler( "TreeListControl::onModelChanged" );
 		if ( NULL == handler ) {
 			handler = new TreeModelEventHandler<TreeListControl>( this, &TreeListControl::onModelChanged, "TreeListControl::onModelChanged" );
-			addEventHandler( "TreeListControl::onModelChanged", handler );
+			
+			//JC - commented this out - this is unneccesary
+			//addEventHandler( "TreeListControl::onModelChanged", handler );
 		}
+
 		treeModel_->addTreeNodeAddedHandler( handler );
 		treeModel_->addTreeNodeDeletedHandler( handler );
+	}
+	else {
+		setViewModel( NULL );
 	}
 }
 
@@ -139,6 +144,47 @@ void TreeListControl::onModelChanged( TreeModelEvent* event )
 			}
 		}
 		break;
+	}
+
+
+	recalcScrollable();
+	
+}
+
+void TreeListControl::recalcScrollable()
+{
+	Scrollable* scrollable = getScrollable();
+	if ( NULL != scrollable ) {
+		double oldVisibleHeight = visibleItemsHeight_;
+
+		visibleItemsHeight_ = 0;
+		if ( header_->getVisible() ) {
+			visibleItemsHeight_ += header_->getHeight();
+		}
+
+		std::vector<TreeItem*> visibleItems;		
+
+		populateVisiblityList( visibleItems );
+
+		std::vector<TreeItem*>::iterator it = visibleItems.begin();
+		while ( it != visibleItems.end() ) {
+			TreeItem* item = *it;
+			
+			visibleItemsHeight_ += item->getBounds()->getHeight();
+			it ++;
+		}
+
+		if ( (getHeight() > visibleItemsHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
+			scrollable->setVerticalPosition( 0.0 );
+		}
+		else if ( oldVisibleHeight > visibleItemsHeight_ ) {
+			double newPos = minVal<double>( abs((long)(visibleItemsHeight_ - getHeight()))+1.0, scrollable->getVerticalPosition() );
+			
+			scrollable->setVerticalPosition( newPos );
+			
+		}
+		
+		scrollable->setVirtualViewHeight( visibleItemsHeight_ );
 	}
 }
 
@@ -513,6 +559,7 @@ void TreeListControl::paint( GraphicsContext * context )
 	CustomControl::paint( context );
 
 	paintChildren( context );
+	
 
 	double oldVisibleHeight = visibleItemsHeight_;
 
@@ -523,18 +570,15 @@ void TreeListControl::paint( GraphicsContext * context )
 
 	hierarchyHeightMap_.clear();
 
-	Rect borderRect(0,0,getWidth(), getHeight() );
-	Border* border = getBorder();
-	if ( NULL != border ) {
-		borderRect = border->getClientRect( &borderRect, this );
-	}
+	Rect borderRect = getClientBounds();
 
+	
 	Rect itemRect;
 
 	double prevTop = borderRect.top_ + header_->getHeight();
 
-	Rect clipRect = borderRect;
-	clipRect.top_ = prevTop;
+	Rect clipRect = context->getViewableBounds();
+
 	context->setClippingRect( &clipRect );
 
 	std::vector<TreeItem*> visibleItems;
@@ -565,7 +609,7 @@ void TreeListControl::paint( GraphicsContext * context )
 		it ++;
 	}
 
-
+/*
 	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		if ( (getHeight() > visibleItemsHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
@@ -579,7 +623,7 @@ void TreeListControl::paint( GraphicsContext * context )
 		}
 
 		scrollable->setVirtualViewHeight( visibleItemsHeight_ );
-	}
+	}*/
 }
 
 
@@ -810,6 +854,8 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 				foundItem->expand( !foundItem->isExpanded() );
 				ItemEvent event( this, ITEM_EVENT_CHANGED );
 				ItemExpanded.fireEvent( &event );
+
+				recalcScrollable();
 			}
 			else if ( true == stateHitTest( event->getPoint(), foundItem ) ) {
 				long state = foundItem->getState();
@@ -1222,16 +1268,22 @@ bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem*
 	return result;
 }
 
-void TreeListControl::populateVisiblityList( std::vector<TreeItem*>& items )
+void TreeListControl::populateVisiblityList( std::vector<TreeItem*>& items, Rect* bounds )
 {
 	Enumerator<TreeItem*>* rootItems = treeModel_->getRootItems();
-	Rect clientBounds = getClientBounds();
-
-	clientBounds.top_ += header_->getHeight();
-
-	Scrollable* scrollable = getScrollable();
-	if ( NULL != scrollable ) {
-		clientBounds.offset( 0, scrollable->getVerticalPosition() );
+	Rect clientBounds;
+	if ( NULL != bounds ) {
+		clientBounds = *bounds;
+	}
+	else {
+		clientBounds = getClientBounds();
+		
+		clientBounds.top_ += header_->getHeight();
+		
+		Scrollable* scrollable = getScrollable();
+		if ( NULL != scrollable ) {
+			clientBounds.offset( 0, scrollable->getVerticalPosition() );
+		}
 	}
 	while ( rootItems->hasMoreElements() ) {
 		TreeItem* child = rootItems->nextElement();
@@ -1458,6 +1510,26 @@ bool TreeListControl::listSelectedItems( std::vector<TreeItem*>& items, TreeItem
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.1  2004/08/21 21:06:52  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

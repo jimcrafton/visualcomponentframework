@@ -24,7 +24,9 @@ class ContextPeer;
 class GraphicsContext;
 class Font;
 class FontPeer;
-
+class GraphicsResourceBundle;
+class PrintSessionPeer; 
+class GraphicsResourceBundlePeer;
 
 
 /**
@@ -121,6 +123,13 @@ public:
 
 	static Image* createImage( GraphicsContext* context, Rect* rect );
 
+	static PrintSessionPeer* createPrintSessionPeer();
+
+	static GraphicsResourceBundlePeer* createGraphicsResourceBundlePeer();
+
+	static GraphicsResourceBundle* getResourceBundle();
+	
+
 	/**
 	*Create a image from a filename. The file is loaded into a Bitmap instance.
 	*The toolkit looks up the file extension and matches the type to
@@ -146,13 +155,13 @@ public:
 
 	static Color* getColorFromColormap( const String& colorName );
 
-	/*
-	*Find the named color closest to a color with a given RGB value
+	/**
+	* finds the named color closest to a color with a given RGB value
 	*/
 	static Color* getColorMatchFromColormap( const Color& color );
 
-	/*
-	*Find a color with a given luminosity contrast with another given color
+	/**
+	* finds a color with a given luminosity contrast with another given color
 	*/
 	static Color getColorContrast( const Color& clrRef, double deltaL = 0.3 );
 
@@ -162,7 +171,12 @@ public:
 
 	static Font* getDefaultSystemFont() ;
 
-	static double getDPI();
+	/**
+	Returns the crurent DPI for the screen if the context
+	parameter is NULL, otherwise returns the dpi that 
+	is used by the graphics context.
+	*/
+	static double getDPI( GraphicsContext* context = NULL );
 
 	static void initGraphicsToolkit();
 
@@ -184,6 +198,13 @@ protected:
 	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height ) = 0;
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect ) = 0;
+	
+	virtual PrintSessionPeer* internal_createPrintSessionPeer() = 0;
+
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer() = 0;
+
+	virtual double internal_getDPI( GraphicsContext* context ) = 0;
+
 
 	/**
 	*Create a image from a filename. The file is loaded into a Bitmap instance.
@@ -206,9 +227,7 @@ protected:
 		return NULL;
 	}
 
-	virtual double internal_getDPI() {
-		return -1.0;
-	};
+	
 
 
 
@@ -221,13 +240,13 @@ protected:
 
 	Color* internal_getColorFromColormap( const String& colorName );
 
-	/*
-	*Find the named color closest to a color with a given RGB value
+	/**
+	* finds the named color closest to a color with a given RGB value
 	*/
 	Color* internal_getColorMatchFromColormap( const Color& color );
 
-	/*
-	*Find a color with a given luminosity contrast with another given color
+	/**
+	* finds a color with a given luminosity contrast with another given color
 	*/
 	Color internal_getColorContrast( const Color& clrRef, double deltaL = 0.3 );
 
@@ -290,6 +309,28 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:43  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/11/10 19:09:53  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.3  2004/08/27 03:50:47  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.2  2004/08/25 04:43:33  ddiego
+*migrated the core printing changes into the graphics kit
+*
+*Revision 1.2.2.1  2004/08/21 21:07:10  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

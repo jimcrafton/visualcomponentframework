@@ -1,0 +1,7 @@
+USEUNIT("CmdLine.cpp");
+USEUNIT("FilePath.cpp");
+USEUNIT("xmake.cpp");
+USEUNIT("xmakeUtils.cpp");
+USEUNIT("XMLParser.cpp");
+//---------------------------------------------------------------------------
+#define Library

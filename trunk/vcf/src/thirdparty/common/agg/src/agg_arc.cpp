@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -43,6 +43,16 @@ namespace agg
         m_rx  = rx; m_ry = ry; 
         normalize(a1, a2, ccw);
     }
+    
+    //------------------------------------------------------------------------
+    void arc::approximation_scale(double s)
+    {
+        m_scale = s;
+        if(m_initialized)
+        {
+            normalize(m_start, m_end, m_ccw);
+        }
+    }
 
     //------------------------------------------------------------------------
     void arc::rewind(unsigned)
@@ -84,11 +94,12 @@ namespace agg
         else
         {
             while(a1 < a2) a1 += pi * 2.0;
-            m_da   = -m_da;
+            m_da = -m_da;
         }
         m_ccw   = ccw;
         m_start = a1;
         m_end   = a2;
+        m_initialized = true;
     }
 
 }

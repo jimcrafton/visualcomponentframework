@@ -49,9 +49,9 @@ extern CComModule _Module;
 
 
 
-/*
-This is a series of smart pointer declarations
-so ICustomDoc, becomes ICustomDocPtr, used on the stack
+/**
+* This is a series of smart pointer declarations
+* so ICustomDoc, becomes ICustomDocPtr, used on the stack
 */
 _COM_SMARTPTR_TYPEDEF(IOleObject, __uuidof(IOleObject));
 _COM_SMARTPTR_TYPEDEF(IConnectionPointContainer, __uuidof(IConnectionPointContainer));
@@ -508,7 +508,7 @@ protected:
 /**
 *Class Win32HTMLBrowser documentation
 */
-class WIN32HTMLBROWSERAPI Win32HTMLBrowser : public AbstractWin32Component, public HTMLBrowserPeer {
+class WIN32HTMLBROWSER_API Win32HTMLBrowser : public AbstractWin32Component, public HTMLBrowserPeer {
 public:
 	BEGIN_CLASSINFO(Win32HTMLBrowser, "VCF::Win32HTMLBrowser", "VCF::AbstractWin32Component", WIN32HTMLBROWSER_CLASSID )
 	END_CLASSINFO(Win32HTMLBrowser)
@@ -525,7 +525,8 @@ public:
 
 	virtual void setVisible( const bool& val );
 
-	virtual LRESULT handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc = NULL );
+	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndResult, WNDPROC defaultWndProc=NULL );
+	
 
 
 	virtual String getCurrentURL();
@@ -579,6 +580,20 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/10 19:07:37  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.2  2004/09/08 01:16:50  ddiego
+*fixed incorrect win32htmlbrowser function due to changes from weekend.
+*
+*Revision 1.2.2.1  2004/08/17 05:01:29  marcelloptr
+*improved macros for library selection
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

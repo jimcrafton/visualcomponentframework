@@ -602,14 +602,21 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 		FILETIME   ftUTC;
 		HANDLE hFile = NULL;
 
-		st.wYear = dateModified.getYear();
-		st.wMonth = dateModified.getMonth();
+		unsigned long y, m, d, h, min, s, ms;
+		dateModified.get( &y, &m, &d, &h, &min, &s, &ms );
+
+		if ( ( y < 1601 ) || ( 30827 < y ) ) {
+			throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
+		}
+
+		st.wYear   = y;
+		st.wMonth  = m;
 		st.wDayOfWeek = dateModified.getWeekDay();
-		st.wDay = dateModified.getDay();
-		st.wHour = dateModified.getHour();
-		st.wMinute = dateModified.getMinute();
-		st.wSecond = dateModified.getSecond();
-		st.wMilliseconds = dateModified.getMilliSecond();
+		st.wDay    = d;
+		st.wHour   = h;
+		st.wMinute = min;
+		st.wSecond = s;
+		st.wMilliseconds = ms;
 
 		// convert system time to filetime
 		if ( !::SystemTimeToFileTime( &st, &ftUTC ) ) { // stUTC --> ftUTC
@@ -956,6 +963,17 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.1  2004/08/26 04:05:48  marcelloptr
+*minor change on name of getMillisecond
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

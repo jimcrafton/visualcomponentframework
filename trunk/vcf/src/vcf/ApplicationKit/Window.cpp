@@ -128,7 +128,7 @@ void Window::resizeChildren( Control* control )
 	Rect rect( 0.0, 0.0, bounds->getWidth(), bounds->getHeight() );
 	resizeChildrenUsingBounds( &rect );
 	*/
-	Frame::resizeChildren(NULL);
+	Frame::resizeChildren(control);
 }
 
 
@@ -158,6 +158,8 @@ void Window::setMenuBar( MenuBar* menuBar )
 	if ( NULL != menuBar_ ){
 		menuBar_->setFrame( this );
 	}
+
+	//resizeChildren( NULL );
 }
 
 void Window::close()
@@ -301,6 +303,14 @@ bool Window::isActiveFrame()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/21 00:19:10  ddiego
+*fixed a few more res loading bugs, and added yet another resource example.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -39,6 +39,20 @@ public:
 
 	virtual void setVirtualViewWidth( const double& virtualViewWidth ) = 0;
 
+	virtual void setVirtualViewSize( const double& width, const double& height ) = 0;
+
+	virtual void setVirtualViewHorzStep( const double& step ) = 0;
+
+	virtual void setVirtualViewVertStep( const double& step ) = 0;
+
+	virtual double getVirtualViewHorzStep() = 0;
+
+	virtual double getVirtualViewVertStep() = 0;
+
+	virtual bool isVerticalScrollbarVisible() = 0;
+
+	virtual bool isHorizontalScrollbarVisible() = 0;	
+
 	virtual void recalcScrollPositions() = 0;
 
 	virtual void setVerticalPosition( const double& vertPosition ) = 0;
@@ -103,8 +117,21 @@ public:
 	*/
 	virtual void getVerticalScrollRects( Rect* scrollBounds, Rect* topBounds=NULL, Rect* bottomBounds=NULL ) = 0;
 
-	virtual void setKeepScrollbarsVisible( const bool& val )  = 0;
-	virtual bool getKeepScrollbarsVisible()  = 0;
+	/**
+	This allows you to control whether or not the scrollbars disappear when they are no longer needed.
+	By default this is false, which means that the scrollabars will disappear when the virtual width
+	or height is less than the control's actual width or height. If this is true, then the
+	scrollbars will stay visible, but become disabled.
+	@param bool visible, true if we want it visible
+	*/
+	virtual void setKeepScrollbarsVisible( const bool& horzVisible, const bool& vertVisible ) = 0;
+
+	/**
+	Gets whether or not the scrollbars disappear when they are no longer needed.
+	@return true if they stay visible even when not needed
+	*/
+	virtual bool getKeepHorzScrollbarVisible() = 0;
+	virtual bool getKeepVertScrollbarVisible() = 0;
 };
 
 
@@ -114,6 +141,23 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/09/21 22:27:09  marcelloptr
+*added setVirtualViewStep functions for the scrollbars and other minor changes
+*
+*Revision 1.2.2.3  2004/09/21 05:51:55  dougtinkham
+*removed updateVirtualViewSize, added isVerticalScrollbarVisible, isHorizontalScrollbarVisible
+*
+*Revision 1.2.2.2  2004/09/19 19:54:45  marcelloptr
+*scrollbars transitory changes
+*
+*Revision 1.2.2.1  2004/09/10 22:28:10  dougtinkham
+*added updateVirtualViewSize member
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

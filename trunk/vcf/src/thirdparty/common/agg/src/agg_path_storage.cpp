@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -20,6 +20,7 @@
 #include <math.h>
 #include "thirdparty/common/agg/include/agg_path_storage.h"
 #include "thirdparty/common/agg/include/agg_math.h"
+#include "thirdparty/common/agg/include/agg_bezier_arc.h"
 
 
 namespace agg
@@ -128,10 +129,72 @@ namespace agg
 
 
     //------------------------------------------------------------------------
-    void path_storage::rewind(unsigned id)
+    void path_storage::rewind(unsigned path_id)
     {
-        m_iterator = id; 
+        m_iterator = path_id; 
     }
+
+
+
+    //------------------------------------------------------------------------
+    void path_storage::arc_to(double rx, double ry,
+                              double angle,
+                              bool large_arc_flag,
+                              bool sweep_flag,
+                              double x, double y)
+    {
+        if(m_total_vertices && is_vertex(command(m_total_vertices - 1)))
+        {
+            const double epsilon = 1e-30;
+            double x0 = 0.0;
+            double y0 = 0.0;
+            last_vertex(&x0, &y0);
+
+            rx = fabs(rx);
+            ry = fabs(ry);
+
+            // Ensure radii are valid
+            //-------------------------
+            if(rx < epsilon || ry < epsilon) 
+            {
+                line_to(x, y);
+                return;
+            }
+
+            if(calc_distance(x0, y0, x, y) < epsilon)
+            {
+                // If the endpoints (x, y) and (x0, y0) are identical, then this
+                // is equivalent to omitting the elliptical arc segment entirely.
+                return;
+            }
+            bezier_arc_svg a(x0, y0, rx, ry, angle, large_arc_flag, sweep_flag, x, y);
+            if(a.radii_ok())
+            {
+                add_path(a, 0, true);
+            }
+            else
+            {
+                line_to(x, y);
+            }
+        }
+        else
+        {
+            move_to(x, y);
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    void path_storage::arc_rel(double rx, double ry,
+                               double angle,
+                               bool large_arc_flag,
+                               bool sweep_flag,
+                               double dx, double dy)
+    {
+        rel_to_abs(&dx, &dy);
+        arc_to(rx, ry, angle, large_arc_flag, sweep_flag, dx, dy);
+    }
+
 
     //------------------------------------------------------------------------
     void path_storage::curve3(double x_ctrl, double y_ctrl, 
@@ -141,117 +204,200 @@ namespace agg
         add_vertex(x_to,   y_to,   path_cmd_curve3);
     }
 
+    //------------------------------------------------------------------------
+    void path_storage::curve3_rel(double dx_ctrl, double dy_ctrl, 
+                                  double dx_to,   double dy_to)
+    {
+        rel_to_abs(&dx_ctrl, &dy_ctrl);
+        rel_to_abs(&dx_to,   &dy_to);
+        add_vertex(dx_ctrl, dy_ctrl, path_cmd_curve3);
+        add_vertex(dx_to,   dy_to,   path_cmd_curve3);
+    }
+
+    //------------------------------------------------------------------------
+    void path_storage::curve3(double x_to, double y_to)
+    {
+        double x0;
+        double y0;
+        if(is_vertex(last_vertex(&x0, &y0)))
+        {
+            double x_ctrl;
+            double y_ctrl; 
+            unsigned cmd = prev_vertex(&x_ctrl, &y_ctrl);
+            if(is_curve(cmd))
+            {
+                x_ctrl = x0 + x0 - x_ctrl;
+                y_ctrl = y0 + y0 - y_ctrl;
+            }
+            else
+            {
+                x_ctrl = x0;
+                y_ctrl = y0;
+            }
+            curve3(x_ctrl, x_ctrl, x_to, y_to);
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    void path_storage::curve3_rel(double dx_to, double dy_to)
+    {
+        rel_to_abs(&dx_to, &dy_to);
+        curve3(dx_to, dy_to);
+    }
+
 
     //------------------------------------------------------------------------
     void path_storage::curve4(double x_ctrl1, double y_ctrl1, 
-                                     double x_ctrl2, double y_ctrl2, 
-                                     double x_to,    double y_to)
+                              double x_ctrl2, double y_ctrl2, 
+                              double x_to,    double y_to)
     {
         add_vertex(x_ctrl1, y_ctrl1, path_cmd_curve4);
         add_vertex(x_ctrl2, y_ctrl2, path_cmd_curve4);
         add_vertex(x_to,    y_to,    path_cmd_curve4);
     }
 
+    //------------------------------------------------------------------------
+    void path_storage::curve4_rel(double dx_ctrl1, double dy_ctrl1, 
+                                  double dx_ctrl2, double dy_ctrl2, 
+                                  double dx_to,    double dy_to)
+    {
+        rel_to_abs(&dx_ctrl1, &dy_ctrl1);
+        rel_to_abs(&dx_ctrl2, &dy_ctrl2);
+        rel_to_abs(&dx_to,    &dy_to);
+        add_vertex(dx_ctrl1, dy_ctrl1, path_cmd_curve4);
+        add_vertex(dx_ctrl2, dy_ctrl2, path_cmd_curve4);
+        add_vertex(dx_to,    dy_to,    path_cmd_curve4);
+    }
 
 
     //------------------------------------------------------------------------
-    void path_storage::close_polygon()
+    void path_storage::curve4(double x_ctrl2, double y_ctrl2, 
+                              double x_to,    double y_to)
+    {
+        double x0;
+        double y0;
+        if(is_vertex(last_vertex(&x0, &y0)))
+        {
+            double x_ctrl1;
+            double y_ctrl1; 
+            unsigned cmd = prev_vertex(&x_ctrl1, &y_ctrl1);
+            if(is_curve(cmd))
+            {
+                x_ctrl1 = x0 + x0 - x_ctrl1;
+                y_ctrl1 = y0 + y0 - y_ctrl1;
+            }
+            else
+            {
+                x_ctrl1 = x0;
+                y_ctrl1 = y0;
+            }
+            curve4(x_ctrl1, y_ctrl1, x_ctrl2, y_ctrl2, x_to, y_to);
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    void path_storage::curve4_rel(double dx_ctrl2, double dy_ctrl2, 
+                                  double dx_to,    double dy_to)
+    {
+        rel_to_abs(&dx_ctrl2, &dy_ctrl2);
+        rel_to_abs(&dx_to,    &dy_to);
+        curve4(dx_ctrl2, dy_ctrl2, dx_to, dy_to);
+    }
+
+
+    //------------------------------------------------------------------------
+    void path_storage::end_poly(unsigned flags)
     {
         if(m_total_vertices)
         {
-            unsigned char* cmd_ptr = 
-                m_cmd_blocks[(m_total_vertices - 1) >> block_shift] + 
-                ((m_total_vertices - 1) & block_mask);
-
-            if(!is_end_poly(*cmd_ptr))
+            if(is_vertex(command(m_total_vertices - 1)))
             {
-                *cmd_ptr |= path_flags_close;
+                add_vertex(0.0, 0.0, path_cmd_end_poly | flags);
             }
         }
     }
 
 
-
     //------------------------------------------------------------------------
-    unsigned path_storage::add_new_path()
+    unsigned path_storage::start_new_path()
     {
         if(m_total_vertices)
         {
-            add_vertex(0.0, 0.0, path_cmd_stop);
+            if(!is_stop(command(m_total_vertices - 1)))
+            {
+                add_vertex(0.0, 0.0, path_cmd_stop);
+            }
         }
         return m_total_vertices;
     }
 
 
     //------------------------------------------------------------------------
-    unsigned path_storage::perceive_polygon_orientation(unsigned idx, 
-                                                        double xs, 
-                                                        double ys)
+    void path_storage::add_poly(const double* vertices, unsigned num,
+                                bool solid_path, unsigned end_flags)
+    {
+        if(num)
+        {
+            if(!solid_path)
+            {
+                move_to(vertices[0], vertices[1]);
+                vertices += 2;
+                --num;
+            }
+            while(num--)
+            {
+                line_to(vertices[0], vertices[1]);
+                vertices += 2;
+            }
+            if(end_flags) end_poly(end_flags);
+        }
+    }
+
+
+    //------------------------------------------------------------------------
+    unsigned path_storage::perceive_polygon_orientation(unsigned idx,
+                                                        double xs, double ys,
+                                                        unsigned* orientation)
     {
         unsigned i;
         double sum = 0.0;
-        double x = xs;
-        double y = ys;
-        double x1, y1;
+        double x, y, xn, yn;
 
-        for(i = idx + 1; i < m_total_vertices; i++)
+        x = xs;
+        y = ys;
+        for(i = idx; i < m_total_vertices; ++i)
         {
-            if(is_end_poly(vertex(i, &x1, &y1))) break;
-            sum += x * y1 - y * x1;
-            x = x1;
-            y = y1;
+            if(is_next_poly(vertex(i, &xn, &yn))) break;
+            sum += x * yn - y * xn;
+            x = xn;
+            y = yn;
         }
-        sum += x * ys - y * xs;
-
-        unsigned char* cmd_ptr = m_cmd_blocks[idx >> block_shift] + (idx & block_mask);
-        *cmd_ptr = (unsigned char) (sum < 0.0) ? 
-                                    set_cw(*cmd_ptr) : 
-                                    set_ccw(*cmd_ptr);
-        return i - idx - 1;
+        if(i > idx) sum += x * ys - y * xs;
+        *orientation = path_flags_none;
+        if(sum != 0.0)
+        {
+            *orientation = (sum < 0.0) ? path_flags_cw : path_flags_ccw;
+        }
+        return i;
     }
 
 
-
     //------------------------------------------------------------------------
-    int path_storage::perceive_orientation(unsigned start)
+    void path_storage::reverse_polygon(unsigned start, unsigned end)
     {
         unsigned i;
-        double x, y;
-        int balance = 0;
-
-        for(i = start; i < m_total_vertices; i++)
-        {
-            unsigned cmd = vertex(i, &x, &y);
-            if(is_move_to(cmd))
-            {
-                int n = perceive_polygon_orientation(i, x, y);
-                unsigned cmd = m_cmd_blocks[i >> block_shift][i & block_mask];
-                if(is_ccw(cmd)) balance++;
-                if(is_cw(cmd))  balance--;
-                i += n;
-            }
-            if(is_stop(cmd)) break;
-        }
-        return balance;
-    }
-
-
-
-    //------------------------------------------------------------------------
-    void path_storage::reverse_orientation(unsigned start, unsigned end)
-    {
-        unsigned i;
-        unsigned tmp_cmd = m_cmd_blocks[start >> block_shift][start & block_mask];
+        unsigned tmp_cmd = command(start);
         
-        // Shift all attributes to one position
+        // Shift all commands to one position
         for(i = start; i < end; i++)
         {
-            m_cmd_blocks[i >> block_shift][i & block_mask] = 
-                m_cmd_blocks[(i + 1) >> block_shift][(i + 1) & block_mask];
+            modify_command(i, command(i + 1));
         }
 
-        // Assign move_to to the ending cmd
-        m_cmd_blocks[end >> block_shift][end & block_mask] = (unsigned char)tmp_cmd;
+        // Assign starting command to the ending command
+        modify_command(end, tmp_cmd);
 
         // Reverse the polygon
         while(end > start)
@@ -277,76 +423,102 @@ namespace agg
             ++start;
             --end;
         }
-
-
     }
 
 
-
-
-
     //------------------------------------------------------------------------
-    void path_storage::arrange_orientation(unsigned start,
-                                           bool perception_flag, 
-                                           path_flags_e new_orientation)
+    unsigned path_storage::arrange_orientations(unsigned path_id, 
+                                                path_flags_e new_orientation)
     {
-        int balance = 0;
-        if(perception_flag)
+        unsigned end = m_total_vertices;
+        if(m_total_vertices && new_orientation != path_flags_none)
         {
-            balance = perceive_orientation(start);
-            if(!is_oriented(new_orientation))
+            unsigned start = path_id;
+
+            double xs, ys;
+            unsigned cmd = vertex(start, &xs, &ys);
+            unsigned inc = 0;
+            for(;;)
             {
-                new_orientation = (balance >= 0) ? path_flags_ccw : path_flags_cw;
-            }
-        }
-
-        if(is_oriented(new_orientation))
-        {
-            unsigned i;
-            path_flags_e of = path_flags_none;
-            unsigned start_i = 0;
-
-            for(i = start; i < m_total_vertices; i++)
-            {
-                unsigned char cmd = m_cmd_blocks[i >> block_shift][i & block_mask];
-
-                if(is_stop(cmd)) break;
-
-                if(is_move_to(cmd))
+                unsigned orientation;
+                end = perceive_polygon_orientation(start + 1, xs, ys, 
+                                                   &orientation);
+                if(end > start + 2 &&
+                   orientation && 
+                   orientation != unsigned(new_orientation))
                 {
-                    if(i > start_i && is_oriented(of) && of != new_orientation)
-                    {
-                        reverse_orientation(start_i, i - 1);
-                    }
-                    start_i = i;
-                    of = get_orientation(cmd);
+                    reverse_polygon(start + inc, end - 1);
                 }
+                if(end >= m_total_vertices) break;
+                cmd = command(end);
+                if(is_stop(cmd)) 
+                {
+                    ++end;
+                    break;
+                }
+                if(is_end_poly(cmd))
+                {
+                    inc = 1;
+                    modify_command(end, set_orientation(cmd, new_orientation));
+                }
+                else
+                {
+                    cmd = vertex(++end, &xs, &ys);
+                    inc = 0;
+                }
+                start = end;
             }
-            if(i > start_i && is_oriented(of) && of != new_orientation)
+        }
+        return end;
+    }
+
+
+
+    //------------------------------------------------------------------------
+    void path_storage::arrange_orientations_all_paths(path_flags_e new_orientation)
+    {
+        if(new_orientation != path_flags_none)
+        {
+            unsigned start = 0;
+            while(start < m_total_vertices)
             {
-                reverse_orientation(start_i, i - 1);
+                start = arrange_orientations(start, new_orientation);
+            }
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------
+    void path_storage::flip_x(double x1, double x2)
+    {
+        unsigned i;
+        double x, y;
+        for(i = 0; i < m_total_vertices; i++)
+        {
+            unsigned cmd = vertex(i, &x, &y);
+            if(is_vertex(cmd))
+            {
+                modify_vertex(i, x2 - x + x1, y);
             }
         }
     }
 
 
     //------------------------------------------------------------------------
-    void path_storage::add_poly(const double* vertices, unsigned num,
-                                path_flags_e flags)
+    void path_storage::flip_y(double y1, double y2)
     {
-        if(num > 1)
+        unsigned i;
+        double x, y;
+        for(i = 0; i < m_total_vertices; i++)
         {
-            move_to(*vertices, *(vertices + 1), flags);
-            vertices += 2;
-            while(--num)
+            unsigned cmd = vertex(i, &x, &y);
+            if(is_vertex(cmd))
             {
-                line_to(*vertices, *(vertices + 1));
-                vertices += 2;
+                modify_vertex(i, x, y2 - y + y1);
             }
         }
     }
-
-
 
 
 }

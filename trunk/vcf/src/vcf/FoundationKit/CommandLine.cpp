@@ -39,71 +39,144 @@ where you installed the VCF.
 
 using namespace VCF;
 
+int CommandLine::splitLine( const std::vector<String>& commandLine )
+{
+	commandLine_.clear();
+	originalCommandLine_.clear();
+	commandLineContainer_.initContainer( originalCommandLine_ );
+	
+	originalCommandLine_ = commandLine;
+	
+	String curParam; // current argv[x]
+	int argc = originalCommandLine_.size();
+	// skip the exe name (start with i = 1)
+	for (int i = 1; i < argc; i++)  {
+		// if it's a switch, start a new CommandLine
+		if ( isSwitch(originalCommandLine_[i]))  {
+			curParam = originalCommandLine_[i];
+			
+			String arg;
+			
+			// look at next input string to see if it's a switch or an argument
+			if (i + 1 < argc)  {
+				if (!isSwitch(originalCommandLine_[i + 1])) {
+					// it's an argument, not a switch
+					arg = originalCommandLine_[i + 1];
+					
+					// skip to next
+					i++;
+				}
+				else {
+					arg = "";
+				}
+			}
+			
+			// add it
+			CmdParam cmd;
+			
+			// only add non-empty args
+			if (arg != "")  {
+				cmd.strings_.push_back(arg);
+			}
+			
+			// add the CmdParam to 'this'
+			std::pair<CommandLineMap::iterator, bool> res = commandLine_.insert(CommandLineMap::value_type(curParam, cmd));
+			
+		}
+		else  {
+			// it's not a new switch, so it must be more stuff for the last switch
+			
+			// ...let's add it
+			CommandLineMap::iterator theIterator;
+			
+			// get an iterator for the current param
+			theIterator = commandLine_.find(curParam);
+			if (theIterator!=commandLine_.end())  {
+				(*theIterator).second.strings_.push_back(originalCommandLine_[i]);
+			}
+			else  {
+				// ??
+			}
+		}
+	}
+	
+	return commandLine_.size();
+}
+
 
 int CommandLine::splitLine( int argc, char **argv )
 {
-   commandLine_.clear();
-   originalCommandLine_.clear();
-   commandLineContainer_.initContainer( originalCommandLine_ );
+	std::vector<String> args;
+	
+	for ( int j=0;j<argc;j++ ) {
+		args.push_back( String(argv[j]) );
+	}
+	
+	return splitLine( args );
+}
 
-   for ( int j=0;j<argc;j++ ) {
-	   originalCommandLine_.push_back( String(argv[j]) );
-   }
-
-   String curParam; // current argv[x]
-
-   // skip the exe name (start with i = 1)
-   for (int i = 1; i < argc; i++)  {
-      // if it's a switch, start a new CommandLine
-      if ( isSwitch(argv[i]))  {
-         curParam = argv[i];
-
-         String arg;
-
-         // look at next input string to see if it's a switch or an argument
-         if (i + 1 < argc)  {
-            if (!isSwitch(argv[i + 1])) {
-               // it's an argument, not a switch
-               arg = argv[i + 1];
-
-               // skip to next
-               i++;
-            }
-            else {
-               arg = "";
-            }
-         }
-
-         // add it
-         CmdParam cmd;
-
-         // only add non-empty args
-         if (arg != "")  {
-            cmd.strings_.push_back(arg);
-         }
-
-         // add the CmdParam to 'this'
-		 std::pair<CommandLineMap::iterator, bool> res = commandLine_.insert(CommandLineMap::value_type(curParam, cmd));
-
-      }
-      else  {
-         // it's not a new switch, so it must be more stuff for the last switch
-
-         // ...let's add it
- 	      CommandLineMap::iterator theIterator;
-
-         // get an iterator for the current param
-         theIterator = commandLine_.find(curParam);
-	      if (theIterator!=commandLine_.end())  {
-            (*theIterator).second.strings_.push_back(argv[i]);
-         }
-         else  {
-            // ??
-         }
-      }
-   }
-
-   return commandLine_.size();
+int CommandLine::splitLine( const String& commandLine )
+{
+	std::vector<String> args;
+	const VCF::WideChar* P = commandLine.c_str();
+	const VCF::WideChar* start = P;
+	const VCF::WideChar* argStart = P;
+	
+	int sz = commandLine.size();
+	while ( (P - start) < sz ) {
+		if ( *P == '\"' ) {
+			P++;
+			while ( ((P - start) < sz) && (*P != '\"' ) ) {
+				P++;
+			}
+			P++;
+		}
+		
+		if ( *P == '\"' ) {
+			continue; //loop again
+		}
+		
+		if ( *P == ' ' ) {
+			//argument
+			//strip out begin/end quotes
+			
+			String arg;
+			const VCF::WideChar* tmpArgStart = argStart;
+			const VCF::WideChar* tmpArgEnd = tmpArgStart;
+			while ( tmpArgEnd < P ) {
+				if ( *tmpArgEnd == '\"' ) {
+					if ( tmpArgStart != tmpArgEnd ) {
+						arg.append( tmpArgStart, tmpArgEnd - tmpArgStart );
+						tmpArgStart = tmpArgEnd;
+					}
+					tmpArgStart++;					
+				}
+				
+				tmpArgEnd ++;
+			}
+			
+			if ( arg.empty() ) {
+				arg.append( tmpArgStart, tmpArgEnd - tmpArgStart );
+			}
+			
+			args.push_back( arg );
+			
+			while ( (*P == ' ') && ((P - start) < sz) ) {
+				P++;
+			}
+			argStart = P;
+			P--;
+		}
+		
+		P++;
+	}
+	if ( argStart < P ) {
+		String arg;
+		arg.assign( argStart, P-argStart );
+		args.push_back( arg );
+	}
+	
+	return splitLine( args );
 }
 
 
@@ -206,6 +279,14 @@ int CommandLine::getArgumentCount(const String& aSwitch)
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/10 20:42:07  ddiego
+*osx updates
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

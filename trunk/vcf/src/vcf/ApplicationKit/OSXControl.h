@@ -81,21 +81,26 @@ public:
 	virtual void translateFromScreenCoords( Point* pt );
 	
 	virtual void setBorder( Border* border );
-
-	static void setCurrentCreateHIView( TView* view );
-
-	static TView* getCurrentCreateHIView() {
-		return OSXControl::currentCreatedView;
-	}
+	
+	static OSXControl* getControlFromControlRef( ControlRef control );
 protected:
-	TView* hiView_;
+	ControlRef hiView_;
 	Control* control_;
 	EventHandlerRef handlerRef_;
 	MouseState mouseState_;
+	::Point lastMousePt_;
 	
-	OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
+	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 
-	static TView* currentCreatedView;
+	OSStatus handleControlTrack( EventRef theEvent );
+	
+	OSStatus handleWrappedControlTrack( EventRef theEvent );
+	
+	OSStatus handleWrappedControlTrackDone( EventRef theEvent );
+	
+	OSStatus handleWrappedControlHitTest( EventRef theEvent );
+	
+	OSStatus installStdControlHandler();
 
 	static EventHandlerUPP getEventHandlerUPP();
 	static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
@@ -108,6 +113,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:37  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
+*Revision 1.2.2.1  2004/10/10 15:23:12  ddiego
+*updated os x code
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

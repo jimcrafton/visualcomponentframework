@@ -27,6 +27,7 @@ namespace VCF {
 class FontPeer;
 class GlyphCollection;
 class Locale;
+class GraphicsContext;
 
 #define FONT_CLASSID	"C41B2C4C-C95F-4ba2-B844-185C3AFCEF35"
 
@@ -127,11 +128,31 @@ public:
 	font when being rendered.
 	*/
 	void setLocale( Locale* locale );
+
+	/**
+	Sets the GraphicsContext for the font. This is used for special cases
+	where calculations may need to be determined based on the information
+	in the GraphicsContext. For example, the font peer may need information
+	from the context peer when making font size calculations, particularly
+	during printing.
+	*/
+	void setGraphicsContext( GraphicsContext* context ) {
+		context_ = context;
+	}
+
+	/**
+	Returns the current graphics context that's associated with this font.
+	By default this value will be NULL.
+	*/
+	GraphicsContext* getGraphicsContext() {
+		return context_;
+	}
 protected:
 
 	FontPeer* peer_;
 	Color color_;
 	Locale* locale_;
+	GraphicsContext* context_;
 };
 
 };
@@ -140,6 +161,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/08/24 04:29:58  ddiego
+*more printing work, still not yet integrated.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

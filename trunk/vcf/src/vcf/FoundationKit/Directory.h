@@ -39,6 +39,7 @@ class FileSearchFilter;
 *      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
 *
 *      Directory::Finder* finder = dir.findFiles( "*.cpp" );
+*      finder->setDisplayMode( Directory::Finder::dmFiles );
 *      while ( finder->nextElement() ) {
 *        file = finder->getCurrentElement();
 *        filename = file->getName();
@@ -149,7 +150,7 @@ public:
 	public:
 		virtual ~Finder();
 
-		/*
+		/**
 		*gets the pointer to the last searched element.
 		*@return the pointer to the last searched element.
 		*/
@@ -163,15 +164,15 @@ public:
 		bool nextElement();
 
 		/**
-		*resets the search.
+		* resets the search.
 		*/
 		void reset();
 
-		/*
-       *Are there any more elements in this Finder ?
-       *This function doesn't affect the search in any way.
-       *@return bool true if the there are more elements yet to search.
-       */
+		/**
+		* Are there any more elements in this Finder ?
+		* This function doesn't affect the search in any way.
+		* @return bool true if the there are more elements yet to search.
+		*/
 		inline bool hasMoreElements() const {
 			return searchHasMoreElements_;
 		}
@@ -185,7 +186,7 @@ public:
 			return owningDirectory_;
 		}
 
-		/*
+		/**
 		* set flags for DisplayMode enabled
 		* It can be set for files ( dmFiles ) or dirs ( dmDirs )
 		* or both ( dmAny ). If it is set for files, the finder
@@ -197,7 +198,7 @@ public:
 		*/
 		void setDisplayMode( DisplayMode displayMode );
 
-		/*
+		/**
 		* tells the current display mode
 		*@return DisplayMode the current display mode
 		*/
@@ -303,14 +304,15 @@ public:
 			return searchFilterFileObject_;
 		}
 
-		/*
+		/**
 		* set the file attributes mask used to limit the search for files ( not directories )
 		*@param maskFilterFileAttribs the file attributes mask for files
 		*/
 		inline void setMaskFilterFileAttribs( File::FileAttributes maskFilterFileAttribs ) {
 			maskFilterFileAttribs_ = maskFilterFileAttribs;
 		}
-		/*
+
+		/**
 		* gets the file attributes mask used to limit the search for files ( not directories )
 		*@return the file attributes mask for files
 		*/
@@ -318,7 +320,7 @@ public:
 			return maskFilterFileAttribs_;
 		}
 
-		/*
+		/**
 		* sets the mask for the informations we want to extract from a file
 		* This filter is meant to increase the performance, but be careful:
 		* this speed up the search significantly, but then if later you'll 
@@ -335,7 +337,7 @@ public:
 			}
 		}
 
-		/*
+		/**
 		* gets the mask for the informations we want to extract from a file
 		*@return the mask
 		*/
@@ -343,7 +345,7 @@ public:
 			return statMask_;
 		}
 
-		/*
+		/**
 		* sets the mask for the informations we just don't care about.
 		* see setStatMask for more informations
 		*@param StatMask the mask of infos we want to ignore
@@ -373,7 +375,7 @@ public:
 			return showLocalTime_;
 		}
 
-		/*
+		/**
 		* set the finder to always return filenames in the OS specific format
 		*@param bool true if we keep the format OS specific, 
 		* false if we keep the native format instead
@@ -382,7 +384,7 @@ public:
 			keepOSSpecificFormat_ = keepOSSpecificFormat;
 		}
 
-		/*
+		/**
 		* tells if we keep currently keep the filenames format OS specific
 		*@return bool the current choice
 		*/
@@ -390,7 +392,7 @@ public:
 			return keepOSSpecificFormat_;
 		}
 
-		/*
+		/**
 		* enables/disable the visibility of some special directories during the search
 		* Under Windows these are indicated with dots ( '.' and '..' )
 		*@param allowSpecialDirs
@@ -398,7 +400,8 @@ public:
 		virtual void setAllowSpecialDirs( const bool& allowSpecialDirs ) {
 			allowSpecialDirs_ = allowSpecialDirs;
 		}
-		/*
+
+		/**
 		* tells if the search is enabled for retrieving some special directories 
 		* Under Windows these are indicated with dots ( '.' and '..' )
 		* but they could be others under different OS
@@ -503,7 +506,7 @@ public:
 		*/
 		String relativePathToRootSearch_;
 
-		/*
+		/**
 		The followings are pointers to finders used to manage the 
 		search along the directory tree.
 		Each finder node has its child and parent finders.
@@ -566,7 +569,7 @@ public:
 
 	virtual ~Directory();
 
-	/*
+	/**
 	* sets the name of the Directory
 	* and creates the peer if it does not exists yet
 	* It makes sure the name is a well formed directory name
@@ -575,7 +578,7 @@ public:
 	*/
 	virtual void setName( const String& fileName );
 
-	/*
+	/**
 	* Creates, initializes and returns a Finder object to perform a 
 	* directory/files search.
 	*@param String a filter string for a simple filtering of the file names.
@@ -586,7 +589,7 @@ public:
 	*/
 	Finder* findFiles( const String& filterFile = L"", const String& filterDir = L"" );
 
-	/*
+	/**
 	* Creates, initializes and returns a Finder object to perform a directory/files search.
 	*@param FileSearchFilter a filter object to filter the search for files and/or subdirectories.
 	* Use NULL to disable any filtering on files or subdirectories.
@@ -617,7 +620,7 @@ class FOUNDATIONKIT_API FileSearchFilter {
 public:
 	virtual ~FileSearchFilter(){};
 
-	/*
+	/**
 	* the filtering function of the object, called by the Directory::Finder during the search
 	* @param File* the pointer to the File object and its informations retrieved by the Finder,
 	* file can also represent a directory on the file system.
@@ -641,7 +644,7 @@ public:
 class FOUNDATIONKIT_API FileSearchFilterStandard : public FileSearchFilter {
 public:
 
-	/*
+	/**
 	* the constructor
 	* @param String the filter list for files.
 	* @param String the filter list for subdirectories.
@@ -649,6 +652,8 @@ public:
 	* which is the ';' character by default.
 	* The wildcard character '*' is accepted, 
 	* as in the implementation of FilePath::wildCharsMatchName()
+	* A specification like "*.vpl" does not implies that we are excluding directories
+	* from the search. Please use setDisplayMode( Directory::Finder::dmFiles ) for this.
 	* @param String the separator between items in filterFileList and filterDirList.
 	* @param fileAttributes the file attributes of the files we want to retrieve.
 	*/
@@ -658,7 +663,7 @@ public:
 
 	virtual File* passSearchFilter( const File* file, const Directory* subdir, const Directory::Finder* finder );
 
-	/*
+	/**
 	* build the filter starting from the filter string 
 	* @param String the filter string for files.
 	* @param String the filter string for subdirectories.
@@ -697,6 +702,17 @@ inline void Directory::setName( const String& fileName ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/10 19:09:45  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.1  2004/09/18 20:08:17  marcelloptr
+*improved comments
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

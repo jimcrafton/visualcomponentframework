@@ -26,7 +26,9 @@ Win32Edit::Win32Edit( TextControl* component, const bool& isMultiLineControl ):
 	isRichedit_(false),
 	OKToResetControlText_(true),
 	backgroundBrush_(NULL),
-	isMultiLined_(isMultiLineControl)
+	isMultiLined_(isMultiLineControl),
+	currentSelLength_(0),
+	currentSelStart_(-1)
 {
 
 }
@@ -59,7 +61,12 @@ void Win32Edit::create( Control* owningControl )
 		if ( GetVersionEx( &osInfo ) ) {
 			if ( osInfo.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
 				richeditLibrary = "RICHED20.Dll";
-				className = RICHEDIT_CLASS;
+				if ( System::isUnicodeEnabled() ) {
+					className = RICHEDIT_CLASSW;
+				}
+				else {
+					className = RICHEDIT_CLASSA;
+				}
 			}
 			else if ( osInfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) { //Windows 9.x
 				richeditLibrary = "RICHED32.DLL";
@@ -93,7 +100,7 @@ void Win32Edit::create( Control* owningControl )
 
 	
 	styleMask_ &= ~WS_VISIBLE;
-	DWORD style = styleMask_ | ES_AUTOHSCROLL | ES_SAVESEL;
+	DWORD style = styleMask_ | ES_AUTOHSCROLL | ES_SAVESEL | ES_NOHIDESEL;
 	if ( true == isMultiLined_ ) {
 		style |= ES_MULTILINE | WS_HSCROLL | WS_VSCROLL;// | ES_WANTRETURN;
 	}
@@ -135,15 +142,11 @@ void Win32Edit::create( Control* owningControl )
 		Win32Object::registerWin32Object( this );
 		
 		subclassWindow();
-
-		TextModelEventHandler<Win32Edit>* tml =
-			new TextModelEventHandler<Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
-
-
-		TextModel* tm = textControl_->getTextModel();
-		tm->addTextModelChangedHandler( tml );
-
+		
 		setFont( textControl_->getFont() );
+
+		textControl_->ControlModelChanged +=
+			new GenericEventHandler<Win32Edit>( this, &Win32Edit::onControlModelChanged, "Win32Edit::onControlModelChanged" );
 
 	}
 	else {
@@ -312,18 +315,142 @@ void Win32Edit::processTextEvent( VCFWin32::KeyboardData keyData, WPARAM wParam,
 	}
 }
 
-LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc)
+bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
-	LRESULT result = 0;
+	bool result = false;
+	wndProcResult = 0;
 
 	switch ( message ) {
 
-		case WM_CHAR: case WM_KEYDOWN: case WM_KEYUP:{
+		case WM_RBUTTONDOWN :  case WM_LBUTTONDOWN : {
 
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			ulong32 start = 0;
+			ulong32 end = 0;
+
+			getSelectionMark( start, end );
+			currentSelLength_ = end - start;
+			currentSelStart_ = start;
+
+		}
+		break;
+
+		case WM_RBUTTONUP : case WM_LBUTTONUP : {
+
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			ulong32 start = 0;
+			ulong32 end = 0;
+
+			getSelectionMark( start, end );
+
+			if ( (currentSelLength_ != (end - start)) || (currentSelStart_ != start) ) {
+				//selection changed
+				TextEvent event( textControl_, start, end - start );
+
+				textControl_->SelectionChanged.fireEvent( &event );
+			}
+
+			currentSelLength_ = end - start;
+			currentSelStart_ = start;
+
+		}
+		break;
+
+		case WM_KEYDOWN: {
+			
+			ulong32 virtKeyCode = Win32Utils::translateVKCode( wParam );
+
+			switch ( virtKeyCode ) {
+				case vkLeftArrow : 
+				case vkRightArrow : 
+				case vkPgUp : 
+				case vkPgDown : 
+				case vkHome : 
+				case vkEnd : 
+				case vkDownArrow :
+				case vkUpArrow : {
+					ulong32 start = 0;
+					ulong32 end = 0;
+
+					getSelectionMark( start, end );
+					currentSelLength_ = end - start;
+					currentSelStart_ = start;
+				}
+				break;
+			}
+			
+
+			
+			if ( (peerControl_->getComponentState() != Component::csDestroying) ) {
+
+				KeyboardData keyData = Win32Utils::translateKeyData( hwnd_, lParam );
+				unsigned long eventType = Control::KEYBOARD_DOWN;
+				
+
+				unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
+
+				virtKeyCode = Win32Utils::translateVKCode( keyData.VKeyCode );
+
+				VCF::KeyboardEvent event( peerControl_, eventType, keyData.repeatCount,
+					keyMask, (VCF::VCFChar)keyData.character, (VirtualKeyCode)virtKeyCode );
+
+				OKToResetControlText_ = false;
+				
+				peerControl_->handleEvent( &event );
+				
+				switch ( virtKeyCode ) {
+					case vkLeftArrow : 
+					case vkRightArrow : 
+					case vkPgUp : 
+					case vkPgDown : 
+					case vkHome : 
+					case vkEnd : 
+					case vkDownArrow :
+					case vkUpArrow : {
+
+
+						ulong32 start = 0;
+						ulong32 end = 0;
+
+						getSelectionMark( start, end );
+
+						if ( event.hasShiftKey() && ((currentSelLength_ != (end - start)) || (currentSelStart_ != start)) ) {
+							//selection changed
+							TextEvent event( textControl_, start, end - start );
+							
+							textControl_->SelectionChanged.fireEvent( &event );
+						}
+
+						currentSelLength_ = end - start;
+						currentSelStart_ = start;
+					}
+					break;
+				}
+				
+
+				OKToResetControlText_ = true;
+
+				//wndProcResult = 1;
+				result = true;
+			}
 
 			if ( !(peerControl_->getComponentState() & Component::csDesigning) ) {
-				defaultWndProcedure(  message, wParam, lParam );
-				//result = CallWindowProc( oldEditWndProc_, hwnd_,
+				wndProcResult = defaultWndProcedure(  message, wParam, lParam );
+				result = true;
+			}
+
+
+		}
+		break;
+
+		case WM_CHAR:  case WM_KEYUP:{
+
+			
+			if ( !(peerControl_->getComponentState() & Component::csDesigning) ) {
+				wndProcResult = defaultWndProcedure(  message, wParam, lParam );
+				result = true;
 			}
 
 			if ( (peerControl_->getComponentState() != Component::csDestroying) ) {
@@ -332,15 +459,10 @@ LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				unsigned long eventType = 0;
 				switch ( message ){
 					case WM_CHAR: {
-						eventType = Control::KEYBOARD_DOWN;
+						eventType = Control::KEYBOARD_PRESSED;
 					}
 					break;
-
-					case WM_KEYDOWN: {
-						eventType = Control::KEYBOARD_PRESSED;//KEYBOARD_EVENT_DOWN;
-					}
-					break;
-
+					
 					case WM_KEYUP: {
 						eventType = Control::KEYBOARD_UP;
 					}
@@ -353,29 +475,62 @@ LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 					keyMask, (VCF::VCFChar)keyData.character, (VirtualKeyCode)virtKeyCode );
 
 				OKToResetControlText_ = false;
-
-				//processTextEvent( keyData, wParam, lParam );
-
+				
 				peerControl_->handleEvent( &event );
 
 				OKToResetControlText_ = true;
+				
+				result = true;
+			}
 
-				result = 1;
+		}
+		break;
+		
+		case WM_COMMAND:{
+			
+			WPARAM fakeWParam = LOWORD(wParam);
+
+			
+			wndProcResult = 0;
+			result = true;
+
+			switch ( HIWORD(wParam) ) {
+				case EN_UPDATE:{
+					
+					// 
+
+					OKToResetControlText_ = false;
+
+					VCF::TextModel* model = textControl_->getTextModel();
+					if ( NULL != model ) {
+						
+					}
+
+					OKToResetControlText_ = true;
+				}
+				break; 
+
+				default : {
+
+				}
+				break;
 			}
 
 		}
 		break;
 
 		
-		case WM_COMMAND:{
 
-			handleEventMessages( HIWORD(wParam), LOWORD(wParam), lParam );
-			return 1;
-		}
-		break;
+		case WM_PASTE : {
+			wndProcResult = 0;
+			result = false;
 
-		case EN_UPDATE:{
-			OKToResetControlText_ = false;
+			OKToResetControlText_ = false;		
+
+			if ( !(peerControl_->getComponentState() & Component::csDesigning) ) {
+				wndProcResult = defaultWndProcedure(  message, wParam, lParam );
+				result = true;
+			}
 
 			VCF::TextModel* model = textControl_->getTextModel();
 			if ( NULL != model ) {
@@ -386,94 +541,33 @@ LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			}
 
 			OKToResetControlText_ = true;
-			return 1;
+			
 		}
 		break;
 
 		case WM_ERASEBKGND :{
-			result = 1;
+			wndProcResult = 1;
+			result = true;
 		}
 		break;
 
 		case WM_PAINT:{
-			result = 0;
+			wndProcResult = 0;
+			result = false;
 		}
 		break;
 		
 
 		case WM_NCCALCSIZE: {
-			return handleNCCalcSize( wParam, lParam );
+			wndProcResult = handleNCCalcSize( wParam, lParam );
+			result = true;
 		}
 		break;
-/*
-		case WM_NCHITTEST: { 
-			RECT rect;
-	GetWindowRect(hwnd_, &rect);
-	OffsetRect(&rect, -rect.left, -rect.top);
-	RECT clipR = rect;
-	RECT clientRect = rect;
-	Rect vsRect;
-	Rect hsRect;
-
-	if ( NULL != peerControl_->getBorder() ) {		
-		Rect clientBounds( rect.left, rect.top, rect.right, rect.bottom );
-		clientBounds = peerControl_->getBorder()->getClientRect( &clientBounds, peerControl_ );
-		
-		clipR.left = clientBounds.left_;
-		clipR.top = clientBounds.top_;
-		clipR.right = clientBounds.right_;
-		clipR.bottom = clientBounds.bottom_;
-		clientRect = clipR;
-	}
-	int style = GetWindowLong( hwnd_, GWL_STYLE );
-	if ( style & WS_VSCROLL ) {
-		NONCLIENTMETRICS ncm;
-		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
-		ncm.cbSize = sizeof(NONCLIENTMETRICS);	
-		
-		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
-		
-		clipR.right -= ncm.iScrollWidth;
-
-		vsRect.setRect( clipR.right, clipR.top, clientRect.right, clipR.bottom );
-
-	}
-	if ( style & WS_HSCROLL ) {
-		NONCLIENTMETRICS ncm;
-		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
-		ncm.cbSize = sizeof(NONCLIENTMETRICS);	
-		
-		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
-		
-		clipR.bottom -= ncm.iScrollHeight;
-		hsRect.setRect( clipR.left, clipR.bottom, clientRect.right, clientRect.bottom );
-	}
-
-	Point pt( LOWORD(lParam), HIWORD(lParam) ); 
-
-	this->translateFromScreenCoords( &pt );
-	if ( !vsRect.isEmpty() ) {
-		if ( vsRect.containsPt( &pt ) ) {
-			return HTVSCROLL;
-		}
-	}
-
-	if ( !hsRect.isEmpty() ) {
-		if ( hsRect.containsPt( &pt ) ) {
-			return HTHSCROLL;
-		}
-	}
-
-
-
-			return 1;
-		}
-		break;
-		*/
 
 		case WM_NCPAINT: {	
 
-			return handleNCPaint( wParam, lParam );
+			wndProcResult = handleNCPaint( wParam, lParam );
+			return true;
 		}
 		break;
 
@@ -492,7 +586,8 @@ LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			backgroundBrush_ = CreateSolidBrush( backColor );
 			SetBkColor( hdcEdit, backColor );
 
-			result = (LRESULT)backgroundBrush_;
+			wndProcResult = (LRESULT)backgroundBrush_;
+			return true;
 		}
 		break;
 
@@ -507,9 +602,8 @@ LRESULT Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 		//break;
 		
 
-		default: {	
-			//result = CallWindowProc( oldEditWndProc_, hwnd_, message, wParam, lParam );
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+		default: {				
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;		
 	}
@@ -524,7 +618,8 @@ void Win32Edit::onTextModelTextChanged( TextEvent* event )
 
 			String text = textControl_->getTextModel()->getText();
 
-			setText( text );
+			setText( text );		
+
 		}
 	}
 }
@@ -831,10 +926,200 @@ void Win32Edit::setReadOnly( const bool& readonly )
 	SendMessage( hwnd_, EM_SETREADONLY, readonly ? TRUE : FALSE, 0 );
 }
 
+ulong32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
+{
+	printPageMap_.clear();
+
+	ulong32 result = 1;
+
+	FORMATRANGE formatRange = {0};
+	//print everything
+	formatRange.chrg.cpMax = -1;
+	formatRange.chrg.cpMin = 0;
+
+	formatRange.hdc = (HDC)context->getPeer()->getContextID();
+	formatRange.hdcTarget = formatRange.hdc;
+
+	Rect printRect = context->getViewableBounds();
+	double dpi = GraphicsToolkit::getDPI(context);
+
+	printRect.left_ = (printRect.left_ / dpi) * 1400.0;
+	printRect.top_ = (printRect.top_ / dpi) * 1400.0;
+	printRect.bottom_ = (printRect.bottom_ / dpi) * 1400.0;
+	printRect.right_ = (printRect.right_ / dpi) * 1400.0;
+
+	formatRange.rcPage.left = printRect.left_;
+	formatRange.rcPage.top = printRect.top_;
+	formatRange.rcPage.right = printRect.right_;
+	formatRange.rcPage.bottom = printRect.bottom_;
+
+	formatRange.rc.left = printRect.left_;
+	formatRange.rc.top = printRect.top_;
+	formatRange.rc.right = printRect.right_;
+	formatRange.rc.bottom = printRect.bottom_;
+
+	HDC dc = GetDC( hwnd_ );
+	double ctrlDPI = (double)GetDeviceCaps( dc, LOGPIXELSY);
+	ReleaseDC( hwnd_, dc );
+
+	DWORD margins = ::SendMessage( hwnd_, EM_GETMARGINS, 0, 0 );
+	double lm = ((double)LOWORD(margins)/ctrlDPI) * 1400;
+	double rm = ((double)HIWORD(margins)/ctrlDPI) * 1400;
+
+	formatRange.rc.left += lm;
+	formatRange.rc.right -= lm;
+	formatRange.rc.top += 350; //add a 1/4"
+	formatRange.rc.bottom -= 350; //add a 1/4"
+
+	TextControl* tc = (TextControl*)this->getControl();
+	String text = tc->getTextModel()->getText();
+	ulong32 textSize = text.size();
+	
+	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
+
+	printPageMap_[result] = (ulong32)-1;
+
+	DWORD index = SendMessage( hwnd_, EM_FORMATRANGE, 0, (LPARAM)&formatRange );
+	while ( (index <= textSize) && (formatRange.chrg.cpMin != index) ) {
+		printPageMap_[result] = index;
+
+		formatRange.chrg.cpMin = index;
+		index = SendMessage( hwnd_, EM_FORMATRANGE, 0, (LPARAM)&formatRange );
+		result ++;
+	}
+
+	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
+
+
+	return result;
+}
+
+void Win32Edit::print( PrintContext* context, const long& page )
+{
+	VCF_ASSERT( !printPageMap_.empty() );
+
+	if ( printPageMap_.empty() ) {
+
+		return;
+	}
+
+	std::map<ulong32,ulong32>::iterator found = printPageMap_.find( page );
+	if ( found == printPageMap_.end() ) {
+		//clear out of dodge! We are done printing
+		printPageMap_.clear();
+		return;
+	}
+	else {
+		FORMATRANGE formatRange = {0};
+		//print everything
+		formatRange.chrg.cpMax = found->second;
+		if ( 0 == (page-1) ) {
+			formatRange.chrg.cpMin = 0;
+		}
+		else {
+			formatRange.chrg.cpMin = printPageMap_[page-1];
+		}
+
+		
+		formatRange.hdc = (HDC)context->getPeer()->getContextID();
+		formatRange.hdcTarget = formatRange.hdc;
+		
+		Rect printRect = context->getViewableBounds();
+		double dpi = GraphicsToolkit::getDPI(context);
+		
+		printRect.left_ = (printRect.left_ / dpi) * 1400.0;
+		printRect.top_ = (printRect.top_ / dpi) * 1400.0;
+		printRect.bottom_ = (printRect.bottom_ / dpi) * 1400.0;
+		printRect.right_ = (printRect.right_ / dpi) * 1400.0;
+		
+		formatRange.rcPage.left = printRect.left_;
+		formatRange.rcPage.top = printRect.top_;
+		formatRange.rcPage.right = printRect.right_;
+		formatRange.rcPage.bottom = printRect.bottom_;
+		
+		formatRange.rc.left = printRect.left_;
+		formatRange.rc.top = printRect.top_;
+		formatRange.rc.right = printRect.right_;
+		formatRange.rc.bottom = printRect.bottom_;
+		
+		HDC dc = GetDC( hwnd_ );
+		double ctrlDPI = (double)GetDeviceCaps( dc, LOGPIXELSY);
+		ReleaseDC( hwnd_, dc );
+		
+		DWORD margins = ::SendMessage( hwnd_, EM_GETMARGINS, 0, 0 );
+		double lm = ((double)LOWORD(margins)/ctrlDPI) * 1400;
+		double rm = ((double)HIWORD(margins)/ctrlDPI) * 1400;
+		
+		formatRange.rc.left += lm;
+		formatRange.rc.right -= lm;
+		formatRange.rc.top += 350; //add a 1/4"
+		formatRange.rc.bottom -= 350; //add a 1/4"
+		
+		
+		
+		SendMessage( hwnd_, EM_FORMATRANGE, TRUE, (LPARAM)&formatRange );		
+	}
+}
+
+void Win32Edit::finishPrinting()
+{
+	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
+}
+
+void Win32Edit::onControlModelChanged( Event* e )
+{
+	EventHandler* tml = getEventHandler( "Win32TextModelHandler" );
+	if ( NULL == tml ) {
+		tml = new TextModelEventHandler<Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
+	}
+
+	
+
+	TextModel* tm = textControl_->getTextModel();
+	tm->addTextModelChangedHandler( tml );
+
+	
+	String text = tm->getText();
+
+	//OKToResetControlText_ = false;
+
+	setText( text );
+
+	//OKToResetControlText_ = true;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.6  2004/11/19 05:54:28  ddiego
+*added some fixes to the text peer for win32 for printing. added toolbars to text edit example anmd added printing
+*
+*Revision 1.2.2.5  2004/11/18 06:45:44  ddiego
+*updated toolbar btn bug, and added text edit sample.
+*
+*Revision 1.2.2.4  2004/10/03 23:14:37  ddiego
+*fixed a text model bug that incorectly handled deleting chars.
+*
+*Revision 1.2.2.3  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.2  2004/09/06 21:30:20  ddiego
+*added a separate paintBorder call to Control class
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

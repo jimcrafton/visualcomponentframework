@@ -143,7 +143,9 @@ public:
 	virtual void paint( GraphicsContext * context );
 
 	/**
-	Shows the frame. Generally the same as calling Control::setVisible(true)
+	Shows the frame.
+	Generally the same as calling Control::setVisible(true)
+	It also activates it.
 	@see Control::setVisible
 	*/
 	virtual void show();
@@ -204,10 +206,12 @@ public:
 
 	/**
 	Activates this frame.
+	This base implementation activates the window 
+	only if is not already the active one.
 	*/
 	virtual void activate();
 
-	/*
+	/**
 	Indicates to the framework whether or not this frame should allow activation.
 	Som frames do <i>not</i> support becoming activated, for example the tooltip frame,
 	or the frame that houses the dropdown list for the ComboBoxControl. Must be implemented
@@ -254,18 +258,30 @@ public:
 	*/
 	virtual bool allowClose();
 
+	/**
+	* sets if we want to use the control's color to draw the control's background;
+	* otherwise the theme background is drawn.
+	*@param const bool&, true if we use the control's color, false if 
+	* we draw the theme background.
+	*/
 	void setUseColorForBackground( const bool& val ) {
 		useColorForBackground_ = val;
 		repaint();
 	}
 	
+	/**
+	* gets if we use the control's color to draw the control's background
+	*@return bool, true if we use the control's color, false if it uses the theme background.
+	*/
 	bool getUseColorForBackground() {
 		return useColorForBackground_;
 	}
+
 	/**
 	*don't call - for internal use only
 	*/
-	static void setActiveFrame( Frame* activeFrame );
+	static void internal_setActiveFrame( Frame* activeFrame );
+
 protected:
 	static Frame* currentActiveFrame;
 	String caption_;
@@ -284,6 +300,20 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/10 19:07:36  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.2  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.1  2004/10/23 13:53:12  marcelloptr
+*comments for setUseColorForBackground; setActiveFrame renamed as internal
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

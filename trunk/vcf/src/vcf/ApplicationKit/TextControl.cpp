@@ -20,20 +20,24 @@ TextControl::TextControl( const bool& multiLineControl ):
 	model_(NULL),
 	readOnly_(false)
 {
-	setTextModel( new DefaultTextModel() );
-
 	textPeer_ =	UIToolkit::createTextPeer( this, multiLineControl );
+	
+	if ( NULL == textPeer_ ){
+		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	};
+
+
 	peer_ = dynamic_cast<ControlPeer*>(textPeer_ );
 
 
 
 	setColor(  GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
+	
 	peer_->create( this );
+
+	setTextModel( new DefaultTextModel() );
+
 
 	//if we are a single line control then add a
 	//handler for getting the focus so we can
@@ -50,7 +54,7 @@ TextControl::TextControl( const bool& multiLineControl ):
 TextControl::~TextControl()
 {
 	if ( NULL != model_ ){
-		model_->release();
+		//model_->release();
 		model_ = NULL;
 	}
 }
@@ -72,31 +76,19 @@ void TextControl::paint( GraphicsContext * context )
 	Border* border = getBorder();
 
 	Rect innerBounds = getClientBounds( false );
-
-	if ( NULL != border ){
-		border->paint( this, context );
-		innerBounds = border->getClientRect( &innerBounds, this );
-	}
+	
 	context->setColor( getColor() );
 
 	context->rectangle( &innerBounds );
 
-	context->fillPath();	
+	context->fillPath();
 }
 
 void TextControl::setTextModel( TextModel * model )
 {
-	if ( NULL != model_ ){
-		delete model_;
-		model_ = NULL;
-	}
 	model_ = model;
-
-	if ( NULL != model_ ) {
-		model_->addRef();
-	}
-
-	setViewModel( model_ );
+	
+	setViewModel( dynamic_cast<Model*>(model_) );
 }
 
 TextModel* TextControl::getTextModel()
@@ -106,9 +98,6 @@ TextModel* TextControl::getTextModel()
 
 unsigned long TextControl::getCaretPosition()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	unsigned long result = 0;
 	result = textPeer_->getCaretPosition();
 	return result;
@@ -117,127 +106,72 @@ unsigned long TextControl::getCaretPosition()
 
 void TextControl::setCaretPosition( const unsigned long& caretPos )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
+	
 	textPeer_->setCaretPosition( caretPos );
 }
 
 void TextControl::setRightMargin( const double & rightMargin )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	textPeer_->setRightMargin( rightMargin );
 }
 
 void TextControl::setLeftMargin( const double & leftMargin )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	textPeer_->setLeftMargin( leftMargin );
 }
 
 unsigned long TextControl::getLineCount()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getLineCount();
 }
 
 unsigned long TextControl::getCurrentLinePosition()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getCurrentLinePosition();
 }
 
 double TextControl::getLeftMargin()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getLeftMargin();
 }
 
 double TextControl::getRightMargin()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getRightMargin();
 }
 
 Point* TextControl::getPositionFromCharIndex( const unsigned long& index )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getPositionFromCharIndex( index );
 }
 
 unsigned long TextControl::getCharIndexFromPosition( Point* point )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getCharIndexFromPosition( point );
 }
 
 unsigned long TextControl::getSelectionStart()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getSelectionStart();
 }
 
 unsigned long TextControl::getSelectionCount()
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	return textPeer_->getSelectionCount();
 }
 
 void TextControl::setSelectionMark( const unsigned long& start, const unsigned long& count )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	textPeer_->setSelectionMark( start, count );
 }
 
 void TextControl::setSelectionFont( Font* font )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	textPeer_->setSelectionFont( font );
 }
 
 void TextControl::setParagraphAlignment( const TextAlignmentType& alignment )
 {
-	if ( NULL == textPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	textPeer_->setParagraphAlignment( alignment );
 }
 
@@ -287,9 +221,7 @@ void TextControl::handleEvent( Event* event )
 {
 	switch( event->getType() ) {
 
-		case Control::KEYBOARD_DOWN : case Control::KEYBOARD_PRESSED: case Control::KEYBOARD_UP: {
-			TextModel* model = getTextModel();
-
+		case Control::KEYBOARD_DOWN : {
 			/**
 			HACK ALERT!
 			this is the braindead way - needs to be reworked in the future
@@ -302,21 +234,160 @@ void TextControl::handleEvent( Event* event )
 			that should cause an delete/insert are the set of characters [a..z,A..Z,0..9],
 			back space, space, and delete. This is a valid assumption assuming en/US language
 			but for other languages this totally falls down...
+			#-------------------------------------------------------------------------------#
+			#UN-HACK ALERT!																	#
+			#-------------------------------------------------------------------------------#
+			JC - I have currently implemented this so that we now add text key press at 
+			a time,	or delete text if appropriate.
 			*/
+
+			TextModel* model = getTextModel();
 
 			if ( !getReadOnly() ) {
 				if ( !(getComponentState() & Component::csDesigning) ) {
-					String text = peer_->getText();
-					model->setText( text );
+					KeyboardEvent* ke = (KeyboardEvent*)event;
+
+					switch ( ke->getVirtualCode() ) {
+						case vkDelete : {
+							ulong32 pos =  textPeer_->getSelectionStart();
+
+							if ( pos <= (model->getSize()-1) ) {
+								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );							
+
+								//Debug diagnostics - JC
+								//String text = model->getText();
+								//StringUtils::traceWithArgs( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+								//		text.c_str(), text[pos], text[pos], pos );
+
+								model->deleteText( pos, length );
+
+								//text = model->getText();
+								//StringUtils::traceWithArgs( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+								//		text.c_str(), text[pos], text[pos], pos );
+							}
+
+						}
+						break;
+
+						case vkBackSpace : {
+							ulong32 pos =  minVal<ulong32>( model->getSize()-1, textPeer_->getSelectionStart() );
+
+							if ( pos >= 0 ) {
+								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
+								
+								//Debug diagnostics - JC
+								//String text = model->getText();								
+								//StringUtils::traceWithArgs( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+								//		text.c_str(), text[pos], text[pos], pos );
+
+								
+								model->deleteText( pos, length );
+								
+
+								//text = model->getText();
+								//StringUtils::traceWithArgs( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+								//		text.c_str(), text[pos-length], text[pos-length], pos-length );
+								
+							}
+						}
+						break;
+
+						case vkLeftArrow : 
+						case vkRightArrow : 
+						case vkPgUp : 
+						case vkPgDown : 
+						case vkHome : 
+						case vkEnd : 
+						case vkInsert : 
+						case vkAlt : 
+						case vkCtrl : 
+						case vkEscape : 
+						case vkPrintScreen : 
+						case vkScrollLock :
+						case vkPause : 
+						case vkCapsLock : 
+						case vkShift : 
+						case vkF1 : 							
+						case vkF2 : 
+						case vkF3 : 
+						case vkF4 : 
+						case vkF5 : 
+						case vkF6 : 
+						case vkF7 : 
+						case vkF8 : 
+						case vkF9 : 
+						case vkF10 : 
+						case vkF11 : 
+						case vkF12 : 
+						case vkDownArrow :
+						case vkUpArrow : {
+							//no-op for these, since we don't want to add/delete text for them
+						}
+						break;
+
+
+						case vkEnter : {
+							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
+								if ( supportsMultiLinedText() ) {
+									ulong32 pos =  textPeer_->getCaretPosition();
+									String text = "\n";
+									
+									ulong32 length = textPeer_->getSelectionCount();
+									if ( length > 0 ) {
+										model->deleteText( pos, length );
+									}
+
+									//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+									//	text.c_str(), text[0], text[0], pos );
+									
+									model->insertText( pos, text );
+								}
+							}
+						}
+						break;
+
+						default : {
+
+							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
+								ulong32 pos =  textPeer_->getCaretPosition();
+								String text;
+								text += ke->getKeyValue();
+
+								//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+								//	text.c_str(), text[0], text[0], pos );
+
+								//determnine if we have sleected text. If we 
+								//have, then delete the selection ant *then*
+								//add in the new character(s)
+
+								ulong32 length = textPeer_->getSelectionCount();
+								if ( length > 0 ) {
+									model->deleteText( pos, length );
+								}
+
+								
+								model->insertText( pos, text );
+							}
+
+						}
+						break;
+					}
 				}
 			}
 
 			Control::handleEvent( event );
-
 		}
 		break;
 
+		case Control::KEYBOARD_UP : {
+			Control::handleEvent( event );
+		}
+		break;
 
+		case Control::KEYBOARD_PRESSED : {
+			Control::handleEvent( event );
+		}
+		break;
 
 		default : {
 			Control::handleEvent( event );
@@ -336,6 +407,38 @@ void TextControl::setReadOnly( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.7  2004/11/15 05:41:28  ddiego
+*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
+*
+*Revision 1.2.2.6  2004/10/26 02:38:18  ddiego
+*fixed a bug in the handling of a backspace char event
+*
+*Revision 1.2.2.5  2004/10/04 23:47:28  ddiego
+*fixed text control char entry bug.
+*
+*Revision 1.2.2.4  2004/10/03 23:02:29  ddiego
+*fixed a text model bug that incorectly handled deleting chars.
+*
+*Revision 1.2.2.3  2004/10/03 22:47:33  ddiego
+*fixed a text model bug that incorectly handled deleting chars.
+*
+*Revision 1.2.2.2  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.1  2004/09/06 21:30:20  ddiego
+*added a separate paintBorder call to Control class
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -60,6 +60,7 @@ class ComboBoxControl;
 class CommandButton;
 class CommonFileDialogPeer;
 class CommonColorDialogPeer;
+class CommonPrintDialogPeer;
 class Color;
 class Clipboard;
 class GraphicsToolkit;
@@ -81,7 +82,7 @@ class Button;
 class Toolbar;
 class TimerEvent;
 
-
+class SystemTrayPeer;
 
 
 
@@ -182,21 +183,21 @@ public:
 	view a list of data in multiple ways. For Win32 systems this is equivalent to
 	creating a window handle with the WC_LISTVIEW window class name.
 	*/
-    static ListviewPeer* createListViewPeer( ListViewControl* component, ComponentType componentType=CT_DEFAULT);
+    static ListviewPeer* createListViewPeer( ListViewControl* component);
 
 	/**
 	This creates a peer that implements the TreePeer interface. A TreePeer allows you to
 	view a data in an outline or hierarchical style. For Win32 systems this is equivalent to
 	creating a window handle with the WC_TREEVIEW window class name.
 	*/
-    static TreePeer* createTreePeer( TreeControl* component, ComponentType componentType=CT_DEFAULT);
+    static TreePeer* createTreePeer( TreeControl* component);
 
 	/**
 	This creates a peer that implements the TextPeer interface. A TextPeer allows you to
 	view and edit text, either in a single line edit control, or a multiline edit control.
 	For Win32 systems this is equivalent to creating a Richedit window handle.
 	*/
-    static TextPeer* createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType=CT_DEFAULT);
+    static TextPeer* createTextPeer( TextControl* component, const bool& isMultiLineControl);
 
 	/**
 	This creates a peer that implements the HTMLBrowserPeer interface. The HTMLBrowserPeer
@@ -211,15 +212,14 @@ public:
 	to try and emulate, as opposed to just providing a peer that creates a native button control.
 	For Win32 systems this is equivalent to creating a window handle with the BUTTON window class name.
 	*/
-    static ButtonPeer* createButtonPeer( CommandButton* component, ComponentType componentType=CT_DEFAULT);
+    static ButtonPeer* createButtonPeer( CommandButton* component);
 
 
-    static DialogPeer* createDialogPeer( Control* owner, Dialog* component, ComponentType componentType=CT_DEFAULT);
+    static DialogPeer* createDialogPeer( Control* owner, Dialog* component);
 
 	static DialogPeer* createDialogPeer();
 
-    static WindowPeer* createWindowPeer( Control* component, Control* owner,
-											ComponentType componentType=CT_DEFAULT);
+    static WindowPeer* createWindowPeer( Control* component, Control* owner );
 
 
 	static ToolbarPeer* createToolbarPeer( Toolbar* toolbar );
@@ -252,11 +252,16 @@ public:
 
 	static CommonFontDialogPeer* createCommonFontDialogPeer( Control* owner );
 
+	static CommonPrintDialogPeer* createCommonPrintDialogPeer( Control* owner );
+	
+
 	static DesktopPeer* createDesktopPeer( Desktop* desktop );
 
 	static ScrollPeer* createScrollPeer( Control* control );
 
 	static CursorPeer* createCursorPeer( Cursor* cursor );
+
+	static SystemTrayPeer* createSystemTrayPeer();
 
 	static bool createCaret( Control* owningControl, Image* caretImage  );
 
@@ -379,13 +384,6 @@ protected:
 
 	void onDefaultButton( KeyboardEvent* event );
 
-	Control* getNextChildControl( Control* control, Control* prevControl=NULL );
-
-	Control* getPrevChildControl( Control* control, Control* prevControl=NULL );
-
-
-
-
 	/**
 	*creates a new instance of a ControlPeer
 	*the component passed in represents the component the implmenter will get attached to.
@@ -398,22 +396,21 @@ protected:
 
 	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
 
-    virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component, ComponentType componentType=CT_DEFAULT) = 0;
+    virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component) = 0;
 
-    virtual TreePeer* internal_createTreePeer( TreeControl* component, ComponentType componentType=CT_DEFAULT) = 0;
+    virtual TreePeer* internal_createTreePeer( TreeControl* component) = 0;
 
-    virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType=CT_DEFAULT) = 0;
+    virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl) = 0;
 
 	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control ) = 0;
 
-    virtual ButtonPeer* internal_createButtonPeer( CommandButton* component, ComponentType componentType=CT_DEFAULT) = 0;
+    virtual ButtonPeer* internal_createButtonPeer( CommandButton* component) = 0;
 
-    virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component, ComponentType componentType=CT_DEFAULT) = 0;
+    virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component) = 0;
 
 	virtual DialogPeer* internal_createDialogPeer() = 0;
 
-    virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner,
-											ComponentType componentType=CT_DEFAULT) = 0;
+    virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner) = 0;
 
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar ) = 0;
@@ -446,11 +443,15 @@ protected:
 
 	virtual CommonFontDialogPeer* internal_createCommonFontDialogPeer( Control* owner ) = 0;
 
+	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner ) = 0;
+
 	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop ) = 0;
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control ) = 0;
 
 	virtual CursorPeer* internal_createCursorPeer( Cursor* cursor ) = 0;
+
+	virtual SystemTrayPeer* internal_createSystemTrayPeer() = 0;
 
 	virtual bool internal_createCaret( Control* owningControl, Image* caretImage  ) = 0;
 
@@ -558,6 +559,28 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.2  2004/08/31 04:12:12  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.1  2004/08/18 21:20:24  ddiego
+*added initial system tray code for win32
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -44,7 +44,6 @@ void Light3DBorder::paint( Rect* bounds, GraphicsContext* context )
 {
 	if ( NULL != bounds ){
 
-
 		Color* shadow = NULL;
 		if ( true == inverted_ ){
 			shadow = GraphicsToolkit::getSystemColor( SYSCOLOR_HIGHLIGHT );
@@ -62,36 +61,22 @@ void Light3DBorder::paint( Rect* bounds, GraphicsContext* context )
 		}
 
 		Color* face = NULL;
-		if ( true == inverted_ ){
-			face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
-		}
-		else {
-			face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
-		}
-
-		if ( true == inverted_ ) {
-			context->rectangle( bounds->left_+1, bounds->top_+1, bounds->right_-2, bounds->bottom_-2 );
-		}
-		else {
-			context->rectangle( bounds );
-		}
-
+		face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
+		
+		context->rectangle( bounds );
 		context->setColor( face );
 		context->fillPath();
-
 
 		context->moveTo( bounds->left_+1, bounds->bottom_-2 );
 		context->lineTo( bounds->left_+1, bounds->top_+1 );
 		context->lineTo( bounds->right_-2, bounds->top_+1 );
 
 		context->setColor( hilight );
-
 		context->strokePath();
 
 		context->moveTo( bounds->right_-2, bounds->top_+1 );
 		context->lineTo( bounds->right_-2, bounds->bottom_-2 );
 		context->lineTo( bounds->left_+1, bounds->bottom_-2 );
-
 
 		context->setColor( shadow );
 		context->strokePath();
@@ -112,6 +97,14 @@ Rect Light3DBorder::getClientRect( Rect* initialBounds, Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/05 19:43:44  dougtinkham
+*fixed paint to paint outside edge
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -52,14 +52,7 @@ public:
 	*set the Application instance ot be associated with the
 	*application implmenter
 	*/
-	virtual void setApplication( AbstractApplication* application ) = 0;
-
-	/**
-	*returns the resource bundle that contains
-	*all the application's resources
-	*@see ResourceBundle
-	*/
-	virtual ResourceBundle* getResourceBundle() = 0;
+	virtual void setApplication( AbstractApplication* application ) = 0;	
 
 	/**
 	*returns the fully qualified file name
@@ -84,6 +77,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/08/21 21:06:52  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

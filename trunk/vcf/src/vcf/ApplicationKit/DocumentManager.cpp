@@ -38,31 +38,6 @@ DocumentManager::~DocumentManager()
 
 }
 
-void DocumentManager::terminate() {
-	standardMenu_->free();
-	standardMenu_ = NULL;
-
-	ActionMap::iterator actionIt =  actionsMap_.begin();
-	while ( actionIt != actionsMap_.end() ) {
-		actionIt->second->free();
-		actionIt ++;
-	}
-
-	DocumentUndoRedoMap::iterator it = undoRedoStack_.begin();
-	while ( it != undoRedoStack_.end() ) {
-		delete it->second;
-		it ++;
-	}
-	undoRedoStack_.clear();
-
-	std::vector<Document*>::iterator it2 = openDocuments_.begin();
-	while ( it2 != openDocuments_.end() ) {
-		Document* document = *it2;
-		document->release();
-		it2 ++;
-	}
-}
-
 Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
 {
 	return docInfoContainer_.getEnumerator();
@@ -71,8 +46,12 @@ Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
 void DocumentManager::init()
 {
 	Application* app = Application::getRunningInstance();
-	String fileName = app->getName();
+	FilePath dir = app->getFileName();
+	
+	String fileName = dir.getPathName(true);
+	fileName += app->getName();	
 	fileName += ".xml";
+	
 	FileInputStream fs( fileName );
 
 	XMLParser parser;
@@ -124,8 +103,31 @@ void DocumentManager::init()
 		}
 	}
 
+}
 
+void DocumentManager::terminate() {
+	standardMenu_->free();
+	standardMenu_ = NULL;
 
+	ActionMap::iterator actionIt =  actionsMap_.begin();
+	while ( actionIt != actionsMap_.end() ) {
+		actionIt->second->free();
+		actionIt ++;
+	}
+
+	DocumentUndoRedoMap::iterator it = undoRedoStack_.begin();
+	while ( it != undoRedoStack_.end() ) {
+		delete it->second;
+		it ++;
+	}
+	undoRedoStack_.clear();
+
+	std::vector<Document*>::iterator it2 = openDocuments_.begin();
+	while ( it2 != openDocuments_.end() ) {
+		Document* document = *it2;
+		document->release();
+		it2 ++;
+	}
 }
 
 
@@ -363,7 +365,7 @@ void DocumentManager::updateUndo( ActionEvent* event, Document* doc )
 
 		bool hasUndoableCmds = undoRedoStack.hasUndoableItems();
 		if ( true == hasUndoableCmds ) {
-			event->setText( "Undo " + undoRedoStack.getCurrentUndoComand()->getName() + "\tCtrl+Z" );
+			event->setText( "Undo " + undoRedoStack.getCurrentUndoCommand()->getName() + "\tCtrl+Z" );
 		}
 		else {
 			event->setText( "Nothing to Undo\tCtrl+Z" );
@@ -378,7 +380,7 @@ void DocumentManager::updateRedo( ActionEvent* event, Document* doc )
 		UndoRedoStack& undoRedoStack = getUndoRedoStack( doc );
 		bool hasRedoableCmds = undoRedoStack.hasRedoableItems();
 		if ( true == hasRedoableCmds ) {
-			event->setText( "Redo " + undoRedoStack.getCurrentRedoComand()->getName()+ "\tCtrl+Shift+Z" );
+			event->setText( "Redo " + undoRedoStack.getCurrentRedoCommand()->getName()+ "\tCtrl+Shift+Z" );
 		}
 		else {
 			event->setText( "Nothing to Redo\tCtrl+Shift+Z" );
@@ -531,17 +533,20 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 
 	FilePath fp = fileName;
 	String mimetype = getMimeTypeFromFileExtension( fp );
+
 	Document* doc = NULL;
 	if ( !mimetype.empty() )  {
 		doc = newDefaultDocument( mimetype );
 	}
 
+	// finally reads what is specific about the document: its file
 	if ( NULL != doc ) {
 		doc->setFileName( fp );
 		if ( doc->openFromType( fp, mimetype ) ) {
 			addDocument( doc );
 		}
 		else {
+			// failed to open the file, we close the default document just opened.
 			setCurrentDocument( doc );
 			closeCurrentDocument();
 			doc = NULL;
@@ -558,7 +563,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	return doc;
 }
 
-Action* DocumentManager::getAction( ActionTag tag )
+Action* DocumentManager::getAction( ulong32 tag )
 {
 	Action* result = NULL;
 
@@ -570,7 +575,7 @@ Action* DocumentManager::getAction( ActionTag tag )
 	return result;
 }
 
-void DocumentManager::addAction( ActionTag tag, Action* action )
+void DocumentManager::addAction( ulong32 tag, Action* action )
 {
 	actionsMap_[tag] = action;
 	action->setTag( tag );
@@ -580,6 +585,26 @@ void DocumentManager::addAction( ActionTag tag, Action* action )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.6  2004/11/21 00:19:10  ddiego
+*fixed a few more res loading bugs, and added yet another resource example.
+*
+*Revision 1.2.2.5  2004/11/19 05:54:28  ddiego
+*added some fixes to the text peer for win32 for printing. added toolbars to text edit example anmd added printing
+*
+*Revision 1.2.2.4  2004/11/15 05:41:27  ddiego
+*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
+*
+*Revision 1.2.2.3  2004/11/13 22:30:42  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.1  2004/10/24 18:48:56  marcelloptr
+*Document Window documentation
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
@@ -638,7 +663,7 @@ void DocumentManager::addAction( ActionTag tag, Action* action )
 *empty() by default - not exactly nice behaviour.
 *
 *Revision 1.2.2.9  2003/09/22 01:48:04  ddiego
-*some minor additions ot teh DropTarget to allow it to have multiple
+*some minor additions ot the DropTarget to allow it to have multiple
 *control targets
 *also a few other misc fixes
 *
@@ -658,7 +683,7 @@ void DocumentManager::addAction( ActionTag tag, Action* action )
 *classes. Began some fixes to the html browser implementation on Win32
 *
 *Revision 1.2.2.4  2003/08/27 20:11:33  ddiego
-*adjustments to how hte DataObject class work and copy/paste
+*adjustments to how the DataObject class work and copy/paste
 *
 *Revision 1.2.2.3  2003/08/26 21:41:17  ddiego
 *miscellanesous stuff, minor bugs

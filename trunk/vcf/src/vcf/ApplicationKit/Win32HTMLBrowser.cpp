@@ -429,13 +429,13 @@ void Win32HTMLBrowser::setVisible( const bool& val )
 	}
 }
 
-LRESULT Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc )
+bool Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndResult, WNDPROC defaultWndProc )
 {
-	LRESULT result = 0;
+	bool result = false;
 	switch ( message ) {
 
 		case WM_DESTROY : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndResult );
 
 			HRESULT hr = DoUnadvise(spBrowser_, DIID_DWebBrowserEvents2, connectionPtCookie_ );
 
@@ -445,22 +445,25 @@ LRESULT Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPAR
 
 		case WM_PAINT : {
 			if ( System::isUnicodeEnabled() ) {
-				result = DefWindowProcW(hwnd_, message, wParam, lParam);
+				wndResult = DefWindowProcW(hwnd_, message, wParam, lParam);
+				result = true;
 			}
 			else {
-				result = DefWindowProcA(hwnd_, message, wParam, lParam);
+				wndResult = DefWindowProcA(hwnd_, message, wParam, lParam);
+				result = true;
 			}
 		}
 		break;
 
 		case WM_ERASEBKGND : {
-			result = 0;
+			wndResult = 0;
+			result = true;
 		}
 		break;
 
 
 		case WM_SIZE : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndResult );
 
 			DWORD w = LOWORD(lParam);
 			DWORD h = HIWORD(lParam);
@@ -469,7 +472,7 @@ LRESULT Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPAR
 		break;
 
 		default : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam,lParam, defaultWndProc );
+			result = AbstractWin32Component::handleEventMessages( message, wParam,lParam, wndResult, defaultWndProc );
 
 		}
 		break;
@@ -636,6 +639,14 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/08 01:16:49  ddiego
+*fixed incorrect win32htmlbrowser function due to changes from weekend.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -16,7 +16,6 @@ where you installed the VCF.
 
 using namespace VCF;
 
-static GraphicsContext* s_tempDesktopCtx = NULL;
 
 //******************************************************************************
 //ToolbarItem
@@ -24,7 +23,6 @@ static GraphicsContext* s_tempDesktopCtx = NULL;
 
 ToolbarItem::ToolbarItem():
 	control_(NULL),
-	tag_(-1),
 	state_(tisEnabled),
 	model_(NULL),
 	data_(NULL),
@@ -32,7 +30,7 @@ ToolbarItem::ToolbarItem():
 	imageStateIndex_(0),
 	itemControl_(NULL)
 {
-
+	tag_ = -1;
 }
 
 void ToolbarItem::click()
@@ -486,7 +484,7 @@ void Toolbar::handleEvent( Event* event )
 
 void Toolbar::paint( GraphicsContext* context )
 {
-	Rect innerBounds = getClientBounds( false );
+	Rect innerBounds = getClientBounds( true );
 	BackgroundState bkg;
 	bkg.setEnabled( isEnabled() );
 	bkg.setActive( isActive() );
@@ -530,6 +528,17 @@ Toolbar::FloatingToolbar::~FloatingToolbar()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.2.2.1  2004/09/06 21:30:20  ddiego
+*added a separate paintBorder call to Control class
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -35,8 +35,10 @@ AbstractScrollable::AbstractScrollable():
 	resizeHandler_(NULL),
 	scrollPeer_(NULL),
 	scrollableControl_(NULL),
+	virtualViewHorzStep_(5.0),
+	virtualViewVertStep_(5.0),
 	virtualViewHeight_(0.0),
-	virtualViewWidth_(0.0),
+	virtualViewWidth_(0.0),	
 	hasVertScrollbar_(false),
 	hasHorzScrollbar_(false),
 	vertPosition_(0.0),
@@ -45,7 +47,8 @@ AbstractScrollable::AbstractScrollable():
 	bottomScrollSpace_(0.0),
 	leftScrollSpace_(0.0),
 	rightScrollSpace_(0.0),
-	keepScrollbarsVisible_(false),
+	keepHorzScrollbarVisible_(false),
+	keepVertScrollbarVisible_(false),
 	vertDelegate_(NULL),
 	horzDelegate_(NULL)
 {
@@ -77,30 +80,50 @@ void AbstractScrollable::setScrollableControl( Control* scrollableControl ) {
 void AbstractScrollable::setVerticalTopScrollSpace( const double& topScrollSpace )
 {
 	this->topScrollSpace_ = topScrollSpace;
+
 	this->recalcScrollPositions();
 }
 
 void AbstractScrollable::setVerticalBottomScrollSpace( const double& bottomScrollSpace )
 {
 	this->bottomScrollSpace_ = bottomScrollSpace;
+
 	this->recalcScrollPositions();
 }
 
 void AbstractScrollable::setHorizontalLeftScrollSpace( const double& leftScrollSpace )
 {
 	this->leftScrollSpace_ = leftScrollSpace;
+
 	this->recalcScrollPositions();
 }
 
 void AbstractScrollable::setHorizontalRightScrollSpace( const double& rightScrollSpace )
 {
 	this->rightScrollSpace_ = rightScrollSpace;
+
 	this->recalcScrollPositions();
 }
 
 void AbstractScrollable::onControlResized( ControlEvent* event )
 {
+		scrollPeer_->recalcScrollPositions( this );
+}
+
+void AbstractScrollable::setVirtualViewSize( const double& width, const double& height )
+{
+	virtualViewWidth_ = width;
+	virtualViewHeight_ = height;
+
 	scrollPeer_->recalcScrollPositions( this );
+}
+
+bool AbstractScrollable::isVerticalScrollbarVisible() {
+	return scrollPeer_->isVerticalScrollbarVisible();
+}
+
+bool AbstractScrollable::isHorizontalScrollbarVisible() {
+	return scrollPeer_->isHorizontalScrollbarVisible();
 }
 
 void AbstractScrollable::recalcScrollPositions()
@@ -163,21 +186,61 @@ void AbstractScrollable::getVerticalScrollRects( Rect* scrollBounds, Rect* topBo
 	scrollPeer_->getVerticalScrollRects( scrollBounds, topBounds, bottomBounds );
 }
 
-void AbstractScrollable::setKeepScrollbarsVisible( const bool& val )
+void AbstractScrollable::setKeepScrollbarsVisible( const bool& horzVisible, const bool& vertVisible )
 {
-	keepScrollbarsVisible_ = val;
+	keepHorzScrollbarVisible_ = horzVisible;
+	keepVertScrollbarVisible_ = vertVisible;
+
+	recalcScrollPositions();
 }
 
-
-bool AbstractScrollable::getKeepScrollbarsVisible()
+bool AbstractScrollable::getKeepHorzScrollbarVisible()
 {
-	return keepScrollbarsVisible_;
+	return keepHorzScrollbarVisible_;
 }
+
+bool AbstractScrollable::getKeepVertScrollbarVisible()
+{
+	return keepVertScrollbarVisible_;
+}
+
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.7  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.6  2004/09/21 22:27:06  marcelloptr
+*added setVirtualViewStep functions for the scrollbars and other minor changes
+*
+*Revision 1.2.2.5  2004/09/21 05:43:21  dougtinkham
+*removed updateVirtualViewSize, addied isVerticalScrollbarVisible, isHorizontalScrollbarVisible
+*
+*Revision 1.2.2.4  2004/09/19 19:54:45  marcelloptr
+*scrollbars transitory changes
+*
+*Revision 1.2.2.3  2004/09/13 06:07:05  dougtinkham
+*onControlResized now checks if updateVirtualViewSize should be called
+*
+*Revision 1.2.2.2  2004/09/11 08:16:41  dougtinkham
+*changes to updateVirtualViewSize
+*
+*Revision 1.2.2.1  2004/09/10 22:31:18  dougtinkham
+*added updateVirtualViewSize member fct
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

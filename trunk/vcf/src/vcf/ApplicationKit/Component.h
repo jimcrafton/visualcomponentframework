@@ -18,7 +18,7 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF {
 
 class Rect;
 class InvalidPeer;
@@ -33,40 +33,40 @@ class Action;
 
 
 /**
-The base class for all objects within the Visual Component Framework
-that wish to manipulated dynamically within the an IDE. All UI controls
-are descended from this class.
-<p>
-Some of the services that are provided are as follows:
-<ul>
-<li>provides methods for registering components into logical
- 	groups, that can then be displayed with an IDE
-<li>provides the ability to own other components
-<li>the ability to be manipulated by the IDE UI designer
-<li>methods for uniquely identifying each instance, either
- 	by name or by a numerical tag.
-</ul>
-</p>
-<p>
-The component itself is a <b>non</b> visual object, thus it can be used
-as a base class for a wide variety of things, in addition to serving as
-a base class for UI controls. The Component by itself is an abstract class
-and should never be created by itself, instead you should be created derived
-instances of classes derived from Component.
-
-@delegates
-	@del Component::ComponentCreated
-	@del Component::ComponentDeleted
-	@del Component::ComponentAdded
-	@del Component::ComponentRemoved
-	@del Component::ComponentLoaded
-	@del Component::ComponentSaved
- */
+* The base class for all objects within the Visual Component Framework
+* that wish to manipulated dynamically within the an IDE. All UI controls
+* are descended from this class.
+* <p>
+* Some of the services that are provided are as follows:
+* <ul>
+* <li>provides methods for registering components into logical
+*  	groups, that can then be displayed with an IDE
+* <li>provides the ability to own other components
+* <li>the ability to be manipulated by the IDE UI designer
+* <li>methods for uniquely identifying each instance, either
+* 	by name or by a numerical tag.
+* </ul>
+* </p>
+* <p>
+* The component itself is a <b>non</b> visual object, thus it can be used
+* as a base class for a wide variety of things, in addition to serving as
+* a base class for UI controls. The Component by itself is an abstract class
+* and should never be created by itself, instead you should be created derived
+* instances of classes derived from Component.
+*
+* @delegates
+*   @del Component::ComponentCreated
+*   @del Component::ComponentDeleted
+*   @del Component::ComponentAdded
+*   @del Component::ComponentRemoved
+*   @del Component::ComponentLoaded
+*   @del Component::ComponentSaved
+*/
 class APPLICATIONKIT_API Component : public ObjectWithEvents { //, public Persistable{
 protected:
 	/**
-	*The constructor and destructor is hidden - this is an abstract class and should NEVER
-	*be instantiated directly
+	* The constructor and destructor is hidden - this is an abstract class and should NEVER
+	* be instantiated directly
 	*/
 	Component();
 
@@ -77,7 +77,7 @@ protected:
 	Component( const String& name );
 
 	/**
-	*This is protected - you should call free, or release to destroy the component
+	* This is protected - you should call free, or release to destroy the component
 	*/
 	virtual ~Component();
 public:
@@ -95,13 +95,13 @@ public:
 
 
 	/**
-	*The ComponentState enum represents the current
-	*state of the component. Some states will prevent
-	*the Component from responding to events, for example,
-	*a Control with it state set to CS_DESIGNING, will <b><i>not</i></b>
-	*respond to certain UI events, while a Control with it's
-	*state set to CS_DESTROYING, will not respond to any
-	*pending UI events.
+	* The ComponentState enum represents the current
+	* state of the component. Some states will prevent
+	* the Component from responding to events, for example,
+	* a Control with it state set to CS_DESIGNING, will <b><i>not</i></b>
+	* respond to certain UI events, while a Control with it's
+	* state set to CS_DESTROYING, will not respond to any
+	* pending UI events.
 	*/
 	enum ComponentState {
 		csUnknown=0,
@@ -118,172 +118,172 @@ public:
 	};
 
 	/**
-	*generic handler method for events. All UI events
-	*are sent here and then dispatched accordingly to a
-	*more specific event handler. If an Application class
-	*is present, then it is given a chance to "see" the event
-	*first before delegating it to the Component.
-	*<p>
-	*All events are dispatched by their type so it is important
-	*to correctly identify the event objects type if you would
-	*like it to me dispatched correctly.
-	*@param Event based on the value returned by
-	*Event::getType(), the method will call the
-	*appropriate component method, like afterCreate(), beforeDestroy(), etc
+	* generic handler method for events. All UI events
+	* are sent here and then dispatched accordingly to a
+	* more specific event handler. If an Application class
+	* is present, then it is given a chance to "see" the event
+	* first before delegating it to the Component.
+	* <p>
+	* All events are dispatched by their type so it is important
+	* to correctly identify the event objects type if you would
+	* like it to be dispatched correctly.
+	* The method will call the appropriate component method,
+	* like afterCreate(), beforeDestroy(), etc.
+	* @param Event based on the value returned by Event::getType(),
 	*/
 	virtual void handleEvent( Event* event );
 
 	/**
-	@delegate ComponentCreated this is called when the component is created. This
-	may be <i>after</i> the call to operator new to create the component instance.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_CREATED
+	* @delegate ComponentCreated this is called when the component is created. This
+	* may be <i>after</i> the call to operator new to create the component instance.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_CREATED
 	*/
 	DELEGATE(ComponentCreated)
 
 	/**
-	@delegate ComponentDeleted this is fired when the component is being destroyed.
-	Handlers attached to this delegate may safely call virtual methods of the component
-	as the component's destructor has not yet been called.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_CREATED
+	* @delegate ComponentDeleted this is fired when the component is being destroyed.
+	* Handlers attached to this delegate may safely call virtual methods of the component
+	* as the component's destructor has not yet been called.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_CREATED
 	*/
 	DELEGATE(ComponentDeleted)
 
 	/**
-	@delegate ComponentAdded this is fired when a new child component is added
-	to this component.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_ADDED
+	* @delegate ComponentAdded this is fired when a new child component is added
+	* to this component.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_ADDED
 	*/
 	DELEGATE(ComponentAdded)
 
 	/**
-	@delegate ComponentRemoved this is fired when child component is removed
-	from this component.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_REMOVED
+	* @delegate ComponentRemoved this is fired when child component is removed
+	* from this component.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_REMOVED
 	*/
 	DELEGATE(ComponentRemoved)
 
 	/**
-	@delegate ComponentLoaded this is fired when child component is done being
-	loaded from some InputStream.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_LOADED
+	* @delegate ComponentLoaded this is fired when child component is done being
+	* loaded from some InputStream.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_LOADED
 	*/
 	DELEGATE(ComponentLoaded)
 
 	/**
-	@delegate ComponentSaved this is fired when child component is removed
-	from this component.
-	@event ComponentEvent
-	@eventtype Component::COMPONENT_SAVED
+	* @delegate ComponentSaved this is fired when child component is removed
+	* from this component.
+	* @event ComponentEvent
+	* @eventtype Component::COMPONENT_SAVED
 	*/
 	DELEGATE(ComponentSaved)
 
 
 	/**
-	This is called to make sure the csLoading bit is set in the component
-	state. Called by streams that read in a component object
+	* This is called to make sure the csLoading bit is set in the component
+	* state. Called by streams that read in a component object
 	*/
 	void loading();
 
 	/**
-	This is called to make sure the csSaving bit is set in the component
-	state. Called by streams that write out a component object
+	* This is called to make sure the csSaving bit is set in the component
+	* state. Called by streams that write out a component object
 	*/
 	void saving();
 
 	/**
-	Fires an event to the ComponentLoaded delegate. The csLoading bit is removed
-	from the component's state.
+	* Fires an event to the ComponentLoaded delegate. The csLoading bit is removed
+	* from the component's state.
 	*/
 	void loaded();
 
 	/**
-	Fires an event to the ComponentSaved delegate. The csSaving bit is removed
-	from the component's state.
+	* Fires an event to the ComponentSaved delegate. The csSaving bit is removed
+	* from the component's state.
 	*/
 	void saved();
 
 	/**
-	*The name of the component. While technically the name
-	*can be any character sequence, it is preferred if the
-	*name follow C++ variable name rules, i.e. must start
-	*with a character of [a..z] or [A..Z], followed by any
-	*sequence of characters in the set [a..z,A..Z,0..9,_].
-	*The name of the component should be unique.
-	*@return String the name of the component.
+	* The name of the component. While technically the name
+	* can be any character sequence, it is preferred if the
+	* name follow C++ variable name rules, i.e. must start
+	* with a character of [a..z] or [A..Z], followed by any
+	* sequence of characters in the set [a..z,A..Z,0..9,_].
+	* The name of the component should be unique.
+	* @return String the name of the component.
 	*/
-    virtual String getName();
+	virtual String getName();
 
 	/**
-	*sets the name of the component. For naming conventions/rules
-	*please see getName().
+	* sets the name of the component. For naming conventions/rules
+	* please see getName().
 	*/
-    virtual void setName( const String& name );
+	virtual void setName( const String& name );
 
 	/**
-	*called just prior to completely destroying the component
-	*and it's associated memory.
+	* called just prior to completely destroying the component
+	* and it's associated memory.
 	*/
-    virtual void beforeDestroy( ComponentEvent* event );
+	virtual void beforeDestroy( ComponentEvent* event );
 
 	/**
-	*after the component has been created/instantiated
-	*the afterCreate() method is called. Special initializations
-	*may then happen here.
+	* after the component has been created/instantiated
+	* the afterCreate() method is called. Special initializations
+	* may then happen here.
 	*/
 	virtual void afterCreate( ComponentEvent* event );
 
 
 	/**
-	*returns the current state of the component.
-	*Some states will prevent the Component from responding
-	*to events, for example, a Control with it's state set to
-	*CS_DESIGNING, will <b><i>not</i></b> respond to certain
-	*UI events, while a Control with it's state set to
-	*CS_DESTROYING, will not respond to any pending UI events.
+	* returns the current state of the component.
+	* Some states will prevent the Component from responding
+	* to events, for example, a Control with it's state set to
+	* CS_DESIGNING, will <b><i>not</i></b> respond to certain
+	* UI events, while a Control with it's state set to
+	* CS_DESTROYING, will not respond to any pending UI events.
 	*/
 	ulong32 getComponentState();
 
 	/**
-	queries the component state to check if it's
-	set to csNormal or not.
-	@return bool true if component state is csNormal, otherwise false
+	* queries the component state to check if it's
+	* set to csNormal or not.
+	* @return bool true if component state is csNormal, otherwise false
 	*/
 	bool isNormal() const ;
 
 	/**
-	queries the component state to check if it's
-	set to csDestroying or not.
-	@return bool true if component state is csDestroying, otherwise false
+	* queries the component state to check if it's
+	* set to csDestroying or not.
+	* @return bool true if component state is csDestroying, otherwise false
 	*/
 	bool isDestroying() const ;
 
 	/**
-	queries the component state to check if it's csLoading bit is set or not.
-	@return bool true if component state includes csLoading, otherwise false
+	* queries the component state to check if it's csLoading bit is set or not.
+	* @return bool true if component state includes csLoading, otherwise false
 	*/
 	bool isLoading() const ;
 
 	/**
-	queries the component state to check if it's csSaving bit is set or not.
-	@return bool true if component state includes csSaving otherwise false
+	* queries the component state to check if it's csSaving bit is set or not.
+	* @return bool true if component state includes csSaving otherwise false
 	*/
 	bool isSaving() const ;
 
 	/**
-	queries the component state to check if it's csDesigning bit is set or not.
-	@return bool true if component state includes csDesigning otherwise false
+	* queries the component state to check if it's csDesigning bit is set or not.
+	* @return bool true if component state includes csDesigning otherwise false
 	*/
 	bool isDesigning() const ;
 
 	/**
-	queries the component state to check if it's
-	set to csCreated or not.
-	@return bool true if component state is csCreated, otherwise false
+	* queries the component state to check if it's
+	* set to csCreated or not.
+	* @return bool true if component state is csCreated, otherwise false
 	*/
 	bool isCreated() const;
 
@@ -291,12 +291,12 @@ public:
 
 
 	/**
-	*Sets the component's state
+	* Sets the component's state
 	*/
 	void setComponentState( const ulong32& componentState );
 
 	/**
-	convenience fundtions for setting the component state
+	* convenience fundtions for setting the component state
 	*/
 	void setCreated();
 	void setNormal();
@@ -304,94 +304,117 @@ public:
 	void setDesigning( const bool& designing );
 
 	/**
-	*adds a component to this component. Components may contain
-	*one or more child, or owned, components. When the component is destroyed,
-	*all owned components are destroyed as well. This is entirely independent
-	*from the Container interface's add() method. This provides a convenient
-	*way to clean up memory of components added on the heap. For
-	*example, a Window may have a popup menu that is created during initialization.
-	*By adding the popup menu (which is derived from Component), the popup
-	*menu will be destroyed automatically for you once the Window is
-	*destroyed. The implementation checks to prevent multiple adds of the
-	*same component instance in the internal list.
+	* adds a component to this component. Components may contain
+	* one or more child, or owned, components. When the component is destroyed,
+	* all owned components are destroyed as well. This is entirely independent
+	* from the Container interface's add() method. This provides a convenient
+	* way to clean up memory of components added on the heap. For
+	* example, a Window may have a popup menu that is created during initialization.
+	* By adding the popup menu (which is derived from Component), the popup
+	* menu will be destroyed automatically for you once the Window is
+	* destroyed. The implementation checks to prevent multiple adds of the
+	* same component instance in the internal list.
 	*/
 	virtual void addComponent( Component* component );
 
 	/**
-	*removes the component.
+	* removes the component.
 	*/
 	virtual void removeComponent( Component* component );
 
+	void removeFromOwner( const bool& freeInstance=true );
+
 	/**
-	*returns an enumeration of all the component's that this
-	*component currently owns.
+	* returns an enumeration of all the component's that this
+	* component currently owns.
 	*/
 	virtual Enumerator<Component*>* getComponents();
 
 	/**
-	*returns the number of components owned by this component
+	* returns the number of components owned by this component
 	*/
 	virtual unsigned long getComponentCount();
 
 	/**
-	*finds a particular component as specified by the componentName
-	*parameter within the list of owned components.
-	*@param String the name of the component to look for
-	*@return Component a pointer to the Component with a matching
-	*name to componentName. If no match is found or the component has
-	*no owned components, the return value is NULL.
+	* finds a particular component as specified by the componentName
+	* parameter within the list of owned components.
+	* @param String the name of the component to look for
+	* @return Component a pointer to the Component with a matching
+	* name to componentName. If no match is found or the component has
+	* no owned components, the return value is NULL.
 	*/
 	Component* findComponent( const String& componentName );
 
 
 	/**
-	*Used to bind a variable to a component by attempting to bind the variable
-	*passed in to the component in the variablePtr parameter to the component
-	*instance with the same name as the variableName parameter. This functions
-	*looks at all the owned components first, then checks to see if the Container
-	*interface is supported, and if so, it checks all the child controls of the
-	*container.
-	*@param Component* a pointer to a Component pointer variable
-	*@param String the name of the component to find
-	*@return bool true if the component is found, otherwise false
+	* Used to bind a variable to a component by attempting to bind the variable
+	* passed in to the component in the variablePtr parameter to the component
+	* instance with the same name as the variableName parameter. This functions
+	* looks at all the owned components first, then checks to see if the Container
+	* interface is supported, and if so, it checks all the child controls of the
+	* container.
+	* @param Component* a pointer to a Component pointer variable
+	* @param String the name of the component to find
+	* @return bool true if the component is found, otherwise false
 	*/
 	bool bindVariable( Component** variablePtr, const String& variableName );
 
 	/**
-	*returns the Component's tag value. A Tag is borrowed from the
-	*NeXTStep idea of tags. A unique number is automatically associated
-	*with the component when it is created, but can be changed by the programmer.
-	*The following info is lifted directly from the NeXTSTEP docs.
-	*"Tags are integers that you use in your code to identify objects.
-	*They offer a convenient alternative to such methods of object identification
-	*as fetching an object's title.  (What if the object't title changes while the
-	*application is running, or the object has no title?)"
-	*@return long the tag value of the Component
+	* returns the Component's tag value. A Tag is borrowed from the
+	* NeXTStep idea of tags. A unique number is automatically associated
+	* with the component when it is created, but can be changed by the programmer.
+	* The following info is lifted directly from the NeXTSTEP docs.
+	* "Tags are integers that you use in your code to identify objects.
+	* They offer a convenient alternative to such methods of object identification
+	* as fetching an object's title.  (What if the object't title changes while the
+	* application is running, or the object has no title?)"
+	* @return long the tag value of the Component
 	*/
 	long getTag() {
 		return tag_;
 	}
 
 	/**
-	*Sets the tag value
-	*@param long - represents the new value of the component's tag will be set to.
+	* Sets the tag value
+	* @param long - represents the new value of the component's tag will be set to.
 	*/
 	void setTag( const long& tag ) {
 		tag_ = tag;
 	}
 
+	/**
+	*
+	*
+	*/
 	Component* getOwner() {
 		return owner_;
 	}
 
 
+	/**
+	*
+	*
+	*/
 	Action* getAction() {
 		return action_;
 	}
 
+	/**
+	*
+	*
+	*/
 	void setAction( Action* action );
 
+	/**
+	*
+	*
+	*/
 	void addToUpdateTimer();
+
+	/**
+	*
+	*
+	*/
 	void removeFromUpdateTimer();
 
 	/**
@@ -427,7 +450,7 @@ public:
 	}
 
 	/**
-	*registers a component in the system component map. The map is organized into
+	* registers a component in the system component map. The map is organized into
 	a series of keys called categories, with 1 or more entries in each category.
 	The UIToolkit registers the default ApplicationKit components, and other developers may
 	use this to extend the list with their own components.
@@ -435,17 +458,17 @@ public:
 	static bool registerComponent( const String& componentClassName, const String& category );
 
 	/**
-	*Used by IDE's to list the various Component classes for a given category. Each Class pointer
-	*that is contained in the Enumerator guarantees the ability to create an instance
-	*of the component it represents.
+	* Used by IDE's to list the various Component classes for a given category. Each Class pointer
+	* that is contained in the Enumerator guarantees the ability to create an instance
+	* of the component it represents.
 	*/
 	static Enumerator<Class*>* getComponentClassesForCategory( const String& category );
 
 	/**
-	*returns a list of all the known, registered, component categories. These in turn
-	*may be used to gather the classes for each category with a call to the getComponentClassesForCategory()
-	*static method.
-	*@see Component::getComponentClassesForCategory()
+	* returns a list of all the known, registered, component categories. These in turn
+	* may be used to gather the classes for each category with a call to the getComponentClassesForCategory()
+	* static method.
+	* @see Component::getComponentClassesForCategory()
 	*/
 	static Enumerator<String>* getRegisteredComponentCategories();
 
@@ -454,22 +477,41 @@ public:
 	*/
 	static void initComponentRegistrar();
 
+	/**
+	*
+	*
+	*/
 	static void clearRegistedComponents();
 
 protected:
+	/**
+	*
+	*
+	*/
+	virtual void destroy();
+
+protected:
+	/**
+	*
+	*
+	*/
 	Component* owner_;
 	ulong32 componentState_;
-    String name_;
+	String name_;
 	long tag_;
 	Action* action_;
 	std::vector<Component*> components_;
 	EnumeratorContainer<std::vector<Component*>, Component*> componentContainer_;
 	
+	/**
+	*
+	*
+	*/
 	bool useLocaleStrings_;
 
 
 	/**
-	*a map of component classes to categorys
+	* a map of component classes to categories
 	*/
 	static std::map<String,std::vector<Class*>*>* registeredComponentMap;
 	static std::vector<String>* registeredCategory;
@@ -478,16 +520,32 @@ protected:
 
 
 
-	virtual void destroy();
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:20  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/07 19:32:18  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.1  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

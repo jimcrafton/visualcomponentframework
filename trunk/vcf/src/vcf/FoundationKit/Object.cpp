@@ -97,11 +97,23 @@ String Object::getClassName()
 
 String Object::toString()
 {
-	String result = "";
+	String result;
+	/*
+	JC : I commented this out - I think there was some confusion about how this was supposed
+	to work. By using %ls we can pass in a WideChar*. If you use an ansi char* I am not sure 
+	what will happen.
+	The simpler solution is to just use the StringUtils::format() function, which 
+	uses less ansi to wide char transformation.
+	I would like to thank Aroman for catching this though!
 	char info[256];
 	sprintf( info, "%ls @ %p, refcount: %d",
-		     this->getClassName().c_str(), this, (int)refCount_ );
+		     this->getClassName().ansi_c_str(), this, (int)refCount_ );
 	result += info;
+	*/
+	//Note: %ls means we can pass in a WideChar* - if we wanted to 
+	//pass in a char* we would need to use the %s formatter
+	result = StringUtils::format( "%ls @ %p, refcount: %d", getClassName().c_str(), this, (int)refCount_ );
+	
 	return result;
 }
 
@@ -249,6 +261,17 @@ ulong32 Object::objectAllocationCount()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/09 02:01:39  ddiego
+*made a change to the way the toString() method is implementing formatting the info
+*
+*Revision 1.2.2.1  2004/10/21 18:19:19  augusto_roman
+*Fixed Object's toString() method - it used c_str() instead of ansi_c_str() in sprintf() - aroman
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

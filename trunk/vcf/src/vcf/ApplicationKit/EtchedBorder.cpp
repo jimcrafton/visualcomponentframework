@@ -48,7 +48,14 @@ Rect EtchedBorder::getClientRect( Rect* initialBounds, Control* control )
 {
 	Rect result = *initialBounds;
 
-	result.inflate( -2.0, -2.0 );
+	double left, top, right, bottom = 0;
+
+	if ( (sidesToPaint_ & GraphicsContext::etLeftSide  ) != 0 ) left   = -2.0;
+	if ( (sidesToPaint_ & GraphicsContext::etTopSide   ) != 0 ) top    = -2.0;
+	if ( (sidesToPaint_ & GraphicsContext::etRightSide ) != 0 ) right  = -2.0;
+	if ( (sidesToPaint_ & GraphicsContext::etBottomSide) != 0 ) bottom = -2.0;
+
+	result.inflate( left, top, right, bottom );
 
 	return result;
 }
@@ -56,6 +63,14 @@ Rect EtchedBorder::getClientRect( Rect* initialBounds, Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/01 17:04:21  dougtinkham
+*modified getClientRect to account for absence of border on certain sides
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

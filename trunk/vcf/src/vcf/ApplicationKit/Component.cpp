@@ -82,6 +82,11 @@ Component::~Component()
 
 void Component::destroy()
 {
+	Action* action = getAction();
+	if ( NULL != action ) {
+		action->removeTarget( this );
+	}
+
 	std::vector<Component*>::iterator componentIter = components_.begin();
 	while ( componentIter != components_.end() ){
 		Component* component = *componentIter;
@@ -112,12 +117,12 @@ void Component::handleEvent( Event* event )
 		switch ( eventType ){
 
 			case Component::COMPONENT_CREATED:{
+				setNormal();
+
 				ComponentEvent* componentEvent = (ComponentEvent*)event;
 
 				afterCreate( componentEvent);
 				ComponentCreated.fireEvent( componentEvent );
-
-				setNormal();
 			}
 			break;
 
@@ -181,6 +186,17 @@ void Component::removeComponent( Component* component )
 		(*found)->owner_ = NULL;
 		components_.erase( found );
 	}
+}
+
+void Component::removeFromOwner( const bool& freeInstance )
+{
+	Component* owner = getOwner();
+	if ( NULL != owner ) {
+		owner->removeComponent( this );
+		if ( freeInstance ) {
+			free();
+		}
+	}	
 }
 
 Enumerator<Component*>* Component::getComponents()
@@ -468,6 +484,20 @@ void Component::setUseLocaleStrings( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:20  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

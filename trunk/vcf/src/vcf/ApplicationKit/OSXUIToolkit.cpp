@@ -16,6 +16,15 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXWindow.h"
 #include "vcf/ApplicationKit/OSXControl.h"
 #include "vcf/ApplicationKit/OSXLightweightControl.h"
+#include "vcf/ApplicationKit/OSXDialog.h"
+#include "vcf/ApplicationKit/OSXButton.h"
+#include "vcf/ApplicationKit/OSXColorDialog.h"
+#include "vcf/ApplicationKit/OSXFolderBrowseDialog.h"
+#include "vcf/ApplicationKit/OSXFileOpenDialog.h"
+#include "vcf/ApplicationKit/OSXFileSaveDialog.h"
+#include "vcf/ApplicationKit/OSXMenuBar.h"
+#include "vcf/ApplicationKit/OSXMenuItem.h"
+
 
 #define kSleepTime	32767
 
@@ -565,6 +574,53 @@ public:
 	}
 };
 
+
+
+
+
+
+class OSXUIPolicyManager : public UIPolicyManager {
+public:
+	virtual void mergeMenus( Menu* appMenu, Menu* windowMenu ){
+	
+	}
+
+	virtual Frame* getOwnerForDialog() {
+		return NULL;
+	}
+	
+	virtual Rect adjustInitialDialogBounds( Dialog* dialog ) {
+		Rect result;
+		Control* owner = dialog->getOwner();
+		if ( NULL != owner ) {			
+			result.left_ = owner->getLeft() + ( owner->getWidth()/2.0 - dialog->getWidth()/2.0 );
+			result.top_ = owner->getTop() + ( owner->getHeight()/2.0 - dialog->getHeight()/2.0 );
+			result.right_ = result.left_ + dialog->getWidth();
+			result.bottom_ = result.top_ + dialog->getHeight();
+			if ( NULL != owner->getParent() ) {
+				owner->translateToScreenCoords( &result );
+			}
+		}
+		else {
+			//get the horizontal center of screen, and the vertical position
+			//about 1/3 of the way from the top
+			double w = Desktop::getDesktop()->getWidth();
+			double h = Desktop::getDesktop()->getHeight();
+			
+			result.left_ = result.right_ = w / 2.0;
+			result.top_ = result.bottom_ = h / 3.0;
+			
+			result.inflate( dialog->getWidth()/2.0, dialog->getHeight()/2.0 );
+			
+		}
+		
+		return result;
+	}
+};
+
+
+
+
 };//end of VCF namespace
 
 
@@ -581,7 +637,7 @@ OSXUIToolkit::OSXUIToolkit():
     idleTimerRef_(NULL)
 {
     metricsMgr_ = new OSXUIMetricsManager();
-
+	policyMgr_ = new OSXUIPolicyManager();
     //install event loop callbacks
     handlerUPP_ = NewEventHandlerUPP(OSXUIToolkit::handleOSXApplicationEvents);
     static EventTypeSpec eventsToHandle[] ={
@@ -631,32 +687,32 @@ ApplicationPeer* OSXUIToolkit::internal_createApplicationPeer()
     return new OSXApplicationPeer();
 }
 
-TextPeer* OSXUIToolkit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType)
+TextPeer* OSXUIToolkit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl )
 {
     return NULL;
 }
 
-TreePeer* OSXUIToolkit::internal_createTreePeer( TreeControl* component, ComponentType componentType)
+TreePeer* OSXUIToolkit::internal_createTreePeer( TreeControl* component )
 {
     return NULL;
 }
 
-ListviewPeer* OSXUIToolkit::internal_createListViewPeer( ListViewControl* component, ComponentType componentType)
+ListviewPeer* OSXUIToolkit::internal_createListViewPeer( ListViewControl* component )
 {
     return NULL;
 }
 
-DialogPeer* OSXUIToolkit::internal_createDialogPeer( Control* owner, Dialog* component, ComponentType componentType )
+DialogPeer* OSXUIToolkit::internal_createDialogPeer( Control* owner, Dialog* component )
 {
-    return NULL;
+    return new OSXDialog( owner, component );
 }
 
 DialogPeer* OSXUIToolkit::internal_createDialogPeer()
 {
-    return NULL;
+    return new OSXDialog();
 }
 
-ControlPeer* OSXUIToolkit::internal_createControlPeer( Control* control, ComponentType componentType)
+ControlPeer* OSXUIToolkit::internal_createControlPeer( Control* control, ComponentType componentType )
 {
 	ControlPeer* result = NULL;
 
@@ -674,7 +730,7 @@ ControlPeer* OSXUIToolkit::internal_createControlPeer( Control* control, Compone
 	return result;	
 }
 
-WindowPeer* OSXUIToolkit::internal_createWindowPeer( Control* control, Control* owner, ComponentType componentType)
+WindowPeer* OSXUIToolkit::internal_createWindowPeer( Control* control, Control* owner )
 {
     return new OSXWindow( control, owner );
 }
@@ -686,12 +742,12 @@ ToolbarPeer* OSXUIToolkit::internal_createToolbarPeer( Toolbar* toolbar )
 
 MenuItemPeer* OSXUIToolkit::internal_createMenuItemPeer( MenuItem* item )
 {
-    return NULL;
+    return new OSXMenuItem( item );
 }
 
 MenuBarPeer* OSXUIToolkit::internal_createMenuBarPeer( MenuBar* menuBar )
 {
-    return NULL;
+    return new OSXMenuBar( menuBar );
 }
 
 PopupMenuPeer* OSXUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu )
@@ -699,9 +755,9 @@ PopupMenuPeer* OSXUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu 
     return NULL;
 }
 
-ButtonPeer* OSXUIToolkit::internal_createButtonPeer( CommandButton* component, ComponentType componentType)
+ButtonPeer* OSXUIToolkit::internal_createButtonPeer( CommandButton* component )
 {
-    return NULL;
+    return new OSXButton( component );
 }
 
 HTMLBrowserPeer* OSXUIToolkit::internal_createHTMLBrowserPeer( Control* control )
@@ -716,22 +772,22 @@ ContextPeer* OSXUIToolkit::internal_createContextPeer( Control* control )
 
 CommonFileDialogPeer* OSXUIToolkit::internal_createCommonFileOpenDialogPeer( Control* owner )
 {
-    return NULL;
+    return new OSXFileOpenDialog(owner);
 }
 
 CommonFileDialogPeer* OSXUIToolkit::internal_createCommonFileSaveDialogPeer( Control* owner )
 {
-    return NULL;
+    return new OSXFileSaveDialog(owner);
 }
 
 CommonColorDialogPeer* OSXUIToolkit::internal_createCommonColorDialogPeer( Control* owner )
 {
-    return NULL;
+    return new OSXColorDialog( owner );
 }
 
 CommonFolderBrowseDialogPeer* OSXUIToolkit::internal_createCommonFolderBrowseDialogPeer( Control* owner )
 {
-    return NULL;
+    return new OSXFolderBrowseDialog( owner );
 }
 
 CommonFontDialogPeer* OSXUIToolkit::internal_createCommonFontDialogPeer( Control* owner )
@@ -762,6 +818,16 @@ DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
 ScrollPeer* OSXUIToolkit::internal_createScrollPeer( Control* control )
 {
     return NULL;
+}
+
+SystemTrayPeer* OSXUIToolkit::internal_createSystemTrayPeer()
+{
+	return NULL;
+}
+
+CommonPrintDialogPeer* OSXUIToolkit::internal_createCommonPrintDialogPeer( Control* owner )
+{
+	return NULL;
 }
 
 CursorPeer* OSXUIToolkit::internal_createCursorPeer( Cursor* cursor )
@@ -931,7 +997,50 @@ void OSXUIToolkit::internal_runEventLoop()
 
 UIToolkit::ModalReturnType OSXUIToolkit::internal_runModalEventLoopFor( Control* control )
 {
-    return UIToolkit::mrFalse;
+	Frame* ownerFrame = control->getParentFrame();
+	WindowRef controlWindow = (WindowRef) ownerFrame->getPeer()->getHandleID();
+	
+	//EndAppModalStateForWindow( controlWindow );
+	UIToolkit::ModalReturnType result = UIToolkit::mrTrue;
+	/*
+	EventRef theEvent;
+	while  ( ReceiveNextEvent(0, NULL,kEventDurationForever,true, &theEvent)== noErr ) {
+		
+		SendEventToEventTarget (theEvent, GetEventDispatcherTarget());
+				
+		if ( kEventClassCommand == GetEventKind( theEvent ) ) {
+			HICommand		command;
+			GetEventParameter( theEvent, kEventParamDirectObject, typeHICommand, NULL,
+								sizeof( HICommand ), NULL, &command );							
+								
+			if ( command.attributes & kHICommandFromControl ) {
+				if ( kEventCommandProcess == GetEventKind( theEvent ) ) {
+					switch ( command.commandID ) {
+						case kHICommandOK : {
+							//result = UIToolkit::mrOK;
+						}
+						break;
+						
+						case kHICommandCancel : {
+							result = UIToolkit::mrCancel;
+						}
+						break;
+					}
+				}
+			}					
+		}
+		
+		
+		ReleaseEvent(theEvent);
+	}
+	*/
+	
+	RunAppModalLoopForWindow( controlWindow );
+	
+	
+	//EndAppModalStateForWindow( controlWindow );
+	
+    return result;
 }
 
 void OSXUIToolkit::internal_quitCurrentEventLoop()
@@ -1001,6 +1110,57 @@ OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRe
         }
         break;
 
+		case kEventClassCommand : {
+			switch ( GetEventKind( osxEvent ) ) {
+				case kEventProcessCommand : {
+					HICommand		command;
+					GetEventParameter( osxEvent, kEventParamDirectObject, typeHICommand, NULL,
+									sizeof( HICommand ), NULL, &command );
+									
+					MenuItem* item = NULL;
+					GetMenuCommandProperty( command.menu.menuRef, 
+										command.commandID,
+										VCF_PROPERTY_CREATOR, 
+										OSXMenuItem::propertyTag,
+										sizeof(item),
+										NULL, &item );
+					
+								
+					if ( NULL != item ) {
+						//cause the menu click method to be called!
+						item->click();
+						result = noErr;
+					}										
+                }
+                break;
+				
+				case kEventCommandUpdateStatus : {
+					HICommand		command;
+					GetEventParameter( osxEvent, kEventParamDirectObject, typeHICommand, NULL,
+									sizeof( HICommand ), NULL, &command );
+									
+					MenuItem* item = NULL;
+					GetMenuCommandProperty( command.menu.menuRef, 
+										command.commandID,
+										VCF_PROPERTY_CREATOR, 
+										OSXMenuItem::propertyTag,
+										sizeof(item),
+										NULL, &item );
+					
+					
+					result = ::CallNextEventHandler( nextHandler, osxEvent );
+								
+					if ( NULL != item ) {					
+						//cause the menu update method to be called!
+						//this updates the menu item
+						item->update();
+					}										
+                }
+                break;
+			}
+		}
+		break;
+		
         default : {
             return ::CallNextEventHandler( nextHandler, osxEvent );
         }
@@ -1010,40 +1170,7 @@ OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRe
     return result;
 }
 
-VCF::ulong32 translateButtonMask( EventMouseButton button )
-{
-    VCF::ulong32 result = 0;
 
-    if ( button == kEventMouseButtonPrimary ) {
-        result = mbmLeftButton;
-    }
-    else if ( button == kEventMouseButtonSecondary ) {
-        result = mbmRightButton;
-    }
-    else if ( button == kEventMouseButtonTertiary ) {
-        result = mbmMiddleButton;
-    }
-
-    return result;
-}
-
-VCF::ulong32 translateKeyMask( UInt32 keyMod )
-{
-    VCF::ulong32 result = 0;
-
-    if ( keyMod & shiftKey ) {
-        result |= kmShift;
-    }
-
-    if ( keyMod & cmdKey ) {
-        result |= kmAlt;
-    }
-
-    if ( keyMod & controlKey ) {
-        result |= kmCtrl;
-    }
-    return result;
-}
 
 
 VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* eventData )
@@ -1088,8 +1215,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_DOWN,
-											translateButtonMask( button ),
-											translateKeyMask( keyboardModifier ), &pt );
+											OSXUtils::translateButtonMask( button ),
+											OSXUtils::translateKeyMask( keyboardModifier ), &pt );
 
                 }
                 break;
@@ -1102,8 +1229,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_UP,
-											translateButtonMask( button ),
-											translateKeyMask( keyboardModifier ), &pt );
+											OSXUtils::translateButtonMask( button ),
+											OSXUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1116,8 +1243,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
-                                                translateButtonMask( button ),
-                                                translateKeyMask( keyboardModifier ), &pt );
+                                                OSXUtils::translateButtonMask( button ),
+                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1129,8 +1256,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
                     
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
-                                                translateButtonMask( button ),
-                                                translateKeyMask( keyboardModifier ), &pt );
+                                                OSXUtils::translateButtonMask( button ),
+                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1142,8 +1269,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_ENTERED,
-                                                    translateButtonMask( 0 ),
-                                                    translateKeyMask( 0 ), &pt );
+                                                    OSXUtils::translateButtonMask( 0 ),
+                                                    OSXUtils::translateKeyMask( 0 ), &pt );
                 }
                 break;
 
@@ -1155,8 +1282,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_LEAVE,
-                                                    translateButtonMask( 0 ),
-                                                    translateKeyMask( 0 ), &pt );
+                                                    OSXUtils::translateButtonMask( 0 ),
+                                                    OSXUtils::translateKeyMask( 0 ), &pt );
                 }
                 break;
 
@@ -1599,8 +1726,32 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                 break;
 
                 case kEventControlSetFocusPart : {
-
-
+					UInt32 attributes = 0;
+					ControlRef ctrl = NULL;
+					ControlRef startCtrl = NULL;
+					ControlPartCode part = 0;
+					OSStatus err = GetEventParameter( msg->osxEvent_,
+                                                kEventParamDirectObject,
+                                                typeControlRef,
+                                                NULL,
+                                                sizeof( ControlRef ),
+                                                NULL, &ctrl );
+					
+					err = GetEventParameter( msg->osxEvent_,
+                                                kEventParamStartControl,
+                                                typeControlRef,
+                                                NULL,
+                                                sizeof( ControlRef ),
+                                                NULL, &startCtrl );
+												
+					err = GetEventParameter( msg->osxEvent_,
+                                                kEventParamControlPart,
+                                                typeControlPartCode,
+                                                NULL,
+                                                sizeof( ControlPartCode ),
+                                                NULL, &part );	
+												
+																																				
                 }
                 break;
 
@@ -1608,88 +1759,51 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 
                 }
                 break;
-
-                case kEventControlHit : {
-
-					::Point mousePos;
-					GetEventParameter( msg->osxEvent_, kEventParamMouseLocation, typeQDPoint, NULL,
-										sizeof (mousePos), NULL, &mousePos);
-            
-            
-					UInt32 keyboardModifier = 0;            
-					GetEventParameter( msg->osxEvent_, kEventParamKeyModifiers, typeUInt32, NULL,
-										sizeof (keyboardModifier), NULL, &keyboardModifier);
-								
-					VCF::Point pt( mousePos.h , 
-									mousePos.v );
-						   
-					Scrollable* scrollable = msg->control_->getScrollable();
-                    if ( NULL != scrollable ) {
-                        pt.x_ += scrollable->getHorizontalPosition();
-                        pt.y_ += scrollable->getVerticalPosition();
-                    }
-                    
-                    result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_DOWN,
-                                                mbmLeftButton,
-                                                translateKeyMask( keyboardModifier ), &pt );
+				
+				case kEventControlHit : {
 
                 }
                 break;
-
-                case kEventControlSimulateHit : {
-
-                }
-                break;
+				
 
                 case kEventControlHitTest : {
 					::Point mousePos;
 					GetEventParameter( msg->osxEvent_, kEventParamMouseLocation, typeQDPoint, NULL,
 										sizeof (mousePos), NULL, &mousePos);
-            
-            
-					VCF::Point pt( mousePos.h , 
-									mousePos.v );
-						   
+                    
+					//LocalToGlobal( &mousePos );
+					VCF::Point pt( mousePos.h , mousePos.v );
+					//localizes the coords
+					//msg->control_->translateFromScreenCoords( &pt );
+			
 					Scrollable* scrollable = msg->control_->getScrollable();
                     if ( NULL != scrollable ) {
                         pt.x_ += scrollable->getHorizontalPosition();
                         pt.y_ += scrollable->getVerticalPosition();
                     }
-                    
+					
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
                                                 mbmLeftButton,
-                                                translateKeyMask( 0 ), &pt );
+                                                OSXUtils::translateKeyMask( 0 ), &pt );
 
                 }
                 break;
 
-                case kEventControlDraw : {
-
-                }
-                break;
-
-                case kEventControlApplyBackground : {
-
-                }
-                break;
-
-                case kEventControlApplyTextColor : {
-
-                }
-                break;
-
+                
+                
+                
                 case kEventControlGetFocusPart : {
 
                 }
                 break;
 
                 case kEventControlActivate : {
-
+					result = new VCF::FocusEvent ( msg->control_, Control::FOCUS_GAINED );
                 }
                 break;
 
                 case kEventControlDeactivate : {
-
+					result = new VCF::FocusEvent ( msg->control_, Control::FOCUS_LOST );
                 }
                 break;
 
@@ -1749,7 +1863,40 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                 break;
 
                 case kEventControlTrack : {
-
+					ControlRef theControl;
+					GetEventParameter( msg->osxEvent_, kEventParamDirectObject, typeControlRef, NULL,
+										sizeof (theControl), NULL, &theControl);
+					
+					
+						   
+					::Point mousePos;
+					GetEventParameter( msg->osxEvent_, kEventParamMouseLocation, typeQDPoint, NULL,
+										sizeof (mousePos), NULL, &mousePos);
+            
+            
+					//LocalToGlobal( &mousePos );
+					
+					UInt32 keyboardModifier = 0;            
+					GetEventParameter( msg->osxEvent_, kEventParamKeyModifiers, typeUInt32, NULL,
+										sizeof (keyboardModifier), NULL, &keyboardModifier);
+								
+					VCF::Point pt( mousePos.h , 
+									mousePos.v );
+					
+					OSXControl* control = OSXControl::getControlFromControlRef( theControl );
+					//localizes the coords
+					//control->translateFromScreenCoords( &pt );
+					
+						   
+					Scrollable* scrollable = msg->control_->getScrollable();
+                    if ( NULL != scrollable ) {
+                        pt.x_ += scrollable->getHorizontalPosition();
+                        pt.y_ += scrollable->getVerticalPosition();
+                    }
+                    
+                    result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_DOWN,
+                                                mbmLeftButton,
+                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1877,12 +2024,27 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
         case kEventClassCommand : {
             switch ( whatHappened ) {
                 case kEventProcessCommand : {
-
+					
+					HICommand		command;
+					GetEventParameter( msg->osxEvent_, kEventParamDirectObject, typeHICommand, NULL,
+									sizeof( HICommand ), NULL, &command );
+									
+					MenuItem* item = NULL;
+					GetMenuCommandProperty( command.menu.menuRef, 
+										command.commandID,
+										VCF_PROPERTY_CREATOR, 
+										OSXMenuItem::propertyTag,
+										sizeof(item),
+										NULL, &item );				
+								
+					if ( NULL != item ) {
+						
+					}										
                 }
                 break;
 
                 case kEventCommandUpdateStatus : {
-
+					
                 }
                 break;
             }
@@ -2003,6 +2165,35 @@ VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:37  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.8  2004/11/15 05:41:28  ddiego
+*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
+*
+*Revision 1.2.2.7  2004/11/10 06:16:40  ddiego
+*started adding osx menu code
+*
+*Revision 1.2.2.6  2004/11/02 05:19:13  ddiego
+*more osx updates for open file dialog.
+*
+*Revision 1.2.2.5  2004/10/30 20:27:26  ddiego
+*added osx color dialog and browse for folder dialog
+*
+*Revision 1.2.2.4  2004/10/27 03:11:40  ddiego
+*integrated chrisk changes
+*
+*Revision 1.2.2.3  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
+*Revision 1.2.2.2  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
+*Revision 1.2.2.1  2004/10/10 15:23:12  ddiego
+*updated os x code
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

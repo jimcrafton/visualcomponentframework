@@ -12,7 +12,12 @@ where you installed the VCF.
 #include "thirdparty/macOSX/HIView/TCarbonEvent.h"
 #include "thirdparty/macOSX/HIView/TView.h"
 
+#define VCF_PROPERTY_CREATOR			'VCFA'
+#define VCF_PROPERTY_CONTROL_VAL		'VCFc'
+#define VCF_PROPERTY_WINDOW_VAL			'VCFw'
 
+#define VCF_WINDOW_MOUSE_RGN			'VCfW'
+#define VCF_CONTROL_MOUSE_RGN			'VCfC'
 
 template <typename ViewType >
 class ViewCreator {
@@ -41,11 +46,11 @@ public:
 
 		if ( err == noErr ) {
 			if ( inWindow != NULL ) {
-				GetRootControl( inWindow, &root );
-				HIViewAddSubview( root, *outControl );
+				//GetRootControl( inWindow, &root );
+				//HIViewAddSubview( root, *outControl );
 			}
 
-			HIViewSetFrame( *outControl, inBounds );
+			//HIViewSetFrame( *outControl, inBounds );
 		}
 		return err;
 	}
@@ -116,9 +121,12 @@ public:
         DeletePostedEvent = 'dele', //indicates whether to delete an event created for postEvent
         SizeOfEventHandler = sizeof(UInt32),
         SizeOfEventHandlerEvent = sizeof(UInt32),
-        SizeOfDeletePostedEvent = sizeof(Boolean)
-
-
+        SizeOfDeletePostedEvent = sizeof(Boolean),
+		cmdRetry = 'VRty',
+		cmdAbort = 'VAbt',
+		cmdIgnore = 'VIgn',
+		cmdYes = 'VYes',
+		cmdNo = 'VNo '
     };
 
 	OSXUIToolkit();
@@ -127,19 +135,19 @@ public:
 
 	virtual ApplicationPeer* internal_createApplicationPeer();
 
-	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType=CT_DEFAULT);
+	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl );
 
-	virtual TreePeer* internal_createTreePeer( TreeControl* component, ComponentType componentType=CT_DEFAULT);
+	virtual TreePeer* internal_createTreePeer( TreeControl* component );
 
-	virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component, ComponentType componentType=CT_DEFAULT);
+	virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component );
 
-	virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component, ComponentType componentType=CT_DEFAULT );
+	virtual DialogPeer* internal_createDialogPeer( Control* owner, Dialog* component );
 
 	virtual DialogPeer* internal_createDialogPeer();
 
 	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType);
 
-	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner, ComponentType componentType);
+	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner );
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 
@@ -149,7 +157,7 @@ public:
 
 	virtual PopupMenuPeer* internal_createPopupMenuPeer( PopupMenu* popupMenu );
 
-	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component, ComponentType componentType);
+	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component );
 
 	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control );
 
@@ -165,6 +173,8 @@ public:
 
 	virtual CommonFontDialogPeer* internal_createCommonFontDialogPeer( Control* owner );
 
+	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner );
+
 	virtual DragDropPeer* internal_createDragDropPeer();
 
 	virtual DataObjectPeer* internal_createDataObjectPeer();
@@ -174,6 +184,8 @@ public:
 	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop );
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
+
+	virtual SystemTrayPeer* internal_createSystemTrayPeer();
 
 	virtual CursorPeer* internal_createCursorPeer( Cursor* cursor );
 
@@ -244,6 +256,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
+*Revision 1.2.2.1  2004/10/10 15:23:12  ddiego
+*updated os x code
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

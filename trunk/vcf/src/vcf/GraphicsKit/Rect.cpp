@@ -13,16 +13,6 @@ where you installed the VCF.
 using namespace VCF;
 
 
-VCF::Rect::Rect( const double & left, const double & top, const double & right, const double & bottom )
-{
-	setRect( left, top, right, bottom );
-}
-
-VCF::Rect::Rect()
-{
-	setRect( 0.0, 0.0, 0.0, 0.0 );
-}
-
 VCF::Rect::Rect( const Rect& rect ):
     Object(rect),
     Persistable( rect )
@@ -30,62 +20,20 @@ VCF::Rect::Rect( const Rect& rect ):
 	setRect( rect.left_, rect.top_, rect.right_, rect.bottom_ );
 }
 
-void VCF::Rect::inflate( const double & x, const double & y )
+void VCF::Rect::normalize()
 {
-	left_ += (-x);
-	right_ += x;
-
-	top_ += (-y);
-	bottom_ += y;
-}
-
-void VCF::Rect::inflate( const double & left, const double & top, const double & right, const double & bottom )
-{
-	left_ += (-left);
-	right_ += right;
-	top_ += (-top);
-	bottom_ += bottom;
-}
-
-void VCF::Rect::inflate( const Rect& rect )
-{
-	left_ += (-rect.left_);
-	right_ += rect.right_;
-	top_ += (-rect.top_);
-	bottom_ += rect.bottom_;
-}
-
-bool VCF::Rect::containsRect( Rect* rect ) const
-{
-	bool result = false;
-
-	if ( (left_ <= rect->left_) && (top_ <= rect->top_) && (right_ > rect->right_) && (bottom_ > rect->bottom_) ) {
-		result = true;
+	double tmp;
+	if ( left_ > right_ ) {
+		tmp = left_;
+		left_ = right_;
+		right_ = tmp;
 	}
 
-	return result;
-}
-
-bool VCF::Rect::containsRectOpen( Rect* rect ) const
-{
-	bool result = false;
-
-	if ( (left_ < rect->left_) && (top_ < rect->top_) && (right_ > rect->right_) && (bottom_ > rect->bottom_) ) {
-		result = true;
+	if ( top_ > bottom_ ) {
+		tmp = top_;
+		top_ = bottom_;
+		bottom_ = tmp;
 	}
-
-	return result;
-}
-
-bool VCF::Rect::containsRectClose( Rect* rect ) const
-{
-	bool result = false;
-
-	if ( (left_ <= rect->left_) && (top_ <= rect->top_) && (right_ >= rect->right_) && (bottom_ >= rect->bottom_) ) {
-		result = true;
-	}
-
-	return result;
 }
 
 bool VCF::Rect::containsPt( Point * point ) const
@@ -128,63 +76,40 @@ bool VCF::Rect::containsPtClose( Point * point ) const
 	return result;
 }
 
-void VCF::Rect::normalize()
-{
-	double tmp;
-	if ( left_ > right_ ) {
-		tmp = left_;
-		left_ = right_;
-		right_ = tmp;
-	}
-
-	if ( top_ > bottom_ ) {
-		tmp = top_;
-		top_ = bottom_;
-		bottom_ = tmp;
-	}
-}
-
-double VCF::Rect::getHeight() const
-{
-	return fabs( bottom_ - top_ );
-}
-
-double VCF::Rect::_getHeight()
-{
-	return fabs( bottom_ - top_ );
-}
-
-double VCF::Rect::getWidth() const
-{
-	return fabs( right_ - left_ );
-}
-
-double VCF::Rect::_getWidth()
-{
-	return fabs( right_ - left_ );
-}
-
-bool VCF::Rect::operator == ( const Rect& rectToCompare )const
+bool VCF::Rect::containsRect( Rect* rect ) const
 {
 	bool result = false;
 
-	result = (bottom_ == rectToCompare.bottom_) &&
-			     (right_ == rectToCompare.right_) &&
-				 (top_ == rectToCompare.top_) &&
-				 (left_ == rectToCompare.left_);
+	if ( (left_ <= rect->left_) && (top_ <= rect->top_) && (right_ > rect->right_) && (bottom_ > rect->bottom_) ) {
+		result = true;
+	}
 
 	return result;
 }
 
-void VCF::Rect::setRect( const double & left, const double & top, const double & right, const double & bottom )
+bool VCF::Rect::containsRectOpen( Rect* rect ) const
 {
-	left_ = left;
-	right_ = right;
-	top_ = top;
-	bottom_ = bottom;
+	bool result = false;
+
+	if ( (left_ < rect->left_) && (top_ < rect->top_) && (right_ > rect->right_) && (bottom_ > rect->bottom_) ) {
+		result = true;
+	}
+
+	return result;
 }
 
-String VCF::Rect::toString()
+bool VCF::Rect::containsRectClose( Rect* rect ) const
+{
+	bool result = false;
+
+	if ( (left_ <= rect->left_) && (top_ <= rect->top_) && (right_ >= rect->right_) && (bottom_ >= rect->bottom_) ) {
+		result = true;
+	}
+
+	return result;
+}
+
+String VCF::Rect::toString() const
 {
 	String result = "";
 
@@ -213,22 +138,13 @@ void VCF::Rect::loadFromStream( InputStream * stream )
 	stream->read( bottom_ );
 }
 
-void VCF::Rect::offset( const double& dx, const double& dy )
-{
-	left_ += dx;
-	right_ += dx;
-
-	top_ += dy;
-	bottom_ += dy;
-}
-
 void VCF::Rect::add( const Rect* rect )
 {
-	left_ = VCF::minVal<double>( left_, rect->left_ );
+	left_   = VCF::minVal<double>( left_, rect->left_ );
 
-	top_ = VCF::minVal<double>( top_, rect->top_ );
+	top_    = VCF::minVal<double>( top_, rect->top_ );
 
-	right_ = VCF::maxVal<double>( right_, rect->right_ );
+	right_  = VCF::maxVal<double>( right_, rect->right_ );
 
 	bottom_ = VCF::maxVal<double>( bottom_, rect->bottom_ );
 
@@ -322,36 +238,24 @@ Rect VCF::Rect::makeUnion( const Rect* rect )
 {
 	Rect result;
 
-	return result;
-}
-
-
-bool Rect::isEmpty() const
-{
-	bool result = false;
-
-	if ( (getWidth() <= 0.0) || (getHeight() <= 0.0) ) {
-		result = true;
-	}
+	throw NotImplementedException();
 
 	return result;
 }
 
-bool Rect::isNull() const
-{
-	bool result = false;
-
-	if ( (left_ == 0.0) && (top_ == 0.0) && (right_ == 0.0) && (bottom_ == 0.0) ) {
-		result = true;
-	}
-
-	return result;
-}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/26 06:12:16  marcelloptr
+*bugfix [1045603] forgotten const in Point and Rect; better formatting and documentation
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -67,6 +67,16 @@ public:
 		else {
 			checkHandlers();
 			*handlers_ = *rhs.handlers_;
+
+			//this code re-assigns all the handler's of this 
+			//delegate to point to it. 
+			//NOTE: We may *not* want to do this.
+			EventHandler::Vector::iterator it = handlers_->begin();
+			while ( it != handlers_->end() ) {
+				EventHandler* handler = *it;
+				handler->setDelegate( this );
+				it++;
+			}
 		}
 		return *this;
 	}
@@ -81,6 +91,8 @@ public:
 	be added if it is not already in the collection of event handlers.
 	*/
 	inline void addHandler( EventHandler* handler ) {
+		VCF_ASSERT( NULL != handler );
+
 		checkHandlers();
 
 		EventHandler::Vector::iterator found =
@@ -88,6 +100,7 @@ public:
 
 		if ( found == handlers_->end() ) {
 			handlers_->push_back( handler );
+			handler->setDelegate( this );
 		}
 	}
 
@@ -96,11 +109,14 @@ public:
 	@param EventHandler the event handler to remove
 	*/
 	inline void removeHandler( EventHandler* handler ) {
+		VCF_ASSERT( NULL != handler );
+
 		if ( NULL != handlers_ ) {
 			EventHandler::Vector::iterator found =
 				std::find( handlers_->begin(), handlers_->end(), handler );
 
 			if ( found != handlers_->end() ) {
+				handler->setDelegate( NULL );
 				handlers_->erase( found );
 			}
 		}
@@ -153,6 +169,13 @@ public:
 
 	inline void removeAllHandlers() {
 		if ( NULL != handlers_ ) {
+			EventHandler::Vector::iterator it = handlers_->begin();
+			while ( it != handlers_->end() ) {
+				EventHandler* handler = *it;
+				handler->setDelegate( NULL );
+				it++;
+			}
+
 			handlers_->clear();
 		}
 	}
@@ -176,6 +199,7 @@ public:
 			handlers_->erase( found );
 		}
 
+		handler->setDelegate( this );
 		handlers_->insert( handlers_->begin(), handler );
 	}
 
@@ -195,6 +219,11 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

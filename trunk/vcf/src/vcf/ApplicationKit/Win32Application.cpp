@@ -10,24 +10,64 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/Win32Application.h"
-#include "vcf/ApplicationKit/Win32ResourceBundle.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/Win32ResourceBundle.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundle.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/GraphicsKit/Win32GraphicsResourceBundle.h"
 
 
 using namespace VCFWin32;
 using namespace VCF;
 
+
+
+class Win32ApplicationResBundle : public Win32GraphicsResourceBundle {
+public:
+	Win32ApplicationResBundle( ApplicationPeer* peer ): Win32GraphicsResourceBundle(), appPeer_(peer){
+		
+	}
+protected:
+	virtual HINSTANCE getResourceInstance() {
+
+		HINSTANCE result = NULL;
+
+		if ( NULL != this->appPeer_ ) {
+			result = (HINSTANCE)appPeer_->getHandleID();
+		}
+		else {
+			//throw exception !!
+		}
+		return result;
+	}
+
+	ApplicationPeer* appPeer_;
+};
+
+
+class AppKitGraphicsResourceBundle : public GraphicsResourceBundle {
+public:
+	AppKitGraphicsResourceBundle(Win32Application* peer) : GraphicsResourceBundle(){
+		delete graphicsResPeer_;
+
+		graphicsResPeer_ = new Win32ApplicationResBundle(peer);
+		peer_ = dynamic_cast<ResourceBundlePeer*>( graphicsResPeer_ );
+	}
+};
+
+
+
 Win32Application::Win32Application()
 {
-	resBundle_ = NULL;
-	resBundle_ = new Win32ResourceBundle();
-	resBundle_->setApplicationPeer( this );
+	System::internal_replaceResourceBundleInstance( new AppKitGraphicsResourceBundle(this) );
+
+
 	instanceHandle_ = NULL;
 }
 
 Win32Application::~Win32Application()
 {
-	delete resBundle_;
-	resBundle_ = NULL;
+	
 }
 
 bool Win32Application::initApp()
@@ -72,10 +112,6 @@ void Win32Application::setApplication( VCF::AbstractApplication* application )
 	this->app_ = application;
 }
 
-ResourceBundle* Win32Application::getResourceBundle()
-{
-	return resBundle_;
-}
 
 String Win32Application::getFileName()
 {
@@ -114,6 +150,22 @@ void Win32Application::setHandleID( const long& handleID )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/08/27 03:50:46  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.1  2004/08/21 21:06:52  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -11,16 +11,15 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/DateTime.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/Win32ResourceBundle.h"
 
-#include "vcf/FoundationKit/DateTime.h"
-
-#include "vcf/FoundationKit/DateTime.h"
 
 using namespace VCF;
 
 Win32SystemPeer::Win32SystemPeer()
 {
-
+	
 }
 
 Win32SystemPeer::~Win32SystemPeer()
@@ -149,22 +148,6 @@ void Win32SystemPeer::setCurrentWorkingDirectory( const String& currentDirectory
 }
 
 
-void Win32SystemPeer::setDateToSystemTime( DateTime* date )
-{
-	//get current time
-	SYSTEMTIME tm;
-	::GetSystemTime( &tm );
-	date->set( tm.wYear, tm.wMonth, tm.wDay, tm.wHour, tm.wMinute, tm.wSecond, tm.wMilliseconds );
-}
-
-void Win32SystemPeer::setDateToLocalTime( DateTime* date )
-{
-	//get current time
-	SYSTEMTIME tm;
-	::GetLocalTime( &tm );
-	date->set( tm.wYear, tm.wMonth, tm.wDay, tm.wHour, tm.wMinute, tm.wSecond, tm.wMilliseconds );
-}
-
 void Win32SystemPeer::setCurrentThreadLocale( Locale* locale )
 {
 
@@ -187,6 +170,23 @@ bool Win32SystemPeer::isUnicodeEnabled()
 	return result;
 }
 
+
+void Win32SystemPeer::setDateToSystemTime( DateTime* date )
+{
+	//get current time
+	SYSTEMTIME tm;
+	::GetSystemTime( &tm );
+	date->set( tm.wYear, tm.wMonth, tm.wDay, tm.wHour, tm.wMinute, tm.wSecond, tm.wMilliseconds );
+}
+
+void Win32SystemPeer::setDateToLocalTime( DateTime* date )
+{
+	//get current time
+	SYSTEMTIME tm;
+	::GetLocalTime( &tm );
+	date->set( tm.wYear, tm.wMonth, tm.wDay, tm.wHour, tm.wMinute, tm.wSecond, tm.wMilliseconds );
+}
+
 DateTime Win32SystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 {
 	DateTime result = date;
@@ -194,16 +194,22 @@ DateTime Win32SystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	FILETIME   ftUTC, ftLocal;
 	SYSTEMTIME st;
 
-
 	// DateTime --> systemTime
-	st.wYear = date.getYear();
-	st.wMonth = date.getMonth();
+	unsigned long y, m, d, h, min, s, ms;
+	date.get( &y, &m, &d, &h, &min, &s, &ms );
+
+	if ( ( y < 1601 ) || ( 30827 < y ) ) {
+		throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
+	}
+
+	st.wYear   = y;
+	st.wMonth  = m;
 	st.wDayOfWeek = date.getWeekDay();
-	st.wDay = date.getDay();
-	st.wHour = date.getHour();
-	st.wMinute = date.getMinute();
-	st.wSecond = date.getSecond();
-	st.wMilliseconds = date.getMilliSecond();
+	st.wDay    = d;
+	st.wHour   = h;
+	st.wMinute = min;
+	st.wSecond = s;
+	st.wMilliseconds = ms;
 
 	// convert system time to filetime
 	if ( !::SystemTimeToFileTime( &st, &ftUTC ) ) { // stUTC --> ftUTC
@@ -238,15 +244,20 @@ DateTime Win32SystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	FILETIME   ftLocal, ftUTC;
 	SYSTEMTIME st;
 
+	unsigned long y = date.getYear();
+	if ( ( y < 1601 ) || ( 30827 < y ) ) {
+		throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
+	}
+
 	// DateTime --> systemTime
-	st.wYear = date.getYear();
+	st.wYear = y;
 	st.wMonth = date.getMonth();
 	st.wDayOfWeek = date.getWeekDay();
 	st.wDay = date.getDay();
 	st.wHour = date.getHour();
 	st.wMinute = date.getMinute();
 	st.wSecond = date.getSecond();
-	st.wMilliseconds = date.getMilliSecond();
+	st.wMilliseconds = date.getMillisecond();
 
 	// convert system time to filetime
 	if ( !::SystemTimeToFileTime( &st, &ftLocal ) ) { // stUTC --> ftUTC
@@ -273,9 +284,77 @@ DateTime Win32SystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	return result;
 }
 
+String Win32SystemPeer::getOSName()
+{
+	String result;
+	OSVERSIONINFO osVersion = {0};
+
+	
+	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
+	::GetVersionEx( &osVersion );
+	//need a way to tell WinCE???
+	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
+		result = "WindowsNT";
+	}
+	else {
+		result = "Windows";
+	}
+	
+
+	return result;
+}
+
+
+String Win32SystemPeer::getOSVersion()
+{
+	String result;
+	OSVERSIONINFO osVersion = {0};
+
+	
+	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
+	::GetVersionEx( &osVersion );
+	
+	result = StringUtils::format( "%d.%d %d", osVersion.dwMajorVersion, osVersion.dwMinorVersion, osVersion.dwBuildNumber );
+
+	return result;
+}
+
+ProgramInfo* Win32SystemPeer::getProgramInfoFromFileName( const String& fileName )
+{
+	return Win32ResourceBundle::getProgramInfoFromFileName( fileName );
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.6  2004/11/07 19:32:20  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.5  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.2.2.4  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.2.2.3  2004/08/27 03:50:46  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.2  2004/08/26 04:05:48  marcelloptr
+*minor change on name of getMillisecond
+*
+*Revision 1.2.2.1  2004/08/21 21:06:53  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

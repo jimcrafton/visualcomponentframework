@@ -17,8 +17,14 @@ Win32Font::Win32Font( const String& fontName ):
 	pointSize_(-1.0),
 	fontName_(fontName),
 	logFont_(NULL),
-	tm_(NULL)
+	tm_(NULL),
+	oldDPI_(0)
 {
+	HDC dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	oldDPI_ = GetDeviceCaps( dc, LOGPIXELSY);
+
+	ReleaseDC( ::GetDesktopWindow(), dc );
+
 	init();
 }
 
@@ -27,8 +33,14 @@ Win32Font::Win32Font( const String& fontName, const double& pointSize ):
 	pointSize_(pointSize),
 	fontName_(fontName),
 	logFont_(NULL),
-	tm_(NULL)
+	tm_(NULL),
+	oldDPI_(0)
 {
+	HDC dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	oldDPI_ = GetDeviceCaps( dc, LOGPIXELSY);
+
+	ReleaseDC( ::GetDesktopWindow(), dc );
+
 	init();
 }
 
@@ -49,8 +61,6 @@ Win32Font::~Win32Font()
 
 void Win32Font::init()
 {
-
-
 	if ( System::isUnicodeEnabled() ) {
 		logFont_ = new LOGFONTW;
 		memset( logFont_, 0, sizeof(LOGFONTW) );
@@ -68,7 +78,42 @@ void Win32Font::init()
 
 	int fontHeight = 0;
 
-	HFONT defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );//DEFAULT_GUI_FONT );
+	//ANSI_VAR_FONT produces bold text on WinME. Changed to DEFAULT_GUI_FONT, which
+	//gives same appearrance on WinXP as ANSI_VAR_FONT. dougtinkham
+	//Unfortunately DEFAULT_GUI_FONT looks like shit on Win2k :( 
+	//we'll check here to see the OS version and then base the decision on that
+	//WinMe = DEFAULT_GUI_FONT. But Win98, Win2K, WinXP = ANSI_VAR_FONT. JC (aka ddiego)
+
+	HFONT defFont = NULL;
+	
+	static OSVERSIONINFO osVersion = {0};
+	if ( 0 == osVersion.dwOSVersionInfoSize ) {
+		osVersion.dwOSVersionInfoSize = sizeof(osVersion);
+		::GetVersionEx( &osVersion );
+	}
+	
+
+
+	
+
+	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
+		if ( (osVersion.dwMinorVersion >= 1) && (osVersion.dwMinorVersion != 51) ) { //Windows XP or better
+			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
+		}
+		else { //Windows 2k or worse
+			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
+		}
+	}
+	else { //Windows 9x
+		if ( 90 == osVersion.dwMinorVersion ) { //Windows ME
+			defFont = (HFONT)GetStockObject( DEFAULT_GUI_FONT );
+		}
+		else { //Windows 98
+			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
+		}
+	}
+
+	
 	//defFont = NULL;
 	if ( NULL != defFont ){
 		if ( System::isUnicodeEnabled() ) {
@@ -85,6 +130,7 @@ void Win32Font::init()
 	}
 	else {
 		if ( System::isUnicodeEnabled() ) {
+
 			LOGFONTW& tmpLF = *((LOGFONTW*)logFont_);
 			tmpLF.lfCharSet = ANSI_CHARSET;//DEFAULT_CHARSET might be better ?
 			tmpLF.lfClipPrecision = CLIP_DEFAULT_PRECIS;
@@ -125,14 +171,29 @@ void Win32Font::init()
 		fontHeight = ((LOGFONTA*)logFont_)->lfHeight;
 	}
 
-	HDC dc = GetDC( ::GetDesktopWindow() );//gets screen DC
+	bool releaseDC = true;
+	HDC dc = NULL;
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+		dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
+	
 
 	if ( pointSize_ > 0.0 ) {
 		fontHeight = -MulDiv( pointSize_, GetDeviceCaps( dc, LOGPIXELSY), 72 );
 	}
 
 
-	ReleaseDC( ::GetDesktopWindow(), dc );
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
 
 	if ( System::isUnicodeEnabled() ) {
 		LOGFONTW& tmpLF = *((LOGFONTW*)logFont_);
@@ -175,7 +236,19 @@ ulong32 Win32Font::getFontHandleID()
 
 void Win32Font::updateTextMetrics()
 {
-	HDC dc = GetDC( ::GetDesktopWindow() );//gets screen DC
+	bool releaseDC = true;
+	HDC dc = NULL;
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+		dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
 
 	int dcs = ::SaveDC( dc );
 
@@ -199,13 +272,15 @@ void Win32Font::updateTextMetrics()
 		GetTextMetricsA( dc, (TEXTMETRICA*)tm_ );
 	}
 
-
 	::RestoreDC( dc, dcs );
 
 	SelectObject( dc, oldFont );
 	DeleteObject( tmpFont );
 
-	ReleaseDC( ::GetDesktopWindow(), dc );
+
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
 }
 
 bool Win32Font::isTrueType()
@@ -227,27 +302,130 @@ bool Win32Font::isTrueType()
 
 double Win32Font::getPointSize()
 {
-	HDC dc = GetDC( ::GetDesktopWindow() );
+	bool releaseDC = true;
+	HDC dc = NULL;
+
+	//this gets a HDC either from the GraphicsContext that is associated 
+	// to this font ( i.e. 'owning' this font as it would always be the 
+	// case for printing ), or from the desktop window.
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			//look at win32Ctx if we are having problems in the assertions below
+			//Win32Context* win32Ctx = (Win32Context*)font_->getGraphicsContext()->getPeer();
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+	  dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
+
+	
+
+	if ( NULL == dc ) {
+		//damn! We are well and truly screwed at this point!
+		DWORD err = ::GetLastError();
+
+		String msg = "\nNULL dc in Win32Font::getPointSize() - need to fix this!!!!\n\t";
+		msg +=  VCFWin32::Win32Utils::getErrorString(err) + "\n";		
+
+		StringUtils::trace( MAKE_ERROR_MSG_2(msg) );		
+
+		//this assert stays in  - we should NEVER, EVER, EVER have a NULL HDC at this point.
+		//this would indicate the presence of unspeakable evil, and we should all run for
+		//cover if this is the case
+		VCF_ASSERT( dc != NULL );  
+	}
+
+
 	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-	double result = 0.0;
+
+	if ( ((int)ppi) <= 0 ) {
+		DWORD err = ::GetLastError();
+		String msg = "\nppi <= 0 in Win32Font::getPointSize() - need to fix this!!!!\n\t";
+		msg +=  VCFWin32::Win32Utils::getErrorString(err) + "\n";		
+
+		StringUtils::trace( MAKE_ERROR_MSG_2(msg) );
+	
+		/**
+		The asserts will stay in here for the time being because we should NEVER 
+		EVER be getting them, and if we are it's a sympomatic problem of something else
+		*/
+		VCF_ASSERT( ((int)ppi) > 0 ); 
+	}
+
+	int lfHeight = 0;
 
 	if ( System::isUnicodeEnabled() ) {
-		result = ((double)((LOGFONTW*)logFont_)->lfHeight / ppi) * 72.0;
+		lfHeight = ((LOGFONTW*)logFont_)->lfHeight;
 	}
 	else {
-		result = ((double)((LOGFONTA*)logFont_)->lfHeight / ppi) * 72.0;
+		lfHeight = ((LOGFONTA*)logFont_)->lfHeight;
 	}
-	ReleaseDC( ::GetDesktopWindow(), dc );
+
+	if ( lfHeight == 0 ) {
+		DWORD err = ::GetLastError();
+		String msg = "\nlfHeight == 0 in Win32Font::getPointSize() - need to fix this!!!!\n\t";
+		msg +=  VCFWin32::Win32Utils::getErrorString(err) + "\n";		
+
+		StringUtils::trace( MAKE_ERROR_MSG_2(msg) );
+		VCF_ASSERT( lfHeight != 0 ); 
+	}
+
+	/*
+	JC I took these out - while I understand the need for a workaround here
+	we don't want to be doing this - ppi of 0 or a lfHeight of 0 is BAD BAD BAD
+	and we need to fix the problem(s) that may be causing them.
+	if (ppi == 0.0){
+		ppi = 96.0;
+	}
+
+	if (lfHeight == 0) {
+		lfHeight=1;
+	}
+	*/
+
+	double result = fabs( ((double)lfHeight / ppi) * 72.0 );
+
+	if ( GetDeviceCaps( dc, LOGPIXELSY) != this->oldDPI_ ) {
+		result = result * ( ppi / oldDPI_ );
+		oldDPI_ = GetDeviceCaps( dc, LOGPIXELSY);
+	}
+
+	// releases the device context if it is not the one associated to the font.
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
 
 	return result;
 }
 
 void Win32Font::setPointSize( const double pointSize )
 {
-	HDC dc = GetDC( ::GetDesktopWindow() );
+	bool releaseDC = true;
+	HDC dc = NULL;
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+		dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
+
 	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
 	long lfHeight = (pointSize / 72) * ppi;
 
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
+
+	
 	bool needsUpdate = false;
 
 	if ( System::isUnicodeEnabled() ) {
@@ -258,10 +436,12 @@ void Win32Font::setPointSize( const double pointSize )
 	}
 
 
-	ReleaseDC( ::GetDesktopWindow(), dc );
-
 	if ( true == needsUpdate ) {
 		Win32FontManager::removeFont( this );
+	}
+
+	if ( isTrueType() ) {
+		lfHeight = -lfHeight;
 	}
 
 	if ( System::isUnicodeEnabled() ) {
@@ -299,6 +479,8 @@ void Win32Font::setPixelSize( const double pixelSize )
 {
 	bool needsUpdate = false;
 
+	double pixSize = pixelSize;
+
 	if ( System::isUnicodeEnabled() ) {
 		needsUpdate = (pixelSize != ((LOGFONTW*)logFont_)->lfHeight);
 	}
@@ -310,12 +492,20 @@ void Win32Font::setPixelSize( const double pixelSize )
 		Win32FontManager::removeFont( this );
 	}
 
+	int lfHeight = pixSize;
+
+	if ( isTrueType() ) {
+		if ( !(lfHeight < 0) ) { //if it's NOT negative, then flip it o negative!
+			lfHeight = -lfHeight;
+		}
+	}
+
 	if ( System::isUnicodeEnabled() ) {
-		((LOGFONTW*)logFont_)->lfHeight = pixelSize;
+		((LOGFONTW*)logFont_)->lfHeight = lfHeight;
 		((LOGFONTW*)logFont_)->lfWidth = 0; //let font mapper choose closest match
 	}
 	else {
-		((LOGFONTA*)logFont_)->lfHeight = pixelSize;
+		((LOGFONTA*)logFont_)->lfHeight = lfHeight;
 		((LOGFONTA*)logFont_)->lfWidth = 0; //let font mapper choose closest match
 	}
 
@@ -506,6 +696,7 @@ void Win32Font::setStrikeOut( const bool& strikeout )
 		((LOGFONTA*)logFont_)->lfStrikeOut = strikeout ? TRUE : FALSE;
 	}
 
+
 	if ( true == needsUpdate ) {
 		updateTextMetrics();
 
@@ -610,11 +801,66 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 
 	fontName_ = name;
 
-	HDC dc = GetDC( ::GetDesktopWindow() );
-	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-	long lfHeight = (pointSize / 72.0) * ppi;
+	bool releaseDC = true;
+	HDC dc = NULL;
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+		dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
 
-	ReleaseDC( ::GetDesktopWindow(), dc );
+	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
+	long lfHeight = ((pointSize / 72.0) * ppi) + 0.5;
+
+
+	bool trueTypeFont = false;
+	{ //test for true type
+		LOGFONT lfTmp = {0};
+		lfTmp.lfHeight = 10; //doesn't matter - just testing the name!
+		lfTmp.lfWidth = 0; //let font mapper choose closest match				
+		lfTmp.lfCharSet = ANSI_CHARSET;//DEFAULT_CHARSET might be better ?
+		lfTmp.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+		lfTmp.lfItalic = FALSE;			
+		lfTmp.lfOutPrecision = OUT_DEFAULT_PRECIS;
+		lfTmp.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+		lfTmp.lfQuality = DEFAULT_QUALITY;
+		lfTmp.lfStrikeOut = FALSE;
+		lfTmp.lfUnderline = FALSE;
+		lfTmp.lfWeight = FW_NORMAL;
+		
+		AnsiString tmpName = fontName_;
+		memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(char) );
+		tmpName.copy( lfTmp.lfFaceName, minVal<int>( tmpName.size(), LF_FACESIZE) );
+		
+		HFONT testFnt = CreateFontIndirect( &lfTmp );
+		if ( testFnt ) {
+			HFONT oldFnt = (HFONT)SelectObject( dc, testFnt );		
+
+			TEXTMETRIC tm = {0};
+			if ( GetTextMetrics( dc, &tm ) ) {
+
+				trueTypeFont = ((tm.tmPitchAndFamily & TMPF_TRUETYPE) != 0) ? true : false;
+			}
+
+			SelectObject( dc, oldFnt );
+			DeleteObject( testFnt );
+		}
+
+	}
+
+	if ( trueTypeFont ) {
+		lfHeight = -lfHeight;
+	}
+
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
 
 
 	if ( System::isUnicodeEnabled() ) {
@@ -658,6 +904,61 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.16  2004/11/01 19:38:47  marcelloptr
+*minor change
+*
+*Revision 1.2.2.15  2004/10/31 15:32:29  ddiego
+*fixed a bug in the way Win32ControlContext::releaseHandle() worked that was causing a problem in Win32Font::getPointSize().
+*
+*Revision 1.2.2.14  2004/10/25 03:52:02  ddiego
+*minor changes to osx checkin for win32
+*
+*Revision 1.2.2.13  2004/10/11 14:28:47  kiklop74
+*First version of patch for BUG 1042623 - Incorect handling of DC in win32font
+*
+*Revision 1.2.2.12  2004/10/04 15:51:15  kiklop74
+*Added explicit cast to avoid ambiquity on BCB6
+*
+*Revision 1.2.2.11  2004/09/21 23:41:25  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.10  2004/09/01 03:50:39  ddiego
+*fixed font drawing bug that tinkham pointed out.
+*
+*Revision 1.2.2.9  2004/08/31 08:55:58  marcelloptr
+*minor change on a comment
+*
+*Revision 1.2.2.7  2004/08/31 04:12:13  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.6  2004/08/26 04:08:15  marcelloptr
+*minor change on a comment
+*
+*Revision 1.2.2.4  2004/08/26 01:44:40  ddiego
+*fixed font pix size bug that handled non true type fonts poorly.
+*
+*Revision 1.2.2.3  2004/08/26 00:27:49  ddiego
+*fixed font pix size bug that handled non true type fonts poorly.
+*
+*Revision 1.2.2.2  2004/08/24 04:29:58  ddiego
+*more printing work, still not yet integrated.
+*
+*Revision 1.2.2.1  2004/08/20 18:54:21  dougtinkham
+*Changed stock font from ANSI_VAR_FONT to DEFAULT_GUI_FONT to fix WinME problem.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
