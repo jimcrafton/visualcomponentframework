@@ -21,19 +21,19 @@ $$IF(STD_HELP_MNU || STD_FILE_MNU || UNDO_REDO)
 	MenuBar* menuBar = new MenuBar();
 	this->setMenuBar( menuBar );
 	MenuItem* root = menuBar->getRootMenuItem();
-	MenuItemHandler* menuItemHandler = NULL;
+	MenuItemHandler<MainWindow>* menuItemHandler = NULL;
 $$IF(STD_FILE_MNU)
 	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, menuBar );
 
 	DefaultMenuItem* fileOpenProject = new DefaultMenuItem( "&Open...", file, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onFileOpenProject;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onFileOpenProject, 0 );
 	fileOpenProject->addMenuItemListener( menuItemHandler );
 	addEventHandler( "fileOpen", menuItemHandler );
 	
 	DefaultMenuItem* fileSaveProject = new DefaultMenuItem( "&Save...", file, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onFileSaveProject;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onFileSaveProject, 0 );		
 	fileSaveProject->addMenuItemListener( menuItemHandler );
 	addEventHandler( "fileSave", menuItemHandler );
 
@@ -41,8 +41,9 @@ $$IF(STD_FILE_MNU)
 	sep->setSeparator( true );
 	
 	DefaultMenuItem* fileExit = new DefaultMenuItem( "E&xit", file, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onFileExit;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onFileExit, 0 );
+	
 	fileExit->addMenuItemListener( menuItemHandler );
 	addEventHandler( "fileExit", menuItemHandler );
 $$ENDIF
@@ -50,16 +51,16 @@ $$IF(UNDO_REDO)
 	//edit Undo/Redo support
 	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, menuBar );
 	DefaultMenuItem* editUndo = new DefaultMenuItem( "Undo", edit, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onEditUndo;
-	menuItemHandler->m_menuItemUpdate = (OnMenuItemEvent)MainWindow::onEditUndoUpdate;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onEditUndo, 0 );
+	menuItemHandler->setMethodPtr( MainWindow::onEditUndoUpdate, 1 );		
 	editUndo->addMenuItemListener( menuItemHandler );
 	addEventHandler( "editUndo", menuItemHandler );
 	
 	DefaultMenuItem* editRedo = new DefaultMenuItem( "Redo", edit, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onEditRedo;
-	menuItemHandler->m_menuItemUpdate = (OnMenuItemEvent)MainWindow::onEditRedoUpdate;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onEditRedo, 0 );		
+	menuItemHandler->setMethodPtr( MainWindow::onEditRedoUpdate, 1 );		
 	editRedo->addMenuItemListener( menuItemHandler );
 	addEventHandler( "editRedo", menuItemHandler );
 $$ENDIF
@@ -68,8 +69,8 @@ $$IF(STD_HELP_MNU)
 	//add Help menu
 	DefaultMenuItem* help = new DefaultMenuItem( "&Help", root, menuBar );
 	DefaultMenuItem* helpAbout = new DefaultMenuItem( "About...", help, menuBar );
-	menuItemHandler = new MenuItemHandler(this);
-	menuItemHandler->m_menuItemClicked = (OnMenuItemEvent)MainWindow::onHelpAbout;
+	menuItemHandler = new MenuItemHandler<MainWindow>(this);
+	menuItemHandler->setMethodPtr( MainWindow::onHelpAbout, 0 );				
 	helpAbout->addMenuItemListener( menuItemHandler );
 	addEventHandler( "helpAbout", menuItemHandler );
 $$ENDIF

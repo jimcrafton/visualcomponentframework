@@ -156,6 +156,10 @@ SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\AppKitPeerConfig.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Application.h
 # End Source File
 # Begin Source File
@@ -493,6 +497,14 @@ SOURCE=..\..\..\include\core\HeaderControl.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\HeaderPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\HelpEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\HelpListener.h
 # End Source File
 # Begin Source File
 
@@ -864,6 +876,14 @@ SOURCE=..\..\..\include\core\ToolbarSeparator.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\ToolTipEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ToolTipListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\TreeControl.h
 # End Source File
 # Begin Source File
@@ -925,6 +945,14 @@ SOURCE=..\..\..\include\io\VFFOutputStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\View.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\WhatsThisHelpEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\WhatsThisHelpListener.h
 # End Source File
 # Begin Source File
 
@@ -1309,7 +1337,15 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FocusEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Frame.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\HelpEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -1461,6 +1497,10 @@ SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\ToolTipEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\TreeControl.cpp
 # End Source File
 # Begin Source File
@@ -1494,6 +1534,10 @@ SOURCE=..\..\..\src\IO\VFFInputStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\VFFOutputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\WhatsThisHelpEvent.cpp
 # End Source File
 # Begin Source File
 

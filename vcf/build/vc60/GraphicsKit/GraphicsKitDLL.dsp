@@ -132,6 +132,14 @@ SOURCE=..\..\..\include\graphics\AlphaGamma.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\ArtStroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Basic3DBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\BasicFill.h
 # End Source File
 # Begin Source File
@@ -141,6 +149,14 @@ SOURCE=..\..\..\include\graphics\BasicRectangle.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicStroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Bitmap.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Border.h
 # End Source File
 # Begin Source File
 
@@ -161,6 +177,10 @@ SOURCE=..\..\..\include\graphics\Composition.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\Contextpeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
 # End Source File
 # Begin Source File
 
@@ -185,6 +205,10 @@ SOURCE=..\..\..\include\graphics\Filter.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\Font.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\FontPeer.h
 # End Source File
 # Begin Source File
 
@@ -220,6 +244,10 @@ SOURCE=..\..\..\include\graphics\ImageBits.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\ImageList.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\ImageLoader.h
 # End Source File
 # Begin Source File
@@ -233,6 +261,10 @@ SOURCE=..\..\..\include\graphics\Kernel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\Layer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Matrix.h
 # End Source File
 # Begin Source File
 
@@ -337,6 +369,10 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\graphics\AlphaGamma.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
 # End Source File
 # Begin Source File
 
@@ -447,6 +483,722 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 
 SOURCE=..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp
 # End Source File
+# End Group
+# Begin Group "libart"
+
+# PROP Default_Filter ""
+# Begin Group "include"
+
+# PROP Default_Filter "*.h;*.hpp"
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_affine.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_alphagamma.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_bpath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_filterlevel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_gray_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_misc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_pathcode.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_pixbuf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_point.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rect.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rect_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rect_uta.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_render.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_render_gradient.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_render_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_affine.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_affine_private.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_bitmap_affine.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_pixbuf_affine.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_rgba_affine.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgb_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_rgba.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_ops.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_point.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_render_aa.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_vpath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_vpath_stroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_svp_wind.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_uta.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_uta_ops.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_uta_rect.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_uta_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_uta_vpath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_vpath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_vpath_bpath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_vpath_dash.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\art_vpath_svp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\libart.h
+# End Source File
+# End Group
+# Begin Group "src"
+
+# PROP Default_Filter "*.c;*.cpp;*.cxx"
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_affine.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_alphagamma.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_bpath.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_gray_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_misc.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_pixbuf.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rect.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rect_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rect_uta.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_render.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_render_gradient.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_render_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_affine.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_affine_private.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_bitmap_affine.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_pixbuf_affine.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_rgba_affine.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgb_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_rgba.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_ops.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_point.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_render_aa.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_vpath.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_vpath_stroke.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_svp_wind.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_uta.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_uta_ops.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_uta_rect.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_uta_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_uta_vpath.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_vpath.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_vpath_bpath.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_vpath_dash.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\art_vpath_svp.c
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
+# End Source File
+# End Group
 # End Group
 # End Target
 # End Project
