@@ -17,6 +17,7 @@ CCommands::CCommands()
 
 STDMETHODIMP CCommands::NewVCFClass()
 {
+	
 	// obtain the MSDEV CWinApp object:
 	// (this is the "magic")
 	CWinApp* pApp = AfxGetApp();
@@ -31,22 +32,47 @@ STDMETHODIMP CCommands::NewVCFClass()
 
 	if (NULL == pApp) return E_FAIL;
 
+	CComPtr<IBuildProject> proj;
 	
-	
-	NewClassDlg dlg;
-
-	if ( IDOK == dlg.DoModal() ){
-		CString s = dlg.GetClassDecl();
-		CString filename = dlg.m_headerName;
-
-		CFile file( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
-		file.Write( s.GetBuffer(0), s.GetLength() );
-
-		filename = dlg.m_CPPName;
-		s = dlg.GetClassImpl();
-		CFile file2( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
-		file2.Write( s.GetBuffer(0), s.GetLength() );
+	if ( SUCCEEDED( this->m_piApplication->get_ActiveProject( (IDispatch**)&proj ) ) ){
+		
+		NewClassDlg dlg;
+		
+		if ( IDOK == dlg.DoModal() ){
+			CString s = dlg.GetClassDecl();
+			CString tmp1 = dlg.m_headerName;
+			CString tmp2 = dlg.m_CPPName;
+			
+			CString filename = dlg.m_headerName;
+			
+			CFile file( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+			file.Write( s.GetBuffer(0), s.GetLength() );
+			
+			filename = dlg.m_CPPName;
+			s = dlg.GetClassImpl();
+			CFile file2( filename, CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+			file2.Write( s.GetBuffer(0), s.GetLength() );
+			
+			
+			
+			
+			
+			CComBSTR cppFile;
+			cppFile = tmp1;
+			_variant_t reserved;
+			proj->AddFile( cppFile, reserved );
+			
+			CComBSTR headerFile = tmp2;
+			
+			proj->AddFile( headerFile, reserved );			
+			
+		}
+		
 	}
+	else {
+		AfxMessageBox( "You don't have an active project - please create one before using this Class Wizard." );
+	}
+
 
 
 	return S_OK;
