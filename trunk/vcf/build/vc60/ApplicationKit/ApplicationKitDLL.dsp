@@ -44,7 +44,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPLICATIONKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /Ox /Oy /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /Yu"ApplicationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Ox /I "..\..\..\include\COM" /I "..\..\..\include\Core" /I "..\..\..\include\Graphics" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\Implementer" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /Yu"ApplicationKit.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -121,6 +121,10 @@ LINK32=link.exe
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=..\..\..\include\core\AbstractCommand.h
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractListModel.h
@@ -231,7 +235,15 @@ SOURCE=..\..\..\include\com\COMDropTarget.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Command.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\CommandButton.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\CommandGroup.h
 # End Source File
 # Begin Source File
 
@@ -280,6 +292,10 @@ SOURCE=..\..\..\include\core\Component.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ComponentEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ComponentInfo.h
 # End Source File
 # Begin Source File
 
@@ -611,6 +627,14 @@ SOURCE=..\..\..\include\core\Model.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\ModelEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ModelListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\ModelValidationListener.h
 # End Source File
 # Begin Source File
@@ -847,6 +871,18 @@ SOURCE=..\..\..\include\utils\UIToolkit.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\UndoRedoEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\UndoRedoListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\UndoRedoStack.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\ValidationEvent.h
 # End Source File
 # Begin Source File
@@ -995,6 +1031,10 @@ SOURCE=..\..\..\include\implementer\WindowPeer.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractCommand.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractContainer.cpp
 # End Source File
 # Begin Source File
@@ -1084,6 +1124,10 @@ SOURCE=..\..\..\src\core\CommandButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\CommandGroup.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\CommonColor.cpp
 # End Source File
 # Begin Source File
@@ -1117,6 +1161,10 @@ SOURCE=..\..\..\src\COM\COMObject.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
@@ -1369,6 +1417,14 @@ SOURCE=..\..\..\src\Events\TreeModelEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\UIToolkit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\UndoRedoEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\UndoRedoStack.cpp
 # End Source File
 # Begin Source File
 
