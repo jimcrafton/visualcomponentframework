@@ -1,0 +1,5 @@
+//tb.rc
+bmp1	BITMAP		"icon1.bmp"
+bmp2	BITMAP		"icon3.bmp"
+bmp3	BITMAP		"icon4.bmp"
+bmp4	BITMAP		"icon5.bmp"

@@ -1,0 +1,178 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Files and Directories</title>
+	<para>
+	This example will demonstrate using the various file and directory 
+	classes for working with the underlying filesystem. 
+	</para>
+	<formalpara><title>File names and the FilePath class</title>
+	The first part we'll look at is dealing with file names. To make this
+	easier to work with, the VCF uses a special class called the FilePath
+	class. This class allows you to deal with the various parts of a file
+	name string, such as extracting the directory, or just the file extension.
+	</formalpara>
+	<para>
+	Using a FilePath object is easy - just assign a string to it.
+	<programlisting>
+<![CDATA[
+FilePath fileName = "tmp-output.txt";
+]]>	
+	</programlisting>
+	Now we can check to see if the file name is a relative file name or
+	a fully qualified file name.
+	<programlisting>
+<![CDATA[
+if ( fileName.isRelativePath() ) {		
+	fileName = fileName.expandRelativePathName( System::getCurrentWorkingDirectory() );
+}
+]]>	
+	</programlisting>
+	Calling the fileName.isRelativePath() method will return true if it's a relative
+	path, or false otherwise. If the file name is relative, then we can expand the 
+	file name by calling expandRelativePathName(). Note that this returns a string
+	that represents the fully qualified file name, but the original data for the
+	FilePath object is <emphasis>unmodified</emphasis>.
+	</para>
+	<para>
+	We can examine the various parts of the file name quite easily, like so:
+<programlisting>
+<![CDATA[
+String drive = fileName.getDriveName();
+String directoryPath = fileName.getPathName();
+String name = fileName.getName();
+String extension = fileName.getExtension();
+String nativeOSFilePath = fileName.transformToOSSpecific();
+]]>	
+</programlisting>
+	Each of these functions, getDriveName(), getPathName(), getName(),
+	and getExtension(), extracts the various data from the original FilePath
+	object, again, it makes no modifications to do so. This is roughly analagous to
+	Microsoft's _splitpath() C Runtime function.
+	</para>
+	<para>
+	In addition to extracting the various path components, you can also get
+	an vector of strings for the directory components. For example, a directory
+	such as "C:\Program Files\A Program\User Settings\Stuff.txt" would have 
+	3 strings, "Program Files", "A Program", and "User Settings".
+	You can enumerate these like so:
+<programlisting>
+<![CDATA[
+std::vector<String> pathComponents = fileName.getPathComponents();
+std::vector<String>::iterator it = pathComponents.begin();
+while ( it != pathComponents.end() ) {
+	System::println( *it );
+	it ++;
+}
+]]>	
+</programlisting>	
+	</para>
+	<formalpara><title>Creating a file</title>
+	You can create files (as well as read and write to them) using the 
+	FileOutputStream class. To create a file, just create an isntance of 
+	FileOutputStream, and pass in the file name to the constructor. Then
+	use the various write() methods of the FileOutputStream class. For 
+	example, lets create a file, write some text to it, and then display
+	the file size:
+<programlisting>
+<![CDATA[
+FileOutputStream fs(fileName);
+String text = "here's some text to put in the file";
+fs << text;
+System::println( "FileOutputStream current size: %d", fs.getSize() );
+]]>
+</programlisting>	
+	</formalpara>
+	<para>
+	Now lets look at accessing the same file that we just created with the 
+	File object. With the VCF::File object we can get information about the
+	file attributes, such as size. To do this all we need to do is create a 
+	File object and pass in a file name to the File's constructor.
+	<programlisting>
+<![CDATA[
+File file( fileName ); 
+System::println( "The file %s's size: %d", fileName.getFileName().c_str(), file.getSize() );
+]]>	
+	</programlisting>
+	As we can see this is extremely easy to do. Now lets copy the file somewhere else:
+	<programlisting>
+<![CDATA[
+file.copyTo( fileName.getPathName(true) + 
+			FilePath::getDirectorySeparator() + 
+			fileName.getName() + "-copy" + fileName.getExtension() );
+]]>	
+	</programlisting>
+	To accomplish this, we just call the File's copyTo() method, and pass in 
+	the file name that we are copying to. If this fails, an exception will be thrown,
+	so we may want to wrap this in a try/catch block like so:
+	<programlisting>
+<![CDATA[
+try {
+	file.copyTo( fileName.getPathName(true) + 
+				FilePath::getDirectorySeparator() + 
+				fileName.getName() + "-copy" + fileName.getExtension() );
+}
+catch ( BasicException& e ) {
+	System::println( "Oops, couldn't copy the file, error: " + e.getMessage() );
+}
+]]>	
+	</programlisting>
+	</para>
+	<formalpara><title>File searches</title>
+	The last things we'll look at is search for files. To do this we will use 
+	a directory	object, and a Directory::Finder object. A directory is somewhat
+	similar to a File object, but obviously is specific to just directories. To
+	actually search for files, you call the Directory::findFiles() method.
+	</formalpara>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:54  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.4  2003/12/01 03:44:13  ddiego
+added some fixes to the Win32Toolbar impl. A few minor changes to the
+toolbar example (which also got added). Some minor changes to docs
+as well.
+
+Revision 1.1.2.3  2003/11/24 05:05:23  ddiego
+added some more docs, and some minor changes to the Win32ScrollPeer
+
+Revision 1.1.2.2  2003/11/20 21:54:55  ddiego
+*** empty log message ***
+
+Revision 1.1.2.1  2003/09/27 23:04:19  ddiego
+added tutorial docbook files
+
+-->
+
+

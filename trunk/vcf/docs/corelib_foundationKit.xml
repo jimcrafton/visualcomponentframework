@@ -1,0 +1,735 @@
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+
+<section><title>FoundationKit</title>
+	<para>
+	</para>
+	<section><title>VCF::Object - the VCF base class</title>
+		<formalpara><title>Intro</title>
+		The VCF is (mostly, with a few exceptions) designed as a single rooted 
+		class hierarchy, with the VCF::Object class as the root or base class for the 
+		rest of the framework. VCF::Object support several virtual method that you can 
+		override, such as the VCF::Object::hash() method for return a hash value for the
+		object instance. VCF::Object::clone() can be used to "clone" a new instance from an
+		existing one.
+		</formalpara>
+		<formalpara><title>Reference Counting</title>
+		The VCF::Object class also supports reference counting for instances that have been
+		allocated on the heap. A new instance starts with it's refcount initialized to 0.
+		Calling VCF::Object::addRef() increments the refcount, and calling VCF::Object::release()
+		decrements the refcount. If VCF::Object::release() is called and the refcount is 
+		equal to 0, then the object is destroyed by a call to VCF::Object::free().
+		</formalpara>
+		<formalpara><title>Creating and destroying Objects</title>
+		Creating objects on the heap is done using the typical operator new(). However, to 
+		destroy an instance that is directly or indirectly derived from VCF::Object, you should
+		call VCF::Object::free() if you own the object, or VCF::Object::release() to decrement the
+		refcount on the object. When the VCF::Object::free() is called it first calls the virtual 
+		VCF::Object::destroy() method, allowing you customize the clean up of your class, and 
+		making it safe to call otehr virtual methods. After VCF::Object::destroy() returns, it 
+		then deletes the instance. So, if you have a class that is intended to be used on the heap,
+		it's a good idea to override the destroy() method (keeping it in protected scope), and put
+		your clean ciode in there, instead of the destructor.
+		</formalpara>
+		<formalpara><title>RTTI</title>
+		You can get the VCF::Class instance from any instance of a VCF::Object by calling 
+		VCF::Object::getClass() method. If the class has been properly registered in the
+		Class Registry, the VCF::Object::getClass() will return a pointer to the Class instance.
+		If not, then it will return NULL. You can also get the class name of the Object instance
+		by calling VCF::Object::getClassName().
+		</formalpara>
+	</section>
+
+	<section><title>System Toolkit</title>
+		<para>
+		The System Toolkit is used by VCF developers to create instances of various FoundationKit
+		peer interfaces. For example, the Thread class uses the System Toolkit to create the thread's
+		internal ThreadPeer instance. You generally do not need to call any functions on this class
+		unless you are implementing low level functionality within the FoundationKit itself.
+		</para>
+		<para>This class is implemented for each platform that the VCF is ported to. The 
+		relationship between the OS and the System Toolkit can be seen below.
+		<figure><title>System Toolkit</title>
+		<graphic fileref="gfx/systoolkit.png"/>
+		</figure>
+		</para>
+	</section>
+
+	<section><title>Reference Counting</title>
+		<para>
+		As mentioned above, the VCF::Object class supports reference counting. Reference counting
+		is useful as a form of garbage collection, albeit a manual one. It is most appropriate
+		to use when you are unsure of the lifetime of a particular object, and/or the fact that
+		the object may have multiple "owners" who need to keep track of the object. In this 
+		situation it helps to have reference counting. 
+		</para>
+		<para>It should be noted that this is only appropriate to use on 
+		<emphasis>heap allocated</emphasis> objects.
+		Objects that allocated on the stack do not, and should not use the reference counting 
+		functionality.
+		</para>
+		<para>
+		One example might be the use of a model. For example, imagine that we have created a model
+		object, and that 3 different objects all need to hold a reference or pointer to the single
+		instance of the model. Yet all 3 "owners" may have different lifetimes, so who then 
+		becomes responsible for destroying the model? If one of the three were to delete the model
+		instance <emphasis>before</emphasis>, and then one of the other "owners" were to make use of
+		it's pointer, your program would crash, due to a reference to invalid memory that had been
+		freed. The solution is to use reference counting. When each "owner" object is assigned the 
+		pointer to the model, it should increment the model's refcount by calling 
+		VCF::Object::addRef(). Likewise, when the owner is destroyed, it should release the object 
+		by calling VCF::Object::release(), as opposed to deleting it.
+		</para>
+	</section>
+
+	<section><title>Exceptions</title>
+		<para>
+		The VCF uses exceptions throughout the framework as a way of indicating error conditions, 
+		as opposed to returning error codes. The rationale for this is largely practical: error codes,
+		while useful, frequently (if not always) get ignored in real world code. Because nothing 
+		forces you to check the error code, error conditions can go unnoticed until later on,
+		making it difficult to track down bugs. Exceptions, on the other hand, if not caught, tend to 
+		do ugly things immediately, making it much more obvious where things went wrong.
+		</para>
+		<para>
+		The root exception class is VCF::BasicException. All other VCF exceptions derive from this. 
+		To get the error message from a VCF exception, call VCF::BasicException::getMessage().
+		</para>
+		<para>
+		To throw a VCF exception, you create the exception on the stack, and pass in a VCF::String
+		to the exceptions constructor. Some of the specific exception classes has a default 
+		constructor that fills in a default message for you. If you would like to include line and
+		file information with your excepton message you can use the MAKE_ERROR_MSG_2 macro, for example:
+		<programlisting><![CDATA[
+String fileName = getMyFileName();
+if ( fileName.empty() ) {
+	throw BasicException( MAKE_ERROR_MSG_2("My File Name is Empty - please fix this ASAP!"));
+}			]]>
+		</programlisting>
+		This will take you error string and append the source file and line number that the exception
+		was thrown in, which can be useful in tracking errors down.
+		</para>
+	</section>
+
+	<section><title>RTTI</title>
+		<formalpara><title>Introduction</title>
+		RTTI, or Run Time Type Information, is the process of identifying the class information about a
+		particular object instance at run time. If you used Java at all, this is often referred to as 
+		"Reflection", and if you compare the VCF RTTI classes with Java's you'll see a great deal of 
+		similarity between the two. Other languages like Java, C#, ObjectPascal, Smalltalk, 
+		Objective C (to name a few), as well as other C++ frameworks, such as Qt, wxWindows, MFC, 
+		COM (well this isn't really a C++ only framework but we'll let that go), VRS3D and many others, 
+		also implement some sort of RTTI system to varying degrees complexity. Most of the languages mentioned
+		previously offer full support for things like dynamic object creation from a class name, 
+		dynamic property enumeration, and dynamic method invocation. Some also have support for discovering 
+		the fields of a class (like Java) and for discovering the events the class supports. Unfortunately C++ 
+		itself offers only the ability to determine the super class of a given class, i.e. using the 
+		dynamic_cast operator, you can tell if class B inherits in some way from class A. In addition the 
+		typeid() method will return a type_info class which can tell you the class name of a particular 
+		instance at runtime. Obviously this is not enough, so many of the C++ frameworks tend to implement 
+		some form of their own RTTI. What makes the VCF unusual is the depth to which it offers RTTI features, 
+		namely:
+		<itemizedlist>
+			<listitem><para>
+			object creation from a class name	
+			</para></listitem>			
+			<listitem><para>
+			discovery of super class
+			</para></listitem>
+			<listitem><para>
+			discovery and dynamic invocation of properties at runtime
+			</para></listitem>
+			<listitem><para>
+			discovery and dynamic invocation of methods at runtime
+			</para></listitem>
+			<listitem><para>
+			discovery of events exposed via a Delegate at runtime
+			</para></listitem>
+			<listitem><para>
+			discovery of interfaces at runtime
+			</para></listitem>
+			<listitem><para>
+			discovery  and dynamic invocation of interface methods at runtime
+			</para></listitem>		
+		</itemizedlist>
+		</formalpara>
+		<formalpara><title>The Basics</title>
+		RTTI in the VCF is described through a series of abstract classes, and implemented through 
+		heavy use of templates. This makes it type safe, and does not require any weird void pointer 
+		type casting. To simplify matters, a number of macros exist that enable you to specify the 
+		RTTI elements you would like to expose in your class declaration, so there are no separate 
+		build steps like IDL compiling or other pre-processor tools. These macros basically "collect" 
+		all the stuff that the C++ compiler knows about during compilation, but throws away. 
+		</formalpara>
+		<para>
+		Each RTTI element is registered in a central repository called the VCF::ClassRegistry - 
+		a singleton instance that is created when the FoundationKit is initialized and destroyed 
+		when the FoundationKit is terminated. This registering of a class happens only once per 
+		class type, if another attempt is made to register an existing class, the registration will fail.
+		</para> 
+		<para>
+		The basic RTTI element is the VCF::Class class - this holds all the necessary information to 
+		describe a C++ class at runtime. At a glance, a VCF::Class has the following methods:
+		<itemizedlist>
+			<listitem><para>
+			getSuperClass() - returns a VCF::Class pointer to the next super class of the class in question.
+			Using this method, you can walk up the class hierarchy.
+			</para></listitem>
+			<listitem><para>
+			getClassName() - returns the class name.
+			</para></listitem>
+			<listitem><para>
+			getID - returns a string that <emphasis>should</emphasis> be a unique ID. While the generation
+			of this is left to the developer, all the VCF classes that are registered use UUID's created with
+			uuidgen, or some similar tool. It is highly recommended to use the same approach for your own classes
+			when adding RTTI support.
+			</para></listitem>
+			<listitem><para>
+			createInstance() - this allows you to create a new default instance of the class.
+			</para></listitem>
+			<listitem><para>
+			getInterfaces() - this allows you to enumerate all the interfaces that a class may implement.
+			</para></listitem>
+			<listitem><para>
+			getMethods() - allows you to enumerate all the methods the class has
+			</para></listitem>
+			<listitem><para>
+			getProperties()	- allows you to enumerate all the properties of a class
+			</para></listitem>
+			<listitem><para>
+			getEvents() - allows you to enumerate all the events a class has
+			</para></listitem>
+		</itemizedlist>
+		</para>
+		<formalpara><title>Registering RTTI for a class</title>
+		In order to take advantage of these features, you have to register your class
+		with the VCF's ClassRegistry. To make this simple, there are a set of macros
+		you can use. For example, lets declare a class called "Foo" and register it:
+<programlisting>
+<![CDATA[
+class Foo : public VCF::Object {
+public:
+	Foo(){}
+};
+
+#define FOO_CLASSID		"99c0754b-c18f-49b0-999f-81384c65fd18"
+BEGIN_CLASSINFO( Foo, "Foo", "VCF::Object", FOO_CLASSID )
+END_CLASSINFO( Foo )
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init( argc, argv );
+
+	//register the class 
+	REGISTER_CLASSINFO_EXTERNAL( Foo );
+
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+</programlisting>
+		As you can see it's relatively easy to register the class - the only catch is 
+		that the FoundationKit library <emphasis>must</emphasis> be initialized prior
+		to registering the class.
+		</formalpara>
+		<para>Once registered with the VCF you can now work with the RTTI features.
+		For example we could create and instance of the class like so:
+<programlisting>
+<![CDATA[
+//class definition omitted for clarity
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init( argc, argv );
+
+	//register the class 
+	REGISTER_CLASSINFO_EXTERNAL( Foo );
+
+
+	Object* object = ClassRegistry::createNewInstance( "Foo" );
+
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+</programlisting>
+		Once the object is created we can confirm the class type by querying it's name:
+<programlisting>
+<![CDATA[
+Object* object = ClassRegistry::createNewInstance( "Foo" );
+
+Class* clazz = object->getClass();
+System::println( clazz->getClassName() );
+]]>
+</programlisting>
+		At this point, you now have a Class object, that you can call the methods mentioned 
+		above.
+		</para>
+		<formalpara><title>Properties</title>
+		You can query for a class's proeprties easily by just calling the Class::getProperties()
+		method. This will return an enumeration of Property instances. Each property
+		can be queried for it's name, description, it's type (an enumeration of PropertyDescriptorType
+		which indicates either the primitive type, or the fact that it's an instance of a 	
+		VCF::Object), and probably most importantly, the ability to get and set the values
+		of the property. Let's look a little closer:
+<programlisting>
+<![CDATA[
+Class* clazz = object->getClass();
+Enumerator<Property*>* properties = clazz->getProperties();
+while ( properties->hasMoreElements() ) {
+	Property* property = properties->nextElement();
+	String name = property->getName();
+	String description = property->getDescription();
+	String typeName = property->getTypeClassName();
+
+	VariantData* value = property->get();
+}
+]]>
+</programlisting>
+		</formalpara>
+		<para>
+		Note the call to Property::get() to retreive the current value of the 
+		Property instance. It returns a VariantData object which is acts like VB's
+		Variant type, or CORBA's Any object. A VariantData instance can store any
+		primitive type or Object type.
+		</para>
+	</section>
+
+	<section><title>Events</title>
+		<para>
+		Events happen to us every day. When we open a door, when we go to work, 
+		when we fall asleep. Objects in a framework, particularly objects that 
+		represent a user interface, are no different. Events are triggered 
+		when a user closes a window, or clicks on a button. Events can happen 
+		when the state of an object changes, such as reading data from a stream, 
+		or upon the object's creation. Not only do events happen, but quite 
+		often one object wants to be notified when a particular event happens 
+		to another object, and frequently the two objects may have no direct 
+		knowledge of each other beyond a basic base class. To further complicate 
+		matters, it is entirely possible that more than one object wants to 
+		notified when the event happens!</para>
+<para>
+		One of the goals of the VCF is to provide a uniform architecture for
+		this and provide a solution that allows events to be used every where 
+		in the framework, but that in no way ties their usage just to user 
+		interface classes. So this is an overview and explanation of how the 
+		event mechanism is used in the VCF.		
+		</para>
+		<para>
+		In most frameworks event handling is done through callbacks, and their 
+		are many different ways to approach this. In C++ this gets a bit tricky 
+		due to the nature of C++ member functions, so we need a way to wrap the 
+		callback function, which itself needs to be a member function. In addition, 
+		we need a consistent way to let objects know that we are interested in 
+		being notified when a particular event happens, as well as telling the 
+		same object when we are no longer interested in the notifications.
+		</para>
+<para>
+To accomplish this in the VCF we have three main players: the source, or 
+object that fires the event, the event, which is itself represented by 
+an object, and the observer, or the object that wishes to receive some 
+notification when the event occurs and have that notification call a method 
+on the observer object. Each of these objects has to have certain 
+responsibilities as described in the table below.
+<table frame="none" pgwide="1">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<thead>
+			<row>
+				<entry>Object</entry>
+				<entry>Responsibilities</entry>
+			</row>							
+		</thead>
+		<tbody>
+			<row>
+				<entry>Source object</entry>
+				<entry>The source must provide a way to register, and un-register one 
+						or more observer objects with a particular event that will
+						be fired by the source object.</entry>
+			</row>
+			<row>
+				<entry>Event object</entry>
+				<entry>The Event object must provide data to be used by the observer 
+				objects. For example, mouse event object would contain data about the 
+				position of the mouse, the buttons that were held down, etc. In 
+				addition, the event must be able to expose who actually fired the 
+				event, in other words provide a pointer back to the source of the 
+				event.
+				</entry>
+			</row>
+			<row>
+				<entry>Observer object</entry>
+				<entry>The observer must define one or more callback methods that 
+				will be invoked during the firing of a specific event by the
+				source object that the observer has registered with.</entry>
+			</row>
+		</tbody>	
+	</tgroup>
+</table>
+</para>
+<para>
+To make all of this work in the VCF there are three main classes that are used. The first
+is the EventHandler class. This provides an interface that wraps a C++ callback function, 
+be it a static function, or a class member function. The EventHandler class itself is an
+abstract class, the developer creates concrete template classes when using event handlers.
+For example:
+<programlisting>
+<![CDATA[
+class MyClass : public VCF::Object {
+public:
+	void onButtonClick( ButtonEvent* e ) {
+
+	}
+};
+
+MyClass* myClassInstance = ..... //get a MyClass instance
+VCF::EventHandler* handler = 
+	new ButtonEventHandler<MyClass>( myClassInstance, &MyClass::onButtonClick, "onButtonClick" );
+]]>
+</programlisting>
+The above example creates an event handler and attaches the calss member function MyClass::onButtonClick
+to the event handler.
+</para>
+<para>
+The next part of this is the Delegate class. The Delegate represents a single event that would 
+be fired by the source object, and holds a collection of EventHandlers. The Delegate allows 
+you to add or remove event handlers at will. For example:
+<programlisting>
+<![CDATA[
+EventHandler* handler = ...//get handler from somewhere
+
+Delegate d;
+//add a handler
+d.addHandler( handler );
+
+//remove handler
+d.removeHandler( handler );
+
+//or if you prefer the syntactical "sugar"
+d += handler;
+
+//to remove the handler
+d -= handler;
+]]>
+</programlisting>
+The Delegate also handles routing a single Event instance, as the result of the source object
+firing an event, to all of the handlers that have registered with it. This is accomplished
+by calling the Delegate::fireEvent() method, and passing in an event.
+<programlisting>
+<![CDATA[
+Delegate d;
+Event event( this, 123 );
+//fire the event
+d.fireEvent( &event );
+]]>
+</programlisting>
+That's all there is to it! Delegate::fireEvent() will take the event, and 
+loop through it's list of event handler's. For each handler, it will check 
+to verify the event has not been marked as being consumed (Event::isConsumed() 
+returns false), and then call the EventHandler::invoke() method on the 
+handler, which in turn invokes the callback function.
+</para>
+<para>
+The next step os to actually use the Delegate class within your source 
+object, so that the source can fire events. The VCF does this by declaring
+a public member variable of type Delegate and giving it the name of the
+event that will be fired. For example:
+<programlisting>
+<![CDATA[
+class Foo : public VCF::Object {
+public :
+	enum {
+		TalkingEvent = 0x111111
+	};
+	Delegate Talking;
+  
+	void speak() {
+		Event talkingEvent( this, TalkingEvent );
+		
+		Talking.fireEvent( &talkingEvent );		
+	}
+};
+]]>
+</programlisting>
+We have exposed the talking event by declaring a Delegate named Talking. Now 
+any interested observer can register their callback (or event handler) with 
+this and be notified when a talking event is fired. For example:
+<programlisting>
+<![CDATA[
+class FooObserver : public VCF::ObjectWithEvents {
+public:
+	void onTalking( Event* e ) {
+		System.println( "FooObserver got it's onTalking() method called!" );
+	}
+};
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
+	
+	Foo foo;
+	
+	//our observer
+	FooObserver observer;
+	
+	//the observer now registers with the Foo object's Talking delegate
+	foo.Talking += 
+		new GenericEventHandler<FooObserver>(&observer, &FooObserver::onTalking, "onTalking" );
+	
+	//teh Foo speaks, and lo, and behold the FooObserver's onTalking() method will
+	//get called!
+	foo.speak();
+	
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+</programlisting>
+Talking events are fired if the Foo::speak() method is called, and we can see 
+how we have connected the two object (source and observer) through the use 
+of Delegates and EventHandlers.
+</para>
+
+	</section>
+
+	<section><title>Threads</title>
+		<para>
+		Threads in the VCF are quite simple to use and work with. A thread 
+		represents a piece of code that can be run, hence the reason that
+		the Thread class implements the Runnable interface. Any class that
+		implements the Runnable interface can be run in a separate thread.		
+		</para>
+		<para>
+		The Runnable interface provides two methods - one called run(), 
+		which is where your thread specific code goes, and another
+		called stop(), which is where you should put code to cleanly
+		stop your executing code in your run() method.		
+		</para>
+		<para>
+		A Thread implements both these methods, and you can derive your own 
+		thread classes directly from the Thread class. If you do this you 
+		should check the status of the canContinue() method, and if it returns
+		false, you should immediately stop what you're doing and exit your
+		run() implementation cleanly. For example:
+		<programlisting>
+<![CDATA[
+class MyThread : public Thread {
+public:
+	bool run() {
+		int count = 0;
+		while ( (count < 10000) && (canContinue()) ) {
+			System::println( "count: %d", count );
+			count ++;
+		}
+		return true;
+	}
+};
+]]>		
+		</programlisting>
+		In this simple example, we loop till count equals 10,000 <emphasis>or</emphasis>
+		canContinue() returns false. Doing this ensures that if the program 
+		requests the thread to stop, it will do so cleanly.		
+		</para>
+		<para>
+		To actually run you must call the Thread::start() method. All threads are 
+		inactive when first created, and will not run till the Thread::start() method
+		is called.
+		</para>
+		<para>
+		To stop the thread gracefully, you can call the Thread::stop() method. This
+		will block till the thread's peer actually stops and destroys the 
+		underlying thread handle. 
+		</para>
+		<para>
+		A Thread can automatically delete itself when it stops running, and this is
+		the default behaviour. By passing in a boolean flag set ot false in the 
+		Threads constructor, you can prevent this behaviour. In this case, it
+		is up to the caller who created the thread to delete it. Lets look at a 
+		short example:
+		<programlisting>
+<![CDATA[
+
+class MyThread : public Thread {
+public:
+	MyThread( bool autoDelete ):Thread(autoDelete)  {
+	
+	}
+	
+	bool run() {
+		//..do something interesting
+		return true;
+	}
+};
+
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
+	
+	Thread* autoDeleteThread = new MyThread(true);
+	
+	Thread* manualDeleteThread = new MyThread(false);
+	
+	
+	autoDeleteThread->start();
+	manualDeleteThread->start();
+	
+	//wait and/or loop for the threads to finish
+	
+	manualDeleteThread->free();
+	
+	FoundationKit::terminate();
+	return 0;
+}
+]]>		
+		</programlisting>
+		</para>
+		<para>
+		An alternate way to work with a thread is to create a class 
+		that simply derives from Runnable, and implementing the run() 
+		and stop methods. Then you can simply create a Thread and pass in 
+		the Runnable instance to the Thread's constructor. For example:
+		<programlisting>
+<![CDATA[
+class MyRunnable : public Runnable {
+public:
+	MyRunnable() : conContinue_(true){
+		
+	}
+	
+	virtual bool run() {
+		int count = 0;
+		while ( (count < 10000) && conContinue_ ) {
+			count ++;
+			System::println( "count : %d", count );			
+		}
+		
+		return true;
+	}
+	
+	virtual void stop() {
+		conContinue_ = false;
+	}
+	
+	bool conContinue_;
+};
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
+	
+	Thread* thread = new Thread(new MyRunnable());
+	
+	thread->start();
+	
+	//wait and/or loop for the thread to finish
+	System::sleep(2000); //wait 2 seconds
+	thread->stop(); //stop the thread
+		
+	FoundationKit::terminate();
+	return 0;
+}
+]]>		
+		</programlisting>
+		This creates a thread, and a new instance of our custom
+		runnable class (MyRunnable) starts the thread. By default,
+		both the thread and the runnable instance are automatically
+		deleted. We then wait for 2 seconds, and then stop the thread,
+		which in turn stops the runnable instance. Strictly speaking,
+		this is not the best idea to stop the thread like this 
+		when it's set to auto delete, as it is possible (depending 
+		on how you implemented your run() method) for the thread to have 
+		already finished by the time the code gets here. To be truly 
+		safe you would want to create the thread with auto deletion 
+		turned of. For more on this, please see the Thread.h and the
+		Thread constructors.
+		</para>
+		
+	</section>
+
+	<section><title>Streams</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Files</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Dynamic Libraries</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Processes</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>XML Parsing</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Peer classes</title>
+		<para>
+		</para>
+	</section>
+</section>
+
+<!-- 
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:52  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.5  2003/11/10 22:17:36  ddiego
+added some more updates to docs - finished off event section
+
+Revision 1.1.2.4  2003/11/07 05:08:04  ddiego
+added some more docs
+
+Revision 1.1.2.3  2003/11/04 22:10:31  ddiego
+*** empty log message ***
+
+Revision 1.1.2.2  2003/10/06 04:25:56  ddiego
+updated foundationkit docs
+
+Revision 1.1.2.1  2003/09/24 19:41:18  ddiego
+switched the sgml files over to xml file extensions
+made a slight adjustment to the docbook makefile
+
+Revision 1.2  2003/05/17 20:36:51  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+
+Revision 1.1.2.1  2003/03/03 03:39:49  ddiego
+initial check-in of docbook vcf documentation, plus neccesary stylsheets
+and images
+
+-->

@@ -2,6 +2,16 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.4  2003/12/18 05:15:47  ddiego
+#merge from devmain-0-6-2 branch into the stable branch
+#
+#Revision 1.3.4.2  2003/10/03 01:07:48  ddiego
+#added/fixed problems to get it to compile under linux
+#
+#Revision 1.3.4.1  2003/10/02 04:50:34  ddiego
+#changes to ensure the code compiles on linux. made a bunch of updates to
+#the makefiles
+#
 #Revision 1.3  2003/05/17 20:36:20  ddiego
 #this is the checkin for the 0.6.1 release - represents the merge over from
 #the devmain-0-6-0 branch plus a few minor bug fixes
@@ -44,6 +54,12 @@ $(OUTDIR_GK_D)/GraphicsKit.o : $(SRC_GRF)/GraphicsKit.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK_D)/AbstractImage.o : $(SRC_GRF)/AbstractImage.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/AbstractImage.cpp -o $(OUTDIR_GK_D)/AbstractImage.o
 	
+$(OUTDIR_GK_D)/Rect.o : $(SRC_CORE)/Rect.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_CORE)/Rect.cpp -o $(OUTDIR_GK_D)/Rect.o	
+	
+$(OUTDIR_GK_D)/Point.o : $(SRC_CORE)/Point.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_CORE)/Point.cpp -o $(OUTDIR_GK_D)/Point.o		
+	
 $(OUTDIR_GK_D)/BasicFill.o : $(SRC_GRF)/BasicFill.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/BasicFill.cpp -o $(OUTDIR_GK_D)/BasicFill.o
 	
@@ -62,9 +78,6 @@ $(OUTDIR_GK_D)/GlyphCollection.o : $(SRC_GRF)/GlyphCollection.cpp $(GRAPHICSKIT_
 $(OUTDIR_GK_D)/GraphicsContext.o : $(SRC_GRF)/GraphicsContext.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/GraphicsContext.cpp -o $(OUTDIR_GK_D)/GraphicsContext.o
 	
-$(OUTDIR_GK_D)/GraphicsObject.o : $(SRC_GRF)/GraphicsObject.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/GraphicsObject.cpp -o $(OUTDIR_GK_D)/GraphicsObject.o
-	
 $(OUTDIR_GK_D)/GraphicsToolKit.o : $(SRC_UTILS)/GraphicsToolKit.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_UTILS)/GraphicsToolKit.cpp -o $(OUTDIR_GK_D)/GraphicsToolKit.o
 	
@@ -74,8 +87,8 @@ $(OUTDIR_GK_D)/ImageEvent.o : $(SRC_EVENT)/ImageEvent.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK_D)/Matrix2D.o : $(SRC_GRF)/Matrix2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/Matrix2D.cpp -o $(OUTDIR_GK_D)/Matrix2D.o
 	
-$(OUTDIR_GK_D)/Polygon.o : $(SRC_GRF)/Polygon.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/Polygon.cpp -o $(OUTDIR_GK_D)/Polygon.o
+$(OUTDIR_GK_D)/BezierCurve.o : $(SRC_GRF)/BezierCurve.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/BezierCurve.cpp -o $(OUTDIR_GK_D)/BezierCurve.o
 	
 $(OUTDIR_GK_D)/Vector2D.o : $(SRC_GRF)/Vector2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS_D) $(SRC_GRF)/Vector2D.cpp -o $(OUTDIR_GK_D)/Vector2D.o
@@ -142,8 +155,6 @@ $(OUTDIR_GK)/GlyphCollection.o : $(SRC_GRF)/GlyphCollection.cpp $(GRAPHICSKIT_HD
 $(OUTDIR_GK)/GraphicsContext.o : $(SRC_GRF)/GraphicsContext.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/GraphicsContext.cpp -o $(OUTDIR_GK)/GraphicsContext.o
 	
-$(OUTDIR_GK)/GraphicsObject.o : $(SRC_GRF)/GraphicsObject.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/GraphicsObject.cpp -o $(OUTDIR_GK)/GraphicsObject.o
 	
 $(OUTDIR_GK)/GraphicsToolKit.o : $(SRC_UTILS)/GraphicsToolKit.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_UTILS)/GraphicsToolKit.cpp -o $(OUTDIR_GK)/GraphicsToolKit.o
@@ -154,8 +165,8 @@ $(OUTDIR_GK)/ImageEvent.o : $(SRC_EVENT)/ImageEvent.cpp $(GRAPHICSKIT_HDRS)
 $(OUTDIR_GK)/Matrix2D.o : $(SRC_GRF)/Matrix2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/Matrix2D.cpp -o $(OUTDIR_GK)/Matrix2D.o
 	
-$(OUTDIR_GK)/Polygon.o : $(SRC_GRF)/Polygon.cpp $(GRAPHICSKIT_HDRS)
-	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/Polygon.cpp -o $(OUTDIR_GK)/Polygon.o
+$(OUTDIR_GK)/BezierCurve.o : $(SRC_GRF)/BezierCurve.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/BezierCurve.cpp -o $(OUTDIR_GK)/BezierCurve.o
 	
 $(OUTDIR_GK)/Vector2D.o : $(SRC_GRF)/Vector2D.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/Vector2D.cpp -o $(OUTDIR_GK)/Vector2D.o
@@ -190,6 +201,10 @@ $(OUTDIR_GK)/MgcSingleCurve2.o : $(SRC_GRF)/MgcSingleCurve2.cpp $(GRAPHICSKIT_HD
 $(OUTDIR_GK)/MgcMath.o  : $(SRC_GRF)/MgcMath.cpp $(GRAPHICSKIT_HDRS)
 	$(CXX) $(GK_CXX_FLAGS) $(SRC_GRF)/MgcMath.cpp -o $(OUTDIR_GK)/MgcMath.o
 	
+$(OUTDIR_GK)/Rect.o : $(SRC_CORE)/Rect.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_CORE)/Rect.cpp -o $(OUTDIR_GK)/Rect.o	
 	
+$(OUTDIR_GK)/Point.o : $(SRC_CORE)/Point.cpp $(GRAPHICSKIT_HDRS)
+	$(CXX) $(GK_CXX_FLAGS) $(SRC_CORE)/Point.cpp -o $(OUTDIR_GK)/Point.o			
 
 

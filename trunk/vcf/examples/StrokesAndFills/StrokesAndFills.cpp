@@ -59,7 +59,7 @@ public:
 		
 		if ( isUsingRenderBuffer() ) {
 			GraphicsContext* ctx = getContext();
-			ctx->setDrawingArea( *getClientBounds() );
+			ctx->setDrawingArea( getClientBounds() );
 		}
 
 		repaint();
@@ -237,6 +237,10 @@ public:
 class StrokesAndFillsApplication : public Application {
 public:
 
+	StrokesAndFillsApplication(int argc, char** argv) : Application(argc,argv){
+
+	}
+
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
@@ -253,9 +257,9 @@ public:
 
 int main(int argc, char *argv[])
 {
-	StrokesAndFillsApplication app;
+	StrokesAndFillsApplication app( argc, argv );
 
-	Application::main( argc, argv );
+	Application::main();
 	
 	return 0;
 }

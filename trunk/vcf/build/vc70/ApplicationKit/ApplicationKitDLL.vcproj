@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="ApplicationKitDLL">
+	Name="ApplicationKitDLL"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,14 +13,14 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/DebugDLL\obj"
+			IntermediateDirectory=".\vc70/DebugDLL\obj"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm120 "
+				AdditionalOptions="/Zm150 "
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;USE_GRAPHICSKIT_DLL;APPKIT_DLL;APPKIT_EXPORTS;BUILD_APPKIT_LIB"
@@ -27,10 +29,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="ApplicationKit.h"
-				PrecompiledHeaderFile=".\vc7/DebugDLL\obj/ApplicationKitDLL.pch"
-				AssemblerListingLocation=".\vc7/DebugDLL\obj/"
-				ObjectFile="vc7/DebugDLL\obj/"
-				ProgramDataBaseFileName="..\..\..\bin/ApplicationKit_vc7_d.pdb"
+				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/ApplicationKitDLL.pch"
+				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
+				ObjectFile="vc70/DebugDLL\obj/"
+				ProgramDataBaseFileName="..\..\..\bin/ApplicationKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -42,13 +44,13 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/ApplicationKit_vc7_d.dll"
+				OutputFile="..\..\..\bin/ApplicationKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\..\lib/ApplicationKit_vc7_d.pdb"
-				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc7_d.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/ApplicationKit_vc70_d.pdb"
+				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -74,14 +76,14 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/ReleaseDLL\obj"
+			IntermediateDirectory=".\vc70/ReleaseDLL\obj"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm120 /Zm120 "
+				AdditionalOptions="/Zm150 "
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/../thirdparty/common/agg/include/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;USE_GRAPHICSKIT_DLL;APPKIT_DLL;APPKIT_EXPORTS;BUILD_APPKIT_LIB"
@@ -91,10 +93,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="ApplicationKit.h"
-				PrecompiledHeaderFile=".\vc7/ReleaseDLL\obj/ApplicationKitDLL.pch"
-				AssemblerListingLocation=".\vc7/ReleaseDLL\obj/"
-				ObjectFile="vc7/ReleaseDLL\obj/"
-				ProgramDataBaseFileName=".\vc7/ReleaseDLL\obj/"
+				PrecompiledHeaderFile=".\vc70/ReleaseDLL\obj/ApplicationKitDLL.pch"
+				AssemblerListingLocation=".\vc70/ReleaseDLL\obj/"
+				ObjectFile="vc70/ReleaseDLL\obj/"
+				ProgramDataBaseFileName=".\vc70/ReleaseDLL\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -104,12 +106,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/ApplicationKit_vc7.dll"
+				OutputFile="..\..\..\bin/ApplicationKit_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib,..\..\..\xml\lib"
-				ProgramDatabaseFile=".\..\..\..\lib/ApplicationKit_vc7.pdb"
-				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc7.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/ApplicationKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/ApplicationKit_vc70.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -147,6 +149,9 @@
 				RelativePath="..\..\..\include\core\AbstractComponentEditor.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\core\AbstractContainer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\core\AbstractPropertyEditor.h">
 			</File>
 			<File
@@ -171,9 +176,6 @@
 				RelativePath="..\..\..\include\ApplicationKitPrivate.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\ApplicationPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\exceptions\BadComponentStateException.h">
 			</File>
 			<File
@@ -181,9 +183,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\BasicTableItemEditor.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\ButtonPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Clipboard.h">
@@ -202,9 +201,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\CommonDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\CommonDialogPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\CommonFileBrowse.h">
@@ -240,25 +236,19 @@
 				RelativePath="..\..\..\include\core\Container.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\core\Containers.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\core\Control.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\ControlGraphicsContext.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\ControlPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\Cursor.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\CursorManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\CursorPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\CustomControlPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\DataObject.h">
@@ -273,16 +263,16 @@
 				RelativePath="..\..\..\include\core\Desktop.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\DesktopPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\Dialog.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\DialogPeer.h">
+				RelativePath="..\..\..\include\events\DragEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\dragdrop\DragSource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\DropEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\dragdrop\DropTarget.h">
@@ -294,12 +284,6 @@
 				RelativePath="..\..\..\include\core\Frame.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\HTMLBrowserPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\HeaderPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\graphics\ImageList.h">
 			</File>
 			<File
@@ -307,9 +291,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Item.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\Label.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\LibraryApplication.h">
@@ -321,28 +302,16 @@
 				RelativePath="..\..\..\include\implementerKit\LightweightComponent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\ListviewPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\Menu.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\MenuBar.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\MenuBarPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\MenuItem.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\MenuItemPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\MessageDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\MultilineTextControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\exceptions\NoToolKitFoundException.h">
@@ -355,15 +324,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\PopupMenu.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\PopupMenuPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\PrintContextPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\PrintPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\PropertyEditor.h">
@@ -384,9 +344,6 @@
 				RelativePath="..\..\..\include\io\ResourceStream.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\ScrollPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\Scrollable.h">
 			</File>
 			<File
@@ -396,16 +353,10 @@
 				RelativePath="..\..\..\include\core\TableItemEditor.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\implementer\TextPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\TimerComponent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\TitledBorder.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\TreePeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\UIMetricsManager.h">
@@ -430,9 +381,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Window.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementer\WindowPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Wizard.h">
@@ -512,6 +460,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\include\ApplicationKitRTTI.inl">
+			</File>
+			<File
 				RelativePath="..\..\..\src\Graphics\Basic3DBorder.cpp">
 			</File>
 			<File
@@ -555,6 +506,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ComponentInfo.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\Containers.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Control.cpp">
@@ -843,6 +797,12 @@
 				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Toolbar.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Toolbar.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32ToolKit.cpp">
 			</File>
 			<File
@@ -893,12 +853,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\events\ControlEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\DragEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\DropEvent.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\FocusEvent.cpp">
@@ -958,16 +912,16 @@
 				RelativePath="..\..\..\include\events\ScrollEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\Events\TabModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\TabModelEvent.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\Events\TableModelEvent.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\events\TableModelEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Events\TabModelEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\TabModelEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\TextEvent.cpp">
@@ -1088,18 +1042,6 @@
 				RelativePath="..\..\..\include\core\DefaultMenuItem.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\DefaultTabModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTabModel.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTabPage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTabPage.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
 			</File>
 			<File
@@ -1110,6 +1052,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\DefaultTableModel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTabModel.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTabModel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTabPage.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTabPage.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\DefaultTextModel.cpp">
@@ -1136,6 +1090,9 @@
 				RelativePath="..\..\..\include\core\Document.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\core\DocumentBasedApplication.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\DocumentManager.cpp">
 			</File>
 			<File
@@ -1157,16 +1114,16 @@
 				RelativePath="..\..\..\include\ModelViewKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\TabModel.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\TabPage.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\TableCellItem.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TableModel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TabModel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TabPage.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TextModel.h">
@@ -1218,16 +1175,16 @@
 				RelativePath="..\..\..\include\core\CustomControl.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\HeaderControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\HeaderControl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ImageControl.cpp">
@@ -1237,6 +1194,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Label.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Label.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ListBoxControl.cpp">
@@ -1251,6 +1211,9 @@
 				RelativePath="..\..\..\include\core\ListViewControl.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\core\MultilineTextControl.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\core\OpenGLControl.h">
 			</File>
 			<File
@@ -1258,6 +1221,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Panel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\ProgressControl.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\ProgressControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\PushButton.cpp">
@@ -1276,6 +1245,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\ScrollbarManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\SliderControl.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\SliderControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Splitter.cpp">
@@ -1348,6 +1323,76 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TreeListControl.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Peer Interfaces"
+			Filter="*.h">
+			<File
+				RelativePath="..\..\..\include\implementer\ApplicationPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ButtonPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\CommonDialogPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ControlPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\CursorPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\DataObjectPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\DesktopPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\DialogPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\DragDropPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\DropTargetPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\HTMLBrowserPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ListviewPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\MenuBarPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\MenuItemPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\PopupMenuPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\PrintContextPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\PrintPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ResourceStreamPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ScrollPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\TextPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\TreePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\WindowPeer.h">
 			</File>
 		</Filter>
 	</Files>

@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="RemoteObjectKit">
+	Name="RemoteObjectKit"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,7 +13,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -26,10 +28,10 @@
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/Release/RemoteObjectKit.pch"
-				AssemblerListingLocation=".\vc7/Release/"
-				ObjectFile="vc7/Release/"
-				ProgramDataBaseFileName=".\vc7/Release/"
+				PrecompiledHeaderFile=".\vc70/Release/RemoteObjectKit.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile="vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -39,12 +41,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/RemoteObjectKit_vc7.dll"
+				OutputFile="..\..\..\bin/RemoteObjectKit_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
-				ProgramDatabaseFile=".\..\..\..\lib/RemoteObjectKit_vc7.pdb"
-				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc7.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/RemoteObjectKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc70.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -70,7 +72,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/Debug"
+			IntermediateDirectory=".\vc70/Debug"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -84,10 +86,10 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/Debug/RemoteObjectKit.pch"
-				AssemblerListingLocation=".\vc7/Debug/"
-				ObjectFile="vc7/Debug/"
-				ProgramDataBaseFileName="..\..\..\bin/RemoteObjectKit_vc7_d.pdb"
+				PrecompiledHeaderFile=".\vc70/Debug/RemoteObjectKit.pch"
+				AssemblerListingLocation=".\vc70/Debug/"
+				ObjectFile="vc70/Debug/"
+				ProgramDataBaseFileName="..\..\..\bin/RemoteObjectKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -99,13 +101,13 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/RemoteObjectKit_vc7_d.dll"
+				OutputFile="..\..\..\bin/RemoteObjectKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\..\lib/RemoteObjectKit_vc7_d.pdb"
-				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc7_d.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/RemoteObjectKit_vc70_d.pdb"
+				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"

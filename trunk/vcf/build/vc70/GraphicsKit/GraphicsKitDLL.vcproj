@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="GraphicsKitDLL">
+	Name="GraphicsKitDLL"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,7 +13,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/DebugDLL\obj"
+			IntermediateDirectory=".\vc70/DebugDLL\obj"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -26,10 +28,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="GraphicsKit.h"
-				PrecompiledHeaderFile=".\vc7/DebugDLL\obj/GraphicsKitDLL.pch"
-				AssemblerListingLocation=".\vc7/DebugDLL\obj/"
-				ObjectFile="vc7/DebugDLL\obj/"
-				ProgramDataBaseFileName="..\..\..\bin/GraphicsKit_vc7_d.pdb"
+				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/GraphicsKitDLL.pch"
+				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
+				ObjectFile="vc70/DebugDLL\obj/"
+				ProgramDataBaseFileName="..\..\..\bin/GraphicsKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -41,13 +43,13 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/GraphicsKit_vc7_d.dll"
+				OutputFile="..\..\..\bin/GraphicsKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\..\lib/GraphicsKit_vc7_d.pdb"
-				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc7_d.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/GraphicsKit_vc70_d.pdb"
+				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -73,7 +75,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/ReleaseDLL\obj"
+			IntermediateDirectory=".\vc70/ReleaseDLL\obj"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -89,10 +91,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="GraphicsKit.h"
-				PrecompiledHeaderFile=".\vc7/ReleaseDLL\obj/GraphicsKitDLL.pch"
-				AssemblerListingLocation=".\vc7/ReleaseDLL\obj/"
-				ObjectFile="vc7/ReleaseDLL\obj/"
-				ProgramDataBaseFileName=".\vc7/ReleaseDLL\obj/"
+				PrecompiledHeaderFile=".\vc70/ReleaseDLL\obj/GraphicsKitDLL.pch"
+				AssemblerListingLocation=".\vc70/ReleaseDLL\obj/"
+				ObjectFile="vc70/ReleaseDLL\obj/"
+				ProgramDataBaseFileName=".\vc70/ReleaseDLL\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -102,12 +104,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/GraphicsKit_vc7.dll"
+				OutputFile="..\..\..\bin/GraphicsKit_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
-				ProgramDatabaseFile=".\..\..\..\lib/GraphicsKit_vc7.pdb"
-				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc7.lib"/>
+				ProgramDatabaseFile=".\..\..\..\lib/GraphicsKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc70.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -172,9 +174,6 @@
 				RelativePath="..\..\..\include\implementer\Contextpeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Curve.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\graphics\Ellipse.h">
 			</File>
 			<File
@@ -200,6 +199,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\GraphicsKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\graphics\GraphicsKitSelectLib.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\GraphicsToolKit.h">
@@ -235,13 +237,10 @@
 				RelativePath="..\..\..\include\core\Point.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Polygon.h">
+				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\PrintContext.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Rect.h">
@@ -302,6 +301,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\include\GraphicsKitRTTI.inl">
+			</File>
+			<File
 				RelativePath="..\..\..\src\Utils\GraphicsToolKit.cpp">
 			</File>
 			<File
@@ -312,9 +314,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Point.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Polygon.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Rect.cpp">

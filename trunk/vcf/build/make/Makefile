@@ -2,6 +2,47 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.4  2003/12/18 05:15:47  ddiego
+#merge from devmain-0-6-2 branch into the stable branch
+#
+#Revision 1.3.4.11  2003/12/13 19:17:10  ddiego
+#*** empty log message ***
+#
+#Revision 1.3.4.10  2003/12/13 18:19:00  ddiego
+#*** empty log message ***
+#
+#Revision 1.3.4.9  2003/11/11 17:43:42  ddiego
+#updated the makefile and foundationKit object to make a VariantData.obj
+#file
+#
+#Revision 1.3.4.8  2003/11/01 20:41:00  ddiego
+#updated makefil to add the gtk toolbar class
+#
+#Revision 1.3.4.7  2003/10/22 03:56:43  ddiego
+#added two more tutorials for advanced alignment and another for anchors
+#also finished off the alignment tutorial. yay :)
+#
+#Revision 1.3.4.6  2003/10/04 20:13:45  ddiego
+#updated the Makefiles - everything works now, including compiling
+#building on GCC 3.3.1
+#
+#Revision 1.3.4.5  2003/10/03 04:33:03  ddiego
+#add precompiled header target - doesn't seem to really work though
+#
+#Revision 1.3.4.4  2003/10/03 01:07:48  ddiego
+#added/fixed problems to get it to compile under linux
+#
+#Revision 1.3.4.3  2003/10/02 04:50:34  ddiego
+#changes to ensure the code compiles on linux. made a bunch of updates to
+#the makefiles
+#
+#Revision 1.3.4.2  2003/09/27 16:19:10  ddiego
+#further mods to bring it up to synch with the current win32 rev
+#
+#Revision 1.3.4.1  2003/09/27 16:11:30  ddiego
+#fixed some minor glitches in the makefile due to changes made on the Win32
+#side.
+#
 #Revision 1.3  2003/05/17 20:36:20  ddiego
 #this is the checkin for the 0.6.1 release - represents the merge over from
 #the devmain-0-6-0 branch plus a few minor bug fixes
@@ -54,17 +95,24 @@ include common.mak
 #debug target
 FOUNDATION_KIT_SO_D=$(BIN_OUT)/libFoundationKit_d.so
 GRAPHICS_KIT_SO_D=$(BIN_OUT)/libGraphicsKit_d.so
+LIBAGG_LIB_D=$(LIB_OUT)/libAGG_d.a
 APPLICATION_KIT_SO_D=$(BIN_OUT)/libApplicationKit_d.so
 NETWORK_KIT_SO_D=$(BIN_OUT)/libNetworkKit_d.so
 
 #release target
 FOUNDATION_KIT_SO=$(BIN_OUT)/libFoundationKit.so
 GRAPHICS_KIT_SO=$(BIN_OUT)/libGraphicsKit.so
+LIBAGG_LIB=$(LIB_OUT)/libAGG.a
 APPLICATION_KIT_SO=$(BIN_OUT)/libApplicationKit.so
 NETWORK_KIT_SO=$(BIN_OUT)/libNetworkKit.so
 
+
+
+FK_PRECOMP=$(INC)/FoundationKit.h.gch
+
+
 #toolchain definitions
-CXX_FLAGS_D=-ggdb -D VCF_GCC -D_DEBUG -I $(CXX_INC) -c
+CXX_FLAGS_D=-ggdb -D VCF_GCC -DVCF_POSIX -D_DEBUG -I $(CXX_INC) -c
 
 GTK_CXX_FLAGS = `pkg-config gtk+-2.0 --cflags`
 
@@ -74,7 +122,7 @@ AK_CXX_FLAGS_D=$(GK_CXX_FLAGS_D)
 
 NK_CXX_FLAGS_D=$(CXX_FLAGS_D)
 
-CXX_FLAGS=-D VCF_GCC -I $(CXX_INC) -O2 -c
+CXX_FLAGS=-DNDEBUG -DVCF_GCC -DVCF_POSIX -I $(CXX_INC) -Os -c
 GK_CXX_FLAGS=$(GTK_CXX_FLAGS) -DVCF_GTK $(CXX_FLAGS)
 
 AK_CXX_FLAGS=$(GK_CXX_FLAGS)
@@ -88,10 +136,16 @@ GK_LINKER_FLAGS_D=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit_d $(LINKER_F
 AK_LINKER_FLAGS_D=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit_d -lGraphicsKit_d $(LINKER_FLAGS_D)
 NK_LINKER_FLAGS_D=-L $(BIN_OUT) -lFoundationKit_d $(LINKER_FLAGS_D)
 
-LINKER_FLAGS=-ldl -shared -o
+LINKER_FLAGS=-ldl -lpthread -shared -o
 GK_LINKER_FLAGS=-L $(BIN_OUT) $(GTK_LINKER_FLAGS) -lFoundationKit $(LINKER_FLAGS)
 AK_LINKER_FLAGS=-L $(BIN_OUT) $(GTK_LINKER_FLAGS)  -lFoundationKit -lGraphicsKit $(LINKER_FLAGS)
 NK_LINKER_FLAGS=-L $(BIN_OUT) -lFoundationKit $(LINKER_FLAGS)
+
+
+STATIC_LINKER_FLAGS=-cru
+
+
+
 
 #debug object files.
 #note that they are in a different directory
@@ -119,9 +173,7 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/Object.o \
 	$(OUTDIR_FK_D)/ObjectWithEvents.o \
 	$(OUTDIR_FK_D)/Parser.o \
-	$(OUTDIR_FK_D)/Point.o \
 	$(OUTDIR_FK_D)/PropertyChangeEvent.o \
-	$(OUTDIR_FK_D)/Rect.o \
 	$(OUTDIR_FK_D)/Registry.o \
 	$(OUTDIR_FK_D)/Stream.o \
 	$(OUTDIR_FK_D)/StringUtils.o \
@@ -131,9 +183,11 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/TextOutputStream.o \
 	$(OUTDIR_FK_D)/Thread.o \
 	$(OUTDIR_FK_D)/ThreadEvent.o \
+	$(OUTDIR_FK_D)/VariantData.o \
 	$(OUTDIR_FK_D)/VCFMath.o \
 	$(OUTDIR_FK_D)/VCFProcess.o \
 	$(OUTDIR_FK_D)/XMLParser.o \
+	$(OUTDIR_FK_D)/CommandLine.o \
 	$(OUTDIR_FK_D)/LinuxPeer.o \
 	$(OUTDIR_FK_D)/LinuxFilePeer.o \
 	$(OUTDIR_FK_D)/LinuxFileStream.o \
@@ -156,6 +210,7 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/BasicInputStream.o \
 	$(OUTDIR_FK)/BasicOutputStream.o \
 	$(OUTDIR_FK)/Class.o \
+	$(OUTDIR_FK)/CommandLine.o \
 	$(OUTDIR_FK)/ClassRegistry.o \
 	$(OUTDIR_FK)/Directory.o \
 	$(OUTDIR_FK)/ErrorLog.o \
@@ -175,9 +230,7 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/Object.o \
 	$(OUTDIR_FK)/ObjectWithEvents.o \
 	$(OUTDIR_FK)/Parser.o \
-	$(OUTDIR_FK)/Point.o \
 	$(OUTDIR_FK)/PropertyChangeEvent.o \
-	$(OUTDIR_FK)/Rect.o \
 	$(OUTDIR_FK)/Registry.o \
 	$(OUTDIR_FK)/Stream.o \
 	$(OUTDIR_FK)/StringUtils.o \
@@ -187,6 +240,7 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/TextOutputStream.o \
 	$(OUTDIR_FK)/Thread.o \
 	$(OUTDIR_FK)/ThreadEvent.o \
+	$(OUTDIR_FK)/VariantData.o \
 	$(OUTDIR_FK)/VCFMath.o \
 	$(OUTDIR_FK)/VCFProcess.o \
 	$(OUTDIR_FK)/XMLParser.o \
@@ -209,6 +263,24 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 
 
 #GraphicsKit Objects
+LIBAGG_OBJECTFILES_D=$(OUTDIR_GK_D)/agg_affine_matrix.o \
+			$(OUTDIR_GK_D)/agg_bspline.o \
+			$(OUTDIR_GK_D)/agg_curves.o \
+			$(OUTDIR_GK_D)/agg_gen_stroke.o \
+			$(OUTDIR_GK_D)/agg_gsv_text.o \
+			$(OUTDIR_GK_D)/agg_path_storage.o \
+			$(OUTDIR_GK_D)/agg_rasterizer_scanline_aa.o \
+			$(OUTDIR_GK_D)/agg_scanline_u8.o 
+
+LIBAGG_OBJECTFILES=$(OUTDIR_GK)/agg_affine_matrix.o \
+			$(OUTDIR_GK)/agg_bspline.o \
+			$(OUTDIR_GK)/agg_curves.o \
+			$(OUTDIR_GK)/agg_gen_stroke.o \
+			$(OUTDIR_GK)/agg_gsv_text.o \
+			$(OUTDIR_GK)/agg_path_storage.o \
+			$(OUTDIR_GK)/agg_rasterizer_scanline_aa.o \
+			$(OUTDIR_GK)/agg_scanline_u8.o 
+			
 GRAFKIT_OBJECT_FILES_D=$(OUTDIR_GK_D)/GraphicsKit.o \
 			$(OUTDIR_GK_D)/AbstractImage.o \
 			$(OUTDIR_GK_D)/BasicFill.o \
@@ -217,12 +289,13 @@ GRAFKIT_OBJECT_FILES_D=$(OUTDIR_GK_D)/GraphicsKit.o \
 			$(OUTDIR_GK_D)/Font.o \
 			$(OUTDIR_GK_D)/GlyphCollection.o \
 			$(OUTDIR_GK_D)/GraphicsContext.o \
-			$(OUTDIR_GK_D)/GraphicsObject.o \
 			$(OUTDIR_GK_D)/GraphicsToolKit.o \
 			$(OUTDIR_GK_D)/ImageEvent.o \
 			$(OUTDIR_GK_D)/Matrix2D.o \
-			$(OUTDIR_GK_D)/Polygon.o \
+			$(OUTDIR_GK_D)/BezierCurve.o \
 			$(OUTDIR_GK_D)/Vector2D.o \
+			$(OUTDIR_GK_D)/Point.o \
+			$(OUTDIR_GK_D)/Rect.o \
 			$(OUTDIR_GK_D)/GTKFont.o \
 			$(OUTDIR_GK_D)/GTKImage.o \
 			$(OUTDIR_GK_D)/GTKContext.o \
@@ -232,7 +305,9 @@ GRAFKIT_OBJECT_FILES_D=$(OUTDIR_GK_D)/GraphicsKit.o \
 			$(OUTDIR_GK_D)/MgcVector2.o \
 			$(OUTDIR_GK_D)/MgcIntegrate.o \
 			$(OUTDIR_GK_D)/MgcSingleCurve2.o \
-			$(OUTDIR_GK_D)/MgcMath.o 
+			$(OUTDIR_GK_D)/MgcMath.o \
+			$(LIBAGG_LIB_D) 
+			
 
 
 GRAFKIT_OBJECT_FILES=$(OUTDIR_GK)/GraphicsKit.o \
@@ -243,11 +318,12 @@ GRAFKIT_OBJECT_FILES=$(OUTDIR_GK)/GraphicsKit.o \
 			$(OUTDIR_GK)/Font.o \
 			$(OUTDIR_GK)/GlyphCollection.o \
 			$(OUTDIR_GK)/GraphicsContext.o \
-			$(OUTDIR_GK)/GraphicsObject.o \
 			$(OUTDIR_GK)/GraphicsToolKit.o \
 			$(OUTDIR_GK)/ImageEvent.o \
 			$(OUTDIR_GK)/Matrix2D.o \
-			$(OUTDIR_GK)/Polygon.o \
+			$(OUTDIR_GK)/BezierCurve.o \
+			$(OUTDIR_GK)/Point.o \
+			$(OUTDIR_GK)/Rect.o \
 			$(OUTDIR_GK)/Vector2D.o \
 			$(OUTDIR_GK)/GTKFont.o \
 			$(OUTDIR_GK)/GTKImage.o \
@@ -258,7 +334,8 @@ GRAFKIT_OBJECT_FILES=$(OUTDIR_GK)/GraphicsKit.o \
 			$(OUTDIR_GK)/MgcVector2.o \
 			$(OUTDIR_GK)/MgcIntegrate.o \
 			$(OUTDIR_GK)/MgcSingleCurve2.o \
-			$(OUTDIR_GK)/MgcMath.o 
+			$(OUTDIR_GK)/MgcMath.o \
+			$(LIBAGG_LIB)
 
 
 #ApplicationKit objects
@@ -282,7 +359,7 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/ButtonEvent.o \
 			$(OUTDIR_AK_D)/CheckBoxControl.o \
 			$(OUTDIR_AK_D)/Clipboard.o \
-			$(OUTDIR_AK_D)/ClipboardDataObject.o \
+			$(OUTDIR_AK_D)/DataObject.o \
 			$(OUTDIR_AK_D)/ClipboardEvent.o \
 			$(OUTDIR_AK_D)/ColumnItemEvent.o \
 			$(OUTDIR_AK_D)/ColumnModelEvent.o \
@@ -299,6 +376,7 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/Component.o \
 			$(OUTDIR_AK_D)/ComponentEditorManager.o \
 			$(OUTDIR_AK_D)/ComponentInfo.o \
+			$(OUTDIR_AK_D)/Action.o \
 			$(OUTDIR_AK_D)/Control.o \
 			$(OUTDIR_AK_D)/ControlContainer.o \
 			$(OUTDIR_AK_D)/ControlEvent.o \
@@ -306,7 +384,6 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/Cursor.o \
 			$(OUTDIR_AK_D)/CursorManager.o \
 			$(OUTDIR_AK_D)/CustomControl.o \
-			$(OUTDIR_AK_D)/DataType.o \
 			$(OUTDIR_AK_D)/DefaultColumnItem.o \
 			$(OUTDIR_AK_D)/DefaultColumnModel.o \
 			$(OUTDIR_AK_D)/DefaultListItem.o \
@@ -322,9 +399,7 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/DefaultTreeModel.o \
 			$(OUTDIR_AK_D)/Desktop.o \
 			$(OUTDIR_AK_D)/Dialog.o \
-			$(OUTDIR_AK_D)/DragEvent.o \
 			$(OUTDIR_AK_D)/DragSource.o \
-			$(OUTDIR_AK_D)/DropEvent.o \
 			$(OUTDIR_AK_D)/DropTarget.o \
 			$(OUTDIR_AK_D)/FocusEvent.o \
 			$(OUTDIR_AK_D)/Frame.o \
@@ -369,9 +444,7 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/TimerEvent.o \
 			$(OUTDIR_AK_D)/ToggledButton.o \
 			$(OUTDIR_AK_D)/Toolbar.o \
-			$(OUTDIR_AK_D)/ToolbarButton.o \
 			$(OUTDIR_AK_D)/ToolbarDock.o \
-			$(OUTDIR_AK_D)/ToolbarSeparator.o \
 			$(OUTDIR_AK_D)/ToolTipEvent.o \
 			$(OUTDIR_AK_D)/TreeControl.o \
 			$(OUTDIR_AK_D)/TreeListControl.o \
@@ -385,6 +458,10 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/WhatsThisHelpEvent.o \
 			$(OUTDIR_AK_D)/Window.o \
 			$(OUTDIR_AK_D)/WindowEvent.o \
+			$(OUTDIR_AK_D)/Containers.o \
+			$(OUTDIR_AK_D)/PackageInfo.o \
+			$(OUTDIR_AK_D)/DocumentManager.o \
+			$(OUTDIR_AK_D)/MessageDialog.o \
 			$(OUTDIR_AK_D)/GTKUIToolkit.o \
 			$(OUTDIR_AK_D)/GTKDesktop.o \
 			$(OUTDIR_AK_D)/GTKApplication.o \
@@ -392,7 +469,12 @@ APPKIT_OBJECT_FILES_D=$(OUTDIR_AK_D)/ApplicationKit.o \
 			$(OUTDIR_AK_D)/GTKControl.o \
 			$(OUTDIR_AK_D)/GTKWindow.o \
 			$(OUTDIR_AK_D)/GTKControlContext.o \
-			$(OUTDIR_AK_D)/GTKCursor.o 
+			$(OUTDIR_AK_D)/GTKCursor.o \
+			$(OUTDIR_AK_D)/GTKTextControl.o \
+			$(OUTDIR_AK_D)/GTKFileOpenDialog.o \
+			$(OUTDIR_AK_D)/GTKDialog.o \
+			$(OUTDIR_AK_D)/GTKCommandButton.o \
+			$(OUTDIR_AK_D)/GTKToolbar.o 
 
 
 APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
@@ -414,7 +496,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/ButtonEvent.o \
 			$(OUTDIR_AK)/CheckBoxControl.o \
 			$(OUTDIR_AK)/Clipboard.o \
-			$(OUTDIR_AK)/ClipboardDataObject.o \
+			$(OUTDIR_AK)/DataObject.o \
 			$(OUTDIR_AK)/ClipboardEvent.o \
 			$(OUTDIR_AK)/ColumnItemEvent.o \
 			$(OUTDIR_AK)/ColumnModelEvent.o \
@@ -431,6 +513,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/Component.o \
 			$(OUTDIR_AK)/ComponentEditorManager.o \
 			$(OUTDIR_AK)/ComponentInfo.o \
+			$(OUTDIR_AK)/Action.o \
 			$(OUTDIR_AK)/Control.o \
 			$(OUTDIR_AK)/ControlContainer.o \
 			$(OUTDIR_AK)/ControlEvent.o \
@@ -438,7 +521,6 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/Cursor.o \
 			$(OUTDIR_AK)/CursorManager.o \
 			$(OUTDIR_AK)/CustomControl.o \
-			$(OUTDIR_AK)/DataType.o \
 			$(OUTDIR_AK)/DefaultColumnItem.o \
 			$(OUTDIR_AK)/DefaultColumnModel.o \
 			$(OUTDIR_AK)/DefaultListItem.o \
@@ -454,9 +536,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/DefaultTreeModel.o \
 			$(OUTDIR_AK)/Desktop.o \
 			$(OUTDIR_AK)/Dialog.o \
-			$(OUTDIR_AK)/DragEvent.o \
 			$(OUTDIR_AK)/DragSource.o \
-			$(OUTDIR_AK)/DropEvent.o \
 			$(OUTDIR_AK)/DropTarget.o \
 			$(OUTDIR_AK)/FocusEvent.o \
 			$(OUTDIR_AK)/Frame.o \
@@ -501,9 +581,7 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/TimerEvent.o \
 			$(OUTDIR_AK)/ToggledButton.o \
 			$(OUTDIR_AK)/Toolbar.o \
-			$(OUTDIR_AK)/ToolbarButton.o \
 			$(OUTDIR_AK)/ToolbarDock.o \
-			$(OUTDIR_AK)/ToolbarSeparator.o \
 			$(OUTDIR_AK)/ToolTipEvent.o \
 			$(OUTDIR_AK)/TreeControl.o \
 			$(OUTDIR_AK)/TreeListControl.o \
@@ -517,6 +595,10 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/WhatsThisHelpEvent.o \
 			$(OUTDIR_AK)/Window.o \
 			$(OUTDIR_AK)/WindowEvent.o \
+			$(OUTDIR_AK)/Containers.o \
+			$(OUTDIR_AK)/PackageInfo.o \
+			$(OUTDIR_AK)/DocumentManager.o \
+			$(OUTDIR_AK)/MessageDialog.o \
 			$(OUTDIR_AK)/GTKUIToolkit.o \
 			$(OUTDIR_AK)/GTKDesktop.o \
 			$(OUTDIR_AK)/GTKApplication.o \
@@ -524,7 +606,14 @@ APPKIT_OBJECT_FILES=$(OUTDIR_AK)/ApplicationKit.o \
 			$(OUTDIR_AK)/GTKControl.o \
 			$(OUTDIR_AK)/GTKWindow.o \
 			$(OUTDIR_AK)/GTKControlContext.o \
-			$(OUTDIR_AK)/GTKCursor.o 
+			$(OUTDIR_AK)/GTKCursor.o \
+			$(OUTDIR_AK)/GTKTextControl.o \
+			$(OUTDIR_AK)/GTKFileOpenDialog.o \
+			$(OUTDIR_AK)/GTKDialog.o \
+			$(OUTDIR_AK)/GTKCommandButton.o \
+			$(OUTDIR_AK)/GTKToolbar.o 
+
+
 
 
 #NetworkKit objects
@@ -561,7 +650,7 @@ debug : FoundationKit_debug GraphicsKit_debug ApplicationKit_debug
 
 #release target
 
-release : prep_dirs_FK $(FOUNDATION_KIT_SO)
+release : FoundationKit_release GraphicsKit_release ApplicationKit_release
 
 
 #all target, builds release and debug builds
@@ -668,21 +757,34 @@ $(FOUNDATION_KIT_SO_D) : $(FK_OBJECT_FILES_D)
 	$(LINKER) $(LINKER_FLAGS_D) $(FOUNDATION_KIT_SO_D) $(FK_OBJECT_FILES_D)
 
 
+
+
+
+$(FK_PRECOMP): $(INC)/FoundationKit.h
+	$(CXX) $(CXX_FLAGS_D) -x c++ $(INC)/FoundationKit.h -o $(FK_PRECOMP)
+	
 #this is the release build target for the 
 #FoundationKit shared object library
-$(FOUNDATION_KIT_SO) : $(FK_OBJECT_FILES)
+$(FOUNDATION_KIT_SO) :  $(FK_OBJECT_FILES)
 	$(LINKER) $(LINKER_FLAGS) $(FOUNDATION_KIT_SO) $(FK_OBJECT_FILES)
 
 
+
+$(LIBAGG_LIB_D) : $(LIBAGG_OBJECTFILES_D)
+	$(STATIC_LINKER) $(STATIC_LINKER_FLAGS) $(LIBAGG_LIB_D) $(LIBAGG_OBJECTFILES_D)
+
+$(LIBAGG_LIB) : $(LIBAGG_OBJECTFILES)
+	$(STATIC_LINKER) $(STATIC_LINKER_FLAGS) $(LIBAGG_LIB) $(LIBAGG_OBJECTFILES)
+	
 #this is the debug build target for the 
 #GraphicsKit shared object library
-$(GRAPHICS_KIT_SO_D) : $(GRAFKIT_OBJECT_FILES_D)
+$(GRAPHICS_KIT_SO_D) : $(LIBAGG_LIB_D) $(GRAFKIT_OBJECT_FILES_D)
 	$(LINKER) $(GK_LINKER_FLAGS_D) $(GRAPHICS_KIT_SO_D) $(GRAFKIT_OBJECT_FILES_D)
 
 
 #this is the release build target for the 
 #GraphicsKit shared object library
-$(GRAPHICS_KIT_SO) : $(GRAFKIT_OBJECT_FILES)
+$(GRAPHICS_KIT_SO) : $(LIBAGG_LIB) $(GRAFKIT_OBJECT_FILES)
 	$(LINKER) $(GK_LINKER_FLAGS) $(GRAPHICS_KIT_SO) $(GRAFKIT_OBJECT_FILES)
 
 #this is the debug build target for the 
@@ -719,6 +821,7 @@ $(NETWORK_KIT_SO) : $(NETKIT_OBJECT_FILES)
 
 include FoundationKitObjects.mak
 
+include LibAGGObjects.mak
 
 include GraphicsKitObjects.mak
 

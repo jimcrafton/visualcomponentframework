@@ -3,6 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Win32HTMLBrowser"
+	SccProjectName=""
+	SccLocalPath=""
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -11,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc7/Release"
-			IntermediateDirectory=".\vc7/Release"
+			OutputDirectory=".\vc70/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			UseOfATL="1"
@@ -27,10 +29,10 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc7/Release/Win32HTMLBrowser.pch"
-				AssemblerListingLocation=".\vc7/Release/"
-				ObjectFile="vc7/Release/"
-				ProgramDataBaseFileName=".\vc7/Release/"
+				PrecompiledHeaderFile=".\vc70/Release/Win32HTMLBrowser.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile="vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -40,20 +42,20 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
-				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc7.dll"
+				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc7/Release/Win32HTMLBrowser_vc7.pdb"
+				ProgramDatabaseFile=".\vc70/Release/Win32HTMLBrowser_vc70.pdb"
 				SubSystem="2"
-				ImportLibrary=".\vc7/Release/Win32HTMLBrowser_vc7.lib"/>
+				ImportLibrary=".\vc70/Release/Win32HTMLBrowser_vc70.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc7/Release/Win32HTMLBrowser.tlb"/>
+				TypeLibraryName=".\vc70/Release/Win32HTMLBrowser.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -71,8 +73,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc7/Debug"
-			IntermediateDirectory=".\vc7/Debug"
+			OutputDirectory=".\vc70/Debug"
+			IntermediateDirectory=".\vc70/Debug"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			UseOfATL="1"
@@ -86,10 +88,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc7/Debug/Win32HTMLBrowser.pch"
-				AssemblerListingLocation=".\vc7/Debug/"
-				ObjectFile="vc7/Debug/"
-				ProgramDataBaseFileName="..\..\..\bin/Win32HTMLBrowser_vc7_d.pdb"
+				PrecompiledHeaderFile=".\vc70/Debug/Win32HTMLBrowser.pch"
+				AssemblerListingLocation=".\vc70/Debug/"
+				ObjectFile="vc70/Debug/"
+				ProgramDataBaseFileName="..\..\..\bin/Win32HTMLBrowser_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -101,21 +103,21 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
-				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc7_d.dll"
+				OutputFile="..\..\..\bin\Win32HTMLBrowser_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\vc7/Debug/Win32HTMLBrowser_vc7_d.pdb"
+				ProgramDatabaseFile=".\vc70/Debug/Win32HTMLBrowser_vc70_d.pdb"
 				SubSystem="2"
-				ImportLibrary=".\vc7/Debug/Win32HTMLBrowser_vc7_d.lib"/>
+				ImportLibrary=".\vc70/Debug/Win32HTMLBrowser_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc7/Debug/Win32HTMLBrowser.tlb"/>
+				TypeLibraryName=".\vc70/Debug/Win32HTMLBrowser.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -139,18 +141,12 @@
 			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32HTMLBrowser.cpp">
 			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32HTMLBrowser.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h">
 			</File>
 		</Filter>
 		<Filter

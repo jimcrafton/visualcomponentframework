@@ -1,0 +1,168 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Splitters</title>
+	<para>
+		This tutorial will explain and demonstrate how to easily customize and create
+		container classes that implement your own layout algorithms. We will
+		create two container classes that do this, one which will lay out it's 
+		child controls from left to right, taking up all the vertical space, and evenly
+		dividing the horizontal space. The second container will demonstrate how to simulate
+		a paged layout container, conceptually similar to Java's CardLayout class.
+	</para>
+	<para>
+	When creating a container, we generally only need to implement a single method: the 
+	Container::resizeChildren(). The rest of the methods of the Container interface are 
+	implemented in the AbstractContainer class, which we can derive from to save ourselves
+	some time. When implementing resizeChildren() we may be passed in a Control pointer. 
+	If the control has just been added to the container, it will be passed in to 
+	resizeChildren(), but will not be in the Container's child control list. We need to 
+	test for this and act accordingly. Testing can be done like so:
+	<programlisting>
+<![CDATA[
+virtual void resizeChildren( Control* control ) {
+//rest of code omitted
+bool controlJustAdded = false;
+std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
+controlJustAdded = (found == controls_.end());
+
+}
+]]>
+	</programlisting>
+	The variable controlJustAdded will now indicate whether or not the passed in control 
+	has just been added to the container.
+	</para>
+	<para>
+	For our first container we'll simply layout all the child controls from left to right,
+	dividing the width of the container control equally among them. So, to get started
+	lets look at the class declaration:
+	<programlisting>
+<![CDATA[
+class LeftToRightContainer : public AbstractContainer {
+public:
+  virtual void resizeChildren( Control* control );
+};
+]]>
+	</programlisting>
+	That's it! That's all we need to declare to implement a container. We could have chosen to
+	derive from StandardContainer, but we'll save that for our next container. Next we just need
+	to implement resizeChildren(). It will look like this:
+	<programlisting>
+<![CDATA[
+
+virtual void resizeChildren( Control* control ) {
+	Rect clientBounds = controlContainer_->getClientBounds();
+	
+	if ( clientBounds.isEmpty() ) {
+		return; //nothing to do, so just exit the function
+	}
+	
+	bool controlJustAdded = false;
+	if ( NULL != control ) {
+		std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );		
+		controlJustAdded = (found == controls_.end());
+	}
+	
+	double childCount = AbstractContainer::getChildCount();
+	if ( controlJustAdded ) {
+		childCount = childCount + 1.0;
+	}
+
+	double width = clientBounds.getWidth() / childCount ;
+
+	Enumerator<Control*>* children = AbstractContainer::getChildren();
+	Rect childBounds;
+	double left = clientBounds.left_;
+	while ( children->hasMoreElements() ) {
+		Control* child = children->nextElement();
+		
+		childBounds.setRect( left, clientBounds.top_, left + width, clientBounds.bottom_ );
+		child->setBounds( &childBounds );
+		
+		left += width;
+	}
+
+	if ( controlJustAdded ) {
+		childBounds.setRect( left, clientBounds.top_, left + width, clientBounds.bottom_ );
+		control->setBounds( &childBounds );
+	}
+}
+
+]]>
+	</programlisting>
+	</para>
+	<para>
+	The first thing we do is get the client bounds, by calling the controlContainer_->getClientBounds().
+	The controlContainer_ is a member variable that points to the containers current Control that
+	it is attached to. The Rect that is returned takes into account any border that 
+	may be part of the control. If the rect is empty, we exit method immediately, as there is no
+	need for any forther processing. 
+	</para>
+	<para>
+	Next we determine if the control passed in is being added to the container for the first
+	time. As we discussed before, we search through the controls_ vector using std::find. Next 
+	we determine the width that each control will be assigned. This is calculated by dividing 
+	the number of controls currently in the container by the width of client bounds (the clientBounds
+	Rect variable). We store the count of controls ins childCount, and if the control that 
+	was passed in has just been added we increment the childCount by one. The childCount variable 
+	is incremented because the newlky added control has not yet been added to the controls_
+	vector (the framework will take care of this later).
+	</para>
+	<para>
+	Finally, we iterate through the list of child controls by calling getChildren() to get the 
+	enumerator, and then adjusting each child control accordingly.
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:55  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.1  2003/12/02 05:50:04  ddiego
+added preliminary support for teh Action class. This will make it easier
+to hook up complimentary UI elements (such as a "copy" menu item, and a
+"copy" toolbar item) and have tehm respond to update and actions via a
+single source.
+Got rid of the old toolbar button and separator class. Merged in Marcellos
+new fixes for the Container and Splitter classes.
+Some misc fixes to the Toolbar, groups and checks now work correctly.
+
+Revision 1.1.2.2  2003/10/22 21:21:57  ddiego
+added some more docs to advanced alignment
+
+Revision 1.1.2.1  2003/10/22 03:56:44  ddiego
+added two more tutorials for advanced alignment and another for anchors
+also finished off the alignment tutorial. yay :)
+
+-->
+
+

@@ -1,0 +1,153 @@
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+
+
+<section><title>A Hello World application</title>
+<para>
+This article will explain the very basics of creating a Hello World application with the 
+Visual Component Framework. This simple application will demonstrate creating a 
+VCF::Application instance and displaying a main window, with "Hello World" in 
+it's caption bar.
+</para>
+<para>
+The simplest full VCF application, in other words, one that uses the Application class 
+as it's starting point, as opposed to just using certain pieces of it, needs only a 
+few lines of code in a standard C main function, like the following:
+<programlisting>
+<![CDATA[
+int main(int argc, char *argv[])
+{
+	Application app( argc, argv );
+
+	Application::main();
+}
+]]>
+</programlisting>
+</para>
+<para>
+Those two lines of code are all that is need to create your app instance on the stack, 
+and then start the app running, by calling the static Application::main() function. 
+If you are using the VCF Application class features, like we are here, then there can 
+only be one instance of a Application derived class for the running process, much like 
+the restrictions that apply to MFC's CWinApp.  Once you have this instance it is 
+neccessary to start the app up by calling Application::main() function, passing 
+in the number of arguments and the argument array of strings. This is processed 
+internally and calls the applications initRunningApplication() and then the run loop, 
+which starts the message pump up. From there on in you are processing windows messages. 
+</para>
+
+<para>
+Well this by itself is not that interesting, so lets add a window.
+<programlisting>
+<![CDATA[
+int main(int argc, char *argv[])
+{
+	Application app( argc, argv );
+	
+	Window* mainWindow = new Window();
+
+	Application::main();
+}
+]]>
+</programlisting>
+This creates our new window on the heap. This is the preferred way of creating most 
+objects in the VCF, with a few exceptions. Next we need to set the application's 
+main window. In doing this the application is able to register itself as a listener to 
+the windows window events (via a call to addWindowListener()), and will be notified 
+when the window closes itself. At this point the application will in turn terminate 
+it self cleanly and shut down. Failure to do this will prevent the Application of being 
+notified to close correctly, and it will not be able to free up the heap based memory 
+for the Window object.
+
+<programlisting>
+<![CDATA[
+int main(int argc, char *argv[])
+{
+	Application app;
+	
+	Window* mainWindow = new Window();
+	
+	app.setMainWindow( mainWindow );
+
+	Application::appMain( argc, argv );
+}
+]]>
+</programlisting>
+</para>
+<para>
+Well this is still pretty boring so lets set the windows caption and then display it.
+<programlisting>
+<![CDATA[
+
+int main(int argc, char *argv[])
+{
+	Application app;
+	
+	Window* mainWindow = new Window();
+	
+	app.setMainWindow( mainWindow );
+
+	mainWindow->setCaption( "Hello World" );
+
+	mainWindow->show();
+
+	Application::appMain( argc, argv );
+}
+]]>
+</programlisting>
+
+</para>
+<para>
+And there you have it: a window will magically display itself, with a caption that 
+reads "Hello World". The caption is set via the setCaption() method, and the windows 
+is made visible via the show() method. Alternatively, we could have made the window 
+visible by calling the setVisible() with a true bool value.
+</para>
+<para>
+Most of this was pretty easy, with the only odd thing the missing WinMain(). 
+This is circumvented by setting some custom linker settings: in the output section 
+of the project setting's Link tab, you specify mainCRTStartup as the Entry-point 
+symbol, and make sure your /subsystem flag is set to /subsystem:windows 
+not /subsystem:console. With this set you can go about your merry way and still 
+use main() just like normal.
+</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:54  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.1  2003/09/24 19:42:48  ddiego
+added docbook documentation for this example.
+
+-->

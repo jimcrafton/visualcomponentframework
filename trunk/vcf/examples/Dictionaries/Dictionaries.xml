@@ -1,0 +1,132 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Dictionaries</title>
+	<formalpara><title>Introduction</title>
+	The Dictionary class is a simple class intended to be used
+	when you have a collection of name value pairs. It is based on
+	the STL std::map class, and you can use it just as you would a 
+	std::map&lt;String,VariantData&gt; instance. Because the class
+	uses the VariantData type for it's value type, you can easily store
+	just about anything in it. One use might be for passing a collection 
+	of named arguments to a plugin, where you may not know the arguments
+	at compile time. Another usage might be for storing and/or accessing 
+	application preferences.
+	</formalpara>
+	<para>
+	You can add elements to a dictionary quite easily, for example:
+	<programlisting>
+<![CDATA[
+Dictionary dict;
+dict["size"] = 200;
+dict["Name"] = "Bob";
+]]>	
+	</programlisting>
+	This adds two elements, one named "size", with a value of 200, and another
+	named "Name" with a string value of "Bob".
+	</para>
+	<para>
+	Removing individual elements or clearing the dictionary is also easy, for
+	example, to remove the element named "Name":
+	<programlisting>
+<![CDATA[
+dict.remove( "Name" );
+]]>	
+	</programlisting>
+	To remove all the elements of the dictionary use the Dictionary::clear() method:
+	<programlisting>
+<![CDATA[
+dict.clear();
+]]>	
+	</programlisting>	
+	</para>
+	<para>
+	To access an element, use the [] operator, just like for a std::map class. Since the
+	value type is a VariantData class, you can either retrieve the value as a VarianData
+	instance, or into one of the primitive types.
+	<programlisting>
+<![CDATA[
+VariantData name = dict["Name"];
+int size = dict["size"];
+]]>	
+	</programlisting>
+	</para>
+	<para>
+	You can easily save or load a dictionary to (or from) a stream. Since the Dictionary
+	class implements the Persistable interface, you can simply pass a pointer of the
+	dictionary intance to a stream, and you're done! For example, lets save the 
+	dictionary to a file stream:
+	<programlisting>
+<![CDATA[
+FileOutputStream fs( "dict.file.txt" );
+fs << dict;
+]]>	
+	</programlisting>
+	Loading the dictionary from a file is just as easy:
+	<programlisting>
+<![CDATA[
+FileInputStream fs( "dict.file.txt" );
+fs >> dict;
+]]>	
+	</programlisting>
+	</para>
+	<para>
+	Iterating the elements is identical to doing so with an std::map. Lets
+	print out all the elements in a dictionary.
+	<programlisting>
+<![CDATA[
+Dictionary::iterator it = dict.begin();		
+while ( it != dict.end() ) {
+	Dictionary::pair& element = *it;
+
+	System::println( "dict[\"%s\"] = %s", element.first.c_str(), element.second.toString().c_str() );
+	
+	it ++;
+}
+]]>	
+	</programlisting>
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:53  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.2  2003/11/24 05:05:23  ddiego
+added some more docs, and some minor changes to the Win32ScrollPeer
+
+Revision 1.1.2.1  2003/11/23 15:10:05  ddiego
+added dictionaries tutorial
+
+-->
+
+

@@ -23,6 +23,8 @@ CFG=FoundationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -36,18 +38,18 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/ReleaseS\obj"
+# PROP Intermediate_Dir "vc70/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /Fo"vc7/ReleaseS\obj/" /Yu"FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /WX /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /Fo"vc70/ReleaseS\obj/" /Yu"FoundationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\lib\FoundationKit_vc7_s.bsc"
+# ADD BSC32 /nologo /o"..\..\..\lib\FoundationKit_vc70_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc7_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
 
@@ -59,18 +61,18 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/DebugS\obj"
+# PROP Intermediate_Dir "vc70/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /FR"vc7/DebugS\obj/" /Fo"vc7/DebugS\obj/" /FR /Yu"FoundationKit.h" /Fd"..\..\..\lib/FoundationKit_vc7_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /FR"vc70/DebugS\obj/" /Fo"vc70/DebugS\obj/" /FR /Yu"FoundationKit.h" /Fd"..\..\..\lib/FoundationKit_vc70_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\lib\FoundationKit_vc7_sd.bsc"
+# ADD BSC32 /nologo /o"..\..\..\lib\FoundationKit_vc70_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc7_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_sd.lib"
 
 !ENDIF 
 
@@ -204,6 +206,10 @@ SOURCE=..\..\..\include\core\Method.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\VariantData.cpp
 # End Source File
 # Begin Source File
 
@@ -711,12 +717,18 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
 
+# ADD CPP /Yc"FoundationKit.h"
+
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
 
 # ADD CPP /Yc"FoundationKit.h"
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\FoundationKitRTTI.inl
 # End Source File
 # Begin Source File
 

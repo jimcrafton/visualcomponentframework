@@ -1,0 +1,55 @@
+ISS="D:/Program Files/Inno Setup 4/ISCC.exe"
+
+VCF_VERSION=`cat ../VERSION`
+VCF_VERSION_STAGE=`cat ../VERSION_STAGE`
+FULL_VCF_VERSION="$VCF_VERSION $VCF_VERSION_STAGE"
+FULL_VCF_DOT_VERSION="$VCF_VERSION-$VCF_VERSION_STAGE"
+
+INSTALL_FILE_LISTING=../installers/win32/vcfSrcFiles.iss
+INSTALL_FILE=../installers/win32/VCFFullInstaller.iss
+
+
+
+./installFiles
+
+
+
+echo Starting build of all binaries and installation executable for 
+echo Visual Component Framework $FULL_VCF_DOT_VERSION
+
+
+msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Debug" /REBUILD /OUT vcfAll-debug.stat.log
+cat vcfAll-debug.stat.log
+
+msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAll - Win32 Release" /REBUILD /OUT vcfAll-release.stat.log
+cat vcfAll-release.stat.log
+
+msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Debug" /REBUILD /OUT vcfAll-debug-static.stat.log
+cat vcfAll-debug-static.stat.log
+
+msdev ../build/vc60/vcfAll.dsw /MAKE "vcfAllStaticLibs - Win32 Release" /REBUILD /OUT vcfAll-release-static.stat.log
+cat vcfAll-release-static.stat.log
+
+echo done building binaries, preparing to build installer
+
+
+
+cp $INSTALL_FILE $INSTALL_FILE.bak
+echo "backing up original installer file (backed up to $INSTALL_FILE.bak)"
+
+sed "s?VCF-VERSION?$VCF_VERSION?g" $INSTALL_FILE > tmp
+
+echo "applying modifications to installer file to update to correct version ($VCF_VERSION)"
+
+mv tmp $INSTALL_FILE
+
+sed "s?VCF-LONG-VERSION?$FULL_VCF_VERSION?g" $INSTALL_FILE > tmp
+
+mv tmp $INSTALL_FILE
+
+
+echo compiling installer script
+"$ISS" $INSTALL_FILE
+
+echo restoring installer file from backup file
+cp $INSTALL_FILE.bak $INSTALL_FILE

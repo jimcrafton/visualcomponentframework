@@ -36,18 +36,18 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/ReleaseS\obj"
+# PROP Intermediate_Dir "vc70/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /Fo"vc7/ReleaseS\obj/" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /Fo"vc70/ReleaseS\obj/" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\lib\Win32HTMLBrowser_vc7_s.bsc"
+# ADD BSC32 /nologo /o"..\..\..\lib\Win32HTMLBrowser_vc70_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\Win32HTMLBrowser_vc7_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\Win32HTMLBrowser_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "Win32HTMLBrowser_StaticLib - Win32 Debug"
 
@@ -59,18 +59,18 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/DebugS\obj"
+# PROP Intermediate_Dir "vc70/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR"vc7/DebugS\obj/" /Fo"vc7/DebugS\obj/" /FR /YX /Fd"..\..\..\lib/Win32HTMLBrowser_vc7_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR"vc70/DebugS\obj/" /Fo"vc70/DebugS\obj/" /FR /YX /Fd"..\..\..\lib/Win32HTMLBrowser_vc70_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\lib\Win32HTMLBrowser_vc7_sd.bsc"
+# ADD BSC32 /nologo /o"..\..\..\lib\Win32HTMLBrowser_vc70_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\lib\Win32HTMLBrowser_vc7_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\Win32HTMLBrowser_vc70_sd.lib"
 
 !ENDIF 
 
@@ -85,10 +85,6 @@ LIB32=link.exe -lib
 
 SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowser.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -96,10 +92,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowser.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h
 # End Source File
 # End Group
 # End Target

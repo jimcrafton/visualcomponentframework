@@ -3,6 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="vcfAllStaticLibs"
+	SccProjectName=""
+	SccLocalPath=""
 	Keyword="MakeFileProj">
 	<Platforms>
 		<Platform
@@ -11,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc7/Debug"
-			IntermediateDirectory=".\vc7/Debug"
+			OutputDirectory=".\vc70/Debug"
+			IntermediateDirectory=".\vc70/Debug"
 			ConfigurationType="10"
 			UseOfMFC="0">
 			<Tool
@@ -26,8 +28,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc7/Release"
-			IntermediateDirectory=".\vc7/Release"
+			OutputDirectory=".\vc70/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="10"
 			UseOfMFC="0">
 			<Tool

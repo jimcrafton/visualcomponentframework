@@ -1,0 +1,67 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Copy And Paste and the VCF Clipboard</title>
+	<para>
+		The VCF allows you to make use of the clipboard services provided by the underlying
+		OS and/or windowing system. This is done through 3 main objects that interact with
+		each otehr during the copy and paste process. The first is the Clipboard itself,
+		that serves as an interface to the underlying native clipboard. The Clipboard works 
+		with data that is wrapped in a DataObject, which can hold multiple data types. 
+		Finally, you stream data to and from a DataObject via concrete input or output streams.
+	</para>
+	<para>
+	In our example we'll create a window with two buttons, and attach an event handler to each,
+	one that will handle coppying the data to the clipboard, and another that will take 
+	data from the clipboard and paste in into an edit control.
+	</para>
+	
+	<para>
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:53  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.2  2003/10/13 04:05:18  ddiego
+updated the scrolling example - this now demonstrates how to use the
+ScrollManager component and how to customize the scrollbars -
+even shows how to control where they go and how you have a little
+control on left (or right side) of the scroll bar (like Word does)
+
+Revision 1.1.2.1  2003/09/27 23:03:55  ddiego
+added tutorial docbook files
+
+-->
+
+

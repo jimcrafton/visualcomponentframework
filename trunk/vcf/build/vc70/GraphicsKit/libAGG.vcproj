@@ -12,8 +12,8 @@
 	<Configurations>
 		<Configuration
 			Name="GTK Debug|Win32"
-			OutputDirectory=".\vc7/libAGG___Win32_GTK_Debug"
-			IntermediateDirectory=".\vc7/libAGG___Win32_GTK_Debug"
+			OutputDirectory=".\vc70/libAGG___Win32_GTK_Debug"
+			IntermediateDirectory=".\vc70/libAGG___Win32_GTK_Debug"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -27,10 +27,10 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/libAGG___Win32_GTK_Debug/libAGG.pch"
-				AssemblerListingLocation=".\vc7/libAGG___Win32_GTK_Debug/"
-				ObjectFile="vc7/libAGG___Win32_GTK_Debug/"
-				ProgramDataBaseFileName="..\..\..\lib/libAGG_vc7_sd.pdb"
+				PrecompiledHeaderFile=".\vc70/libAGG___Win32_GTK_Debug/libAGG.pch"
+				AssemblerListingLocation=".\vc70/libAGG___Win32_GTK_Debug/"
+				ObjectFile="vc70/libAGG___Win32_GTK_Debug/"
+				ProgramDataBaseFileName="..\..\..\lib/libAGG_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -40,7 +40,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\libAGG_vc7_sd.lib"
+				OutputFile="..\..\..\lib\libAGG_vc70_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -60,7 +60,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/Debug"
+			IntermediateDirectory=".\vc70/Debug"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -74,10 +74,10 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/Debug/libAGG.pch"
-				AssemblerListingLocation=".\vc7/Debug/"
-				ObjectFile="vc7/Debug/"
-				ProgramDataBaseFileName="..\..\..\lib/libAGG_vc7_sd.pdb"
+				PrecompiledHeaderFile=".\vc70/Debug/libAGG.pch"
+				AssemblerListingLocation=".\vc70/Debug/"
+				ObjectFile="vc70/Debug/"
+				ProgramDataBaseFileName="..\..\..\lib/libAGG_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -87,7 +87,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\libAGG_vc7_sd.lib"
+				OutputFile="..\..\..\lib\libAGG_vc70_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -107,7 +107,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -122,10 +122,10 @@
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/Release/libAGG.pch"
-				AssemblerListingLocation=".\vc7/Release/"
-				ObjectFile="vc7/Release/"
-				ProgramDataBaseFileName=".\vc7/Release/"
+				PrecompiledHeaderFile=".\vc70/Release/libAGG.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile="vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -133,7 +133,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\libAGG_vc7_s.lib"
+				OutputFile="..\..\..\lib\libAGG_vc70_s.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>

@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MVCAppWizard"=".\MVCAppWizard\MVCAppWizard.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "VCFConsoleWiz"=".\VCFConsoleWiz\VCFConsoleWiz.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -89,6 +101,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name VCFLibraryAppWizard
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MVCAppWizard
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -116,5 +131,4 @@ Package=<3>
 }}}
 
 ###############################################################################
-
 

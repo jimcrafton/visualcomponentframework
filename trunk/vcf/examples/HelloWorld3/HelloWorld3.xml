@@ -1,0 +1,120 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>HelloWorld3</title>
+	<para>
+	The purpose of this example is to demonstrate creating not only 
+	our own custom application class, but our first case of deriving 
+	a new window class. As before, we'll build on what we learned in the
+	HelloWorld and HelloWorld2 examples.
+	</para>
+	<para>
+	We'll create another class in this example, this time deriving from VCF::Window.
+	The only methods we'll implement are the constructor, and we'll put the code that
+	was previously in the application's initRunningApplication() method, and move it
+	to our window's constructor. So let's create a window class:
+	<programlisting>
+<![CDATA[
+class HelloWorld3Window : public VCF::Window {
+public:
+	HelloWorld3Window() {
+	}
+};
+]]>
+</programlisting>	
+	</para>
+	<para>
+	Next we'll start setting various properties of the window. First let's change the window's
+	title, or caption. To do this we just have to call the VCF::Window::setCaption() method
+	and pass in a string.
+	<programlisting>
+<![CDATA[
+class HelloWorld3Window : public VCF::Window {
+public:
+	HelloWorld3Window() {
+	  //get the current running application
+	  Application* runningApp = Application::getRunningInstance();
+	  
+	  //get the app's name
+	  String appname = runningApp->getName();
+	  
+	  //set the caption!
+	  setCaption( appname + " - Hello World!" );
+	}
+};
+]]>
+	</programlisting>
+	</para>
+	<para>
+	Now we'll set the bounds, just like we did in the HelloWorld2 example.
+	<programlisting>
+<![CDATA[
+class HelloWorld3Window : public VCF::Window {
+public:
+	HelloWorld3Window() {
+	  //code omitted for clarity
+	  Rect bounds( 100.0, 100.0, 500.0, 500.0 );
+	  setBounds( &bounds );
+	}
+};
+]]>
+</programlisting>
+	</para>
+	<para>
+	Finally we'll show the window. Note that this time we are going to use the setVisible() method
+	of the Window class, as opposed to the show() method - for our purposes they perform the 
+	same functionality.
+	<programlisting>
+<![CDATA[
+class HelloWorld3Window : public VCF::Window {
+public:
+	HelloWorld3Window() {
+	  //code omitted for clarity
+	  setVisible( true );
+	}
+};
+]]>
+	</programlisting>
+	</para>
+</section>
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:54  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.3  2003/09/29 03:48:03  ddiego
+added the app iconms ex
+
+
+Revision 1.1.2.1  2003/09/27 23:04:20  ddiego
+added tutorial docbook files
+
+-->

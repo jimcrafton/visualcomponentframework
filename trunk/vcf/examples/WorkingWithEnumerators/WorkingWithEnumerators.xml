@@ -1,0 +1,175 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Working With Enumerators</title>
+	<para>
+	This example will exaplain how to use the 
+	VCF::Enumerator class. An Enumerator is simply a virtual class 
+	that wraps around a collection and provides a standard interface
+	for iterating through the collection, without worrying 
+	about the specifics of the collection type.
+	</para>
+	<para>
+	For example you might have a collection class based on a 
+	std::vector. If you exposed the collection type directly, then
+	any changes you made to would have to be reflected in all cases 
+	where you iterate through the collection. However, if you 
+	use an Enumerator, this wraps the collection type, and you can then
+	transparently change the collection type, say from a 
+	std::vector, to a std::list, and any code using the Enumerator
+	will remain unaffected.
+	</para>
+	<para>
+	An Enumerator has 3 main methods. The first method, Enumerator::hasMoreElements()
+	returns true or false, indicating whether there are any more elements left
+	to enumerate. The next method, Enumerator::nextElement() allows you to move 
+	to the element of the Enumerator. If the Enumerator wraps something like a
+	std::vector, then this is equivalent to calling the ++ operator on the 
+	std::vector::iterator. Finally, the Enumerator can be rewound, or set back to the
+	beginning by calling Enumerator::reset().
+	</para>
+	<para>
+	To actually enumerate items it's quite easy. To demonstrate this, lets get 
+	an enumerator of Class objects from the ClassRegistry, like so:
+	<programlisting>
+<![CDATA[
+Enumerator<Class*>* classes = ClassRegistry::getClasses();
+]]>	
+	</programlisting>
+	The enumerator takes only a single template argument: the type of element
+	in the enumeration. Note that the enumerator is returned as a pointer - this 
+	is always the case in the VCF, as the Enumerator class is itself abstract.
+	Now to enumerator, you simply use the hasMoreElements() and nextElement()
+	methods in a while loop:
+	<programlisting>
+<![CDATA[
+while ( classes->hasMoreElements() ) {
+	Class* clazz = classes->nextElement();
+}
+]]>	
+	</programlisting>
+	That's it. You can now iterate through the collection of classes without caring
+	what the actual collection implementation is.
+	</para>
+	<para>
+	You can reset the enumerator when you need to loop through it again. For example,
+	lets say you looped through a collection, looking for something, and then needed 
+	to loop through it again. To do this on the same enumerator pointer, you would
+	just call the reset() method, like so:
+	<programlisting>
+<![CDATA[
+while ( classes->hasMoreElements() ) {
+	Class* clazz = classes->nextElement();
+	//do something 
+}
+
+//reset the enumerator back to the beginnin
+classes->reset();
+
+while ( classes->hasMoreElements() ) {
+	Class* clazz = classes->nextElement();
+	//do something else
+}
+]]>	
+	</programlisting>
+	</para>
+	<para>
+	You may find that you want to use enumerators with your own classes or code. Doing
+	so is quite easy. For example, if you wanted to wrap a std::vector&lt;String&gt; instance
+	you can use the EnumeratorContainer&lt;&gt; template class. This takes two template
+	arguments, the first is the type of container or collection class, and 
+	the second is the element type.
+	<programlisting>
+<![CDATA[
+std::vector<String> strings;
+
+//string container
+EnumeratorContainer<std::vector<String>,String> stringContainer;
+]]>	
+	</programlisting>
+	The EnumeratorContainer class needs to be initialized once. To do so, you 
+	need to call the initContainer() method, and pass in a reference to the actual
+	collection instance.
+	<programlisting>
+<![CDATA[
+stringContainer.initContainer( strings );
+]]>	
+	</programlisting>
+	At this, point you can now add or remove elements to the collection:
+	<programlisting>
+<![CDATA[
+strings.push_back( "1" );
+strings.push_back( "2" );
+strings.push_back( "3" );
+strings.push_back( "4" );
+]]>	
+	</programlisting>
+	Now to enumerate the collection, we simply call the getEnumerator() method of the 
+	EnumeratorContainer instance.
+	<programlisting>
+<![CDATA[
+Enumerator<String>* stringEnum = stringContainer.getEnumerator();
+]]>	
+	</programlisting>
+	We now have a pointer to an Enumerator, which we can use just the same as 
+	demonstrated earlier.
+	</para>
+	<para>
+	Note that an Enumerator that is a wrapper to one of the STL's collection classes
+	has the same limits as the underlying collection class. For example, if you have 
+	an Enumerator that wraps a vector&lt;String&gt;, and during the course of 
+	enumerating through it, you remove an element from the vector, then the enumeration
+	will become invalid, just like an iterator to the vector would be invalid.
+	In addition, there is no threading support built in beyond what the STL provides,
+	so anything else needs to added by the application developer, at least at this
+	point in time.
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:56  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.3  2003/12/01 03:44:13  ddiego
+added some fixes to the Win32Toolbar impl. A few minor changes to the
+toolbar example (which also got added). Some minor changes to docs
+as well.
+
+Revision 1.1.2.2  2003/11/24 05:05:23  ddiego
+added some more docs, and some minor changes to the Win32ScrollPeer
+
+Revision 1.1.2.1  2003/09/27 23:04:21  ddiego
+added tutorial docbook files
+
+-->
+
+

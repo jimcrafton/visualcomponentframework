@@ -15,6 +15,9 @@ using namespace VCF;
 
 class SketchIt : public SDIDocumentBasedApplication {
 public:
+	SketchIt( int argc, char** argv ) : SDIDocumentBasedApplication(argc, argv ) {
+
+	}
 
 	virtual void terminateRunningApplication() {
 		SDIDocumentBasedApplication::terminateRunningApplication();
@@ -215,7 +218,7 @@ public:
 		doc->getWindow()->setUsingRenderBuffer( !doc->getWindow()->isUsingRenderBuffer() );	
 		GraphicsContext* ctx = doc->getWindow()->getContext();
 		if ( doc->getWindow()->isUsingRenderBuffer() ) {
-			ctx->setDrawingArea( *doc->getWindow()->getClientBounds() );
+			ctx->setDrawingArea( doc->getWindow()->getClientBounds() );
 		}
 
 		doc->getWindow()->repaint();
@@ -231,9 +234,9 @@ public:
 
 int main(int argc, char *argv[])
 {
-	SketchIt app;
+	SketchIt app( argc, argv );
 
-	Application::main( argc, argv );
+	Application::main();
 	
 	return 0;
 }
