@@ -158,6 +158,14 @@ SOURCE=..\..\..\src\IO\TextOutputStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\Thread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\events\ThreadEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
 # End Source File
 # Begin Source File
@@ -326,6 +334,10 @@ SOURCE=..\..\..\include\core\Rect.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Runnable.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Size.h
 # End Source File
 # Begin Source File
@@ -343,6 +355,14 @@ SOURCE=..\..\..\include\io\TextInputStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\TextOutputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\Thread.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ThreadEvent.h
 # End Source File
 # Begin Source File
 

@@ -210,7 +210,7 @@ SOURCE=..\..\..\src\Events\ControlEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=\vcf\src\graphics\\ControlGraphicsContext.cpp
+SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
 # End Source File
 # Begin Source File
 
