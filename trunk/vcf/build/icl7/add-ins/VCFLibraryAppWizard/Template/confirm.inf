@@ -1,0 +1,12 @@
+The VCF LibraryApplication Wizard has created the following files for you:
+	$$root$$.cpp
+	$$root$$.dsp
+	$$root$$.dsw
+
+	$$root$$.cpp - this is you main program and contains the initialization
+	code for properly intializing your library application.
+
+	$$root$$.dsp has the correct settings for linking to the VCF FoundationKit,
+	GraphicsKit, and ApplicationKit libraries.
+
+
