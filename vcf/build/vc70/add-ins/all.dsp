@@ -23,6 +23,8 @@ CFG=all - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 MTL=midl.exe
 
 !IF  "$(CFG)" == "all - Win32 Release"
@@ -34,8 +36,8 @@ MTL=midl.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc7/Release"
-# PROP Intermediate_Dir "vc7/Release"
+# PROP Output_Dir "vc70/Release"
+# PROP Intermediate_Dir "vc70/Release"
 # PROP Target_Dir ""
 
 !ELSEIF  "$(CFG)" == "all - Win32 Debug"
@@ -47,8 +49,8 @@ MTL=midl.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc7/Debug"
-# PROP Intermediate_Dir "vc7/Debug"
+# PROP Output_Dir "vc70/Debug"
+# PROP Intermediate_Dir "vc70/Debug"
 # PROP Target_Dir ""
 
 !ENDIF 
@@ -59,5 +61,3 @@ MTL=midl.exe
 # Name "all - Win32 Debug"
 # End Target
 # End Project
-
-

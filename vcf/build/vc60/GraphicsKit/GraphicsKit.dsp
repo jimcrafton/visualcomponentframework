@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -162,15 +162,11 @@ SOURCE=..\..\..\src\graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\graphics\GraphicsKit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
 # ADD CPP /Yc"GraphicsKit.h"
+# End Source File
+# Begin Source File
 
-!ENDIF 
-
+SOURCE=..\..\..\include\GraphicsKitRTTI.inl
 # End Source File
 # Begin Source File
 
@@ -283,6 +279,10 @@ SOURCE=..\..\..\include\graphics\GraphicsContext.h
 # Begin Source File
 
 SOURCE=..\..\..\include\GraphicsKit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\GraphicsKitSelectLib.h
 # End Source File
 # Begin Source File
 

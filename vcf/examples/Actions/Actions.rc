@@ -1,0 +1,13 @@
+//Actions.rc
+wnd			BITMAP		"wnd.bmp"
+hammer		BITMAP		"hammer.bmp"
+new			BITMAP		"new.bmp"
+open		BITMAP		"open.bmp"
+paste		BITMAP		"paste.bmp"
+save		BITMAP		"save.bmp"
+saveall		BITMAP		"saveall.bmp"
+side		BITMAP		"side.bmp"
+undo		BITMAP		"undo.bmp"
+copy		BITMAP		"copy.bmp"
+
+

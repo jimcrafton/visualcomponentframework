@@ -9,7 +9,7 @@ Includes=$(VCF_INCLUDE);..\..\..\include
 Linker=-lRpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 --implib ../../../lib/libFoundationKit_mingw_d.a
 Libs=E:\code\vcfdev\dev\vcf\lib
 Resources=
-UnitCount=149
+UnitCount=147
 ObjFiles=
 PrivateResource=
 ResourceIncludes=
@@ -29,6 +29,10 @@ FileName=..\..\..\include\exceptions\BasicException.h
 Open=0
 Folder=
 Top=0
+CursorCol=2
+CursorRow=52
+TopLine=32
+LeftChar=1
 
 [Unit2]
 FileName=..\..\..\include\io\BasicFileError.h
@@ -90,8 +94,8 @@ Open=0
 Folder=
 Top=0
 CursorCol=1
-CursorRow=77
-TopLine=77
+CursorRow=1
+TopLine=1
 LeftChar=1
 
 [Unit12]
@@ -301,13 +305,13 @@ Folder=
 Top=0
 
 [Unit45]
-FileName=..\..\..\include\events\NotifyListener.h
+FileName=..\..\..\include\core\Object.h
 Open=0
 Folder=
 Top=0
 
 [Unit46]
-FileName=..\..\..\include\core\Object.h
+FileName=..\..\..\include\core\ObjectWithEvents.h
 Open=0
 Folder=
 Top=0
@@ -317,37 +321,37 @@ TopLine=261
 LeftChar=1
 
 [Unit47]
-FileName=..\..\..\include\core\ObjectWithEvents.h
-Open=0
-Folder=
-Top=0
-
-[Unit48]
 FileName=..\..\..\include\exceptions\OutOfBoundsException.h
 Open=0
 Folder=
 Top=0
 
-[Unit49]
+[Unit48]
 FileName=..\..\..\include\events\OutputReadyEvent.h
 Open=0
 Folder=
 Top=0
 
-[Unit50]
+[Unit49]
 FileName=..\..\..\include\utils\Parser.h
 Open=0
 Folder=
 Top=0
 
-[Unit51]
+[Unit50]
 FileName=..\..\..\include\io\Persistable.h
 Open=0
 Folder=
 Top=0
 
-[Unit52]
+[Unit51]
 FileName=..\..\..\include\core\Point.h
+Open=0
+Folder=
+Top=0
+
+[Unit52]
+FileName=..\..\..\include\exceptions\ProcessException.h
 Open=0
 Folder=
 Top=0
@@ -357,31 +361,31 @@ TopLine=43
 LeftChar=1
 
 [Unit53]
-FileName=..\..\..\include\exceptions\ProcessException.h
-Open=0
-Folder=
-Top=0
-
-[Unit54]
 FileName=..\..\..\include\implementer\ProcessIORedirectionPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit55]
+[Unit54]
 FileName=..\..\..\include\implementer\ProcessPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit56]
+[Unit55]
 FileName=..\..\..\include\utils\ProcessWithRedirectedIO.h
 Open=0
 Folder=
 Top=0
 
-[Unit57]
+[Unit56]
 FileName=..\..\..\include\core\Property.h
+Open=0
+Folder=
+Top=0
+
+[Unit57]
+FileName=..\..\..\include\events\PropertyChangeEvent.h
 Open=0
 Folder=
 Top=0
@@ -391,241 +395,241 @@ TopLine=842
 LeftChar=1
 
 [Unit58]
-FileName=..\..\..\include\events\PropertyChangeEvent.h
-Open=0
-Folder=
-Top=0
-
-[Unit59]
 FileName=..\..\..\include\exceptions\PropertyChangeException.h
 Open=0
 Folder=
 Top=0
 
-[Unit60]
-FileName=..\..\..\include\events\PropertyListener.h
-Open=0
-Folder=
-Top=0
-
-[Unit61]
+[Unit59]
 FileName=..\..\..\include\core\Rect.h
 Open=0
 Folder=
 Top=0
 
-[Unit62]
+[Unit60]
 FileName=..\..\..\include\utils\Registry.h
 Open=0
 Folder=
 Top=0
 
-[Unit63]
+[Unit61]
 FileName=..\..\..\include\implementer\RegistryPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit64]
+[Unit62]
 FileName=..\..\..\include\utils\Runnable.h
 Open=0
 Folder=
 Top=0
 
-[Unit65]
+[Unit63]
 FileName=..\..\..\include\exceptions\RuntimeException.h
 Open=0
 Folder=
 Top=0
 
-[Unit66]
+[Unit64]
 FileName=..\..\..\include\utils\Semaphore.h
 Open=0
 Folder=
 Top=0
 
-[Unit67]
+[Unit65]
 FileName=..\..\..\include\utils\SemaphorePeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit68]
+[Unit66]
 FileName=..\..\..\include\core\Size.h
 Open=0
 Folder=
 Top=0
 
-[Unit69]
+[Unit67]
 FileName=..\..\..\include\io\Stream.h
 Open=0
 Folder=
 Top=0
 
-[Unit70]
+[Unit68]
 FileName=..\..\..\include\utils\StringUtils.h
 Open=0
 Folder=
 Top=0
 
-[Unit71]
+[Unit69]
 FileName=..\..\..\include\utils\SynchObject.h
 Open=0
 Folder=
 Top=0
 
-[Unit72]
+[Unit70]
 FileName=..\..\..\include\utils\System.h
 Open=0
 Folder=
 Top=0
 
-[Unit73]
+[Unit71]
 FileName=..\..\..\include\utils\SystemPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit74]
+[Unit72]
 FileName=..\..\..\include\utils\SystemToolkit.h
 Open=0
 Folder=
 Top=0
 
-[Unit75]
+[Unit73]
 FileName=..\..\..\include\io\TextInputStream.h
 Open=0
 Folder=
 Top=0
 
-[Unit76]
+[Unit74]
 FileName=..\..\..\include\io\TextOutputStream.h
 Open=0
 Folder=
 Top=0
 
-[Unit77]
+[Unit75]
 FileName=..\..\..\include\utils\Thread.h
 Open=0
 Folder=
 Top=0
 
-[Unit78]
+[Unit76]
 FileName=..\..\..\include\events\ThreadEvent.h
 Open=0
 Folder=
 Top=0
 
-[Unit79]
+[Unit77]
 FileName=..\..\..\include\implementer\ThreadPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit80]
+[Unit78]
 FileName=..\..\..\include\exceptions\TypeCastException.h
 Open=0
 Folder=
 Top=0
 
-[Unit81]
+[Unit79]
 FileName=..\..\..\include\io\VariantDataStream.h
 Open=0
 Folder=
 Top=0
 
-[Unit82]
+[Unit80]
 FileName=..\..\..\include\core\VCF.h
 Open=0
 Folder=
 Top=0
 
-[Unit83]
+[Unit81]
 FileName=..\..\..\include\utils\VCFChar.h
 Open=0
 Folder=
 Top=0
 
-[Unit84]
+[Unit82]
 FileName=..\..\..\include\core\VCFMath.h
 Open=0
 Folder=
 Top=0
 
-[Unit85]
+[Unit83]
 FileName=..\..\..\include\utils\VCFProcess.h
 Open=0
 Folder=
 Top=0
 
-[Unit86]
+[Unit84]
 FileName=..\..\..\include\utils\VCFString.h
 Open=0
 Folder=
 Top=0
 
-[Unit87]
+[Unit85]
 FileName=..\..\..\include\ImplementerKit\Win32FilePeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit88]
+[Unit86]
 FileName=..\..\..\include\implementerKit\Win32FileStream.h
 Open=0
 Folder=
 Top=0
 
-[Unit89]
+[Unit87]
 FileName=..\..\..\include\implementerkit\Win32LibraryPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit90]
+[Unit88]
 FileName=..\..\..\include\implementerKit\Win32Mutex.h
 Open=0
 Folder=
 Top=0
 
-[Unit91]
+[Unit89]
 FileName=..\..\..\include\implementerKit\Win32ProcessIORedirector.h
 Open=0
 Folder=
 Top=0
 
-[Unit92]
+[Unit90]
 FileName=..\..\..\include\implementerkit\Win32ProcessPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit93]
+[Unit91]
 FileName=..\..\..\include\implementerkit\Win32Registry.h
 Open=0
 Folder=
 Top=0
 
-[Unit94]
+[Unit92]
 FileName=..\..\..\include\implementerKit\Win32SemaphorePeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit95]
+[Unit93]
 FileName=..\..\..\include\implementerKit\Win32SystemPeer.h
 Open=0
 Folder=
 Top=0
 
-[Unit96]
+[Unit94]
 FileName=..\..\..\include\implementerKit\Win32SystemToolkit.h
 Open=0
 Folder=
 Top=0
 
-[Unit97]
+[Unit95]
 FileName=..\..\..\include\implementerKit\Win32Thread.h
+Open=0
+Folder=
+Top=0
+
+[Unit96]
+FileName=..\..\..\include\utils\XMLParser.h
+Open=0
+Folder=
+Top=0
+
+[Unit97]
+FileName=..\..\..\src\Exceptions\BasicException.cpp
 Open=0
 Folder=
 Top=0
@@ -635,7 +639,7 @@ TopLine=83
 LeftChar=1
 
 [Unit98]
-FileName=..\..\..\include\utils\XMLParser.h
+FileName=..\..\..\src\IO\BasicInputStream.cpp
 Open=0
 Folder=
 Top=0
@@ -645,7 +649,7 @@ TopLine=47
 LeftChar=1
 
 [Unit99]
-FileName=..\..\..\src\Exceptions\BasicException.cpp
+FileName=..\..\..\src\IO\BasicOutputStream.cpp
 Open=0
 Folder=
 Top=0
@@ -655,61 +659,61 @@ TopLine=5
 LeftChar=1
 
 [Unit100]
-FileName=..\..\..\src\IO\BasicInputStream.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit101]
-FileName=..\..\..\src\IO\BasicOutputStream.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit102]
 FileName=..\..\..\src\core\Class.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit103]
+[Unit101]
 FileName=..\..\..\src\core\ClassRegistry.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit104]
+[Unit102]
 FileName=..\..\..\src\IO\Directory.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit105]
+[Unit103]
 FileName=..\..\..\src\Utils\ErrorLog.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit106]
+[Unit104]
 FileName=..\..\..\src\Events\Event.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit107]
+[Unit105]
 FileName=..\..\..\src\Events\EventHandler.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit108]
+[Unit106]
 FileName=..\..\..\src\io\File.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit109]
+[Unit107]
 FileName=..\..\..\src\Utils\FilePath.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit108]
+FileName=..\..\..\src\IO\FileStream.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit109]
+FileName=..\..\..\src\IO\FileUtils.cpp
 Open=0
 Folder=
 Top=0
@@ -719,67 +723,67 @@ TopLine=97
 LeftChar=1
 
 [Unit110]
-FileName=..\..\..\src\IO\FileStream.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit111]
-FileName=..\..\..\src\IO\FileUtils.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit112]
 FileName=..\..\..\src\core\FoundationKit.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit113]
+[Unit111]
 FileName=..\..\..\src\core\InterfaceClass.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit114]
+[Unit112]
 FileName=..\..\..\src\utils\Library.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit115]
+[Unit113]
 FileName=..\..\..\src\core\Locales.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit116]
+[Unit114]
 FileName=..\..\..\src\IO\MemoryStream.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit117]
+[Unit115]
 FileName=..\..\..\src\Utils\Mutex.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit118]
+[Unit116]
 FileName=..\..\..\src\core\Object.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit119]
+[Unit117]
 FileName=..\..\..\src\core\ObjectWithEvents.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit120]
+[Unit118]
 FileName=..\..\..\src\Utils\Parser.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit119]
+FileName=..\..\..\src\core\Point.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit120]
+FileName=..\..\..\src\Utils\ProcessWithRedirectedIO.cpp
 Open=0
 Folder=
 Top=0
@@ -789,25 +793,25 @@ TopLine=53
 LeftChar=1
 
 [Unit121]
-FileName=..\..\..\src\core\Point.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit122]
-FileName=..\..\..\src\Utils\ProcessWithRedirectedIO.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit123]
 FileName=..\..\..\src\Events\PropertyChangeEvent.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit124]
+[Unit122]
 FileName=..\..\..\src\core\Rect.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit123]
+FileName=..\..\..\src\Utils\Registry.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit124]
+FileName=..\..\..\src\Utils\Semaphore.cpp
 Open=0
 Folder=
 Top=0
@@ -817,25 +821,25 @@ TopLine=61
 LeftChar=1
 
 [Unit125]
-FileName=..\..\..\src\Utils\Registry.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit126]
-FileName=..\..\..\src\Utils\Semaphore.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit127]
 FileName=..\..\..\src\IO\Stream.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit128]
+[Unit126]
 FileName=..\..\..\src\Utils\StringUtils.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit127]
+FileName=..\..\..\src\Utils\System.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit128]
+FileName=..\..\..\src\utils\SystemToolkit.cpp
 Open=0
 Folder=
 Top=0
@@ -845,7 +849,7 @@ TopLine=245
 LeftChar=1
 
 [Unit129]
-FileName=..\..\..\src\Utils\System.cpp
+FileName=..\..\..\src\IO\TextInputStream.cpp
 Open=0
 Folder=
 Top=0
@@ -855,73 +859,73 @@ TopLine=82
 LeftChar=1
 
 [Unit130]
-FileName=..\..\..\src\utils\SystemToolkit.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit131]
-FileName=..\..\..\src\IO\TextInputStream.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit132]
 FileName=..\..\..\src\IO\TextOutputStream.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit133]
+[Unit131]
 FileName=..\..\..\src\Utils\Thread.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit134]
+[Unit132]
 FileName=..\..\..\src\Events\ThreadEvent.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit135]
+[Unit133]
 FileName=..\..\..\src\core\VCFMath.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit136]
+[Unit134]
 FileName=..\..\..\src\Utils\VCFProcess.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit137]
+[Unit135]
 FileName=..\..\..\src\ImplementerKit\Win32FilePeer.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit138]
+[Unit136]
 FileName=..\..\..\src\ImplementerKit\Win32FileStream.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit139]
+[Unit137]
 FileName=..\..\..\src\implementerkit\Win32LibraryPeer.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit140]
+[Unit138]
 FileName=..\..\..\src\ImplementerKit\Win32Mutex.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit141]
+[Unit139]
 FileName=..\..\..\src\ImplementerKit\Win32Peer.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit140]
+FileName=..\..\..\src\ImplementerKit\Win32ProcessIORedirector.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit141]
+FileName=..\..\..\src\implementerkit\Win32ProcessPeer.cpp
 Open=0
 Folder=
 Top=0
@@ -931,7 +935,7 @@ TopLine=138
 LeftChar=1
 
 [Unit142]
-FileName=..\..\..\src\ImplementerKit\Win32ProcessIORedirector.cpp
+FileName=..\..\..\src\implementerkit\Win32Registry.cpp
 Open=0
 Folder=
 Top=0
@@ -941,7 +945,7 @@ TopLine=218
 LeftChar=1
 
 [Unit143]
-FileName=..\..\..\src\implementerkit\Win32ProcessPeer.cpp
+FileName=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
 Open=0
 Folder=
 Top=0
@@ -951,25 +955,29 @@ TopLine=94
 LeftChar=1
 
 [Unit144]
-FileName=..\..\..\src\implementerkit\Win32Registry.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit145]
-FileName=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
-Open=0
-Folder=
-Top=0
-
-[Unit146]
 FileName=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
 Open=0
 Folder=
 Top=0
 
-[Unit147]
+[Unit145]
 FileName=..\..\..\src\ImplementerKit\Win32SystemToolkit.cpp
+Open=0
+Folder=
+Top=0
+
+[Unit146]
+FileName=..\..\..\src\ImplementerKit\Win32Thread.cpp
+Open=1
+Folder=
+Top=1
+CursorCol=1
+CursorRow=108
+TopLine=1
+LeftChar=1
+
+[Unit147]
+FileName=..\..\..\src\Utils\XMLParser.cpp
 Open=0
 Folder=
 Top=0

@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="GraphicsKit">
+	Name="GraphicsKit"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,7 +13,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/ReleaseS\obj"
+			IntermediateDirectory=".\vc70/ReleaseS\obj"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -27,10 +29,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="GraphicsKit.h"
-				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/GraphicsKit.pch"
-				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile="vc7/ReleaseS\obj/"
-				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
+				PrecompiledHeaderFile=".\vc70/ReleaseS\obj/GraphicsKit.pch"
+				AssemblerListingLocation=".\vc70/ReleaseS\obj/"
+				ObjectFile="vc70/ReleaseS\obj/"
+				ProgramDataBaseFileName=".\vc70/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -38,7 +40,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\GraphicsKit_vc7_s.lib"
+				OutputFile="..\..\..\lib\GraphicsKit_vc70_s.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -58,7 +60,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/DebugS\obj"
+			IntermediateDirectory=".\vc70/DebugS\obj"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -73,10 +75,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="GraphicsKit.h"
-				PrecompiledHeaderFile=".\vc7/DebugS\obj/GraphicsKit.pch"
-				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile="vc7/DebugS\obj/"
-				ProgramDataBaseFileName="..\..\..\lib/GraphicsKit_vc7_sd.pdb"
+				PrecompiledHeaderFile=".\vc70/DebugS\obj/GraphicsKit.pch"
+				AssemblerListingLocation=".\vc70/DebugS\obj/"
+				ObjectFile="vc70/DebugS\obj/"
+				ProgramDataBaseFileName="..\..\..\lib/GraphicsKit_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -86,7 +88,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\GraphicsKit_vc7_sd.lib"
+				OutputFile="..\..\..\lib\GraphicsKit_vc70_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -169,11 +171,20 @@
 			<File
 				RelativePath="..\..\..\src\graphics\GraphicsKit.cpp">
 				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\include\GraphicsKitRTTI.inl">
 			</File>
 			<File
 				RelativePath="..\..\..\src\utils\GraphicsToolKit.cpp">
@@ -186,9 +197,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Point.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\graphics\Polygon.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\Rect.cpp">
@@ -237,9 +245,6 @@
 				RelativePath="..\..\..\include\implementer\Contextpeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Curve.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\graphics\Ellipse.h">
 			</File>
 			<File
@@ -265,6 +270,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\GraphicsKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\graphics\GraphicsKitSelectLib.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\GraphicsToolKit.h">
@@ -300,13 +308,10 @@
 				RelativePath="..\..\..\include\core\Point.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Polygon.h">
+				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\PrintContext.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Rect.h">

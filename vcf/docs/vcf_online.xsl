@@ -26,6 +26,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.4  2003/12/18 05:15:52  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.3.2.1  2003/12/08 05:05:27  ddiego
+added a bunch more documentation to classes, and added support for new doc
+keywords (@delegates, @del, @delegate, @event, and @eventtype). This
+makes it easier to see at a glance what events a class fires off.
+Added finishing touches for the Action implementation and have a partially
+complete example for this checked in.
+
 Revision 1.3  2003/08/09 21:01:40  ddiego
 minor changes to doc makefile
 
@@ -58,7 +68,7 @@ and images
  <!--
  this uses a local path - may need to be modified for others
  -->
-	<xsl:import href="D:/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="vcf.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
@@ -76,7 +86,7 @@ and images
 	<xsl:param name="html.ext"	select="'.html'"/>
 	
 	
-	
+	<!--
 	<xsl:template match="legalnotice" mode="titlepage.mode">
 	  <xsl:variable name="id"><xsl:call-template name="object.id"/></xsl:variable>
 	  <xsl:choose>
@@ -123,7 +133,8 @@ and images
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:template>	
-
+	-->
+<!--
 	<xsl:template name="href.target">
 		<xsl:text>ref.php?src=</xsl:text>
 		<xsl:param name="object" select="."/>
@@ -142,7 +153,7 @@ and images
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:template>
-
+-->
 
 
 </xsl:stylesheet>

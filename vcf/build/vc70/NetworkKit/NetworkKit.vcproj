@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="NetworkKit">
+	Name="NetworkKit"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,7 +13,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/DebugS\obj"
+			IntermediateDirectory=".\vc70/DebugS\obj"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -26,10 +28,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\vc7/DebugS\obj/NetworkKit.pch"
-				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile="vc7/DebugS\obj/"
-				ProgramDataBaseFileName="..\..\..\lib/NetworkKit_vc7_sd.pdb"
+				PrecompiledHeaderFile=".\vc70/DebugS\obj/NetworkKit.pch"
+				AssemblerListingLocation=".\vc70/DebugS\obj/"
+				ObjectFile="vc70/DebugS\obj/"
+				ProgramDataBaseFileName="..\..\..\lib/NetworkKit_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -39,7 +41,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\NetworkKit_vc7_sd.lib"
+				OutputFile="..\..\..\lib\NetworkKit_vc70_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -59,7 +61,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/ReleaseS\obj"
+			IntermediateDirectory=".\vc70/ReleaseS\obj"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -74,10 +76,10 @@
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/NetworkKit.pch"
-				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile="vc7/ReleaseS\obj/"
-				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
+				PrecompiledHeaderFile=".\vc70/ReleaseS\obj/NetworkKit.pch"
+				AssemblerListingLocation=".\vc70/ReleaseS\obj/"
+				ObjectFile="vc70/ReleaseS\obj/"
+				ProgramDataBaseFileName=".\vc70/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -85,7 +87,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\NetworkKit_vc7_s.lib"
+				OutputFile="..\..\..\lib\NetworkKit_vc70_s.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>

@@ -36,18 +36,18 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/ReleaseS\obj"
+# PROP Intermediate_Dir "vc70/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FRAMEWORK_LIB" /D "USE_GRAPHICSKIT_LIB" /D "USE_WIN32HTMLBROWSER_LIB" /D "BUILD_APPKIT_LIB" /Fo"vc7/ReleaseS\obj/" /Yu"ApplicationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FRAMEWORK_LIB" /D "USE_GRAPHICSKIT_LIB" /D "USE_WIN32HTMLBROWSER_LIB" /D "BUILD_APPKIT_LIB" /Fo"vc70/ReleaseS\obj/" /Yu"ApplicationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc7_s.bsc"
+# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc70_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc7_s.lib" /MACHINE:I386
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc70_s.lib" /MACHINE:I386
 
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
@@ -59,18 +59,18 @@ LIB32=link.exe -lib
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc7/DebugS\obj"
+# PROP Intermediate_Dir "vc70/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FRAMEWORK_LIB" /D "USE_GRAPHICSKIT_LIB" /D "USE_WIN32HTMLBROWSER_LIB" /D "BUILD_APPKIT_LIB" /FR"vc7/DebugS\obj/" /Fo"vc7/DebugS\obj/" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\Lib/ApplicationKit_vc7_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FRAMEWORK_LIB" /D "USE_GRAPHICSKIT_LIB" /D "USE_WIN32HTMLBROWSER_LIB" /D "BUILD_APPKIT_LIB" /FR"vc70/DebugS\obj/" /Fo"vc70/DebugS\obj/" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\Lib/ApplicationKit_vc70_sd.pdb" /FD /GZ /Zm150 /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc7_sd.bsc"
+# ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc70_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc7_sd.lib" /MACHINE:I386
+# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc70_sd.lib" /MACHINE:I386
 
 !ENDIF 
 
@@ -467,6 +467,10 @@ SOURCE=..\..\..\include\core\Document.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\DocumentBasedApplication.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\DocumentManager.cpp
 # End Source File
 # Begin Source File
@@ -564,14 +568,6 @@ SOURCE=..\..\..\src\events\ControlEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ControlEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\events\DragEvent.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\events\DropEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -963,6 +959,14 @@ SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\implementerkit\Win32Toolbar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Toolbar.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\implementerkit\Win32ToolKit.cpp
 # End Source File
 # Begin Source File
@@ -1024,15 +1028,11 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
-
-!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
-
 # ADD CPP /Yc"ApplicationKit.h"
+# End Source File
+# Begin Source File
 
-!ENDIF 
-
+SOURCE=..\..\..\include\ApplicationKitRTTI.inl
 # End Source File
 # Begin Source File
 
@@ -1096,6 +1096,10 @@ SOURCE=..\..\..\src\core\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Containers.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Control.cpp
 # End Source File
 # Begin Source File
@@ -1109,6 +1113,14 @@ SOURCE=..\..\..\src\core\Cursor.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\CursorManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\DataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\DataObject.h
 # End Source File
 # Begin Source File
 
@@ -1181,6 +1193,10 @@ SOURCE=..\..\..\src\core\MultilineTextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\PackageInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\PackageInfo.h
 # End Source File
 # Begin Source File
 
@@ -1273,6 +1289,10 @@ SOURCE=..\..\..\include\core\AbstractCommand.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractComponentEditor.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\AbstractContainer.h
 # End Source File
 # Begin Source File
 
@@ -1397,6 +1417,10 @@ SOURCE=..\..\..\include\core\ComponentInfo.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Container.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Containers.h
 # End Source File
 # Begin Source File
 
@@ -1655,17 +1679,5 @@ SOURCE=..\..\..\include\implementer\WindowPeer.h
 SOURCE=..\..\..\include\core\Wizard.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=..\..\..\src\core\DataObject.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\DataObject.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\PackageInfo.h
-# End Source File
 # End Target
 # End Project

@@ -146,6 +146,9 @@ The application class
 class GraphicsBasicsApplication : public Application {
 public:
 
+	GraphicsBasicsApplication(int argc, char** argv) : Application(argc,argv){
+
+	}
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
@@ -162,9 +165,9 @@ public:
 
 int main(int argc, char *argv[])
 {
-	GraphicsBasicsApplication app;
+	GraphicsBasicsApplication app( argc, argv );
 
-	Application::main( argc, argv );
+	Application::main();
 	
 	return 0;
 }

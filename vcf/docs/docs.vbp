@@ -1,0 +1,88 @@
+<!-- XMake project start -->
+
+
+<project name="docs" id="3d409cb3-046c-4e35-aadc-5ba1c93f987e">
+	<variable name="HTML_STYLESHEET" value="d:/docbook-xsl-1.60.1/html/docbook.xsl"/>
+
+	<dependsOn>
+	</dependsOn>
+
+	<target name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" active="true" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
+		<dependsOn>
+			<dependency name="./vcf_docbook.xml" id="76e9e3b1-434b-4751-a82d-8603ab0ded80"/>
+		</dependsOn>
+	</target>
+
+	<config name="db-articles" id="09a312df-4ead-4f44-a0d5-da157d31dc42" parent="b5c0bde4-1ae3-41f6-88c5-bdf5b49f7e9e" uuid="a380b702-2789-4f3b-94dc-73104227c750" >
+		<variable name="XSL_DIR" value="D:/docbook-xsl-1.60.1"/>
+		<variable name="HTMLOUTPUT" value="index.html"/>
+		<variable name="XSL_SHEET" value="html/docbook.xsl"/>
+		<tool id="xsltproc" name="xsltproc" type=".xml">
+			<flags value="--nonet "/>
+			<exec command="xsltproc --nonet  $(XSL_DIR)/$(XSL_SHEET) $(dependency.name) > index.html"/>
+		</tool>
+	</config>
+	<config name="docbook" id="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" parent="b5c0bde4-1ae3-41f6-88c5-bdf5b49f7e9e" uuid="a380b702-2789-4f3b-94dc-73104227c750" active="true" >
+		<variable name="XSL_DIR" value=""/>
+		<variable name="HTMLOUTPUT" value=""/>
+		<variable name="XSL_SHEET" value="vcf.xsl"/>
+		<tool id="xsltproc" name="xsltproc" type=".xml">
+			<flags value="--nonet "/>
+			<exec command="xsltproc --nonet  $(XSL_SHEET) $(dependency.name)"/>
+		</tool>
+	</config>
+	<files>
+		<file src="../examples/ImageBasics/ImageBasics.xml" id="0219e8d2-dfdf-4917-8771-c3d91c0254ce" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/TextLayout/TextLayout.xml" id="053f0f15-06b3-4df1-92ca-6ce68c9cf681" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./corelib_networkKit.xml" id="0639e0ee-6fdf-461f-9ac5-f64c69df42e6" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/WorkingWithEnumerators/WorkingWithEnumerators.xml" id="07f445d0-d4a0-4cdb-91ab-32c43757fc67" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/GraphicsBasics/GraphicsBasics.xml" id="08e1d7bb-7594-4225-8ec6-fbde91ed9e7e" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./corelib_remoteObjectKit.xml" id="097eb36f-004f-4db0-9057-b2e758241341" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/DragAndDrop/DragAndDrop.xml" id="118d17d2-8414-40ee-bf1a-70fcf7444afd" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/AdvancedAlignment/AdvancedAlignment.xml" id="20507720-cb48-4722-9528-1c5ae4166855" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/ImageViewer/ImageViewer.xml" id="226c1087-6d5e-45ac-8ad0-602b1f5524f1" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./corelib_applicationKit.xml" id="242c582a-b7f1-4912-b141-43c6dee0378f" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="./corelib_foundationKit.xml" id="35132f25-0683-4b38-9bda-d475cfb4e043" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="./faqs.xml" id="38df6db4-7381-49e2-a764-16b140d0bce5" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/FilesAndDirectories/FilesAndDirectories.xml" id="3d11d0fd-3a62-4496-a6d0-0326dfb75fa8" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./general.xml" id="4d0ae53d-3bd6-4903-b059-fbf2699d1873" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/ThreadBasics/ThreadBasics.xml" id="4f32f21f-23e2-4ef4-9fc4-bf72e3eaaf83" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./vcf.xsl" id="550820e6-5852-4152-b459-73910ca71c10" parent="52ec4c1c-b3e5-44cf-9d50-9dff14c452a4"/>
+		<file src="./getting_started.xml" id="5a36fcfb-7241-4856-8036-d3335c1cf67b" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/EventBasics/EventBasics.xml" id="5e5df5a8-ebeb-479b-b849-d062b76788e5" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/HelloWorld/HelloWorld.xml" id="6d81161f-4e8d-42d1-8fa5-cc6f1331e8d1" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/GraphicsAndMouseMoves/GraphicsAndMouseMoves.xml" id="76d045ac-9df4-4ccd-96f5-27ef39553757" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./vcf_docbook.xml" id="76e9e3b1-434b-4751-a82d-8603ab0ded80" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/Alignment/Alignment.xml" id="7957d2c9-c002-49a4-b49f-aaf05f221775" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/Anchors/Anchors.xml" id="79cfd8ed-0c1e-42e1-8306-a261ef0d1161" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/HelloWorld3/HelloWorld3.xml" id="8b7f9696-2eaa-4e4f-bfd6-7bbb7054c815" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/CopyAndPaste/CopyAndPaste.xml" id="93576a90-ae73-4823-8e66-79ae89f2dbb2" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/ApplicationIcons/ApplicationIcons.xml" id="976eef7c-b9be-41f6-a31f-85cdaf98a378" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/StrokesAndFills/StrokesAndFills.xml" id="9c5b5948-5257-4f38-95d3-2579a710ec72" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./corelib_componentAuthoring.xml" id="9ea68ce6-ba01-480b-b02a-a682c681bd3a" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="./vcf_intro.xml" id="a7d08f6a-02cd-442c-b100-7a0d3640cc73" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/ThreadsInGUI/ThreadsInGUI.xml" id="af5c6f1b-e273-4557-8d01-b0d6fc12319c" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/Strings/Strings.xml" id="b19d4a44-2d4a-4b49-ac05-bf7d09cfc3f0" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/HelloWorld2/HelloWorld2.xml" id="b5bd548b-e772-4d7a-bd7c-074938932678" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./vcf_book.xml" id="b5cc5970-c2d4-4fa3-a5a3-4ef56ff5f722" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/Sliders/Sliders.xml" id="b75f1069-78f0-442f-b112-472a98db545c" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./tutorials.xml" id="bac8209f-7694-4b8a-8f3e-23f33c921828" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/Labels/Labels.xml" id="d81cc801-15ae-44cd-8a34-55480c2e809a" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/ProgressBars/ProgressBars.xml" id="ddc04610-300f-452e-b07b-5eb098c189aa" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/Scrolling/Scrolling.xml" id="e1577446-a95e-4249-bc02-6c859215d734" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="./corelib_graphicsKit.xml" id="e9b5df9a-f493-4ae2-9d03-5b1e960f8d3f" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<file src="../examples/HeavyAndLight/HeavyAndLight.xml" id="eb4cc75c-a51c-49f7-ab13-725ab91c2b7c" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/Dictionaries/Dictionaries.xml" id="f78b5f5b-ef56-494e-aced-87d24dc0bb98" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/SharedLibraries/SharedLibraries.xml" id="f7a32c55-a693-485d-a82f-884be3e92f0d" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+	</files>
+	<folders>
+		<folder name="example-tutorials" ext="" id="2b37d6fb-c055-4e7e-9769-4e7419479926" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<folder name="stylesheets" ext="" id="52ec4c1c-b3e5-44cf-9d50-9dff14c452a4" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
+		<folder name="files" ext="" id="a3138d6c-d0a3-48ec-88ae-b5462d8a1074" parent="3d409cb3-046c-4e35-aadc-5ba1c93f987e"/>
+		<folder name="Configurations" ext="" id="b5c0bde4-1ae3-41f6-88c5-bdf5b49f7e9e" parent="3d409cb3-046c-4e35-aadc-5ba1c93f987e"/>
+		<folder name="Targets" ext="" id="f936d9e6-4cf5-4e66-b9de-352b7db36d88" parent="3d409cb3-046c-4e35-aadc-5ba1c93f987e"/>
+	</folders>
+</project>
+<!-- XMake project end -->
+
+

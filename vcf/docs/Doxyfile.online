@@ -59,6 +59,10 @@ EXTRACT_PRIVATE        = NO
 
 EXTRACT_STATIC         = YES
 
+
+DETAILS_AT_TOP         = YES
+
+
 # If the HIDE_UNDOC_MEMBERS tag is set to YES, Doxygen will hide all 
 # undocumented members of documented classes, files or namespaces. 
 # If set to NO (the default) these members will be included in the 
@@ -236,7 +240,12 @@ GENERATE_BUGLIST       = YES
 # will result in a user defined paragraph with heading "Side Effects:". 
 # You can put \n's in the value part of an alias to insert newlines.
 
-ALIASES                = 
+ALIASES                = "delegate=\par Event Delegate:\n" \
+					"delegates=\par Event Delegates for this class:\n" \
+					"del=\li" \
+					"eventtype=<br><b>event type</b>:" \
+					"event=<br><b>event class:</b>"
+
 
 # The MAX_INITIALIZER_LINES tag determines the maximum number of lines 
 # the initial value of a variable or define consist of for it to appear in 
@@ -644,7 +653,7 @@ EXPAND_ONLY_PREDEF     = YES
 # If the SEARCH_INCLUDES tag is set to YES (the default) the includes files 
 # in the INCLUDE_PATH (see below) will be search if a #include is found.
 
-SEARCH_INCLUDES        = YES
+SEARCH_INCLUDES        = NO
 
 # The INCLUDE_PATH tag can be used to specify one or more directories that 
 # contain include files that are not input files but should be processed by 
@@ -665,7 +674,8 @@ INCLUDE_FILE_PATTERNS  =
 # or name=definition (no spaces). If the definition and the = are 
 # omitted =1 is assumed.
 
-PREDEFINED             = BEGIN_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \					
+PREDEFINED             = "DELEGATE(F)= VCF::Delegate F;" \
+					BEGIN_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \					
 					BEGIN_ABSTRACT_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \					
 					BEGIN_INTERFACEINFO(InterfaceType,InterfaceName,SuperInterfaceName,InterfaceID)=/* \
 					IMPLEMENTS_INTERFACE(ClassType, InterfaceType, implementationClassName, interfaceName, interfaceID, superInterfaceClassName)=// \
@@ -713,8 +723,8 @@ PREDEFINED             = BEGIN_CLASSINFO(ClassType,ClassName,superClassName,clas
 					END_CLASSINFO(ClassType)=*/ \
 					REGISTER_CLASSINFO(ClassType)=// \
 					REGISTER_INTERFACEINFO(InterfaceType)=// \
-					END_INTERFACEINFO(InterfaceType)=*/ 
-				
+					END_INTERFACEINFO(InterfaceType)=*/
+					 				
 
 # If the MACRO_EXPANSION and EXPAND_PREDEF_ONLY tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 

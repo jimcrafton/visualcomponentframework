@@ -44,7 +44,7 @@ void SketchView::paintView( GraphicsContext* ctx )
 {
 	ctx->setColor( Color::getColor( "white" ) );
 	
-	Rect* clientBounds = getViewControl()->getClientBounds();
+	Rect clientBounds = getViewControl()->getClientBounds();
 	ctx->rectangle( clientBounds );
 	ctx->fillPath();
 
@@ -104,7 +104,7 @@ void SketchView::paintView( GraphicsContext* ctx )
 				
 				agg::null_distortions    distortions; 
 				ColorAlpha   color_alpha;
-				color_alpha.alphaValue_ = 255.0 * (bounds.left_ / clientBounds->getWidth() );
+				color_alpha.alphaValue_ = 255.0 * (bounds.left_ / clientBounds.getWidth() );
 				agg::null_gradient_alpha gradient_alpha;
 				
 				renderer_image           imgRenderer(*renderingBuffer);

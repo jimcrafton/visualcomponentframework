@@ -2,6 +2,27 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.3  2003/12/18 05:15:47  ddiego
+#merge from devmain-0-6-2 branch into the stable branch
+#
+#Revision 1.2.6.5  2003/11/11 17:43:43  ddiego
+#updated the makefile and foundationKit object to make a VariantData.obj
+#file
+#
+#Revision 1.2.6.4  2003/10/04 20:13:44  ddiego
+#updated the Makefiles - everything works now, including compiling
+#building on GCC 3.3.1
+#
+#Revision 1.2.6.3  2003/10/03 04:33:03  ddiego
+#add precompiled header target - doesn't seem to really work though
+#
+#Revision 1.2.6.2  2003/10/03 01:07:48  ddiego
+#added/fixed problems to get it to compile under linux
+#
+#Revision 1.2.6.1  2003/10/02 04:50:34  ddiego
+#changes to ensure the code compiles on linux. made a bunch of updates to
+#the makefiles
+#
 #Revision 1.2  2003/02/26 04:30:25  ddiego
 #merge of code in the devmain-0-5-9 branch into the current tree.
 #most additions are in the area of the current linux port, but the major
@@ -26,6 +47,8 @@
 #Object files for the FoundationKit 
 #
 ###########################################################
+
+#precompiled headers
 
 
 
@@ -103,14 +126,12 @@ $(OUTDIR_FK_D)/ObjectWithEvents.o : $(SRC_CORE)/ObjectWithEvents.cpp $(FOUNDATIO
 $(OUTDIR_FK_D)/Parser.o : $(SRC_UTILS)/Parser.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS_D) $(SRC_UTILS)/Parser.cpp -o $(OUTDIR_FK_D)/Parser.o
 
-$(OUTDIR_FK_D)/Point.o : $(SRC_CORE)/Point.cpp $(FOUNDATIONKIT_HDRS)
-	$(CXX) $(CXX_FLAGS_D) $(SRC_CORE)/Point.cpp -o $(OUTDIR_FK_D)/Point.o
-
 $(OUTDIR_FK_D)/PropertyChangeEvent.o : $(SRC_EVENT)/PropertyChangeEvent.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS_D) $(SRC_EVENT)/PropertyChangeEvent.cpp -o $(OUTDIR_FK_D)/PropertyChangeEvent.o
 
-$(OUTDIR_FK_D)/Rect.o : $(SRC_CORE)/Rect.cpp $(FOUNDATIONKIT_HDRS)
-	$(CXX) $(CXX_FLAGS_D) $(SRC_CORE)/Rect.cpp -o $(OUTDIR_FK_D)/Rect.o
+
+$(OUTDIR_FK_D)/CommandLine.o : $(SRC_UTILS)/CommandLine.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS_D) $(SRC_UTILS)/CommandLine.cpp -o $(OUTDIR_FK_D)/CommandLine.o
 
 $(OUTDIR_FK_D)/Registry.o : $(SRC_UTILS)/Registry.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS_D) $(SRC_UTILS)/Registry.cpp -o $(OUTDIR_FK_D)/Registry.o
@@ -138,6 +159,9 @@ $(OUTDIR_FK_D)/Thread.o : $(SRC_UTILS)/Thread.cpp $(FOUNDATIONKIT_HDRS)
 
 $(OUTDIR_FK_D)/ThreadEvent.o : $(SRC_EVENT)/ThreadEvent.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS_D) $(SRC_EVENT)/ThreadEvent.cpp -o $(OUTDIR_FK_D)/ThreadEvent.o
+
+$(OUTDIR_FK_D)/VariantData.o : $(SRC_CORE)/VariantData.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS_D) $(SRC_CORE)/VariantData.cpp -o $(OUTDIR_FK_D)/VariantData.o
 
 $(OUTDIR_FK_D)/VCFMath.o : $(SRC_CORE)/VCFMath.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS_D) $(SRC_CORE)/VCFMath.cpp -o $(OUTDIR_FK_D)/VCFMath.o
@@ -208,6 +232,9 @@ $(OUTDIR_FK)/Class.o : $(SRC_CORE)/Class.cpp $(FOUNDATIONKIT_HDRS)
 $(OUTDIR_FK)/ClassRegistry.o : $(SRC_CORE)/ClassRegistry.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_CORE)/ClassRegistry.cpp -o $(OUTDIR_FK)/ClassRegistry.o
 
+$(OUTDIR_FK)/CommandLine.o : $(SRC_UTILS)/CommandLine.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS) $(SRC_UTILS)/CommandLine.cpp -o $(OUTDIR_FK)/CommandLine.o
+	
 $(OUTDIR_FK)/Directory.o : $(SRC_IO)/Directory.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_IO)/Directory.cpp -o $(OUTDIR_FK)/Directory.o
 
@@ -259,14 +286,9 @@ $(OUTDIR_FK)/ObjectWithEvents.o : $(SRC_CORE)/ObjectWithEvents.cpp $(FOUNDATIONK
 $(OUTDIR_FK)/Parser.o : $(SRC_UTILS)/Parser.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_UTILS)/Parser.cpp -o $(OUTDIR_FK)/Parser.o
 
-$(OUTDIR_FK)/Point.o : $(SRC_CORE)/Point.cpp $(FOUNDATIONKIT_HDRS)
-	$(CXX) $(CXX_FLAGS) $(SRC_CORE)/Point.cpp -o $(OUTDIR_FK)/Point.o
 
 $(OUTDIR_FK)/PropertyChangeEvent.o : $(SRC_EVENT)/PropertyChangeEvent.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_EVENT)/PropertyChangeEvent.cpp -o $(OUTDIR_FK)/PropertyChangeEvent.o
-
-$(OUTDIR_FK)/Rect.o : $(SRC_CORE)/Rect.cpp $(FOUNDATIONKIT_HDRS)
-	$(CXX) $(CXX_FLAGS) $(SRC_CORE)/Rect.cpp -o $(OUTDIR_FK)/Rect.o
 
 $(OUTDIR_FK)/Registry.o : $(SRC_UTILS)/Registry.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_UTILS)/Registry.cpp -o $(OUTDIR_FK)/Registry.o
@@ -295,9 +317,15 @@ $(OUTDIR_FK)/Thread.o : $(SRC_UTILS)/Thread.cpp $(FOUNDATIONKIT_HDRS)
 $(OUTDIR_FK)/ThreadEvent.o : $(SRC_EVENT)/ThreadEvent.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_EVENT)/ThreadEvent.cpp -o $(OUTDIR_FK)/ThreadEvent.o
 
+$(OUTDIR_FK)/VariantData.o : $(SRC_CORE)/VariantData.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS) $(SRC_CORE)/VariantData.cpp -o $(OUTDIR_FK)/VariantData.o
+
 $(OUTDIR_FK)/VCFMath.o : $(SRC_CORE)/VCFMath.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_CORE)/VCFMath.cpp -o $(OUTDIR_FK)/VCFMath.o
 
+$(OUTDIR_FK)/Condition.o : $(SRC_UTILS)/Condition.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS) $(SRC_UTILS)/Condition.cpp -o $(OUTDIR_FK)/Condition.o
+	
 $(OUTDIR_FK)/VCFProcess.o : $(SRC_UTILS)/VCFProcess.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_UTILS)/VCFProcess.cpp -o $(OUTDIR_FK)/VCFProcess.o
 
@@ -316,6 +344,12 @@ $(OUTDIR_FK)/LinuxFileStream.o : $(SRC_IMPLKIT)/LinuxFileStream.cpp $(FOUNDATION
 $(OUTDIR_FK)/PosixThread.o : $(SRC_IMPLKIT)/PosixThread.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_IMPLKIT)/PosixThread.cpp -o $(OUTDIR_FK)/PosixThread.o
 
+$(OUTDIR_FK)/PosixMutex.o : $(SRC_IMPLKIT)/PosixMutex.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS) $(SRC_IMPLKIT)/PosixMutex.cpp -o $(OUTDIR_FK)/PosixMutex.o
+	
+$(OUTDIR_FK)/PosixCondition.o : $(SRC_IMPLKIT)/PosixCondition.cpp $(FOUNDATIONKIT_HDRS)
+	$(CXX) $(CXX_FLAGS) $(SRC_IMPLKIT)/PosixCondition.cpp -o $(OUTDIR_FK)/PosixCondition.o	
+	
 $(OUTDIR_FK)/LinuxLibraryPeer.o : $(SRC_IMPLKIT)/LinuxLibraryPeer.cpp $(FOUNDATIONKIT_HDRS)
 	$(CXX) $(CXX_FLAGS) $(SRC_IMPLKIT)/LinuxLibraryPeer.cpp -o $(OUTDIR_FK)/LinuxLibraryPeer.o
 

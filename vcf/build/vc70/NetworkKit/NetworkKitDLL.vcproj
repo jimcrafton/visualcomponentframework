@@ -2,7 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="NetworkKitDLL">
+	Name="NetworkKitDLL"
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -11,7 +13,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/DebugDLL\obj"
+			IntermediateDirectory=".\vc70/DebugDLL\obj"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -25,10 +27,10 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/DebugDLL\obj/NetworkKitDLL.pch"
-				AssemblerListingLocation=".\vc7/DebugDLL\obj/"
-				ObjectFile="vc7/DebugDLL\obj/"
-				ProgramDataBaseFileName="..\..\..\bin/NetworkKit_vc7_d.pdb"
+				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/NetworkKitDLL.pch"
+				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
+				ObjectFile="vc70/DebugDLL\obj/"
+				ProgramDataBaseFileName="..\..\..\bin/NetworkKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -40,12 +42,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="Ws2_32.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/NetworkKit_vc7_d.dll"
+				OutputFile="..\..\..\bin/NetworkKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				GenerateDebugInformation="TRUE"
-				ImportLibrary=".\..\..\..\lib/NetworkKit_vc7_d.lib"/>
+				ImportLibrary=".\..\..\..\lib/NetworkKit_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -71,7 +73,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc7/Release"
+			IntermediateDirectory=".\vc70/Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -86,10 +88,10 @@
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc7/Release/NetworkKitDLL.pch"
-				AssemblerListingLocation=".\vc7/Release/"
-				ObjectFile="vc7/Release/"
-				ProgramDataBaseFileName=".\vc7/Release/"
+				PrecompiledHeaderFile=".\vc70/Release/NetworkKitDLL.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile="vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -99,11 +101,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="Ws2_32.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin/NetworkKit_vc7.dll"
+				OutputFile="..\..\..\bin/NetworkKit_vc70.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib"
-				ImportLibrary=".\..\..\..\lib/NetworkKit_vc7.lib"/>
+				ImportLibrary=".\..\..\..\lib/NetworkKit_vc70.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"

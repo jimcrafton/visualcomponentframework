@@ -1,0 +1,261 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>Event Basics</title>
+	<para>
+		This example will explain how to work with events in the VCF, and 
+		how to add event support to your own custom classes.
+	</para>
+	<para>
+	Event's are quite easy to use. You can receive notification of an event
+	by registering an instance of an event handler with any valid Delegate instance
+	on the object that will be firing the event you're interested in. Event handlers
+	wrap a function call, which may be a class method, or a static function, and when
+	the event is fired your event handler (and in turn your callback) will get called.
+	Delegate classes are used to both store a collection of 0 or more event handlers,
+	and to send the event to all registered event handlers. For each event the object
+	fires, there should generally be a distinct Delegate instance. For example the Control
+	classes fires off mouse down, mouse move, and mose up events (among others), and has 
+	a Delegate member variable for each (named MouseDown, MouseMove, and MouseUp). While
+	most member variables in the VCF use camel casing for theirr naming standard, delegates
+	do not to make them stand out more.
+	</para>
+	<para>
+	So lets look our first example. Let's create a very simple class that fires a
+	single event when the class "talks".
+	<programlisting>
+<![CDATA[
+class Simple : public Object {
+public:	
+	Delegate Talking;
+		
+	void talk() {
+		Event e(this);
+		Talking.fireEvent( &e );
+	}
+};
+]]>
+	</programlisting> 
+	Notice that we do have to derive the class from either VCF::Object or some other class that directly
+	or indirectly inherits from VCF::Object. We have a single member variable, a Delegate called
+	Talking, and we have a single method called talk() that fires off a talking
+	event. It does this in two steps:
+	<itemizedlist>
+	  <listitem>
+	  <para>
+		First it creates an event (and you can create the event on the stack), and passes in itself 
+		as the event's source.
+	  </para>
+	  </listitem>
+	  <listitem>
+	  <para>
+		Then it calls the Talking delegate's fireEvent() method, and passes in a pointer to the event (e).
+	  </para>
+	  </listitem>
+	</itemizedlist>
+	Once the Talking delegate's fireEvent() method is called, it will pass the event to all the registered
+	event handlers that have registered with the Talking delegate.
+	</para> 
+	<para>
+	Next we'll examine some simple examples that make use of this, one with static functions, and then 
+	two different ways to with member functions. First we'll look at how to connect a static function to
+	the Talking delegate as a callback.
+	<programlisting>
+<![CDATA[
+void StaticTalkingCallBack( Event* e ) 
+{
+  //call back code here
+}
+]]>
+	</programlisting>
+	When you declare the function it does have to follow certain rules, namely:
+	<itemizedlist>
+	  <listitem>
+	  <para>
+	  It must return "void".
+	  </para>
+	  </listitem>
+	  <listitem>
+	  <para>
+	  It must take a single parameter, a pointer to a VCF::Event or some other class that derives (directly
+	  or indirectly) from VCF::Event.
+	  </para>
+	  </listitem>
+	</itemizedlist>
+	Once you have declared the function, you can use that function as a callback by creating the appropriate 
+	EventHandler class, for example:
+	<programlisting>
+<![CDATA[
+EventHandler* handler = new StaticEventHandlerInstance<Event>( StaticTalkingCallBack );
+Simple simple;
+simple.Talking.addHandler( handler );
+]]>	
+	</programlisting>
+	The first linbe creates a StaticEventHandlerInstance, which is a template class that take a single template
+	argument: the event type. In our case it's just a VCF::Event, so that's what use. Had the event that our
+	static callback taken, been a NotifyEvent then we would have written:
+	<programlisting>
+<![CDATA[
+EventHandler* handler = new StaticEventHandlerInstance<NotifyEvent>( StaticTalkingCallBack );
+]]>	
+	</programlisting>
+	The next line creates an instance of the Simple class. The last line adds our event handler 
+	to the simple.Talking delegate.
+	</para>
+	<para>
+	One thing to note - the above code creates an event handler, but does not delete it. As is, we would
+	have to write some code to take care of this. We'll see in the following examples how to use some of 
+	extra parameters in the event handler constructor to take care of this automatically for us.
+	</para>
+	<para>
+	Our next example will use the member function of a class. We'll define the as follows:
+	<programlisting>
+
+<![CDATA[
+class SimpleCallBackClass : public Object {
+public:	
+	void onTalking( Event* e ) {
+		//call back code here
+	}
+};
+]]>	
+	</programlisting>
+	As before we must observe the rules for a callback function. Now we can see how we register it with the
+	Talking delegate.
+	
+	<programlisting>
+<![CDATA[
+Simple simple;
+SimpleCallBackClass callback;
+EventHandler* handler = new GenericEventHandler<SimpleCallBackClass>( callback, &SimpleCallBackClass::onTalking );	
+
+simple.Talking += handler;
+]]>
+</programlisting>	
+	
+	The first two lines create a Simple instance, and a SimpleCallBackClass instance. The next line creates
+	and event handler for the SimpleCallBackClass's onTalking method. We create an instnce of the 
+	GenericEventHandler class, which is used to member functions that take a VCF::Event, and has a single
+	template argument, the source class type. The source class is the class that the callback method is
+	part of, os for our purposes this is the SimpleCallBackClass. Next we pass in two arguments to the 
+	GenericEventHandler constructor: a pointer to an instance of the source class (the callback variable) 
+	and the function pointer for the call back function (SimpleCallBackClass::onTalking). Now when the 
+	simple.talk() is called our event handler will get invoked and in turn call the 
+	SimpleCallBackClass::onTalking() method. As before, we have an event handler instance that needs to be 
+	cleaned up. Lets move to the next example to see how we handle that.
+	</para>
+	<para>
+	In our third and final example, we introduce a way to associate event handlers with a source and 
+	to clean up any event handlers automatically when the source is destroyed.
+	</para>
+	<para>
+	We'll create another class, but this time, instead of deriving from VCF::Object, we'll derive from 
+	VCF::ObjectWithEvents. By doing this we gain some extra functionality. First, we can name the event handlers
+	and refer back to them at any given time during the life cyle of the object instance. Secondly, we no longer 
+	have to manuallly manage the lifetimes of the event handlers. When we create the event handler, if the source object
+	derives from ObjectWithEvents, then the event handler's will be added to a list of event handlers maintained
+	by the source, and when the source is destroyed, it will destroy any event handlers in it's list.	
+	</para>
+	<para>
+	To see this in action, let's declare a new class like so:
+	<programlisting>
+<![CDATA[
+class SimpleCallBackClass2 : public ObjectWithEvents {
+public:
+	SimpleCallBackClass2() {
+		//lets add an event handler to our collection
+		EventHandler* handler = 
+			new GenericEventHandler<SimpleCallBackClass2>( this, &SimpleCallBackClass2::onTalking, "SimpleCallBackClass2::onTalking" );		
+	}
+	
+	void onTalking( Event* e ) {
+		//callback code here
+	}
+};
+]]>
+	</programlisting>	
+	To use the class we can write the following:
+	<programlisting>
+<![CDATA[
+Simple simple;
+SimpleCallBackClass2 callback2;
+
+//we can get at the event handler by name
+simple.Talking += callback2.getEventHandler( "SimpleCallBackClass2::onTalking" );
+
+simple.talk();
+]]>
+	</programlisting>		
+	This will now fire the event, and the SimpleCallBackClass2's onTalking() method will get called.
+	As mentioned earlier, a Delegate can have more than one event handler, for example:
+	<programlisting>
+<![CDATA[
+Simple simple;
+SimpleCallBackClass callback;
+SimpleCallBackClass2 callback2;
+
+EventHandler* handler = new GenericEventHandler<SimpleCallBackClass>( &callback, &SimpleCallBackClass::onTalking );
+
+simple.Talking += handler;
+
+simple.Talking += callback2.getEventHandler( "SimpleCallBackClass2::onTalking" );
+
+simple.talk();
+]]>
+	</programlisting>
+	Now when the Simple talk() method is called and fires the event, both event handlers are called, and 
+	SimpleCallBackClass::onTalking and SimpleCallBackClass2::onTalking methods get invoked.
+	</para>
+	<para>
+	This pretty much sums up the basics of event handlers. As we can see the event and the event handlers do not 
+	have to have any dependency on UI code and can be used in console applications as well as GUI's.
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2003/12/18 05:15:53  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.4  2003/10/13 04:05:45  ddiego
+updated the scrolling example - this now demonstrates how to use the
+ScrollManager component and how to customize the scrollbars -
+even shows how to control where they go and how you have a little
+control on left (or right side) of the scroll bar (like Word does)
+
+Revision 1.1.2.3  2003/09/29 03:48:03  ddiego
+added the app iconms ex
+
+
+Revision 1.1.2.1  2003/09/27 23:04:19  ddiego
+added tutorial docbook files
+
+-->

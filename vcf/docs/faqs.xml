@@ -1,0 +1,1679 @@
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+
+
+-->
+
+
+<section><title>General</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>Why are you writing another framework ? Aren't there enough out there ?</para>
+			</question>
+			<answer>
+				<para>
+				The Visual Component Framework (VCF) was designed to make application 
+				programming in general, particularly applications with User Interfaces, 
+				much easier than it currently is with typical development tools. In addition 
+				it was created to be cross platform in design, so a program relying only 
+				on features within the VCF should simply recompile on another platform 
+				supported by the VCF.
+				</para>
+			</answer>
+			<question>
+				<para>Regarding the copyright, is it open-source, gnu license, what are the rules
+about that? I just saw the installer telling me you own the copyright, is that so?</para>
+			</question>
+			<answer>
+
+				<para>The VCF license is a BSD license. The only restriction is that
+				the copyright notice may not be stripped out from the source, and
+				you need to give credit to the project and or author(s). Beyond
+				that you are free to use the code however you like, and you are not
+				<emphasis>required</emphasis> to release changes you make back to
+				the VCF project (though they are certainly welcome to, and encouraged to 
+				do so). Copyright is owned by the authors of the content.</para>
+			</answer>
+			<question>
+				<para>How does  the VCF compare to other frameworks or toolkits,
+					such as MFC, Qt, FLTK, FOX, and GTK?</para>
+			</question>
+			<answer>
+				<para></para>
+			</answer>
+
+			<question>
+				<para>Why not just help out an existing framework? Why write 
+					yet <emphasis>another</emphasis> framework/toolkit?</para>
+			</question>
+			<answer>
+				<para>There are a variety of reasons, such as:
+					<itemizedlist>
+					<listitem>	<para>					
+					One of the big ones is the dynamic nature of the 
+					VCF due to the use of advanced RTTI features. For a number of frameworks this 
+					would be difficult to fit in with out serious changes to the framework in question.
+					</para></listitem>	
+					<listitem>	<para>
+					Another reason is simply the way the VCF is designed, for example the use of a Component
+					base class for many of the UI controls, and the presence of Property and Component
+					editors to support RAD design time editing. Supporting these requires certain features 
+					that could be difficult to add in to an existing framework (this was partially the case 
+					with wxWindows). 
+					</para></listitem>	
+					<listitem>	<para>
+					Other issues are the usage of modern C++, such as templates, STL, namespaces, and exceptions. 
+					These require a reasonably up to date C++ compiler (such as GCC, MS VC6 or VC7, 
+					Borland C++, etc), and some of the existing toolkits place a high priority on supporting 
+					older, non-standard	C++ compilers, which greatly reduces what features of the 
+					C++ langauge are available to them.
+					</para></listitem>	
+					</itemizedlist>
+				</para>
+			</answer>
+			<question>
+				<para>Can we use the VCF in commercial applications?</para>
+			</question>
+			<answer>
+				<para>Yes. There are no restrictions made on how the VCF is 
+				used. It can used in both OSS and commercial/proprietary 
+				projects. In addition, due to the BSD license, you are free
+				to make any changes to the VCF source code without obligations
+				to share the changes. While people are encouraged to do so if
+				possible, there is no requirement that forces this.
+				</para>
+			</answer>
+			
+			<question>
+				<para>Is the VCF Documentation available in PDF format?</para>
+			</question>
+			<answer>
+				<para>Not currently, though there is an effort to make this 
+				happen. </para>
+			</answer>
+			
+			<question>
+				<para>Is the VCF Documentation available in HTML for offline viewing?</para>
+			</question>
+			<answer>
+				<para>Yes, see the project downloads section and look for the
+				Documentation area. </para>
+			</answer>
+			
+			<question>
+				<para>Is the VCF Documentation available as an HTML Help .CHM file?</para>
+			</question>
+			<answer>
+				<para>Yes, see the project downloads section and look for the
+				Documentation area.</para>
+			</answer>
+			
+			<question>
+				<para>What would be required to port my MFC App to VCF?</para>
+			</question>
+			<answer>
+				<para>A miracle? Seriously porting an existing code in one framework to another
+				is not a 5 minute job. It would partially depend on what features of MFC you make use of
+				and how you built your app. Many of the function names are different or subtly different.
+				The basic core concepts are pretty much the same, but the fundamental design of the two
+				frameworks is quite different.
+				</para>
+			</answer>
+			<question>
+				<para>What platforms and/or compilers does the VCF support?</para>
+			</question>
+			<answer>
+				<para>Currently the VCF runs on Win32 (Windows 98, Windows NT 4 sp4 or better, Windows 2000
+						and Windows XP). A linux port (with the UI/graphics parts based on GTK) is currently 
+						underway and making good progress). Some work has been done on MacOSX, but it is 
+						sporadic at best.</para>
+				<para>
+				As far as supported compilers, the VCF is known to compile/link with:
+				<itemizedlist>
+					<listitem>	<para>
+					Microsoft Visual C++ 6 (sp5)
+					</para></listitem>
+					<listitem>	<para>
+					Microsoft Visual C++ 7
+					</para></listitem>
+					<listitem>	<para>
+					GCC 2.95
+					</para></listitem>
+					<listitem>	<para>
+					GCC 3.2
+					</para></listitem>
+				</itemizedlist>						
+				</para>
+			</answer>
+			<question>
+				<para>How are the resources handled between OS's?</para>
+			</question>
+			<answer>
+				<para>On Win32 platforms resources are compiled into the executable using the toolchains rc compiler.
+				For other platforms, the VCF will use whatever native support there is, or come up with an 
+				appropriate scheme.</para>
+			</answer>
+			<question>
+				<para>If a serious security/memory/whatever issue was found 18 months down 
+				the track how is this handled? In general where do I go if I find bugs, and 
+				if I do, how can I get them resolved?</para>
+			</question>
+			<answer>
+				<para></para>
+			</answer>
+			<question>
+				<para>How do I know what headers to use in my application? </para>
+			</question>
+			<answer>
+				<para>
+				As a general rule you can do the following:	
+				<itemizedlist>
+					<listitem><para>
+					If you're just using the FoundationKit, then you can 
+					simply include the FoundationKit.h, i.e.
+					<programlisting>
+<![CDATA[					
+#include "FoundationKit.h"					
+]]>
+					</programlisting>
+					</para></listitem>
+					<listitem><para>
+					If you're just using the GraphicsKit, then you can 
+					simply include the GraphicsKit.h, i.e.
+					<programlisting>
+<![CDATA[					
+#include "GraphicsKit.h"					
+]]>
+					</programlisting>
+					The GraphicsKit depends on the FoundationKit and will
+					automatically include the FoundationKit header.
+					</para></listitem>
+					<listitem><para>
+					If you're using the ApplicationKit, then you can 
+					simply include the ApplicationKit.h, i.e.
+					<programlisting>
+<![CDATA[					
+#include "ApplicationKit.h"					
+]]>
+					</programlisting>
+					The ApplicationKit depends on the GraphicsKit and will
+					automatically include the GraphicsKit header.
+					</para></listitem>		
+				</itemizedlist>
+				
+				</para>
+			</answer>
+			<question>
+				<para>Why do I have to set environment variables?</para>
+			</question>
+			<answer>
+				<para>The VCF uses three environment variables to identify the following:
+				<itemizedlist>
+					<listitem>	<para>
+					Where the vcf/include directory is (as an absolute path), stored as VCF_INCLUDE.
+					This is the base include directory.
+					</para></listitem>
+					<listitem>	<para>
+					Where the vcf/lib directory is (as an absolute path), stored as VCF_LIB.
+					This is the base library directory.
+					</para></listitem>
+					<listitem>	<para>
+					GCC 2.95
+					</para></listitem>
+					<listitem>	<para>
+					GCC 3.2
+					</para></listitem>
+				</itemizedlist>
+				</para>
+			</answer>
+			<question>
+				<para>Will the VCF really save the world ?</para>
+			</question>
+			<answer>
+				<para>No, this is a cruel rumor started by an obviously deranged 
+				individual. Probably someone who spends far, far too much time in 
+				front of a computer...
+				</para>
+			</answer>			
+		</qandaentry>
+	</qandaset>
+	</section>
+	<section><title>Installation/Building the VCF</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>Where the heck do I get this from ?</para>
+			</question>
+			<answer>
+				<para>
+				You can get the VCF from the "Files" section at the Source Forge project page.
+				Alternately you can also get the VCF from CVS, either in the current stable 
+				release, or directly from the most recent (potentially <emphasis>unstable</emphasis>)
+				development release.
+				</para>
+			</answer>
+			<question>
+				<para>Do I have to use CVS ?</para>
+			</question>
+			<answer>
+				<para>
+				If you want to get the VCF sources from the CVS source tree, or be able to contribute 
+				to the VCF as developer, yes. Otherwise you can get the source from the project's
+				file downloads page, and submit patches for VCF devlopers to patch into the CVS tree.
+				</para>
+			</answer>
+			<question>
+				<para>What about SSH ?</para>
+			</question>
+			<answer>
+				<para>
+				To use allow people to securely use CVS, Source Forge uses SSH. Most linux installations
+				have this installed (as well as CVS), and Win32 users can get this set up and running 
+				by downloading and installing <ulink url="http://www.cygwin.com">Cygwin</ulink>.
+				</para>
+			</answer>
+			<question>
+				<para>What other libraries do I need to get the VCF to run?</para>
+			</question>
+			<answer>
+				<para>
+				This partly depends on the platform you use. For Win32 platforms the
+				VCF has everything it needs in the source distribution. For Linux platforms
+				you'll need GTK 2 (and whatever libraries that GTK requires).
+				</para>
+			</answer>
+			<question>
+				<para>What do I need to build ? Why do I have to build anything ? 
+				Can't I just get the binaries ?</para>
+			</question>
+			<answer>
+				<para>For Win32 system's you can download the entire VCF including pre-built
+				binaries, documentation, source, and MSDN integration all in one easy installer.
+				As other platform ports become complete, similar installers will be made available.
+				</para>
+				<para>
+				In terms of what parts of VCF you have build, this is partially dependant on how 
+				you plan to use it. For console applications, it's likely that hte FoundationKit
+				library is all you need. For GUI applications, you'll most likely want the 
+				ApplicationKit, which in turn requires the GraphicsKit and FoundationKit libraries.
+				</para>
+			</answer>
+			<question>
+				<para>The documentation mentions a folder named "bin" which must be included 
+				in the system path. I do not see any bin folder. Where is it?</para>
+			</question>
+			<answer>
+				<para>
+				When you download the source code, the "bin" and "lib" directories
+				do not exist. When you build the source code, these will be created 
+				automatically as part of the build process. The "bin" directory holds
+				the linked binary files (like .DLL/.so or .exe files) and the "lib"
+				directory holds .lib or .a files. If you installed the VCF 
+				through the installer, these directories will exist since the pre-built
+				binaries will be installed there.
+				</para>
+			</answer>
+			<question>
+				<para>Using Visual C++ I get compiler errors complaining that it can't find certain 
+				files. What do I do? </para>
+			</question>
+			<answer>
+				<para>
+				Make sure that Visual C++ can find the vcf/include directory. This is what the 
+				VCF_INCLUDE environment variable is for. An alternate solution (for Visual C++)
+				is to add the vcf/include directory to the global list of include directories that
+				Visual C++ searches through. To do this
+				<itemizedlist>
+					<listitem>	<para>
+					Go to "Tools > Options..."
+					</para></listitem>
+					<listitem>	<para>
+					Click on the "Options" tab.
+					</para></listitem>
+					<listitem>	<para>
+					In the "Show Directories for:" drop down, select "Include files".
+					</para></listitem>
+					<listitem>	<para>
+					Go to the end of the list, double click a blank item and add teh path to 
+					wherever the vcf/include directory is found on your system.
+					</para></listitem>
+					<listitem>	<para>
+					Click "OK" and you should be good to go.
+					</para></listitem>
+				</itemizedlist>
+				</para>
+			</answer>
+			<question>
+				<para>Using GCC I get compiler errors complaining that it can't find certain 
+				files. What do I do?</para>
+			</question>
+			<answer>
+				<para>
+				Ensure that the make file is correctly pointing to wherever the vcf/include
+				is on your machine. If your building the VCF from the makefile, this shouldn't 
+				be a problem. If you're having problems with building you own applications that 
+				use the VCF, make sure you are including some thing like "-I $(VCF_INCLUDE)" in your
+				make files.
+				</para>
+			</answer>				
+			<question>
+				<para>Using Visual C++ I get linker errors. What do I do? </para>
+			</question>
+			<answer>
+				<para>
+				You probably do not have the vcf/lib directory in Visual C++'s lib path. 
+				</para>
+			</answer>				
+			<question>
+				<para>When I run my program (using Visual C++) I get weird crashes and memory 
+				overwrites</para>
+			</question>
+			<answer>
+				<para>Make sure your code generation options match the VCF's (or any other 
+				library you may link to). You should be using the "Multi Threaded DLL"
+				or "Debug Multi Threaded DLL" (/MD or /MDd, respectively). If you don't do
+				this, then memory that you allocate and delete will run into problems with 
+				other libraries memory management.</para>
+			</answer>				
+			<question>
+				<para>When I attempt to compile with Visual C++ 6, I get an Internal Compiler Error. 
+				What do I do?</para>
+			</question>
+			<answer>
+				<para>Make sure that you have installed 
+				<ulink url="http://msdn.microsoft.com/vstudio/downloads/updates/sp/vs6/sp5/dnldoverview.aspx">
+				Service Pack 5</ulink> for Visual Studio C++. Also the Standard version of 
+				Visual C++ seems to have some problems, so you'll need to use the Professional 
+				or Enterprise version.
+				</para>
+			</answer>				
+			<question>
+				<para>I am using BoundsChecker, and it claims I have all sorts of memory leaks? 
+					Is this really correct?</para>
+			</question>
+			<answer>
+				<para>
+				Bounds Checker 6.x for Visual C++ tends to "quit" too early, and thus reports any 
+				memory that it thinks is still allocated as "leaks", regardless if the memory is 
+				freed by the application later on. This is a known bug, and affects other libraries
+				that do their own memory reporting, and can safely be ignored. If you are in debug
+				mode, and have the memory traps for VCF enabled (they are on by default), then
+				any objects (that are directly or indirectly derived from VCF::Object) that have 
+				not been freed are reported by the VCF.
+				</para>
+			</answer>				
+			<question>
+				<para>Can I use the VCF without writing a GUI?</para>
+			</question>
+			<answer>
+				<para>You most certainly can! Applications that do not need
+				a user interface can simply link to the FoundationKit library.
+				</para>
+				<para>
+				Should your application need graphics support (but not want or need
+				any of the various GUI classes, such as controls, etc), it can link
+				to the GraphicsKit library (this is in addition to the FoundationKit).
+				</para>
+			</answer>							
+		</qandaentry>
+	</qandaset>	
+	</section>	
+	<section><title>Contributing</title>
+	<qandaset>
+		<qandaentry>
+			<question> 
+				<para>Do I have to checkout all the code from sourceforge before 
+					I can add  something?</para> 
+			</question>
+			<answer>
+				<para>You don't have to check it out. You can also send a patch. See the patch 
+				submission page at the SourceForge project page 
+				<ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=306796">here</ulink>
+				</para>
+			</answer>
+
+			<question>
+				<para>How do I joing the project?</para>
+			</question>
+			<answer>
+				<para>
+				You must be a member of Source Forge (it's free), which you can do 
+				<ulink url="http://sourceforge.net/account/register.php">here</ulink>. 
+				Once you have joined the Source Forge, you can email the VCF Project admins
+				and they can add you to the project.
+				</para>
+			</answer>
+
+			<question>
+				<para>Can I submit changes with out using CVS?</para>
+			</question>
+			<answer>
+				<para>Yes you can use the Patch system that can be found on the 
+				 VCF's Source Forge project page.</para>
+			</answer>
+			
+			<question>
+				<para>Do you accept a patches? </para>
+			</question>
+			<answer>
+				<para>Yes, click <ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=306796">
+				here</ulink> for more information. You must be logged in to Source Forge as a 
+				registered Source Forge user before you can submit a new patch.
+				</para>
+			</answer>
+		</qandaentry>
+	</qandaset>			
+	</section>
+	<section><title>Libraries</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>what is that Blackbox stuff?</para>
+			</question>
+			<answer>
+				<para>
+				BlackBox is a Win32 DLL that can help track exceptions that happen at runtime,
+				and can provide a stack trace that shows where the error occured. It is conceptually
+				similar to the TalkBack module that Mozilla uses in their builds to handle error
+				reporting.
+				</para>
+			</answer>
+		</qandaentry>
+	</qandaset>	
+	</section>
+	<section><title>Miscellaneous</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>How do you document the source code?</para>
+			</question>
+			<answer>
+				<para>
+				Source code documentation is done through comments in the source headers
+				using <ulink url="http://java.sun.com/j2se/javadoc/writingdoccomments/index.html">
+				Javadoc notation</ulink> (such as @author, @version, @return, @param, etc).				
+				</para>
+				<para>
+				The documentation itself is produced by using 
+				<ulink url="http://www.stack.nl/~dimitri/doxygen/">doxygen</ulink> 
+				on all the source files.
+				</para>
+			</answer>
+			<question>
+				<para>What do you use to produce general documentation?</para>
+			</question>
+			<answer>
+				<para>
+				The general documentation (which is what your reading right now) is produced
+				by using <ulink url="http://docbook.sourceforge.net">docbook</ulink>.
+				All the documentation is written in xml conforming to the docbook DTD. It is 
+				then transformed by various docbook xsl stylesheets to produce the online 
+				html and HTML Help files.
+				</para>
+			</answer>
+			<question>
+				<para>How can I edit and/or contribute to the VCF's documentation?</para>
+			</question>
+			<answer>
+				<para>
+				The core documentation is located in a series of .xml files in the 
+				vcf/docs directory. To add documentation to the VCF you should edit 
+				these files. Please see the section on "Documentation Standards 
+				and Generation" (section 1.6.4.2).
+				</para>
+			</answer>
+
+			<question>
+				<para>Is Doxygen free? Is it easy  to use like javadoc?</para>
+			</question>
+			<answer>
+				<para>Yes, Doxygen is free, and supports most of the basic javadoc tags 
+				(which is why I use it).</para>
+			</answer>			
+			<question>
+				<para>What is the VCF's performance relative to MFC?</para>
+			</question>
+			<answer>
+				<para>
+				VCF performance is equivalent to MFC, and adds a noumber of "for free" features,
+				like double buffering, and layout, that you typically have to write by hand
+				in MFC. In addition the number of calls from when a native Win32 event is received
+				to getting to an event handler within the framework is often much less, as MFC adds 
+				a number of "extra" handling between the time the event is fired and is received 
+				by the developers callback.
+				</para>
+			</answer>			
+			<question>
+				<para>What is the size/memory footprint difference of an 
+				application written with VCF vs MFC?</para>
+			</question>
+			<answer>
+				<para>
+				In terms of memory used by an application, the VCF uses more memory. For small
+				utility applications, or size critical applications, this might make a difference,
+				but for larger "desktop" applications, the difference becomes much less as the 
+				application itself takes a lot of memory due to features and/or complexity
+				regardless of using MFC or the VCF.
+				</para>
+				<para>
+				The runtime binary libraries for the VCF are under 3MB in size (this includes
+				the FoundationKit, GraphicsKit, and ApplicationKit).
+				</para>
+			</answer>			
+			<question>
+				<para>Is there a way to statically link to VCF rather then use the dlls? </para>
+			</question>
+			<answer>
+				<para>
+				Yes, you can use the VCF as a static library.
+				</para>
+			</answer>						
+			<question>
+				<para>If I have written and application in MFC can I still use the VCF libraries in 
+				this app? How hard/easy is it to integrate VCF code with other frameworks or vice-versa?
+				</para>
+			</question>
+			<answer>
+				<para></para>
+			</answer>			
+			<question>
+				<para>How long will this project last? What happens in the original or current 
+				developers lose interest? </para>
+			</question>
+			<answer>
+				<para></para>
+			</answer>
+			<question>
+				<para>Is the VCF help documentation integrated with the MSDN help for Visual Studio users?</para>
+			</question>
+			<answer>
+				<para>
+				Yes, the win32 installer executable can integrate the VCF's documentation into 
+				your MSDN collection.
+				</para>
+			</answer>
+		</qandaentry>
+	</qandaset>	
+	</section>	
+	<section><title>FoundationKit</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>Does the VCF support XML?</para>
+			</question>
+			<answer>
+				<para>
+				Yes. See the VCF::XMLParser class. The XMLParser class can handle
+				basic xml files (it does not do any validation however). It can parse
+				xml from a file name, or from string of xml text. Once parsed you can 
+				access the xml document as an enumeration of XMLNodes. Alternately you
+				can add event handlers to the XMLParser to get notified as it parses 
+				the xml contents.
+				</para>
+				<para>
+				An example of this looks like this:
+				<programlisting>
+<![CDATA[
+VCF::XMLParser parser;
+VCF::FileInputStream fs("path/to/some/file.xml");
+parser.parse( &fs );
+VCF::Enumerator<VCF::XMLNode*>* nodes =  parser.getParsedNodes();
+while( nodes->hasMoreElements() ) {
+	XMLNode* node = nodes->nextElement();
+		if ( node->getName() == "foo" ) {
+			XMLAttr* barAttr = node->getAttrByName( "bar" );
+			String barVal = barAttr->getValue();
+			String nodeCDATA = node->getCDATA();
+		}
+	}
+}
+]]>
+				</programlisting>
+				</para>
+			</answer>
+			<question>
+				<para>What is the VCF::Interface good for?</para>
+			</question>
+			<answer>
+				<para>
+				The VCF::Interface simply identifies a class as being an "interface". In 
+				and of itself it has no functionality, other than to derve as a base 
+				class for other interfaces.
+				</para>
+			</answer>
+			<question>
+				<para>How do I create a new thread ?</para>
+			</question>
+			<answer>
+				<para>
+				You can create a thread by deriving a new class from VCF::Thread,
+				and override the run() method. In your run() implementation you can 
+				put whatever code you want to execute for your thread. To use the
+				class you just create a new instance of it, call VCF::Thread::start(),
+				and you're done. When your thread exits it's run() method, it will 
+				delete itself. For more advanced usages, or to see how to further control
+				the Thread behaviour (such as prevent auto deletion), see the VCF::Thread
+				class documention.
+				</para>	
+				<para>
+				A brief example looks like this:
+				<programlisting>
+<![CDATA[
+
+bool canQuit = false;
+
+class MyThread : public VCF::Thread {
+public:
+	virtual bool run() {
+		int fooVal = 0;
+		while ( fooVal < 1000 ) {
+			fooVal ++;
+			int calcVal = fooVal * sin(0.1234) - cos(0.78 * fooVal/(fooVal*2.0));
+		}
+		canQuit = true;
+		return true;
+	}
+};
+
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
+	Thread* thread = new MyThread();
+	thread->start();
+
+	while ( !canQuit ) {
+		
+	}
+
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+				</programlisting>
+				</para>
+			</answer>
+			<question>
+				<para>How about Mutexs, Semaphores, etc ?</para>
+			</question>
+			<answer>
+				<para>
+				Creating a mutex is easy:
+<programlisting>
+<![CDATA[
+Mutex* m = new Mutex();
+]]>
+</programlisting>		
+				To lock the mutex, simple call the Mutex::lock() method. If the lock() 
+				fails it will return false. To unlock the mutex call the unlock method.
+				For example:
+<programlisting>
+<![CDATA[
+Mutex* m = getMyMutex();
+m->lock();
+String s = "Hello!";
+myVectorOfStrings.push_back( s );
+m->unlock();
+]]>
+</programlisting>		
+				</para>
+			</answer>
+			<question>
+				<para>Are the collections thread safe ?</para>
+			</question>
+			<answer>
+				<para>
+				Collections are only as safe as the STL version that implements them. Please 
+				check the documentation for the version of the STL that you're using 
+				for more information about this.
+				</para>
+			</answer>
+			<question>
+				<para>How do I access a file ?</para>
+			</question>
+			<answer>
+				<para>
+				If you want to read or write the contents of a file, use the 
+				VCF::FileInputStream or VCF::FileOutputStream classes. If you want to 
+				manipulate the file, for example copying it, or deleting it,
+				use the VCF::File class.
+				</para>
+				<para>
+				A quick example of reading from a file:
+<programlisting>
+<![CDATA[
+FileInputStream fis("path/to/some/file.txt");
+String fileText;
+fis >> fileText;
+]]>
+</programlisting>
+				A quick example of writing to a file:
+<programlisting>
+<![CDATA[
+FileOutputStream fos("path/to/some/file.txt");
+String fileText = "blah blah blah, yada, yada, yada";
+fos << fileText;
+]]>
+</programlisting>	
+				A quick example of copying and then deleting a file:
+<programlisting>
+<![CDATA[
+File f("path/to/some/file.txt");
+f.copyTo( "some/other/cool/path/file.txt" );
+f.remove();
+]]>
+</programlisting>	
+				</para>
+			</answer>
+			<question>
+				<para>How do I change a files name ? </para>
+			</question>
+			<answer>
+				<para>
+				Use the VCF::File class, and call the VCF::File::setName() method.
+				A quick example of changing the name:
+<programlisting>
+<![CDATA[
+File f("path/to/some/file.txt");
+f.setName( "some/other/cool/path/file.txt" );
+]]>
+</programlisting>
+				</para>
+			</answer>
+			<question>
+				<para>Can I delete the file programmatically ? Does this actually delete the physical file on the hard disk ?</para>
+			</question>
+			<answer>
+				<para>
+				Yes, use the VCF::File class, and call the VCF::File::remove() method. 
+				Be careful as this will really delete the file!
+				</para>
+			</answer>
+			<question>
+				<para>Does the VCF support ref counting ?</para>
+			</question>
+			<answer>
+				<para>
+				Yes. The VCF::Object class has methods for handling this. See 
+				VCF::Object::addRef(), and VCF::Object::release().
+				</para>
+			</answer>
+			<question>
+				<para>Does the VCF support garbage collecting?</para>
+			</question>
+			<answer>
+				<para>
+				No, at least not at this point. If you need garbage collector
+				you'll have to implement this integration your self.
+				</para>
+			</answer>
+			<question>
+				<para>Does the VCF have a set of collection classes?</para>
+			</question>
+			<answer>
+				<para>
+				Not really. The VCF makes heavy of STL which has an excellent set 
+				of collection classes for virtually any use. What the VCF does provide
+				is a simple enumeration class that <emphasis>wraps</emphasis> the 
+				STL collection classes so you can get an enumeration back with being
+				tied to the precise underlying collection implementation.
+				</para>
+			</answer>			
+			<question>
+				<para>Whats the point of the Object::destroy() and Object::free() methods</para>
+			</question>
+			<answer>
+				<para>
+				In a typical C++ destructor it is not safe to call
+				virtual methods, yet there are times when you need to do so. To 
+				achieve this the VCF uses the Object::free() method to destroy all
+				heap based instances. When Object::free() is called, it first calls
+				Object::destroy(), and then deletes the instance. The Object::destroy() 
+				is a virtual method that you can override in your own classes, and 
+				provides a safe place to reclaim the object's resources and make
+				virtual function calls. 
+				</para>
+			</answer>
+			<question>
+				<para>What is the "proper" or preferred way to delete an instance on the Heap?</para>
+			</question>
+			<answer>
+				<para>
+				If the instance is derived (directly or indirectly) from VCF::Object, then
+				the preferred way to delete the instance is to call the Object::free() member
+				function. If the instance does not derive from VCF::Object then you can
+				use the more traditional delete operator.
+<programlisting>
+<![CDATA[
+class MyObject : public VCF::Object {
+public:
+	
+};
+
+class Stuff {
+
+};
+
+class MyObject2 : public MyObject {
+
+};
+
+int main( int argc, char** argv )
+{
+	Object* instance1 = new MyObject();
+	MyObject2* instance2 = new MyObject2();
+	Stuff* instance3 = new Stuff();
+
+	//delete all the instances
+	
+	instance1->free();
+	instance2->free();
+	delete instance3;
+}
+]]>
+</programlisting>
+				</para>
+			</answer>
+			<question>
+				<para>When should I create objects on the heap versus the stack in the VCF?</para>
+			</question>
+			<answer>
+				<para>
+				As a general rule, you'll want to create most VCF based objects 
+				on the heap, with the C++ new operator. All of the Component based
+				classes should be create on the heap, with the exception of a modal
+				Dialog. Some of the utility classes like Rect, Point, String, and Size can 
+				be created on the stack.
+				</para>
+			</answer>
+			<question>
+				<para>What's the deal with the Enumerator class? I thought the VCF only used the STL for collections?</para>
+			</question>
+			<answer>
+				<para>
+				The VCF::Enumerator class is simply a thin wrapper around an STL iterator.
+				This provides a generic way to enumerate through a collection without having 
+				to care or expose the actual collection implementation type.
+				</para>
+			</answer>
+			<question>
+				<para>Does the VCF support Unicode?</para>
+			</question>
+			<answer>
+				<para>
+				Not yet. Support for Unicode will come in conjuntion with
+				Internationalization (i18n) and Localization (l10n) support.
+				</para>
+			</answer>
+			<question>
+				<para>Does the VCF support i18n and l10n ?</para>
+			</question>
+			<answer>
+				<para>
+				Not yet. As of November 2, 2003, it does not, but 
+				have no fear! There are plans to implement this 
+				support relatively soon.
+				</para>
+			</answer>
+			<question>
+				<para>How do I use the Input/Output streams?</para>
+			</question>
+			<answer>
+				<para>
+				Input and Output streams are easy to use. You can determine the amount
+				of data in the stream by calling getSize(). You can write to the stream 
+				using the write() method, or write any basic type (int, char, double, 
+				String) using the specialized write() method. You can write a buffer of
+				data by passing in a const unsigned char pointer and a size. You can 
+				read from an InputStream in similar fashion, using one of the read 
+				functions.
+				</para>
+			</answer>
+			<question>
+				<para>How do I persist my objects data to a file?</para>
+			</question>
+			<answer>
+				<para>
+				Well the easy way is to simply implement the Persistable interface, and 
+				then just pass your object to a stream. For example:
+<programlisting>
+<![CDATA[
+class MyObject : public VCF::Object, public VCF::Persistable {
+public:
+	virtual void saveToStream( VCF::OutputStream * stream ) {
+		stream->write( myCount_ );
+		stream->write( myName_ );
+	}
+
+	virtual void loadFromStream( VCF::InputStream * stream ) {
+		stream->read( myCount_ );
+		stream->read( myName_ );
+	}
+protected:
+	int myCount_;
+	String myName_;
+};
+
+int main( int argc, char** argv )
+{
+	FoundationKit::init(argc,argv);
+	MyObject obj;
+	
+	FileOutputStream fso("path/to/my/file.txt");
+	fso.write( &obj ); //or you could have written fso << &obj;
+	fso.close();
+
+	FileInputStream fsi("path/to/my/file.txt");
+	fsi >> &obj;
+	fsi.close();
+	
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+</programlisting>
+				</para>
+			</answer>
+			<question>
+				<para>How do I get at the command line arguments sent to my
+						application (for example, if I wanted to know what file 
+						to open)?</para>
+			</question>
+			<answer>
+				<para>
+				Call FoundationKit::getCommandLine() which will return a CommandLine 
+				object. See the documentation for the VCF::CommandLine class.
+<programlisting>
+<![CDATA[
+CommandLine commandLine = FoundationKit::getCommandLine();
+if ( commandLine.hasSwitch("-h") ) {
+	//show usage listing...
+}
+]]>
+</programlisting>
+
+				</para>
+			</answer>
+			<question>
+				<para>I got the VCF installed fine and my program compiled and 
+						linked fine, but as soon as I run my application
+						it crashes! What's wrong?</para>
+			</question>
+			<answer>
+				<para>
+				You may not have initialized it correctly. If you have an app that makes 
+				use of only the FoundationKit, then you have to initialize it like so:
+<programlisting>
+<![CDATA[
+int main( int argc, char** argv )
+{
+	//initialize the FoundationKit
+	VCF::FoundationKit::init(argc,argv);
+	//your code here
+	
+	//close the FoundationKit down
+	VCF::FoundationKit::terminate(); 
+	return 0;
+}
+]]>
+</programlisting>
+				</para>
+				<para>
+				Likewise, if your application uses the GraphicsKit, then you need to 
+				initialize the  GraphicsKit, by calling  GraphicsKit::init(argc,argv).
+				Initializing the GraphicsKit automatically initializes the FoundationKit,
+				and terminating the GraphicsKit also terminates the FoundationKit. 
+				</para>
+				<para>For applications that use a GUI the process is a little different.
+				At the very least you need to create an Application instance (on the stack is OK),
+				passing in the argc and argv arguments to the constructor, and then 
+				call Application::main(). The initialization of the 
+				ApplicationKit, GraphicsKit, and FoundationKit will be taken care of for 
+				you. As an example:
+<programlisting>
+<![CDATA[
+int main( int argc, char** argv )
+{
+	VCF::Application app( argc, argv );
+	Application::main();	
+	return 0;
+}
+]]>
+</programlisting>
+				</para>
+			</answer>		
+			<question>
+				<para>Is there some kind of sprintf like routine in the VCF? 
+						I can't seem to find anything and I really would like one!</para>
+			</question>
+			<answer>
+				<para>
+				Yes, look in the StringUtils class for the static member function 
+				VCF::StringUtils::format(). You can use like so:
+<programlisting>
+<![CDATA[
+String formattedString = 
+	StringUtils::format( "Hello from: %s at %d seconds to %0X4 at %.2f", "FooBar", 10, 124, 123.34788 );
+]]>
+</programlisting>
+				</para>
+			</answer>
+<!--			
+			<question>
+				<para></para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+-->			
+		</qandaentry>
+	</qandaset>
+	</section>
+	<section><title>GraphicsKit</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>How do I draw lines ? How do I draw thick lines ?</para>
+			</question>
+			<answer>
+				<para>
+				Drawing lines is accomplished with the GraphicsContext::moveTo() and 
+				GraphicsContext::lineTo() methods, and to render the lines to the screen,
+				you call GraphicsContext::strokePath(). A quick example:
+<programlisting>
+<![CDATA[
+GraphicsContext* gc = getMyGraphicsContext();//get the graphics context some how....
+//draw a square
+gc->moveTo( 0.0, 0.0 );
+gc->lineTo( 100.0, 0.0 );
+gc->lineTo( 100.0, 100.0 );
+gc->lineTo( 0.0, 100.0 );
+gc->lineTo( 0.0, 0.0 );
+
+//render 
+gc->strokePath();
+]]>
+</programlisting>
+				</para>
+				<para>Drawing with thick lines is also easy, just adjust the current
+				stroke width of the GraphicsContext by calling GraphicsContext::setStrokeWidth(),
+				for example:
+<programlisting>
+<![CDATA[
+GraphicsContext* gc = getMyGraphicsContext();//get the graphics context some how....
+//draw a square
+gc->moveTo( 0.0, 0.0 );
+gc->lineTo( 100.0, 0.0 );
+gc->lineTo( 100.0, 100.0 );
+gc->lineTo( 0.0, 100.0 );
+gc->lineTo( 0.0, 0.0 );
+
+//render 
+gc->strokePath();
+
+gc->setStrokeWidth( 10.0 );
+//draw a thicker square
+gc->moveTo( 200.0, 200.0 );
+gc->lineTo( 300.0, 200.0 );
+gc->lineTo( 300.0, 300.0 );
+gc->lineTo( 200.0, 300.0 );
+gc->lineTo( 200.0, 200.0 );
+
+//render 
+gc->strokePath();
+]]>
+</programlisting>
+</para>
+			</answer>
+			<question>
+				<para>How do I draw ellipses? Rectangles?</para>
+			</question>
+			<answer>
+				<para>
+				To draw an ellips, use the GraphicsContext::ellipse 
+				method. To draw a rectangle, use the GraphicsContext::rectangle()
+				method.
+<programlisting>
+<![CDATA[
+GraphicsContext* gc = getMyGraphicsContext();//get the graphics context some how....
+gc->ellipse( 20, 20, 100, 100 );
+gc->rectangle( 400, 400, 500, 600 );
+gc->strokePath();
+]]>
+</programlisting>				
+				</para>
+			</answer>
+			<question>
+				<para>Is there any support for anti-aliased graphics?</para>
+			</question>
+			<answer>
+				<para>
+				Yes, the VCF uses the <ulink url="http://www.antigrain.com/">
+				AGG C++ graphics library</ulink> for 
+				performing advanced anti-aliased vector graphics.
+				</para>
+			</answer>
+			<question>
+				<para>How do I use anti-aliased drawing?</para>
+			</question>
+			<answer>
+				<para>
+				If you're drawing in a Control, then the simplest way is 
+				to turn it on by calling Control::setUsingRenderBuffer(true),
+				and then use the BasicStroke and BasicFill classes to draw
+				with. You can see an example of this in the 
+				vcf/examples/StrokesAndFills directory.
+				</para>
+			</answer>
+			<question>
+				<para>Is there an equivalent for the Win32 API call DrawEdge() ?</para>
+			</question>
+			<answer>
+				<para>
+				Yes, you can call the GraphicsContext::drawEdge() method.
+<programlisting>
+<![CDATA[
+GraphicsContext* gc = getMyGraphicsContext();//get the graphics context some how....
+long edgeSides = GraphicsContext::etAllSides;
+long edgeStyle = GraphicsContext::etSunken;
+gc->drawEdge( &Rect(20,20,100,100), edgeSides, edgeStyle );
+]]>
+</programlisting>				
+				</para>
+			</answer>
+			<question>
+				<para>How do I change the color of a pen or brush ? Are there even pens or brushes ?</para>
+			</question>
+			<answer>
+			<para>
+			There are no Pen or Brush objects in the VCF. Instead you set the basic 
+			attributes of a GraphicsContext object. For more advanced graphics features
+			you would implement specific Stroke or Fill classes.
+			</para>
+			<para>
+			To change the color that the GraphicsContext uses to fill or stroke a path
+			you just need to call GraphicsContext::setColor() and pass in a pointer to 
+			a color object. For example:
+			<programlisting>
+<![CDATA[
+GraphicsContext* gc = getMyGraphicsContext();//get the graphics context some how....
+gc->setColor( Color::getColor("red") );
+
+gc->moveTo( 10, 10 );
+gc->lineTo( 10, 100 );
+gc->strokePath();
+]]>			
+			</programlisting>
+			This will draw a straight vertical line, 90 pixels long, with the color
+			red.
+			</para>
+			</answer>
+			<question>
+				<para>What's the deal with GraphicsContext::strokePath() and GraphicsContext::fillPath() methods?</para>
+			</question>
+			<answer>
+				<para>
+				The GraphicsContext::strokePath() or GraphicsContext::fillPath() are used to
+				either stroke, or fill the current path(s). A path is made using the GraphicsContext's
+				moveTo(), lineTo(), curveTo(), 
+				</para>
+			</answer>
+			<question>
+				<para>How do I create an Image? Can I create one from a file? A resource?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I draw an Image ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I modify Images ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>What's the Stroke class for? What about the Fill class?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I draw text?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I measure the length of some text I'd like to draw? What about the height?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I change the font that is used to render some text?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I change the color of text?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+
+
+		</qandaentry>
+	</qandaset>
+	</section>
+	<section><title>ApplicationKit</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>What kinds of controls(or widgets) are there in the 
+				VCF?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I create a Timer ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>What is the bare minimum necessary to create a new control ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>What's the difference between a heavyweight and lightweight control ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do I override events on my control ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do I trap mouse events for my custom control ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>What method do I override to draw or paint the control ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do I make a window visible or show up?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do I close a window?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do I delete the memory for a Window or Dialog instance that I created ?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>Can existing controls be customized?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>	
+			<question>
+				<para>How do add owner draw support to menu items?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+
+			</answer>
+			<question>
+				<para>Can I use threads in my GUI built with the ApplicationKit? If
+					so what's the best way to do this?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>Can I change the parent of a control at runtime?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I set the position of a Control? What about the
+					width and/or height?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I add a context menu?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How can I send an event asynchronously to an event
+						handler? Is there some equivalent to Window's PostMessage?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I add a menu bar and menu items?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I create and display a modal dialog?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I show a message in a modal dialog, such as an 
+					error message?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I tell what the top level window it?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How to I get my control to refresh?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I make a control disabled (or enabled)? How do 
+					I tell if it's already enabled?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I make a floating top level window apear with 
+					no borders or caption/title bar (like a splash screen)?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I set the focus to a particular control? How do 
+						I tell which control is currently focused?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I support drag and drop?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I change the cursor of a Control?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I add support for hot key combinations (like Ctrl+"C")?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I add scrolling support for a control?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>Can I make my own cursor? If so how?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>What's the difference bewteen a Component, Control,
+						Frame, Dialog and Window?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+			<question>
+				<para>How do I make a control keep all the mouse events? Is there
+					something analgous to Win32's ::SetCapture GTK's gdk_pointer_grab()?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>
+		</qandaentry>
+	</qandaset>
+	</section>
+	<section><title>Component Authoring</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>a question?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>			
+		</qandaentry>
+	</qandaset>
+	</section>	
+	<section><title>NetworkKit</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>a question?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>			
+		</qandaentry>
+	</qandaset>
+	</section>
+	<section><title>RemoteObjectKit</title>
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>a question?</para>
+			</question>
+			<answer>
+				<para>
+				An answer.
+				</para>
+			</answer>			
+		</qandaentry>
+	</qandaset>
+</section>
+
+
+<!--
+CVS Log info
+
+$Log$
+Revision 1.2  2003/12/18 05:15:52  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.12  2003/12/01 03:44:12  ddiego
+added some fixes to the Win32Toolbar impl. A few minor changes to the
+toolbar example (which also got added). Some minor changes to docs
+as well.
+
+Revision 1.1.2.11  2003/11/10 22:17:36  ddiego
+added some more updates to docs - finished off event section
+
+Revision 1.1.2.10  2003/11/04 22:10:32  ddiego
+*** empty log message ***
+
+Revision 1.1.2.9  2003/11/03 22:21:01  ddiego
+more faq documentation
+
+Revision 1.1.2.8  2003/10/22 21:14:37  ddiego
+adjusted the xsl stylesheet so it works with new version of xsltproc
+
+Revision 1.1.2.7  2003/10/06 04:25:56  ddiego
+updated foundationkit docs
+
+Revision 1.1.2.6  2003/10/04 06:51:58  ddiego
+answered more faq questions
+
+Revision 1.1.2.5  2003/10/03 04:34:16  ddiego
+added updates to FAQ
+
+Revision 1.1.2.4  2003/10/03 01:45:29  ddiego
+updates to faqs
+
+Revision 1.1.2.3  2003/10/01 21:49:56  ddiego
+*** empty log message ***
+
+Revision 1.1.2.2  2003/10/01 04:34:52  ddiego
+more faq editing
+
+Revision 1.1.2.1  2003/10/01 01:57:27  ddiego
+added the new faqs docs - all faqs i nthe document are now in one place
+as opposed to being spread out over different chapters.
+
+-->

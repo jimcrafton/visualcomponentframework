@@ -23,6 +23,8 @@ CFG=Win32HTMLBrowser - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -41,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "WIN32HTMLBROWSER_DLL" /D "WIN32HTMLBROWSER_EXPORTS" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /D "_ATL_STATIC_REGISTRY" /D "BUILD_WIN32HTMLBROWSER_LIB" /Fo"vc6/Release/" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "WIN32HTMLBROWSER_DLL" /D "WIN32HTMLBROWSER_EXPORTS" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /D "_ATL_STATIC_REGISTRY" /D "BUILD_WIN32HTMLBROWSER_LIB" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -67,7 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "WIN32HTMLBROWSER_DLL" /D "WIN32HTMLBROWSER_EXPORTS" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /D "_ATL_STATIC_REGISTRY" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Fd"..\..\..\bin/Win32HTMLBrowser_vc6_d.pdb" /FD /GZ /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "WIN32HTMLBROWSER_DLL" /D "WIN32HTMLBROWSER_EXPORTS" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /D "_ATL_STATIC_REGISTRY" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR /Fd"..\..\..\bin/Win32HTMLBrowser_vc6_d.pdb" /FD /GZ /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -77,7 +79,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\bin\Win32HTMLBrowser_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\bin\Win32HTMLBrowser_vc6_d.dll" /pdbtype:sept /libpath:"$(VCF_LIB)"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\bin\Win32HTMLBrowser_vc6_d.dll" /implib:"..\..\..\lib\Win32HTMLBrowser_vc6_d.lib" /pdbtype:sept /libpath:"$(VCF_LIB)"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
@@ -92,10 +95,6 @@ LINK32=link.exe
 
 SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowser.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -104,10 +103,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
 
 SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowser.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h
-# End Source File
 # End Group
 # Begin Group "Resource Files"
 
@@ -115,5 +110,3 @@ SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h
 # End Group
 # End Target
 # End Project
-
-

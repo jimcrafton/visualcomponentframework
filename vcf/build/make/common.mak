@@ -3,6 +3,23 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.4  2003/12/18 05:15:47  ddiego
+#merge from devmain-0-6-2 branch into the stable branch
+#
+#Revision 1.3.4.4  2003/12/13 18:19:00  ddiego
+#*** empty log message ***
+#
+#Revision 1.3.4.3  2003/10/03 04:33:03  ddiego
+#add precompiled header target - doesn't seem to really work though
+#
+#Revision 1.3.4.2  2003/10/02 04:50:34  ddiego
+#changes to ensure the code compiles on linux. made a bunch of updates to
+#the makefiles
+#
+#Revision 1.3.4.1  2003/09/27 16:11:30  ddiego
+#fixed some minor glitches in the makefile due to changes made on the Win32
+#side.
+#
 #Revision 1.3  2003/05/17 20:36:20  ddiego
 #this is the checkin for the 0.6.1 release - represents the merge over from
 #the devmain-0-6-0 branch plus a few minor bug fixes
@@ -78,17 +95,17 @@ LIB_OUT=../../lib
 
 
 #source file short cut directories
-SRC_COM=$(SRC)/COM
+SRC_COM=$(SRC)/com
 SRC_CORE=$(SRC)/core
-SRC_DND=$(SRC)/DragDrop
-SRC_EVENT=$(SRC)/Events
-SRC_EXCPT=$(SRC)/Exceptions
-SRC_GRF=$(SRC)/Graphics
-SRC_IMPLKIT=$(SRC)/ImplementerKit
-SRC_IO=$(SRC)/IO
+SRC_DND=$(SRC)/dragdrop
+SRC_EVENT=$(SRC)/events
+SRC_EXCPT=$(SRC)/exceptions
+SRC_GRF=$(SRC)/graphics
+SRC_IMPLKIT=$(SRC)/implementerkit
+SRC_IO=$(SRC)/io
 SRC_NET=$(SRC)/net
 SRC_REMOTE=$(SRC)/remote
-SRC_UTILS=$(SRC)/Utils
+SRC_UTILS=$(SRC)/utils
 
 
 #include short cuts
@@ -108,7 +125,7 @@ INC_UTILS=$(INC)/utils
 
 
 #toolchain definitions
-CXX_INC=$(INC)
+CXX_INC=$(INC) 
 
 
 #we are using the g++ compiler for C++
@@ -116,6 +133,7 @@ CXX=g++
 
 #we are using the g++ linker
 LINKER=g++
+STATIC_LINKER=ar
 
 
 ###########################################################
@@ -152,13 +170,9 @@ FOUNDATIONKIT_HDRS=$(INC)/utils/VCFChar.h \
 	$(INC)/utils/Thread.h \
 	$(INC)/utils/Mutex.h \
 	$(INC)/utils/Parser.h \
-	$(INC)/utils/pcre.h \
-	$(INC)/utils/pcreposix.h \
 	$(INC)/utils/ProcessWithRedirectedIO.h \
 	$(INC)/utils/References.h \
-	$(INC)/utils/regexx.h \
 	$(INC)/utils/Registry.h \
-	$(INC)/utils/internal.h \
 	$(INC)/utils/Library.h \
 	$(INC)/utils/Lock.h \
 	$(INC)/utils/Enum.h \
@@ -209,10 +223,8 @@ FOUNDATIONKIT_HDRS=$(INC)/utils/VCFChar.h \
 	$(INC)/exceptions/ClassNotFound.h \
 	$(INC)/exceptions/ErrorStrings.h \
 	$(INC)/events/NotifyEvent.h \
-	$(INC)/events/NotifyListener.h \
 	$(INC)/events/OutputReadyEvent.h \
 	$(INC)/events/PropertyChangeEvent.h \
-	$(INC)/events/PropertyListener.h \
 	$(INC)/core/Class.h \
 	$(INC)/core/ClassInfo.h \
 	$(INC)/core/ClassRegistry.h \
@@ -225,10 +237,7 @@ FOUNDATIONKIT_HDRS=$(INC)/utils/VCFChar.h \
 	$(INC)/core/Method.h \
 	$(INC)/core/Object.h \
 	$(INC)/core/ObjectWithEvents.h \
-	$(INC)/core/Point.h \
 	$(INC)/core/Property.h \
-	$(INC)/core/Rect.h \
-	$(INC)/core/Size.h \
 	$(INC)/core/VCF.h \
 	$(INC)/core/VCFMath.h \
 	$(INC)/core/WarningsOffVc.h \
@@ -256,10 +265,7 @@ FOUNDATIONKIT_HDRS=$(INC)/utils/VCFChar.h \
 ###########################################################
 
 GRAPHICSKIT_HDRS=$(FOUNDATIONKIT_HDRS) $(INC)/events/ImageEvent.h \
-	$(INC)/events/ImageListener.h \
 	$(INC)/graphics/AbstractImage.h \
-	$(INC)/graphics/AlphaGamma.h \
-	$(INC)/graphics/Basic3DBorder.h \
 	$(INC)/graphics/BasicFill.h \
 	$(INC)/graphics/BasicRectangle.h \
 	$(INC)/graphics/BasicStroke.h \
@@ -269,11 +275,8 @@ GRAPHICSKIT_HDRS=$(FOUNDATIONKIT_HDRS) $(INC)/events/ImageEvent.h \
 	$(INC)/graphics/Color.h \
 	$(INC)/graphics/ColorEtchedBorder.h \
 	$(INC)/graphics/Composition.h \
-	$(INC)/graphics/ControlGraphicsContext.h \
-	$(INC)/graphics/Curve.h \
-	$(INC)/graphics/DrawToolkit.h \
+	$(INC)/graphics/BezierCurve.h \
 	$(INC)/graphics/Ellipse.h \
-	$(INC)/graphics/EtchedBorder.h \
 	$(INC)/graphics/Fill.h \
 	$(INC)/graphics/Filter.h \
 	$(INC)/graphics/Font.h \
@@ -282,16 +285,12 @@ GRAPHICSKIT_HDRS=$(FOUNDATIONKIT_HDRS) $(INC)/events/ImageEvent.h \
 	$(INC)/graphics/GlyphCollection.h \
 	$(INC)/graphics/GraphicsContext.h \
 	$(INC)/graphics/GraphicsKitSelectLib.h \
-	$(INC)/graphics/GraphicsObject.h \
-	$(INC)/graphics/GraphicsResourceMgr.h \
 	$(INC)/graphics/Image.h \
 	$(INC)/graphics/ImageBits.h \
-	$(INC)/graphics/ImageList.h \
 	$(INC)/graphics/ImageLoader.h \
-	$(INC)/graphics/ImageTile.h \
-	$(INC)/graphics/Kernel.h \
-	$(INC)/graphics/Layer.h \
-	$(INC)/graphics/Light3DBorder.h \
+	$(INC)/core/Point.h \
+	$(INC)/core/Rect.h \
+	$(INC)/core/Size.h \
 	$(INC)/graphics/MagicFMLibType.h \
 	$(INC)/graphics/Matrix2D.h \
 	$(INC)/graphics/MatrixFunction.h \
@@ -306,17 +305,10 @@ GRAPHICSKIT_HDRS=$(FOUNDATIONKIT_HDRS) $(INC)/events/ImageEvent.h \
 	$(INC)/graphics/OpenGLContext.h \
 	$(INC)/graphics/OpenGLControlContext.h \
 	$(INC)/graphics/Path.h \
-	$(INC)/graphics/PathEnumerator.h \
-	$(INC)/graphics/PixelBuffer.h \
-	$(INC)/graphics/Polygon.h \
 	$(INC)/graphics/Printable.h \
 	$(INC)/graphics/PrintContext.h \
 	$(INC)/graphics/RenderableArea.h \
-	$(INC)/graphics/RenderPaths.h \
 	$(INC)/graphics/Stroke.h \
-	$(INC)/graphics/TileManager.h \
-	$(INC)/graphics/TitledBorder.h \
-	$(INC)/graphics/UVMap.h \
 	$(INC)/graphics/VCFOpenGL.h \
 	$(INC)/graphics/Vector2D.h \
 	$(INC)/GraphicsKit.h \
@@ -340,20 +332,6 @@ GRAPHICSKIT_HDRS=$(FOUNDATIONKIT_HDRS) $(INC)/events/ImageEvent.h \
 
 APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/ApplicationKitPrivate.h \
-	$(INC)/com/ClassFactory.h \
-	$(INC)/com/COMDataObject.h \
-	$(INC)/com/COMDragSource.h \
-	$(INC)/com/COMDropTarget.h \
-	$(INC)/com/COMObject.h \
-	$(INC)/com/COMUtils.h \
-	$(INC)/com/ConnectionPoint.h \
-	$(INC)/com/ConnectionPointContainer.h \
-	$(INC)/com/DataObject.h \
-	$(INC)/com/DispatchObject.h \
-	$(INC)/com/EnumObject.h \
-	$(INC)/com/MemoryAllocator.h \
-	$(INC)/com/VCFCOM.h \
-	$(INC)/com/ViewableObject.h \
 	$(INC)/core/AbstractApplication.h \
 	$(INC)/core/AbstractCommand.h \
 	$(INC)/core/AbstractComponentEditor.h \
@@ -368,12 +346,11 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/core/ActiveXControlHost.h \
 	$(INC)/core/Application.h \
 	$(INC)/core/ApplicationKitSelectLib.h \
-	$(INC)/core/ApplicationPeer.h \
 	$(INC)/core/BasicTableItemEditor.h \
 	$(INC)/core/Button.h \
 	$(INC)/core/CheckBoxControl.h \
 	$(INC)/core/Clipboard.h \
-	$(INC)/core/ClipboardDataObject.h \
+	$(INC)/core/DataObject.h \
 	$(INC)/core/ColumnItem.h \
 	$(INC)/core/ColumnModel.h \
 	$(INC)/core/ComboBoxControl.h \
@@ -392,14 +369,14 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/core/ComponentEditor.h \
 	$(INC)/core/ComponentEditorManager.h \
 	$(INC)/core/ComponentInfo.h \
+	$(INC)/core/Action.h \
 	$(INC)/core/Container.h \
+	$(INC)/core/Containers.h \
 	$(INC)/core/Control.h \
 	$(INC)/core/ControlContainer.h \
-	$(INC)/core/Controller.h \
 	$(INC)/core/Cursor.h \
 	$(INC)/core/CursorManager.h \
 	$(INC)/core/CustomControl.h \
-	$(INC)/core/DataType.h \
 	$(INC)/core/DefaultColumnItem.h \
 	$(INC)/core/DefaultColumnModel.h \
 	$(INC)/core/DefaultListItem.h \
@@ -443,9 +420,7 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/core/Scrollable.h \
 	$(INC)/core/ScrollBarControl.h \
 	$(INC)/core/ScrollbarManager.h \
-	$(INC)/core/ScrollPeer.h \
 	$(INC)/core/Selectable.h \
-	$(INC)/core/SelectionListener.h \
 	$(INC)/core/Splitter.h \
 	$(INC)/core/StatusBar.h \
 	$(INC)/core/TabbedPages.h \
@@ -460,9 +435,6 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/core/TimerComponent.h \
 	$(INC)/core/ToggledButton.h \
 	$(INC)/core/Toolbar.h \
-	$(INC)/core/ToolbarButton.h \
-	$(INC)/core/ToolbarDock.h \
-	$(INC)/core/ToolbarSeparator.h \
 	$(INC)/core/TreeControl.h \
 	$(INC)/core/TreeItem.h \
 	$(INC)/core/TreeListControl.h \
@@ -475,69 +447,37 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/dragdrop/DragSource.h \
 	$(INC)/dragdrop/DropTarget.h \
 	$(INC)/events/ButtonEvent.h \
-	$(INC)/events/ButtonListener.h \
 	$(INC)/events/ClipboardEvent.h \
-	$(INC)/events/ClipboardListener.h \
 	$(INC)/events/ColumnItemEvent.h \
 	$(INC)/events/ColumnModelEvent.h \
-	$(INC)/events/ColumnModelEventHandler.h \
-	$(INC)/events/ComboBoxListener.h \
 	$(INC)/events/ComponentEvent.h \
-	$(INC)/events/ComponentListener.h \
 	$(INC)/events/ControlEvent.h \
-	$(INC)/events/ControlListener.h \
 	$(INC)/events/DragEvent.h \
 	$(INC)/events/DragScrollEvent.h \
-	$(INC)/events/DragSourceListener.h \
 	$(INC)/events/DropEvent.h \
-	$(INC)/events/DropTargetListener.h \
 	$(INC)/events/FocusEvent.h \
-	$(INC)/events/FocusListener.h \
 	$(INC)/events/FrameEvent.h \
 	$(INC)/events/HelpEvent.h \
-	$(INC)/events/HelpListener.h \
 	$(INC)/events/ImageListEvent.h \
-	$(INC)/events/ImageListListener.h \
 	$(INC)/events/ItemEditorEvent.h \
-	$(INC)/events/ItemEditorListener.h \
 	$(INC)/events/ItemEvent.h \
-	$(INC)/events/ItemListener.h \
 	$(INC)/events/KeyboardEvent.h \
-	$(INC)/events/KeyboardListener.h \
-	$(INC)/events/Listener.h \
 	$(INC)/events/ListModelEvent.h \
-	$(INC)/events/ListModelListener.h \
 	$(INC)/events/MenuItemEvent.h \
-	$(INC)/events/MenuItemListener.h \
-	$(INC)/events/MenuListener.h \
 	$(INC)/events/ModelEvent.h \
-	$(INC)/events/ModelListener.h \
-	$(INC)/events/ModelValidationListener.h \
 	$(INC)/events/MouseEvent.h \
-	$(INC)/events/MouseListener.h \
 	$(INC)/events/ScrollEvent.h \
-	$(INC)/events/ScrollListener.h \
-	$(INC)/events/SelectionListener.h \
 	$(INC)/events/TableModelEvent.h \
-	$(INC)/events/TableModelListener.h \
 	$(INC)/events/TabModelEvent.h \
-	$(INC)/events/TabModelListener.h \
 	$(INC)/events/TextEvent.h \
-	$(INC)/events/TextModelListener.h \
 	$(INC)/events/ThreadEvent.h \
 	$(INC)/events/TimerEvent.h \
-	$(INC)/events/TimerListener.h \
 	$(INC)/events/ToolTipEvent.h \
-	$(INC)/events/ToolTipListener.h \
 	$(INC)/events/TreeModelEvent.h \
-	$(INC)/events/TreeModelListener.h \
 	$(INC)/events/UndoRedoEvent.h \
-	$(INC)/events/UndoRedoListener.h \
 	$(INC)/events/ValidationEvent.h \
 	$(INC)/events/WhatsThisHelpEvent.h \
-	$(INC)/events/WhatsThisHelpListener.h \
 	$(INC)/events/WindowEvent.h \
-	$(INC)/events/WindowListener.h \
 	$(INC)/exceptions/ApplicationException.h \
 	$(INC)/exceptions/BadComponentStateException.h \
 	$(INC)/exceptions/BadImageBitsException.h \
@@ -555,13 +495,11 @@ APPKIT_HDRS=$(GRAPHICSKIT_HDRS) $(INC)/ApplicationKit.h \
 	$(INC)/implementer/ContextPeer.h \
 	$(INC)/implementer/ControlPeer.h \
 	$(INC)/implementer/CursorPeer.h \
-	$(INC)/implementer/CustomControlPeer.h \
 	$(INC)/implementer/DataObjectPeer.h \
 	$(INC)/implementer/DesktopPeer.h \
 	$(INC)/implementer/DialogPeer.h \
 	$(INC)/implementer/DragDropPeer.h \
 	$(INC)/implementer/DropTargetPeer.h \
-	$(INC)/implementer/HeaderPeer.h \
 	$(INC)/implementer/HTMLBrowserPeer.h \
 	$(INC)/implementer/ListviewPeer.h \
 	$(INC)/implementer/MenuBarPeer.h \

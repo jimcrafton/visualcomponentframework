@@ -6,7 +6,7 @@ using namespace VCF;
 
 int main( int argc, char** argv ){
 
-	FoundationKit::init();
+	FoundationKit::init( argc, argv );
 
 	
 

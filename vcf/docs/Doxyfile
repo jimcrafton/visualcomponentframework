@@ -1,4 +1,4 @@
-# Doxyfile 1.2.9.1
+m# Doxyfile 1.2.9.1
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project
@@ -92,7 +92,7 @@ REPEAT_BRIEF           = YES
 # Doxygen will generate a detailed section even if there is only a brief 
 # description.
 
-ALWAYS_DETAILED_SEC    = NO
+ALWAYS_DETAILED_SEC    = YES
 
 # If the FULL_PATH_NAMES tag is set to YES then Doxygen will prepend the full 
 # path before files name in the file list and in the header files. If set 
@@ -182,6 +182,10 @@ JAVADOC_AUTOBRIEF      = YES
 
 INHERIT_DOCS           = YES
 
+
+DETAILS_AT_TOP         = YES
+
+
 # If the INLINE_INFO tag is set to YES (the default) then a tag [inline] 
 # is inserted in the documentation for inline members.
 
@@ -204,7 +208,7 @@ DISTRIBUTE_GROUP_DOC   = NO
 # The TAB_SIZE tag can be used to set the number of spaces in a tab. 
 # Doxygen uses this value to replace tabs by spaces in code fragments.
 
-TAB_SIZE               = 8
+TAB_SIZE               = 4 
 
 # The ENABLED_SECTIONS tag can be used to enable conditional 
 # documentation sections, marked by \if sectionname ... \endif.
@@ -236,7 +240,11 @@ GENERATE_BUGLIST       = YES
 # will result in a user defined paragraph with heading "Side Effects:". 
 # You can put \n's in the value part of an alias to insert newlines.
 
-ALIASES                = 
+ALIASES                = "delegate=\par Event Delegate:\n" \
+					"delegates=\par Event Delegates for this class:\n" \
+					"del=\li" \
+					"eventtype=<br><b>event type</b>:" \
+					"event=<br><b>event class:</b>"
 
 # The MAX_INITIALIZER_LINES tag determines the maximum number of lines 
 # the initial value of a variable or define consist of for it to appear in 
@@ -644,7 +652,7 @@ EXPAND_ONLY_PREDEF     = YES
 # If the SEARCH_INCLUDES tag is set to YES (the default) the includes files 
 # in the INCLUDE_PATH (see below) will be search if a #include is found.
 
-SEARCH_INCLUDES        = YES
+SEARCH_INCLUDES        = NO
 
 # The INCLUDE_PATH tag can be used to specify one or more directories that 
 # contain include files that are not input files but should be processed by 
@@ -665,8 +673,9 @@ INCLUDE_FILE_PATTERNS  =
 # or name=definition (no spaces). If the definition and the = are 
 # omitted =1 is assumed.
 
-PREDEFINED             = BEGIN_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \					
-					BEGIN_ABSTRACT_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \					
+PREDEFINED             = "DELEGATE(F)=VCF::Delegate F;" \
+					BEGIN_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \
+					BEGIN_ABSTRACT_CLASSINFO(ClassType,ClassName,superClassName,classID)=/* \
 					BEGIN_INTERFACEINFO(InterfaceType,InterfaceName,SuperInterfaceName,InterfaceID)=/* \
 					IMPLEMENTS_INTERFACE(ClassType, InterfaceType, implementationClassName, interfaceName, interfaceID, superInterfaceClassName)=// \
 					EVENT(handlerClassName,eventClassName,eventMethod)=//// \
@@ -721,7 +730,7 @@ PREDEFINED             = BEGIN_CLASSINFO(ClassType,ClassName,superClassName,clas
 # The macro definition that is found in the sources will be used. 
 # Use the PREDEFINED tag if you want to use a different macro definition.
 
-EXPAND_AS_DEFINED      = 
+EXPAND_AS_DEFINED      = "DELEGATE(F)= VCF::Delegate F;"
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references   

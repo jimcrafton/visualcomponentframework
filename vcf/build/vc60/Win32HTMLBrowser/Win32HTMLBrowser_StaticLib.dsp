@@ -23,6 +23,8 @@ CFG=Win32HTMLBrowser_StaticLib - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -39,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /Fo"vc6/ReleaseS\obj/" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -62,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR"vc6/DebugS\obj/" /Fo"vc6/DebugS\obj/" /FR /YX /Fd"..\..\..\lib/Win32HTMLBrowser_vc6_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "BUILD_WIN32HTMLBROWSER_LIB" /FR /YX /Fd"..\..\..\lib/Win32HTMLBrowser_vc6_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -85,10 +87,6 @@ LIB32=link.exe -lib
 
 SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowser.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -97,12 +95,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32HTMLBrowserApplication.cpp
 
 SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowser.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32HTMLBrowserApplication.h
-# End Source File
 # End Group
 # End Target
 # End Project
-
-
