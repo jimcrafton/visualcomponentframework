@@ -1,38 +1,11 @@
-# "$Id$"
-#
-# Makefile for FoundationKit of the Visual Component Framework
-#
-# Copyright 2000 by Endre Somogyi
-# please mail any questions to etsomogy@ouray.cudenver.edu,
-# ddiego@users.sourceforge.net, or cesarmello@users.sourceforge.net
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
-#
-# You should have received a copy of the GNU Library General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-# USA.
-#
-#
 
 SHELL=/bin/sh
+
 
 # basic gcc app makefile
 
 SRC = ../../../src
 INC = ../../../include
-
-.SUFFIXES: .cpp .o
-.cpp.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -c -DVCF_GCC $*.cpp
 
 SOURCES = $(SRC)/Exceptions/BasicException.cpp \
 $(SRC)/IO/BasicInputStream.cpp \
@@ -73,19 +46,63 @@ $(SRC)/ImplementerKit/LinuxPeer.cpp \
 $(SRC)/ImplementerKit/LinuxFilePeer.cpp \
 $(SRC)/ImplementerKit/LinuxFileStream.cpp
 
+OBJ_DIR = ./objs
+
+OBJ_LIST = $(OBJ_DIR)/BasicException.o \
+$(OBJ_DIR)/BasicInputStream.o \
+$(OBJ_DIR)/BasicOutputStream.o \
+$(OBJ_DIR)/Class.o \
+$(OBJ_DIR)/ClassRegistry.o \
+$(OBJ_DIR)/Directory.o \
+$(OBJ_DIR)/ErrorLog.o \
+$(OBJ_DIR)/Event.o \
+$(OBJ_DIR)/EventHandler.o \
+$(OBJ_DIR)/File.o \
+$(OBJ_DIR)/FileStream.o \
+$(OBJ_DIR)/FileUtils.o \
+$(OBJ_DIR)/FoundationKit.o \
+$(OBJ_DIR)/InterfaceClass.o \
+$(OBJ_DIR)/Library.o \
+$(OBJ_DIR)/Locales.o \
+$(OBJ_DIR)/MemoryStream.o \
+$(OBJ_DIR)/Mutex.o \
+$(OBJ_DIR)/Object.o \
+$(OBJ_DIR)/ObjectWithEvents.o \
+$(OBJ_DIR)/Parser.o \
+$(OBJ_DIR)/Point.o \
+$(OBJ_DIR)/PropertyChangeEvent.o \
+$(OBJ_DIR)/Rect.o \
+$(OBJ_DIR)/Registry.o \
+$(OBJ_DIR)/Stream.o \
+$(OBJ_DIR)/StringUtils.o \
+$(OBJ_DIR)/System.o \
+$(OBJ_DIR)/SystemToolkit.o \
+$(OBJ_DIR)/TextInputStream.o \
+$(OBJ_DIR)/TextOutputStream.o \
+$(OBJ_DIR)/Thread.o \
+$(OBJ_DIR)/ThreadEvent.o \
+$(OBJ_DIR)/VCFMath.o \
+$(OBJ_DIR)/VCFProcess.o \
+$(OBJ_DIR)/LinuxPeer.o \
+$(OBJ_DIR)/LinuxFilePeer.o \
+$(OBJ_DIR)/LinuxFileStream.o
 
 INCLUDES = -I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptions -I $(INC)/io \
 -I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerKit -I $(INC)/graphics -I /usr/include/g++3
 
-OBJS    = ${SOURCES:.cpp=.o}
+#OBJS    = ${SOURCES:.cpp=.o}
+
+
+
 CFLAGS  = -fpic
 
 LDADD   = -shared
 DEFINES = -Dgtk
 CC      = g++
-PACKAGE = libFoundationKit.a
+#PACKAGE = libFoundationKit.a
 
-all : ${OBJS}
-	$(CC) -o libFoundationKit_shared.so $(LDADD) *.o
-	ar rcs libFoundationKit.a *.o
-	
+libFoundationKit_shared.so : $(OBJ_LIST)
+	echo linking
+
+$(OBJ_LIST) : $(SOURCES)
+	$(CC) $(CFLAGS) $(INCLUDES) -c -DVCF_GCC $(SOURCES)
