@@ -2,6 +2,7 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
@@ -33,7 +34,7 @@
     STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
     STYLE="font-weight : bold;">public</SPAN>:<BR>     BEGIN_CLASSINFO(Employee, <FONT
     COLOR="RED">&quot;Employee&quot;</FONT>, <FONT COLOR="RED">&quot;VCF::Object&quot;</FONT>, EMPLOYEE_CLASSID)<BR>     END_CLASSINFO(Employee)<BR>     Employee();<BR><BR>     <SPAN
-    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR></PRE><PRE>     ...rest of code omitted....<BR>};</PRE><P>
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR><BR>     ...rest of code omitted....<BR>};</PRE><P>
    The Employee class now has the basic RTTI which includes a class name 
    (&quot;Employee&quot;), information about the super class (the 
    primary class it derives from, which in this case is VCF::Object), 
@@ -84,7 +85,7 @@
    it for a variety of different information, such as the above example 
    does. We can ask for the name of the class using getClassName() (line 
    10 ), get the UUID through the getID() method, and get the super 
-   class Class using getSuperClass(). To walk the list of derived 
+   class's Class using getSuperClass(). To walk the list of derived 
    classes we can execute a loop similar to what is found in line 16.</P>
   <P>
    So, as you can see, with just a few lines added to our class we get a 
@@ -109,13 +110,91 @@
     STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
     STYLE="font-weight : bold;">public</SPAN>:<BR>     BEGIN_CLASSINFO(Employee, <FONT
     COLOR="RED">&quot;Employee&quot;</FONT>, <FONT COLOR="RED">&quot;VCF::Object&quot;</FONT>, EMPLOYEE_CLASSID)<BR>     PROPERTY( <SPAN
-    STYLE="font-weight : bold;">int</SPAN>, <FONT COLOR="RED">&quot;IQ&quot;</FONT>, Employee::getIQ, Employee::setIQ, PROP_INT );<BR>     END_CLASSINFO(Employee)<BR>     Employee();<BR><BR>     <SPAN
-    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR></PRE><PRE><SPAN
+    STYLE="font-weight : bold;">int</SPAN>, <FONT COLOR="RED">&quot;IQ&quot;</FONT>, Employee::getIQ, Employee::setIQ, PROP_INT );<BR>     END_CLASSINFO(Employee)<BR><BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR><BR><SPAN
     STYLE="font-weight : bold;">     int</SPAN> getIQ();<BR><BR>     <SPAN
-    STYLE="font-weight : bold;">void</SPAN> setIQ( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; IQ );<BR><BR></PRE><PRE>     ...rest of code omitted....</PRE><PRE><SPAN
+    STYLE="font-weight : bold;">void</SPAN> setIQ( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; IQ );<BR><BR></PRE><PRE>     ...rest of code omitted....<BR><SPAN
     STYLE="font-weight : bold;">protected</SPAN>:<BR>     <SPAN
-    STYLE="font-weight : bold;">int</SPAN> m_age;</PRE><PRE>     ...rest of code omitted....<BR>};</PRE><P>
-   <!-- $MVD$:spaceretainer() -->&nbsp;
+    STYLE="font-weight : bold;">int</SPAN> m_age;<BR><BR>     ...rest of code omitted....<BR>};</PRE><P>
+   So, as you can see, the simple adddition of a property can be 
+   accomplished through the PROPERTY macro, and specifying the 
+   apropriate parameters. Let's quickly run through what the parameters 
+   are and then we'll see wht this actually gives you. The first 
+   parameter is the C++ primitive type, i.e. <SPAN STYLE="font-weight : bold;">int</SPAN>,
+    <SPAN STYLE="font-weight : bold;">double</SPAN>, <SPAN STYLE="font-weight : bold;">float</SPAN>,
+    etc. The next parameter is the string name of the property. The 
+   naming convention of the VCF is to use the property name (such as 
+   &quot;IQ&quot;) and then specify get and set functions in the form 
+   &quot;get&quot; + property name, and &quot;set&quot; + property name 
+   (thus the getIQ() and setIQ() functions). The next two parameters we 
+   need to specify are the function pointers to the get and set 
+   functions of the specific property. Please note how they are 
+   specified: Class name, followed by the double colon and then the 
+   function itself. The last parameter is the enum type that identifies 
+   the C++ type to it's corresponding VCF property type. So now that we 
+   have this let's look at some sample code to see just what we can do 
+   with these properties!</P><PRE><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">1</SPAN></FONT> <SPAN STYLE="font-weight : bold;">int</SPAN> main()<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">2</FONT></SPAN> {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">3</FONT></SPAN>     initFoundationKit();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">4</FONT></SPAN>     REGISTER_CLASSINFO( Employee );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">5</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN>     Object* obj = NULL;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">7</FONT></SPAN>     ClassRegistry::getClassRegistry()-&gt;createNewInstance( <FONT COLOR="RED">&quot;Employee&quot;</FONT>, &amp;obj );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">8</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">9</FONT></SPAN>     Class* clazz = obj-&gt;getClass();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">10</FONT></SPAN>    Enumerator&lt;Property*&gt;* properties = clazz-&gt;getProperties();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">11</FONT></SPAN>    if ( NULL != properties ) {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">12</FONT></SPAN>        while ( true == properties-&gt;hasMoreElements() ) {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">13</FONT></SPAN>            Property* property = properties-&gt;nextElement();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">14</FONT></SPAN>            if ( NULL != property ) {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">15</FONT></SPAN>                VariantData* propValue = property-&gt;get();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">16</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">17</FONT></SPAN>                String stringVal = propValue-&gt;toString();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">18</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">19</FONT></SPAN>                std::cout &lt;&lt; stringVal &lt;&lt; std::endl;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">20</FONT></SPAN>            }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">21</FONT></SPAN>        } <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">22</FONT></SPAN>    }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">23</FONT></SPAN>    Property* propIQ = clazz-&gt;getProperty( &quot;IQ&quot; );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">24</FONT></SPAN>    if ( NULL != propIQ ) {<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">25</SPAN></FONT>        propIQ-&gt;set( &quot;200&quot; );<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">2</SPAN></FONT><SPAN STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN><BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">27</SPAN></FONT>        VariantData newVal;<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">28</SPAN></FONT>        newVal = 50;<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">29</SPAN></FONT>                <BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">30</SPAN></FONT>        propIQ-&gt;set( &amp;newVal );          <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">31</FONT></SPAN>    }   <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">32</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">33</FONT></SPAN>    <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">34</FONT></SPAN> }</PRE><P>
+   Similar to the previous demo, lines 1-9 create a new instance of an 
+   Employee and then retrieve a pointer to it's Class. Line 10 may need 
+   a bit of explaining though. You'll notice that the properties 
+   variable is a pointer to a templated class Enumerator, with the class 
+   type specified as Property*. The Enumerator class basically provides 
+   a &quot;mask&quot; around the various STL collection iterators, 
+   allowing the developer to iteratively walk the collection forwards or 
+   backwards, and to determine whether or not the end (or begining) has 
+   been reached. This hides the actual collection implementation, 
+   whether it be a vector, list, or map (or theoretically any collection 
+   whose iterator supports ++ and -- operators). Those of you who are 
+   familiar with Java will recognive the interface from Iterator. So we 
+   loop till our properties enumerator has no more elements, each time 
+   calling nextElement() to return the next Property pointer in the 
+   enumeration. Once we have the property (line 13) we can retrieve it's 
+   value by calling get() on the property (line 15). This returns us a 
+   VariantData pointer, which is discussed in more depth in the <A HREF="Variable_Data_Types.htm">RTTI
+    section</A>, but simply put, allows us to dynamically assign and 
+   retreive a wide variety of different data types through a single 
+   object. We can print out the value of the property by calling the 
+   VariantData's toString() function.</P>
+  <P>
+   To set a value on the property we can call the set method, either 
+   passing in a string value (as in line 25), or a pointer to a 
+   VariantData. In our example above we pass in the string 
+   &quot;200&quot; which is automatically translated into the correct 
+   type if possible, and then a VariantData set to the integer value 50.
  <OBJECT
  CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
  ID="hhctrl"

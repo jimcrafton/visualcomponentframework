@@ -2,6 +2,7 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
@@ -49,15 +50,15 @@
    and add support reading and writing the class. In the VCF reading and 
    writing is done through streams. <A HREF="Stream_Basics.htm">Streams</A> 
    can exist in a variety of formats, they can be streams to the hard 
-   disk, streams in memory, or even streams that apply a 
-   compression/decompression algorithm to the data being read or written 
-   to or from the stream. Streams come in two major groupings, Input 
-   Streams and Output Streams. Input streams have methods that allow for 
-   data to be <B><I>read</I></B> from the stream, while Output streams 
-   have methods that allow data to be <B><I>written</I></B> to the 
-   stream. Some stream classes support both features in one, such as the 
-   FileStream, which derives from both InputStream and OutputStream, 
-   thus allowing read or write capabilities from the one class.</P>
+   disk, streams in memory, or even streams that apply a compression/decompression
+    algorithm to the data being read or written to or from the stream. 
+   Streams come in two major groupings, Input Streams and Output 
+   Streams. Input streams have methods that allow for data to be <B><I>read</I></B> 
+   from the stream, while Output streams have methods that allow data to 
+   be <B><I>written</I></B> to the stream. Some stream classes support 
+   both features in one, such as the FileStream, which derives from both 
+   InputStream and OutputStream, thus allowing read or write 
+   capabilities from the one class.</P>
   <P>
    To write to an Output stream you have a couple of options: you can 
    use the write() method (which is overloaded, and can take all the 
@@ -67,16 +68,16 @@
    operator is so commonly used by the STL IOStream library, I included 
    it for completeness (my reason for preferring write() is one of 
    clarity - I think it is easy to get confused with the bit shift 
-   &lt;&lt;, and people reading your code for the first time or two may 
-   be confused as to what is going on). Likewise to use the Input stream 
-   you can use the read() method or the extraction operator (). All 
-   basic types are written out/read in according to the implementation 
-   of the stream and the size of the type. String's are handled 
-   similarly and are written out according to the length of the String 
-   (which is defined as number of characters till a null terminator, or 
-   \0), and are read in till a null terminator (\0) is found. Objects 
-   (i.e. anything that is not a basic type or a String) are handled a 
-   bit differently.</P>
+   &lt;&lt; operator, and people reading your code for the first time or 
+   two may be confused as to what is going on). Likewise to use the 
+   Input stream you can use the read() method or the extraction operator 
+   (). All basic types are written out/read in according to the 
+   implementation of the stream and the size of the type. String's are 
+   handled similarly and are written out according to the length of the 
+   String (which is defined as number of characters till a null 
+   terminator, or \0), and are read in till a null terminator (\0) is 
+   found. Objects (i.e. anything that is not a basic type or a String) 
+   are handled a bit differently.</P>
   <P>
    To send an object to a Stream, the Object must support the 
    Persistable <A HREF="JavaScript:hhctrl.TextPopup('This does not mean a COM interface, instead it is just a C++ class that has a set of virtual pure methods defined that must be implemented by a deriving class.','Arial,8',10,10,00000000,0xc0ffff)">interface</A>.
@@ -95,7 +96,7 @@
     STYLE="font-weight : bold;">int</SPAN> getName();<BR><BR>     <SPAN
     STYLE="font-weight : bold;">void</SPAN> setName( <SPAN STYLE="font-weight : bold;">const</SPAN> VCF::String&amp; Name );<BR>     <BR>     <SPAN
     STYLE="font-style : italic;"><FONT COLOR="BLUE">//VCF::Persistable methods</FONT></SPAN><BR><SPAN
-    STYLE="font-weight : bold;">     virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> loadFromStream( VCF::InputStream* stream );</PRE><PRE>     <SPAN
+    STYLE="font-weight : bold;">     virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> loadFromStream( VCF::InputStream* stream );<BR><BR>     <SPAN
     STYLE="font-weight : bold;">virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> saveToStream( VCF::OutputStream* stream );<BR><SPAN
     STYLE="font-weight : bold;">protected</SPAN>:<BR>     <SPAN
     STYLE="font-weight : bold;">int</SPAN> m_age;<BR>     <SPAN
@@ -110,9 +111,9 @@
     STYLE="font-style : normal;">m_IQ</SPAN> );<BR>     stream-&gt;read( m_name );<BR>}</PRE><P>
    Now when we want to save our class to a stream we can simply pass in 
    the Employee instance to a stream, and <SPAN STYLE="font-style : italic;">voila!</SPAN> 
-   our methods above will be invoked. As an example look at the following:</P><PRE><SPAN
+   our methods above will be invoked. As an example, look at the following:</P><PRE><SPAN
     STYLE="font-weight : bold;">int</SPAN> main()<BR>{<BR>     initFoundationKit(); <FONT
-    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//initializes the VCF FoundationKit library</SPAN></FONT></PRE><PRE>     Employee bob;<BR>     bob.setName( <FONT
+    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//initializes the VCF FoundationKit library</SPAN></FONT><BR>     Employee bob;<BR>     bob.setName( <FONT
     COLOR="RED">&quot;Bob Johanson&quot;</FONT> ) ;<BR>     bob.setAge( <FONT
     COLOR="FUCHSIA">50</FONT> );<BR>     bob.setIQ( <FONT
     COLOR="FUCHSIA">160</FONT> );<BR>     <BR>     FileStream stream( <FONT
@@ -143,7 +144,7 @@
   <P>
    Anyways, we now have a basic class that has some data and can read 
    and write itself from a stream. For more exciting coding move lets on 
-   to Tutorial 2...
+   to <A HREF="Tutorial_2.htm">Tutorial 2...</A>
  <OBJECT
  CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
  ID="hhctrl"
