@@ -3,7 +3,31 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "COMToVCFClassWizard"=".\COMToVCFClassWizard\COMToVCFClassWizard.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "VCFConsoleWiz"=".\VCFConsoleWiz\VCFConsoleWiz.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VCFLibraryAppWizard"=".\VCFLibraryAppWizard\VCFLibraryAppWizard.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -58,6 +82,12 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name VPLAppWiz
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name COMToVCFClassWizard
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name VCFLibraryAppWizard
     End Project Dependency
 }}}
 
