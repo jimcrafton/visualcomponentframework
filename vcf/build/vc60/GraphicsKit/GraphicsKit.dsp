@@ -64,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D _WIN32_WINNT=0x400 /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -146,6 +146,10 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\graphics\OpenGLContext.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +171,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32OpenGLPeer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -302,6 +310,14 @@ SOURCE=..\..\..\include\graphics\MatrixFunction.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\OpenGLContext.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\OpenGLPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Path.h
 # End Source File
 # Begin Source File
@@ -338,6 +354,10 @@ SOURCE=..\..\..\include\graphics\UVMap.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\VCFOpenGL.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Vector2D.h
 # End Source File
 # Begin Source File
@@ -351,6 +371,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Font.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Image.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32OpenGLPeer.h
 # End Source File
 # End Group
 # End Target
