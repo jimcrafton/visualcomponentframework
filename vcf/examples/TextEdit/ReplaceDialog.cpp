@@ -179,6 +179,7 @@ void ReplaceDialog::findNextClicked( VCF::ButtonEvent* e )
 	}
 	else {
 		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
+		replaceInfo_.position_ += replaceInfo_.searchString_.size();
 	}
 }
 
@@ -217,6 +218,7 @@ void ReplaceDialog::replaceClicked( VCF::ButtonEvent* e )
 	}
 	else {
 		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
+		replaceInfo_.position_ += replaceInfo_.searchString_.size();
 	}
 }
 
