@@ -2,13 +2,92 @@ Visual Component Framework 0.6.6
 
 Readme
 
+Bugs fixed include:
+1074768	VCF application slows down modal dialogs.
+1045603 Some comparison operators of the class point are not const
+1042623 Incorect handling of DC in win32font
+1026443 Small windows with wrong border
+1016150 Listbox Horizontal Scrollbar (show-through)
+1015786 Listbox Horizontal Scrollbar (show-through)
+1015368 ListBoxControl Mousemove error
+A number of other miscellaneous bugs were fixed as well.
+	
+New features include:
+1015739 recursive findComponent(), findControl()
+999710 add method to System to get Resources dir
+999698 migrate resources over to foundation kit
+
+Printing, printing, printing!!! We have (finally) added an easy to use 
+API for printing (see the PrintSession class). You can see this in action 
+in the vcf/examples/Printing and vcf/examples/TextEdit examples.
+
+We have added support for the system tray on Win32. Not implemented (yet) 
+on OS X.
+
+We have migrated the ResourceBundle class to the FoundationKit, so that console, 
+non-gui apps can also use resources. 
+
+We have added support for "bundle" resources, i.e. loading resources based on a 
+formal directory pattern, in addition to be able to load resources from a binary 
+file (i.e. Win32 rc style resources). 
+
+Along with this "bundle" support we have modified the way processes and shared 
+libraries (DLLs) are loaded, so that we can load a bundle directory as a process 
+(just like OS X can) or shared lib. Along with this comes the notion of extra 
+process/library meta data in the form of the ProgramInfo class. This allows us 
+to retrieve what version the app is, the author, etc. This information may be stored 
+in the exectuable bundle, or directly in the executable itself (Win32 only as 
+VS_VERSIONINFO data).
+
+Full transformation support was cleared up, or fixed in the GraphicsContext class. 
+You can now transform any path, or image. Partial text transforms are supported in 
+the form of translation and rotation. You can see this in the vcf/examples/Transformations 
+example.
+
+There is also more documentation in this release. A number of the core graphics 
+classes have better, more complete source documentation for how/why they work. 
+Marcello also contributed source documentation to the Document/View classes. Several 
+new examples were added, namely TextEdit, which demonstrates a full Doc/View app 
+that allows you to open, edit, save, and print text documents, and also demonstrated 
+how to add undo/redo support, Resources, a simple console program which demonstrates 
+how to load resources, AppResources, a simple GUI app that demonstrates resource loading, 
+Dialogs, a small app that show how to call up the various standard dialogs as well as 
+write your own custom dialogs, and Transformations, a gui demo that show how to transform 
+graphics. Another example is the ParticleEditor which uses the OpenGLKit and demonstrate 
+a little editor that lets you control a particle system.
+
+
+
+Tasks for this release:
+56662	implement printer support
+101508	Add OSX MenuItem peer
+101516	Add OSX UIToolkit peer
+101514	Add OSX Window peer
+101498	Add OSX Control peer
+101507	Add OSX MenuBar peer
+101502	Add OSX Dialog peer
+101495	Add OSX Common folder browser dialog peer
+101494	Add OSX Common file dialog peer
+101496	Add OSX Common color dialog peer
+101484	Add OSX Process peer
+101480	Add OSX Library peer
+101492	Add OSX Button peer
+101500	Add OSX Cursor peer
+
+
+
 Known issues:
-The OSX port is still a work in progress.
+The OSX port is still a work in progress. Further work was accomplished and the window, 
+and control peers are basically done. Support was added for handling mouse event properly, 
+loading processes and shared libs, using dialogs (including support for sheets), common 
+dialog peers are all but done with the exception of the font dialog. Menu items work, but 
+we still need a bit more work to handle them at the application level, so that differences 
+in how Win32 vs. OS X see menus are all handled transparently. 
 
 
 
 
-Visual Component Framework 0.6.5 
+Visual Component Framework 0.6.5 
 
 Readme
 
@@ -133,7 +212,7 @@ needs a lot of help.
 
 
 
-Visual Component Framework 0.5.9 
+Visual Component Framework 0.5.9 
 
 Readme
 
@@ -142,15 +221,15 @@ Known issues:
 
 
 
-Visual Component Framework 0.5.4 
+Visual Component Framework 0.5.4 
 
 Readme
 
 Known issues:
 
-There may be path problems when trying to run executable that link with the VCF Runtime DLL's ( FoundationKit.dll, GraphicsKit.dll, and ApplicationKit.dll). These require a path variable called VCF_BIN to be added to your system PATH variable. The installer adds this to your user PATH but if this does not work then it will probably need to added to you local PATH. For this you'll need Administrator privileges. If you know of a better solution please contact me(ddiego@one.net) !  
+There may be path problems when trying to run executable that link with the VCF Runtime DLL's ( FoundationKit.dll, GraphicsKit.dll, and ApplicationKit.dll). These require a path variable called VCF_BIN to be added to your system PATH variable. The installer adds this to your user PATH but if this does not work then it will probably need to added to you local PATH. For this you'll need Administrator privileges. If you know of a better solution please contact me(ddiego@one.net) !  
 
-Add-ins sometimes do not get added automatically to Dev Studio. These can be added manually by clicking the "Tools > Customize..." menu item and selecting the "Add-ins and macro files" tab page. Click on the "Browse..." button and look in the vcf\build\vc60\add-ins directory and then go to the specific add in project you want to add (generally VCFNewClassWiz\Release\VCFNewClassWiz.dll for now). Select the dll and click OK. The add-in will be plugged into Dev Studio for you. If there are no dlls then just build the add and repeat the previous steps. 
+Add-ins sometimes do not get added automatically to Dev Studio. These can be added manually by clicking the "Tools > Customize..." menu item and selecting the "Add-ins and macro files" tab page. Click on the "Browse..." button and look in the vcf\build\vc60\add-ins directory and then go to the specific add in project you want to add (generally VCFNewClassWiz\Release\VCFNewClassWiz.dll for now). Select the dll and click OK. The add-in will be plugged into Dev Studio for you. If there are no dlls then just build the add and repeat the previous steps. 
 
 
 People experiencing any problems during or after the 

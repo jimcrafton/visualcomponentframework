@@ -929,8 +929,12 @@ int main( int argc, char** argv )
 			</question>
 			<answer>
 				<para>
-				Not yet. Support for Unicode will come in conjuntion with
-				Internationalization (i18n) and Localization (l10n) support.
+				Yes. All string handling is done using the UnicodeString class, which is typedeffed to 
+				String. The String class is a thin wrapper around std::basic_string&lt;WideChar&gt; where
+				WideChar is defined as an unsigned 16 bit type. For Win32, a single exe can run on either 
+				Windows 9.x or WinNT and will use either the ansi versions of the API (Windows 9.x) or
+				the Unicode versions of the API. This means you don't have to maintain separate builds
+				for one platform or the other. Internally all string data is maintained in UTF16 format.
 				</para>
 			</answer>
 			<question>
@@ -938,9 +942,8 @@ int main( int argc, char** argv )
 			</question>
 			<answer>
 				<para>
-				Not yet. As of November 2, 2003, it does not, but 
-				have no fear! There are plans to implement this 
-				support relatively soon.
+				Yes. See the VCF::Locale class. You can change the locale, and by adding the proper resources
+				to your application, provide localized string translation. 
 				</para>
 			</answer>
 			<question>
@@ -1764,6 +1767,9 @@ gc->strokePath();
 CVS Log info
 
 $Log$
+Revision 1.4  2004/12/03 03:06:01  ddiego
+minor doc changes
+
 Revision 1.3  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 
