@@ -25,91 +25,15 @@ NULL=
 NULL=nul
 !ENDIF 
 
-CPP=cl.exe
-RSC=rc.exe
-
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
 
-OUTDIR=.\Release
-INTDIR=.\Release\obj
+OUTDIR=.\..\..\..\lib
+INTDIR=.\ReleaseS\obj
+# Begin Custom Macros
+OutDir=.\..\..\..\lib
+# End Custom Macros
 
-ALL : "..\..\..\lib\FoundationKit.lib"
-
-
-CLEAN :
-	-@erase "$(INTDIR)\BasicException.obj"
-	-@erase "$(INTDIR)\BasicInputStream.obj"
-	-@erase "$(INTDIR)\BasicOutputStream.obj"
-	-@erase "$(INTDIR)\Class.obj"
-	-@erase "$(INTDIR)\ClassRegistry.obj"
-	-@erase "$(INTDIR)\Event.obj"
-	-@erase "$(INTDIR)\FileStream.obj"
-	-@erase "$(INTDIR)\FileUtils.obj"
-	-@erase "$(INTDIR)\FoundationKit.obj"
-	-@erase "$(INTDIR)\MemoryStream.obj"
-	-@erase "$(INTDIR)\Object.obj"
-	-@erase "$(INTDIR)\Point.obj"
-	-@erase "$(INTDIR)\PropertyChangeEvent.obj"
-	-@erase "$(INTDIR)\Rect.obj"
-	-@erase "$(INTDIR)\Stream.obj"
-	-@erase "$(INTDIR)\StringUtils.obj"
-	-@erase "$(INTDIR)\TextInputStream.obj"
-	-@erase "$(INTDIR)\TextOutputStream.obj"
-	-@erase "$(INTDIR)\Thread.obj"
-	-@erase "$(INTDIR)\ThreadEvent.obj"
-	-@erase "$(INTDIR)\vc60.idb"
-	-@erase "$(INTDIR)\Win32FileStream.obj"
-	-@erase "$(INTDIR)\Win32Peer.obj"
-	-@erase "..\..\..\lib\FoundationKit.lib"
-
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
-
-"$(INTDIR)" :
-    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
-
-CPP_PROJ=/nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\COM" /I "..\..\..\include\Graphics" /I "..\..\..\include\Implementer" /I "..\..\..\include\DragDrop" /I "..\..\..\xml\include" /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\FoundationKit.bsc" 
-BSC32_SBRS= \
-	
-LIB32=link.exe -lib
-LIB32_FLAGS=/nologo /out:"..\..\..\lib\FoundationKit.lib" 
-LIB32_OBJS= \
-	"$(INTDIR)\BasicException.obj" \
-	"$(INTDIR)\BasicInputStream.obj" \
-	"$(INTDIR)\BasicOutputStream.obj" \
-	"$(INTDIR)\Class.obj" \
-	"$(INTDIR)\ClassRegistry.obj" \
-	"$(INTDIR)\Event.obj" \
-	"$(INTDIR)\FileStream.obj" \
-	"$(INTDIR)\FileUtils.obj" \
-	"$(INTDIR)\FoundationKit.obj" \
-	"$(INTDIR)\MemoryStream.obj" \
-	"$(INTDIR)\Object.obj" \
-	"$(INTDIR)\Point.obj" \
-	"$(INTDIR)\PropertyChangeEvent.obj" \
-	"$(INTDIR)\Rect.obj" \
-	"$(INTDIR)\Stream.obj" \
-	"$(INTDIR)\StringUtils.obj" \
-	"$(INTDIR)\TextInputStream.obj" \
-	"$(INTDIR)\TextOutputStream.obj" \
-	"$(INTDIR)\Thread.obj" \
-	"$(INTDIR)\ThreadEvent.obj" \
-	"$(INTDIR)\Win32FileStream.obj" \
-	"$(INTDIR)\Win32Peer.obj"
-
-"..\..\..\lib\FoundationKit.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
-    $(LIB32) @<<
-  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
-<<
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
-
-OUTDIR=.\Debug
-INTDIR=.\Debug\obj
-
-ALL : "..\..\..\lib\FoundationKit_d.lib"
+ALL : "$(OUTDIR)\FoundationKit_s.lib"
 
 
 CLEAN :
@@ -118,26 +42,43 @@ CLEAN :
 	-@erase "$(INTDIR)\BasicOutputStream.obj"
 	-@erase "$(INTDIR)\Class.obj"
 	-@erase "$(INTDIR)\ClassRegistry.obj"
+	-@erase "$(INTDIR)\ErrorLog.obj"
 	-@erase "$(INTDIR)\Event.obj"
+	-@erase "$(INTDIR)\File.obj"
 	-@erase "$(INTDIR)\FileStream.obj"
 	-@erase "$(INTDIR)\FileUtils.obj"
 	-@erase "$(INTDIR)\FoundationKit.obj"
+	-@erase "$(INTDIR)\FoundationKit.pch"
+	-@erase "$(INTDIR)\Library.obj"
+	-@erase "$(INTDIR)\Locales.obj"
 	-@erase "$(INTDIR)\MemoryStream.obj"
 	-@erase "$(INTDIR)\Object.obj"
+	-@erase "$(INTDIR)\ObjectWithEvents.obj"
+	-@erase "$(INTDIR)\Parser.obj"
 	-@erase "$(INTDIR)\Point.obj"
 	-@erase "$(INTDIR)\PropertyChangeEvent.obj"
 	-@erase "$(INTDIR)\Rect.obj"
+	-@erase "$(INTDIR)\Registry.obj"
 	-@erase "$(INTDIR)\Stream.obj"
 	-@erase "$(INTDIR)\StringUtils.obj"
+	-@erase "$(INTDIR)\System.obj"
+	-@erase "$(INTDIR)\SystemToolkit.obj"
 	-@erase "$(INTDIR)\TextInputStream.obj"
 	-@erase "$(INTDIR)\TextOutputStream.obj"
 	-@erase "$(INTDIR)\Thread.obj"
 	-@erase "$(INTDIR)\ThreadEvent.obj"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase "$(INTDIR)\vc60.pdb"
+	-@erase "$(INTDIR)\VCFMath.obj"
+	-@erase "$(INTDIR)\VCFProcess.obj"
+	-@erase "$(INTDIR)\Win32FilePeer.obj"
 	-@erase "$(INTDIR)\Win32FileStream.obj"
+	-@erase "$(INTDIR)\Win32LibraryPeer.obj"
 	-@erase "$(INTDIR)\Win32Peer.obj"
-	-@erase "..\..\..\lib\FoundationKit_d.lib"
+	-@erase "$(INTDIR)\Win32ProcessPeer.obj"
+	-@erase "$(INTDIR)\Win32Registry.obj"
+	-@erase "$(INTDIR)\Win32SystemPeer.obj"
+	-@erase "$(INTDIR)\Win32Thread.obj"
+	-@erase "$(OUTDIR)\FoundationKit_s.lib"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -145,43 +86,8 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
-CPP_PROJ=/nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\FoundationKit.bsc" 
-BSC32_SBRS= \
-	
-LIB32=link.exe -lib
-LIB32_FLAGS=/nologo /out:"..\..\..\lib\FoundationKit_d.lib" 
-LIB32_OBJS= \
-	"$(INTDIR)\BasicException.obj" \
-	"$(INTDIR)\BasicInputStream.obj" \
-	"$(INTDIR)\BasicOutputStream.obj" \
-	"$(INTDIR)\Class.obj" \
-	"$(INTDIR)\ClassRegistry.obj" \
-	"$(INTDIR)\Event.obj" \
-	"$(INTDIR)\FileStream.obj" \
-	"$(INTDIR)\FileUtils.obj" \
-	"$(INTDIR)\FoundationKit.obj" \
-	"$(INTDIR)\MemoryStream.obj" \
-	"$(INTDIR)\Object.obj" \
-	"$(INTDIR)\Point.obj" \
-	"$(INTDIR)\PropertyChangeEvent.obj" \
-	"$(INTDIR)\Rect.obj" \
-	"$(INTDIR)\Stream.obj" \
-	"$(INTDIR)\StringUtils.obj" \
-	"$(INTDIR)\TextInputStream.obj" \
-	"$(INTDIR)\TextOutputStream.obj" \
-	"$(INTDIR)\Thread.obj" \
-	"$(INTDIR)\ThreadEvent.obj" \
-	"$(INTDIR)\Win32FileStream.obj" \
-	"$(INTDIR)\Win32Peer.obj"
-
-"..\..\..\lib\FoundationKit_d.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
-    $(LIB32) @<<
-  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
-<<
-
-!ENDIF 
+CPP=cl.exe
+CPP_PROJ=/nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yu"FoundationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -213,6 +119,209 @@ LIB32_OBJS= \
    $(CPP_PROJ) $< 
 <<
 
+RSC=rc.exe
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\FoundationKit.bsc" 
+BSC32_SBRS= \
+	
+LIB32=link.exe -lib
+LIB32_FLAGS=/nologo /out:"$(OUTDIR)\FoundationKit_s.lib" 
+LIB32_OBJS= \
+	"$(INTDIR)\BasicException.obj" \
+	"$(INTDIR)\BasicInputStream.obj" \
+	"$(INTDIR)\BasicOutputStream.obj" \
+	"$(INTDIR)\Class.obj" \
+	"$(INTDIR)\ClassRegistry.obj" \
+	"$(INTDIR)\ErrorLog.obj" \
+	"$(INTDIR)\Event.obj" \
+	"$(INTDIR)\File.obj" \
+	"$(INTDIR)\FileStream.obj" \
+	"$(INTDIR)\FileUtils.obj" \
+	"$(INTDIR)\FoundationKit.obj" \
+	"$(INTDIR)\Library.obj" \
+	"$(INTDIR)\Locales.obj" \
+	"$(INTDIR)\MemoryStream.obj" \
+	"$(INTDIR)\Object.obj" \
+	"$(INTDIR)\ObjectWithEvents.obj" \
+	"$(INTDIR)\Parser.obj" \
+	"$(INTDIR)\Point.obj" \
+	"$(INTDIR)\PropertyChangeEvent.obj" \
+	"$(INTDIR)\Rect.obj" \
+	"$(INTDIR)\Registry.obj" \
+	"$(INTDIR)\Stream.obj" \
+	"$(INTDIR)\StringUtils.obj" \
+	"$(INTDIR)\System.obj" \
+	"$(INTDIR)\SystemToolkit.obj" \
+	"$(INTDIR)\TextInputStream.obj" \
+	"$(INTDIR)\TextOutputStream.obj" \
+	"$(INTDIR)\Thread.obj" \
+	"$(INTDIR)\ThreadEvent.obj" \
+	"$(INTDIR)\VCFMath.obj" \
+	"$(INTDIR)\VCFProcess.obj" \
+	"$(INTDIR)\Win32FilePeer.obj" \
+	"$(INTDIR)\Win32FileStream.obj" \
+	"$(INTDIR)\Win32LibraryPeer.obj" \
+	"$(INTDIR)\Win32Peer.obj" \
+	"$(INTDIR)\Win32ProcessPeer.obj" \
+	"$(INTDIR)\Win32Registry.obj" \
+	"$(INTDIR)\Win32SystemPeer.obj" \
+	"$(INTDIR)\Win32Thread.obj"
+
+"$(OUTDIR)\FoundationKit_s.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
+    $(LIB32) @<<
+  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+OUTDIR=.\..\..\..\lib
+INTDIR=.\DebugS\obj
+# Begin Custom Macros
+OutDir=.\..\..\..\lib
+# End Custom Macros
+
+ALL : "$(OUTDIR)\FoundationKit_sd.lib"
+
+
+CLEAN :
+	-@erase "$(INTDIR)\BasicException.obj"
+	-@erase "$(INTDIR)\BasicInputStream.obj"
+	-@erase "$(INTDIR)\BasicOutputStream.obj"
+	-@erase "$(INTDIR)\Class.obj"
+	-@erase "$(INTDIR)\ClassRegistry.obj"
+	-@erase "$(INTDIR)\ErrorLog.obj"
+	-@erase "$(INTDIR)\Event.obj"
+	-@erase "$(INTDIR)\File.obj"
+	-@erase "$(INTDIR)\FileStream.obj"
+	-@erase "$(INTDIR)\FileUtils.obj"
+	-@erase "$(INTDIR)\FoundationKit.obj"
+	-@erase "$(INTDIR)\FoundationKit.pch"
+	-@erase "$(INTDIR)\Library.obj"
+	-@erase "$(INTDIR)\Locales.obj"
+	-@erase "$(INTDIR)\MemoryStream.obj"
+	-@erase "$(INTDIR)\Object.obj"
+	-@erase "$(INTDIR)\ObjectWithEvents.obj"
+	-@erase "$(INTDIR)\Parser.obj"
+	-@erase "$(INTDIR)\Point.obj"
+	-@erase "$(INTDIR)\PropertyChangeEvent.obj"
+	-@erase "$(INTDIR)\Rect.obj"
+	-@erase "$(INTDIR)\Registry.obj"
+	-@erase "$(INTDIR)\Stream.obj"
+	-@erase "$(INTDIR)\StringUtils.obj"
+	-@erase "$(INTDIR)\System.obj"
+	-@erase "$(INTDIR)\SystemToolkit.obj"
+	-@erase "$(INTDIR)\TextInputStream.obj"
+	-@erase "$(INTDIR)\TextOutputStream.obj"
+	-@erase "$(INTDIR)\Thread.obj"
+	-@erase "$(INTDIR)\ThreadEvent.obj"
+	-@erase "$(INTDIR)\vc60.idb"
+	-@erase "$(INTDIR)\vc60.pdb"
+	-@erase "$(INTDIR)\VCFMath.obj"
+	-@erase "$(INTDIR)\VCFProcess.obj"
+	-@erase "$(INTDIR)\Win32FilePeer.obj"
+	-@erase "$(INTDIR)\Win32FileStream.obj"
+	-@erase "$(INTDIR)\Win32LibraryPeer.obj"
+	-@erase "$(INTDIR)\Win32Peer.obj"
+	-@erase "$(INTDIR)\Win32ProcessPeer.obj"
+	-@erase "$(INTDIR)\Win32Registry.obj"
+	-@erase "$(INTDIR)\Win32SystemPeer.obj"
+	-@erase "$(INTDIR)\Win32Thread.obj"
+	-@erase "$(OUTDIR)\FoundationKit_sd.lib"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+CPP=cl.exe
+CPP_PROJ=/nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yu"FoundationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\FoundationKit.bsc" 
+BSC32_SBRS= \
+	
+LIB32=link.exe -lib
+LIB32_FLAGS=/nologo /out:"$(OUTDIR)\FoundationKit_sd.lib" 
+LIB32_OBJS= \
+	"$(INTDIR)\BasicException.obj" \
+	"$(INTDIR)\BasicInputStream.obj" \
+	"$(INTDIR)\BasicOutputStream.obj" \
+	"$(INTDIR)\Class.obj" \
+	"$(INTDIR)\ClassRegistry.obj" \
+	"$(INTDIR)\ErrorLog.obj" \
+	"$(INTDIR)\Event.obj" \
+	"$(INTDIR)\File.obj" \
+	"$(INTDIR)\FileStream.obj" \
+	"$(INTDIR)\FileUtils.obj" \
+	"$(INTDIR)\FoundationKit.obj" \
+	"$(INTDIR)\Library.obj" \
+	"$(INTDIR)\Locales.obj" \
+	"$(INTDIR)\MemoryStream.obj" \
+	"$(INTDIR)\Object.obj" \
+	"$(INTDIR)\ObjectWithEvents.obj" \
+	"$(INTDIR)\Parser.obj" \
+	"$(INTDIR)\Point.obj" \
+	"$(INTDIR)\PropertyChangeEvent.obj" \
+	"$(INTDIR)\Rect.obj" \
+	"$(INTDIR)\Registry.obj" \
+	"$(INTDIR)\Stream.obj" \
+	"$(INTDIR)\StringUtils.obj" \
+	"$(INTDIR)\System.obj" \
+	"$(INTDIR)\SystemToolkit.obj" \
+	"$(INTDIR)\TextInputStream.obj" \
+	"$(INTDIR)\TextOutputStream.obj" \
+	"$(INTDIR)\Thread.obj" \
+	"$(INTDIR)\ThreadEvent.obj" \
+	"$(INTDIR)\VCFMath.obj" \
+	"$(INTDIR)\VCFProcess.obj" \
+	"$(INTDIR)\Win32FilePeer.obj" \
+	"$(INTDIR)\Win32FileStream.obj" \
+	"$(INTDIR)\Win32LibraryPeer.obj" \
+	"$(INTDIR)\Win32Peer.obj" \
+	"$(INTDIR)\Win32ProcessPeer.obj" \
+	"$(INTDIR)\Win32Registry.obj" \
+	"$(INTDIR)\Win32SystemPeer.obj" \
+	"$(INTDIR)\Win32Thread.obj"
+
+"$(OUTDIR)\FoundationKit_sd.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
+    $(LIB32) @<<
+  $(LIB32_FLAGS) $(DEF_FLAGS) $(LIB32_OBJS)
+<<
+
+!ENDIF 
+
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
 !IF EXISTS("FoundationKit.dep")
@@ -226,133 +335,253 @@ LIB32_OBJS= \
 !IF "$(CFG)" == "FoundationKit - Win32 Release" || "$(CFG)" == "FoundationKit - Win32 Debug"
 SOURCE=..\..\..\src\Exceptions\BasicException.cpp
 
-"$(INTDIR)\BasicException.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\BasicException.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\BasicInputStream.cpp
 
-"$(INTDIR)\BasicInputStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\BasicInputStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\BasicOutputStream.cpp
 
-"$(INTDIR)\BasicOutputStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\BasicOutputStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Core\Class.cpp
+SOURCE=..\..\..\src\core\Class.cpp
 
-"$(INTDIR)\Class.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Class.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Core\ClassRegistry.cpp
+SOURCE=..\..\..\src\core\ClassRegistry.cpp
 
-"$(INTDIR)\ClassRegistry.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ClassRegistry.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\ErrorLog.cpp
+
+"$(INTDIR)\ErrorLog.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Events\Event.cpp
 
-"$(INTDIR)\Event.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Event.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\IO\File.cpp
+
+"$(INTDIR)\File.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\FileStream.cpp
 
-"$(INTDIR)\FileStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\FileStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\io\FileUtils.cpp
+SOURCE=..\..\..\src\IO\FileUtils.cpp
 
-"$(INTDIR)\FileUtils.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\FileUtils.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
 
-"$(INTDIR)\FoundationKit.obj" : $(SOURCE) "$(INTDIR)"
+!IF  "$(CFG)" == "FoundationKit - Win32 Release"
+
+CPP_SWITCHES=/nologo /MD /W3 /WX /GR /GX /O2 /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yc /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+"$(INTDIR)\FoundationKit.obj"	"$(INTDIR)\FoundationKit.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fp"$(INTDIR)\FoundationKit.pch" /Yc"FoundationKit.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\FoundationKit.obj"	"$(INTDIR)\FoundationKit.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
+
+SOURCE=..\..\..\src\Utils\Library.cpp
+
+"$(INTDIR)\Library.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\Locales.cpp
+
+"$(INTDIR)\Locales.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\MemoryStream.cpp
 
-"$(INTDIR)\MemoryStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\MemoryStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Core\Object.cpp
+SOURCE=..\..\..\src\core\Object.cpp
 
-"$(INTDIR)\Object.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Object.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Core\Point.cpp
+SOURCE=..\..\..\src\core\ObjectWithEvents.cpp
 
-"$(INTDIR)\Point.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ObjectWithEvents.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\Parser.cpp
+
+"$(INTDIR)\Parser.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\Point.cpp
+
+"$(INTDIR)\Point.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Events\PropertyChangeEvent.cpp
 
-"$(INTDIR)\PropertyChangeEvent.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\PropertyChangeEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\Core\Rect.cpp
+SOURCE=..\..\..\src\core\Rect.cpp
 
-"$(INTDIR)\Rect.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Rect.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\Registry.cpp
+
+"$(INTDIR)\Registry.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\Stream.cpp
 
-"$(INTDIR)\Stream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Stream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Utils\StringUtils.cpp
 
-"$(INTDIR)\StringUtils.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\StringUtils.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\System.cpp
+
+"$(INTDIR)\System.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\SystemToolkit.cpp
+
+"$(INTDIR)\SystemToolkit.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\TextInputStream.cpp
 
-"$(INTDIR)\TextInputStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\TextInputStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\IO\TextOutputStream.cpp
 
-"$(INTDIR)\TextOutputStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\TextOutputStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\Utils\Thread.cpp
 
-"$(INTDIR)\Thread.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Thread.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\..\src\events\ThreadEvent.cpp
+SOURCE=..\..\..\src\Events\ThreadEvent.cpp
 
-"$(INTDIR)\ThreadEvent.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ThreadEvent.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\core\VCFMath.cpp
+
+"$(INTDIR)\VCFMath.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\Utils\VCFProcess.cpp
+
+"$(INTDIR)\VCFProcess.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32FilePeer.cpp
+
+"$(INTDIR)\Win32FilePeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
 
-"$(INTDIR)\Win32FileStream.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32FileStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32LibraryPeer.cpp
+
+"$(INTDIR)\Win32LibraryPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
 
-"$(INTDIR)\Win32Peer.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\Win32Peer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32ProcessPeer.cpp
+
+"$(INTDIR)\Win32ProcessPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Registry.cpp
+
+"$(INTDIR)\Win32Registry.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
+
+"$(INTDIR)\Win32SystemPeer.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Thread.cpp
+
+"$(INTDIR)\Win32Thread.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\FoundationKit.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
