@@ -40,8 +40,8 @@ public:
 		return (uint32)taskID_;
 	}
 
-	virtual uint32 getHandleID() {
-		return (uint32)taskID_;
+	virtual OSHandleID getHandleID() {
+		return (OSHandleID)taskID_;
 	}
 
     /** Returns process that created thread.  Is this useful?
@@ -80,6 +80,9 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.4  2005/01/08 20:52:47  ddiego
+ *fixed some glitches in osx impl.
+ *
  *Revision 1.3  2004/08/08 22:09:33  ddiego
  *final checkin before the 0-6-5 release
  *

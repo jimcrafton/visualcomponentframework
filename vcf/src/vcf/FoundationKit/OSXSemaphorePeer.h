@@ -27,8 +27,8 @@ public:
     /**
     on OSX this returns a MPSemaphoreID
     */
-	virtual uint32 getHandleID() {
-        return (uint32) semaphoreID_;
+	virtual OSHandleID getHandleID() {
+        return (OSHandleID) semaphoreID_;
     }
 
 protected:
@@ -43,6 +43,9 @@ protected:
  /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2005/01/08 20:52:47  ddiego
+ *fixed some glitches in osx impl.
+ *
  *Revision 1.2  2004/08/07 02:49:14  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *

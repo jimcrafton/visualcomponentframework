@@ -10,6 +10,10 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/GraphicsKit/OSXGraphicsResourceBundle.h"
+
 
 
 using namespace VCF;
@@ -196,7 +200,7 @@ ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( const unsigned long
 	return new OSXContext( width, height );
 }
 
-ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( const unsigned long& contextID )
+ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( OSHandleID contextID )
 {
 	return new OSXContext( contextID );
 }
@@ -228,7 +232,7 @@ PrintSessionPeer* OSXGraphicsToolkit::internal_createPrintSessionPeer()
 
 GraphicsResourceBundlePeer* OSXGraphicsToolkit::internal_createGraphicsResourceBundlePeer()
 {
-	return NULL;
+	return new OSXGraphicsResourceBundle();
 }
 
 double OSXGraphicsToolkit::internal_getDPI( GraphicsContext* context )
@@ -239,6 +243,9 @@ double OSXGraphicsToolkit::internal_getDPI( GraphicsContext* context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:48  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -34,9 +34,9 @@ public:
 
 	virtual String getFileName();
 
-	virtual long getHandleID();
+	virtual OSHandleID getHandleID();
 
-	virtual void setHandleID( const long& handleID );
+	virtual void setHandleID( OSHandleID handleID );
 protected:
 	VCF::AbstractApplication* app_;
 	long handleID_;
@@ -48,6 +48,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -21,15 +21,15 @@ public:
 
 	virtual ~OSXCursorPeer();
 
-	virtual ulong32 getCursorHandleID(){
-		return (ulong32)cursorHandle_;
+	virtual OSHandleID getCursorHandleID(){
+		return (OSHandleID)cursorHandle_;
 	}
 
 	virtual void createFromImage( Image* cursorImage, Point* hotSpot );
 
 	virtual void createSystemCursor( const Cursor::SystemCursorType& systemCursor );
 
-	virtual void createFromResourceName( const String& cursorName, const ulong32& instanceHandle=0 );
+	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=0 );
 
 	virtual long getCursorID() {
 		return cursorID_;
@@ -65,6 +65,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

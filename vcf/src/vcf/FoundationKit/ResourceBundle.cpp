@@ -12,6 +12,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 
 
+
 using namespace VCF;
 
 
@@ -172,6 +173,9 @@ String ResourceBundle::getResourcesDirectory()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:47  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

@@ -26,6 +26,11 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXMenuItem.h"
 
 
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/ApplicationKit/OSXAppResourceBundle.h"
+
+
 #define kSleepTime	32767
 
 
@@ -818,6 +823,11 @@ DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
 ScrollPeer* OSXUIToolkit::internal_createScrollPeer( Control* control )
 {
     return NULL;
+}
+
+GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
+{
+	return new OSXAppResourceBundle( app );
 }
 
 SystemTrayPeer* OSXUIToolkit::internal_createSystemTrayPeer()
@@ -2165,6 +2175,9 @@ VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

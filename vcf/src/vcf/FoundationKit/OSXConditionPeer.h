@@ -58,8 +58,8 @@ public:
 
     virtual void broadcast();
 
-	virtual uint32 getHandleID() {
-		return (uint32)0;
+	virtual OSHandleID getHandleID() {
+		return (OSHandleID)0;
 	}
 protected:
 	Condition* condition_;
@@ -82,6 +82,9 @@ protected:
  /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2005/01/08 20:52:47  ddiego
+ *fixed some glitches in osx impl.
+ *
  *Revision 1.2  2004/08/07 02:49:13  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *
