@@ -1,18 +1,12 @@
-
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
-
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 5.03.0280 */
-/* at Sun Sep 16 12:06:06 2001
+/* File created by MIDL compiler version 5.01.0164 */
+/* at Wed Jan 02 11:26:17 2002
  */
 /* Compiler settings for D:\code\vcf\build\vc60\add-ins\VCFNewClassWiz\VCFNewClassWiz.idl:
-    Oicf (OptLev=i2), W1, Zp8, env=Win32 (32b run), ms_ext, c_ext
+    Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
-         __declspec(uuid()), __declspec(selectany), __declspec(novtable)
-         DECLSPEC_UUID(), MIDL_INTERFACE()
 */
 //@@MIDL_FILE_HEADING(  )
 
@@ -27,6 +21,10 @@
 
 #ifndef __VCFNEWCLASSWIZ_h__
 #define __VCFNEWCLASSWIZ_h__
+
+#ifdef __cplusplus
+extern "C"{
+#endif 
 
 /* Forward Declarations */ 
 
@@ -59,10 +57,6 @@ typedef struct VCFNewClassWiz VCFNewClassWiz;
 
 #endif 	/* __VCFNewClassWiz_FWD_DEFINED__ */
 
-
-#ifdef __cplusplus
-extern "C"{
-#endif 
 
 void __RPC_FAR * __RPC_USER MIDL_user_allocate(size_t);
 void __RPC_USER MIDL_user_free( void __RPC_FAR * ); 
@@ -232,5 +226,3 @@ VCFNewClassWiz;
 #endif
 
 #endif
-
-
