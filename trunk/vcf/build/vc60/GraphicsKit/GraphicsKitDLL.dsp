@@ -345,6 +345,10 @@ SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\BasicFill.cpp
 # End Source File
 # Begin Source File
@@ -406,6 +410,10 @@ SOURCE=..\..\..\src\Graphics\MicroTiles.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\PixelBuffer.cpp
 # End Source File
 # Begin Source File
 
