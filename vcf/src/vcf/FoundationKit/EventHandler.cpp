@@ -12,11 +12,7 @@ using namespace VCF;
 
 EventHandler::~EventHandler()
 {
-	if ( NULL != delegate_ ) {
-		delegate_->removeHandler( this );
-	}
-
-	delegate_ = NULL;
+	
 }
 	
 
@@ -35,22 +31,13 @@ void EventHandler::addHandlerToSource( Object* source, const String& handlerName
 	}
 }
 
-void EventHandler::addHandlerList( Object* eventOwner, EventHandler::Vector* handlerList )
-{
-	ObjectWithEvents* objWithEvents = dynamic_cast<ObjectWithEvents*>(eventOwner);
-	if ( NULL != objWithEvents ) {
-		objWithEvents->addEventHandlerList( handlerList );
-	}
-	else {
-		StringUtils::traceWithArgs( "this EventHandler::Vector* does not have a source (class Name: %s) object that can clean up it's memory. \nExpect memory leaks from this!\n",
-									eventOwner->getClassName().c_str() );
-	}
-}
-
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/10 03:32:52  ddiego
+*fixed a heap overwrite error in the delegate-event handler code.
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -85,7 +85,7 @@ Control::~Control()
 
 void Control::destroy()
 {
-
+	
 	if ( this->isLightWeight() ) {
 		//have to handle a Component::COMPONENT_DELETED event manually
 		//as they will NOT recv notification from the underlying windowing system
@@ -1457,6 +1457,9 @@ void Control::paintBorder( GraphicsContext * context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2004/12/10 03:32:51  ddiego
+*fixed a heap overwrite error in the delegate-event handler code.
+*
 *Revision 1.4  2004/12/01 04:31:20  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -67,16 +67,6 @@ public:
 		else {
 			checkHandlers();
 			*handlers_ = *rhs.handlers_;
-
-			//this code re-assigns all the handler's of this 
-			//delegate to point to it. 
-			//NOTE: We may *not* want to do this.
-			EventHandler::Vector::iterator it = handlers_->begin();
-			while ( it != handlers_->end() ) {
-				EventHandler* handler = *it;
-				handler->setDelegate( this );
-				it++;
-			}
 		}
 		return *this;
 	}
@@ -100,7 +90,6 @@ public:
 
 		if ( found == handlers_->end() ) {
 			handlers_->push_back( handler );
-			handler->setDelegate( this );
 		}
 	}
 
@@ -116,7 +105,6 @@ public:
 				std::find( handlers_->begin(), handlers_->end(), handler );
 
 			if ( found != handlers_->end() ) {
-				handler->setDelegate( NULL );
 				handlers_->erase( found );
 			}
 		}
@@ -160,7 +148,11 @@ public:
 					break;
 				}
 
-				(*it)->invoke( event );
+				EventHandler* handler = *it;
+				
+				VCF_ASSERT( NULL != handler );
+
+				handler->invoke( event );
 
 				it ++;
 			}
@@ -169,13 +161,7 @@ public:
 
 	inline void removeAllHandlers() {
 		if ( NULL != handlers_ ) {
-			EventHandler::Vector::iterator it = handlers_->begin();
-			while ( it != handlers_->end() ) {
-				EventHandler* handler = *it;
-				handler->setDelegate( NULL );
-				it++;
-			}
-
+			
 			handlers_->clear();
 		}
 	}
@@ -185,6 +171,7 @@ public:
 		EventHandler* result = NULL;
 		if ( (NULL != handlers_) && (!handlers_->empty()) ) {
 			result = handlers_->front();
+			VCF_ASSERT( NULL != result );
 		}
 
 		return result;
@@ -198,8 +185,7 @@ public:
 		if ( found != handlers_->end() ) {
 			handlers_->erase( found );
 		}
-
-		handler->setDelegate( this );
+		
 		handlers_->insert( handlers_->begin(), handler );
 	}
 
@@ -219,6 +205,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/10 03:32:52  ddiego
+*fixed a heap overwrite error in the delegate-event handler code.
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

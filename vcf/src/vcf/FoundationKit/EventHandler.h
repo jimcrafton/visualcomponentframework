@@ -40,7 +40,7 @@ class FOUNDATIONKIT_API EventHandler : public VCF::Object {
 public:
 	typedef std::vector<EventHandler*> Vector;
 
-	EventHandler():delegate_(NULL){};
+	EventHandler(){};
 
 	virtual ~EventHandler();
 
@@ -68,24 +68,8 @@ public:
 	*/
 	void addHandlerToSource( Object* source, const String& handlerName );
 
-	/**
-	*adds the handler list to the event owner. The eventOwner must derive
-	*from ObjectWithEvent for this to work successfully.
-	*/
-	static void addHandlerList( Object* eventOwner, EventHandler::Vector* handlerList );
-
-	void setDelegate( Delegate* delegate ) {
-		delegate_ = delegate;
-	}
-
-	Delegate* getDelegate() const {
-		return delegate_;
-	}
 protected:
-	/**
-	The delegate that this event handler belongs to
-	*/
-	Delegate* delegate_;
+	
 };
 
 
@@ -187,6 +171,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2004/12/10 03:32:52  ddiego
+*fixed a heap overwrite error in the delegate-event handler code.
+*
 *Revision 1.4  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
