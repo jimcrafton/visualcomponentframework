@@ -30,7 +30,7 @@
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\vc70/DebugS\obj/NetworkKit.pch"
 				AssemblerListingLocation=".\vc70/DebugS\obj/"
-				ObjectFile="vc70/DebugS\obj/"
+				ObjectFile=".\vc70/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/NetworkKit_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -68,6 +68,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,BUILD_NETWORKKIT_LIB"
@@ -78,7 +79,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc70/ReleaseS\obj/NetworkKit.pch"
 				AssemblerListingLocation=".\vc70/ReleaseS\obj/"
-				ObjectFile="vc70/ReleaseS\obj/"
+				ObjectFile=".\vc70/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc70/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"

@@ -31,7 +31,7 @@
 				PrecompiledHeaderThrough="ApplicationKit.h"
 				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/ApplicationKitDLL.pch"
 				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
-				ObjectFile="vc70/DebugDLL\obj/"
+				ObjectFile=".\vc70/DebugDLL\obj/"
 				ProgramDataBaseFileName="..\..\..\bin/ApplicationKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -84,6 +84,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm150 "
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/../thirdparty/common/agg/include/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;USE_GRAPHICSKIT_DLL;APPKIT_DLL;APPKIT_EXPORTS;BUILD_APPKIT_LIB"
@@ -95,7 +96,7 @@
 				PrecompiledHeaderThrough="ApplicationKit.h"
 				PrecompiledHeaderFile=".\vc70/ReleaseDLL\obj/ApplicationKitDLL.pch"
 				AssemblerListingLocation=".\vc70/ReleaseDLL\obj/"
-				ObjectFile="vc70/ReleaseDLL\obj/"
+				ObjectFile=".\vc70/ReleaseDLL\obj/"
 				ProgramDataBaseFileName=".\vc70/ReleaseDLL\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -159,6 +160,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\AcceleratorKey.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Action.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementer\AppKitPeerConfig.h">
@@ -442,6 +446,9 @@
 				RelativePath="..\..\..\src\core\AcceleratorKey.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\Action.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\Application.cpp">
 			</File>
 			<File
@@ -613,7 +620,8 @@
 				RelativePath="..\..\..\src\IO\VFFOutputStream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\Window.cpp">
+				RelativePath="..\..\..\src\core\Window.cpp"
+				DeploymentContent="TRUE">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\WindowEvent.cpp">
@@ -629,6 +637,9 @@
 				RelativePath="..\..\..\include\implementerKit\AbstractWin32Component.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\implementer\ClipboardPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\ImplementerKit\COMDataObject.cpp">
 			</File>
 			<File
@@ -639,6 +650,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\COMUtils.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementer\ClipboardPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\EnumObject.h">
@@ -797,16 +811,16 @@
 				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\implementerkit\Win32Toolbar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Toolbar.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32ToolKit.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementerKit\Win32ToolKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\implementerkit\Win32Toolbar.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Toolbar.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32Tree.cpp">
@@ -832,6 +846,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\ClipboardEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\ClipboardEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\ColumnItemEvent.cpp">
@@ -912,16 +929,16 @@
 				RelativePath="..\..\..\include\events\ScrollEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\Events\TableModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\events\TableModelEvent.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\Events\TabModelEvent.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\events\TabModelEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Events\TableModelEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\events\TableModelEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Events\TextEvent.cpp">
@@ -1042,18 +1059,6 @@
 				RelativePath="..\..\..\include\core\DefaultMenuItem.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTableCellItem.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTableModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\DefaultTableModel.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\DefaultTabModel.cpp">
 			</File>
 			<File
@@ -1064,6 +1069,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\DefaultTabPage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTableCellItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableModel.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\DefaultTableModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\DefaultTextModel.cpp">
@@ -1114,16 +1131,16 @@
 				RelativePath="..\..\..\include\ModelViewKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\TableCellItem.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\TableModel.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\core\TabModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TabPage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TableCellItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\TableModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\TextModel.h">
@@ -1175,16 +1192,16 @@
 				RelativePath="..\..\..\include\core\CustomControl.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\HeaderControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\HeaderControl.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\HeaderControl.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\HeaderControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\ImageControl.cpp">
@@ -1295,22 +1312,10 @@
 				RelativePath="..\..\..\include\core\Toolbar.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\ToolbarButton.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\ToolbarButton.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\ToolbarDock.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\ToolbarDock.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ToolbarSeparator.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\include\core\ToolbarSeparator.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\TreeControl.cpp">

@@ -23,8 +23,6 @@ CFG=FoundationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -249,14 +247,6 @@ SOURCE=..\..\..\include\utils\ErrorLog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\utils\FilePath.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\io\FileUtils.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\utils\Library.h
 # End Source File
 # Begin Source File
@@ -417,6 +407,10 @@ SOURCE=..\..\..\include\io\File.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\utils\FilePath.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\FilePath.h
 # End Source File
 # Begin Source File
@@ -434,6 +428,10 @@ SOURCE=..\..\..\include\io\FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileStreamPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\io\FileUtils.cpp
 # End Source File
 # Begin Source File
 

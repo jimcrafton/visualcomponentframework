@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="ThreadsInGUI"
-	SccProjectName="ThreadsInGUI"
-	SccLocalPath=".">
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -29,7 +29,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Release/ThreadsInGUI.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -87,7 +87,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Debug/ThreadsInGUI.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="vc70/Debug/"
 				BrowseInformation="1"
 				WarningLevel="3"

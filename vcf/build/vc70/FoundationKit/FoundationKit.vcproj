@@ -30,7 +30,7 @@
 				PrecompiledHeaderThrough="FoundationKit.h"
 				PrecompiledHeaderFile=".\vc70/DebugS\obj/FoundationKit.pch"
 				AssemblerListingLocation=".\vc70/DebugS\obj/"
-				ObjectFile="vc70/DebugS\obj/"
+				ObjectFile=".\vc70/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/FoundationKit_vc70_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -69,6 +69,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,NO_MFC,BUILD_FRAMEWORK_LIB"
@@ -80,7 +81,7 @@
 				PrecompiledHeaderThrough="FoundationKit.h"
 				PrecompiledHeaderFile=".\vc70/ReleaseS\obj/FoundationKit.pch"
 				AssemblerListingLocation=".\vc70/ReleaseS\obj/"
-				ObjectFile="vc70/ReleaseS\obj/"
+				ObjectFile=".\vc70/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc70/ReleaseS\obj/"
 				WarningLevel="3"
 				WarnAsError="TRUE"
@@ -175,37 +176,43 @@
 			Name="RTTI"
 			Filter="">
 			<File
-				RelativePath="..\..\..\src\core\Class.cpp">
+				RelativePath="..\..\..\src\rtti\Class.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\Class.h">
+				RelativePath="..\..\..\include\rtti\Class.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\ClassInfo.h">
+				RelativePath="..\..\..\include\rtti\ClassInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\ClassRegistry.cpp">
+				RelativePath="..\..\..\src\rtti\ClassRegistry.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\ClassRegistry.h">
+				RelativePath="..\..\..\include\rtti\ClassRegistry.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\utils\Enum.h">
+				RelativePath="..\..\..\include\rtti\Enum.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\rtti\Field.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\core\Interface.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\InterfaceClass.cpp">
+				RelativePath="..\..\..\src\rtti\InterfaceClass.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\InterfaceClass.h">
+				RelativePath="..\..\..\include\rtti\InterfaceClass.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\Method.h">
+				RelativePath="..\..\..\include\rtti\Method.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\core\Property.h">
+				RelativePath="..\..\..\include\rtti\Property.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\rtti\VCFRTTIImpl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\VariantData.cpp">
@@ -237,12 +244,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\ErrorLog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\utils\FilePath.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\io\FileUtils.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\utils\Library.h">
@@ -366,6 +367,9 @@
 				RelativePath="..\..\..\include\io\File.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\utils\FilePath.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\utils\FilePath.h">
 			</File>
 			<File
@@ -381,16 +385,19 @@
 				RelativePath="..\..\..\include\io\FileStreamPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\io\FileUtils.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\io\FileUtils.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\io\MemStreamUtils.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\io\MemoryStream.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\include\io\MemoryStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\io\MemStreamUtils.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\io\Persistable.h">

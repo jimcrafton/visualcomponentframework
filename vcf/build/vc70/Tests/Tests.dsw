@@ -96,7 +96,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKit"=..\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
+Project: "ApplicationKit"=..\..\gtk\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -125,6 +125,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name GraphicsKitDLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AtlBrowser"=..\..\..\..\..\..\..\Temp\AtlBrowser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -213,21 +225,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DrawingWin32"=.\DrawingWin32\DrawingWin32.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name GraphicsKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "ErrorLogging"=..\..\..\TESTS\ErrorLogging\ErrorLogging.dsp - Package Owner=<4>
 
 Package=<5>
@@ -276,7 +273,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKit"=..\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
+Project: "GraphicsKit"=..\..\gtk\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -284,9 +281,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name FoundationKit
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
@@ -317,6 +311,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -353,6 +350,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Win32HTMLBrowser
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -669,7 +669,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "circles"=..\..\..\thirdparty\common\agg\examples\win32_api\circles\circles.dsp - Package Owner=<4>
+Project: "layout2"=..\..\..\..\..\..\JUNK\layout2\layout2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -677,23 +677,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "libAGG"=..\GRAPHICSKIT\libAGG.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "pure_api"=..\..\..\thirdparty\common\agg\examples\win32_api\pure_api\pure_api.dsp - Package Owner=<4>
+Project: "libAGG"=..\..\gtk\GraphicsKit\libAGG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

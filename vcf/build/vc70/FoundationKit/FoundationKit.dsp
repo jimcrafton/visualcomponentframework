@@ -23,8 +23,6 @@ CFG=FoundationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -41,7 +39,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc70/ReleaseS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /Fo"vc70/ReleaseS\obj/" /Yu"FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /WX /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /Yu"FoundationKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +62,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc70/DebugS\obj"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /FR"vc70/DebugS\obj/" /Fo"vc70/DebugS\obj/" /FR /Yu"FoundationKit.h" /Fd"..\..\..\lib/FoundationKit_vc70_sd.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /WX /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_FRAMEWORK_LIB" /FR /Yu"FoundationKit.h" /Fd"..\..\..\lib/FoundationKit_vc70_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -249,14 +247,6 @@ SOURCE=..\..\..\include\utils\ErrorLog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\utils\FilePath.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\io\FileUtils.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\utils\Library.h
 # End Source File
 # Begin Source File
@@ -417,6 +407,10 @@ SOURCE=..\..\..\include\io\File.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\utils\FilePath.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\FilePath.h
 # End Source File
 # Begin Source File
@@ -434,6 +428,10 @@ SOURCE=..\..\..\include\io\FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileStreamPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\io\FileUtils.cpp
 # End Source File
 # Begin Source File
 
@@ -714,17 +712,7 @@ SOURCE=..\..\..\include\implementerKit\Win32Thread.h
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
-
-!IF  "$(CFG)" == "FoundationKit - Win32 Release"
-
 # ADD CPP /Yc"FoundationKit.h"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
-
-# ADD CPP /Yc"FoundationKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

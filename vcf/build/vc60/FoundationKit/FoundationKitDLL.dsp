@@ -109,6 +109,10 @@ SOURCE=..\..\..\include\core\FoundationKitSelectLib.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=..\..\..\src\utils\Dictionary.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\FoundationKit.cpp
 # ADD CPP /Yc"FoundationKit.h"
 # End Source File
@@ -474,6 +478,10 @@ SOURCE=..\..\..\include\utils\Condition.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Dictionary.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\Enumerator.h
 # End Source File
 # Begin Source File
@@ -613,66 +621,6 @@ SOURCE=..\..\..\src\Utils\XMLParser.cpp
 SOURCE=..\..\..\include\utils\XMLParser.h
 # End Source File
 # End Group
-# Begin Group "RTTI"
-
-# PROP Default_Filter "*.h"
-# Begin Source File
-
-SOURCE=..\..\..\src\core\Class.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\Class.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\ClassInfo.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\ClassRegistry.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\ClassRegistry.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\utils\Enum.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\Interface.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\InterfaceClass.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\InterfaceClass.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\Method.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\Property.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\VariantData.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\VariantData.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\VCFRTTIImpl.h
-# End Source File
-# End Group
 # Begin Group "Core"
 
 # PROP Default_Filter "*.h"
@@ -755,6 +703,66 @@ SOURCE=..\..\..\include\utils\SystemPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\ThreadPeer.h
+# End Source File
+# End Group
+# Begin Group "RTTI"
+
+# PROP Default_Filter "*.h;*.cpp"
+# Begin Source File
+
+SOURCE=..\..\..\src\rtti\Class.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\Class.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\ClassInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\rtti\ClassRegistry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\ClassRegistry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\Enum.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\Field.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\rtti\InterfaceClass.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\InterfaceClass.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\Method.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\VariantData.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\VariantData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\rtti\VCFRTTIImpl.h
 # End Source File
 # End Group
 # End Target

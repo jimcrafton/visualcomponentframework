@@ -29,7 +29,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/NetworkKitDLL.pch"
 				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
-				ObjectFile="vc70/DebugDLL\obj/"
+				ObjectFile=".\vc70/DebugDLL\obj/"
 				ProgramDataBaseFileName="..\..\..\bin/NetworkKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -80,6 +80,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FRAMEWORK_DLL;BUILD_NETWORKKIT_LIB"
@@ -90,7 +91,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc70/Release/NetworkKitDLL.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"

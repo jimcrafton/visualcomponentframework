@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="Splitters"
-	ProjectGUID="{7DA7CCAC-179F-420A-BB27-681F76087D10}"
+	ProjectGUID="{72AC9B38-5B0D-4BF6-9F78-59EA126B77A8}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -11,6 +11,65 @@
 			Name="Win32"/>
 	</Platforms>
 	<Configurations>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\vc70/Release"
+			IntermediateDirectory=".\vc70/Release"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32,NDEBUG,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\vc70/Release/Splitters.pch"
+				AssemblerListingLocation=".\vc70/Release/"
+				ObjectFile=".\vc70/Release/"
+				ProgramDataBaseFileName=".\vc70/Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
+				OutputFile="vc70/Release/Splitters_vc70.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="$(VCF_LIB)"
+				ProgramDatabaseFile=".\vc70/Release/Splitters_vc70.pdb"
+				SubSystem="2"
+				EntryPointSymbol="mainCRTStartup"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\vc70/Release/Splitters.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\vc70/Debug"
@@ -29,9 +88,8 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Debug/Splitters.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="vc70/Debug/"
-				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -66,65 +124,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\vc70/Release"
-			IntermediateDirectory=".\vc70/Release"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL"
-				StringPooling="TRUE"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc70/Release/Splitters.pch"
-				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
-				ProgramDataBaseFileName=".\vc70/Release/"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="vc70/Release/Splitters_vc70.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc70/Release/Splitters_vc70.pdb"
-				SubSystem="2"
-				EntryPointSymbol="mainCRTStartup"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\vc70/Release/Splitters.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>

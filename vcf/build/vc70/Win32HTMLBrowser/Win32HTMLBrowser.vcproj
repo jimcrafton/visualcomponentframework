@@ -22,6 +22,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS,_USRDLL,WIN32HTMLBROWSER_DLL,WIN32HTMLBROWSER_EXPORTS,USE_FRAMEWORK_DLL,USE_GRAPHICSKIT_DLL,USE_APPKIT_DLL,BUILD_WIN32HTMLBROWSER_LIB"
@@ -31,7 +32,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Release/Win32HTMLBrowser.pch"
 				AssemblerListingLocation=".\vc70/Release/"
-				ObjectFile="vc70/Release/"
+				ObjectFile=".\vc70/Release/"
 				ProgramDataBaseFileName=".\vc70/Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -90,7 +91,7 @@
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=".\vc70/Debug/Win32HTMLBrowser.pch"
 				AssemblerListingLocation=".\vc70/Debug/"
-				ObjectFile="vc70/Debug/"
+				ObjectFile=".\vc70/Debug/"
 				ProgramDataBaseFileName="..\..\..\bin/Win32HTMLBrowser_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -110,7 +111,7 @@
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\vc70/Debug/Win32HTMLBrowser_vc70_d.pdb"
 				SubSystem="2"
-				ImportLibrary=".\vc70/Debug/Win32HTMLBrowser_vc70_d.lib"/>
+				ImportLibrary="..\..\..\lib\Win32HTMLBrowser_vc70_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"

@@ -30,7 +30,7 @@
 				PrecompiledHeaderThrough="GraphicsKit.h"
 				PrecompiledHeaderFile=".\vc70/DebugDLL\obj/GraphicsKitDLL.pch"
 				AssemblerListingLocation=".\vc70/DebugDLL\obj/"
-				ObjectFile="vc70/DebugDLL\obj/"
+				ObjectFile=".\vc70/DebugDLL\obj/"
 				ProgramDataBaseFileName="..\..\..\bin/GraphicsKit_vc70_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -82,6 +82,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/../thirdparty/common/agg/include/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;BUILD_GRAPHICSKIT_LIB"
@@ -93,7 +94,7 @@
 				PrecompiledHeaderThrough="GraphicsKit.h"
 				PrecompiledHeaderFile=".\vc70/ReleaseDLL\obj/GraphicsKitDLL.pch"
 				AssemblerListingLocation=".\vc70/ReleaseDLL\obj/"
-				ObjectFile="vc70/ReleaseDLL\obj/"
+				ObjectFile=".\vc70/ReleaseDLL\obj/"
 				ProgramDataBaseFileName=".\vc70/ReleaseDLL\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"

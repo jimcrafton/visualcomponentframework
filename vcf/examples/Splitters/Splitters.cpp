@@ -1,6 +1,6 @@
 //Splitters.cpp
 
-//#define USING_SPLITTER
+#define USING_SPLITTER
 #define NUM_OF_PANELS 5	 // 1-6
 
 

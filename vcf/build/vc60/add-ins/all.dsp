@@ -22,8 +22,6 @@ CFG=all - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 MTL=midl.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
