@@ -687,7 +687,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKit
+    Project_Dep_Name FoundationKit
     End Project Dependency
 }}}
 
@@ -702,7 +702,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name FoundationKitDLL
     End Project Dependency
 }}}
 
@@ -716,6 +716,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -728,6 +731,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1131,16 +1137,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser_StaticLib
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name ImageFormats
+    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
 }}}
 
@@ -1154,6 +1157,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name libXmake
+    End Project Dependency
 }}}
 
 ###############################################################################
