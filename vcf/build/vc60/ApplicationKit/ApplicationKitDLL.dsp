@@ -299,15 +299,7 @@ SOURCE=..\..\..\include\core\ComponentInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\io\ComponentInputStream.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\events\ComponentListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\io\ComponentOutputStream.h
 # End Source File
 # Begin Source File
 
@@ -1181,14 +1173,6 @@ SOURCE=..\..\..\src\core\Component.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ComponentInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\IO\ComponentInputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\IO\ComponentOutputStream.cpp
 # End Source File
 # Begin Source File
 
