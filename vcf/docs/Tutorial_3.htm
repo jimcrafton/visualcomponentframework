@@ -9,7 +9,8 @@
   <TITLE>Tutorial 3</TITLE>
   <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <H1>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
@@ -24,27 +25,25 @@
    the close button of a window you fire off an event that closes the 
    window, and possible the application it represents. Events are 
    particularly useful because they allow other objects to be notified 
-   when the event happens. These other objects are called Listeners in 
-   the VCF. This is a standard pattern in which an observer is notified 
-   when an Event is fired in the object being observed (formally this is 
-   known as the &quot;Observer&quot; pattern).</P>
+   when the event happens. This is a standard pattern in which an 
+   observer is notified when an Event is fired in the object being 
+   observed (formally this is known as the &quot;Observer&quot; 
+   pattern). </P>
   <P>
    Lets get a little more specific and talk about this is terms of our 
    Employee class. Lets say that when an Employee's age changes, then 
    the Employee fires off an Event. Just firing off the event is 
    meaningless unless we actually have something to fire off the event 
-   to, in other words, a list of Listeners that are interested in 
-   knowing that the Employee's age has changed. These Listeners are 
-   identified through a common interface that describes the kind of 
-   events the Employee can fire off, and the Listener can in turn 
-   respond to. So, in addition to firing off the event, the Employee 
-   must also have some means of allowing for Listeners to be added and 
-   removed from the Employee's Listener list. Lets create the Listener 
-   interface for the Employee and call it EmployeeListener, and describe 
-   it as follows:</P><PRE><SPAN
-    STYLE="font-weight : bold;">class</SPAN> EmployeeListener : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Listener {<BR><SPAN
-    STYLE="font-weight : bold;">public</SPAN>:<BR>     <SPAN
-    STYLE="font-weight : bold;">virtual</SPAN> ~EmployeeListener(){};<BR><BR>     <SPAN
+   to, in other words, a list of observers that are interested in 
+   knowing that the Employee's age has changed. <BR>
+   </P>
+  <P>
+   &lt;&lt; Broken fix &gt;&gt;</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P><PRE><SPAN
+    STYLE="font-weight : bold;">template &lt;class T&gt; class</SPAN> EmployeeEventHandler : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::EventHandlerInstance&lt;T,EmployeeEvent&gt; {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     EmployeeEventHandler( T* source, VCF::EventHandlerInstance&lt;T,EmployeeEvent&gt;::<BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~EmployeeEventHandler(){};<BR><BR>     <SPAN
     STYLE="font-weight : bold;">virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> onAgeChange( EmployeeEvent* event )<SPAN STYLE="font-weight : bold;"> = 0</SPAN>;<BR>}; </PRE><P>
    There are several things to note here: firstly, the class has no 
    constructor declared. This is OK because we'll never create an 
@@ -324,7 +323,7 @@
    And there you have it ! Events VCF style. Again, those of who have 
    worked with Java will recognize much of this, while those from a COM 
    background may recognize the design as being similar to COM's 
-   ConnectionPoint architecture. </P>
+   ConnectionPoint architecture.</P>
   <P>
    Now let's move on to our next tutorial where we will begin to use 
    what we have learned to write a simple app that has a GUI using the VCF.

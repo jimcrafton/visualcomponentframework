@@ -9,17 +9,42 @@
   <TITLE>Events In the VCF</TITLE>
   <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <H1>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
   <H1>
    Events In the VCF</H1>
   <P>
-   What are Events ?</P>
+   Events happen to us every day. When we open a door, when we go to 
+   work, when we fall asleep. Objects in a framework, particularly 
+   objects that represent a user interface, are no different. Events are 
+   triggered when a user closes a window, or clicks on a button. Events 
+   happen when the state of an object changes, such as reading data from 
+   a stream, or upon the object's creation. Not only do events happen, 
+   but quite often one object wants to be notified when a particular 
+   event happens to another object, and frequently the two objects may 
+   have no direct knowledge of each other. Not only that, but it is 
+   entirely possible that more than one object wants to notified of the 
+   event happening !</P>
+  <P>
+   In most frameworks this is done through callbacks, and their are many 
+   different ways to approach this. In C++ this gets a bit tricky due to 
+   nature of C++ member functions, so we need a way to wrap the callback 
+   function, which itself needs to be a member function. In addition, we 
+   need a consistent way to let objects know that we are interested in 
+   being notified when a particular event happens, as well as telling 
+   the same object that we no longer want to be notified.</P>
+  <P>
+   To accomplish this in the VCF we have EventHandler objects. An 
+   EventHandler encapsulates a member method on some other object that 
+   will be called when the event happens. An EventHandler is an abstract 
+   class that serves as a base class for other classes to derive from. 
+   But wait - what are these other classes ? In order to make the method </P>
   <P>
    Why do it this way ?</P>
   <P>
-   Listeners and Adapters
+   <!-- $MVD$:spaceretainer() -->&nbsp;
  </BODY>
 </HTML>

@@ -2,13 +2,15 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
   <TITLE>Graphics Basics</TITLE>
   <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
- </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <H1>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
@@ -34,14 +36,10 @@
    the screen real estate directly), or can have support for OpenGL calls.</P>
   <P>
    Notice that not all of the functions defined in GraphicsContext are 
-   mirrored in the ContextPeer interface (a quick aside: I will mention 
-   the term <I>&quot;interface&quot;</I> frequently, but I do <I><B>not</B></I> 
-   mean the MS definition, in other words a COM interface. I define an 
-   interface, at least as far as the VCF is concerned, as a C++ class 
-   with a virtual destructor, and a set of virtual pure methods, and 
-   nothing else).&nbsp; The graphics primitives are modeled after the 
-   basic PostScript calls, so nothing is drawn until either strokePath() 
-   or fillPath() is called. Basic primitives are defined for drawing 
-   lines, curves, and polylines, as well as rectangles, ellipses, and circles.
+   mirrored in the ContextPeer interface .&nbsp; The graphics primitives 
+   are modeled after the basic PostScript calls, so nothing is drawn 
+   until either strokePath() or fillPath() is called. Basic primitives 
+   are defined for drawing lines, curves, and polylines, as well as 
+   rectangles, ellipses, and circles.
  </BODY>
 </HTML>
