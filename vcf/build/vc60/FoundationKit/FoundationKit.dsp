@@ -25,7 +25,7 @@ CFG=FoundationKit - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName "FoundationKit"
 # PROP Scc_LocalPath "."
-CPP=cl.exe
+CPP=xicl6.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
@@ -47,7 +47,7 @@ RSC=rc.exe
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_s.lib"
 
@@ -70,7 +70,7 @@ LIB32=link.exe -lib
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_sd.lib"
 
@@ -407,6 +407,10 @@ SOURCE=..\..\..\include\implementer\LibraryPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Locales.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\Lock.h
 # End Source File
 # Begin Source File
 
