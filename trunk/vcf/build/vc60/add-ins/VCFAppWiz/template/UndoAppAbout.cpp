@@ -2,6 +2,7 @@
 #include "ApplicationKit.h"
 #include "$$Root$$About.h"
 #include "Label.h"
+#include "CommandButton.h"
 
 using namespace VCF;
 

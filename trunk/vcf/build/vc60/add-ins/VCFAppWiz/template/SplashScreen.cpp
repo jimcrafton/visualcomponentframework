@@ -24,7 +24,7 @@ SplashScreen::SplashScreen()
 
 	setVisible( true );	
 
-	setFrameStyle( FST_NOBORDER_FIXED );
+	setFrameStyle( fstNoBorderFixed );
 	setFrameTopmost( true );
 	setColor( Color::getColor( "white" ) );
 
