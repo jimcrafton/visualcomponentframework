@@ -120,7 +120,15 @@ SOURCE="$(InputPath)"
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Chooser.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Debug.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Page1Dlg.cpp
 # End Source File
 # Begin Source File
 
@@ -145,7 +153,15 @@ SOURCE=.\VCFConsoleWizAw.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Chooser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Debug.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Page1Dlg.h
 # End Source File
 # Begin Source File
 
@@ -167,6 +183,14 @@ SOURCE=.\VCFConsoleWizAw.h
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\res\bitmap1.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tmp.bmp
+# End Source File
 # Begin Source File
 
 SOURCE=.\res\VCFConsoleWiz.ico
@@ -197,9 +221,5 @@ SOURCE=.\Template\newproj.inf
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\ReadMe.txt
-# End Source File
 # End Target
 # End Project
