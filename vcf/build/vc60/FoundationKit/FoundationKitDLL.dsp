@@ -181,11 +181,19 @@ SOURCE=..\..\..\include\events\Event.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\io\File.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\FileIOError.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\io\FileNotFound.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\Implementer\FilePeer.h
 # End Source File
 # Begin Source File
 
@@ -337,6 +345,10 @@ SOURCE=..\..\..\include\utils\VCFString.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\ImplementerKit\Win32FilePeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32FileStream.h
 # End Source File
 # Begin Source File
@@ -370,6 +382,10 @@ SOURCE=..\..\..\src\core\ClassRegistry.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\Event.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\io\File.cpp
 # End Source File
 # Begin Source File
 
@@ -438,6 +454,10 @@ SOURCE=..\..\..\src\Events\ThreadEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\VCFMath.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32FilePeer.cpp
 # End Source File
 # Begin Source File
 
