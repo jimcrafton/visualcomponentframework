@@ -31,12 +31,23 @@ public:
 	void onLoaded( ComponentEvent* e ) {
 		EventHandler* ev = new MenuItemEventHandler<VisualFormFilesWindow>( this, &VisualFormFilesWindow::onFileOpened, "VisualFormFilesWindow::onFileOpened" );
 
-		fileOpenMenu->addMenuItemClickedHandler( ev );
+		MenuItem* root = this->getMenuBar()->getRootMenuItem();
+		MenuItem* file = root->getChildAt( 0 );
+		Enumerator<MenuItem*>* children =  file->getChildren();
+		while ( children->hasMoreElements() ) {
+			MenuItem* item = children->nextElement();
+
+			item->addMenuItemClickedHandler( ev );
+		}
+
+		
 
 	}
 
 	void onFileOpened( MenuItemEvent* e ) {
+		MenuItem* item = (MenuItem*)e->getSource();
 
+		Dialog::showMessage( "Menu Item " + item->getCaption() + " clicked!" );
 	}
 
 	MenuItem* fileOpenMenu;
@@ -332,6 +343,9 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/08/07 15:48:01  ddiego
+*some more minor pre-release changes.
+*
 *Revision 1.3  2004/08/07 02:47:41  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
