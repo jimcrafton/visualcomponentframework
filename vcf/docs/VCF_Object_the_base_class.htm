@@ -16,7 +16,7 @@
   <!-- $MVD$:color("29","802000","Custom #11","0") -->
   <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
   <TITLE>VCF::Object - the base class</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css"></HEAD>
@@ -24,10 +24,10 @@
   <P>
    <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></P>
   <H1>
-   VCF::Object - the base class</H1>
+   VCF::Object - The base class</H1>
   <P>
    The VCF is, by and large, a single rooted object hierarchy, the base 
-   class of which is VCF::Object. This class provides several common 
+   class of which is <code>VCF::Object</code>. This class provides several common 
    functions for us, as well as providing several method that can be 
    overridden by derived classes.</P>
   <P>
@@ -59,9 +59,9 @@
        Returns a pointer to a Class object that identifies the Object's 
        runtime class information.</TD>
     </TR>
-   </TABLE></P>
+   </TABLE>
   <P>
-   The core methods that can be overriden are:</P>
+   The core methods that can be overridden are:</P>
   <P>
    <TABLE WIDTH="100%" CELLPADDING="2" CELLSPACING="0" BORDER="0">
     <TR>
@@ -79,7 +79,7 @@
      <TD WIDTH="83%" VALIGN=TOP>
       <P>
        returns an unsigned long that represents the object's hash value. Can 
-       be overriden to provide any number of hashing algorithms that return 
+       be overridden to provide any number of hashing algorithms that return 
        some valid hash number</TD>
     </TR>
     <TR>
@@ -90,70 +90,29 @@
       <P>
        returns a String that represents the object. The default behavior 
        simply returns the pointer for the object's instance. Other 
-       implementations may return state information, such as VCF::Rect, 
+       implementations may return state information, such as <code>VCF::Rect</code>, 
        which returns the bounds of the rectangle. Used primarily as a 
        debugging tool.</TD>
     </TR>
-   </TABLE></P>
+   </TABLE>
   <P>
-   In addition, Object will also support refcounting for those who need 
+   In addition, Object also supports reference counting for those who need 
    this kind of support. There are several places in the ApplicationKit 
-   that will need to make use of this fairly soon. Also Object supports 
-   a new technique for instantiating and destroying Object derived instances.</P>
-  <P>
-   In general, in C++, when creating a new instance on the heap 
-   (free-store) you would use the operator <CODE>new()</CODE> function. 
-   This is being phased out of the VCF for a variety of reasons, in 
-   favor of a new (no pun intended) scheme. New classes should hide 
-   their constructor's and destructor's, making them private or 
-   protected. Proper object instantiation will now look like this:</P><PRE>FooObject* f = FooObject::create();<BR>//or if we needed to have a constructor that took an int...<BR><BR>FooObject* f = FooObject::create(12);<BR></PRE><P>
-   <CODE>create()</CODE> is a static method that will need to put on 
-   every class, and will be paired with each constructor of the class. 
-   So if the class only needs a default constructor, then <CODE>create()</CODE> 
-   is OK, if the class has a default constructor, a copy constructor, 
-   and a constructor that takes a <CODE>String</CODE>, then there need 
-   to be 3 <CODE>create()</CODE> methods, <CODE>create()</CODE>, <CODE>create(
-    const class&amp; )</CODE>, and <CODE>create( String )</CODE>, and so forth.</P>
-  <P>
-   The pattern for implementing <CODE>create() </CODE>is as follows:</P>
-  <UL>
-   <LI CLASS="mvd-P">
-   <P>
-    create the object on the heap via the operator <CODE>new()</CODE> call</P>
-   <LI CLASS="mvd-P">
-   <P>
-    call the new created object's <CODE>init()</CODE> method, which is virtual</P>
-   <LI CLASS="mvd-P">
-   <P>
-    return the object to the caller.</P>
-   </UL>
-  <P>
-   The <CODE>init() </CODE>method is intended to place common shared 
-   startup code. Because of the desire to make it virtual it cannot be 
-   called in the constructor, thus the use of the <CODE>create()</CODE> call.</P>
-  <P>
-   <CODE>init()</CODE> does not have to be implemented.</P>
-  <P>
-   To facilitate this there will be macros that do just this declared in <CODE>ClassInfo.h</CODE>.
-    These macros will allow for <CODE>create()</CODE> methods with up to 
-   six(6) arguments passed in. The macros will <SPAN STYLE="font-style : italic;font-weight : bold;">NOT</SPAN> 
-   make the constructors for you, this is something that needs to be 
-   done by hand, and should be visible so that you can see what is going 
-   on. Using the Macros is optional.</P>
+   that will need to make use of this fairly soon.&nbsp;</P>
   <P>
    Destroying the memory can now happen in two ways:</P>
   <UL>
    <LI CLASS="mvd-P">
    <P>
-    The first is the equivalent of the operator delete() call. This 
-    involves calling the objects free() method, which will call the 
-    virtual destroy() method before calling operator delete() on itself.</P>
+    The first is the equivalent of the operator <code> delete()</code> call. This 
+    involves calling the objects <code> free()</code> method, which will call the 
+    virtual <code> destroy()</code> method before calling operator delete() on itself.</P>
    <LI CLASS="mvd-P">
    <P>
     The second way an object can be destroyed is if it's refcount drops 
-    to 0, at which point the object's free() method will be invoked. 
-    Calling the object's release() method decrements the reference count 
-    on the object. Like init(), destroy() is a virtual method, where 
+    to 0, at which point the object's <code> free()</code> method will be invoked. 
+    Calling the object's <code> release()</code> method decrements the reference count 
+    on the object. <code> destroy() </code> is a virtual method, where 
     common shared cleanup may take place, again due to the restrictions 
     of C++, virtual methods are not allowed in destructors, but we get 
     around this with the free()/destroy() pattern.</P>
@@ -161,8 +120,52 @@
   <P>
    Semantics for the usage of the <CODE>addRef()/release()</CODE> method 
    usage are as follows:</P>
-  <H3>
-   &lt;&lt;Documentation missing&gt;&gt;</H3>
+  <P>
+   An object's reference count indicates "ownership " of the object. In other words, the "owner" of the
+   object is responsible for releasing it's hold on the object, thus decrementing the objects
+   reference count, which, when reduced to 0, causes the object to be deleted. This is also known as
+   a <b><i> strong</i></b> reference to an object, as opposed to a <b><i> weak</i></b> reference where the "owner" doesn't
+   claim any responsibility over the object.&nbsp;</P>
+  <P>
+   An example might look like this:</P>
+  <pre>class Bar : public Object {
+public:
+    ...//declarations    
+};
+
+
+class FooBar : public Object {
+public:
+    ...//rest of class declaration
+
+    void setBarObj( Bar* bar ) {
+        m_barObj = bar;
+    }
+    
+    Bar* getBarObj() {
+        return m_barObj;
+    }
+protected:
+    Bar* m_barObj;  
+};</pre>
+  <P>In our FooBar class we have a member m_barObj which is a pointer to some
+  instance of class Bar.&nbsp; In this class we have a string reference to the
+  Bar instance, and want to make sure that whatever else happens to the
+  instance, it stays valid until we no longer care about it. So lets modify our <code>setBarObj()</code>
+  method to reflect this:</P>
+  <pre><b>void</b> setBarObj( Bar* bar ) {
+    if ( <b>NULL</b> != m_barObj ) {
+        m_barObj-&gt;release(); <i>//release() our hold on the object - we don't care about it anymore</i>
+    }
+    m_barObj = bar;
+    if ( <b>NULL</b> != m_barObj ) {
+        m_barObj-&gt;addRef();  <i>//addref() to prevent the object from being deleted should someone else release() it</i>
+    }
+}</pre>
+  <p>So in the setBarObj() method we release() our old instance that we no
+  longer care about, assign the new value to our member variable, and if it is a
+  valid instance (non null), then we take &quot;ownership&quot; of it by calling
+  addRef() on the instance.</p>
   <P>
    <SPAN STYLE="font-style : italic;font-weight : bold;font-size : 12.0pt;">Note</SPAN><SPAN STYLE="font-size : 12.0pt;">:</SPAN> 
    that this whole scheme is aimed at heap based objects. Many objects 
