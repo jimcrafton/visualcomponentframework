@@ -28,8 +28,8 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book VERSION-NUMBER</title>
-	<titleabbrev>VCF Documentation VERSION-NUMBER</titleabbrev>
+<title>The VCF Book 0.6.6</title>
+	<titleabbrev>VCF Documentation 0.6.6</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
@@ -279,6 +279,9 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.6  2004/12/02 04:54:02  ddiego
+added some more documentation to the graphics kit classes.
+
 Revision 1.5  2004/12/01 04:14:53  ddiego
 merged over devmain-0-6-6 code. Marcello did a kick ass job
 of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -6,7 +6,7 @@
 namespace VCF {
 	class PrintContext;
 	/**
-	class PrintEvent documentation
+	A PrintEvent is fired by the PrintSession during certain operations.
 	*/
 	class GRAPHICSKIT_API PrintEvent : public Event{
 	public: 		

@@ -1,3 +1,13 @@
+Visual Component Framework 0.6.6
+
+Readme
+
+Known issues:
+The OSX port is still a work in progress.
+
+
+
+
 Visual Component Framework 0.6.5 
 
 Readme
