@@ -75,7 +75,16 @@ public:
 
 	virtual void translateFromScreenCoords( Point* pt );
 
+	/**
+	* sets the control's border.
+	* Called by the control when it's border object changes.
+	* This implementation is a no-op because 
+	* a lightweight component only needs to set border_
+	* but it doesn't need an indipendent peer.
+	*@param Border* border, the border object to assign.
+	*/
 	virtual void setBorder( Border* border ) {} //no-op
+
 private:
 	VCF::Control* getHeavyWeightParent();
 	VCF::Control* component_;
@@ -85,12 +94,16 @@ private:
 	bool focused_;
 };
 
-};
+
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/10 16:57:23  marcelloptr
+*comment added
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
