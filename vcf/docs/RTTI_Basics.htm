@@ -17,13 +17,14 @@
   <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
   <TITLE>RTTI Basics</TITLE>
   <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css">
- <META NAME="generator" CONTENT="Microsoft FrontPage 4.0"></HEAD>
+ <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition"></HEAD>
   <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
   <P>
-   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
   <H1>
    RTTI Basics</H1>
   <P>
@@ -92,22 +93,26 @@
    class, and is quite similar to the VCF::Class class. It contains the 
    name of the interface, the UUID of the interface, and any of the 
    methods of the interface.</P>
-  <P>To register the various types of RTTI information you can use special
-  macros in you class declaration to control what parts of you class you want to
-  expose via RTTI. The two most basic macros are <CODE>BEGIN_CLASSINFO </CODE>and<CODE>
-  END_CLASSINFO.&nbsp;</CODE>These are used together&nbsp; when declaring you
-  class, and establish the starting and ending of your class declaration's RTTI
-  information. In between these macros you put the remaining RTTI information,
-  like the properties you'd like to expose, the methods, and any events. Once
-  this is finished, you can register your class at any time, using the
-  REGISTER_CLASSINFO macro, which registers your classes RTTI information with
-  the VCF::ClassRegistry. Generally you should place this macro someplace early
-  in your executables start up code. </P>
-  <P>An alternate way of generating this RTTI information is to use the RTTI
-  Compiler, but this is still in the early stages of development. Once finished,
-  it will allow you to feed in a class declaration in the form of a header file
-  (.h) and output a header/implementation file that contains has all the of the
-  classes RTTI automatically generated. You still have to register the class,
-  but you will no longer have to manually write out the RTTI macros. 
+  <P>
+   To register the various types of RTTI information you can use special 
+   macros in you class declaration to control what parts of you class 
+   you want to expose via RTTI. The two most basic macros are <CODE>BEGIN_CLASSINFO
+    </CODE>and<CODE> END_CLASSINFO.&nbsp;</CODE>These are used 
+   together&nbsp; when declaring you class, and establish the starting 
+   and ending of your class declaration's RTTI information. In between 
+   these macros you put the remaining RTTI information, like the 
+   properties you'd like to expose, the methods, and any events. Once 
+   this is finished, you can register your class at any time, using the 
+   REGISTER_CLASSINFO macro, which registers your classes RTTI 
+   information with the VCF::ClassRegistry. Generally you should place 
+   this macro someplace early in your executables start up code.</P>
+  <P>
+   An alternate way of generating this RTTI information is to use the 
+   RTTI Compiler, but this is still in the early stages of development. 
+   Once finished, it will allow you to feed in a class declaration in 
+   the form of a header file (.h) and output a header/implementation 
+   file that contains has all the of the classes RTTI automatically 
+   generated. You still have to register the class, but you will no 
+   longer have to manually write out the RTTI macros.
  </BODY>
 </HTML>
