@@ -418,6 +418,14 @@ CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass,
 	header += "#ifndef " + coClassName + "_H__\n";
 	header += "#define " + coClassName + "_H__\n";
 	header += "#include \"FoundationKit.h\"\n\n";
+	//check for ATL support
+	if ( TRUE == this->m_useATLForCoClassImpl ) {
+		header += "#include <atlbase.h>\n";
+		header += "#include <comdef.h>\n\n";		
+	}
+
+	header += "\n\nusing namespace VCF;\n\n";
+
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "namespace ";
 		header += pTypeLibHolder->m_typeLibName;
@@ -539,6 +547,16 @@ CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass,
 			header += "\n\n";
 		}
 	}
+
+	//check for ATL support
+	if ( TRUE == this->m_useATLForCoClassImpl ) {
+		header += "//ATL COM Peer";
+		header += "\nprotected:\n";
+		
+		header += "\tCComQIPtr<" + pCoClass->m_implementedInterfaces[j]->m_interfaceName +
+					",__uuidof(" + pCoClass->m_implementedInterfaces[j]->m_interfaceName + ")> m_comPtr;";
+	}
+
 	header += "};\n\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "}  //end of namespace ";
@@ -586,16 +604,31 @@ CString TypeLibraryConverterDlg::GenerateCoClassImpl( CoClassHolder* pCoClass, T
 	}
 
 	coClassImpl += "#include \"" + pCoClass->m_className + ".h\"\n\n";
+	
+
 	coClassImpl += "using namespace VCF;\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		coClassImpl += "using namespace " + pTypeLibHolder->m_typeLibName + ";\n\n";
 	}
 	
-	coClassImpl += pCoClass->m_className + "::" + pCoClass->m_className + "()\n";
-	coClassImpl += "{\n\n}\n\n";
+	//check for ATL support
+	if ( TRUE == this->m_useATLForCoClassImpl ) {
+		coClassImpl += pCoClass->m_className + "::" + pCoClass->m_className + "()\n";
+		coClassImpl += "{\n";
+		
+		coClassImpl += "\n}\n\n";
 
-	coClassImpl += pCoClass->m_className + "::~" + pCoClass->m_className + "()\n";
-	coClassImpl += "{\n\n}\n\n";
+		coClassImpl += pCoClass->m_className + "::~" + pCoClass->m_className + "()\n";
+		coClassImpl += "{\n\n}\n\n";
+	}
+	else {
+		coClassImpl += pCoClass->m_className + "::" + pCoClass->m_className + "()\n";
+		coClassImpl += "{\n\n}\n\n";
+
+		coClassImpl += pCoClass->m_className + "::~" + pCoClass->m_className + "()\n";
+		coClassImpl += "{\n\n}\n\n";
+	}
+	
 
 	int interfaceCount = pCoClass->m_implementedInterfaces.size();
 	for ( int j=0;j<interfaceCount;j++) {
@@ -670,7 +703,7 @@ CString TypeLibraryConverterDlg::GenerateInterface( InterfaceHolder* pInterface,
 		header += "*/\n";
 	}
 	
-	header += "class " + pInterface->m_interfaceName + " : public Interface { \n";
+	header += "class " + pInterface->m_interfaceName + " : public VCF::Interface { \n";
 	header += "public:\n";
 	header += "\tvirtual ~" + pInterface->m_interfaceName + "(){};\n\n";
 	CString s;
@@ -751,6 +784,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 	s.ReleaseBuffer();
 	header += "\n\n";
 	header += "#include \"FoundationKit.h\"\n\n";
+	header += "\n\nusing namespace VCF;\n\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "namespace ";
 		header += pTypeLibHolder->m_typeLibName;
@@ -802,6 +836,7 @@ void TypeLibraryConverterDlg::GenerateSingleUnitperClassImpl( TypeLibHolder* pTy
 	header += s;
 	header += "\n\n";
 	header += "#include \"FoundationKit.h\"\n\n";
+	header += "\n\nusing namespace VCF;\n\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "namespace ";
 		header += pTypeLibHolder->m_typeLibName;
@@ -894,6 +929,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 	s.ReleaseBuffer();
 	header += "\n\n";
 	header += "#include \"FoundationKit.h\"\n\n";
+	header += "\n\nusing namespace VCF;\n\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "namespace ";
 		header += pTypeLibHolder->m_typeLibName;
@@ -925,7 +961,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 			header += "*/\n";
 		}
 		
-		header += "class " + pInterface->m_interfaceName + " : public Interface { \n";
+		header += "class " + pInterface->m_interfaceName + " : public VCF::Interface { \n";
 		header += "public:\n";
 		header += "\tvirtual ~" + pInterface->m_interfaceName + "(){};\n\n";
 		CString s;
@@ -1104,6 +1140,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForIFaceSeparateCoClasses( TypeL
 	s.ReleaseBuffer();
 	header += "\n\n";
 	header += "#include \"FoundationKit.h\"\n\n";
+	header += "\n\nusing namespace VCF;\n\n";
 	if ( TRUE == this->m_useTLBAsNamespace ) {
 		header += "namespace ";
 		header += pTypeLibHolder->m_typeLibName;

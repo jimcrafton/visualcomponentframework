@@ -176,12 +176,12 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				if ( linkType == VCF_DLL_LINK ) {
 					switch ( t ){
 						case debug: {
-							setting = "ApplicationKitDLL_d.lib GraphicsKitDLL_d.lib FoundationKitDLL_d.lib ";
+							setting = "ApplicationKit_d.lib GraphicsKit_d.lib FoundationKit_d.lib ";
 							if ( m_pChooser->NeedVCFRemote() ) {
-								setting += "NetworkKitDLL_d.lib RemoteObjectKitDLL_d.lib ";
+								setting += "NetworkKit_d.lib RemoteObjectKit_d.lib ";
 							}
 							else if ( m_pChooser->NeedVCFNet() ) {
-								setting += "NetworkKitDLL_d.lib ";
+								setting += "NetworkKit_d.lib ";
 							}
 							setting += "rpcrt4.lib ";
 							if ( m_pChooser->NeedsOpenGLSupport() ) {
@@ -192,12 +192,12 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						break;
 
 						case release: {
-							setting = "ApplicationKitDLL.lib GraphicsKitDLL.lib FoundationKitDLL.lib ";
+							setting = "ApplicationKit.lib GraphicsKit.lib FoundationKit.lib ";
 							if ( m_pChooser->NeedVCFRemote() ) {
-								setting += "NetworkKitDLL.lib RemoteObjectKitDLL.lib ";
+								setting += "NetworkKit.lib RemoteObjectKit.lib ";
 							}
 							else if ( m_pChooser->NeedVCFNet() ) {
-								setting += "NetworkKitDLL.lib ";
+								setting += "NetworkKit.lib ";
 							}
 							setting += "rpcrt4.lib ";
 							if ( m_pChooser->NeedsOpenGLSupport() ) {
