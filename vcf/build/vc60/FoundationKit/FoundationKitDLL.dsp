@@ -23,8 +23,8 @@ CFG=FOUNDATIONKITDLL - WIN32 DEBUG
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "FoundationKitDLL"
-# PROP Scc_LocalPath "..\..\.."
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -386,6 +386,10 @@ SOURCE=..\..\..\include\core\Size.h
 # Begin Source File
 
 SOURCE=..\..\..\include\io\Stream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\StringTokenizer.h
 # End Source File
 # Begin Source File
 

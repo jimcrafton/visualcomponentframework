@@ -23,8 +23,8 @@ CFG=GraphicsKitDLL - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "GraphicsKitDLL"
-# PROP Scc_LocalPath "..\..\.."
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -94,14 +94,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\AbstractImage.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\AlphaGamma.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\ArtStroke.h
 # End Source File
 # Begin Source File
 
@@ -182,14 +174,6 @@ SOURCE=..\..\..\include\graphics\GraphicsContext.h
 # Begin Source File
 
 SOURCE=..\..\..\include\GraphicsKit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\GraphicsObject.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\GraphicsResourceMgr.h
 # End Source File
 # Begin Source File
 
@@ -305,10 +289,6 @@ SOURCE=..\..\..\src\Graphics\Font.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\FontState.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
 # End Source File
 # Begin Source File
@@ -319,10 +299,6 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
 # ADD CPP /Yc"GraphicsKit.h"
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 # End Source File
 # Begin Source File
 

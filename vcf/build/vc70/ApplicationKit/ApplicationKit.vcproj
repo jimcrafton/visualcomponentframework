@@ -2,9 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="ApplicationKit"
-	SccProjectName="ApplicationKit"
-	SccLocalPath=".">
+	Name="ApplicationKit">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -17,7 +15,8 @@
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="2"
+			CompilerName="Microsoft">
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
@@ -64,7 +63,8 @@
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="2"
+			CompilerName="Microsoft">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -88,6 +88,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalOptions="/MACHINE:I386 "
 				OutputFile="..\..\..\Lib\ApplicationKit_vc7_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
@@ -108,499 +109,6 @@
 	</Configurations>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
-			<File
-				RelativePath="..\..\..\src\core\AbstractApplication.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractCommand.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractComponentEditor.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractContainer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractListModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractPropertyEditor.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractScrollable.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractTableModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractTextModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractTreeModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AbstractView.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\AbstractWin32Component.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\AcceleratorKey.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Application.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ApplicationKit.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Basic3DBorder.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\BasicTableItemEditor.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ButtonEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\COM\COMDataObject.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\COM\COMDragSource.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\COM\COMDropTarget.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\COM\COMObject.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\COM\COMUtils.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CheckBoxControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Clipboard.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ClipboardDataObject.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ClipboardEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\ColorEtchedBorder.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ColumnItemEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ColumnModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ComboBoxControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommandButton.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommandGroup.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonColor.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonFileBrowse.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonFileDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonFileOpen.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonFileSave.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonFont.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CommonPrint.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Component.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ComponentEditorManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ComponentInfo.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Control.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ControlContainer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ControlEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\ControlGraphicsContext.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Cursor.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CursorManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CustomControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DataType.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultColumnItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultColumnModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultListItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultListModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultMenuItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultPropertyEditors.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTabModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTabPage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTableModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTextModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTreeItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\DefaultTreeModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Desktop.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Dialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\DragEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\DragDrop\DragSource.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\DropEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\DragDrop\DropTarget.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\EtchedBorder.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\FocusEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Frame.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\HeaderControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\HelpEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ImageControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\ImageList.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ImageListEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ItemEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\KeyboardEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Label.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\LibraryApplication.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Light3DBorder.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\LightweightComponent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ListBoxControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ListModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ListViewControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Menu.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\MenuBar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\MenuItemEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\MessageDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Model.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\MouseEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\MultilineTextControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Panel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\PopupMenu.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\PropertyEditorManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\PushButton.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\RadioButtonControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\Resource.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\ResourceStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ScrollbarManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Splitter.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\StatusBar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\TabModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TabbedPages.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TableControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\TableModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TextControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\TextEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TimerComponent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\TimerEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\TitledBorder.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ToggledButton.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ToolTipEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Toolbar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ToolbarButton.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ToolbarDock.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\ToolbarSeparator.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TreeControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\TreeListControl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\TreeModelEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\UIToolkit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\UndoRedoEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\UndoRedoStack.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\VFFInputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\IO\VFFOutputStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ValidationEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\WhatsThisHelpEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Application.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Button.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Clipboard.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ColorDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Component.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ControlContext.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32CursorPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Desktop.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Dialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Edit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FolderBrowseDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FontDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Listview.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32MenuBar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32MenuItem.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Object.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32PopupMenu.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ResourceStream.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32ToolKit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Tree.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Window.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Window.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\WindowEvent.cpp">
-			</File>
-		</Filter>
-		<Filter
 			Name="Res"
 			Filter="">
 			<File
@@ -619,761 +127,845 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\resources\win32\inform.bmp">
-			</File>
+				RelativePath="..\..\resources\win32\inform.bmp"/>
 			<File
-				RelativePath="..\..\resources\win32\vcf.ico">
-			</File>
+				RelativePath="..\..\resources\win32\vcf.ico"/>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
+			Filter="">
 			<File
-				RelativePath="..\..\..\include\core\AbstractApplication.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractApplication.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractCommand.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractCommand.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractComponentEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractComponentEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractListModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractListModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractPropertyEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractPropertyEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractScrollable.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractScrollable.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractTableModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractTableModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractTextModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractTextModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractTreeModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractTreeModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AbstractView.h">
-			</File>
+				RelativePath="..\..\..\include\core\AbstractView.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\AbstractWin32Component.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\AbstractWin32Component.h"/>
 			<File
-				RelativePath="..\..\..\include\core\AcceleratorKey.h">
-			</File>
+				RelativePath="..\..\..\include\core\AcceleratorKey.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\AppKitPeerConfig.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\AppKitPeerConfig.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Application.h">
-			</File>
+				RelativePath="..\..\..\include\core\Application.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\ApplicationException.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\ApplicationException.h"/>
 			<File
-				RelativePath="..\..\..\include\ApplicationKit.h">
-			</File>
+				RelativePath="..\..\..\include\ApplicationKit.h"/>
 			<File
-				RelativePath="..\..\..\include\ApplicationKitPrivate.h">
-			</File>
+				RelativePath="..\..\..\include\ApplicationKitPrivate.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ApplicationPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\ApplicationPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\BadComponentStateException.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\BadComponentStateException.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\BadModelStateException.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\BadModelStateException.h"/>
 			<File
-				RelativePath="..\..\..\include\core\BasicTableItemEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\BasicTableItemEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Button.h">
-			</File>
+				RelativePath="..\..\..\include\core\Button.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ButtonEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ButtonEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ButtonListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\ButtonListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\ButtonPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\ButtonPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\com\COMDataObject.h">
-			</File>
+				RelativePath="..\..\..\include\com\COMDataObject.h"/>
 			<File
-				RelativePath="..\..\..\include\com\COMDropTarget.h">
-			</File>
+				RelativePath="..\..\..\include\com\COMDropTarget.h"/>
 			<File
-				RelativePath="..\..\..\include\com\COMObject.h">
-			</File>
+				RelativePath="..\..\..\include\com\COMObject.h"/>
 			<File
-				RelativePath="..\..\..\include\com\COMUtils.h">
-			</File>
+				RelativePath="..\..\..\include\com\COMUtils.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CheckBoxControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\CheckBoxControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ColumnItem.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\ColorEtchedBorder.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ColumnItemEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ColumnItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ColumnModel.h">
-			</File>
+				RelativePath="..\..\..\include\events\ColumnItemEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ColumnModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ColumnModel.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ColumnModelEventHandler.h">
-			</File>
+				RelativePath="..\..\..\include\events\ColumnModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ComboBoxControl.h">
-			</File>
+				RelativePath="..\..\..\include\events\ColumnModelEventHandler.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ComboBoxListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\ComboBoxControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Command.h">
-			</File>
+				RelativePath="..\..\..\include\events\ComboBoxListener.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommandButton.h">
-			</File>
+				RelativePath="..\..\..\include\core\Command.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommandGroup.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommandButton.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonColor.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommandGroup.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonDialog.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonColor.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\CommonDialogPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonFileBrowse.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\CommonDialogPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonFileDialog.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonFileBrowse.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonFileOpen.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonFileDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonFileSave.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonFileOpen.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonFont.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonFileSave.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CommonPrint.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonFont.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Component.h">
-			</File>
+				RelativePath="..\..\..\include\core\CommonPrint.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ComponentEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\Component.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ComponentEditorManager.h">
-			</File>
+				RelativePath="..\..\..\include\core\ComponentEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ComponentEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ComponentEditorManager.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ComponentInfo.h">
-			</File>
+				RelativePath="..\..\..\include\events\ComponentEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ComponentListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\ComponentInfo.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Container.h">
-			</File>
+				RelativePath="..\..\..\include\events\ComponentListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\Contextpeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\Container.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Control.h">
-			</File>
+				RelativePath="..\..\..\include\core\Control.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ControlContainer.h">
-			</File>
+				RelativePath="..\..\..\include\core\ControlContainer.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ControlEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ControlEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\graphics\ControlGraphicsContext.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\ControlGraphicsContext.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ControlListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\ControlListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\ControlPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\ControlPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Controller.h">
-			</File>
+				RelativePath="..\..\..\include\core\Controller.h"/>
 			<File
-				RelativePath="..\..\..\include\ControlsKit.h">
-			</File>
+				RelativePath="..\..\..\include\ControlsKit.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Cursor.h">
-			</File>
+				RelativePath="..\..\..\include\core\Cursor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CursorManager.h">
-			</File>
+				RelativePath="..\..\..\include\core\CursorManager.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\CursorPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\CursorPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\CustomControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\CustomControl.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\CustomControlPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\CustomControlPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\dragdrop\DataObjectPeer.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\DataTypeNotSupportedException.h"/>
 			<File
-				RelativePath="..\..\..\include\dragdrop\DataType.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultColumnItem.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\DataTypeNotSupportedException.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultColumnModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultColumnItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultListItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultColumnModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultListModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultListItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultMenuItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultListModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultPropertyEditors.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultMenuItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTabModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultPropertyEditors.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTabPage.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTabModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTableCellItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTabPage.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTableModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTableCellItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTextModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTableModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTreeItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTextModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\DefaultTreeModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTreeItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\Desktop.h"/>
 			<File
-				RelativePath="..\..\..\include\core\DefaultTreeModel.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\DesktopPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Desktop.h">
-			</File>
+				RelativePath="..\..\..\include\core\Dialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\DesktopPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\DialogPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Dialog.h">
-			</File>
+				RelativePath="..\..\..\include\dragdrop\DragSource.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\DialogPeer.h">
-			</File>
+				RelativePath="..\..\..\include\dragdrop\DropTarget.h"/>
 			<File
-				RelativePath="..\..\..\include\dragdrop\DragSource.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\EtchedBorder.h"/>
 			<File
-				RelativePath="..\..\..\include\dragdrop\DropTarget.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\FillState.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\FillState.h">
-			</File>
+				RelativePath="..\..\..\include\events\FocusEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\FocusEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\FocusListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\FocusListener.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\FontState.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\FontState.h">
-			</File>
+				RelativePath="..\..\..\include\core\Frame.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Frame.h">
-			</File>
+				RelativePath="..\..\..\include\events\FrameEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\FrameEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\HTMLBrowserControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\HTMLBrowserControl.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\HTMLBrowserPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\HTMLBrowserPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\HeaderControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\HeaderControl.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\HeaderPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\HeaderPeer.h">
-			</File>
+				RelativePath="..\..\..\include\events\HelpEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\HelpEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\HelpListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\HelpListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\ImageControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ImageControl.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\ImageList.h"/>
 			<File
-				RelativePath="..\..\..\include\graphics\ImageList.h">
-			</File>
+				RelativePath="..\..\..\include\events\ImageListEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ImageListEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ImageListListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ImageListListener.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\InvalidStateException.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\InvalidStateException.h">
-			</File>
+				RelativePath="..\..\..\include\core\Item.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Item.h">
-			</File>
+				RelativePath="..\..\..\include\events\ItemEditorEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ItemEditorEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ItemEditorListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ItemEditorListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\ItemEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ItemEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ItemListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ItemListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\KeyboardEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\KeyboardEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\KeyboardListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\KeyboardListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\Label.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Label.h">
-			</File>
+				RelativePath="..\..\..\include\core\LibraryApplication.h"/>
 			<File
-				RelativePath="..\..\..\include\core\LibraryApplication.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\Light3DBorder.h"/>
 			<File
-				RelativePath="..\..\..\include\graphics\Light3DBorder.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\LightweightComponent.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\LightweightComponent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ListBoxControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ListBoxControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\ListItem.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\ListBoxPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\ListModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ListItem.h">
-			</File>
+				RelativePath="..\..\..\include\events\ListModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ListModel.h">
-			</File>
+				RelativePath="..\..\..\include\events\ListModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ListModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ListViewControl.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ListModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\ListviewPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ListViewControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\Menu.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\ListviewPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\MenuBar.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Menu.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\MenuBarPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\MenuBar.h">
-			</File>
+				RelativePath="..\..\..\include\core\MenuItem.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\MenuBarPeer.h">
-			</File>
+				RelativePath="..\..\..\include\events\MenuItemEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\core\MenuItem.h">
-			</File>
+				RelativePath="..\..\..\include\events\MenuItemListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\MenuItemEvent.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\MenuItemPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\events\MenuItemListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\MenuListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\MenuItemPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\MessageDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\events\MenuListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\Model.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Model.h">
-			</File>
+				RelativePath="..\..\..\include\events\ModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\ModelValidationListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ModelValidationListener.h">
-			</File>
+				RelativePath="..\..\..\include\ModelViewKit.h"/>
 			<File
-				RelativePath="..\..\..\include\ModelViewKit.h">
-			</File>
+				RelativePath="..\..\..\include\events\MouseEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\MouseEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\MouseListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\MouseListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\MultilineTextControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\MultilineTextControl.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\NoToolKitFoundException.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\NoToolKitFoundException.h">
-			</File>
+				RelativePath="..\..\..\include\events\NotifyEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\NotifyEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\NotifyListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\NotifyListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\OpenGLControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\OpenGLControl.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\OpenGLControlContext.h"/>
 			<File
-				RelativePath="..\..\..\include\graphics\OpenGLControlContext.h">
-			</File>
+				RelativePath="..\..\..\include\core\Panel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Panel.h">
-			</File>
+				RelativePath="..\..\..\include\core\PopupMenu.h"/>
 			<File
-				RelativePath="..\..\..\include\core\PopupMenu.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\PopupMenuPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\PopupMenuPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\PrintContextPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\PrintContextPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\PrintPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\PrintPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\PropertyEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\PropertyEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\PropertyEditorManager.h"/>
 			<File
-				RelativePath="..\..\..\include\core\PropertyEditorManager.h">
-			</File>
+				RelativePath="..\..\..\include\core\PushButton.h"/>
 			<File
-				RelativePath="..\..\..\include\core\PushButton.h">
-			</File>
+				RelativePath="..\..\..\include\core\RadioButtonControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\RadioButtonControl.h">
-			</File>
+				RelativePath="..\..\..\include\utils\Resource.h"/>
 			<File
-				RelativePath="..\..\..\include\utils\Resource.h">
-			</File>
+				RelativePath="..\..\..\include\utils\ResourceBundle.h"/>
 			<File
-				RelativePath="..\..\..\include\utils\ResourceBundle.h">
-			</File>
+				RelativePath="..\..\..\include\exceptions\ResourceException.h"/>
 			<File
-				RelativePath="..\..\..\include\exceptions\ResourceException.h">
-			</File>
+				RelativePath="..\..\..\include\io\ResourceStream.h"/>
 			<File
-				RelativePath="..\..\..\include\io\ResourceStream.h">
-			</File>
+				RelativePath="..\..\..\include\core\ScrollBarControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ScrollBarControl.h">
-			</File>
+				RelativePath="..\..\..\include\events\ScrollEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ScrollEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\ScrollPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ScrollPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\Scrollable.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Scrollable.h">
-			</File>
+				RelativePath="..\..\..\include\core\ScrollbarManager.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ScrollbarManager.h">
-			</File>
+				RelativePath="..\..\..\include\core\Selectable.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Selectable.h">
-			</File>
+				RelativePath="..\..\..\include\core\Splitter.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Splitter.h">
-			</File>
+				RelativePath="..\..\..\include\core\StatusBar.h"/>
 			<File
-				RelativePath="..\..\..\include\core\StatusBar.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\StrokeState.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\StrokeState.h">
-			</File>
+				RelativePath="..\..\..\include\core\TabModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TabModel.h">
-			</File>
+				RelativePath="..\..\..\include\events\TabModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TabModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\TabModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TabModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\TabPage.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TabPage.h">
-			</File>
+				RelativePath="..\..\..\include\core\TabbedPages.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TabbedPages.h">
-			</File>
+				RelativePath="..\..\..\include\core\TableCellItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TableCellItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\TableControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TableControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\TableItemEditor.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TableItemEditor.h">
-			</File>
+				RelativePath="..\..\..\include\core\TableModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TableModel.h">
-			</File>
+				RelativePath="..\..\..\include\events\TableModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TableModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\TableModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TableModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\core\TextControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TextControl.h">
-			</File>
+				RelativePath="..\..\..\include\events\TextEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TextEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\TextModel.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TextModel.h">
-			</File>
+				RelativePath="..\..\..\include\events\TextModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TextModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\TextPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\TextPeer.h">
-			</File>
+				RelativePath="..\..\..\include\core\TimerComponent.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TimerComponent.h">
-			</File>
+				RelativePath="..\..\..\include\events\TimerEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TimerEvent.h">
-			</File>
+				RelativePath="..\..\..\include\graphics\TitledBorder.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ToggledButton.h">
-			</File>
+				RelativePath="..\..\..\include\core\ToggledButton.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ToolTipEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\ToolTipEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ToolTipListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\ToolTipListener.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Toolbar.h">
-			</File>
+				RelativePath="..\..\..\include\core\Toolbar.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ToolbarButton.h">
-			</File>
+				RelativePath="..\..\..\include\core\ToolbarButton.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ToolbarDock.h">
-			</File>
+				RelativePath="..\..\..\include\core\ToolbarDock.h"/>
 			<File
-				RelativePath="..\..\..\include\core\ToolbarSeparator.h">
-			</File>
+				RelativePath="..\..\..\include\core\ToolbarSeparator.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TreeControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\TreeControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TreeItem.h">
-			</File>
+				RelativePath="..\..\..\include\core\TreeItem.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TreeListControl.h">
-			</File>
+				RelativePath="..\..\..\include\core\TreeListControl.h"/>
 			<File
-				RelativePath="..\..\..\include\core\TreeModel.h">
-			</File>
+				RelativePath="..\..\..\include\core\TreeModel.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TreeModelEvent.h">
-			</File>
+				RelativePath="..\..\..\include\events\TreeModelEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\TreeModelListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\TreeModelListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementer\TreePeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementer\TreePeer.h"/>
 			<File
-				RelativePath="..\..\..\include\utils\UIToolkit.h">
-			</File>
+				RelativePath="..\..\..\include\utils\UIMetricsManager.h"/>
 			<File
-				RelativePath="..\..\..\include\events\UndoRedoEvent.h">
-			</File>
+				RelativePath="..\..\..\include\utils\UIToolkit.h"/>
 			<File
-				RelativePath="..\..\..\include\events\UndoRedoListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\UndoRedoEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\core\UndoRedoStack.h">
-			</File>
+				RelativePath="..\..\..\include\events\UndoRedoListener.h"/>
 			<File
-				RelativePath="..\..\..\include\com\VCFCOM.h">
-			</File>
+				RelativePath="..\..\..\include\core\UndoRedoStack.h"/>
 			<File
-				RelativePath="..\..\..\include\io\VFFInputStream.h">
-			</File>
+				RelativePath="..\..\..\include\com\VCFCOM.h"/>
 			<File
-				RelativePath="..\..\..\include\io\VFFOutputStream.h">
-			</File>
+				RelativePath="..\..\..\include\io\VFFInputStream.h"/>
 			<File
-				RelativePath="..\..\..\include\events\ValidationEvent.h">
-			</File>
+				RelativePath="..\..\..\include\io\VFFOutputStream.h"/>
 			<File
-				RelativePath="..\..\..\include\core\View.h">
-			</File>
+				RelativePath="..\..\..\include\events\ValidationEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\events\WhatsThisHelpEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\View.h"/>
 			<File
-				RelativePath="..\..\..\include\events\WhatsThisHelpListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\WhatsThisHelpEvent.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Application.h">
-			</File>
+				RelativePath="..\..\..\include\events\WhatsThisHelpListener.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Button.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Application.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Clipboard.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Button.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32ColorDialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Clipboard.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Component.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32ColorDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerkit\Win32ControlContext.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Component.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32CursorPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerkit\Win32ControlContext.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Desktop.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32CursorPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Dialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Desktop.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32DragDropPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Dialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32DropTargetPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32DragDropPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Edit.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32DropTargetPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32FileOpenDialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Edit.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32FileSaveDialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32FileOpenDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32FolderBrowseDialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32FileSaveDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32FontDialog.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32FolderBrowseDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\ImplementerKit\Win32FontManager.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32FontDialog.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Listview.h">
-			</File>
+				RelativePath="..\..\..\include\ImplementerKit\Win32FontManager.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32MenuBar.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Listview.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32MenuItem.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32MenuBar.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Object.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32MenuItem.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Peer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Object.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32PopupMenu.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Peer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32ResourceBundle.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32PopupMenu.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32ResourceStream.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32ResourceBundle.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32ScrollPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32ResourceStream.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32ScrollPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32ToolKit.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32SystemPeer.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Tree.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32ToolKit.h"/>
 			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Window.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Tree.h"/>
 			<File
-				RelativePath="..\..\..\include\core\Window.h">
-			</File>
+				RelativePath="..\..\..\include\implementerKit\Win32Window.h"/>
 			<File
-				RelativePath="..\..\..\include\events\WindowEvent.h">
-			</File>
+				RelativePath="..\..\..\include\core\Window.h"/>
 			<File
-				RelativePath="..\..\..\include\events\WindowListener.h">
-			</File>
+				RelativePath="..\..\..\include\events\WindowEvent.h"/>
+			<File
+				RelativePath="..\..\..\include\events\WindowListener.h"/>
+			<File
+				RelativePath="..\..\..\include\implementer\WindowPeer.h"/>
+			<File
+				RelativePath="..\..\..\include\core\Wizard.h"/>
+		</Filter>
+		<Filter
+			Name="Source Files"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\core\AbstractApplication.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractCommand.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractComponentEditor.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractContainer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractListModel.cpp"/>
 			<File
-				RelativePath="..\..\..\include\implementer\WindowPeer.h">
+				RelativePath="..\..\..\src\core\AbstractPropertyEditor.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractScrollable.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractTableModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractTextModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractTreeModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AbstractView.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\AbstractWin32Component.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\AcceleratorKey.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Application.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ApplicationKit.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Basic3DBorder.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\BasicTableItemEditor.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ButtonEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\COM\COMDataObject.cpp"/>
+			<File
+				RelativePath="..\..\..\src\COM\COMDragSource.cpp"/>
+			<File
+				RelativePath="..\..\..\src\COM\COMDropTarget.cpp"/>
+			<File
+				RelativePath="..\..\..\src\COM\COMObject.cpp"/>
+			<File
+				RelativePath="..\..\..\src\COM\COMUtils.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CheckBoxControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Clipboard.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ClipboardDataObject.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ClipboardEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\ColorEtchedBorder.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ColumnItemEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ColumnModelEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ComboBoxControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommandButton.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommandGroup.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonColor.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonFileBrowse.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonFileDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonFileOpen.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonFileSave.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonFont.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CommonPrint.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Component.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ComponentEditorManager.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ComponentInfo.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Control.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ControlContainer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ControlEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\ControlGraphicsContext.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Cursor.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CursorManager.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\CustomControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DataType.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultColumnItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultColumnModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultListItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultListModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultMenuItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultPropertyEditors.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTabModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTabPage.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableCellItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTableModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTextModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTreeItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\DefaultTreeModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Desktop.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Dialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\DragEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\DragDrop\DragSource.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\DropEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\DragDrop\DropTarget.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\EtchedBorder.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\FocusEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Frame.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\HTMLBrowserControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\HeaderControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\HelpEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ImageControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\ImageList.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ImageListEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ItemEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\KeyboardEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Label.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\LibraryApplication.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\Light3DBorder.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\LightweightComponent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ListBoxControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ListModelEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ListViewControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Menu.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\MenuBar.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\MenuItemEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\MessageDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Model.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\MouseEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\MultilineTextControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Panel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\PopupMenu.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\PropertyEditorManager.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\PushButton.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\RadioButtonControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Utils\Resource.cpp"/>
+			<File
+				RelativePath="..\..\..\src\IO\ResourceStream.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ScrollbarManager.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Splitter.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\StatusBar.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\TabModelEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TabbedPages.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TableControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\TableModelEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TextControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\TextEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TimerComponent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\TimerEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Graphics\TitledBorder.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ToggledButton.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ToolTipEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Toolbar.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ToolbarButton.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ToolbarDock.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\ToolbarSeparator.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TreeControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\TreeListControl.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\TreeModelEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Utils\UIToolkit.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\UndoRedoEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\UndoRedoStack.cpp"/>
+			<File
+				RelativePath="..\..\..\src\IO\VFFInputStream.cpp"/>
+			<File
+				RelativePath="..\..\..\src\IO\VFFOutputStream.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\ValidationEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\WhatsThisHelpEvent.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Application.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Button.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Clipboard.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ColorDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Component.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ControlContext.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32CursorPeer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Desktop.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Dialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Edit.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32FolderBrowseDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32FontDialog.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Listview.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32MenuBar.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32MenuItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Object.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32PopupMenu.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ResourceStream.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32ToolKit.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Tree.cpp"/>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Window.cpp"/>
+			<File
+				RelativePath="..\..\..\src\core\Window.cpp"/>
+			<File
+				RelativePath="..\..\..\src\Events\WindowEvent.cpp"/>
 		</Filter>
 	</Files>
-	<Globals>
-	</Globals>
+	<Globals/>
 </VisualStudioProject>
+
+

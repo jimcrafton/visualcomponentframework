@@ -55,3 +55,5 @@ STDMETHODIMP CVCFNewClassWiz::OnDisconnection(VARIANT_BOOL bLastTime)
 
 	return S_OK;
 }
+
+

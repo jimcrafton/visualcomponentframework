@@ -62,3 +62,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_VCFBUILDERHOSTVIEW_H__528A8358_7064_4F07_B830_1DA5774F6807__INCLUDED_)
+
+

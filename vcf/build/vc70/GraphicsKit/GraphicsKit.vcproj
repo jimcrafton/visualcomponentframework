@@ -2,9 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="GraphicsKit"
-	SccProjectName="GraphicsKit"
-	SccLocalPath=".">
+	Name="GraphicsKit">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -108,84 +106,8 @@
 	</Configurations>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
-			<File
-				RelativePath="..\..\..\src\Graphics\AbstractImage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\BasicFill.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\BasicStroke.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Color.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Font.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\FontState.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\GlyphCollection.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\GraphicsContext.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\GraphicsKit.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\GraphicsObject.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Utils\GraphicsToolKit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Events\ImageEvent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Matrix2D.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Polygon.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\Vector2D.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Context.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Font.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32FontManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\ImplementerKit\Win32Image.cpp">
-			</File>
-		</Filter>
-		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
+			Filter="">
 			<File
 				RelativePath="..\..\..\include\graphics\AbstractImage.h">
 			</File>
@@ -328,7 +250,79 @@
 				RelativePath="..\..\..\include\implementerkit\Win32OpenGLPeer.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="Source Files"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\Graphics\AbstractImage.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\BasicFill.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\BasicStroke.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Color.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Font.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\FontState.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\GlyphCollection.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\GraphicsContext.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\GraphicsKit.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\GraphicsObject.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Utils\GraphicsToolKit.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Events\ImageEvent.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Matrix2D.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Polygon.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\Graphics\Vector2D.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Context.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Font.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32FontManager.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\ImplementerKit\Win32Image.cpp">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
+

@@ -2,9 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="RemoteObjectKitStatic"
-	SccProjectName="RemoteObjectKitStatic"
-	SccLocalPath="..\..\..">
+	Name="RemoteObjectKitStatic">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -170,3 +168,5 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
+

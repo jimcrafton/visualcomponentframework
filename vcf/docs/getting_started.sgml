@@ -1,0 +1,297 @@
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+CVS Log info
+$Log$
+Revision 1.2  2003/05/17 20:36:52  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+
+Revision 1.1.2.1  2003/03/03 03:39:49  ddiego
+initial check-in of docbook vcf documentation, plus neccesary stylsheets
+and images
+
+-->
+
+<chapter><title>Getting Started</title>
+		<section><title>A very simple VCF Application</title>
+			<para>
+			This will explain the very basics of creating a "Hello World" application with the VCF.
+			</para>			
+			<para>
+			This simple application will demonstrate creating a VCF::Application instance and displaying a main window, 
+			with "Hello World" in it's caption bar.
+			</para>
+			<para>
+			The simplest full VCF application, in other words, one that uses the Application class as it's starting point, ]
+			as opposed to just using certain pieces of it, needs only a few lines of code in a main() function, like the following:
+			</para>
+			<programlisting>
+int main(int argc, char *argv[])
+{
+	Application app;
+
+	Application::appMain( argc, argv );
+}
+			</programlisting>			
+			<para>
+			Those two lines of code are all that is needed to create your app instance on the stack, and then start the app running, 
+			by calling the static Application::appMain() function. If you are using the VCF Application class features, like we are here, 
+			then there can only be one instance of a Application derived class for the running process, much like the restrictions that 
+			apply to MFC's CWinApp.  Once you have this instance it is neccessary to start the app up by calling Application::appMain() 
+			function, passing in the number of arguments and the argument array of strings. This is processed internally and calls the 
+			applications initRunningApplication() and then the run loop, which starts the message pump up. From there on in you are 
+			processing windows messages. 
+			</para>
+			<para>
+			Well this by itself is not that interesting, so lets add a window.
+			</para>
+			<programlisting>
+int main(int argc, char *argv[])
+{
+	Application app;
+	
+	Window* mainWindow = new Window();
+
+	Application::appMain( argc, argv );
+}
+			</programlisting>
+			<para>
+			This creates our new window on the heap. This is the preferred way of creating most objects in the VCF, with a few 
+			exceptions. Next we need to set the application's main window. In doing this the application is able to register itself as a 
+			listener to the windows window events (via a call to addWindowListener()), and will be notified when the window closes 
+			itself. At this point the application will in turn terminate it self cleanly and shut down. Failure to do this will prevent the 
+			Application of being notified to close correctly, and it will not be able to free up the heap based memory for the Window 
+			object.
+			</para>
+
+			<programlisting>
+int main(int argc, char *argv[])
+{
+	Application app;
+	
+	Window* mainWindow = new Window();
+	
+	app.setMainWindow( mainWindow );
+
+	Application::appMain( argc, argv );
+}
+			</programlisting>
+			<para>
+			Well this is still pretty boring so lets set the windows caption and then display it.
+			</para>
+			
+			<programlisting>
+int main(int argc, char *argv[])
+{
+	Application app;
+	
+	Window* mainWindow = new Window();
+	
+	app.setMainWindow( mainWindow );
+
+	mainWindow->setCaption( "Hello World" );
+
+	mainWindow->show();
+
+	Application::appMain( argc, argv );
+}
+			</programlisting>
+			<para>
+			And there you have it: a window will magically display itself, with a caption that reads "Hello World". The caption is 
+			set via the setCaption() method, and the windows is made visible via the show() method. Alternatively, we could have 
+			made the window visible by calling the setVisible() with a true bool value.
+			</para>
+			<para>			
+			Most of this was pretty easy, with the only odd thing the missing WinMain(). This is circumvented by setting some 
+			custom linker settings: in the output section of the project setting's Link tab, you specify mainCRTStartup as the 
+			Entry-point symbol, and make sure your /subsystem flag is set to /subsystem:windows not /subsystem:console. With 
+			this set you can go about your merry way and still use main() just like normal.
+			</para>
+		</section>
+		<section><title>Understanding the VCF directory tree</title>
+			<para>
+				The VCF is organized into a series of subdirectories all under the main VCF root directory. All the 
+				core  source code is contained in two top level directories, include (all the header files for the 
+				framework), and src (all the implementation files for the framework). Documentation is contained 
+				in the docs directory and consists of all the HTML and images necessary for creating the HTML 
+				Help files (on Win32 systems). Executable binaries are kept in the bin directory, while the link 
+				libraries are kept in the lib directory.
+			</para>
+			
+			<para>
+			The main header files in the include directory are used by each of the framework "kits" (FoundationKit, 
+			GraphicsKit, ApplicationKit, etc) to pull in whatever common files are needed by a developer using the 
+			particular kit and are named with the form &lt;kit name&gt;.h. For example, the FoundationKit.h header 
+			includes all the common headers required for developing with the VCF when using the FoundationKit. 
+			So a developer writing a console application that links to the FoundationKit simply needs to 
+			#include "FoundationKit.h" and everything else will be taken care of. If you are using pre compiled 
+			headers then you would want to include this file (FoundationKit.h) in your master pre compiled header 
+			file (i.e. if you are used to using VC++ you would put this include in your stdafx.h file). Kits that use 
+			the FoundationKit will also include the FoundationKit.h in their header as well. For example, the 
+			ApplicationKit.h includes the GraphicsKit.h header, which in turn includes the FoundationKit.h. Thus 
+			including the ApplicationKit.h pulls in the other two major kit headers.
+			</para>
+			
+			<para>
+			Underneath the main include directory there are a series of subdirectories containing the rest of the 
+			framework headers, with each subdirectory named according to the high level functionality of the 
+			headers it contains. The following is an alphabetical list of these subdirectories, with a brief comment 
+			on the functionality of the directory.
+			<itemizedlist>
+				<listitem><para>
+				<symbol>com</symbol> - this holds several headers used 
+				<emphasis>only</emphasis> on Win32 for COM implementation, needed mainly because the 
+				clipboard and drag-drop implementations are COM compliant, making interoperability with 
+				non-VCF application possible as far as clipboard and drag-drop goes.
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>core</symbol> - this holds most of the common VCF headers for core 
+				VCF classes like the ClassRegistry, properties, controls, models, etc.
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>dragdrop</symbol> - this contains the headers used for drag and drop in the VCF. 
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>events</symbol> - all of the event class headers are stored here, as well as the template 
+				headers for the various event handlers.
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>exceptions</symbol> - this contains all the error messages and exception classes 
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>graphics</symbol> - this contains all the graphics headers for the VCF (not counting the 
+				implementation of platform specific peer classes)
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>implementer</symbol> - contains all the peer interface classes. If you are writing code 
+				that needs a new peer class to be written for the VCF, this is where you would put the header. 
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>implementerKit</symbol> - this directory contains all the headers for various platform 
+				specific implementations of peer classes. For example, the VCF::ThreadPeer class has it's header 
+				in include/implementer/ThreadPeer.h, and it's Win32 implementation header is in this directory as 
+				include/implementerKit/Win32Thread.h. 
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>io</symbol> - this contains headers for various kinds of IO, typically classes that derive from the 
+				VCF::InputStream and VCF::OutputStream classes. 
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>net</symbol> - this contains headers for the various networking classes like 
+				VCF::Socket.
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>utils</symbol> - this contains headers for various utility classes such as the 
+				VCF::StringUtils class, the thread and synchronization classes, the VCF::Registry class 
+				and others.
+				</para></listitem>
+				
+				<listitem><para>
+				<symbol>remote</symbol> - this contains all the classes used in the RemoteObjectKit library.
+				</para></listitem>
+			</itemizedlist>
+			</para>
+			
+			<para>
+			Like the include directory, the src directory also has a set of subdirectories, that mirror the include 
+			subdirectories in both name and function. For more information about them please see the descriptions 
+			above, the only difference being that instead of containing header files the src subdirectories contain 
+			C++ implementation files.
+			</para>
+			
+			<para>
+			When writing code for the VCF itself (as opposed to simply using it in your application) you must use 
+			include guards both for the outer level of your header files, and for any cases that require you to 
+			include a header inside of another header. For example, the following code demonstrates writing a 
+			header with correct top level include guards :			
+			<programlisting>
+//MyHeader.h
+#ifndef _MYHEADER_H__
+#define _MYHEADER_H__
+      
+//rest of code goes here
+
+#endif //_MYHEADER_H__
+			</programlisting>
+			</para>
+			<note>
+				<para>
+				The symbol for the #define has the following form which MUST be followed for VCF headers. 
+				Headers for your own use outside of the framework proper can any form you want. That form is:
+				<programlisting>
+_&lt;name of the header in upper case - no breaks, underbars, etc&gt;_H__				
+				</programlisting>
+				</para>
+			</note>
+			
+			<para>
+			Examples:
+			</para>
+			<para>
+			You have added a new control control class to the VCF called LEDLabel. It's header is called LEDLabel.h, 
+			so it's include guard is <symbol>_LEDLABEL_H__</symbol>
+			</para>
+			
+			<para>
+			If your code for the VCF needs to include other headers, then you must wrap the #include in an include guard as 
+			well. Once again if this is code for your application, then this does not apply, you can use it if you want to, but you 
+			are not obligated to. If you contribute code the framework itself then you must do this. The following example 
+			demonstrates this:
+			<programlisting>
+//MyHeader.h
+#ifndef _MYHEADER_H__
+#define _MYHEADER_H__
+     
+//this will include the ListModel header
+#ifndef _LISTMODEL_H__
+	#include "core/ListModel.h"
+#endif//_LISTMODEL_H__
+
+//rest of code goes here
+
+#endif //_MYHEADER_H__			
+			</programlisting>
+			</para>
+			
+			<para>
+			This may seem like an extra hassle (and it is) but for a framework this size this helps reduce compile time and 
+			makes it more efficient to use.
+			</para>
+		</section>
+	</chapter>
+	
+	

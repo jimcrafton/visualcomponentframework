@@ -138,6 +138,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Interfaces"=..\..\tests\Interfaces\Interfaces.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "LibJPEG"=..\..\ImageFormats\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
 
 Package=<5>
@@ -289,18 +301,6 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"=..\..\ImageFormats\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "libart"=.\GRAPHICSKIT\libart.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

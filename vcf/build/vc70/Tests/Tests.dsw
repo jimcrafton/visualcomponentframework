@@ -30,9 +30,6 @@ Package=<4>
     Project_Dep_Name Trees
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name DLLs
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Drawing
     End Project Dependency
     Begin Project Dependency
@@ -680,4 +677,5 @@ Package=<3>
 }}}
 
 ###############################################################################
+
 

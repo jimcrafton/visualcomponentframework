@@ -23,8 +23,6 @@ CFG=vcfAll - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "vcfAll"
-# PROP Scc_LocalPath "."
 MTL=midl.exe
 
 !IF  "$(CFG)" == "vcfAll - Win32 Release"
@@ -61,3 +59,5 @@ MTL=midl.exe
 # Name "vcfAll - Win32 Debug"
 # End Target
 # End Project
+
+

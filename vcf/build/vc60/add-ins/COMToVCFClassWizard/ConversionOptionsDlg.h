@@ -62,3 +62,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_CONVERSIONOPTIONSDLG_H__6ACA6120_D8D3_4818_99E0_9B31A68D1007__INCLUDED_)
+
+

@@ -2,9 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="RegExx"
-	SccProjectName="RegExx"
-	SccLocalPath="..\..\..">
+	Name="RegExx">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -147,3 +145,5 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
+

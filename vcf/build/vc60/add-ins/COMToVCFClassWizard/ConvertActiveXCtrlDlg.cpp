@@ -137,3 +137,5 @@ void ConvertActiveXCtrlDlg::FindAllActiveXControls()
 		RegCloseKey( hkCLSID ) ;
 	}
 }
+
+

@@ -213,3 +213,4 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 //  global VPLAppWizaw.
 CVPLAppWizAppWiz VPLAppWizaw;
 
+

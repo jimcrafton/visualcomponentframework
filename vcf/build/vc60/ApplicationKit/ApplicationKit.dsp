@@ -23,8 +23,6 @@ CFG=ApplicationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "ApplicationKit"
-# PROP Scc_LocalPath "."
 CPP=cl.exe
 RSC=rc.exe
 
@@ -49,7 +47,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc6_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_s.lib"
+# ADD LIB32 /MACHINE:I386 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
@@ -72,7 +70,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\Lib\ApplicationKit_vc6_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_sd.lib"
+# ADD LIB32 /MACHINE:I386 /nologo /out:"..\..\..\Lib\ApplicationKit_vc6_sd.lib"
 
 !ENDIF 
 
@@ -1751,3 +1749,5 @@ SOURCE=..\..\..\src\Events\WindowEvent.cpp
 # End Group
 # End Target
 # End Project
+
+

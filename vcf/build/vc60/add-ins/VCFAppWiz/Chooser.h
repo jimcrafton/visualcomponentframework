@@ -56,3 +56,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_CHOOSER_H__105DAEDE_B66D_4B50_915C_4262F2625593__INCLUDED_)
+
+

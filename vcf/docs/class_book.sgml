@@ -1,0 +1,139 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE  book  PUBLIC  "-//OASIS//DTD DocBook V4.2//EN" >
+
+<book><title> Title goes here with $VERSION </title>
+	<titleabbrev>Title with $VERSION </titleabbrev>
+
+	<bookinfo>
+		<legalnotice>
+			<!-- legal notice here -->
+		</legalnotice>
+
+		<author>
+			<firstname>Author1 First name</firstname>
+			<surname>Author1 Last name</surname>
+			<firstname>Author2 First name</firstname>
+			<surname>Author2 Last name</surname>
+		</author>
+
+		<copyright>
+			<year></year>
+			<holder> Copyright owner Name</holder>
+		</copyright>
+	</bookinfo>
+
+	<preface><title>Introduction</title>
+		<para>
+			Intro text goes here
+		</para>
+	</preface>
+
+	<chapter><title>Class Listing</title>
+		<section><title>Class Name</title>
+			<para>
+				Full description.
+			</para>
+			<section><title>Inheritance diagram</title>
+				<para>
+					
+				</para>
+			</section>
+
+			<section><title>Public Constructors</title>
+			<table frame="none" pgwide="1">
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<tbody>
+						<row>
+							<entry>								
+								<link linkend="class_name_func_name">func name</link>
+							</entry>
+							<entry>
+								brief description
+							</entry>
+						</row>						
+					</tbody>
+				</tgroup>
+			</table>
+			</section>
+
+			<section><title>Public Types</title>
+
+			</section>	
+
+			<section><title>Public Methods</title>
+
+			</section>	
+
+			<section><title>Public Attributes</title>
+
+			</section>
+
+			<section><title>Protected Constructors</title>
+
+			</section>
+
+			<section><title>Protected Types</title>
+
+			</section>	
+
+			<section><title>Protected Methods</title>
+
+			</section>	
+
+			<section><title>Protected Attributes</title>
+
+			</section>
+
+			<section><title>Static Methods</title>
+
+			</section>	
+
+			<section><title>Static Attributes</title>
+
+			</section>
+			<para>
+
+			<table frame="none" pgwide="1">
+				<tgroup cols="1" align="left" colsep="1" rowsep="1">
+					<tbody>
+						<row id="class_name_func_name">
+							<entry >
+								<para>
+								<funcsynopsis>
+									<funcprototype>
+										<funcdef>return type <function>func name</function></funcdef>
+										<paramdef>param return type <parameter>param name</parameter></paramdef>
+									</funcprototype>
+								</funcsynopsis>
+								</para>
+							</entry>							
+						</row>
+						<row>
+							<entry>
+								<para>
+									Full description
+								</para>
+							</entry>
+						</row>					
+					</tbody>
+				</tgroup>
+			</table>
+
+			</para>
+			
+		</section>
+	</chapter>
+
+	<chapter><title>Namespace Listing</title>
+	</chapter>
+
+	<chapter><title>Namespace Members</title>
+	</chapter>
+
+	<chapter><title>Function Listing</title>
+	</chapter>
+
+	<chapter><title>File Listing</title>
+	</chapter>
+</book>
+	

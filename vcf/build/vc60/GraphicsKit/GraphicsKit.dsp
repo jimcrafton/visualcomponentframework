@@ -23,8 +23,8 @@ CFG=GraphicsKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "GraphicsKit"
-# PROP Scc_LocalPath "."
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -86,14 +86,6 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\AbstractImage.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\AlphaGamma.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\ArtStroke.h
 # End Source File
 # Begin Source File
 
@@ -297,10 +289,6 @@ SOURCE=..\..\..\src\Graphics\Font.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\FontState.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
 # End Source File
 # Begin Source File
@@ -319,10 +307,6 @@ SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
 
 !ENDIF 
 
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
 # End Source File
 # Begin Source File
 

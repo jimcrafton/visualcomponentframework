@@ -23,8 +23,6 @@ CFG=RemoteObjectKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "RemoteObjectKit"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -173,3 +171,5 @@ SOURCE=..\..\..\include\RemoteObjectKit.h
 # End Group
 # End Target
 # End Project
+
+

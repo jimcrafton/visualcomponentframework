@@ -84,4 +84,3 @@ void CDevStudioMainWnd::SetVCFHostVisible( bool visible )
 }
 
 
-

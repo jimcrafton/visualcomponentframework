@@ -54,3 +54,5 @@ void Trace(LPCTSTR lpszFormat, ...);
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_DEBUG_H__30D4ACF7_1103_47F4_8E2C_44EA3E91C6F9__INCLUDED_)
+
+

@@ -47,3 +47,5 @@ public:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_TEST_H__0A8F073A_D11D_4C51_AB42_4E597CA16B5D__INCLUDED_)
+
+

@@ -78,3 +78,5 @@ void Trace(LPCTSTR lpszFormat, ...)
 
 
 #endif // _PSEUDO_DEBUG
+
+

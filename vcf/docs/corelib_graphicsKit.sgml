@@ -1,0 +1,366 @@
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+CVS Log info
+$Log$
+Revision 1.2  2003/05/17 20:36:51  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+
+Revision 1.1.2.5  2003/03/17 21:24:03  ddiego
+blah
+
+Revision 1.1.2.4  2003/03/13 02:34:40  ddiego
+added some more docs and broke apart the various "books" so they can be all
+put together or in separate books. Made to changes to Makefile
+
+Revision 1.1.2.3  2003/03/10 03:58:34  ddiego
+fixes ot better support online html, plus the addition of a little C++
+program to stip stuff
+
+Revision 1.1.2.2  2003/03/05 22:15:58  ddiego
+more docs on images
+
+Revision 1.1.2.1  2003/03/03 03:39:49  ddiego
+initial check-in of docbook vcf documentation, plus neccesary stylsheets
+and images
+
+-->
+
+<section><title>GraphicsKit</title>
+	<para></para>
+	
+	<section><title>The GraphicsContext</title>
+		<para>
+		</para>
+	</section>
+	
+	<section><title>The GraphicsToolkit</title>
+		<para>
+		</para>
+	</section>
+	
+	<section><title>Colors</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Strokes</title>
+		<para>
+		</para>
+	</section>
+	
+	<section><title>Fills</title>
+		<para>
+		</para>
+	</section>
+	
+	<section><title>Images</title>
+		<para>
+		An Image represents the neccessary data to display a graphic on a GraphicsContext. You 
+		can draw an Image on a GraphicsContext by calling the GraphicsContext::drawImage() 
+		method and passing in the Image instance.
+		</para>
+		<para>
+		An Image has a height and width, describing it's dimensions in pixels. It provides access
+		to it's pixel data through pointer to the pixel memory buffer. Each Image also has 
+		an internal GraphicsContext associated with it. Any drawing on the Image's GraphicsContext
+		is reflected in the Image's pixel data.
+		</para>
+		<para>
+		Each pixel is composed of 4 color channels (red, green, blue, and an alpha chanel). 
+		The precise	layout of the channels in memory is dependent on the system you are running on. 
+		For example in Win32, the layout is blue, green, red, alpha. On a linux machine (x86 
+		architecture) the layout is read, green, blue, alpha. The data size 
+		for each channel may vary from 8 to 32 bits. The default is 8 bits. The Image has a 
+		descriptor member that defines what the channel depth is, whether it is floating point,
+		or integer based, and the layout order. 
+		</para>
+		<para>
+		To actually get at the pixel data that makes up the Image class you get an pointer to the 
+		ImageBits class. This class is responsible for actually holding the raw bits that
+		make up the image. This class is a template class that can be specialized for various
+		kinds of data and pixel layout order. The default specialization is dependant on the 
+		platform you compile the VCF for. At a later date you'll be able to create Images
+		of any arbitrary pixel depth. 
+		To get the raw pixel data you call the ImageBits's getData() method
+		which returns a pointer to the pixel buffer. This buffer is seen as a unsigned char*.
+		</para>
+		<para>
+		To work with pixel data in a neutral fashion use the RGBAVals structure. It represents 
+		a single pixel worth of image data. 
+		<programlisting>
+		<![CDATA[
+Image* image = //...get an image from somewhere
+
+RGBAVals* pixels = image->getPixels();
+for ( ulong32 y=0;y<image->getHeight() ) {
+	for ( ulong32 x=0;x<image->getWidth() ) {
+		//modify only blue values
+		pixels[ y * image->getWidth() + x ].b += 20;
+	}
+} 
+		]]>
+		</programlisting>
+		Value ranges for color channels that are integer based are 0 to 2<superscript>channel depth</superscript> .
+		Value ranges for color channels that are floating point based are 0.0 to 1.0.
+		</para>
+	</section>
+
+	<section><title>Borders</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Fonts</title>
+		<para>
+		A Font object is a representation of a set of functions and data used to
+		render a string onto GraphicsContext. Fonts may be bitmap/raster based,
+		vector, TrueType, OpenType, or Post Script. The exact type largely depends 
+		on the system that the VCF is running on.
+		</para>
+		<para>
+		For international characters, the actually handling of rendering is done 
+		by the low level system calls, and is largely (if not completely) transparent
+		to a user of the VCF.
+		<note>
+			<para>
+			In the future this may change, but for know it is handled by the peer
+			implementation of either the FontPeer, ContextPeer or both working together,
+			depending on the system.
+			</para>
+			<para>
+			For Win32 this is handled via the Win32 API, for linux (using GTK2) this 
+			is handled via the 
+			<ulink url="http://developer.gnome.org/doc/API/2.0/pango/">Pango</ulink> API.
+			</para>
+		</note>
+		</para>
+		<para>
+		For international text that needs to handle bi-directional text from 
+		different character sets, for example a chunk of text in English (flowing from 
+		left to right) mixed with some text in Hebrew (flowing from right to left),
+		there may be issues if this is not handled correctly by the low level 
+		graphics implementation. The public VCF API's do not currently address this
+		</para>
+		<para>
+		A Font can be changed at any time during the instances lifetime. You can change 
+		the size (either specifying pixel size or point size), the font name (such as 
+		"Times New Roman"), various attributes, like bold, italic, or strike out, and 
+		the color to use when rendering the font.
+		</para>
+		<para>
+		A Font consists of a number of attributes, such as name, size, style (bold, 
+		italic, et al), ascent, descent, and height. Some of these attributes are 
+		read-only, providing information about the dimensions of the font, and others
+		can be changed at will. The following table illustrates this:
+		<table frame="none" pgwide="1">
+			<tgroup cols="2" align="left" colsep="1" rowsep="1">
+				<thead>
+					<row>
+						<entry>Attribute name</entry>
+						<entry>Read-only</entry>						
+					</row>							
+				</thead>
+				<tbody>
+					<row>
+						<entry>Name</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Size</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Bold</entry>
+						<entry>No</entry>
+					</row>
+
+					<row>
+						<entry>Italic</entry>
+						<entry>No</entry>
+					</row>
+
+					<row>
+						<entry>Strikeout</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Underlined</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Color</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Shear</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Angle</entry>
+						<entry>No</entry>
+					</row>
+					<row>
+						<entry>Ascent</entry>
+						<entry>Yes</entry>
+					</row>
+					<row>
+						<entry>Descent</entry>
+						<entry>Yes</entry>
+					</row>
+					<row>
+						<entry>External Leading</entry>
+						<entry>Yes</entry>
+					</row>
+					<row>
+						<entry>Internal Leading</entry>
+						<entry>Yes</entry>
+					</row>
+					<row>
+						<entry>Height</entry>
+						<entry>Yes</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		<note>
+			<para>
+			Anything that is marked <emphasis>not</emphasis> read-only
+			can be changed.
+			</para>
+		</note>
+		</para>
+		<para>
+		To use a font, simple create it on the heap or stack. To change attributes,
+		call any of the setXXX methods. To use it with a GraphicsContext, call the 
+		GraphicsContext::setCurrentFont() method. This will <emphasis>copy</emphasis>
+		hte font's information into the GraphicsContext's member font. All text functions
+		will then use that font for drawing text till the font is changed.
+		<programlisting>
+
+GraphicsContext* gc = getSomeGraphicsContext();//some function to get a GraphicsContext
+
+Font myFont;
+myFont.setName( "Times New Roman" );
+myFont.setPixelSize( 20 );
+
+gc->setCurrentFont( &amp;myFont );
+gc->textAt( 12, 300, "Hello!" );
+
+Font* myFont = new Font("Arial");
+myFont->setColor( &amp;Color(1.0, 0.0, 0.0) ); //changes the color to red
+myFont->setItalic( true );
+
+gc->setCurrentFont( myFont );
+myFont->free();//destroy our font - we don't need it anymore
+
+gc->textAt( 12, 375, "Hello2!" );
+
+		</programlisting>
+		</para>
+		<para>
+		For advanced techniques like tracing the path of a font's glyphs see the
+		"Glyphs" section.
+		</para>
+	</section>
+
+	<section><title>Glyphs</title>
+		<para>
+		Font's, in addition to a set of attributes, also have to ability to return
+		a set of gyphs, for more advanced drawing techniques. A glyph represents a 
+		single character, and contains metods to render the single glyph, as well
+		as methods for retreiving all the points associated with the glyph. 
+		<note>
+			<para>
+			This is only applicable to Font objects that are True Type, Open Type,
+			or PostScript fonts.
+			</para>
+		</note>
+		</para>
+		<para>
+		A glyph is represented by the Glyph class. You do not create a Glyph directly,
+		instead you retreive a GlyphCollection, which is a class that maintains
+		a series of 1 or more Glyphs for you, and provides methods for operating on 
+		the collection of Glyphs or retrieving an individual Glyph.
+		</para>
+		<para>
+		To get a GlyphCollection you call a Font instance's getGlyphCollection() method 
+		and pass in a string of text. If the Font support's working with Glyphs then
+		it will return a new instance of a GlyphCollection, for which you are responsible
+		for. The returned GlyphCollection wil contain a Glyph for each character in the 
+		string.
+		</para>
+		<para>
+		The GlyphCollection can render itself as a grayscale (alpha channel) image by 
+		calling GlyphCollection::getImage(). This will return a new Image instance whose
+		height and width will be the dimensions of the bounding rectangle neccessary for 
+		the series of characters rendered in a single line (no word wrapping will 
+		take place). The image will contain a grayscale (256 shades of gray) image of 
+		character rendering.
+		</para>
+		<para>
+		A GlyphCollection can return the path, or vector information for the series
+		of Glyphs.
+		</para>
+	</section>
+
+	<section><title>Paths</title>
+		<para>
+		Paths represent a series of 1 or more points. The points can form a closed shape or polygon, like a circle, or 
+		rectangle, or an open shape like a line. A Path is "closed" if it has more than one point and it's end point is 
+		equal to it's starting point.
+		</para>
+		<para>
+		A Path itself is not drawn. Instead you "stroke" or "fill" the path with an imaginary brush that paints on the 
+		GraphicsContext. The variopus sub classes of the Stroke and Fill classes are responsible for doing the actual painting.
+		</para>
+		<para>
+		A Path may be transformed, using matrix math and a 3X3 matrix. Basic transformations include scaling, rotating, shearing,
+		and translation.
+		</para>
+		
+	</section>
+	<section><title>Image Loading</title>
+		<para>
+		</para>
+	</section>
+	<section><title>Transforms</title>
+		<para>
+		</para>
+	</section>
+	
+	<section><title>Exceptions</title>
+		<para>
+		</para>
+	</section>
+
+	<section><title>Peer Classes</title>
+		<para>
+		</para>
+	</section>
+</section>
+

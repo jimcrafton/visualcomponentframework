@@ -33,3 +33,5 @@ extern CVCFLibraryAppWizardAppWiz VCFLibraryAppWizardaw;
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_VCFLIBRARYAPPWIZARDAW_H__DF1C6597_CADC_4F0F_B70C_05D52C123E1B__INCLUDED_)
+
+

@@ -23,8 +23,6 @@ CFG=GraphicsKitDLL - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "GraphicsKitDLL"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -367,3 +365,5 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
 # End Group
 # End Target
 # End Project
+
+

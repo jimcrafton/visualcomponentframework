@@ -23,8 +23,6 @@ CFG=RegExx - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName "RegExx"
-# PROP Scc_LocalPath "..\..\.."
 CPP=cl.exe
 RSC=rc.exe
 
@@ -130,3 +128,5 @@ SOURCE=..\..\..\include\utils\regexx.h
 # End Group
 # End Target
 # End Project
+
+

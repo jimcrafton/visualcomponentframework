@@ -115,3 +115,5 @@ COLORREF WINAPI tdGetHighlightColor( COLORREF rgb ) ;
  * For example if RGBLTGRAY is passed in as rgb, RGBGRAY will be returned.
  */
 COLORREF WINAPI tdGetShadowColor( COLORREF rgb ) ;
+
+

@@ -50,3 +50,5 @@ protected:
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_PAGE2DLG_H__0DBAB4DC_A1BC_4C22_867C_C299FD923EC3__INCLUDED_)
+
+

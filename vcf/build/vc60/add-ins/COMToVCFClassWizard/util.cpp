@@ -712,3 +712,5 @@ CString TYPEDESCtoString( ITypeInfo* pti, TYPEDESC* ptdesc )
 	}
 	return VTtoString( ptdesc->vt );
 }
+
+

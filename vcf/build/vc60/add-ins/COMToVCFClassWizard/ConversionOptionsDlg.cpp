@@ -152,3 +152,5 @@ void ConversionOptionsDlg::OnUseVcfRtti()
 
 	UpdateData(FALSE);
 }
+
+

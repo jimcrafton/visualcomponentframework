@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<!DOCTYPE  book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"  [
+	<!ENTITY vcfbuilder_intro SYSTEM "vcfbuilder_intro.sgml">
+	<!ENTITY vcfbuilder_quicktut SYSTEM "vcfbuilder_quicktut.sgml">
+	<!ENTITY vcfbuilder_ui SYSTEM "vcfbuilder_ui.sgml">	
+	<!ENTITY vcfbuilder_wspprj SYSTEM "vcfbuilder_wspprj.sgml">	
+	<!ENTITY vcfbuilder_designer SYSTEM "vcfbuilder_designer.sgml">		
+	<!ENTITY vcfbuilder_building SYSTEM "vcfbuilder_building.sgml">		
+	<!ENTITY vcfbuilder_versionctrl SYSTEM "vcfbuilder_versionctrl.sgml">		
+	<!ENTITY vcfbuilder_debug SYSTEM "vcfbuilder_debug.sgml">		
+	<!ENTITY vcfbuilder_ide SYSTEM "vcfbuilder_ide.sgml">		
+	<!ENTITY vcfbuilder_design SYSTEM "vcfbuilder_design.sgml">		
+	<!ENTITY vcfbuilder_faq SYSTEM "vcfbuilder_faq.sgml">
+	<!ENTITY vcfbuilder_book SYSTEM "vcfbuilder_book.sgml">
+			
+
+]>
+
+<!--
+Copyright (c) 2000-2003, Jim Crafton
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+	Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in 
+	the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+CVS Log info
+$Log$
+Revision 1.2  2003/05/17 20:36:55  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+
+Revision 1.1.2.5  2003/04/17 04:29:45  ddiego
+updated scintilla, added gtk support for the application kit, with stubs
+for the basic peers.
+
+Revision 1.1.2.4  2003/03/13 02:34:40  ddiego
+added some more docs and broke apart the various "books" so they can be all
+put together or in separate books. Made to changes to Makefile
+
+Revision 1.1.2.3  2003/03/12 22:43:06  ddiego
+more xmake docs
+
+Revision 1.1.2.2  2003/03/12 02:51:39  ddiego
+more documentation updates
+
+Revision 1.1.2.1  2003/03/07 22:24:07  ddiego
+added initial vcf builders docbook files
+
+
+-->
+
+
+<book>
+	&vcfbuilder_book;
+
+	<index id="index"/>
+</book>
+

@@ -210,3 +210,4 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 //  global VCFLibraryAppWizardaw.
 CVCFLibraryAppWizardAppWiz VCFLibraryAppWizardaw;
 
+

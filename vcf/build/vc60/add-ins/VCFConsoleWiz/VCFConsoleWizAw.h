@@ -33,3 +33,5 @@ extern CVCFConsoleWizAppWiz VCFConsoleWizaw;
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_VCFCONSOLEWIZAW_H__475A8F80_32E8_4C36_8768_ED296FE05249__INCLUDED_)
+
+

@@ -119,3 +119,5 @@ void Page2Dlg::OnStaticLib()
 	m_LibLinkage = VCF_STATIC_LINK;
 	UpdateData( FALSE );
 }
+
+

@@ -20,3 +20,5 @@ CString TYPEDESCtoString( ITypeInfo* pti, TYPEDESC* ptdesc );
 CString  VTtoString( VARTYPE vt ) ;
 
 #endif
+
+
