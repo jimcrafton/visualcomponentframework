@@ -1,22 +1,28 @@
 //DragAndDrop.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
-#include "utils/StringTokenizer.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
 
 using namespace VCF;
 
 
 
 /**
-This example demonstrates how to use drag and drop 
+This example demonstrates how to use drag and drop
 with the VCF
 */
 
 
 /**
-This simple class creates a panel that 
+This simple class creates a panel that
 creates data for dragging and dropping.
 */
 class DraggingPanel : public Panel {
@@ -24,20 +30,20 @@ public:
 
 	/**
 	By overriding the beginDragDrop()
-	method of the VCF::Control class we can drag 
+	method of the VCF::Control class we can drag
 	data from one place to another.
 	The method should return true if the drag drop operation
 	completed, otherwise return false.
 	*/
 	virtual bool beginDragDrop( MouseEvent* e ) {
 		/**
-		Here we create our data source for the 
+		Here we create our data source for the
 		drag drop operation
 		*/
 		DragSource src;
 		/**
-		We set the action type to "link". Me can 
-		set it to link, copy, move, or none. 
+		We set the action type to "link". Me can
+		set it to link, copy, move, or none.
 		*/
 		src.setActionType( daLink );
 
@@ -48,7 +54,7 @@ public:
 		TextDataObject sourceData("Some Text To Drag!");
 
 		/**
-		calling startDragDrop(), tells the OS that we are ready to 
+		calling startDragDrop(), tells the OS that we are ready to
 		drag and drop. startDragDrop() will block till hte operation
 		is completed or cancelled out.
 		*/
@@ -63,7 +69,7 @@ public:
 /**
 Our main window is going to hold several controls.
 One of the controls will be a drag source, so that when you drag
-the mouse on it, you'll be able to drag a small piece of 
+the mouse on it, you'll be able to drag a small piece of
 "text" to another control.
 The other panel below it will accept files if you drop them on the panel
 Finally, the last panel will accept image and briefly display the
@@ -85,16 +91,16 @@ public:
 
 		/**
 		Add our text source panel.
-		Dragging on this panel will create a DragSource and 
+		Dragging on this panel will create a DragSource and
 		begin a drag-drop operation.
 		*/
 		Panel* textSrcPanel = new DraggingPanel();
 		/**
-		setting auto start dragdrop to true lets the VCF decide 
+		setting auto start dragdrop to true lets the VCF decide
 		when a drag-drop operation has potentially begun.
 		*/
 		textSrcPanel->setAutoStartDragDrop( true );
-		
+
 		//set the tooltip text
 		textSrcPanel->setToolTipText( "Drag me to the right most panel" );
 
@@ -123,27 +129,27 @@ public:
 		and the drop target will become notified when a drag-drop operation
 		enters it's target control, drags over the target control, drops on
 		the target control, or leaves the target control.
-		
+
 		The drop target is *not* itself a control.
 
-		A control *must* be connected to a drop target to 
+		A control *must* be connected to a drop target to
 		recieve drag drop operations.
 
 		For the purposes of this example we will only add event handlers
 		for recieving events on entering and dropping over the drop target.
 		*/
 		DropTarget* textDestDropTarget = new DropTarget( textDestPanel );
-		//add the component to our main window. 
+		//add the component to our main window.
 		addComponent( textDestDropTarget );
 
 		//add the two event handlers to the drop target's delegates
-		textDestDropTarget->DropTargetDropped += 
+		textDestDropTarget->DropTargetDropped +=
 			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onTextDestDropped, "onTextDestDropped" );
 
-		textDestDropTarget->DropTargetEntered += 
+		textDestDropTarget->DropTargetEntered +=
 			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onTextDestEntered, "onTextDestEntered" );
-		
-		
+
+
 
 		label = new Label();
 		label->setBounds( 20, textDestPanel->getBottom() + 45, 280, label->getPreferredHeight() );
@@ -153,7 +159,7 @@ public:
 		/**
 		Add another panel that will proces drag drop operations from files
 		*/
-		Panel* filesDestPanel = new Panel();		
+		Panel* filesDestPanel = new Panel();
 		filesDestPanel->setBounds( 20, label->getBottom(), 280, 50 );
 		filesDestPanel->setToolTipText( "Drop files on me!" );
 		add( filesDestPanel );
@@ -162,10 +168,10 @@ public:
 		Add another drop target, this one to our file drop panel
 		*/
 		DropTarget* fileDestDropTarget = new DropTarget( filesDestPanel );
-		
+
 		addComponent( fileDestDropTarget );
 
-		fileDestDropTarget->DropTargetDropped += 
+		fileDestDropTarget->DropTargetDropped +=
 			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onFileDestDropped, "onFileDestDropped" );
 
 
@@ -183,7 +189,7 @@ public:
 		onto an image, which can tehn be extracted.
 		*/
 		Panel* imageDestPanel = new Panel();
-		
+
 		imageDestPanel->setBounds( 20, label->getBottom(), 280, 200 );
 		imageDestPanel->setToolTipText( "Drop images on me!" );
 		add( imageDestPanel );
@@ -192,16 +198,16 @@ public:
 		DropTarget* imageDestDropTarget = new DropTarget( imageDestPanel );
 		addComponent( imageDestDropTarget );
 
-		imageDestDropTarget->DropTargetDropped += 
+		imageDestDropTarget->DropTargetDropped +=
 			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onImageDestDropped, "onImageDestDropped" );
 
-		
+
 	}
 
 	virtual ~DragAndDropWindow(){};
 
 	/**
-	This methods allows us to control what data types 
+	This methods allows us to control what data types
 	we will respond to. If the data type is "text/plain"
 	then we will allows drag drop operations, otherwise
 	we'll ignore them.
@@ -224,10 +230,10 @@ public:
 		allow us to respond to the rest of the drag drop operation
 		(such as the drag overs, and eventual drop itself).
 		If it doesn't support "text/plain" then set the action type
-		to daNone, which will tell the VCF that this target doesn't 
+		to daNone, which will tell the VCF that this target doesn't
 		respond to drag overs/drops for this particualar drag drop operation.
 		Please note, that at this point all the data object contains is an
-		indication of the types it supports. The actual data itself is 
+		indication of the types it supports. The actual data itself is
 		not made available until a drop is made.
 		*/
 		if ( dataObj->isTypeSupported( "text/plain" ) ) {
@@ -281,7 +287,7 @@ public:
 			if ( dataObj->saveToStream( FILE_DATA_TYPE, &stream ) ) {
 				//create a string from the output streams data
 				String fileNames;
-				fileNames.append( stream.getBuffer(), stream.getSize() );
+				fileNames.append( (VCF::WideChar*)stream.getBuffer(), stream.getSize()/sizeof(VCF::WideChar) );
 
 				//create a string tokenizer, with the delimeter set to '\n'
 				StringTokenizer tok( fileNames, "\n");
@@ -289,14 +295,14 @@ public:
 				while ( tok.hasMoreElements() ) {
 					String fileName = tok.nextElement();
 					Dialog::showMessage( "onFileDestDropped got: " + fileName );
-				}	
+				}
 			}
 		}
 	}
 
 	/**
 	This handler will be called when an image is dragged over the image drop
-	target. 
+	target.
 	*/
 	void onImageDestDropped( DropTargetEvent* e ) {
 		DataObject* dataObj = e->getDataObject();
@@ -325,7 +331,7 @@ public:
 		}
 	}
 
-	
+
 };
 
 
@@ -340,11 +346,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new DragAndDropWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -352,12 +358,24 @@ public:
 
 
 int main(int argc, char *argv[])
-{	 
+{
 	Application* app = new DragAndDropApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:00  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.5  2004/04/29 03:40:53  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

@@ -169,7 +169,7 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				setting = strRoot;
 				pConfig->AddToolSettings( tool, setting, reserved );
 				
-				setting = "/DUSE_FRAMEWORK_DLL /DUSE_GRAPHICSKIT_DLL /DUSE_APPKIT_DLL";
+				setting = "/DUSE_FOUNDATIONKIT_DLL /DUSE_GRAPHICSKIT_DLL /DUSE_APPLICATIONKIT_DLL";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				pConfig->AddToolSettings( tool, setting, reserved );

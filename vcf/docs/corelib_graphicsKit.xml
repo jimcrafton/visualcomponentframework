@@ -58,38 +58,38 @@ NB: This software will not save the world.
 	
 	<section><title>Images</title>
 		<para>
-		An Image represents the neccessary data to display a graphic on a GraphicsContext. You 
-		can draw an Image on a GraphicsContext by calling the GraphicsContext::drawImage() 
-		method and passing in the Image instance.
+		An Image represents the neccessary data to display a graphic on a 
+		GraphicsContext. You can draw an Image on a GraphicsContext by calling the 
+		GraphicsContext::drawImage() method and passing in the Image instance.
 		</para>
 		<para>
-		An Image has a height and width, describing it's dimensions in pixels. It provides access
-		to it's pixel data through pointer to the pixel memory buffer. Each Image also has 
-		an internal GraphicsContext associated with it. Any drawing on the Image's GraphicsContext
-		is reflected in the Image's pixel data.
+		An Image has a height and width, describing it's dimensions in pixels. It 
+		provides access to it's pixel data through pointer to the pixel memory buffer.
+		Each Image also has an internal GraphicsContext associated with it. Any 
+		drawing on the Image's GraphicsContext is reflected in the Image's pixel data.
 		</para>
 		<para>
 		Each pixel is composed of 4 color channels (red, green, blue, and an alpha chanel). 
-		The precise	layout of the channels in memory is dependent on the system you are running on. 
-		For example in Win32, the layout is blue, green, red, alpha. On a linux machine (x86 
-		architecture) the layout is read, green, blue, alpha. The data size 
-		for each channel may vary from 8 to 32 bits. The default is 8 bits. The Image has a 
-		descriptor member that defines what the channel depth is, whether it is floating point,
-		or integer based, and the layout order. 
+		The precise	layout of the channels in memory is dependent on the system you 
+		are running on. For example in Win32, the layout is blue, green, red, alpha. On 
+		a linux machine (x86 architecture) the layout is read, green, blue, alpha. The 
+		data size for each channel may vary from 8 to 32 bits. The default is 8 bits. The 
+		Image has a descriptor member that defines what the channel depth is, whether it 
+		is floating point, or integer based, and the layout order. 
 		</para>
 		<para>
-		To actually get at the pixel data that makes up the Image class you get an pointer to the 
-		ImageBits class. This class is responsible for actually holding the raw bits that
-		make up the image. This class is a template class that can be specialized for various
-		kinds of data and pixel layout order. The default specialization is dependant on the 
-		platform you compile the VCF for. At a later date you'll be able to create Images
-		of any arbitrary pixel depth. 
-		To get the raw pixel data you call the ImageBits's getData() method
-		which returns a pointer to the pixel buffer. This buffer is seen as a unsigned char*.
+		To actually get at the pixel data that makes up the Image class you get an pointer 
+		to the ImageBits class. This class is responsible for actually holding the raw bits 
+		that make up the image. This class is a template class that can be specialized 
+		for various kinds of data and pixel layout order. The default specialization is 
+		dependant on the platform you compile the VCF for. At a later date you'll be able 
+		to create Images of any arbitrary pixel depth. To get the raw pixel data you call 
+		the ImageBits's getData() method which returns a pointer to the pixel buffer. This 
+		buffer is seen as a unsigned char*.
 		</para>
 		<para>
-		To work with pixel data in a neutral fashion use the RGBAVals structure. It represents 
-		a single pixel worth of image data. 
+		To work with pixel data in a neutral fashion use the RGBAVals structure. It 
+		represents a single pixel worth of image data. 
 		<programlisting>
 		<![CDATA[
 Image* image = //...get an image from somewhere
@@ -103,7 +103,8 @@ for ( ulong32 y=0;y<image->getHeight() ) {
 } 
 		]]>
 		</programlisting>
-		Value ranges for color channels that are integer based are 0 to 2<superscript>channel depth</superscript> .
+		Value ranges for color channels that are integer based are 0 to 2<superscript>
+		channel depth</superscript> .
 		Value ranges for color channels that are floating point based are 0.0 to 1.0.
 		</para>
 	</section>
@@ -308,23 +309,101 @@ gc->textAt( 12, 375, "Hello2!" );
 
 	<section><title>Paths</title>
 		<para>
-		Paths represent a series of 1 or more points. The points can form a closed shape or polygon, like a circle, or 
-		rectangle, or an open shape like a line. A Path is "closed" if it has more than one point and it's end point is 
-		equal to it's starting point.
+		Paths represent a series of 1 or more points. The points can form a closed shape 
+		or polygon, like a circle, or rectangle, or an open shape like a line. A Path is 
+		"closed" if it has more than one point and it's end point is equal to it's starting 
+		point.
 		</para>
 		<para>
-		A Path itself is not drawn. Instead you "stroke" or "fill" the path with an imaginary brush that paints on the 
-		GraphicsContext. The variopus sub classes of the Stroke and Fill classes are responsible for doing the actual painting.
+		A Path itself is not drawn. Instead you "stroke" or "fill" the path with an 
+		imaginary brush that paints on the GraphicsContext. The various sub classes of the 
+		Stroke and Fill classes are responsible for doing the actual painting.
 		</para>
 		<para>
-		A Path may be transformed, using matrix math and a 3X3 matrix. Basic transformations include scaling, rotating, shearing,
-		and translation.
+		A Path may be transformed, using matrix math and a 3X3 matrix. Basic transformations 
+		include scaling, rotating, shearing, and translation.
 		</para>
 		
 	</section>
 	<section><title>Image Loading</title>
 		<para>
+		VFC supports loading of almost every image type.  Image loading is handled via 
+		mime types.  The available image types are: PNG, JPEF, TIFF, KOALA, LBM, MNG, PCD, 
+		PCX, PNM, PSD, RAS, and TARGA. On Win32 systems BMP is also supported. Image types
+		other than BMP use the FreeImage library.
 		</para>
+					
+		<para>
+		In order to get access to the image loaders you must load the ImageFormats library.
+		This library is available as a dynamic and static link version. Loading the 
+		library as a dll on win32 platforms would be done as follows:
+		</para>
+		<programlisting>
+<![CDATA[
+#include "ImageFormatsSelectLib.h"
+
+...
+
+Library lib;
+		
+//load the library up. This library name can also be passed in to the
+//constructor of the Library instance
+//if the library doesn't exist or can't be found Library::load() will
+//throw an exception
+try {
+	String libName = "ImageFormats_" + _LIB_CPLVERNUM;
+	if( _DEBUG ){
+		libName +="_d.lib";
+	}
+	else
+		libName +=".lib";
+
+	lib.load( libName );
+		
+}
+catch(BasicException& e){
+}
+]]>
+		</programlisting>
+		<note>
+		On Win32 systems, if all the files you want to load or save 
+		are BMP files then the library need not be loaded. 
+		</note> <!--JC: you don't need to do anything else - the Win32IMage peer
+					takes care of laoding BMP images directly.-->
+		<para>
+		Once the lib is loaded, the ImageLoader for a mime type or
+		for a file can be acessed from one of these methods in 
+		GraphicToolit.
+		</para>
+<![CDATA[
+ImageLoader* GraphicsToolkit::getImageLoader( const String& contentType )
+
+ImageLoader* GraphicsToolkit::getImageLoaderForFileName( const String& fileName )
+]]>
+		<para>
+		Now we have the ImageLoader for the file type or mime type. There
+		are 3 methods in VFC::ImageLoader.
+		</para>
+		<para>
+		The loadImageFromFile() method loads the file. All image types can
+		be loaded. The signature of loadImageFromFile() is below:
+		</para>
+<![CDATA[
+		Image* loadImageFromFile( const String& fileName )
+]]>
+		<para>
+		Not all image formats can be saved.  The canSaveImage() method returns 
+		true if save is supported and false if not. If it returns true and
+		you need to save the image then call saveImageToFile() method.
+		</para>
+<![CDATA[
+		void saveImageToFile( const String& fileName, Image* image )
+]]>
+		<note> 
+		If saving is not supported and saveImageToFile is called no
+		exceptions will be thrown.  The saveImageToFile methods will be empty
+		in this case.
+		</note>
 	</section>
 	<section><title>Transforms</title>
 		<para>
@@ -345,6 +424,15 @@ gc->textAt( 12, 375, "Hello2!" );
 <!--
 CVS Log info
 $Log$
+Revision 1.3  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.2.4.2  2004/07/25 15:06:38  ddiego
+added a few minor corrections.
+
+Revision 1.2.4.1  2004/07/21 22:01:57  emonjay
+Added loding images and completed dialog section minus graphics.
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

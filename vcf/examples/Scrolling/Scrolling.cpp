@@ -1,9 +1,15 @@
 //Scrolling.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
-#include "graphics/EtchedBorder.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/EtchedBorder.h"
 
 using namespace VCF;
 
@@ -26,15 +32,15 @@ public:
 		addComponent( menuBar );
 
 		/**
-		create menu items, first arguemtn is the menu item name, 
-		then the parent, 
+		create menu items, first arguemtn is the menu item name,
+		then the parent,
 		then the owning menu bar
 		*/
 		MenuItem* fileMenu = new DefaultMenuItem( "File", menuBar->getRootMenuItem(), menuBar );
 		MenuItem* fileOpenImageMenu = new DefaultMenuItem( "Open Image...", fileMenu, menuBar );
 
 		//add our event handler to the menu item
-		fileOpenImageMenu->addMenuItemClickedHandler( 
+		fileOpenImageMenu->addMenuItemClickedHandler(
 			new MenuItemEventHandler<ScrollingWindow>( this,ScrollingWindow::openImage, "ScrollingWindow::openImage" ) );
 
 
@@ -44,7 +50,7 @@ public:
 		bdr->setStyle( GraphicsContext::etSunken );
 		setBorder( bdr );
 
-		//this is what gives us the capability to easily control the 
+		//this is what gives us the capability to easily control the
 		//scrollbars for the form window
 		scrollBarMgr_ = new ScrollbarManager();
 		scrollBarMgr_->setTarget( this );
@@ -83,14 +89,14 @@ public:
 				scrollable->getHorizontalScrollRects( NULL, &r );
 				panel_->setBounds( &r );
 			}
-		}	
+		}
 	}
 
 	virtual void paint( GraphicsContext* ctx ) {
-		Window::paint(ctx);		
+		Window::paint(ctx);
 
 		if ( NULL != currentImage_ ) {
-			
+
 			Rect viewBounds = ctx->getViewableBounds();
 
 			/**
@@ -98,11 +104,11 @@ public:
 			rect
 			*/
 			Rect imageRect(0,0,currentImage_->getWidth(),currentImage_->getHeight());
-			
+
 			Point imagePos;
 			imagePos = viewBounds.getTopLeft();
 
-			
+
 			//adjust the imagePos to be centered if neccessary
 			if ( viewBounds.getWidth() > imageRect.getWidth() ) {
 				imagePos.x_ = viewBounds.getWidth()/2.0 - imageRect.getWidth()/2.0;
@@ -113,7 +119,7 @@ public:
 			}
 
 
-			//adjust the rect to the bare minimum rect needed 
+			//adjust the rect to the bare minimum rect needed
 			imageRect.left_ = maxVal<>( 0.0,viewBounds.left_ );
 			imageRect.right_ = minVal<double>( currentImage_->getWidth(), viewBounds.right_ );
 
@@ -131,8 +137,8 @@ public:
 		std::vector< std::pair<String,String> > contentTypes;
 
 		/**
-		this will get a list of all current available types that 
-		can currently be loaded by the VCF. The list is a series 
+		this will get a list of all current available types that
+		can currently be loaded by the VCF. The list is a series
 		of std::pair objects. the std::pair.first element is a string
 		that represents the file extension, and the std::pair.second
 		represents a string that is the mime type for the extension
@@ -141,7 +147,7 @@ public:
 		std::vector< std::pair<String,String> >::iterator it = contentTypes.begin();
 
 		/*
-		For each type, add a new filter to the dialog 
+		For each type, add a new filter to the dialog
 		*/
 		while ( it != contentTypes.end() ) {
 			std::pair<String,String>& type = *it;
@@ -166,7 +172,7 @@ public:
 
 			FilePath fp = dlg.getFileName();
 			infoLabel_->setCaption( StringUtils::format( "Image: %s Size: %d, %d",
-															fp.getName(true).c_str(),
+															fp.getBaseName(true).c_str(),
 															currentImage_->getWidth(),
 															currentImage_->getHeight() ) );
 		}
@@ -191,11 +197,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ScrollingWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -208,8 +214,20 @@ int main(int argc, char *argv[])
 
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:36  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:56  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

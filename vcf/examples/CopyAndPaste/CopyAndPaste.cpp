@@ -1,8 +1,14 @@
 //CopyAndPaste.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 using namespace VCF;
 
@@ -24,7 +30,7 @@ public:
 		add( label );
 
 		/**
-		add our text control into which we'll enter text to be copied to 
+		add our text control into which we'll enter text to be copied to
 		the clipboard
 		*/
 		TextControl* edit = new TextControl();
@@ -44,9 +50,9 @@ public:
 		add( copyBtn );
 
 		//add the event handler
-		copyBtn->addButtonClickHandler( 
-			new ButtonEventHandler<CopyAndPasteWindow>( this, 
-														&CopyAndPasteWindow::onCopyClicked, 
+		copyBtn->addButtonClickHandler(
+			new ButtonEventHandler<CopyAndPasteWindow>( this,
+														&CopyAndPasteWindow::onCopyClicked,
 														"CopyAndPasteWindow::onCopyClicked" ) );
 
 
@@ -62,9 +68,9 @@ public:
 		add( pasteBtn );
 
 		//add the event handler
-		pasteBtn->addButtonClickHandler( 
-			new ButtonEventHandler<CopyAndPasteWindow>( this, 
-															&CopyAndPasteWindow::onPasteClicked, 
+		pasteBtn->addButtonClickHandler(
+			new ButtonEventHandler<CopyAndPasteWindow>( this,
+															&CopyAndPasteWindow::onPasteClicked,
 															"CopyAndPasteWindow::onPasteClicked" ) );
 
 		label = new Label();
@@ -73,7 +79,7 @@ public:
 		add( label );
 
 		/**
-		Add the text control into which any text from the clipboard will be copied into 
+		Add the text control into which any text from the clipboard will be copied into
 		*/
 		TextControl* edit2 = new TextControl();
 		edit2->setName( "edit2" );
@@ -106,7 +112,7 @@ public:
 		copy the text data into the clipboard
 		This now makes the data available to any application
 		(regardless of whether or not it is based on the VCF)
-		that makes use of the standard clipboard protocol for the 
+		that makes use of the standard clipboard protocol for the
 		native windowing system/OS.
 		*/
 		UIToolkit::getSystemClipboard()->copyTo( &textData );
@@ -114,13 +120,13 @@ public:
 
 
 	/**
-	This handler takes care of transferring the data from the clipboard to the 
+	This handler takes care of transferring the data from the clipboard to the
 	second edit control.
 	*/
 	void onPasteClicked( ButtonEvent* e ) {
-		
+
 		/**
-		get the system clipboard and paste any data from it that is of type 
+		get the system clipboard and paste any data from it that is of type
 		"text/plain"
 		*/
 		DataObject* dataObject = UIToolkit::getSystemClipboard()->pasteFrom( "text/plain" );
@@ -136,10 +142,12 @@ public:
 				String text;
 				//append the contents of the stream's buffer to the string
 				text.append( stream.getBuffer(), stream.getSize() );
-				
+
 				//set the text control model's text
 				edit2->getTextModel()->setText( text );
 			}
+
+			dataObject->free();
 		}
 	}
 
@@ -157,11 +165,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new CopyAndPasteWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -169,12 +177,27 @@ public:
 
 
 int main(int argc, char *argv[])
-{	 
+{
 	Application* app = new CopyAndPasteApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:46:57  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.6  2004/06/26 15:22:49  ddiego
+*fixes bug [ 978681 ] Copy past example busted
+*
+*Revision 1.3.2.5  2004/04/29 03:40:52  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

@@ -1,0 +1,961 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE  book  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+
+<book><title> XMake 2 </title>
+	<titleabbrev>XMake 2 </titleabbrev>
+
+	<bookinfo>
+		<legalnotice>
+			Blah blah blah
+		</legalnotice>
+
+		<author>
+			<firstname>Jim</firstname>
+			<surname>Crafton</surname>			
+		</author>
+
+		<copyright>
+			<year>2003</year>
+			<holder>Jim Crafton</holder>
+		</copyright>
+	</bookinfo>
+
+	<preface><title>Introduction</title>
+		<para>
+		Xmake is designed to offer a simple to read, yet reasonably 
+		complete alternative to make file syntax. It represents a redesign
+		of the syntax introduced with the first xmake, based on experience 
+		with using the previous syntax and attempts to resolve some
+		of it's limitations.
+		</para>
+		<para>
+		By simple to read, it is intended that anyone should be able to open
+		a an xmake makefile and pretty cleary understand what is being built,
+		what are dependencies, etc. Typically, with more tradional Makefile syntax,
+		this can be very difficult to determine or understand unless the reader
+		is a near expert at understanding traditional makefile syntax. In addition,
+		since the format is xml based, the potential for accidental errors, such
+		as forgetting to use a tab before the start of a rule, or accidentally adding
+		an extra carriage return is greatly reduced. Th down side, is that hte makefiles
+		become more verbose, but I think this is more than worth it, given that they
+		are easy to parse, and easy to read.
+		</para>
+	
+		<para> 
+		The basic syntax is based on the makefile's target, dependencies, rules concept. 
+		In other words, you have a target, you specify the dependencies for the target,
+		and then specify the rules neccessary to create the target. You can also specify
+		variables, import other makefiles, and specify config sections for common 
+		functionality in processing targets and dependencies.
+		</para>
+	</preface>
+	<chapter><title>Using xmake</title>
+		<section><title>The Basics</title>
+			<para>
+				The xmakefile is comprised of a series of targets and dependencies. A target 
+				is a specific "thing" to build. Each target has zero or more dependencies 
+				that are required to be processed to produce the target. Each target can 
+				have zero or more commands (or rules) that get executed. A target may have an output 
+				name that indicates that a succesful build of the target will create the 
+				indicated file. A target's output is the same as it's name if no output 
+				attribute is specified.
+			</para>
+			<para>
+				Each dependency of a target has a name. The name may refer to either another 
+				target (either defined previously, or later on in the makefile), or a file. 
+				If the dependency name satisfies neither condition an error occurs and the 
+				build will stop. A dependency that is not a target may have zero or more 
+				exec commands specified. A dependency may specify it's output if this makes 
+				sense. The existance of an output attribute for the dependency implies that
+				after executing all the commands associated with the dependency, a file will 
+				be created (or updated) with the name specified in the "output" attribute. 
+				If this file is not created an error results. A dependency's output is the 
+				same as it's name if no output attrbute is explicitly defined.
+			</para>
+			<para>
+				A dependency has an optional build attribute. By default it is true, but can 
+				be set to false, indicating that the dependency should be ignored. This can 
+				be useful if you have a target with a series of files (dependencies) that 
+				you'd like to group together, but not build all of them.</para>
+			<para>
+				A target is considered "built" if it meets the following conditions:
+				<itemizedlist>
+					<listitem>
+					All of it's dependencies are "built".
+					</listitem>
+					
+					<listitem>
+					If the target specifies an output, then that output must exist.
+					</listitem>
+					
+					<listitem>
+					If the output exists, it's file date must be the same or newer than any 
+					output file specified by any of the dependencies.
+					</listitem>					
+				</itemizedlist>
+			</para>
+			<para>
+				A dependency is considered "built" if it meets the following conditions:
+				<itemizedlist>
+					<listitem>
+					If the dependency specifies a target then the rules for a target apply 
+					(see above)
+					</listitem>
+					
+					<listitem>
+					If a dependency is a file and an output is specified then the output
+					must be the same date or newer than the file date. Additionally, for
+					certain file types (like .c, .cpp etc), if xmake determines the file
+					has implicit depedencies, all the implicit depencencies dates must be
+					older or equal to the file's date.
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				A target or dependency that is not built will have it's commands executed,
+				in the order they were defined. Any command that does not succesully return
+				from execution will cause the build to stop. By default, a successful command
+				is one that returns 0, but you can control the value that is used to indicate 
+				success by defining a a success attribute and setting it to some appropriate 
+				value.
+			</para>
+			
+			<para>
+				All of this	is roughly analgous to the more traditional makefiles targets, 
+				dependencies, and rules. To see how this compares, lets look at an example:
+				
+				<screen>
+traditional Makefile
+				<![CDATA[
+target: dependency1 dependency2 dependency3
+	rule1
+	rule2
+				]]>
+xmake makefile
+				<![CDATA[
+<target>
+	<dependsOn>
+		<dependency name="dependency1"/>
+		<dependency name="dependency2"/>
+		<dependency name="dependency3"/>
+	</dependsOn>
+	<exec command="rule1"/>
+	<exec command="rule2"/>
+</target>
+				]]>
+				</screen>
+				Obviously the xmake file is much more verbose. However, a newbie can come
+				along and, more often than not, immediately understand what is going on in 
+				the xmake file, whereas, unless they have some experience with make and 
+				makefiles they may not understand the makefile. This is particularly true 
+				with larger makefiles, especially those that make use of the various built 
+				in variables and rather cryptic ways of substitutions and wild cards. 
+				While this makes for less typing it quickly becomes unreadable to anyone
+				but a make expert, and is difficult to for tools to parse without all the
+				logic of a makefile parser.
+			</para>
+			<para>
+			We've seen that each target can have one or more dependencies. Like makefiles, 
+			each dependency can itself be a target. For example, in a traditional makefile:
+			<screen>
+			<![CDATA[
+target1 : dependency1
+	rule1
+
+
+
+target2 : target1 dependency2
+	rule2
+			]]>
+			</screen>
+			So, target2 has 2 dependencies: "target1", and "dependency2". The dependency
+			"target1" is actually itself a target, and has a single dependency called
+			"dependency1". While more verbose, notating this with xmake is quite simple:
+			<screen>
+			<![CDATA[
+<target name="target1">
+	<dependsOn>
+		<dependency name="dependency1">
+			<exec command="rule1"/>
+		</dependency>	
+	</dependsOn>
+</target>
+
+<target name="target2">
+	<dependsOn>
+		<dependency name="target1"/>
+		<dependency name="dependency2"/>
+	</dependsOn>
+	<exec command="rule2"/>
+</target>				
+			]]>
+			</screen>
+			</para>
+			
+			<para>
+			Lets look at and analyze another example:
+			<screen>
+			<![CDATA[
+<target name="test" output="test.exe">
+	<dependsOn>
+		<dependency name="test.obj"/>
+	</dependsOn>
+	<exec command="g++ -o test.exe test.obj"/>
+</target>
+
+<target name="test.obj">
+	<dependsOn>
+		<dependency name="test.cpp"/>
+	</dependsOn>
+	<exec command="g++ -o test.obj -c test.cpp"/>
+</target>
+			]]>			
+			</screen>
+			</para>
+			<para>
+			This defines 2 targets called "test", whose output is "test.exe" found in 
+			whatever the current directory is, and "test.obj". The "test" target has a 
+			single dependency named "test.obj". Since no output is specied for the "test.obj" 
+			dependency, it's output	defaults to "test.obj". The "test.obj" target in turn
+			has a single dependency named "test.cpp".
+			</para>
+			<para> 
+			To build the default target (the first target in the file, which in this case is 
+			the target named "test"), we need to build "test.obj". To build target "test.obj"
+			we need to build "test.cpp". Since the dependency "test.cpp" has no commands (or rules)
+			associated with it, we proceed to the "test.obj"'s commands. There is only one, which
+			tells us that the line "g++ -o test.obj -c test.cpp" will get executed in the current
+			system shell. If this is successful, we'll end up with the file "test.obj" in our
+			current directory. Now that we have the dependency for "test" built, we can go and 
+			run the commands for the "test" target, which tells us that the line 
+			"g++ -o test.exe test.obj" will get executed. If this is successful, we will then
+			end up with a file called "test.exe" in our current directory, and will have completed
+			the build for target "test".
+			</para>
+			<para>
+			During the dependency scan, one thing xmake gives us for free is checking headers.
+			If "test.cpp" includes any headers, and xmake can determine that any of those headers
+			have changed, it will mark the dependency as needing to be built.
+			</para>
+			<para>
+			Now lets change things a bit and modify where the file is output.
+			<screen>
+			<![CDATA[
+<target name="test" output="debug/test.exe">
+	<dependsOn>
+		<dependency name="test.obj"/>
+	</dependsOn>
+	<exec command="g++ -o debug/test.exe debug/test.obj"/>
+</target>
+
+<target name="test.obj" output="debug/test.obj">
+	<dependsOn>
+		<dependency name="test.cpp"/>
+	</dependsOn>
+	<exec command="g++ -o debug/test.obj -c test.cpp"/>
+</target>			
+			]]>
+			</screen>
+			</para>			
+			<para>
+			Same things happen as before, but note the output changes. The "test" target now outputs
+			to "debug/test.exe", and the "test.obj" target is output to "debug/test.obj".
+			xmake will automatically create these directories for you, so that's one less
+			thing you'll have to worry about. Note that in changing the output attribute
+			you must also change the commands you execute so that the file is output
+			correctly. 
+			</para>
+		</section>
+		<section><title>Running from the command line</title>
+			<section><title>General usage</title>
+				<para>
+				To build the following examples from the command line, simply copy and paste
+				the text into a file and save it as "makefile.xml". Save it in the same directory
+				that "test.cpp" is found. 
+				</para>
+				<para>
+				cd to this directory and type:
+				<screen>
+xmake 			
+				</screen>
+				</para>
+				
+				<para>			
+				And you should see xmake run and build your makefile.			
+				</para>
+				<para>
+				To list all the known targets, try:
+				<screen>	
+xmake -listtargets			
+				</screen>
+				xmake should list the targets in the makefile.
+				</para>
+				<para>
+				To specify a different makefile to use, try copying makefile.xml to 
+				test.xml, and then type:
+				<screen>
+xmake -f test.xml
+				</screen>
+				</para>
+			</section>
+			<section><title>Specifying targets</title>
+				<para>
+				By default, if you don't specify a target, the first
+				target encountered in the xmake makefile, becomes the 
+				target to build. Using the example
+				</para>
+				<para>
+				To build a specific target run xmake as normal, and use the -target 
+				option to tell xmake which target to build. For example:
+				<screen>
+xmake -target "test.obj"				
+				</screen>
+				This will build the "test.obj" target and any of it's dependencies. 
+				We could also do the same thing and specify a makefile to use as well:
+				<screen>
+xmake -f test.xml -target "test.obj"				
+				</screen>
+				or
+				<screen>
+xmake -target "test.obj" -f test.xml
+				</screen>				
+				</para>
+			</section>
+			<section><title>Micellaneous</title>
+				<para>
+					To clean output files created as a result of the build process
+					use the -clean option. 
+					<screen>
+xmake -clean 					
+					</screen>
+					You can specify a target (and it's dependencies) to clean like so:
+					<screen>
+xmake -clean -target "test.obj"					
+					</screen>
+				</para>
+			</section>
+			<section><title>Creating an xmake makefile</title>
+				<para>
+				You can use xmake to create a default xmake file for you. Then
+				all you have to fill in are the dependencies. You can even feed
+				in a file listing and xmake will populate the dependencies from that!
+				</para>
+				<para>
+				To create a simple template, type this:
+				<screen>
+xmake -new -configtype "VC6 Debug" -project "myproj"
+				</screen>
+				This will create a simple makefile.xml and popuplate with a default 
+				project and config for the Visual C++ 6.0 toolchain. You can create 
+				the following configuration types (specifying "-configtype type):
+				<itemizedlist>
+					<listitem>
+					"VC6 Debug" - a Visual C++ 6.0 toolchain using debug options
+					</listitem>
+					
+					<listitem>
+					"VC6 Release" - a Visual C++ 6.0 toolchain using release options
+					</listitem>
+					
+					<listitem>
+					"GCC Debug" - a GCC toolchain using debug options
+					</listitem>
+					
+					<listitem>
+					"GCC Release" - a GCC toolchain using release options
+					</listitem>
+				</itemizedlist>									
+				</para>
+				<para>
+				You can control the makefile name like so:
+				<screen>
+xmake -new -configtype "GCC Debug" -project "myproj" -f myproj.xml
+				</screen>
+				</para>
+				
+				<para>
+				You can control the target name by specifying the -target option,
+				like so:
+				<screen>
+xmake -new -configtype "GCC Debug" -project "myproj" -target "myproj.exe"
+				</screen>				
+				</para>
+				<para>
+				To populate the dependencies from a file listing, create another
+				file with each file name separated by a CRLF. Then pass in the
+				name of the file listing to xmake using the -filelisting option.
+				Our example will create the file listing using the Unix find command:
+				<screen>
+find test/ -name *.cpp > files.out
+xmake -new -configtype "GCC Debug" -project "myproj" -target "myproj.exe" -filelisting file.out
+				</screen>
+				In our example, the files.out had the following contents:
+				<screen>
+test/pt1.cpp
+test/pt2.cpp
+test/test.cpp				
+				</screen>
+				After running xmake, we end with something like this:
+				<screen>
+				<![CDATA[
+<!--Autogenerated xmake makefile for project myproj
+-->
+
+
+<config name="GCC Debug">
+	<!-- un-comment this out if you want to add
+	custom include paths for this configuration.
+		<include path=""/>
+	-->
+
+	<!-- compiler tool -->
+	<tool id="cc" name="g++" type=".cc;.cpp;.cxx">
+		<flags value="-o $(dependency.output) -g -I ./ -D _DEBUG -c "/>
+		<exec command="g++ -o $(dependency.output) -g -I ./ -D _DEBUG -c  $(dependency.name) "/>
+	</tool>
+
+	<!-- linker tool -->
+	<tool id="link" name="g++" >
+		<flags value="-o "/>
+		<exec command="g++ -o  $(target.output) $(dependsOn.children.output) "/>
+	</tool>
+</config>
+
+
+<project name="myproj" >
+	<dependsOn>
+		<!-- place a dependency entry here where the
+		dependency is another project that must be built
+		before this project. The form is:
+			<dependency name="name_of_some_project"/>
+		-->
+	</dependsOn>
+
+
+	<!--put your project's targets here.-->
+	<target name="myproj.exe" tool="link" config="GCC Debug">
+		<dependsOn>
+		<!-- put the projects source files here -->
+			<dependency name="test/pt1.cpp" output="test/Objs/pt1.o" />
+			<dependency name="test/pt2.cpp" output="test/Objs/pt2.o" />
+			<dependency name="test/test.cpp" output="test/Objs/test.o" />
+		</dependsOn>
+	</target>
+</project>
+				]]>				
+				</screen>
+				We can build it like so:
+				<screen>
+xmake -config "GCC Debug"				
+				</screen>
+				</para>
+			</section>
+		</section>
+	</chapter>
+	<chapter><title>Imports</title>
+		<para> 
+			The import tag will import a file - the contents of the file
+			are simply inserted where ever the import takes place,
+			and inserted as is - <emphasis>no</emphasis> processing on the data 
+			will happen. All imports are resolved at the beginning of the xmake
+			parsing process, so you can reference variables in the makefile
+			that is doing the importing, so long as the variables are defined at 
+			some point in one of the imported files. Imported files can themselves
+			contain import tags.
+		</para>
+		<para>
+			An import tag looks like this:
+			<screen>
+			<![CDATA[
+<import file="filename"/>
+			]]>
+			</screen>
+			The file attribute can be an absolute or relative file name. You can 
+			have any valid xmake syntax in the file. 
+		</para>
+	</chapter>
+	<chapter><title>Variables</title>		
+		<section><title>User Defined Variables</title>
+			<para>
+				A variable is a name that is used to represent some value. 
+				The name gets expanded when the xmakefile is parsed.
+				A variables scope is file wide. 
+				The variable can hereafter be refered to as $(name of the variable).
+				variable names may <emphasis>not</emphasis> have spaces, valid characters are:
+				[A-Z,a-z,0-9,_,-, ' ',]. The name must start with alphanumeric character.
+				Variables are optional. For example:
+				<screen>
+				<![CDATA[
+<variable name="MyProg" value="c:\My Programs\MyProgram.exe"/>
+				]]>
+				</screen>
+				To refer to this variable, you use $(MyProg). 
+			</para>
+		</section>
+		<section><title>Environment Variables</title>
+			<para>
+				In addition to user variables, you can refer to any environment
+				variable using the $("name of env variable"). For example, assuming
+				you had an environment variable call FOOBAR="baz", you could use
+				<screen>
+$(FOOBAR)				
+				</screen>
+				to refer to it.				
+			</para>
+		</section>
+		<section><title>Automatic Variables</title>
+			<para>
+			There are certain variables that you can use automatically
+			without having to define them via the <![CDATA[<variable>]]> tag. These 
+			variables represent existing nodes and can be referred to 
+			with the following syntax:
+			<itemizedlist>
+				<listitem>
+				<para>
+				<screen>
+				<![CDATA[	
+ $(<node tag name>.<attribute name>) ]]>
+				 </screen>
+			for example if you had:
+				 <screen>
+				<![CDATA[
+<dependency name="foo" output="foo.o">
+	... rest of xml	]]>
+				 </screen>
+			you could refer to the dependency node named "foo" from any child 
+			node of "foo" like so: 
+				<screen>
+				<![CDATA[
+$(dependency.output) ]]>
+				 </screen>
+			which would resolve to "foo.o". For example:
+				<screen>
+				<![CDATA[
+<dependency name="foo.c" output="foo.o">
+	<exec command="g++ -o $(dependency.output) -c $(dependency.name) "/>
+</dependency>   ]]>
+				</screen>
+				</para>
+				</listitem>
+				
+				<listitem>
+				<para>
+				<screen>
+				<![CDATA[
+ $(<node name attribute>.<attribute name>)	]]>
+				</screen>
+				For example:
+				<screen>
+				<![CDATA[				
+<target name="foobar">
+	<dependsOn>
+		<dependency name="foo.c" output="foo.o"/>
+		<dependency name="baz.c" output="baz.o"/>
+	</dependsOn>
+	<exec command="g++ -o $(target.output) $(foo.output) $(baz.output) "/>
+</target>			]]>
+				</screen>
+				The exec command for target "foobar" references the dependency nodes
+				"foo" and "baz" by name. Dependency nodes can only be referred to 
+				this way if they are children of the target. Target A cannot refer 
+				to target B's dependencies (for now).
+				</para>
+				</listitem>
+			</itemizedlist>
+			</para>
+			<para>
+			For a more complete example:
+			<screen>
+			<![CDATA[			
+<target name="Cheese" output="libCheese.a">
+	<dependsOn>
+		<dependency name="american.c" output="american.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>	
+		
+		<dependency name="bleu.c" output="bleu.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+		
+		<dependency name="gorgonzola.c" output="gorgonzola.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+	</dependsOn>
+	
+	<exec command="ar -cru $(target.output) $(dependsOn.children.output)"/>
+</target>
+
+<target name="foobar">
+	<dependsOn>
+		<dependency name="foo.c" output="foo.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+		<dependency name="baz.c" output="baz.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+	</dependsOn>
+	<exec command="gcc -o $(target.output) $(Cheese.output) $(foo.c.output) $(baz.c.output) "/>
+</target>		]]>
+			</screen>
+			Target Cheese has three dependencies, american.c, bleu.c, and gorgonzola.c. 
+			Each dependency has a an exec command that builds the dependency's output 
+			file via the gcc compiler. The Cheese target has an exec command that builds 
+			it's lib via the ar command. Note how it uses the "dependsOn.children.output" 
+			variable. This will combine the value of the specified attribute of each 
+			child node of the dependsOn tag. In our example this would result in the 
+			string "american.o bleu.o gorgonzola.o". Also note how target "foobar" 
+			references the target Cheese's output in it's exec command.
+			</para>
+			<para>
+			Variable members that are usable are:
+			<itemizedlist>
+				<listitem>
+					<para>
+					target | (target name)
+					<itemizedlist>
+						<listitem>
+						name - value of the target node's "name" attribute
+						</listitem>
+						<listitem>
+						output - value of the target node's "output" attribute
+						</listitem>
+					</itemizedlist>
+					</para>		
+				</listitem>
+				
+				<listitem>
+					<para>
+					dependency | (dependency name)
+					<itemizedlist>
+						<listitem>
+						name - value of the dependency node's "name" attribute
+						</listitem>
+						<listitem>
+						output - value of the dependency node's "output" attribute
+						</listitem>
+					</itemizedlist>
+					</para>
+				</listitem>
+				
+				<listitem>				
+					<para>
+					dependsOn
+					<itemizedlist>
+						<listitem>
+						children.name - a value that represents each child's 
+						"name" attribute separated by a space
+						</listitem>
+						
+						<listitem>
+						children.output - a value that represents each child's 
+						"output" attribute separated by a space
+						</listitem>
+					</itemizedlist>						
+					</para>
+				</listitem>	
+			</itemizedlist>
+			</para>
+		</section>
+	</chapter>
+	<chapter><title>Configurations</title>
+		<section><title>Config basics</title>
+			<para>
+			Configurations are used to make it easier to write larger, more complex
+			makefiles, by allowing you to associate a specific set of tools with 
+			a specific configuration. For example, on a Win32 platform you might associate
+			the Visual C++ compiler and linker with a particular configuration,
+			while assigning the GCC compiler and linker to another configuration. You could
+			then build a makefile using a specific configuration and automatically use 
+			the correct tools for that configuration!
+			</para>
+			<para>
+			A <![CDATA[<config>]]> tag specifies a specific configuration to
+			use to build a target or dependency. Configurations specify a series of 
+			one or more tools to use to build a dependency of some sort (for example, 
+			the name of the C++ compiler to use to build a .cpp file). Each tool may be 
+			associated with a dependency in one of two ways. 
+			<itemizedlist>
+				<listitem>
+				By the file extension of the dependency
+				</listitem>
+				
+				<listitem>
+				By the dependency explicitly referring to the tool by id 
+				(thus the reason for the tool's "id" attribute).
+				</listitem>
+			</itemizedlist>			
+			</para>
+			<para>
+			Each configuration can have one or more tools defined within it. Each 
+			config must have a name defined for it. A dependency or target may be 
+			explicitly linked with a particular config by defining a config attribute 
+			and setting it equal to the name value of an existing config. For example:
+			<screen>
+				<![CDATA[
+<config name="VC6">
+...more definitions
+</config>
+
+<target name="blah" config="VC6">
+...more definitions
+</target>				
+				]]>
+			</screen>
+			Doing this means that the target will only get built if the current
+			config is VC6. The current config, by default, is "", or non existant,
+			and is specified via the 
+			<screen><![CDATA[ -config <config name> ]]> </screen>
+			command line parameter.
+			Specifying a config is optional, but if one is *not* specified, then any 
+			target or dependency that <emphasis>does</emphasis> specify a config 
+			will <emphasis>not</emphasis> get built.
+			</para>
+			<para>
+			This means that you can also specify a target with a whole series of 
+			dependency files, and control which files get used by having the 
+			various dependencies refer to a particular config name.
+			For example:
+			<screen>
+				<![CDATA[
+<config name="VC6">
+...more definitiions
+</config>
+
+<config name="gcc">
+...more definitiions
+</config>
+
+<target name="blah" >
+	<dependsOn>
+		<dependency "main.cpp"/>
+		<dependency "win32_code.cpp" config="VC6"/>
+		<dependency "gcc_code.cpp" config="gcc"/>
+		<dependency "common_code.cpp" config="gcc;VC6"/>
+	</dependsOn>
+</target>				
+				]]>
+			</screen>				
+			if we specify -config "VC6" at the command line, the following will happen:
+			<itemizedlist>
+				<listitem>
+				since no target is specified, the first target found is used, which in 
+				this case is "blah".
+				</listitem>
+				
+				<listitem>
+				Since dependency "main.cpp" has no config it will be built.
+				</listitem>
+				
+				<listitem>
+				Since depenedency "win32_code.cpp" *does* specify a config, and 
+				it matches what was specified at the command line ("VC6"), then it 
+				too will get built.
+				</listitem>
+				
+				<listitem>
+				Dependency "gcc_code.cpp" will <emphasis>not</emphasis> get built, as 
+				it specifies a config other than that specied by the command line.
+				</listitem>
+				
+				<listitem>
+				Dependency "common_code.cpp" will get built since it specifies 2 
+				config's (using the ";" to separate the config names), and one of 
+				them matches the command line specified config.
+				</listitem>
+			</itemizedlist>				
+			</para>
+			<para>
+			Dependencies and targets may refer to the config's tool as an 
+			automatic variable. For example:
+			<screen>
+				<![CDATA[
+<config name="gcc">
+	<tool id="cc" name="gcc">
+		...additional stuff
+	</tool>
+</config>
+
+<target name="blah" >
+	<dependsOn>
+		<dependency "main.cpp" tool="cc">		
+			<exec command="$(tool.name) -c $(dependency.name)"/>
+		</dependency>
+	</dependsOn>
+</target>
+				]]>
+			</screen>
+			Reasons for doing this might be to use the same tool as the config specifies
+			but use some custom flags for the tool, such as  for compiling precompiled 
+			headers.
+			</para>
+		</section>
+		<section><title>Tools</title>
+			<para>
+			As mentioned earlier, each config can have a series of tools, each of which 
+			can be associated with a particular dependency either explicitly or implicitly.
+			A tool can be associated explicitly with a dependency by having the dependency
+			refer to it by name. A tool can be associated implicitly by defining a series of 
+			file extensions that the tool works with.
+			</para>
+			
+			<para>
+			To cause the tool to be used according to the dependency's file
+			type, the tool must identify the type of file it will work work
+			with. The type is identified by a string with one or more file 
+			extensions separated by a ";" (semi-colon). For example ".cpp;.cc;.cxx" 
+			would be a valid type that would associate any dependency whose name 
+			had an extension of any of the three types listed.
+			</para>
+			
+			<para>
+			A tool can be expliticly used by putting a tool attribute in the 
+			dependency. The value of the tool should be the same as the 
+			tool's id attribute. For example:
+			<screen>
+			<![CDATA[
+<tool id="cc">
+... further tags
+</tool>
+
+<dependency name="foo.cx" tool="cc"/>
+			]]>
+			</screen>
+			This will cause the building of "foo.cx" to use the "cc" tool
+			whose id is "cc".
+			</para>
+			<para>
+			A dependency that has an associate with a tool, either implicity
+			(through the file extension of the dependency) or explicitly
+			by notating the id of the tool to use, does not need to define
+			an "exec" tag. Execution of the tool (using the tool's 
+			name as the program to invoke) will happen automatically for you.
+			The tool's program will be invoked in the following default manner: 
+			the program name, followed by the tool's flags, followed by the 
+			name of the dependency.
+			</para>
+			<para>
+			For finer grained control, you can put an exec tag in the tool
+			declaration, precisely describing how to execute the tool.
+			</para>
+			
+			<para>
+			Both the exec tag and the flags tag have access to the following
+			automatic variables:
+			
+			<itemizedlist>
+				<listitem>
+				dependency
+				</listitem>
+				
+				<listitem>
+				target
+				</listitem>
+				
+				<listitem>
+				flags
+				</listitem>
+			</itemizedlist>
+			</para>
+			
+			<para>
+			The depency and target variable may *only* be referred to in their
+			generic form - i.e. you can use $(dependency.name) but <emphasis>not</emphasis>
+			$(foo.name). In other words, you can't reference targets or dependencies
+			by name, as the point of a config is to be used generically over a series
+			of targets or dependencies.
+			</para>
+			<para>
+			The tool has the following attributes:
+			<itemizedlist>
+				<listitem>	
+				The "name" attribute
+				<para>Specifies the command line tool name, such as "g++" or "cl.exe".
+				</para>
+				<para>Required</para>
+				</listitem>
+				
+				<listitem>
+				The id attribute
+				<para>Specifies a short form the tool - can be 
+				[A-Z,a-z,0-9,_]. The name must start with alphanumeric character.
+				</para>
+				<para>Required </para>
+				</listitem>
+				
+				<listitem>
+				The type attribute
+				<para>Specifies one or more extensions to use to associate the
+				tool with a dependency. You can have a single extension like ".rc",
+				or multiple extensions, each separated by a ";" character like
+				".cpp;.cc;.cxx".
+				</para>
+				<para>Optional </para>
+				</listitem>
+			</itemizedlist>	
+			</para>	
+			<para>
+			The flags child(s) lists the set of arguments that will
+			get passed to the tool program. You can have more than 1, but
+			you msut have at least 1. The value attribute of the flags
+			represents the actual arguments. You can refer to the automatic
+			variables as defined above. This is a required tag.
+			</para>
+			<para>
+			The exec tag is optional, and can be used to control how the tool
+			program is called.
+			</para>
+			<para>
+			For an example:
+			<screen>
+			<![CDATA[
+<config name="">
+	<tool id="" name="" type="" >
+		<flags value=""/>
+		<exec command=""/>
+	</tool>
+</config>			
+			]]>
+			</screen>
+			</para>
+			<para>
+			For a more complete example:
+			<screen>
+			<![CDATA[
+<config name="gcc-debug">
+	<tool name="g++" id="cc" type=".cc;.cpp;.cxx">
+		<flags value="-g -c"/>		
+		<exec command="g++ -o $(dependency.output) -g -c $(dependency.name)"/>
+	</tool>
+
+	<tool name="ar" id="static-lib-linker" type=".a">
+		<flags value="-cru"/>		
+		<exec command="ar -cru $(target.output) $(dependsOn.children.output)"/>
+	</tool>
+
+	<tool name="g++" id="exe-linker" >
+		<flags value="-g"/>
+		<exec command="g++ -o $(target.output) $(dependsOn.children.output)"/>
+	</tool>
+</config>
+
+<target name="test1.exe" tool="exe-linker">
+	<dependsOn>
+		<dependency name="test1.cpp" output="test1.debug.o"/>
+	</dependsOn>
+</target>			
+			]]>
+			</screen>
+			Notice how smaller our depends section has become. All we have to do is specify
+			a file name and output name and xmake will do the rest of the work of 
+			associating the tools with the output. To build this, simply type:
+			<screen>
+xmake -config "gcc-debug"		
+			</screen>
+			</para>
+		</section>
+	</chapter>
+	<chapter><title>Projects</title>
+	</chapter>
+</book>

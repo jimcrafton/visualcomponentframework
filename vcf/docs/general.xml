@@ -28,27 +28,30 @@ NB: This software will not save the world.
 <chapter><title>General</title>
 	<section><title>Features</title>
 		<para>
-		The VCF features an easy to use programming API and class hierarchy. Below is a list briefly describing the key 
-		features in the framework.
+		The VCF features an easy to use programming API and class hierarchy. Below
+		 is a list briefly describing the key features in the framework.
 		</para>
 		<itemizedlist>
 				<listitem><para>
-				Modern C++ design - use of modern C++ techniques like exceptions, templates 
-				(where useful), name spaces, and heavy use of the Standard Template Library.
+				Modern C++ design - use of modern C++ techniques like exceptions, 
+				templates (where useful), name spaces, and heavy use of the Standard 
+				Template Library.
 				</para></listitem>
 				
 				<listitem><para>
-				Modular - built across several libraries as opposed to one huge monolithic 
-				library that then becomes difficult to break apart. This means that while 
-				the VCF is incredibly powerful as a framework for writing GUI based applications, 
-				if you just want to use the core features, such as threads, file IO, and RTTI 
-				you can do so, with out having to have dependencies on all the GUI code. 
+				Modular - built across several libraries as opposed to one huge 
+				monolithic library that then becomes difficult to break apart. 
+				This means that while the VCF is incredibly powerful as a framework 
+				for writing GUI based applications, if you just want to use the 
+				core features, such as threads, file IO, and RTTI you can do so, 
+				with out having to have dependencies on all the GUI code. 
 				</para></listitem>
 				
 				<listitem><para>
-				Support for Thread, Mutexes, Semaphores, Files, Streaming data, error logging, 
-				string utility functions, and other basic services. All of this is part of 
-				the FoundationKit and has no dependencies on the graphics or UI code.
+				Support for Thread, Mutexes, Semaphores, Files, Streaming data, 
+				error logging, string utility functions, and other basic services. 
+				All of this is part of the FoundationKit and has no dependencies 
+				on the graphics or UI code.
 				</para></listitem>
 				
 				<listitem><para>
@@ -60,36 +63,41 @@ NB: This software will not save the world.
 				</para></listitem>
 				
 				<listitem><para>
-				Memory leak detection in debug mode for catching VCF::Object derived classes that have not been 
-				freed. This can be turned completely off in debug by recompiling the libraries. 
+				Memory leak detection in debug mode for catching VCF::Object derived 
+				classes that have not been freed. This can be turned completely off 
+				in debug by recompiling the libraries. 
 				</para></listitem>
 				
 				<listitem><para>
-				Easy to use, and powerful event system, suitable for console as well as GUI based applications. 
+				Easy to use, and powerful event system, suitable for console as 
+				well as GUI based applications. 
 				</para></listitem>
 				
 				<listitem><para>
-				Graphics classes for easily drawing on a graphics context, as well as working with images. This 
-				includes easily manipulating things like the current color, pen and brush attributes, and 
-				current transformation matrix. 
+				Graphics classes for easily drawing on a graphics context, as well 
+				as working with images. This includes easily manipulating things 
+				like the current color, pen and brush attributes, and current 
+				transformation matrix. 
 				</para></listitem>
 				
 				<listitem><para>
 				A simple image-loading architecture that allows multiple formats 
 				to be registered for loading up a variety of different graphics 
-				formats. On Win32 systems the default image loading support is limited 
-				to BMP files, but by using the ImageFormats library (also a part of the 
-				VCF) a wide variety of additional image types are also supported. 
-				Currently the ImageFormats library uses FreeImage to support a image 
-				types such as .TIFF, .TGA, .PSD, .PNG, .PCX, .SGI, .MNG, .RAS, .PBM, 
-				.PPM, and many others. 
+				formats. On Win32 systems the default image loading support is 
+				limited to BMP files, but by using the ImageFormats library 
+				(also a part of the VCF) a wide variety of additional image types 
+				are also supported. Currently the ImageFormats library uses 
+				<ulink url="http://freeimage.sourceforge.net">FreeImage</ulink> 
+				to support a image types such as .TIFF, .TGA, .PSD, .PNG, .PCX, 
+				.SGI, .MNG, .RAS, .PBM, .PPM, and many others. 
 				</para></listitem>
 				
 				<listitem><para>
-				More advanced classes for customizing the drawing process with application 
-				defined behaviors. Advanced features also icnlude support for anti-aliased 
-				vector graphics through the use the <ulink url="http://antigrain.com/">Anti 
-				Grain Graphics libraries</ulink>.
+				More advanced classes for customizing the drawing process with 
+				application defined behaviors. Advanced features also include 
+				support for anti-aliased vector graphics through the use the 
+				<ulink url="http://antigrain.com/">Anti Grain Graphics 
+				libraries</ulink>.
 				</para></listitem>
 				
 				<listitem><para>
@@ -115,46 +123,52 @@ NB: This software will not save the world.
 				
 				<listitem><para>
 				GUI controls that support both alignment and anchoring. Any control 
-				may be aligned to the top, bottom, left or right of it's parent container 
-				control.  Alternately controls may use their anchoring properties to 
-				anchor themselves to the left, right, top and/or bottom sides of their 
-				parent container control. 
+				may be aligned to the top, bottom, left or right of it's parent 
+				container control.  Alternately controls may use their anchoring 
+				properties to anchor themselves to the left, right, top and/or 
+				bottom sides of their parent container control. 
 				</para></listitem>
 				
 				<listitem><para>
-				The GUI provides a set of Model and View classes for using in MVC patterns. A series of models 
-				like the ListModel, TreeModel, and  TextModel are used in controls to provide separation of the data 
-				from the UI presentation code. Because a View can be dynamically attached to a Control at runtime, 
-				it will be possible to develop "themes" in the future. 
+				The GUI provides a set of Model and View classes for using in MVC 
+				patterns. A series of models like the ListModel, TreeModel, and  
+				TextModel are used in controls to provide separation of the data 
+				from the UI presentation code. Because a View can be dynamically 
+				attached to a Control at runtime, it will be possible to develop 
+				"themes" in the future. 
 				</para></listitem>
 				
 				<listitem><para>
-				Because of the RTTI features and the event handlers, the VCF easily supports component programming. 
-				Objects can easily register event handlers with other object in the system at runtime, without knowing the 
-				specifics of each other.
+				Because of the RTTI features and the event handlers, the VCF easily 
+				supports component programming. Objects can easily register event 
+				handlers with other object in the system at runtime, without knowing 
+				the specifics of each other.
 				</para></listitem>
 				
 				<listitem><para>
-				As much as possible, VCF tries to be as flexible as possible, allowing you to use the parts you want, 
-				and allowing for interoperability with other frameworks. Thus VCF controls can be used inside of an 
-				MFC app if you like. 
+				As much as possible, VCF tries to be as flexible as possible, allowing 
+				you to use the parts you want, and allowing for interoperability with 
+				other frameworks. Thus VCF controls can be used inside of an MFC app 
+				if you like. 
 				</para></listitem>
 				
 				<listitem><para>
-				No need of special preprocessor tools - if you have a reasonably complete C++ compiler then you're 
-				all set to go.
+				No need of special preprocessor tools - if you have a reasonably 
+				complete C++ compiler then you're all set to go.
 				</para></listitem>
 				
 				<listitem><para>
-				Heavy use of the Standard Template Library throughout the VCF, as well as templates, that make 
-				up the RTTI extensions the VCF implements.
+				Heavy use of the Standard Template Library throughout the VCF, as well 
+				as templates, that make up the RTTI extensions the VCF implements.
 				</para></listitem>
 				
 				<listitem><para>
-				Ability to access the low level handles for most native objects. For example, by accessing the 
-				Thread's peer class, you can get a handle to the native thread handle itself. For a control, you can 
-				access the control's peer and get a handle id that represents the windowing systems native handle for 
-				a window/widget. This allows you to use platform specific calls when neccessary.
+				Ability to access the low level handles for most native objects. For 
+				example, by accessing the Thread's peer class, you can get a handle 
+				to the native thread handle itself. For a control, you can access 
+				the control's peer and get a handle id that represents the windowing 
+				systems native handle for a window/widget. This allows you to use 
+				platform specific calls when neccessary.
 				</para></listitem>					
 		</itemizedlist>			
 	</section>
@@ -168,93 +182,137 @@ NB: This software will not save the world.
 		These are the required tools if you want to build the VCF.
 		</para>
 		<para>
-		The tools you need depend on the platform you plan to work on, in the following list.
+		The tools you need depend on the platform you plan to work on, in the 
+		following list.
 		</para>
 		<itemizedlist>
 			<listitem>
 				<para>Win32</para>
 				<para>
-					For this platform the preferred compiler is currently the Microsoft Visual C++ 6 compiler with 
-					Service Pack 5 applied. Microft Visual C++ 7 also works but some setting may be slightly different
-					or found in different places than described in the documentation.
+					For this platform the preferred compiler is currently the Microsoft 
+					Visual C++ 6 compiler with Service Pack 5 applied. Microft Visual C++ 7 
+					also works but some setting may be slightly different or found in 
+					different places than described in the documentation.
 				</para>
-			</listitem>					
-			<listitem>
-				<para>Linux</para>
 				<para>
-					The linux port requires the GCC toolchain be installed in order to build the 
-					VCF from source. The VCF has been found to compile with versions of 
-					GCC including 2.95, 3.1, 3.2, and teh most recent 3.3 release (the 3.3 is 
-					reccommended).
-					In addition, the GraphicsKit and ApplicationKit require the presence of 
-					GTK 2.x shared libraries and headers and whatever dependencies that entails.
+					Currently the support compilers for the Win32 platform are:
+					<itemizedlist>
+						<listitem>
+							Microsoft Visual C++ 6 (service pack 5 or better preferred).
+						</listitem>
+						<listitem>
+							Microsoft Visual C++ 7.0.
+						</listitem>
+						<listitem>
+							Microsoft Visual C++ 7.1.
+						</listitem>
+						<listitem>
+							Intels C/C++ compiler version 7 (using Visual Studio 6).
+						</listitem>
+						<listitem>
+							Borland C++ 6
+						</listitem>
+					</itemizedlist>
 				</para>
 			</listitem>
 			<listitem>
 				<para>MacOSX</para>
 				<para>The MacOSX port currently uses the Apple Developer Tools that 
-				come with OSX.</para>	
+				come with OSX. The supported OS versions are:
+				<itemizedlist>
+						<listitem>
+							Mac OSX 10.2, using Project Builder.
+						</listitem>
+						<listitem>
+							Mac OSX 10.3, using XCode.
+						</listitem>
+					</itemizedlist>
+				</para>
+					
 			</listitem>
-			<listitem>???</listitem>
+			
+			<listitem>
+				<para>Linux</para>
+				<para>
+					The linux port requires the GCC toolchain be installed in order 
+					to build the VCF from source. The VCF has been found to compile 
+					with versions of GCC including 2.95, 3.1, 3.2, and the most recent 
+					3.3 release (the 3.3 is reccommended). In addition, the GraphicsKit 
+					and ApplicationKit require the presence of GTK 2.x shared libraries 
+					and headers and whatever dependencies that entails.
+				</para>
+			</listitem>			
 		</itemizedlist>
 	</section>
 
 	<section><title>Installing the VCF</title>
 		<section><title>For Win32 systems</title>
 		<formalpara><title>Using the VCF Installer</title>
-		You can install the VCF in a number of ways. The simplest way to install on a "clean" system, is to simply download the 
-		VCF Installer from <ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">Source Forge</ulink>, save the
-		appropriate file to your hard drive, run it, and Voila! you are ready to rock and roll! 
-		</formalpara>
-		<note><title>Installer currently broken</title>
-			<para>
-			The VCF Installer is currently broken and is not being offered at the moment
-			</para>
-		</note>
+		You can install the VCF in a number of ways. The simplest way to install on a 
+		"clean" system, is to simply download the VCF Installer from 
+		<ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">Source Forge</ulink>, 
+		save the appropriate file to your hard drive, run it, and Voila! you are ready to 
+		rock and roll! 
+		</formalpara>		
 		<formalpara><title>Install from a source archive</title>
-		The more complex way is to pull down the latest cvs tar.gz file (again, you can get that from 
-		<ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">Source Forge</ulink>) and uncompress 
-		it somewhere on you hardrive. Once you have done this you'll need to set up some environment variables, which are as 
-		follows: 
+		The more complex way is to pull down the latest cvs tar.gz file (again, you can 
+		get that from 
+		<ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">Source Forge</ulink>) 
+		and uncompress it somewhere on you hardrive. Once you have done this you'll need 
+		to set up some environment variables, which are as follows: 
 		</formalpara>
 		<itemizedlist>
 			<listitem><para>
-				VCF_BIN : this should point to the bin under the root where you installed the VCF. For example, on my 
-				machine it resolves to "d:\code\vcf\bin". 
+				VCF_BIN : this should point to the bin under the root where you installed the 
+				VCF. For example, on my machine it resolves to "d:\code\vcf\bin". 
 			</para></listitem>
 			<listitem><para>
-				VCF_INCLUDE : this should point to the include directory under the same VCF root mentioned earlier. 
-				Once again (as an example), on my machine this resolves to "d:\code\vcf\include" 
+				VCF_INCLUDE : this should point to the include directory under the same VCF 
+				root mentioned earlier. Once again (as an example), on my machine this 
+				resolves to "d:\code\vcf\src".
 			</para></listitem>
 			<listitem><para>
-				VCF_LIB : this should point to the lib directory under the same VCF root mentioned earlier. Once again 
-				(as an example), on my machine this resolves to "d:\code\vcf\lib". 
+				VCF_LIB : this should point to the lib directory under the same VCF root 
+				mentioned earlier. Once again (as an example), on my machine this resolves 
+				to "d:\code\vcf\lib". 
 			</para></listitem>
 		</itemizedlist>
 		<para>
-		Once you have this done you can open up the projects in Microsoft Visual Studio and build the various 
-		workspaces (.dsw files).
+		Once you have this done you can open up the projects in Microsoft Visual Studio and build 
+		the various workspaces (.dsw files).
 		</para>
 		
+		
 		<formalpara><title>Install via CVS access</title>
-		The most "advanced" way is to connect to cvs and pull down either the latest stable version or the latest 
-		development version. There are instructions on SourceForge detailing 
-		<ulink url="http://sourceforge.net/cvs/?group_id=6796">how to do this</ulink>. 
+		The most "advanced" way is to connect to cvs and pull down either the latest stable 
+		version or the latest development version. There are instructions on SourceForge 
+		detailing <ulink url="http://sourceforge.net/cvs/?group_id=6796">how to do this</ulink>. 
 		<note><title>Anonymous vs. developer cvs access</title>
 			<para>
-			if you download the VCF via anonymous CVS access, and then, realizing it is the greatest thing since 
-			sliced bread and toasted crumpets, you decide to join the project (hint, hint), you will need to either delete 
-			the directory where you currently have the VCF, or pull it down with cvs to a different directory.
+			if you download the VCF via anonymous CVS access, and then, realizing it is the 
+			greatest thing since sliced bread and toasted crumpets, you decide to join the 
+			project (hint, hint), you will need to either delete the directory where you 
+			currently have the VCF, or pull it down with cvs to a different directory.
 			</para>
 			<para>
-			The problem that arises is that you will be unable to check-in anything, despite having joined the project and 
-			received write access to the cvs repository. I think this is because cvs thinks you are still "anonymous" and 
-			you have no write access for an anonymous user. 
+			The problem that arises is that you will be unable to check-in anything, despite 
+			having joined the project and received write access to the cvs repository. I 
+			think this is because cvs thinks you are still "anonymous" and you have no write 
+			access for an anonymous user. 
 			</para>
 		</note>
 		</formalpara>
 		<para>
-		Once you have pulled down the code with cvs repeat the steps above for environment variables.
+		Once you have pulled down the code with cvs repeat the steps above for environment 
+		variables.
+		</para>
+		</section>
+		<section><title>For Mac OSX systems</title>
+		<para>
+		Currently you need to connect to cvs and pull down either the latest 
+		stable version or the latest development version. There are instructions on 
+		SourceForge detailing <ulink url="http://sourceforge.net/cvs/?group_id=6796">
+		how to do this</ulink>. 		
 		</para>
 		</section>
 		<section><title>For Linux systems</title>
@@ -264,144 +322,301 @@ NB: This software will not save the world.
 
 	<section><title>Building the VCF</title>
 		<para>
-		Building the VCF is easy. This assumes that you have downloaded it and, if necessary, set up any environment 
-		variables. The following sections will discuss building the VCF on specific platforms.
+		Building the VCF is easy. This assumes that you have downloaded it and, if necessary, 
+		set up any environment variables. The following sections will discuss building the 
+		VCF on specific platforms.
 		</para>
 		<section><title>VCF Tools</title>
-		</section>
-		<section><title>Win32</title>
-			<para>
-			Required tools:				
-			</para>
-			<para>
-			Microsoft Visual C++ 6.x
-			</para>
-			<para>
-			The first thing you'll want to is build the various add-ins for Developer Studio. Open the main workspace 
-			found in vcf/build/vc60/add-ins/all.dsw. Build the "Win32 Release" configuration, making sure that the "all" project is 
-			the current active project. This should build the VCF New Class add-in, plus project wizards VCFLibraryAppWizard, 
-			VPLAppWiz, VCFConsoleWiz, and VCFAppWiz. To verify that these were correctly built go to "File | New..." and 
-			click on the "Projects" tab and you should see something like the following:
-			</para>
-			<screenshot>
-				<graphic fileref="gfx/addins_verify.png"></graphic>
-			</screenshot>
-			<para>
-			The red circle indicates the various new Application Wizards that you should see.
-			</para>
-			<para>
-			Once this is done you should build the VCF framework itself. Open the vcf/build/vc60/vcfAll.dsw workspace. 
-			This workspace has all the various framework projects, both as static .lib files and DLL projects. To build all the
-			DLL projects select the "vcfAll" project and make it the active project. Building this project will automatically 
-			build the FoundationKit, GraphicsKit, ApplicationKit, NetworkKit, and RemoteObjectKit. To build all the core 
-			static libraries select the "vcfAllStaticLibs" project and make it the active project. 
-			</para>
-			<para>
-			There are several additional projects you can build as well for additional features.
-			</para>
-			<itemizedlist>
-				<listitem><para>
+			<section><title>Microsoft Visual C++ 6</title>				
 				<para>
-				The ImageFormats project, which adds support for a wide variety of image formats by using the 
-				<ulink url="http://www.6ixsoft.com/">FreeImage library</ulink>. Build this if you would like to add this support 
-				to your project.
+				The first thing you'll want to is build the various add-ins for 
+				Developer Studio. Open the main workspace found in vcf/build/vc60/add-ins/all.dsw. 
+				Build the "Win32 Release" configuration, making sure that the "all" 
+				project is the current active project. This should build the 
+				VCF New Class add-in, plus project wizards VCFLibraryAppWizard, 
+				VPLAppWiz, VCFConsoleWiz, and VCFAppWiz. To verify that these were 
+				correctly built go to "File | New..." and click on the "Projects" 
+				tab and you should see something like the following:
 				</para>
-				</para></listitem>
-				<listitem><para>
+				<screenshot>
+					<graphic fileref="gfx/addins_verify.png"></graphic>
+				</screenshot>
 				<para>
-				The Win32HTMLBrowser (and Win32HTMLBrowser_StaticLib) project, for an HTML browser peer 
-				(currently implemented using the Internet Explorer IWebBrowser COM interface, though experiments have been done 
-				using the Gecko component from mozilla.  
+				The red circle indicates the various new Application Wizards that you should see.
 				</para>
-				</para></listitem>
-			</itemizedlist>
-			<para>
-			The build will take a bit, so now would be a good time for coffee, tea, or perhaps reading some Dostoevsky...
-			</para>
-			<para>
-			Once the build is finished you are ready to go ! All binaries will be put in the vcf/bin directory when built.
-			</para>		
-		</section>
-		<section><title>Linux</title>
-			<para>
-			Currently the Linux port is in progress and these instructions may change,
-			but here are the current steps to build, as of November 3, 2003.
-			</para>
-			<para>For Linux systemsFor Linux systems
-			First make sure you have GTK (at least version 2.2). Most recent linux distributions include this
-			by default, so you probably have it. An easy test would be to try the following:
-<programlisting>
-echo `pkg-config gtk+-2.0 --cflags`
-</programlisting>
-			You should see some sort GCC compiler flags - if you get back error messages 
-			like:
-<programlisting>
-pkg-config: command not found
-</programlisting>
-			Then you don't have the pkg-config system installed (and almost certainly not 
-			GTK which depends on pkg-config). If you see something like:
-<programlisting>
-Package gtk+-2.0 was not found in the pkg-config search path.
-Perhaps you should add the directory containing `gtk+-2.0.pc'
-to the PKG_CONFIG_PATH environment variable
-No package 'gtk+-2.0' found
-</programlisting>
-			Then you have the pkg-config tool, but probably not gtk installed (or not installed correctly).
-			</para>
-			<para>For more information about GTK and installing it go 
-			<ulink url="http://developer.gnome.org/doc/API/2.2/gtk/gtk-building.html"> here</ulink>.
-			</para>
-			<para>
-			Once you have confirmed you have (or installed) GTK, go to the vcf/build/make 
-			directory. Type 
-			<programlisting>make debug</programlisting>
-			for a debug version of the libraries, or 
-			<programlisting>make release</programlisting>
-			for an optimized, release version of the libraries. To build both release
-			and debug targets, type:
-			<programlisting>make all</programlisting>
-			</para>
-			<para>
-			The .a library files will be output to the vcf/lib directory, while the 
-			.so shared libraries will be output to the vcf/bin directory. To ensure 
-			programs can load these up you may need to add the vcf/bin path to your 
-			LD_LIBRARY_PATH. In the future this may change to correctly using the -rpath
-			option to ld when linking.
-			</para>
-			<para>
-			There is currently no install target. This needs to be addressed in the very near future! 
-			Presumably, you can just copy the .so's in the vcf/bin directory into /usr/local/lib.
-			</para>
-		</section>
-		<section><title>MacOSX</title>
-		<para>
-		</para>
-		</section>
+			</section>		
+			<section><title>Microsoft Visual C++ 7/7.1</title>				
+				<para>
+				The first thing you'll want to is build the various add-ins for 
+				Developer Studio. 
+				</para>
+				<para>
+				Someone needs to fill in the rest of this...
+				</para>
+				<screenshot>
+					<graphic fileref="gfx/insert-some-vc7-screenshot-here.png"></graphic>
+				</screenshot>
+				<para>
+				The red circle indicates the various new Application Wizards that you should see.
+				</para>
+			</section>
+			<section><title>Apple XCode 1.2</title>
+				<para>
+				This will explain how to install the project templates that come 
+				with the VCF so	that you can create VCF enabled applications easily 
+				from within XCode.
+				</para>
+				<para>
+				Create a "VCF" directory in your 
+				/Library/Application Support/Apple/Developer Tools/Project Templates/ 
+				directory. Then copy all the directories in the 
+				vcf/build/xcode/Project Templates/ directory to the new VCF directory 
+				you created. Yous should end up with something like this:
+				<graphic fileref="gfx/vcf-xcode-templates.png"></graphic>
+				</para>
+				Now when you select the "File > New Project..." menu item in XCode, 
+				you should see the new project templates in the New Project dialog:
+				<graphic fileref="gfx/vcf-xcode-proj-templates.png"></graphic>
+			</section>
+		</section>		
+		<section><title>Building the VCF Libraries</title>
+			<section><title>Win32</title>
+				<formalpara><title>Microsoft Visual C++ 6</title>
+				The following section deals with build the VCF libraries using the Microsoft 
+				Visual C++ 6 IDE.
+				</formalpara>
+				<para>
+				To build the VCF open the vcf/build/vc60/vcfAllProjects.dsw workspace. 
+				This workspace has all the various framework projects, both as 
+				static .lib files and DLL projects. To build all the VCF libraries select 
+				the "vcfAllLibs" project and make it the active project. Building this 
+				project will automatically build the FoundationKit, GraphicsKit, 
+				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+				just the static libraries, build the "vcfAllStaticLibs" project. To
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
+				</para>
+				<para>
+				There are several additional projects you can build as well for additional 
+				features.
+				</para>
+				<itemizedlist>
+					<listitem><para>
+					<para>
+					The ImageFormats project, which adds support for a wide variety of 
+					image formats by using the <ulink url="http://freeimage.sourceforge.net/">FreeImage 
+					library</ulink>. Build this if you would like to add this support to your 
+					project.
+					</para>
+					</para></listitem>
+					<listitem><para>
+					<para>
+					The Win32HTMLBrowser (and Win32HTMLBrowser_StaticLib) project, for an 
+					HTML browser peer (currently implemented using the Internet Explorer 
+					IWebBrowser COM interface, though experiments have been done 
+					using the Gecko component from mozilla).  
+					</para>
+					</para></listitem>
+				</itemizedlist>
+				<para>
+				The build will take a bit, so now would be a good time for coffee, tea, or 
+				perhaps reading some Dostoevsky...
+				</para>
+				<para>
+				Once the build is finished you are ready to go ! All binaries will be put 
+				in the vcf/bin directory when built.
+				</para>
+	
+				<formalpara><title>Microsoft Visual C++ 7.0</title>
+				The following section deals with build the VCF libraries using the Microsoft 
+				Visual C++ 7.0 IDE.
+				</formalpara>
+				<para>
+				To build the VCF open the vcf/build/vc70/vcfAllProjects.dsw workspace. 
+				This workspace has all the various framework projects, both as 
+				static .lib files and DLL projects. Visual Studio should prompt
+				you to convert the Visual C++ 6 projects into the new Visual Studio 7 
+				format. Click the "Yes to All" option, and all the projects should then
+				get converted. To build all the VCF libraries select 
+				the "vcfAllLibs" project and make it the active project. Building this 
+				project will automatically build the FoundationKit, GraphicsKit, 
+				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+				just the static libraries, build the "vcfAllStaticLibs" project. To
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
+				</para>
+				
+				<formalpara><title>Microsoft Visual C++ 7.1</title>
+				The following section deals with build the VCF libraries using the Microsoft 
+				Visual C++ 7.0 IDE.
+				</formalpara>
+				<para>
+				To build the VCF open the vcf/build/vc71/vcfAllProjects.dsw workspace. 
+				This workspace has all the various framework projects, both as 
+				static .lib files and DLL projects. Visual Studio should prompt
+				you to convert the Visual C++ 6 projects into the new Visual Studio 7.1 
+				format. Click the "Yes to All" option, and all the projects should then
+				get converted. To build all the VCF libraries select 
+				the "vcfAllLibs" project and make it the active project. Building this 
+				project will automatically build the FoundationKit, GraphicsKit, 
+				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+				just the static libraries, build the "vcfAllStaticLibs" project. To
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
+				</para>
+				
+				<formalpara><title>Microsoft Visual C++ 6 using the Intel C/C++ compiler</title>
+				The following section deals with build the VCF libraries using the Microsoft 
+				Visual C++ 7.0 IDE with the Intel C/C++ compiler installed.
+				</formalpara>
+				<para>
+				To build the VCF open the vcf/build/icl7/vcfAllProjects.dsw workspace. 
+				This workspace has all the various framework projects, both as 
+				static .lib files and DLL projects. To build all the VCF libraries select 
+				the "vcfAllLibs" project and make it the active project. Building this 
+				project will automatically build the FoundationKit, GraphicsKit, 
+				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+				just the static libraries, build the "vcfAllStaticLibs" project. To
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
+				</para>
+			</section>
+			
+			<section><title>MacOSX</title>
+				<para>
+				The VCF currently requires OSX 10.2 or better, preferably 10.3. 
+				There are projects supplied for both Project Builder, and XCode. 
+				You can download the VCF from SourceForge via cvs (see the 
+				instructions getting the VCF via CVS). 
+				</para>
+				<para>
+				Once you have downloaded the code you need to make a few environment 
+				configurations. Currently the projects depend on having the 
+				environment	variables VCF_INCLUDE, VCF_BIN, and VCF_LIB defined. This 
+				will go away in the near future but for now please define them. To 
+				define environment variables in OSX create a ".MacOSX" directory under 
+				you home directory. Create a file called "environment.plist" under the 
+				.MacOSX directory like so:
+				<programlisting>
+				cd ~
+				mkdir .MacOSX
+				touch .MacOSX/environment.plist
+				open .MacOSX/environment.plist
+				</programlisting>
+				This will open the environment.plist in the Property List Editor. Add 
+				the variables VCF_INCLUDE, VCF_BIN, and VCF_LIB, with VCF_INCLUDE set 
+				to "&lt;vcf root&gt;/include", VCF_BIN set to "&lt;vcf root&gt;/bin", 
+				and VCF_LIB set to "&lt;vcf root&gt;/lib". You can see an example 
+				below:
+				<graphic fileref="gfx/mac-env-vars.png"> 
+				</graphic>
+				You may have to logout and log back in to get the environment variables 
+				to take effect.
+				</para>
+				<para>
+				Now you should be ready to open the VCF in XCode or Project Builder. For 
+				Xcode open the vcf/build/xcode/vcfAllProjects.pbproj project. For Project
+				Builder open the vcf/build/osx-pb/vcfAllProjects.pbproj project. There are
+				"release" and "debug" targets provided. This was done because we had 
+				problems understanding how to work with the whole development/deployment 
+				builds. In the future this will almost certainly change.
+				</para>
+				<para>
+				Each of the "kits" of the VCF are built as Frameworks under Mac OSX. Thus
+				if you have an application you'd like to add VCF support to, you just need to
+				add the appropriate VCF framework kit, such as FoundationKit.framework, 
+				GraphicsKit.framework, or ApplicationKit.framework.
+				</para>
+			</section>
+			
+			<section><title>Linux</title>
+				<para>
+				Currently the Linux port is in progress and these instructions may change,
+				but here are the current steps to build, as of November 3, 2003.
+				</para>
+				<para>For Linux systemsFor Linux systems
+				First make sure you have GTK (at least version 2.2). Most recent linux 
+				distributions include this by default, so you probably have it. An easy 
+				test would be to try the following:
+	<programlisting>
+	echo `pkg-config gtk+-2.0 --cflags`
+	</programlisting>
+				You should see some sort GCC compiler flags - if you get back error messages 
+				like:
+	<programlisting>
+	pkg-config: command not found
+	</programlisting>
+				Then you don't have the pkg-config system installed (and almost certainly not 
+				GTK which depends on pkg-config). If you see something like:
+	<programlisting>
+	Package gtk+-2.0 was not found in the pkg-config search path.
+	Perhaps you should add the directory containing `gtk+-2.0.pc'
+	to the PKG_CONFIG_PATH environment variable
+	No package 'gtk+-2.0' found
+	</programlisting>
+				Then you have the pkg-config tool, but probably not gtk installed (or not 
+				installed correctly).
+				</para>
+				<para>For more information about GTK and installing it go 
+				<ulink url="http://developer.gnome.org/doc/API/2.2/gtk/gtk-building.html"> 
+				here</ulink>.
+				</para>
+				<para>
+				Once you have confirmed you have (or installed) GTK, go to the 
+				vcf/build/make directory. Type 
+				<programlisting>make debug</programlisting>
+				for a debug version of the libraries, or 
+				<programlisting>make release</programlisting>
+				for an optimized, release version of the libraries. To build both release
+				and debug targets, type:
+				<programlisting>make all</programlisting>
+				</para>
+				<para>
+				The .a library files will be output to the vcf/lib directory, while the 
+				.so shared libraries will be output to the vcf/bin directory. To ensure 
+				programs can load these up you may need to add the vcf/bin path to your 
+				LD_LIBRARY_PATH. In the future this may change to correctly using the -rpath
+				option to ld when linking.
+				</para>
+				<para>
+				There is currently no install target. This needs to be addressed in the 
+				very near future! Presumably, you can just copy the .so's in the vcf/bin 
+				directory into /usr/local/lib.
+				</para>
+			</section>
+			
+		</section>		
 	</section>		
 	
 	<section><title>Contributing</title>
 		<section><title>Registering at SF</title>
 		<para>
-		Interested in contributing to the VCF project ? Great ! First you need to become a member of Source Forge. Source 
-		Forge membership is free, and only takes a minute to fill out the web form. It is a requirement for participating in any 
+		Interested in contributing to the VCF project ? Great ! First you need to become a 
+		member of Source Forge. SourceForge membership is free, and only takes a minute to 
+		fill out the web form. It is a requirement for participating in any 
 		Source Forge sponsored project, like the VCF. You can join at the Source Forge 
 			<ulink url="http://sourceforge.net/account/register.php">New User page</ulink>.
 		</para>
 		<para>
-		Next, you need to email me, and let me know to add you to the project. It usually takes a day or so for your Source Forge 
-		account to become activated,  so keep that in mind. If your a developer, you'll be added with read/write privileges to the CVS 
+		Next, you need to email me, and let me know to add you to the project. It usually 
+		takes a day or so for your Source Forge account to become activated,  so keep that 
+		in mind. If your a developer, you'll be added with read/write privileges to the CVS 
 		source tree. 
 		</para>
 		</section>
 		<section><title>Setting up CVS</title>
 			<para>
-			Once all of this is done, all you have to do is setup your machine to use CVS and SSH. CVS and SSH are must have tools, 
-			without these you'll not be able to check source code in or out from CVS, which is the standard version control program used 
-			by all Source Forge projects. You can get both of these tools from a variety of places, including the VCF Installer, as well as 
-			a smaller installer on the project that only installs CVS and SSH, and also configures your system to use them ( you can get 
-			this installer here). For documentation on how to use SSH on your Win32 system, Source Forge has some great articles, as 
-			well as some specific stuff just for Win32 (here, and here). There are some things you'll need to check for to make sure CVS 
-			and SSH will work together correctly so please verify the following: 
+			Once all of this is done, all you have to do is setup your machine to use CVS 
+			and SSH. CVS and SSH are must have tools, without these you'll not be able to 
+			check source code in or out from CVS, which is the standard version control 
+			program used by all Source Forge projects. You can get both of these tools 
+			from a variety of places, including the VCF Installer, as well as 
+			a smaller installer on the project that only installs CVS and SSH, 
+			and also configures your system to use them ( you can get this installer 
+			here). For documentation on how to use SSH on your Win32 system, SourceForge 
+			has some great articles, as well as some specific stuff just for Win32 
+			(here, and here). There are some things you'll need to check for to make 
+			sure CVS and SSH will work together correctly so please verify the following: 
 			<itemizedlist>
 				<listitem><para>
 				You'll need a CVSROOT variable that equals 
@@ -418,20 +633,22 @@ No package 'gtk+-2.0' found
 		
 		<section><title>Developing in the main VCF source tree</title>
 			<para>
-			When developing in the VCF proper you need to be aware that there are at least two branches 
-			in CVS at any given time. There will be a dev branch for adding new features etc. Until this new 
-			set of features is tested and ready it will stay separate from the main branch, which should 
-			contain relatively stable code. When you are working on implementing these new features you 
-			should be working in this development branch, NOT the main branch. The main branch is only for 
-			checking in bug fixes for reported bugs on it. This allows people to download a stable branch, 
-			rather than pulling something down that is in a continuous state of flux.
+			When developing in the VCF proper you need to be aware that there are
+			at least two branches in CVS at any given time. There will be a dev 
+			branch for adding new features etc. Until this new set of features is 
+			tested and ready it will stay separate from the main branch, which should 
+			contain relatively stable code. When you are working on implementing these 
+			new features you should be working in this development branch, NOT the 
+			main branch. The main branch is only for checking in bug fixes for reported 
+			bugs on it. This allows people to download a stable branch, rather than 
+			pulling something down that is in a continuous state of flux.
 			</para>
 			<para>
-			As a developer you need to be aware of this and make sure that you are checking out the 
-			correct version. Please see this for instructions on how to access branches in CVS trees. For 
-			further help look at the 
-			<ulink url="http://www.cvshome.org/docs/manual/cvs.html">cvshome.org</ulink> pages 
-			for more detailed information on using cvs.
+			As a developer you need to be aware of this and make sure that you 
+			are checking out the correct version. Please see this for instructions 
+			on how to access branches in CVS trees. For further help look at the 
+			<ulink url="http://www.cvshome.org/docs/manual/cvs.html">cvshome.org</ulink> 
+			pages for more detailed information on using cvs.
 			</para>
 			<para>
 			The recommended procedure is the following:
@@ -452,42 +669,49 @@ vcfcode/
 			</screen>
 			</para>
 			<para>
-			This gives you a stable release directory to work on for bug fixing, and another directory to work on for new 
-			development code that may be unstable or untested and is not yet ready to go into the main branch.
+			This gives you a stable release directory to work on for bug fixing, 
+			and another directory to work on for new development code that may be 
+			unstable or untested and is not yet ready to go into the main branch.
 			</para>
 		</section>
 	</section>
 	<section><title>Standards</title>
 			<para>
-			Please read the naming standards documentation before you start changing all sorts of things. These standards must be followed 
-			for any code that gets entered into the main VCF development tree. 
+			Please read the naming standards documentation before you start changing 
+			all sorts of things. These standards must be followed for any code 
+			that gets entered into the main VCF development tree. 
 			</para>
 			<para>
-			To get familiar with things build the VCF if you haven't already done so, and then check out some of the tests and example code in 
-			the vcf/tests directory.  
+			To get familiar with things build the VCF if you haven't already done so, 
+			and then check out some of the example code in the vcf/examples 
+			directory.  
 			</para>
 			<para>
 			If you're unsure where to go next, try taking a look at the 
-			<ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=106796">bug list</ulink> or 
-			<ulink url="http://sourceforge.net/pm/?group_id=6796">tasks list</ulink> at the project page. Also feel free to contact me for 
-			more information.  
+			<ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=106796">bug list</ulink> 
+			or <ulink url="http://sourceforge.net/pm/?group_id=6796">tasks list</ulink> 
+			at the project page. Also feel free to contact anyone on the project or
+			stop by the project <ulink url="http://vcf.sourceforge.net/forums">forums</ulink>
+			for more information.  
 			</para>
 		<section><title>Coding and Naming Standards</title>
 			<para>
-			The following <indexterm><primary>standards</primary></indexterm> are setup here to attempt to increase the readability of the VCF source code.  
-			Developers interested working on the framework proper, must adhere to these guidelines. 
-			Any questions regarding this, please email me. 
+			The following <indexterm><primary>standards</primary></indexterm> are 
+			setup here to attempt to increase the readability of the VCF source code.  
+			Developers interested working on the framework proper, must adhere to 
+			these guidelines. Any questions regarding this, please email me. 
 			<note>
-			Much of this is rehashed from naming standards used on other projects, so there is nothing new here, 
-			and tries to use as much common sense as possible.  Folks who are familiar with Borland's Delphi, 
-			Sun's Java, or (gasp...) Microsoft's .NET naming conventions will probably recognize a great deal 
-			here. 
+			Much of this is rehashed from naming standards used on other projects, so 
+			there is nothing new here, and tries to use as much common sense as possible.  
+			Folks who are familiar with Borland's Delphi, Sun's Java, or (gasp...) 
+			Microsoft's .NET naming conventions will probably recognize a great deal here. 
 			</note>
 			</para>
 			
 			<para>
-			As a general rule, please do <emphasis>not</emphasis> use Hungarian notation at all in any code that is in the main VCF 
-			development tree.
+			Do <emphasis>not</emphasis> use Hungarian notation at all in any code that 
+			is in the main VCF development tree. Code submitted like this will be removed
+			or ignored (if submitted as a patch).
 			</para>
 			<formalpara><title>Capitalization Styles</title>					
 			</formalpara>
@@ -512,7 +736,8 @@ FileStream
 			</programlisting>
 			</para>
 			<para>
-			The following table indicates which styles are used for the various types/identifiers.
+			The following table indicates which styles are used for the various 
+			types/identifiers.
 			<table frame="none" pgwide="1">
 				<tgroup cols="3" align="left" colsep="1" rowsep="1">
 					<thead>
@@ -583,23 +808,23 @@ FileStream
 			
 			<formalpara><title>Class naming</title></formalpara>					
 			<para>
-			Classes should be named with nouns or noun phrases, with more or less abstraction 
-			in the name depending on it's usage. For example, a common base class for describing 
-			objects that represent bananas, apples and oranges might be Fruit, with a class called 
-			Banana deriving from Fruit. 
+			Classes should be named with nouns or noun phrases, with more or less 
+			abstraction in the name depending on it's usage. For example, a common 
+			base class for describing objects that represent bananas, apples and 
+			oranges might be Fruit, with a class called Banana deriving from Fruit. 
 			<itemizedlist>
 				<listitem><para>
 				Pascal casing
 				</para></listitem>
 				
 				<listitem><para>
-				No prefixes, like "C", or "vcf" or whatever. If you really need a prefix 
-				then you probably need the class inside of a namespace. 
+				No prefixes, like "C", or "vcf" or whatever. If you really need a 
+				prefix then you probably need the class inside of a namespace. 
 				</para></listitem>
 				
 				<listitem><para>
-				Keep away from abbreviations if at all possible. Common ones like IO, or UI are 
-				OK, but please use sparingly.
+				Keep away from abbreviations if at all possible. Common ones like 
+				IO, or UI are OK, but please use sparingly.
 				</para></listitem>
 				
 				<listitem><para>
@@ -619,9 +844,9 @@ Control
 			</para>
 			<formalpara><title>Enumerated values</title></formalpara>
 			<para>
-			Enumerated values should have a descriptive name of what the value represents. The 
-			value names should use a prefix that is an acronym of the upper case characters of the 
-			enumeration type.
+			Enumerated values should have a descriptive name of what the value 
+			represents. The value names should use a prefix that is an acronym 
+			of the upper case characters of the enumeration type.
 			<itemizedlist>
 				<listitem><para>
 				Camel casing
@@ -632,8 +857,8 @@ Control
 				</para></listitem>
 				
 				<listitem><para>
-				Keep away from abbreviations if at all possible. Common ones like IO, 
-				or UI are OK, but please use sparingly
+				Keep away from abbreviations if at all possible. Common ones like 
+				IO, or UI are OK, but please use sparingly
 				</para></listitem>
 				
 				<listitem><para>
@@ -661,10 +886,10 @@ msWarning
 			
 			<formalpara><title>Enumerated types</title></formalpara>
 			<para>
-			Names should be clearly descriptive of the type and what it represents. When 
-			appropriate please nest the enum type inside of the class it is associated with 
-			(don't forget to place it at public scope so others may use, assuming that is the 
-			intent).
+			Names should be clearly descriptive of the type and what it represents. 
+			When appropriate please nest the enum type inside of the class it is 
+			associated with (don't forget to place it at public scope so others 
+			may use, assuming that is the intent).
 			<itemizedlist>
 				<listitem><para>
 				Pascal casing
@@ -692,7 +917,8 @@ AlignmentType
 			</programlisting>
 			</para>
 			<para>
-			<emphasis>Always</emphasis> refer to enum types that are part of a class with the class name. 
+			<emphasis>Always</emphasis> refer to enum types that are part of a 
+			class with the class name. 
 			</para>
 			<para>
 			Example
@@ -707,8 +933,9 @@ MessageStyle
 			<formalpara><title>Class member function naming</title>
 			</formalpara>
 			<para>
-			Use names that have verbs or verb phrases that clearly express what the function will do. Functions 
-			that return a true or false value should try and use the "is" or "has" in front of the name, i.e. 
+			Use names that have verbs or verb phrases that clearly express what the 
+			function will do. Functions that return a true or false value should 
+			try and use the "is" or "has" in front of the name, i.e. 
 			<function>isEmpty()</function> or <function>hasData()</function>.
 
 			<itemizedlist>
@@ -721,9 +948,9 @@ MessageStyle
 				</para></listitem>
 				
 				<listitem><para>
-				No underscores, unless the function's scope is forced to be public but is not meant for
-				general usage(for whatever reason). In this case a "internal_" should be prefixed to the name 
-				of the funtion
+				No underscores, unless the function's scope is forced to be public 
+				but is not meant for general usage(for whatever reason). In this 
+				case a "internal_" should be prefixed to the name of the function.
 				</para></listitem>
 			</itemizedlist>
 			</para>
@@ -744,8 +971,8 @@ void internal_doSomething( int someValue );
 				<title>Class member variable naming</title>
 			</formalpara>
 			<para>
-			Use adjectives that clearly describe what the member is and how it should be used. 
-			All member names must use the "_" suffix convention.
+			Use adjectives that clearly describe what the member is and how it 
+			should be used. All member names must use the "_" suffix convention.
 			<itemizedlist>
 				<listitem><para>
 				camel casing
@@ -780,8 +1007,9 @@ String name_;
 				<title>Variable naming</title>
 			</formalpara>
 			<para>
-			Use descriptive names that clearly identify what the variable should do or what it means rather than 
-			identifying it's type. Please do <emphasis>not</emphasis> use Hungarian notation.
+			Use descriptive names that clearly identify what the variable should 
+			do or what it means rather than identifying it's type. Do 
+			<emphasis>not</emphasis> use Hungarian notation.
 			<itemizedlist>
 				<listitem><para>
 				Camel casing
@@ -810,7 +1038,8 @@ String name_;
 				<title>Function naming</title>
 			</formalpara>
 			<para>
-			Use names that have verbs or verb phrases that clearly express what the function will do. 
+			Use names that have verbs or verb phrases that clearly express what 
+			the function will do. 
 			<itemizedlist>
 				<listitem><para>
 				Camel casing 
@@ -835,10 +1064,12 @@ String name_;
 				<title>Use of Namespaces</title>
 			</formalpara>
 			<para>
-			Use namespaces to group a large collection of classes, typedefs, etc together, to more clearly identify 
-			the classes. Use namespaces in place of class prefixes or function prefixes. For example instead of the 
-			classes PDQFileDialog,  PDQDumper, and PDQBigStuff, create a namespace called PDQ and 
-			rename the classes to FileDialog, Dumper, and BigStuff, and place them inside of the PDQ namespace.
+			Use namespaces to group a large collection of classes, typedefs, etc 
+			together, to more clearly identify the classes. Use namespaces in 
+			place of class prefixes or function prefixes. For example instead of the 
+			classes PDQFileDialog,  PDQDumper, and PDQBigStuff, create a namespace 
+			called PDQ and rename the classes to FileDialog, Dumper, and BigStuff, 
+			and place them inside of the PDQ namespace.
 			<itemizedlist>
 				<listitem><para>
 				Pascal casing
@@ -864,14 +1095,15 @@ String name_;
 				<title>Use of static class methods/members</title>
 			</formalpara>
 			<para>
-			see Function naming and Member function naming above with the following restrictions:
+			see Function naming and Member function naming above with the following 
+			restrictions:
 			<itemizedlist>
 				<listitem><para>
 				<emphasis>No</emphasis> underscores at all  
 				</para></listitem>
 			</itemizedlist>
-			All static members must always be referenced with the class name that they are part of, 
-			never just by themselves, or by a class instance.
+			All static members must always be referenced with the class name that they 
+			are part of, never just by themselves, or by a class instance.
 			</para>
 			<para>
 			Example:
@@ -903,7 +1135,8 @@ String s = f.commonBarRepository;
 				<title>Comments</title>
 			</formalpara>
 			<para>
-			The standard comment style used in the VCF is comparable to what is used in Java, i.e. the 
+			The standard comment style used in the VCF is comparable to what is 
+			used in Java, i.e. the 
 			<programlisting>
 /**
 */
@@ -930,7 +1163,8 @@ String s = f.commonBarRepository;
 				</para></listitem>
 				
 				<listitem><para>
-				Class/Struct/Union members (semi optional depending on what it is andhow clear the name is) 
+				Class/Struct/Union members (semi optional depending on what it is 
+				and how clear the name is) 
 				</para></listitem>
 				
 				<listitem><para>
@@ -951,19 +1185,23 @@ String s = f.commonBarRepository;
 			</itemizedlist>
 			</para>
 			<para>
-			The rationale for this is to allow for automatic source level documentation by processing all headers 
-			through doxygen. Document the headers. Document your classes. More documentation is better that 
-			no documentation. Be as clear and concise as possible in explaining what something does. You can 
-			and should use html markup tags for further clarity, for example the &lt;B&gt; tag to emphasize some point 
-			or word. Also where applicable, feel free to put a sample piece of code that illustrates proper usage. 
-			Use the &lt;PRE&gt; tags for this. 
+			The rationale for this is to allow for automatic source level 
+			documentation by processing all headers through doxygen. Document the 
+			headers. Document your classes. More documentation is better that 
+			no documentation. Be as clear and concise as possible in explaining 
+			what something does. You can and should use html markup tags for further 
+			clarity, for example the &lt;B&gt; tag to emphasize some point or word. 
+			Also where applicable, feel free to put a sample piece of code that 
+			illustrates proper usage. Use the &lt;PRE&gt; tags for this. 
 			</para>
 			<para>
-			Do not pollute the code, particularly the headers, with tons of "//" spacers a-la what Microsoft's 
-			Visual C++ generated code for classes does. Keep it clean.
+			Do not pollute the code, particularly the headers, with tons of "//" 
+			spacers a-la what Microsoft's Visual C++ generated code for classes does. 
+			Keep it clean.
 			</para>
 			<para>
-			For single line comments line comments you can use the "//" but it still prefered that you use the
+			For single line comments line comments you can use the "//" but it is 
+			still prefered that you use the
 			<programlisting>
 /**
 comment
@@ -972,10 +1210,11 @@ comment
 			style.
 			</para>
 			<para>
-			Use the @param, @return, @author, and @version to further clarify what paramaters/arguments 
-			and return values do, as well as the author and version of the item in question.The @version should be 
-			the current cvs version that you are working under. If you are not entirely sure what these do, look 
-			them up in JavaDoc (which is where they are from). 
+			Use the @param, @return, @author, and @version to further clarify what 
+			paramaters/arguments and return values do, as well as the author and 
+			version of the item in question.The @version should be the current cvs 
+			version that you are working under. If you are not entirely sure what 
+			these do, look them up in JavaDoc (which is where they are from). 
 			</para>
 			<para>
 			Example:
@@ -996,14 +1235,18 @@ int myCoolMethod( void* d, bool b, String s );
 			
 			<section><title>Documentation Standards and Generation</title>
 			<formalpara><title>Introduction</title>
-			The VCF uses DocBook for all documentation that is not generated from source code. For source code 
-			generated documentation, we use doxygen. This section will concentrate on explaining how to edit
-			and work with the VCF DocBook documentation. If y0ou have never used DocBook before, take a glance 
-			at this <ulink url="http://www.codeproject.com/winhelp/docbook_howto.asp">CodeProject article</ulink> 
-			that thoroughly explains how to get set up and running with DocBook on Win32 systems.
+			The VCF uses DocBook for all documentation that is not generated from 
+			source code. For source code generated documentation, we use doxygen. 
+			This section will concentrate on explaining how to edit	and work with 
+			the VCF DocBook documentation. If y0ou have never used DocBook before, 
+			take a glance at this 
+			<ulink url="http://www.codeproject.com/winhelp/docbook_howto.asp">CodeProject article</ulink> 
+			that thoroughly explains how to get set up and running with DocBook on 
+			Win32 systems.
 			</formalpara>
 			<formalpara><title>Generating the VCF DocBook files</title>
-			To generate the VCF documentation you have to have a few things set up:
+			To generate the VCF documentation on a Win32 system, you have to have 
+			a few things set up:
 			<itemizedlist>
 			<listitem><para>
 			You'll need cygwin and xlst_proc
@@ -1012,7 +1255,8 @@ int myCoolMethod( void* d, bool b, String s );
 			You'll need the DocBook xsl stylesheets
 			</para></listitem>
 			<listitem><para>
-			If you want to generate HTML Help then you'll need Microsoft's HTML Help. You can get it from:
+			If you want to generate HTML Help then you'll need Microsoft's HTML 
+			Help. You can get it from:
 			<ulink url="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp">
 			http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
 			</ulink>. Download it from <ulink url="http://go.microsoft.com/fwlink/?LinkId=14188">http://go.microsoft.com/fwlink/?LinkId=14188</ulink>
@@ -1020,14 +1264,16 @@ int myCoolMethod( void* d, bool b, String s );
 			</itemizedlist>
 			</formalpara>
 			<para>			
-			Currently certain files used to build the VCF DocBook documentation require hard coded absolute paths
-			to make sure that things work right. To generate the documentation on your own system, you'll need to 
-			edit a few files to make sure the paths are pointing to the right directories.   
+			Currently certain files used to build the VCF DocBook documentation 
+			require hard coded absolute paths to make sure that things work right. 
+			To generate the documentation on your own system, you'll need to edit 
+			a few files to make sure the paths are pointing to the right directories.   
 			</para>
 			<para>
-			To start with edit vcf/docs/Makefile in your favourite editor. Make sure the HTMLHELP_COMPILER variable 
-			points to the correct directory on your machine. Keep the directories in quotes or make will barf. Make 
-			sure XSL_DOCBOOK_DIR points to where you have your DocBook xsl stylesheets installed.
+			To start with edit vcf/docs/Makefile in your favourite editor. Make sure 
+			the HTMLHELP_COMPILER variable points to the correct directory on your 
+			machine. Keep the directories in quotes or make will barf. Make sure 
+			XSL_DOCBOOK_DIR points to where you have your DocBook xsl stylesheets installed.
 			</para>
 			<para>
 			Next edit vcf/docs/vcf.xsl. Make sure the line:
@@ -1036,20 +1282,22 @@ int myCoolMethod( void* d, bool b, String s );
 <xsl:import href="d:/code/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
 			]]>
 			</programlisting>
-			Points to the right doc book directory on your system where your DocBook XSL Stylesheets are found. 
+			Points to the right doc book directory on your system where your DocBook 
+			XSL Stylesheets are found. 
 			</para>
 			<para>			
-			Once you've completed this, open a command line (if you are doing this on a Win32 system
-			you'll need cygwin for this) and cd to vcf/docs. Type: 
+			Once you've completed this, open a command line (if you are doing this 
+			on a Win32 system you'll need cygwin for this) and cd to vcf/docs. Type: 
 			<programlisting>
 make coredocs_hh
 			</programlisting>
-			This should generate the VCF documentation for you in HTML Help chm format (including all tutorials). 
-			Look for a file called "VCFDocs.0.6.2.chm" (or whatever the current version is set at).
+			This should generate the VCF documentation for you in HTML Help chm 
+			format (including all tutorials). Look for a file called 
+			"VCFDocs.0.6.2.chm" (or whatever the current version is set at).
 			</para>
 			<formalpara><title>Editing the VCF DocBook Documentation</title>
-			To edit the docs open and edit the various .xml files in the vcf/docs directory in your favorite text
-			or xml editor. The main ones are :
+			To edit the docs open and edit the various .xml files in the vcf/docs 
+			directory in your favorite text	or xml editor. The main ones are :
 			<itemizedlist>
 			<listitem><para>
 			corelib_applicationKit.xml - application Kit stuff
@@ -1073,34 +1321,37 @@ make coredocs_hh
 			</formalpara>
 			
 			<formalpara><title>Generating Tutorials</title>
-			To generate tutorials, opend a command line, cd to vcf/docs and type 
+			To generate tutorials, open a command line, cd to vcf/docs and type 
 			<programlisting>
 make tutorials
 			</programlisting>	
-			This will generate separate "articles" in each tutorial directory (with the
-			top level director being vcf/examples). 
+			This will generate separate "articles" in each tutorial directory 
+			(with the top level director being vcf/examples). 
 			</formalpara>
 			
 			<formalpara><title>Editing and Adding Tutorials</title>
-			To add a tutorial article you have to edit/create several files to ensure that the tutorial
-			documentation is added to the full VCF DocBook documentation, and that spearate articles 
+			To add a tutorial article you have to edit/create several files to 
+			ensure that the tutorial documentation is added to the full VCF 
+			DocBook documentation, and that spearate articles 
 			can be created.
 			</formalpara>
 			<para>
-			To start, edit vcf/docs/vcf_docbook.xml. At the top there are a number of ENTITY declarations,
-			each of which point to specific file that contains further documentation. This is done to break
-			the documentation into smaller, more manageable sections. To add a tutorial, you'll need to 
-			add a new entity for each tutorial. Let say we had a tutorial for "FooBar", we'd add and 
-			an entity for your tutorial(after the last ENTITY), like so:
+			To start, edit vcf/docs/vcf_docbook.xml. At the top there are a number 
+			of ENTITY declarations, each of which point to specific file that 
+			contains further documentation. This is done to break the documentation 
+			into smaller, more manageable sections. To add a tutorial, you'll need to 
+			add a new entity for each tutorial. Let say we had a tutorial for "FooBar", 
+			we'd add and an entity for your tutorial(after the last ENTITY), like so:
 			<programlisting>
 <![CDATA[
 <!ENTITY foobar SYSTEM "../examples/FooBar/FooBar.xml">
 ]]>
 			</programlisting>
-			Now edit the vcf/docs/tutorials.xml file. This is organized first by kit (or library) 
-			and then by section for each tutorial. Find a section or create a new one and insert your 
-			entity that you created earlier. For our FooBar example we'll create a new one under 
-			the FoundationKit. Our example would look like this:
+			Now edit the vcf/docs/tutorials.xml file. This is organized first by kit 
+			(or library) and then by section for each tutorial. Find a section or 
+			create a new one and insert your entity that you created earlier. For our 
+			FooBar example we'll create a new one under the FoundationKit. Our 
+			example would look like this:
 			
 			<programlisting>
 <![CDATA[
@@ -1109,11 +1360,13 @@ make tutorials
 </section>
 ]]>		
 			</programlisting>
-			Note that the entity name is the same as you declared it in the vcf/docs/vcf_docbook.xml file.
+			Note that the entity name is the same as you declared it in the 
+			vcf/docs/vcf_docbook.xml file.
 			</para>
 			<para>
-			Now you need to create the actual content itself. You <emphasis>must</emphasis> follow this 
-			format or things will break. cd to your examples directory
+			Now you need to create the actual content itself. 
+			You <emphasis>must</emphasis> follow this format or things will 
+			break. cd to your examples directory
 			<programlisting>
 cd vcf/examples/FooBar
 			</programlisting>
@@ -1126,8 +1379,9 @@ cd vcf/examples/FooBar
 			&lt;tutorial name-case sensitive&gt;Article.xml
 			</para></listitem>
 			</itemizedlist>
-			For our example we'd create FooBar.xml and FooBarArticle.xml. Edit the FooBarArticle.xml file and 
-			add the following (this must go right at the begining of the file):
+			For our example we'd create FooBar.xml and FooBarArticle.xml. Edit the 
+			FooBarArticle.xml file and add the following (this must go right at 
+			the begining of the file):
 			<programlisting>
 <![CDATA[
 <?xml version="1.0" standalone="no"?>
@@ -1143,17 +1397,19 @@ cd vcf/examples/FooBar
 
 ]]>
 			</programlisting>
-			This will allow your content in FooBar.xml to either be used in the larger VCF DocBook documentation 
-			or allow it to be generated as a standalone article, suitable for posting on websites such as 
+			This will allow your content in FooBar.xml to either be used in the 
+			larger VCF DocBook documentation or allow it to be generated as a 
+			standalone article, suitable for posting on websites such as 
 			<ulink url="http://www.codeproject.com">CodeProject.com</ulink>.	
 			</para>
 			<para>
 			Now add your actual documentation (following DocBook rules) to Foobar.xml.
 			</para>
 			<para>
-			Finally, to be able to actually generate the tutorials in a standalone manner, we need to make one 
-			more change to the vcf/docs/Makefile. Edit vcf/docs/Makefile and add your tutorial to the 
-			TUTORIAL_ARTICLES variable. For our example, we'd add:
+			Finally, to be able to actually generate the tutorials in a standalone 
+			manner, we need to make one more change to the vcf/docs/Makefile. Edit 
+			vcf/docs/Makefile and add your tutorial to the TUTORIAL_ARTICLES variable. 
+			For our example, we'd add:
 			<programlisting>
 <![CDATA[
 TUTORIAL_ARTICLES = ../examples/HelloWorld/HelloWorldArticle.xml\
@@ -1172,24 +1428,26 @@ make tutorials
 	
 	<section><title>Bugs</title>
 	<para>
-	Bugs, bugs, bugs - the bane of every developer and project. Naturally the VCF has no bugs so we have nothing to 
-	worry about. And if you believe that, I have some real estate in Florida I'd like to show you...
+	Bugs, bugs, bugs - the bane of every developer and project. Naturally the VCF 
+	has no bugs so we have nothing to worry about. And if you believe that, I have 
+	some real estate in Florida I'd like to show you...
 	</para>
 	<para>
 	Seriously bugs do exist in the VCF and should be reported to the 
-	<ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=106796">VCF bug tracker</ulink> on 
-	Source Forge.
+	<ulink url="http://sourceforge.net/tracker/?group_id=6796&amp;atid=106796">VCF bug tracker</ulink> 
+	on Source Forge.
 	</para>
 	<para>
-	Please submit as much information as possible. If you don't do this, it slows the process down, and the sooner the bug is 
-	fixed the happier you'll be ! 
+	Please submit as much information as possible. If you don't do this, it slows 
+	the process down, and the sooner the bug is fixed the happier you'll be ! 
 	</para>
 	<para>
 	As a general rule please submit the following information: 
 	<itemizedlist>
 		<listitem><para>
-		Operating System (and service pack, patch, etc if known). Please indicate if you are using non-english version, 
-		as well as if you're language requires special input (for example Arabic, Hebrew, and several other languages are 
+		Operating System (and service pack, patch, etc if known). Please indicate 
+		if you are using non-english version, as well as if you're language requires 
+		special input (for example Arabic, Hebrew, and several other languages are 
 		read and input differently than English or Romance/Latin based languages).
 		</para></listitem>
 		
@@ -1210,17 +1468,20 @@ make tutorials
 		</para></listitem>
 		
 		<listitem><para>
-		What where you doing (if you remember) when the bug occured? In other words, how do we recreate this ?
+		What where you doing (if you remember) when the bug occured? In other words, 
+		how do we recreate this ?
 		</para></listitem>
 		
 		<listitem><para>
-		Please try and rate the bug (in your opinion). Is it cosmetic, does it affect usability, does it cause your computer to 
-		ignite in flames (this one tends to be a serious bug).
+		Please try and rate the bug (in your opinion). Is it cosmetic, does it affect 
+		usability, does it cause your computer to ignite in flames (this one tends to 
+		be a serious bug).
 		</para></listitem>
 		
 		<listitem><para>
-		Is there an email address we can use to contact you if we need more information? Note this is 
-		<emphasis>totally</emphasis> optional, the emails will not be used for spam or anything else.
+		Is there an email address we can use to contact you if we need more information? 
+		Note this is <emphasis>totally</emphasis> optional, the emails will not be used 
+		for spam or anything else.
 		</para></listitem>			
 	</itemizedlist>
 	</para>
@@ -1230,15 +1491,17 @@ make tutorials
 	<section><title>Mailing lists</title>
 		<para>
 		There is a <ulink url="http://lists.sourceforge.net/lists/listinfo/vcf-development">development 
-		mailing list</ulink> that can be subscribed to. There are also forums, which are what we are encouraging people to
-		use as well.
+		mailing list</ulink> that can be subscribed to. Do not use them. Use the 
+		<ulink url="http://vcf.sourceforge.net/forums/">forums</ulink> instead.
 		</para>
 	</section>
 	
 	<section><title>Forums</title>
 		<para>
-			There are <ulink url="">forums</ulink> covering a wide range of topics that everyone is encouraged to 
-			visit and participate in. There is also a private developer forum, for VCF registered developers only.
+			There are <ulink url="http://vcf.sourceforge.net/forums/">forums</ulink> 
+			covering a wide range of topics that everyone is encouraged to visit 
+			and participate in. There is also a private developer forum, 
+			for VCF registered developers only.
 		</para>
 	</section>		
 </chapter>
@@ -1246,6 +1509,20 @@ make tutorials
 <!--
 CVS Log info
 $Log$
+Revision 1.3  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.2.4.3  2004/08/06 01:45:03  ddiego
+updated and added Marcellos DateTime changes.
+
+Revision 1.2.4.2  2004/07/31 03:59:07  ddiego
+updated the docs and added info for building on
+OSX. merged in the xcode templates
+
+Revision 1.2.4.1  2004/04/29 19:06:41  ddiego
+added MVC example, plus the Model::changed() method. Also
+added more documentation.
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

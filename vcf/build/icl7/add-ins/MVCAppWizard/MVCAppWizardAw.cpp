@@ -165,11 +165,11 @@ void CMVCAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				
 				//if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
-					setting = "/DUSE_FRAMEWORK_DLL";
+					setting = "/DUSE_FOUNDATIONKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 					setting = "/DUSE_GRAPHICSKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_APPKIT_DLL";
+					setting = "/DUSE_APPLICATIONKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				//}
 				tool = "link.exe";

@@ -1,12 +1,20 @@
-////DatesAndTime.cpp
+//DatesAndTime.cpp
 
-#include "FoundationKit.h"
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#include "vcf/FoundationKit/FoundationKit.h"
 
 /**
-include the DateTime header - this must come *after* your include 
+include the DateTime header - this must come *after* your include
 of the FoundationKit.
 */
-#include "utils/DateTime.h"
+#include "vcf/FoundationKit/DateTime.h"
+
 
 
 using namespace VCF;
@@ -15,7 +23,7 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-	/**
+    /**
 	retrieve the current time
 	*/
 	DateTime currentTime = DateTime::now();
@@ -23,8 +31,8 @@ int main( int argc, char** argv ){
 	/**
 	Output the date time instance using the Object::toString method
 	*/
-
-	System::println( "currentTime: %s", currentTime.toString().c_str() );
+    String timeStr = currentTime.toString();
+	System::println( "currentTime: %ls", timeStr.c_str() );
 
 
 	/**
@@ -36,20 +44,20 @@ int main( int argc, char** argv ){
 	/**
 	Output the date time instance using the StringUtils::format() method
 	*/
-	System::println( "currentTime from StringUtils::format():\n\t%s",
+	System::println( "currentTime from StringUtils::format():\n\t%ls",
 					StringUtils::format( currentTime, "Day %#j in the year %Y, week %#U, %A day %#d of %B month %#m" ).c_str() );
 
 	/**
 	Output the time portion of the date time instance using the StringUtils::format() method
 	*/
-	System::println( "currentTime from StringUtils::format():\n\t%s",
+	System::println( "currentTime from StringUtils::format():\n\t%ls",
 					StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
 	/**
 	Modify the time, hours, minutes and seconds
 	*/
 	currentTime.setTime( 9, 45, 12 );
-	System::println( "currentTime from StringUtils::format():\n\t%s",
+	System::println( "currentTime from StringUtils::format():\n\t%ls",
 					StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
 
@@ -58,7 +66,7 @@ int main( int argc, char** argv ){
 	*/
 	currentTime.set( 1982, 5, 21, 18, 23, 10, 456 );
 
-	System::println( "currentTime from StringUtils::format():\n\t%s",
+	System::println( "currentTime from StringUtils::format():\n\t%ls",
 					StringUtils::format( currentTime, "%Y/%m/%d-%H:%M:%S.%s" ).c_str() );
 
 
@@ -87,7 +95,7 @@ int main( int argc, char** argv ){
 	*/
 
 	if ( dt1 == dt2 ) {
-		System::println( "Date {%s} equals date {%s}",
+		System::println( "Date {%ls} equals date {%ls}",
 							dt1.toString().c_str(), dt2.toString().c_str() );
 	}
 
@@ -97,7 +105,7 @@ int main( int argc, char** argv ){
 	dt2.incrHour( 10 );
 
 	if ( dt1 < dt2 ) {
-		System::println( "Date {%s} is earlier than date {%s}",
+		System::println( "Date {%ls} is earlier than date {%ls}",
 							dt1.toString().c_str(), dt2.toString().c_str() );
 	}
 
@@ -107,7 +115,7 @@ int main( int argc, char** argv ){
 	dt2.decrYear( 10 );
 
 	if ( dt1 > dt2 ) {
-		System::println( "Date {%s} is after than date {%s}",
+		System::println( "Date {%ls} is after than date {%ls}",
 							dt1.toString().c_str(), dt2.toString().c_str() );
 	}
 
@@ -145,28 +153,58 @@ int main( int argc, char** argv ){
 
 	DateTime storeMe( 1977, 10, 3, 19, 23, 12 );
 
-	
+
 	{
 		FileOutputStream fs( "datetime.out" );
 
 		fs << &storeMe;
 
-		System::println( "storeMe (%s) saved!", storeMe.toString().c_str() );
+		System::println( "storeMe (%ls) saved!", storeMe.toString().c_str() );
 	}
 
 	DateTime loadMe;
-	System::println( "loadMe is equal to %s", loadMe.toString().c_str() );
+	System::println( "loadMe is equal to %ls", loadMe.toString().c_str() );
 	{
 		FileInputStream fs( "datetime.out" );
 
 		fs >> &loadMe;
 
-		System::println( "loadMe (%s) loaded!", loadMe.toString().c_str() );
+		System::println( "loadMe (%ls) loaded!", loadMe.toString().c_str() );
 	}
 
 
 	FoundationKit::terminate();
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:46:58  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.2.7  2004/07/09 03:39:28  ddiego
+*merged in changes from the OSX branch for new theming API. Added
+*support for controlling the use of locale translated strings in components.
+*
+*Revision 1.2.2.6.2.1  2004/06/27 18:19:14  ddiego
+*more osx updates
+*
+*Revision 1.2.2.6  2004/05/15 17:59:36  marcelloptr
+*minor project changes
+*
+*Revision 1.2.2.5  2004/05/03 03:44:52  ddiego
+*This checks in a bunch of changes to the FoundationKit for OSX
+*porting. The thread, mutex, semaphor, condition, and file peers
+*have all been implemented and tested. The file peer could be improved
+*and needs search functionality. The locale peer is only partially
+*complete, but the functions will return values. The unicode transition
+*is also finished and works OK now.
+*
+*Revision 1.2.2.4  2004/04/29 03:40:52  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

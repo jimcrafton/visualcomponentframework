@@ -1,0 +1,30 @@
+<target name="Cheese" output="libCheese.a">
+	<dependsOn>
+		<dependency name="american.c" output="american.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>	
+		
+		<dependency name="bleu.c" output="bleu.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+		
+		<dependency name="gorgonzola.c" output="gorgonzola.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+	</dependsOn>
+	
+	<exec command="ar -cru $(target.output) $(dependsOn.children.output)"/>
+</target>
+
+<target name="foobar">
+	<dependsOn>
+		<dependency name="Cheese"/>
+		<dependency name="foo.c" output="foo.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+		<dependency name="baz.c" output="baz.o">
+			<exec command="gcc -c -o $(dependency.output) $(dependency.name)"/>
+		</dependency>
+	</dependsOn>
+	<exec command="gcc -o $(target.output) $(Cheese.output) $(foo.c.output) $(baz.c.output) "/>
+</target>

@@ -34,8 +34,8 @@ MTL=midl.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc70/Release/"
-# PROP Intermediate_Dir "vc70/Release/"
+# PROP Output_Dir "vc70\Release\"
+# PROP Intermediate_Dir "vc70\Release\"
 # PROP Target_Dir ""
 
 !ELSEIF  "$(CFG)" == "Examples - Win32 Debug"
@@ -47,8 +47,8 @@ MTL=midl.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc70/Debug/"
-# PROP Intermediate_Dir "vc70/Debug/"
+# PROP Output_Dir "vc70\Debug\"
+# PROP Intermediate_Dir "vc70\Debug\"
 # PROP Target_Dir ""
 
 !ENDIF 
@@ -59,5 +59,3 @@ MTL=midl.exe
 # Name "Examples - Win32 Debug"
 # End Target
 # End Project
-
-

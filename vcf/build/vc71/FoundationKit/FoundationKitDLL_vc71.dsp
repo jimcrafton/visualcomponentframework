@@ -36,12 +36,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "../../../lib/"
-# PROP Intermediate_Dir "vc71/ReleaseDLL/"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc71\ReleaseDLL\"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "BUILD_FRAMEWORK_LIB" /Yu"FoundationKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /D "BUILD_FOUNDATIONKIT_LIB" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -51,8 +51,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/FoundationKit_vc71.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"../../../bin/FoundationKit_vc71.dll"
-# SUBTRACT LINK32 /pdb:none /map /debug
+# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\FoundationKit_vc71.dll"
+# SUBTRACT LINK32 /map /pdb:none /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
 
@@ -63,12 +63,12 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "../../../lib/"
-# PROP Intermediate_Dir "vc71/DebugDLL/"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc71\DebugDLL\"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "BUILD_FRAMEWORK_LIB" /Yu"FoundationKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /D "BUILD_FOUNDATIONKIT_LIB" /Fd"..\..\..\bin\FoundationKit_vc71_d.pdb" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/FoundationKit_vc71_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 Rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /machine:I386 /out:"../../../bin/FoundationKit_vc71_d.dll" /debug
+# ADD LINK32 Rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin\FoundationKit_vc71_d.dll"
 
 !ENDIF 
 
@@ -91,15 +91,15 @@ LINK32=link.exe
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=../../../include/FoundationKit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/FoundationKitPrivate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/FoundationKitSelectLib.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -107,20 +107,16 @@ SOURCE=../../../include/core/FoundationKitSelectLib.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=../../../src/core/FoundationKit.cpp
-# ADD CPP /Yc"FoundationKit.h"
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
+# ADD CPP /Yc"vcf/FoundationKit/FoundationKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/FoundationKitRTTI.inl
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/Library.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=../../../src/core/Locales.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -128,115 +124,115 @@ SOURCE=../../../src/core/Locales.cpp
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=../../../src/implementerkit/Win32Condition.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Condition.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Condition.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Condition.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32FilePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FilePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/ImplementerKit/Win32FilePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FilePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32FileStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FileStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32FileStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FileStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/implementerkit/Win32LibraryPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerkit/Win32LibraryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/implementerkit/Win32LocalePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LocalePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32LocalePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LocalePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Mutex.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Mutex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Mutex.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Mutex.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Peer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Peer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Peer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Peer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32ProcessIORedirector.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32ProcessIORedirector.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/implementerkit/Win32ProcessPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerkit/Win32ProcessPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/implementerkit/Win32Registry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerkit/Win32Registry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32SemaphorePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32SemaphorePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32SystemPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32SystemPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32SystemToolkit.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32SystemToolkit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Thread.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Thread.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.h
 # End Source File
 # End Group
 # Begin Group "Exceptions"
@@ -244,75 +240,83 @@ SOURCE=../../../include/implementerKit/Win32Thread.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../src/Exceptions/BasicException.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicException.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/BasicException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/BasicFileError.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicFileError.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/CantCreateObjectException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CantCreateObjectException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/ClassNotFound.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassNotFound.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/ErrorStrings.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorStrings.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/FileIOError.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileIOError.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/FileNotFound.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileNotFound.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/InvalidPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/InvalidPointerException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidPointerException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/NoFreeMemException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/NoPeerFoundException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoFreeMemException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/NoSuchElementException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoPeerFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/OutOfBoundsException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoSuchElementException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/ProcessException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/PropertyChangeException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\OutOfBoundsException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/RuntimeException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/TypeCastException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RuntimeException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # End Source File
 # End Group
 # Begin Group "Events"
@@ -320,47 +324,47 @@ SOURCE=../../../include/exceptions/TypeCastException.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../include/events/Delegate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegate.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Events/Event.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Event.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/Event.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Events/EventHandler.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/EventHandler.h
+SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/NotifyEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NotifyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/OutputReadyEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Events/PropertyChangeEvent.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/PropertyChangeEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Events/ThreadEvent.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/events/ThreadEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.h
 # End Source File
 # End Group
 # Begin Group "IO"
@@ -368,103 +372,103 @@ SOURCE=../../../include/events/ThreadEvent.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../src/IO/BasicInputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/BasicInputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/BasicOutputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/BasicOutputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/Directory.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Directory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/Directory.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Directory.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/io/File.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\File.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/File.h
+SOURCE=..\..\..\src\vcf\FoundationKit\File.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/FilePath.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePath.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/Implementer/FilePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePath.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/FileStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/FileStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/FileStreamPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/FileUtils.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStreamPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/MemoryStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/MemoryStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/MemStreamUtils.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MemStreamUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/Persistable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Persistable.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/Stream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Stream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/Stream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Stream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/TextInputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\TextInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/TextInputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/TextOutputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/TextOutputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/io/VariantDataStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantDataStream.h
 # End Source File
 # End Group
 # Begin Group "Utils"
@@ -472,211 +476,223 @@ SOURCE=../../../include/io/VariantDataStream.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../src/Utils/CommandLine.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/CommandLine.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Condition.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Condition.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Condition.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Condition.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/DateTime.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/DateTime.h
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/Dictionary.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Dictionary.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Enumerator.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Enumerator.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/ErrorLog.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/ErrorLog.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/FilePath.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/IO/FileUtils.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Locales.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Library.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Lock.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/MessageLoader.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/MessageLoader.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Mutex.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Mutex.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Mutex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Parser.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Mutex.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Parser.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/ProcessWithRedirectedIO.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/ProcessWithRedirectedIO.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Registry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Registry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Runnable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Semaphore.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Semaphore.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/StringsMessageLoader.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Runnable.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/StringsMessageLoader.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Semaphore.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/StringTokenizer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Semaphore.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/StringUtils.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\StringsMessageLoader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/StringUtils.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringsMessageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/SynchObject.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringTokenizer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/System.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\StringUtils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/System.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/SystemToolkit.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\SynchObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/SystemToolkit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\System.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/TextCodec.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\System.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/TextCodec.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/Thread.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Thread.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextCodec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/VCFChar.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextCodec.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/VCFMath.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/VCFProcess.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/VCFProcess.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFChar.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/utils/VCFString.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFMath.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/VCFString.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/VCFulong64.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/Waitable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/XMLParser.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/XMLParser.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFulong64.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Waitable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.h
 # End Source File
 # End Group
 # Begin Group "Core"
@@ -684,43 +700,43 @@ SOURCE=../../../include/utils/XMLParser.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../include/core/CommonDefines.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/FrameworkConfig.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/Locales.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Locales.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/Object.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/Object.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/ObjectWithEvents.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/ObjectWithEvents.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/VCF.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCF.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/VCFMath.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFMath.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/WarningsOffVc.h
+SOURCE=..\..\..\src\vcf\FoundationKit\WarningsOffVc.h
 # End Source File
 # End Group
 # Begin Group "Peer Interfaces"
@@ -728,43 +744,43 @@ SOURCE=../../../include/core/WarningsOffVc.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=../../../include/implementer/ConditionPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ConditionPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/LibraryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/LocalePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\LocalePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/MutexPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MutexPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/ProcessIORedirectionPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessIORedirectionPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/ProcessPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/RegistryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RegistryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/SemaphorePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SemaphorePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/SystemPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/ThreadPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadPeer.h
 # End Source File
 # End Group
 # Begin Group "RTTI"
@@ -772,59 +788,59 @@ SOURCE=../../../include/implementer/ThreadPeer.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=../../../src/rtti/Class.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Class.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/Class.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Class.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/ClassInfo.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/rtti/ClassRegistry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassRegistry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/ClassRegistry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassRegistry.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/Enum.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Enum.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/Field.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Field.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/rtti/InterfaceClass.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\InterfaceClass.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/InterfaceClass.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InterfaceClass.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/Method.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Method.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/Property.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/VariantData.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantData.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/VariantData.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantData.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/rtti/VCFRTTIImpl.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFRTTIImpl.h
 # End Source File
 # End Group
 # End Target

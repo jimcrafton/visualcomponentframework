@@ -1,0 +1,21 @@
+#shell script for building a tar.gz release for xmake
+cd ..
+#make a temporary dir with the name xmake<version>
+XMKDIR=xmake.$1
+mkdir $XMKDIR
+
+#copy over the files
+cp xmake/*.h xmake/*.cpp xmake/makefile.xml xmake/Makefile xmake/configure xmake/xmake.kdevprj xmake/*.dsw xmake/*.dsp xmake/xmake_documentation.html ./$XMKDIR/
+
+#tar the files in the versioned directory, i.e. the dir named $XMKDIR
+tar -cf xmake.$1.tar $XMKDIR/*.h $XMKDIR/*.cpp $XMKDIR/makefile.xml $XMKDIR/Makefile $XMKDIR/configure $XMKDIR/xmake.kdevprj $XMKDIR/*.dsw $XMKDIR/*.dsp $XMKDIR/xmake_documentation.html
+
+#gzip the tar file up
+gzip xmake.$1.tar
+
+#move the tgz file to the xmake dir
+mv xmake.$1.tar.gz xmake/
+
+#remove the temporary $XMKDIR
+rm -rf $XMKDIR
+echo done making xmake.$1.tar.gz

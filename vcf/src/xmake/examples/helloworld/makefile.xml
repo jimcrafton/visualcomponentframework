@@ -1,0 +1,24 @@
+
+
+<config name="gcc-debug">
+	<tool name="g++" id="cc" type=".cc;.cpp;.cxx">
+		<flags value="-g -c"/>		
+		<exec command="g++ -o $(dependency.output) -g -c $(dependency.name)"/>
+	</tool>
+
+	<tool name="ar" id="static-lib-linker" type=".a">
+		<flags value="-cru"/>		
+		<exec command="ar -cru $(target.output) $(dependsOn.children.output)"/>
+	</tool>
+
+	<tool name="g++" id="exe-linker" >
+		<flags value="-g"/>
+		<exec command="g++ -o $(target.output) $(dependsOn.children.output)"/>
+	</tool>
+</config>
+
+<target name="test1.exe" tool="exe-linker">
+	<dependsOn>
+		<dependency name="test1.cpp" output="test1.debug.o"/>
+	</dependsOn>
+</target>

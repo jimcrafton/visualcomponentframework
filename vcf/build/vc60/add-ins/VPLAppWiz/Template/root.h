@@ -43,7 +43,13 @@
 *Please see the documentation on the Component::registerComponent() method and the
 *PropertyEditorManager::registerPropertyEditor() method
 */
-extern "C" $$ROOT_$$_API void initPackage();
+extern "C"  {
+	
+$$ROOT_$$_API void _vpl_init();
+$$ROOT_$$_API void _vpl_terminate();
+
+}
+
 
 
 #endif //$$FILE_NAME_SYMBOL$$

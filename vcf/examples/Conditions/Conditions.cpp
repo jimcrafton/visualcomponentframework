@@ -1,6 +1,13 @@
-////Conditions.cpp
+//Conditions.cpp
 
-#include "FoundationKit.h"
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#include "vcf/FoundationKit/FoundationKit.h"
 
 using namespace VCF;
 
@@ -20,7 +27,7 @@ public:
 
 		while ( count < 10 && !producerDone ) {
 			Lock l(*theMutex);
-			
+
 			theCondition->wait();
 
 			System::println( "Reporter: Done waiting report %d, reporting from %p:\n\tNews Flash! Yada yada yada!", count + 1, this );
@@ -51,7 +58,7 @@ public:
 			System::sleep( 100 );
 			System::println( "...Fart!" );
 
-			
+
 			theCondition->broadcast();
 
 			System::println( "Done chomping!" );
@@ -68,7 +75,7 @@ public:
 	}
 
 	virtual void stop() {
-		
+
 	}
 };
 
@@ -81,7 +88,7 @@ void example1() {
 
 
 	Thread* th1 = new Thread( new Reporter() );
-	th1->start();	
+	th1->start();
 
 	Thread* th2 = new Thread( new Reporter() );
 	th2->start();
@@ -89,11 +96,11 @@ void example1() {
 
 	Thread* producer = new Thread( new Producer() );
 	producer->start();
-	
+
 	producer->wait();
-	
-	
-	//theCondition->broadcast();	
+
+
+	//theCondition->broadcast();
 
 	System::sleep( 100 );
 
@@ -107,8 +114,8 @@ void example1() {
 
 class bounded_buffer {
 public:
-    
-    bounded_buffer(int n) : begin(0), end(0), buffered(0), circular_buf(n) { 
+
+    bounded_buffer(int n) : begin(0), end(0), buffered(0), circular_buf(n) {
 		buffer_not_full = new Condition( &monitor );
 		buffer_not_empty = new Condition( &monitor );
 	}
@@ -141,7 +148,7 @@ public:
 		}
 
         int i = circular_buf[begin];
-        
+
 		begin = (begin+1) % circular_buf.size();
 
         buffered --;
@@ -169,7 +176,7 @@ int threadsDone = 2;
 
 class Sender : public Thread {
 public:
-	
+
 	virtual bool run() {
 		int n = 0;
 		while (n < 100) {
@@ -188,7 +195,7 @@ public:
 
 class Receiver : public Thread {
 public:
-	
+
 	virtual bool run() {
 		int n;
 		do {
@@ -203,7 +210,7 @@ public:
 };
 
 
-void example2() 
+void example2()
 {
 	theMutex = new Mutex();
 	theCondition = new Condition( theMutex );
@@ -236,5 +243,16 @@ int main( int argc, char** argv ){
 	return 0;
 }
 
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:46:56  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.2.4  2004/04/29 03:40:52  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

@@ -1,0 +1,34 @@
+
+
+
+<target name="test" output="test.exe">
+	<dependsOn>
+		<dependency name="test.obj"/>
+		<dependency name="pt1.obj"/>
+		<dependency name="pt2.obj"/>
+	</dependsOn>
+	<exec command="g++ -o test.exe test.obj"/>
+</target>
+
+<target name="pt2.obj">
+	<dependsOn>
+		<dependency name="pt2.cpp"/>
+	</dependsOn>
+	<exec command="g++ -c -o pt2.obj pt2.cpp"/>
+</target>
+
+<target name="test.obj">
+	<dependsOn>		
+		<dependency name="test.cpp"/>
+	</dependsOn>
+	<exec command="g++ -c -o test.obj test.cpp"/>
+</target>
+
+<target name="pt1.obj">
+	<dependsOn>
+		<dependency name="pt1.cpp"/>
+	</dependsOn>
+	<exec command="g++ -c -o pt1.obj pt1.cpp"/>
+</target>
+
+

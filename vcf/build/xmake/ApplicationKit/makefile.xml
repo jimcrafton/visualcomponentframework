@@ -32,8 +32,8 @@
 						<flag value="-I $(MINGW_INC)/g++-3"/>
 						<flag value="-c"/>
 						<flag value="-I $(INC)"/>
-						<flag value="-DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DAPPKIT_DLL"/>
-						<flag value="-DUSE_GRAPHICSKIT_DLL -DUSE_FRAMEWORK_DLL -DAPPKIT_EXPORTS -DBUILD_APPKIT_LIB"/>
+						<flag value="-DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DAPPLICATIONKIT_DLL"/>
+						<flag value="-DUSE_GRAPHICSKIT_DLL -DUSE_FOUNDATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS -DBUILD_APPLICATIONKIT_LIB"/>
 					</flags>
 				</compiler>	
 
@@ -137,8 +137,8 @@
 
 						<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I $(VCF_INCLUDE)"/> 
 						<flag value="/D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /D _USRDLL"/>
-						<flag value="/D USE_FRAMEWORK_DLL /D USE_GRAPHICSKIT_DLL /D APPKIT_DLL"/>
-						<flag value="/D APPKIT_EXPORTS /D BUILD_APPKIT_LIB"/>
+						<flag value="/D USE_FOUNDATIONKIT_DLL /D USE_GRAPHICSKIT_DLL /D APPLICATIONKIT_DLL"/>
+						<flag value="/D APPLICATIONKIT_EXPORTS /D BUILD_APPLICATIONKIT_LIB"/>
 
 						<flag value="/Fp'ApplicationKit.pch' "/>
 						<flag value="/YX'ApplicationKit.h'"/>

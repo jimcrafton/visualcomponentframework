@@ -35,11 +35,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "../../../lib/"
-# PROP Intermediate_Dir "vc70/ReleaseS/"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc70\ReleaseS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Yu"vcf/GraphicsKit/GraphicsKit.h" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -58,11 +58,11 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "../../../lib/"
-# PROP Intermediate_Dir "vc70/DebugS/"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc70\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Fd"../../../lib/GraphicsKit_vc70_sd.pdb" /Yu"GraphicsKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "BUILD_GRAPHICSKIT_LIB" /Fd"..\..\..\lib\GraphicsKit_vc70_sd.pdb" /Yu"vcf/GraphicsKit/GraphicsKit.h" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -83,163 +83,155 @@ LIB32=link.exe -lib
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=../../../include/graphics/AbstractImage.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\AbstractImage.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/AggCommon.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\AggCommon.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Basic3DBorder.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\BasicFill.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/BasicFill.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\BasicRectangle.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/BasicRectangle.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\BasicStroke.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/BasicStroke.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\BezierCurve.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/BezierCurve.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Circle.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Border.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\ClippingRegion.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Circle.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Color.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/ClippingRegion.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Contextpeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Color.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\DrawUIState.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementer/Contextpeer.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Ellipse.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Ellipse.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Fill.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Fill.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Filter.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Filter.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Font.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Font.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\FontPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/FontPeer.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Glyph.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Glyph.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\GlyphCollection.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/GlyphCollection.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/GraphicsContext.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/GraphicsKit.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsKitSelectLib.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/GraphicsKitSelectLib.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/utils/GraphicsToolKit.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Image.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\ImageBits.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/ImageBits.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/ImageList.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\ImageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/ImageLoader.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/exceptions/ImageLoaderException.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Matrix2D.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Matrix2D.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\MatrixFunction.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/MatrixFunction.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Path.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Path.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\PixelFormats.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/PixelFormats.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Point.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/Point.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Printable.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Printable.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\PrintContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/PrintContext.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Rect.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/Rect.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Size.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/core/Size.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Stroke.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/graphics/Stroke.h
-# End Source File
-# Begin Source File
-
-SOURCE=../../../include/graphics/VCFOpenGL.h
-# End Source File
-# Begin Source File
-
-SOURCE=../../../include/graphics/Vector2D.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Vector2D.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -247,68 +239,68 @@ SOURCE=../../../include/graphics/Vector2D.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=../../../src/Graphics/AbstractImage.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\AbstractImage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/BasicFill.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\BasicFill.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/BasicStroke.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\BasicStroke.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/graphics/BezierCurve.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\BezierCurve.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/Color.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Color.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/Font.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Font.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/GlyphCollection.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\GlyphCollection.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/GraphicsContext.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/GraphicsKit.cpp
-# ADD CPP /Yc"GraphicsKit.h"
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsKit.cpp
+# ADD CPP /Yc"vcf/GraphicsKit/GraphicsKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/GraphicsKitRTTI.inl
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsKitRTTI.inl
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Utils/GraphicsToolKit.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Events/ImageEvent.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/Matrix2D.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/Point.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Point.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/core/Rect.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Rect.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/Graphics/Vector2D.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Vector2D.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -316,43 +308,39 @@ SOURCE=../../../src/Graphics/Vector2D.cpp
 # PROP Default_Filter "*.cpp;*.h"
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Context.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Context.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Font.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Font.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Font.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Font.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32FontManager.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32GraphicsToolkit.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32GraphicsToolkit.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=../../../src/ImplementerKit/Win32Image.cpp
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Image.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=../../../include/implementerKit/Win32Image.h
-# End Source File
-# Begin Source File
-
-SOURCE=../../../include/implementerkit/Win32OpenGLPeer.h
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Image.h
 # End Source File
 # End Group
 # End Target

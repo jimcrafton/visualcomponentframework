@@ -1,13 +1,22 @@
+//TextLayout.cpp
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
 //Graphics4.cpp
 
 
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 
 
 using namespace VCF;
 
 /**
-Thie will show some of the various text 
+Thie will show some of the various text
 options that are possible when drawing text
 */
 
@@ -22,7 +31,7 @@ public:
 
 	virtual void paint( GraphicsContext* ctx ) {
 		Window::paint( ctx );
-		
+
 		/**
 		first we'll create 3 different fonts
 		One with Times New Roman, in 16 point bold
@@ -52,7 +61,7 @@ public:
 		double y = 20;
 
 		/**
-		To change the GraphicsContext's font, make a call to 
+		To change the GraphicsContext's font, make a call to
 		GraphicsContext::setCurrentFont, passing in a pointer to
 		the font. The passed in font will be copied over, so you
 		do not have to hold on it.
@@ -78,7 +87,7 @@ public:
 		ctx->textAt( x, y, "Text Example - " );
 
 		/**
-		Determine the text width. The GraphicsContext uses it's 
+		Determine the text width. The GraphicsContext uses it's
 		current font to determine this
 		*/
 		double width = ctx->getTextWidth( "Text Example - " );
@@ -121,8 +130,8 @@ public:
 		ctx->setCurrentFont( &font3 );
 
 		/**
-		Now we'll prepare to draw text using 
-		a Rect to specify the bounds that the text will be 
+		Now we'll prepare to draw text using
+		a Rect to specify the bounds that the text will be
 		drawn within
 		*/
 		String text = "Text within bounds";
@@ -173,7 +182,7 @@ public:
 
 		/**
 		Now draw the text using the rect's bounds
-		using the text drawing options specified in 
+		using the text drawing options specified in
 		the drawingOptions variable
 		*/
 		ctx->textBoundedBy( &textBounds, text, drawingOptions );
@@ -186,7 +195,7 @@ public:
 		text = "Clipped text within bounds, center aligned, single line";
 
 		/**
-		Draw the text but now that teh bounds have been shrunk, you'll see that 
+		Draw the text but now that teh bounds have been shrunk, you'll see that
 		the text becomes clipped
 		*/
 		ctx->textBoundedBy( &textBounds, text, drawingOptions );
@@ -228,17 +237,17 @@ public:
 		x = textBounds.left_;
 		y = textBounds.bottom_ + 50;
 
-		
+
 		textBounds.left_ = x;
-		textBounds.top_ = y;	
+		textBounds.top_ = y;
 
 
 		ctx->moveTo( x, y );
 		ctx->lineTo( x + 600, y );
 		ctx->strokePath();
-		
 
-		drawingOptions = GraphicsContext::tdoBottomAlign;		
+
+		drawingOptions = GraphicsContext::tdoBottomAlign;
 
 		ctx->setCurrentFont( &font1 );
 		textBounds.right_ = textBounds.left_ + ctx->getTextWidth( "Text Example - " );
@@ -248,7 +257,7 @@ public:
 		/**
 		Draw the text and align it to the bottom of the bounds
 		*/
-		ctx->textBoundedBy( &textBounds, "Text Example - ", drawingOptions );	
+		ctx->textBoundedBy( &textBounds, "Text Example - ", drawingOptions );
 
 
 		ctx->setCurrentFont( &font2 );
@@ -262,7 +271,7 @@ public:
 
 
 		/**
-		What follows shows you how to draw text that is aligned along a 
+		What follows shows you how to draw text that is aligned along a
 		baseline
 		*/
 
@@ -275,11 +284,11 @@ public:
 
 		ctx->setCurrentFont( &font1 );
 
-		
-		
+
+
 		/**
-		Generate the baseline. The baseline is determined by using the 
-		largest ascent in the series of font's you intend to use. In 
+		Generate the baseline. The baseline is determined by using the
+		largest ascent in the series of font's you intend to use. In
 		our case that's font1
 		*/
 		double baselineY = y + font1.getAscent() ;
@@ -295,15 +304,15 @@ public:
 		/**
 		draw the first part of the text
 		*/
-		ctx->textAt( x, y, "Text Example - " );	
+		ctx->textAt( x, y, "Text Example - " );
 
 		/**
 		nudge our x coordinate over by the width of the text we just drew
 		*/
-		x += ctx->getTextWidth( "Text Example - " );		
-		
+		x += ctx->getTextWidth( "Text Example - " );
+
 		/**
-		reset the y coordinate. It's new value is the baseline 
+		reset the y coordinate. It's new value is the baseline
 		minus the ascent of the next font we are going to use
 		*/
 		y = baselineY - (font2.getAscent());
@@ -322,13 +331,13 @@ public:
 		repeat ad infinitum...
 		*/
 		x += ctx->getTextWidth( "all on a single line" );
-		
+
 		ctx->setCurrentFont( &font3 );
 
 		y = baselineY - (font3.getAscent());
 
 		ctx->textAt( x, y, ", with even more Text!" );
-		
+
 		x += ctx->getTextWidth( ", with even more Text!" );
 
 		font1.setColor( Color::getColor("red") );
@@ -341,7 +350,7 @@ public:
 
 
 		ctx->textAt( x, y, " And now in Technicolor :)" );
-		
+
 	}
 
 };
@@ -357,12 +366,12 @@ public:
 	}
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new TextLayoutWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 850.0, 700.0 );
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -374,7 +383,20 @@ int main(int argc, char *argv[])
 	Application* app = new TextLayoutApp( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.5  2004/08/07 02:47:39  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.4.2.4  2004/04/29 03:40:57  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
+
 

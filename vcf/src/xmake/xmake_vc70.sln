@@ -1,0 +1,26 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libXmake", ".\libXmake_vc70.vcproj", "{14554450-4A3F-4616-B663-A246FEA20634}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmake", ".\xmake_vc70.vcproj", "{61E34BFF-B962-4F20-9D1B-206BBED299E8}"
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{14554450-4A3F-4616-B663-A246FEA20634}.Debug.ActiveCfg = Debug|Win32
+		{14554450-4A3F-4616-B663-A246FEA20634}.Release.ActiveCfg = Release|Win32
+		{61E34BFF-B962-4F20-9D1B-206BBED299E8}.Debug.ActiveCfg = Debug|Win32
+		{61E34BFF-B962-4F20-9D1B-206BBED299E8}.Release.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

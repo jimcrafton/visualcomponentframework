@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /Fo"vc6/Release/" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FOUNDATIONKIT_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPLICATIONKIT_DLL" /Fo"vc6/Release/" /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../../VCFBuilder2/Bin/VCFBuilder_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6.dll" /libpath:"../../../../VCFBuilder2/Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6.dll" /libpath:"..\..\..\..\VCFBuilder2\Packages\" /libpath:"$(VCF_LIB)"
 
 !ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
 
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Yu"stdafx.h" /Fd"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FOUNDATIONKIT_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPLICATIONKIT_DLL" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Yu"stdafx.h" /Fd"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.dll" /pdbtype:sept /libpath:"../../../../VCFBuilder2/Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages\" /libpath:"$(VCF_LIB)"
 
 !ENDIF 
 

@@ -1,13 +1,19 @@
 //ImageBasics.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
 
 
 using namespace VCF;
 
 /**
-This example will demonstrate some of the basics of 
+This example will demonstrate some of the basics of
 working with images
 */
 
@@ -58,7 +64,7 @@ public:
 
 		y += logoImage->getHeight() + 20;
 
-		String imageInfo = StringUtils::format( "Image width: %d, height: %d", 
+		String imageInfo = StringUtils::format( "Image width: %d, height: %d",
 												logoImage->getWidth(),
 												logoImage->getHeight() );
 
@@ -80,7 +86,7 @@ public:
 		draw a red rectangle on the image
 		*/
 		imgCtx->setColor( Color::getColor("red") );
-		
+
 		imgCtx->rectangle( 20, 20, 100, 75 );
 		imgCtx->fillPath();
 
@@ -112,7 +118,7 @@ public:
 		y += dest.getHeight() + 20;
 
 		/**
-		Now draw the image transparently. Note that this does not use any sort 
+		Now draw the image transparently. Note that this does not use any sort
 		of alpha channel transparency
 		*/
 
@@ -153,7 +159,7 @@ public:
 		delete the image cause we don't need it anymore
 		*/
 		delete logoImage;
-		
+
 	}
 };
 
@@ -169,11 +175,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ImageBasicsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -185,8 +191,20 @@ int main(int argc, char *argv[])
 	Application* app = new ImageBasicsApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:09  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:54  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

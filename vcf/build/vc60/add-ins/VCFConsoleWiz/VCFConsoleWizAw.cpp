@@ -153,7 +153,7 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				setting = "/D_CONSOLE";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
-				setting = "/DUSE_FRAMEWORK_DLL";
+				setting = "/DUSE_FOUNDATIONKIT_DLL";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				tool = "link.exe";

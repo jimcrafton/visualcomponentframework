@@ -1,6 +1,49 @@
+#ifndef _VCF_SKETCHWINDOW_H__
+#define _VCF_SKETCHWINDOW_H__
+//SketchWindow.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
+
+#define SKETCHWINDOW_CLASSID		"e035e1bd-f375-4b97-9736-710c17e672c8"
+
+/**
+class SketchWindow documentation
+*/
+class SketchWindow : public VCF::Window {
+public:
+	BEGIN_CLASSINFO( SketchWindow, "SketchWindow", "VCF::Window", SKETCHWINDOW_CLASSID )
+	END_CLASSINFO( SketchWindow )
+
+
+	SketchWindow();
+	virtual ~SketchWindow();
+
+
+protected:
+
+	void onDocInitialized( VCF::Event* e ) ;
+};
+
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/07 02:47:37  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.6.3  2004/04/29 03:40:56  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
 *Revision 1.2  2003/08/09 02:56:42  ddiego
 *merge over from the devmain-0-6-1 branch
 *Changes
@@ -34,33 +77,6 @@
 */
 
 
-#ifndef _SKETCHWINDOW_H__
-#define _SKETCHWINDOW_H__
-
-
-#define SKETCHWINDOW_CLASSID		"e035e1bd-f375-4b97-9736-710c17e672c8"
-
-/**
-class SketchWindow documentation
-*/
-class SketchWindow : public VCF::Window {
-public: 
-	BEGIN_CLASSINFO( SketchWindow, "SketchWindow", "VCF::Window", SKETCHWINDOW_CLASSID )
-	END_CLASSINFO( SketchWindow )
-
-
-	SketchWindow();
-	virtual ~SketchWindow();
-
-
-protected:
-
-	void onDocInitialized( VCF::Event* e ) ;
-};
-
-
-
-#endif //_SKETCHWINDOW_H__
-
+#endif // _VCF_SKETCHWINDOW_H__
 
 

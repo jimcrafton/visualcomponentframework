@@ -20,21 +20,21 @@ import string
 
 # globals
 
-ISS = "\"D:/Program Files/Inno Setup 4/ISCC.exe\""
 
-VCF_VERSION=''
-VCF_VERSION_STAGE= ''
-FULL_VCF_VERSION=''
-FULL_VCF_DOT_VERSION=''
-
-INSTALL_FILE_LISTING= '../installers/win32/vcfSrcFiles.iss'
-INSTALL_FILE = '../installers/win32/VCFFullInstaller.iss'
 
 def main():
 	
-	
-			
-		
+	ISS = "\"D:/Program Files/Inno Setup 4/ISCC.exe\""
+
+	VCF_VERSION=''
+	VCF_VERSION_STAGE= ''
+	FULL_VCF_VERSION=''
+	FULL_VCF_DOT_VERSION=''
+
+	INSTALL_FILE_LISTING= '../installers/win32/vcfSrcFiles.iss'
+	INSTALL_FILE = '../installers/win32/VCFFullInstaller.iss'
+
+
 
 	fs = file( '../VERSION', 'r' )
 	lines = fs.readlines()

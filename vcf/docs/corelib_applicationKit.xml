@@ -32,18 +32,18 @@ NB: This software will not save the world.
 	<section><title>Applications </title>
 		<para>
 		<indexterm><primary>UI Applications</primary></indexterm>
-		In the VCF an user inteface application can have a central class that derives 
+		In the VCF, a user inteface application can have a central class that derives 
 		from the VCF::Application class. The application class handles the details of 
-		starting thea application, initializing it, starting the event loop, and 
+		starting the application, initializing it, starting the event loop, and 
 		terminating gracefully when the user exits the application, or an exception
-		occurrs. 
+		occurrs.
 		</para>
 		<para>
 		<indexterm><primary>VCF standalone</primary></indexterm>
 		It is possible to use the VCF with out an application class, particularly if 
-		you are integrating with another toolkit. In this case it is assumed that 
-		an event loop is already running, and certain features that depend on an 
-		Application instance may not work.
+		you are integrating with another toolkit. In this case, it is assumed that 
+		an event loop is already running, and certain features that depend on an
+		Application instance may not work. 
 		</para>
 		<para>
 		<indexterm><primary>apps</primary></indexterm>
@@ -72,10 +72,11 @@ int main( int argc, char** argv )
 		</programlisting>
 		</para>
 		<para>
-		This will start the program running, call the Application's initRunningApplication() method,
-		and then start the event loop. The Application stores it's arguments in a std::vector of 
-		Strings, in the member variable Application::m_cmdLine. You can retreive the current 
-		running instance of the Application by calling Application::getRunningInstance().
+		This will start the program running, call the Application's 
+		initRunningApplication() method, and then start the event loop. The Application 
+		stores it's arguments in a std::vector of Strings, in the member variable 
+		Application::m_cmdLine. You can retreive the current running instance of the 
+		Application by calling Application::getRunningInstance().
 		</para>
 		<para>
 		You can customize the initialization of your application by overriding the 
@@ -94,12 +95,11 @@ public:
 		</programlisting>
 		<note>
 			<para>
-			Don't forget to call the base class's initRunningApplication() method, or you may see 
-			incorrect or undefined behaviour.
+			Don't forget to call the base class's initRunningApplication() method, or you 
+			may see incorrect or undefined behaviour.
 			</para>
 		</note>
-		</para>
-		<para>
+		
 		You can use your new class like so:
 		<programlisting>
 int main( int argc, char** argv ) 
@@ -131,17 +131,27 @@ public:
 
 	<section><title>UI Toolkit </title>
 		<section><title>Intro</title>
+	
 			<para>
-			The UI Toolkit is used to create instances of various peer's needed by the VCF,
-			as well as providing certain low level services, such as modal and non-modal event
-			loops, and getting at UI metrics. Each system the VCF is ported to has a concrete
-			implementation of the UIToolkit. The UIToolkit is a singleton, and there should 
-			only be <emphasis>one</emphasis> instance for a given process running the VCF
-			libraries.
+			The UI Toolkit is used to create instances of various peer's needed by the 
+			VCF, as well as providing certain low level services, such as modal and
+			non-modal event loops, and getting at UI metrics. Each system the VCF is 
+			ported to has a concrete implementation of the UIToolkit. Below are the
+			available port for UIToolkit.
+			</para>
+			<para>
+			 	Windows	-> Win32Toolkit	
+				Linux	-> GTKUIToolkit
+				OSX	-> OSXUIToolkit
+				X11	-> X11UIToolkit
+			</para>
+			<para>
+                        The UIToolkit is a singleton, and there should only be <emphasis>one</emphasis>
+			instance for a given process running the VCF libraries.
 			</para>
 			<para>
 			To work with the toolkit you retreive it's instance via a static function,
-			<function>UIToolkit::getDefaultUIToolkit()</function>. If no toolkit is found 
+			<function>UIToolkit::getDefaultUIToolkit()</function>. If no toolkit is found
 			(which is an extremely bad thing!) a NoToolKitFoundException is thrown. A 
 			quick example:
 			<programlisting>
@@ -165,21 +175,26 @@ catch ( NoToolKitFoundException &amp; e ) {
 			spacing between controls. These values are read only and may not be changed.
 			</para>
 			<para>
-			The UI Metrics are intended to be a guide. It allows you properly control the spacing between controls, 
-			something that is frequently guess work and done with hard coded values. By using the UI Metrics provided
-			by the toolkit, you can ensure that the values you work with are standard and consistent for the platform you
-			app is running on. It also makes sure that the values you use take into account the DPI resolution of the current
-			screen settings, so that a change in these settings does not adversely affect your layout of your GUI.
+			The UI Metrics are intended to be a guide. It allows you properly control the 
+			spacing between controls, something that is frequently guess work and done 
+			with hard coded values. By using the UI Metrics provided by the toolkit, you 
+			can ensure that the values you work with are standard and consistent for the 
+			platform your app is running on. It also makes sure that the values you use 
+			take into account the DPI resolution of the current screen settings, so that 
+			a change in these settings does not adversely affect your layout of your GUI.
 			</para>			
 			<para>
-			An example of this is writing code that creates a label and an edit box, and wanting to ensure that the vertical
-			spacing between the two is consistent and in line with the platform UI rules. This is extremely important when creating 
-			a professional UI.
+			An example of this is writing code that creates a label and an edit box, and
+			wanting to ensure that the vertical spacing between the two is consistent 
+			and in line with the platform UI rules. This is extremely important when 
+			creating a professional UI.
 			</para>
 			<para>
-			Another feature of UI Metrics is the ability to get the right Font for various common controls. For example, the font used for
-			displaying status versus the font used in a message dialog, is frequently different, and may depend on the users settings
-			within the system. By using the UI Metrics you dont' have to resort to guess work as to what this is.
+			Another feature of UI Metrics is the ability to get the right font for 
+			various common controls. For example, the font used for displaying status 
+			versus the font used in a message dialog, is frequently different, and may 
+			depend on the users settings within the system. By using the UI Metrics you 
+			dont' have to resort to guess work as to what this is.
 			</para>			
 		</section>
 		
@@ -190,48 +205,149 @@ catch ( NoToolKitFoundException &amp; e ) {
 		
 		<section><title>Timers</title>
 			<para>
-			A timer in the VCF is an instance of the EventHandler class that is called repeatedly until the handler is removed. 
-			The duration between calls is specified in milliseconds, and you can specify the duration in the call to register the 
-			timer handler. Each time the handler is called, a TimerEvent instance is created, with it event type set to 
-			TIMER_EVENT_PULSE. The event is then passed to the handler's invoke() method.
+			A timer in the VCF is an instance of the EventHandler class that is called 
+			repeatedly until the handler is removed. The duration between calls is 
+			specified in milliseconds, and you can specify the duration in the call to 
+			register the timer handler. Each time the handler is called, a TimerEvent 
+			instance is created, with it event type set to TIMER_EVENT_PULSE. The event 
+			is then passed to the handler's invoke() method.
 			</para>
 			<para>
-			A timer in the VCF is not run in a separate thread, instead it is in the thread of execution that started the event 
-			loop. If you need a timer mechanism that is in a separate thread then you should use the Thread class for writing 
-			one.
+			A timer in the VCF is not run in a separate thread, instead it is in the 
+			thread of execution that started the event loop. If you need a timer 
+			mechanism that is in a separate thread then you should use the Thread class 
+			for writing one.
 			</para>
 			<para>
-			To add a timer all you have to do is call the toolkit's <function>UIToolkit::registerTimerHandler()</function>. This
-			method is not static, so you'll first need to get an instance of the toolkit. To call registerTimerHandler() you need 
-			to pass in an instance of a VCF::Object (or some class derived from it), and a VCF::EventHandler instance. In 
-			addition you specify the duration of the timer, or how long to wait till the next time to call the handler's invoke() 
-			method. The Object you pass in represents the source that is used for all TimerEvents that get created.
+			To add a timer all you have to do is call the toolkit's 
+			<function>
+                         <![CDATA[
+			UIToolkit::registerTimerHandler(Object* source, EventHandler*
+			handler, const ulong32& timeoutInMilliSeconds )
+			 ]]>
+			 </function> function.
+			This method is not static, so you'll first need to get an instance of the 
+			toolkit. The source is an instance of 
+			a VCF::Object (or some class derived from it), the handler is a
+			VCF::EventHandler instance. The timeoutInMilliSeconds term is the duration 
+			of the timer, or how long to wait till the next time to call the handler's 
+			invoke() method. The Object you pass in represents the source that is used 
+			for all TimerEvents that get created.  
 			</para>
+			
+
 			<para>
-			You can stop a timer by calling the toolkit's <function>UIToolkit::unregisterTimerHandler()</function> method and 
+			You can stop a timer by calling the toolkit's 
+			<function>UIToolkit::unregisterTimerHandler()</function> method and 
 			passing in the same event handler instance that was passed to 
 			<function>UIToolkit::registerTimerHandler()</function>.
 			</para>
-		</section>
-		
-		<section><title>Carets</title>		
 			<para>
-			A caret is a little rectangular (usually) graphic that flashs and shows the current position within a section of text. 
-			Typically the caret is used in text controls.
+			Here is an example of using a timer. 
+			</para>			
+			<programlisting>
+			<![CDATA[
+class TimerEx :public EventHandler, Object
+{
+
+    public:
+    	TimerEx(){
+    		// Here we set up the timer.  This class is the source for
+    		// the timer and it is also the event handler.  This timer
+    		// will fire every 4 seconds.
+    		UIToolkit::registerTimerHandler( this, this, 4000L);
+    	}
+
+    	//The invoke takes an Event. For timers the event type is TimerEvent.
+	void invoke(TimerEvent * evt){
+		Object * src = evt->getSource();
+
+		//Invoke any time specific code tied to this timer.
+	}
+
+	~TimerEx(){
+		// before destruction remove the timer.  That way we don't
+		// waste system resources.
+		UIToolkit::unregisterTimerHandler( this );
+	}
+};                     ]]>
+			</programlisting>
+ 
+			<note>
+			Events are not coelesced in this release.  So this means that you could slow 
+                        the entire application down easily if event handling takes too long.
+			Because all the timer events share one thread by default it is important
+			that the EventHandler::invoke() function return quickly.  It will tie up
+                        all other timers after it if event handling time of the timer events is
+                        very long.
+			</note>
+			<para>
+			If timer handling is complex or other methods called then consider creating
+			a tread for handler code.  The example above would need these changes if the
+			handler was time intensive.
+			</para>
+		<programlisting>
+		<![CDATA[
+class MyTimerCallback : public Thread{
+   public:
+    	void run(){
+    		//process complex code
+    	}
+};
+
+class TimerEx2 :public EventHandler, Object
+{
+    public:
+    	TimerEx2(){
+    		// Here we set up the timer.  This class is the source for
+    		// the timer and it is also the event handler.  This timer
+    		// will fire every 4 seconds.
+    		UIToolkit::registerTimerHandler( this, this, 4000L);
+    	}
+
+    	//The invoke takes an Event. For timers the event type is TimerEvent.
+	void invoke(TimerEvent * evt){
+
+		// Create and invoke the thread.
+		MyTimerCallback  callbackThread = new MyTimerCallback();
+		callbackThread->start();
+	}
+
+	~TimerEx2(){
+		// before destruction remove the timer.  That way we don't
+		// waste system resources.
+		UIToolkit::unregisterTimerHandler( this );
+	}
+};
+]]>
+			</programlisting>
+			<para>
+			Alternativly, A new timer class could be created that would send all timer
+			events on seperate threads.  This could consume significant resources if
+			there are many events getting fired at near real-time.
+			</para>
+		</section>
+
+		<section><title>Carets</title>
+			<para>
+			A caret is a little rectangular (usually) graphic that flashs and shows the 
+			current position within a section of text. Typically the caret is used in 
+			text controls.
 			</para>
 		</section>	
 		
 		
 		<section><title>Posting Events</title>
 			<para>
-			Calling functions that fire events, or firing an event yourself via a Delegate is always synchronous behaviour, and 
-			you must wait for any callbacks before proceeding. However you can also <emphasis>post</emphasis> an 
-			event, which allows you to go on with your immediate processing and puts the event on the toolkits event 
-			queue for later processing.
+			Calling functions that fire events, or firing an event yourself via a 
+			Delegate is always synchronous behaviour, and you must wait for any callbacks 
+			before proceeding. However you can also <emphasis>post</emphasis> an event, 
+			which allows you to go on with your immediate processing and puts the event 
+			on the toolkits event queue for later processing.
 			</para>
 			<para>
-			To post an event you need to create a an event instance. With synchronous behaviour, you can create an event
-			instance on the stack, for example:
+			To post an event you need to create a an event instance. With synchronous 
+			behaviour, you can create an event instance on the stack, for example:
 			<programlisting>
 			<![CDATA[
 //get the control some how
@@ -243,9 +359,11 @@ MouseEvent e; //event is created on the stack
 someControl->handleEvent( &e ); //we block here till all the event handling is done
 			]]>
 			</programlisting>
-			However when you post an event, you <emphasis>must</emphasis> create the event on heap, since you will not
-			have control over when it gets destroyed. If you already have an existing event the easiest thing to do is to 
-			clone it, by calling the event's clone() method, and pass this cloned event instance to the post method. 
+			However when you post an event, you <emphasis>must</emphasis> create the 
+			event on heap, since you will not have control over when it gets destroyed. 
+			If you already have an existing event the easiest thing to do is to 
+			clone it, by calling the event's clone() method, and pass this cloned event 
+			instance to the post method. 
 
 			
 			 <note>
@@ -254,59 +372,70 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 			
 			</para>
 			<para>
-			Once you have an event instance ready, you can post the event by either creating a new event handler
-			instance or getting an existing one, and then call the toolkit's postEvent() method. You can 
-			optionally tell the toolkit to <emphasis>not</emphasis> auotmatically delete the handler 
-			for you by passing in a boolean value set to false (the default behaviour is to delete the handler
-			you pass in). The event instance that is passed in is deleted automatically for you when the event
-			is finished processing.
+			Once you have an event instance ready, you can post the event by either 
+			creating a new event handler instance or getting an existing one, and then 
+			call the <![CDATA[ UIToolkit::postEvent(EventHandler* eventHandler, Event*
+			event, const bool& deleteHandler=true)]]> method.
+			You can optionally tell the toolkit to <emphasis>not</emphasis> 
+			auotmatically delete the handler for you by setting the deleteHandler to 
+			false (the default behaviour is to delete the handler you pass in). The 
+			event instance that is passed in is deleted automatically for you when the 
+			event is finished processing.
 			</para>
 		</section>
 		
 		<section><title>Default Buttons</title>		
 			<para>
-			A default button is a button whose click method will get called fired when the user hits the 
-			return key. The button does not have to have the current focus for this to happen. Typically
-			a default button has some visual indicator that easily distinguishes it from other buttons. 
+			A default button is a button whose click method will get called fired when 
+			the user hits the return key. The button does not have to have the current 
+			focus for this to happen. Typically a default button has some visual 
+			indicator that easily distinguishes it from other buttons. 
 				<note>
-				On Win32 systems the default button usually has a 1 pixel black border around it's edges.
+				On Win32 systems the default button usually has a 1 pixel black 
+				border around it's edges.
+				
 				On MacOSX the button is darker shade of blue and pulses.
 				</note>
 			</para>
 			<para>
-			You can set the default button programmatically by calling hte toolkit's setDefaultButton()
-			method. You pass in any control that implements the VCF::Button interface. 
+			You can set the default button programmatically by calling the toolkit's 
+			setDefaultButton() method. You pass in any control that implements the 
+			VCF::Button interface. 
 			</para>
 			<para>
-			To determine the current default button, call the toolkit's getDefaultButton() method, which 
-			will return the current default button instance, or NULL if there is no default button.
+			To determine the current default button, call the toolkit's 
+			getDefaultButton() method, which will return the current default button 
+			instance, or NULL if there is no default button.
 			</para>
 			
 		</section>
 		
 		<section><title>Accelerators</title>	
 			<para>
-			An accelerator is a special action that takes place when a key or key combination is 
-			pressed on the keyboard. For example, with many applications, hitting the "Ctrl" and the 
-			"C" keys together will copy something to the clipboard. Key combinations are one of hte 
-			alpha-numeric keys, and 0 or more "modifier" keys, such as Ctrl, Alt (or Option),
-			or Shift.
+			An accelerator is a special action that takes place when a key or key 
+			combination is pressed on the keyboard. For example, with many applications, 
+			hitting the "Ctrl" and the "C" keys together will copy something to the 
+			clipboard. Key combinations are one of the alpha-numeric keys, and 0 or more 
+			"modifier" keys, such as Ctrl, Alt (or Option),or Shift.
 			</para>	
 			<para>
-			Accelerators are managed by the toolkit, which also ensures that keyboard events that
-			match a particular accelerator get handled correctly. To register an accelerator you
-			call the toolkit's registerAccelerator() method which takes an instance of a 
-			VCF::AcceleratorKey class. You can remove an accelerator by calling the removeAccelerator()
-			method. You can query for the existance of an accelerator by calling the 
-			toolkit's getAccelerator() method, passing in the virtual key code, and a mask that indicates
+			Accelerators are managed by the toolkit, which also ensures that keyboard 
+			events that match a particular accelerator get handled correctly. To register 
+			an accelerator you call the toolkit's registerAccelerator() method which 
+			takes an instance of a VCF::AcceleratorKey class. You can remove an 
+			accelerator by calling the removeAccelerator() method. You can query for 
+			the existance of an accelerator by calling the toolkit's getAccelerator() 
+			method, passing in the virtual key code, and a mask that indicates
 			which modifier keys are pressed (if any).
 			</para>
 			<para>
-			To register an accelerator you need an instance of AcceleratorKey. To do this you need 
-			the following information to pass to the AcceleratorKey's constructor:
+			To register an accelerator you need an instance of AcceleratorKey. To do this 
+			you need the following information to pass to the AcceleratorKey's 
+			constructor:
 			<itemizedlist>
 				<listitem>
-					a control that is associated with the AcceleratorKey (this may be NULL).
+					a control that is associated with the AcceleratorKey (this 
+					may be NULL).
 				</listitem>
 
 				<listitem>
@@ -314,8 +443,8 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 				</listitem>
 
 				<listitem>
-					a value for a modifier mask (whether or not the accelerator uses 
-					the Ctrl, Shift, or Alt keys).
+					a value for a modifier mask (whether or not the accelerator 
+					uses the Ctrl, Shift, or Alt keys).
 				</listitem>
 
 				<listitem>
@@ -326,8 +455,8 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 					and whether or not the accelerator is triggered via a mnemonic. 
 				</listitem>
 			</itemizedlist>
-			Once you have created the AcceleratorKey, call the toolkit's registerAccelerator()
-			and pass in the new AcceleratorKey instance.
+			Once you have created the AcceleratorKey, call the toolkit's 
+			registerAccelerator() and pass in the new AcceleratorKey instance.
 			</para>
 		</section>
 		
@@ -381,6 +510,159 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		valid control instance.
 		</para>
 	</section>
+	<section><title>Event Types</title>
+		<para>
+		The table below shows each event and the component or object type responisble for the 
+		event being fired.  <TODO>validate all event data. </TODO>
+		
+		<table frame="none" pgwide="1">
+		      <tgroup cols="3" align="left" colsep="1" rowsep="1">
+		        <thead>
+		          <row>
+		            <entry>Event Class</entry>
+		            <entry>Source Class(es)</entry>
+		            <entry>Description</entry>
+		          </row>
+		        </thead>
+		        <tbody>
+		          <row>
+		            <entry>ButtonEvent</entry>
+		            <entry>PushButton</entry>
+		            <entry>This event is fired when button is pressed</entry>
+		       	  </row>
+		       	  <row>
+		            <entry>ClipboardEvent</entry>
+		            <entry>Object</entry>
+		            <entry>Fired when a cut copy or paste occurs</entry>
+		          </row>
+		       	  <row>
+		            <entry>ColumnItemEvent</entry>
+		            <entry></entry>
+		            <entry>Fired when column is selected</entry>
+		          </row>
+		       	  <row>
+		            <entry>ColumnModelEvent</entry>
+		            <entry></entry>
+		            <entry>Fired when model data is changed</entry>
+		          </row>
+		       	  <row>
+		            <entry>ControlEvent</entry>
+		            <entry></entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>FocusEvent</entry>
+		            <entry>Component</entry>
+		            <entry>Fired when component focus changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>HelpEvent</entry>
+		            <entry>Component</entry>
+		            <entry>Fired when help requested</entry>
+		          </row>
+		       	  <row>
+		            <entry>ImageEvent</entry>
+		            <entry></entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>ImageListEvent</entry>
+		            <entry></entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>ItemEvent</entry>
+		            <entry>CheckBoxControl, </entry>
+		            <entry>Fired when item selection changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>KeyboardEvent</entry>
+		            <entry>Object</entry>
+		            <entry>fided when a key is hit on the keyboard</entry>
+		          </row>
+		       	  <row>
+		            <entry>ListModelEvent</entry>
+		            <entry>ListBoxControl</entry>
+		            <entry>Fired when list data is changed</entry>
+		          </row>
+		       	  <row>
+		            <entry>MenuItemEvent</entry>
+		            <entry>MenuBar</entry>
+		            <entry>Fired when menu item selected</entry>
+		          </row>
+		       	  <row>
+		            <entry>MouseEvent</entry>
+		            <entry>Component</entry>
+		            <entry>Fired when mouse is moved or mouse button clicked</entry>
+		          </row>
+		       	  <row>
+		            <entry>PropertyChangeEvent</entry>
+		            <entry>PropertyEditorManager</entry>
+		            <entry>Fired when propery changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>TabModelEvent</entry>
+		            <entry>TabbedPages</entry>
+		            <entry>Fired when tab selection changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>TableModelEvent</entry>
+		            <entry>TableControl</entry>
+		            <entry>Fired when table data changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>TextEvent</entry>
+		            <entry>TextControl</entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>ThreadEvent</entry>
+		            <entry>Thread or Runnable</entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>TimerEvent</entry>
+		            <entry>Object</entry>
+		            <entry>Fired when timer expires</entry>
+		          </row>
+		       	  <row>
+		            <entry>ToolTipEvent</entry>
+		            <entry>Component</entry>
+		            <entry>Fired when tool tip needs shown</entry>
+		          </row>
+		       	  <row>
+		            <entry>TreeModelEvent</entry>
+		            <entry>DefaultTreeModel</entry>
+		            <entry>Fired when tree model data changes</entry>
+		          </row>
+		       	  <row>
+		            <entry>UndoRedoEvent</entry>
+		            <entry>UndoRedoStack</entry>
+		            <entry>Fired when undo or redo is required</entry>
+		          </row>
+		       	  <row>
+		            <entry>ValidationEvent</entry>
+		            <entry></entry>
+		            <entry></entry>
+		          </row>
+		       	  <row>
+		            <entry>WhatsThisHelpEvent</entry>
+		            <entry>Component</entry>
+		            <entry>Fired when context sensitive hit on UI item is made</entry>
+		          </row>
+		       	  <row>
+		            <entry>WindowEvent</entry>
+		            <entry>Window</entry>
+		            <entry>Fired when window size or location changes.  Also when 
+		            maximized or minimized.</entry>
+		          </row>
+		          
+		        </tbody>
+		      </tgroup>    
+		    </table>
+
+		</para>
+	</section>
 	
 	<section><title>Drag and Drop </title>
 		<para>
@@ -404,7 +686,7 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		Starting a drag operation is typically done when the primary mouse button is held down
 		and while keeping this button held down, the user moves the mouse beyond some system
 		specific thresh hold. This threshold can be retreived from the UIToolkit by calling the 
-		getDragDropDelta() method, which returns a Size object indicating the minimum change 
+		getDragDropDelta() method, which returns a Size object indicating the minimum change
 		in position that each coordinate must exceed before the drag is started. These mouse
 		events all take place on VCF::Control derived class, such as a VCF::Window, or 
 		VCF::TextControl, or some custom control.
@@ -431,10 +713,11 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		are defined in DragActionType enumeration. An event handler that gets notified of 
 		this event may call the DragSource event's setActionType() to indicate the preferred
 		action type (typically a link, copy, or move). If the mouse is over an area that
-		cannot receive a Drag Drop operation, then the action type should be none, or daNone.		
+		cannot receive a Drag Drop operation, then the action type should be none, or daNone.
+
 		</para>
 		<para>
-		In addition to the the SourceGiveFeedback events, DragSource also fires 
+		In addition to the the SourceGiveFeedback events, DragSource also fires
 		SourceCanContinueDragOp events. These control whether or not the operation should
 		even continue at all. An event handler for this event can call the DragSource event's 
 		setActionType() method with a value of daStop to shutdown the Drag Drop operation.
@@ -453,85 +736,93 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		appropriate times. 
 		</para>
 		<para>
-		The first event fired is the DropTargetEntered event. This is fired the first time the mouse
-		enters within the bounds of the control registered to the DropTarget instance during a Drag 
-		and Drop operation. When the mouse leaves the control's bounds, a DropTargetLeft event is 
-		fired. While the mouse is within the control's bounds a DropTargetDraggingOver event is 
-		fired for each mouse move. When the mouse is released, indicating the source will be dropped,
-		the DropTargetDropped event is fired, completing the Drag and Drop operation.
+		The first event fired is the DropTargetEntered event. This is fired the first time 
+		the mouse enters within the bounds of the control registered to the DropTarget 
+		instance during a Drag and Drop operation. When the mouse leaves the control's 
+		bounds, a DropTargetLeft event is fired. While the mouse is within the control's 
+		bounds a DropTargetDraggingOver event is fired for each mouse move. When the mouse 
+		is released, indicating the source will be dropped, the DropTargetDropped event is 
+		fired, completing the Drag and Drop operation.
 		</para>
 		<para>
-		Once the source data has been "dropped" you can retreive the data from the DropEvent instance
-		that is fired because from the DropTargetDropped delegate. With this event you can retreive 
-		the data object and process it accordingly.
+		Once the source data has been "dropped" you can retreive the data from the DropEvent 
+		instance that is fired because from the DropTargetDropped delegate. With this event 
+		you can retreive the data object and process it accordingly.
 		</para>
 	</section>
 	
 	<section><title>Components </title>
 		<para>
-		Components represent the smallest nonvisual class that can be manipulated at design time.
-		This manipulation takes place through property editors, event editors, and component editors.
-		Technically the VCF RTTI system and event system will work with any class that is derived 
-		(directly or indirectly) from VCF::Object, but the VCF::Component represents the beginning 
-		of user interface related classes. In addition, any class derived from Component can be 
-		registered with the run time component information system, and will also show up in an 
-		IDE's component	palette.
+		Components represent the smallest nonvisual class that can be manipulated at design 
+		time.  This manipulation takes place through property editors, event editors, and 
+		component editors.  Technically the VCF RTTI system and event system will work with 
+		any class that is derived (directly or indirectly) from VCF::Object, but the 
+		VCF::Component represents the beginning of user interface related classes. In 
+		addition, any class derived from Component can be registered with the run time 
+		component information system, and will also show up in an IDE's component palette.
 		</para>		
 		<para>
-		Components come in two flavors: non-visual components, such as the TimerComponent, and visual 
-		components, that derive from Control (which is itself derived from Component), and are visible
-		to the user. Examples of visual components are the ListBoxControl, Window, and Panel control.
+		Components come in two flavors: non-visual components, such as the TimerComponent, 
+		and visual components, that derive from Control (which is itself derived from 
+		Component), and are visible to the user. Examples of visual components are the 
+		ListBoxControl, Window, and Panel control.
 		</para>
 		<para>
-		You do <emphasis>not</emphasis> create instances of Component. It is an abstract class that
-		is intended to serve as a base class for other concrete components. 
+		You do <emphasis>not</emphasis> create instances of Component. It is an abstract 
+		class that is intended to serve as a base class for other concrete components. 
 		</para>
 		<para>
-		Components maintain a special state variable called component state, that indicates the current 
-		state of the component. This is useful, for example, in determining if the component is in design
-		mode, or normal mode. Unless the component is being edited in a designer, the default state is 
-		normal mode. The state is an enumeration of type ComponentState.
+		Components maintain a special state variable called component state, that indicates 
+		the current state of the component. This is useful, for example, in determining if 
+		the component is in design mode, or normal mode. Unless the component is being 
+		edited in a designer, the default state is normal mode. The state is an enumeration 
+		of type ComponentState.
 		</para>
 		<para>
-		Components are intended to be reused by other applications. They can be part of a standalone 
-		library, that can be used by other applications, or a an application may create a series of 
-		components specifically for it's use. When part of a standalone library, library is referred 
-		to as a Visual Package Library (VPL). A VPL can be a static library, or a dynamic library
-		in the form of a DLL or Shared Object. VPL's typically have a file extension of ".vpl". To
-		allow this form of re-use, Componen need to provide not only RTTI information, but also 
-		language specific information, such as the name of the library they belong to, the header(s)
-		they require for usage, etc. This information is stored in two main classes, ComponentInfo, 
-		which deals with the specific details of a particular Component class, and PackageInfo, which
-		deals with the specifics of the package libary (VPL) that the Component belongs to.
+		Components are intended to be reused by other applications. They can be part of a 
+		standalone library, that can be used by other applications, or a an application may 
+		create a series of components specifically for it's use. When part of a standalone 
+		library, library is referred to as a Visual Package Library (VPL). A VPL can be a 
+		static library, or a dynamic library in the form of a DLL or Shared Object. VPL's 
+		typically have a file extension of ".vpl". Remember if using Application to derive 
+		the libraries main class from LibraryApplication. To allow this form of re-use, 
+		Components need to provide not only RTTI information, but also language specific 
+		information, such as the name of the library they belong to, the header(s) they 
+		require for usage, etc. This information is stored in two main classes, 
+		ComponentInfo, which deals with the specific details of a particular Component 
+		class, and PackageInfo, which deals with the specifics of the package libary (VPL) 
+		that the Component belongs to.
 		</para>
 		<para>
-		The ComponentInfo class gives detailed information about the particular component class. It 
-		provides information about the author of the component, the company (if relevant),
-		copyright, and text containing any other relevant information the developer wishes to provide.
-		A developer can set the image to use for the component as well (if left alone a default 
-		image will be provided).
+		The ComponentInfo class gives detailed information about the particular component 
+		class. It provides information about the author of the component, the company (if 
+		relevant),copyright, and text containing any other relevant information the 
+		developer wishes to provide.  A developer can set the image to use for the component 
+		as well (if left alone a default image will be provided).
 		</para>
 		<para>
-		The ComponentInfo class also provides inforamation about which header(s) are needed by 
-		the component. The getRequiredHeaders() method returns an Enumerator of Strings that
-		lists the headers in the orderd they should be included. The headers should 
-		<emphasis>not</emphasis> contain absolute paths. If the component is part of a namespace
-		(other than the VCF namespace) it can expose this information via the getRequiredNamespaces()
-		method. This will list any namespaces the component requires for usage.
+		The ComponentInfo class also provides inforamation about which header(s) are needed 
+		by the component. The getRequiredHeaders() method returns an Enumerator of Strings 
+		that lists the headers in the orderd they should be included. The headers should 
+		<emphasis>not</emphasis> contain absolute paths. If the component is part of a 
+		namespace (other than the VCF namespace) it can expose this information via the 
+		<function>getRequiredNamespaces()</function> method. This will list any namespaces 
+		the component requires for usage.
 		</para>
 		<para>
-		The PackageInfo class describes the library the component is part of. It specifies the
-		author of the package library, the company, copyright info, and text for other information.
-		It gives out the name of the library <emphasis>excluding</emphasis> the platform specific
-		extension (such as .lib or .a or .so). It indicates the platforms/toolchains it supports 
-		(if no source is provided). It indicates whether it allows static linkage, dynamic linkage, 
-		or both.
+		The PackageInfo class describes the library the component is part of. It specifies 
+		the author of the package library, the company, copyright info, and text for other 
+		information. It gives out the name of the library <emphasis>excluding</emphasis> the 
+		platform specific extension (such as .lib or .a or .so). It indicates the platforms/
+		toolchains it supports (if no source is provided). It indicates whether it allows 
+		static linkage, dynamic linkage, or both.
 		</para>
 
 		<para>
-		Components can be "owned" by other components, freeing the developer from having to worry
-		about deleting the Components later on. To add a Component you simply call the Component's
-		addComponent() method, passing in the instance of the component you want to "own".
+		Components can be "owned" by other components, freeing the developer from having to 
+		worry about deleting the Components later on. To add a Component you simply call the 
+		Component's <function>addComponent()</function> method, passing in the instance of 
+		the component you want to "own".
 		</para>
 	</section>
 	
@@ -556,7 +847,7 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		that has a parent is known as a child control. Typically controls with no parent
 		are top level controls like a Window, Toolbar, or Dialog. The parent control is responsible 
 		for resizing the child if appropriate (see <link linkend="Layout">Layout</link> for 
-		more information on this). It is OK for a parent to be NULL for top level controls
+		more information on this). It is okay for a parent to be NULL for top level controls
 		like a Window or Dialog.
 		</para>
 
@@ -569,11 +860,12 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		</para>
 
 		<para>
-		A Container has methods for adding, inserting, and removing
-		controls. A Container instance owns all the child controls it has, and is responsible
-		for deleting them when the container itself is destroyed. The container is owned by the
-		Control it belongs to. The Container class itself cannot be created, as it is an abstract 
-		interface class. Instead you must create some concrete class derived from the Container class.
+		A Container has methods for adding, inserting, and removing controls. A Container 
+		instance owns all the child controls it has, and is responsible for deleting them 
+		when the container itself is destroyed. The container is owned by the Control it 
+		belongs to. The Container class itself cannot be created, as it is an abstract 
+		interface class. Instead you must create some concrete class derived from the 
+		Container class.
 		</para>
 
 		<para>
@@ -581,10 +873,11 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		and to respond to certain events, forwarding them along to other child controls. 
 		Containers can automatically resize their child controls when a resize event happens
 		to the Control that owns the Container. When this happens, the 
-		<emphasis>default</emphasis> behaviour is to follow standard <link linkend="Layout">layout rules</link> 
-		depending on the child's alignment or anchor settings. The event forwarding behaviour only 
-		takes place for child controls that are lightweight. Heavyweight controls do not need this, 
-		as they will receive events directly from the windowing system.
+		<emphasis>default</emphasis> behaviour is to follow standard <link linkend="Layout">
+		layout rules</link> depending on the child's alignment or anchor settings. The event 
+		forwarding behaviour only takes place for child controls that are lightweight. 
+		Heavyweight controls do not need this, as they will receive events directly from the
+		windowing system.
 		</para>
 		
 		<para>
@@ -598,26 +891,517 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		<para>
 		</para>
 	</section>
-	
-	<section><title>Frames, Dialogs, and Windows </title>
+	<section><title>Frames, Dialogs, and Windows</title>
 		<para>
+		Most applications today are GUI based.  The main components of any 
+		GUI application are frames, dialogs, and windows. Many vendors claim
+		platform independence it usually does not involve the GUI.  Each 
+		platform has its own style guidlines and look and feel.  
 		</para>
-	</section>
-	
-	<section><title>Models </title>
 		<para>
+		Java was originally promised to be able to write once and run anywhere.  
+		That did not totally turn out to be true though.  C++ libraries for
+		platfom independet graphics have existed in the past ;however, they were
+		cumbersome to use.  Many also suffered from licensing cost and divergence 
+		from the platforms standard.  VCF provides a clean and easy to use 
+		framework that goes well beyond common graphics packages and adheres 
+		strictly to platform look and feel guidelines.
+		</para>
+		<section><title>Dialog usage in VFC</title>
+		<para>
+		An application often needs to show modal and non modal dialogs.  Modal 
+		dialogs do not allow any other GUI interaction while displayed. VFC 
+		supports modal and non modal dialog types.   
+		</para>
+		
+                <section><title>Standard Dialogs</title>
+		<para>
+                There are several standard dialogs already in VCF.
+		</para>
+                <note>These common dialogs are fully supported in Windows in this
+		version.  The OSX platform has no support in this release.  The
+		linux platform has partial support in this release.
+		</note>
+		<para>
+		File load and save dialogs are derived from CommonFileDialog.  To open a file load dialog use the
+		CommonFileOpen class. To bring up a save dialog, use the CommonFileSave class. 
+		Another related dialog is the CommonFileBrowse. This dialog is used when you
+		want to browse the folders in a tree. Here is an example of how to use the 
+		common file realated dialogs.
+		</para>
+		<programlisting>
+                  <![CDATA[
+                  
+class MyWindow :public Window{
+
+	/**
+	* doFindFile
+	* Purpose: Find a file to load
+	* @param filename the filename to look for
+	* @param allowMulti is multiselection allowed
+	* @param startDir where do you want the dialog to initially start looing for the file.
+	* @param title what title do you want to give the dialog.
+	*/
+	void doFindFile(String filename, bool allowMulti, String startDir, String title){
+		// create open file dialog passing in parent component and start directory
+		CommonFileOpen* openDialog = new CommonFileOpen( this, startDir);
+			
+		//Sets up the filters for available file searches.  
+		openDialog.addFilter("All Files", "*.*");
+					
+		// limit selection to a single file.
+		openDialog.setAllowsMultiSelect(allowMulti);
+
+		//Set its title to let the user know what this is all about.
+		openDialog.setTitle(title);
+
+		//limit search to specific file names.
+		openDialog.setCaption("Looking for " + filename);
+		openDialog.setFilename(filename);
+		
+		
+		//Now get the results.
+		if(openDialog.execute()){
+		        Enumerator<String>* fileList = openDialog.getSelectedFiles();
+
+		        //cycle through the selected files.  Should only be one in
+		        //this case.
+		        while( fileList.hasMoreElements(){
+			       String file = fileList.nextElement();
+
+		               // additional processing logic based on file goes here.
+		               //The file variable will be null if not found.
+		        }
+		}
+	}
+	/**
+	* doSaveFile
+	* Purpose: Find path to save a file.
+	* @param filename the filename to save.  Initial value only, user can change.
+	* @param path where do you want the dialog to initially set the save path to.
+	* @param title what title do you want to give the dialog.
+	*/
+	void doSaveFile(String filename, String path, String title){
+
+		// create save file dialog passing in parent component and start directory
+		CommonFileSave* saveDialog = new CommonFileSave( this, path);
+
+
+		//Set its title to let the user know what this is all about.
+		saveDialog.setTitle(title);
+
+		//limit search to specific file names.
+		saveDialog.setCaption("Saving " + filename);
+		saveDialog.setFilename(filename);
+
+		// now show the dialog
+		saveDialog.showModal();
+
+		//Now get the results.
+		if( openDialog.execute()){
+		    Enumerator<String>* fileList = saveDialog.getSelectedFiles();
+
+		    //cycle through the selected files.  Should only be one in
+		    //this case. Here we are getting the path where the user wants
+		    //to save the file.  It is up to the application to save it there.
+		    while( fileList.hasMoreElements(){
+			String file = fileList.nextElement();
+
+		       // additional processing logic based on file goes here.
+		       //The file variable will be null if not found.
+		    }
+	        }
+	}
+	/**
+	* doBrowseFolders
+	* Purpose: Let user browse through folders
+	* @param path where do you want the dialog to initially set the save path to.
+	* @param title what title do you want to give the dialog.
+	*/
+	void doBrowseFolders(String path, String title){
+
+		// create save file dialog passing in parent component and start directory
+		CommonFileBrowse* browseDialog = new CommonFileBrowse();
+
+
+		//Set its title to let the user know what this is all about.
+		browseDialog.setTitle(title);
+
+		//set initial direcory
+		browseDialog.setDirectory(path);
+
+		// now show the dialog
+		browseDialog.showModal();
+
+		if( browseDialog.execute()){
+			String dir = browseDialog.getDirectory();
+		}
+
+	}
+
+	...
+};
+                    ]]>
+		</programlisting>
+		<para>
+		<TODO>Add pictures of dialogs.</TODO>
+		</para>
+		<para>
+		 Other dialogs common to all platforms are the color
+		 picker and font chooser.  The VCF::CommonColor class
+		 is a platform independet color picker.  The
+		 VCF::CommonFont class is the platform independent
+		 font picker. Both classes are derived from CommonDialog.
+		 </para>
+
+		 <para>
+		 Using the color and font dialogs is very simple.  The
+		 example below creates and shows an example of the use
+		 of the color and font picker.
+		 </para>
+		<programListing>
+<![CDATA[
+class UserPrefsExample: public Window{
+
+	/**
+	* getUserSelectedColor()
+	* This method lets the user select the desired color.
+	* @return returns the color the user selected or NULL if not selected.
+	*/
+	Color * getUserSelectedColor(){
+		Color * ret = null;
+
+		//Create the dialog and set the window as the paren.
+		CommonColor* colorChooser = new CommonColor(this);
+		colorChooser.showModal();
+		if( colorChooser.execute()){
+			ret = colorChooser.getSelectedColor();
+		}
+		return ret;
+	}
+
+	/**
+	* getUserSelectedFont()
+	* This method lets the user select the desired font.
+	* @return returns the font the user selected or NULL if not selected.
+	*/
+	Font* getUserSelectedFont(){
+		Font * ret = null;
+
+		// Create the font dialog
+		CommonFont * fontChooser = new CommonFont(this);
+		if( fontChooser.execute() ){
+			ret = fontChooser.getSelectedFont();
+		}
+		return ret;
+	}
+	...
+};
+]]>
+</programListing>
+		<TODO>Add pictures of font and color picker</TODO>
+		</section>
+		<para>
+		There is also a common dialog for showing a text
+		message to the user.  This is included in the VCF::Dialog
+		class.  To send a popup message simply call the static method,
+		showMessage() and pass in the message and optionally a caption.
+		The signature for the showMessage() function is:
+		</para>
+
+		<function>
+		<![CDATA[ showMessage(const String& message, const String& caption="")]]>
+		</function>
+
+		If you need custom control of the buttons and message style
+		with the message choose this alternate signature. :
+
+		<function>
+		<![CDATA[ UIToolkit::ModalReturnType showMessage( const String&
+			message, const String& caption,	const long& messageButtons =
+			mbOKCancel,const MessageStyle& messageStyle=msDefault ) ]]>
+		</function>
+		<para>
+		where messageButtons can be any combination of the following :
+		</para>
+		<itemizedlist>
+			<listitem>mbOK 		     - 	Okay button</listitem>
+			<listitem>mbHelp 	     -	a help button</listitem>
+			<listitem>mbYesNo            - 	Yes and No buttons</listitem>
+			<listitem>mbYesNoCancel      - 	Yes No and Cancel buttons</listitem>
+			<listitem>mbOKCancel         - 	Okay and Cancel buttons</listitem>
+			<listitem>mbRetryCancel      - 	Retry and Cancel buttons</listitem>
+			<listitem>mbAbortRetryIgnore - 	Retry and Ignore buttons</listitem>
+		</itemizedlist>
+		<para>
+		and, messageStyle can be any of the following:
+		</para>
+		<itemizedlist>
+			<listitem>msDefault - 	normal message</listitem>
+			<listitem>msError   - 	error message</listitem>
+			<listitem>msInfo    - 	information message</listitem>
+			<listitem>msWarning - 	warning message</listitem>
+		</itemizedlist>
+		<TODO>show pictures of all message styles</TODO>
+
+	<section><title>Custom Dialogs</title>
+		<para>
+		Custom dialogs will typically be derived from the VCF::Dialog class
+		and possibly CustomControl.  The VCF::Dialog class has methods for
+		showing the dialog, and setting the icon. Below is an example of an About box
+		dialog:
+		</para>
+		<programlisting>
+		<![CDATA[
+class MyAbout : public VCF::Dialog {
+   public:
+
+   	/**
+   	* Set up the about dialog.
+	MyAbout(){
+		// here we set the size of the dialog.
+		setBounds( 100, 100, 150, 150 );
+
+		//Add a VFC::Label
+		Label* label = new Label();
+		label->setBounds( &Rect(25, 10, 200, 45) );
+
+		// add label to dialog frame.
+		add( label, AlignClient );
+
+		label->setCaption( "About My Application." );
+
+		Rect clientRect = getClientBounds();
+
+		//Create an okay button.
+		CommandButton* okBtn = new CommandButton();
+		okBtn->setWidth( okBtn->getPreferredWidth() );
+		okBtn->setHeight( okBtn->getPreferredHeight() );
+
+		okBtn->setTop( 10 );
+		okBtn->setLeft( clientRect.right_ + 20 );
+	
+		//now add it 
+		add( okBtn );
+	
+		clientRect.right_ += okBtn->getWidth() + 25 ;
+		
+		okBtn->setFocused();
+		okBtn->setCommandType( BC_OK );
+		okBtn->setCaption( "&OK" );
+	
+		setCaption( "About My Applications" );
+	
+		setClientBounds( &clientRect );	
+	}
+			
+	virtual ~MyAbout(){
+	}
+};
+]]>
+		</programlisting>
+		<para>
+		Typically, this would be tied to the about menu item. The following
+		snippet of code shows how this is shown:
+		</para>
+		<programlisting>
+<![CDATA[
+	void onHelpAbout( VCF::Event* e ){
+		MyAbout myAbout;
+		myAbout.showModal();
+	}	
+]]>
+		</programlisting>
+		
+		</section>
+
+		</section>
+		<section><title>Frame usage in the VFC</title>
+		
+		</section>
+		<section><title>Window usage in the VFC</title>
+		</section>
+
+	</section>
+	<section><title>Model View Controller</title>
+                <para>
+		MVC, also known as Model-View-Controller, is a common pattern
+		for implementing UI interaction between the User, the presentation,
+		and the data being viewed or modified. The pattern was pioneered in the
+		mid ot later 1970's at Xerox's PARC research center. It orginated in
+		Alan Kay's Learning Research Group, the same group that would take Kay's
+		Smalltalk language and implement it on PARC's Alto, Dorado, and later
+		the commercial Xerox Star computer systems. 
+		</para>
+		<para>
+		Some more modern uses of MVC can be found in Java's Swing library, Struts,
+		Apple's (NeXTStep) Cocoa Objective-C framework, and even a basterdized version
+		in Microsoft's MFC framework.
+		</para>
+		<para>
+		MVC makes a point of separating the data being used, which generically 
+		referred to as the "Model", the control of the interaction, or the "Controller",
+		and the presentation of the Model, referred to as the "View". Some framework
+		merge the View and Controller into one unit, which is also something the VCF does. 
+		</para>
+		<para>
+		The Model is represented by a single class that represents the data being 
+		worked with. An example of this might be a NumberModel, which might store 
+		a numerical value, or a GraphModel which might store a series of nodes to 
+		represent a graph heirarchy. Each Model has a collection of 0 or more Views'
+		associated with a given Model instance.
+		</para>
+		<para>
+		A View is associate with 1, and only 1 Model instance. It is used to "render" 
+		or present a particular presentation of the Model it is associated with. 
+		When determing how to present the UI a View may use only a portion of all 
+		the information from it's Model. For example, a View of a GraphModel might
+		render the Model as a tree that is vertically aligned (kind of like the 
+		view in the left side of the Explorer app for Windows) or it might render 
+		the model with free form nodes (similar to Maya's Graph Window that shows the
+		3D scene's scene graph structure).
+		</para>
+		<para>
+		A Controller mediates between the model and view. The Controller typically process
+		user input and does something meaningful with it. For example, a Controller
+		for a drawing app might receive notification of mouse clicks, and if the user
+		right clicks the mouse over a shape, the Controller might delete the shape
+		from the model. Generally there is a one Controller for a given Model.
+		</para>
+		<para>
+		In the VCF the View and Model are separate classes. The View class is an interface
+		and the Model is derived from the VCF::Component class to support visual editing.
+		In the VCF a Model can have views added to removed at runtime. A View maintains a
+		pointer back to it's Model, and a View maintains a pointer to the Control it
+		is ultimately a part of. A Model is able to update all it's views.
+		</para>
+		<para>
+		There is no formal Controller class (at least not yet). This role is largely performed
+		by the VCF::Control class. In the VCF a Control is both a View and a Controller. Thus 
+		any Control instance may be added as a view to a Model. In addition, a Control can have a
+		specific view associated with it. If this is the case, then all drawing is delegated to
+		control's view (which is set/retreived bay calling Control::setView() or 
+		Control::getView() ). 
+		</para>
+		
+		
+		<section><title>Models </title>
+		<para>
+		In the VCF a Model has 3 main duties:
+		<itemizedlist>
+			<listitem>
+			<para>
+			To support emptying the model. Each model class should implement the 
+			empty() method. When empty() is called the implementation should clear
+			out any data the model contains. If the model was a copllection of items
+			then all the items should be deleted if empty() is called. In addition,
+			calling empty() causes a change event to be fired.
+			</para>
+			</listitem>
+			
+			<listitem>
+			<para>
+			Optionally support some form of validation. Validation makes it possible to 
+			verify that a potential change is acceptable to the model. It allows 
+			"outsiders" to participate in the logic by adding event handler's to the 
+			Model's Validate delegate.
+			</para>
+			</listitem>
+			
+			<listitem>
+			<para>
+			Finally the model needs to support change notification. Any change to the model 
+			should fire an event on the ModelChanged delegate. This lets event handlers get
+			notified when the model is changed. In addition to this, when a change occurs
+			a model should probably call it's updateAllViews() method. Model::updateAllViews()
+			will loop through the list of views that are attached to the model and call each
+			view's updateView() method. 
+			</para>
+			<note>
+			<para>
+			Changing a model's contents from anything other than the main thread is 
+			not safe unless you're very careful in how you do it. The VCF, like most 
+			GUI toolkits, is not threadsafe, and making changes like this can cause 
+			problems. The best things to do, is to cause the thread to post an event 
+			back to the main UI thread (see  UITookit::postEvent()), and then make the 
+			changes at that point.
+			</para>
+			</note>
+			<para>
+			To make it easier to fire events correctly when the model changes, there 
+			is a utility method on the Model class called changed(). Calling this will 
+			pass the event to the model ModelChanged delegate, and call updateAllViews(). 
+			For example:
+			<programlisting>
+<![CDATA[
+ModelEvent event( this, ... );
+changed( &event );			
+]]>
+			</programlisting>
+			</para>
+			</listitem>
+		</itemizedlist>
 		</para>
 	</section>
 	
 	<section><title>Items </title>
 		<para>
+		Some models may have a collection of items. To make this easier to use and to 
+		display, a custom collection model implementor may choose to use the Item class 
+		as a base class for the items in their model.
 		</para>
 	</section>
 	
 	<section><title>Views </title>
 		<para>
+		In the VCF each view one and only one model instance that it is attached to at 
+		a given point in time. Each view has one control associated with it. This control 
+		is the surface that the view "renders" or paints itself onto. Each view has
+		an update() method that, by default (as implemented in AbstractView), generally 
+		just calls the view control's repaint() method. The actual painting for the View 
+		happens when the view's paintView() is called.
 		</para>
 	</section>
+	
+	<section><title>Controls</title>
+		<para>
+		A Control is derived from the View class, therefore it <emphasis>is</emphasis>
+		a View. In addition, a Control has a View, which is accessed or set by the Control's
+		getView() or setView() methods. This means that a control may added as a view of 
+		a Model.
+		<programlisting>
+<![CDATA[
+Model* model = ... //get a model from somewhere
+Control* control = ... //get a control from somewhere
+model->addView( control ); //this is perfectly valid
+]]>		
+		</programlisting>
+		A Control may also host a separate instance of a View.
+		<programlisting>
+<![CDATA[
+Control* control = ... //get a control from somewhere
+View* view = new MyCustomView();
+control->setView( view );
+]]>
+		</programlisting>
+		By default a Control's view member is set to NULL. If a Control's view is 
+		"set" (by calling Control::setView() and passing in a valid, non NULL view 
+		instance), then the Control's paint() method will end up calling the view's 
+		paintView() method, and the control will do no further painting. This allows
+		a View to completely override how a control paint's itself.
+		</para>
+	</section>
+	<para>
+	To recap this all, MVC provides a simple framework to store, manipulate, and display
+	a programs data. The Model stores and manipulates the data, the View renders or paints
+	the display of the Model, and the Control handles user interaction with the model.
+	</para>
+	<section><title>Document/View Architecture</title>
+		
+	</section>
+	
+	</section>
+	
 	
 	<section><title>Undo/Redo and Commands </title>
 		<para>
@@ -627,18 +1411,20 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 	<section><title>Control Focus and Activation </title>
 		<para>
 		A control with focus is able to receive
-		keyboard events. Without focus, <emphasis>no</emphasis> keyboard events will be received
-		by the control. Only one control at a time may have the focus. 
+		keyboard events. Without focus, <emphasis>no</emphasis> keyboard events will be 
+		received by the control. Only one control at a time may have the focus. 
 		</para>
 		<para>
-		To get the focus, you simply call Control::setFocus(), which will return the control that
-		<emphasis>previously</emphasis> had the focus (but does not anymore). Control::setFocus()
-		will in turn pass the request to the underlying windowing system to get focus. Once the
-		Control receives focus, it will receive a FocusGained event. The previously focused control
-		will recieve a FocusLost event.
+		To get the focus, you simply call Control::setFocus(), which will return the control 
+		that <emphasis>previously</emphasis> had the focus (but does not anymore). 
+		<function>Control::setFocus()</function> will in turn pass the request to the 
+		underlying windowing system to get focus. Once the Control receives focus, it 
+		will receive a FocusGained event. The previously focused control will recieve a 
+		FocusLost event.
 		</para>
 		<para>
-		A control with focus also activates it's parent Frame, if the Frame was not previously active. 		
+		A control with focus also activates it's parent Frame, if the Frame was not 
+		previously active. 		
 		</para>
 		
 	</section>
@@ -652,6 +1438,8 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		<para>
 		</para>
 	</section>
+
+	
 </section>
 		
 		
@@ -659,6 +1447,18 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 <!--
 CVS Log info
 $Log$
+Revision 1.3  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.2.4.4  2004/07/25 15:06:38  ddiego
+added a few minor corrections.
+
+Revision 1.2.4.3  2004/07/21 22:01:56  emonjay
+Added loding images and completed dialog section minus graphics.
+
+Revision 1.2.4.2  2004/07/21 03:21:34  emonjay
+Reformat and timer update
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

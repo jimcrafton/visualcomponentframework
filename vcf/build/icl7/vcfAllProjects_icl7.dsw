@@ -1,0 +1,1172 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Actions"="..\..\examples\Actions\Actions_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AdvancedAlignment"="..\..\examples\AdvancedAlignment\AdvancedAlignment_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Alignment"="..\..\examples\Alignment\Alignment_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Anchors"="..\..\examples\Anchors\Anchors_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ApplicationIcons"="..\..\examples\ApplicationIcons\ApplicationIcons_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ApplicationKit"=".\ApplicationKit\ApplicationKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ApplicationKitDLL"=".\ApplicationKit\ApplicationKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Conditions"="..\..\examples\Conditions\Conditions_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CopyAndPaste"="..\..\examples\CopyAndPaste\CopyAndPaste_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DateTimeUI"="..\..\examples\DateTimeUI\DateTimeUI_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DatesAndTime"="..\..\examples\DatesAndTime\DatesAndTime_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Dictionaries"="..\..\examples\Dictionaries\Dictionaries_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Directories"="..\..\examples\Directories\Directories_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DocViewAdvanced"="..\..\examples\DocViewAdvanced\DocViewAdvanced_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DocViewBasics"="..\..\examples\DocViewBasics\DocViewBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DragAndDrop"="..\..\examples\DragAndDrop\DragAndDrop_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "EventBasics"="..\..\examples\EventBasics\EventBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Examples"="..\..\examples\Examples\Examples_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Actions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name AdvancedAlignment
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Alignment
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Anchors
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ApplicationIcons
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Conditions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CopyAndPaste
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DateTimeUI
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DatesAndTime
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Dictionaries
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Directories
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DocViewAdvanced
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DocViewBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DragAndDrop
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name EventBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FilesAndDirectories
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GraphicsAndMouseMoves
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GraphicsBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HeavyAndLight
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld3
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageViewer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Labels
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ListBox
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Localization
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MVCBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLShapes
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Processes
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ProgressBars
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name QTPlayer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Scrolling
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SharedLibraries
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SketchIt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Sliders
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Splitters
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Strings
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name StrokesAndFills
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Tables
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TextLayout
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ThreadBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ThreadsInGUI
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Toolbars
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TreeListControls
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name VisualFormFiles
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FilesAndDirectories"="..\..\examples\FilesAndDirectories\FilesAndDirectories_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FoundationKit"=".\FoundationKit\FoundationKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FoundationKitDLL"=".\FoundationKit\FoundationKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FreeImageLib"="..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibMNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GraphicsAndMouseMoves"="..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsBasics"="..\..\examples\GraphicsBasics\GraphicsBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsKit"=".\GraphicsKit\GraphicsKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GraphicsKitDLL"=".\GraphicsKit\GraphicsKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HeavyAndLight"="..\..\examples\HeavyAndLight\HeavyAndLight_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld"="..\..\examples\HelloWorld\HelloWorld_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld2"="..\..\examples\HelloWorld2\HelloWorld2_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld3"="..\..\examples\HelloWorld3\HelloWorld3_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageBasics"="..\..\examples\ImageBasics\ImageBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageFormats"=".\GraphicsKit\ImageFormats_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FreeImageLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImageViewer"="..\..\examples\ImageViewer\ImageViewer_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Labels"="..\..\examples\Labels\Labels_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibJPEG"="..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibMNG"="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibPNG"="..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ListBox"="..\..\examples\ListBox\ListBox_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Localization"="..\..\examples\Localization\Localization_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "NetworkKit"=".\NetworkKit\NetworkKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NetworkKitDLL"=".\NetworkKit\NetworkKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKit"=".\OpenGLKit\OpenGLKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OpenGLKitDLL"=".\OpenGLKit\OpenGLKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OpenGLShapes"="..\..\examples\OpenGLShapes\OpenGLShapes_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Processes"="..\..\examples\Processes\Processes_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ProgressBars"="..\..\examples\ProgressBars\ProgressBars_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "QTPlayer"="..\..\examples\QTPlayer\QTPlayer_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Reflection"="..\..\examples\Reflection\Reflection_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExx"=".\FoundationKit\RegExx_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKitStatic"=".\RemoteObjectKit\RemoteObjectKitStatic_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Scrolling"="..\..\examples\Scrolling\Scrolling_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SharedLibraries"="..\..\examples\SharedLibraries\SharedLibraries_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SketchIt"="..\..\examples\SketchIt\SketchIt_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sliders"="..\..\examples\Sliders\Sliders_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Splitters"="..\..\examples\Splitters\Splitters_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Strings"="..\..\examples\Strings\Strings_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "StrokesAndFills"="..\..\examples\StrokesAndFills\StrokesAndFills_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tables"="..\..\examples\Tables\Tables_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextLayout"="..\..\examples\TextLayout\TextLayout_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadBasics"="..\..\examples\ThreadBasics\ThreadBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadsInGUI"="..\..\examples\ThreadsInGUI\ThreadsInGUI_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Toolbars"="..\..\examples\Toolbars\Toolbars_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TreeListControls"="..\..\examples\TreeListControls\TreeListControls_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VisualFormFiles"="..\..\examples\VisualFormFiles\VisualFormFiles_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser"=".\Win32HTMLBrowser\Win32HTMLBrowser_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser_StaticLib"=".\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "WorkingWithEnumerators"="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"=".\GraphicsKit\libAGG_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libXmake"="..\..\src\xmake\libXmake_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "vcfAllDynamicLibs"=".\vcfAllDynamicLibs_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Win32HTMLBrowser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageFormats
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "vcfAllLibs"=".\vcfAllLibs_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name vcfAllDynamicLibs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name vcfAllStaticLibs
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "vcfAllStaticLibs"=".\vcfAllStaticLibs_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Win32HTMLBrowser_StaticLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKitStatic
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageFormats
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "xmake"="..\..\src\xmake\xmake_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

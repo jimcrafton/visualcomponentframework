@@ -162,7 +162,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				
-				setting = "/D \"USE_FRAMEWORK_DLL\" /D \"USE_GRAPHICSKIT_DLL\" /D \"USE_APPKIT_DLL\"";
+				setting = "/D \"USE_FOUNDATIONKIT_DLL\" /D \"USE_GRAPHICSKIT_DLL\" /D \"USE_APPLICATIONKIT_DLL\"";
 
 				pConfig->AddToolSettings( tool, setting, reserved );
 				
