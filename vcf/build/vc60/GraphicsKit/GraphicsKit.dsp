@@ -130,6 +130,7 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+# ADD CPP /Yc"GraphicsKit.h"
 # End Source File
 # Begin Source File
 
