@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FOUNDATIONKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Core" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\include\Implementer" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "FRAMEWORK_EXPORTS" /D "NO_MFC" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -190,6 +190,14 @@ SOURCE=..\..\..\include\exceptions\InvalidPointerException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Library.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\LibraryPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\Listener.h
 # End Source File
 # Begin Source File
@@ -254,6 +262,10 @@ SOURCE=..\..\..\include\core\Rect.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\exceptions\RuntimeException.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Size.h
 # End Source File
 # Begin Source File
@@ -296,6 +308,10 @@ SOURCE=..\..\..\include\utils\VCFString.h
 
 SOURCE=..\..\..\include\implementerKit\Win32FileStream.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -335,6 +351,10 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\utils\Library.cpp
 # End Source File
 # Begin Source File
 
@@ -383,6 +403,10 @@ SOURCE=..\..\..\src\core\VCFMath.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FileStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32LibraryPeer.cpp
 # End Source File
 # Begin Source File
 
