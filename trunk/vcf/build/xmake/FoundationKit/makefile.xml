@@ -4,8 +4,6 @@
 		<variable name="INC" value="../../../include"/>
 		<variable name="SRC" value="../../../src"/>
 		<variable name="GCC_INC" value="-I d:/cygwin/usr/include -I d:/cygwin/usr/include/g++-3"/>
-		<variable name="BCC_INC" value="G:\Borland\BCC55\include"/>
-		<variable name="BCC_LIB" value="G:\Borland\BCC55\lib"/>
 		<variable name="LIB_OUT" value="../../../lib"/>
 		<variable name="BIN_OUT" value="../../../bin"/>
 	</substitutions>
@@ -28,6 +26,20 @@
 					</flags>
 				</linker>
 			</config>
+			<config name="GCC Static" srcBinaryExt=".o">
+				<compiler name="g++" >
+					<flags>
+						<flag value="-I $(INC)"/>						
+						<flag value="-c -DVCF_GCC -D_DEBUG"/>
+					</flags>
+				</compiler>	
+
+				<linker name="ar">
+					<flags>						
+						<flag value="-cru $(LIB_OUT)/libFoundationKit_sd.a"/>
+					</flags>
+				</linker>
+			</config>
 			<config name="VC++ Debug" srcBinaryExt=".obj">
 				<compiler name="cl" >
 					<flags>
@@ -42,10 +54,6 @@
 				<compiler name="bcc32" >
 					<flags>
 						<flag value="-I$(INC)"/>
-<!--
-/core -I$(INC)/events -I$(INC)/dragdrop -I$(INC)/exceptions -I$(INC)/io"/>
-						<flag value="-I$(INC)/utils -I$(INC)/implementer -I$(INC)/implementerKit -I$(INC)/graphics"/>
--->
 						<flag value="-I$(BCC_INC)"/>				
 						<flag value="-RT"/>						
 						<flag value="-DWIN32 -D_DEBUG -D_CONSOLE -D_MBCS -DFRAMEWORK_DLL -DFRAMEWORK_EXPORTS"/>
@@ -54,7 +62,6 @@
 					</flags>
 				</compiler>	
 			</config>
-
 		</configurations>
 
 		<sources>
