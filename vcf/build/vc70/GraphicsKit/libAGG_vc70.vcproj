@@ -11,52 +11,6 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc70\Debug\"
-			ConfigurationType="4"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc70\Debug\libAGG_vc70_sd.pch"
-				AssemblerListingLocation=".\vc70\Debug\"
-				ObjectFile=".\vc70\Debug\"
-				ProgramDataBaseFileName="..\..\..\lib\libAGG_vc70_sd.pdb"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="..\..\..\lib\libAGG_vc70_sd.lib"
-				SuppressStartupBanner="TRUE"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-		</Configuration>
-		<Configuration
 			Name="GTK Debug|Win32"
 			OutputDirectory=".\vc70\libAGG___Win32_GTK_Debug\"
 			IntermediateDirectory=".\vc70\libAGG___Win32_GTK_Debug\"
@@ -103,8 +57,54 @@
 				Name="VCWebServiceProxyGeneratorTool"/>
 		</Configuration>
 		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\vc70\Debug\"
+			IntermediateDirectory=".\vc70\Debug\"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\vc70\Debug\libAGG_vc70_sd.pch"
+				AssemblerListingLocation=".\vc70\Debug\"
+				ObjectFile=".\vc70\Debug\"
+				ProgramDataBaseFileName="..\..\..\lib\libAGG_vc70_sd.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="..\..\..\lib\libAGG_vc70_sd.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\lib\"
+			OutputDirectory=".\vc70\Release\"
 			IntermediateDirectory=".\vc70\Release\"
 			ConfigurationType="4"
 			UseOfMFC="0"
@@ -114,7 +114,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,NDEBUG,_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"

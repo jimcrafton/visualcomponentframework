@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Transformations"
-	ProjectGUID="{FD1500D3-96DC-4321-A397-035942300DE7}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

@@ -504,11 +504,18 @@ g_uuidList = [ \
 ################################################################################
 class StringUtils:
     """Utilities class"""
-    def replace( text, str, replac ):
-        i = text.find( str )
+    def replace( text, str, replac, lowercase=False ):
+        if ( lowercase ):
+            t = text.lower()
+            s = str.lower()
+            i = t.find( s )
+        else:
+            i = text.find( str )
+
         if ( i != -1 ):
             ls = len(str)
             text = text[:i] + replac + text[i+ls:]
+
         return text
     replace = staticmethod(replace)
 
@@ -952,7 +959,7 @@ class FileUtils:
             if ( 3 < len( path ) and path[2] == '$' and path[1] in '/\\' and path[0] == '.' ):
                 path = path[2:]
             # no '/' at the end when we have something like: "$(VCF_LIB)"
-            if ( path and path[-2] == ')' and path[-1] in '/\\' ):
+            if ( 3 < len( path ) and path[-2] == ')' and path[-1] in '/\\' ):
                 path = path[:-1]
 
         return path
@@ -1484,6 +1491,10 @@ class DspApp:
         self.projectsNoPostfixIfUnderCompilerDirMainNameLwrList = []
         self.projectsNoPostfixIfUnderCompilerDirMainNameLwrDict = {}
 
+        self.projectsOutSameDirAsOutputDirList = []
+        self.projectsOutSameDirAsOutputDirMainNameLwrList = []
+        self.projectsOutSameDirAsOutputDirMainNameLwrDict = {}
+
         self.projectsOutputOnProjectDirList = []
         self.projectsOutputOnProjectDirMainNameLwrList = []
         self.projectsOutputOnProjectDirMainNameLwrDict = {}
@@ -1516,6 +1527,10 @@ class DspApp:
         self.lastUuidIndex = -1
         self.allUsedUuidsDict = {}
         self.allUsedProjUuidsDict = {}
+
+        self.allAlreadyUsedUuidsDict = {}
+        self.allAlreadyUsedUuidsBecomesNewDict = {}
+        self.allAlreadyUsedProjUuidsDict = {}
 
         #self.configsection = ''
         optparser = OptionParser( usage=self.usage, version=self.version, option_class=OptionEx )
@@ -1758,6 +1773,9 @@ class DspApp:
         print '   ' + 'projectsNoPostfixIfUnderCompilerDirList:'
         print '   ' + '  ' + str( self.projectsNoPostfixIfUnderCompilerDirList )
 
+        print '   ' + 'projectsOutSameDirAsOutputDirList:'
+        print '   ' + '  ' + str( self.projectsOutSameDirAsOutputDirList )
+
         print '   ' + 'projectsOutputOnProjectDirList:'
         print '   ' + '  ' + str( self.projectsOutputOnProjectDirList )
 
@@ -1864,7 +1882,8 @@ class DspApp:
                     section_projectsNoPostfix                   = self.configGetStr ( comm_sect, 'section_projectsNoPostfix'      )
                     section_projectsNoPostfixOutput             = self.configGetStr ( comm_sect, 'section_projectsNoPostfixOutput')
                     section_projectsNoPostfixIfUnderCompilerDir = self.configGetStr ( comm_sect, 'section_projectsNoPostfixIfUnderCompilerDir' )
-                    section_projectsOutputOnProjectDir          = self.configGetStr ( comm_sect, 'section_projectsOutputOnProjectDir'          )
+                    section_projectsOutSameDirAsOutputDir       = self.configGetStr ( comm_sect, 'section_projectsOutSameDirAsOutputDir' )
+                    section_projectsOutputOnProjectDir          = self.configGetStr ( comm_sect, 'section_projectsOutputOnProjectDir'    )
 
                     self.options.filename                       = self.getOptionValue( [ 'filename', 'f' ]                   , comm_sect, 'filename'                       , "string"    )
 
@@ -2008,6 +2027,12 @@ class DspApp:
                 self.makeProjectsNoPostfixIfUnderCompilerDirList( section_projectsNoPostfixIfUnderCompilerDir )
             else:
                 raise Exception( 'The section \'%s\' in the config file \'%s\' does not exists !' % ( section_projectsNoPostfixIfUnderCompilerDir, self.options.config ) )
+
+        if ( section_projectsOutSameDirAsOutputDir ):
+            if ( self.config.has_section( section_projectsOutSameDirAsOutputDir ) ):
+                self.makeProjectsOutSameDirAsOutputDirList( section_projectsOutSameDirAsOutputDir )
+            else:
+                raise Exception( 'The section \'%s\' in the config file \'%s\' does not exists !' % ( section_projectsOutSameDirAsOutputDir, self.options.config ) )
 
         if ( section_projectsOutputOnProjectDir ):
             if ( self.config.has_section( section_projectsOutputOnProjectDir ) ):
@@ -2275,6 +2300,48 @@ class DspApp:
 
         return
 
+    def makeProjectsOutSameDirAsOutputDirList( self, section ):
+        # splits entries like [ c# = proj: lib1, lib2, libn ]
+        pairs = self.config.items( section )
+
+        # shorter names
+        libList = self.projectsOutSameDirAsOutputDirList
+        lmLwrList = self.projectsOutSameDirAsOutputDirMainNameLwrList
+        libDict = self.projectsOutSameDirAsOutputDirMainNameLwrDict
+
+        # resettting the lists
+        libList = []
+        lmLwrList = []
+        libDict = {}
+
+        for pair in pairs:
+            ( name, item ) = pair
+
+            # project1, "project12", project1n
+            list = item
+            list = StringUtils.stripComment( list )
+            list = StringUtils.trimQuotes( list )
+            list = list.strip()
+
+            ls = list.split( ',' )
+            for lib in ls:
+                lib = lib.strip()
+
+                ( ( lp, lf ), ( lb, le ), ( li, lm, lmLwr, cpl ), ( ls, ld ) ) = DspFile.splitPostfixComponents( lib, '' )
+                if ( not lm ):
+                    continue
+
+                libList.append( lib )
+                lmLwr = lm.lower()
+                lmLwrList.append( lmLwr )
+                libDict[ lmLwr ] = ( lm, le, lib )
+
+            self.projectsOutSameDirAsOutputDirList = libList
+            self.projectsOutSameDirAsOutputDirMainNameLwrList = lmLwrList
+            self.projectsOutSameDirAsOutputDirMainNameLwrDict = libDict
+
+        return
+
     def makeProjectsOutputOnProjectDirList( self, section ):
         # splits entries like [ c# = proj: lib1, lib2, libn ]
         pairs = self.config.items( section )
@@ -2492,6 +2559,7 @@ class GenericProjectFile( GenericFile ):
         return
 
     def resetWarnings( self ):
+        self.warning_done_projects_output_on_projectDir = False
         self.warning_done_dirs_different_between_cfgs = False
         self.warning_done_dir_out_different_than_dir_prop = False
         self.warning_done_extension_different_than_expected = False
@@ -4915,6 +4983,10 @@ class DspFile( GenericProjectFile ):
                             entryValue = FileUtils.normPath( entryValue, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_ChkDot )
                             entryValue = self.fixFilenamePostfix( entryValue, oldCompiler, newCompiler, appType, isDebug, config_name )
                             entryValue = DspFile.replaceCompilerTextTuple( entryValue, replaceCompilerTuple )
+                            if ( self.isInProjectsOutputOnProjectDirList()  ):
+                                if ( entryName == 'OutputFile' ):
+                                    outputDir = vcpCfg.entryNameValueDict[ 'OutputDirectory' ]
+                                    entryValue = self.fixFilenameSubdir( entryValue, outputDir, oldCompiler, newCompiler, appType, isDebug, config_name )
                             changed = True
                         if ( entryName == 'AdditionalDependencies' ):
                             entryValue = self.librariesChangePostfix( entryValue, oldCompiler, newCompiler, appType, isDebug, config_name )
@@ -5859,8 +5931,8 @@ class DspFile( GenericProjectFile ):
         fn = fm + postfix + fe
 
         putPostfix = True
-        if ( app.projectsNoPostfixList or app.projectsNoPostfixOutputList or app.projectsNoPostfixIfUnderCompilerDirList ):
-            if ( self.isInProjectsNoPostfixList() or self.isInProjectsNoPostfixOutputList() or self.isInProjectsNoPostfixIfUnderCompilerDirList() ):
+        if ( app.projectsNoPostfixList or app.projectsNoPostfixOutputList or app.projectsNoPostfixIfUnderCompilerDirList or app.projectsOutputOnProjectDirList ):
+            if ( self.isInProjectsNoPostfixList() or self.isInProjectsNoPostfixOutputList() or self.isInProjectsNoPostfixIfUnderCompilerDirList() or self.isInProjectsOutputOnProjectDirList() ):
                 putPostfix = False
         if ( putPostfix ):
             fn2 = fm + postfix + fe
@@ -6016,6 +6088,41 @@ class DspFile( GenericProjectFile ):
 
         return list
 
+    def fixFilenameSubdir( self, entryValue, outputDir, oldCompiler, newCompiler, appType, isDebug, config_name ):
+        pf = entryValue
+        
+        sep = FileUtils.getNormSep( app.options.unixStyle )
+
+        pf = StringUtils.replace( pf, 'debug' + sep, '', True )
+        pf = StringUtils.replace( pf, 'release' + sep, '', True )
+        pf = StringUtils.replace( pf, oldCompiler + sep, '', True )
+        pf = StringUtils.replace( pf, newCompiler + sep, '', True )
+        pf = FileUtils.normPath( pf, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+
+#       pathname = FileUtils.normPath( pathname, g_internal_unixStyle )
+#
+#            # Lib
+#            dirname = os.path.dirname( pathname )
+#            dirname =  FileUtils.normDir( dirname, g_internal_unixStyle )
+#
+#            dirname = FileUtils.normPath( dirname, app.options.unixStyle, g_KeepFirstDot_False, g_MinPathIsDot_True, g_IsDirForSure_ChkDot )
+#
+#        directory = dir
+#        sep = FileUtils.getNormSep( app.options.unixStyle )
+#        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+#        directory = StringUtils.replace( directory, self.configNameList[self.nCfg] + sep, '', True )
+#        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+#        directory = StringUtils.replace( directory, compilerVc6 + sep, '', True )
+#        directory = StringUtils.replace( directory, compilerVc70 + sep, '', True )
+#        directory = StringUtils.replace( directory, compilerVc71 + sep, '', True )
+#        directory = StringUtils.replace( directory, compilerIcl7 + sep, '', True )
+#        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+#        #line = self.storeAndRemoveOption( line, '/out:', directory, self.mainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile, True, forceNoConfigSubdir, forceNoPostfix )
+#        lin = StringUtils.replace( line, dir, directory, True )
+#        line = lin
+
+        return pf
+
     def isInProjectsNoPostfixList( self ):
         isInList = False
 
@@ -6052,6 +6159,18 @@ class DspFile( GenericProjectFile ):
 
         return isInList
 
+    def isInProjectsOutSameDirAsOutputDirList( self ):
+        isInList = False
+
+        if ( app.projectsOutSameDirAsOutputDirList ):
+
+            ( ( sp, sf ), ( sb, se ), ( si, sm, smLwr, cpl ), ( ss, sd ) ) = DspFile.splitPostfixComponents( self.filename, self.compiler )
+            if ( sm ):
+                if ( app.projectsOutSameDirAsOutputDirMainNameLwrDict.has_key( smLwr ) ):
+                    isInList = True
+
+        return isInList
+
     def isInProjectsOutputOnProjectDirList( self ):
         isInList = False
 
@@ -6073,6 +6192,11 @@ class DspFile( GenericProjectFile ):
     translateConfigurationType = staticmethod(translateConfigurationType)
 
     def reformatDir( self, relpath ):
+        # check if it is a relative path
+        if ( not FileUtils.isRelativePath( relpath ) ):
+            msg = 'WARNING: reformatDir: not a relative path \'%s\'.  File \'%s\' (%d). Config: %s' % ( relpath, self.filetitle, self.n, self.configName )
+            print msg
+
         # adds '_compiler/' to the relpath and removes a possible '/obj'
         relpath = FileUtils.normDir( relpath, g_internal_unixStyle )
         sep = FileUtils.getNormSep( g_internal_unixStyle )
@@ -6406,10 +6530,32 @@ class DspFile( GenericProjectFile ):
             if ( re_intermed_dir.match( line ) ):
                 if ( self.PropIntermeDir != dirname ):
                     raise Exception( 'self.PropIntermeDir != dirname i.e. \'%s\' != \'%s\'' % ( self.PropIntermeDir, dirname) )
+                line = StringUtils.replace( line, subdir, dirname )
             else:
                 if ( self.PropOutputDir != dirname ):
                     raise Exception( 'self.PropOutputDir != dirname i.e. \'%s\' != \'%s\'' % ( self.PropOutputDir, dirname) )
-            line = StringUtils.replace( line, subdir, dirname )
+
+                if ( self.isInProjectsOutputOnProjectDirList() ):
+                    #re_output_dir = re.compile( r'^# PROP Output_Dir "(?P<subdir>[a-zA-Z0-9_\- $\(\)\\/.]*?)"' )
+                    m = re_output_dir.match( line )
+                    if ( m ):
+                        dir = m.group( 'subdir' )
+                        directory = dir
+                        sep = FileUtils.getNormSep( app.options.unixStyle )
+                        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+                        directory = StringUtils.replace( directory, self.configNameList[self.nCfg] + sep, '', True )
+                        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+                        directory = StringUtils.replace( directory, compilerVc6 + sep, '', True )
+                        directory = StringUtils.replace( directory, compilerVc70 + sep, '', True )
+                        directory = StringUtils.replace( directory, compilerVc71 + sep, '', True )
+                        directory = StringUtils.replace( directory, compilerIcl7 + sep, '', True )
+                        directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+                        #line = self.storeAndRemoveOption( line, '/out:', directory, self.mainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile, True, forceNoConfigSubdir, forceNoPostfix )
+                        lin = StringUtils.replace( line, dir, directory, True )
+                        line = lin
+                else:
+                    line = StringUtils.replace( line, subdir, dirname )
+
         return line
 
     def changeOptionsCpp( self, line ):
@@ -6418,6 +6564,7 @@ class DspFile( GenericProjectFile ):
         changeSomething =   ( app.options.reformatOptionOutput  [self.c] != 0 ) or \
                             ( app.options.reformatOptionPdb     [self.c] != 0 ) or \
                             ( app.options.reformatOptionBrowse  [self.c] != 0 )
+
         if ( changeSomething ):
             if ( self.addKind == enum_ADD_CPP ):
                 # the order of the following calls counts ( maybe not anymore )
@@ -6550,6 +6697,7 @@ class DspFile( GenericProjectFile ):
         #        return line
 
         changeSomething = ( app.options.reformatOptionOutput[self.c] != 0 )
+
         if ( self.addKind == enum_ADD_CPP ):
             # (*) the reason why we always remove the '/Fo' option in a ADD CPP line is that vc6 always does it ( or at least when the value is the the same as Intermediate_Dir )
             addDir  = False
@@ -6559,29 +6707,67 @@ class DspFile( GenericProjectFile ):
             # this option should always be there ( we always want dir and filename specified for the linker output )
             addDir  = +1 # never remove it
             addFile = +1
-            line = self.storeAndRemoveOption( line, '/out:', self.OutputDirOut, self.mainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile )
+            forceNoPostfix = False
+            forceNoConfigSubdir = False
+            directory = self.OutputDirOut
+            if ( self.isInProjectsOutputOnProjectDirList() ):
+                if ( not self.warning_done_projects_output_on_projectDir ):
+                    self.warning_done_projects_output_on_projectDir = True
 
-        if ( 0 < self.nCfg ):
-            if ( not self.warning_done_dirs_different_between_cfgs ):
-                self.warning_done_dirs_different_between_cfgs = True
-                temp = self.OutputDirOut.lower().replace( self.configNameList[self.nCfg].lower(), self.configNameList[0].lower() )
-                if ( temp != self.OutputDirOutList[0].lower() ):
-                    if ( not self.isInProjectsOutputOnProjectDirList() ):
-                        print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
+                    option = '/out:'
+                    reOption = re.VERBOSE
+                    reOption += re.IGNORECASE
+                    if ( option and option[ len(option) -1 ] == ':' ):
+                        # (/Fd:"vc6\Debug\Very-Beautiful Actions_vc6.pdb") or /machine:i386 ( but no spaces )
+                        rec = re.compile( r'(?P<fulloption> %s(\s*?)"(?P<optionarg>[a-zA-Z0-9_\- $\(\)\\/.]*)") | (?P<fulloption2> %s(?P<optionarg2>[a-zA-Z0-9_\-$\(\)\\/.]*))' % (option,option), reOption )
+                    else:
+                        # (/Fd "vc6\Debug\Very-Beautiful Actions_vc6.pdb") or /FR ) ( isolated option with no argument )
+                        rec = re.compile( r'(?P<fulloption> %s(\s*?)"(?P<optionarg>[a-zA-Z0-9_\- $\(\)\\/.]*)") | (?P<optionalone> %s(\s+?))' % (option,option), reOption )
+                    m = rec.search( line )
+                    if ( m ):
+                        fulloption = m.group( 'fulloption' )
+                        optionarg = m.group( 'optionarg' )
+                        if ( fulloption.lower().find( self.configNameList[self.nCfg].lower() ) != -1 ):
+                            print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' depending on the config \'%s\'.  This will be fixed.' % ( os.path.basename(self.filename), fulloption, self.configNameList[self.nCfg] )
+                        elif ( fulloption.lower().find( self.configNameList[0].lower() ) != -1 ):
+                            print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' depending on the config \'%s\'.  This will be fixed.' % ( os.path.basename(self.filename), fulloption, self.configNameList[0] )
 
-        if ( self.appType == enumAppTypeExe ):
-            if ( self.OutputDirOut != self.PropIntermeDir ):
-                if ( self.filename.lower().find( g_subdir_examples ) != -1 ):
-                    # automatically fixed because it is a very common mistake
-                    if ( not self.isInProjectsOutputOnProjectDirList() ):
-                        print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
-                        self.OutputDirOut = self.PropOutputDir
-                        self.OutputDirOutList[self.nCfg] = self.PropOutputDir
-                else:
-                    if ( 0 < app.options.warning ):
-                        if ( not self.warning_done_dir_out_different_than_dir_prop and self.OutputDirOut == './' or self.OutputDirOut == '\\'  ):
-                            self.warning_done_dir_out_different_than_dir_prop = True
-                            print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
+                forceNoPostfix = True
+                forceNoConfigSubdir = True
+                sep = FileUtils.getNormSep( app.options.unixStyle )
+                directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+                directory = StringUtils.replace( directory, self.configNameList[self.nCfg] + sep, '', True )
+                directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+                directory = StringUtils.replace( directory, compilerVc6 + sep, '', True )
+                directory = StringUtils.replace( directory, compilerVc70 + sep, '', True )
+                directory = StringUtils.replace( directory, compilerVc71 + sep, '', True )
+                directory = StringUtils.replace( directory, compilerIcl7 + sep, '', True )
+                directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
+
+            line = self.storeAndRemoveOption( line, '/out:', directory, self.mainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile, True, forceNoConfigSubdir, forceNoPostfix )
+
+        if ( not self.isInProjectsOutputOnProjectDirList() ):
+            if ( 0 < self.nCfg ):
+                if ( not self.warning_done_dirs_different_between_cfgs ):
+                    self.warning_done_dirs_different_between_cfgs = True
+                    temp = self.OutputDirOut.lower().replace( self.configNameList[self.nCfg].lower(), self.configNameList[0].lower() )
+                    if ( temp != self.OutputDirOutList[0].lower() ):
+                        if ( not self.isInProjectsOutSameDirAsOutputDirList() ):
+                            print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
+
+            if ( self.appType == enumAppTypeExe ):
+                if ( self.OutputDirOut != self.PropIntermeDir ):
+                    if ( self.filename.lower().find( g_subdir_examples ) != -1 ):
+                        # automatically fixed because it is a very common mistake
+                        if ( not self.isInProjectsOutSameDirAsOutputDirList() ):
+                            print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
+                            self.OutputDirOut = self.PropOutputDir
+                            self.OutputDirOutList[self.nCfg] = self.PropOutputDir
+                    else:
+                        if ( 0 < app.options.warning ):
+                            if ( not self.warning_done_dir_out_different_than_dir_prop and self.OutputDirOut == './' or self.OutputDirOut == '\\'  ):
+                                self.warning_done_dir_out_different_than_dir_prop = True
+                                print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
 
         return line
 
@@ -6651,7 +6837,7 @@ class DspFile( GenericProjectFile ):
             line = self.storeAndRemoveOption( line, '/FR', '', '', True, changeSomething, addDir, addFile )
         return line
 
-    def storeAndRemoveOption( self, line, option, directory, filename, ignorecase, changeSomething, addDir, addFile, store=True ):
+    def storeAndRemoveOption( self, line, option, directory, filename, ignorecase, changeSomething, addDir, addFile, store=True, forceNoConfigSubdir=False, forceNoPostfix=False ):
         # Remark: this function removes the entry even if changeSomething = False !
         #           because we want to set a 'standard' order of the options
         #           Therefore if we don't want to change anything we need not to call this function
@@ -6672,7 +6858,7 @@ class DspFile( GenericProjectFile ):
                 if ( app.projectsNoPostfixList or app.projectsNoPostfixOutputList or app.projectsNoPostfixIfUnderCompilerDirList ):
                     if ( self.isInProjectsNoPostfixList() or self.isInProjectsNoPostfixOutputList() or self.isInProjectsNoPostfixIfUnderCompilerDirList() ):
                         putPostfix = False
-                if ( putPostfix ):
+                if ( putPostfix and not forceNoPostfix ):
                     fn += self.getPostFix()
 
                 fn += ext
@@ -7374,6 +7560,10 @@ class Workspace( DspFile ):
         self.prjNameUuidDict = {}
         self.prjUuidNameDict = {} # reverse dictionary - but the value is not lowercase
 
+        self.allAlreadyUsedUuidsDict = {}
+        self.allAlreadyUsedUuidsBecomesNewDict = {}
+        self.allAlreadyUsedProjUuidsDict = {}
+
         self.solutionLine = ''
         self.solutionVersion = ''
 
@@ -7413,6 +7603,10 @@ class Workspace( DspFile ):
         for n in range( len( self.lines ) ):
             line = self.lines[n]
             self.n = n + 1
+
+            if ( self.filetitle == 'Examples_vc70.sln' ):
+                if ( self.n == 80 or self.n == 197 or self.n == 354 or self.n == 355 or self.n == 356 ):
+                    lkasdlkasdl = 10
 
             if ( state == 0 ):
                 version = ''
@@ -7458,11 +7652,22 @@ class Workspace( DspFile ):
                         pass
                     else:
                         if ( app.allUsedUuidsDict.has_key( uuidProj ) ):
-                            msg = 'getSlnProjectEntries: this uuid {%s} for [%s] has been already used for another project [%s]. This will be fixed!. File \'%s\'. Line [%d] \'%s\'' % ( uuidProj, prjName, app.allUsedUuidsDict[ uuidProj ], self.filename, self.n, line.rstrip() )
+                            msg = 'getSlnProjectEntries: this uuid {%s} for [%s] has been already used for another project [%s]. This will be fixed!. \n File \'%s\'. Line [%d] \'%s\'' % ( uuidProj, prjName, app.allUsedUuidsDict[ uuidProj ], self.filename, self.n, line.rstrip() )
                             #raise Exception( msg )
                             print msg
+                            uuidProjOld = uuidProj
                             uuidProj = app.getNextUuid( prjName )
-                            print 'Using key: {%s}' % ( uuidProj )
+                            print ' Using key: {%s}' % ( uuidProj )
+                            if ( self.allAlreadyUsedUuidsDict.has_key( uuidProj ) ):
+                                p = self.allAlreadyUsedUuidsDict[uuidProj]
+                                msg = 'getSlnProjectEntries: this uuid {%s} for [%s] has been already used also for the project [%s]. This cannot be fixed!.\n File \'%s\'. Line [%d] \'%s\'' % ( uuidProj, prjName, p, self.filename, self.n, line.rstrip() )
+                                raise Exception( msg )
+                            else:
+                                pLwr = prjName.lower()
+                                self.allAlreadyUsedUuidsDict[ uuidProjOld ] = pLwr
+                                self.allAlreadyUsedUuidsBecomesNewDict[ uuidProjOld ] = uuidProj
+                                self.allAlreadyUsedProjUuidsDict[ pLwr ] = uuidProjOld
+
                         else:
                             app.addUuid( uuidProj, prjName )
 
@@ -7655,11 +7860,18 @@ class Workspace( DspFile ):
                                     depNumCheck = -1
                                     lastUuid = '-1'
 
+                            uuidProj2Old = uuidProj2
+                            if ( self.allAlreadyUsedUuidsBecomesNewDict.has_key( uuidProj2 ) ):
+                                uuidProj2New = self.allAlreadyUsedUuidsBecomesNewDict[ uuidProj2Old ]
+                                msg = 'getSlnProjectEntries: {%s} --> (%s).  File \'%s\'. Line [%d] \'%s\'' % ( uuidProj2Old, uuidProj2New, self.filename, self.n, line.rstrip() )
+                                print msg
+                                uuidProj2 = uuidProj2New
+
                             # %%% should we put this if so it doesn't chrash ?
                             # for sure we want to be able to remove some projcts from a solution if we want !
                             if ( self.dictSlnProjectDataByUuid.has_key( uuidProj2 ) ):
-                                prjName1 = self.dictSlnProjectDataByUuid[ uuidProj  ].prjName # for debug
-                                prjName2 = self.dictSlnProjectDataByUuid[ uuidProj2 ].prjName # for debug
+                                prjName1dbg = self.dictSlnProjectDataByUuid[ uuidProj  ].prjName # for debug
+                                prjName2dbg = self.dictSlnProjectDataByUuid[ uuidProj2 ].prjName # for debug
 
                             depNumCheck = depNumCheck + 1
                             prjDependenciesUuidList.append( uuidProj2 )
@@ -7713,6 +7925,14 @@ class Workspace( DspFile ):
                     if ( m_sln_globalSectionProjectConfig_entry ):
                         uuidProj = m_sln_globalSectionProjectConfig_entry.group( 'uuidProj' )
 
+                        uuidProjOld = uuidProj
+
+                        if ( self.allAlreadyUsedUuidsBecomesNewDict.has_key( uuidProj ) ):
+                            uuidProjNew = self.allAlreadyUsedUuidsBecomesNewDict[ uuidProjOld ]
+                            msg = 'getSlnProjectEntries: {%s} --> (%s).  File \'%s\'. Line [%d] \'%s\'' % ( uuidProjOld, uuidProjNew, self.filename, self.n, line.rstrip() )
+                            print msg
+                            uuidProj = uuidProjNew
+
                         if ( lastUuid != '-1' and lastUuid != uuidProj ):
                             slnPrjData = self.dictSlnProjectDataByUuid[ lastUuid ]
                             if ( not lastUuid == slnPrjData.prjUuid ):
@@ -7742,6 +7962,14 @@ class Workspace( DspFile ):
                         #stupid format: GTK Debug.ActiveCfg = Debug|Win32
                         configFullNameEx = configNameExtended.split( '.' )[0]
                         prjConfigFullNameExCfgPlatfAssocDict[ configFullNameEx ] = configOrPlatform
+
+                        if ( not self.dictSlnProjectDataByUuid.has_key( uuidProj ) ):
+                            msg = 'getSlnProjectEntries: self.dictSlnProjectDataByUuid has not the key \'%s\''
+                            msg += '\n it is very possible that this uuid had been used twice and then deleted'
+                            msg += '\n This script had been run from windows ? please don\'t'
+                            msg += '\n Please replace manually the key for this project.'
+                            raise Exception( msg % ( self.filetitle, uuidProj ) )
+
 
                         slnPrjData = self.dictSlnProjectDataByUuid[ uuidProj ]
                         projectsWithConfigFullNameExCfgPlatfAssocDictDict[ slnPrjData.prjName.lower() ] = uuidProj

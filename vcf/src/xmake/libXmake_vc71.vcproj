@@ -27,7 +27,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc71\Release\libXmake_vc71_s.pch"
+				PrecompiledHeaderFile=".\vc71\Release\libXmake.pch"
 				AssemblerListingLocation=".\vc71\Release\"
 				ObjectFile=".\vc71\Release\"
 				ProgramDataBaseFileName=".\vc71\Release\"
@@ -37,7 +37,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\lib\libXmake_vc71_s.lib"
+				OutputFile="..\..\lib\libXmake.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -69,10 +69,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile=".\vc71\Debug\libXmake_vc71_sd.pch"
+				PrecompiledHeaderFile=".\vc71\Debug\libXmake.pch"
 				AssemblerListingLocation=".\vc71\Debug\"
 				ObjectFile=".\vc71\Debug\"
-				ProgramDataBaseFileName="..\..\lib\libXmake_vc71_sd.pdb"
+				ProgramDataBaseFileName="..\..\lib\libXmake.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"/>
@@ -80,7 +80,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\..\lib\libXmake_vc71_sd.lib"
+				OutputFile="..\..\lib\libXmake.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>

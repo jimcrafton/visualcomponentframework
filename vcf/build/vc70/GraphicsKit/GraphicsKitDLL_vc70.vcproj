@@ -11,67 +11,6 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc70\ReleaseDLL\"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS"
-				StringPooling="TRUE"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\GraphicsKit\GraphicsKit.h"
-				PrecompiledHeaderFile=".\vc70\ReleaseDLL\GraphicsKitDLL_vc70.pch"
-				AssemblerListingLocation=".\vc70\ReleaseDLL\"
-				ObjectFile=".\vc70\ReleaseDLL\"
-				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin\GraphicsKit_vc70.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib\"
-				ProgramDatabaseFile="..\..\..\lib\GraphicsKit_vc70.pdb"
-				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc70.lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\GraphicsKitDLL_vc70.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
-		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc70\DebugDLL\"
@@ -88,7 +27,7 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf\GraphicsKit\GraphicsKit.h"
+				PrecompiledHeaderThrough="vcf/GraphicsKit/GraphicsKit.h"
 				PrecompiledHeaderFile=".\vc70\DebugDLL\GraphicsKitDLL_vc70_d.pch"
 				AssemblerListingLocation=".\vc70\DebugDLL\"
 				ObjectFile=".\vc70\DebugDLL\"
@@ -126,6 +65,67 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc70\ReleaseDLL\"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="vcf/GraphicsKit/GraphicsKit.h"
+				PrecompiledHeaderFile=".\vc70\ReleaseDLL\GraphicsKitDLL_vc70.pch"
+				AssemblerListingLocation=".\vc70\ReleaseDLL\"
+				ObjectFile=".\vc70\ReleaseDLL\"
+				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\bin\GraphicsKit_vc70.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\..\lib\"
+				ProgramDatabaseFile="..\..\..\lib\GraphicsKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/GraphicsKit_vc70.lib"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName="..\..\..\lib\GraphicsKitDLL_vc70.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>

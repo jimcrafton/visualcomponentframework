@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="ParticleEditor"
-	ProjectGUID="{754EE465-81C3-4AEE-8014-91CD2DE447E4}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -22,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\"
+				AdditionalIncludeDirectories=".\.,$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,_DEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL,USE_OPENGLKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -44,6 +43,7 @@
 				OutputFile=".\Debug\ParticleEditor_vc70.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug\ParticleEditor_vc70.pdb"
 				SubSystem="2"
@@ -78,7 +78,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".\"
+				AdditionalIncludeDirectories=".\.,$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL,USE_OPENGLKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -101,6 +101,7 @@
 				OutputFile=".\Release\ParticleEditor_vc70.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="$(VCF_LIB)"
 				ProgramDatabaseFile=".\Release\ParticleEditor_vc70.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>

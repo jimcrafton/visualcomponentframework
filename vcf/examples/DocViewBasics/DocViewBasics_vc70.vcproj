@@ -28,7 +28,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\Release\DocViewBasics_vc70.pch"
+				PrecompiledHeaderFile=".\Release\DocViewBasics.pch"
 				AssemblerListingLocation=".\Release\"
 				ObjectFile=".\Release\"
 				ProgramDataBaseFileName=".\Release\"
@@ -41,11 +41,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\DocViewBasics.exe"
+				OutputFile=".\Release\DocViewBasics.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release\DocViewBasics_vc70.pdb"
+				ProgramDatabaseFile=".\Release\DocViewBasics.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -54,7 +54,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release\DocViewBasics_vc70.tlb"/>
+				TypeLibraryName=".\Release\DocViewBasics.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -86,7 +86,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\Debug\DocViewBasics_vc70.pch"
+				PrecompiledHeaderFile=".\Debug\DocViewBasics.pch"
 				AssemblerListingLocation=".\Debug\"
 				ObjectFile=".\Debug\"
 				ProgramDataBaseFileName=".\Debug\"
@@ -100,12 +100,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\DocViewBasics.exe"
+				OutputFile=".\Debug\DocViewBasics.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug\DocViewBasics_vc70.pdb"
+				ProgramDatabaseFile=".\Debug\DocViewBasics.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -114,7 +114,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug\DocViewBasics_vc70.tlb"/>
+				TypeLibraryName=".\Debug\DocViewBasics.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

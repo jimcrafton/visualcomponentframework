@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="RegEnVar"
-	ProjectGUID="{856D0A8A-455E-4A6A-9B63-E3614A4C97C8}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -40,7 +39,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile=".\Debug\RegEnVar_vc71.exe"
+				OutputFile=".\RegEnVar_vc71.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"

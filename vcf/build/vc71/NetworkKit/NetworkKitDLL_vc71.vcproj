@@ -12,7 +12,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc71\DebugDLL\"
+			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc71\DebugDLL\"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -40,23 +40,22 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="Ws2_32.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\NetworkKit_vc71_d.dll"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib\"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="..\..\..\lib\NetworkKit_vc71_d.pdb"
-				ImportLibrary=".\..\..\..\lib/NetworkKit_vc71_d.lib"
-				TargetMachine="1"/>
+				ImportLibrary=".\..\..\..\lib/NetworkKit_vc71_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\NetworkKitDLL_vc71_d.tlb"
-				HeaderFileName=""/>
+				TypeLibraryName="..\..\..\lib\NetworkKitDLL_vc71_d.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -70,17 +69,11 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
 				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc71\Release\"
+			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc71\Release\"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -91,7 +84,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_LIB;NETKIT_DLL;NETKIT_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NETKIT_DLL;NETKIT_EXPORTS;USE_FOUNDATIONKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -109,22 +102,21 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="Ws2_32.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\NetworkKit_vc71.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\lib\"
 				ProgramDatabaseFile="..\..\..\lib\NetworkKit_vc71.pdb"
-				ImportLibrary=".\..\..\..\lib/NetworkKit_vc71.lib"
-				TargetMachine="1"/>
+				ImportLibrary=".\..\..\..\lib/NetworkKit_vc71.lib"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\NetworkKitDLL_vc71.tlb"
-				HeaderFileName=""/>
+				TypeLibraryName="..\..\..\lib\NetworkKitDLL_vc71.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -138,13 +130,7 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
 				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -155,185 +141,42 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\NetToolkit.cpp">
 				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						UsePrecompiledHeader="1"
-						BasicRuntimeChecks="3"/>
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\Socket.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\SocketEvent.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\URL.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;NETKIT_DLL;NETKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
