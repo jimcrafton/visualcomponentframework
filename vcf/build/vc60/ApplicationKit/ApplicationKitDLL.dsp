@@ -742,7 +742,15 @@ SOURCE=..\..\..\include\core\ToolbarButton.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ToolbarDock.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ToolbarPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ToolbarSeparator.h
 # End Source File
 # Begin Source File
 
@@ -1219,6 +1227,14 @@ SOURCE=..\..\..\src\Events\TextEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ToolbarButton.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarDock.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
 # End Source File
 # Begin Source File
 
