@@ -201,6 +201,26 @@ SOURCE=..\..\..\include\dragdrop\ClipboardPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ColumnItem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ColumnItemEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ColumnModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ColumnModelEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ColumnModelEventHandler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ComboBoxControl.h
 # End Source File
 # Begin Source File
@@ -366,6 +386,14 @@ SOURCE=..\..\..\include\dragdrop\DataType.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\DataTypeNotSupportedException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\DefaultColumnItem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\DefaultColumnModel.h
 # End Source File
 # Begin Source File
 
@@ -1162,6 +1190,14 @@ SOURCE=..\..\..\src\DragDrop\ClipboardEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\ColumnItemEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\ColumnModelEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\ComboBoxControl.cpp
 # End Source File
 # Begin Source File
@@ -1259,6 +1295,14 @@ SOURCE=..\..\..\src\core\CustomControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DataType.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\DefaultColumnItem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\DefaultColumnModel.cpp
 # End Source File
 # Begin Source File
 
