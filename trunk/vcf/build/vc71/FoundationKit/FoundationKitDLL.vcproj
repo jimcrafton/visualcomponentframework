@@ -1004,6 +1004,9 @@
 				RelativePath="..\..\..\include\utils\Condition.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\utils\DateTime.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\include\utils\Enumerator.h">
 			</File>
 			<File
