@@ -441,9 +441,11 @@ NB: This software will not save the world.
 				the "vcfAllLibs" project and make it the active project. Building this 
 				project will automatically build the FoundationKit, GraphicsKit, 
 				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
-				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
-				just the static libraries, build the "vcfAllStaticLibs" project. To
-				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
+				will be built as both static <emphasis>and</emphasis> DLL binaries. 
+				To build just the static libraries, build the "vcfAllStaticLibs" 
+				project. To build all the libraries as DLL's, build the 
+				"vcfAllDynamicLibs" project.
+				
 				</para>
 				
 				<formalpara><title>Microsoft Visual C++ 7.1</title>
@@ -456,14 +458,21 @@ NB: This software will not save the world.
 				static .lib files and DLL projects. Visual Studio should prompt
 				you to convert the Visual C++ 6 projects into the new Visual Studio 7.1 
 				format. Click the "Yes to All" option, and all the projects should then
-				get converted. To build all the VCF libraries select 
-				the "vcfAllLibs" project and make it the active project. Building this 
-				project will automatically build the FoundationKit, GraphicsKit, 
+				get converted. Alternately you should be able to open the VC71 Solution in
+				vcf/build/vc71/vcfAllProjects.sln.
+				<graphic fileref="gfx/vc71-open.png"></graphic>
+				</para>
+				
+				<para>
+				To build all the VCF libraries select the "vcfAllLibs" project and make 
+				it the active project. 
+				<graphic fileref="gfx/vc71-build-all.png"></graphic>
+				Building this project will automatically build the FoundationKit, GraphicsKit, 
 				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
 				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
 				just the static libraries, build the "vcfAllStaticLibs" project. To
-				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
-				</para>
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.			
+				</para>				
 				
 				<formalpara><title>Microsoft Visual C++ 6 using the Intel C/C++ compiler</title>
 				The following section deals with build the VCF libraries using the Microsoft 
@@ -1509,6 +1518,9 @@ make tutorials
 <!--
 CVS Log info
 $Log$
+Revision 1.4  2004/08/18 18:22:22  ddiego
+nothing much
+
 Revision 1.3  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 
