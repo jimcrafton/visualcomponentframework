@@ -287,39 +287,42 @@ void TextControl::handleEvent( Event* event )
 
 						case vkBackSpace : {
 							ulong32 pos =  minVal<ulong32>( model->getSize(), textPeer_->getSelectionStart() );
-							pos -= 1;
+							
+							if ( pos > 0 ) {
+								pos -= 1;
+							}
 
-							if ( pos >= 0 ) {
-								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
+							
+							ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
 
-								// workaround for a '\r\n' sequence: we need to
-								// delete '\r' too at the beginning of the selection
-								if ( pos > 0 ) {
-									String text = model->getText();
-									const VCFChar* textBuffer = text.c_str();
-									
-									if ( textBuffer[pos] == '\n' ) {
-										if ( textBuffer[pos-1] == '\r' ) {
-											pos -= 1;
-											length += 1;
-										}
+							// workaround for a '\r\n' sequence: we need to
+							// delete '\r' too at the beginning of the selection
+							if ( pos > 0 ) {
+								String text = model->getText();
+								const VCFChar* textBuffer = text.c_str();
+								
+								if ( textBuffer[pos] == '\n' ) {
+									if ( textBuffer[pos-1] == '\r' ) {
+										pos -= 1;
+										length += 1;
 									}
 								}
-								
-								//Debug diagnostics - JC
-								//String text = model->getText();								
-								//StringUtils::traceWithArgs( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-								//		text.c_str(), text[pos], text[pos], pos );
-
-								
-								model->deleteText( pos, length );
-								
-
-								//text = model->getText();
-								//StringUtils::traceWithArgs( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-								//		text.c_str(), text[pos-length], text[pos-length], pos-length );
-								
 							}
+							
+							//Debug diagnostics - JC
+							//String text = model->getText();								
+							//StringUtils::traceWithArgs( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+							//		text.c_str(), text[pos], text[pos], pos );
+
+							
+							model->deleteText( pos, length );
+							
+
+							//text = model->getText();
+							//StringUtils::traceWithArgs( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+							//		text.c_str(), text[pos-length], text[pos-length], pos-length );
+							
+						
 						}
 						break;
 
@@ -353,6 +356,38 @@ void TextControl::handleEvent( Event* event )
 						case vkDownArrow :
 						case vkUpArrow : {
 							//no-op for these, since we don't want to add/delete text for them
+						}
+						break;
+
+						/**
+						JC - added this to account for tab entry - 
+						sometimes you'd end up with a tab character entered when all you 
+						wanted was to tab to the next control
+						*/
+						case vkTab : {
+							if ( keepsTabKey() ) {
+								//process the tab
+								
+								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
+									// we add the 'tab' text in place of the selection
+
+									ulong32 pos =  textPeer_->getCaretPosition();
+									String text;
+									text += ke->getKeyValue();
+									
+									//determine if we have selected text. If we 
+									//have, then delete the selection and *then*
+									//add in the new character(s)
+									
+									ulong32 length = textPeer_->getSelectionCount();
+									if ( length > 0 ) {
+										model->deleteText( pos, length );
+									}
+									
+									
+									model->insertText( pos, text );
+								}
+							}
 						}
 						break;
 
@@ -469,6 +504,10 @@ void TextControl::setReadOnly( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/01/18 00:21:44  ddiego
+*merged in changes from dev for aromans text edit bug
+*
+<<<<<<< TextControl.cpp
 *Revision 1.5  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *
@@ -486,6 +525,22 @@ void TextControl::setReadOnly( const bool& val )
 *Revision 1.4  2004/12/16 04:10:43  ddiego
 *fixes for bug 1081652, the actual fix came from Marcello.
 *
+=======
+*Revision 1.3.2.3  2005/01/18 00:15:33  ddiego
+*fixed aromans text edit bug
+*
+*Revision 1.3.2.2  2004/12/21 00:25:37  marcelloptr
+*comments
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.4  2004/12/16 04:10:43  ddiego
+*fixes for bug 1081652, the actual fix came from Marcello.
+*
+>>>>>>> 1.3.2.3
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
