@@ -6,15 +6,32 @@
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
   <TITLE>RTTI Basics</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK REL="StyleSheet" HREF="default.css"></HEAD>
-  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <BODY >
   <H1>
-   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+   <IMG SRC="vcflogo.gif" width="230" height="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
   <H1>
    RTTI Basics</H1>
-  <P>
-   Type topic text here.
+  <p>RTTI, or Run Time Type Information, is used in the VCF to dynamically identify
+  objects during the execution of a program. Most large frameworks, or
+  object-oriented languages have some form of RTTI, some examples are Smalltalk,
+  ObjectiveC, and Java (in Java RTTI is frequently referred to as reflection,
+  and is defined in the java.lang.reflect package). RTTI can be used to identify
+  the object's class name, the methods of a class, the properties of a class,
+  and the events that the object fires. In addition, RTTI allows the dynamic
+  creation of objects at runtime without having direct (compile-time) knowledge
+  of the objects class definition. In the VCF this dynamic creation can take
+  place by either specifying the class name or UUID, or creating an instance
+  that supports a particular interface from the interface name or UUID. </p>
+  <p>Obviously C++ itself does not support many of these features. The RTTI that
+  is supported in the language itself allows for dynamic class identification,
+  and dynamically casting an object to a specific class such that if the object
+  does not derive from the class, a null pointer is returned. This allows us to
+  &quot;query&quot; for the interfaces a particular object instance may&nbsp;
+  support. To support these other features requires additional work on the part
+  of the programmer by using special functions and classes provided by the VCF
+  to accomplish just this. </p>
  </BODY>
 </HTML>
