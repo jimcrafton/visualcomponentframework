@@ -154,6 +154,10 @@ SOURCE=..\..\..\src\IO\MemoryStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\Mutex.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Object.cpp
 # End Source File
 # Begin Source File
@@ -234,6 +238,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32LibraryPeer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
 # End Source File
 # Begin Source File
@@ -299,6 +307,10 @@ SOURCE=..\..\..\include\core\ClassRegistry.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\CommonDefines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\io\Directory.h
 # End Source File
 # Begin Source File
 
@@ -386,10 +398,6 @@ SOURCE=..\..\..\include\implementer\LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\Listener.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Locales.h
 # End Source File
 # Begin Source File
@@ -406,6 +414,14 @@ SOURCE=..\..\..\include\core\Method.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Mutex.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\MutexPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\NoFreeMemException.h
 # End Source File
 # Begin Source File
@@ -415,6 +431,10 @@ SOURCE=..\..\..\include\exceptions\NoPeerFoundException.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\NoSuchElementException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\NotifyListener.h
 # End Source File
 # Begin Source File
 
@@ -567,6 +587,10 @@ SOURCE=..\..\..\include\implementerKit\Win32FileStream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32LibraryPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Mutex.h
 # End Source File
 # Begin Source File
 

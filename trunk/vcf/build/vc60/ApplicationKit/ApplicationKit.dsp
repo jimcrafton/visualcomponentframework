@@ -125,11 +125,16 @@ SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AcceleratorKey.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Application.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+# ADD CPP /Yc"ApplicationKit.h"
 # End Source File
 # Begin Source File
 
@@ -718,6 +723,10 @@ SOURCE=..\..\..\include\core\AbstractTreeModel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\AcceleratorKey.h
 # End Source File
 # Begin Source File
 
