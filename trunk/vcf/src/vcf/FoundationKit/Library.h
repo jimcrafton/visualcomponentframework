@@ -19,11 +19,11 @@ namespace VCF {
 class LibraryPeer;
 
 /**
-*A Library represnts a DLL or SO. It can be created by passing
-*in a fully qualified file name to the constructor. The specified
-*DLL/SO will then be dynamically loaded (and unloaded when the
-*Library obejct is destroyed if autoUnloadLib is true).
-*Alternatively you may call the load() method which will do the same.
+A Library represnts a DLL (Dynamic Linked Library) or SO (Shared Object). 
+It can be created by passing in a fully qualified file name to the constructor. 
+The specified DLL/SO will then be dynamically loaded (and unloaded when the
+Library obejct is destroyed if autoUnloadLib is true).
+Alternatively you may call the load() method which will do the same.
 */
 class FOUNDATIONKIT_API Library : public Object{
 
@@ -77,6 +77,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -168,11 +168,6 @@ bool Thread::isActive()
 }
 
 
-void Thread::pause()
-{
-	peer_->pause();
-}
-
 Waitable::WaitResult Thread::wait()
 {
 	return (Waitable::WaitResult) peer_->wait();
@@ -187,6 +182,9 @@ Waitable::WaitResult Thread::wait( uint32 milliseconds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

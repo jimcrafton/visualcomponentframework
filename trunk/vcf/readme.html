@@ -8,7 +8,142 @@
 
 <body>
 
+<h1>Visual Component Framework 0.6.5&nbsp;</h1>
+<h2>Readme</h2>
+<p>
+The 0-6-5 release fixes a number of bugs, plus adds a number of new features, and also adds 
+more support for the OSX platform, as well as new compiler support for Borland's C/C++ compiler.
+</p>
+<p>
+Some of the bugs fixed include:
+<ul>
+  <li>Better support for Win32 border drawing - this means that the controls draw the actual VCF
+  border and adjust the non-client bounds accordingly.
+  <li>776440	ClassReg doesn't call addImplementedInterface
+  <li>932883	Wrong Scintilla link on homepage!
+  <li>937106	missing $(VCF_INCLUDE) in Strings example
+  <li>978678	Toolbar flickers when window resized.
+  <li>978679	Missing functionality in Actions Example.
+  <li>978681	Copy past example busted.
+  <li>980106	set Frame to null should cause removing of menubar.
+  <li>985136	StringUtils cast to (int) and ulong64.
+  <li>995642	delete LocalePeer in Locale.
+  <li>998161	Thread should not have pause and continue
+  <li>some subtle bugs in the Doc/View DocumentManager code
+  <li>some subtle draw errors were fixed in some of the VCF Controls including the 
+  TableControl and TabbedPages control.
+  </ul>
+  </p>
+<p>
+Some of the new features include:
+<ul>
+ <li>A revamped file structure that should make it much much easier to deternmine which files
+ belong with which kit.
+ 
+ <li>A new kit. We now support OpenGL via the OpenGLKit. This work on Win32 and it is rumored to work on 
+ linux as well.
+ 
+ <li>A new API for the File, Directory, and Directory::Finder classes. This includes support 
+ for getting the file creation/access/modification time, getting file size as an 64 bit number,
+ getting an input and/or output stream to the file, getting file attributes and more.
+ 
+ <li>The Unicode transition is now complete. For Win32 systems we now support a single library/
+ binary that can work on either NT based system or Win9.x system without worrying about
+ defining _MBCS or _UNICODE builds. 
+ 
+ <li>Improved API for drawing various "theme" elements of a windowing system with support 
+ for indicating the state of the element.
+ 
+ <li>Much improved support on Win32 for drawing in the non-client area. This means that VCF wrapped
+ controls will properly draw their border object and the non-client area dimensions will reflect 
+ this.
+ 
+ <li>Multi-lingual support in the locale class is now used in the ApplicationKit as well. So you
+ can write your strings file with your language translations and it will show up in your UI 
+ elements. Most UI elements have been transitioned to be "aware" of this (it's a single line of code 
+ to support this, os if we missed anything it's easy to fix).
+ <li>Better VC7/7.1 support. We now support Application wizards to make creating a VCF application
+ as easy as it is on VC6.
+ 
+ <li>XCode application wizards to make it easy to create VCF based applications with Apple's 
+ XCode IDE.
+ 
+</ul>
+</p>
+<p>
+We have new and improved examples, especially a much improved QuickTime media player that shows
+how to use QuickTime on Win32 and demo using the locale translation features.
+</p>
+<p>
+The Mac OSX port is coming along, with basic support for the FoundationKit, 
+GraphicsKits and ApplicationKit. There's still lots to do, but we can run some of the samples
+now on OSX. 
+</p>
 
+<p>
+We have added an additional compiler that the VCF can be built on for Win32, You can now 
+use Borland's C++ 5.5 or 6 compilers to build the VCF.
+</p>
+
+<p>  
+Other miscellaneous tasks for this release:
+<ul>
+ <li>82276	add auto init to Library class
+ <li>101572	Switch & rename default containers for controls
+ <li>101477	Add OSX FileStream peer
+ <li>101478	Add OSX Condition peer
+ <li>101479	Add OSX Thread peer	
+ <li>101481	Add OSX Mutex peer
+ <li>101482	Add OSX Semaphore peer
+ <li>101483	Add OSX System peer
+ <li>101488	Add OSX Context peer
+ <li>101487	Add OSX Font peer
+ <li>101489	Add OSX GraphicsToolkit
+ <li>101490	Add OSX Image class
+ <li>101491	Add OSX Application peer
+ <li>101499	Add OSX lightweight control peer
+ <li>37707	Port to Borland C++ 5.x compiler
+ <li>101573	Model, Items, Views Docs (3.3.9 - 3.3.11 of Ref.Manual)
+ <li>72693	Toolbar
+ </ul>
+ </p>
+ 
+ 
+<h3>Known issues:</h3>
+<ol>
+<li>The OSX port is still a work in progress. Some of the examples work,
+namely:
+<ul>
+<li>Alignment
+<li>Conditions
+<li>DateTimeUI
+<li>DatesAndTime
+<li>Dictionaries
+<li>EventBasics
+<li>FilesAndDirectories
+<li>GraphicsBasics
+<li>HelloWorld
+<li>HelloWorld2
+<li>HelloWorld3
+<li>Reflection
+<li>Strings
+<li>TextLayout
+<li>ThreadBasics
+<li>WorkingWithEnumerators
+</ul>
+
+There is still alot of work to be done on the osx port. Hopefully by the next release
+(0-6-6) this will all be accomplished. 
+That said you should be able to build the framework using the supplied 
+projects. Look in vcf/build/xcode if you use XCode, or try the 
+vcf/build/osx-pb fopr ProjectBuilder projects.
+
+<li>
+The linux port is also still in progress. Not much to say other than it 
+needs a lot of help.
+</ol>
+
+ 
 <h1>Visual Component Framework 0.6.4&nbsp;</h1>
 <h2>Readme</h2>
 <p>

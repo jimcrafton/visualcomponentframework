@@ -38,8 +38,19 @@ class SystemPeer;
 class LocalePeer;
 
 /**
-*The SystemToolkit is used to create or get access to
-*basic system peer instances, like threads, processes, etc.
+\par
+The SystemToolkit is and abstract class used to create or 
+get access to basic system peer instances, like threads, processes, etc. 
+It is a singleton factory for the various platform specific 
+peers that are required for the FoundationKit. 
+\par
+The SystemToolkit is a singleton and is not intended to be created
+or deleted directly. It is created as part of the FoundationKit::init()
+and deleted as part of the FoundationKit::terminate() call. 
+\par
+If you are porting to a new platform you will need to derive a new 
+class from this one and provide implementations of the various
+internal_createXXXPeer methods. 
 */
 class FOUNDATIONKIT_API SystemToolkit : public Object{
 
@@ -49,9 +60,7 @@ public:
 
 	static void terminate();
 
-	SystemToolkit();
-
-	virtual ~SystemToolkit();
+	
 
 	/**
 	*creates a new ProcessPeer instance
@@ -88,45 +97,95 @@ public:
 
 	static LocalePeer* createLocalePeer();
 protected:
+	SystemToolkit();
+
+	virtual ~SystemToolkit();
+
 	/**
-	*creates a new ProcessPeer instance
+	creates a new ProcessPeer instance. 
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.
 	*/
 	virtual ProcessPeer* internal_createProcessPeer( Process* process ) = 0;
 
+	/**	
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.
+	*/
 	virtual ProcessIORedirectionPeer* internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process ) = 0;
 
 	/**
-	*creates a new ThreadPeer instance
+	creates a new ThreadPeer instance.
+	
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
 	*/
 	virtual ThreadPeer* internal_createThreadPeer( Thread* thread ) = 0;
 
 	/**
 	*creates a new system peer
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
 	*/
 	virtual SystemPeer* internal_createSystemPeer() = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount = 1, long maxCount = 1 ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual RegistryPeer* internal_createRegistryPeer( Registry* registry ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual MutexPeer* internal_createMutexPeer( Mutex* mutex ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
     virtual ConditionPeer* internal_createConditionPeer( Condition* condition ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual LibraryPeer* internal_createLibraryPeer( Library* library ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual FilePeer* internal_createFilePeer( File* file ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual FileStreamPeer* internal_createFileStreamPeer( const String& filename, const FileStreamAccessType& accessType ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual FileStreamPeer* internal_createFileStreamPeer( File* file ) = 0;
 
+	/**
+	A port of the FoundationKit to a new platform requires a new class that derives from the 
+	SystemToolkit and implements this method.	
+	*/
 	virtual LocalePeer* internal_createLocalePeer() = 0;
 
 	/**
 	*returns the one and only instance of the system toolkit
 	*/
-
 	static SystemToolkit* getSystemToolkit() {
 		return systemToolkitInstance;
 	}
@@ -139,6 +198,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

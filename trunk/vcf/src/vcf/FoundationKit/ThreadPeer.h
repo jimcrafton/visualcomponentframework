@@ -41,11 +41,6 @@ public:
 	virtual void stop() = 0;
 
 	/**
-	*pauses a thread. The thread may be resumed by calling start()
-	*/
-	virtual void pause() = 0;
-
-	/**
 	*causes the thread the thread to sleep for the specified number of
 	*milliseconds
 	*@param uint32 - the number of milliseconds to sleep
@@ -84,6 +79,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

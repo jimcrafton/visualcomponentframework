@@ -16,6 +16,13 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+\par
+A generic event meant only to indicate some sort of "signal" has 
+happened on the event's source instance. The actual semantics of this
+is entirely up to the class deriving from ObjectWithEvents.
+@see ObjectWithEvents.
+*/
 class NotifyEvent : public Event{
 
 public:
@@ -55,6 +62,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

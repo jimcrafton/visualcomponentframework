@@ -22,12 +22,58 @@ namespace VCF  {
 class NotifyEvent;
 
 /**
-*ObjectWithEvents is an object that may
-*have 0 or more EventHandlers associated with it,
-*and will automatically clean up these EventHandlers
-*when it is destroyed. This simplifies handling
-*who has to clean up EventHandlers that have been
-*allocated on the heap (which they always will be).
+\par
+ObjectWithEvents is an object that may
+have 0 or more EventHandlers associated with it,
+and will automatically clean up these EventHandlers
+when it is destroyed. This simplifies handling
+who has to clean up EventHandlers that have been
+allocated on the heap (which they always will be).
+\par
+Because the collection is a map, an event handler may be
+retreived for future use - that is it may be reused by 
+another delegate. For example:
+\code
+class Stuff : public ObjectWithEvents {
+public:
+	void onEvent( Event* e ) {
+		
+	}
+
+};
+
+int main() 
+{
+	FoundationKit::init();
+
+	Stuff stuff;
+	
+	EventHandler* ev = 
+		new GenericEventHandler<Stuff>(&stuff,&Stuff::onEvent,"Stuff::onEvent");
+	
+	FoundationKit::terminate();
+	return 0;
+}
+
+\endcode
+
+This adds the new event handler (ev) to the stuff instance. This event handler can
+then be retreived at any time:
+
+\code
+void someFunction( Stuff* stuff ) 
+{
+	EventHandler* stuffHandler = stuff->getEventHandler( "Stuff::onEvent" );
+	//use the stuffHandler somehow...
+}
+\endcode
+
+\par
+Note that the ObjectWithEvents should not be created directly. Instead derive a 
+new custom class using this as a base class.
+
+@delegates	
+	@del ObjectWithEvents::Notified
 */
 class FOUNDATIONKIT_API ObjectWithEvents : public Object {
 public:
@@ -54,12 +100,15 @@ public:
 
 	/**
 	*Adds the vector of handlers to the master list. This list will be
-	*destroyed when the destructor is called
+	*destroyed when the destructor is called. This is used internally by the
+	framework, and you shouldn't have to call it.
 	*/
 	void addEventHandlerList( EventHandler::Vector* eventHandlerList );
 
-	/**
-	*Notifier events
+	/**	
+	@delegate Notifier events are used as a generic signal mechanism and can signify 
+	anything that takes place to the ObjectWithEvents instance.
+	@event NotifyEvent
 	*/
 	DELEGATE(Notified)
 
@@ -89,6 +138,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -152,10 +152,6 @@ unsigned __stdcall Win32Thread::threadProc( void* param )
 	return result;
 }
 
-void Win32Thread::pause()
-{
-	::SuspendThread( (HANDLE)threadHandle_ );
-}
 
 void Win32Thread::sleep( unsigned int milliseconds )
 {
@@ -216,6 +212,9 @@ int Win32Thread::wait( uint32 milliseconds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

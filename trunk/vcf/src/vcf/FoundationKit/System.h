@@ -29,19 +29,37 @@ class Locale;
 
 
 /**
-*The System object represents basic lower level OS functions
+The System object represents basic lower level OS functions. 
+The System instance is a singleton, and may not be created or 
+deleted directly. Instead the FunctionKit::init() and FoundationKit::terminate()
+take of this for you. You interact with it by calling the various 
+static methods of the class, which in turn call the proper 
+System peer implementation.
 */
 class FOUNDATIONKIT_API System : public Object {
 public:
+	/**
+	This is for internal usage only - don't call
+	*/
 	static System* create();
 
+	/*
+	This is for internal usage only - don't call
+	*/
 	static void terminate();
 
-	System();
-	virtual ~System();
+	
 
+	/**
+	Returns the current "tick" count. On Win32 systems this is analagous to the 
+	GetTickCount() API. Should be millisecond resolution, but this is not by any means 
+	guaranteed.
+	*/
 	static unsigned long getTickCount();
 
+	/**
+	Causes the calling thread/process to sleep for a specified number of milliseconds.
+	*/
 	static void sleep( const uint32& milliseconds );
 
 	/**
@@ -102,8 +120,14 @@ public:
 	*/
 	static String getEnvironmentVariable( const String& variableName );
 
+	/**
+	Returns the current working directory.
+	*/
 	static String getCurrentWorkingDirectory();
 
+	/**
+	Sets the current working directory
+	*/
 	static void setCurrentWorkingDirectory( const String& currentDirectory );
 
 	/**
@@ -147,7 +171,11 @@ public:
 	Windows XP) this will return true. For Mac OSX this always returns true.
 	*/
 	static bool isUnicodeEnabled();
-private:
+
+protected:
+	System();
+	virtual ~System();
+
 	SystemPeer* systemPeer_;
 	static System* systemInstance;
 
@@ -163,6 +191,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/08 22:09:33  ddiego
+*final checkin before the 0-6-5 release
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
