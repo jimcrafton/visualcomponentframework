@@ -126,8 +126,22 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,74,142,
                     WS_EX_CLIENTEDGE
-    LTEXT           "This Wizard will createa simple Hello World Application, with a single window, that uses the VCF ApplicationKit.\n\nThe application will link to the ApplicationKit as a Win32 DLL.",
+    LTEXT           "This Wizard will createa simple Hello World Application, with a single window, that uses the VCF ApplicationKit.",
                     IDC_STATIC,105,15,154,54
+END
+
+IDD_PAGE2 DIALOGEX 0, 0, 283, 152
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,74,142,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "Select whether to link to the Visual Component Framework through a static library or a dynamic library.",
+                    IDC_STATIC,105,15,154,31
+    CONTROL         "Link to VCF through a Static Libary",IDC_RADIO1,"Button",
+                    BS_AUTORADIOBUTTON,107,52,117,10
+    CONTROL         "Link to VCF through a Dynamic Libary (.DLL)",IDC_RADIO2,
+                    "Button",BS_AUTORADIOBUTTON,107,68,146,10
 END
 
 
@@ -140,6 +154,14 @@ END
 GUIDELINES DESIGNINFO DISCARDABLE 
 BEGIN
     IDD_PAGE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 280
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PAGE2, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 280
