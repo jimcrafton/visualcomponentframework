@@ -153,6 +153,10 @@ SOURCE=..\..\..\include\events\Event.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\EventHandler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\File.h
 # End Source File
 # Begin Source File
@@ -442,6 +446,10 @@ SOURCE=..\..\..\src\Utils\ErrorLog.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\Event.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\EventHandler.cpp
 # End Source File
 # Begin Source File
 

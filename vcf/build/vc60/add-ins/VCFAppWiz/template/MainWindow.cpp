@@ -21,58 +21,55 @@ $$IF(STD_HELP_MNU || STD_FILE_MNU || UNDO_REDO)
 	MenuBar* menuBar = new MenuBar();
 	this->setMenuBar( menuBar );
 	MenuItem* root = menuBar->getRootMenuItem();
-	MenuItemHandler<MainWindow>* menuItemHandler = NULL;
+	MenuItemEventHandler<MainWindow>* menuItemHandler = NULL;
 $$IF(STD_FILE_MNU)
 	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, menuBar );
 
 	DefaultMenuItem* fileOpenProject = new DefaultMenuItem( "&Open...", file, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onFileOpenProject, 0 );
-	fileOpenProject->addMenuItemListener( menuItemHandler );
-	addEventHandler( "fileOpen", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileOpenProject, "fileOpen" );
+	fileOpenProject->addMenuItemClickedHandler( menuItemHandler );
+	
 	
 	DefaultMenuItem* fileSaveProject = new DefaultMenuItem( "&Save...", file, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onFileSaveProject, 0 );		
-	fileSaveProject->addMenuItemListener( menuItemHandler );
-	addEventHandler( "fileSave", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileSaveProject, "fileSave" );	
+	fileSaveProject->addMenuItemClickedHandler( menuItemHandler );
+	
 
 	DefaultMenuItem* sep = new DefaultMenuItem( "", file, menuBar );
 	sep->setSeparator( true );
 	
 	DefaultMenuItem* fileExit = new DefaultMenuItem( "E&xit", file, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onFileExit, 0 );
-	
-	fileExit->addMenuItemListener( menuItemHandler );
-	addEventHandler( "fileExit", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileExit, "fileExit" );	
+	fileExit->addMenuItemClickedHandler( menuItemHandler );
+
 $$ENDIF
 $$IF(UNDO_REDO)
 	//edit Undo/Redo support
 	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, menuBar );
 	DefaultMenuItem* editUndo = new DefaultMenuItem( "Undo", edit, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onEditUndo, 0 );
-	menuItemHandler->setMethodPtr( MainWindow::onEditUndoUpdate, 1 );		
-	editUndo->addMenuItemListener( menuItemHandler );
-	addEventHandler( "editUndo", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditUndo, "editUndoClick" );	
+	editUndo->addMenuItemClickedHandler( menuItemHandler );
+
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditUndoUpdate, "editUndoUpdate" );	
+	editUndo->addMenuItemUpdateHandler( menuItemHandler );
+	
 	
 	DefaultMenuItem* editRedo = new DefaultMenuItem( "Redo", edit, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onEditRedo, 0 );		
-	menuItemHandler->setMethodPtr( MainWindow::onEditRedoUpdate, 1 );		
-	editRedo->addMenuItemListener( menuItemHandler );
-	addEventHandler( "editRedo", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditRedo, "editRedoClick" );	
+	editRedo->addMenuItemClickedHandler( menuItemHandler );
+
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditRedoUpdate, "editRedoUpdate" );	
+	editRedo->addMenuItemUpdateHandler( menuItemHandler );
+
 $$ENDIF
 $$IF(STD_HELP_MNU)
 
 	//add Help menu
 	DefaultMenuItem* help = new DefaultMenuItem( "&Help", root, menuBar );
 	DefaultMenuItem* helpAbout = new DefaultMenuItem( "About...", help, menuBar );
-	menuItemHandler = new MenuItemHandler<MainWindow>(this);
-	menuItemHandler->setMethodPtr( MainWindow::onHelpAbout, 0 );				
-	helpAbout->addMenuItemListener( menuItemHandler );
-	addEventHandler( "helpAbout", menuItemHandler );
+	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onHelpAbout, "helpAbout" );	
+	helpAbout->addMenuItemClickedHandler( menuItemHandler );
+
 $$ENDIF
 $$ENDIF
 }
