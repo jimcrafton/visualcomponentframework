@@ -19,7 +19,7 @@ $$Root$$About::$$Root$$About()
 	okBtn->setTop( getHeight() - (okBtn->getHeight()+35) );
 	okBtn->setLeft( getWidth() - (okBtn->getWidth()+25) );
 	add( okBtn );
-	okBtn->setFocus( true );
+	okBtn->setFocused();
 	okBtn->setCommandType( BC_OK );
 	okBtn->setCaption( "&OK" );
 

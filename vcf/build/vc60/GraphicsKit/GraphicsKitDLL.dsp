@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Yu"GraphicsKit.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/../thirdparty/common/agg/include/" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /D "BUILD_GRAPHICSKIT_LIB" /Yu"GraphicsKit.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\bin/GraphicsKit_vc6_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /D "BUILD_GRAPHICSKIT_LIB" /FR /Yu"GraphicsKit.h" /Fd"..\..\..\bin/GraphicsKit_vc6_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -97,6 +97,10 @@ SOURCE=..\..\..\include\graphics\AbstractImage.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\AggCommon.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Basic3DBorder.h
 # End Source File
 # Begin Source File
@@ -110,6 +114,10 @@ SOURCE=..\..\..\include\graphics\BasicRectangle.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicStroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\BezierCurve.h
 # End Source File
 # Begin Source File
 
@@ -130,14 +138,6 @@ SOURCE=..\..\..\include\graphics\Color.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\Contextpeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\Curve.h
 # End Source File
 # Begin Source File
 
@@ -201,10 +201,6 @@ SOURCE=..\..\..\include\exceptions\ImageLoaderException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Matrix.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\Matrix2D.h
 # End Source File
 # Begin Source File
@@ -217,11 +213,11 @@ SOURCE=..\..\..\include\graphics\Path.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\PathEnumerator.h
+SOURCE=..\..\..\include\graphics\PixelFormats.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Polygon.h
+SOURCE=..\..\..\include\core\Point.h
 # End Source File
 # Begin Source File
 
@@ -230,6 +226,14 @@ SOURCE=..\..\..\include\graphics\Printable.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\PrintContext.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Rect.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Size.h
 # End Source File
 # Begin Source File
 
@@ -242,26 +246,6 @@ SOURCE=..\..\..\include\graphics\VCFOpenGL.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\Vector2D.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Context.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Font.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32GraphicsToolkit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerKit\Win32Image.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerkit\Win32OpenGLPeer.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -278,6 +262,10 @@ SOURCE=..\..\..\src\Graphics\BasicFill.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\graphics\BezierCurve.cpp
 # End Source File
 # Begin Source File
 
@@ -314,19 +302,35 @@ SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\Polygon.cpp
+SOURCE=..\..\..\src\core\Point.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\Rect.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Vector2D.cpp
 # End Source File
+# End Group
+# Begin Group "Peers"
+
+# PROP Default_Filter "*.cpp;*.h"
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Font.h
 # End Source File
 # Begin Source File
 
@@ -338,7 +342,19 @@ SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32GraphicsToolkit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Image.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32OpenGLPeer.h
 # End Source File
 # End Group
 # End Target

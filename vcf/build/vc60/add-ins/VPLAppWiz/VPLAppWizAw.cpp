@@ -74,8 +74,13 @@ CAppWizStepDlg* CVPLAppWizAppWiz::Next(CAppWizStepDlg* pDlg)
 		strRoot.MakeUpper();
 		m_Dictionary[_T("MAC_TYPE")] = strRoot;
 		
+
+
 		// Return NULL to indicate there are no more steps.  (In this case, there are
 		//  no steps at all.)
+	}
+	else {
+
 	}
 	return result;
 }

@@ -20,14 +20,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,_LIB"
+				PreprocessorDefinitions="WIN32,_DEBUG,_LIB,BUILD_WIN32HTMLBROWSER_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc7/DebugS\obj/Win32HTMLBrowser_StaticLib.pch"
 				AssemblerListingLocation=".\vc7/DebugS\obj/"
-				ObjectFile=".\vc7/DebugS\obj/"
+				ObjectFile="vc7/DebugS\obj/"
 				ProgramDataBaseFileName="..\..\..\lib/Win32HTMLBrowser_vc7_sd.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -67,7 +67,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,_LIB"
+				PreprocessorDefinitions="WIN32,NDEBUG,_LIB,BUILD_WIN32HTMLBROWSER_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -75,7 +75,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\vc7/ReleaseS\obj/Win32HTMLBrowser_StaticLib.pch"
 				AssemblerListingLocation=".\vc7/ReleaseS\obj/"
-				ObjectFile=".\vc7/ReleaseS\obj/"
+				ObjectFile="vc7/ReleaseS\obj/"
 				ProgramDataBaseFileName=".\vc7/ReleaseS\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -127,5 +127,3 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-

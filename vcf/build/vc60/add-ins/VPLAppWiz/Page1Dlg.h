@@ -21,6 +21,10 @@ public:
 	//{{AFX_DATA(Page1Dlg)
 	enum { IDD = IDD_PAGE1 };
 	CStatic	m_image;
+	CString	m_additional;
+	CString	m_author;
+	CString	m_company;
+	CString	m_copyright;
 	//}}AFX_DATA
 
 

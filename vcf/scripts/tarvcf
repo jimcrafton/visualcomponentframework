@@ -6,11 +6,11 @@ cd ../
 
 #find all files
 
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.h -o -iname *.hpp -o -iname *.c -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl > srcfiles.out
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.def -o -iname *.vcfdir -o -iname *.vcp -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.inf -o -iname *.vcproj > srcfiles1.out
-find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.cpp -o -iname *.CPP -o -iname *.HPP -o -iname *.cxx -o -iname *.CXX -o -iname *.cur -o -iname *.CUR > srcfiles2.out
+find ./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' -o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.rgs' -o -iname '*.rc' -o -iname '*.idl' > srcfiles.out
+find ./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty -iname '*.def' -o -iname '*.vcfdir' -o -iname '*.vcp' -o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.vff' -o -iname '*.inf' -o -iname '*.vcproj' > srcfiles1.out
+find ./include ./src ./ImageFormats ./build ./AppServer ./xmake ./ClassServer ./thirdparty -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.HPP' -o -iname *.cxx -o -iname '*.CXX' -o -iname '*.cur' -o -iname '*.CUR' > srcfiles2.out
 
-find ./tests -iname *.h -o -iname *.cpp -o -iname *.CPP -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl -o -iname *.def -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.html > tests.out
+find ./tests -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' -o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.rgs' -o -iname '*.rc' -o -iname '*.idl' -o -iname '*.def' -o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.vff' -o -iname '*.html' > tests.out
 
 
 #combine the outoput into a master list
@@ -41,7 +41,13 @@ tar -cf vcf-$1.tar vcf-$1/
 echo Compressing tar file with gzip...
 gzip -f vcf-$1.tar
 
-mv vcf-$1.tar.gz ../uploadToSF/vcf-$1.tar.gz
+if ( test -d ../uploadToSF/ )
+then 
+	mv vcf-$1.tar.gz ../uploadToSF/vcf-$1.tar.gz
+else
+	mv vcf-$1.tar.gz ../
+fi
+
 cd ../
 rm -rf tmp
 

@@ -20,7 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;BUILD_GRAPHICSKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -28,7 +28,7 @@
 				PrecompiledHeaderThrough="GraphicsKit.h"
 				PrecompiledHeaderFile=".\vc7/DebugDLL\obj/GraphicsKitDLL.pch"
 				AssemblerListingLocation=".\vc7/DebugDLL\obj/"
-				ObjectFile=".\vc7/DebugDLL\obj/"
+				ObjectFile="vc7/DebugDLL\obj/"
 				ProgramDataBaseFileName="..\..\..\bin/GraphicsKit_vc7_d.pdb"
 				BrowseInformation="1"
 				WarningLevel="3"
@@ -81,8 +81,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/../thirdparty/common/agg/include/"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FRAMEWORK_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;BUILD_GRAPHICSKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -91,7 +91,7 @@
 				PrecompiledHeaderThrough="GraphicsKit.h"
 				PrecompiledHeaderFile=".\vc7/ReleaseDLL\obj/GraphicsKitDLL.pch"
 				AssemblerListingLocation=".\vc7/ReleaseDLL\obj/"
-				ObjectFile=".\vc7/ReleaseDLL\obj/"
+				ObjectFile="vc7/ReleaseDLL\obj/"
 				ProgramDataBaseFileName=".\vc7/ReleaseDLL\obj/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -139,10 +139,7 @@
 				RelativePath="..\..\..\include\graphics\AbstractImage.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\AlphaGamma.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\graphics\ArtStroke.h">
+				RelativePath="..\..\..\include\graphics\AggCommon.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\Basic3DBorder.h">
@@ -155,6 +152,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\BasicStroke.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\graphics\BezierCurve.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\Border.h">
@@ -170,9 +170,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\implementer\Contextpeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\graphics\ControlGraphicsContext.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\Curve.h">
@@ -205,12 +202,6 @@
 				RelativePath="..\..\..\include\GraphicsKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\GraphicsObject.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\graphics\GraphicsResourceMgr.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\utils\GraphicsToolKit.h">
 			</File>
 			<File
@@ -229,9 +220,6 @@
 				RelativePath="..\..\..\include\exceptions\ImageLoaderException.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\Matrix.h">
-			</File>
-			<File
 				RelativePath="..\..\..\include\graphics\Matrix2D.h">
 			</File>
 			<File
@@ -241,7 +229,10 @@
 				RelativePath="..\..\..\include\graphics\Path.h">
 			</File>
 			<File
-				RelativePath="..\..\..\include\graphics\PathEnumerator.h">
+				RelativePath="..\..\..\include\graphics\PixelFormats.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Point.h">
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\Polygon.h">
@@ -253,6 +244,12 @@
 				RelativePath="..\..\..\include\graphics\Printable.h">
 			</File>
 			<File
+				RelativePath="..\..\..\include\core\Rect.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\core\Size.h">
+			</File>
+			<File
 				RelativePath="..\..\..\include\graphics\Stroke.h">
 			</File>
 			<File
@@ -260,21 +257,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\graphics\Vector2D.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Context.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Font.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32GraphicsToolkit.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerKit\Win32Image.h">
-			</File>
-			<File
-				RelativePath="..\..\..\include\implementerkit\Win32OpenGLPeer.h">
 			</File>
 		</Filter>
 		<Filter
@@ -290,13 +272,13 @@
 				RelativePath="..\..\..\src\Graphics\BasicStroke.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\graphics\BezierCurve.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\Graphics\Color.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Graphics\Font.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\Graphics\FontState.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Graphics\GlyphCollection.cpp">
@@ -320,9 +302,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\Graphics\GraphicsObject.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\src\Utils\GraphicsToolKit.cpp">
 			</File>
 			<File
@@ -332,16 +311,32 @@
 				RelativePath="..\..\..\src\Graphics\Matrix2D.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\Point.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\Graphics\Polygon.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\Rect.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\Graphics\Vector2D.cpp">
 			</File>
+		</Filter>
+		<Filter
+			Name="Peers"
+			Filter="*.cpp;*.h">
 			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32Context.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Context.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32Font.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Font.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32FontManager.cpp">
@@ -350,12 +345,19 @@
 				RelativePath="..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\include\implementerKit\Win32GraphicsToolkit.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\ImplementerKit\Win32Image.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerKit\Win32Image.h">
+			</File>
+			<File
+				RelativePath="..\..\..\include\implementerkit\Win32OpenGLPeer.h">
 			</File>
 		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-
