@@ -1,0 +1,104 @@
+Introduction to File Handling in VCF
+
+<p>
+
+Reading and writing files and browsing directories are very easy tasks in VCF. Files and directories are represented through the <b>File</b>
+and <b>Directory</b> classes, respectively. The <b>File</b> class allows creating, copying, renaming, deleting and gathering information
+about files. These same operations can be applied to directories through the <b>Directory</b> class. These classes also allow to 
+browse directories, search for files and navigate the file system.
+
+<p>
+
+Data can be easily read from and written to files through standard stream interfaces. The <b>FileStream</b> class is responsible for
+opening files for reading and writing and provides the input and output streams. Let's take a look at these exciting features.
+
+<p>
+
+The File class
+
+<p>
+
+A File object represents a single file. You attach the File object to a file in disk this way:
+
+<p>
+
+<code>
+File file1("myfile.txt"); // passing the filename in the constructor
+</code>
+
+<p>
+
+or
+
+<p>
+
+<code>
+File file1;<br>
+file1.setName("myfile.txt"); // calling the setName method
+</code>
+
+<p>
+
+If the file doesn't exist it will be kindly created for you. As soon as you have an initialized file object you can play with it,
+as the next example shows:
+<p>
+
+<code>
+void main()<br>
+{<br>
+	File file1("testFile.txt");
+	<br>
+	<br>
+	uint32 fileSize = file1.getSize(); // gets the file size
+	<br>
+	file1.copyTo("copy_of_testFile.txt"); // makes a copy of the file
+	<br>
+	<br>
+	File file2("copy_of_testFile.txt");
+	<br>
+	file2.remove(); // deletes the copy
+	<br>
+	<br>
+	file1.rename("renamed_testFile.txt"); // renames the file
+	<br>
+	String fileName = file1.getName(); // gets the file name
+	<br>
+	String absoluteName = file1.getAbsoluteName(); // gets the file name with complete path
+	<br>
+	String path = file1.getPath(); 
+	<br>
+}
+</code>
+
+<p>
+
+As you can see the methods are very clear and straightforward. And VCF classes are platform independent, so you can use:
+
+<p>
+
+<code>
+file1.setName("/home/cesar/testFile.txt"); // Unix path
+<br>
+file1.setName("C:\\My Documents\\testFile.txt"); Windows path
+</code>
+
+<p>
+
+To help working with paths in a platform independent manner, the File class has two static methods:
+
+<p>
+
+<code>
+File::getSeparatorChar(); // this returns "/" in Unix and "\" in Windows
+<br>
+File::getRootPath(); // this returns "/" in Unix and probably "C:\" in Windows
+</code>
+
+
+
+
+
+
+
+
+
