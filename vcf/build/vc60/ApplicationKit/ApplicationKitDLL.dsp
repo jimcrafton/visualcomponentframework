@@ -400,6 +400,10 @@ SOURCE=..\..\..\include\core\Desktop.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\DesktopPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Dialog.h
 # End Source File
 # Begin Source File
@@ -464,19 +468,23 @@ SOURCE=..\..\..\include\core\Frame.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerkit\GTKPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementerkit\GTKToolkit.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\HeaderControl.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\HeaderPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\ImageList.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ImageListEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ImageListListener.h
 # End Source File
 # Begin Source File
 
@@ -513,6 +521,10 @@ SOURCE=..\..\..\include\events\KeyboardListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Label.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Light3DBorder.h
 # End Source File
 # Begin Source File
 
@@ -708,6 +720,10 @@ SOURCE=..\..\..\include\events\SelectionListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Splitter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\StrokeState.h
 # End Source File
 # Begin Source File
@@ -869,6 +885,10 @@ SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32CustomControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
 # End Source File
 # Begin Source File
 
@@ -1175,6 +1195,10 @@ SOURCE=..\..\..\src\core\DefaultTreeModel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Desktop.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Dialog.cpp
 # End Source File
 # Begin Source File
@@ -1199,6 +1223,14 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\ImageList.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\ImageListEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\ItemEvent.cpp
 # End Source File
 # Begin Source File
@@ -1208,6 +1240,10 @@ SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\Light3DBorder.cpp
 # End Source File
 # Begin Source File
 
@@ -1275,6 +1311,10 @@ SOURCE=..\..\..\src\IO\ResourceStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Splitter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\TabbedPages.cpp
 # End Source File
 # Begin Source File
@@ -1296,6 +1336,22 @@ SOURCE=..\..\..\src\core\TextControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TextEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\Toolbar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarButton.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarDock.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
 # End Source File
 # Begin Source File
 
@@ -1344,6 +1400,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32CustomControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32Desktop.cpp
 # End Source File
 # Begin Source File
 

@@ -2,6 +2,7 @@
  <HEAD>
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
   <!-- $MVD$:fontset("Arial","Arial") -->
   <!-- $MVD$:fontset("Verdana","Verdana") -->
   <!-- $MVD$:fontset("Courier New","Courier New") -->
@@ -16,6 +17,102 @@
   <H1>
    Stream Basics</H1>
   <P>
-   Type topic text here.
+   Streams are used to store and retreive data from a variety of 
+   different sources. A stream can exist that reads from you hard drive, 
+   while another stream can be used to write data in OS memory, yet 
+   another stream can be used that converts the incoming data and 
+   applies some sort of algorithm to the data, such as compression or 
+   encryption. </P>
+  <P>
+   Streams exist in two primary forms, input and output. Input streams 
+   are used to retreive and read data from, while output streams are use 
+   to write data to. There are some stream classes that can perform both 
+   actions, that is input and output, such as the FileStream class, to 
+   make life a bit simpler. Streams support the notion of 
+   &quot;seeking&quot;, or in other words, allowing the programmer to 
+   randomly access data any where in the stream. In addition the 
+   programmer can access the stream's buffer, or a pointer to the 
+   streams raw bytes. The stream can also indicate the size of the data 
+   currently held in it (in bytes) through it's getSize() method. </P>
+  <P>
+   Writing or reading data is always done through the use of the virtual 
+   read() or write() method (for InputStream and OutputStream 
+   respectively), where the programmer passes in a pointer to a data 
+   buffer of bytes and the size of the data buffer. To simplify this, 
+   the read() and write() methods have been overloaded to support most 
+   of the basic C++ primitive types, as well as strings and Objects. The 
+   following is a list of supported types that can be passed in to the 
+   read() or write() methods.</P><PRE><SPAN
+    STYLE="font-weight : bold;">bool</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">char</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">short</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">long</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">int</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">float</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">double</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">VCF::String</SPAN><BR>VCF::Persistable*</PRE><P>
+   These overloaded functions internally call the main read()/write() method.</P>
+  <P>
+   All stream classes support the standard C++ extraction and insertion 
+   operator's, with OutputStream supporting the &lt;&lt; operator, and 
+   the InputStream supporting the &gt;&gt; operator. There is a 
+   corresponding operator for each of the basic types, which in turn 
+   calls it's appropriate read()/write() overloaded method. Thus the 
+   example code performs the following:</P><PRE><SPAN
+    STYLE="font-weight : normal;">BasicOutputStream bos;</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">int val = 5;</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">bos &lt;&lt; val;</SPAN></PRE><P>
+   First OutputStream::operator &lt;&lt; (int) is called. This is turn 
+   calls OutputStream::write(int). Finally, since write(char*,unsigned 
+   long) is virtual pure ( meaning all proper Stream implementations <SPAN STYLE="font-style : italic;font-weight : bold;">must</SPAN> 
+   implement it), the <SPAN STYLE="font-weight : normal;">BasicOutputStream::</SPAN>write(char*,unsigned
+    long) is called, with a pointer to the val variable, and a size of 4 
+   (or whatever sizeof(int) resolves to). This same process happens for 
+   InputStreams as well when using the extraction operator (&gt;&gt;).</P>
+  <P>
+   To demonstrate this more clearly, all three calls to write() do the 
+   same thing, the third call is the most direct way to save the data.</P><PRE><SPAN
+    STYLE="font-weight : normal;">BasicOutputStream bos;</SPAN><BR><SPAN
+    STYLE="font-weight : bold;">int</SPAN><SPAN STYLE="font-weight : normal;"> val = <FONT COLOR="RED">5</FONT>;</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">bos &lt;&lt; val; </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//overloaded write called indirectly through the operator&lt;&lt;</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">bos.write( val ); </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//overloaded write determines the size of the data for you</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">bos.write( (</SPAN><SPAN STYLE="font-weight : bold;">char</SPAN><SPAN STYLE="font-weight : normal;">*)&amp;val, </SPAN><SPAN STYLE="font-weight : bold;">sizeof</SPAN><SPAN STYLE="font-weight : normal;">(</SPAN><SPAN STYLE="font-weight : bold;">int</SPAN><SPAN STYLE="font-weight : normal;">) ); </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;"><FONT COLOR="BLUE">//direct call to write()</FONT></SPAN></PRE><H3>
+   Stream Chaining</H3>
+  <P>
+   Stream chaining allows you to link together multiple streams to 
+   accomplish more sophisticated stream operations, but keeping the 
+   stream implementations seperate. Why would I want to do this, you're 
+   probably asking. Well let's say you had a Object representing a large 
+   amount of sensitive data. It would be nice to be able to save the 
+   data to a filesystem somewhere, after compressing and then encrypting 
+   the data. This can be easily done using stream chaining in the 
+   following example:</P><PRE><SPAN
+    STYLE="font-weight : normal;">VCF::String filename;</SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">MyBigSecureData* data = ....</SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">FileStream fs( filename );</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">MyEncryptionOutputStream encrypted( &amp;fs );</SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">MyZipCompressionOutputStream compressed( &amp;encrypted );</SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN><BR><SPAN
+    STYLE="font-weight : normal;">OutputStream* os = &amp;compressed;</SPAN><BR><SPAN
+    STYLE="font-weight : normal;">os-&gt;write( data );</SPAN><BR><SPAN
+    STYLE="font-weight : normal;"></SPAN></PRE><P>
+   &nbsp;</P>
+  <H3>
+   Persisting Objects</H3>
+  <P>
+   To persist objects to a stream the object must implement the 
+   VCF::Persistable interface. Doing this means the addition of two 
+   methods to your class definiton: </P>
+  <P>
+   saveToStream( OutputStream * stream )</P>
+  <P>
+   loadFromStream( InputStream * stream )</P>
+  <P>
+   The implementer then simply calls read() or write() on the passed in 
+   stream for the appropriate member variables. 
  </BODY>
 </HTML>
