@@ -26,6 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.5  2003/08/09 21:01:40  ddiego
+minor changes to doc makefile
+
 Revision 1.4  2003/08/09 02:56:41  ddiego
 merge over from the devmain-0-6-1 branch
 Changes
@@ -103,7 +106,7 @@ and images
  <!--
  this uses a local path - may need to be modified for others
  -->
-	<xsl:import href="/Users/jimcrafton/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="d:/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
@@ -112,7 +115,7 @@ and images
 	<xsl:param name="admon.graphics.path">gfx/</xsl:param>
 	<xsl:param name="htmlhelp.chm" select="'vcf_docs.chm'"/>
 	
-	<xsl:param name="htmlhelp.hhc.binary" select="0"/>
+	<xsl:param name="htmlhelp.hhc.binary" select="1"/>
 	<xsl:param name="htmlhelp.hhc.folders.instead.books" select="0"/>
 
 	<xsl:param name="toc.section.depth" select="4"/>

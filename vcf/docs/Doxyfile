@@ -23,7 +23,7 @@ PROJECT_NAME           = "Visual Component Framework"
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 0.6.1
+PROJECT_NUMBER         = VERSION-NUMBER
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -445,7 +445,7 @@ GENERATE_CHI           = YES
 # controls whether a binary table of contents is generated (YES) or a 
 # normal table of contents (NO) in the .chm file.
 
-BINARY_TOC             = NO
+BINARY_TOC             = YES
 
 # The TOC_EXPAND flag can be set to YES to add extra items for group members 
 # to the contents of the Html help documentation and to the tree view.
