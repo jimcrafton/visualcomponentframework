@@ -1,9 +1,9 @@
 //StatusBarControl.cpp
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 #include "StatusBarControl.h"
-#include "graphics/EtchedBorder.h"
+#include "vcf/ApplicationKit/EtchedBorder.h"
 
 using namespace VCF;
 

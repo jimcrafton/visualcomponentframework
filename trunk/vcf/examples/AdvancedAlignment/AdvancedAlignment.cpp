@@ -1,8 +1,14 @@
 //AdvancedAlignment.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 using namespace VCF;
 
@@ -13,28 +19,28 @@ your own layout algorithms.
 
 
 /**
-This represents a custom container class. We derive from 
-AbstractContainer, as it implements all the grunt methods for 
+This represents a custom container class. We derive from
+AbstractContainer, as it implements all the grunt methods for
 a container. The one key method we need to implement ourselves
-is the resizeChildren() method. This is where all our layout 
+is the resizeChildren() method. This is where all our layout
 logic will be performed.
 */
 class LeftToRightContainer : public AbstractContainer {
 public:
 
 	/**
-	This is our implementation of the resizeChildren() method. 
+	This is our implementation of the resizeChildren() method.
 	This will be called whenever the control that this container
-	belongs has been resized and potentially needs to resize it;s 
-	children as well. In our case we will keep things simple. 
-	Our layout will calculate the width and height. Divide the 
+	belongs has been resized and potentially needs to resize it;s
+	children as well. In our case we will keep things simple.
+	Our layout will calculate the width and height. Divide the
 	width into as many equal sections as we have child controls,
 	and then position each control accordingly.
 	*/
 	virtual void resizeChildren( Control* control ) {
 		//controlContainer_ is the control that this container is attached to
 		Rect clientBounds = controlContainer_->getClientBounds();
-		
+
 		if ( clientBounds.isEmpty() ) {
 			return; //nothing to do, so just exit the function
 		}
@@ -45,7 +51,7 @@ public:
 			//has been added then it will not be in the child control list
 			//search for the control
 			std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
-			
+
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
 			controlJustAdded = (found == controls_.end());
@@ -81,8 +87,8 @@ public:
 			childBounds.setRect( left, clientBounds.top_, left + width, clientBounds.bottom_ );
 			control->setBounds( &childBounds );
 		}
-		
-		
+
+
 	}
 };
 
@@ -111,25 +117,28 @@ public:
 
 		Panel* p1 = new Panel();
 		p1->setColor( Color::getColor("red") );
+		p1->setUseColorForBackground( true );
 		main->add( p1 );
 
 		Panel* p2 = new Panel();
 		p2->setColor( Color::getColor("green") );
+		p2->setUseColorForBackground( true );
 		main->add( p2 );
 
 		Panel* p3 = new Panel();
 		p3->setColor( Color::getColor("blue") );
+		p3->setUseColorForBackground( true );
 		main->add( p3 );
 
 	}
 };
- 
+
 
 
 
 /**
 This is our next container class. We'll simulate a paged container,
-something similar to Java's CardLayout class. Each child 
+something similar to Java's CardLayout class. Each child
 control will take up all the client space, and we'll add a method
 to toggle through the children, making each on visible and in front.
 We'll also derive from StandardContainer to pick up support
@@ -137,7 +146,7 @@ for left, right, top, and bottom "buffer zones".
 */
 class PagedContainer : public StandardContainer {
 public:
-	
+
 	void first() {
 		if ( !pages_.empty() ) {
 			//resort the pages_
@@ -171,7 +180,7 @@ public:
 				pages_.pop_front();
 				pages_.push_back( tmp );
 			}
-			
+
 			std::deque<Control*>::iterator it = pages_.begin();
 			while ( it != pages_.end() ) {
 				if ( *it != control ) {
@@ -207,16 +216,16 @@ public:
 	virtual void resizeChildren( Control* control ) {
 		//controlContainer_ is the control that this container is attached to
 		Rect clientBounds = controlContainer_->getClientBounds();
-		
+
 		if ( clientBounds.isEmpty() ) {
 			return; //nothing to do, so just exit the function
 		}
 
-		clientBounds.setRect( clientBounds.left_ + leftBorderWidth_, 
-								clientBounds.top_ + topBorderHeight_, 
-								clientBounds.right_ - rightBorderWidth_, 
+		clientBounds.setRect( clientBounds.left_ + leftBorderWidth_,
+								clientBounds.top_ + topBorderHeight_,
+								clientBounds.right_ - rightBorderWidth_,
 								clientBounds.bottom_ - bottomBorderHeight_ );
-		
+
 
 
 		bool controlJustAdded = false;
@@ -225,7 +234,7 @@ public:
 			//has been added then it will not be in the child control list
 			//search for the control
 			std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
-			
+
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
 			controlJustAdded = (found == controls_.end());
@@ -240,7 +249,7 @@ public:
 			//note: we could have used the containers vector - this would be ever so slightly faster,
 			//but this is a bit cleaner for the sake of an example.
 			Enumerator<Control*>* children = AbstractContainer::getChildren();
-			
+
 			while ( children->hasMoreElements() ) {
 				Control* child = children->nextElement();
 				if ( child->getVisible() ) {
@@ -275,13 +284,13 @@ public:
 		label->setWordWrap( true );
 		label->setCaption( "Paged layout example\ntry resizing to see the layout in action.\nClick the \"X\" button, or hit the \"Esc\" key to close this dialog." );
 
-		//add a panel to hold buttons - the buttons will 
+		//add a panel to hold buttons - the buttons will
 		//demonstrate the first/last/next methods of the PagedLayout class
 		Panel* btnPanel = new Panel();
 		btnPanel->setHeight( 50 );
 		add( btnPanel, AlignTop );
 
-		EventHandler* btnHandler = 
+		EventHandler* btnHandler =
 			new ButtonEventHandler<Layout2>( this, &Layout2::onButtonClicked, "onButtonClicked" );
 
 		//this button will switch to the first control - note the use of the setTag() call
@@ -329,26 +338,32 @@ public:
 		//add our children
 		Panel* p1 = new Panel();
 		p1->setColor( Color::getColor("red") );
+		p1->setUseColorForBackground( true );
 		main->add( p1 );
 
 		Panel* p2 = new Panel();
 		p2->setColor( Color::getColor("green") );
+		p2->setUseColorForBackground( true );
 		main->add( p2 );
 
 		Panel* p3 = new Panel();
 		p3->setColor( Color::getColor("blue") );
+		p3->setUseColorForBackground( true );
 		main->add( p3 );
 
 		Panel* p4 = new Panel();
 		p4->setColor( Color::getColor("white") );
+		p4->setUseColorForBackground( true );
 		main->add( p4 );
 
 		Panel* p5 = new Panel();
 		p5->setColor( Color::getColor("black") );
+		p5->setUseColorForBackground( true );
 		main->add( p5 );
 
 		Panel* p6 = new Panel();
 		p6->setColor( Color::getColor("gold") );
+		p6->setUseColorForBackground( true );
 		main->add( p6 );
 
 	}
@@ -379,11 +394,11 @@ class AdvancedAlignmentWindow : public Window {
 public:
 	AdvancedAlignmentWindow() {
 		setCaption( "AdvancedAlignment" );
-		setVisible( true );		
+		setVisible( true );
 
-		
+
 		CommandButton* btn1 = new CommandButton();
-		btn1->ButtonClicked += 
+		btn1->ButtonClicked +=
 			new ButtonEventHandler<AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn1Clicked, "AdvancedAlignmentWindow::onBtn1Clicked");
 
 		btn1->setBounds( 20, 20, 100, btn1->getPreferredHeight() );
@@ -393,7 +408,7 @@ public:
 
 
 		CommandButton* btn2 = new CommandButton();
-		btn2->ButtonClicked += 
+		btn2->ButtonClicked +=
 			new ButtonEventHandler<AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn2Clicked, "AdvancedAlignmentWindow::onBtn2Clicked");
 
 		btn2->setBounds( 120, 20, 100, btn1->getPreferredHeight() );
@@ -432,11 +447,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new AdvancedAlignmentWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -448,8 +463,20 @@ int main(int argc, char *argv[])
 	Application* app = new AdvancedAlignmentApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:46:54  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:51  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

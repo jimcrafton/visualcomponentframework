@@ -1,5 +1,5 @@
 //SplashScreen.h
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 #include "SplashScreen.h"
 
 
@@ -28,6 +28,7 @@ SplashScreen::SplashScreen()
 	setFrameTopmost( true );
 	setColor( Color::getColor( "white" ) );
 
+
 	TimerComponent* tc = new TimerComponent();
 	addComponent( tc );
 
@@ -36,6 +37,8 @@ SplashScreen::SplashScreen()
 	tc->TimerPulse += new GenericEventHandler<SplashScreen>( this, &SplashScreen::onTimer, "SplashScreen::onTimer" );
 
 	tc->setActivated( true );
+
+	m_splashText = "Welcome to the $$Root$$...";
 }
 
 
@@ -68,6 +71,26 @@ void SplashScreen::paint( GraphicsContext* context )
 	if ( NULL != m_splashImage ) {
 		context->drawImage( 0, 0, m_splashImage );
 	}
-	context->textAt( bounds.getWidth()/2-50, bounds.getHeight()/2.0, "Welcome to the $$Root$$..." );
+	
+	double w = context->getTextWidth( m_splashText );
+	context->textAt( bounds.getWidth()/2-(w/2.0), bounds.getHeight()/2.0, m_splashText );
+}
+
+void SplashScreen::onTimer( Event* e )
+{
+	static int count = 0;
+	count ++;
+
+	if ( count <= 5 ) {
+		m_splashText += ", going";
+	}
+	else {
+		m_splashText += "...Gone!";
+	}
+
+	repaint();
+	if ( count >= 6 ) {
+		close();
+	}
 }
 

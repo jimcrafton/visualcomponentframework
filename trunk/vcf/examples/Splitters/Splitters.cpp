@@ -1,11 +1,18 @@
 //Splitters.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
 #define USING_SPLITTER
 #define NUM_OF_PANELS 5	 // 1-6
 
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 using namespace VCF;
 
@@ -42,13 +49,14 @@ public:
 		ControlPositioned += new ControlEventHandler<SplittersWindow>(this, SplittersWindow::onPosChanged, "SplittersWindow::onPosChanged" );
 
 		Panel* buttonsPanel = new Panel();
+		buttonsPanel->setUseColorForBackground( true );
 		buttonsPanel->setHeight( 30 );
 		buttonsPanel->setColor( Color::getColor("lightyellow") );
 		add( buttonsPanel, AlignTop );
 
 
 		btnShow_ = new CommandButton();
-		btnShow_->ButtonClicked += 
+		btnShow_->ButtonClicked +=
 			new ButtonEventHandler<SplittersWindow>(this,&SplittersWindow::onBtnShow, "SplittersWindow::onBtnShow");
 		btnShow_->setBounds( 120, 2, 100, btnShow_->getPreferredHeight() );
 		btnShow_->setCaption( "Hide" );
@@ -73,17 +81,20 @@ public:
 
 		main_ = new Panel;
 		main_->setHeight( 25 );
+		main_->setUseColorForBackground( true );
 		main_->setColor( Color::getColor("brown") );
 		main_->setToolTipText( "main: AlignClient, brown" );
 		add( main_, AlignClient );
 
 		panelLeft_ = new Panel;
+		panelLeft_->setUseColorForBackground( true );
 		panelLeft_->setWidth( main_->getWidth()/2 );
 		panelLeft_->setColor( Color::getColor("cyan") );
 		panelLeft_->setToolTipText( "left: AlignLeft, cyan" );
 		main_->add( panelLeft_, AlignLeft );
 
 		panelRight_ = new Panel;
+		panelRight_->setUseColorForBackground( true );
 		panelRight_->setWidth( main_->getWidth()/2 );
 		panelRight_->setColor( Color::getColor("navy") );
 		panelRight_->setToolTipText( "right: AlignRight, navy" );
@@ -95,7 +106,7 @@ public:
 
 	void addPanels( Panel* panel, int num, AlignmentType alignment  )
 	{
-		panel->setContainer( new FixedStandardContainer() );
+		panel->setContainer( new StandardContainer() );
 
 		int n = maxVal<int>( minVal<int>( num, NUM_OF_PANELS ), 1 );
 		int width = panel->getWidth() / n;
@@ -122,6 +133,7 @@ public:
 
 		for ( int i = 1; i <= n; i ++ ) {
 			MyPanel* p = new MyPanel( this );
+			p->setUseColorForBackground( true );
 			p->setWidth( width );
 			p->setHeight( height );
 			p->setColor( Color::getColor( colors[i-1] ) );
@@ -193,7 +205,7 @@ public:
 	}
 */
 	void onResized( ControlEvent*e ) {
-				 
+
 		double w = main_->getWidth()/2;
 		StringUtils::traceWithArgs( "w: %0.2f\n", w );
 
@@ -207,7 +219,7 @@ public:
 	}
 
 	void onPosChanged( ControlEvent*e ) {
-		
+
 	}
 
 public:
@@ -238,11 +250,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new SplittersWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 700.0, 700.0 ) );
-		
+
 		return result;
 	}
 
@@ -254,8 +266,28 @@ int main(int argc, char *argv[])
 	Application* app = new SplittersApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.5  2004/08/07 02:47:37  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.4.2.6  2004/07/11 22:54:03  ddiego
+*fixed some miscellaneous examples
+*
+*Revision 1.4.2.5  2004/07/08 15:09:53  ddiego
+*made the change to the StandardContainer name - the
+*old StandardContainer is now called DesignTimeContainer and
+*the old FixedStandardContainer is now renamed to StandardContainer.
+*
+*Revision 1.4.2.4  2004/04/29 03:40:56  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

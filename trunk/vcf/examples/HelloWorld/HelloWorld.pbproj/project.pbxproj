@@ -3,18 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 38;
+	objectVersion = 39;
 	objects = {
 		0249A665FF388DC511CA2CEA = {
+			explicitFileType = wrapper.application;
+			fallbackIsa = PBXFileReference;
 			isa = PBXApplicationReference;
 			path = HelloWorld.app;
 			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		0249A669FF388E3911CA2CEA = {
 			isa = PBXFileReference;
+			lastKnownFileType = archive.ar;
 			name = "libstdc++.a";
 			path = "/usr/lib/libstdc++.a";
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		0249A66AFF388E3911CA2CEA = {
 			fileRef = 0249A669FF388E3911CA2CEA;
@@ -54,7 +59,12 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -64,6 +74,8 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ZERO_LINK = NO;
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -78,17 +90,14 @@
 //062
 //063
 //064
-		0640BAA4FFF0323A11CA0E50 = {
-			isa = PBXFrameworkReference;
-			name = ApplicationServices.framework;
-			path = /System/Library/Frameworks/ApplicationServices.framework;
-			refType = 0;
-		};
 		0640BAA5FFF0323A11CA0E50 = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = CoreServices.framework;
 			path = /System/Library/Frameworks/CoreServices.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 //060
 //061
@@ -103,10 +112,12 @@
 		195DF8C9FE9D4F0611CA2CBB = {
 			children = (
 				0249A665FF388DC511CA2CEA,
+				5EB257680674067800DA4A17,
 			);
 			isa = PBXGroup;
 			name = Products;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 //190
 //191
@@ -119,6 +130,8 @@
 //203
 //204
 		20286C28FDCF999611CA2CEA = {
+			buildSettings = {
+			};
 			buildStyles = (
 				05952DFCFFF02D1B11CA0E50,
 				05952DFDFFF02D1B11CA0E50,
@@ -129,6 +142,7 @@
 			projectDirPath = "";
 			targets = (
 				20286C34FDCF999611CA2CEA,
+				5EB257670674067800DA4A17,
 			);
 		};
 		20286C29FDCF999611CA2CEA = {
@@ -141,6 +155,7 @@
 			name = "¬´PROJECTNAME¬ª";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		20286C2AFDCF999611CA2CEA = {
 			children = (
@@ -150,27 +165,34 @@
 			name = Sources;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		20286C32FDCF999611CA2CEA = {
 			children = (
-				5EBADDC305EA49B600A8020D,
-				5EBADDBF05EA499900A8020D,
-				5EBADDB905EA482A00A8020D,
+				5EB257A9067407B100DA4A17,
+				5EB257A2067407A700DA4A17,
+				5EB257920674079800DA4A17,
 				20286C33FDCF999611CA2CEA,
 				0249A669FF388E3911CA2CEA,
-				0640BAA4FFF0323A11CA0E50,
 				0640BAA5FFF0323A11CA0E50,
+				5E2CE2C1064889AB00A8020D,
+				5E2CE2C2064889AB00A8020D,
+				5E2CE2C3064889AB00A8020D,
 			);
 			isa = PBXGroup;
 			name = "External Frameworks and Libraries";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		20286C33FDCF999611CA2CEA = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = Carbon.framework;
 			path = /System/Library/Frameworks/Carbon.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		20286C34FDCF999611CA2CEA = {
 			buildPhases = (
@@ -181,14 +203,14 @@
 				04313892FE3035C9C02AAC07,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb/build";
+				DEBUGGING_SYMBOLS = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\"";
 				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
+				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
-				PREFIX_HEADER = "$(VCF_INCLUDE)/ApplicationKit.h";
 				PRODUCT_NAME = HelloWorld;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
@@ -252,9 +274,9 @@
 			files = (
 				20286C3CFDCF999611CA2CEA,
 				0249A66AFF388E3911CA2CEA,
-				5EBADDBA05EA482A00A8020D,
-				5EBADDC005EA499900A8020D,
-				5EBADDC405EA49B600A8020D,
+				5E2CE2C4064889AB00A8020D,
+				5E2CE2C5064889AB00A8020D,
+				5E2CE2C6064889AB00A8020D,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,50 +297,214 @@
 //5E2
 //5E3
 //5E4
-		5EBADDB705EA481D00A8020D = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = HelloWorld.cpp;
-			refType = 4;
+		5E2CE2C1064889AB00A8020D = {
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
+			name = ApplicationKit.framework;
+			path = ../../bin/ApplicationKit.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
-		5EBADDB805EA481D00A8020D = {
+		5E2CE2C2064889AB00A8020D = {
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
+			name = FoundationKit.framework;
+			path = ../../bin/FoundationKit.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		5E2CE2C3064889AB00A8020D = {
+			fallbackIsa = PBXFileReference;
+			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
+			name = GraphicsKit.framework;
+			path = ../../bin/GraphicsKit.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		5E2CE2C4064889AB00A8020D = {
+			fileRef = 5E2CE2C1064889AB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E2CE2C5064889AB00A8020D = {
+			fileRef = 5E2CE2C2064889AB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E2CE2C6064889AB00A8020D = {
+			fileRef = 5E2CE2C3064889AB00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EB257620674067800DA4A17 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EB257630674067800DA4A17 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EB257640674067800DA4A17 = {
+			buildActionMask = 2147483647;
+			files = (
+				5EB257BE067407CA00DA4A17,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EB257650674067800DA4A17 = {
+			buildActionMask = 2147483647;
+			files = (
+				5EB257930674079800DA4A17,
+				5EB257A3067407A700DA4A17,
+				5EB257AA067407B100DA4A17,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EB257660674067800DA4A17 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EB257670674067800DA4A17 = {
+			buildPhases = (
+				5EB257620674067800DA4A17,
+				5EB257630674067800DA4A17,
+				5EB257640674067800DA4A17,
+				5EB257650674067800DA4A17,
+				5EB257660674067800DA4A17,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\" /Users/jimcrafton/code/vcfdev/dev/vcf/bin";
+				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "HelloWorld-debug";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = "HelloWorld-debug";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = "HelloWorld-debug";
+			productReference = 5EB257680674067800DA4A17;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string></string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+</dict>
+</plist>
+";
+		};
+		5EB257680674067800DA4A17 = {
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = "HelloWorld-debug.app";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5EB257920674079800DA4A17 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = "FoundationKit-debug.framework";
+			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/FoundationKit-debug.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		5EB257930674079800DA4A17 = {
+			fileRef = 5EB257920674079800DA4A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EB257A2067407A700DA4A17 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = "GraphicsKit-debug.framework";
+			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/GraphicsKit-debug.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		5EB257A3067407A700DA4A17 = {
+			fileRef = 5EB257A2067407A700DA4A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EB257A9067407B100DA4A17 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = "ApplicationKit-debug.framework";
+			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/ApplicationKit-debug.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		5EB257AA067407B100DA4A17 = {
+			fileRef = 5EB257A9067407B100DA4A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EB257BE067407CA00DA4A17 = {
 			fileRef = 5EBADDB705EA481D00A8020D;
 			isa = PBXBuildFile;
 			settings = {
 			};
 		};
-		5EBADDB905EA482A00A8020D = {
-			isa = PBXFrameworkReference;
-			name = ApplicationKit.framework;
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb/build/ApplicationKit.framework";
-			refType = 0;
+		5EBADDB705EA481D00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = HelloWorld.cpp;
+			refType = 4;
+			sourceTree = "<group>";
 		};
-		5EBADDBA05EA482A00A8020D = {
-			fileRef = 5EBADDB905EA482A00A8020D;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		5EBADDBF05EA499900A8020D = {
-			isa = PBXFrameworkReference;
-			name = GraphicsKit.framework;
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb/build/GraphicsKit.framework";
-			refType = 0;
-		};
-		5EBADDC005EA499900A8020D = {
-			fileRef = 5EBADDBF05EA499900A8020D;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		5EBADDC305EA49B600A8020D = {
-			isa = PBXFrameworkReference;
-			name = FoundationKit.framework;
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb/build/FoundationKit.framework";
-			refType = 0;
-		};
-		5EBADDC405EA49B600A8020D = {
-			fileRef = 5EBADDC305EA49B600A8020D;
+		5EBADDB805EA481D00A8020D = {
+			fileRef = 5EBADDB705EA481D00A8020D;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -125,7 +125,7 @@ public:
 	
 
 	QuickTimeControl* getQuickTimeControl() {
-		return m_quickTimeControl;
+		return quickTimeControl_;
 	}
 
 	void setQuickTimeControl( QuickTimeControl* control );
@@ -133,15 +133,15 @@ public:
 	virtual void paint( VCF::GraphicsContext* ctx );
 
 	double getMaxRange() {
-		return m_maxRange;
+		return maxRange_;
 	}
 
 	double getMinRange() {
-		return m_minRange;
+		return minRange_;
 	}
 
 	TimeRecord getCurrentPosition() {
-		return m_currentPosition;
+		return currentPosition_;
 	}
 
 	void setMaxRange( const double& val ) ;
@@ -152,7 +152,7 @@ public:
 	
 
 	virtual double getPreferredHeight() {
-		return 25;
+		return 15;
 	}
 
 	virtual void mouseDown( VCF::MouseEvent* event );
@@ -161,11 +161,11 @@ public:
 
 	virtual void mouseUp( VCF::MouseEvent* event );
 protected:
-	QuickTimeControl* m_quickTimeControl;
-	double m_maxRange;
-	double m_minRange;
-	bool m_scrubbing;
-	TimeRecord m_currentPosition;
+	QuickTimeControl* quickTimeControl_;
+	double maxRange_;
+	double minRange_;
+	bool scrubbing_;
+	TimeRecord currentPosition_;
 	void onMovieChanged( VCF::Event* movieEvent );
 	void onMovieFrameChanged( VCF::Event* movieEvent );
 

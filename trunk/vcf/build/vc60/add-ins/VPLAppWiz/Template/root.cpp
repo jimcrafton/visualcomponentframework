@@ -1,5 +1,5 @@
 //$$root$$.cpp
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 
 
 #include $$ROOT_INCLUDE$$
@@ -28,9 +28,21 @@ public:
 
 
 
-extern "C" $$ROOT_$$_API void initPackage()
+extern "C" {
+	
+$$ROOT_$$_API void _vpl_init()
 {
 	
+}
+
+
+
+$$ROOT_$$_API void _vpl_terminate()
+{
+	
+}
+
+
 }
 
 

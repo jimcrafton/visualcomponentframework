@@ -1,0 +1,648 @@
+<!--Copyright (c) 2003, Author Name
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES \(INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION\) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT \(INCLUDING
+NEGLIGENCE OR OTHERWISE\) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+NB: This software will not save the world.
+-->
+ 
+
+<section><title>MVC Basics</title>
+	<para>
+		This example will discuss the basics of using and creating 
+		a custom model, view, and control classes that make use of the 
+		VCF's MVC architecture. Our example will create a simple model 
+		class that contains a series of cirlce shapes. We'll demonstrate
+		5 different ways to work with and put it together with the 
+		VCF's control's, custom views, and a custom controller.
+	</para>
+	<formalpara><title>Defining the CircleModel</title>
+	The first thing we'll start with is the model. Our model will be a collection
+	for circles, and we'll define it's interface like so:
+	<programlisting>
+<![CDATA[
+class CircleModel  {
+public:
+
+	void addCircle( const CircleShape& circle ) {
+		circles_.push_back( circle );
+	}
+
+	void addCircle( const Point& pt, const double& radius ) {
+		addCircle( CircleShape(pt,radius) );
+	}
+	
+	void removeCircle( const CircleShape& circle ) {
+		std::vector<CircleShape>::iterator found = std::find( circles_.begin(), circles_.end(), circle );
+		if ( found != circles_.end() ) {
+			circles_.erase( found );
+		}
+	}
+
+	CircleShape& getCircle( int index ) {
+		return circles_.at(index);
+	}
+
+	const CircleShape& getCircle( int index ) const {
+		return circles_.at(index);
+	}
+
+	std::vector<CircleShape>& getCircles() {
+		return circles_;
+	}
+
+	const std::vector<CircleShape>& getCircles() const {
+		return circles_;
+	}
+
+	int size() const {
+		return circles_.size();
+	}
+protected:
+	std::vector<CircleShape> circles_;
+};
+
+]]>	
+	</programlisting>
+	Our model has a collection (an std::vector to be precise) of CircleShapes. The 
+	CircleShape is defined as 
+	<programlisting>
+<![CDATA[
+class CircleShape {
+public:
+
+	CircleShape( const Point& pt, const double& radius ) :  center_(pt), radius_(radius) {}
+
+	CircleShape():radius_(0.0){}
+	
+	bool operator==( const CircleShape& rhs ) const{
+		return 	center_ == rhs.center_ && radius_ == rhs.radius_;
+	}
+
+	Point center_;
+	double radius_;
+};
+]]>
+	</programlisting>
+	At this point we have specified our custom pieces for the model and how we can alter
+	(add or remove) shapes from the model.
+	</formalpara>
+	
+	<para>
+	Next we'll actually turn the class into a VCF compatible model. For this we need to derive
+	directly, or indirectly, from the VCF::Model class. In our case we'll derive from the 
+	VCF::AbstractModel, which provides some basic implementation of the various virtual
+	methods of a Model.
+	<programlisting>
+<![CDATA[
+class CircleModel : public AbstractModel  {
+... //rest of implemention omitted
+};
+]]>	
+	</programlisting>
+	Next we need to add support for emptying the model by implementing the Model::empty()
+	method. We'll be sure to call the super class's implementation as well, so that the
+	ModelChanged event is fired.
+	<programlisting>
+<![CDATA[
+class CircleModel : public AbstractModel  {
+... //rest of implemention omitted
+
+	virtual void empty() {
+		//remove all the circles!
+		circles_.clear();
+
+		//make sure to call the super class's implementation
+		AbstractModel::empty();
+	}
+};
+]]>		
+	</programlisting>
+	</para>
+	<para>
+	At this point we have a our custom model almost ready to go. The one missing feature
+	is the ability to notify others when our circle model changes, i.e. when a 
+	circle shape is added or removed. To implement this we need to make some subtle changes
+	to our implementation of CircleModel::addCircle() and CircleModel::removeCircle().
+	<programlisting>
+<![CDATA[
+class CircleModel : public AbstractModel  {
+... //rest of implemention omitted
+
+	enum {
+		CircleAdded = Model::MODEL_LAST_EVENT + 100,
+		CircleRemoved
+	};
+	
+	
+	void addCircle( const CircleShape& circle ) {
+		circles_.push_back( circle );
+
+		ModelEvent e( this, CircleModel::CircleAdded );
+		ModelChanged.fireEvent( &e );
+		updateAllViews();
+	}
+	
+	void removeCircle( const CircleShape& circle ) {
+		std::vector<CircleShape>::iterator found = std::find( circles_.begin(), circles_.end(), circle );
+		if ( found != circles_.end() ) {
+
+			circles_.erase( found );
+			
+			ModelEvent e( this, CircleModel::CircleRemoved );
+			ModelChanged.fireEvent( &e );
+			updateAllViews();
+		}
+	}
+	
+};
+]]>	
+	</programlisting>
+	We have added a simple enumeration: a value for adding circles, anda value for 
+	removing circles. This value becomes the model changed event's type when the 
+	change occurs. This allows an event handle to distinguish what type of event occured.
+	</para>
+	<para>
+	The extra code that was added in both the addCircle() and removeCircle() method
+	simply creates and event and initializes it with reasonable values, and then
+	fires the event on the ModelChanged delegate. This will notify any registered 
+	event handlers. Then the Model::updateAllViews() method is called, which also 
+	notifies all the views that are attached to this model. We can simplify this code a
+	bit by changing it like so:
+	<programlisting>
+<![CDATA[
+class CircleModel : public AbstractModel  {
+... //rest of implemention omitted
+	
+	void addCircle( const CircleShape& circle ) {
+		circles_.push_back( circle );
+
+		ModelEvent e( this, CircleModel::CircleAdded );
+		changed( &e );
+	}
+	
+	void removeCircle( const CircleShape& circle ) {
+		std::vector<CircleShape>::iterator found = std::find( circles_.begin(), circles_.end(), circle );
+		if ( found != circles_.end() ) {
+
+			circles_.erase( found );
+			
+			ModelEvent e( this, CircleModel::CircleRemoved );
+			changed( &e );
+		}
+	}
+};
+]]>		
+	</programlisting>
+	Calling the Model::changed() method makes it a bit easier, and prevents 
+	the implementer from forgetting to either fire the event on the delegate, 
+	or notifying all the models views. At this point we know have a usable 
+	model class.
+	</para>
+	<formalpara><title>Example 1</title>
+	This will demonstrate probably the simplest usage of our model. We'll create a
+	window, a model, and hook the two together.
+	</formalpara>
+	<para>
+	First we'll define a custom Window class:
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart1Window : public Window {
+public:
+	MVCBasicsPart1Window() {}
+};
+]]>	
+	</programlisting>
+	This gives us our basic window. 
+	<note>
+	It's important to remember that a VCF::Window class is derived (indirectly)
+	from VCF::Control. This means that a Window is also a specialized form of a view
+	and we'll take advantage of this later on.
+	</note>
+	Next we'll fill in the constructor implementation. We will create an instance of 
+	our CircleModel class, add three circle shapes, and add our window to the model.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart1Window : public Window {
+public:
+	MVCBasicsPart1Window() {
+		setCaption( "MVCBasics Part 1" );
+		setVisible( true );
+
+		CircleModel* model = new CircleModel();
+
+		model->addCircle( Point(100,200), 100 );
+		model->addCircle( Point(234,550), 300 );
+		model->addCircle( Point(300,400), 80 );
+		
+		model->addView( this );
+	}
+};
+]]>	
+	</programlisting>	
+	Note the call to the model's addView() passing in the window instance. This will 
+	add the window as a view to the model. This in turn calls the view's setViewModel()
+	method.
+	</para>
+	<para>
+	At this point we have our window, we can create and also create a model for it.
+	But we still need to be able to present the view, or draw it. For this, we'll 
+	override the window's paint() method, and draw the model's content's as a series of
+	circles.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart1Window : public Window {
+public:
+	...//rest of code ommitted
+	virtual void paint( GraphicsContext* ctx ) {
+		Window::paint( ctx );
+
+		CircleModel* model = (CircleModel*)getViewModel();
+
+		const std::vector<CircleShape>& circles = model->getCircles();
+		for ( std::vector<CircleShape>::const_iterator it = circles.begin(); it!=circles.end(); it++ ) {
+			const CircleShape& circle = *it;
+			ctx->circle( circle.center_, circle.radius_ );
+		}
+		ctx->setColor( Color::getColor("black") );
+		ctx->strokePath();
+	}
+};
+]]>	
+	</programlisting>
+	This calls the super class's paint() method first, then retrieve the model. Recall that
+	in the constructor, we added the window to the model, which in turns sets the model
+	on the view. We then iterate through each circle shape, and draw a circle on the 
+	GraphicsContext.
+	</para>
+	
+	<formalpara><title>Example 2</title>
+	This next example will create a custom window, an instance of our CircleModel, 
+	and a custom view instance, taking the functionality that was in our
+	custom window's paint() method, and putting it in our custom view.
+	</formalpara>
+	<para>
+	First we'll define our custom view class. We'll derive from AbstractView, which 
+	provides a default implementation for most of the virtual methods
+	of the View interface.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart2View : public AbstractView {
+public:
+	MVCBasicsPart2View(){}
+
+	virtual void paintView( GraphicsContext* ctx ) {
+
+
+		Control* control = AbstractView::getViewControl();
+
+		Rect r = control->getClientBounds();
+
+		ctx->rectangle( &r );
+		ctx->setColor( Color::getColor("white") );
+		ctx->fillPath();
+		
+
+		CircleModel* model = (CircleModel*)getViewModel();
+
+		const std::vector<CircleShape>& circles = model->getCircles();
+		for ( std::vector<CircleShape>::const_iterator it = circles.begin(); it!=circles.end(); it++ ) {
+			const CircleShape& circle = *it;
+
+			ctx->circle( circle.center_, circle.radius_ );
+
+		}
+		ctx->setColor( Color::getColor("black") );
+		ctx->strokePath();
+	}
+};
+]]>	
+	</programlisting>
+	This is basically the same functionality that we had in our previous window's 
+	paint() method. We only need to implement one method (all the others are already
+	implemented by the AbstractView super class), paintView() which takes a 
+	GraphicsContext pointer, just like the Window::paint() method does.
+	</para>
+	<para>
+	Next we'll go ahead an implement our custom window class. This time all we need to 
+	do is implement the constructor, where we'll create our model (just like we
+	did last time) and also create our new view class instance.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart2Window : public Window {
+public:
+	MVCBasicsPart2Window() {
+		setCaption( "MVCBasics Part 2" );
+		setVisible( true );
+
+		CircleModel* model = new CircleModel();
+
+		model->addCircle( Point(100,200), 100 );
+		model->addCircle( Point(234,550), 300 );
+		model->addCircle( Point(300,400), 80 );
+
+		View* view = new MVCBasicsPart2View();
+
+		this->setView( view );
+		model->addView( view );
+	}
+};
+]]>	
+	</programlisting>
+	We create our model and add circle shapes just like we did the last time. 
+	Next we create our MVCBasicsPart2View view instance. Now we set the window's 
+	view with a call to setView(), passing in our new view instance. Finally we 
+	add our new view instance to the model. Note that we did <emphasis>not</emphasis>
+	add the window instance as a view to the model. Also note that we did not 
+	have to override the Window's paint() method, because we set a view for the 
+	window, the window (or any control instance) will delegate the painting to be
+	handled by the view.
+	</para>
+	
+	<formalpara><title>Example 3</title>
+	Our 3rd example will duplicate the functionality found in the previous example
+	and also add the processing of user input. We will add event handlers for 
+	processesing key up events, and mouse clicked events.
+	</formalpara> 
+	<para>
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart3Window : public Window {
+public:
+	MVCBasicsPart3Window() {
+		setCaption( "MVCBasics Part 3" );
+		setVisible( true );
+
+		CircleModel* model = new CircleModel();
+
+		model->addCircle( Point(100,200), 100 );
+		model->addCircle( Point(234,550), 300 );
+		model->addCircle( Point(300,400), 80 );
+
+		View* view = new MVCBasicsPart2View();
+
+		this->setView( view );
+		model->addView( view );
+
+		MouseClicked += 
+			new MouseEventHandler<MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onMouseClicked, "MVCBasicsPart3Window::onMouseClicked" );
+
+		KeyUp += 
+			new KeyboardEventHandler<MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onKeyUp, "MVCBasicsPart3Window::onKeyUp" );
+	}
+
+
+	void onMouseClicked( MouseEvent* e ){}
+
+	void onKeyUp( KeyboardEvent* e ) {}
+};
+]]>	
+	</programlisting>	
+	The change, obviously, is the addition of event handlers. We add an event handler 
+	(MVCBasicsPart3Window::onMouseClicked) to the window's MouseClicked delegate 
+	and another handler (MVCBasicsPart3Window::onKeyUp) to the window's KeyUp
+	delegate. Now let's see what we do for our implementation of MVCBasicsPart3Window::onKeyUp
+	and MVCBasicsPart3Window::onMouseClicked.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart3Window : public Window {
+public:
+	...//rest of code ommitted
+
+	void onMouseClicked( MouseEvent* e ){
+		CircleModel* model = (CircleModel*)getView()->getViewModel();
+
+		model->addCircle( *e->getPoint(), 50 );
+	}
+
+	void onKeyUp( KeyboardEvent* e ) {
+		if ( e->getVirtualCode() == vkDelete ) {
+			CircleModel* model = (CircleModel*)getView()->getViewModel();
+			
+			model->empty();
+		}
+	}
+};
+]]>	
+	</programlisting>
+	When we click on the window we'll add a circle to the circle model. That's 
+	all we ahve to do - the update to the window and the repainting will all happen
+	automatically. When we get notified by the KeyUp delegate, if the 
+	delete key was pressed, then we will empty the model, clearing the display.
+	</para>
+	
+	<formalpara><title>Example 4</title>
+	This example will do things a little differently. We won't derive a new Window
+	class. Instead we'll create our own controller class which will handle the 
+	mouse click and key up events. We will also add another type of view.
+	</formalpara>
+	
+	<para>
+	First we'll look at our new view, MVCBasicsPart4View. The difference is simply in the
+	way the model is rendered.
+	<programlisting>
+<![CDATA[
+class MVCBasicsPart4View : public AbstractView {
+public:
+	virtual void paintView( GraphicsContext* ctx ) {
+		Control* control = AbstractView::getViewControl();
+
+		Rect r = control->getClientBounds();		
+
+		ctx->rectangle( &r );
+		ctx->setColor( Color::getColor("white") );
+		ctx->fillPath();		
+
+		CircleModel* model = (CircleModel*)getViewModel();
+
+		const std::vector<CircleShape>& circles = model->getCircles();
+		for ( std::vector<CircleShape>::const_iterator it = circles.begin(); it!=circles.end(); it++ ) {
+			const CircleShape& circle = *it;
+			
+			ctx->setColor( Color::getColor("blue") );
+			ctx->circle( circle.center_, circle.radius_ );
+			ctx->fillPath();
+
+			ctx->setColor( Color::getColor("black") );
+			ctx->circle( circle.center_, circle.radius_ );
+			ctx->strokePath();
+
+		}	
+		
+		EtchedBorder bdr;
+		bdr.setStyle( GraphicsContext::etSunken );
+		bdr.paint( &r, ctx );
+	}
+};
+]]>	
+	</programlisting>
+	As we can see, in this view we first paint a solid white background, then render 
+	each circle with a blue fill and a solid black outline. And finally we draw a 
+	etched border around the client bounds of the control that "owns" this view.
+	</para>
+	<para>
+	Next we'll look at the controller class. What we have done here, is simply to migrate the
+	code that we had previously put in our custom window class, and push it into our new 
+	controller class. First lets define our controller class:
+	<programlisting>
+<![CDATA[
+class MyMVCController : public Component {
+public:
+	CircleModel* model_;
+
+	void onMouseClicked( MouseEvent* e );
+
+	void onKeyUp( KeyboardEvent* e );
+};
+]]>	
+	</programlisting>
+	We're deriving from Component so that we can create an instance of our controller, and then 
+	add it to some other Component instance, which will automatically delete it when the 
+	owner component is deleted. We'll add a member variable that holds a pointer to the current
+	model to work with, which we will set when we create the controller.
+	</para>
+	<para>
+	Next we'll implement the onMouseClicked() and onKeyUp(). To do this, we just copy over 
+	the code that was previously in our MVCBasicsPart3Window.
+	<programlisting>
+<![CDATA[
+class MyMVCController : public Component {
+public:
+
+	CircleModel* model_;
+
+	void onMouseClicked( MouseEvent* e ) {	
+
+		if ( e->hasLeftButton() ) {
+			model_->addCircle( *e->getPoint(), 50 );
+		}
+		else if ( e->hasRightButton() ) {
+
+			const std::vector<CircleShape>& circles = model_->getCircles();
+
+			std::vector<CircleShape>::const_iterator it = circles.begin();
+			Rect r;
+			while ( it != circles.end() ) {
+				const CircleShape& shape = *it;
+				r.left_ = shape.center_.x_ - shape.radius_;
+				r.top_ = shape.center_.y_ - shape.radius_;
+				r.right_ = shape.center_.x_ + shape.radius_;
+				r.bottom_ = shape.center_.y_ + shape.radius_;
+
+				if ( r.containsPt( e->getPoint() ) ) {
+					model_->removeCircle( shape );
+					break;
+				}
+				it ++;
+			}
+			
+		}
+	}
+
+	void onKeyUp( KeyboardEvent* e ) {
+
+		if ( e->getVirtualCode() == vkDelete ) {
+			model_->empty();
+		}
+	}
+};
+]]>	
+	</programlisting>
+	The next big change is in how we hook all of this together. Lets look at the code in 
+	our example4() function:
+	<programlisting>
+<![CDATA[
+void example4( VCF::Event* ) {
+	Window* wnd = new Window();
+	MyMVCController* controller = new MyMVCController();
+
+	wnd->setCaption( "MVCBasics Part 4" );
+
+	CircleModel* model = new CircleModel();
+
+	model->addCircle( Point(100,200), 100 );
+	model->addCircle( Point(234,550), 300 );
+	model->addCircle( Point(300,400), 80 );		
+
+	View* view = new MVCBasicsPart4View();
+
+	wnd->setView( view );
+	model->addView( view );
+
+	wnd->MouseClicked += 
+		new MouseEventHandler<MyMVCController>( controller, &MyMVCController::onMouseClicked, "MyMVCController::onMouseClicked" );
+
+	wnd->KeyUp += 
+		new KeyboardEventHandler<MyMVCController>( controller, &MyMVCController::onKeyUp, "MyMVCController::onKeyUp" );
+
+	controller->model_ = model;
+
+	wnd->addComponent( controller );
+	wnd->show();
+}
+]]>	
+	</programlisting>
+	We create our window instance - note that we do <emphasis>not</emphasis> need to 
+	derive a new window class. We create our controller, of type MyMVCController. 
+	We then create our model and view. We set the window's view to our view instance,
+	which will cause the view to be responsible for painting the window. We also add the
+	view to our model instance. Next we add the the controller's onMouseClicked and 
+	onKeyUp functions as event handlers to the window instance's MouseClicked, and 
+	KeyUp delegates. Finally we set the controller's model pointer, and we add the controller
+	to our window component list. When the window is destroyed, it will destroy all it's
+	own component's, which in this case is the controller.
+	</para>
+	
+	<formalpara><title>Example 5</title>
+	Our last example will make a more complex UI. We will create 2 different views 
+	of our our circle model. One will present the model as a series of circles, for a 
+	graphical representation of the model. The second view will show the circle models
+	state by displaying the number of shapes it currently has as well as the current 
+	"action".
+	</formalpara>
+	<para>
+	</para>
+</section>
+
+
+
+
+<!--
+CVS Log info
+$Log$
+Revision 1.2  2004/08/07 02:47:32  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.1.2.4  2004/05/12 02:55:18  ddiego
+updated mvc docs
+
+Revision 1.1.2.3  2004/04/29 23:47:33  ddiego
+added more docs
+
+Revision 1.2  2003/12/18 05:15:55  ddiego
+merge from devmain-0-6-2 branch into the stable branch
+
+Revision 1.1.2.1  2003/09/27 23:04:21  ddiego
+added tutorial docbook files
+
+-->
+
+

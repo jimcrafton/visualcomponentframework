@@ -11,3 +11,10 @@ view50		BITMAP	"view-half.bmp"
 
 fullvol		BITMAP	"fullvol.bmp"
 mute		BITMAP	"mute.bmp"
+
+search		BITMAP	"search.bmp"
+
+movies		BITMAP	"movies.bmp"
+
+movies-playlist		BITMAP	"movies-playlist.bmp"
+

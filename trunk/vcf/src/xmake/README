@@ -1,0 +1,45 @@
+This short set of instructions shows you how to build and setup 
+xmake for usage on unix or Win32 systems.
+
+
+Unix/Linux based systems
+Building
+ - unpack the xmake-XXXX.tar.gz file somewhere
+ - cd to xmake-XXX
+ - make
+ this will build the xmake static lib and the xmake executable
+
+Installing
+ - make install
+ this will install the xmake in /usr/local/bin - if you need it to 
+ go somewhere else open the Makefile and change the INSTALLDIR variable
+ to something more appropriate
+
+Documentation
+ - make docs 
+ this will generate the docbook based documentation. It will generate
+ html docs and HTML Help project files in the xmake-XXX/docs directory.
+
+
+Win32 using Visual Studio
+Building
+ - unpack the xmake-XXXX.tar.gz file somewhere
+ - cd to xmake-XXX
+ - open the xmake.dsw workspace in Visual C++ 6.0 (sp5) and
+ build the xmake project.
+
+Installing
+ - copy the xmake executable to wherever is most convenient for you and
+ can be seen by your PATH.
+
+Documentation
+ - documentation comes with the distro, see xmake-XXX/docs/xmake_docs.chm.
+
+For more information about xmake (or the Visual Component Framework of which 
+it is a part) please see http://vcf.sf.net and/or http://sf.net/projects/vcf.
+
+
+
+
+
+

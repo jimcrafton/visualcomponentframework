@@ -4,23 +4,23 @@ Name=FoundationKitDLL
 Ver=1
 IsCpp=1
 Type=3
-Compiler=-DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DFRAMEWORK_DLL -DFRAMEWORK_EXPORTS -DBUILD_FRAMEWORK_LIB -fvtable-thunks_@@_
+Compiler=_@@_
 Includes=$(VCF_INCLUDE);..\..\..\include
-Linker=-lRpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 --implib ../../../lib/libFoundationKit_mingw_d.a_@@_
+Linker=-lRpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32_@@_
 Libs=E:\code\vcfdev\dev\vcf\lib
-UnitCount=156
+UnitCount=159
 ObjFiles=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Icon=
-ExeOutput=..\..\..\bin
+ExeOutput=
 ObjectOutput=..\FoundationKit
 OverrideOutput=1
 OverrideOutputName=FoundationKit_mingw_d.dll
 Folders=
 CommandLine=
-CppCompiler=
+CppCompiler=-D__GNUWIN32__ -DWIN32 -DVCF_GCC  -W -fexceptions  -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -DBUILD_FOUNDATIONKIT_LIB -Wno-multichar -Wno-deprecated_@@_
 HostApplication=
 IncludeVersionInfo=0
 SupportXPThemes=0
@@ -935,7 +935,7 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CPP) -c BasicException.cpp -o ../FoundationKit/BasicException.o $(CXXFLAGS)
 
 [Unit92]
 FileName=..\..\..\src\IO\BasicInputStream.cpp
@@ -1600,6 +1600,36 @@ BuildCmd=
 
 [Unit156]
 FileName=..\..\..\src\utils\Dictionary.cpp
+CompileCpp=1
+Folder=FoundationKitDLL
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit157]
+FileName=..\..\..\src\implementerkit\Win32Condition.cpp
+CompileCpp=1
+Folder=FoundationKitDLL
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit158]
+FileName=..\..\..\src\implementerkit\Win32LocalePeer.cpp
+CompileCpp=1
+Folder=FoundationKitDLL
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit159]
+FileName=..\..\..\src\core\VariantData.cpp
 CompileCpp=1
 Folder=FoundationKitDLL
 Compile=1

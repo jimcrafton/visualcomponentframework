@@ -1,9 +1,15 @@
 //VisualFormFiles.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
-#include "io/VFFInputStream.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/VFFInputStream.h"
 
 using namespace VCF;
 
@@ -289,7 +295,7 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		REGISTER_CLASSINFO_EXTERNAL(VisualFormFilesWindow);
 
 		FilePath fp = getFileName();
@@ -302,11 +308,11 @@ public:
 		BasicInputStream bis( vff );
 		VFFInputStream vis( &bis );
 		vis.readComponent( (Component**)&window );
-		
+
 		VisualFormFilesWindow* w = (VisualFormFilesWindow*)window;
 
 		setMainWindow(window);
-		
+
 		return result;
 	}
 
@@ -318,8 +324,20 @@ int main(int argc, char *argv[])
 	Application* app = new VisualFormFilesApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:47:41  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.2.4  2004/04/29 03:40:58  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

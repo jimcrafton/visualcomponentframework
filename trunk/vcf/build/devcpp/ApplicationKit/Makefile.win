@@ -8,7 +8,7 @@ OBJ  = ../ApplicationKit/AbstractApplication.o ../ApplicationKit/AbstractCommand
 LIBS =  -L"d:/Dev-Cpp/lib" -L"../../../lib" -L"../../../xml/lib" -lcomctl32 -lrpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lFoundationKit_mingw_d -lGraphicsKit_mingw_d --implib ../../../lib/libApplicationKit_mingw_d.a
 INCS =  -I"d:/Dev-Cpp/include"  -I"d:/Dev-Cpp/include/g++-3"  -I"d:/Dev-Cpp/include"  -I"../../../include" 
 BIN  = ../../../bin/ApplicationKit_mingw_d.dll
-CFLAGS = $(INCS) -DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DUSE_FRAMEWORK_DLL -DUSE_GRAPHICSKIT_DLL -DAPPKIT_DLL -DAPPKIT_EXPORTS -DBUILD_APPKIT_LIB -fvtable-thunks -fpermissive -s
+CFLAGS = $(INCS) -DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DUSE_FOUNDATIONKIT_DLL -DUSE_GRAPHICSKIT_DLL -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS -DBUILD_APPLICATIONKIT_LIB -fvtable-thunks -fpermissive -s
 
 .PHONY: all all-before all-after clean clean-custom
 

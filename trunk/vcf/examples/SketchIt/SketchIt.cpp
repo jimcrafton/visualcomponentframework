@@ -1,11 +1,17 @@
 //SketchIt.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "SketchDocument.h"
-#include "SketchWindow.h"
-#include "SketchView.h"
-#include "SketchTools.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "../examples/SketchIt/SketchDocument.h"
+#include "../examples/SketchIt/SketchWindow.h"
+#include "../examples/SketchIt/SketchView.h"
+#include "../examples/SketchIt/SketchTools.h"
 
 
 using namespace VCF;
@@ -31,60 +37,60 @@ public:
 		REGISTER_CLASSINFO( SketchView );
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
-		
+
 		ToolManager::init();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new GenericEventHandler<SketchIt>( this, 
+		docMgr->DocumentInitialized += new GenericEventHandler<SketchIt>( this,
 																			&SketchIt::onDocInitialized,
 																			"SketchIt::onDocInitialized" );
 
 		newDefaultDocument();
-		
+
 		return result;
 	}
 
 	void onDocInitialized( Event* e ) {
 		Document* doc = (Document*)e->getSource();
-		
-		
-		
+
+
+
 		static bool firstTime = true;
-		
+
 		if ( firstTime || (doc->getWindow() != getMainWindow()) )  {
 			MenuBar* menuBar = doc->getWindow()->getMenuBar();
-			
+
 			MenuItem* root = menuBar->getRootMenuItem();
 			MenuItem* view = new DefaultMenuItem( "&View", root, menuBar );
 			MenuItem* viewAA = new DefaultMenuItem( "&Anti-Aliased", view, menuBar );
 
-			viewAA->addMenuItemClickedHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			viewAA->addMenuItemClickedHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onToggleAntiAliasing,
 													"SketchIt::onToggleAntiAliasing" ) );
 
-			viewAA->addMenuItemUpdateHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			viewAA->addMenuItemUpdateHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateToggleAntiAliasing,
 													"SketchIt::onUpdateToggleAntiAliasing" ) );
 
 
 			MenuItem* tools = new DefaultMenuItem( "&Tools", root, menuBar );
-			
+
 			MenuItem* toolsSelect = new DefaultMenuItem( "&Select", tools, menuBar );
-			
+
 			MenuItem* toolsLine = new DefaultMenuItem( "&Line", tools, menuBar );
 			MenuItem* toolsRect = new DefaultMenuItem( "&Rectangle", tools, menuBar );
 			MenuItem* toolsBezCurve = new DefaultMenuItem( "&Bezier Curve", tools, menuBar );
-			
+
 			MenuItem* toolsImage = new DefaultMenuItem( "&Image", tools, menuBar );
 
 			ToolManager::getToolManager()->setCurrentControl( doc->getWindow() );
-			
+
 			Tool* tool = new SelectTool();
-			
+
 			ToolManager::getToolManager()->registerTool( tool, toolsSelect );
-			
+
 			tool = new LineTool();
 			ToolManager::getToolManager()->registerTool( tool, toolsLine );
 
@@ -93,39 +99,39 @@ public:
 
 			ToolManager::getToolManager()->registerTool( new ImageTool(), toolsImage );
 
-		
+
 			MenuItem* toolsXForm = new DefaultMenuItem( "&Transform", tools, menuBar );
 			MenuItem* toolsXFormRotate = new DefaultMenuItem( "&Rotate", toolsXForm, menuBar );
 			MenuItem* toolsXFormScale = new DefaultMenuItem( "&Scale", toolsXForm, menuBar );
 			MenuItem* toolsXFormSkew = new DefaultMenuItem( "S&kew", toolsXForm, menuBar );
-			
+
 			tool = new RotateTool();
 			ToolManager::getToolManager()->registerTool( tool, toolsXFormRotate );
 
 			ToolManager::getToolManager()->registerTool( new ScaleTool(), toolsXFormScale );
 
 			ToolManager::getToolManager()->registerTool( new SkewTool(), toolsXFormSkew );
-			
-			
 
-			
 
-			//Add menu items to the "Edit" menu 
+
+
+
+			//Add menu items to the "Edit" menu
 			MenuItem* edit = root->getChildAt( 1 );
-			
+
 			MenuItem* sep = new DefaultMenuItem( "", NULL, NULL );
 			edit->insertChild( 6, sep );
 			sep->setSeparator( true );
 
 			MenuItem* editDelete = new DefaultMenuItem( "Delete\tDel", NULL, NULL );
 			edit->insertChild( 7, editDelete );
-			editDelete->addMenuItemClickedHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			editDelete->addMenuItemClickedHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onDeleteShape,
 													"SketchIt::onDeleteShape" ) );
 
-			editDelete->addMenuItemUpdateHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			editDelete->addMenuItemUpdateHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateDeleteShape,
 													"SketchIt::onUpdateDeleteShape" ) );
 
@@ -137,17 +143,17 @@ public:
 			MenuItem* editFill = new DefaultMenuItem( "Fill Shape", NULL, NULL );
 			edit->insertChild( 8, editFill );
 
-			editFill->addMenuItemClickedHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			editFill->addMenuItemClickedHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onSetFillShape,
 													"SketchIt::onSetFillShape" ) );
 
-			editFill->addMenuItemUpdateHandler( 
-				new MenuItemEventHandler<SketchIt>( this, 
+			editFill->addMenuItemUpdateHandler(
+				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateSetFillShape,
 													"SketchIt::onUpdateSetFillShape" ) );
 
-			
+
 		}
 
 		firstTime = false;
@@ -159,7 +165,7 @@ public:
 		if ( NULL != doc ) {
 			SketchDocument* skDoc = (SketchDocument*)doc;
 			Shape* shape = skDoc->getSelectedShape();
-		
+
 			skDoc->removeShape( shape );
 		}
 	}
@@ -185,8 +191,8 @@ public:
 		if ( NULL != doc ) {
 			SketchDocument* skDoc = (SketchDocument*)doc;
 			Shape* shape = skDoc->getSelectedShape();
-		
-			shape->fill_ = !shape->fill_;			
+
+			shape->fill_ = !shape->fill_;
 		}
 	}
 
@@ -214,8 +220,8 @@ public:
 
 	void onToggleAntiAliasing( MenuItemEvent* e ) {
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
-		
-		doc->getWindow()->setUsingRenderBuffer( !doc->getWindow()->isUsingRenderBuffer() );	
+
+		doc->getWindow()->setUsingRenderBuffer( !doc->getWindow()->isUsingRenderBuffer() );
 		GraphicsContext* ctx = doc->getWindow()->getContext();
 		if ( doc->getWindow()->isUsingRenderBuffer() ) {
 			ctx->setDrawingArea( doc->getWindow()->getClientBounds() );
@@ -237,9 +243,20 @@ int main(int argc, char *argv[])
 	Application* app = new SketchIt( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
 
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.5  2004/08/07 02:47:36  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.4.2.4  2004/04/29 03:40:56  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

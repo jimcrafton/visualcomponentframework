@@ -1,0 +1,737 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>xmake Documentation</title>
+</head>
+
+<body>
+
+<h1><code>xmake</code> Documentation</h1>
+
+<h1>xmake</h1>
+
+      <h2>Introduction</h2>
+
+        <p>So why another build tool ? Well that's a great question now isn't it
+
+        ! Basically I hate make files, and the whole make file syntax. I find it
+
+        incredibly difficult to read, it is error prone to edit, and just seems
+
+        to me to be incredibly messy. Obviously I am not alone in this feeling,
+
+        since there are a number of projects out there to create alternatives to
+
+        make (Ant for Java, and Jam, come to mind immediately).</p>
+
+        <p>So, since the <a href="http://sourceforge.net/projects/vcf"> VCF</a> is now building on linux/Unix systems (so far the
+
+        FoundationKit has been built on linux and Solaris ), it was thought it
+
+        sure would be nice to have a single build file that could be used on any
+
+        system for GCC, VC++, etc. Since XML syntax is easy to read (compared to
+
+        a traditional make file), and the scope of the program would be fairly
+
+        limited, i.e. it is designed to compiled and link C++ programs, and not
+
+        a whole lot more, I thought it was worth the effort to try and write a
+
+        make like program that would accept this new syntax. As it turned out it
+
+        wasn't very hard, and maybe a couple of days of programming time (plus
+        probably a week of testing) has
+
+        gone into writing <code> xmake</code> so I think it is worth it .&nbsp;</p>
+
+        <p>Another reason to write <code> xmake</code> was the desire to be able to have other
+
+        developers quickly be able to build the framework, even on system that
+
+        do not have good IDE's. I felt that it is a LOT easier to explain a
+
+        simple set of XML tags to developers with a background in VC++ and GUI
+
+        IDE's than trying to struggle to explain makefiles.&nbsp;</p>
+
+        <p>While there are a couple of features that are not yet finished,
+        notably the preBuild/postBuild tags, and the project level dependencies,
+        the core of xmake works quite well and I have been regularly using it to
+        build the VCF on linux as I work on porting it. This includes the build
+        the FoundationKit as a shared library and the various test projects used
+        to test the various parts of the port.&nbsp;</p>
+
+        <p>In addition to a command line tool, the <code> xmake</code> engine will become the underlying build tool
+
+        for the VCFBuilder, so VCFBuilder workspaces/projects will share the
+
+        same XML syntax as <code> xmake</code> does (though the VCFBuilder will include a
+
+        number of extra tags that will simply be ignored by the <code> xmake</code> engine).&nbsp;</p>
+
+      <p>&nbsp;</p>
+
+      <h3>Basic Usage</h3>
+
+        <p><code>xmake</code> is designed to work on one or more projects. A project
+
+        generally results in the output of a single binary, such as an
+
+        executable (.exe) or a library (.lib) or a dynamic library (.dll or .so
+
+        depending on your system). Within in a project, you can specify one or
+
+        more configurations to build. For example, you could have a project
+
+        build a &quot;Debug GCC&quot; and a &quot;Debug VC++&quot; and a
+
+        &quot;Debug BCC&quot; (please note you can call the configuration
+
+        anything you want), that would build a binary file using different
+
+        compilers and linkers depending on the configuration. Configurations
+
+        hold most of the key settings for the compiler and linker, as well as
+
+        allowing you to specify additional build tools for specials file types
+
+        (such as a resource compiler for .RC files on Win32 systems).&nbsp; Thus
+
+        when using <code> xmake</code> you tell it to build a specific configuration for a
+
+        given project in a make file (usually makefile.xml). <code> xmake</code> is smart
+
+        enough to automatically check file dependencies for you, so if you have
+
+        recently modified a header that two of the five source files in your
+
+        project depend on, it will only build the two affected source files.</p>
+
+        <p>Projects also hold a list of one or more source files that are
+
+        necessary to build the project. These source files hold information such
+
+        as the file name (the exact path is determined dynamically, relative to
+
+        the path where is <code> xmake</code> is invoked), the output name, whether or not the
+
+        file should be built (this can be useful, to allow you to turn
+
+        &quot;off&quot; certain files ), and finally the configuration the
+
+        source belongs to. Source files may belong to one or more
+
+        configurations, with each configuration name separated by a
+
+        &quot;|&quot; character (for example, <code>&quot;Debug GCC|Debug
+
+        VC++&quot;</code>) .</p>
+
+        <p>The command line usage is :</p>
+
+        <p><code>xmake [projectName] -config configurationName [-f makefileName]
+        || [-install] || [-clean]</code></p>
+
+        <p>You can invoke the <code> xmake</code> program from the command line. You control
+
+        the program by the following options :</p>
+
+        <ul>
+
+          <li><code>projectName</code> - is the name of the project to build in this
+            makefile. If left blank then the first project found is the one that is
+            built.
+
+          <li><code>-config configurationName</code> - this tells the <code> xmake</code> program which
+
+            configuration to build. The <code> -config</code> option <b><i>must</i></b>
+            be followed by a
+
+            configuration name so <code> xmake</code> knows what to build. Specify the wrong
+
+            name and you will not build what you expected.
+
+          <li><code>-f makefileName</code> -        the makefile to use. If this is not specified then
+            <code>xmake</code> looks for a file named
+            &quot;makefile.xml&quot; in the current directory. If this is not found then an
+            error results and <code> xmake</code> exits.
+
+          <li><code>-install</code> - currently unimplemented
+
+          <li><code>-clean</code> - removes all binary files produced by the
+
+            make file for the specified configuration</li>
+
+        </ul>
+
+        <p>An example of it's usage, for example to build the FoundationKit for
+        the <a href="http://sourceforge.net/projects/vcf"> VCF</a> in linux using GCC, is this:</p>
+        <pre>xmake -config&nbsp; &quot;GCC Debug&quot;        </pre>
+
+      <p>&nbsp;</p>
+
+      <h3>XML syntax</h3>
+
+      <p>Since the <code> xmake</code> makefile is based on XML it follows all XML syntax
+
+      rules. Please note that if you need to have double quotes in a value,
+
+      use the single quote, which will then be replaced with a double quote
+
+      during the build process.&nbsp;</p>
+
+        <h4><code>&lt;make&gt;</code></h4>
+
+        <p>This is the outermost tag. Every <code> xmake</code> makefile must begin and end
+
+        with this tag.</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;substitutions&gt;</code></h4>
+
+        <p>This is where you can specify variable names that will be substituted
+
+        when the make file is parsed and executed by <code>xmake</code>. For example you can
+
+        specify a common include path, or a common output folder. Inside of a <code>substitutions</code>
+
+        tag you can have zero or more variable tags that have 2 attributes, a
+
+        name and a value. The name attribute is the name of the variable as it
+
+        will be referenced throughout the make file, and the value attribute
+
+        specifies the string that will be substituted wherever the parser
+
+        encounters the variable. System environment variables may also be used,
+
+        so if you have defined <code><b>VCF_INCLUDE</b></code> as one of your
+
+        system's environment variables, then the parser is smart enough to
+
+        attempt to try and check to see if the variable exists.</p>
+
+        <p>To reference the variable you do so as follows:</p>
+
+        <ul>
+
+          <li>$(&lt;variable name&gt;), for example if you have defined a
+
+            variable called MyIncludePath, then you would reference it $(MyIncludePath)
+
+          <li>%&lt;variable name&gt;%, for example if you have defined a
+
+            variable called MyIncludePath, then you would reference it %MyIncludePath%</li>
+
+        </ul>
+
+        <p>An example of this tag section looks like this:</p>
+
+        <pre>&lt;substitutions&gt;
+
+	&lt;variable name=&quot;VCF_INCLUDE&quot; value=&quot;e:\code\vcf\include&quot;/&gt;
+
+	&lt;variable name=&quot;INC&quot; value=&quot;../../../include&quot;/&gt;
+
+	&lt;variable name=&quot;SRC&quot; value=&quot;../../../src&quot;/&gt;
+
+&lt;/substitutions&gt;</pre>
+
+        <p><b><i>Please note</i></b>: Variables can be used anywhere you are
+        specifying a value for a attribute.&nbsp;</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;project&gt;</code></h4>
+
+        <p>The project holds all the important nodes. It also has a series of
+
+        attributes, as follows:</p>
+
+        <ul>
+
+          <li><code>name</code> - the name of the project. This is required.
+
+          <li><code>path</code> - the path of the project. This is optional
+
+            right now and doesn't do much...</li>
+
+          <li><code>outputAs</code> - the output path of the project. This is
+
+            used to determine the binary that represents a successful build of
+
+            the project, and is used when your &quot;clean&quot; your project to
+
+            specify the binary to get rid of. For example it could be &quot;FooBar.exe&quot;,
+
+            or &quot;MyLib.dll&quot;, or &quot;MySharedCode.so&quot;.&nbsp;</li>
+
+          <li><code>externalFileName</code> - this specifies an external xmake
+            makefile to build and will cause a new xmake process to be started.
+            If this is used then no other attributes are necessary (other than
+            the name attribute). a relative or absolute path may be used to
+            specify the makefile. All relevant arguments passed to the currently
+            executing xmake process are passed to the new xmake process that
+            will get started as a result. So if you called xmake like so:<br>
+            <code>xmake -config &quot;GCC Debug&quot; -v -clean</code><br>
+            then the new process that gets started will also use the &quot;<code>-config
+            &quot;GCC Debug&quot; -v -clean&quot;</code> arguments.</li>
+
+        </ul>
+
+        <p>Note that the <code>outputAs</code> attribute is optional. With most
+
+        compilers/linkers you can specify where the binary output will go.
+
+        However, as mentioned above, the output name is used so that <code> xmake</code> can
+
+        do a complete &quot;clean&quot; of the project.</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;dependencies&gt;</code></h4>
+
+<p>The dependencies sections allows you indicate, at the project level, what
+other projects need to be built first before the project that we are currently specifying.
+The &lt;dependencies&gt; tag has 0 or more &lt;dependency&gt; sub tags. If your
+project has no dependencies at all, then you can omit the &lt;dependencies&gt;
+all together.</p>
+
+<h4><code>&lt;dependency&gt;</code></h4>
+
+<p>This tag indicates a particular project that must be built prior to building
+the parent project that is a part of. A dependency has the following attributes:</p>
+
+<ul>
+  <li><code>name</code> - The name of the project that needs to be built first</li>
+</ul>
+<p>An example might look like this:</p>
+<pre>&lt;project name=&quot;foo&quot;&gt;
+	&lt;dependencies&gt;
+		&lt;dependency name=&quot;libFoo&quot;/&gt;	
+	&lt;/dependencies&gt;
+&lt;/project&gt;</pre>
+
+<pre>&lt;project name=&quot;libFoo&quot;&gt;
+	&lt;dependencies&gt;
+		&lt;dependency name=&quot;libBar&quot;/&gt;	
+	&lt;/dependencies&gt;	
+&lt;/project&gt;</pre>
+
+<pre>&lt;project name=&quot;libBar&quot;&gt;
+&lt;/project&gt;</pre>
+
+<p>This gets resolved to project &quot;foo&quot; depends on project &quot;libFoo&quot;
+which in turn depends on project &quot;libBar&quot;, so the build order becomes
+libBar, libFoo, and finally foo.
+</p>
+
+        <h4><code>&lt;configurations&gt;</code></h4>
+
+        <p>Configurations are the heart of <code>xmake</code>. If you have used Microsoft's
+
+        Visual C++ then you'll be right at home here. Basically a configuration
+
+        is a complete set of settings for compiler and linker in order to build
+
+        the project. A single project may have multiple configurations, for
+
+        example you might have a &quot;Win32 Debug&quot;, &quot;Win32
+
+        Release&quot;, &quot;Linux Debug&quot;, &quot;Linux Release&quot;,
+
+        &quot;Mac Debug&quot;, and &quot;Mac Release&quot;. Thus, in order for <code>
+
+        xmake</code> to do it's job it needs to know the configuration you want to
+
+        build. The &lt;configurations&gt; tag is used to indicate the collection, and then a
+        series of 1 or more &lt;config&gt; sub tags for each configuration. A configuration has the following attributes:</p>
+
+        <ul>
+
+          <li><code>name</code> - The configuration name identifies the
+
+            configuration, and is used by source files to identify which
+
+            configuration they belong to. A configuration name can only have the
+
+            characters [a..z, A..Z, 0..9] the &quot;|&quot; is used to separate
+
+            multiple configurations.
+
+          <li><code>srcBinaryExt</code> - the srcBinaryExt is used to identify
+
+            the extension of compiled source files. Many compilers use
+
+            &quot;.o&quot; while many others use &quot;.obj&quot;. For example,
+
+            GCC/G++ uses &quot;.o&quot; for it's extension for object files,
+
+            while VC++ uses &quot;.obj&quot;. This allows you to specify just
+
+            the name of your output files (without the &quot;.&quot; extension)
+
+            and let <code> xmake</code> append the correct extension based on the
+
+            configuration currently being built.&nbsp;</li>
+
+        </ul>
+
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;config name=&quot;VC++ Debug&quot; srcBinaryExt=&quot;.obj&quot;&gt;
+
+.... more stuff follows</pre>
+
+        <p>Besides the above attributes, the configuration also has the
+
+        following sub tags:</p>
+
+        <ul>
+
+          <li><code>includes</code> - The includes section informs <code> xmake</code> of
+
+            where to look for include files not in the current directory. This
+
+            is used during the dependency scan for source files.&nbsp;
+
+          <li><code>tools</code> - The tools sections allows you to specify
+
+            special build tools for build source files that are not able to be
+
+            compiled using the <code><samp>compiler</samp></code> and <code>linker</code>
+
+            in the configuration.
+
+          <li><code>compiler</code> - This specifies the compiler used to
+
+            compile source files (unless the source file specifies another <code>tool</code>).
+
+          <li><code>linker</code> -&nbsp;This specifies the linker used to
+
+            create the final project binary.&nbsp;
+
+          <li><code>preBuild</code> - not implemented yet.
+
+          <li><code>postBuild</code> - not implemented yet.</li>
+
+        </ul>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;includes&gt;</code></h4>
+
+        <p>This allows you to specify a set of directories to look in when
+
+        resolving dependencies for what to build. Each include directory
+
+        requires an include tag. Each include tag has a single attribute:</p>
+
+        <ul>
+
+          <li><code>path</code> - Where path is a directory path that will get
+
+            added to the list of directory paths to search for when determining
+
+            dependencies.</li>
+
+        </ul>
+
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;includes&gt;
+	&lt;include path=&quot;../../MyDir/includes&quot;/&gt;
+&lt;/includes&gt;
+
+.... more stuff follows</pre>
+
+        <p>By default the directory where the source file lives is search in the
+
+        dependency check.</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;tools&gt;</code></h4>
+
+        <p>&nbsp;The tools tag allows you to specify 0 or more tools that can be
+
+        used to build a specific type of file. The association of tool to a
+
+        source file is done with a source's &quot;tool&quot; attribute&nbsp;
+
+        having the same value as the tool's &quot;id&quot; attribute. Each tool
+
+        is described in a &lt;tool&gt; tag with the following attributes:</p>
+
+        <ul>
+
+          <li><code>name</code> - the name of the tool executable, such as
+
+            &quot;rc.exe&quot;. You can specify a full or relative path.</li>
+
+          <li><code>id</code> - the text name of the tool. This is the name that
+
+            the various source entries will refer to the tool as. It can be
+
+            anything you want, so long as you consistently refer to it.</li>
+
+        </ul>
+
+        <p>Each tool tag can have flags associated with it. This is done by
+
+        using the &lt;flags&gt; tag to indicate the collection, and then a
+
+        &lt;flag&gt; sub tag. Each flag has the following attributes:</p>
+
+        <ul>
+
+          <li>value - the text parameters you want to pass to the tool</li>
+
+        </ul>
+
+        <p>The flags are then appended to on another to create a command line
+
+        that is then sent to the tool when needed. </p>
+
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;tools&gt;
+	&lt;tool name=&quot;rc.exe&quot; id=&quot;rc&quot; &gt; &lt;!-- here we are using just the resource compilers file name, 
+                                            assuming it can be found on the system path --&gt;
+        	&lt;flags&gt;
+			&lt;flag value=&quot;/i'..\..\MyResIncludes' \d '_DEBUG'&quot;/&gt;
+		&lt;/flags&gt;
+	&lt;/tool&gt;        
+&lt;/tools&gt;
+.... more stuff follows</pre>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;compiler&gt;</code></h4>
+
+        <p>The compiler tag allows you to specify the executable to use as your
+        compiler (for a given configuration) and a set of flags to send to the
+        compiler when processing source files.&nbsp; The compiler tag has only a
+        single attribute:</p>
+
+        <ul>
+          <li>name - the relative or full path name to the executable to use for
+            compiling source files. If the name is just the short name (i.e.
+            &quot;cl.exe&quot;), then it is assumed that it can be found on the
+            system path.</li>
+        </ul>
+        <p>The compiler can have flags associated with it. This is done by
+
+        using the &lt;flags&gt; tag to indicate the collection, and then a
+
+        &lt;flag&gt; sub tag. Each flag has the following attributes:</p>
+
+        <ul>
+
+          <li>value - the text parameters you want to pass to the compiler</li>
+
+        </ul>
+
+        <p>The flags are then appended to on another to create a command line
+
+        that is sent to the compiler when it is invoked for each source file.</p>
+
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;compiler name=&quot;cl&quot;&gt;
+	&lt;flags&gt;
+		&lt;flag value=&quot;/I $(INC)&quot;/&gt;
+		&lt;flag value=&quot;/nologo /MDd /W3 /Gm /GR /GX /ZI /Od&quot;/&gt;
+		&lt;flag value=&quot;/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FOUNDATIONKIT_DLL /D FOUNDATIONKIT_EXPORTS&quot;/&gt;
+		&lt;flag value=&quot;/c&quot;/&gt;
+	&lt;/flags&gt;
+&lt;/compiler &gt;
+
+.... more stuff follows</pre>
+
+        <p>Note the use of the variable <code>INC</code> in the first flag. Also
+        note that you could have just as easily put everything in one flag, but
+        breaking it up makes it easier to read for others.</p>
+
+        <p>Please note: Use single quote's where you would use						double quotes.
+        Single quote characters will be expanded to double quote when the string is parsed and prepared to send to the						compiler.&nbsp;</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;linker&gt;</code></h4>
+
+        <p>The linker tag allows you to specify the executable to use as your
+        linker (for a given configuration) and a set of flags to send to the
+        linker when linking all the compiler object code.&nbsp; The linker tag
+        has only a single attribute:</p>
+
+        <ul>
+          <li>name - the relative or full path name to the executable to use for
+            linking object files. If the name is just the short name (i.e.
+            &quot;link.exe&quot;), then it is assumed that it can be found on
+            the system path.</li>
+        </ul>
+        <p>The linker can have flags associated with it. This is done by
+
+        using the &lt;flags&gt; tag to indicate the collection, and then a
+
+        &lt;flag&gt; sub tag. Each flag has the following attributes:</p>
+
+        <ul>
+
+          <li>value - the text parameters you want to pass to the linker&nbsp;</li>
+
+        </ul>
+
+        <p>The flags are then appended to on another to create a command line
+
+        that is sent to the linker when it is invoked to build the final binary
+        image for the project.</p>
+
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;linker name=&quot;link.exe&quot;&gt;
+	&lt;flags&gt;
+		&lt;flag value=&quot;/nologo&quot;/&gt;
+		&lt;flag value=&quot;/subsystem:console&quot;/&gt;					
+		&lt;flag value=&quot;/incremental:yes&quot;/&gt;
+		&lt;flag value=&quot;/pdb:'Debug/xmake.pdb'&quot;/&gt;
+		&lt;flag value=&quot;/debug&quot;/&gt;
+		&lt;flag value=&quot;/machine:I386&quot;/&gt;
+		&lt;flag value=&quot;/out:'Debug/xmake.exe'&quot;/&gt;
+		&lt;flag value=&quot;/pdbtype:sept&quot;/&gt;		
+	&lt;/flags&gt;
+&lt;/linker&gt;
+
+.... more stuff follows</pre>
+
+        <p>Please note: Use single quote's where you would use						double quotes.
+        Single quote characters will be expanded to double quote						when the string is parsed and prepared to send to the
+        linker .&nbsp;</p>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;preBuild&gt;</code></h4>
+
+        <p>This allows you
+        to specify a series of command line actions to execute <b><i>prior</i></b>
+        to the compile phase of the build process. preBuild is part of the
+        configuration tag and is thus associated with a specific
+        configuration.&nbsp;</p>
+
+        <p>The syntax looks like this:</p>
+
+        <pre>&lt;prebuild&gt;
+	&lt;exec commandLine=&quot;copy Foo.cpp ../../outputSrc&quot;/&gt;
+	&lt;!-- ...other commands --&gt;
+&lt;/prebuild&gt;
+
+.... more stuff follows</pre>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;postBuild&gt;</code></h4>
+
+<p>This allows you
+        to specify a series of command line actions to execute <b><i>after</i></b>
+        the link phase of the build process. postBuild is part of the
+        configuration tag and is thus associated with a specific
+        configuration.&nbsp;</p>
+
+        <p>The syntax looks like this:</p>
+
+        <pre>&lt;postbuild&gt;
+	&lt;!-- in this example we use doxygen to autogenerate
+		source documentation--&gt;
+	&lt;exec commandLine=&quot;doxygen ../../help/Doxyfile&quot;/&gt; 
+	&lt;!-- ...other commands --&gt;
+&lt;/postbuild&gt;
+
+.... more stuff follows</pre>
+
+        <p>&nbsp;</p>
+
+        <h4><code>&lt;sources&gt;</code></h4>
+
+        <p>After the configurations are all specified you list you source files
+        that are required to build your project. The sources tag is a collection
+        of 1 or more source sub tags, with each source sub tag representing an
+        individual source file to build. The source tag has the following
+        attributes:</p>
+
+        <ul>
+          <li><code>name</code> - this is the name of the source file, relative
+            to the directory where the project is being built. This attribute is
+            required.</li>
+          <li><code>partOfConfig</code> -&nbsp;this indicates which
+            configuration the source file will compile under. The name of the
+            configuration <b><i>must</i></b> exactly match the name of the
+            configuration specified in one of the config sections that was
+            defined earlier in the makefile. If the source file can be compiled
+            under multiple configurations, then each configuration name must be
+            separated by the &quot;|&quot; character. This attribute is
+            required.&nbsp;</li>
+          <li><code>build</code> -&nbsp;indicates whether the file should even
+            be built for this configuration. The possible values for this
+            attribute are &quot;yes&quot; or &quot;no&quot;. This attribute is
+            optional. If you do not specify this then it defaults to
+            &quot;yes&quot;, meaning the file will be compiled.</li>
+          <li><code>outputAs</code> -&nbsp;this tells <code>xmake</code> where
+            the compiled object file should go. This will override the settings
+            in the compiler flags. Generally you want the two to match. By
+            specifying this <code>xmake</code> knows where to go to clean up the
+            object files during a &quot;clean&quot;. This attribute is optional.
+            If you do not specify this then it defaults to the directory where
+            the project's makefile is. When specifying the name of the output
+            file you can leave off the extension (like foo.o or baz.obj) and
+            xmake will determine the proper extension from the configuration's <code>srcBinaryExt</code> 
+            attribute.&nbsp;</li>
+          <li><code>tool</code> - tells <code>xmake</code> that the source file
+            is not compiled using the default compiler, instead it is to be
+            &quot;compiled&quot; using the tool whose <code>id</code> attribute
+            matches this attribute's value. The two values must match exactly.
+            If a tool does not exist in the makefile with a matching <code>id</code>
+            attribute then the source file is not compiled. This attribute is
+            required.&nbsp; </li>
+        </ul>
+        <p>An example looks something like this:</p>
+
+        <pre>&lt;sources&gt;
+	&lt;source name=&quot;Test1Make.rc&quot; partOfConfig=&quot;VC++ Debug&quot; outputAs=&quot;Debug/Test1Make.res&quot; tool=&quot;rc&quot;/&gt;
+	&lt;source name=&quot;StdAfx.cpp&quot; partOfConfig=&quot;VC++ Debug&quot; /&gt;
+	&lt;source name=&quot;MainFrm.cpp&quot; partOfConfig=&quot;VC++ Debug&quot; outputAs=&quot;Debug/MainFrm.obj&quot;/&gt;
+	&lt;source name=&quot;ChildView.cpp&quot; partOfConfig=&quot;VC++ Debug&quot; outputAs=&quot;Debug/ChildView.obj&quot;/&gt;
+	&lt;source name=&quot;Test1Make.cpp&quot; partOfConfig=&quot;VC++ Debug&quot; outputAs=&quot;Debug/Test1Make.obj&quot;/&gt;						
+&lt;/sources&gt;</pre>
+
+        <p>Note the use of the tool attribute in the first source tag.</p>
+        <p>&nbsp;</p>
+        <h3>Building and installing <code>xmake</code></h3>
+        <p>You can get <code>xmake</code> from <a href="http://sourceforge.net/projects/vcf">here</a>
+        at the Source Forge VCF project page. You can build for Win32 systems
+        using the VC++ workspace that is included. Alternately it can be built
+        using GCC on 'nix systems using the traditional <code>configure</code>, <code>make</code>,
+        <code>make install</code> commands (a configure and Makefile are
+        provided for this). </p>
+        <p>It has been built and tested on Windows 2000, Windows NT sp4 (it is a
+        fairly simple command line tool so it should work fine in Windows 98 and
+        Windows XP), linux 2.4 (RH7.1 distro), SparcStation with Solaris 8
+        (2.8), and I have heard it runs on MacOSX and VMS but I have not
+        personally verified this. </p>
+        <p>To install it under Win32 systems just put the executable where you
+        want, preferably someplace that is on your system path. For 'nix systems
+        the <code>make install</code> command will put it in <code>/usr/bin</code>,
+        or you can place it somewhere else if you want.</p>
+        <p>&nbsp;</p>
+
+
+<!-------------------------------    That's it!   --------------------------->
+<p>&nbsp;</p>
+
+</body>
+
+</html>

@@ -7,7 +7,7 @@
 	<dependsOn>
 	</dependsOn>
 
-	<target name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" active="true" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
+	<target name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
 		<dependsOn>
 			<dependency name="./vcf_docbook.xml" id="76e9e3b1-434b-4751-a82d-8603ab0ded80"/>
 		</dependsOn>
@@ -22,6 +22,14 @@
 			<exec command="xsltproc --nonet  $(XSL_DIR)/$(XSL_SHEET) $(dependency.name) > index.html"/>
 		</tool>
 	</config>
+
+	<target name="vcf-docbook-chm" id="???????????????????" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" active="true" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
+		<dependsOn>
+			<dependency name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a"/>
+		</dependsOn>
+		<exec command="hhc vcf-docbook.hhp" />
+	</target>
+
 	<config name="docbook" id="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" parent="b5c0bde4-1ae3-41f6-88c5-bdf5b49f7e9e" uuid="a380b702-2789-4f3b-94dc-73104227c750" active="true" >
 		<variable name="XSL_DIR" value=""/>
 		<variable name="HTMLOUTPUT" value=""/>
@@ -55,6 +63,7 @@
 		<file src="./vcf_docbook.xml" id="76e9e3b1-434b-4751-a82d-8603ab0ded80" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
 		<file src="../examples/Alignment/Alignment.xml" id="7957d2c9-c002-49a4-b49f-aaf05f221775" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 		<file src="../examples/Anchors/Anchors.xml" id="79cfd8ed-0c1e-42e1-8306-a261ef0d1161" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
+		<file src="../examples/MVCBasics/MVCBasics.xml" id="7d7a366f-c124-49e0-85d5-165b12f8f99a" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 		<file src="../examples/HelloWorld3/HelloWorld3.xml" id="8b7f9696-2eaa-4e4f-bfd6-7bbb7054c815" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 		<file src="../examples/CopyAndPaste/CopyAndPaste.xml" id="93576a90-ae73-4823-8e66-79ae89f2dbb2" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 		<file src="../examples/ApplicationIcons/ApplicationIcons.xml" id="976eef7c-b9be-41f6-a31f-85cdaf98a378" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>

@@ -1,10 +1,15 @@
 //DateTimeUI.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
-#include "utils/DateTime.h"
-#include "graphics/TitledBorder.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/TitledBorder.h"
 
 
 using namespace VCF;
@@ -15,7 +20,7 @@ public:
 
 
 	Calendar() {
-	
+
 		EventHandler* ev = new KeyboardEventHandler<Calendar>( this, &Calendar::onUpArrow, "Calendar::onUpArrow" );
 
 		Application::getRunningInstance()->addAcceleratorKey( vkUpArrow, 0, ev );
@@ -37,6 +42,9 @@ public:
 		Application::getRunningInstance()->addAcceleratorKey( vkSpaceBar, 0, ev );
 
 
+		setUseColorForBackground( true );
+		setColor( Color::getColor( "white" ) );
+
 		current = DateTime::now();
 	}
 
@@ -44,31 +52,31 @@ public:
 	virtual void paint( GraphicsContext* ctx ) {
 		CustomControl::paint( ctx );
 
-		DateTime tmp( current.getYear(), current.getMonth(), 1 );
-		DateTime::Iterator<ByDay> dayIter = tmp;
+		DateTime currentMonthDate( current.getYear(), current.getMonth(), 1 );
+		DateTime::Iterator<ByDay> dayIter = currentMonthDate;
 
-		Rect rect = getClientBounds();
+		VCF::Rect rect = getClientBounds();
 
 		ctx->setColor( Color::getColor("black") );
 		ctx->rectangle( &rect );
 		ctx->strokePath();
 
-		Rect textRect = rect;
+		VCF::Rect textRect = rect;
 
 		textRect.bottom_ = 100;
 		textRect.inflate( -5, -5 );
 
-		String s = 
-			StringUtils::format( "%s. %s", 
-						StringUtils::format( tmp, "The current month starts on %A, %B %d, %Y" ).c_str(),
+		String s =
+			StringUtils::format( "%ls. %ls",
+						StringUtils::format( currentMonthDate, "The current month starts on %A, %B %d, %Y" ).c_str(),
 						StringUtils::format( current, "Today is %A, %B %d, %Y week %#W" ).c_str() );
 
-		String s2 = 
+		String s2 =
 			StringUtils::format( "\nThe current month has %d days in it, and the current year has %d days in it, starts on week %d,\nand has %d total weeks in the year\n",
-										tmp.getNumberOfDaysInMonth(), 
-										tmp.getDaysInYear(),
-										tmp.getWeekOfYearStartingMon(),
-										tmp.getWeeksInYear() );
+										currentMonthDate.getNumberOfDaysInMonth(),
+										currentMonthDate.getDaysInYear(),
+										currentMonthDate.getWeekOfYearStartingMon(),
+										currentMonthDate.getWeeksInYear() );
 
 		s += s2;
 		s += StringUtils::format( current, "The current time is %#I:%M:%S" );
@@ -80,31 +88,32 @@ public:
 		rect.top_ += 100;
 
 
-		Size sizeBorder = Size( 5, 2 );
-		Size sz;
+		VCF::Size sizeBorder = VCF::Size( 5, 2 );
+		VCF::Size sz;
 		sz.width_  = ( rect.getWidth()  - 2 * sizeBorder.width_  ) / 7;
 		sz.height_ = ( rect.getHeight() - 2 * sizeBorder.height_ ) / 7;
-		
+
 
 		int x,y;
 		x = sizeBorder.width_;
 		y = rect.top_ + sizeBorder.height_;
-		Rect cellRect;
+		VCF::Rect cellRect;
 
-		for ( int i=0;i<7;i++ ) {		
+
+		for ( int i=0;i<7;i++ ) {
 			for ( int j=0;j<7;j++) {
 				ctx->setColor( Color::getColor("black") );
 				cellRect.setRect( x, y, x + sz.width_, y + sz.height_ );
 				ctx->rectangle( &cellRect );
 				ctx->strokePath();
-				
+
 				if ( 0 == i ) {
 					cellRect.inflate( -1, -1 );
-					
+
 					ctx->setColor( &Color(0.8,0.8,0.8) );
 					ctx->rectangle( &cellRect );
 					ctx->fillPath();
-					
+
 					switch ( j ) {
 						case 0 : {
 							ctx->textBoundedBy( &cellRect, "Sun" );
@@ -152,12 +161,12 @@ public:
 							drawText = true;
 						}
 					}
-					else if (dt.getMonth() == tmp.getMonth()) {
+					else if (dt.getMonth() == currentMonthDate.getMonth()) {
 						drawText = true;
-					}			
-					
+					}
+
 					if ( drawText == true ) {
-						if ( dt.getDayOfYear() == current.getDayOfYear() ) {							
+						if ( dt.getDayOfYear() == current.getDayOfYear() ) {
 							ctx->setColor( &Color(1.0,0.8,0.0) );
 							ctx->rectangle( &cellRect );
 							ctx->fillPath();
@@ -166,9 +175,9 @@ public:
 
 						dayIter ++;
 					}
-					
+
 				}
-				
+
 
 				x += sz.width_;
 			}
@@ -232,9 +241,9 @@ public:
 		getFont()->setPointSize( 15 );
 		getFont()->setBold( true );
 
-		EventHandler* ev = 
+		EventHandler* ev =
 			new GenericEventHandler<DigitalClock>( this, &DigitalClock::onTimer, "DigitalClock::onTimer" );
-		
+
 		TimerComponent* timer = new TimerComponent();
 		addComponent( timer );
 
@@ -252,10 +261,11 @@ public:
 
 
 	virtual void paint( GraphicsContext* ctx ) {
+
 		CustomControl::paint( ctx );
 
-		Rect rect = getClientBounds();
-		
+		VCF::Rect rect = getClientBounds();
+
 		rect.inflate( -5, -5 );
 		ctx->setCurrentFont( getFont() );
 
@@ -264,6 +274,7 @@ public:
 
 		long options = GraphicsContext::tdoCenterVertAlign | GraphicsContext::tdoCenterHorzAlign;
 		ctx->textBoundedBy( &rect, s, options );
+
 	}
 
 	void onTimer( Event* e ) {
@@ -277,13 +288,13 @@ public:
 
 class AnalogClock : public CustomControl {
 public:
-	AnalogClock()	{	
+	AnalogClock()	{
 
 		current = DateTime::now();
 
-		EventHandler* ev = 
+		EventHandler* ev =
 			new GenericEventHandler<AnalogClock>( this, &AnalogClock::onTimer, "AnalogClock::onTimer" );
-		
+
 		TimerComponent* timer = new TimerComponent();
 		addComponent( timer );
 
@@ -303,30 +314,49 @@ public:
 	virtual void paint( GraphicsContext* ctx ) {
 		CustomControl::paint( ctx );
 
-		Rect rect = getClientBounds();
-		
+		VCF::Rect rect = getClientBounds();
+
 		rect.inflate( -5, -5 );
 
-		Point center = rect.getCenter();
+		VCF::Point center = rect.getCenter();
 		double radius = minVal<>( rect.getHeight()/2.0, rect.getWidth()/2.0);
+
 		ctx->setColor( Color::getColor("black") );
 		ctx->circle( center, radius );
 		ctx->strokePath();
-	
+
 		double tickLength = 5.0;
-		
+
 		for ( int i=0;i<12;i++ ) {
 			 double theta = (i/12.0) * (2*M_PI);
 
 			 double s = sin( theta );
 			 double c = cos( theta );
 
-			 ctx->moveTo( center.x_ + c*(radius-tickLength), 
+			 ctx->moveTo( center.x_ + c*(radius-tickLength),
 							center.y_ - s*(radius-tickLength) );
-			 ctx->lineTo( center.x_ + c*radius, 
+			 ctx->lineTo( center.x_ + c*radius,
 							center.y_ - s*radius );
 		}
 		ctx->strokePath();
+
+		tickLength = 2.5;
+
+		for ( int j=0;j<60;j++ ) {
+			 double theta = (j/60.0) * (2*M_PI);
+
+			 double s = sin( theta );
+			 double c = cos( theta );
+
+			 ctx->moveTo( center.x_ + c*(radius-tickLength),
+							center.y_ - s*(radius-tickLength) );
+			 ctx->lineTo( center.x_ + c*radius,
+							center.y_ - s*radius );
+		}
+		ctx->setColor( Color::getColor("gray128") );
+		ctx->strokePath();
+		
+		ctx->setColor( Color::getColor("black") );
 
 		double hourLength = radius * 0.40;
 		double minLength = radius * 0.35;
@@ -339,38 +369,38 @@ public:
 		ctx->setColor( Color::getColor("midnightblue") );
 		ctx->setStrokeWidth( 2 );
 		ctx->moveTo( center );
-		ctx->lineTo( center.x_ + c*(radius-hourLength), 
+		ctx->lineTo( center.x_ + c*(radius-hourLength),
 							center.y_ - s*(radius-hourLength) );
 
 		ctx->strokePath();
 
-		
+
 		theta = (current.getMinute()/60.0) * (2*M_PI);
 		c = sin( theta );
 		s = cos( theta );
 
 		ctx->setColor( Color::getColor("red") );
-		ctx->setStrokeWidth( 0 );
+		ctx->setStrokeWidth( 1 );
 		ctx->moveTo( center );
-		ctx->lineTo( center.x_ + c*(radius-minLength), 
+		ctx->lineTo( center.x_ + c*(radius-minLength),
 							center.y_ - s*(radius-minLength) );
 
 		ctx->strokePath();
 
-		theta = (current.getSeconds()/60.0) * (2*M_PI);
+		theta = (current.getSecond()/60.0) * (2*M_PI);
 		c = sin( theta );
 		s = cos( theta );
 
 		ctx->setColor( Color::getColor("forestgreen") );
-		
+
 		ctx->moveTo( center );
-		ctx->lineTo( center.x_ + c*(radius-secLength), 
+		ctx->lineTo( center.x_ + c*(radius-secLength),
 							center.y_ - s*(radius-secLength) );
 
 		ctx->strokePath();
 
 
-		ctx->setStrokeWidth( 0 );
+		ctx->setStrokeWidth( 1 );
 
 	}
 
@@ -391,33 +421,22 @@ class DateTimeUIWindow : public Window {
 public:
 	DateTimeUIWindow() {
 		setCaption( "DateTimeUI" );
-		setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 
-		setVisible( true );
 
 		Panel* panel = new Panel();
-		panel->setHeight( 100 );
+		panel->setHeight( 250 );
+		panel->setBorderSize( 5 );
 		add( panel, AlignTop );
 
-		
-
 		DigitalClock* clock1 = new DigitalClock();
-		clock1->setWidth( panel->getWidth()/2.0 );
 		panel->add( clock1, AlignClient );
 
 		AnalogClock* clock2 = new AnalogClock();
-		clock2->setWidth( panel->getWidth()/2.0 );
+		clock2->setWidth( 200 );
 		panel->add( clock2, AlignLeft );
 
-
-		Calendar* calendar = new Calendar();
-
-		Rect r = getClientBounds();
-		r.inflate( -10, -10 );	
-		
-		calendar->setColor( Color::getColor("white") );
-		
-		add( calendar, AlignClient );		
+		Calendar* calendar = new Calendar();		
+		add( calendar, AlignClient );
 	}
 
 	virtual ~DateTimeUIWindow(){};
@@ -436,11 +455,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new DateTimeUIWindow();
 		setMainWindow(mainWindow);
-		
-		
+        mainWindow->setBounds( 100.0, 100.0, 500, 600 );
+        mainWindow->show();
+
 		return result;
 	}
 
@@ -452,8 +472,54 @@ int main(int argc, char *argv[])
 	Application* app = new DateTimeUIApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:46:57  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.2.15  2004/08/04 00:00:31  marcelloptr
+*minor change on name DateTime:getSecond DateTime:getMillisecond
+*
+*Revision 1.2.2.14  2004/08/02 04:11:21  ddiego
+*added more examples to xcode project
+*
+*Revision 1.2.2.13  2004/08/01 23:39:45  ddiego
+*fixed a few osx bugs
+*
+*Revision 1.2.2.12  2004/07/09 03:39:27  ddiego
+*merged in changes from the OSX branch for new theming API. Added
+*support for controlling the use of locale translated strings in components.
+*
+*Revision 1.2.2.11  2004/06/25 19:45:25  marcelloptr
+*minor changes
+*
+*Revision 1.2.2.10.2.1  2004/06/27 18:19:14  ddiego
+*more osx updates
+*
+*Revision 1.2.2.10  2004/06/07 03:07:06  ddiego
+*more osx updates dealing with mouse handling
+*
+*Revision 1.2.2.9  2004/06/06 07:04:42  marcelloptr
+*changed macros, text reformatting, copyright sections
+*
+*Revision 1.2.2.7  2004/05/31 22:24:52  ddiego
+*OSX code for handling focus events
+*
+*Revision 1.2.2.6  2004/05/31 19:42:31  ddiego
+*more osx updates
+*
+*Revision 1.2.2.5  2004/05/31 13:20:52  ddiego
+*more osx updates
+*
+*Revision 1.2.2.4  2004/04/29 03:40:52  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

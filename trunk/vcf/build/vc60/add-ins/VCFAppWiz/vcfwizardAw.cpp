@@ -158,12 +158,13 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->RemoveToolSettings( tool, setting, reserved );				
 				
 				int linkType = this->m_pChooser->GetLinkType();
-				if ( linkType == VCF_DLL_LINK ) {
-					setting = "/DUSE_FRAMEWORK_DLL";
+				if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
+					setting = "/DUSE_FOUNDATIONKIT_DLL";
+
 					pConfig->AddToolSettings( tool, setting, reserved );
 					setting = "/DUSE_GRAPHICSKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_APPKIT_DLL";
+					setting = "/DUSE_APPLICATIONKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				}
 				else if ( linkType == VCF_STATIC_LINK ) {

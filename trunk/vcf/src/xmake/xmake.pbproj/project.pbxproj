@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		014CEA460018CE2711CA2923 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				OPTIMIZATION_CFLAGS = "-O0";
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		014CEA470018CE2711CA2923 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//010
+//011
+//012
+//013
+//014
+//020
+//021
+//022
+//023
+//024
+		0249A660FF388D4511CA2CEA = {
+			isa = PBXExecutableFileReference;
+			path = xmake;
+			refType = 3;
+		};
+		0249A662FF388D9811CA2CEA = {
+			children = (
+				0249A663FF388D9811CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "External Frameworks and Libraries";
+			refType = 4;
+		};
+		0249A663FF388D9811CA2CEA = {
+			isa = PBXFileReference;
+			name = "libstdc++.a";
+			path = "/usr/lib/libstdc++.a";
+			refType = 0;
+		};
+		0249A664FF388D9811CA2CEA = {
+			fileRef = 0249A663FF388D9811CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//020
+//021
+//022
+//023
+//024
+//080
+//081
+//082
+//083
+//084
+		08FB7793FE84155DC02AAC07 = {
+			buildStyles = (
+				014CEA460018CE2711CA2923,
+				014CEA470018CE2711CA2923,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 08FB7794FE84155DC02AAC07;
+			projectDirPath = "";
+			targets = (
+				08FB779FFE84155DC02AAC07,
+				5E0F873B0464486E00A8020D,
+			);
+		};
+		08FB7794FE84155DC02AAC07 = {
+			children = (
+				5E0F8736046447E300A8020D,
+				08FB7795FE84155DC02AAC07,
+				C6859E8C029090F304C91782,
+				0249A662FF388D9811CA2CEA,
+				1AB674ADFE9D54B511CA2CBB,
+			);
+			isa = PBXGroup;
+			name = xmake;
+			refType = 4;
+		};
+		08FB7795FE84155DC02AAC07 = {
+			children = (
+				08FB7796FE84155DC02AAC07,
+			);
+			isa = PBXGroup;
+			name = "xmake-src";
+			refType = 4;
+		};
+		08FB7796FE84155DC02AAC07 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = main.cpp;
+			refType = 4;
+		};
+		08FB779FFE84155DC02AAC07 = {
+			buildPhases = (
+				08FB77A0FE84155DC02AAC07,
+				08FB77A1FE84155DC02AAC07,
+				08FB77A3FE84155DC02AAC07,
+				08FB77A5FE84155DC02AAC07,
+				C6859E8D0290911004C91782,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "\U0001";
+				PRODUCT_NAME = xmake;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+				5E257226046463C500A8020D,
+			);
+			isa = PBXToolTarget;
+			name = xmake;
+			productInstallPath = "$(HOME)/bin";
+			productName = xmake;
+			productReference = 0249A660FF388D4511CA2CEA;
+		};
+		08FB77A0FE84155DC02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08FB77A1FE84155DC02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				08FB77A2FE84155DC02AAC07,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08FB77A2FE84155DC02AAC07 = {
+			fileRef = 08FB7796FE84155DC02AAC07;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		08FB77A3FE84155DC02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+				0249A664FF388D9811CA2CEA,
+				5E2572270464647400A8020D,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08FB77A5FE84155DC02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+//080
+//081
+//082
+//083
+//084
+//1A0
+//1A1
+//1A2
+//1A3
+//1A4
+		1AB674ADFE9D54B511CA2CBB = {
+			children = (
+				0249A660FF388D4511CA2CEA,
+				5E0F873C0464486E00A8020D,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+//1A0
+//1A1
+//1A2
+//1A3
+//1A4
+//5E0
+//5E1
+//5E2
+//5E3
+//5E4
+		5E0F8736046447E300A8020D = {
+			children = (
+				5E0F874E046448FF00A8020D,
+				5E0F874F046448FF00A8020D,
+				5E0F8750046448FF00A8020D,
+				5E0F8751046448FF00A8020D,
+				5E0F8752046448FF00A8020D,
+				5E0F8753046448FF00A8020D,
+				5E0F873E046448DC00A8020D,
+				5E0F873F046448DC00A8020D,
+				5E0F8740046448DC00A8020D,
+				5E0F8741046448DC00A8020D,
+				5E0F8742046448DC00A8020D,
+				5E0F8743046448DC00A8020D,
+				5E0F8744046448DC00A8020D,
+				5E0F8745046448DC00A8020D,
+			);
+			isa = PBXGroup;
+			name = "libxmake-src";
+			refType = 4;
+		};
+		5E0F87370464486E00A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+				5E0F8746046448DC00A8020D,
+				5E0F8747046448DC00A8020D,
+				5E0F8748046448DC00A8020D,
+				5E0F8749046448DC00A8020D,
+				5E0F874A046448DC00A8020D,
+				5E0F874B046448DC00A8020D,
+				5E0F874C046448DC00A8020D,
+				5E0F874D046448DC00A8020D,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0F87380464486E00A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+				5E0F8754046448FF00A8020D,
+				5E0F8755046448FF00A8020D,
+				5E0F8756046448FF00A8020D,
+				5E0F8757046448FF00A8020D,
+				5E0F8758046448FF00A8020D,
+				5E0F8759046448FF00A8020D,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0F87390464486E00A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0F873A0464486E00A8020D = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E0F873B0464486E00A8020D = {
+			buildPhases = (
+				5E0F87370464486E00A8020D,
+				5E0F87380464486E00A8020D,
+				5E0F87390464486E00A8020D,
+				5E0F873A0464486E00A8020D,
+			);
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_STYLE = STATIC;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "-DGCC -DMACOSX";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOL_FLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = libxmake.a;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXLibraryTarget;
+			name = libxmake.a;
+			productInstallPath = "$(HOME)/bin";
+			productName = libxmake.a;
+			productReference = 5E0F873C0464486E00A8020D;
+		};
+		5E0F873C0464486E00A8020D = {
+			isa = PBXLibraryReference;
+			path = libxmake.a;
+			refType = 3;
+		};
+		5E0F873E046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = FilePath.h;
+			refType = 4;
+		};
+		5E0F873F046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = xmakeUtils.h;
+			refType = 4;
+		};
+		5E0F8740046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = StdAfx.h;
+			refType = 4;
+		};
+		5E0F8741046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = Enumerator.h;
+			refType = 4;
+		};
+		5E0F8742046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = CmdLine.h;
+			refType = 4;
+		};
+		5E0F8743046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = xmake.h;
+			refType = 4;
+		};
+		5E0F8744046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = DependencyNodes.h;
+			refType = 4;
+		};
+		5E0F8745046448DC00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = XMLParser.h;
+			refType = 4;
+		};
+		5E0F8746046448DC00A8020D = {
+			fileRef = 5E0F873E046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8747046448DC00A8020D = {
+			fileRef = 5E0F873F046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8748046448DC00A8020D = {
+			fileRef = 5E0F8740046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8749046448DC00A8020D = {
+			fileRef = 5E0F8741046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F874A046448DC00A8020D = {
+			fileRef = 5E0F8742046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F874B046448DC00A8020D = {
+			fileRef = 5E0F8743046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F874C046448DC00A8020D = {
+			fileRef = 5E0F8744046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F874D046448DC00A8020D = {
+			fileRef = 5E0F8745046448DC00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F874E046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = xmakeUtils.cpp;
+			refType = 4;
+		};
+		5E0F874F046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = StdAfx.cpp;
+			refType = 4;
+		};
+		5E0F8750046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = CmdLine.cpp;
+			refType = 4;
+		};
+		5E0F8751046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = xmake.cpp;
+			refType = 4;
+		};
+		5E0F8752046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = XMLParser.cpp;
+			refType = 4;
+		};
+		5E0F8753046448FF00A8020D = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = FilePath.cpp;
+			refType = 4;
+		};
+		5E0F8754046448FF00A8020D = {
+			fileRef = 5E0F874E046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8755046448FF00A8020D = {
+			fileRef = 5E0F874F046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8756046448FF00A8020D = {
+			fileRef = 5E0F8750046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8757046448FF00A8020D = {
+			fileRef = 5E0F8751046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8758046448FF00A8020D = {
+			fileRef = 5E0F8752046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E0F8759046448FF00A8020D = {
+			fileRef = 5E0F8753046448FF00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5E257226046463C500A8020D = {
+			isa = PBXTargetDependency;
+			target = 5E0F873B0464486E00A8020D;
+		};
+		5E2572270464647400A8020D = {
+			fileRef = 5E0F873C0464486E00A8020D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5EDDD314046459A700A8020D = {
+			fileRef = 0249A660FF388D4511CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//5E0
+//5E1
+//5E2
+//5E3
+//5E4
+//C60
+//C61
+//C62
+//C63
+//C64
+		C6859E8B029090EE04C91782 = {
+			isa = PBXFileReference;
+			path = xmake.1;
+			refType = 4;
+		};
+		C6859E8C029090F304C91782 = {
+			children = (
+				C6859E8B029090EE04C91782,
+			);
+			isa = PBXGroup;
+			name = Documentation;
+			refType = 4;
+		};
+		C6859E8D0290911004C91782 = {
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				C6859E900290913A04C91782,
+				5EDDD314046459A700A8020D,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		C6859E900290913A04C91782 = {
+			fileRef = C6859E8B029090EE04C91782;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 08FB7793FE84155DC02AAC07;
+}

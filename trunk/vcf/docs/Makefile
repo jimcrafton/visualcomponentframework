@@ -2,6 +2,12 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.9  2004/08/07 02:46:51  ddiego
+#merged in the devmain-0-6-5 branch to stable
+#
+#Revision 1.8.2.1  2004/06/07 03:06:46  ddiego
+#more osx updates dealing with mouse handling
+#
 #Revision 1.8  2004/04/03 15:48:26  ddiego
 #Merged over code from the 0-6-3 branch.
 #
@@ -485,13 +491,13 @@ xmake_hh : vcf-docbook.hhp xmake_docs
 	
 
 test_tools : 
-	if ( test -f $(HTMLHELP_COMPILER) )\
-	then\
-		echo HTML Help compiler found;\
-	else\
-		echo Html Help compiler not found;\
-		exit 1;\
-	fi
+#	if ( test -f $(HTMLHELP_COMPILER) )\
+#	then\
+#		echo HTML Help compiler found;\
+#	else\
+#		echo Html Help compiler not found;\
+#		exit 1;\
+#	fi
 
 	if ( test -f $(XSL_HTMLHELP_IMPORT) )\
 	then\

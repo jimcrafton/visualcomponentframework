@@ -1,7 +1,7 @@
 //$$root$$.cpp
 
 
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 #include "$$Root$$Document.h"
 #include "$$Root$$View.h"
 #include "$$Root$$Window.h"

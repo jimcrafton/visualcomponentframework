@@ -1,0 +1,11 @@
+/*
+Italian localization test file
+/**
+nesting comments
+*/
+
+*/
+
+"Hello" = "Ciao" /*this is Hello in italian*/
+
+"I understand" = "Io capisco"

@@ -1,63 +1,15 @@
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2003/08/09 02:56:42  ddiego
-*merge over from the devmain-0-6-1 branch
-*Changes
-*Features:
-*-Added additional implementation to better support the MVC architecture in
-*the VCF
-*
-*-Added a Document/View architecure that is similar to MFC's or NextSteps's
-*Doc/View architectures
-*
-*-Integrated the Anti Grain Graphics library into the GraphicsKit. There is
-*now basic support for it in terms of drawing vector shapes
-*(fills and strokes). Image support will come in the next release
-*
-*-Added several documented graphics tutorials
-*
-*Bugfixes:
-*
-*[ 775744 ] wrong buttons on a dialog
-*[ 585239 ] Painting weirdness in a modal dialog ?
-*[ 585238 ] Modal dialog which makes a modal Dialog
-*[ 509004 ] Opening a modal Dialog causes flicker
-*[ 524878 ] onDropped not called for MLTcontrol
-*
-*Plus an issue with some focus and getting the right popup window to activate
-*has also been fixed
-*
-*Revision 1.1.2.5  2003/07/28 23:49:58  ddiego
-*check in of the weekend's work from July 25
-*learned how to use agg image renedering, now have to integrate it into the
-*GraphicsKit - alos enabled setting a viewable bounds that sets the agg cliprect
-*as well, useful for later optimizations
-*
-*Revision 1.1.2.4  2003/07/24 04:10:43  ddiego
-*added fixes for the following tasks:
-*Task #82279 ApplicationKit: add static methods to singleton objects
-*Task #82277 FoundationKit: add static methods to singleton objects
-*this required a bunch of changes in terms of getting rid of older style code
-*
-*Revision 1.1.2.3  2003/07/21 03:08:29  ddiego
-*added bezier curve editing to Sketchit, fixed a bug in not saving
-*bitmaps, added PackageInfo to the ApplicationKit
-*
-*Revision 1.1.2.2  2003/07/18 04:38:54  ddiego
-*got more work done on the sketch examples plus fixed a bug in the application
-*of a transform ot a path
-*
-*Revision 1.1.2.1  2003/07/17 03:02:46  ddiego
-*added sketch example
-*
+//SketchTools.cpp
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
 */
 
 
-
-#include "ApplicationKit.h"
-#include "SketchTools.h"
-#include "SketchDocument.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "../examples/SketchIt/SketchTools.h"
+#include "../examples/SketchIt/SketchDocument.h"
 
 
 using namespace VCF;
@@ -87,7 +39,7 @@ void Tool::attach( VCF::Control* control )
 
 	control->MouseUp += ev;
 
-	
+
 	ev = getEventHandler( "Tool::onDblClick" );
 	if ( ev == NULL ) {
 		ev = new MouseEventHandler<Tool>( this, &Tool::onDblClick, "Tool::onDblClick" );
@@ -145,14 +97,14 @@ VCF::Control* Tool::detach()
 	ev = getEventHandler( "Tool::onDblClick" );
 	if ( ev != NULL ) {
 		currentControl_->MouseDoubleClicked -= ev;
-	}	
+	}
 
 
 	ev = getEventHandler( "Tool::onKeyPressed" );
 	if ( ev != NULL ) {
 		currentControl_->KeyPressed -= ev;
 	}
-	
+
 
 	ev = getEventHandler( "Tool::onKeyDown" );
 	if ( ev != NULL ) {
@@ -168,7 +120,7 @@ VCF::Control* Tool::detach()
 	currentControl_ = NULL;
 
 	return result;
-	
+
 }
 
 ToolManager::ToolManager():
@@ -190,7 +142,7 @@ ToolManager::~ToolManager()
 ToolManager* ToolManager::manager = NULL;
 
 void ToolManager::init()
-{	
+{
 	ToolManager::manager = new ToolManager();
 }
 
@@ -229,10 +181,10 @@ void ToolManager::onMenuItemClicked( MenuItemEvent* e )
 		currentTool_->detach();
 	}
 
-	if ( found != toolMap_.end() ) {		
+	if ( found != toolMap_.end() ) {
 
 		currentTool_ = found->second;
-		
+
 		Window* window = DocumentManager::getDocumentManager()->getCurrentDocument()->getWindow();
 
 		currentTool_->attach( window );
@@ -240,7 +192,7 @@ void ToolManager::onMenuItemClicked( MenuItemEvent* e )
 	}
 	else {
 		currentTool_ = NULL;
-	}	
+	}
 }
 
 void ToolManager::onMenuItemUpdate( MenuItemEvent* e )
@@ -279,17 +231,17 @@ Shape* SelectTool::hitTest( Point& pt )
 	Enumerator<Shape*>* shapes = doc->getShapes();
 	while ( shapes->hasMoreElements() ) {
 		Shape* shape = shapes->nextElement();
-		
+
 		if ( shape->fill_ && shape->polygon_.contains( pt ) ) {
 			result = shape;
 			break;
 		}
 		else if ( shape->polygon_.intersects( pt ) ) {
-			
+
 			result = shape;
 			break;
 		}
-		
+
 	}
 
 	return result;
@@ -302,12 +254,12 @@ void SelectTool::onMouseDown( VCF::MouseEvent* e )
 		Shape* shape =  hitTest( *e->getPoint() );
 		if ( shape ) {
 			doc->setSelectedShape( shape );
-			dragPoint_ = *e->getPoint(); 
+			dragPoint_ = *e->getPoint();
 			startDragPoint_ = dragPoint_;
 
 		}
 		else {
-			doc->setSelectedShape( NULL );	
+			doc->setSelectedShape( NULL );
 		}
 	}
 }
@@ -317,10 +269,10 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 	if ( e->hasLeftButton() ) {
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 		Shape* shape = doc->getSelectedShape();
-		
+
 
 		if ( NULL != shape ) {
-			
+
 
 			Matrix2D m1;
 			m1.translate( dragPoint_.x_ - startDragPoint_.x_,
@@ -333,7 +285,7 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 			Matrix2D m2;
 			m2.translate( e->getPoint()->x_ - startDragPoint_.x_,
 							e->getPoint()->y_ - startDragPoint_.y_ );
-			
+
 			shape->polygon_.applyTransform( m2 );
 			doc->updateAllViews();
 
@@ -349,9 +301,9 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 			doc->updateAllViews();
 		}
 	}
-	
-	
-	//doc->setSelectedShape( shape );	
+
+
+	//doc->setSelectedShape( shape );
 }
 
 void SelectTool::onMouseUp( VCF::MouseEvent* e )
@@ -360,7 +312,7 @@ void SelectTool::onMouseUp( VCF::MouseEvent* e )
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 		Shape* shape = doc->getSelectedShape();
 		if ( NULL != shape ) {
-			
+
 
 			Matrix2D m1;
 			m1.translate( dragPoint_.x_ - startDragPoint_.x_,
@@ -373,24 +325,24 @@ void SelectTool::onMouseUp( VCF::MouseEvent* e )
 			Matrix2D m2;
 			m2.translate( e->getPoint()->x_ - startDragPoint_.x_,
 							e->getPoint()->y_ - startDragPoint_.y_ );
-			
+
 			shape->polygon_.applyTransform( m2 );
 
 
-			
+
 /*
 			Control* c = (Control*)e->getSource();
 			GraphicsContext* ctx = c->getContext();
 
 			BasicStroke bs;
 			ctx->setCurrentStroke( &bs );
-			
+
 			bs.setAllowAntiAlias( false );
 			bs.setColor( Color::getColor( "green" ) );
-			
+
 			ctx->draw( &shape->polygon_ );
-			
-			ctx->setCurrentStroke( NULL );			
+
+			ctx->setCurrentStroke( NULL );
 */
 			doc->updateAllViews();
 		}
@@ -399,7 +351,7 @@ void SelectTool::onMouseUp( VCF::MouseEvent* e )
 
 void SelectTool::paintState( VCF::GraphicsContext* ctx )
 {
-	
+
 	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 	//Shape* shape = doc->getSelectedShape();
 	if ( NULL != mouseOverShape_ ) {
@@ -413,7 +365,7 @@ void SelectTool::paintState( VCF::GraphicsContext* ctx )
 
 		ctx->setCurrentStroke( NULL );
 	}
-	
+
 	BasicStroke bs;
 	ctx->setCurrentStroke( &bs );
 	bs.setAllowAntiAlias( false );
@@ -421,7 +373,7 @@ void SelectTool::paintState( VCF::GraphicsContext* ctx )
 
 	Enumerator<Shape*>* shapes = doc->getSelectedShapes();
 	while ( shapes->hasMoreElements() ) {
-		Shape* shape = shapes->nextElement();		
+		Shape* shape = shapes->nextElement();
 		ctx->draw( &shape->polygon_ );
 	}
 
@@ -457,7 +409,7 @@ void LineTool::onMouseDown( VCF::MouseEvent* e )
 void LineTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		
+
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 		ctx->setColor( Color::getColor("blue") );
@@ -473,7 +425,7 @@ void LineTool::onMouseMove( VCF::MouseEvent* e )
 		ctx->strokePath();
 
 		ctx->setXORModeOn( false );
-		
+
 	}
 }
 
@@ -499,7 +451,7 @@ void LineTool::onMouseUp( VCF::MouseEvent* e )
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 		Shape shape;
 		shape.polygon_.moveTo( start_.x_, start_.y_ );
-		shape.polygon_.lineTo( end_.x_, end_.y_ );				
+		shape.polygon_.lineTo( end_.x_, end_.y_ );
 		doc->addShape( shape );
 	}
 }
@@ -527,14 +479,14 @@ double getAngleFromLine( Point p1, Point p2 )
 {
 	double result;
 
-	double a,b,c,d;	
+	double a,b,c,d;
 
-	a = fabs(p1.y_-p2.y_); 
+	a = fabs(p1.y_-p2.y_);
 	b = fabs(p1.x_-p2.x_);
 
 	c = sqrt(a*a+b*b);
 
-	
+
 
 	c = (c <= _EPSILON_) ? 0.0 : b/c;
 
@@ -554,7 +506,7 @@ double getAngleFromLine( Point p1, Point p2 )
 	}
 
 	result = 360.00 - result;
-		
+
 	return result;
 }
 
@@ -568,7 +520,7 @@ void RotateTool::onMouseDown( VCF::MouseEvent* e )
 	if ( e->hasLeftButton() ) {
 		startDragPoint_ = dragPoint_ = *e->getPoint();
 		startAngle_ = getAngleFromLine( dragPoint_, startDragPoint_ );
-		
+
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		Shape* shape = doc->getSelectedShape();
@@ -587,22 +539,22 @@ void RotateTool::rotateShape( Shape* shape, Point pt )
 {
 	Matrix2D m1;
 	m1.translate( -origin_.x_, -origin_.y_ );
-	
+
 	shape->polygon_.applyTransform( m1 );
-	
-	double angle = getAngleFromLine( pt, startDragPoint_ ) - getAngleFromLine( dragPoint_, startDragPoint_ ) ;		
+
+	double angle = getAngleFromLine( pt, startDragPoint_ ) - getAngleFromLine( dragPoint_, startDragPoint_ ) ;
 	Matrix2D m2;
-	m2.rotate( angle );//				
-	
+	m2.rotate( angle );//
+
 	m1.translate( origin_.x_, origin_.y_ );
-	
+
 	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
 }
 
 void RotateTool::onMouseMove( VCF::MouseEvent* e )
 {
-	
-	if ( e->hasLeftButton() ) {		
+
+	if ( e->hasLeftButton() ) {
 
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 		Shape* shape = doc->getSelectedShape();
@@ -620,7 +572,7 @@ void RotateTool::onMouseMove( VCF::MouseEvent* e )
 }
 
 void RotateTool::onMouseUp( VCF::MouseEvent* e )
-{	
+{
 	if ( e->hasLeftButton() ) {
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 		Shape* shape = doc->getSelectedShape();
@@ -646,8 +598,8 @@ void ScaleTool::onMouseDown( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
 		startDragPoint_ = dragPoint_ = *e->getPoint();
-		
-		
+
+
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		Shape* shape = doc->getSelectedShape();
@@ -665,9 +617,9 @@ void ScaleTool::scaleShape( Shape* shape, VCF::Point pt )
 {
 	Matrix2D m1;
 	m1.translate( -origin_.x_, -origin_.y_ );
-	
+
 	shape->polygon_.applyTransform( m1 );
-	
+
 	double dx = pt.x_ - origin_.x_;
 	double dy = pt.y_ - origin_.y_;
 	double t  = bounds_.getWidth() - (dx) /2.0;
@@ -683,13 +635,13 @@ void ScaleTool::scaleShape( Shape* shape, VCF::Point pt )
 
 	double sy = bounds_.getHeight() / t;
 
-		
+
 	Matrix2D m2;
 	m2.scale( sx,sy );
-	
+
 	m1.translate( origin_.x_, origin_.y_ );
-	
-	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );	
+
+	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
 }
 
 void ScaleTool::onMouseMove( VCF::MouseEvent* e )
@@ -726,7 +678,7 @@ void SkewTool::onMouseDown( VCF::MouseEvent* e )
 	if ( e->hasLeftButton() ) {
 		startDragPoint_ = dragPoint_ = *e->getPoint();
 		startAngle_ = getAngleFromLine( dragPoint_, startDragPoint_ );
-		
+
 		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		Shape* shape = doc->getSelectedShape();
@@ -804,15 +756,15 @@ void SkewTool::skewShape( Shape* shape, VCF::Point pt )
 
 	Matrix2D m1;
 	m1.translate( -origin_.x_, -origin_.y_ );
-	
-	shape->polygon_.applyTransform( m1 );	
-	
+
+	shape->polygon_.applyTransform( m1 );
+
 	Matrix2D m2;
 	m2.shear( skx, sky );
-	
+
 	m1.translate( origin_.x_, origin_.y_ );
-	
-	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );	
+
+	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
 }
 
 
@@ -828,7 +780,7 @@ void RectangleTool::onMouseDown( VCF::MouseEvent* e )
 		ctx->setColor( Color::getColor("blue") );
 		ctx->setXORModeOn( true );
 
-		
+
 		ctx->rectangle( &Rect(start_.x_,start_.y_,end_.x_,end_.y_) );
 		ctx->strokePath();
 
@@ -844,7 +796,7 @@ void RectangleTool::onMouseMove( VCF::MouseEvent* e )
 
 		ctx->setColor( Color::getColor("blue") );
 		ctx->setXORModeOn( true );
-		
+
 		Rect r(start_.x_,start_.y_,end_.x_,end_.y_);
 		r.normalize();
 
@@ -871,7 +823,7 @@ void RectangleTool::onMouseUp( VCF::MouseEvent* e )
 
 		ctx->setColor( Color::getColor("blue") );
 		ctx->setXORModeOn( true );
-		
+
 		Rect r(start_.x_,start_.y_,end_.x_,end_.y_);
 		r.normalize();
 
@@ -922,11 +874,11 @@ void CurveTool::drawCurve( VCF::GraphicsContext* ctx )
 	r.inflate( 2, 2 );
 
 	ctx->rectangle( &r );
-	ctx->fillPath();	
+	ctx->fillPath();
 
 	ctx->setXORModeOn( true );
 
-	ctx->circle( end_, 2 );	
+	ctx->circle( end_, 2 );
 
 	ctx->moveTo( end_ );
 	ctx->lineTo( segment_.pt2 );
@@ -945,18 +897,18 @@ void CurveTool::drawCurve( VCF::GraphicsContext* ctx )
 		ctx->moveTo( segment_.pt1 );
 		ctx->lineTo( segment_.ctrl1 );
 
-		ctx->circle( segment_.ctrl1, 2 );		
+		ctx->circle( segment_.ctrl1, 2 );
 //	}
 
 	ctx->strokePath();
 
 
-}	
+}
 
 void CurveTool::onMouseDown( VCF::MouseEvent* e )
 {
 	StringUtils::traceWithArgs( "CurveTool::onMouseDown, state: %d\n", state_ );
-	if ( e->hasLeftButton() ) {		
+	if ( e->hasLeftButton() ) {
 
 		switch ( state_ ) {
 			case CurveTool::sFirstPoint : {
@@ -988,21 +940,21 @@ void CurveTool::onMouseDown( VCF::MouseEvent* e )
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
-		
+
 
 		drawCurve( ctx );
 
-		
+
 
 		paintSegments( ctx );
 
-		
 
-		
-		
+
+
+
 
 		state_ = CurveTool::sNextPoint;
-		
+
 	}
 }
 
@@ -1011,18 +963,18 @@ void CurveTool::onMouseMove( VCF::MouseEvent* e )
 	if ( e->hasLeftButton() ) {
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
-		
-		paintSegments( ctx );
-		
 
-		
+		paintSegments( ctx );
+
+
+
 		drawCurve( ctx );
 
 		end_ = *e->getPoint();
 
 		switch ( state_ ) {
 			case CurveTool::sFirstPoint : {
-				
+
 			}
 			break;
 
@@ -1031,15 +983,15 @@ void CurveTool::onMouseMove( VCF::MouseEvent* e )
 				segment_.ctrl2.y_ = start_.y_  - (end_.y_ - start_.y_);
 
 
-				
+
 			}
 			break;
-		}		
+		}
 
-		
+
 		drawCurve( ctx );
 
-		
+
 	}
 }
 
@@ -1049,30 +1001,30 @@ void CurveTool::onMouseUp( VCF::MouseEvent* e )
 
 	if ( e->hasLeftButton() ) {
 		Control* c = (Control*)e->getSource();
-		GraphicsContext* ctx = c->getContext();		
-		
+		GraphicsContext* ctx = c->getContext();
+
 		drawCurve( ctx );
 
-		end_ = *e->getPoint();		
-		
+		end_ = *e->getPoint();
+
 		if ( (!segments_.empty()) && ( CurveTool::sNextPoint == state_) ) {
 			segment_.ctrl2.x_ = start_.x_  - (end_.x_ - start_.x_);
 			segment_.ctrl2.y_ = start_.y_  - (end_.y_ - start_.y_);
 		}
-				
+
 		drawCurve( ctx );
-		
+
 		segments_.push_back( segment_ );
 
 		paintSegments( ctx );
 	}
-	
+
 }
 
 void CurveTool::finishCurve()
 {
 	state_ = CurveTool::sFirstPoint;
-	
+
 
 	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
 	Shape shape;
@@ -1109,11 +1061,11 @@ void CurveTool::paintState( VCF::GraphicsContext* ctx )
 
 void CurveTool::paintSegments( VCF::GraphicsContext* ctx )
 {
-	
+
 	std::vector<Segment>::iterator it = segments_.begin();
 	while ( it != segments_.end() ) {
 		Segment& segment = *it;
-		
+
 		if ( segment != segment_ ) {
 			ctx->curve( segment.pt1.x_, segment.pt1.y_,
 							segment.ctrl1.x_, segment.ctrl1.y_,
@@ -1158,10 +1110,10 @@ void ImageTool::onMouseDown( VCF::MouseEvent* e )
 		CommonFileOpen openDlg;
 		if ( openDlg.execute() ) {
 			FilePath fp = openDlg.getFileName();
-			
+
 			Image* img = GraphicsToolkit::createImage( fp );
 
-	
+
 			if ( NULL != img ) {
 				Rect imageRect;
 				imageRect.setRect( e->getPoint()->x_, e->getPoint()->y_,
@@ -1174,9 +1126,9 @@ void ImageTool::onMouseDown( VCF::MouseEvent* e )
 				shape.polygon_.rectangle( imageRect );
 				shape.image_ = img;
 				shape.image_->getImageBits()->attachRenderBuffer( img->getWidth(), img->getHeight() );
-				doc->addShape( shape );			
+				doc->addShape( shape );
 			}
-			
+
 		}
 	}
 }
@@ -1193,8 +1145,72 @@ void ImageTool::onMouseUp( VCF::MouseEvent* e )
 
 void ImageTool::paintState( VCF::GraphicsContext* ctx )
 {
-	
+
 }
 
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:47:37  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.6.4  2004/04/29 03:40:56  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*Revision 1.2.6.1  2004/04/28 00:27:41  ddiego
+*migration towards new directory structure
+*
+*Revision 1.2  2003/08/09 02:56:42  ddiego
+*merge over from the devmain-0-6-1 branch
+*Changes
+*Features:
+*-Added additional implementation to better support the MVC architecture in
+*the VCF
+*
+*-Added a Document/View architecure that is similar to MFC's or NextSteps's
+*Doc/View architectures
+*
+*-Integrated the Anti Grain Graphics library into the GraphicsKit. There is
+*now basic support for it in terms of drawing vector shapes
+*(fills and strokes). Image support will come in the next release
+*
+*-Added several documented graphics tutorials
+*
+*Bugfixes:
+*
+*[ 775744 ] wrong buttons on a dialog
+*[ 585239 ] Painting weirdness in a modal dialog ?
+*[ 585238 ] Modal dialog which makes a modal Dialog
+*[ 509004 ] Opening a modal Dialog causes flicker
+*[ 524878 ] onDropped not called for MLTcontrol
+*
+*Plus an issue with some focus and getting the right popup window to activate
+*has also been fixed
+*
+*Revision 1.1.2.5  2003/07/28 23:49:58  ddiego
+*check in of the weekend's work from July 25
+*learned how to use agg image renedering, now have to integrate it into the
+*GraphicsKit - alos enabled setting a viewable bounds that sets the agg cliprect
+*as well, useful for later optimizations
+*
+*Revision 1.1.2.4  2003/07/24 04:10:43  ddiego
+*added fixes for the following tasks:
+*Task #82279 ApplicationKit: add static methods to singleton objects
+*Task #82277 FoundationKit: add static methods to singleton objects
+*this required a bunch of changes in terms of getting rid of older style code
+*
+*Revision 1.1.2.3  2003/07/21 03:08:29  ddiego
+*added bezier curve editing to Sketchit, fixed a bug in not saving
+*bitmaps, added PackageInfo to the ApplicationKit
+*
+*Revision 1.1.2.2  2003/07/18 04:38:54  ddiego
+*got more work done on the sketch examples plus fixed a bug in the application
+*of a transform ot a path
+*
+*Revision 1.1.2.1  2003/07/17 03:02:46  ddiego
+*added sketch example
+*
+*/
 
 

@@ -26,11 +26,11 @@ Name: {app}\VC6-Addins; Components: VC_Addins
 
 
 Source: ..\..\build\vc60\add-ins\COMToVCFClassWizard\Release\COMToVCFClassWizard.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins; Flags: regserver
-Source: ..\..\build\vc60\add-ins\VCFAppWiz\Release\vcfwizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
-Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
-Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
+Source: ..\..\build\vc60\add-ins\VCFAppWiz\Release\vcfwizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins; Flags: regserver
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
+Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
 
 Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
 Source: ..\..\docs\VCFDocs.0.6.4.chm; DestDir: {app}\docs; Components: Help_Files

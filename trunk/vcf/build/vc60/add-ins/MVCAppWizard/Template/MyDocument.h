@@ -2,7 +2,7 @@
 #ifndef _$$ROOT$$DOCUMENT_H__
 #define _$$ROOT$$DOCUMENT_H__
 
-#include "ModelViewKit.h"
+#include "vcf/ApplicationKit/ModelViewKit.h"
 
 #define $$ROOT$$DOCUMENT_CLASSID		"$$DOCUUID$$"
 

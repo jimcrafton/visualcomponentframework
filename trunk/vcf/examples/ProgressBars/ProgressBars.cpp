@@ -1,8 +1,14 @@
 //ProgressBars.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 using namespace VCF;
 
@@ -34,7 +40,7 @@ public:
 		ProgressControl* progressVert_ = new ProgressControl();
 		progressVert_->setDisplayAlignment( ProgressControl::paVertical );
 
-		progressVert_->setBounds( 20, progressHorz_->getBottom() + 40, 
+		progressVert_->setBounds( 20, progressHorz_->getBottom() + 40,
 									progressVert_->getPreferredWidth()+30, 250 );
 
 		progressVert_->setPosition( 65 );
@@ -42,7 +48,7 @@ public:
 		add( progressVert_ );
 
 		progressVert_->setDisplayProgressText( true );
-		
+
 
 
 
@@ -50,16 +56,16 @@ public:
 		ProgressControl* progressVert2 = new ProgressControl();
 		progressVert2->setDisplayAlignment( ProgressControl::paVertical );
 
-		progressVert2->setBounds( progressVert_->getRight() + 10, 
-									progressVert_->getTop(), 
+		progressVert2->setBounds( progressVert_->getRight() + 10,
+									progressVert_->getTop(),
 									progressVert2->getPreferredWidth(), 250 );
 
 		progressVert2->setPosition( 12 );
 		progressVert2->setAnchor( AnchorTop | AnchorBottom );
 		add( progressVert2 );
 
-		progressVert2->setStepItIncrement( 5 );	
-		
+		progressVert2->setStepItIncrement( 5 );
+
 		progressVert2->setProgressBarColor( Color::getColor("gold") );
 
 
@@ -102,11 +108,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ProgressBarsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -118,8 +124,20 @@ int main(int argc, char *argv[])
 	Application* app = new ProgressBarsApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:33  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:55  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

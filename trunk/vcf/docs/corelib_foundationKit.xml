@@ -352,9 +352,9 @@ while ( properties->hasMoreElements() ) {
 <para>
 To accomplish this in the VCF we have three main players: the source, or 
 object that fires the event, the event, which is itself represented by 
-an object, and the observer, or the object that wishes to receive some 
-notification when the event occurs and have that notification call a method 
-on the observer object. Each of these objects has to have certain 
+an object, and the observer ( also called listener ), or the object that wishes 
+to receive some notification when the event occurs and have that notification 
+call a method on the observer object. Each of these objects has to have certain 
 responsibilities as described in the table below.
 <table frame="none" pgwide="1">
 	<tgroup cols="2" align="left" colsep="1" rowsep="1">
@@ -705,6 +705,12 @@ int main( int argc, char** argv )
 <!-- 
 CVS Log info
 $Log$
+Revision 1.3  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.2.4.1  2004/07/03 05:03:07  marcelloptr
+minor change
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

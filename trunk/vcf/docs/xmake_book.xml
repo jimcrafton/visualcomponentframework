@@ -26,6 +26,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.3  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.2.4.1  2004/06/06 07:54:14  marcelloptr
+changed macros, text reformatting, copyright sections
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 
@@ -624,7 +630,7 @@ An example looks something like this:
 	<flags>
 		<flag value="/I $(INC)"/>
 		<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od"/>
-		<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FRAMEWORK_DLL /D FRAMEWORK_EXPORTS"/>
+		<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FOUNDATIONKIT_DLL /D FOUNDATIONKIT_EXPORTS"/>
 		<flag value="/c"/>
 	</flags>
 </compiler >

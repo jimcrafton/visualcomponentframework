@@ -1,5 +1,5 @@
 //QTPlayerApplication.h
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 #include "QTPlayerApplication.h"
 #include "MainWindow.h"
 
@@ -30,12 +30,14 @@ bool QTPlayerApplication::initRunningApplication(){
 	// Initialize QuickTime
 	EnterMovies();
 
+	setName( L"QuickTime Media Player" );
+
 	m_mainQTWindow = new MainQTWindow();
 	
 	setMainWindow(m_mainQTWindow);
-	m_mainQTWindow->setBounds( &VCF::Rect( 100.0, 100.0, 500.0, 500.0 ) );
+	m_mainQTWindow->setBounds( 100.0, 100.0, 700.0, 500.0 );
 	m_mainQTWindow->setVisible( true );
-	m_mainQTWindow->setCaption( "QuickTime Media Player" );
+	m_mainQTWindow->setCaption( getName() );
 	
 	return result;
 }

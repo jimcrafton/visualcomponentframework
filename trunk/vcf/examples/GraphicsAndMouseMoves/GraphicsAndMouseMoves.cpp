@@ -1,14 +1,20 @@
 //GraphicsAndMouseMoves.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
 
 
 using namespace VCF;
 
 /**
 This example will discuss using the graphics
-API's in various mouse events, such as drawing a 
+API's in various mouse events, such as drawing a
 selection rect
 
 */
@@ -17,8 +23,8 @@ class GraphicsAndMouseMovesWindow : public Window {
 public:
 	GraphicsAndMouseMovesWindow() {
 		setCaption( "GraphicsAndMouseMoves" );
-		
-		
+
+
 	}
 
 	virtual ~GraphicsAndMouseMovesWindow(){};
@@ -65,8 +71,8 @@ public:
 			GraphicsContext* ctx = getContext();
 
 			/**
-			turn the GraphicsContext's XOR mode on. This allows for the 
-			rubber banding effect. 
+			turn the GraphicsContext's XOR mode on. This allows for the
+			rubber banding effect.
 			*/
 			ctx->setXORModeOn( true );
 
@@ -90,7 +96,7 @@ public:
 			ctx->setXORModeOn( true );
 
 			/**
-			Draw the rectangle again - this will erase the previous 
+			Draw the rectangle again - this will erase the previous
 			rectangle since we are in XOR drawing mode.
 			*/
 			ctx->rectangle( &dragRect_ );
@@ -139,8 +145,8 @@ public:
 			dragRect_.bottom_ = pt.y_;
 
 			/**
-			Draw the rectangle *twice* this time - this is to 
-			draw it at the new coordinates, and then draw it 
+			Draw the rectangle *twice* this time - this is to
+			draw it at the new coordinates, and then draw it
 			again to erase the shape.
 			*/
 			ctx->rectangle( &dragRect_ );
@@ -168,12 +174,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new GraphicsAndMouseMovesWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -185,7 +191,20 @@ int main(int argc, char *argv[])
 	Application* app = new GraphicsAndMouseMovesApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.5  2004/08/07 02:47:03  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.4.2.4  2004/04/29 03:40:53  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
+
 

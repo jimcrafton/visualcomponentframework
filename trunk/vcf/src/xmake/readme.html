@@ -1,0 +1,58 @@
+<html>
+<body>
+<p>
+This short set of instructions shows you how to build and setup 
+xmake for usage on unix or Win32 systems.
+</p>
+<p>
+<h3>Unix/Linux based systems</h3>
+<p>Building
+<ul>
+ <li> unpack the xmake-XXXX.tar.gz file somewhere
+ <li> <code>cd xmake-XXX</code>
+ <li> <code>make</code><br>
+ this will build the xmake static lib and the xmake executable
+ </ul>
+
+<p>Installing
+<ul>
+ <li> <code>make install</code><br>
+  this will install the xmake in <code>/usr/local/bin</code> - if you need it to 
+ go somewhere else open the Makefile and change the <code>INSTALLDIR</code> variable
+ to something more appropriate
+</ul>
+
+<p>Documentation
+<ul>
+ <li> <code>make docs</code> <br>
+ this will generate the docbook based documentation. It will generate
+ html docs and HTML Help project files in the xmake-XXX/docs directory.
+</ul>
+
+<h3>Win32 using Visual Studio</h3>
+<p>Building
+<ul>
+ <li> unpack the xmake-XXXX.tar.gz file somewhere 
+ <li> open the xmake.dsw workspace in Visual C++ 6.0 (sp5) and
+ build the xmake project.
+ </ul>
+
+<p>Installing
+<ul>
+ <li> copy the xmake executable to wherever is most convenient for you and
+ can be seen by your <code>PATH</code>.
+</ul>
+
+<p>Documentation
+<ul>
+ <li> documentation comes with the distro, see xmake-XXX/docs/xmake_docs.chm.
+</ul>
+
+<p>
+For more information about xmake (or the Visual Component Framework of which 
+it is a part) please see 
+<a href="http://vcf.sf.net" target="_blank">http://vcf.sf.net</a> and/or 
+<a href="http://sf.net/projects/vcf"  target="_blank">http://sf.net/projects/vcf</a>.
+
+</body>
+</html>

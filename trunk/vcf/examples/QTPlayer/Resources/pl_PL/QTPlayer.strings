@@ -1,0 +1,23 @@
+/*
+Polish language strings
+*/
+"&File" = "&Plik" /*Akta???*/
+"&Open..." = "&Otw\U00F3rz..."
+"Open" = "Otw\U00F3rz"
+"&View" = "&Zobacz"
+"&Edit" = "&Zredaguj"
+"&Play" = "&W\U0142\U0105cz"
+"Play" = "W\U0142\U0105cz"
+"&Pause" = "P&auza"
+"Pause" = "Pauza"
+"&Stop" = "&Zatrzynaj"
+"Stop" = "Zatrzynaj"
+"E&xit" = "Wyj\U015bcie"
+"&Movie" = "&Kino"
+"&Normal" = "&Normalny"
+"&Help" = "&Pom\U00F3\U017C"
+"About..." = "Informacje o..."
+"About QuickTime Player." = "Informacje o QuickTime Player."
+"About QuickTime Player" = "Informacje o QuickTime Player"
+"Media Info" = "Informacje medialne"
+"Copyright" = "Prawa autorskie"

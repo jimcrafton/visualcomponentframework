@@ -1,8 +1,14 @@
 //TreeListControls.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 
 using namespace VCF;
@@ -63,23 +69,23 @@ public:
 	}
 
 	void setFullRowSelect( MenuItemEvent* e ) {
-		
-		treeList->setDisplayOptions( TreeListControl::tdoShowHierarchyLines | 
-										TreeListControl::tdoShowFullRowSelection | 
-										TreeListControl::tdoShowColumnHeader ); 
+
+		treeList->setDisplayOptions( TreeListControl::tdoShowHierarchyLines |
+										TreeListControl::tdoShowFullRowSelection |
+										TreeListControl::tdoShowColumnHeader );
 
 
 	}
 
 	void setFullRowSelectOff( MenuItemEvent* e ) {
-		
-		treeList->showFullRowSelection( false ); 
+
+		treeList->showFullRowSelection( false );
 
 	}
 
 	void doList( TreeItem* item ) {
 		TreeItem* next = NULL;
-		
+
 		next = item->getChildren()->nextElement();
 
 		while ( next ) {
@@ -100,29 +106,29 @@ public:
 		MenuItem* root = menuBar->getRootMenuItem();
 		MenuItem* test = new DefaultMenuItem( "Test", root, menuBar );
 		MenuItem* menuItem = new DefaultMenuItem( "Remove Selected Item", test, menuBar );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::removeSelectedItem, "TreeListControlsWindow::removeSelectedItem" ) );
 
 
 		menuItem = new DefaultMenuItem( "Set Multi select", test, menuBar );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::setMultiSelection, "TreeListControlsWindow::setMultiSelection" ) );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection", test, menuBar );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::setFullRowSelect, "TreeListControlsWindow::setFullRowSelect" ) );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection Off", test, menuBar );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::setFullRowSelectOff, "TreeListControlsWindow::setFullRowSelectOff" ) );
 
 		menuItem = new DefaultMenuItem( "Change Caption", test, menuBar );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" ) );
-		
-		
+
+
 		ImageList* listIL = new ImageList();
 		Image* img = Application::getRunningInstance()->getResourceBundle()->getImage( "MainIcon" );
 		listIL->setImageHeight( img->getHeight() );
@@ -131,12 +137,12 @@ public:
 
 		listIL->addImage( img );
 		delete img;
-		
+
 
 		img = Application::getRunningInstance()->getResourceBundle()->getImage( "Open" );
 		listIL->addImage( img );
 		delete img;
-		
+
 		img = Application::getRunningInstance()->getResourceBundle()->getImage( "img3" );
 		listIL->addImage( img );
 		delete img;
@@ -159,7 +165,7 @@ public:
 		root = popup->getRootMenuItem();
 
 		menuItem = new DefaultMenuItem( "Enumerate Selected items", root, popup );
-		menuItem->addMenuItemClickedHandler( 
+		menuItem->addMenuItemClickedHandler(
 			new MenuItemEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::enumerateSelectedItems, "TreeListControlsWindow::enumerateSelectedItems" ) );
 
 
@@ -183,7 +189,7 @@ public:
 		treeList->setBorder( border );
 
 		TreeItem* item = treeList->addItem( NULL, "foo 1" );
-		
+
 		TreeItem* firstItem = item;
 
 		item->setExpandedImageIndex( 1 );
@@ -201,7 +207,7 @@ public:
 		child = treeList->addItem( item, "foo 1b" );
 
 		child->addSubItem( "Sub item 1", NULL );
-		
+
 		child = treeList->addItem( item, "foo 1c" );
 		child = treeList->addItem( item, "foo 1d" );
 		child = treeList->addItem( item, "foo 1e" );
@@ -306,7 +312,7 @@ public:
 
 		panel->setHeight( 35 );
 		add( panel, AlignBottom );
-		
+
 		status = new Label();
 		panel->add( status, AlignClient );
 		status->setCaption( "status: " );
@@ -314,13 +320,13 @@ public:
 		setVisible( true );
 
 		HeaderControl* header = treeList->getHeader();
-		header->ColumnItemClicked.addHandler( 
+		header->ColumnItemClicked.addHandler(
 			new MouseEventHandler<TreeListControlsWindow>( this, TreeListControlsWindow::headerColumnClicked, "TreeListControlsWindow::headerColumnClicked" ) );
 
 	}
 
 	virtual ~TreeListControlsWindow(){
-		
+
 	};
 
 	void headerColumnClicked( MouseEvent* e ) {
@@ -344,8 +350,8 @@ public:
 	void onTreeItemState( ItemEvent* e ) {
 		TreeItem* item = (TreeItem*)e->getSource();
 		String s;
-		s = StringUtils::format( "State item: %s, state: %d", item->getCaption().c_str(), item->getState() );	
-		
+		s = StringUtils::format( "State item: %s, state: %d", item->getCaption().c_str(), item->getState() );
+
 		if ( item->getState() == Item::idsChecked ) {
 			s += ", Item is Checked!";
 		}
@@ -369,11 +375,11 @@ public:
 	virtual bool initRunningApplication(){
 		this->setAutoLoadSaveAppState( true );
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new TreeListControlsWindow();
 		setMainWindow(mainWindow);
 		//mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
@@ -385,7 +391,20 @@ int main(int argc, char *argv[])
 	Application* app = new TreeListControlsApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:41  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:58  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
+
 

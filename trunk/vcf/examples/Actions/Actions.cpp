@@ -1,8 +1,14 @@
 //Actions.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 
 using namespace VCF;
@@ -18,7 +24,7 @@ It's a good way to see how the different elements work together
 class ActionsWindow : public Window {
 public:
 	ActionsWindow() {
-		setCaption( "Actions" );		
+		setCaption( "Actions" );
 
 
 		Toolbar* tb = new Toolbar();
@@ -79,14 +85,14 @@ public:
 
 		MenuBar* menuBar = new MenuBar();
 		setMenuBar( menuBar );
-		addComponent( menuBar ); 
+		addComponent( menuBar );
 
 		MenuItem* root = menuBar->getRootMenuItem();
 
 		DefaultMenuItem* file = new DefaultMenuItem( "&File", root, menuBar );
 
 		DefaultMenuItem* fileNew = new DefaultMenuItem( "&New", file, menuBar );
-		
+
 		DefaultMenuItem* menuSep = new DefaultMenuItem( "", file, menuBar );
 		menuSep->setSeparator( true );
 
@@ -95,7 +101,7 @@ public:
 		DefaultMenuItem* fileSaveAll = new DefaultMenuItem( "Save &All", file, menuBar );
 
 		DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, menuBar );
-		
+
 		DefaultMenuItem* editUndo = new DefaultMenuItem( "&Undo", edit, menuBar );
 
 		menuSep = new DefaultMenuItem( "", edit, menuBar );
@@ -163,11 +169,13 @@ public:
 		sideBar_ = new Panel();
 		sideBar_->setColor( Color::getColor("white") );
 		sideBar_->setWidth( 100 );
+		sideBar_->setUseColorForBackground( true );
 		add( sideBar_, AlignLeft );
 
 
 		hammerBar_ = new Panel();
 		hammerBar_->setColor( Color::getColor( "gray105" ) );
+		hammerBar_->setUseColorForBackground( true );
 		hammerBar_->setHeight( 80 );
 		Label* label = new Label();
 		label->getFont()->setPointSize( 20 );
@@ -183,14 +191,14 @@ public:
 		addComponent( fileNewAction );
 		fileNewAction->addTarget(fileNew);
 		fileNewAction->addTarget(newTBitem);
-		fileNewAction->Performed += 
+		fileNewAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileNew, "ActionsWindow::onFileNew" );
 
 		Action* fileOpenAction = new Action();
 		addComponent( fileOpenAction );
 		fileOpenAction->addTarget(fileOpen);
 		fileOpenAction->addTarget(openTBitem);
-		fileOpenAction->Performed += 
+		fileOpenAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileOpen, "ActionsWindow::onFileOpen" );
 
 
@@ -198,22 +206,22 @@ public:
 		addComponent( fileSaveAction );
 		fileSaveAction->addTarget(fileSave);
 		fileSaveAction->addTarget(saveTBitem);
-		
-		fileSaveAction->Performed += 
+
+		fileSaveAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileSave, "ActionsWindow::onFileSave" );
 
-		fileSaveAction->Update += 
+		fileSaveAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateFileSave, "ActionsWindow::onUpdateFileSave" );
 
-		
+
 
 		Action* fileSaveAllAction = new Action();
 		addComponent( fileSaveAllAction );
 		fileSaveAllAction->addTarget(fileSaveAll);
 		fileSaveAllAction->addTarget(saveAllTBitem);
-		fileSaveAllAction->Performed += 
+		fileSaveAllAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileSaveAll, "ActionsWindow::onFileSaveAll" );
-		fileSaveAllAction->Update += 
+		fileSaveAllAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateFileSaveAll, "ActionsWindow::onUpdateFileSaveAll" );
 
 
@@ -221,27 +229,27 @@ public:
 		addComponent( editCopyAction );
 		editCopyAction->addTarget(editCopy);
 		editCopyAction->addTarget(copyTBitem);
-		editCopyAction->Performed += 
+		editCopyAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditCopy, "ActionsWindow::onEditCopy" );
 
 		Action* editPasteAction = new Action();
 		addComponent( editPasteAction );
 		editPasteAction->addTarget(editPaste);
 		editPasteAction->addTarget(pasteTBitem);
-		
-		editPasteAction->Performed += 
+
+		editPasteAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditPaste, "ActionsWindow::onEditPaste" );
-		editPasteAction->Update += 
+		editPasteAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateEditPaste, "ActionsWindow::onUpdateEditPaste" );
 
 		Action* editUndoAction = new Action();
 		addComponent( editUndoAction );
 		editUndoAction->addTarget(editUndo);
 		editUndoAction->addTarget(undoTBitem);
-		
-		editUndoAction->Performed += 
+
+		editUndoAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditUndo, "ActionsWindow::onEditUndo" );
-		editUndoAction->Update += 
+		editUndoAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateEditUndo, "ActionsWindow::onUpdateEditUndo" );
 
 
@@ -252,10 +260,10 @@ public:
 		viewSidebarAction->addTarget( viewSidebar );
 		viewSidebarAction->addTarget( sidebarTBitem );
 
-		viewSidebarAction->Performed += 
+		viewSidebarAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewSidebar, "ActionsWindow::onViewSidebar" );
 
-		viewSidebarAction->Update += 
+		viewSidebarAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateViewSidebar, "ActionsWindow::onUpdateViewSidebar" );
 
 
@@ -265,12 +273,23 @@ public:
 		viewHammerBarAction->addTarget( viewHammer );
 		viewHammerBarAction->addTarget( hammerTBitem );
 
-		viewHammerBarAction->Performed += 
+		viewHammerBarAction->Performed +=
 			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewHammerBar, "ActionsWindow::onViewHammerBar" );
 
-		viewHammerBarAction->Update += 
+		viewHammerBarAction->Update +=
 			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateViewHammerBar, "ActionsWindow::onUpdateViewHammerBar" );
 
+
+		Action* viewWindowsAction = new Action();
+		addComponent( viewWindowsAction );
+
+		viewWindowsAction->addTarget( viewWindows );
+		viewWindowsAction->addTarget( windowsTBitem );
+
+		viewWindowsAction->Performed +=
+			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewWindows, "ActionsWindow::onViewWindows" );
+
+		
 
 		canSave_ = false;
 		canPaste_ = false;
@@ -317,7 +336,7 @@ public:
 		canPaste_ = true;
 		Dialog::showMessage( "Edit Copy!" );
 	}
-	
+
 
 	void onEditPaste( Event* e ) {
 		canPaste_ = false;
@@ -333,7 +352,7 @@ public:
 	}
 
 	void onUpdateEditUndo( ActionEvent* e ) {
-		
+
 	}
 
 
@@ -368,7 +387,7 @@ public:
 
 
 	void onViewWindows( Event* e ) {
-
+		Dialog::showMessage( "Show Window List!" );
 	}
 
 };
@@ -385,12 +404,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ActionsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -405,8 +424,23 @@ int main(int argc, char *argv[])
 	Application* app = new ActionsApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:46:54  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.5  2004/06/26 15:20:49  ddiego
+*fixes example bug [ 978679 ] Missing functionality in Actions Example
+*
+*Revision 1.3.2.4  2004/04/29 03:40:47  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

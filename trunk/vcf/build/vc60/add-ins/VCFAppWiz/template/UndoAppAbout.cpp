@@ -1,6 +1,6 @@
 //$$Root$$About.h
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 #include "$$Root$$About.h"
 
 

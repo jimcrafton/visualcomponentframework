@@ -1,9 +1,15 @@
 //ImageViewer.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
-#include "graphics/EtchedBorder.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/EtchedBorder.h"
 
 using namespace VCF;
 
@@ -26,15 +32,15 @@ public:
 		addComponent( menuBar );
 
 		/**
-		create menu items, first arguemtn is the menu item name, 
-		then the parent, 
+		create menu items, first arguemtn is the menu item name,
+		then the parent,
 		then the owning menu bar
 		*/
 		MenuItem* fileMenu = new DefaultMenuItem( "File", menuBar->getRootMenuItem(), menuBar );
 		MenuItem* fileOpenImageMenu = new DefaultMenuItem( "Open Image...", fileMenu, menuBar );
 
 		//add our event handler to the menu item
-		fileOpenImageMenu->addMenuItemClickedHandler( 
+		fileOpenImageMenu->addMenuItemClickedHandler(
 			new MenuItemEventHandler<ImageViewerWindow>( this,ImageViewerWindow::openImage, "ImageViewerWindow::openImage" ) );
 
 
@@ -81,8 +87,8 @@ public:
 		std::vector< std::pair<String,String> > contentTypes;
 
 		/**
-		this will get a list of all current available types that 
-		can currently be loaded by the VCF. The list is a series 
+		this will get a list of all current available types that
+		can currently be loaded by the VCF. The list is a series
 		of std::pair objects. the std::pair.first element is a string
 		that represents the file extension, and the std::pair.second
 		represents a string that is the mime type for the extension
@@ -91,7 +97,7 @@ public:
 		std::vector< std::pair<String,String> >::iterator it = contentTypes.begin();
 
 		/*
-		For each type, add a new filter to the dialog 
+		For each type, add a new filter to the dialog
 		*/
 		while ( it != contentTypes.end() ) {
 			std::pair<String,String>& type = *it;
@@ -128,15 +134,15 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ImageViewerWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+
 		return result;
 	}
 
-	
+
 
 };
 
@@ -146,8 +152,20 @@ int main(int argc, char *argv[])
 	Application* app = new ImageViewerApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:29  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:54  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

@@ -22,6 +22,7 @@ public:
 	//END_CLASSINFO(QuickTimeMovie)
 
 	DELEGATE(MovieFrameChanged);
+	DELEGATE(MovieOpened);
 
 	typedef Rect QTRect;
 
@@ -29,6 +30,7 @@ public:
 		DefaultTimeOutVal = 5000
 	};
 
+	typedef std::pair<VCF::String,VCF::String> MovieMetaInfo;
 	
 	enum PlayState {
 		psPlaying = 0,
@@ -59,19 +61,19 @@ public:
 	bool close();
 
 	Movie getMovie() {
-		return m_qtMovie;
+		return qtMovie_;
 	}
 
 	const Movie getMovie() const {
-		return m_qtMovie;
+		return qtMovie_;
 	}
 
 	operator Movie& () {
-		return m_qtMovie;
+		return qtMovie_;
 	}
 
 	operator const Movie& () const {
-		return m_qtMovie;
+		return qtMovie_;
 	}
 
 	void movieTask( const long& timeout=QuickTimeMovie::DefaultTimeOutVal );
@@ -96,11 +98,11 @@ public:
 	void setDisplayControl( VCF::Control* displayControl );
 
 	double getAspectRatio() {
-		return m_aspectRatio;
+		return aspectRatio_;
 	}
 
 	VCF::Rect getOriginalBounds() {
-		return m_originalBounds;
+		return originalBounds_;
 	}
 
 	
@@ -120,18 +122,31 @@ public:
 
 	void nextFrame();
 	void previousFrame();
+
+	void getMovieMetaInfo( std::vector<MovieMetaInfo>& infoList );
+
+	VCF::String getTitle() const {
+		return title_;
+	}
+
+	VCF::String getFileName() const {
+		return filename_;
+	}
 protected:
-	TimeRecord m_currentTime;
-	Movie m_qtMovie;
-	VCF::Control* m_displayControl;
-	bool m_isMovieOpen;
-	VCF::String m_filename;
-	VCF::Rect m_originalBounds;
+	TimeRecord currentTime_;
+	Movie qtMovie_;
+	VCF::Control* displayControl_;
+	bool isMovieOpen_;
+	VCF::String filename_;
+	VCF::String title_;
+	VCF::Rect originalBounds_;
 	
 	PlayState playState_;
 
-	double m_aspectRatio;
+	double aspectRatio_;
 	void redrawMovie();
+
+	void setTitle();
 
 };
 

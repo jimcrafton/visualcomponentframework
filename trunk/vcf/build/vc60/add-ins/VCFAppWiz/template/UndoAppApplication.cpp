@@ -1,5 +1,5 @@
 //$$Root$$Application.h
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 #include "$$Root$$Application.h"
 #include "$$MainWindow$$.h"
 
@@ -12,8 +12,9 @@ using namespace VCF;
 
 
 
-$$Root$$Application::$$Root$$Application( int argc, char *argv[] ):
+$$Root$$Application::$$Root$$Application( int argc, char** argv ):
 	Application( argc, argv )
+
 {
 	
 }

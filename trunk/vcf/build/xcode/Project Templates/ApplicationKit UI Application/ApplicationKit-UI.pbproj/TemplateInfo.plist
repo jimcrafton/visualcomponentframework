@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This project makes a VCF ApplicationKit based application with a single Window and that links to the VCF's ApplicationKit, GraphicsKit, and FoundationKit frameworks.</string>
+	<key>FilesToMacroExpand</key>
+	<array>
+		<string>main.cpp</string>
+		<string>PROJECTNAME</string>
+		<string>Info.plist</string>
+	</array>
+	<key>FilesToRename</key>
+	<dict/>
+</dict>
+</plist>

@@ -1,24 +1,31 @@
-////WorkingWithEnumerators.cpp
+//WorkingWithEnumerators.cpp
 
-#include "FoundationKit.h"
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#include "vcf/FoundationKit/FoundationKit.h"
 
 using namespace VCF;
 
 
 /**
-This example will exaplain how to use the 
+This example will exaplain how to use the
 VCF::Enumerator class.
-An Emuerator is simply a virtual class that wraps 
+An Emuerator is simply a virtual class that wraps
 around a collection and provides a standard interface
-for iterating through the collection, without worrying 
+for iterating through the collection, without worrying
 about the specifics of the collection type.
 
-For example you might have a collection class based on a 
+For example you might have a collection class based on a
 std::vector. If you exposed the collection type directly, then
-any changes you made to would have to be reflected in all cases 
-where you iterate through the collection. However, if you 
+any changes you made to would have to be reflected in all cases
+where you iterate through the collection. However, if you
 use an Enumerator, this wraps the collection type, and you can then
-transparently change the collection type, say from a 
+transparently change the collection type, say from a
 std::vector, to a std::list, and any code using the Enumerator
 will remain unaffected.
 */
@@ -27,24 +34,24 @@ will remain unaffected.
 /**
 Our first example will show how to use an Enumerator
 as a result of making a call to a VCF class.
-We'll call the ClassRegistry, and get a list of 
+We'll call the ClassRegistry, and get a list of
 all the classes that have been registered with it.
 */
 void example1()
 {
 	/**
-	This returns you an Enumerator of classes. 
+	This returns you an Enumerator of classes.
 	The Enumerator is a template class, and in this
 	case it represents a collection of type VCF::Class
-	objects.	
+	objects.
 	*/
 	Enumerator<Class*>* classes = ClassRegistry::getClasses();
 
 	/**
 	The typical usage is in a while loop,
-	where the test condition is whether or 
+	where the test condition is whether or
 	not the Enumerator in question has any
-	more elements. This is achieved by calling 
+	more elements. This is achieved by calling
 	the Enumerator's hasMoreElements() method,
 	which will return true as long as there
 	are more elements to enumerater through.
@@ -52,12 +59,12 @@ void example1()
 
 	while ( classes->hasMoreElements() ) {
 		/**
-		To get the current element in the 
-		enumeration, call the Enumerator's 
-		nextElement() method, which will return a 
+		To get the current element in the
+		enumeration, call the Enumerator's
+		nextElement() method, which will return a
 		reference to the current element.
-		In our case the enumeration type is a 
-		Class pointer, so we'll receive a pointer 
+		In our case the enumeration type is a
+		Class pointer, so we'll receive a pointer
 		to a current VCF::Class instance.
 		*/
 		Class* clazz = classes->nextElement();
@@ -71,14 +78,14 @@ void example1()
 
 
 /**
-The next example will show how to reset the Enumerator 
+The next example will show how to reset the Enumerator
 */
-void example2() 
+void example2()
 {
 	/**
 	Get the classes enumerator
 	Whenever you call a method that returns an Enumerator,
-	it is safe to assume that the Enumerator is current 
+	it is safe to assume that the Enumerator is current
 	"rewound" to the beginning of it's collection.
 	*/
 	Enumerator<Class*>* classes = ClassRegistry::getClasses();
@@ -112,7 +119,7 @@ void example2()
 	}
 
 	/**
-	Now let's "reset" the enumerator - this will set the current item 
+	Now let's "reset" the enumerator - this will set the current item
 	in the enumerator back to the beginning.
 	*/
 
@@ -139,10 +146,10 @@ void example2()
 
 
 /**
-This example will demonstrate enumerating backwards 
+This example will demonstrate enumerating backwards
 in an enumeration. By default when you call Enumerator::reset()
-or Enumerator::hasMoreElements() the behaviour is to assume 
-that you're moving forward through the collection. 
+or Enumerator::hasMoreElements() the behaviour is to assume
+that you're moving forward through the collection.
 This will demonstrate the reverse of that
 */
 void example3()
@@ -157,7 +164,7 @@ void example3()
 
 	/**
 	Now print out the list.
-	Note that we *must* use true in our call to 
+	Note that we *must* use true in our call to
 	hasMoreElements() to match the backwards reset
 	above.
 	*/
@@ -172,14 +179,14 @@ void example3()
 		*/
 		System::println( clazz->getClassName() );
 	}
-	
+
 }
 
 /**
 Here we see an example of how to create an enumerator.
 */
 
-void example4() 
+void example4()
 {
 	/**
 	First we define a vector of strings
@@ -190,7 +197,7 @@ void example4()
 	string vector
 	*/
 	EnumeratorContainer<std::vector<String>,String> stringContainer;
-	
+
 	/**
 	The the container is initialized by passing in the string vector
 	*/
@@ -220,7 +227,7 @@ void example4()
 		*/
 		String s = stringEnum->nextElement();
 
-		
+
 		System::println( s );
 	}
 
@@ -238,17 +245,17 @@ void example4()
 		*/
 		String s = stringEnum->prevElement();
 
-		
+
 		System::println( s );
 	}
-	
+
 }
 
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-	example1();	
+	example1();
 
 	example2();
 
@@ -259,5 +266,17 @@ int main( int argc, char** argv ){
 	FoundationKit::terminate();
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2004/08/07 02:47:42  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.2.4.4  2004/04/29 03:40:58  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

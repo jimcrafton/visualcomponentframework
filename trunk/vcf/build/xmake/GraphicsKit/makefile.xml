@@ -27,7 +27,7 @@
 						<flag value="-c"/>
 						<flag value="-I $(INC)"/>
 						<flag value="-DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DGRAPHICSKIT_DLL"/>
-						<flag value="-DUSE_FRAMEWORK_DLL -DGRAPHICSKIT_EXPORTS -DBUILD_GRAPHICSKIT_LIB"/>
+						<flag value="-DUSE_FOUNDATIONKIT_DLL -DGRAPHICSKIT_EXPORTS -DBUILD_GRAPHICSKIT_LIB"/>
 					</flags>
 				</compiler>	
 
@@ -114,7 +114,7 @@
 					<flags>
 						<flag value="/I $(INC)"/>
 						<flag value="/nologo /MDd /W3 /Gm /GR /GX /ZI /Od"/>
-						<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FRAMEWORK_DLL /D FRAMEWORK_EXPORTS"/>
+						<flag value="/D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /D FOUNDATIONKIT_DLL /D FOUNDATIONKIT_EXPORTS"/>
 						<flag value="/c"/>
 					</flags>
 				</compiler>	

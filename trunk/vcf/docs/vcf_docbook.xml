@@ -55,6 +55,7 @@
 	<!ENTITY splitters SYSTEM "../examples/Splitters/Splitters.xml">
 	<!ENTITY tables SYSTEM "../examples/Tables/Tables.xml">
 	<!ENTITY visualformfiles SYSTEM "../examples/VisualFormFiles/VisualFormFiles.xml">
+	<!ENTITY mvcbasics SYSTEM "../examples/MVCBasics/MVCBasics.xml">
 	
 	
 
@@ -104,6 +105,13 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.4  2004/08/07 02:46:52  ddiego
+merged in the devmain-0-6-5 branch to stable
+
+Revision 1.3.2.1  2004/04/29 19:06:41  ddiego
+added MVC example, plus the Model::changed() method. Also
+added more documentation.
+
 Revision 1.3  2004/04/03 15:48:26  ddiego
 Merged over code from the 0-6-3 branch.
 

@@ -1,0 +1,11 @@
+/*
+Spanish localization test file
+/**
+nesting comments
+*/
+
+*/
+
+"Hello" = "Hola" /*this is Hello in spanish*/
+
+"I understand" = "Yo comprende"

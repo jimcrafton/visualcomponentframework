@@ -1,8 +1,14 @@
 //Labels.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
-#include "ApplicationKit.h"
-#include "ControlsKit.h"
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ControlsKit.h"
 
 using namespace VCF;
 
@@ -14,7 +20,7 @@ class LabelsWindow : public Window {
 public:
 	LabelsWindow() {
 		setCaption( "Labels" );
-		
+
 		setWidth( 500 );
 		setHeight( 700 );
 
@@ -33,7 +39,7 @@ public:
 		y = label1->getBottom() + 10;
 
 		/**
-		This changes the horizontal alignment - this is accomplished 
+		This changes the horizontal alignment - this is accomplished
 		by the label2->setTextAlignment( taTextRight ) call
 		which will change the alignment to right aligned text.
 		*/
@@ -47,10 +53,10 @@ public:
 		y = label2->getBottom() + 10;
 
 		/**
-		This centers the text, and gives the background color of the control a 
+		This centers the text, and gives the background color of the control a
 		red color. Again, setTextAlignment() changes the alignment, and calling
 		setColor() and passing a color instance, will change the lables color.
-		Please note: the label (and any control for that matter) maintains it's 
+		Please note: the label (and any control for that matter) maintains it's
 		own copy of a Color object - therefore it is safe to pass in temporary
 		or stack based color instances. When setting the color of a control,
 		if the control is lightweight, you need to turn ther control's transparent
@@ -70,8 +76,8 @@ public:
 
 		/**
 		This one changes the font, fairly straight forward.
-		We also change the vertical alignment. This is accomplished with 
-		a call to setVerticalAlignment(). Vertical alignment default to 
+		We also change the vertical alignment. This is accomplished with
+		a call to setVerticalAlignment(). Vertical alignment default to
 		top, and can be changed to top, center, or bottom (tvaTextTop,
 		tvaTextCenter, and tvaTextBottom, respectively)
 		*/
@@ -81,7 +87,7 @@ public:
 		add( label4 );
 		label4->setAnchor( AnchorLeft | AnchorRight );
 		label4->setTextAlignment( taTextCenter );
-		
+
 		label4->setVerticalAlignment( tvaTextCenter );
 
 		label4->setColor( Color::getColor( "gold" ) );
@@ -103,7 +109,7 @@ public:
 		add( label5 );
 		label5->setAnchor( AnchorLeft | AnchorRight );
 		label5->setTextAlignment( taTextCenter );
-		
+
 		label5->setVerticalAlignment( tvaTextBottom );
 
 		label5->setColor( Color::getColor( "gray125" ) );
@@ -119,8 +125,8 @@ public:
 		label6->setCaption( "This is a single line, DISABLED, left aligned, and vertically centered label" );
 		label6->setBounds( clientBounds.left_ + 20, y, clientBounds.getWidth()-40, label6->getPreferredHeight() );
 		add( label6 );
-		label6->setAnchor( AnchorLeft | AnchorRight );		
-		
+		label6->setAnchor( AnchorLeft | AnchorRight );
+
 		label6->setVerticalAlignment( tvaTextCenter );
 
 		label6->setEnabled( false );
@@ -129,7 +135,7 @@ public:
 
 		/**
 		This sets the label to allow for multiple lines - the change is made by calling
-		setWordWrap() - pass in true and you have a word wrapping multi line lable, 
+		setWordWrap() - pass in true and you have a word wrapping multi line lable,
 		pass in false and the behaviour reverts to displaying a single line of text
 		*/
 		Label* label7 = new Label();
@@ -137,9 +143,9 @@ public:
 		label7->setBounds( clientBounds.left_ + 20, y, clientBounds.getWidth()-40, 100 );
 		add( label7 );
 		label7->setAnchor( AnchorLeft | AnchorRight );
-		
+
 		label7->setWordWrap( true );
-		
+
 		label7->setBorder( new Light3DBorder() );
 
 
@@ -157,7 +163,7 @@ public:
 		label8->setCaption( "This next label will test using mnemonics. When you click Alt+L (the mnemonic for the label) it will set focus to it's focus control, the edit box" );
 		label8->setBounds( clientBounds.left_ + 20, y, clientBounds.getWidth()-40, 100 );
 		add( label8 );
-		label8->setAnchor( AnchorLeft | AnchorRight );				
+		label8->setAnchor( AnchorLeft | AnchorRight );
 		label8->setWordWrap( true );
 
 		label8->getFont()->setName( "Verdana" );
@@ -171,15 +177,15 @@ public:
 		Label* label9 = new Label();
 		label9->setCaption( "Text &Label:" );
 		label9->setBounds( clientBounds.left_ + 20, y, 80, label9->getPreferredHeight() );
-		add( label9 );		
-		
+		add( label9 );
+
 		label9->setVerticalAlignment( tvaTextCenter );
 
 
 		TextControl* text = new TextControl();
 
 		text->setBounds( label9->getRight() + 10, y, 200, text->getPreferredHeight() );
-		add( text ); 
+		add( text );
 		text->getTextModel()->setText( "Hello World !" );
 
 		label9->setFocusControl( text );
@@ -203,12 +209,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new LabelsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->show();
-		
-		
+
+
 		return result;
 	}
 
@@ -220,8 +226,20 @@ int main(int argc, char *argv[])
 	Application* app = new LabelsApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2004/08/07 02:47:29  ddiego
+*merged in the devmain-0-6-5 branch to stable
+*
+*Revision 1.3.2.4  2004/04/29 03:40:55  marcelloptr
+*reformatting of source files: macros and csvlog and copyright sections
+*
+*/
 
 

@@ -1,5 +1,5 @@
 //QuickTimeControl.h
-#include "ApplicationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 #include "QuickTimeControl.h"
 #include "QuickTimeMovie.h"
 
@@ -252,12 +252,12 @@ void QuickTimeControl::onTimer( VCF::Event* e )
 //QuickTimeScrubber
 
 QuickTimeScrubber::QuickTimeScrubber():
-	m_quickTimeControl(NULL),
-	m_maxRange(1.0),
-	m_minRange(0.0),
-	m_scrubbing(false)
+	quickTimeControl_(NULL),
+	maxRange_(1.0),
+	minRange_(0.0),
+	scrubbing_(false)
 {
-	memset( &m_currentPosition, 0, sizeof(m_currentPosition) );
+	memset( &currentPosition_, 0, sizeof(currentPosition_) );
 }
 
 QuickTimeScrubber::~QuickTimeScrubber()
@@ -267,9 +267,9 @@ QuickTimeScrubber::~QuickTimeScrubber()
 
 void QuickTimeScrubber::onMovieChanged( Event* movieEvent )
 {
-	m_minRange = 0.0;
-	m_maxRange = m_quickTimeControl->getMovie()->getDuration();
-	memset( &m_currentPosition, 0, sizeof(m_currentPosition) );
+	minRange_ = 0.0;
+	maxRange_ = quickTimeControl_->getMovie()->getDuration();
+	memset( &currentPosition_, 0, sizeof(currentPosition_) );
 	
 	EventHandler* movieFrameChanged = getEventHandler( "QuickTimeScrubber::onMovieFrameChanged" );
 	if ( NULL == movieFrameChanged ) {
@@ -277,7 +277,7 @@ void QuickTimeScrubber::onMovieChanged( Event* movieEvent )
 			new GenericEventHandler<QuickTimeScrubber>( this, QuickTimeScrubber::onMovieFrameChanged, "QuickTimeScrubber::onMovieFrameChanged" );
 	}
 	
-	QuickTimeMovie* movie = m_quickTimeControl->getMovie();
+	QuickTimeMovie* movie = quickTimeControl_->getMovie();
 	if ( NULL != movie ) {
 		movie->MovieFrameChanged += movieFrameChanged;
 	}
@@ -290,23 +290,23 @@ void QuickTimeScrubber::onMovieFrameChanged( Event* movieEvent )
 	QuickTimeMovie* movie = (QuickTimeMovie*) movieEvent->getSource();
 
 	TimeRecord time = movie->getCurrentTime();
-	m_currentPosition = time;
+	currentPosition_ = time;
 
 	repaint();
 }
 
 void QuickTimeScrubber::setQuickTimeControl( QuickTimeControl* control )
 {		
-	m_quickTimeControl = control;
+	quickTimeControl_ = control;
 
-	if ( NULL != m_quickTimeControl ) {
+	if ( NULL != quickTimeControl_ ) {
 		EventHandler* movieChanged = getEventHandler( "QuickTimeScrubber::onMovieChanged" );
 		if ( NULL == movieChanged ) {
 			movieChanged = 
 				new GenericEventHandler<QuickTimeScrubber>( this, QuickTimeScrubber::onMovieChanged, "QuickTimeScrubber::onMovieChanged" );
 		}		
 
-		m_quickTimeControl->MovieChanged += movieChanged;
+		quickTimeControl_->MovieChanged += movieChanged;
 	}
 	
 }
@@ -327,8 +327,8 @@ void QuickTimeScrubber::paint( VCF::GraphicsContext* ctx )
 	std::vector<VCF::Point> pts;
 	pts.resize( 3 );
 	
-	double dx = m_maxRange - m_minRange;
-	double pos = r.left_ + ((r.getWidth()/dx) * m_currentPosition.value.lo);
+	double dx = maxRange_ - minRange_;
+	double pos = r.left_ + ((r.getWidth()/dx) * currentPosition_.value.lo);
 
 	ctx->moveTo( pos, r.top_ );
 	ctx->lineTo( pos, r.bottom_ );
@@ -362,57 +362,57 @@ void QuickTimeScrubber::paint( VCF::GraphicsContext* ctx )
 
 void QuickTimeScrubber::setMaxRange( const double& val )
 {
-	m_maxRange = val;
+	maxRange_ = val;
 	repaint();
 }
 
 void QuickTimeScrubber::setMinRange( const double& val )
 {
-	m_minRange = val;
+	minRange_ = val;
 	repaint();
 }
 
 void QuickTimeScrubber::setCurrentPosition( const TimeRecord& val )
 {
-	m_currentPosition = val;
+	currentPosition_ = val;
 	repaint();
-	if ( this->m_quickTimeControl ) {
+	if ( this->quickTimeControl_ ) {
 		
-		m_quickTimeControl->getMovie()->setCurrentTime( val );
+		quickTimeControl_->getMovie()->setCurrentTime( val );
 	}
 }
 
 void QuickTimeScrubber::mouseDown( MouseEvent* event )
 {
 	CustomControl::mouseDown( event );
-	m_scrubbing = false;
+	scrubbing_ = false;
 	if ( event->hasLeftButton() ) {
 		VCF::Rect r = getClientBounds();
 		r.inflate( -5, -5 );	
-		if ( r.containsPt( event->getPoint() ) ) {
-			m_scrubbing = true;
-			keepMouseEvents();
-			m_quickTimeControl->getMovie()->pause();
+		
+		scrubbing_ = true;
+		keepMouseEvents();
+		quickTimeControl_->getMovie()->pause();
+		
+		TimeRecord time = currentPosition_;
+		time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (maxRange_-minRange_) );
+		time.value.lo = minVal<unsigned long>( time.value.lo, maxRange_ );
 
-			TimeRecord time = m_currentPosition;
-			time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (m_maxRange-m_minRange) );
-			time.value.lo = minVal<unsigned long>( time.value.lo, m_maxRange );
-
-			setCurrentPosition( time );
-		}
+		setCurrentPosition( time );
+		
 	}
 }
 
 void QuickTimeScrubber::mouseMove( MouseEvent* event )
 {
 	CustomControl::mouseMove( event );
-	if ( event->hasLeftButton() && m_scrubbing ) {
+	if ( event->hasLeftButton() && scrubbing_ ) {
 		VCF::Rect r = getClientBounds();
 		r.inflate( -5, -5 );	
 		
-		TimeRecord time = m_currentPosition;			
-		time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (m_maxRange-m_minRange) );
-		time.value.lo = minVal<unsigned long>( time.value.lo, m_maxRange );
+		TimeRecord time = currentPosition_;			
+		time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (maxRange_-minRange_) );
+		time.value.lo = minVal<unsigned long>( time.value.lo, maxRange_ );
 		setCurrentPosition( time );		
 	}
 }	
@@ -422,17 +422,17 @@ void QuickTimeScrubber::mouseUp( VCF::MouseEvent* event )
 	CustomControl::mouseUp( event );
 	
 	releaseMouseEvents();
-	if ( event->hasLeftButton() && m_scrubbing ) {
+	if ( event->hasLeftButton() && scrubbing_ ) {
 		VCF::Rect r = getClientBounds();
 		r.inflate( -5, -5 );	
 		
-		TimeRecord time = m_currentPosition;			
-		time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (m_maxRange-m_minRange) );
-		time.value.lo = minVal<unsigned long>( time.value.lo, m_maxRange );
+		TimeRecord time = currentPosition_;			
+		time.value.lo =  maxVal<unsigned long>( 0, ((event->getPoint()->x_ - r.left_) / r.getWidth()) * (maxRange_-minRange_) );
+		time.value.lo = minVal<unsigned long>( time.value.lo, maxRange_ );
 		setCurrentPosition( time );		
 	}
 
-	m_scrubbing = false;
+	scrubbing_ = false;
 }
 
 
