@@ -27,7 +27,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	MyApplication app;
+	$$Root$$Application app;
 
 	Application::appMain( argc, argv );
 	

@@ -5,6 +5,7 @@
 #include "vcfwizard.h"
 #include "vcfwizardaw.h"
 #include <comdef.h>
+#include <atlbase.h>
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -90,6 +91,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 			IConfiguration* pConfig = NULL;
 			long t = i+1;
 			_variant_t index = t;
+			CComBSTR configName;		
 			const int debug = 1;
 			const int release = 2;
 			if ( SUCCEEDED(pConfigs->Item( index, &pConfig )) ){
@@ -100,12 +102,20 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "cl.exe";
 				_bstr_t setting = "";				
 				
-				
+				pConfig->get_Name( (BSTR*)&configName );
+
+				CString s = configName;
+				if ( s.Find( "Release" ) != -1 ){
+					t = 2;
+				}
+				else if ( s.Find( "Debug" ) != -1 ){
+					t = 1;
+				}
 				
 				switch ( t ){
 					case debug: {
 						setting = "/GR /MDd /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events "\
+							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
 								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
 					}
@@ -113,7 +123,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 
 					case release: {
 						setting = "/GR /MD /DNO_MFC /I$(VCF_INCLUDE)\\core /I$(VCF_INCLUDE)\\exceptions "\
-							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events "\
+							      "/I$(VCF_INCLUDE)\\dragdrop /I$(VCF_INCLUDE)\\events /I$(VCF_INCLUDE)\\graphics "\
 								  "/I$(VCF_INCLUDE)\\implementer /I$(VCF_INCLUDE)\\implementerKit "\
 								  "/I$(VCF_INCLUDE)\\utils /I$(VCF_INCLUDE)\\io";
 					}
@@ -128,23 +138,24 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->RemoveToolSettings( tool, setting, reserved );
 
 				setting = "/D_WINDOWS";
-				pConfig->RemoveToolSettings( tool, setting, reserved );
-
-				setting = "/D_CONSOLE";
-				pConfig->AddToolSettings( tool, setting, reserved );
+				pConfig->RemoveToolSettings( tool, setting, reserved );				
 
 				setting = "/DFRAMEWORK_DLL";
+				pConfig->AddToolSettings( tool, setting, reserved );
+				setting = "/DGRAPHICSKIT_DLL";
+				pConfig->AddToolSettings( tool, setting, reserved );
+				setting = "/DAPPKIT_DLL";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "FoundationKitDLL_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "ApplicationKitDLL_d.lib GraphicsKitDLL_d.lib FoundationKitDLL_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 
 					case release: {
-						setting = "FoundationKitDLL.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "ApplicationKitDLL.lib GraphicsKitDLL.lib FoundationKitDLL.lib rpcrt4.lib /libpath:$(VCF_LIB)";
 					}
 					break;
 				}
@@ -153,11 +164,8 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					TRACE( "failed to set linker variables\n" );
 				}
 				
-				setting = "/subsystem:windows";
-				pConfig->RemoveToolSettings( tool, setting, reserved );
-
-				setting = "/subsystem:console";
-				pConfig->AddToolSettings( tool, setting, reserved );
+				setting = "/subsystem:windows /entry:\"mainCRTStartup\"";
+				pConfig->AddToolSettings( tool, setting, reserved );				
 
 				pConfig->Release();
 			}
