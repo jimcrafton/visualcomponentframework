@@ -144,7 +144,7 @@ public:
 	*/
 	void setCommandType( const ButtonCommandType& commandType );
 protected:
-	std::string caption_;
+	String caption_;
 	long BtnImageIndex_;
 	ImageList* imageList_;
 	bool autoSizeForCaption_;
@@ -177,6 +177,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/09/15 02:39:20  ddiego
+*fixed a bug in the declaration of the caption member variable that was incorrectly declared as a std::string when it should have been a String. This causing bad display character to show up. Many, many, many thanks to Duff(Eddie) for tracking this down! Also many thanks to Marcello for catching and fixing this in the current dev branch.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
