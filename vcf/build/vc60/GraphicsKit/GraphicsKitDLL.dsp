@@ -265,6 +265,10 @@ SOURCE=..\..\..\include\graphics\PathEnumerator.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PixelBuffer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Polygon.h
 # End Source File
 # Begin Source File
