@@ -93,6 +93,72 @@ Package=<4>
 
 ###############################################################################
 
+Project: "NetworkKit"=.\NetworkKit\NetworkKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NetworkKitDLL"=.\NetworkKit\NetworkKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKit"=.\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKitStatic"=.\REMOTEOBJECTKIT\RemoteObjectKitStatic.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "testApp"=.\testApp\testApp.dsp - Package Owner=<4>
 
 Package=<5>
@@ -122,6 +188,12 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name GraphicsKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKit
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -142,6 +214,12 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name GraphicsKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKitStatic
     End Project Dependency
 }}}
 
