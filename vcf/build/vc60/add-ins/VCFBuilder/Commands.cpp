@@ -5,7 +5,7 @@
 #include "VCFBuilder.h"
 #include "Commands.h"
 #include "DevStudioMainWnd.h"
-#include "VCFBuilderHostView.h"
+//#include "VCFBuilderHostView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -203,10 +203,12 @@ STDMETHODIMP CCommands::OpenProject()
 STDMETHODIMP CCommands::NewProject()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState())
+	/*
 	VCFBuilderHostView* vcfBuilderHost = CDevStudioMainWnd::globalDevStudioMainWnd->GetVCFBuilderHost();
 	if ( NULL != vcfBuilderHost ) 	{
 		vcfBuilderHost->newProject();
 	}
+	*/
 
 	return S_OK;
 }

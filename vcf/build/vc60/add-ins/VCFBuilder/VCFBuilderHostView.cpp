@@ -9,17 +9,14 @@
 
 
 
-
-
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
 
-using namespace VCF;
-using namespace VCFBuilder;
+//using namespace VCF;
+//using namespace VCFBuilder;
 
 
 
@@ -97,13 +94,14 @@ int VCFBuilderHostView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
+	/*
 	VCFBuilderUIApplication::getVCFBuilderUI()->initMainWindow();
 	m_vcfBuilderUIPanel = VCFBuilderUIApplication::getVCFBuilderUI()->getMainUIPanel();
 
 	HWND hWnd = (HWND)m_vcfBuilderUIPanel->getPeer()->getHandleID();
 
 	::SetParent( hWnd, this->m_hWnd );
-
+	*/
 
 	//Control* c = NULL;
 	
@@ -113,14 +111,17 @@ int VCFBuilderHostView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void VCFBuilderHostView::OnSize(UINT nType, int cx, int cy) 
 {
 	CView::OnSize(nType, cx, cy);
-	
+	/*
 	if ( NULL != m_vcfBuilderUIPanel )	{
 		m_vcfBuilderUIPanel->setBounds( &Rect(0,0,cx,cy) );
 	}
+	*/
 }
 void VCFBuilderHostView::newProject()
 {
+	/*
 	if ( NULL != m_vcfBuilderUIPanel )	{
 		m_vcfBuilderUIPanel->newProject( NULL );
 	}
+	*/
 }

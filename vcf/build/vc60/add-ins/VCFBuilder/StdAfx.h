@@ -36,10 +36,11 @@ extern CComModule _Module;
 #include <comdef.h>
 
 //VCF Stuff
+/*
 #include "ApplicationKit.h"
 #include "VCFBuilderUI.h"
 #include "MainUIPanel.h"
-
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 // Debugging support
