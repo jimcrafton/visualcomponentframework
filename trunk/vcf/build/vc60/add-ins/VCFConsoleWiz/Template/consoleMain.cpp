@@ -8,6 +8,9 @@ int main( int argc, char** argv ){
 
 	initFoundationKit();
 
+	
+
+	terminateFoundationKit();
 	return 0;
 }
 
