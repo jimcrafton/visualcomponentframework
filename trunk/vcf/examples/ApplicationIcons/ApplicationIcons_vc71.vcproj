@@ -152,6 +152,9 @@
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
+				RelativePath="app.ico">
+			</File>
+			<File
 				RelativePath="icon1.bmp">
 			</File>
 			<File

@@ -53,6 +53,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyAndPaste", "..\..\examp
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateBundle", "..\..\src\createbundle\CreateBundle_vc71.vcproj", "{974c4998-4d5a-4da5-a272-9e5558b81d92}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTimeUI", "..\..\examples\DateTimeUI\DateTimeUI_vc71.vcproj", "{3B156A14-57D6-4485-8818-DFD99456F391}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -142,7 +146,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", "..\..\examples\
 		{6C7214DF-8E5F-47A4-9701-79C0C41DA42F} = {6C7214DF-8E5F-47A4-9701-79C0C41DA42F}
 		{33459B8F-E879-4DB5-8F9C-92A2E7E42774} = {33459B8F-E879-4DB5-8F9C-92A2E7E42774}
 		{8B4A8445-0AB3-4C10-81AE-F8CFEA39C64E} = {8B4A8445-0AB3-4C10-81AE-F8CFEA39C64E}
-		{2f0c5f04-4383-428c-86f7-a4015753d09b} = {2f0c5f04-4383-428c-86f7-a4015753d09b}
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec} = {917d25cc-5924-40df-9bc8-0a1ce6676fec}
 		{1ec3dc66-9383-4f30-969a-7e4417d2118e} = {1ec3dc66-9383-4f30-969a-7e4417d2118e}
 		{FC9367AB-F11A-4C26-BAA2-C47F75A88035} = {FC9367AB-F11A-4C26-BAA2-C47F75A88035}
@@ -363,10 +366,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tables", "..\..\examples\Ta
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tabs", "..\..\examples\Tabs\Tabs_vc71.vcproj", "{2f0c5f04-4383-428c-86f7-a4015753d09b}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TeXLabel", "..\..\examples\TeXLabel\TeXLabel_vc71.vcproj", "{917d25cc-5924-40df-9bc8-0a1ce6676fec}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -418,6 +417,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorkingWithEnumerators", ".
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_vc71.vcproj", "{9D61D880-17B7-4E23-A951-FF8384ACBCB4}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "createinfo", "..\..\src\createinfo\createinfo_vc71.vcproj", "{9ea40cac-25a9-4fa4-8ec9-c1e3d45b0de4}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -503,6 +506,9 @@ Global
 		{7EA5507A-C49B-4F94-892E-3CA2CD0589C7}.Debug.ActiveCfg = Debug|Win32
 		{7EA5507A-C49B-4F94-892E-3CA2CD0589C7}.GTK Debug.ActiveCfg = Debug|Win32
 		{7EA5507A-C49B-4F94-892E-3CA2CD0589C7}.Release.ActiveCfg = Release|Win32
+		{974c4998-4d5a-4da5-a272-9e5558b81d92}.Debug.ActiveCfg = Debug|Win32
+		{974c4998-4d5a-4da5-a272-9e5558b81d92}.GTK Debug.ActiveCfg = Debug|Win32
+		{974c4998-4d5a-4da5-a272-9e5558b81d92}.Release.ActiveCfg = Release|Win32
 		{3B156A14-57D6-4485-8818-DFD99456F391}.Debug.ActiveCfg = Debug|Win32
 		{3B156A14-57D6-4485-8818-DFD99456F391}.GTK Debug.ActiveCfg = Debug|Win32
 		{3B156A14-57D6-4485-8818-DFD99456F391}.Release.ActiveCfg = Release|Win32
@@ -677,9 +683,6 @@ Global
 		{8B4A8445-0AB3-4C10-81AE-F8CFEA39C64E}.Debug.ActiveCfg = Debug|Win32
 		{8B4A8445-0AB3-4C10-81AE-F8CFEA39C64E}.GTK Debug.ActiveCfg = Debug|Win32
 		{8B4A8445-0AB3-4C10-81AE-F8CFEA39C64E}.Release.ActiveCfg = Release|Win32
-		{2f0c5f04-4383-428c-86f7-a4015753d09b}.Debug.ActiveCfg = Debug|Win32
-		{2f0c5f04-4383-428c-86f7-a4015753d09b}.GTK Debug.ActiveCfg = Debug|Win32
-		{2f0c5f04-4383-428c-86f7-a4015753d09b}.Release.ActiveCfg = Release|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.Debug.ActiveCfg = Debug|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.GTK Debug.ActiveCfg = Debug|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.Release.ActiveCfg = Release|Win32
@@ -719,6 +722,9 @@ Global
 		{9D61D880-17B7-4E23-A951-FF8384ACBCB4}.Debug.ActiveCfg = Debug|Win32
 		{9D61D880-17B7-4E23-A951-FF8384ACBCB4}.GTK Debug.ActiveCfg = Debug|Win32
 		{9D61D880-17B7-4E23-A951-FF8384ACBCB4}.Release.ActiveCfg = Release|Win32
+		{9ea40cac-25a9-4fa4-8ec9-c1e3d45b0de4}.Debug.ActiveCfg = Debug|Win32
+		{9ea40cac-25a9-4fa4-8ec9-c1e3d45b0de4}.GTK Debug.ActiveCfg = Debug|Win32
+		{9ea40cac-25a9-4fa4-8ec9-c1e3d45b0de4}.Release.ActiveCfg = Release|Win32
 		{33E6788C-E2AC-4136-8367-B3F40A3CFA35}.Debug.ActiveCfg = Debug|Win32
 		{33E6788C-E2AC-4136-8367-B3F40A3CFA35}.GTK Debug.ActiveCfg = GTK Debug|Win32
 		{33E6788C-E2AC-4136-8367-B3F40A3CFA35}.Release.ActiveCfg = Release|Win32
