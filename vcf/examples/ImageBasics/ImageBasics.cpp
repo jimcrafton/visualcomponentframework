@@ -182,7 +182,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ImageBasicsApplication app( argc, argv );
+	Application* app = new ImageBasicsApplication( argc, argv );
 
 	Application::main();
 	

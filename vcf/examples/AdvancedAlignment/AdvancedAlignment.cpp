@@ -445,7 +445,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	AdvancedAlignmentApplication app( argc, argv );
+	Application* app = new AdvancedAlignmentApplication( argc, argv );
 
 	Application::main();
 	

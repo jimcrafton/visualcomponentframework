@@ -204,7 +204,8 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ScrollingApplication app( argc, argv );
+	Application* app = new ScrollingApplication( argc, argv );
+
 
 	Application::main();
 	

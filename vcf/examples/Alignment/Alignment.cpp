@@ -195,7 +195,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	AlignmentApplication app( argc, argv );
+	Application* app = new AlignmentApplication( argc, argv );
 
 	Application::main();
 	

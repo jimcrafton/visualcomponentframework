@@ -41,17 +41,17 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /Fo"vc6/Release/" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /Fo"vc6/Release/" /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\..\VCFBuilder2\Bin\VCFBuilder_vc6.bsc"
+# ADD BSC32 /nologo /o"../../../../VCFBuilder2/Bin/VCFBuilder_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin/VCFBuilder_vc6.dll" /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6.dll" /libpath:"../../../../VCFBuilder2/Packages" /libpath:"$(VCF_LIB)"
 
 !ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
 
@@ -67,17 +67,17 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "..\..\..\..\VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Yu"stdafx.h" /Fd"..\..\..\..\VCFBuilder2\Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MD /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "../../../../VCFBuilder2" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPKIT_DLL" /FR"vc6/Debug/" /Fo"vc6/Debug/" /FR /Yu"stdafx.h" /Fd"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\..\VCFBuilder2\Bin\VCFBuilder_vc6_d.bsc"
+# ADD BSC32 /nologo /o"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin\VCFBuilder_vc6_d.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"../../../../VCFBuilder2/Bin/VCFBuilder_vc6_d.dll" /pdbtype:sept /libpath:"../../../../VCFBuilder2/Packages" /libpath:"$(VCF_LIB)"
 
 !ENDIF 
 
@@ -90,15 +90,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Commands.cpp
+SOURCE=./Commands.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DevStudioMainWnd.cpp
+SOURCE=./DevStudioMainWnd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DevStudioMDIClientWnd.cpp
+SOURCE=./DevStudioMDIClientWnd.cpp
 
 !IF  "$(CFG)" == "VCFBuilder - Win32 Release"
 
@@ -111,24 +111,24 @@ SOURCE=.\DevStudioMDIClientWnd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSAddIn.cpp
+SOURCE=./DSAddIn.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\SubClassWnd.cpp
+SOURCE=./SubClassWnd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilder.cpp
+SOURCE=./VCFBuilder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilder.def
+SOURCE=./VCFBuilder.def
 
 !IF  "$(CFG)" == "VCFBuilder - Win32 Release"
 
@@ -141,20 +141,20 @@ SOURCE=.\VCFBuilder.def
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilder.odl
+SOURCE=./VCFBuilder.odl
 # ADD MTL /h "VCFBuilderTypes.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilder.rc
+SOURCE=./VCFBuilder.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilderHostView.cpp
+SOURCE=./VCFBuilderHostView.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilderMDIChild.cpp
+SOURCE=./VCFBuilderMDIChild.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -162,43 +162,43 @@ SOURCE=.\VCFBuilderMDIChild.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Commands.h
+SOURCE=./Commands.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DevStudioMainWnd.h
+SOURCE=./DevStudioMainWnd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DevStudioMDIClientWnd.h
+SOURCE=./DevStudioMDIClientWnd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSAddIn.h
+SOURCE=./DSAddIn.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resource.h
+SOURCE=./Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SubClassWnd.h
+SOURCE=./SubClassWnd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilder.h
+SOURCE=./VCFBuilder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilderHostView.h
+SOURCE=./VCFBuilderHostView.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFBuilderMDIChild.h
+SOURCE=./VCFBuilderMDIChild.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -206,19 +206,19 @@ SOURCE=.\VCFBuilderMDIChild.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\icon1.ico
+SOURCE=./res/icon1.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarLrge.bmp
+SOURCE=./res/TBarLrge.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarMedm.bmp
+SOURCE=./res/TBarMedm.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\VCFBuilder.rc2
+SOURCE=./res/VCFBuilder.rc2
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -226,7 +226,7 @@ SOURCE=.\res\VCFBuilder.rc2
 # End Group
 # Begin Source File
 
-SOURCE=.\ReadMe.txt
+SOURCE=./ReadMe.txt
 # End Source File
 # End Target
 # End Project

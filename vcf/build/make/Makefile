@@ -2,6 +2,15 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.6  2004/04/03 15:47:59  ddiego
+#Merged over code from the 0-6-3 branch.
+#
+#Revision 1.5.2.2  2004/02/16 05:33:47  ddiego
+#updated linux makefiles as a result of new locale support - pushed in stubs for locale peer impl, but no functionality at this point
+#
+#Revision 1.5.2.1  2004/02/16 03:00:26  ddiego
+#*** empty log message ***
+#
 #Revision 1.5  2003/12/19 05:48:35  ddiego
 #made some adjustments in the makefiles to compile and link correctly
 #
@@ -115,7 +124,7 @@ FK_PRECOMP=$(INC)/FoundationKit.h.gch
 
 
 #toolchain definitions
-CXX_FLAGS_D=-ggdb -D VCF_GCC -DVCF_POSIX -D_DEBUG -I $(CXX_INC) -c
+CXX_FLAGS_D=-ggdb -D VCF_GCC -DVCF_POSIX -D_DEBUG -I $(CXX_INC) -Wno-multichar -c
 
 GTK_CXX_FLAGS = `pkg-config gtk+-2.0 --cflags`
 
@@ -125,7 +134,7 @@ AK_CXX_FLAGS_D=$(GK_CXX_FLAGS_D)
 
 NK_CXX_FLAGS_D=$(CXX_FLAGS_D)
 
-CXX_FLAGS=-DNDEBUG -DVCF_GCC -DVCF_POSIX -I $(CXX_INC) -Os -c
+CXX_FLAGS=-DNDEBUG -DVCF_GCC -DVCF_POSIX -I $(CXX_INC) -Wno-multichar -Os -c
 GK_CXX_FLAGS=$(GTK_CXX_FLAGS) -DVCF_GTK $(CXX_FLAGS)
 
 AK_CXX_FLAGS=$(GK_CXX_FLAGS)
@@ -158,6 +167,7 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/BasicOutputStream.o \
 	$(OUTDIR_FK_D)/Class.o \
 	$(OUTDIR_FK_D)/ClassRegistry.o \
+	$(OUTDIR_FK_D)/DateTime.o \
 	$(OUTDIR_FK_D)/Directory.o \
 	$(OUTDIR_FK_D)/ErrorLog.o \
 	$(OUTDIR_FK_D)/Event.o \
@@ -171,6 +181,9 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/Library.o \
 	$(OUTDIR_FK_D)/Locales.o \
 	$(OUTDIR_FK_D)/MemoryStream.o \
+	$(OUTDIR_FK_D)/MessageLoader.o \
+	$(OUTDIR_FK_D)/StringsMessageLoader.o \
+	$(OUTDIR_FK_D)/TextCodec.o \
 	$(OUTDIR_FK_D)/Mutex.o \
 	$(OUTDIR_FK_D)/Condition.o \
 	$(OUTDIR_FK_D)/Object.o \
@@ -188,6 +201,7 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/ThreadEvent.o \
 	$(OUTDIR_FK_D)/VariantData.o \
 	$(OUTDIR_FK_D)/VCFMath.o \
+	$(OUTDIR_FK_D)/VCFString.o \
 	$(OUTDIR_FK_D)/VCFProcess.o \
 	$(OUTDIR_FK_D)/XMLParser.o \
 	$(OUTDIR_FK_D)/CommandLine.o \
@@ -203,7 +217,8 @@ FK_OBJECT_FILES_D=$(OUTDIR_FK_D)/BasicException.o \
 	$(OUTDIR_FK_D)/LinuxSemaphorePeer.o \
 	$(OUTDIR_FK_D)/LinuxSystemPeer.o \
 	$(OUTDIR_FK_D)/LinuxSystemToolkit.o \
-	$(OUTDIR_FK_D)/LinuxProcessIORedirector.o 
+	$(OUTDIR_FK_D)/LinuxProcessIORedirector.o \
+	$(OUTDIR_FK_D)/LinuxLocalePeer.o 
 
 
 #release object files.
@@ -213,6 +228,7 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/BasicInputStream.o \
 	$(OUTDIR_FK)/BasicOutputStream.o \
 	$(OUTDIR_FK)/Class.o \
+	$(OUTDIR_FK)/DateTime.o \
 	$(OUTDIR_FK)/CommandLine.o \
 	$(OUTDIR_FK)/ClassRegistry.o \
 	$(OUTDIR_FK)/Directory.o \
@@ -228,6 +244,9 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/Library.o \
 	$(OUTDIR_FK)/Locales.o \
 	$(OUTDIR_FK)/MemoryStream.o \
+	$(OUTDIR_FK)/MessageLoader.o \
+	$(OUTDIR_FK)/StringsMessageLoader.o \
+	$(OUTDIR_FK)/TextCodec.o \
 	$(OUTDIR_FK)/Mutex.o \
 	$(OUTDIR_FK)/Condition.o \
 	$(OUTDIR_FK)/Object.o \
@@ -244,6 +263,7 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/Thread.o \
 	$(OUTDIR_FK)/ThreadEvent.o \
 	$(OUTDIR_FK)/VariantData.o \
+	$(OUTDIR_FK)/VCFString.o \
 	$(OUTDIR_FK)/VCFMath.o \
 	$(OUTDIR_FK)/VCFProcess.o \
 	$(OUTDIR_FK)/XMLParser.o \
@@ -259,7 +279,8 @@ FK_OBJECT_FILES=$(OUTDIR_FK)/BasicException.o \
 	$(OUTDIR_FK)/LinuxSemaphorePeer.o \
 	$(OUTDIR_FK)/LinuxSystemPeer.o \
 	$(OUTDIR_FK)/LinuxSystemToolkit.o \
-	$(OUTDIR_FK)/LinuxProcessIORedirector.o 
+	$(OUTDIR_FK)/LinuxProcessIORedirector.o \
+	$(OUTDIR_FK)/LinuxLocalePeer.o 
 
 
 

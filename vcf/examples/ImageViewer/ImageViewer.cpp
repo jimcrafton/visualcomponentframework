@@ -143,7 +143,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ImageViewerApplication app( argc, argv );
+	Application* app = new ImageViewerApplication( argc, argv );
 
 	Application::main();
 	

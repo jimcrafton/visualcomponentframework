@@ -1,14 +1,18 @@
 # Project: FoundationKitDLL
-# Makefile created by Dev-C++ 4.9.6.0
+# Makefile created by Dev-C++ 4.9.8.0
 
-CC   = g++.exe
+CPP  = g++.exe
+CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = ../FoundationKit/BasicException.o ../FoundationKit/BasicInputStream.o ../FoundationKit/BasicOutputStream.o ../FoundationKit/Class.o ../FoundationKit/ClassRegistry.o ../FoundationKit/Directory.o ../FoundationKit/ErrorLog.o ../FoundationKit/Event.o ../FoundationKit/EventHandler.o ../FoundationKit/File.o ../FoundationKit/FilePath.o ../FoundationKit/FileStream.o ../FoundationKit/FileUtils.o ../FoundationKit/FoundationKit.o ../FoundationKit/InterfaceClass.o ../FoundationKit/Library.o ../FoundationKit/Locales.o ../FoundationKit/MemoryStream.o ../FoundationKit/Mutex.o ../FoundationKit/Object.o ../FoundationKit/ObjectWithEvents.o ../FoundationKit/Parser.o ../FoundationKit/Point.o ../FoundationKit/ProcessWithRedirectedIO.o ../FoundationKit/PropertyChangeEvent.o ../FoundationKit/Rect.o ../FoundationKit/Registry.o ../FoundationKit/Semaphore.o ../FoundationKit/Stream.o ../FoundationKit/StringUtils.o ../FoundationKit/System.o ../FoundationKit/SystemToolkit.o ../FoundationKit/TextInputStream.o ../FoundationKit/TextOutputStream.o ../FoundationKit/Thread.o ../FoundationKit/ThreadEvent.o ../FoundationKit/VCFMath.o ../FoundationKit/VCFProcess.o ../FoundationKit/Win32FilePeer.o ../FoundationKit/Win32FileStream.o ../FoundationKit/Win32LibraryPeer.o ../FoundationKit/Win32Mutex.o ../FoundationKit/Win32Peer.o ../FoundationKit/Win32ProcessIORedirector.o ../FoundationKit/Win32ProcessPeer.o ../FoundationKit/Win32Registry.o ../FoundationKit/Win32SemaphorePeer.o ../FoundationKit/Win32SystemPeer.o ../FoundationKit/Win32SystemToolkit.o ../FoundationKit/Win32Thread.o ../FoundationKit/XMLParser.o $(RES)
-LIBS =  -L"D:/Dev-Cpp/lib" -L"E:/code/vcfdev/dev/vcf/lib" -lRpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 --implib ../../../lib/libFoundationKit_mingw_d.a
-INCS =  -I"D:/Dev-Cpp/include"  -I"D:/Dev-Cpp/include/g++-3"  -I"D:/Dev-Cpp/include"  -I"../../../include" 
+OBJ  = ../FoundationKit/BasicException.o ../FoundationKit/BasicInputStream.o ../FoundationKit/BasicOutputStream.o ../FoundationKit/Directory.o ../FoundationKit/ErrorLog.o ../FoundationKit/Event.o ../FoundationKit/EventHandler.o ../FoundationKit/File.o ../FoundationKit/FilePath.o ../FoundationKit/FileStream.o ../FoundationKit/FileUtils.o ../FoundationKit/FoundationKit.o ../FoundationKit/Library.o ../FoundationKit/Locales.o ../FoundationKit/MemoryStream.o ../FoundationKit/Mutex.o ../FoundationKit/Object.o ../FoundationKit/ObjectWithEvents.o ../FoundationKit/Parser.o ../FoundationKit/Point.o ../FoundationKit/ProcessWithRedirectedIO.o ../FoundationKit/PropertyChangeEvent.o ../FoundationKit/Rect.o ../FoundationKit/Registry.o ../FoundationKit/Semaphore.o ../FoundationKit/Stream.o ../FoundationKit/StringUtils.o ../FoundationKit/System.o ../FoundationKit/SystemToolkit.o ../FoundationKit/TextInputStream.o ../FoundationKit/TextOutputStream.o ../FoundationKit/Thread.o ../FoundationKit/ThreadEvent.o ../FoundationKit/VCFMath.o ../FoundationKit/VCFProcess.o ../FoundationKit/Win32FilePeer.o ../FoundationKit/Win32FileStream.o ../FoundationKit/Win32LibraryPeer.o ../FoundationKit/Win32Mutex.o ../FoundationKit/Win32Peer.o ../FoundationKit/Win32ProcessIORedirector.o ../FoundationKit/Win32ProcessPeer.o ../FoundationKit/Win32Registry.o ../FoundationKit/Win32SemaphorePeer.o ../FoundationKit/Win32SystemPeer.o ../FoundationKit/Win32SystemToolkit.o ../FoundationKit/Win32Thread.o ../FoundationKit/XMLParser.o ../FoundationKit/ClassRegistry.o ../FoundationKit/Class.o ../FoundationKit/InterfaceClass.o ../FoundationKit/DateTime.o ../FoundationKit/VCFString.o ../FoundationKit/StringsMessageLoader.o ../FoundationKit/TextCodec.o ../FoundationKit/MessageLoader.o ../FoundationKit/Dictionary.o $(RES)
+LINKOBJ  = ../FoundationKit/BasicException.o ../FoundationKit/BasicInputStream.o ../FoundationKit/BasicOutputStream.o ../FoundationKit/Directory.o ../FoundationKit/ErrorLog.o ../FoundationKit/Event.o ../FoundationKit/EventHandler.o ../FoundationKit/File.o ../FoundationKit/FilePath.o ../FoundationKit/FileStream.o ../FoundationKit/FileUtils.o ../FoundationKit/FoundationKit.o ../FoundationKit/Library.o ../FoundationKit/Locales.o ../FoundationKit/MemoryStream.o ../FoundationKit/Mutex.o ../FoundationKit/Object.o ../FoundationKit/ObjectWithEvents.o ../FoundationKit/Parser.o ../FoundationKit/Point.o ../FoundationKit/ProcessWithRedirectedIO.o ../FoundationKit/PropertyChangeEvent.o ../FoundationKit/Rect.o ../FoundationKit/Registry.o ../FoundationKit/Semaphore.o ../FoundationKit/Stream.o ../FoundationKit/StringUtils.o ../FoundationKit/System.o ../FoundationKit/SystemToolkit.o ../FoundationKit/TextInputStream.o ../FoundationKit/TextOutputStream.o ../FoundationKit/Thread.o ../FoundationKit/ThreadEvent.o ../FoundationKit/VCFMath.o ../FoundationKit/VCFProcess.o ../FoundationKit/Win32FilePeer.o ../FoundationKit/Win32FileStream.o ../FoundationKit/Win32LibraryPeer.o ../FoundationKit/Win32Mutex.o ../FoundationKit/Win32Peer.o ../FoundationKit/Win32ProcessIORedirector.o ../FoundationKit/Win32ProcessPeer.o ../FoundationKit/Win32Registry.o ../FoundationKit/Win32SemaphorePeer.o ../FoundationKit/Win32SystemPeer.o ../FoundationKit/Win32SystemToolkit.o ../FoundationKit/Win32Thread.o ../FoundationKit/XMLParser.o ../FoundationKit/ClassRegistry.o ../FoundationKit/Class.o ../FoundationKit/InterfaceClass.o ../FoundationKit/DateTime.o ../FoundationKit/VCFString.o ../FoundationKit/StringsMessageLoader.o ../FoundationKit/TextCodec.o ../FoundationKit/MessageLoader.o ../FoundationKit/Dictionary.o $(RES)
+LIBS =  -L"K:/Dev-Cpp/lib" -L"E:/code/vcfdev/dev/vcf/lib" -lRpcrt4 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 --implib ../../../lib/libFoundationKit_mingw_d.a 
+INCS =  -I"K:/Dev-Cpp/include"  -I"../../../include" 
+CXXINCS =  -I"K:/Dev-Cpp/include/c++"  -I"K:/Dev-Cpp/include/c++/mingw32"  -I"K:/Dev-Cpp/include/c++/backward"  -I"K:/Dev-Cpp/include"  -I"../../../include" 
 BIN  = ../../../bin/FoundationKit_mingw_d.dll
-CFLAGS = $(INCS) -DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DFRAMEWORK_DLL -DFRAMEWORK_EXPORTS -DBUILD_FRAMEWORK_LIB -fvtable-thunks -s
+CXXFLAGS = $(CXXINCS)  -fexceptions
+CFLAGS = $(INCS)-DVCF_GCC -D__GNUWIN32__ -W -fexceptions -DWIN32 -D_DEBUG -D_WINDOWS -D_MBCS -D_USRDLL -DFRAMEWORK_DLL -DFRAMEWORK_EXPORTS -DBUILD_FRAMEWORK_LIB -fvtable-thunks   -fexceptions
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -22,158 +26,176 @@ DLLWRAP=dllwrap.exe
 DEFFILE=libFoundationKit_mingw_d.def
 STATICLIB=libFoundationKit_mingw_d.a
 
-$(BIN): $(OBJ)
-	$(DLLWRAP) --output-def $(DEFFILE) --driver-name c++ --implib $(STATICLIB) $(OBJ) $(LIBS) -o $(BIN)
+$(BIN): $(LINKOBJ)
+	$(DLLWRAP) --output-def $(DEFFILE) --driver-name c++ --implib $(STATICLIB) $(LINKOBJ) $(LIBS) -o $(BIN)
 
 ../FoundationKit/BasicException.o: ../../../src/Exceptions/BasicException.cpp
-	$(CC) -c ../../../src/Exceptions/BasicException.cpp -o ../FoundationKit/BasicException.o $(CFLAGS)
+	$(CPP) -c ../../../src/Exceptions/BasicException.cpp -o ../FoundationKit/BasicException.o $(CXXFLAGS)
 
 ../FoundationKit/BasicInputStream.o: ../../../src/IO/BasicInputStream.cpp
-	$(CC) -c ../../../src/IO/BasicInputStream.cpp -o ../FoundationKit/BasicInputStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/BasicInputStream.cpp -o ../FoundationKit/BasicInputStream.o $(CXXFLAGS)
 
 ../FoundationKit/BasicOutputStream.o: ../../../src/IO/BasicOutputStream.cpp
-	$(CC) -c ../../../src/IO/BasicOutputStream.cpp -o ../FoundationKit/BasicOutputStream.o $(CFLAGS)
-
-../FoundationKit/Class.o: ../../../src/core/Class.cpp
-	$(CC) -c ../../../src/core/Class.cpp -o ../FoundationKit/Class.o $(CFLAGS)
-
-../FoundationKit/ClassRegistry.o: ../../../src/core/ClassRegistry.cpp
-	$(CC) -c ../../../src/core/ClassRegistry.cpp -o ../FoundationKit/ClassRegistry.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/BasicOutputStream.cpp -o ../FoundationKit/BasicOutputStream.o $(CXXFLAGS)
 
 ../FoundationKit/Directory.o: ../../../src/IO/Directory.cpp
-	$(CC) -c ../../../src/IO/Directory.cpp -o ../FoundationKit/Directory.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/Directory.cpp -o ../FoundationKit/Directory.o $(CXXFLAGS)
 
 ../FoundationKit/ErrorLog.o: ../../../src/Utils/ErrorLog.cpp
-	$(CC) -c ../../../src/Utils/ErrorLog.cpp -o ../FoundationKit/ErrorLog.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/ErrorLog.cpp -o ../FoundationKit/ErrorLog.o $(CXXFLAGS)
 
 ../FoundationKit/Event.o: ../../../src/Events/Event.cpp
-	$(CC) -c ../../../src/Events/Event.cpp -o ../FoundationKit/Event.o $(CFLAGS)
+	$(CPP) -c ../../../src/Events/Event.cpp -o ../FoundationKit/Event.o $(CXXFLAGS)
 
 ../FoundationKit/EventHandler.o: ../../../src/Events/EventHandler.cpp
-	$(CC) -c ../../../src/Events/EventHandler.cpp -o ../FoundationKit/EventHandler.o $(CFLAGS)
+	$(CPP) -c ../../../src/Events/EventHandler.cpp -o ../FoundationKit/EventHandler.o $(CXXFLAGS)
 
 ../FoundationKit/File.o: ../../../src/io/File.cpp
-	$(CC) -c ../../../src/io/File.cpp -o ../FoundationKit/File.o $(CFLAGS)
+	$(CPP) -c ../../../src/io/File.cpp -o ../FoundationKit/File.o $(CXXFLAGS)
 
 ../FoundationKit/FilePath.o: ../../../src/Utils/FilePath.cpp
-	$(CC) -c ../../../src/Utils/FilePath.cpp -o ../FoundationKit/FilePath.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/FilePath.cpp -o ../FoundationKit/FilePath.o $(CXXFLAGS)
 
 ../FoundationKit/FileStream.o: ../../../src/IO/FileStream.cpp
-	$(CC) -c ../../../src/IO/FileStream.cpp -o ../FoundationKit/FileStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/FileStream.cpp -o ../FoundationKit/FileStream.o $(CXXFLAGS)
 
 ../FoundationKit/FileUtils.o: ../../../src/IO/FileUtils.cpp
-	$(CC) -c ../../../src/IO/FileUtils.cpp -o ../FoundationKit/FileUtils.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/FileUtils.cpp -o ../FoundationKit/FileUtils.o $(CXXFLAGS)
 
 ../FoundationKit/FoundationKit.o: ../../../src/core/FoundationKit.cpp
-	$(CC) -c ../../../src/core/FoundationKit.cpp -o ../FoundationKit/FoundationKit.o $(CFLAGS)
-
-../FoundationKit/InterfaceClass.o: ../../../src/core/InterfaceClass.cpp
-	$(CC) -c ../../../src/core/InterfaceClass.cpp -o ../FoundationKit/InterfaceClass.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/FoundationKit.cpp -o ../FoundationKit/FoundationKit.o $(CXXFLAGS)
 
 ../FoundationKit/Library.o: ../../../src/utils/Library.cpp
-	$(CC) -c ../../../src/utils/Library.cpp -o ../FoundationKit/Library.o $(CFLAGS)
+	$(CPP) -c ../../../src/utils/Library.cpp -o ../FoundationKit/Library.o $(CXXFLAGS)
 
 ../FoundationKit/Locales.o: ../../../src/core/Locales.cpp
-	$(CC) -c ../../../src/core/Locales.cpp -o ../FoundationKit/Locales.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/Locales.cpp -o ../FoundationKit/Locales.o $(CXXFLAGS)
 
 ../FoundationKit/MemoryStream.o: ../../../src/IO/MemoryStream.cpp
-	$(CC) -c ../../../src/IO/MemoryStream.cpp -o ../FoundationKit/MemoryStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/MemoryStream.cpp -o ../FoundationKit/MemoryStream.o $(CXXFLAGS)
 
 ../FoundationKit/Mutex.o: ../../../src/Utils/Mutex.cpp
-	$(CC) -c ../../../src/Utils/Mutex.cpp -o ../FoundationKit/Mutex.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/Mutex.cpp -o ../FoundationKit/Mutex.o $(CXXFLAGS)
 
 ../FoundationKit/Object.o: ../../../src/core/Object.cpp
-	$(CC) -c ../../../src/core/Object.cpp -o ../FoundationKit/Object.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/Object.cpp -o ../FoundationKit/Object.o $(CXXFLAGS)
 
 ../FoundationKit/ObjectWithEvents.o: ../../../src/core/ObjectWithEvents.cpp
-	$(CC) -c ../../../src/core/ObjectWithEvents.cpp -o ../FoundationKit/ObjectWithEvents.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/ObjectWithEvents.cpp -o ../FoundationKit/ObjectWithEvents.o $(CXXFLAGS)
 
 ../FoundationKit/Parser.o: ../../../src/Utils/Parser.cpp
-	$(CC) -c ../../../src/Utils/Parser.cpp -o ../FoundationKit/Parser.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/Parser.cpp -o ../FoundationKit/Parser.o $(CXXFLAGS)
 
 ../FoundationKit/Point.o: ../../../src/core/Point.cpp
-	$(CC) -c ../../../src/core/Point.cpp -o ../FoundationKit/Point.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/Point.cpp -o ../FoundationKit/Point.o $(CXXFLAGS)
 
 ../FoundationKit/ProcessWithRedirectedIO.o: ../../../src/Utils/ProcessWithRedirectedIO.cpp
-	$(CC) -c ../../../src/Utils/ProcessWithRedirectedIO.cpp -o ../FoundationKit/ProcessWithRedirectedIO.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/ProcessWithRedirectedIO.cpp -o ../FoundationKit/ProcessWithRedirectedIO.o $(CXXFLAGS)
 
 ../FoundationKit/PropertyChangeEvent.o: ../../../src/Events/PropertyChangeEvent.cpp
-	$(CC) -c ../../../src/Events/PropertyChangeEvent.cpp -o ../FoundationKit/PropertyChangeEvent.o $(CFLAGS)
+	$(CPP) -c ../../../src/Events/PropertyChangeEvent.cpp -o ../FoundationKit/PropertyChangeEvent.o $(CXXFLAGS)
 
 ../FoundationKit/Rect.o: ../../../src/core/Rect.cpp
-	$(CC) -c ../../../src/core/Rect.cpp -o ../FoundationKit/Rect.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/Rect.cpp -o ../FoundationKit/Rect.o $(CXXFLAGS)
 
 ../FoundationKit/Registry.o: ../../../src/Utils/Registry.cpp
-	$(CC) -c ../../../src/Utils/Registry.cpp -o ../FoundationKit/Registry.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/Registry.cpp -o ../FoundationKit/Registry.o $(CXXFLAGS)
 
 ../FoundationKit/Semaphore.o: ../../../src/Utils/Semaphore.cpp
-	$(CC) -c ../../../src/Utils/Semaphore.cpp -o ../FoundationKit/Semaphore.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/Semaphore.cpp -o ../FoundationKit/Semaphore.o $(CXXFLAGS)
 
 ../FoundationKit/Stream.o: ../../../src/IO/Stream.cpp
-	$(CC) -c ../../../src/IO/Stream.cpp -o ../FoundationKit/Stream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/Stream.cpp -o ../FoundationKit/Stream.o $(CXXFLAGS)
 
 ../FoundationKit/StringUtils.o: ../../../src/Utils/StringUtils.cpp
-	$(CC) -c ../../../src/Utils/StringUtils.cpp -o ../FoundationKit/StringUtils.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/StringUtils.cpp -o ../FoundationKit/StringUtils.o $(CXXFLAGS)
 
 ../FoundationKit/System.o: ../../../src/Utils/System.cpp
-	$(CC) -c ../../../src/Utils/System.cpp -o ../FoundationKit/System.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/System.cpp -o ../FoundationKit/System.o $(CXXFLAGS)
 
 ../FoundationKit/SystemToolkit.o: ../../../src/utils/SystemToolkit.cpp
-	$(CC) -c ../../../src/utils/SystemToolkit.cpp -o ../FoundationKit/SystemToolkit.o $(CFLAGS)
+	$(CPP) -c ../../../src/utils/SystemToolkit.cpp -o ../FoundationKit/SystemToolkit.o $(CXXFLAGS)
 
 ../FoundationKit/TextInputStream.o: ../../../src/IO/TextInputStream.cpp
-	$(CC) -c ../../../src/IO/TextInputStream.cpp -o ../FoundationKit/TextInputStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/TextInputStream.cpp -o ../FoundationKit/TextInputStream.o $(CXXFLAGS)
 
 ../FoundationKit/TextOutputStream.o: ../../../src/IO/TextOutputStream.cpp
-	$(CC) -c ../../../src/IO/TextOutputStream.cpp -o ../FoundationKit/TextOutputStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/IO/TextOutputStream.cpp -o ../FoundationKit/TextOutputStream.o $(CXXFLAGS)
 
 ../FoundationKit/Thread.o: ../../../src/Utils/Thread.cpp
-	$(CC) -c ../../../src/Utils/Thread.cpp -o ../FoundationKit/Thread.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/Thread.cpp -o ../FoundationKit/Thread.o $(CXXFLAGS)
 
 ../FoundationKit/ThreadEvent.o: ../../../src/Events/ThreadEvent.cpp
-	$(CC) -c ../../../src/Events/ThreadEvent.cpp -o ../FoundationKit/ThreadEvent.o $(CFLAGS)
+	$(CPP) -c ../../../src/Events/ThreadEvent.cpp -o ../FoundationKit/ThreadEvent.o $(CXXFLAGS)
 
 ../FoundationKit/VCFMath.o: ../../../src/core/VCFMath.cpp
-	$(CC) -c ../../../src/core/VCFMath.cpp -o ../FoundationKit/VCFMath.o $(CFLAGS)
+	$(CPP) -c ../../../src/core/VCFMath.cpp -o ../FoundationKit/VCFMath.o $(CXXFLAGS)
 
 ../FoundationKit/VCFProcess.o: ../../../src/Utils/VCFProcess.cpp
-	$(CC) -c ../../../src/Utils/VCFProcess.cpp -o ../FoundationKit/VCFProcess.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/VCFProcess.cpp -o ../FoundationKit/VCFProcess.o $(CXXFLAGS)
 
 ../FoundationKit/Win32FilePeer.o: ../../../src/ImplementerKit/Win32FilePeer.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32FilePeer.cpp -o ../FoundationKit/Win32FilePeer.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32FilePeer.cpp -o ../FoundationKit/Win32FilePeer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32FileStream.o: ../../../src/ImplementerKit/Win32FileStream.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32FileStream.cpp -o ../FoundationKit/Win32FileStream.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32FileStream.cpp -o ../FoundationKit/Win32FileStream.o $(CXXFLAGS)
 
 ../FoundationKit/Win32LibraryPeer.o: ../../../src/implementerkit/Win32LibraryPeer.cpp
-	$(CC) -c ../../../src/implementerkit/Win32LibraryPeer.cpp -o ../FoundationKit/Win32LibraryPeer.o $(CFLAGS)
+	$(CPP) -c ../../../src/implementerkit/Win32LibraryPeer.cpp -o ../FoundationKit/Win32LibraryPeer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32Mutex.o: ../../../src/ImplementerKit/Win32Mutex.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32Mutex.cpp -o ../FoundationKit/Win32Mutex.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32Mutex.cpp -o ../FoundationKit/Win32Mutex.o $(CXXFLAGS)
 
 ../FoundationKit/Win32Peer.o: ../../../src/ImplementerKit/Win32Peer.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32Peer.cpp -o ../FoundationKit/Win32Peer.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32Peer.cpp -o ../FoundationKit/Win32Peer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32ProcessIORedirector.o: ../../../src/ImplementerKit/Win32ProcessIORedirector.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32ProcessIORedirector.cpp -o ../FoundationKit/Win32ProcessIORedirector.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32ProcessIORedirector.cpp -o ../FoundationKit/Win32ProcessIORedirector.o $(CXXFLAGS)
 
 ../FoundationKit/Win32ProcessPeer.o: ../../../src/implementerkit/Win32ProcessPeer.cpp
-	$(CC) -c ../../../src/implementerkit/Win32ProcessPeer.cpp -o ../FoundationKit/Win32ProcessPeer.o $(CFLAGS)
+	$(CPP) -c ../../../src/implementerkit/Win32ProcessPeer.cpp -o ../FoundationKit/Win32ProcessPeer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32Registry.o: ../../../src/implementerkit/Win32Registry.cpp
-	$(CC) -c ../../../src/implementerkit/Win32Registry.cpp -o ../FoundationKit/Win32Registry.o $(CFLAGS)
+	$(CPP) -c ../../../src/implementerkit/Win32Registry.cpp -o ../FoundationKit/Win32Registry.o $(CXXFLAGS)
 
 ../FoundationKit/Win32SemaphorePeer.o: ../../../src/ImplementerKit/Win32SemaphorePeer.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32SemaphorePeer.cpp -o ../FoundationKit/Win32SemaphorePeer.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32SemaphorePeer.cpp -o ../FoundationKit/Win32SemaphorePeer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32SystemPeer.o: ../../../src/ImplementerKit/Win32SystemPeer.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32SystemPeer.cpp -o ../FoundationKit/Win32SystemPeer.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32SystemPeer.cpp -o ../FoundationKit/Win32SystemPeer.o $(CXXFLAGS)
 
 ../FoundationKit/Win32SystemToolkit.o: ../../../src/ImplementerKit/Win32SystemToolkit.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32SystemToolkit.cpp -o ../FoundationKit/Win32SystemToolkit.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32SystemToolkit.cpp -o ../FoundationKit/Win32SystemToolkit.o $(CXXFLAGS)
 
 ../FoundationKit/Win32Thread.o: ../../../src/ImplementerKit/Win32Thread.cpp
-	$(CC) -c ../../../src/ImplementerKit/Win32Thread.cpp -o ../FoundationKit/Win32Thread.o $(CFLAGS)
+	$(CPP) -c ../../../src/ImplementerKit/Win32Thread.cpp -o ../FoundationKit/Win32Thread.o $(CXXFLAGS)
 
 ../FoundationKit/XMLParser.o: ../../../src/Utils/XMLParser.cpp
-	$(CC) -c ../../../src/Utils/XMLParser.cpp -o ../FoundationKit/XMLParser.o $(CFLAGS)
+	$(CPP) -c ../../../src/Utils/XMLParser.cpp -o ../FoundationKit/XMLParser.o $(CXXFLAGS)
+
+../FoundationKit/ClassRegistry.o: ../../../src/rtti/ClassRegistry.cpp
+	$(CPP) -c ../../../src/rtti/ClassRegistry.cpp -o ../FoundationKit/ClassRegistry.o $(CXXFLAGS)
+
+../FoundationKit/Class.o: ../../../src/rtti/Class.cpp
+	$(CPP) -c ../../../src/rtti/Class.cpp -o ../FoundationKit/Class.o $(CXXFLAGS)
+
+../FoundationKit/InterfaceClass.o: ../../../src/rtti/InterfaceClass.cpp
+	$(CPP) -c ../../../src/rtti/InterfaceClass.cpp -o ../FoundationKit/InterfaceClass.o $(CXXFLAGS)
+
+../FoundationKit/DateTime.o: ../../../src/utils/DateTime.cpp
+	$(CPP) -c ../../../src/utils/DateTime.cpp -o ../FoundationKit/DateTime.o $(CXXFLAGS)
+
+../FoundationKit/VCFString.o: ../../../src/utils/VCFString.cpp
+	$(CPP) -c ../../../src/utils/VCFString.cpp -o ../FoundationKit/VCFString.o $(CXXFLAGS)
+
+../FoundationKit/StringsMessageLoader.o: ../../../src/utils/StringsMessageLoader.cpp
+	$(CPP) -c ../../../src/utils/StringsMessageLoader.cpp -o ../FoundationKit/StringsMessageLoader.o $(CXXFLAGS)
+
+../FoundationKit/TextCodec.o: ../../../src/utils/TextCodec.cpp
+	$(CPP) -c ../../../src/utils/TextCodec.cpp -o ../FoundationKit/TextCodec.o $(CXXFLAGS)
+
+../FoundationKit/MessageLoader.o: ../../../src/utils/MessageLoader.cpp
+	$(CPP) -c ../../../src/utils/MessageLoader.cpp -o ../FoundationKit/MessageLoader.o $(CXXFLAGS)
+
+../FoundationKit/Dictionary.o: ../../../src/utils/Dictionary.cpp
+	$(CPP) -c ../../../src/utils/Dictionary.cpp -o ../FoundationKit/Dictionary.o $(CXXFLAGS)

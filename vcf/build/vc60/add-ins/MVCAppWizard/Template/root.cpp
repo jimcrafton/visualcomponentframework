@@ -15,6 +15,10 @@ using namespace VCF;
 class $$Root$$ : public SDIDocumentBasedApplication {
 public:
 
+	$$Root$$( int argc, char *argv[] ) : SDIDocumentBasedApplication(argc,argv) {
+
+	}
+
 	virtual bool initRunningApplication(){
 
 		REGISTER_CLASSINFO( $$Root$$Document );
@@ -48,9 +52,9 @@ public:
 
 int main(int argc, char *argv[])
 {
-	$$Root$$ app;
+	Application* app = new $$Root$$( argc, argv );
 
-	Application::main( argc, argv );
+	Application::main();
 	
 	return 0;
 }

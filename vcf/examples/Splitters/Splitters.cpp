@@ -251,7 +251,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	SplittersApplication app( argc, argv );
+	Application* app = new SplittersApplication( argc, argv );
 
 	Application::main();
 	

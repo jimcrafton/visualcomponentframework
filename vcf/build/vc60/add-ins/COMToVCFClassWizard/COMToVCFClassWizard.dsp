@@ -44,7 +44,9 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Release\COMToVCFClassWizard_vc6.bsc"
+
+# ADD BSC32 /nologo /o"Release/COMToVCFClassWizard_vc6.bsc"
+
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"Release/COMToVCFClassWizard.dll"
@@ -56,81 +58,81 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Commands.cpp
+SOURCE=./Commands.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizard.cpp
+SOURCE=./COMToVCFClassWizard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizard.def
+SOURCE=./COMToVCFClassWizard.def
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizard.idl
-# ADD MTL /tlb ".\COMTOVCFCLASSWIZARD.tlb" /h "COMTOVCFCLASSWIZARD.h" /Oicf
+SOURCE=./COMToVCFClassWizard.idl
+# ADD MTL /tlb "./COMTOVCFCLASSWIZARD.tlb" /h "COMTOVCFCLASSWIZARD.h" /Oicf
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizard.rc
+SOURCE=./COMToVCFClassWizard.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizardAddin.cpp
+SOURCE=./COMToVCFClassWizardAddin.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConversionOptionsDlg.cpp
+SOURCE=./ConversionOptionsDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConvertActiveXCtrlDlg.cpp
+SOURCE=./ConvertActiveXCtrlDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConvertTypeDlg.cpp
+SOURCE=./ConvertTypeDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\shadow.cpp
+SOURCE=./shadow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SourceFormattingOptionsPage.cpp
+SOURCE=./SourceFormattingOptionsPage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\TreeItem.cpp
+SOURCE=./TreeItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeConversionOptionsPage.cpp
+SOURCE=./TypeConversionOptionsPage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibContents.cpp
+SOURCE=./TypeLibContents.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypelibDump.cpp
+SOURCE=./TypelibDump.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibraryConverterDlg.cpp
+SOURCE=./TypeLibraryConverterDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibTreeView.cpp
+SOURCE=./TypeLibTreeView.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\util.cpp
+SOURCE=./util.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -138,71 +140,71 @@ SOURCE=.\util.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Commands.h
+SOURCE=./Commands.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMTOVCFCLASSWIZARD.h
+SOURCE=./COMTOVCFCLASSWIZARD.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizardAddin.h
+SOURCE=./COMToVCFClassWizardAddin.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConversionOptionsDlg.h
+SOURCE=./ConversionOptionsDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConvertActiveXCtrlDlg.h
+SOURCE=./ConvertActiveXCtrlDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConvertTypeDlg.h
+SOURCE=./ConvertTypeDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\resource.h
+SOURCE=./resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\shadow.h
+SOURCE=./shadow.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SourceFormattingOptionsPage.h
+SOURCE=./SourceFormattingOptionsPage.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TreeItem.h
+SOURCE=./TreeItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeConversionOptionsPage.h
+SOURCE=./TypeConversionOptionsPage.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibContents.h
+SOURCE=./TypeLibContents.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibDump.h
+SOURCE=./TypeLibDump.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibraryConverterDlg.h
+SOURCE=./TypeLibraryConverterDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeLibTreeView.h
+SOURCE=./TypeLibTreeView.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\util.h
+SOURCE=./util.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -210,56 +212,56 @@ SOURCE=.\util.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\bitmap1.bmp
+SOURCE=./res/bitmap1.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bitmap2.bmp
+SOURCE=./res/bitmap2.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bitmap3.bmp
+SOURCE=./res/bitmap3.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bitmap4.bmp
+SOURCE=./res/bitmap4.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bmp00001.bmp
+SOURCE=./res/bmp00001.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bmp00002.bmp
+SOURCE=./res/bmp00002.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bmp00003.bmp
+SOURCE=./res/bmp00003.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Commands.rgs
+SOURCE=./Commands.rgs
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\COMToVCFClassWizard.rc2
+SOURCE=./res/COMToVCFClassWizard.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizardAddin.rgs
+SOURCE=./COMToVCFClassWizardAddin.rgs
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarLrge.bmp
+SOURCE=./res/TBarLrge.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarMedm.bmp
+SOURCE=./res/TBarMedm.bmp
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\COMToVCFClassWizard.tlb
+SOURCE=./COMToVCFClassWizard.tlb
 # End Source File
 # End Target
 # End Project

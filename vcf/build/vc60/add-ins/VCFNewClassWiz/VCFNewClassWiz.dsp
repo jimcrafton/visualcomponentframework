@@ -44,7 +44,9 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Release\VCFNewClassWiz_vc6.bsc"
+
+# ADD BSC32 /nologo /o"Release/VCFNewClassWiz_vc6.bsc"
+
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/VCFNewClassWiz.dll"
@@ -56,49 +58,49 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Commands.cpp
+SOURCE=./Commands.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\NewClassDlg.cpp
+SOURCE=./NewClassDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PostHeaderDlg.cpp
+SOURCE=./PostHeaderDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PreHeaderDlg.cpp
+SOURCE=./PreHeaderDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PropertyInfoDlg.cpp
+SOURCE=./PropertyInfoDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWiz.cpp
+SOURCE=./VCFNewClassWiz.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWiz.def
+SOURCE=./VCFNewClassWiz.def
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWiz.idl
-# ADD MTL /tlb ".\VCFNEWCLASSWIZ.tlb" /h "VCFNEWCLASSWIZ.h" /Oicf
+SOURCE=./VCFNewClassWiz.idl
+# ADD MTL /tlb "./VCFNEWCLASSWIZ.tlb" /h "VCFNEWCLASSWIZ.h" /Oicf
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWiz.rc
+SOURCE=./VCFNewClassWiz.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWizAddin.cpp
+SOURCE=./VCFNewClassWizAddin.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -106,35 +108,35 @@ SOURCE=.\VCFNewClassWizAddin.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Commands.h
+SOURCE=./Commands.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\NewClassDlg.h
+SOURCE=./NewClassDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PostHeaderDlg.h
+SOURCE=./PostHeaderDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PreHeaderDlg.h
+SOURCE=./PreHeaderDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PropertyInfoDlg.h
+SOURCE=./PropertyInfoDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\resource.h
+SOURCE=./resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWizAddin.h
+SOURCE=./VCFNewClassWizAddin.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -142,36 +144,36 @@ SOURCE=.\VCFNewClassWizAddin.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\bmp00001.bmp
+SOURCE=./res/bmp00001.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Commands.rgs
+SOURCE=./Commands.rgs
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarLrge.bmp
+SOURCE=./res/TBarLrge.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\TBarMedm.bmp
+SOURCE=./res/TBarMedm.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\toolbar_.bmp
+SOURCE=./res/toolbar_.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\VCFNewClassWiz.rc2
+SOURCE=./res/VCFNewClassWiz.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFNewClassWizAddin.rgs
+SOURCE=./VCFNewClassWizAddin.rgs
 # End Source File
 # End Group
 # Begin Source File
 
-SOURCE=.\VCFNewClassWiz.tlb
+SOURCE=./VCFNewClassWiz.tlb
 # End Source File
 # End Target
 # End Project

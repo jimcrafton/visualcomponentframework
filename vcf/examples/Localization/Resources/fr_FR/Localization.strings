@@ -1,0 +1,9 @@
+/*
+French localization test file
+
+
+*/
+
+"Hello" = "Salute" /*this is Hello in french*/
+
+"I understand" = "Je comprends"

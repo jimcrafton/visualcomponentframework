@@ -169,8 +169,8 @@ public:
 
 
 int main(int argc, char *argv[])
-{
-	CopyAndPasteApplication app( argc, argv );
+{	 
+	Application* app = new CopyAndPasteApplication( argc, argv );
 
 	Application::main();
 	

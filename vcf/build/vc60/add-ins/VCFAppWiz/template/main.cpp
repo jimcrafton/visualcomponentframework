@@ -43,7 +43,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	$$Root$$Application app( argc, argv );
+	Application* app = new $$Root$$Application( argc, argv );
 
 	Application::main();
 	

@@ -90,9 +90,9 @@ public:
 int main(int argc, char *argv[])
 {
 	/**
-	*here we create an instance of our application class on the stack
+	*here we create an instance of our application class on the heap
 	*/
-	HelloWorld2Application app( argc, argv );
+	Application* app = new HelloWorld2Application( argc, argv );
 
 	/**
 	*call the appMain() method

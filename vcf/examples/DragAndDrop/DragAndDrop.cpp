@@ -352,8 +352,8 @@ public:
 
 
 int main(int argc, char *argv[])
-{
-	DragAndDropApplication app( argc, argv );
+{	 
+	Application* app = new DragAndDropApplication( argc, argv );
 
 	Application::main();
 	

@@ -23,7 +23,10 @@ int main( int argc, char** argv ){
 	Dictionary dict;
 
 	//add 2 elements to the dictionary.
+
 	dict.insert( "size", 200 );
+	dict["width"] = 150;
+
 	dict["Name"] = "Bob";
 
 	/*

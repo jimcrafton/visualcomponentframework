@@ -160,7 +160,8 @@ public:
 
 int main(int argc, char *argv[])
 {
-	SlidersApplication app( argc, argv );
+	Application* app = new SlidersApplication( argc, argv );
+
 
 	Application::main();
 	

@@ -6,7 +6,7 @@ rm vcfSrcFiles.iss
 
 echo preparing list of all files for distribution in installer...
 
-SRC_DIRS="../../include ../../src ../../ImageFormats ../../build ../../AppServer ../../xmake ../../ClassServer ../../thirdparty"
+SRC_DIRS="../../include ../../src ../../ImageFormats ../../build ../../xmake ../../thirdparty"
 
 echo 1st find
 find $SRC_DIRS -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' \
@@ -16,7 +16,7 @@ find $SRC_DIRS -iname '*.h' -o -iname '*.hpp' -o -iname '*.c' \
 
 echo 2nd find
 find $SRC_DIRS -iname '*.def' -o -iname '*.vcfdir' -o -iname '*.vcp' \
--o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' \
+-o -iname '*.ico' -o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.inl' \
 -o -iname '*.vff' -o -iname '*.inf' -o -iname '*.vcproj' > srcfiles1.out
 			
 echo 3nd find			
@@ -31,19 +31,13 @@ find ../../examples -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' \
 -o -iname '*.def' -o -iname '*.ico' -o -iname '*.rc2' \
 -o -iname '*.odl' -o -iname '*.vff' -o -iname '*.html' -o -iname '*.xml' > examples.out
 
-echo 5th find
-find ../../BlackBox -iname '*.h' -o -iname '*.cpp' -o -iname '*.CPP' \
-		-o -iname '*.dsw' -o -iname '*.dsp' -o -iname '*.bmp' -o -iname '*.rgs' \
-		-o -iname '*.rc' -o -iname '*.idl' -o -iname '*.def' -o -iname '*.ico' \
-		-o -iname '*.rc2' -o -iname '*.odl' -o -iname '*.dll' -o -iname '*.lib' \
-		-o -iname '*.html' > blackbox.out
 
 
 
 #combine the outoput into a master list
-cat srcfiles.out srcfiles1.out srcfiles2.out blackbox.out> files.out
+cat srcfiles.out srcfiles1.out srcfiles2.out> files.out
 
-rm srcfiles.out srcfiles1.out srcfiles2.out blackbox.out
+rm srcfiles.out srcfiles1.out srcfiles2.out
 
 
 echo file list built, creating file listing for vcfSrcFiles.iss

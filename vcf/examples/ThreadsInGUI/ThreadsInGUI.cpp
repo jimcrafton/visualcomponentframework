@@ -256,7 +256,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ThreadsInGUIApplication app( argc, argv );
+	Application* app = new ThreadsInGUIApplication( argc, argv );
 
 	Application::main();
 	

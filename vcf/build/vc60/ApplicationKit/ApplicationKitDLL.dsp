@@ -36,22 +36,22 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc6/ReleaseDLL\obj"
+# PROP Output_Dir "../../../lib/"
+# PROP Intermediate_Dir "vc6/ReleaseDLL/"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPKIT_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/../thirdparty/common/agg/include/" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /Yu"ApplicationKit.h" /FD /Zm150 /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/../thirdparty/common/agg/include/" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /Yu"ApplicationKit.h" /FD /Zm200 /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\bin\ApplicationKit_vc6.bsc"
+# ADD BSC32 /nologo /o"../../../bin/ApplicationKit_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# ADD LINK32 opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"../../../bin/ApplicationKit_vc6.dll" /libpath:"../../../lib" /libpath:"../../../xml/lib"
 # SUBTRACT LINK32 /incremental:yes /map /debug
 
 !ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
@@ -63,22 +63,22 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc6/DebugDLL\obj"
+# PROP Output_Dir "../../../lib/"
+# PROP Intermediate_Dir "vc6/DebugDLL/"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "APPKIT_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /FR /Yu"ApplicationKit.h" /Fd"..\..\..\bin/ApplicationKit_vc6_d.pdb" /FD /GZ /Zm150 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FRAMEWORK_DLL" /D "USE_GRAPHICSKIT_DLL" /D "APPKIT_DLL" /D "APPKIT_EXPORTS" /D "BUILD_APPKIT_LIB" /Yu"ApplicationKit.h" /FD /GZ /Zm200 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\bin\ApplicationKit_vc6_d.bsc"
+# ADD BSC32 /nologo /o"../../../bin/ApplicationKit_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6_d.dll" /libpath:"..\..\..\lib"
+# ADD LINK32 comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /profile /machine:I386 /out:"../../../bin/ApplicationKit_vc6_d.dll" /debug /libpath:"../../../lib"
 
 !ENDIF 
 
@@ -91,335 +91,331 @@ LINK32=link.exe
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractApplication.h
+SOURCE=../../../include/core/AbstractApplication.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractCommand.h
+SOURCE=../../../include/core/AbstractCommand.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractComponentEditor.h
+SOURCE=../../../include/core/AbstractComponentEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractContainer.h
+SOURCE=../../../include/core/AbstractContainer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractPropertyEditor.h
+SOURCE=../../../include/core/AbstractPropertyEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractScrollable.h
+SOURCE=../../../include/core/AbstractScrollable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AcceleratorKey.h
+SOURCE=../../../include/core/AcceleratorKey.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Action.h
+SOURCE=../../../include/core/Action.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\AppKitPeerConfig.h
+SOURCE=../../../include/implementer/AppKitPeerConfig.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Application.h
+SOURCE=../../../include/core/Application.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\ApplicationException.h
+SOURCE=../../../include/exceptions/ApplicationException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\ApplicationKit.h
+SOURCE=../../../include/ApplicationKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\ApplicationKitPrivate.h
+SOURCE=../../../include/ApplicationKitPrivate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\BadComponentStateException.h
+SOURCE=../../../include/exceptions/BadComponentStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\BadModelStateException.h
+SOURCE=../../../include/exceptions/BadModelStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\BasicTableItemEditor.h
+SOURCE=../../../include/core/BasicTableItemEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Clipboard.h
+SOURCE=../../../include/core/Clipboard.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ColorEtchedBorder.h
+SOURCE=../../../include/graphics/ColorEtchedBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Command.h
+SOURCE=../../../include/core/Command.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommandGroup.h
+SOURCE=../../../include/core/CommandGroup.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonColor.h
+SOURCE=../../../include/core/CommonColor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonDialog.h
+SOURCE=../../../include/core/CommonDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonFileBrowse.h
+SOURCE=../../../include/core/CommonFileBrowse.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonFileDialog.h
+SOURCE=../../../include/core/CommonFileDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonFileOpen.h
+SOURCE=../../../include/core/CommonFileOpen.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonFileSave.h
+SOURCE=../../../include/core/CommonFileSave.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonFont.h
+SOURCE=../../../include/core/CommonFont.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommonPrint.h
+SOURCE=../../../include/core/CommonPrint.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Component.h
+SOURCE=../../../include/core/Component.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ComponentEditor.h
+SOURCE=../../../include/core/ComponentEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ComponentEditorManager.h
+SOURCE=../../../include/core/ComponentEditorManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ComponentInfo.h
+SOURCE=../../../include/core/ComponentInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Container.h
+SOURCE=../../../include/core/Container.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Containers.h
+SOURCE=../../../include/core/Containers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Control.h
+SOURCE=../../../include/core/Control.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
+SOURCE=../../../include/graphics/ControlGraphicsContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Cursor.h
+SOURCE=../../../include/core/Cursor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CursorManager.h
+SOURCE=../../../include/core/CursorManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DataObject.h
+SOURCE=../../../include/core/DataObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\DataTypeNotSupportedException.h
+SOURCE=../../../include/exceptions/DataTypeNotSupportedException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultPropertyEditors.h
+SOURCE=../../../include/core/DefaultPropertyEditors.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Desktop.h
+SOURCE=../../../include/core/Desktop.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Dialog.h
+SOURCE=../../../include/core/Dialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\DragEvent.h
+SOURCE=../../../include/events/DragEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\dragdrop\DragSource.h
+SOURCE=../../../include/dragdrop/DragSource.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\DropEvent.h
+SOURCE=../../../include/events/DropEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\dragdrop\DropTarget.h
+SOURCE=../../../include/dragdrop/DropTarget.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\EtchedBorder.h
+SOURCE=../../../include/graphics/EtchedBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Frame.h
+SOURCE=../../../include/core/Frame.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\ImageList.h
+SOURCE=../../../include/graphics/ImageList.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\InvalidStateException.h
+SOURCE=../../../include/exceptions/InvalidStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Item.h
+SOURCE=../../../include/core/Item.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\LibraryApplication.h
+SOURCE=../../../include/core/LibraryApplication.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\Light3DBorder.h
+SOURCE=../../../include/graphics/Light3DBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\LightweightComponent.h
+SOURCE=../../../include/implementerKit/LightweightComponent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Menu.h
+SOURCE=../../../include/core/Menu.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\MenuBar.h
+SOURCE=../../../include/core/MenuBar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\MenuItem.h
+SOURCE=../../../include/core/MenuItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\MessageDialog.h
+SOURCE=../../../include/core/MessageDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\NoToolKitFoundException.h
+SOURCE=../../../include/exceptions/NoToolKitFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\OpenGLControlContext.h
+SOURCE=../../../include/graphics/OpenGLControlContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\PackageInfo.h
+SOURCE=../../../include/core/PackageInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\PopupMenu.h
+SOURCE=../../../include/core/PopupMenu.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\PropertyEditor.h
+SOURCE=../../../include/core/PropertyEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\PropertyEditorManager.h
+SOURCE=../../../include/core/PropertyEditorManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\Resource.h
+SOURCE=../../../include/utils/Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\ResourceBundle.h
+SOURCE=../../../include/utils/ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\exceptions\ResourceException.h
+SOURCE=../../../include/exceptions/ResourceException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\io\ResourceStream.h
+SOURCE=../../../include/io/ResourceStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Scrollable.h
+SOURCE=../../../include/core/Scrollable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Selectable.h
+SOURCE=../../../include/core/Selectable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TableItemEditor.h
+SOURCE=../../../include/core/TableItemEditor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TimerComponent.h
+SOURCE=../../../include/graphics/TitledBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\graphics\TitledBorder.h
+SOURCE=../../../include/utils/UIMetricsManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\UIMetricsManager.h
+SOURCE=../../../include/utils/UIPolicyManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\UIPolicyManager.h
+SOURCE=../../../include/utils/UIToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\UIToolkit.h
+SOURCE=../../../include/core/UndoRedoStack.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\UndoRedoStack.h
+SOURCE=../../../include/io/VFFInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\io\VFFInputStream.h
+SOURCE=../../../include/io/VFFOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\io\VFFOutputStream.h
+SOURCE=../../../include/core/View.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\View.h
+SOURCE=../../../include/core/Window.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Window.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\Wizard.h
+SOURCE=../../../include/core/Wizard.h
 # End Source File
 # End Group
 # Begin Group "Res"
@@ -427,23 +423,23 @@ SOURCE=..\..\..\include\core\Wizard.h
 # PROP Default_Filter "*.rc;*.bmp;*.ico"
 # Begin Source File
 
-SOURCE=..\..\resources\win32\ApplicationKit.rc
+SOURCE=../../resources/win32/ApplicationKit.rc
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\resources\win32\inform.bmp
+SOURCE=../../resources/win32/inform.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\resources\win32\question.bmp
+SOURCE=../../resources/win32/question.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\resources\win32\stop.bmp
+SOURCE=../../resources/win32/stop.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\resources\win32\vcf.ico
+SOURCE=../../resources/win32/vcf.ico
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -451,160 +447,160 @@ SOURCE=..\..\resources\win32\vcf.ico
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractApplication.cpp
+SOURCE=../../../src/core/AbstractApplication.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractCommand.cpp
+SOURCE=../../../src/core/AbstractCommand.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
+SOURCE=../../../src/core/AbstractComponentEditor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractContainer.cpp
+SOURCE=../../../src/core/AbstractContainer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractPropertyEditor.cpp
+SOURCE=../../../src/core/AbstractPropertyEditor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractScrollable.cpp
+SOURCE=../../../src/core/AbstractScrollable.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AcceleratorKey.cpp
+SOURCE=../../../src/core/AcceleratorKey.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Action.cpp
+SOURCE=../../../src/core/Action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Application.cpp
+SOURCE=../../../src/core/Application.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ApplicationKit.cpp
+SOURCE=../../../src/core/ApplicationKit.cpp
 # ADD CPP /Yc"ApplicationKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\ApplicationKitRTTI.inl
+SOURCE=../../../include/ApplicationKitRTTI.inl
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\Basic3DBorder.cpp
+SOURCE=../../../src/Graphics/Basic3DBorder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\BasicTableItemEditor.cpp
+SOURCE=../../../src/core/BasicTableItemEditor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Clipboard.cpp
+SOURCE=../../../src/core/Clipboard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\ColorEtchedBorder.cpp
+SOURCE=../../../src/Graphics/ColorEtchedBorder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommandGroup.cpp
+SOURCE=../../../src/core/CommandGroup.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonColor.cpp
+SOURCE=../../../src/core/CommonColor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonFileBrowse.cpp
+SOURCE=../../../src/core/CommonFileBrowse.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonFileDialog.cpp
+SOURCE=../../../src/core/CommonFileDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonFileOpen.cpp
+SOURCE=../../../src/core/CommonFileOpen.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonFileSave.cpp
+SOURCE=../../../src/core/CommonFileSave.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonFont.cpp
+SOURCE=../../../src/core/CommonFont.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommonPrint.cpp
+SOURCE=../../../src/core/CommonPrint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Component.cpp
+SOURCE=../../../src/core/Component.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ComponentEditorManager.cpp
+SOURCE=../../../src/core/ComponentEditorManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ComponentInfo.cpp
+SOURCE=../../../src/core/ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Containers.cpp
+SOURCE=../../../src/core/Containers.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Control.cpp
+SOURCE=../../../src/core/Control.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
+SOURCE=../../../src/Graphics/ControlGraphicsContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Cursor.cpp
+SOURCE=../../../src/core/Cursor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CursorManager.cpp
+SOURCE=../../../src/core/CursorManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DataObject.cpp
+SOURCE=../../../src/core/DataObject.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultPropertyEditors.cpp
+SOURCE=../../../src/core/DefaultPropertyEditors.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Desktop.cpp
+SOURCE=../../../src/core/Desktop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Dialog.cpp
+SOURCE=../../../src/core/Dialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\DragSource.cpp
+SOURCE=../../../src/DragDrop/DragSource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
+SOURCE=../../../src/DragDrop/DropTarget.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\EtchedBorder.cpp
+SOURCE=../../../src/Graphics/EtchedBorder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Frame.cpp
+SOURCE=../../../src/core/Frame.cpp
 
 !IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
 
@@ -617,99 +613,91 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\ImageList.cpp
+SOURCE=../../../src/Graphics/ImageList.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ImageListEvent.cpp
+SOURCE=../../../src/Events/ImageListEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
+SOURCE=../../../src/Events/KeyboardEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\LibraryApplication.cpp
+SOURCE=../../../src/core/LibraryApplication.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\Light3DBorder.cpp
+SOURCE=../../../src/Graphics/Light3DBorder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\LightweightComponent.cpp
+SOURCE=../../../src/ImplementerKit/LightweightComponent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Menu.cpp
+SOURCE=../../../src/core/Menu.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\MenuBar.cpp
+SOURCE=../../../src/core/MenuBar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\MessageDialog.cpp
+SOURCE=../../../src/core/MessageDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\MultilineTextControl.cpp
+SOURCE=../../../src/core/MultilineTextControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\PackageInfo.cpp
+SOURCE=../../../src/core/PackageInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\PopupMenu.cpp
+SOURCE=../../../src/core/PopupMenu.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\PropertyEditorManager.cpp
+SOURCE=../../../src/core/PropertyEditorManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\Resource.cpp
+SOURCE=../../../src/Utils/Resource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\IO\ResourceStream.cpp
+SOURCE=../../../src/IO/ResourceStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ScrollbarManager.cpp
+SOURCE=../../../src/Graphics/TitledBorder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TimerComponent.cpp
+SOURCE=../../../src/Utils/UIToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Graphics\TitledBorder.cpp
+SOURCE=../../../src/core/UndoRedoStack.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\UIToolkit.cpp
+SOURCE=../../../src/IO/VFFInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\UndoRedoStack.cpp
+SOURCE=../../../src/IO/VFFOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\IO\VFFInputStream.cpp
+SOURCE=../../../src/core/Window.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\IO\VFFOutputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\Window.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\WindowEvent.cpp
+SOURCE=../../../src/Events/WindowEvent.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -717,271 +705,271 @@ SOURCE=..\..\..\src\Events\WindowEvent.cpp
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\AbstractWin32Component.cpp
+SOURCE=../../../src/ImplementerKit/AbstractWin32Component.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
+SOURCE=../../../include/implementerKit/AbstractWin32Component.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ClipboardPeer.h
+SOURCE=../../../include/implementer/ClipboardPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\COMDataObject.cpp
+SOURCE=../../../src/ImplementerKit/COMDataObject.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\COMDataObject.h
+SOURCE=../../../include/implementerKit/COMDataObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\COMUtils.cpp
+SOURCE=../../../src/ImplementerKit/COMUtils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\COMUtils.h
+SOURCE=../../../include/implementerKit/COMUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\EnumObject.h
+SOURCE=../../../include/implementerKit/EnumObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\VCFCOM.h
+SOURCE=../../../include/implementerKit/VCFCOM.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
+SOURCE=../../../src/ImplementerKit/Win32Application.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Application.h
+SOURCE=../../../include/implementerKit/Win32Application.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Button.cpp
+SOURCE=../../../src/ImplementerKit/Win32Button.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Button.h
+SOURCE=../../../include/implementerKit/Win32Button.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Clipboard.cpp
+SOURCE=../../../src/ImplementerKit/Win32Clipboard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Clipboard.h
+SOURCE=../../../include/implementerKit/Win32Clipboard.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32ColorDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ColorDialog.h
+SOURCE=../../../include/implementerKit/Win32ColorDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
+SOURCE=../../../src/ImplementerKit/Win32Component.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Component.h
+SOURCE=../../../include/implementerKit/Win32Component.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
+SOURCE=../../../src/ImplementerKit/Win32ControlContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
+SOURCE=../../../include/implementerkit/Win32ControlContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32CursorPeer.cpp
+SOURCE=../../../src/ImplementerKit/Win32CursorPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32CursorPeer.h
+SOURCE=../../../include/implementerKit/Win32CursorPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Desktop.cpp
+SOURCE=../../../src/ImplementerKit/Win32Desktop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Desktop.h
+SOURCE=../../../include/implementerKit/Win32Desktop.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Dialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32Dialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Dialog.h
+SOURCE=../../../include/implementerKit/Win32Dialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32DragDropPeer.cpp
+SOURCE=../../../src/ImplementerKit/Win32DragDropPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32DragDropPeer.h
+SOURCE=../../../include/implementerKit/Win32DragDropPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32DropTargetPeer.cpp
+SOURCE=../../../src/ImplementerKit/Win32DropTargetPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32DropTargetPeer.h
+SOURCE=../../../include/implementerKit/Win32DropTargetPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Edit.cpp
+SOURCE=../../../src/ImplementerKit/Win32Edit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Edit.h
+SOURCE=../../../include/implementerKit/Win32Edit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32FileOpenDialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32FileOpenDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32FileOpenDialog.h
+SOURCE=../../../include/implementerKit/Win32FileOpenDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32FileSaveDialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32FileSaveDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32FileSaveDialog.h
+SOURCE=../../../include/implementerKit/Win32FileSaveDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32FolderBrowseDialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32FolderBrowseDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32FolderBrowseDialog.h
+SOURCE=../../../include/implementerKit/Win32FolderBrowseDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32FontDialog.cpp
+SOURCE=../../../src/ImplementerKit/Win32FontDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32FontDialog.h
+SOURCE=../../../include/implementerKit/Win32FontDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Listview.cpp
+SOURCE=../../../src/ImplementerKit/Win32Listview.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Listview.h
+SOURCE=../../../include/implementerKit/Win32Listview.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32MenuBar.cpp
+SOURCE=../../../src/ImplementerKit/Win32MenuBar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32MenuBar.h
+SOURCE=../../../include/implementerKit/Win32MenuBar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32MenuItem.cpp
+SOURCE=../../../src/ImplementerKit/Win32MenuItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32MenuItem.h
+SOURCE=../../../include/implementerKit/Win32MenuItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Object.cpp
+SOURCE=../../../src/ImplementerKit/Win32Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Object.h
+SOURCE=../../../include/implementerKit/Win32Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Peer.h
+SOURCE=../../../include/implementerKit/Win32Peer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32PopupMenu.cpp
+SOURCE=../../../src/ImplementerKit/Win32PopupMenu.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32PopupMenu.h
+SOURCE=../../../include/implementerKit/Win32PopupMenu.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ResourceBundle.cpp
+SOURCE=../../../src/ImplementerKit/Win32ResourceBundle.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ResourceBundle.h
+SOURCE=../../../include/implementerKit/Win32ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
+SOURCE=../../../src/ImplementerKit/Win32ResourceStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ResourceStream.h
+SOURCE=../../../include/implementerKit/Win32ResourceStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp
+SOURCE=../../../src/ImplementerKit/Win32ScrollPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ScrollPeer.h
+SOURCE=../../../include/implementerKit/Win32ScrollPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
+SOURCE=../../../include/implementerKit/Win32SystemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\implementerkit\Win32Toolbar.cpp
+SOURCE=../../../src/implementerkit/Win32Toolbar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Toolbar.h
+SOURCE=../../../include/implementerKit/Win32Toolbar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ToolKit.cpp
+SOURCE=../../../src/ImplementerKit/Win32ToolKit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ToolKit.h
+SOURCE=../../../include/implementerKit/Win32ToolKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Tree.cpp
+SOURCE=../../../src/ImplementerKit/Win32Tree.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Tree.h
+SOURCE=../../../include/implementerKit/Win32Tree.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32Window.cpp
+SOURCE=../../../src/ImplementerKit/Win32Window.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32Window.h
+SOURCE=../../../include/implementerKit/Win32Window.h
 # End Source File
 # End Group
 # Begin Group "Events"
@@ -989,199 +977,195 @@ SOURCE=..\..\..\include\implementerKit\Win32Window.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ButtonEvent.cpp
+SOURCE=../../../src/Events/ButtonEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ButtonEvent.h
+SOURCE=../../../include/events/ButtonEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ClipboardEvent.cpp
+SOURCE=../../../src/Events/ClipboardEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ClipboardEvent.h
+SOURCE=../../../include/events/ClipboardEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ColumnItemEvent.cpp
+SOURCE=../../../src/Events/ColumnItemEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ColumnItemEvent.h
+SOURCE=../../../include/events/ColumnItemEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ColumnModelEvent.cpp
+SOURCE=../../../src/Events/ColumnModelEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ColumnModelEvent.h
+SOURCE=../../../include/events/ColumnModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ComponentEvent.h
+SOURCE=../../../include/events/ComponentEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ControlEvent.cpp
+SOURCE=../../../src/Events/ControlEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ControlEvent.h
+SOURCE=../../../include/events/ControlEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\FocusEvent.cpp
+SOURCE=../../../src/Events/FocusEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\FocusEvent.h
+SOURCE=../../../include/events/FocusEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\FrameEvent.h
+SOURCE=../../../include/events/FrameEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\HelpEvent.cpp
+SOURCE=../../../src/Events/HelpEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\HelpEvent.h
+SOURCE=../../../include/events/HelpEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ImageListEvent.h
+SOURCE=../../../include/events/ImageListEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ItemEditorEvent.h
+SOURCE=../../../include/events/ItemEditorEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ItemEvent.cpp
+SOURCE=../../../src/Events/ItemEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ItemEvent.h
+SOURCE=../../../include/events/ItemEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\KeyboardEvent.h
+SOURCE=../../../include/events/KeyboardEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ListModelEvent.cpp
+SOURCE=../../../src/Events/ListModelEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ListModelEvent.h
+SOURCE=../../../include/events/ListModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
+SOURCE=../../../src/Events/MenuItemEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\MenuItemEvent.h
+SOURCE=../../../include/events/MenuItemEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ModelEvent.h
+SOURCE=../../../include/events/ModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\MouseEvent.cpp
+SOURCE=../../../src/Events/MouseEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\MouseEvent.h
+SOURCE=../../../include/events/MouseEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\NotifyEvent.h
+SOURCE=../../../include/events/NotifyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ScrollEvent.h
+SOURCE=../../../include/events/ScrollEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\TableModelEvent.cpp
+SOURCE=../../../include/events/TableModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\TableModelEvent.h
+SOURCE=../../../src/Events/TabModelEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\TabModelEvent.cpp
+SOURCE=../../../include/events/TabModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\TabModelEvent.h
+SOURCE=../../../src/Events/TextEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\TextEvent.cpp
+SOURCE=../../../include/events/TextEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\TextEvent.h
+SOURCE=../../../src/Events/TimerEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\TimerEvent.cpp
+SOURCE=../../../include/events/TimerEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\TimerEvent.h
+SOURCE=../../../src/Events/ToolTipEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ToolTipEvent.cpp
+SOURCE=../../../include/events/ToolTipEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ToolTipEvent.h
+SOURCE=../../../src/Events/TreeModelEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\TreeModelEvent.cpp
+SOURCE=../../../include/events/TreeModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\TreeModelEvent.h
+SOURCE=../../../src/Events/UndoRedoEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\UndoRedoEvent.cpp
+SOURCE=../../../include/events/UndoRedoEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\UndoRedoEvent.h
+SOURCE=../../../src/Events/ValidationEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\ValidationEvent.cpp
+SOURCE=../../../include/events/ValidationEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\ValidationEvent.h
+SOURCE=../../../src/Events/WhatsThisHelpEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Events\WhatsThisHelpEvent.cpp
+SOURCE=../../../include/events/WhatsThisHelpEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\events\WhatsThisHelpEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\events\WindowEvent.h
+SOURCE=../../../include/events/WindowEvent.h
 # End Source File
 # End Group
 # Begin Group "MVC"
@@ -1189,219 +1173,211 @@ SOURCE=..\..\..\include\events\WindowEvent.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractListModel.cpp
+SOURCE=../../../src/core/AbstractListModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractListModel.h
+SOURCE=../../../include/core/AbstractListModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractModel.h
+SOURCE=../../../include/core/AbstractModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractTableModel.cpp
+SOURCE=../../../src/core/AbstractTextModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractTableModel.h
+SOURCE=../../../include/core/AbstractTextModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractTextModel.cpp
+SOURCE=../../../src/core/AbstractTreeModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractTextModel.h
+SOURCE=../../../include/core/AbstractTreeModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractTreeModel.cpp
+SOURCE=../../../src/core/AbstractView.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractTreeModel.h
+SOURCE=../../../include/core/AbstractView.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\AbstractView.cpp
+SOURCE=../../../include/core/ColumnItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\AbstractView.h
+SOURCE=../../../include/core/ColumnModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ColumnItem.h
+SOURCE=../../../src/core/DefaultColumnItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ColumnModel.h
+SOURCE=../../../include/core/DefaultColumnItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultColumnItem.cpp
+SOURCE=../../../src/core/DefaultColumnModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultColumnItem.h
+SOURCE=../../../include/core/DefaultColumnModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultColumnModel.cpp
+SOURCE=../../../src/core/DefaultListItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultColumnModel.h
+SOURCE=../../../include/core/DefaultListItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultListItem.cpp
+SOURCE=../../../src/core/DefaultListModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultListItem.h
+SOURCE=../../../include/core/DefaultListModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultListModel.cpp
+SOURCE=../../../src/core/DefaultMenuItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultListModel.h
+SOURCE=../../../include/core/DefaultMenuItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultMenuItem.cpp
+SOURCE=../../../src/core/DefaultTableCellItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultMenuItem.h
+SOURCE=../../../include/core/DefaultTableCellItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTableCellItem.cpp
+SOURCE=../../../src/core/DefaultTableModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTableCellItem.h
+SOURCE=../../../include/core/DefaultTableModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTableModel.cpp
+SOURCE=../../../src/core/DefaultTabModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTableModel.h
+SOURCE=../../../include/core/DefaultTabModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTabModel.cpp
+SOURCE=../../../src/core/DefaultTabPage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTabModel.h
+SOURCE=../../../include/core/DefaultTabPage.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTabPage.cpp
+SOURCE=../../../src/core/DefaultTextModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTabPage.h
+SOURCE=../../../include/core/DefaultTextModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTextModel.cpp
+SOURCE=../../../src/core/DefaultTreeItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTextModel.h
+SOURCE=../../../include/core/DefaultTreeItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTreeItem.cpp
+SOURCE=../../../src/core/DefaultTreeModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTreeItem.h
+SOURCE=../../../include/core/DefaultTreeModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DefaultTreeModel.cpp
+SOURCE=../../../include/core/DocManagerPolicy.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DefaultTreeModel.h
+SOURCE=../../../include/core/Document.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DocManagerPolicy.h
+SOURCE=../../../include/core/DocumentBasedApplication.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Document.h
+SOURCE=../../../src/core/DocumentManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DocumentBasedApplication.h
+SOURCE=../../../include/core/DocumentManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\DocumentManager.cpp
+SOURCE=../../../include/core/ListItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\DocumentManager.h
+SOURCE=../../../include/core/ListModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ListItem.h
+SOURCE=../../../src/core/Model.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ListModel.h
+SOURCE=../../../include/core/Model.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Model.cpp
+SOURCE=../../../include/ModelViewKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Model.h
+SOURCE=../../../include/core/TableCellItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\ModelViewKit.h
+SOURCE=../../../include/core/TableModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TableCellItem.h
+SOURCE=../../../include/core/TabModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TableModel.h
+SOURCE=../../../include/core/TabPage.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TabModel.h
+SOURCE=../../../include/core/TextModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TabPage.h
+SOURCE=../../../include/core/TreeItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TextModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\TreeItem.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\core\TreeModel.h
+SOURCE=../../../include/core/TreeModel.h
 # End Source File
 # End Group
 # Begin Group "Controls"
@@ -1409,235 +1385,247 @@ SOURCE=..\..\..\include\core\TreeModel.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Button.h
+SOURCE=../../../include/core/Button.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CheckBoxControl.cpp
+SOURCE=../../../src/core/CheckBoxControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CheckBoxControl.h
+SOURCE=../../../include/core/CheckBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ComboBoxControl.cpp
+SOURCE=../../../src/core/ComboBoxControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ComboBoxControl.h
+SOURCE=../../../include/core/ComboBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CommandButton.cpp
+SOURCE=../../../src/core/CommandButton.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CommandButton.h
+SOURCE=../../../include/core/CommandButton.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ControlContainer.cpp
+SOURCE=../../../src/core/ControlContainer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ControlContainer.h
+SOURCE=../../../include/core/ControlContainer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\ControlsKit.h
+SOURCE=../../../include/ControlsKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\CustomControl.cpp
+SOURCE=../../../src/core/CustomControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\CustomControl.h
+SOURCE=../../../include/core/CustomControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\HeaderControl.cpp
+SOURCE=../../../src/core/HeaderControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\HeaderControl.h
+SOURCE=../../../include/core/HeaderControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\HTMLBrowserControl.cpp
+SOURCE=../../../src/core/HTMLBrowserControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\HTMLBrowserControl.h
+SOURCE=../../../include/core/HTMLBrowserControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ImageControl.cpp
+SOURCE=../../../src/core/ImageControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ImageControl.h
+SOURCE=../../../include/core/ImageControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Label.cpp
+SOURCE=../../../src/core/Label.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Label.h
+SOURCE=../../../include/core/Label.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ListBoxControl.cpp
+SOURCE=../../../src/core/ListBoxControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ListBoxControl.h
+SOURCE=../../../include/core/ListBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ListViewControl.cpp
+SOURCE=../../../src/core/ListViewControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ListViewControl.h
+SOURCE=../../../include/core/ListViewControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\MultilineTextControl.h
+SOURCE=../../../include/core/MultilineTextControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\OpenGLControl.h
+SOURCE=../../../include/core/OpenGLControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Panel.cpp
+SOURCE=../../../src/core/Panel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Panel.h
+SOURCE=../../../include/core/Panel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ProgressControl.cpp
+SOURCE=../../../src/core/ProgressControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ProgressControl.h
+SOURCE=../../../include/core/ProgressControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\PushButton.cpp
+SOURCE=../../../src/core/PushButton.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\PushButton.h
+SOURCE=../../../include/core/PushButton.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\RadioButtonControl.cpp
+SOURCE=../../../src/core/RadioButtonControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\RadioButtonControl.h
+SOURCE=../../../include/core/RadioButtonControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ScrollBarControl.h
+SOURCE=../../../include/core/ScrollBarControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ScrollbarManager.h
+SOURCE=../../../src/core/ScrollbarManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\SliderControl.cpp
+SOURCE=../../../include/core/ScrollbarManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\SliderControl.h
+SOURCE=../../../src/core/SliderControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Splitter.cpp
+SOURCE=../../../include/core/SliderControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Splitter.h
+SOURCE=../../../src/core/Splitter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\StatusBar.cpp
+SOURCE=../../../include/core/Splitter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\StatusBar.h
+SOURCE=../../../src/core/StatusBar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TabbedPages.cpp
+SOURCE=../../../include/core/StatusBar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TabbedPages.h
+SOURCE=../../../src/core/TabbedPages.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TableControl.cpp
+SOURCE=../../../include/core/TabbedPages.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TableControl.h
+SOURCE=../../../src/core/TableControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TextControl.cpp
+SOURCE=../../../include/core/TableControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TextControl.h
+SOURCE=../../../src/core/TextControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ToggledButton.cpp
+SOURCE=../../../include/core/TextControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ToggledButton.h
+SOURCE=../../../src/core/TimerComponent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\Toolbar.cpp
+SOURCE=../../../include/core/TimerComponent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\Toolbar.h
+SOURCE=../../../src/core/ToggledButton.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\ToolbarDock.cpp
+SOURCE=../../../include/core/ToggledButton.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\ToolbarDock.h
+SOURCE=../../../src/core/Toolbar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TreeControl.cpp
+SOURCE=../../../include/core/Toolbar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TreeControl.h
+SOURCE=../../../src/core/ToolbarDock.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\core\TreeListControl.cpp
+SOURCE=../../../include/core/ToolbarDock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\core\TreeListControl.h
+SOURCE=../../../src/core/TreeControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=../../../include/core/TreeControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=../../../src/core/TreeListControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=../../../include/core/TreeListControl.h
 # End Source File
 # End Group
 # Begin Group "Peer Interfaces"
@@ -1645,91 +1633,91 @@ SOURCE=..\..\..\include\core\TreeListControl.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ApplicationPeer.h
+SOURCE=../../../include/implementer/ApplicationPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ButtonPeer.h
+SOURCE=../../../include/implementer/ButtonPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\CommonDialogPeer.h
+SOURCE=../../../include/implementer/CommonDialogPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ControlPeer.h
+SOURCE=../../../include/implementer/ControlPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\CursorPeer.h
+SOURCE=../../../include/implementer/CursorPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\DataObjectPeer.h
+SOURCE=../../../include/implementer/DataObjectPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\DesktopPeer.h
+SOURCE=../../../include/implementer/DesktopPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\DialogPeer.h
+SOURCE=../../../include/implementer/DialogPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\DragDropPeer.h
+SOURCE=../../../include/implementer/DragDropPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\DropTargetPeer.h
+SOURCE=../../../include/implementer/DropTargetPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\HTMLBrowserPeer.h
+SOURCE=../../../include/implementer/HTMLBrowserPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ListviewPeer.h
+SOURCE=../../../include/implementer/ListviewPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\MenuBarPeer.h
+SOURCE=../../../include/implementer/MenuBarPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\MenuItemPeer.h
+SOURCE=../../../include/implementer/MenuItemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\PopupMenuPeer.h
+SOURCE=../../../include/implementer/PopupMenuPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\PrintContextPeer.h
+SOURCE=../../../include/implementer/PrintContextPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\PrintPeer.h
+SOURCE=../../../include/implementer/PrintPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ResourceStreamPeer.h
+SOURCE=../../../include/implementer/ResourceStreamPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ScrollPeer.h
+SOURCE=../../../include/implementer/ScrollPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\TextPeer.h
+SOURCE=../../../include/implementer/TextPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\TreePeer.h
+SOURCE=../../../include/implementer/TreePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\WindowPeer.h
+SOURCE=../../../include/implementer/WindowPeer.h
 # End Source File
 # End Group
 # End Target
