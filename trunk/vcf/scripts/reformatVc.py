@@ -30,7 +30,7 @@ g_default_config = "reformatVc.ini"
 g_default_section = "vcfscript"
 g_default_allProjects = './build/vc60/vcfAllProjects.dsw'
 g_default_allExamples = './Examples/Examples.dsw'
-g_dependenciesWorkspace = './build/vc60/vcfAllLibs.dsw'
+g_dependenciesWorkspace = './build/vc60/vcfMasterDepencies.dsw'
 g_dependencyFilterExamplesProject = 'examples/'
 
 # ( hardcoded )
@@ -278,7 +278,7 @@ class FileUtils:
         if ( path and path[0] == '.' ):
             if ( 1 < len(path) and path[1] in '/\\' ):
                 hasCurr = True
-            
+
         path = os.path.normpath( path ) # eliminates the first './' unless it is just that
 
         if ( hasCurr and keepFirstDot ):
@@ -501,6 +501,8 @@ class FileUtils:
 
 
 ################################################################################
+# OptionEx is used to subclass the Option class in an effor to add flexibility to the use of the command line options
+# Even if still used by the script, the effort substantially failed
 def tck_getExtendValues( option, opt, value ):
     s = value
     return s
@@ -590,7 +592,7 @@ class OptionEx( Option ):
 
 
     TYPE_CHECKER = copy(Option.TYPE_CHECKER)
-    TYPE_CHECKER["extend"] = tck_getExtendValues
+    TYPE_CHECKER["extend"]  = tck_getExtendValues
     TYPE_CHECKER["dbgrlsN"] = tck_getDbgRlsValuesN
     TYPE_CHECKER["dbgrlsS"] = tck_getDbgRlsValuesS
     #TYPE_CHECKER["optnum"] = tck_getOptnumValues
@@ -630,6 +632,10 @@ class OptionEx( Option ):
     pass
 
 ################################################################################
+# The options list is first created by the call optparser.parse_args
+# But because we also use a configuration file and we still want the command line options to have priority 
+# on the options given by the configuration file, then we need to find out which options
+# have been really given by the user on the command line
 class ExistingOptions:
     """ Collects all the options given by the user on the command line """
 
@@ -740,24 +746,24 @@ class DspApp:
 
         #self.initialCwd = self.getcwd()
         #self.workingDir = self.initialCwd
-        
+
         self.hasOptions = False
 
         self.usage = "usage: %prog [-f] [-r] [-q] [-v] other args"
         self.version = "%prog - ver 1.0.0 - 13 mar 2004"
-        
+
         self.allowedDirsList = []
         self.allowedAbsoluteDirsList = []
         self.excludedSubdirsList = []
-        
+
         self.staticLibrariesList = []
         self.staticLibrariesListLwr = []
         self.dynamicLibrariesList = []
         self.dynamicLibrariesListLwr = []
-        
+
         self.gtkLibrariesList = g_gtkLibrariesList # ( hardcoded )
         self.gtkLibrariesListLwr = []
-        
+
         self.allProjectNamesList = []
         self.allProjectPathsList = []
         self.createWorkspacesList = []
@@ -861,7 +867,7 @@ class DspApp:
         else:
             raise Exception( 'app.getcwd: no attrib options yet' )
         return cwd
-    
+
     def printOptions( self ):
         #defaults = optparser.defaults
         #if defaults:
@@ -985,6 +991,8 @@ class DspApp:
         return value
 
     def readConfigFile( self ):
+        # read all options from the reformatVc.ini configuration file    
+
         # if ( self.options.config != self.configOptions.configfile )
         if ( self.options.config and os.path.exists( self.options.config ) ):
             self.config.read( self.options.config )
@@ -1151,6 +1159,8 @@ class DspApp:
         return
 
     def makeLibraryDependencyList( self, section ):
+        # function still running but obsolete by fact ( as replaced by the use of g_dependenciesWorkspace only )
+        # creates a depencencies list from [vcf_staticLibraries] and [vcf_dynamicLibraries] sections
         libraryDependencyList = []
         libraryDependencyListLwr = []
         if ( self.config.has_section( section ) ):
@@ -1213,7 +1223,7 @@ class Workspace:
         self.relPrjPaths = []
         self.prjNameAbsPathDict = {}
         self.prjNameRelPathDict = {}
-        
+
         self.filename = ''
         self.setName( workspacename )
         self.dependencies = {}
@@ -1250,6 +1260,7 @@ class Workspace:
         return
 
     def duplicateVcs( self, updateOriginal ):
+        # duplicates original workspace and/or reformat it in a canonic way
         if ( updateOriginal ):                # always
             self.duplicateVc( '' )  # this just reformat the original ( see duplicateVc )
 
@@ -1260,7 +1271,8 @@ class Workspace:
             self.duplicateVc( compilerVc71 )
 
     def duplicateVc( self, newCompiler ):
-        # newCompiler == '' --> just reformat the original ( i.e. make sure projectPath has the "" around of it
+        # duplicates workspaces from the current compiler (i.e. vc6) into the new compiler name ( _vc70 ) and subdirectory (vc70/)
+        # just reformat the original if (newCompiler == '') ( i.e. make sure projectPath has the "" around of it )
 
         if ( app.options.enableVcfSpecific ):
             newFilename = self.filename
@@ -1288,6 +1300,8 @@ class Workspace:
         return
 
     def replaceProjectEntries( lines, wsp, newCompiler, filename ):
+        # makes sure the project entries of a workspace are properly formatted
+        # i.e. they must be inside commas and the relative path name written in normal/canonic way
         recP1 = re.compile( r'Project:\s*?"(?P<prjName>[a-zA-Z0-9_\- ]*?)"\s*?=' )
         # recP2 = re.compile( r'Project:\s*?"(?P<prjName>[a-zA-Z0-9_\- ]*?)"\s*?=\s*?"(?P<prjPath>[a-zA-Z0-9_\- \\/.]*?)"' )
         recP2 = re.compile( r'Project:\s*?"(?P<prjName>[a-zA-Z0-9_\- ]*?)"\s*?=\s*?(?P<prjPath>"?([a-zA-Z0-9_\- \\/.]*?)"?)(?P<pkgOwnr>\s*?-\s*?Package Owner)' )
@@ -1316,7 +1330,7 @@ class Workspace:
                 else:
                     # we need to do this first otherwise problems under Cygwin when unixStyle=True but the path starts with r'.\'
                     newPath = FileUtils.normPathSimple( prjPath, app.options.unixStyle )
-                    
+
                 newline = r'Project: "' + prjName + r'"="' + newPath + '" - Package Owner=<4>\n'
 
                 lines[n] = newline
@@ -1326,12 +1340,15 @@ class Workspace:
     replaceProjectEntries = staticmethod(replaceProjectEntries)
 
     def fillProjectsLists( self, filterString, ignorecase, addLibraries=False, addGtkLibraries=False ):
+        # creates the list of projects forming the workspace
+        # the list are creating from the list of all the managed projects *filtered* by the condition
+        # of having filterString in their PathNames 
         self.prjNames = []
         self.absPrjPaths = []
         self.relPrjPaths = []
         self.prjNameAbsPathDict = {}
         self.prjNameRelPathDict = {}
-        
+
         #filterStringLwr = filterString.lower()
         #filterStringDir = os.path.dirname( filterStringLwr )
         #filterStringDir = FileUtils.normDir( filterStringDir, app.options.unixStyle, True )
@@ -1346,21 +1363,23 @@ class Workspace:
             relPrjPath = FileUtils.relativePath( app.currentdir, absPrjPath, True, app.options.unixStyle )
             relPrjPathLwr = relPrjPath
             if ( ignorecase ):
-                relPrjPathLwr = relPrjPathLwr.lower()                    
+                relPrjPathLwr = relPrjPathLwr.lower()
             if ( not filterString or relPrjPathLwr.find( filterString ) != -1 ):
                 # do not use FileUtils.relativePath because one thing is the path relative to the cwd and different thing is a path relative to the workspace path
                 self.addProject( prjName, absPrjPath )
-                
+
         return
 
     def fillProjectsListsAddLibraries( self, filteredList ):
+        # adds the libraries names in the [vcf_staticLibraries] and [vcf_dynamicLibraries] section to the workspace
+        # because any workspace *must* have those libraries in order to compile the projects dependent on it
         if ( filteredList ):
             # filter: we need to add the libraries
             addLibrariesStatic  = True
             addLibrariesDynamic = True
             #JC I turned this to False so that we don't bother with GTK Libs
             addLibrariesGtk     = False
-            
+
             if ( addLibrariesStatic ):
                 for prjName in app.staticLibrariesList:
                     if ( not app.prjNameAbsPathDict.has_key( prjName ) ):
@@ -1372,7 +1391,7 @@ class Workspace:
                 for prjName in app.dynamicLibrariesList:
                     absPrjPath = app.prjNameAbsPathDict[ prjName ]
                     self.addProject( prjName, absPrjPath )
-                    
+
             if ( addLibrariesGtk ):
                 for prjName in app.gtkLibrariesList:
                     absPrjPath = app.prjNameAbsPathDict[ prjName ]
@@ -1388,10 +1407,10 @@ class Workspace:
         #    return
 
         self.fillProjectsLists( filterString, ignorecase )
-        
+
         filteredList = ( filterString and filterString != '.' and filterString != './' and filterString != '.\\' )
         self.fillProjectsListsAddLibraries( filteredList )
-        
+
         self.copyWorkspaceDependencies( g_dependenciesWorkspace )
 
         workspacedirname = os.path.dirname( self.filename )
@@ -1457,13 +1476,14 @@ class Workspace:
                 dependencyStringAllProjects = self.calcDependencyStringListAllProjects( prjName, prjNames, g_dependencyFilterExamplesProject )
                 dependencyStringList = dependencyStringListLib + dependencyStringAllProjects
             else:
-                dependencyStringList = self.calcDependencyStringList( prjName )
-                if ( not dependencyStringList ):
-                    # for projects without dependencies, copies them from g_dependenciesWorkspace
-                    if ( self.dependencies ):
-                        if ( self.dependencies.has_key( prjName ) ):
-                            dependencyStringList = self.dependencies[ prjName ]
-                    
+                # disabled the dependencies creation: now they are all copied from g_dependenciesWorkspace 2004/04/08
+                #dependencyStringList = self.calcDependencyStringList( prjName )
+                #if ( not dependencyStringList ):
+                # for projects without dependencies, copies them from g_dependenciesWorkspace
+                if ( self.dependencies ):
+                    if ( self.dependencies.has_key( prjName ) ):
+                        dependencyStringList = self.dependencies[ prjName ]
+
 
             if ( dependencyStringList ):
                 fd.writelines( dependencyStringList )
@@ -1477,6 +1497,7 @@ class Workspace:
         return
 
     def copyWorkspaceDependencies( self, dependencyWorkspaceName ):
+        """ Copies all dependencies from a workspace considered master for this"""
         self.dependencies.clear()
 
         if ( not dependencyWorkspaceName ):
@@ -1735,7 +1756,7 @@ class DspFile:
         self.projectName = ''
         self.configName = ''
         self.addKind = enum_ADD_NONE
-        
+
         self.resetWarnings()
 
         return
@@ -1766,15 +1787,15 @@ class DspFile:
         self.projectName = ''
         self.configName = ''
         self.addKind = enum_ADD_NONE
-        
+
         self.resetWarnings()
-        
+
         return
 
     def resetWarnings( self ):
         self.wdone_dirs_different = False
         return
-    
+
     def setFilename( self, filename ):
         self.filename = filename
         self.filetitle = os.path.basename( filename )
@@ -2522,7 +2543,7 @@ class DspFile:
             addDir  = +1 # never remove it
             addFile = +1
             line = self.storeRemoveOption( line, '/out:', self.OutputDirOut, self.MainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile )
-            
+
         if ( 0 < app.options.warning ):
             if ( self.appType == enumAppTypeExe and self.OutputDirOut != self.PropIntermeDir ):
                 if ( not self.wdone_dirs_different and self.OutputDirOut == './' or self.OutputDirOut == '\\'  ):
@@ -2530,7 +2551,7 @@ class DspFile:
                     print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: [%s] != [%s]' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
 
         return line
-    
+
     def storeRemoveOptionOptimize( self, line ):
         changeSomething = ( app.options.reformatOptionOptimize[self.c] and app.options.reformatOptionOptimize[self.c] != '0' )
         if ( self.addKind == enum_ADD_CPP and changeSomething ):
@@ -2542,7 +2563,7 @@ class DspFile:
                 line = self.storeRemoveOption( line, opt, '', '', False, changeSomething, addDir, addFile, False )
             self.storedOptions.append( option )
         return line
-        
+
     def storeRemoveOptionPdb( self, line ):
         # reformat a line for ProgramDatabase option ( /Fd /pdb: )
         changeSomething = ( app.options.reformatOptionPdb[self.c] != 0 )
@@ -2571,7 +2592,7 @@ class DspFile:
                 addDir  = app.options.reformatOptionPdb[self.c]
                 addFile = addDir # we usually want both in the same way
                 line = self.storeRemoveOption( line, '/debug', '', '', False, changeSomething, addDir, addFile )
-                
+
         elif ( self.addKind == enum_SUBTRACT_LINK32 ):
             # '/debug' in # SUBTRACT LINK32 disable the pdb option
             addDir  = -(app.options.reformatOptionPdb[self.c]) # /debug in the SUBTRACT line has opposite meaning
@@ -2675,9 +2696,9 @@ class DspFile:
         addString = ' ' # this space make sure the added options are separated from the previous one
         for fullOption in self.storedOptions:
             addString += fullOption + ' '
-            
+
         self.storedOptions = [] # reset what once it is done
-        
+
         i = index
         if ( i != -1 ):
             #inserting
@@ -2807,14 +2828,14 @@ class Walker:
 
     def job( self ):
         singleFile = ( app.options.filename != '' )
-        
+
         self.manageProjects()
-        
+
         if ( not singleFile ):
             self.conformLibraries()
             self.createWorkspaces()
             self.duplicateWorkspaces()
-            
+
         return
 
     def manageProjects( self ):
@@ -2843,7 +2864,7 @@ class Walker:
                 # skip filenames like: file_vc70.dsp or file_vc71.dsp
                 filename = FileUtils.normPath( filename, app.options.unixStyle )
 
-				#JC - I added some extra code to skip over file_icl7.dsp as well!
+                #JC - I added some extra code to skip over file_icl7.dsp as well!
                 if ( app.options.enableVcfSpecific ):
                     fn = filename.lower()
                     if ( ( fn.find( '_' + compilerVc70 ) != -1 ) or ( fn.find( '_' + compilerVc71 ) != -1 ) or ( fn.find( '_' + compilerIcl7 ) != -1 ) ):
@@ -2943,12 +2964,17 @@ Notes:
     5) reformatOptionOutput = d:-1, r:-1
         this option affects only the /Fo option
         the linker option /out: instead is so important that the script always garuantees that it is there in the dsp files
-        
+
     6) For /pdb /debug  infos see the other notes below
 
     7) The way a configuration of a dsp project is considered debug versus release is still naive
         so it might fail if a user doesn't call it Debug
         This can be easily fixed. See the function checkSetDebug
+
+    8) Dependencies: they are only managed by copy from the g_dependenciesWorkspace
+        Which is a master workspace created only for this purpose.
+        this doesn't let the program to ensure certain dependency are always there, but it is 
+        the simplest way to manage them in the correct way.
 
 Limitations:
     1) The options work better form the configuration files
@@ -2957,34 +2983,33 @@ Limitations:
     2) A program database option is mosly enabled/disabled by the /debug option ( generate debug info )
         which is present or in the #ADD LINK32 line or in the #SUBTRACT LINK32 line
         But this program doesn't affect (create) any SUBTRACT line if it doesn't exist yet
-        
+
     3) It is possible to change the option from unixStyle = True --> False
         but then it wouldn't work under Cygwin
-        
-        
-        
+
+
+
 Other notes on some Visual Studio options:
-    
+
     1) Program Database / Debug informations
         /debug linker option activates debug informations
         Once you have /debug you can only choose where to place those infos,
         so the debug footprint will be the same, unless you put those infos in the pdb files and then you delete them
-        
+
         The linker option /PDB:NONE specify that they are not placed in any pdb files. They go directly into the EXEcutable or DLL
         The linker option /PDB:filename.pdb specify instead that the EXEcutable or DLL contains only a link to where the pdb files is placed
-        
+
         The debugging informations ( minimal or not ) are necessary for the linker.
         The compiler option /Zd and /Z7 make the debugging informations to be embedded into the obj files.
         The compiler option /Zi and /ZI make the debugging informations to be embedded into a pdb file
         The compiler option /Fd only lets me to determine the name of the pdb file. Nothing else.
-        
+
         That's all.
         As consequence of that:
         a) If you don't want any pdb files around, you need to use /Zd or /Z7 together with /PDB:NONE
         b) If you use /Zi or /ZI and you distribute a static library, you need to distribute the pdb files too.
            Important: under vc7 if you use /Zi or /ZI without the option /Fd you'll have warnings like:
             # libAGG_vc70_sd.lib(agg_affine_matrix.obj) : warning LNK4204: 'd:\Projs\GShell\Libraries\Vcf\vcf-active\examples\SketchIt\vc70\Debug\vc70.pdb' is missing debugging information for referencing module; linking object as if no debug info
-            each time you compile a program with the /debug linker option to that library               
-        
-"""
+            each time you compile a program with the /debug linker option to that library
 
+"""
