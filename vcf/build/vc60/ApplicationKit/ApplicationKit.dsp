@@ -114,6 +114,10 @@ SOURCE=..\..\..\src\Core\Application.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\ApplicationKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\BasicTableItemEditor.cpp
 # End Source File
 # Begin Source File
@@ -203,6 +207,10 @@ SOURCE=..\..\..\src\Core\Control.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ControlEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=\vcf\src\graphics\\ControlGraphicsContext.cpp
 # End Source File
 # Begin Source File
 
@@ -334,6 +342,14 @@ SOURCE=..\..\..\src\Events\MouseEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\OpenGLControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\graphics\OpenGLControlContext.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Core\Panel.cpp
 # End Source File
 # Begin Source File
@@ -419,6 +435,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ComboBox.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\implementerkit\Win32ControlContext.cpp
 # End Source File
 # Begin Source File
 
@@ -539,6 +559,10 @@ SOURCE=..\..\..\include\core\Application.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\ApplicationException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ApplicationKit.h
 # End Source File
 # Begin Source File
 
@@ -698,6 +722,10 @@ SOURCE=..\..\..\include\events\ControlEvent.h
 # End Source File
 # Begin Source File
 
+SOURCE=\vcf\include\graphics\ControlGraphicsContext.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Controller.h
 # End Source File
 # Begin Source File
@@ -854,7 +882,7 @@ SOURCE=..\..\..\include\core\Item.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ItemEditorEvent.h
+SOURCE=..\..\..\include\events\ItemEditorEvent.h
 # End Source File
 # Begin Source File
 
@@ -983,6 +1011,14 @@ SOURCE=..\..\..\include\events\NotifyListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\exceptions\NoToolKitFoundException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\OpenGLControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\OpenGLControlContext.h
 # End Source File
 # Begin Source File
 
@@ -1207,6 +1243,10 @@ SOURCE=..\..\..\include\implementerKit\Win32ComboBox.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
 # End Source File
 # Begin Source File
 
