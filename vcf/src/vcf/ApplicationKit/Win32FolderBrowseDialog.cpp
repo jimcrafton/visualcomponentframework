@@ -191,15 +191,17 @@ int CALLBACK Win32FolderBrowseDialog::BrowseDlgCallbackProc( HWND hwnd, UINT uMs
 			//the "My Computer" parent (can't rely on using "My Computer" since the
 			//user is free to rename it
 
-			if ( directory[directory.size()-1] != '\\' ) {
-				directory += "\\";
-			}
-			else if ( directory[directory.size()-1] != '/' ) {
-				directory += "/";
-			}
+			
 			FilePath dirPath = directory;
+			directory = dirPath;
+
+			if ( directory[directory.size()-1] != '/' ) {
+				directory += FilePath::getDirectorySeparator();
+			}
+			dirPath = directory;
+
 			std::vector<String> pathComponents = dirPath.getPathComponents();
-			String driveName = StringUtils::lowerCase( dirPath.getDriveName() + ":" );
+			String driveName = StringUtils::lowerCase( dirPath.getDriveName() );
 
 			HTREEITEM driveRoot = Win32FolderBrowseDialog::getDriveRoot( treeCtrl, desktop, driveName, pathComponents );
 
@@ -271,6 +273,14 @@ String Win32FolderBrowseDialog::getDirectory()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/21 00:19:10  ddiego
+*fixed a few more res loading bugs, and added yet another resource example.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

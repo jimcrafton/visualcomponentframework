@@ -15,35 +15,49 @@ using namespace VCF;
 
 BasicException::BasicException(const String & message)
 {
-	this->message_ = message;
-	System::print( message_ );
+	message_ = message;
+	//JC - I commented this out - I am not sure want to FORCE 
+	//this kind of output? It can clutter up the command line.
+	//System::println( "Exception: " + message_ );
 }
 
 BasicException::BasicException( const VCF::String & message, const int lineNumber )
 {
-	this->message_ = message;
+	message_ = message;
 #ifdef _DEBUG
 	char txt[256];
 	sprintf( txt, "\nerror at line number %d", lineNumber );
-	this->message_ += txt;
+	message_ += txt;
 #endif
-	System::print( message_ );
+
+	//JC - I commented this out - I am not sure want to FORCE 
+	//this kind of output? It can clutter up the command line.
+	//System::println( "Exception: " + message_ );1
+	
 }
 
 String BasicException::getMessage()
 {
-	return this->message_;
+	return message_;
 }
 
 void BasicException::setMessage( const VCF::String& message )
 {
-	this->message_ = message;
+	message_ = message;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/17 04:52:49  ddiego
+*added some minor fixes to win32 resource loading, and added 2 new examples that demonstrate basic resource loading and basic usage of dialogs.
+*
 *Revision 1.2  2004/08/07 02:49:12  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

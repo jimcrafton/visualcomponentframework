@@ -14,9 +14,70 @@ namespace VCF {
 	class OSXUtils {
 	public:
 		static String getErrorString( int errorCode );
+		
+		static String extractStringValueFromCFType( CFTypeRef ref );
+		
+		static ulong32 translateButtonMask( EventMouseButton button );
+		
+		static ulong32 translateKeyMask( UInt32 keyMod );
 	};
 
 
+template < typename CFObjType>
+class CFRefObject {
+protected:
+	CFObjType ref_;	
+public:	
+
+	CFRefObject( CFObjType ref ):ref_(ref) {
+		if ( NULL != ref_ ) {
+			CFRetain( ref_ );
+		}
+	}
+	
+	CFRefObject():ref_(NULL){}
+	
+	CFRefObject( const CFRefObject<CFObjType>& rhs ):ref_(NULL) {
+		*this = rhs;
+	}
+	
+	~CFRefObject() {
+		if ( NULL != ref_ ) {			
+			CFRelease( ref_ );
+		}
+	}
+	
+	CFRefObject<CFObjType>& operator=( const CFRefObject<CFObjType>& rhs ) {
+		if ( NULL != ref_ ) {			
+			CFRelease( ref_ );
+		}
+		
+		ref_ = rhs.ref_;
+		
+		if ( NULL != ref_ ) {
+			CFRetain( ref_ );
+		}
+			
+		return *this;
+	}
+	
+	operator CFObjType () {
+		return ref_;
+	}
+	
+	bool operator ==( CFObjType rhs ) const	{
+		return 	ref_ == rhs;
+	}
+	
+	bool operator !=( CFObjType rhs ) const	{
+		return 	ref_ != rhs;
+	}
+	
+	bool operator !() const {
+		return (NULL == ref_ ) ? true: false;
+	}	
+
+};
 
 
 #define vcf_IntToFixed(a)	   ((Fixed)(a) << 16)
@@ -81,7 +142,11 @@ protected:
 };
 
 
-
+/**
+This is a utility class for wrapping CFStringRef and allowing for
+easy assignment to/from a VCF::String class.
+This class also has the ability to output a CFUrlRef
+*/
 class CFTextString {
 public:	
 
@@ -99,6 +164,12 @@ public:
 
     CFTextString( CFStringRef s ) : cfStringRef(nil), unicodeText(NULL){
 		assign( s );
+	}
+	
+	CFTextString( CFURLRef url ) : cfStringRef(nil), unicodeText(NULL){
+		CFStringRef s = CFURLGetString(url);
+		assign( s );
+		CFRelease( s );
 	}
 
 	~CFTextString() {
@@ -132,6 +203,9 @@ public:
 	}
 
 	int length() const {
+		if ( NULL == cfStringRef ) {
+			return 0;
+		}
 		return CFStringGetLength( cfStringRef );
 	}
 
@@ -175,6 +249,13 @@ public:
 
 	operator CFStringRef () const {
 		return cfStringRef;
+	}
+	
+	/**
+	Returns a CFURLRef - the caller is responsible for releasing the reference.
+	*/
+	operator CFURLRef () const {
+		return CFURLCreateWithString( NULL, cfStringRef, NULL );
 	}
 
     operator String () const {
@@ -274,6 +355,17 @@ private:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2004/12/01 04:31:41  ddiego
+ *merged over devmain-0-6-6 code. Marcello did a kick ass job
+ *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+ *that he found. Many, many thanks for this Marcello.
+ *
+ *Revision 1.2.2.2  2004/11/02 05:19:13  ddiego
+ *more osx updates for open file dialog.
+ *
+ *Revision 1.2.2.1  2004/10/10 20:42:08  ddiego
+ *osx updates
+ *
  *Revision 1.2  2004/08/07 02:49:14  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *

@@ -9,13 +9,14 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
-//#include <dlfcn.h>
+#include <dlfcn.h>
 
 
 using namespace VCF;
 
 OSXLibraryPeer::OSXLibraryPeer():
-libHandle_(NULL)
+	libHandle_(NULL),
+	handleIsBundle_(false)
 {
 
 }
@@ -28,46 +29,83 @@ OSXLibraryPeer::~OSXLibraryPeer()
 
 void OSXLibraryPeer::load( const String& libraryFilename )
 {
-	//for now, till we find a better way, we are going
-	//do default to Lazy loading - the alternate is
-	//have all the symbols of libary resolved at once,
-	//which would mean this call would block till that was
-	//done
-	/*
-	libHandle_ = ::dlopen( libraryFilename.c_str(), RTLD_LAZY );
-StringUtils::traceWithArgs( "dlopen( %s ) returned %p\n",
-							libraryFilename.c_str(),  libHandle_ );
-	if ( NULL == libHandle_ ) {
-		String errMessage = dlerror();
+	CFTextString libName;
+	libName = libraryFilename;
+	CFURLRef url = CFURLCreateWithString( NULL, libName, NULL );
+	
+	CFBundleRef bundle = CFBundleCreate( NULL, url );
+	if ( NULL != bundle ) {
+		libHandle_ = bundle;
+		handleIsBundle_ = true;
+		if ( noErr == CFBundleLoadExecutable( bundle ) ) {			
+			CFRelease( bundle );
+			libHandle_ = NULL;
+		}
+	}
+	else {
+		libHandle_ = dlopen( libraryFilename.ansi_c_str(), RTLD_LAZY );	
+	}
+	
+	CFRelease( url );
+	
+	if ( NULL == libHandle_ ) {		
+		String errMessage = "Error opening bundle from file " + libraryFilename;
+		
+		if ( !handleIsBundle_ ) {
+			const char* err = dlerror();
+			if ( NULL != err ) {
+				errMessage = err;
+			}
+		}
 		throw RuntimeException( MAKE_ERROR_MSG_2( errMessage ) );
 	}
-	*/
 }
 
 void* OSXLibraryPeer::getFunction( const String& functionName )
 {
 	void* result = NULL;
-	/*
-	if ( NULL == libHandle_ ) {
-		throw InvalidPointerException( MAKE_ERROR_MSG_2( "You are trying to get function adress without a valid handle to a library" ) );
+	
+	if ( handleIsBundle_ ) {
+		CFBundleRef bundle = (CFBundleRef)libHandle_;
+		CFTextString funcName;
+		funcName = functionName;
+		result = CFBundleGetFunctionPointerForName( bundle, funcName );
 	}
-	result = dlsym( libHandle_, functionName.c_str() );
-StringUtils::traceWithArgs( "error are: %s\n", dlerror() );
-*/
+	else {
+		result = dlsym( libHandle_, functionName.ansi_c_str() );
+	}
+	
 	return result;
 }
 
 void OSXLibraryPeer::unload()
 {
 	if ( NULL != libHandle_ ) {
-		//dlclose( libHandle_ );
+		if ( handleIsBundle_ ) {
+			CFBundleRef bundle = (CFBundleRef)libHandle_;
+			CFBundleUnloadExecutable( bundle );
+			CFRelease( bundle );
+		}
+		else {
+			dlclose( libHandle_ );
+		}
 	}
+	
+	libHandle_ = NULL;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/10 20:42:07  ddiego
+*osx updates
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

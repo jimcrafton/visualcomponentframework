@@ -18,15 +18,11 @@ namespace VCF
 {
 
 class SystemPeer;
-
 class ErrorLog;
-
 class BasicException;
-
 class DateTime;
-
 class Locale;
-
+class ResourceBundle;
 
 /**
 The System object represents basic lower level OS functions. 
@@ -48,7 +44,130 @@ public:
 	*/
 	static void terminate();
 
+	/**
+	Locates the resource directory, if possible.
+	Possible search patterns
+
+	A): Dead simple
+
+	\code
+	<app>.app/
+		<app>.exe
+		Resources/
+			button.png			<-----generic files - not localized
+			<app>.strings		<----- optional
+			en_US/
+				button.png		<-----localized files - localized for US english
+				<app>.strings	<-----localized strings data for en_US
+			pl_PL/
+				button.png		<-----localized files - localized for Poland polish
+				<app>.strings	<-----localized strings data for pl_PL
+			it_IT/
+				button.png		<-----localized files - localized for Italy italian
+				<app>.strings	<-----localized strings data for it_IT
+	\endcode
+
+
+	B): with contents - OSX compatible
+	\code
+	Bundle/
+		/Contents
+			<app>.exe
+			Resources/
+				button.png			<-----generic files - not localized
+				<app>.strings		<----- optional
+				en_US/
+					button.png		<-----localized files - localized for US english
+					<app>.strings	<-----localized strings data for en_US
+				pl_PL/
+					button.png		<-----localized files - localized for Poland polish
+					<app>.strings	<-----localized strings data for pl_PL
+				it_IT/
+					button.png		<-----localized files - localized for Italy italian
+					<app>.strings	<-----localized strings data for it_IT
+	\endcode
+
+	C): with contents and platform - OSX compatible		
+	\code
+	Bundle/
+		/Contents
+			/<OS-Name>
+				<app>.exe
+			Resources/
+				button.png			<-----generic files - not localized
+				<app>.strings		<----- optional
+				en_US/
+					button.png		<-----localized files - localized for US english
+					<app>.strings	<-----localized strings data for en_US
+				pl_PL/
+					button.png		<-----localized files - localized for Poland polish
+					<app>.strings	<-----localized strings data for pl_PL
+				it_IT/
+					button.png		<-----localized files - localized for Italy italian
+					<app>.strings	<-----localized strings data for it_IT
+					
+	\endcode				
+
+	D): with contents, platform, and compiler - OSX compatible		
+	\endcode
+	Bundle/
+		/Contents
+			/<OS-Name>
+				/<compiler>
+					<app>.exe
+			Resources/
+				button.png			<-----generic files - not localized
+				<app>.strings		<----- optional
+				en_US/
+					button.png		<-----localized files - localized for US english
+					<app>.strings	<-----localized strings data for en_US
+				pl_PL/
+					button.png		<-----localized files - localized for Poland polish
+					<app>.strings	<-----localized strings data for pl_PL
+				it_IT/
+					button.png		<-----localized files - localized for Italy italian
+					<app>.strings	<-----localized strings data for it_IT
+
+	\endcode
+	*/
+	static String findResourceDirectory();
 	
+
+
+	/**
+	\par
+	Returns the name of the operating system that the VCF is currently running on.
+	@return String the operating system name. Can be:
+		\li "MacOS" for Mac OS
+		\li	"Linux" for linux based systems
+		\li "Solaris" for solaris systems
+		\li	"Windows" for Win32 9.x based systems
+		\li	"WindowsNT" for Win32 NT based systems
+		\li	"WindowsCE" for WinCE based systems		
+
+	*/
+	static String getOSName();
+
+	/**
+	Returns the version of the operating system.
+	*/
+	static String getOSVersion();
+
+	/**
+	Returns the compiler that was used to build this version of the VCF. This is 
+	a fixed, build setting that is platform and vendor dependant
+	@return String the name of the compiler used to build the VCF. Can be:
+		\li "VC6"			Microsoft Visual C++ 6
+		\li "VC7"			Microsoft Visual C++ 7
+		\li "VC71"			Microsoft Visual C++ 7.1
+		\li "DMC"			Digital Mars
+		\li	"GCC"			GCC C++ compiler
+		\li "BCC4"			Borland C++ compiler BCB4
+		\li "BCC5"			Borland C++ compiler BCB5
+		\li "BCC6"			Borland C++ compiler BCB6
+
+	*/
+	static String getCompiler();
 
 	/**
 	Returns the current "tick" count. On Win32 systems this is analagous to the 
@@ -172,6 +291,23 @@ public:
 	*/
 	static bool isUnicodeEnabled();
 
+	/**
+	Returns the ResourceBundle for the calling process. 
+	@return ResourceBundle* a pointer to the resource bundle. Do not delete this.
+	*/
+	static ResourceBundle* getResourceBundle();
+
+	/**
+	Retrieves the program information from a given file name
+	@param String the fully qualified file name of the process to
+	retrieve information from, or a directory that includes a Info.plist/Info.xml file in it
+	identifying the process's ProgramInfo.
+	@see ProgramInfo
+	@see ResourceBundle::getProgramInfo()
+	*/
+	static ProgramInfo* getProgramInfoFromFileName( const String& fileName );
+
+	static void internal_replaceResourceBundleInstance( ResourceBundle* newInstance );
 protected:
 	System();
 	virtual ~System();
@@ -183,6 +319,7 @@ protected:
 
 	Locale* locale_;
 	bool unicodeEnabled_;
+	ResourceBundle* resBundle_;
 };
 
 };
@@ -191,6 +328,26 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.3.2.4  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.3.2.3  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.3.2.2  2004/08/26 04:29:28  ddiego
+*added support for getting the resource directory to the System class.
+*
+*Revision 1.3.2.1  2004/08/21 21:06:53  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

@@ -73,6 +73,24 @@ public:
 
 	virtual unsigned long getChildCount() = 0;
 
+
+	/**
+	Searches all the children of this menu item for the first child menu item
+	whose name \em exactly matches the name parameter. This search is 
+	case sensitive.
+	@return MenuItem the found menu item. If no item is found, return is NULL.
+	*/
+	virtual MenuItem* findChildNamed( const String& name ) = 0;
+
+	/**
+	Searches all the children of this menu item for the first child menu item
+	whose name roughly matches that of the named parameter. The search
+	is case insensitive. For example, if you were to pass in "foo" and a menu item
+	had a name of "FooBar" a match would occur.
+	@return MenuItem the found menu item. If no item is found, return is NULL.
+	*/
+	virtual MenuItem* findChildNamedSimilarTo( const String& name ) = 0;
+
 	/**
 	*returns the owner of the menu item. This generally
 	is either a MenuBar or a PopupMenu
@@ -130,6 +148,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/18 06:45:44  ddiego
+*updated toolbar btn bug, and added text edit sample.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

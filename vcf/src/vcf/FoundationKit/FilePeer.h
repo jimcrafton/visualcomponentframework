@@ -33,7 +33,7 @@ public:
 	virtual ~FilePeer(){};
 
 
-	/*
+	/**
 	* close any open handles, reset all internal data,
 	*and it associates itself to a given file instance.
 	*@param File* pointer to a File instance
@@ -42,36 +42,54 @@ public:
 
 	//virtual String getName() = 0; // we don't need anymore
 
-	/*
+	/**
 	* gets the size of the file in bytes
 	*@param ulong64 the size
 	*/
 	virtual ulong64 getSize() = 0;
 
-	/*
+	/**
 	* updates the informations about the file from the file system
 	*@param statMask the mask indicating the infos we want to update
 	*/
 	virtual void updateStat( File::StatMask statMask = File::smMaskDateAll ) = 0;
 
-	/*
+	/**
 	* set the fileAttributes of the file
 	*@param fileAttributes the desired attributes
 	*/
 	virtual void setFileAttributes( const File::FileAttributes fileAttributes ) = 0;
 
 
+	/**
+	* tells if the file can be run by the OS.
+	*@return bool, true if it does.
+	*/
 	virtual bool isExecutable() = 0;
 
-	/*
-	* set the modification Date of the file
+	/**
+	* set the modification date of the file
 	*@param date the desired modification date
 	*/
 	virtual void setDateModified( const DateTime& dateModified ) = 0;
 
 
+	/**
+	* get the modification date of the file
+	*@return DateTime, the modification date.
+	*/
 	virtual DateTime getDateModified()  = 0;
+
+	/**
+	* get the creation date of the file
+	*@return DateTime, the creation date.
+	*/
 	virtual DateTime getDateCreated()  = 0;
+
+	/**
+	* get the latest date the file has been accessed.
+	*@return DateTime, the access date.
+	*/
 	virtual DateTime getDateAccessed()  = 0;
 
 	/**
@@ -135,6 +153,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/10 19:09:46  marcelloptr
+*fixed documentation for doxygen
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

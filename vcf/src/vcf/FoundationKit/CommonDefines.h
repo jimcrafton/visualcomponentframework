@@ -35,7 +35,12 @@ enum PropertyDescriptorType{
 	pdString,
 	pdEnum,
 	pdInterface,
-	pdEnumMask
+	pdEnumMask,
+	pdUInt    ,
+	pdLong64  ,
+	pdULong64 ,
+	pdDateTime,
+	pdDateTimeSpan,
 };
 
 /**
@@ -173,7 +178,7 @@ enum KeyboardMasks{
 #define STR_SHORT_CONVERSION          "%hd"
 #define STR_USHORT_CONVERSION         "%hu"
 #define STR_FLOAT_CONVERSION          "%f"
-#define STR_DOUBLE_CONVERSION         "%f"
+#define STR_DOUBLE_CONVERSION         "%lf"
 #define STR_BOOL_CONVERSION_TRUE      "true"
 #define STR_BOOL_CONVERSION_FALSE     "false"
 
@@ -323,6 +328,17 @@ enum VirtualKeyCode{
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/08/31 08:52:57  marcelloptr
+*added some property descriptor types
+*
+*Revision 1.2.2.1  2004/08/11 04:37:26  marcelloptr
+*minor fix on macro for string to double conversion
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

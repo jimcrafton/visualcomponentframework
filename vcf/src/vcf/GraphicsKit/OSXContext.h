@@ -16,6 +16,15 @@ class GraphicsContext;
 
 class OSXContext  : public ContextPeer, public Object {
 public:
+
+	
+	enum LastPrimitive{
+		lpNone, 
+		lpMove, 
+		lpLine
+	};
+
+
 	OSXContext();
 	/**
 	*Creates a new HDC from scratch
@@ -85,6 +94,12 @@ public:
 
 	virtual void setXORModeOn( const bool& XORModeOn );
 
+	virtual bool isAntiAliasingOn() {
+		return antialiasingOn_;
+	}
+	
+	virtual void setAntiAliasingOn( bool antiAliasingOn );
+	
 	virtual void setTextAlignment( const bool& alignTobaseline );
 
 	virtual bool isTextAlignedToBaseline();
@@ -150,6 +165,13 @@ protected:
 	VCF::Point origin_;
     bool xorModeOn_;
     Rect ownerRect_;
+	LastPrimitive lastPrimitive_;
+	VCF::Point lastPrimitiveP1_;
+	VCF::Point lastPrimitiveV1_;
+	bool antialiasingOn_;
+
+
+
 
 	void atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptions );
 
@@ -157,6 +179,9 @@ protected:
 
 	void setLayoutWidth( ATSUTextLayout layout, double width );
 	VCF::Size getLayoutDimensions( const String& text );
+	
+	void endLastPrimitive();
+	void finishLastPrimitive(const double & x, const double & y);
 };
 
 }; //end of namespace VCF
@@ -165,6 +190,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/27 03:12:18  ddiego
+*integrated chrisk changes
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -110,7 +110,7 @@ public:
 
 	static DateTime convertUtcFileTimeToLocalDateTime( const FILETIME& ftUtc );
 
-	/*
+	/**
 	* Windows specific function: gets the alternate filename of a file
 	* This is the the old dos name composed of 8+3 characters
 	* @param String the full filename of the file
@@ -204,6 +204,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/10 19:09:47  marcelloptr
+*fixed documentation for doxygen
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

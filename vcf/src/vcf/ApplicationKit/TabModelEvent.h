@@ -25,6 +25,13 @@ namespace VCF {
 
 class TabPage;
 
+
+/**
+* the event class for events specific of tabbed pages
+* It containes the pointer to the specific tab page 
+* associated to this event.
+*@see 
+*/
 class APPLICATIONKIT_API TabModelEvent : public Event{
 public:
 	TabModelEvent( Object * source, TabPage* page );
@@ -52,6 +59,9 @@ public:
 		return new TabModelEvent(*this);
 	}
 private:
+	/**
+	* the tab page to be associated to the event.
+	*/
 	TabPage* page_;
 
 };
@@ -61,11 +71,14 @@ private:
 
 
 /**
-*TabModelEventHandler
-*handles the following:
-*onTabPageAdded
-*onTabPageRemoved
-*onTabPageSelected
+* The handler class for a TabModelEvent.
+* \par
+* handles the following:
+* <ul>
+* 	<li>onTabPageAdded
+* 	<li>onTabPageRemoved
+* 	<li>onTabPageSelected
+* </ul>
 */
 template <class SOURCE_TYPE>
 class TabModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TabModelEvent> {
@@ -81,12 +94,20 @@ public:
 };
 
 
-}; //end of namespace VCF
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

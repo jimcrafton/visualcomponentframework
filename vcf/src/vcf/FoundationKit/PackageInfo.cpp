@@ -15,13 +15,10 @@ PackageInfo::PackageInfo( const String& packageName, const String& packageUUID,
 							const String& staticLibName, const String& sharedLibName,
 							long linkageFlags,
 							const String& author, const String& company,
-							const String& copyright, const String& additionalInfo)
-{
-	packageName_ = packageName;
-	packageUUID_ = packageUUID;
-	author_ = author;
-	copyright_ = company;
-	company_ = copyright;
+							const String& copyright, const String& additionalInfo):
+	ProgramInfo(packageName,"",author,copyright,company,additionalInfo,"","")
+{	
+	packageUUID_ = packageUUID;	
 	additionalInfo_ = additionalInfo;
 	staticLibName_ = staticLibName;
 	sharedLibName_ = sharedLibName;
@@ -104,6 +101,20 @@ void PackageInfo::removeAllSupportedPlatforms()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.2.2.2  2004/09/16 03:26:26  ddiego
+*fixed it so we can now get program information from a resource bundle. This can be embedded in the exe like in windows, or read from an external file a la OS X info.plist xml files.
+*
+*Revision 1.2.2.1  2004/09/15 21:14:28  ddiego
+*added support for getting program info from resource bundle.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

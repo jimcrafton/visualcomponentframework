@@ -82,7 +82,7 @@ void OSXLightweightControl::setVisible( const bool& visible )
 	visible_ = visible;
 
 	if ( visible_ != oldVisible ) {
-		Control* parent = this->getHeavyWeightParent();
+		Control* parent = getHeavyWeightParent();
 		if ( NULL != parent ) {
 			Container* container = parent->getContainer();
 			if ( NULL != container ) {
@@ -222,7 +222,7 @@ void OSXLightweightControl::translateToScreenCoords( Point* pt )
 	VCF::Control* parent = getParent();
 	if ( NULL != parent ){
 		bool lightWeightParent = parent->isLightWeight();
-		Rect bounds = this->bounds_;
+		Rect bounds = bounds_;
 
 		offset.width_ += bounds.left_;
 		offset.height_ += bounds.top_;
@@ -262,7 +262,7 @@ void OSXLightweightControl::translateFromScreenCoords( Point* pt )
 	VCF::Control* parent = getParent();
 	if ( NULL != parent ){
 		bool lightWeightParent = parent->isLightWeight();
-		Rect bounds = this->bounds_;
+		Rect bounds = bounds_;
 
 		offset.width_ += bounds.left_;
 		offset.height_ += bounds.top_;
@@ -302,6 +302,14 @@ void OSXLightweightControl::translateFromScreenCoords( Point* pt )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:37  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
 *Revision 1.2  2004/08/07 17:15:07  ddiego
 *added missing osx files and projects
 *

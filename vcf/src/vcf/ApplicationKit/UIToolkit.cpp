@@ -192,19 +192,19 @@ ContextPeer* UIToolkit::createContextPeer( const unsigned long& width, const uns
 	return UIToolkit::toolKitInstance->internal_createContextPeer( width, height );
 }
 
-ListviewPeer* UIToolkit::createListViewPeer( ListViewControl* component, ComponentType componentType)
+ListviewPeer* UIToolkit::createListViewPeer( ListViewControl* component)
 {
-	return UIToolkit::toolKitInstance->internal_createListViewPeer( component, componentType );
+	return UIToolkit::toolKitInstance->internal_createListViewPeer( component );
 }
 
-TreePeer* UIToolkit::createTreePeer( TreeControl* component, ComponentType componentType)
+TreePeer* UIToolkit::createTreePeer( TreeControl* component)
 {
-	return UIToolkit::toolKitInstance->internal_createTreePeer( component, componentType );
+	return UIToolkit::toolKitInstance->internal_createTreePeer( component );
 }
 
-TextPeer* UIToolkit::createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType)
+TextPeer* UIToolkit::createTextPeer( TextControl* component, const bool& isMultiLineControl)
 {
-	return UIToolkit::toolKitInstance->internal_createTextPeer( component, isMultiLineControl, componentType );
+	return UIToolkit::toolKitInstance->internal_createTextPeer( component, isMultiLineControl );
 }
 
 HTMLBrowserPeer* UIToolkit::createHTMLBrowserPeer( Control* control )
@@ -212,14 +212,14 @@ HTMLBrowserPeer* UIToolkit::createHTMLBrowserPeer( Control* control )
 	return UIToolkit::toolKitInstance->internal_createHTMLBrowserPeer( control );
 }
 
-ButtonPeer* UIToolkit::createButtonPeer( CommandButton* component, ComponentType componentType)
+ButtonPeer* UIToolkit::createButtonPeer( CommandButton* component)
 {
-	return UIToolkit::toolKitInstance->internal_createButtonPeer( component, componentType );
+	return UIToolkit::toolKitInstance->internal_createButtonPeer( component );
 }
 
-DialogPeer* UIToolkit::createDialogPeer( Control* owner, Dialog* component, ComponentType componentType)
+DialogPeer* UIToolkit::createDialogPeer( Control* owner, Dialog* component)
 {
-	return UIToolkit::toolKitInstance->internal_createDialogPeer( owner, component, componentType );
+	return UIToolkit::toolKitInstance->internal_createDialogPeer( owner, component );
 }
 
 DialogPeer* UIToolkit::createDialogPeer()
@@ -227,10 +227,9 @@ DialogPeer* UIToolkit::createDialogPeer()
 	return UIToolkit::toolKitInstance->internal_createDialogPeer();
 }
 
-WindowPeer* UIToolkit::createWindowPeer( Control* component, Control* owner,
-									ComponentType componentType)
+WindowPeer* UIToolkit::createWindowPeer( Control* component, Control* owner)
 {
-	return UIToolkit::toolKitInstance->internal_createWindowPeer( component, owner, componentType );
+	return UIToolkit::toolKitInstance->internal_createWindowPeer( component, owner );
 }
 
 ToolbarPeer* UIToolkit::createToolbarPeer( Toolbar* toolbar )
@@ -308,6 +307,11 @@ CommonFontDialogPeer* UIToolkit::createCommonFontDialogPeer( Control* owner )
 	return UIToolkit::toolKitInstance->internal_createCommonFontDialogPeer( owner );
 }
 
+CommonPrintDialogPeer* UIToolkit::createCommonPrintDialogPeer( Control* owner )
+{
+	return UIToolkit::toolKitInstance->internal_createCommonPrintDialogPeer( owner );
+}
+
 DesktopPeer* UIToolkit::createDesktopPeer( Desktop* desktop )
 {
 	return UIToolkit::toolKitInstance->internal_createDesktopPeer( desktop );
@@ -322,6 +326,12 @@ CursorPeer* UIToolkit::createCursorPeer( Cursor* cursor )
 {
 	return UIToolkit::toolKitInstance->internal_createCursorPeer( cursor );
 }
+
+SystemTrayPeer* UIToolkit::createSystemTrayPeer()
+{
+	return UIToolkit::toolKitInstance->internal_createSystemTrayPeer();
+}
+
 
 bool UIToolkit::createCaret( Control* owningControl, Image* caretImage  )
 {
@@ -585,129 +595,6 @@ AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCod
 	return result;
 }
 
-/*
-void buildTabList( Control* control, std::vector<Control*>& tabList )
-{
-	tabList.push_back( control );
-
-	Container* container = control->getContainer();
-	if ( NULL != container ) {
-		Enumerator<Control*>* children = container->getChildren();
-		while ( children->hasMoreElements() ) {
-			Control* child = children->nextElement();
-			buildTabList( child, tabList );
-		}
-	}
-}
-*/
-
-Control* UIToolkit::getNextChildControl( Control* control, Control* prevControl )
-{
-	Control* result = NULL;
-
-	/*
-	if ( NULL != control ) {
-
-		Container* container = control->getContainer();
-
-
-		bool useContainer = false;
-
-		if ( NULL != container ) {
-			useContainer = ( container->getChildCount() > 0 );
-		}
-
-		if ( true == useContainer ) {
-			std::vector<Control*>::iterator found = std::find( visitedContainers_.begin(),
-																visitedContainers_.end(),
-																control );
-			if ( found != visitedContainers_.end() ) {
-				if ( prevControl == container->getLastTabControl() ) {
-					visitedContainers_.erase( found );
-					result = getNextChildControl( control->getParent(), control );
-				}
-				else {
-					result = container->getNextTabControl( prevControl );
-				}
-			}
-			else {
-				visitedContainers_.push_back( control );
-				result = container->getNextTabControl();
-			}
-
-		}
-		else if ( control->getParent() != NULL ) {
-			container = control->getParent()->getContainer();
-
-			if ( NULL == container ) {
-				container = control->getParent()->getParent()->getContainer();
-			}
-
-			if ( NULL != container ) {
-				result = container->getNextTabControl();
-			}
-		}
-
-		if ( NULL == result ) {
-			result = getNextChildControl( control->getParent(), control );
-		}
-	}
-	*/
-
-	return result;
-}
-
-Control* UIToolkit::getPrevChildControl( Control* control, Control* prevControl )
-{
-	Control* result = NULL;
-/*
-	if ( NULL != control ) {
-
-		Container* container = control->getContainer();
-		bool useContainer = false;
-
-		if ( NULL != container ) {
-			useContainer = ( container->getChildCount() > 0 );
-		}
-
-		if ( true == useContainer ) {
-			std::vector<Control*>::iterator found = std::find( visitedContainers_.begin(),
-																visitedContainers_.end(),
-																control );
-			if ( found != visitedContainers_.end() ) {
-				if ( prevControl == container->getFirstTabControl() ) {
-					visitedContainers_.erase( found );
-					result = getPrevChildControl( control->getParent(), control );
-				}
-				else {
-					result = container->getPrevTabControl( prevControl );
-				}
-			}
-			else {
-				visitedContainers_.push_back( control );
-				result = container->getPrevTabControl();
-			}
-
-		}
-		else if ( control->getParent() != NULL ) {
-			container = control->getParent()->getContainer();
-			if ( NULL == container ) {
-				container = control->getParent()->getParent()->getContainer();
-			}
-
-			if ( NULL != container ) {
-				result = container->getPrevTabControl();
-			}
-		}
-
-		if ( NULL == result ) {
-			result = getPrevChildControl( control->getParent(), control );
-		}
-	}
-*/
-	return result;
-}
-
 void internal_handleKeyboardButtonEvent ( Event* e )
 {
 	VCF::Button* button = (VCF::Button*)e->getUserData();
@@ -849,81 +736,6 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 
 				newFocusedControl = tabList[index];
 				newFocusedControl->setFocused();
-
-
-
-				/*
-				bool goForwards = true;
-				Control* newFocusedControl = NULL;
-				if ( (true == control->keepsTabKey()) && (vkTab == keyCode) ) {
-					event->setConsumed( false );
-					return;
-				}
-				*/
-				/*
-				else if ( (true == control->keepsArrowKeys()) &&
-						((vkUpArrow == keyCode) || (vkDownArrow == keyCode) || (vkLeftArrow == keyCode) || (vkRightArrow == keyCode)) ) {
-					event->setConsumed( false );
-					return;
-				}
-
-
-				if ( (keyCode == vkUpArrow) || (keyCode == vkLeftArrow) ) {
-					goForwards = false;
-				}
-				else
-				*/
-				/*
-				if ( (keyCode == vkTab) && (event->hasShiftKey()) ) {
-					goForwards = false;
-				}
-
-				if ( true == goForwards ) {
-					if ( 2 == prevDirectionWasForward ) {
-						//direction
-					}
-					// go to the next focusable control
-					Control* child = getNextChildControl( control );//UIToolkit_getNextChild( control );
-					if ( NULL != child ) {
-						newFocusedControl = child;
-					}
-					else {
-						Control* parent = control->getParent();
-						if ( NULL != parent ) {
-							newFocusedControl = parent;
-						}
-						else {
-							//ok the hell with it, no parent no child,
-							//let's just set ourself focused
-							newFocusedControl = control;
-						}
-					}
-					prevDirectionWasForward = 1;
-				}
-				else { //go backwards
-					Control* child = getPrevChildControl( control );
-					if ( NULL != child ) {
-						newFocusedControl = child;
-					}
-					else {
-						Control* parent = control->getParent();
-						if ( NULL != parent ) {
-							newFocusedControl = parent;
-						}
-						else {
-							//ok the hell with it, no parent no child,
-							//let's just set ourself focused
-							newFocusedControl = control;
-						}
-					}
-					prevDirectionWasForward = 2;
-				}
-
-				if ( NULL != newFocusedControl ) {
-					newFocusedControl->setFocused();
-					event->setConsumed( true );
-				}
-				*/
 			}
 			break;
 
@@ -1161,6 +973,31 @@ void UIToolkit::onUpdateComponentsTimer( TimerEvent* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/09/21 23:41:24  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.3  2004/08/31 04:12:12  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.2  2004/08/19 03:22:54  ddiego
+*updates so new system tray code compiles
+*
+*Revision 1.2.2.1  2004/08/18 21:20:24  ddiego
+*added initial system tray code for win32
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -62,22 +62,32 @@ VCF_BCC - compiling with Borland's C++ compiler
 
 
 
-
+#define VCF_COMPILER_NAME	""
 
 
 
 #if (_MSC_VER >= 1310)
 #	define VCF_VC71
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"VC71"
 #elif (_MSC_VER >= 1300)
 #	define VCF_VC7
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"VC7"
 #elif (_MSC_VER >= 1200)
 #	define VCF_VC6
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"VC6"
 #elif (_MSC_VER >= 1100)
 #	define VCF_VC5
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"VC6"
 #endif
 
 #ifdef __DMC__
 	#define VCF_DMC
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"DMC"
 #endif
 
 
@@ -86,12 +96,20 @@ VCF_BCC - compiling with Borland's C++ compiler
 
 #if (__BORLANDC__ >= 0x0570)
 	#define VCF_BCCKLX  //Kylix
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"BCCKLX"
 #elif (__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570)
 	#define VCF_BCC6 //BCB 6
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"BCC6"
 #elif (__BORLANDC__ >= 0x0550) && (__BORLANDC__ < 0x0560)
 	#define VCF_BCC5 //BCB 5 - Free Compiler
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"BCC5"
 #elif (__BORLANDC__ >= 0x0540)
 	#define VCF_BCC4 //BCB 4
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"BCC4"
 #endif //bcc version
 
 #if defined(VCF_BCC6) && !defined(_USE_OLD_RW_STL)
@@ -284,28 +302,57 @@ this define is to fix:
 	// and we save a MACRO defines at the same time.
 	// Nevertheless USE_FOUNDATIONKIT_DLL cannot replace FOUNDATIONKIT_DLL
 
-	#ifdef USE_FOUNDATIONKIT_DLL
-	# ifndef FOUNDATIONKIT_DLL
-	#		define FOUNDATIONKIT_DLL
-	# endif
-	#endif
+	// USE_APPLICATIONKIT_DLL implies USE_GRAPHICSKIT_DLL
+	// USE_GRAPHICSKIT_DLL    implies USE_FOUNDATIONKIT_DLL
+	// USE_NETKIT_DLL         implies USE_FOUNDATIONKIT_DLL
+	// and 
+	// USE_APPLICATIONKIT_LIB implies USE_GRAPHICSKIT_LIB
+	// USE_GRAPHICSKIT_LIB    implies USE_FOUNDATIONKIT_LIB
+	// USE_NETKIT_LIB         implies USE_FOUNDATIONKIT_LIB
 
-	#ifdef USE_GRAPHICSKIT_DLL
-	# ifndef GRAPHICSKIT_DLL
-	#		define GRAPHICSKIT_DLL
-	# endif
+	#ifdef USE_NETKIT_DLL
+	# 	ifndef NETKIT_DLL
+	#			define NETKIT_DLL
+	# 	endif
+	# 	ifndef USE_FOUNDATIONKIT_DLL
+	#			define USE_FOUNDATIONKIT_DLL
+	# 	endif
+  #elif defined USE_NETKIT_LIB
+	# 	ifndef USE_FOUNDATIONKIT_LIB
+	#			define USE_FOUNDATIONKIT_LIB
+	# 	endif
 	#endif
 
 	#ifdef USE_APPLICATIONKIT_DLL
-	# ifndef APPLICATIONKIT_DLL
-	#		define APPLICATIONKIT_DLL
-	# endif
+	# 	ifndef APPLICATIONKIT_DLL
+	#			define APPLICATIONKIT_DLL
+	# 	endif
+	# 	ifndef USE_GRAPHICSKIT_DLL
+	#			define USE_GRAPHICSKIT_DLL
+	# 	endif
+  #elif defined USE_APPLICATIONKIT_LIB
+	# 	ifndef USE_GRAPHICSKIT_LIB
+	#			define USE_GRAPHICSKIT_LIB
+	# 	endif
 	#endif
 
-	#ifdef USE_NETKIT_DLL
-	# ifndef NETKIT_DLL
-	#		define NETKIT_DLL
-	# endif
+	#ifdef USE_GRAPHICSKIT_DLL
+	# 	ifndef GRAPHICSKIT_DLL
+	#			define GRAPHICSKIT_DLL
+	# 	endif
+	# 	ifndef USE_FOUNDATIONKIT_DLL
+	#			define USE_FOUNDATIONKIT_DLL
+	# 	endif
+  #elif defined USE_GRAPHICSKIT_LIB
+	# 	ifndef USE_FOUNDATIONKIT_LIB
+	#			define USE_FOUNDATIONKIT_LIB
+	# 	endif
+	#endif
+
+	#ifdef USE_FOUNDATIONKIT_DLL
+	#	 ifndef FOUNDATIONKIT_DLL
+	#			define FOUNDATIONKIT_DLL
+	#	 endif
 	#endif
 
 #endif
@@ -560,9 +607,26 @@ The same is with BCC.
 #endif
 
 
+
+#ifdef VCF_GCC
+#	undef VCF_COMPILER_NAME
+#	define VCF_COMPILER_NAME	"GCC"
+#endif 
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.2.2.1  2004/08/17 05:01:32  marcelloptr
+*improved macros for library selection
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

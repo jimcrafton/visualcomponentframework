@@ -55,7 +55,6 @@ _MSC_VER - the Microsoft Visaul C++ compiler
 
 using namespace xmake;
 
-
 #define XMAKE_VERSION	"2.0.0"
 
 
@@ -99,7 +98,7 @@ void XMLMake::debugWithArgs( String text,... )
 		memset( buf, 0, MAX_TRACE_STRING );
 #ifdef GCC	
 		vsnprintf( buf, MAX_TRACE_STRING, text.c_str(), argList );
-#elif WIN32
+#elif defined(WIN32)
 		_vsnprintf( buf, MAX_TRACE_STRING, text.c_str(), argList );
 #endif	
 
@@ -117,9 +116,9 @@ void XMLMake::debug( const String& text )
 {
 	if ( printDebug_ ) {
 		char* tmp = new char[text.size() + 256];
-#ifdef GCC
+#if defined(GCC) || defined(__BORLANDC__)
 		int pid = getpid();
-#elif WIN32	
+#elif defined(WIN32)	
 		int pid = _getpid();
 #endif		
 		sprintf( tmp, "<PID:0x%04X> %s", pid, text.c_str() );

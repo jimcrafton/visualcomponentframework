@@ -13,41 +13,20 @@ where you installed the VCF.
 
 using namespace VCF;
 
-void Dialog_postClose( Event* e )
-{
-	e->getSource()->free();
-}
 
-void Dialog_onClose( WindowEvent* e )
-{
-	Dialog* dialog = (Dialog*)e->getSource();
-	if ( !dialog->isModal() ) {
-		EventHandler* ev = new StaticEventHandlerInstance<Event>( &Dialog_postClose, e->getSource() );
-		UIToolkit::postEvent( ev, new Event( e->getSource() ) );
-	}
-}
 
 Dialog::Dialog( Control* owner )
 {
 	owner_ = owner;
 
-	modal_ = false;
+	modal_ = Dialog::msNonModal;
 
 	previousFocusedControl_ = Control::currentFocusedControl;
 
 	returnValue_ = UIToolkit::mrNone;
-
-	Frame* activeFrame = Frame::getActiveFrame();
-
-
-	Application* app = Application::getRunningInstance();
+	
 	if ( NULL == owner_ ) {
-		if ( NULL != activeFrame ) {
-			owner_ = activeFrame;
-		}
-		else if ( NULL != app ) {
-			owner_ = app->getMainWindow();
-		}
+		owner_ = UIToolkit::getUIPolicyManager()->getOwnerForDialog();
 	}
 
 	dialogPeer_ = UIToolkit::createDialogPeer( owner_, this );
@@ -68,13 +47,36 @@ Dialog::Dialog( Control* owner )
 	setFrameStyle( fstFixed );
 
 	//add a close handler to get notified of the closing window
-	FrameClose.addHandler( new StaticEventHandlerInstance<WindowEvent>( &Dialog_onClose, this, "Dialog_onClose" ) );
+	FrameClose += new GenericEventHandler<Dialog>( this, &Dialog::onDialogClose, "Dialog::onDialogClose" );
 }
 
 
 Dialog::~Dialog()
 {
 
+}
+
+void Dialog::onDialogClose( Event* event )
+{
+	if ( isModal() ) {
+		DialogEvent e(this,Dialog::deModalFinished);
+		e.setModalResult( getModalReturnValue() );
+		ModalFinished.fireEvent(&e);
+	}
+	else if ( isSheetModal() ) {
+		DialogEvent e(this,Dialog::deSheetModalFinished);
+		e.setModalResult( getModalReturnValue() );
+		SheetModalFinished.fireEvent(&e);
+	}
+	else if ( !isModal() ) {
+		EventHandler* ev = new GenericEventHandler<Dialog>( this, &Dialog::onPostClose );
+		UIToolkit::postEvent( ev, new Event( event->getSource() ) );
+	}
+}
+
+void Dialog::onPostClose( Event* e )
+{
+	free();
 }
 
 void Dialog::paint(GraphicsContext * context)
@@ -184,10 +186,20 @@ protected:
 	Control* control_;
 };
 
+
+void Dialog::showSheetModal()
+{
+	if ( NULL == owner_ ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("No owner window specified! Invalid use of the Dialog::showSheetModal method!") );
+	}
+	
+	showWithModalState( Dialog::msSheetModal );
+	
+	owner_->setEnabled( false );	
+}	
+
 UIToolkit::ModalReturnType Dialog::showModal()
 {
-	modal_ = true;
-
 	UIToolkit::ModalReturnType result = UIToolkit::mrNone;
 
 	ControlHolder prevFocusedControl = previousFocusedControl_;
@@ -199,7 +211,8 @@ UIToolkit::ModalReturnType Dialog::showModal()
 		owningControl->setEnabled( false );
 	}
 
-	show();
+	showWithModalState( Dialog::msAppModal );
+	
 	result = UIToolkit::runModalEventLoopFor( this );
 	if ( result == UIToolkit::mrTrue ) {
 		result = getModalReturnValue();
@@ -222,44 +235,40 @@ UIToolkit::ModalReturnType Dialog::showModal()
 
 void Dialog::show()
 {
-	if ( NULL == dialogPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	showWithModalState( Dialog::msNonModal );
+}
+
+void Dialog::showWithModalState( ModalState state )
+{
+	modal_ = state;
+	
+	Rect adjustedBounds = UIToolkit::getUIPolicyManager()->adjustInitialDialogBounds( this );
+
+	if ( (!(adjustedBounds == getBounds())) && (!adjustedBounds.isEmpty()) && (!adjustedBounds.isNull()) ) {
+		setBounds( &adjustedBounds );
 	}
-
-	if ( NULL != owner_ ) {
-		Rect bounds;
-
-		bounds.left_ = owner_->getLeft() + ( owner_->getWidth()/2.0 - getWidth()/2.0 );
-		bounds.top_ = owner_->getTop() + ( owner_->getHeight()/2.0 - getHeight()/2.0 );
-		bounds.right_ = bounds.left_ + getWidth();
-		bounds.bottom_ = bounds.top_ + getHeight();
-		if ( NULL != owner_->getParent() ) {
-			owner_->translateToScreenCoords( &bounds );
-		}
-
-		setBounds( &bounds );
-	}
+	
+	//force a resize here because the actual width/height may not change and therefore
+	//we won't get a size event to be fired.
+	resizeChildren(NULL);
 
 	peer_->setVisible(true);
 }
-
 
 void Dialog::showMessage( const String& message, const String& caption )
 {
 	DialogPeer* dialogPeer = UIToolkit::createDialogPeer();// owner, this );
 	if ( NULL != dialogPeer ){
 		String captionText = caption;
-			
-		captionText = System::getCurrentThreadLocale()->translate( captionText );
-
-		String realCaption = captionText;
-
-		if ( realCaption.empty() ) {
+		
+		if ( captionText.empty() ) {
 			Application* app = Application::getRunningInstance();
 			if ( NULL != app ) {
-				realCaption = app->getName();
+				captionText = app->getName();
 			}
 		}
+		
+		captionText = System::getCurrentThreadLocale()->translate( captionText );
 		
 		String msgText = message;
 			
@@ -297,18 +306,11 @@ UIToolkit::ModalReturnType Dialog::showMessage( const String& message, const Str
 
 void Dialog::close()
 {
-	if ( NULL == dialogPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	windowPeer_->close();
 }
 
 void Dialog::setFrameStyle( const FrameStyleType& frameStyle )
 {
-		if ( NULL == dialogPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
 	frameStyle_ = frameStyle;
 
 	if ( !(Component::csDesigning & getComponentState()) ){
@@ -331,6 +333,7 @@ void Dialog::keyDown( KeyboardEvent* e )
 {
 	if ( vkEscape == e->getVirtualCode() ) {
 		e->setConsumed(true);
+		returnValue_ = UIToolkit::mrCancel;
 		close();
 	}
 }
@@ -339,7 +342,6 @@ bool Dialog::isActiveFrame()
 {
 	return windowPeer_->isActiveWindow();
 }
-
 
 /*
 void Dialog::onModalClose( WindowEvent* e )
@@ -352,6 +354,23 @@ void Dialog::onModalClose( WindowEvent* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/11/17 04:52:48  ddiego
+*added some minor fixes to win32 resource loading, and added 2 new examples that demonstrate basic resource loading and basic usage of dialogs.
+*
+*Revision 1.2.2.3  2004/10/28 03:34:16  ddiego
+*more dialog updates for osx
+*
+*Revision 1.2.2.2  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
+*Revision 1.2.2.1  2004/10/18 03:10:29  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

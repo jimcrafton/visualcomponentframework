@@ -60,17 +60,17 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(AbstractModel);
 		REGISTER_CLASSINFO_EXTERNAL(Document);
 
-		REGISTER_CLASSINFO_EXTERNAL( ListModel );
+//		REGISTER_CLASSINFO_EXTERNAL( ListModel );
 		REGISTER_CLASSINFO_EXTERNAL( MenuItem );
-		REGISTER_CLASSINFO_EXTERNAL(TabModel);
+//		REGISTER_CLASSINFO_EXTERNAL(TabModel);
 		REGISTER_CLASSINFO_EXTERNAL(TabPage);
-		REGISTER_CLASSINFO_EXTERNAL( TextModel );
+//		REGISTER_CLASSINFO_EXTERNAL( TextModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeItem );
-		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
+//		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
 		REGISTER_CLASSINFO_EXTERNAL( Border );
-		REGISTER_CLASSINFO_EXTERNAL( AbstractListModel );
-		REGISTER_CLASSINFO_EXTERNAL( AbstractTextModel );
-		REGISTER_CLASSINFO_EXTERNAL( AbstractTreeModel );
+//		REGISTER_CLASSINFO_EXTERNAL( AbstractListModel );
+//		REGISTER_CLASSINFO_EXTERNAL( AbstractTextModel );
+//		REGISTER_CLASSINFO_EXTERNAL( AbstractTreeModel );
 		REGISTER_CLASSINFO_EXTERNAL( Component );
 		REGISTER_CLASSINFO_EXTERNAL( Control );
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );
@@ -165,6 +165,20 @@ void ApplicationKit::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -15,18 +15,34 @@ where you installed the VCF.
 
 
 namespace VCF {
-
+class Dialog;
 /**
-class UIPolicyManager documentation
+* class UIPolicyManager
+*
+* helper class for any document interface policy
+* it manages things like merging menus, etc.
 */
 class APPLICATIONKIT_API UIPolicyManager {
 public:
 	UIPolicyManager(){};
 	virtual ~UIPolicyManager(){};
 
+	/**
+	* merges the appMenu into the windowMenu
+	* - the windowMenu is filled with menu items clones of the menu items in appMenu
+	* - the 'file' menu is always placed as the leftmost one ( if exists in the windowMenu )
+	*   and the 'edit' menu just in the second place from the left ( if exists in the windowMenu )
+	* - any other first-level windowMenu item is appended on the right 
+	*   of the first-level appMenu items
+	* - if two first-level manu itmes have the same caption, its subitems are merged together
+	*@param Menu* appMenu, the 'source' menu
+	*@param Menu* windowMenu, the 'destination' menu
+	*/
 	virtual void mergeMenus( Menu* appMenu, Menu* windowMenu ) = 0;
 
-
+	virtual Frame* getOwnerForDialog() = 0;
+	
+	virtual Rect adjustInitialDialogBounds( Dialog* dialog ) = 0;
 };
 
 
@@ -38,6 +54,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:38  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
+*Revision 1.2.2.1  2004/10/24 18:48:56  marcelloptr
+*Document Window documentation
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

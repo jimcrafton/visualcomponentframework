@@ -39,43 +39,41 @@ FilePath::~FilePath()
 
 }
 
-/*static*/ String FilePath::getDriveSeparator()
+String FilePath::getDriveSeparator()
 {
 #ifdef WIN32
-	return ":";
+	return L":";
 #else
-	return "";
+	return L"";
 #endif
 }
 
-/*static*/ bool FilePath::isRelativePath( const String& filename )
+bool FilePath::isRelativePath( const String& filename )
 {
 	bool result = false;
 	String drive = getDriveName( filename );
 
-	if ( ( filename[0] != FilePath::DirectorySeparator) && (drive.empty())  ) {
+	VCFChar c = filename[0];
+	if ( ( c != '/' && c != '\\' ) && ( drive.empty() ) ) {
 		result = true;
 	}
-	else {
-		int pos = filename.find( "../" );
-		if ( pos == 0 ) {
-			result = true;
-		}
-		else {
-			result = ( filename.find( "./" ) == 0 );
-		}
+	else if ( c == '.' ) {
+		// is relative if ( "./" or "../" at the beginning )
+		int pos = filename.find_first_of( L"/\\" );
+		result = ( ( pos == 1 ) ||
+		           ( ( pos == 2 ) && ( filename[0] == L'.' ) ) );
 	}
 	return result;
 }
 
-/*static*/ bool FilePath::isDirectoryName( const String& path )
+bool FilePath::isDirectoryName( const String& path )
 {
 	VCFChar c = path[ path.size() - 1 ];
 	bool result = ( c == '/' || c == '\\' );
 	return result;
 }
 
-/*static*/ void FilePath::splitDrive( const String& fullname, String& drive, String& pathname )
+void FilePath::splitDrive( const String& fullname, String& drive, String& pathname )
 {
 	// DriveSeparator is included in drive
 
@@ -92,7 +90,7 @@ FilePath::~FilePath()
 	VCF_ASSERT( fullname == drive + pathname ); 
 }
 
-/*static*/ String FilePath::getDriveName( const String& fullname )
+String FilePath::getDriveName( const String& fullname )
 {
 	// DriveSeparator is included in drive
 
@@ -105,7 +103,7 @@ FilePath::~FilePath()
 	}
 }
 
-/*static*/ void FilePath::splitPath( const String& fullname, String& path, String& name )
+void FilePath::splitPath( const String& fullname, String& path, String& name )
 {
 	// DirectorySeparator is included in path
 
@@ -134,7 +132,7 @@ FilePath::~FilePath()
 	VCF_ASSERT( fullname == path + name ); 
 }
 
-/*static*/ String FilePath::getPathName( const String& fullname, const bool& includeDriveName/*=false*/ )
+String FilePath::getPathName( const String& fullname, const bool& includeDriveName )
 {
 	// DirectorySeparator is included in path
 
@@ -162,7 +160,7 @@ FilePath::~FilePath()
 	return path;
 }
 
-/*static*/ void FilePath::splitExtension( const String& fullname, String& root, String& ext )
+void FilePath::splitExtension( const String& fullname, String& root, String& ext )
 {
 	// ExtensionSeparator is included in ext
 
@@ -178,7 +176,7 @@ FilePath::~FilePath()
 	VCF_ASSERT( fullname == root + ext ); 
 }
 
-/*static*/ String FilePath::getBaseName( const String& fullname, const bool& includeExtension/*=false*/ )
+String FilePath::getBaseName( const String& fullname, const bool& includeExtension )
 {
 	int lastDirsepPos = fullname.find_last_of( L"/\\" );
 
@@ -204,7 +202,7 @@ FilePath::~FilePath()
 	return path;
 }
 
-/*static*/ String FilePath::getExtension( const String& fullname )
+String FilePath::getExtension( const String& fullname )
 {
 	String path;
 	int lastExtPos = fullname.find_last_of( FilePath::getExtensionSeparator() );
@@ -231,12 +229,13 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 	return result;
 }
 
-/*static*/ String FilePath::getTransformedToRelativePathName( const String& fullPath, const String& workingPath/*=L""*/ )
+String FilePath::getTransformedToRelativePathName( const String& fullPath, const String& workingPath )
 {
 	String result;
-	String tmp = fullPath;
-	String workDir = workingPath;
-	if ( workDir.empty() ) {
+
+	String fullPathCopy, workDir;
+
+	if ( workingPath.empty() ) {
 		workDir = System::getCurrentWorkingDirectory();
 	}
 	else {
@@ -246,26 +245,27 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 
 	if ( workDir.empty() ) {
 		//ok we're screwed - throw an exception
-		return "";
+		return L"";
 	}
 
-	FilePath workingDirPath = workDir;
+	workDir = FilePath::transformToNative( workDir );
+	fullPathCopy = FilePath::transformToNative( fullPath );
 
-	std::vector<String> workPathComponents = getPathComponents(workingDirPath);
+	std::vector<String> workPathComponents = getPathComponents( workDir );
+	std::vector<String> currentPathComponents = getPathComponents( fullPathCopy );
 
-	std::vector<String> currentPathComponents = getPathComponents( fullPath );
-
-	String workingDrive = workingDirPath.getDriveName();
-	String currentDrive	= FilePath::getDriveName( fullPath );
+	String workingDrive = FilePath::getDriveName( workDir );
+	String currentDrive = FilePath::getDriveName( fullPathCopy );
 
 	if ( StringUtils::lowerCase(currentDrive) == StringUtils::lowerCase(workingDrive) ) {
+		String sep = String( 1, (VCFChar)DirectorySeparator );
 		String tmp;
 		std::vector<String>::iterator workIt = workPathComponents.begin();
 		int workingIndex = 0;
 		int currentIndex = 0;
 		while ( workIt != workPathComponents.end() ) {
 			if ( (!compareDirectoryComponent( *workIt, currentPathComponents[currentIndex] )) || (workingIndex != currentIndex) ) {
-				tmp += "../";
+				tmp += L".." + sep;
 			}
 			else {
 				currentIndex ++;
@@ -282,7 +282,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 
 			//test to see if we need to add a local dir
 			if ( tmp.empty() ) {
-				tmp += "./";
+				tmp += L"." + sep;
 			}
 			//only go on if we are NOT on the last element
 			if ( currentIndex <= currentPathComponents.size()-1 ) {
@@ -299,26 +299,27 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 			}
 		}
 
-		result = tmp + FilePath::getBaseName( fullPath, true );
+		result = tmp + FilePath::getBaseName( fullPathCopy, true );
 	}
 	else {
-		result = fullPath;
+		result = fullPathCopy;
 	}
 
 
 	return result;
 }
 
-/*static*/ String FilePath::getExpandedRelativePathName( const String& fullPath, const String& workingPath/*=L""*/ )
+String FilePath::getExpandedRelativePathName( const String& fullPath, const String& workingPath )
 {
 	if ( !FilePath::isRelativePath( fullPath ) ) {
-		return fullPath;
+		return FilePath::transformToNative( fullPath );
 	}
 
-	String result;
-	String tmp = fullPath;
-	String workDir = workingPath;
-	if ( workDir.empty() ) {
+	String result, workDir;
+
+	String fullPathCopy = fullPath;
+
+	if ( workingPath.empty() ) {
 		workDir = System::getCurrentWorkingDirectory();
 	}
 	else {
@@ -328,16 +329,18 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 
 	if ( workDir.empty() ) {
 		//ok we're screwed - throw an exception
-		return "";
+		return L"";
 	}
 
+	String sep = String( 1, (VCFChar)DirectorySeparator );
 	workDir = FilePath::transformToNative( workDir );
+	fullPathCopy = FilePath::transformToNative( fullPath );
 
 	//store drive if present because getPathComponents() will remove it
 	String drive = FilePath::getDriveName( workDir );
 
-	std::vector<String> workPathComponents = getPathComponents(workDir);
-	int pos = tmp.find( "../" );
+	std::vector<String> workPathComponents = getPathComponents( workDir );
+	int pos = fullPathCopy.find( L".." + sep );
 	if ( pos != String::npos ) {
 
 		while ( pos != String::npos ) {
@@ -347,55 +350,63 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 				//words we have a relative path like foo/../bar - incorrect!!!
 				//throw exception
 
-				return "";
+				return L"";
 			}
 
 			//remove the last dir component
 			//equivalent of "going back a dir", or "cd .."
 			workPathComponents.pop_back();
-			tmp.erase( 0, pos+3 );
-			pos = tmp.find( "../", 0 );
+			fullPathCopy.erase( 0, pos+3 );
+			pos = fullPathCopy.find( L".." + sep, 0 );
 		}
 		std::vector<String>::iterator it = workPathComponents.begin();
-		result = "";
+		result = L"";
 		while ( it != workPathComponents.end() ) {
 			result += *it;
 			it ++;
 		}
-		result += tmp;
+		result += fullPathCopy;
 		result = drive + result;
 	}
 	else {
 		//ok look for ../ series
-		pos = tmp.find( "./", 0 );
+		pos = fullPathCopy.find( L"." + sep, 0 );
 		//ok simply local working dir
 		//remove the ./ notation and prepend the
 		//working dir to file name
 		if ( pos != String::npos ) {
-			tmp.erase( pos, 2 );
-			result = workDir + tmp;
+			fullPathCopy.erase( pos, 2 );
+			result = workDir + fullPathCopy;
 		}
-		else if ( tmp[0] != FilePath::DirectorySeparator ) {
-			result = workDir + tmp;
+		else if ( fullPathCopy[0] != FilePath::DirectorySeparator ) {
+			result = workDir + fullPathCopy;
 		}
 	}
 
 	return result;
 }
 
-/*static*/ std::vector<String> FilePath::getPathComponents( const String& path )
+std::vector<String> FilePath::getPathComponents( const String& path )
 {
 	std::vector<String> pathComponents;
 
 	//gets rid of drive
-	String tmp = FilePath::getPathName( path, false );
+	String pathCopy = FilePath::getPathName( path, false );
 
-	int pos = tmp.find( FilePath::getDirectorySeparator(), 0 );
+	pathCopy = FilePath::transformToNative( pathCopy );
+
+	String sep = String( 1, (VCFChar)DirectorySeparator );
+
+	int pos = pathCopy.find( sep, 0 );
 	int lastPos = 0;
 	while ( pos != String::npos ) {
-		pathComponents.push_back( tmp.substr( lastPos, (pos - lastPos)+1 ) );
+		pathComponents.push_back( pathCopy.substr( lastPos, (pos - lastPos)+1 ) );
 		lastPos = pos+1;
-		pos = tmp.find( FilePath::getDirectorySeparator(), pos + 1 );
+		pos = pathCopy.find( sep, pos + 1 );
+	}
+
+	if ( ( !pathCopy.empty() ) && ( pathComponents.size() == 0 ) ) {
+		throw BasicException( MAKE_ERROR_MSG_2( "FilePath::getPathComponents: bad parsing" ) );
 	}
 
 	return pathComponents;
@@ -405,7 +416,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 *this will convert the filename to a standard format:
 [<drive_letter>:]/[dir1/][dir2/][dir_n/]
 */
-/*static*/ String FilePath::transformToNative( const String& filename )
+String FilePath::transformToNative( const String& filename )
 {
 	String result = filename;
 	std::replace_if( result.begin(), result.end(),
@@ -413,7 +424,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 	return result;
 }
 
-/*static*/ String FilePath::transformToOSSpecific( const String& filename )
+String FilePath::transformToOSSpecific( const String& filename )
 {
 	VCFChar convertChar = '/';
 #ifdef WIN32
@@ -428,21 +439,23 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 	return result;
 }
 
-/*static*/ String FilePath::makeDirectoryName(  const String& fullname, const bool& remove/*=false*/ )
+String FilePath::makeDirectoryName(  const String& fullname, const bool& remove )
 {
-	String fn = fullname;
+	String fn = FilePath::transformToNative( fullname );
 
 	int size = fn.size();
 	if ( 0 < size ) {
-		VCFChar c = FilePath::getDirectorySeparator()[0];
-		VCFChar cs = fn[size-1];
+		String sep = String( 1, (VCFChar)DirectorySeparator );
+		VCFChar c = fn[size-1];
+		bool hasSep = ( c == '/' ) || ( c == '\\' );
 		/* check against both separators under windows */
-		if ( c != cs || remove ) {
-			if ( cs == '\\' ) {
+		if ( hasSep ) {
+			if ( remove ) {
 				fn.erase( size-1, 1 );
 			}
+		} else {
 			if ( !remove ) {
-				fn += c;
+				fn += sep;
 			}
 		}
 	}
@@ -450,7 +463,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 	return fn;
 }
 
-/*static*/ bool FilePath::wildCharsMatchName( const String& filename, const String& wildChars )
+bool FilePath::wildCharsMatchName( const String& filename, const String& wildChars )
 {
 	String fname, fext;
 	FilePath::splitExtension( filename, fname, fext );
@@ -459,7 +472,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 	FilePath::splitExtension( wildChars, wname, wext );
 
 	bool match = ( ( wname == L"*" || wname == fname ) &&
-									( wext == L"*" || wext == fext || ( 0 == fext.size() && wext == "." ) ) );
+	               ( wext == L"*" || wext == fext || ( 0 == fext.size() && wext == L"." ) ) );
 
 	return match;
 }
@@ -477,6 +490,14 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/10 01:55:43  marcelloptr
+*[bugfix: 1063548] FilePath crashes on relative non Native paths
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

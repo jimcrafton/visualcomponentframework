@@ -14,14 +14,6 @@ where you installed the VCF.
 #endif
 
 
-/*
-* Uncomment this to activate the macro VCF_DEBUG_COLORS
-*	It implements a VCF::String memeber variable ( s_ ) showing some infos about the color
-*	Under Visual Studio (vc6 and vc7) modify Autoexp.dat to QuickWatch this variable under debug mode
-* This involves a strong performance penalty in debug mode. So by default it is commented !
-*/
-//#define VCF_DEBUG_COLORS
-
 /**
 * Uncomment this to activate the macro VCF_DEBUG_COLORS_COMPARISON_OPERATORS
 * It is used to check if the comparison operators work right.
@@ -30,13 +22,9 @@ where you installed the VCF.
 //#define VCF_DEBUG_COLORS_COMPARISON_OPERATORS
 
 
-
-#ifndef _DEBUG
-#	ifdef VCF_DEBUG_COLORS
-#	undef VCF_DEBUG_COLORS
-#	endif
+#if !defined ( _DEBUG ) && !defined( DEBUG )
 #	ifdef VCF_DEBUG_COLORS_COMPARISON_OPERATORS
-#	undef VCF_DEBUG_COLORS_COMPARISON_OPERATORS
+#	  undef VCF_DEBUG_COLORS_COMPARISON_OPERATORS
 #	endif
 #endif
 
@@ -367,10 +355,13 @@ public:
 	*/
 	Color( const double & val1, const double & val2, const double & val3, ColorType type= ctRGB );
 
-	Color(const double & c, const double & m, const double & y, const double & k);
+	Color( const double & c, const double & m, const double & y, const double & k );
 
-	Color(const unsigned char & r, const unsigned char & g, const unsigned char & b);
-	Color(const unsigned long & color, ColorFormat cf=cfABGR);
+	Color( const unsigned char & r, const unsigned char & g, const unsigned char & b );
+
+	Color( const unsigned long & color, ColorFormat cf=cfABGR );
+
+	Color( const String& colorName );
 
 	virtual ~Color(){};
 
@@ -553,10 +544,16 @@ public:
 
 	static Color getColorContrast( const Color& clrRef, double deltaL = 0.3 );
 
-	static const String getColorNameFromMap( Color& color );
+	static const String getColorNameFromMap( const Color& color );
 
 	static void createColorMap();
 
+	/**
+	Helper function: generate a String with the internal representation of the color in hexadecimal format.
+	@param bool true if an inverted scheme is desired, as it is in the Intel architecture.
+	       Example: the scheme 0x00RRGGBB would appear as BBGGRR00 with Intel architecture.
+	*/
+	static String Color::getHexCode( const Color& color, const unsigned char & r, const unsigned char & g, const unsigned char & b, const bool& inverted=false );
 
 private:
 	double r_;
@@ -564,87 +561,60 @@ private:
 	double b_;
 
 
-#ifdef VCF_DEBUG_COLORS
-	public:
-		Color( const String& colorName, const Color& color ) ;
+	/**
 
-		Color( const String& colorName, const unsigned char & r, const unsigned char & g, const unsigned char & b ) ;
+	Some notes for the future programmer.
 
-		void setColorDbg(void);
+	<p>
+	Note: The choice of using the const  qualifier for s_ makes difficult to add a new color
+	( it is not a const pointer though ).
+	</p>
+	<p>
+	To check if a color has a name you need to use some constructor.
+	</p>
+	<p>
+	Example:
+	<pre>
+	Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) )
+	</pre>
+	</p>
 
-		void setColorDbgName(void);
+	<p>
+	We have some difficulties only if we have to add a new color. And the only way to
+	avoid these difficulties is to declare s_ without the 'const' qualifier,
+	which would cause worse problems though.
+	</p>
+	<p>
+	Usage : <br>
+	To add a new color, check if the color already exists with a name:
 
-		void setColorDbgRgb(void);
+	<pre>
+	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
+	</pre>
+	or
+	<pre>
+	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
+	</pre>
+	Then:
 
-		void setColorDbgHsl(void);
+	<pre>
+	String* s = getColorNameFromMap(cTmp);
+	if (s == GraphicsToolkit::unknownColorName) {
+		//allocate the memory for the colorName, then:
+		String* newColorName = new String("newColorName");
+		Color color = Color ( newColorName, cTmp );
+	} else {
+		//Color color = Color ( s, cTmp ); or
+		Color color = cTmp;
+	}
+	</pre>
 
-		const String& getColorName(void) {
-			return s_;
-		};
-	public:
-		/**
-		<p>
-		Note: The choice of using the const  qualifier for s_ makes difficult to add a new color
-		( it is not a const pointer though ).
-		</p>
-		<p>
-		To check if a color has a name you need to use some constructor.
-		</p>
-		<p>
-		Example:
-		<pre>
-		Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) )
-		</pre>
-		</p>
-
-		<p>
-		We have some difficulties only if we have to add a new color. And the only way to
-		avoid these difficulties is to declare s_ without the 'const' qualifier,
-		which would cause worse problems though.
-		</p>
-		<p>
-		Usage : <br>
-		To add a new color, check if the color already exists with a name:
-
-		<pre>
-		Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-		</pre>
-		or
-		<pre>
-		Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-		</pre>
-		Then:
-
-		<pre>
-		String* s = getColorNameFromMap(cTmp);
-		if (s == GraphicsToolkit::unknownColorName) {
-			//allocate the memory for the colorName, then:
-			String* newColorName = new String("newColorName");
-			Color color = Color ( newColorName, cTmp );
-		} else {
-			//Color color = Color ( s, cTmp ); or
-			Color color = cTmp;
-		}
-		</pre>
-
-		Maybe I will think something better if you'll have to continuously add new colors:
-		but in this case it is probably better to just use:
-		<pre>
-		Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-		</pre>
-		*/
-		VCF::String s_;
-
-		unsigned long rgb_;
-		unsigned long hsl_;
-		ColorSpace::RGBrangetype rgbRg_;
-		ColorSpace::HSLrangetype hslRg_;
-
-#else
-	public:
-		void setColorDbg(void);
-
-#endif	// VCF_DEBUG_COLORS
+	Maybe I will think something better if you'll have to continuously add new colors:
+	but in this case it is probably better to just use:
+	<pre>
+	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
+	</pre>
+	*/
 
 };
 
@@ -652,74 +622,16 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // inlines
 
-// debugging ( Color )
-#ifdef VCF_DEBUG_COLORS
-	inline Color::Color( const String& colorName, const Color& color )
-	: s_(colorName) {
-		r_ = color.r_;
-		g_ = color.g_;
-		b_ = color.b_;
-		setColorDbgRgb();
-		setColorDbgHsl();
-	}
-
-	inline Color::Color( const String& colorName, const unsigned char & r, const unsigned char & g, const unsigned char & b )
-	: s_(colorName) {
-		r_ = ((double)r) / 255.0;
-		g_ = ((double)g) / 255.0;
-		b_ = ((double)b) / 255.0;
-		setColorDbgRgb();
-		setColorDbgHsl();
-	}
-
-	inline void Color::setColorDbg (void) {
-		setColorDbgName();
-		setColorDbgRgb();
-		setColorDbgHsl();
-	}
-
-	inline void Color::setColorDbgName (void) {
-		s_ = getColorNameFromMap( *this );
-	}
-
-	inline void Color::setColorDbgRgb (void) {
-		ColorSpace::RGBtype rgb = ColorSpace::ColorToRGB( *this );
-		rgbRg_ = ColorSpace::RGBToRGBRange ( rgb );
-		rgb_ = getRGB();
-	}
-
-	inline void Color::setColorDbgHsl (void) {
-		ColorSpace::HSLtype hsl = ColorSpace::ColorToHSL( *this );
-		hslRg_ = ColorSpace::HSLToHSLRange ( hsl );
-		hsl_ = hslRg_.L;
-		// scheme: 0x00LLSSHH ( which appears as HH SS LL 00 with Intel architecture )
-		hsl_ = hsl_ << 8;
-		hsl_ |= hslRg_.S;
-		hsl_ = hsl_ << 8;
-		hsl_ |= hslRg_.H;
-		//hsl_ = RGB( hslRg_.H, hslRg_.S, hslRg_.L);
-	}
-
-#else
-	inline void Color::setColorDbg(void) {};
-
-#endif // VCF_DEBUG_COLORS
-
-
-
 inline Color::Color() {
 	r_ = 0.0;
 	g_ = 0.0;
 	b_ = 0.0;
-	setColorDbg();
 }
 
 inline Color::Color( const Color& color ) {
 	b_ = color.b_;
 	g_ = color.g_;
 	r_ = color.r_;
-
-	setColorDbg();
 }
 
 inline Color::Color( const double & val1, const double & val2, const double & val3, ColorType type ) {
@@ -759,19 +671,16 @@ inline Color::Color( const double & val1, const double & val2, const double & va
 		}
 		break;
 	}
-
-	setColorDbg();
 }
 
 inline Color::Color( const double & c, const double & m, const double & y, const double & k ) {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 inline Color::Color( const unsigned char & r, const unsigned char & g, const unsigned char & b ) {
 	r_ = ((double)r) / 255.0;
 	g_ = ((double)g) / 255.0;
 	b_ = ((double)b) / 255.0;
-	setColorDbg();
 }
 
 inline Color::Color(const unsigned long & color, ColorFormat cf ) {
@@ -790,10 +699,11 @@ inline Color::Color(const unsigned long & color, ColorFormat cf ) {
 		}
 		break;
 	}
-
-	setColorDbg();
 }
 
+inline Color::Color( const String& colorName ) {
+	( *this ) = (* GraphicsToolkit::getColorFromColormap( colorName ) );
+}
 
 
 inline double Color::getRed() const {
@@ -810,17 +720,14 @@ inline double Color::getBlue() const {
 
 inline void Color::setRed( const double& red ) {
 	r_ = red;
-	setColorDbg();
 }
 
 inline void Color::setGreen( const double& green ) {
 	g_ = green;
-	setColorDbg();
 }
 
 inline void Color::setBlue( const double& blue ) {
 	b_ = blue;
-	setColorDbg();
 }
 
 inline void Color::getRGB( unsigned char & r, unsigned char & g, unsigned char & b ) const {
@@ -861,14 +768,12 @@ inline void Color::setRGB( const unsigned char & r, const unsigned char & g, con
 	r_ = ((double)r) / 255.0;
 	g_ = ((double)g) / 255.0;
 	b_ = ((double)b) / 255.0;
-	setColorDbg();
 }
 
 inline void Color::setRGB( const double & r, const double & g, const double & b) {
 	r_ = r;
 	g_ = g;
 	b_ = b;
-	setColorDbg();
 }
 
 inline void Color::setRGB( const unsigned long& rgb, ColorFormat cf ) {
@@ -887,8 +792,6 @@ inline void Color::setRGB( const unsigned long& rgb, ColorFormat cf ) {
 		}
 		break;
 	}
-
-	setColorDbg();
 }
 
 
@@ -917,8 +820,6 @@ inline void Color::setHSV( const double & h, const double & s, const double & v 
 	r_ = rgb.R;
 	g_ = rgb.G;
 	b_ = rgb.B;
-
-	setColorDbg();
 }
 
 inline void Color::getHLS( double & h, double & l, double & s ) const {
@@ -946,32 +847,30 @@ inline void Color::setHLS( const double & h, const double & l, const double & s 
 	r_ = rgb.R;
 	g_ = rgb.G;
 	b_ = rgb.B;
-
-	setColorDbg();
 }
 
 inline void Color::getCMYK( double & c, double & m, double & y, double & k ) const {
-
+	throw NotImplementedException();
 }
 
 inline void Color::setCMYK( const double & c, const double & m, const double & y, const double & k ) {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 inline void Color::getLab() const {
-
+	throw NotImplementedException();
 }
 
 inline void Color::setLab() {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 inline void Color::getYUV() const {
-
+	throw NotImplementedException();
 }
 
 inline void Color::setYUV() {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 
@@ -980,8 +879,6 @@ inline void Color::copy( const Color* color ) {
 		r_ = color->getRed();
 		g_ = color->getGreen();
 		b_ = color->getBlue();
-
-		setColorDbg();
 	}
 }
 
@@ -989,8 +886,6 @@ inline void Color::copy( const Color& color ) {
 	r_ = color.getRed();
 	g_ = color.getGreen();
 	b_ = color.getBlue();
-
-	setColorDbg();
 }
 
 
@@ -1037,12 +932,12 @@ inline unsigned long Color::getInvertedRGB( ColorFormat cf ) const {
 }
 
 inline void Color::brighter() {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 
 inline void Color::darker() {
-	setColorDbg();
+	throw NotImplementedException();
 }
 
 inline void Color::invert() {
@@ -1050,8 +945,16 @@ inline void Color::invert() {
 	r_ =  ( 1.0 - r_ );
 	g_ =  ( 1.0 - g_ );
 	b_ =  ( 1.0 - b_ );
+}
 
-	setColorDbg();
+inline Color Color::getInverted() const {
+	// get the complement color
+	Color color;
+	color.r_ =  ( 1.0 - r_ );
+	color.g_ =  ( 1.0 - g_ );
+	color.b_ =  ( 1.0 - b_ );
+
+	return color;
 }
 
 inline Color* Color::getColor( const int& gray ) {
@@ -1070,7 +973,7 @@ inline Color Color::getColorContrast( const Color& clrRef, double deltaL/*=0.3*/
 	return GraphicsToolkit::getColorContrast( clrRef, deltaL );
 }
 
-inline const String Color::getColorNameFromMap( Color& color ) {
+inline const String Color::getColorNameFromMap( const Color& color ) {
 	return GraphicsToolkit::getColorNameFromMap( color );
 }
 
@@ -1816,13 +1719,13 @@ public:
         lightpink            ,  //  = "lightpink";              // 0x00FFB6C1
 #endif  // VCF_LARGE_COLOR_LIST
 
-    /*
+    /**
     double colornames
     */
     aqua                 ,  //  = "aqua";           // 0x0000FFFF = cyan
     fuchsia              ,  //  = "fuchsia";        // 0x00FF00FF = magenta
 
-    /*
+    /**
     useful tags
     */
     transparent          ,  //  = "transparent";    // 0xFF000000
@@ -2015,6 +1918,36 @@ inline ulong32 ColorSpace::changeHue( const ulong32& color, const double& deltaH
 	return color2;
 }
 
+inline String Color::getHexCode( const Color& color, const unsigned char & r, const unsigned char & g, const unsigned char & b, const bool& inverted/*=false*/ ) {
+
+	// Remark:
+	//   scheme: 0x00RRGGBB ( it would appear as BB GG RR 00 with Intel architecture ) so it should be:
+	//   code = StringUtils::format( L"%02x%02x%02x", cb, cg, cr ); if we want to see as it would appear with Intel architecture
+
+	String code = "";
+
+	unsigned char cr, cg, cb;
+	cr = (unsigned char)(r * 255 + 0.5);
+	cg = (unsigned char)(g * 255 + 0.5);
+	cb = (unsigned char)(b * 255 + 0.5);
+
+	unsigned long rgb = 0;
+
+	if ( !inverted ) {
+		//((unsigned char*)(&rgb))[2] = cr;
+		//((unsigned char*)(&rgb))[1] = cg;
+		//((unsigned char*)(&rgb))[0] = cb;
+		code = StringUtils::format( L"%02X%02X%02X", cr, cg, cb );
+	} else {
+		//((unsigned char*)(&rgb))[0] = cr;
+		//((unsigned char*)(&rgb))[1] = cg;
+		//((unsigned char*)(&rgb))[2] = cb;
+		code = StringUtils::format( L"%02X%02X%02X", cr, cg, cb );
+	}
+
+	return code;
+}
+
 
 
 }; // namespace VCF
@@ -2023,6 +1956,20 @@ inline ulong32 ColorSpace::changeHue( const ulong32& color, const double& deltaH
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/10 19:09:48  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.2  2004/10/11 12:19:17  marcelloptr
+*added missed function
+*
+*Revision 1.2.2.1  2004/08/27 19:55:45  marcelloptr
+*Color changes
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

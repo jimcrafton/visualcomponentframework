@@ -11,6 +11,11 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/OSXLocalePeer.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/OSXResourceBundle.h"
+#include "vcf/FoundationKit/OSXLibraryPeer.h"
+
+
 
 using namespace VCF;
 
@@ -66,7 +71,7 @@ ConditionPeer* OSXSystemToolkit::internal_createConditionPeer( Condition* condit
 
 LibraryPeer* OSXSystemToolkit::internal_createLibraryPeer( Library* library )
 {
-	return NULL;//new LinuxLibraryPeer();
+	return new OSXLibraryPeer();
 }
 
 FilePeer* OSXSystemToolkit::internal_createFilePeer( File* file )
@@ -96,10 +101,22 @@ LocalePeer* OSXSystemToolkit::internal_createLocalePeer()
     return new OSXLocalePeer();
 }
 
+ResourceBundlePeer* OSXSystemToolkit::internal_createResourceBundlePeer()
+{
+	return new OSXResourceBundle();
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/10 20:42:08  ddiego
+*osx updates
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

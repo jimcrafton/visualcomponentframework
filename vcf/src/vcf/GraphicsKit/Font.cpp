@@ -14,17 +14,21 @@ using namespace VCF;
 
 Font::Font():
 	peer_(NULL),
-	locale_(NULL)
+	locale_(NULL),
+	context_(NULL)
 {
 	peer_ = GraphicsToolkit::createFontPeer( "" );
 	if ( NULL == peer_ ){
 		throw InvalidPeer( MAKE_ERROR_MSG(NO_PEER), __LINE__ );
 	}
+
+	peer_->setFont( this );
 }
 
 Font::Font( const String& fontName ):
 	peer_(NULL),
-	locale_(NULL)
+	locale_(NULL),
+	context_(NULL)
 {
 	peer_ = GraphicsToolkit::createFontPeer( fontName );
 	if ( NULL == peer_ ){
@@ -36,7 +40,8 @@ Font::Font( const String& fontName ):
 
 Font::Font( const String& fontName, const double& pointSize ):
 	peer_(NULL),
-	locale_(NULL)
+	locale_(NULL),
+	context_(NULL)
 {
 
 	peer_ = GraphicsToolkit::createFontPeer( fontName, pointSize );
@@ -50,7 +55,8 @@ Font::Font( const String& fontName, const double& pointSize ):
 Font::Font( const Font& font ):
     Object( font ),
 	peer_(NULL),
-	locale_(NULL)
+	locale_(NULL),
+	context_(NULL)
 {
 	peer_ = GraphicsToolkit::createFontPeer( font.getName() );
 	if ( NULL == peer_ ){
@@ -74,6 +80,7 @@ Font& Font::operator= (const Font& rhs )
 					rhs.getStrikeOut(), &rhs.color_, rhs.getName() );
 
 	locale_ = rhs.locale_;
+	context_ = rhs.context_;
 	return *this;
 }
 
@@ -187,15 +194,7 @@ void Font::copy( Object* source )
 	if ( NULL != source ){
 		Font* srcFont = dynamic_cast<Font*>( source );
 		if ( NULL != srcFont ){
-			setStrikeOut( srcFont->getStrikeOut() );
-			setUnderlined( srcFont->getUnderlined() );
-			setBold( srcFont->getBold() );
-			setItalic( srcFont->getItalic() );
-			setPointSize( srcFont->getPointSize() );
-			setName( srcFont->getName() );
-
-			Color* srcColor = srcFont->getColor();
-			getColor()->copy( srcColor );
+			*this = *srcFont;
 		}
 	}
 }
@@ -231,6 +230,17 @@ void Font::setAttributes( const double& pointSize, const bool& bold, const bool&
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/01 03:50:39  ddiego
+*fixed font drawing bug that tinkham pointed out.
+*
+*Revision 1.2.2.1  2004/08/24 04:29:58  ddiego
+*more printing work, still not yet integrated.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -136,15 +136,16 @@ void Win32Dialog::createParams()
 	styleMask_ &= ~WS_MAXIMIZEBOX;
 }
 
-LRESULT Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc )
+bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
-	LRESULT result = 0;
+	bool result = false;
+	wndProcResult = 0;
 
 	switch ( message ) {
 
 		case WM_SHOWWINDOW :  {
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 			DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
 			DWORD tmp = style;
@@ -200,7 +201,7 @@ LRESULT Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 					}
 				}
 
-				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			}
 
 		}
@@ -208,14 +209,14 @@ LRESULT Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 
 		case WM_DESTROY:{
 			Dialog* dlg = (Dialog*)peerControl_;
-			Win32Window::handleEventMessages( message, wParam, lParam );
+			Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
 			if ( true == dlg->isModal() ) {
 				PostQuitMessage(0);
 			}
 		}
 		break;
 
-		default: result = Win32Window::handleEventMessages( message, wParam, lParam );
+		default: result = Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
 	}
 	return result;
 }
@@ -298,6 +299,10 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 
 
 	HWND activeWnd = GetActiveWindow();
+	//if ( !IsWindow ( activeWnd ) ) {
+		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+		activeWnd = toolkit->getDummyParent();
+	//}
 
 	String tmp = caption;
 
@@ -373,6 +378,17 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/12 22:34:21  ddiego
+*fixed bug in handling window cleanup when exception thrown from constructor.
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

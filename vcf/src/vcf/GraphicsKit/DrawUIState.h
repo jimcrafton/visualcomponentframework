@@ -42,7 +42,8 @@ public:
 		dsDisclosureOpened				= 0x00080000,
 		dsToggledYes					= 0x00100000,
 		dsToggledNo						= 0x00200000,
-		dsMenuItemSeparator				= 0x00400000
+		dsMenuItemSeparator				= 0x00400000,
+		dsDefaultButton					= 0x00800000
 	};	
 };
 
@@ -202,6 +203,20 @@ public:
 			state_ |= DrawStates::dsToggledNo;
 		}
 	}
+	
+	bool isDefaultButton() const {
+		return (state_ & DrawStates::dsDefaultButton) ? true : false;
+	}
+	
+	void setDefaultButton( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsDefaultButton;
+		}
+		else {
+			state_ &= ~DrawStates::dsDefaultButton;
+		}
+	}
+
 	
 	String buttonCaption_;
 };

@@ -21,6 +21,10 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/AbstractListModel.h"
 #endif // _VCF_ABSTRACTLISTMODEL_H__
 
+#ifndef _VCF_ABSTRACTMODEL_H__
+#	include "vcf/ApplicationKit/AbstractModel.h"
+#endif // _VCF_ABSTRACTMODEL_H__
+
 
 
 
@@ -28,14 +32,26 @@ namespace VCF{
 
 #define DEFAULTLISTMODEL_CLASSID			"ED88C0A9-26AB-11d4-B539-00C04F0196DA"
 
-class APPLICATIONKIT_API DefaultListModel : public AbstractListModel {
+class APPLICATIONKIT_API DefaultListModel : public AbstractModel, public AbstractListModel {
 public:
 
 	DefaultListModel();
 
 	virtual ~DefaultListModel();
 
+	virtual void empty() {
+		AbstractListModel::empty();
+		AbstractModel::empty();
+	}
 
+
+	virtual void addListModelHandler(EventHandler * handler) {
+		ModelChanged += handler;
+	}
+
+	virtual void removeListModelHandler(EventHandler * handler) {
+		ModelChanged -= handler;
+	}
 };
 
 };
@@ -44,6 +60,20 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

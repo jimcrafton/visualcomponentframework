@@ -24,7 +24,7 @@ GraphicsToolkit::GraphicsToolkit()
 
 	initColorMap();
 
-	fontInfoContainer_.initContainer( availableSystemFonts_ );
+	fontInfoContainer_.initContainer( availableSystemFonts_ );		
 }
 
 GraphicsToolkit::~GraphicsToolkit()
@@ -88,6 +88,18 @@ Image* GraphicsToolkit::createImage( const String& fileName )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( fileName );
 }
+
+PrintSessionPeer* GraphicsToolkit::createPrintSessionPeer()
+{
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createPrintSessionPeer();
+}
+
+GraphicsResourceBundle* GraphicsToolkit::getResourceBundle()
+{
+	return dynamic_cast<GraphicsResourceBundle*>( System::getResourceBundle() );
+}
+
+
 
 void GraphicsToolkit::saveImage( const String& fileName, Image* image )
 {
@@ -159,12 +171,15 @@ Font* GraphicsToolkit::getDefaultSystemFont()
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getDefaultSystemFont( );
 }
 
-double GraphicsToolkit::getDPI()
+double GraphicsToolkit::getDPI( GraphicsContext* context )
 {
-	return GraphicsToolkit::graphicsToolkitInstance->internal_getDPI();
+	return GraphicsToolkit::graphicsToolkitInstance->internal_getDPI(context);
 }
 
-
+GraphicsResourceBundlePeer* GraphicsToolkit::createGraphicsResourceBundlePeer()
+{
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createGraphicsResourceBundlePeer();
+}
 
 
 
@@ -508,6 +523,8 @@ void GraphicsToolkit::initGraphicsToolkit()
 	if ( NULL == GraphicsToolkit::graphicsToolkitInstance ){
 		throw NoGraphicsToolkitFoundException( MAKE_ERROR_MSG_2(NO_GFX_TOOLKIT_ERROR) );
 	}
+
+	System::internal_replaceResourceBundleInstance( new GraphicsResourceBundle() );
 
 	//GraphicsToolkit::graphicsToolkitInstance->init();
 }
@@ -1285,15 +1302,7 @@ void GraphicsToolkit::initColorMap()
 
 void GraphicsToolkit::initColorNameMapItem( const VCF::String& colorName, const unsigned char & r, const unsigned char & g, const unsigned char & b)
 {
-#	ifdef VCF_DEBUG_COLORS
-	Color* color = new Color( colorName, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b );
-
-	color->s_ = colorName;
-	color->setColorDbgRgb();
-	color->setColorDbgHsl();
-#else
 	Color* color = new Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b );
-#endif
 
 	colorMap_[colorName] = color;
 
@@ -1347,6 +1356,28 @@ void GraphicsToolkit::destroySystemColorNameMap()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/08/27 19:59:55  marcelloptr
+*Color changes
+*
+*Revision 1.2.2.3  2004/08/27 03:50:47  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.2  2004/08/25 04:43:33  ddiego
+*migrated the core printing changes into the graphics kit
+*
+*Revision 1.2.2.1  2004/08/21 21:06:53  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

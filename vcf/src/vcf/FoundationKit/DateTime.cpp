@@ -23,6 +23,10 @@ using namespace VCF;
 
 
 
+
+///////////////////////////////////////////////////////////////////////////////
+// DateTime implementation
+
 DateTime::DateTime( time_t newTime ):
 	time_(0)
 {
@@ -107,7 +111,7 @@ void DateTime::setTime( const unsigned long& hour,
 	unsigned long d;
 	getYearMonthDay( *this, &y, &m, &d );
 
-	unsigned long ms = getMilliSecond();
+	unsigned long ms = getMillisecond();
 
 	set( y, m, d, hour, minutes, seconds, ms );
 }
@@ -296,7 +300,7 @@ unsigned long DateTime::getSecond() const
 	return result;
 }
 
-unsigned long DateTime::getMilliSecond() const
+unsigned long DateTime::getMillisecond() const
 {
 	unsigned long result = 0;
 
@@ -472,7 +476,7 @@ void DateTime::setAndAdjustForGregorianDay( const unsigned long& year,
 
 	if ( gregorianDate != newGregorianDate ) {
 		if ( !gregorianDate ) {
-			set( getYear(), getMonth(), getDay()+10, getHour(), getMinute(), getSecond(), getMilliSecond() );
+			set( getYear(), getMonth(), getDay()+10, getHour(), getMinute(), getSecond(), getMillisecond() );
 		}
 	}
 }
@@ -561,7 +565,7 @@ unsigned long DateTime::getDayOfYear() const
 	unsigned long result = 0;
 
 	DateTime startOfYear;
-	startOfYear.set( getYear(), 1, 1, getHour(), getMinute(), getSecond(), getMilliSecond() );
+	startOfYear.set( getYear(), 1, 1, getHour(), getMinute(), getSecond(), getMillisecond() );
 
 	ulong64 diff = time_ - startOfYear.time_;
 	//+1 is added so we get a 1 based result - otherwise it'd be zero based
@@ -822,17 +826,186 @@ void DateTime::saveToStream( OutputStream* stream )
 
 
 
+void ByMillisecond::incr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() + offset );
+}
+
+void ByMillisecond::decr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() - offset );
+}
+
+void BySecond::incr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONESECOND) );
+}
+
+void BySecond::decr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONESECOND) );
+}
+
+void ByMinute::incr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONEMINUTE) );
+}
+
+void ByMinute::decr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEMINUTE) );
+}
+
+void ByHour::incr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONEHOUR) );
+}
+
+void ByHour::decr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEHOUR) );
+}
+
+void ByDay::incr( DateTime& dt, unsigned long offset )
+{
+	ulong64 offset64 = offset * DateTime::ONEDAY;
+	dt.setMilliseconds( dt.getMilliseconds() + offset64 );
+}
+
+void ByDay::decr( DateTime& dt, unsigned long offset )
+{
+	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEDAY) );
+}
+
+void ByMonth::incr( DateTime& dt, unsigned long offset )
+{
+	long y = dt.getYear();
+	long m = dt.getMonth();
+	long d = dt.getDay();
+
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( (m + offset) > 12 ) {
+		y += (m + offset) / 12;
+
+		m = (m + offset) % 12;
+	}
+	else {
+		m += offset;
+	}
+
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( newMaxDaysInMon != origMaxDaysInMon ) {
+		//check to see if we need to move the day around
+		if ( d == origMaxDaysInMon ) {
+			//last day of the month
+			d = newMaxDaysInMon;
+		}
+		else if ( d > 28 ) {
+			//make it smaller
+			d = minVal<int>( d, newMaxDaysInMon );
+		}
+	}
 
 
 
+	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMillisecond() );
+}
+
+void ByMonth::decr( DateTime& dt, unsigned long offset )
+{
+	long y = dt.getYear();
+	long m = dt.getMonth();
+	long d = dt.getDay();
+
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( (m - offset) < 1 ) {
+
+		y -= ( abs((long)static_cast<float>( m - offset ) ) / 12) + 1;
+
+		m = 12 - ((m - offset) % 12);
+	}
+	else {
+		m -= offset;
+	}
+
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( newMaxDaysInMon != origMaxDaysInMon ) {
+		//check to see if we need to move the day around
+		if ( d == origMaxDaysInMon ) {
+			//last day of the month
+			d = newMaxDaysInMon;
+		}
+		else if ( d > 28 ) {
+			//make it smaller
+			d = minVal<int>( d, newMaxDaysInMon );
+		}
+	}
+
+	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMillisecond() );
+}
+
+void ByYear::incr( DateTime& dt, unsigned long offset )
+{
+	long y = dt.getYear();
+	long m = dt.getMonth();
+	long d = dt.getDay();
+
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	y += offset;
+
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( newMaxDaysInMon != origMaxDaysInMon ) {
+		//check to see if we need to move the day around
+		if ( d == origMaxDaysInMon ) {
+			//last day of the month
+			d = newMaxDaysInMon;
+		}
+		else if ( d > 28 ) {
+			//make it smaller
+			d = minVal<int>( d, newMaxDaysInMon );
+		}
+	}
+
+	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMillisecond() );
+}
+
+void ByYear::decr( DateTime& dt, unsigned long offset )
+{
+	long y = dt.getYear();
+	long m = dt.getMonth();
+	long d = dt.getDay();
+
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	y -= offset;
+
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+
+	if ( newMaxDaysInMon != origMaxDaysInMon ) {
+		//check to see if we need to move the day around
+		if ( d == origMaxDaysInMon ) {
+			//last day of the month
+			d = newMaxDaysInMon;
+		}
+		else if ( d > 28 ) {
+			//make it smaller
+			d = minVal<int>( d, newMaxDaysInMon );
+		}
+	}
+
+	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMillisecond() );
+}
 
 
 
-
-
-
-
-
+///////////////////////////////////////////////////////////////////////////////
+// DateTimeSpan implementation
 
 
 void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
@@ -933,7 +1106,7 @@ unsigned long DateTimeSpan::getMilliseconds() const
 	DateTime dt;
 	dt.time_ = delta_;
 
-	return dt.getMilliSecond();
+	return dt.getMillisecond();
 }
 
 unsigned long DateTimeSpan::getTotalMonths() const
@@ -969,187 +1142,20 @@ ulong64 DateTimeSpan::getTotalMilliseconds() const
 
 
 
-
-void ByMillisecond::incr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() + offset );
-}
-
-void ByMillisecond::decr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() - offset );
-}
-
-void BySecond::incr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONESECOND) );
-}
-
-void BySecond::decr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONESECOND) );
-}
-
-void ByMinute::incr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONEMINUTE) );
-}
-
-void ByMinute::decr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEMINUTE) );
-}
-
-void ByHour::incr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() + (offset * DateTime::ONEHOUR) );
-}
-
-void ByHour::decr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEHOUR) );
-}
-
-void ByDay::incr( DateTime& dt, unsigned long offset )
-{
-	ulong64 offset64 = offset * DateTime::ONEDAY;
-	dt.setMilliseconds( dt.getMilliseconds() + offset64 );
-}
-
-void ByDay::decr( DateTime& dt, unsigned long offset )
-{
-	dt.setMilliseconds( dt.getMilliseconds() - (offset * DateTime::ONEDAY) );
-}
-
-void ByMonth::incr( DateTime& dt, unsigned long offset )
-{
-	long y = dt.getYear();
-	long m = dt.getMonth();
-	long d = dt.getDay();
-
-	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( (m + offset) > 12 ) {
-		y += (m + offset) / 12;
-
-		m = (m + offset) % 12;
-	}
-	else {
-		m += offset;
-	}
-
-	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( newMaxDaysInMon != origMaxDaysInMon ) {
-		//check to see if we need to move the day around
-		if ( d == origMaxDaysInMon ) {
-			//last day of the month
-			d = newMaxDaysInMon;
-		}
-		else if ( d > 28 ) {
-			//make it smaller
-			d = minVal<int>( d, newMaxDaysInMon );
-		}
-	}
-
-
-
-	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMilliSecond() );
-}
-
-void ByMonth::decr( DateTime& dt, unsigned long offset )
-{
-	long y = dt.getYear();
-	long m = dt.getMonth();
-	long d = dt.getDay();
-
-	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( (m - offset) < 1 ) {
-
-		y -= ( abs((long)static_cast<float>( m - offset ) ) / 12) + 1;
-
-		m = 12 - ((m - offset) % 12);
-	}
-	else {
-		m -= offset;
-	}
-
-	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( newMaxDaysInMon != origMaxDaysInMon ) {
-		//check to see if we need to move the day around
-		if ( d == origMaxDaysInMon ) {
-			//last day of the month
-			d = newMaxDaysInMon;
-		}
-		else if ( d > 28 ) {
-			//make it smaller
-			d = minVal<int>( d, newMaxDaysInMon );
-		}
-	}
-
-	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMilliSecond() );
-}
-
-void ByYear::incr( DateTime& dt, unsigned long offset )
-{
-	long y = dt.getYear();
-	long m = dt.getMonth();
-	long d = dt.getDay();
-
-	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	y += offset;
-
-	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( newMaxDaysInMon != origMaxDaysInMon ) {
-		//check to see if we need to move the day around
-		if ( d == origMaxDaysInMon ) {
-			//last day of the month
-			d = newMaxDaysInMon;
-		}
-		else if ( d > 28 ) {
-			//make it smaller
-			d = minVal<int>( d, newMaxDaysInMon );
-		}
-	}
-
-	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMilliSecond() );
-}
-
-void ByYear::decr( DateTime& dt, unsigned long offset )
-{
-	long y = dt.getYear();
-	long m = dt.getMonth();
-	long d = dt.getDay();
-
-	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	y -= offset;
-
-	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
-
-	if ( newMaxDaysInMon != origMaxDaysInMon ) {
-		//check to see if we need to move the day around
-		if ( d == origMaxDaysInMon ) {
-			//last day of the month
-			d = newMaxDaysInMon;
-		}
-		else if ( d > 28 ) {
-			//make it smaller
-			d = minVal<int>( d, newMaxDaysInMon );
-		}
-	}
-
-	dt.set( y, m, d, dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getMilliSecond() );
-}
-
-
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:40  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/08/26 04:05:47  marcelloptr
+*minor change on name of getMillisecond
+*
+*Revision 1.2.2.3  2004/08/23 21:25:57  marcelloptr
+*just moved some member definitions around
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

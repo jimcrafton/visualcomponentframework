@@ -29,7 +29,11 @@ class DropTargetPeer;
 
 /**
 The DropTarget class represents a way to control and be notified when a
-something is "dropped" as a result of a drag-drop operation.
+something is "dropped" ( or just "dragged over" ) as a result of 
+a drag-drop operation.
+In this way, for example, the mouse cursor can be modified according to
+the control is over.
+\par
 A drop target works by being registered with a control. This registration is
 accomplished by calling the addTargetControl() on the drop target and passing
 in a control instance. For example:
@@ -143,6 +147,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -14,38 +14,68 @@ where you installed the VCF.
 #endif
 
 
+/**
+* DocManagerPolicy
+* the document manager policy is the set of operations defining the documents 
+* interface itself.
+* Even if the template using a policy as its argument needs the policy to have
+* certain members defined, we don't create a generic abstract (pure)
+* class DocManagerPolicy. The main reason is that a policy class does NOT have
+* virtual methods as it is not necessary at all for template arguments.
+*/
+
 namespace VCF {
 
 
 class Document;
 
 
+/**
+* class SDIPolicy
+* policy class for Single Document Interface
+* This is the implementation of the regular SDI architecture,
+* with all the tipical operations on a document that we can find
+* in an application having a single document.
+*/
 class APPLICATIONKIT_API SDIPolicy {
 public:
 	SDIPolicy(): currentDocument_(NULL), menusMerged_(false) {}
 
+	/**
+	* tells if we want the application to use the main applicaiton's window for a document
+	* this is true in a SDI application.
+	*/
 	bool usesMainWindow() {
 		return true;
 	}
 
+	/**
+	* tells if we want the application to save the current document before activating a new document
+	*/
 	bool saveBeforeNewDocument() {
 		return true;
 	}
 
+	/**
+	*callback function managing the operation to be done after a new document
+	* has been created
+	*/
 	void afterNewDocument( Document* newDocument ) {
 		currentDocument_ = newDocument;
 
-		newDocument->getWindow()->setCaption( getDocumentWindowCaption() );
+		newDocument->getWindow()->setCaption( getDocumentWindowCaption(newDocument) );
 	}
 
-	void closeDocument() {
-		getCurrentDocument()->getWindow()->close();
-	}
-
+	/**
+	* gets the document that currently has the focus, so to speak, in the application
+	*/
 	Document* getCurrentDocument() {
 		return currentDocument_;
 	}
 
+	/**
+	* sets the specified document as the active one in the application
+	*/
 	void setCurrentDocument( VCF::Document* doc ) {
 		currentDocument_ = doc;
 
@@ -54,6 +84,16 @@ public:
 		}
 	}
 
+	/**
+	* closes the window associated to the current document
+	*/
+	void closeDocument() {
+		getCurrentDocument()->getWindow()->close();
+	}
+
+	/**
+	* closes the specified window
+	*/
 	bool closeDocumentWindow( Window* window ) {
 		
 		if ( currentDocument_->isModified() ) {
@@ -72,17 +112,21 @@ public:
 		return true;
 	}
 
-	String getDocumentName() {
+	/**
+	*gets the appropriate name for the current document
+	*@String, the name
+	*/
+	String getDocumentName( Document* doc ) {
 		String result;
-		if ( NULL == currentDocument_ ) {
+		if ( NULL == doc ) {
 			result = "No Document";
 		}
 		else {
-			result = currentDocument_->getName();
+			result = doc->getName();
 			if ( result.empty() ) {
 				result = "Untitled";
 			}
-			if ( currentDocument_->isModified() ) {
+			if ( doc->isModified() ) {
 				result += "*";
 			}
 		}
@@ -90,25 +134,35 @@ public:
 		return result;
 	}
 
+	/**
+	* 
+	* 
+	*/
 	void documentWindowActivated( Window* window ) {
 
-		window->setCaption( getDocumentWindowCaption() );
+		window->setCaption( getDocumentWindowCaption( getCurrentDocument() ) );
 	}
 
-	String getDocumentWindowCaption() {
+	String getDocumentWindowCaption( Document* doc ) {
 		String result;
 
 		Application* app = Application::getRunningInstance();
 		if ( NULL != app ) {
-			result = app->getName() +  " - " + getDocumentName();
+			result = app->getName() +  " - " + getDocumentName(doc);
 		}
 		else {
-			result = getDocumentName();
+			result = getDocumentName(doc);
 		}
 
 		return result;
 	}
 
+	/**
+	* merges the menu specific of the document window, with the generic
+	* application's menu
+	*Menu* appMenu, the menu general for any application
+	*Menu* documentWindowMenu, the menu specific for this application's document window
+	*/
 	void mergeWindowMenus( Menu* appMenu, Menu* documentWindowMenu ) {
 		if ( !menusMerged_ ) {
 			UIToolkit::getUIPolicyManager()->mergeMenus( appMenu, documentWindowMenu );
@@ -117,8 +171,12 @@ public:
 		menusMerged_ = true;
 	}
 
-	bool menusMerged_;
+public:
+	/* the document that currently has the focus, so to speak, in the application */
 	Document* currentDocument_;
+
+	/* flag telling if the menus have been already merged or not */
+	bool menusMerged_;
 };
 
 
@@ -127,43 +185,99 @@ public:
 
 
 
+/**
+* class MDIPolicy
+* policy class for a Multiple Document Interface (MDI).
+* This is the implementation of the regular MDI architecture,
+* with all the tipical operations with documents that we can find
+* in an application having many (more than one) documents.
+* It is set up to have 1 Document class associated with 1 Window instance,
+* i.e. it is a one to one relationship.
+* Each window is a real indipendent window.
+*/
 class APPLICATIONKIT_API MDIPolicy {
 public:
-	MDIPolicy(): currentDocument_(NULL),documentCount_(0) {}
+	MDIPolicy(): /*currentDocument_(NULL),*/ documentCount_(0) {}
 
+	/**
+	* tells if we want the application to use the main applicaiton's window for a document
+	* this is false in a MDI application, as child windows are used instead.
+	*/
 	bool usesMainWindow() {
 		return false;
 	}
 
+	/**
+	* tells if we want the application to save the current document before activating a new document
+	*/
 	bool saveBeforeNewDocument() {
 		return false;
 	}
 
+	/**
+	*callback function managing the operation to be done after a new document
+	* has been created
+	*/
 	void afterNewDocument( Document* newDocument ) {
 		documents_[newDocument->getWindow()] = newDocument;
 		documentCount_ ++;
 	}
 
+	/**
+	* gets the document that currently has the focus, so to speak, in the application
+	*/
 	Document* getCurrentDocument() {
-		return currentDocument_;
+		Document* result = NULL;
+		std::map<Window*,Document*>::iterator found = documents_.find( (Window*)Frame::getActiveFrame() );
+		if ( found != documents_.end() ) {
+			result = found->second;
+		}
+		
+
+		StringUtils::traceWithArgs( "currentDocument_: %p\n", result );
+
+		return result;
 	}
 
+	/**
+	* sets the specified document as the active one in the application
+	*/
 	void setCurrentDocument( VCF::Document* doc ) {
-		currentDocument_ = doc;
+		
 
-		if ( NULL != currentDocument_ ) {
-			currentDocument_->getWindow()->activate();
+		StringUtils::traceWithArgs( "setCurrentDocument( %p )\n", doc );
+
+		if ( NULL != doc ) {
+			doc->getWindow()->activate();
 		}
 	}
 
+	/**
+	* closes the window associated to the current document
+	*/
 	void closeDocument() {
 		getCurrentDocument()->getWindow()->close();
 	}
 
+	/**
+	* closes the specified window
+	* and activates the next document window in the internal list
+	*/
 	bool closeDocumentWindow( Window* window ) {
 		std::map<Window*,Document*>::iterator found = documents_.find( window );
 		std::map<Window*,Document*>::iterator next = documents_.end();
 		if ( found != documents_.end() ) {
+
+			Document* currentDoc = found->second;
+			if ( currentDoc->isModified() ) {
+				if ( !VCF::DocumentManager::getDocumentManager()->saveDocument( currentDoc ) ) {
+					return false;
+				}
+			}					
+		
+			VCF::DocManagerEvent event( currentDoc, VCF::DocumentManager::dmCloseDocument );
+		
+			VCF::DocumentManager::getDocumentManager()->DocumentClosed.fireEvent( &event );
 
 			window->setView( NULL );
 			window->setViewModel( NULL );
@@ -182,16 +296,14 @@ public:
 			mergedMenus_.erase( found2 );
 		}
 
-		currentDocument_ = NULL;
+		//currentDocument_ = NULL;
 		if ( documents_.empty() ) {
-			//Buh bye!
-			UIToolkit::quitCurrentEventLoop();
+			lastDocumentClosed();
 		}
 		else {
 			if ( next == documents_.end() ) {
 				next = documents_.begin();
 			}
-
 
 			StringUtils::trace( "next->second->getWindow()->show()\n" );
 			if ( next->second->getWindow()->isActive() ) {
@@ -207,19 +319,38 @@ public:
 		return true;
 	}
 
-	String getDocumentName() {
+	/**
+	*specifies what to do after the last application's document has been closed
+	*the defalt behaviour is, for the moment, to close the entire application
+	*this will be rewritten in a different way soon
+	*/
+	void lastDocumentClosed() {
+		//Buh bye!
+
+		UIToolkit::postEvent( new StaticEventHandlerInstance<Event>(MDIPolicy::postQuitEventLoop), new Event(NULL,0) );
+		//UIToolkit::quitCurrentEventLoop();
+	}
+
+	static void postQuitEventLoop( Event* e ) {
+		UIToolkit::quitCurrentEventLoop();
+	}
+	/**
+	*gets the appropriate name for the current document
+	*@String, the name
+	*/
+	String getDocumentName(Document* doc) {
 		String result;
-		if ( NULL == currentDocument_ ) {
+		if ( NULL == doc ) {
 			result = "No Document";
 		}
 		else {
-			result = currentDocument_->getName();
+			result = doc->getName();
 			if ( result.empty() ) {
 				result = "Document" + StringUtils::toString( documentCount_ );
-				currentDocument_->setName( result );
+				doc->setName( result );
 			}
 
-			if ( currentDocument_->isModified() ) {
+			if ( doc->isModified() ) {
 				result += "*";
 			}
 		}
@@ -227,33 +358,48 @@ public:
 		return result;
 	}
 
+	/**
+	* 
+	* 
+	*/
 	void documentWindowActivated( Window* window ) {
 		StringUtils::trace( "documentWindowActivated\n" );
 
-		currentDocument_ = NULL;
+		//currentDocument_ = NULL;
 
 		std::map<Window*,Document*>::iterator found = documents_.find( window );
 		if ( found != documents_.end() ) {
-			currentDocument_ = found->second;
+			//currentDocument_ = found->second;
 
-			window->setCaption( getDocumentWindowCaption() );
+			window->setCaption( getDocumentWindowCaption( found->second ) );
 		}
 	}
 
-	String getDocumentWindowCaption() {
+	/**
+	*gets the appropriate name for the current document
+	*@String, the name
+	*/
+	String getDocumentWindowCaption( Document* doc ) {
 		String result;
 
 		Application* app = Application::getRunningInstance();
 		if ( NULL != app ) {
-			result = app->getName() +  " - [" + getDocumentName() + "]";
+			result = app->getName() +  " - [" + getDocumentName(doc) + "]";
 		}
 		else {
-			result = getDocumentName();
+			result = getDocumentName(doc);
 		}
 
 		return result;
 	}
 
+	/**
+	* merges the menu specific of the document window, with the generic
+	* application's menu
+	* an internal vector keeps track of the menus already merged so this is done only once
+	*Menu* appMenu, the menu general for any application
+	*Menu* documentWindowMenu, the menu specific for the document window we need
+	*/
 	void mergeWindowMenus( Menu* appMenu, Menu* documentWindowMenu ) {
 		std::vector<Menu*>::iterator found = std::find( mergedMenus_.begin(), mergedMenus_.end(), documentWindowMenu );
 		if ( found == mergedMenus_.end() ) {
@@ -264,20 +410,41 @@ public:
 		}
 	}
 
+public:
+	/* the document that currently has the focus, so to speak, in the application */
+	//Document* currentDocument_;
 
-
-	Document* currentDocument_;
+	/**
+	* the association map between each window and its document in the application
+	* in a standard MDI this relationship is one to one
+	*/
 	std::map<Window*,Document*> documents_;
+
+	/**
+	* vector used to keep track of the menus already merged
+	*/
 	std::vector<Menu*> mergedMenus_;
+
+	/**
+	* the total number of newly created documents
+	*/
 	long documentCount_;
 };
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/24 18:48:56  marcelloptr
+*Document Window documentation
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

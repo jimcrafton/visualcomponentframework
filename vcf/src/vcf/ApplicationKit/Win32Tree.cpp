@@ -229,6 +229,7 @@ void Win32Tree::createParams()
 	styleMask_ = BORDERED_VIEW | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_NOTOOLTIPS | TVS_SHOWSELALWAYS;
 
 	styleMask_ &= ~WS_BORDER;
+	styleMask_ &= ~WS_VISIBLE;
 
 	styleMask_ |= WS_HSCROLL | WS_VSCROLL;
 }
@@ -273,6 +274,21 @@ void Win32Tree::setImageList( ImageList* imageList )
 
 		Image* masterImage = imageList->getMasterImage();
 		Win32Image* win32Img = (Win32Image*)masterImage;
+
+		/*
+		JC added this cause it appears that for 32bit images the alpa val
+		matters! If it's not set back to 0 then the transparency affect doesn't 
+		work? Bizarre
+		*/
+		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		int sz = win32Img->getWidth() * win32Img->getHeight();
+		unsigned char* oldAlpaVals = new unsigned char[sz];
+		do {
+			sz --;
+			oldAlpaVals[sz] = pix[sz].a;
+			pix[sz].a = 0;
+		} while( sz > 0 );
+
 		HBITMAP hbmImage = win32Img->getBitmap();
 
 		COLORREF transparentColor = RGB(0,0,0);
@@ -298,14 +314,22 @@ void Win32Tree::setImageList( ImageList* imageList )
 		}
 
 		DeleteObject( hBMPcopy );
+		sz = win32Img->getWidth() * win32Img->getHeight();
+		do {
+			sz --;
+			pix[sz].a = oldAlpaVals[sz];
+		} while( sz > 0 );
+		
+		delete [] oldAlpaVals;
+
 
 		TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_NORMAL );
 
 
-		EventHandler* imgListHandler = getEventHandler( "ImageListHandler" );
+		EventHandler* imgListHandler = getEventHandler( "Win32Tree::onImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Tree>(this, &Win32Tree::onImageListImageChanged, "ImageListHandler" );
+				new ImageListEventHandler<Win32Tree>(this, &Win32Tree::onImageListImageChanged, "Win32Tree::onImageListImageChanged" );
 
 		}
 		imageList->SizeChanged.addHandler( imgListHandler );
@@ -314,95 +338,126 @@ void Win32Tree::setImageList( ImageList* imageList )
 	}
 }
 
-
-LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc )
+bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
-	LRESULT result = 0;
+	bool result = 0;
+	wndProcResult = 0;
+
 
 	switch ( message ) {
 		case WM_PAINT:{
 			PAINTSTRUCT ps;
+
 			HDC dc = BeginPaint( hwnd_, &ps );
 
-			RECT r;
-			GetClientRect( hwnd_, &r );
+			RECT paintRect;
+			GetClientRect( hwnd_, &paintRect );
 
 			if ( NULL == memDC_ ) {
 				//create here
-				HDC dc = ::GetDC(0);
-				memDC_ = ::CreateCompatibleDC( dc );
-				::ReleaseDC( 0,	dc );
+				HDC tmpDC = ::GetDC(0);
+				memDC_ = ::CreateCompatibleDC( tmpDC );
+				::ReleaseDC( 0,	tmpDC );
 			}
-			memBMP_ = ::CreateCompatibleBitmap( dc,
-					r.right - r.left,
-					r.bottom - r.top );
-			memDCState_ = ::SaveDC( memDC_ );
 
+
+			VCF::GraphicsContext* ctx = peerControl_->getContext();
+			
+			ctx->setViewableBounds( Rect(paintRect.left, paintRect.top,
+									paintRect.right, paintRect.bottom ) );
+
+			memBMP_ = ::CreateCompatibleBitmap( dc,
+					paintRect.right - paintRect.left,
+					paintRect.bottom - paintRect.top );
+
+
+			memDCState_ = ::SaveDC( memDC_ );
 			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
 
-			::SetViewportOrgEx( memDC_, -r.left, -r.top, NULL );
+			POINT oldOrg = {0};
+			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 
-			Color* color = treeControl_->getColor();
-			
-			COLORREF backColor = RGB(color->getRed() * 255.0,
-									color->getGreen() * 255.0,
-									color->getBlue() * 255.0 );
-			HBRUSH bkBrush = CreateSolidBrush( backColor );
-			FillRect( memDC_, &r, bkBrush );
-			DeleteObject( bkBrush );
-
-				
-
-			::SetViewportOrgEx( memDC_, -r.left, -r.top, NULL );
+			ctx->getPeer()->setContextID( (long)memDC_ );
 
 			
+			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );				
+			
+			int gcs = ctx->saveState();
+
+			//paint the control here - double buffered
+			peerControl_->paint( ctx );
+
+
+			ctx->restoreState( gcs );		
+
+
+			//reset back to original origin
+			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			
+			//let the tree control's DefWndProc do windwos painting
+						
 			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
 
-			
 
-			::BitBlt( dc, r.left, r.top,
-					  r.right - r.left,
-					  r.bottom - r.top,
-					  memDC_, r.left, r.top, SRCCOPY );
+			//NOW reset the owning control of teh graphics context here
+			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
+
+			::BitBlt( dc, paintRect.left, paintRect.top,
+					  paintRect.right - paintRect.left,
+					  paintRect.bottom - paintRect.top,
+					  memDC_, paintRect.left, paintRect.top, SRCCOPY );
+
 			::RestoreDC ( memDC_, memDCState_ );
 			
 			::DeleteObject( memBMP_ );
 			
+			memBMP_ = NULL;
+			originalMemBMP_ = NULL;
+			memDCState_ = 0;
 
+			
+
+			
 			EndPaint( hwnd_, &ps );
-			result = 1;
+			
+			wndProcResult = 1;
+			result = true;
 		}
 		break;
 
 		case WM_NCCALCSIZE: {
-			return handleNCCalcSize( wParam, lParam );
+			wndProcResult = handleNCCalcSize( wParam, lParam );
+			result = true;
 		}
 		break;
 
 		case WM_NCPAINT: {
-			return handleNCPaint( wParam, lParam );
+			wndProcResult = handleNCPaint( wParam, lParam );
+			result = true;
 		}
 		break;
 
-		case WM_ERASEBKGND :{
+		case WM_ERASEBKGND :{/*
 			Color* color = treeControl_->getColor();
 			if ( (backColor_.getRed() != color->getRed()) || (backColor_.getGreen() != color->getGreen()) || (backColor_.getBlue() != color->getBlue()) ) {
 				COLORREF backColor = RGB(color->getRed() * 255.0,
 									color->getGreen() * 255.0,
 									color->getBlue() * 255.0 );
 
-				TreeView_SetBkColor( hwnd_, backColor );
+				//TreeView_SetBkColor( hwnd_, backColor );
 
 				backColor_.copy( color );
 			}
-			result = 1;
+			*/
+			wndProcResult = 0;
+			result = true;
 		}
 		break;
 
 		case WM_LBUTTONDOWN : {			
 
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 
 
@@ -432,7 +487,7 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 		break;
 
 		case WM_CREATE:{
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
@@ -448,7 +503,8 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			}
 
 			//DO NOT, REPEAT: DO NOT allow the DefaultWndProc to get called!
-			result = 1;
+			wndProcResult = 1;
+			result = true;
 		}
 		break;
 
@@ -483,9 +539,11 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				String text = lptvdi->item.pszText;
 				TreeItem* item = (TreeItem*)lptvdi->item.lParam;
 				item->setCaption( text );
-				return 1;
+				
+				wndProcResult = 1;
+				result = true;
 			}
-			return 0;
+			return false;
 		}
 		break;
 
@@ -495,9 +553,10 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				AnsiString text = lptvdi->item.pszText;
 				TreeItem* item = (TreeItem*)lptvdi->item.lParam;
 				item->setCaption( text );
-				return 1;
+				wndProcResult = 1;
+				result = true;
 			}
-			return 0;
+			return false;
 		}
 		break;
 
@@ -695,31 +754,43 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 		break;
 
 		case NM_CUSTOMDRAW:{
+			static Rect itemRect;
+
+			wndProcResult = CDRF_DODEFAULT;
+			result = true;
+
 			NMTVCUSTOMDRAW__* treeViewDraw = (NMTVCUSTOMDRAW__*)lParam;
 			if ( NULL != treeViewDraw )	{
 				switch ( treeViewDraw->nmcd.dwDrawStage ) {
 					case CDDS_PREPAINT : {
-						result = CDRF_NOTIFYITEMDRAW;
+						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT;
 					}
 					break;
 
 					case CDDS_ITEMPREPAINT : {
-						result = CDRF_NOTIFYPOSTPAINT;
+						RECT r;
+						TreeView_GetItemRect( hwnd_, 
+											(HTREEITEM) treeViewDraw->nmcd.dwItemSpec,
+											&r, TRUE );
+
+						itemRect.left_ = r.left;
+						itemRect.top_ = r.top;
+						itemRect.right_ = r.right;
+						itemRect.bottom_ = r.bottom;
+
+						wndProcResult = CDRF_NOTIFYPOSTPAINT;
 					}
 					break;
 
 					case CDDS_ITEMPOSTPAINT : {
-						result = CDRF_DODEFAULT;
+						
+						
+						wndProcResult = CDRF_DODEFAULT;
+						
 						if ( NULL != treeViewDraw->nmcd.lItemlParam ) {
 							TreeItem* item = (TreeItem*)treeViewDraw->nmcd.lItemlParam;
-							std::map<TreeItem*,HTREEITEM>::iterator found =
-								treeItems_.find( item );
-							if ( found != treeItems_.end() ){
-								Rect itemRect;
-								itemRect.left_ = treeViewDraw->nmcd.rc.left;
-								itemRect.top_ = treeViewDraw->nmcd.rc.top;
-								itemRect.right_ = treeViewDraw->nmcd.rc.right;
-								itemRect.bottom_ = treeViewDraw->nmcd.rc.bottom;
+
+							if ( item->canPaint() ) {
 								item->paint( peerControl_->getContext(), &itemRect );
 							}
 						}
@@ -727,7 +798,8 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 					break;
 
 					default : {
-						result = CDRF_DODEFAULT;
+						
+						wndProcResult = 0;
 					}
 					break;
 				}
@@ -736,7 +808,7 @@ LRESULT Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 		break;
 
 		default: {
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			//result = CallWindowProc( oldTreeWndProc_, hwnd_, message, wParam, lParam );
 
 		}
@@ -1086,21 +1158,40 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 		Image* masterImage = imageList->getMasterImage();
 		Win32Image* win32Img = (Win32Image*)masterImage;
+		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		int sz = win32Img->getWidth() * win32Img->getHeight();
+		unsigned char* oldAlpaVals = new unsigned char[sz];
+		do {
+			sz --;
+			oldAlpaVals[sz] = pix[sz].a;
+			pix[sz].a = 0;
+		} while( sz > 0 );
+
+
+		Color* transparentColor = imageList->getTransparentColor();
 
 		HBITMAP hBMPcopy = (HBITMAP)CopyImage( win32Img->getBitmap(), IMAGE_BITMAP, 0, 0, NULL );
 		//flip the bits
 
-		int err = ImageList_AddMasked( stateImageListCtrl_, hBMPcopy, RGB(0,255,0) );
+		int err = ImageList_AddMasked( stateImageListCtrl_, hBMPcopy, transparentColor->getRGB() );
 
 		if ( err < 0 ) {
 			//error condition !
 		}
 		DeleteObject( hBMPcopy );
 
+		sz = win32Img->getWidth() * win32Img->getHeight();
+		do {
+			sz --;
+			pix[sz].a = oldAlpaVals[sz];
+		} while( sz > 0 );
+		
+		delete [] oldAlpaVals;
+
 		TreeView_SetImageList( hwnd_, stateImageListCtrl_, TVSIL_STATE );
 
 
-		EventHandler* imgListHandler = getEventHandler( "ImageListHandler" );
+		EventHandler* imgListHandler = getEventHandler( "Win32Tree::onStateImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
 				new ImageListEventHandler<Win32Tree>(this, &Win32Tree::onStateImageListImageChanged, "Win32Tree::onStateImageListImageChanged" );
@@ -1163,6 +1254,24 @@ void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/09/09 04:42:04  ddiego
+*fixed some custom draw bugs in win32 tree control. updated
+*advanced ui example.
+*
+*Revision 1.2.2.3  2004/09/08 03:49:05  ddiego
+*minor win32 tree mods
+*
+*Revision 1.2.2.2  2004/09/07 03:57:04  ddiego
+*misc tree control update
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

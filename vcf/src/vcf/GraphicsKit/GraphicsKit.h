@@ -55,6 +55,13 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/ContextPeer.h"
 #include "vcf/GraphicsKit/Vector2D.h"
 
+//graphics resources
+#include "vcf/GraphicsKit/GraphicsResourceBundle.h"
+
+//printing
+#include "vcf/GraphicsKit/PrintSession.h"
+#include "vcf/GraphicsKit/PrintEvent.h"
+
 
 /**
 *initializes the graphics Kit runtime.
@@ -83,6 +90,20 @@ namespace VCF
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/08/25 04:43:33  ddiego
+*migrated the core printing changes into the graphics kit
+*
+*Revision 1.2.2.1  2004/08/21 21:06:53  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -44,7 +44,8 @@ Control::Control():
 	useRenderBuffer_(false),
 	container_(NULL)
 {
-	font_ = new Font( UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont ) );	//the cast is to  avoid internal compiler error on some vc6 versions
+	//this (Font) cast is to avoid an internal compiler error on some vc6 versions
+	font_ = new Font( (Font) UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont ) );
 
 	context_ = new ControlGraphicsContext( this );
 
@@ -66,7 +67,20 @@ Control::Control():
 
 Control::~Control()
 {
-
+	/**
+	this shouldn't happen, but it's
+	possible if an exception is thrown in a constructor
+	and not handled. In this case the Control::destroy
+	method will not be called, but rather the destructor
+	will be called directly.
+	So we double check here and delete the control peer
+	*/
+	if ( NULL != peer_ ) {
+		peer_->setControl( NULL );
+		peer_->destroyControl();
+		delete peer_;
+		peer_ = NULL;
+	}
 }
 
 void Control::destroy()
@@ -162,13 +176,7 @@ void Control::setBorder( Border* border )
 }
 
 Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
-{
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-
-
+{	
 
 	Control* parent = getParent();
 	bool lightweightParent = false;
@@ -200,16 +208,11 @@ Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 
 Rect Control::getClientBounds( const bool& includeBorder ) /**throw( InvalidPeer ); -JEC - FIXME later*/
-{
-
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
+{	
 	Rect r = peer_->getBounds();
 	clientBounds_->setRect( 0.0, 0.0, r.getWidth(), r.getHeight() );
 
-	if ( (true == includeBorder) && (NULL != border_) ){
+	if ( (includeBorder) && (NULL != border_) ){
 		r = *clientBounds_;
 		*clientBounds_ = border_->getClientRect( &r, this );
 	}
@@ -219,11 +222,7 @@ Rect Control::getClientBounds( const bool& includeBorder ) /**throw( InvalidPeer
 
 double Control::getLeft() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
+	
 	//*bounds_ = peer_->getBounds();
 	getBounds();
 
@@ -233,9 +232,6 @@ double Control::getLeft() /**throw( InvalidPeer ); -JEC - FIXME later*/
 double Control::getRight()
 {
 
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	getBounds();
 	//*bounds_ = peer_->getBounds();
 
@@ -244,10 +240,6 @@ double Control::getRight()
 
 double Control::getBottom() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	getBounds();
 	//*bounds_ = peer_->getBounds();
 
@@ -256,10 +248,6 @@ double Control::getBottom() /**throw( InvalidPeer ); -JEC - FIXME later*/
 
 double Control::getWidth() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
 
 	getBounds();
 	//*bounds_ = peer_->getBounds();
@@ -270,10 +258,6 @@ double Control::getWidth() /**throw( InvalidPeer ); -JEC - FIXME later*/
 double Control::getTop() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
 
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	getBounds();
 	//*bounds_ = peer_->getBounds();
 
@@ -282,10 +266,6 @@ double Control::getTop() /**throw( InvalidPeer ); -JEC - FIXME later*/
 
 double Control::getHeight() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 
 	//double result = 0.0;
 
@@ -299,10 +279,6 @@ double Control::getHeight() /**throw( InvalidPeer ); -JEC - FIXME later*/
 
 bool Control::getVisible() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	return peer_->getVisible();
 }
 
@@ -318,11 +294,6 @@ void Control::setBounds( const double& x, const double& y, const double& width, 
 
 void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
-
 	*bounds_ = *rect;
 
 	/**
@@ -398,11 +369,6 @@ void Control::setAlignment( const AlignmentType& alignment )
 
 void Control::setLeft( const double& left ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
-
 	double dx = bounds_->getWidth();
 	bounds_->left_ = left;
 	bounds_->right_ = left + dx;
@@ -411,31 +377,18 @@ void Control::setLeft( const double& left ) /**throw( InvalidPeer ); -JEC - FIXM
 
 void Control::setRight( const double& right ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	bounds_->right_ = right;
 	setBounds( bounds_ );
 }
 
 void Control::setWidth( const double& width ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
-
 	bounds_->right_ = bounds_->left_ + width;
 	setBounds( bounds_ );
 }
 
 void Control::setTop( const double& top ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	double dy = bounds_->getHeight();
 	bounds_->top_ = top;
 	bounds_->bottom_ = top + dy;
@@ -444,20 +397,12 @@ void Control::setTop( const double& top ) /**throw( InvalidPeer ); -JEC - FIXME 
 
 void Control::setBottom( const double& bottom ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	bounds_->bottom_ = bottom;
 	setBounds( bounds_ );
 }
 
 void Control::setHeight( const double& height ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	if ( NULL != peer_ ){
 		bounds_->bottom_ = bounds_->top_ + height;
 		setBounds( bounds_ );
@@ -466,10 +411,6 @@ void Control::setHeight( const double& height ) /**throw( InvalidPeer ); -JEC - 
 
 void Control::setVisible( const bool& visible ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	bool oldVisible = peer_->getVisible();
 
 	if ( oldVisible != visible ) {
@@ -762,10 +703,6 @@ ControlPeer* Control::getPeer()
 
 void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	if ( parent != parent_ ) {
 		ControlEvent event( this, parent );
 		ControlParentChanged.fireEvent( &event );
@@ -800,12 +737,22 @@ void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME
 
 Control* Control::getParent() /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
 	return parent_;
 }
+
+void Control::removeFromParent( const bool& freeInstance )
+{
+	Control* parent = getParent();
+	if ( NULL != parent ) {
+		Container* container = parent->getContainer();
+		VCF_ASSERT( NULL != container );
+
+		container->remove( this );		
+	}
+
+	removeFromOwner( freeInstance );
+}
+
 
 bool Control::isFocused()
 {
@@ -817,10 +764,6 @@ bool Control::isFocused()
 Control* Control::setFocused()
 {
 	Control* result = NULL;
-
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
 
 	if ( isNormal() || isCreated() || isDesigning() ) {	//JC added this so that a control recv's focus
 														//only under these conditions
@@ -847,17 +790,11 @@ Control* Control::setFocused()
 
 bool Control::isEnabled()
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	return peer_->isEnabled();
 }
 
 void Control::setEnabled( const bool& enabled )
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	peer_->setEnabled( enabled );
 }
 
@@ -984,9 +921,7 @@ void Control::setFont( Font* font )
 	if ( NULL != font ){
 		font_->copy( font );
 	}
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
+	
 	peer_->setFont( font_ );
 
 }
@@ -1003,18 +938,13 @@ void Control::setUseParentFont( const bool& useParentFont )
 
 void Control::afterCreate( ComponentEvent* event )
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
-
+	
 	peer_->setFont( font_ );
 }
 
 void Control::repaint( Rect* repaintRect )
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
+	
 	peer_->repaint( repaintRect );
 	if ( useRenderBuffer_ ) {
 		context_->markRenderAreaDirty();
@@ -1033,9 +963,6 @@ void Control::setDoubleBuffered( const bool& doubleBuffered )
 
 void Control::keepMouseEvents()
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	hasMouseCapture_ = true;
 	Control::setCapturedMouseControl( this );
 	peer_->keepMouseEvents();
@@ -1043,9 +970,6 @@ void Control::keepMouseEvents()
 
 void Control::releaseMouseEvents()
 {
-	if ( NULL == peer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	};
 	hasMouseCapture_ = false;
 	Control::setCapturedMouseControl( NULL );
 	peer_->releaseMouseEvents();
@@ -1354,6 +1278,42 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 	if ( NULL != scrollable ) {
 		Rect innerBounds = getClientBounds(true);
 
+		//account for any children that overlap
+		if ( NULL != this->container_ ) {
+			Enumerator<Control*>* children = container_->getChildren();
+			Rect childBounds;
+			while ( children->hasMoreElements() ) {
+				Control* child = children->nextElement();
+
+				
+				if ( child->getAlignment() != AlignNone && child->getVisible() ) {
+					childBounds = child->getBounds();
+					switch( child->getAlignment() ) {
+						case AlignLeft : {
+							innerBounds.left_ += childBounds.getWidth();
+						}
+						break;
+
+						case AlignRight : {
+							innerBounds.right_ -= childBounds.getWidth();
+						}
+						break;
+
+						case AlignTop : {
+							innerBounds.top_ += childBounds.getHeight();
+						}
+						break;
+
+						case AlignBottom : {
+							innerBounds.bottom_ -= childBounds.getHeight();
+						}
+						break;
+					}
+				}
+			}
+		}
+
+
 		Point scrollPos;
 		scrollPos.x_ = scrollable->getHorizontalPosition();
 		scrollPos.y_ = scrollable->getVerticalPosition();
@@ -1369,19 +1329,56 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 
 		double dx = scrollable->getVirtualViewWidth() - innerBounds.getWidth();
 		double dy = scrollable->getVirtualViewHeight() - innerBounds.getHeight();
-
+		
+		/* 
+		* we need to do a comparison of virtualViewWidth and virtualViewHeight with bounds that have
+		* accounted for the presence of scrollbars if they exist. We need to do this so that origin and
+		* viewable bounds offset are calculated correctly so that when we are scrolled all the way to bottom
+		* and right, the very bottom and right of bounds defined by virtualViewWidth and virtualViewHeight 
+		* are visible. These 'adjusted' bounds are initially set to innerBounds dimensions, and then modified
+		* if scrollbars present. (We alternatively could have increased virtualViewWidth/Height if scrollbars
+		* were present, and compared these to actual innerBounds.)
+		* NOTE: These adjusted values go hand-in-hand with adjustment to SCROLLINFO::nMax in scrollPeer when
+		* both scrollbars present. 
+		*/
+		double scrollAdjustedWidth  = innerBounds.getWidth();
+		double scrollAdjustedHeight = innerBounds.getHeight();	
+		
+		// can't use hasVerticalScrollbar here, we need to know if they are actually visible.
+		bool isVertScrollbarVisible = scrollable->isVerticalScrollbarVisible();
+		bool isHorzScrollbarVisible = scrollable->isHorizontalScrollbarVisible();		
+		
+		/*
+		* since we are no longer adjusting virtualViewWidth and Height for presence of both scrollbars,
+		* we need to tack on the extra to dx and dy here.
+		*/
+		if ( isHorzScrollbarVisible ) {
+			dy += scrollable->getHorizontalScrollbarHeight();
+			scrollAdjustedHeight -= scrollable->getHorizontalScrollbarHeight();
+		}
+		if ( isVertScrollbarVisible ) {
+			dx += scrollable->getVerticalScrollbarWidth();
+			scrollAdjustedWidth -= scrollable->getVerticalScrollbarWidth();
+		}	
+		
+		/*
+		Just a note: this assumes the scroll position units are same as GraphicsContext units (I think).
+		When we implement a user-defined scroll increment, such as by the height of a line of text based
+		on current Context, you may need a conversion here depending on how you implement that technique.
+		*/
 		origin.x_ -= scrollPos.x_;
 		origin.y_ -= scrollPos.y_;
 
 		//offset the viewBounds by the scrollable's offset
 		viewBounds.offset( scrollPos.x_, scrollPos.y_ );
 
-		if ( scrollable->hasHorizontalScrollBar() && (scrollable->getVirtualViewWidth() > innerBounds.getWidth()) ) {
+		if ( isHorzScrollbarVisible && ( scrollable->getVirtualViewWidth() > scrollAdjustedWidth ) ) {		
 			Size horzSize = mgr->getDefaultHorizontalScrollButtonDimensions();
 
 			//viewBounds.bottom_ = minVal<>( viewBounds.bottom_-horzSize.height_,viewBounds.bottom_ );
-
+						
 			if ( dx < scrollPos.x_ ) {
+			
 				origin.x_ -= ( dx - scrollPos.x_ );
 
 				viewBounds.offset( dx - scrollPos.x_, 0 );
@@ -1400,8 +1397,8 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 			}
 		}
 
-
-		if ( scrollable->hasVerticalScrollBar() && (scrollable->getVirtualViewHeight() > innerBounds.getHeight()) ) {
+		
+		if ( isVertScrollbarVisible && ( scrollable->getVirtualViewHeight() > scrollAdjustedHeight ) ) {
 			Size vertSize = mgr->getDefaultVerticalScrollButtonDimensions();
 
 			//viewBounds.right_ = minVal<>( viewBounds.right_-vertSize.width_,viewBounds.right_ );
@@ -1433,23 +1430,86 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 bool Control::isActive()
 {
 	Frame* parentFrame = getParentFrame();
+	//printf( "parentFrame: %p, Frame::getActiveFrame(): %p\n",
+	//			parentFrame, Frame::getActiveFrame() );
 	return (parentFrame == Frame::getActiveFrame()) && (parentFrame->isActiveFrame());
 }
 
 void Control::setViewModel( Model* viewModel )
 {
+	bool modelChanged = (viewModel != getViewModel()) ? true : false;
+
 	AbstractView::setViewModel( viewModel );
-	ControlEvent event( this, Control::CONTROL_MODELCHANGED );
-	ControlModelChanged.fireEvent(&event);
+	if ( modelChanged ) {
+		ControlEvent event( this, Control::CONTROL_MODELCHANGED );
+		ControlModelChanged.fireEvent(&event);
+	}
 }
 
+void Control::paintBorder( GraphicsContext * context )
+{
+	Border* border = getBorder();
+	if ( NULL != border ) {
+		border->paint( this, context );
+	}
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:20  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+
 *Revision 1.3  2004/08/19 02:24:54  ddiego
 *fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 *
+
+*Revision 1.2.2.10  2004/11/18 15:24:26  pallindo
+*Fixed a line where there was a comment about a Font cast fix for some vc6 compilers, but the fix wasn't actually there.  So I just put it in.
+*
+*Revision 1.2.2.9  2004/11/03 05:10:45  ddiego
+*osx open file now 95% functional - woot
+*
+*Revision 1.2.2.8  2004/10/23 18:10:41  ddiego
+*mac osx updates, some more fixes for dialog code and for command button peer functionality
+*
+*Revision 1.2.2.7  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
+*Revision 1.2.2.6  2004/09/21 05:46:50  dougtinkham
+*modified adjustViewableBoundsAndOriginForScrollable for new scrolling
+*
+*Revision 1.2.2.5  2004/09/12 22:34:21  ddiego
+*fixed bug in handling window cleanup when exception thrown from constructor.
+*
+*Revision 1.2.2.4  2004/09/06 23:05:55  ddiego
+*fixed border in button class
+*
+*Revision 1.2.2.3  2004/09/06 21:30:19  ddiego
+*added a separate paintBorder call to Control class
+*
+*Revision 1.2.2.2  2004/08/21 21:06:52  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
+*Revision 1.2.2.1  2004/08/19 03:22:53  ddiego
+*updates so new system tray code compiles
+*
+*Revision 1.3  2004/08/19 02:24:54  ddiego
+*fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+*
+>>>>>>> 1.2.2.10
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -10,6 +10,8 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/DateTime.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/OSXResourceBundle.h"
 #include <unistd.h>
 
 
@@ -98,14 +100,34 @@ void OSXSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 
 void OSXSystemPeer::setDateToSystemTime( DateTime* date )
 {
-
+	CFAbsoluteTime timeNow = CFAbsoluteTimeGetCurrent();
+	CFGregorianDate current = CFAbsoluteTimeGetGregorianDate( timeNow, NULL );
+	
+	double dsecs = floor(current.second);
+	int second = dsecs;
+	
+	double milliseconds = (current.second - dsecs) * 1000.0;
+	
+	date->set( current.year, current.month, current.day, 
+				current.hour, current.minute, second, milliseconds );
 }
 
 void OSXSystemPeer::setDateToLocalTime( DateTime* date )
 {
-	time_t now  = 0;
-    time( &now );
-    *date = now;
+	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
+
+	CFAbsoluteTime timeNow = CFAbsoluteTimeGetCurrent();
+	CFGregorianDate current = CFAbsoluteTimeGetGregorianDate( timeNow, tz );
+	
+	double dsecs = floor(current.second);
+	int second = dsecs;
+	
+	double milliseconds = (current.second - dsecs) * 1000.0;
+	
+	
+	
+	date->set( current.year, current.month, current.day, 
+				current.hour, current.minute, second, milliseconds );
 }
 
 void OSXSystemPeer::setCurrentThreadLocale( Locale* locale )
@@ -116,18 +138,119 @@ void OSXSystemPeer::setCurrentThreadLocale( Locale* locale )
 DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 {
 	DateTime result;
+	
+	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
+	CFGregorianDate cfDate;
+	
+	unsigned long year;
+	unsigned long month;
+	unsigned long day;
+	unsigned long hour;
+	unsigned long minute;
+	unsigned long second;
+	unsigned long millisecond;	
+	date.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
+	
+	cfDate.year = year;
+	cfDate.month = month;
+	cfDate.day = day;
+	cfDate.hour = hour;
+	cfDate.minute = minute;
+	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
+	
+	//GMT/UTC time
+	CFAbsoluteTime utcTime = CFGregorianDateGetAbsoluteTime( cfDate, NULL );
+	
+	cfDate = CFAbsoluteTimeGetGregorianDate( utcTime, tz );
+	
+	double dsecs = floor(cfDate.second);
+	second = dsecs;
+	
+	double milliseconds = (cfDate.second - dsecs) * 1000.0;
+	
+	
+	
+	result.set( cfDate.year, cfDate.month, cfDate.day, 
+				cfDate.hour, cfDate.minute, second, milliseconds );
+				
+	
 	return result;
 }
 
 DateTime OSXSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 {
 	DateTime result;
+	
+	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
+	CFGregorianDate cfDate;
+	
+	unsigned long year;
+	unsigned long month;
+	unsigned long day;
+	unsigned long hour;
+	unsigned long minute;
+	unsigned long second;
+	unsigned long millisecond;	
+	date.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
+	
+	cfDate.year = year;
+	cfDate.month = month;
+	cfDate.day = day;
+	cfDate.hour = hour;
+	cfDate.minute = minute;
+	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
+	
+	//GMT/UTC time
+	CFAbsoluteTime localTime = CFGregorianDateGetAbsoluteTime( cfDate, tz );
+	
+	cfDate = CFAbsoluteTimeGetGregorianDate( localTime, NULL );
+	
+	double dsecs = floor(cfDate.second);
+	second = dsecs;
+	
+	double milliseconds = (cfDate.second - dsecs) * 1000.0;
+	
+	
+	
+	result.set( cfDate.year, cfDate.month, cfDate.day, 
+				cfDate.hour, cfDate.minute, second, milliseconds );
+				
+	
 	return result;
 }
 
+String OSXSystemPeer::getOSName()
+{
+	return "Mac OSX";
+}
+
+String OSXSystemPeer::getOSVersion()
+{
+	long response = 0;
+	Gestalt( gestaltSystemVersion, &response );
+	int bug = (0x0000000F) & response;
+	int minor = ((0x000000F0) & response) >> 4;
+	int major = ((0x0000FFFF) & response) >> 8;	
+	
+	return StringUtils::format( "%x.%x.%x", major, minor, bug );
+}
+
+ProgramInfo* OSXSystemPeer::getProgramInfoFromFileName( const String& fileName )
+{
+	return OSXResourceBundle::getProgramInfo( fileName );
+}
+	
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/10 20:42:08  ddiego
+*osx updates
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

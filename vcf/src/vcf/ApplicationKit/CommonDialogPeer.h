@@ -98,7 +98,22 @@ public:
 class APPLICATIONKIT_API CommonPrintDialogPeer : public CommonDialogPeer {
 public:
 	virtual ~CommonPrintDialogPeer(){};
+	
+	virtual void setPrintInfo( PrintInfoHandle info ) = 0;
+	
+	virtual PrintInfoHandle getPrintInfo() = 0;
 
+	virtual void setNumberOfCopies( const ulong32& val ) = 0;
+	virtual ulong32 getNumberOfCopies() = 0;
+	
+	virtual void setStartPage( const ulong32& val ) = 0;
+	virtual ulong32 getStartPage() = 0;
+
+	virtual void setEndPage( const ulong32& val ) = 0;
+	virtual ulong32 getEndPage() = 0;
+
+	virtual void setPrintJobType( PrintSession::PrintJob val ) = 0;
+	virtual PrintSession::PrintJob getPrintJobType() = 0;
 };
 
 
@@ -120,6 +135,16 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/08/31 04:12:12  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

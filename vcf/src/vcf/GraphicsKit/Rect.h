@@ -26,113 +26,22 @@ namespace VCF{
 *2 dimensional rectangle (left, top, right, and bottom). The
 *values are stored as double for maximum precision.
 */
-class GRAPHICSKIT_API Rect : public Object, public Persistable{
+class GRAPHICSKIT_API Rect : public Object, public Persistable {
+public:
+	double bottom_;
+	double right_;
+	double top_;
+	double left_;
+
 public:
 
-
-    Rect( const double & left, const double & top, const double & right, const double & bottom );
+	Rect( const double & left, const double & top, const double & right, const double & bottom );
 
 	Rect( const Rect& rect );
 
 	Rect();
 
-    double bottom_;
-    double right_;
-    double top_;
-    double left_;
-
-	/**
-	*inflates the rectangle
-	*@param double the amount to increase (or decrease if the value is negative)
-	*the left and right coordinates
-	*@param double the amount to increase (or decrease if the value is negative)
-	*the top and bottom coordinates
-	*/
-    void inflate(const double & x, const double & y);
-
-	/**
-	*inflates the rectangle
-	*@param double the amount to increase (or decrease if the value is negative)
-	*for all the four edges
-	*/
-    void inflate( const double & left, const double & top, const double & right, const double & bottom );
-
-	/**
-	*inflates the rectangle
-	*@param double the amount to increase (or decrease if the value is negative)
-	*for all the four edges as given by a rectangle
-	*/
-    void inflate( const Rect& rect );
-
-	/**
-	*does the point lay within this rectangle's coordinates ?
-	*@return true if the point is within the rectangle's coordinates
-	*otherwise false
-	*/
-    bool containsPt( Point * point ) const;
-	bool containsPtCloseTo( Point * point, const double& tolerance )  const;
-    bool containsPtOpen( Point * point )  const;
-    bool containsPtClose( Point * point )  const;
-
-	/**
-	*the width of the rectangle, or the value
-	*returned from abs(right - left)
-	*/
-    double getWidth() const ;
-
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getWidth() ;
-
-	/**
-	*the height of the rectangle, or the value
-	*returned from abs(bottom - top)
-	*/
-    double getHeight() const ;
-
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getHeight() ;
-
-	/**
-	*normalizes the rectangles coordinates so that the top
-	*is the less than the bottom, and the left is less than
-	*the right.
-	*/
-    void normalize();
-
-	/**
-	*does the specified rectangle fall inside the bound of this
-	*Rect instance ?
-	*/
-    bool containsRect( Rect* rect ) const ;
-    bool containsRectOpen( Rect* rect ) const ;
-    bool containsRectClose( Rect* rect ) const ;
-
-	bool operator == ( const Rect& rectToCompare )const;
-
-	// assignment operator
-	Rect& operator= ( const Rect& rect );
-
-	/**
-	*sets the left, top, right, and bottom all at once
-	*/
-	void setRect( const double & left, const double & top, const double & right, const double & bottom );
-	void setRect( const Rect & rect );
-
 	double getLeft() const {
-		return left_;
-	};
-
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getLeft()  {
 		return left_;
 	};
 
@@ -140,16 +49,7 @@ public:
 		left_ = left;
 	};
 
-
 	double getTop() const {
-		return top_;
-	};
-
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getTop()  {
 		return top_;
 	};
 
@@ -161,14 +61,6 @@ public:
 		return right_;
 	};
 
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getRight() {
-		return right_;
-	};
-
 	void setRight( const double& right ){
 		right_ = right;
 	};
@@ -177,76 +69,115 @@ public:
 		return bottom_;
 	};
 
-	/**
-	This is only here because the RTTI functions are not "const safe" - kind of stupid -
-	will fix later
-	*/
-	double _getBottom() {
-		return bottom_;
-	};
-
 	void setBottom( const double& bottom ){
 		bottom_ = bottom;
 	};
 
-	void offset( const double& dx, const double& dy );
-	void offset( const Point& _offsetPt );
-
-	void add( const Rect* rect );
-
-	void subtract( const Rect* rect );
-
-	Rect makeIntersection( const Rect* rect );
-
-	Rect makeUnion( const Rect* rect );
-
-	bool isEmpty() const;
-
-	bool isNull() const;
-
-	virtual String toString();
+	/**
+	*the width of the rectangle, or the value
+	*returned from abs(right - left)
+	*/
+	double getWidth() const ;
 
 	/**
-	*Write the object to the specified output stream
+	*the height of the rectangle, or the value
+	*returned from abs(bottom - top)
 	*/
-    virtual void saveToStream( OutputStream * stream );
+	double getHeight() const ;
 
 	/**
-	**Read the object from the specified input stream
+	*sets the left, top, right, and bottom all at once
 	*/
-    virtual void loadFromStream( InputStream * stream );
+	void setRect( const double & left, const double & top, const double & right, const double & bottom );
+	void setRect( const Rect & rect );
 
-
-
-	Rect& getRect(void);
 	/**
 	*sets the left, top, right, and bottom all at once using the two opposite corners
 	*/
 	void setRect ( const Point& topleft, const Point& bottomright );
 
-	void setEmpty();
-	void setNull();
+	/**
+	* gets a reference to this Rect instance itself.
+	*to be used as conversion operator without introducing ambiguity between operators
+	*/
+	Rect& getRect(void);
 
+	/**
+	*changes the origin of a rectangle, i.e. its top left corner,
+	*but not its size.
+	*/
 	void setOrigin(  const double& left, const double& top );
 	void setOrigin( const Point& topleft );
 
+	/**
+	*changes the size of a rectangle, i.e. its width and its height,
+	*but not its origin.
+	*/
 	void setSize(  const double& width, const double& height );
 	void setWidth( const double& width );
 	void setHeight( const double& height );
 
+	/**
+	*normalizes the rectangles coordinates so that
+	*/
+	void normalize();
+
+	/**
+	*tells if the rect is mormalized, i.e. if the top is
+	*less than the bottom, and the left is less than the right.
+	*/
 	bool isNormalized() const;
 
-/*
-	These need to be commented out for now until a complete review
-	of the VCF for "constness" can be made. It currently breaks the RTTI system
+	/**
+	*tells if the rect is mormalized, i.e. if the top is
+	*less than the bottom, and the left is less than the right.
+	*/
+	bool isEmpty() const;
+	void setEmpty();
 
-	double getLeft() const;
-	double getTop() const;
-	double getRight() const;
-	double getBottom() const;
-	double getWidth() const;
-	double getHeight() const;
-*/
+	bool isNull() const;
+	void setNull();
+
+
+	void offset( const double& dx, const double& dy );
+	void offset( const Point& _offsetPt );
+
+	/**
+	*inflates the rectangle
+	*@param double the amount to increase (or decrease if the value is negative)
+	*the left and right coordinates
+	*@param double the amount to increase (or decrease if the value is negative)
+	*the top and bottom coordinates
+	*/
+	void inflate(const double & x, const double & y);
+
+	/**
+	*inflates the rectangle
+	*@param double the amount to increase (or decrease if the value is negative)
+	*for all the four edges
+	*/
+	void inflate( const double & left, const double & top, const double & right, const double & bottom );
+
+	/**
+	*inflates the rectangle
+	*@param double the amount to increase (or decrease if the value is negative)
+	*for all the four edges as given by a rectangle
+	*/
+	void inflate( const Rect& rect );
+
+	void add( const Rect* rect );
+
+	void subtract( const Rect* rect );
+
+	/**
+	*creates the Rect intersection of this instance with another rectangle
+	*/
+	Rect makeIntersection( const Rect* rect );
+
+	/**
+	*not implemented yet
+	*/
+	Rect makeUnion( const Rect* rect );
 
 	Point getTopLeft(void) const;
 	Point getTopRight(void) const;
@@ -258,6 +189,61 @@ public:
 	Point getCenterTop(void) const;
 	Point getCenterRight(void) const;
 	Point getCenterBottom(void) const;
+
+	/**
+	*tells if the point lay within this rectangle's coordinates
+	*Any point on the top or on the left border of the rectangle 
+	*is considered inside the rectangle.
+	*@return bool, true if the point is within the rectangle's coordinates,
+	*otherwise false
+	*/
+	bool containsPt( Point* point ) const;
+
+	/**
+	*tells if the point lay within this rectangle's coordinates
+	*a given tolerance is admitted in order to consider the point inside the rectangle.
+	*Again any point on the top or on the left border of the rectangle 
+	*within the given tolerance is considered inside the rectangle.
+	*/
+	bool containsPtCloseTo( Point* point, const double& tolerance ) const;
+
+	/**
+	*tells if the point lay within this rectangle's coordinates
+	*Any point on the border of the rectangle is <b>not</b> considered inside the rectangle.
+	*/
+	bool containsPtOpen( Point* point ) const;
+
+	/**
+	*tells if the point lay within this rectangle's coordinates
+	*Any point on the border of the rectangle <b>is</b> considered inside the rectangle.
+	*/
+	bool containsPtClose( Point* point ) const;
+
+	/**
+	*tells if the specified rectangle fall inside the bound of this Rect instance.
+	*/
+	bool containsRect( Rect* rect ) const ;
+
+	/**
+	*tells if the specified rectangle fall inside the bound of this Rect instance.
+	*This is always false though if a border of one rectangle is part of a border 
+	*of the other rectangle.
+	*/
+	bool containsRectOpen( Rect* rect ) const ;
+
+	/**
+	*tells if the specified rectangle fall inside the bound of this Rect instance.
+	*This is true even if a border of one rectangle is part of a border
+	*of the other rectangle.
+	*/
+	bool containsRectClose( Rect* rect ) const ;
+
+	// assignment operator
+	Rect& operator= ( const Rect& rect );
+
+	// comparison operators
+	bool operator == ( const Rect& rectToCompare ) const;
+	bool operator != ( const Rect& rectToCompare ) const;
 
 	// unary operators
 	Rect operator+ () const;
@@ -285,37 +271,113 @@ public:
 	Rect operator- (const double d) const;
 	Rect operator* (const double d) const;
 	Rect operator/ (const double d) const;
+
+
+	/**
+	*returns a String giving the infos about this Rect instance.
+	*/
+	virtual String toString() const;
+
+	/**
+	*writes the object to the specified output stream
+	*/
+	virtual void saveToStream( OutputStream * stream );
+
+	/**
+	*reads the object from the specified input stream
+	*/
+	virtual void loadFromStream( InputStream * stream );
+
+
+	/**
+	*This is only here because the RTTI functions are not "const safe" - kind of
+	* stupid - will fix later.
+	*/
+	double _getLeft()   { return left_; };
+	double _getTop()    { return top_; };
+	double _getRight()  { return right_; };
+	double _getBottom() { return bottom_; };
+	double _getWidth()  { return fabs( right_ - left_ ); }
+	double _getHeight() { return fabs( bottom_ - top_ ); };
 };
 
 
 
+///////////////////////////////////////////////////////////////////////////////
+// inline implementation for Rect class
 
-// inline implementation for VCF::Rect class
+inline Rect::Rect( const double & left, const double & top, const double & right, const double & bottom ) {
+	setRect( left, top, right, bottom );
+}
+
+inline Rect::Rect() {
+	setRect( 0.0, 0.0, 0.0, 0.0 );
+}
+
+inline double Rect::getWidth() const {
+	return fabs( right_ - left_ );
+}
+
+inline double Rect::getHeight() const {
+	return fabs( bottom_ - top_ );
+}
 
 inline void Rect::setRect ( const Rect& rect ) {
 	setRect( rect.left_, rect.top_, rect.right_, rect.bottom_ );
+}
+
+inline void Rect::setRect( const double & left, const double & top, const double & right, const double & bottom ) {
+	left_   = left;
+	right_  = right;
+	top_    = top;
+	bottom_ = bottom;
 }
 
 inline void Rect::setRect ( const Point& topleft, const Point& bottomright ) {
 	setRect( topleft.x_, topleft.y_, bottomright.x_, bottomright.y_ );
 }
 
+inline Rect& Rect::getRect(void) {
+	// conversion operator
+	return ( *this );
+}
+
+inline void Rect::setNull() {
+	setRect( 0.0, 0.0, 0.0, 0.0 );
+}
+
+inline bool Rect::isNull() const {
+	return ( (left_ == 0.0) && (top_ == 0.0) && (right_ == 0.0) && (bottom_ == 0.0) );
+}
+
+inline void Rect::setEmpty() {
+	setRect( left_, top_, left_, top_ );
+}
+
+inline bool Rect::isEmpty() const {
+	return ( (getWidth() <= 0.0) || (getHeight() <= 0.0) );
+}
+
+inline bool Rect::isNormalized() const {
+	return ( left_ <= right_ && top_ <= bottom_ );
+}
+
 inline void Rect::setOrigin(  const double& left, const double& top ){
-	right_ += left - left_;
+	right_  += left - left_;
 	bottom_ += top - top_;
-	left_ = left;
-	top_ = top;
+	left_   = left;
+	top_    = top;
 };
 
 inline void Rect::setOrigin( const Point& topleft ){
-	right_ += topleft.x_ - left_;
+	right_  += topleft.x_ - left_;
 	bottom_ += topleft.y_ - top_;
-	left_ = topleft.x_;
-	top_ = topleft.y_;
+	left_   = topleft.x_;
+	top_    = topleft.y_;
 };
 
 inline void Rect::setSize(  const double& width, const double& height ){
-	right_ = left_ + width;
+	right_  = left_ + width;
 	bottom_ = top_ + height;
 };
 
@@ -327,6 +389,14 @@ inline void Rect::setHeight( const double& height ){
 	bottom_ = top_ + height;
 };
 
+inline void Rect::offset( const double& dx, const double& dy ) {
+	left_   += dx;
+	right_  += dx;
+
+	top_    += dy;
+	bottom_ += dy;
+}
+
 inline void Rect::offset( const Point& _offsetPt ) {
 	offset(_offsetPt.x_, _offsetPt.y_);
 };
@@ -337,26 +407,75 @@ inline Rect& Rect::operator= ( const Rect& rect ) {
 	return *this;
 }
 
-/*
-inline double Rect::getLeft() const {
-	return left_;
-};
-inline double Rect::getTop() const {
-	return top_;
-};
-inline double Rect::getRight() const {
-	return right_;
-};
-inline double Rect::getBottom() const {
-	return bottom_;
-};
-inline double Rect::getWidth() const {
-	return fabs( right_ - left_ );
-};
-inline double Rect::getHeight() const {
-	return fabs( bottom_ - top_ );
-};
-*/
+inline void Rect::inflate( const double & x, const double & y ) {
+	left_   += (-x);
+	right_  += x;
+
+	top_    += (-y);
+	bottom_ += y;
+}
+
+inline void Rect::inflate( const double & left, const double & top, const double & right, const double & bottom ) {
+	left_   += (-left);
+	right_  += right;
+	top_    += (-top);
+	bottom_ += bottom;
+}
+
+inline void Rect::inflate( const Rect& rect ) {
+	left_   += (-rect.left_);
+	right_  += rect.right_;
+	top_    += (-rect.top_);
+	bottom_ += rect.bottom_;
+}
+
+inline Point Rect::getTopLeft(void) const {
+	return Point ( left_, top_ );
+}
+
+inline Point Rect::getTopRight(void) const {
+	return Point ( right_, top_ );
+}
+
+inline Point Rect::getBottomLeft(void) const {
+	return Point ( left_, bottom_ );
+}
+
+inline Point Rect::getBottomRight(void) const {
+	return Point ( right_, bottom_ );
+}
+
+inline Point Rect::getCenter(void) const {
+	return Point ( (left_ + right_) / 2 , (top_ + bottom_) / 2 );
+}
+
+inline Point Rect::getCenterLeft(void) const {
+	return Point ( left_ , (top_ + bottom_) / 2 );
+}
+
+inline Point Rect::getCenterTop(void) const {
+	return Point ( (left_ + right_) / 2 , top_ );
+}
+
+inline Point Rect::getCenterRight(void) const {
+	return Point ( right_ , (top_ + bottom_) / 2 );
+}
+
+inline Point Rect::getCenterBottom(void) const {
+	return Point ( (left_ + right_) / 2 , bottom_ );
+}
+
+// comparison operators
+inline bool Rect::operator == ( const Rect& rectToCompare ) const {
+	return ( (bottom_ == rectToCompare.bottom_) &&
+		       (right_  == rectToCompare.right_) &&
+		       (top_    == rectToCompare.top_) &&
+		       (left_   == rectToCompare.left_) );
+}
+
+inline bool Rect::operator != ( const Rect& rectToCompare ) const {
+	return ( ! operator ==( rectToCompare ) );
+}
 
 // unary operators
 inline Rect Rect::operator+ () const {
@@ -367,7 +486,6 @@ inline Rect Rect::operator- () const {
 	Rect rc (-left_, -top_, -right_, -bottom_);
 	return rc;
 }
-
 
 inline Rect& Rect::operator+= (const Rect& rc) {
 	left_ += rc.left_;
@@ -487,69 +605,20 @@ inline Rect Rect::operator/ (const double d) const {
 }
 
 
-
-
-inline Rect& Rect::getRect(void)
-{
-	// conversion operator
-	return *this;
-}
-
-inline void Rect::setNull() {
-	setRect( 0.0, 0.0, 0.0, 0.0 );
-}
-
-inline void Rect::setEmpty() {
-	setRect( left_, top_, left_, top_ );
-}
-
-inline bool Rect::isNormalized() const {
-	return ( left_ <= right_ && top_ <= bottom_ );
-}
-
-inline Point Rect::getTopLeft(void) const {
-	return Point ( left_, top_ );
-}
-
-inline Point Rect::getTopRight(void) const {
-	return Point ( right_, top_ );
-}
-
-inline Point Rect::getBottomLeft(void) const {
-	return Point ( left_, bottom_ );
-}
-
-inline Point Rect::getBottomRight(void) const {
-	return Point ( right_, bottom_ );
-}
-
-inline Point Rect::getCenter(void) const {
-	return Point ( (left_ + right_) / 2 , (top_ + bottom_) / 2 );
-}
-
-inline Point Rect::getCenterLeft(void) const {
-	return Point ( left_ , (top_ + bottom_) / 2 );
-}
-
-inline Point Rect::getCenterTop(void) const {
-	return Point ( (left_ + right_) / 2 , top_ );
-}
-
-inline Point Rect::getCenterRight(void) const {
-	return Point ( right_ , (top_ + bottom_) / 2 );
-}
-
-inline Point Rect::getCenterBottom(void) const {
-	return Point ( (left_ + right_) / 2 , bottom_ );
-}
-
-
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:44  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/10/26 06:12:16  marcelloptr
+*bugfix [1045603] forgotten const in Point and Rect; better formatting and documentation
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
@@ -623,7 +692,7 @@ inline Point Rect::getCenterBottom(void) const {
 *
 *Revision 1.16.2.1  2003/05/30 04:13:10  ddiego
 *added the commandLine class
-*changed the intialization functions for teh FoundationKit, GraphicsKit, and
+*changed the intialization functions for the FoundationKit, GraphicsKit, and
 *ApplicationKit to take command line parameters
 *FoundationKit now allows you to retreive the commandline (it's stored)
 *start up has changed from appMain() to main()

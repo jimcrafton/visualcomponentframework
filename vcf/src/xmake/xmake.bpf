@@ -1,0 +1,4 @@
+USEUNIT("main.cpp");
+USEFILE("vctobpr.log");
+
+#define WinMain

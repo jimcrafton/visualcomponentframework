@@ -53,61 +53,12 @@ public:
 
 	virtual ~AbstractListModel();
 
-	/**
-	@delegate ModelEmptied fired when the model's empty() method is
-	called.
-	@event ModelEvent
-	@see empty()
-	*/
-	DELEGATE(ModelEmptied)
-
-	/**
-	@delegate ModelValidate fired when the model's validate() method is called
-	@event ValidationEvent
-	@see validate()
-	*/
-	DELEGATE(ModelValidate)
-
-
-    virtual void addModelValidationHandler( EventHandler* handler ) {
-		ModelValidate +=  handler;
-	}
-
-	virtual void removeModelValidationHandler( EventHandler* handler ) {
-		ModelValidate -=  handler;
-	}
-
-	virtual void addModelHandler( EventHandler* handler ) {
-		ModelEmptied +=  handler;
-	}
-
-	virtual void removeModelHandler( EventHandler* handler ) {
-		ModelEmptied -=  handler;
-	}
-
-
-    /**
-     * validate the model.
-     * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
-     * The basic idea is to call all the listeners in the list , passing in a local variable to the
-     * onModelValidate() methods of the listener's. The variable is initialized to true, and if it is
-     * still true at the end of the listener iterations, then it is safe to apply the changes to the
-     * model, other wise the changes are removed.
-     */
-    virtual void validate();
+    
 
     /**
     * clears out the model's data
     */
-    virtual void empty();
-
-	virtual void addListModelHandler(EventHandler * handler) {
-		ModelEmptied += handler;
-	}
-
-	virtual void removeListModelHandler(EventHandler * handler) {
-		ModelEmptied -= handler;
-	}
+    void empty();
 
 	/**
 	@delegate  ContentsChanged
@@ -192,6 +143,20 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/21 23:41:23  ddiego
+*made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
+*concrete implementations of them now derive from BOTH Model and the specific
+*tree, table, etc model interface.
+*Also made some fixes to the way the text input is handled for a text control.
+*We now process on a character by character basis and modify the model one
+*character at a time. Previously we were just using brute force and setting
+*the whole models text. This is more efficent, though its also more complex.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

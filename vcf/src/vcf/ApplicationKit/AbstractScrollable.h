@@ -62,25 +62,45 @@ public:
 
 	virtual bool hasHorizontalScrollBar() {
 		return hasHorzScrollbar_;
+	}	
+
+	virtual void setVirtualViewSize( const double& width, const double& height );
+
+	virtual void setVirtualViewHeight( const double& virtualViewHeight ) {
+		setVirtualViewSize( getVirtualViewWidth(), virtualViewHeight );
 	}
 
 	virtual double getVirtualViewHeight() {
 		return virtualViewHeight_;
 	}
 
+	virtual void setVirtualViewWidth( const double& virtualViewWidth ) {
+		setVirtualViewSize( virtualViewWidth, getVirtualViewHeight() );
+	}
+
 	virtual double getVirtualViewWidth() {
 		return virtualViewWidth_;
 	}
 
-	virtual void setVirtualViewHeight( const double& virtualViewHeight ) {
-		virtualViewHeight_ = virtualViewHeight;
-		recalcScrollPositions();
+	virtual void setVirtualViewHorzStep( const double& step ) {
+		virtualViewHorzStep_ = step;
 	}
 
-	virtual void setVirtualViewWidth( const double& virtualViewWidth ) {
-		virtualViewWidth_ = virtualViewWidth;
-		recalcScrollPositions();
+	virtual void setVirtualViewVertStep( const double& step ) {
+		virtualViewVertStep_ = step;
 	}
+
+	virtual double getVirtualViewHorzStep() {
+		return virtualViewHorzStep_;
+	}
+
+	virtual double getVirtualViewVertStep() {
+		return virtualViewVertStep_;
+	}
+
+	virtual bool isVerticalScrollbarVisible();
+		
+	virtual bool isHorizontalScrollbarVisible();
 
 	virtual void recalcScrollPositions();
 
@@ -134,14 +154,9 @@ public:
 
 	virtual void getVerticalScrollRects( Rect* scrollBounds, Rect* topBounds=NULL, Rect* bottomBounds=NULL );
 
-	/**
-	This allows you to control whether or not hte scrollbars disappear when they are no longer needed.
-	By default this is false, which means that the scrollabrs will disappear when the virtual width
-	or height is less than the control's actual width or height. If this is true, then the
-	scrollbars will stay visible, but become disabled
-	*/
-	virtual void setKeepScrollbarsVisible( const bool& val );
-	virtual bool getKeepScrollbarsVisible();
+	virtual void setKeepScrollbarsVisible( const bool& horzVisible, const bool& vertVisible );
+	virtual bool getKeepHorzScrollbarVisible();
+	virtual bool getKeepVertScrollbarVisible();
 
 	void setVerticalScrollingDelegate( Delegate* delegate ) {
 		vertDelegate_ = delegate;
@@ -166,17 +181,20 @@ protected:
 
 	ScrollPeer* scrollPeer_;
 	Control* scrollableControl_;
+	double virtualViewHorzStep_;
+	double virtualViewVertStep_;
 	double virtualViewHeight_;
-	double virtualViewWidth_;
-	bool hasVertScrollbar_;
+	double virtualViewWidth_;	
 	bool hasHorzScrollbar_;
+	bool hasVertScrollbar_;
 	double vertPosition_;
 	double horzPosition_;
 	double topScrollSpace_;
 	double bottomScrollSpace_;
 	double leftScrollSpace_;
 	double rightScrollSpace_;
-	bool keepScrollbarsVisible_;
+	bool keepHorzScrollbarVisible_;
+	bool keepVertScrollbarVisible_;
 	Delegate* vertDelegate_;
 	Delegate* horzDelegate_;
 
@@ -189,6 +207,26 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.5  2004/09/21 22:27:09  marcelloptr
+*added setVirtualViewStep functions for the scrollbars and other minor changes
+*
+*Revision 1.2.2.4  2004/09/21 05:44:36  dougtinkham
+*removed updateVirtualViewSize, added isVerticalScrollbarVisible, isHorizontalScrollbarVisible
+*
+*Revision 1.2.2.3  2004/09/19 19:54:45  marcelloptr
+*scrollbars transitory changes
+*
+*Revision 1.2.2.2  2004/09/13 06:09:15  dougtinkham
+*onControlResized now checks if updateVirtualViewSize should be called
+*
+*Revision 1.2.2.1  2004/09/10 22:30:15  dougtinkham
+*added updateVirtualViewSize member fct
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

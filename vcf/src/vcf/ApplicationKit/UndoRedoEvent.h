@@ -25,10 +25,20 @@ namespace VCF  {
 class Command;
 
 /**
-*Class UndoRedoEvent documentation
+* the event for the UndoRedoStack operations.
+* this event is mainly used to bypass the default behaviour
+* performed by the UndoUndoStack instance involved.
+* In this case the user needs to add an handler for this event
+* to the UndoCommand or RedoCommand delegate of the UndoUndoStack 
+* instance, and setAllowsUndo(false) or setAllowsRedo(false)
+* inside this handler.
+*
 */
 class APPLICATIONKIT_API UndoRedoEvent : public Event {
 public:
+	/**
+	* constructors
+	*/
 	UndoRedoEvent( Object* source, const unsigned long& eventType, Command* command=NULL );
 
 	UndoRedoEvent( const UndoRedoEvent& rhs ):Event(rhs) {
@@ -37,6 +47,9 @@ public:
 
 	virtual ~UndoRedoEvent();
 
+	/**
+	* copy operator
+	*/
 	UndoRedoEvent& operator=( const UndoRedoEvent& rhs ) {
 		Event::operator =( rhs );
 		command_ = rhs.command_;
@@ -47,34 +60,86 @@ public:
 		return *this;
 	}
 
+	/**
+	* the command associated to the event.
+	*/
 	Command* getCommand(){
 		return command_;
 	}
 
+	/**
+	* sets the command to be associated to the event.
+	*/
 	void setCommand( Command* command ) {
 		command_ = command;
 	}
 
+	/**
+	*@return bool, false if the user managing this event
+	* doens't want the UndoRedoStack instance to perform
+	* hte default undo action.
+	*
+	*/
 	bool getAllowsUndo() {
 		return 	allowUndo_;
 	}
 
+	/**
+	* if the user wants to bypass the undo action of the 
+	* UndoRedoStack instance, he needs to assign this value
+	* as false.
+	*@param const bool& allowsUndo, true to let the default undo
+	*action from the UndoRedoStack to be performed.
+	*/
 	void setAllowsUndo( const bool& allowsUndo );
 
+	/**
+	*@return bool, false if the user managing this event
+	* doens't want the UndoRedoStack instance to perform
+	* hte default redo action.
+	*/
 	bool getAllowsRedo() {
 		return 	allowRedo_;
 	}
 
+	/**
+	* if the user wants to bypass the redo action of the 
+	* UndoRedoStack instance, he needs to assign this value
+	* as false.
+	*@param const bool& allowsRedo, true to let the default redo 
+	*action from the UndoRedoStack to be performed.
+	*/
 	void setAllowsRedo( const bool& allowsRedo );
 
+	/**
+	* creates a new copy of this instance.
+	*/
 	virtual Object* clone( bool deep=false ) {
 		return new UndoRedoEvent(*this);
 	}
 
 protected:
+	/**
+	* the command, potentially undoable, associated to this event.
+	*/
 	Command* command_;
+
+	/**
+	* flag to know if the user lets the default undo action of the 
+	* UndoRedoStack instance to be performed.
+	*/
 	bool allowUndo_;
+
+	/**
+	* flag to know if the user lets the default redo action of the 
+	* UndoRedoStack instance to be performed.
+	*/
 	bool allowRedo_;
+
+	/**
+	* allow for execution
+	* currently unused
+	*/
 	bool allowExecute_;
 private:
 };
@@ -110,6 +175,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/11/10 19:07:37  marcelloptr
+*fixed documentation for doxygen
+*
+*Revision 1.2.2.1  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -20,7 +20,8 @@ using namespace VCF;
 Win32Window::Win32Window():
 	AbstractWin32Component( NULL ),
 	internalClose_(false),
-	owner_(NULL)
+	owner_(NULL),
+	activatesPending_(false)
 {
 
 }
@@ -28,7 +29,8 @@ Win32Window::Win32Window():
 Win32Window::Win32Window( Control* component, Control* owner ):
 	AbstractWin32Component( component ),
 	internalClose_(false),
-	owner_(owner)
+	owner_(owner),
+	activatesPending_(false)
 {
 
 }
@@ -183,33 +185,28 @@ void Win32Window::setVisible( const bool& visible )
 	}
 }
 
-LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc )
+void Win32Window::handleActivate()
 {
-	LRESULT result = 0;
+	activatesPending_ = true;
+
+	Frame* frame = (Frame*)peerControl_;
+	if ( peerControl_->isNormal() ) {
+		frame->activate();
+	}
+}
+
+bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
+{
+	bool result = false;
+	wndProcResult = 0;
+
 
 	static bool windowRestoredAlready = true;
 	switch ( message ) {
-		/*
-		//this doesn't seem to work for some reason, not sure why...
-		case WM_PAINT : {
-			if ( ::IsIconic( hwnd_ ) ) {
-				HICON icon = NULL;
-				icon = (HICON) ::SendMessage( hwnd_, WM_GETICON, ICON_BIG, 0 );
-				PAINTSTRUCT ps;
-				HDC contextID = ::BeginPaint( hwnd_, &ps);
-				::DrawIcon( contextID, 0, 0, icon );
-				EndPaint( hwnd_, &ps);
-			}
-			else {
-				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
-			}
-		}
-		break;
-		*/
 
 		case WM_SIZE : {
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			switch ( wParam ) {
 				case SIZE_MAXIMIZED : {
 					windowRestoredAlready = false;
@@ -251,13 +248,27 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 		}
 		break;
 
+		
+
+		case VCF_CONTROL_CREATE: {
+					
+
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			if ( activatesPending_ ) {
+				activatesPending_ = false;
+				::PostMessage( hwnd_, WM_ACTIVATE, MAKEWPARAM (WA_ACTIVE,0), 0 );
+			}
+		}
+		break;
+
 		case WM_NCLBUTTONDOWN: {
-			Frame* frame = (Frame*)peerControl_;
-			frame->activate();
+			handleActivate();			
 
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			result = 0;
+			wndProcResult = 0;
+			result = false;
 		}
 		break;
 
@@ -265,11 +276,13 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 			BOOL active = (BOOL)wParam;
 
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 			Frame* frame = (Frame*)peerControl_;
+			//StringUtils::traceWithArgs( "WM_NCACTIVATE, active: %d\n", active );
+
 			if ( active ) {
-				frame->activate();
+				handleActivate();
 			}
 		}
 		break;
@@ -277,13 +290,14 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 		case WM_ACTIVATEAPP : {
 			BOOL fActive = (BOOL) wParam;
 
+			//StringUtils::traceWithArgs( "WM_ACTIVATEAPP, fActive: %d\n", fActive );
 			if ( !fActive && (NULL != peerControl_) ) {
 				Frame* frame = (Frame*)peerControl_;
 
 				switch ( frame->getFrameStyle() ){
 
 					case fstNoBorder : case fstNoBorderFixed : {
-						Frame::setActiveFrame( NULL );
+						Frame::internal_setActiveFrame( NULL );
 						if ( frame->getComponentState() == Component::csNormal ) {
 							VCF::WindowEvent event( frame, Frame::ACTIVATION_EVENT );
 							frame->FrameActivation.fireEvent( &event );
@@ -292,7 +306,7 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 					break;
 				}
 			}
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
@@ -300,11 +314,12 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 
 			BOOL active = LOWORD(wParam);
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			//StringUtils::traceWithArgs( "WM_ACTIVATE, active: %d\n", active );
 
 			if ( active ) {
-				Frame* frame = (Frame*)peerControl_;
-				frame->activate();
+				handleActivate();
 
 				::BringWindowToTop( hwnd_ );
 			}
@@ -314,9 +329,9 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 		case WM_LBUTTONDOWN : {
 			Frame* frame = (Frame*)peerControl_;
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			frame->activate();
+			handleActivate();
 		}
 		break;
 
@@ -326,22 +341,33 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 
 			switch ( frame->getFrameStyle() ){
 				case fstToolbarBorderFixed : case fstToolbarBorder : case fstSizeable : case fstFixed :{
-					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 				}
 				break;
 
 				case fstNoBorder : case fstNoBorderFixed : {
-					result = MA_NOACTIVATE;
+
+					/**
+					NOTE!!!!
+					This MUST return true. Returning true means that we have handled all the processing
+					and no further processing by the DefWndProc is required. If we don't return 
+					true here (i.e. result = true), then we end up with focus/activate issues with the
+					controls that popup a fixed window, like the drop down list box for the
+					ComboBoxControl.
+					*/
+					result = true;
+					wndProcResult = MA_NOACTIVATE;
 				}
 				break;
 			}
 
-			frame->activate();
+			handleActivate();
 		}
 		break;
 
 		case WM_CLOSE:{
-			result = 0;
+			result = false;
+			wndProcResult = 0;
 			//check if we need to re notify the listeners of the close event
 
 			VCF::Window* window = (VCF::Window*)getControl();
@@ -364,25 +390,53 @@ LRESULT Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lP
 							::PostMessage( hwnd_, WM_QUIT, 0, 0 );
 						}
 						else {
-							result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+							result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 						}
 					}
 				}
 				else {
-					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 				}
 			}
+			else {
+				result = true;
+			}
+		}
+		break;
+
+		case WM_PAINT:{
+			if ( true == isCreated() ){
+				if ( peerControl_->getComponentState() != Component::csDestroying ) {
+					if( !GetUpdateRect( hwnd_, NULL, FALSE ) ){
+						wndProcResult = 0;
+						result = true;
+						return result;
+					}
+
+					PAINTSTRUCT ps;
+					HDC contextID = 0;
+					contextID = ::BeginPaint( hwnd_, &ps);
+
+					doControlPaint( contextID, ps.rcPaint, NULL, cpControlOnly );
+					updatePaintDC( contextID, ps.rcPaint, NULL );
+
+					::EndPaint( hwnd_, &ps);
+				}
+			}
+
+			wndProcResult = 1;
+			result = true;
 		}
 		break;
 
 		case WM_DESTROY: {
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
 		default: {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 	}
@@ -601,6 +655,23 @@ void Win32Window::setText( const VCF::String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/10/23 13:53:12  marcelloptr
+*comments for setUseColorForBackground; setActiveFrame renamed as internal
+*
+*Revision 1.2.2.3  2004/09/15 17:48:54  ddiego
+*fixed win32 registry and a bug in the handling of the WM_CLOSE message that was introduced by the change in event handler signature last weekend.
+*
+*Revision 1.2.2.2  2004/09/06 21:30:20  ddiego
+*added a separate paintBorder call to Control class
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

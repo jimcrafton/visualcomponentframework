@@ -115,15 +115,16 @@ bool Win32Toolbar::isAutoResizeEnabled()
 	return (style & CCS_NORESIZE) ? false : true;
 }
 
-
-LRESULT Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc )
+bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
-	LRESULT result = 0;
+	bool result = false;
+	wndProcResult = 0;
 
 	switch ( message ) {
 		case WM_ERASEBKGND :{
 			//result = CallWindowProc( oldToolbarWndProc_, hwnd_, message, wParam, lParam );
-			return 1;
+			wndProcResult = 0;
+			result = true;
 		}
 		break;
 
@@ -133,27 +134,40 @@ LRESULT Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM l
 			HDC dc = BeginPaint( hwnd_, &ps );
 
 			RECT r;
-			GetClientRect( hwnd_, &r );
+			GetClientRect( hwnd_, &r );			
 
-			FillRect( dc, &r, (HBRUSH) (COLOR_3DFACE + 1) ); 
+			////FillRect( dc, &r, (HBRUSH) (COLOR_3DFACE + 1) ); 
 
-			HDC memDC = doControlPaint( dc, r, NULL );
+			HDC memDC = doControlPaint( dc, r, NULL, cpControlOnly );
 
 			defaultWndProcedure( WM_PAINT, (WPARAM)memDC, 0 );
 
 			updatePaintDC( dc, r, NULL );
 
 			EndPaint( hwnd_, &ps );
-			result = 1;
+
+			wndProcResult = 1;
+			result = true;
+		}
+		break;
+
+		case WM_NCCALCSIZE: {
+			wndProcResult = handleNCCalcSize( wParam, lParam );
+			result = true;
+		}
+		break;
+
+		case WM_NCPAINT: {	
+
+			wndProcResult = handleNCPaint( wParam, lParam );
+			return true;
 		}
 		break;
 
 		case WM_SIZE : {
 			
 
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam );
-
-			//result = CallWindowProc( oldToolbarWndProc_, hwnd_, message, wParam, lParam );
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );			
 
 			DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
 
@@ -313,7 +327,8 @@ LRESULT Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM l
 			NMTBCUSTOMDRAW* lpNMCustomDraw = (NMTBCUSTOMDRAW*) lParam;
 			switch ( lpNMCustomDraw->nmcd.dwDrawStage ) {
 				case CDDS_PREPAINT : {
-					return CDRF_NOTIFYITEMDRAW  ;
+					wndProcResult = CDRF_NOTIFYITEMDRAW;
+					result = true;
 				}
 				break;
 
@@ -362,8 +377,9 @@ LRESULT Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM l
 						}
 					}
 					
-
-					return CDRF_DODEFAULT ;
+					
+					wndProcResult = CDRF_DODEFAULT;
+					result = true;
 				}
 				break;
 			}
@@ -373,10 +389,7 @@ LRESULT Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM l
 
 
 		default : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam );
-
-			//result = CallWindowProc( oldToolbarWndProc_, hwnd_, message, wParam, lParam );
-
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 	}
@@ -844,7 +857,7 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 		}
 		
 		btn.fsState = TBSTATE_ENABLED;
-		btn.fsStyle = TBSTYLE_BUTTON | TBSTYLE_AUTOSIZE ;
+		btn.fsStyle = TBSTYLE_BUTTON /*| TBSTYLE_AUTOSIZE */;
 		btn.idCommand = index;
 		
 		if ( !SendMessage( hwnd_, TB_INSERTBUTTONW, (WPARAM) index, (LPARAM)&btn ) ) {
@@ -1212,6 +1225,7 @@ void Win32Toolbar::removeToolbarButton( ToolbarItem* item )
 	resizeToolbarItems();
 }
 
+
 void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 {
 	ImageList* imageList = (ImageList*)e->getSource();
@@ -1224,6 +1238,22 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 
 			//reset the contents
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
+
+			/*
+			JC added this cause it appears that for 32bit images the alpa val
+			matters! If it's not set back to 0 then the transparency affect doesn't 
+			work? Bizarre
+			*/
+			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			int sz = win32Img->getWidth() * win32Img->getHeight();
+			unsigned char* oldAlpaVals = new unsigned char[sz];
+			do {
+				sz --;
+				oldAlpaVals[sz] = pix[sz].a;
+				pix[sz].a = 0;
+			} while( sz > 0 );
+
+
 			HBITMAP hbmImage = win32Img->getBitmap();
 
 			HBITMAP hCopyImg = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP, 0, 0, NULL );
@@ -1231,26 +1261,55 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 
 			Color* transparentColor = imageList->getTransparentColor();
 
-			err = ImageList_AddMasked( imageListCtrl_, hCopyImg, (COLORREF)transparentColor->getRGB() );
+			COLORREF color = (COLORREF)transparentColor->getRGB();
+			err = ImageList_AddMasked( imageListCtrl_, hCopyImg, color );
 			if ( err < 0 ) {
 				//error condition !
 			}
 			DeleteObject( hCopyImg );
+
+
+			sz = win32Img->getWidth() * win32Img->getHeight();
+			do {
+				sz --;
+				pix[sz].a = oldAlpaVals[sz];
+			} while( sz > 0 );
+
+			delete [] oldAlpaVals;
 		}
 		break;
 
 		case IMAGELIST_EVENT_ITEM_ADDED : {
 
 			Win32Image* win32Img = (Win32Image*)e->getImage();
+			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			int sz = win32Img->getWidth() * win32Img->getHeight();
+			unsigned char* oldAlpaVals = new unsigned char[sz];
+			do {
+				sz --;
+				oldAlpaVals[sz] = pix[sz].a;
+				pix[sz].a = 0;
+			} while( sz > 0 );
+
 			HBITMAP hbmImage = win32Img->getBitmap();
 
 			HBITMAP hCopyImg = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP, 0, 0, NULL );
 
 			Color* transparentColor = imageList->getTransparentColor();
 
-			int err = ImageList_AddMasked( imageListCtrl_, hCopyImg, (COLORREF)transparentColor->getRGB() );
+			COLORREF color = (COLORREF)transparentColor->getRGB();
+
+			int err = ImageList_AddMasked( imageListCtrl_, hCopyImg, color );
 
 			::DeleteObject( hCopyImg );
+
+			sz = win32Img->getWidth() * win32Img->getHeight();
+			do {
+				sz --;
+				pix[sz].a = oldAlpaVals[sz];
+			} while( sz > 0 );
+
+			delete [] oldAlpaVals;
 		}
 		break;
 
@@ -1293,15 +1352,33 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		if ( imageList->getImageCount() > 0 ) {
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
+			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			int sz = win32Img->getWidth() * win32Img->getHeight();
+			unsigned char* oldAlpaVals = new unsigned char[sz];
+			do {
+				sz --;
+				oldAlpaVals[sz] = pix[sz].a;
+				pix[sz].a = 0;
+			} while( sz > 0 );
+
 			HBITMAP hbmImage = win32Img->getBitmap();
 
 			HBITMAP hCopyImg = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP, 0, 0, NULL );
 
 			Color* transparentColor = imageList->getTransparentColor();
+			COLORREF color = (COLORREF)transparentColor->getRGB();
 
-			int err = ImageList_AddMasked( imageListCtrl_, hCopyImg, (COLORREF)transparentColor->getRGB() );
+			int err = ImageList_AddMasked( imageListCtrl_, hCopyImg, color );
 
 			::DeleteObject( hCopyImg );
+
+			sz = win32Img->getWidth() * win32Img->getHeight();
+			do {
+				sz --;
+				pix[sz].a = oldAlpaVals[sz];
+			} while( sz > 0 );
+
+			delete [] oldAlpaVals;
 		}
 
 		SendMessage( hwnd_, TB_SETIMAGELIST, 0, (LPARAM)imageListCtrl_ );
@@ -1334,6 +1411,20 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/18 06:45:44  ddiego
+*updated toolbar btn bug, and added text edit sample.
+*
+*Revision 1.2.2.2  2004/09/06 21:30:20  ddiego
+*added a separate paintBorder call to Control class
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

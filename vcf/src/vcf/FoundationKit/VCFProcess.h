@@ -29,6 +29,20 @@ public:
 
 	int getThreadID();
 
+	/**
+	The default behaviour is to just start the process, assuming the processName is a
+	path to the executable. However, we are now going to get a tad fancier!
+	If the processName is a directory, then we will try and locate the 
+	Info.plist/Info.xml file, read it, and, based on the info we get, 
+	attempt to use this to open the binary inside.
+	@param String the fully qualified file name of the process to
+	create, or a directory that includes a Info.plist/Info.xml file in it
+	identifying the process's ProgramInfo.
+	@see System::getProgramInfoFromFileName()
+	@see ProgramInfo
+
+	@param String the command line arguments to pass to the newly created process.	
+	*/
 	bool createProcess( const String& processName, const String& arguments );
 
 	String getName();
@@ -44,6 +58,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

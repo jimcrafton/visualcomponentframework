@@ -31,6 +31,9 @@ public:
 
 	Win32Image( HBITMAP bitmap );
 
+	Win32Image( HICON icon );
+	
+
 	virtual ~Win32Image();
 
 	void init();
@@ -93,6 +96,14 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:45  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/21 00:19:11  ddiego
+*fixed a few more res loading bugs, and added yet another resource example.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

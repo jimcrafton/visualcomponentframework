@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF{
 
 
+typedef std::basic_string<char> AnsiString;
 
 
 
@@ -106,13 +107,13 @@ public:
 
 	~UnicodeString();
 
-	UnicodeString(){}
+	UnicodeString():ansiDataBuffer_(NULL){}
 
-	UnicodeString(const UnicodeString& rhs) {
+	UnicodeString(const UnicodeString& rhs):ansiDataBuffer_(NULL) {
 		*this = rhs;
 	}
 
-	UnicodeString(const StringData& rhs) : data_(rhs) {
+	UnicodeString(const StringData& rhs) : data_(rhs),ansiDataBuffer_(NULL) {
 
 	}
 
@@ -136,14 +137,17 @@ public:
 
 
 	/**
-	Decodes the unicode data in this string and returns a const ansi pointer using the provided
-	codec. The ansi pointer will be reclaimed when the string is destroyed.
+	Decodes the unicode data in this string and places the data in the ansi string buffer
+	passed in. When the function returns the strSize variable will be modified to reflect the
+	number of bytes written to the ansi string buffer.
 	@param TextCodec the code to use for decoding this string's data
-	@return const AnsiChar* a pointer to an allocated ansi string. It will be
-	null terminated.
+	@param AnsiChar* str the ansi buffer to use to write the decoded data to
+	@param size_type& strSize teh number of bytes in the str buffer. UIpon returning from this 
+	function this will hold the number of bytes actually written to the str buffer. The
+	null terminator will be written out
 	@see ansi_c_str()
 	*/
-	const AnsiChar* decode_ansi( TextCodec* codec ) const ;
+	void decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize ) const ;
 
 	/**
 	Decodes the unicode data in the string and returns a new string with the
@@ -275,7 +279,7 @@ public:
 	@returns std::basic_string<UniChar>& a const reference to the string's
 	underlying std::basic_string member variable.
 	*/
-	operator const std::basic_string<UniChar>& () const {
+	operator const StringData& () const {
 		return data_;
 	}
 
@@ -287,7 +291,8 @@ public:
 	@returns std::basic_string<UniChar>& a reference to the string's
 	underlying std::basic_string member variable.
 	*/
-	operator std::basic_string<UniChar>& () {
+	operator StringData& () {
+		modified();
 		return data_;
 	}
 
@@ -297,15 +302,21 @@ public:
 	unicode to ansi, and returns a std::basic_string<AnsiChar> (also
 	known as std::string).
 
-	@returns std::basic_string<UniChar>& a reference to the string's
-	underlying std::basic_string member variable.
+	@returns AnsiString a converted string
 	*/
-	operator std::basic_string<AnsiChar> () const {
-		return std::basic_string<AnsiChar>(ansi_c_str());
+	operator AnsiString () const {	// was std::basic_string<AnsiChar> not a reference
+		return AnsiString( ansi_c_str() );	// was std::basic_string<AnsiChar>
 	}
 
 	UnicodeString& operator=(const UnicodeString& rhs) {
 		data_ = rhs.data_;
+		modified();
+		return *this;
+	}
+
+	UnicodeString& operator=(const AnsiString& s) {
+		UnicodeString::transformAnsiToUnicode( s.c_str(), s.size(), data_ );
+		modified();
 		return *this;
 	}
 
@@ -313,6 +324,7 @@ public:
 
 	UnicodeString& operator=(const UniChar *s) {
 		data_ = s;
+		modified();
 		return *this;
 	}
 
@@ -320,6 +332,7 @@ public:
 
 	UnicodeString& operator=(UniChar c) {
 		data_ = c;
+		modified();
 		return *this;
 	}
 
@@ -388,6 +401,7 @@ public:
 	bool operator <=( const AnsiChar* rhs ) const;
 
 	iterator begin() {
+		modified();
 		return data_.begin();
 	}
 
@@ -404,6 +418,7 @@ public:
 	}
 
 	reverse_iterator rbegin(){
+		modified();
 		return data_.rbegin();
 	}
 
@@ -424,6 +439,7 @@ public:
 	}
 
 	reference at(size_type pos) {
+		modified();
 		return data_.at(pos);
 	}
 
@@ -432,6 +448,7 @@ public:
 	}
 
 	reference operator[](size_type pos) {
+		modified();
 		return data_[pos];
 	}
 
@@ -479,6 +496,7 @@ public:
 	}
 
 	void reserve(size_type n = 0) {
+		modified();
 		data_.reserve( n );
 	}
 
@@ -488,16 +506,19 @@ public:
 
 	UnicodeString& operator+=(const UnicodeString& rhs) {
 		data_ += rhs.data_;
+		modified();
 		return *this;
 	}
 
 	UnicodeString& operator+=(const UniChar *s) {
 		data_ += s;
+		modified();
 		return *this;
 	}
 
 	UnicodeString& operator+=(UniChar c) {
 		data_ += c;
+		modified();
 		return *this;
 	}
 
@@ -507,16 +528,19 @@ public:
 
 	UnicodeString& append(const UnicodeString& str) {
 		data_.append( str.data_ );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& append(const UnicodeString& str, size_type pos, size_type n) {
 		data_.append( str.data_, pos, n );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& append(const UniChar *s, size_type n) {
 		data_.append( s, n );
+		modified();
 		return *this;
 	}
 
@@ -524,6 +548,7 @@ public:
 
 	UnicodeString& append(const UniChar *s){
 		data_.append( s );
+		modified();
 		return *this;
 	}
 
@@ -531,6 +556,7 @@ public:
 
 	UnicodeString& append( size_type n, UniChar c){
 		data_.append( n, c );
+		modified();
 		return *this;
 	}
 
@@ -538,31 +564,37 @@ public:
 
 	UnicodeString& append(const_iterator first, const_iterator last){
 		data_.append( first, last );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& assign(const UnicodeString& str){
 		data_.assign( str.data_ );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& assign(const UnicodeString& str, size_type pos, size_type n) {
 		data_.assign( str.data_, pos, n );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& assign(const UniChar *s, size_type n) {
 		data_.assign( s, n );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& assign(const UniChar *s) {
 		data_.assign( s );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& assign( size_type n, UniChar c)  {
 		data_.assign( n, c );
+		modified();
 		return *this;
 	}
 
@@ -574,16 +606,19 @@ public:
 
 	UnicodeString& assign(const_iterator first, const_iterator last) {
 		data_.assign( first, last );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& insert(size_type p0, const UnicodeString& str) {
 		data_.insert( p0, str.data_ );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& insert(size_type p0, const UnicodeString& str, size_type pos, size_type n) {
 		data_.insert( p0, str.data_, pos, n );
+		modified();
 		return *this;
 	}
 
@@ -591,6 +626,7 @@ public:
 
 	UnicodeString& insert(size_type p0, const UniChar *s, size_type n) {
 		data_.insert( p0, s, n );
+		modified();
 		return *this;
 	}
 
@@ -598,6 +634,7 @@ public:
 
 	UnicodeString& insert(size_type p0, const UniChar *s) {
 		data_.insert( p0, s );
+		modified();
 		return *this;
 	}
 
@@ -605,12 +642,14 @@ public:
 
 	UnicodeString& insert(size_type p0, size_type n, UniChar c) {
 		data_.insert( p0, n, c );
+		modified();
 		return *this;
 	}
 
 	iterator insert(iterator it, AnsiChar c) ;
 
 	iterator insert(iterator it, UniChar c) {
+		modified();
 		return data_.insert( it, c );
 	}
 
@@ -618,32 +657,39 @@ public:
 
 	void insert(iterator it, size_type n, UniChar c)  {
 		data_.insert( it, n, c );
+		modified();
 	}
 
 	void insert(iterator it, const_iterator first, const_iterator last){
 		data_.insert( it, first, last );
+		modified();
 	}
 
 	UnicodeString& erase(size_type p0 = 0, size_type n = npos) {
 		data_.erase( p0, n );
+		modified();
 		return *this;
 	}
 
 	iterator erase(iterator it) {
+		modified();
 		return data_.erase( it );
 	}
 
 	iterator erase(iterator first, iterator last) {
+		modified();
 		return data_.erase( first, last );
 	}
 
 	UnicodeString& replace(size_type p0, size_type n0, const UnicodeString& str) {
 		data_.replace( p0, n0, str.data_ );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& replace(size_type p0, size_type n0, const UnicodeString& str, size_type pos, size_type n) {
 		data_.replace( p0, n0, str.data_, pos, n );
+		modified();
 		return *this;
 	}
 
@@ -651,6 +697,7 @@ public:
 
 	UnicodeString& replace(size_type p0, size_type n0, const UniChar *s, size_type n) {
 		data_.replace( p0, n0, s, n );
+		modified();
 		return *this;
 	}
 
@@ -658,6 +705,7 @@ public:
 
 	UnicodeString& replace(size_type p0, size_type n0, const UniChar *s) {
 		data_.replace( p0, n0, s );
+		modified();
 		return *this;
 	}
 
@@ -665,11 +713,13 @@ public:
 
 	UnicodeString& replace(size_type p0, size_type n0, size_type n, UniChar c) {
 		data_.replace( p0, n0, n, c );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& replace(iterator first0, iterator last0, const UnicodeString& str) {
 		data_.replace( first0, last0, str.data_ );
+		modified();
 		return *this;
 	}
 
@@ -677,6 +727,7 @@ public:
 
 	UnicodeString& replace(iterator first0, iterator last0, const UniChar *s, size_type n)  {
 		data_.replace( first0, last0, s, n );
+		modified();
 		return *this;
 	}
 
@@ -684,6 +735,7 @@ public:
 
 	UnicodeString& replace(iterator first0, iterator last0, const UniChar *s) {
 		data_.replace( first0, last0, s );
+		modified();
 		return *this;
 	}
 
@@ -691,11 +743,13 @@ public:
 
 	UnicodeString& replace(iterator first0, iterator last0, size_type n, UniChar c) {
 		data_.replace( first0, last0, n, c );
+		modified();
 		return *this;
 	}
 
 	UnicodeString& replace(iterator first0, iterator last0, const_iterator first, const_iterator last) {
 		data_.replace( first0, last0, first, last );
+		modified();
 		return *this;
 	}
 
@@ -707,6 +761,8 @@ public:
 
 	void swap(UnicodeString& str) {
 		data_.swap( str.data_ );
+		modified();
+		str.modified();
 	}
 
 	size_type find(const UnicodeString& str, size_type pos = 0) const {
@@ -882,21 +938,18 @@ public:
 	static AnsiChar* transformUnicodeToAnsi( const UnicodeString& str );
 
 	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c );
+	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c );
 protected:
 	StringData data_;
+	mutable AnsiChar* ansiDataBuffer_;
 
-	void internal_registerAnsiStringForGarbageCollection( AnsiChar* str ) const;
-
-
-
-	//a collection of ansi strings that have been allocated as a result of
-	//calling to ansi_c_str - these are keyed by a particular UnicodeString instance
-	//and then reclaimed when the string is destroyed
-	typedef std::multimap<const UnicodeString*, char*> AnsiStringMap;
-	typedef std::pair<const UnicodeString*, char*> AnsiStringMapEntry;
-	static AnsiStringMap allocatedAnsiStrings;
-
-	void garbageCollectAnsiStrings();
+	inline void modified() {
+		if ( NULL != ansiDataBuffer_ ) {
+			delete [] ansiDataBuffer_;
+			ansiDataBuffer_ = NULL;
+		}
+	}
+	
 };
 
 
@@ -1025,14 +1078,30 @@ inline bool operator >=( const UnicodeString& lhs, const UnicodeString& rhs )
 
 typedef UnicodeString String;
 
-typedef std::basic_string<char> AnsiString;
-
 };
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.4  2004/09/18 16:54:55  ddiego
+*added a new function to the UnicodeString class to convert from a
+*unicode char to a ansi char.
+*
+*Revision 1.2.2.3  2004/09/11 22:55:45  ddiego
+*changed the way ansi_c_str() works and got rid of global static map of allocated char* strings. This was causing problems on SMP machines.
+*
+*Revision 1.2.2.2  2004/09/11 19:16:36  ddiego
+*changed the way ansi_c_str() works and got rid of global static map of allocated char* strings. This was causing problems on SMP machines.
+*
+*Revision 1.2.2.1  2004/08/19 16:39:29  marcelloptr
+*Preparation of the UnicodeString class to accept a custom allocator. Added missed conversion and assignement operators.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

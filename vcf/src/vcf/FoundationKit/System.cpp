@@ -22,7 +22,7 @@ using namespace VCF;
 System* System::create()
 {
 	if ( NULL == System::systemInstance ) {
-		System::systemInstance = new System();
+		System::systemInstance = new System();		
 		System::systemInstance->init();
 	}
 
@@ -39,7 +39,8 @@ System::System():
 	systemPeer_(NULL),
 	errorLogInstance_(NULL),
 	locale_(NULL),
-	unicodeEnabled_(false)
+	unicodeEnabled_(false),
+	resBundle_(NULL)
 {
 	systemPeer_ = SystemToolkit::createSystemPeer();
 
@@ -52,12 +53,71 @@ System::System():
 	errorLogInstance_ = NULL;
 
 	locale_ = new Locale( L"", L"" );
+
+	resBundle_ = new ResourceBundle();
 }
 
 System::~System()
 {
+	delete resBundle_;
 	delete locale_;
 	delete systemPeer_;
+}
+
+String System::findResourceDirectory()
+{
+	String result;
+	
+	CommandLine cmdLine = FoundationKit::getCommandLine();
+
+	FilePath appPath = cmdLine.getArgument(0);
+
+	UnicodeString appDir = appPath.getPathName(true);
+
+	//case A: or case B:
+	String tmp = appDir + "Resources";
+	if ( File::exists( tmp ) ) {
+		result = tmp;
+	}
+	else {		
+		std::vector<String> pathComponents = appPath.getPathComponents();
+		std::vector<String>::reverse_iterator it = pathComponents.rbegin();
+		int depth = 1;
+		while ( it != pathComponents.rend() && (depth < 3) ) {
+			int length = (*it).length();// + FilePath::getDirectorySeparator().length();
+
+			//if depth == 1 then case C:
+			//if depth == 2 then case D:
+			appDir.erase( appDir.length()-length, length );
+
+			tmp = appDir + "Resources";
+			if ( File::exists( tmp ) ) {
+				result = tmp;
+				break;
+			}
+
+			
+			depth ++;
+			it ++;
+		}
+	}
+	
+
+	if ( !result.empty() ) {
+		//found the top level res dir
+		//now attempt to see if we can use a more locale specific dir
+		//if not, fall back on the default Resources dir
+		String localeName = System::getCurrentThreadLocale()->getName();
+		tmp = result + FilePath::getDirectorySeparator() + localeName;
+		if ( File::exists( tmp ) ) {
+			result = tmp;
+		}
+
+		//add the dir sep at the end to be proper
+		result += FilePath::getDirectorySeparator();
+	}
+
+	return result;
 }
 
 unsigned long System::getTickCount()
@@ -246,9 +306,194 @@ DateTime System::convertLocalTimeToUTCTime( const DateTime& date )
 	return System::systemInstance->systemPeer_->convertLocalTimeToUTCTime( date );
 }
 
+ResourceBundle* System::getResourceBundle()
+{
+	return System::systemInstance->resBundle_;
+}
+
+ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
+{
+	ProgramInfo* result = NULL;
+
+	result = System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
+
+	if ( NULL == result ) {
+		bool isDir = false;
+		{
+			File file(fileName);
+			if ( file.isDirectory() ) {
+				isDir = true;
+			}
+		}
+
+		if ( isDir ) {
+			FilePath fp = fileName;
+			if ( !fp.isDirectoryName() ) {
+				fp = fp.getFileName() + FilePath::getDirectorySeparator();
+			}
+
+			String infoFilename = fp + "Info.plist";
+			bool found = false;
+			if ( File::exists( infoFilename ) ) {
+				found = true;
+			}
+			else {
+				infoFilename = fp + "Info.xml";
+				if ( File::exists( infoFilename ) ) {
+					found = true;
+				}
+			}	
+
+			if ( found ) {
+				String name;
+				String programFileName;
+				String author;
+				String copyright;
+				String company;
+				String description;
+				String programVersion;
+				String fileVersion;				
+
+				XMLParser xmlParser;
+				FileInputStream fs(infoFilename);
+				xmlParser.parse( &fs );				
+				fs.close();
+
+				XMLNode* dictNode = NULL;
+				Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
+				while ( nodes->hasMoreElements() ) {
+					XMLNode* node = nodes->nextElement();
+					if ( node->getName() == L"plist" ) {
+						dictNode = node->getNodeByName( L"dict" );
+						break;
+					}
+				}
+
+				if ( NULL != dictNode ) {
+					nodes = dictNode->getChildNodes();
+					while ( nodes->hasMoreElements() ) {
+						XMLNode* node = nodes->nextElement();
+						XMLNode* val = NULL;
+
+						if ( nodes->hasMoreElements() ) {
+							val = nodes->nextElement();
+						}
+
+						if ( (NULL != val) && (node->getName() == "key") ) {
+							if ( node->getCDATA() == "CFBundleName" ) {
+								name = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "CFBundleDisplayName" ) {
+								name = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "CFBundleVersion" ) {
+								fileVersion = programVersion = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "CFBundleGetInfoString" ) {
+								copyright = programVersion = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "NSHumanReadableCopyright" ) {
+								copyright = programVersion = val->getCDATA();							
+							}
+							else if ( node->getCDATA() == "CFBundleExecutable" ) {
+								programFileName = programVersion = val->getCDATA();							
+							}
+
+							
+							//VCF cross platform keys
+							else if ( node->getCDATA() == "ProgramVersion" ) {
+								programVersion = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "FileVersion" ) {
+								programVersion = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "ProductName" ) {
+								name = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "Copyright" ) {
+								copyright = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "Author" ) {
+								author = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "Company" ) {
+								author = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "Description" ) {
+								description = val->getCDATA();
+							}
+							else if ( node->getCDATA() == "Executable" ) {
+								programFileName = val->getCDATA();
+							}
+						}
+					}
+
+					result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
+				}
+			}
+
+		}		
+	}
+	return result;
+}
+
+void System::internal_replaceResourceBundleInstance( ResourceBundle* newInstance )
+{
+	if ( NULL != System::systemInstance->resBundle_ ) {
+		delete System::systemInstance->resBundle_;
+		System::systemInstance->resBundle_ = NULL;
+	}
+	System::systemInstance->resBundle_ = newInstance;
+}
+
+String System::getOSName()
+{
+	return System::systemInstance->systemPeer_->getOSName();
+}
+
+String System::getOSVersion()
+{
+	return System::systemInstance->systemPeer_->getOSVersion();
+}
+
+
+String System::getCompiler()
+{
+	String result(VCF_COMPILER_NAME);
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:41  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.6  2004/09/17 18:40:39  ddiego
+*fixed bug in system getProgramInfoFromFileName - good catch marcello.
+*
+*Revision 1.2.2.5  2004/09/17 11:38:06  ddiego
+*added program info support in library and process classes.
+*
+*Revision 1.2.2.4  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.2.2.3  2004/08/27 03:50:46  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
+*Revision 1.2.2.2  2004/08/26 04:29:28  ddiego
+*added support for getting the resource directory to the System class.
+*
+*Revision 1.2.2.1  2004/08/21 21:06:53  ddiego
+*migrated over the Resource code to the FoudationKit.
+*Added support for a GraphicsResourceBundle that can get images.
+*Changed the AbstractApplication class to call the System::getResourceBundle.
+*Updated the various example code accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -18,10 +18,9 @@ DefaultTabPage::DefaultTabPage( Control* component ):
 	preferredHeight_(8),
 	imageIndex_(0),
 	component_(NULL),
-	owningControl_(NULL),
-	tag_(-1)
+	owningControl_(NULL)
 {
-
+	tag_ = -1;
 	setPageComponent( component );
 }
 
@@ -111,49 +110,54 @@ void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )
 	Color* face = GraphicsToolkit::getSystemColor(SYSCOLOR_FACE);
 	Color* textColor = GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW_TEXT );
 	Color* selectedTextColor = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT );
-	context->setColor( shadow );
+	context->setColor( face );
 	context->rectangle( paintRect );
 	context->fillPath();
 	Color oldFontColor;
 
 	oldFontColor = *context->getCurrentFont()->getColor();
 
-	context->getCurrentFont()->setColor( selectedTextColor );
+	context->getCurrentFont()->setColor( textColor );
 
 	if ( true == isSelected() ) {
-		context->setColor( face );
-		context->rectangle( paintRect );
-		context->fillPath();
-
-		context->getCurrentFont()->setColor( textColor );
-
-		context->setColor( Color::getColor( "black" ) );
-		context->moveTo( paintRect->right_-1, paintRect->top_ );
-		context->lineTo( paintRect->right_-1, paintRect->bottom_ );
-		context->strokePath();
+		//context->getCurrentFont()->setColor( textColor );
 
 		context->setColor( hilite );
-		context->moveTo( paintRect->left_, paintRect->top_ );
-		context->lineTo( paintRect->right_-1, paintRect->top_ );
-		context->moveTo( paintRect->left_, paintRect->top_+1 );
-		context->lineTo( paintRect->left_, paintRect->bottom_ );
+		context->moveTo(paintRect->left_ , paintRect->bottom_ -1 );
+		context->lineTo(paintRect->left_ , paintRect->top_ + 2 );
+		context->lineTo(paintRect->left_ + 2 , paintRect->top_ );
+		context->lineTo(paintRect->right_ - 2 , paintRect->top_);			
+		context->strokePath();
+
+		context->setColor( Color::getColor( "black" ) );
+		context->moveTo( paintRect->right_ - 2 , paintRect->top_ + 1);
+		context->lineTo( paintRect->right_ - 1 , paintRect->top_ + 2);
+		context->lineTo( paintRect->right_ - 1 , paintRect->bottom_ );
 		context->strokePath();
 
 		context->setColor( shadow );
-
-		context->moveTo( paintRect->right_-2, paintRect->top_+1 );
-		context->lineTo( paintRect->right_-2, paintRect->bottom_ );
+		context->moveTo( paintRect->right_ - 2, paintRect->top_ + 2);		
+		context->lineTo( paintRect->right_ - 2, paintRect->bottom_ );
 		context->strokePath();
 	}
 	else {
-		context->setColor( face );
-		context->moveTo( paintRect->left_, paintRect->top_ );
-		context->lineTo( paintRect->left_, paintRect->bottom_ );
-
-		context->moveTo( paintRect->right_, paintRect->top_ );
-		context->lineTo( paintRect->right_, paintRect->bottom_ );
-
+		context->setColor( hilite );
+		context->moveTo(paintRect->left_ , paintRect->bottom_ );
+		context->lineTo(paintRect->left_ , paintRect->top_ + 2 );
+		context->lineTo(paintRect->left_ + 2 , paintRect->top_  );
+		context->lineTo(paintRect->right_ - 2 , paintRect->top_ );			
 		context->strokePath();
+
+		context->setColor( Color::getColor( "black" ) );
+		context->moveTo( paintRect->right_ - 2 , paintRect->top_ + 1);
+		context->lineTo( paintRect->right_ - 1 , paintRect->top_ + 2);
+		context->lineTo( paintRect->right_ - 1 , paintRect->bottom_ );
+		context->strokePath();
+
+		context->setColor( shadow );
+		context->moveTo( paintRect->right_ - 2, paintRect->top_ + 2);		
+		context->lineTo( paintRect->right_ - 2, paintRect->bottom_ );
+		context->strokePath();		
 	}
 
 	String text = pageName_;
@@ -200,6 +204,23 @@ void DefaultTabPage::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.5  2004/09/15 04:25:52  ddiego
+*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
+*
+*Revision 1.2.2.4  2004/08/17 21:46:55  dougtinkham
+*minor paint changes
+*
+*Revision 1.2.2.3  2004/08/17 20:18:31  marcelloptr
+*project changes
+*
+*Revision 1.2.2.1  2004/08/16 20:49:08  dougtinkham
+*modified paint to give Win32 tab appearance.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

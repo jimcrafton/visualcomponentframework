@@ -11,6 +11,21 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+This is the handle class that OSXProcessPeer::getHandleID() returns.
+You should check isUnixProcess to determine how to access the information in this struct.
+If isUnixProcess is true, then launchBlock is just zero'ed out and is meaningless and
+pid will be set to the process id. If isUnixProcess is false then launchBlock
+will have valid information in it, and pid will be set to the unix process id 
+of the launchBlock.launchProcessSN
+*/
+class OSXProcessHandle {
+public:
+	bool isUnixProcess;
+	LaunchParamBlockRec launchBlock;
+	int pid;	
+};
+
 class OSXProcessPeer : public ProcessPeer {
 
 public:
@@ -18,7 +33,9 @@ public:
 
 	virtual ~OSXProcessPeer();
 
-	virtual int getProcessID();
+	virtual int getProcessID() {
+		return processHandle_.pid;
+	}
 
 	virtual int getProcessThreadID();
 
@@ -26,13 +43,13 @@ public:
 
 	virtual String getProcessFileName();
 
-	virtual ulong32 getHandleID();
+	virtual ulong32 getHandleID() {
+		return (ulong32)&processHandle_;
+	}
 
     virtual ulong32 terminate();
 protected:
-
-	ulong32 processHandle_;
-	ulong32 processID_;
+	OSXProcessHandle processHandle_;
 	VCF::String processFileName_;
 };
 
@@ -42,6 +59,14 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2004/12/01 04:31:41  ddiego
+ *merged over devmain-0-6-6 code. Marcello did a kick ass job
+ *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+ *that he found. Many, many thanks for this Marcello.
+ *
+ *Revision 1.2.2.1  2004/10/10 20:42:08  ddiego
+ *osx updates
+ *
  *Revision 1.2  2004/08/07 02:49:14  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *

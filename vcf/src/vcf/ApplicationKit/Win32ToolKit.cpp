@@ -39,21 +39,30 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/COMUtils.h"
 #include "vcf/ApplicationKit/Win32Toolbar.h"
 #include "vcf/ApplicationKit/Toolbar.h"
+#include "vcf/ApplicationKit/SystemTrayPeer.h"
+
+#include <shellapi.h>
+#include "vcf/ApplicationKit/Win32SystemTrayPeer.h"
+
+//printing
+#include "vcf/GraphicsKit/PrintSessionPeer.h"
+#include "vcf/GraphicsKit/Win32PrintSession.h"
+#include "vcf/ApplicationKit/Win32PrintDialog.h"
 
 
 #ifdef _LIB
     /* a user not defining USE_WIN32HTMLBROWSER_LIB will not be able to
        link the Win32HTMLBrowser_StaticLib, but also he will not have to
        link to it either if is not using it in any of his projects */
-#	ifdef USE_WIN32HTMLBROWSER_LIB
+#   ifdef USE_WIN32HTMLBROWSER_LIB
 //     ApplicationKit statically linked in
 #      include "vcf/ApplicationKit/Win32HTMLBrowserApplication.h"
 #      pragma message ( "Win32HTMLBrowser linked in statically" )
 #   endif
 #else
-// Win32HTMLBrowser will be loaded at runtime
-#	define RUNTIME_LOADLIBRARY
-#	pragma message ( "Win32HTMLBrowser linked dynamically" )
+    /* Win32HTMLBrowser will be loaded at runtime */
+#   define RUNTIME_LOADLIBRARY
+#   pragma message ( "Win32HTMLBrowser linked dynamically" )
 #endif
 
 
@@ -120,11 +129,47 @@ public:
 	virtual ~Win32UIPolicyManager() {
 
 	}
+	
+	virtual Rect adjustInitialDialogBounds( Dialog* dialog ) {
+		Rect result;
+		Control* owner = dialog->getOwner();
+		if ( NULL != owner ) {			
+			result.left_ = owner->getLeft() + ( owner->getWidth()/2.0 - dialog->getWidth()/2.0 );
+			result.top_ = owner->getTop() + ( owner->getHeight()/2.0 - dialog->getHeight()/2.0 );
+			result.right_ = result.left_ + dialog->getWidth();
+			result.bottom_ = result.top_ + dialog->getHeight();
+			if ( NULL != owner->getParent() ) {
+				owner->translateToScreenCoords( &result );
+			}
+		}
+		
+		return result;
+	}
 
+	virtual Frame* getOwnerForDialog() {
+		Frame* result = NULL;
+		Frame* activeFrame = Frame::getActiveFrame();
+		
+		Application* app = Application::getRunningInstance();
+	
+		if ( NULL != activeFrame ) {
+			result = activeFrame;
+		}
+		else if ( NULL != app ) {
+			result = app->getMainWindow();
+		}	
+	
+		return result;
+	}
+	
+	/**
+	* merges two menus by adding to the menu items of windowMenu 
+	* all the items and subitems of appMenu that are not in windowMenu.
+	*/
 	virtual void mergeMenus( Menu* appMenu, Menu* windowMenu ) {
 		MenuItem* windowRoot = windowMenu->getRootMenuItem();
 		MenuItem* appRoot = appMenu->getRootMenuItem();
-
+		// add all the first level menu items from appMenu to windowMenu
 		Enumerator<MenuItem*>* appChildren = appRoot->getChildren();
 		while ( appChildren->hasMoreElements() ) {
 			MenuItem* child = appChildren->nextElement();
@@ -146,6 +191,8 @@ public:
 					windowRoot->addChild( matchingChild );
 				}
 			}
+
+			// now merges the subitems of the first level menu items
 			copyMenuItems( child, matchingChild );
 
 		}
@@ -153,6 +200,13 @@ public:
 
 protected:
 
+	/**
+	* adds to the menu items of windowItem all the items of appItem that are not in windowItem.
+	* In other words, it appends all the submenu items of appItem as subitems of the windowItem
+	* except for the subitems already existing in the subitems of the windowItem.
+	*@param MenuItem* appItem, the menu item in the 'source' menu
+	*@param MenuItem* windowItem, the menu item in the 'destination' menu
+	*/
 	void copyMenuItems( MenuItem* appItem, MenuItem* windowItem ) {
 
 		Enumerator<MenuItem*>* appChildren = appItem->getChildren();
@@ -172,6 +226,13 @@ protected:
 	}
 
 
+	/**
+	* search between the subitems of appItem a subitem having the same caption
+	* or the same tag of the window's item to search,
+	* no search is performed if appItem is a menu separator.
+	*@param MenuItem* appItem, the menu item in the 'source' menu
+	*@param MenuItem* windowItemToSearch, the menu item to search
+	*/
 	MenuItem* getMatchingMenuItem( MenuItem* appItem, MenuItem* windowItemToSearch ) {
 		MenuItem* result = NULL;
 
@@ -181,7 +242,10 @@ protected:
 
 			MenuItem* child = children->nextElement();
 
-			if ( (child->getCaption() == appItem->getCaption()) && (!child->isSeparator()) ) {
+			String appItemCaption   = StringUtils::eraseRightOfChar( appItem->getCaption(), '\t', true );
+			String childItemCaption = StringUtils::eraseRightOfChar( child->getCaption(), '\t', true );
+
+			if ( ( childItemCaption == appItemCaption ) && (!child->isSeparator()) ) {
 				result = child;
 				break;
 			}
@@ -599,20 +663,25 @@ public:
 		getFont()->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_TOOLTIP_TEXT ) );
 		setFrameStyle( fstNoBorderFixed );
 		setFrameTopmost( true );
-		//setBounds( &Rect(200, 200, 400, 235 ) );
+		
+		setUseColorForBackground( true );
 
 	};
 
 	virtual void paint( GraphicsContext* ctx ) {
 		Window::paint( ctx );
 		ctx->setColor( Color::getColor( "black" ) );
-		Rect r(0,0,getWidth(), getHeight() );
+		Rect r(0,0,getWidth() - 1.0, getHeight() - 1.0 );
 		ctx->rectangle( &r );
 		ctx->strokePath();
+
+		r.inflate( -1, -1 );
+
 		ctx->setCurrentFont( getFont() );
-		ctx->textAt( (r.getWidth()/2.0) - (ctx->getTextWidth(getCaption())/2.0),
-						(r.getHeight()/2.0) - (ctx->getTextHeight("EM")/2.0 + 1),
-						getCaption() );
+
+		long drawingOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
+
+		ctx->textBoundedBy( &r, getCaption(), drawingOptions );
 	}
 
 	virtual void mouseClick( MouseEvent* e ) {
@@ -848,16 +917,6 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			else {
 				::KillTimer( hWnd, TOOLTIP_TIMERID );
 
-				//StringUtils::traceWithArgs( "activeFrame: %s\n", activeFrame->toString().c_str() );
-				//Frame* activeFrame = Frame::getActiveFrame();
-				//Frame::setActiveFrame( NULL );
-				//if ( NULL != activeFrame ) {
-				//	if ( activeFrame->getComponentState() == CS_NORMAL ) {
-				//		VCF::WindowEvent event( activeFrame, Frame::ACTIVATION_EVENT );
-				//		activeFrame->FrameActivation.fireEvent( &event );
-				//	}
-				//}
-
 			}
 		}
 		break;
@@ -956,7 +1015,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( notificationHdr->hwndFrom );
 			if ( NULL != win32Obj ){
-				result = win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam );
+				win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam, result );
 			}
 			else {
 				//handle some special case messages here that wouldn't ordinarily get caught
@@ -966,7 +1025,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 						HWND parent = ::GetParent( notificationHdr->hwndFrom );
 						win32Obj = Win32Object::getWin32ObjectFromHWND( parent );
 						if ( NULL != win32Obj ){
-							result = win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam );
+							win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam, result );
 						}
 					}
 					break;
@@ -981,7 +1040,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
 			if ( NULL != win32Obj ){
 				if ( win32Obj->acceptsWMCommandMessages() ) {
-					win32Obj->handleEventMessages( message, wParam, lParam );
+					win32Obj->handleEventMessages( message, wParam, lParam, result );
 				}
 			}
 			if ( System::isUnicodeEnabled() ) {
@@ -999,7 +1058,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				HWND hwndCtl = drawItem->hwndItem;
 				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
 				if ( NULL != win32Obj ){
-					result = win32Obj->handleEventMessages( WM_DRAWITEM, wParam, lParam );
+					win32Obj->handleEventMessages( WM_DRAWITEM, wParam, lParam, result );
 				}
 				else {
 					if ( System::isUnicodeEnabled() ) {
@@ -1181,17 +1240,17 @@ ApplicationPeer* Win32ToolKit::internal_createApplicationPeer()
 	return new Win32Application();
 }
 
-TextPeer* Win32ToolKit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl, ComponentType componentType)
+TextPeer* Win32ToolKit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl)
 {
 	return new Win32Edit( component, isMultiLineControl );
 }
 
-TreePeer* Win32ToolKit::internal_createTreePeer( TreeControl* component, ComponentType componentType )
+TreePeer* Win32ToolKit::internal_createTreePeer( TreeControl* component )
 {
 	return new Win32Tree( component );
 }
 
-ListviewPeer* Win32ToolKit::internal_createListViewPeer( ListViewControl* component, ComponentType componentType )
+ListviewPeer* Win32ToolKit::internal_createListViewPeer( ListViewControl* component )
 {
 	return new Win32Listview( component );
 }
@@ -1229,7 +1288,7 @@ HTMLBrowserPeer* Win32ToolKit::internal_createHTMLBrowserPeer( Control* control 
 	return result;
 }
 
-DialogPeer* Win32ToolKit::internal_createDialogPeer( Control* owner, Dialog* component, ComponentType componentType )
+DialogPeer* Win32ToolKit::internal_createDialogPeer( Control* owner, Dialog* component )
 {
 	return new Win32Dialog( owner, component );
 }
@@ -1246,12 +1305,12 @@ void Win32ToolKit::createDummyParentWindow()
 
 
 	if ( System::isUnicodeEnabled() ) {
-		RegisterWin32ToolKitClass( ::GetModuleHandle( NULL ) );
+		RegisterWin32ToolKitClass( ::GetModuleHandleW( NULL ) );
 
 		dummyParentWnd_ = ::CreateWindowW( L"Win32ToolKit", NULL, WS_POPUP , 0, 0, 0, 0, parent, NULL, ::GetModuleHandleW( NULL ), NULL );
 	}
 	else {
-		RegisterWin32ToolKitClass( ::GetModuleHandle( NULL ) );
+		RegisterWin32ToolKitClass( ::GetModuleHandleA( NULL ) );
 
 		dummyParentWnd_ = ::CreateWindowA( "Win32ToolKit", NULL, WS_POPUP , 0, 0, 0, 0, parent, NULL, ::GetModuleHandleA( NULL ), NULL );
 	}
@@ -1276,7 +1335,7 @@ MenuBarPeer* Win32ToolKit::internal_createMenuBarPeer( MenuBar* menuBar )
 	return new Win32MenuBar( menuBar );
 }
 
-ButtonPeer* Win32ToolKit::internal_createButtonPeer( CommandButton* component, ComponentType componentType)
+ButtonPeer* Win32ToolKit::internal_createButtonPeer( CommandButton* component)
 {
 	return new Win32Button( component );
 }
@@ -1336,6 +1395,12 @@ CommonFontDialogPeer* Win32ToolKit::internal_createCommonFontDialogPeer( Control
 	return new Win32FontDialog( owner );
 }
 
+CommonPrintDialogPeer* Win32ToolKit::internal_createCommonPrintDialogPeer( Control* owner )
+{
+	return new Win32PrintDialog( owner );
+}
+
+
 DesktopPeer* Win32ToolKit::internal_createDesktopPeer( Desktop* desktop )
 {
 	return new Win32Desktop( desktop );
@@ -1370,7 +1435,7 @@ ControlPeer* Win32ToolKit::internal_createControlPeer( Control* component, Compo
 }
 
 
-WindowPeer* Win32ToolKit::internal_createWindowPeer( Control* component, Control* owner, ComponentType componentType)
+WindowPeer* Win32ToolKit::internal_createWindowPeer( Control* component, Control* owner)
 {
 	return new Win32Window( component, owner );
 }
@@ -1378,6 +1443,11 @@ WindowPeer* Win32ToolKit::internal_createWindowPeer( Control* component, Control
 ToolbarPeer* Win32ToolKit::internal_createToolbarPeer( Toolbar* toolbar )
 {
 	return new Win32Toolbar( toolbar );
+}
+
+SystemTrayPeer* Win32ToolKit::internal_createSystemTrayPeer()
+{
+	return new Win32SystemTrayPeer();
 }
 
 bool Win32ToolKit::internal_createCaret( Control* owningControl, Image* caretImage  )
@@ -2013,6 +2083,49 @@ Size Win32ToolKit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:39  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.12  2004/11/13 22:30:42  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.11  2004/10/25 03:52:02  ddiego
+*minor changes to osx checkin for win32
+*
+*Revision 1.2.2.10  2004/10/25 03:23:57  ddiego
+*and even more dialog updates. Introduced smore docs to the dialog class and added a new showXXX function.
+*
+*Revision 1.2.2.9  2004/10/23 13:53:12  marcelloptr
+*comments for setUseColorForBackground; setActiveFrame renamed as internal
+*
+*Revision 1.2.2.8  2004/10/23 12:19:13  marcelloptr
+*bugfix [1048400] menus are now merged regardless of their shortcut key
+*
+*Revision 1.2.2.7  2004/09/29 16:16:24  dougtinkham
+*fixed paint of border around ToolTip
+*
+*Revision 1.2.2.6  2004/09/28 20:18:49  marcelloptr
+*just some spaces for clarity
+*
+*Revision 1.2.2.5  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
+*Revision 1.2.2.4  2004/09/01 03:50:14  ddiego
+*fixed font drawing bug that tinkham pointed out.
+*
+*Revision 1.2.2.3  2004/08/31 04:12:12  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
+*Revision 1.2.2.2  2004/08/19 03:22:54  ddiego
+*updates so new system tray code compiles
+*
+*Revision 1.2.2.1  2004/08/18 21:20:24  ddiego
+*added initial system tray code for win32
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

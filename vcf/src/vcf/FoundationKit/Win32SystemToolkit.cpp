@@ -15,6 +15,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/Win32LocalePeer.h"
 #include "vcf/FoundationKit/Win32Condition.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/FoundationKit/Win32ResourceBundle.h"
+
+
 
 using namespace VCF;
 
@@ -103,10 +107,24 @@ LocalePeer* Win32SystemToolkit::internal_createLocalePeer()
 	return new Win32LocalePeer();
 }
 
+ResourceBundlePeer* Win32SystemToolkit::internal_createResourceBundlePeer()
+{
+	return new Win32ResourceBundle();
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/08/27 03:50:46  ddiego
+*finished off therest of the resource refactoring code. We
+*can now load in resoruces either from the burned in data in the .exe
+*or from resource file following the Apple bundle layout scheme.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

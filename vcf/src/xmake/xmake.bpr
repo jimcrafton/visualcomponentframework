@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.05.03"/>
+    <PROJECT value="..\..\bin\xmake.exe"/>
+    <OBJFILES value="main.obj"/>
+    <RESFILES value=""/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value=""/>
+    <PACKAGES value="Vcl50.bpi Vclx50.bpi bcbsmp50.bpi Vcldb50.bpi vclado50.bpi ibsmp50.bpi 
+      VCLBDE50.bpi vcldbx50.bpi Qrpt50.bpi TeeUI50.bpi TeeDB50.bpi Tee50.bpi 
+      Dss50.bpi TeeQR50.bpi VCLIB50.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="WIN32;_CONSOLE;_MBCS;USE_LIBXMAKE_LIB"/>
+    <SYSDEFINES value="_NO_VCL;_ASSERTE;NO_STRICT;_RTLDLL"/>
+    <MAINSOURCE value="xmake.bpf"/>
+    <INCLUDEPATH value="$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl"/>
+    <LIBPATH value="$(BCB)\lib;$(DEBUGLIBPATH);$(BCB)\lib\psdk"/>
+    <WARNINGS value="-w-par -w-8027 -w-8026 -w-csu"/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-I$(BCB)\include -I$(BCB)\include\mfc -I$(BCB)\include\atl -src_suffix cpp 
+      -DWIN32 -D_CONSOLE -D_MBCS -DUSE_LIBXMAKE_LIB"/>
+    <CFLAG1 value="-O2 -xp -VF -X- -a8 -6 -b -k- -vi -q -tWR -tWM -I./ -c"/>
+    <PFLAGS value="-$Y- -$L- -$D-"/>
+    <RFLAGS value="/l 0x409 /d &quot;_DEBUG&quot; /i$(BCB)\include;$(BCB)\include\mfc"/>
+    <AFLAGS value="/mx /w2 /zn"/>
+    <LFLAGS value="-D&quot;&quot; -ap -Tpe -x -Gn -q -L..\..\LIB"/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0x32.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cw32mti.lib"/>
+  </LINKER>
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=2
+Item0=$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
+Item1=$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl;
+
+[HistoryLists\hlLibraryPath]
+Count=2
+Item0=$(BCB)\lib;$(DEBUGLIBPATH);$(BCB)\lib\psdk
+Item1=$(BCB)\lib;$(DEBUGLIBPATH);;$(BCB)\lib\psdk;
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=2
+Item0=WIN32;_CONSOLE;_MBCS;USE_LIBXMAKE_LIB
+Item1=WIN32;_DEBUG;_CONSOLE;_MBCS;USE_LIBXMAKE_LIB
+
+[HistoryLists\hlFinalOutputDir]
+Count=1
+Item0=..\..\bin\
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+  </IDEOPTIONS>
+</PROJECT>

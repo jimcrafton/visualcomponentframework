@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.0 
-// Copyright (C) 2002 Maxim Shemanarev (McSeem)
+// Anti-Grain Geometry - Version 2.1
+// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -23,7 +23,7 @@
 // other authors of the FreeType library - see the above notice. I nearly 
 // created a similar renderer, but still I was far from David's work. 
 // I completely redesigned the original code and adapted it for Anti-Grain 
-// ideas. Two functions - render_line and render_scanline are the core of 
+// ideas. Two functions - render_line and render_hline are the core of 
 // the algorithm - they calculate the exact coverage of each pixel cell
 // of the polygon. I left these functions almost as is, because there's 
 // no way to improve the perfection - hats off to David and his group!
@@ -38,40 +38,6 @@
 
 namespace agg
 {
-
-
-
-    //------------------------------------------------------------------------
-    unsigned char gamma8::s_default_gamma[] = 
-    {
-          0,  0,  1,  1,  2,  2,  3,  4,  4,  5,  5,  6,  7,  7,  8,  8,
-          9, 10, 10, 11, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 18, 18,
-         19, 19, 20, 21, 21, 22, 22, 23, 24, 24, 25, 25, 26, 27, 27, 28,
-         29, 29, 30, 30, 31, 32, 32, 33, 34, 34, 35, 36, 36, 37, 37, 38,
-         39, 39, 40, 41, 41, 42, 43, 43, 44, 45, 45, 46, 47, 47, 48, 49,
-         49, 50, 51, 51, 52, 53, 53, 54, 55, 55, 56, 57, 57, 58, 59, 60,
-         60, 61, 62, 62, 63, 64, 65, 65, 66, 67, 68, 68, 69, 70, 71, 71,
-         72, 73, 74, 74, 75, 76, 77, 78, 78, 79, 80, 81, 82, 83, 83, 84,
-         85, 86, 87, 88, 89, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
-        100,101,101,102,103,104,105,106,107,108,109,110,111,112,114,115,
-        116,117,118,119,120,121,122,123,124,126,127,128,129,130,131,132,
-        134,135,136,137,139,140,141,142,144,145,146,147,149,150,151,153,
-        154,155,157,158,159,161,162,164,165,166,168,169,171,172,174,175,
-        177,178,180,181,183,184,186,188,189,191,192,194,195,197,199,200,
-        202,204,205,207,209,210,212,214,215,217,219,220,222,224,225,227,
-        229,230,232,234,236,237,239,241,242,244,246,248,249,251,253,255
-    };
-
-
-
-
-
-    //========================================================================
-    enum
-    {
-        not_closed    = 1,
-        sort_required = 2
-    };
 
     //------------------------------------------------------------------------
     inline void cell_aa::set_cover(int c, int a)
@@ -134,13 +100,11 @@ namespace agg
         m_sorted_size(0),
         m_cur_x(0),
         m_cur_y(0),
-        m_close_x(0),
-        m_close_y(0),
         m_min_x(0x7FFFFFFF),
         m_min_y(0x7FFFFFFF),
         m_max_x(-0x7FFFFFFF),
         m_max_y(-0x7FFFFFFF),
-        m_flags(sort_required)
+        m_sorted(false)
     {
         m_cur_cell.set(0x7FFF, 0x7FFF, 0, 0);
     }
@@ -152,8 +116,7 @@ namespace agg
         m_num_cells = 0; 
         m_cur_block = 0;
         m_cur_cell.set(0x7FFF, 0x7FFF, 0, 0);
-        m_flags |= sort_required;
-        m_flags &= ~not_closed;
+        m_sorted = false;
         m_min_x =  0x7FFFFFFF;
         m_min_y =  0x7FFFFFFF;
         m_max_x = -0x7FFFFFFF;
@@ -195,7 +158,9 @@ namespace agg
                 allocate_block();
             }
             *m_cur_cell_ptr++ = m_cur_cell;
-            m_num_cells++;
+            ++m_num_cells;
+            if(m_cur_cell.x < m_min_x) m_min_x = m_cur_cell.x;
+            if(m_cur_cell.x > m_max_x) m_max_x = m_cur_cell.x;
         }
     }
 
@@ -214,7 +179,7 @@ namespace agg
 
 
     //------------------------------------------------------------------------
-    inline void outline_aa::render_scanline(int ey, int x1, int y1, int x2, int y2)
+    inline void outline_aa::render_hline(int ey, int x1, int y1, int x2, int y2)
     {
         int ex1 = x1 >> poly_base_shift;
         int ex2 = x2 >> poly_base_shift;
@@ -240,7 +205,7 @@ namespace agg
         }
 
         //ok, we'll have to render a run of adjacent cells on the same
-        //scanline...
+        //hline...
         p     = (poly_base_size - fx1) * (y2 - y1);
         first = poly_base_size;
         incr  = 1;
@@ -320,25 +285,20 @@ namespace agg
         int dx, dy, x_from, x_to;
         int p, rem, mod, lift, delta, first, incr;
 
-        if(ey1   < m_min_y) m_min_y = ey1;
-        if(ey1+1 > m_max_y) m_max_y = ey1+1;
-        if(ey2   < m_min_y) m_min_y = ey2;
-        if(ey2+1 > m_max_y) m_max_y = ey2+1;
-
         dx = x2 - x1;
         dy = y2 - y1;
 
-        //everything is on a single scanline
+        //everything is on a single hline
         if(ey1 == ey2)
         {
-            render_scanline(ey1, x1, fy1, x2, fy2);
+            render_hline(ey1, x1, fy1, x2, fy2);
             return;
         }
 
         //Vertical line - we have to calculate start and end cells,
         //and then - the common values of the area and coverage for
         //all cells of the line. We know exactly there's only one 
-        //cell, so, we don't have to call render_scanline().
+        //cell, so, we don't have to call render_hline().
         incr  = 1;
         if(dx == 0)
         {
@@ -355,7 +315,7 @@ namespace agg
 
             x_from = x1;
 
-            //render_scanline(ey1, x_from, fy1, x_from, first);
+            //render_hline(ey1, x_from, fy1, x_from, first);
             delta = first - fy1;
             m_cur_cell.add_cover(delta, two_fx * delta);
 
@@ -366,18 +326,18 @@ namespace agg
             area = two_fx * delta;
             while(ey1 != ey2)
             {
-                //render_scanline(ey1, x_from, poly_base_size - first, x_from, first);
+                //render_hline(ey1, x_from, poly_base_size - first, x_from, first);
                 m_cur_cell.set_cover(delta, area);
                 ey1 += incr;
                 set_cur_cell(ex, ey1);
             }
-            //render_scanline(ey1, x_from, poly_base_size - first, x_from, fy2);
+            //render_hline(ey1, x_from, poly_base_size - first, x_from, fy2);
             delta = fy2 - poly_base_size + first;
             m_cur_cell.add_cover(delta, two_fx * delta);
             return;
         }
 
-        //ok, we have to render several scanlines
+        //ok, we have to render several hlines
         p     = (poly_base_size - fy1) * dx;
         first = poly_base_size;
 
@@ -399,7 +359,7 @@ namespace agg
         }
 
         x_from = x1 + delta;
-        render_scanline(ey1, x1, fy1, x_from, first);
+        render_hline(ey1, x1, fy1, x_from, first);
 
         ey1 += incr;
         set_cur_cell(x_from >> poly_base_shift, ey1);
@@ -428,25 +388,24 @@ namespace agg
                 }
 
                 x_to = x_from + delta;
-                render_scanline(ey1, x_from, poly_base_size - first, x_to, first);
+                render_hline(ey1, x_from, poly_base_size - first, x_to, first);
                 x_from = x_to;
 
                 ey1 += incr;
                 set_cur_cell(x_from >> poly_base_shift, ey1);
             }
         }
-        render_scanline(ey1, x_from, poly_base_size - first, x2, fy2);
+        render_hline(ey1, x_from, poly_base_size - first, x2, fy2);
     }
 
 
     //------------------------------------------------------------------------
     void outline_aa::move_to(int x, int y)
     {
-        if((m_flags & sort_required) == 0) reset();
-        if(m_flags & not_closed) line_to(m_close_x, m_close_y);
+        if(m_sorted) reset();
         set_cur_cell(x >> poly_base_shift, y >> poly_base_shift);
-        m_close_x = m_cur_x = x;
-        m_close_y = m_cur_y = y;
+        m_cur_x = x;
+        m_cur_y = y;
     }
 
 
@@ -454,28 +413,14 @@ namespace agg
     //------------------------------------------------------------------------
     void outline_aa::line_to(int x, int y)
     {
-        if((m_flags & sort_required) && ((m_cur_x ^ x) | (m_cur_y ^ y)))
-        {
-            int c;
-
-            c = m_cur_x >> poly_base_shift;
-            if(c < m_min_x) m_min_x = c;
-            ++c;
-            if(c > m_max_x) m_max_x = c;
-
-            c = x >> poly_base_shift;
-            if(c < m_min_x) m_min_x = c;
-            ++c;
-            if(c > m_max_x) m_max_x = c;
-
-            render_line(m_cur_x, m_cur_y, x, y);
-            m_cur_x = x;
-            m_cur_y = y;
-            m_flags |= not_closed;
-        }
+        render_line(m_cur_x, m_cur_y, x, y);
+        m_cur_x = x;
+        m_cur_y = y;
+        m_sorted = false;
     }
 
-
+    
+    //------------------------------------------------------------------------
     enum
     {
         qsort_threshold = 9
@@ -644,6 +589,8 @@ namespace agg
         }
         m_sorted_cells[m_num_cells] = 0;
         qsort_cells(m_sorted_cells, m_num_cells);
+        m_min_y = m_sorted_cells[0]->y;
+        m_max_y = m_sorted_cells[m_num_cells - 1]->y;
     }
 
 
@@ -652,24 +599,19 @@ namespace agg
     //------------------------------------------------------------------------
     const cell_aa* const* outline_aa::cells()
     {
-        if(m_flags & not_closed)
-        {
-            line_to(m_close_x, m_close_y);
-            m_flags &= ~not_closed;
-        }
-
-        if(m_num_cells == 0) return 0;
-
         //Perform sort only the first time.
-        if(m_flags & sort_required)
+        if(!m_sorted)
         {
             add_cur_cell();
             sort_cells();
-            m_flags &= ~sort_required;
+            m_sorted = true;
         }
-
         return m_sorted_cells;
     }
+
+
+
+
 
 }
 

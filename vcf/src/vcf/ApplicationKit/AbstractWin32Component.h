@@ -22,38 +22,49 @@ class Control;
 class Font;
 
 /**
-*This is the core Win32 control class, does most of the handling
+*This is the core Win32 control class peer, does most of the handling
 *of WM_XXX messages.
 */
 class APPLICATIONKIT_API AbstractWin32Component : public Win32Object, public ControlPeer  {
 public:
+	/**
+	* identifiers to specify what to paint
+	*@see AbstractWin32Component::doControlPaint()
+	*/
+	enum {
+		cpBorderOnly = 0,
+		cpControlOnly,
+		cpBorderAndControl
+	};
+
 	AbstractWin32Component();
 
 	AbstractWin32Component( Control* component );
 
 	virtual ~AbstractWin32Component();
 
+public:
 	virtual void create( Control* owningControl );
 
 	virtual void destroyControl();
 
 	virtual long getHandleID();
 
-    virtual VCF::String getText();
+	virtual VCF::String getText();
 
-    virtual void setText( const VCF::String& text );
+	virtual void setText( const VCF::String& text );
 
-    virtual void setBounds( VCF::Rect* rect );
+	virtual void setBounds( VCF::Rect* rect );
 
-    virtual VCF::Rect getBounds();
+	virtual VCF::Rect getBounds();
 
-    virtual void setVisible( const bool& visible );
+	virtual void setVisible( const bool& visible );
 
-    virtual bool getVisible();
+	virtual bool getVisible();
 
-    virtual VCF::Control* getControl();
+	virtual VCF::Control* getControl();
 
-    virtual void setControl( VCF::Control* component );
+	virtual void setControl( VCF::Control* component );
 
 	virtual void setParent( VCF::Control* parent );
 
@@ -76,7 +87,7 @@ public:
 
 	virtual void releaseMouseEvents();
 
-	virtual LRESULT handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, WNDPROC defaultWndProc = NULL);
+	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 
 	virtual String toString();
 
@@ -98,8 +109,18 @@ public:
 	}
 	*/
 
-	HDC doControlPaint( HDC paintDC, RECT paintRect, RECT* exclusionRect );
+	/**
+	* manages a paint message for a control.
+	* it prepares the Graphics context for the control so the correct device context handle is used.
+	* It garantees that the state of the Graphics context doesn't change during tha paint operation.
+	* 
+	*@param HDC paintDC, the HDC given by the system with the paint message.
+	*@see GraphicsContext::saveState()
+	*/
+	HDC doControlPaint( HDC paintDC, RECT paintRect, RECT* exclusionRect, int whatToPaint );
+
 	void updatePaintDC( HDC paintDC, RECT paintRect, RECT* exclusionRect );
+
 protected:
 	void init();
 	HDC memDC_;
@@ -107,6 +128,7 @@ protected:
 	HBITMAP memBMP_;
 	bool mouseEnteredControl_;	
 	int memDCState_;
+
 	/*
 	JC I remove this cause we don't really need them
 	//HDWP winPosInfo_;
@@ -114,7 +136,16 @@ protected:
 	*/
 	bool destroyed_;
 
+	/**
+	*
+	*
+	*/
 	LRESULT handleNCPaint( WPARAM wParam, LPARAM lParam );
+
+	/**
+	*
+	*
+	*/
 	LRESULT handleNCCalcSize( WPARAM wParam, LPARAM lParam );
 };
 
@@ -125,6 +156,20 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:19  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.3  2004/11/07 19:32:18  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.2  2004/09/06 21:30:19  ddiego
+*added a separate paintBorder call to Control class
+*
+*Revision 1.2.2.1  2004/09/06 18:33:43  ddiego
+*fixed some more transparent drawing issues
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

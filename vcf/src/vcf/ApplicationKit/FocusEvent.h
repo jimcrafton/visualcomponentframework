@@ -16,6 +16,10 @@ where you installed the VCF.
 
 namespace VCF {
 
+
+/**
+* the event class for events specific of any change of focus.
+*/
 class APPLICATIONKIT_API FocusEvent : public Event {
 public:
 	FocusEvent( Object* source );
@@ -31,10 +35,13 @@ public:
 
 
 /**
-*FocusEventHandler
-*handles the following:
-*FocusGained
-*FocusLost
+* The handler class for a FocusEvent.
+* \par
+* handles the following:
+* <ul>
+* 	<li>FocusGained
+* 	<li>FocusLost
+* </ul>
 */
 template <class SOURCE_TYPE> class FocusEventHandler : public EventHandlerInstance<SOURCE_TYPE,FocusEvent> {
 public:
@@ -54,6 +61,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:21  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/11/07 19:32:19  marcelloptr
+*more documentation
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

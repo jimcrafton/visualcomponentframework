@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/AggCommon.h"
-
+#include "thirdparty/common/agg/include/agg_scanline_p.h"
 
 
 using namespace VCF;
@@ -45,12 +45,14 @@ void BasicStroke::render( Path * path )
 		context_->setColor( &color_ );
 
 
-		Matrix2D* currentXFrm = context_->getCurrentTransform();
+		//JC - we don't need to grab the current transform since it's 
+		//applied to the points any how
+		//Matrix2D* currentXFrm = context_->getCurrentTransform();
 		std::vector<PathPoint> points;
 		/**
 		JC - changing the Path API a bit here
 		*/
-		path->getPoints( points, currentXFrm );
+		path->getPoints( points, NULL );
 
 		/**
 		JC:
@@ -120,14 +122,19 @@ void BasicStroke::render( Path * path )
 		}
 		else {
 
-			typedef agg::renderer_scanline<agg::span_solid_rgba8, pixfmt> renderer_solid;
+			typedef agg::renderer_base<pixfmt> ren_base;
+			typedef agg::renderer_scanline_p_solid<ren_base> renderer_solid;			
 
-			renderer_solid renderer( *renderingBuffer );
+			pixfmt pixf(*renderingBuffer);
+			ren_base renb(pixf);
+
+			renderer_solid renderer( renb );
 
 
 			agg::path_storage strokePath;
 
-			agg::rasterizer_scanline_aa<agg::scanline_u8, agg::gamma8> rasterizer;
+			agg::rasterizer_scanline_aa<> rasterizer;
+			agg::scanline_p8 scanline;
 
 			while ( pathIt != points.end() ) {
 				pt = *pathIt;
@@ -176,17 +183,32 @@ void BasicStroke::render( Path * path )
 				pathIt++;
 			}
 
-			agg::conv_curve<agg::path_storage> smooth(strokePath);
-			agg::conv_stroke<agg::conv_curve<agg::path_storage> >  stroke(smooth);
+			Matrix2D& currentXFrm = *context_->getCurrentTransform();
+
+			agg::trans_affine mat( currentXFrm[Matrix2D::mei00],
+									currentXFrm[Matrix2D::mei01],
+									currentXFrm[Matrix2D::mei10],
+									currentXFrm[Matrix2D::mei11],
+									currentXFrm[Matrix2D::mei20],
+									currentXFrm[Matrix2D::mei21] );
+			
+
+			agg::conv_curve< agg::path_storage > smooth(strokePath);
+
+			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
+
+			
+			
+			agg::conv_stroke< agg::conv_transform< agg::conv_curve< agg::path_storage > > >  stroke(xfrmedPath);
 
 			stroke.width( maxVal<>( 0.5, width_ ) );
 
 
 			rasterizer.add_path( stroke );
 
-			renderer.attribute(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
+			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
 
-			rasterizer.render(renderer);
+			rasterizer.render(scanline,renderer);
 		}
 	}
 
@@ -222,6 +244,19 @@ void BasicStroke::line( const double& x1, const double& y1,
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.2  2004/09/06 03:33:21  ddiego
+*updated the graphic context code to support image transforms.
+*
+*Revision 1.2.2.1  2004/08/31 04:12:13  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

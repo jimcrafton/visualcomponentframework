@@ -14,10 +14,10 @@ where you installed the VCF.
 #endif
 
 
-
-namespace agg {
-	class rendering_buffer;
-};
+#ifndef AGG_RENDERING_BUFFER_INCLUDED
+#include "thirdparty/common/agg/include/agg_rendering_buffer.h"
+#endif
+	
 
 
 namespace VCF{
@@ -39,6 +39,10 @@ class ScrollBarState;
 class TabState;
 class BackgroundState;
 class TextState;
+
+class GraphicsState;
+
+
 
 
 /**
@@ -70,7 +74,7 @@ class TextState;
 */
 class GRAPHICSKIT_API GraphicsContext : public Object {
 public:
-	GraphicsContext();
+	GraphicsContext( );
 
 	/**
 	Creates a new blank graphics context of the specified width and height
@@ -83,7 +87,7 @@ public:
 	*/
 	GraphicsContext( const unsigned long& contextID );
 
-	virtual ~GraphicsContext();
+	virtual ~GraphicsContext( );
 
 	/**
 	represents what kind of high level drawing operation we
@@ -103,7 +107,7 @@ public:
 		doImage
 	};
 
-	enum GraphicsState {
+	enum GraphicsDrawingState {
 		gsNone = 0,
 		gsAddingGraphicsOps,
 		gsExecutingGraphicsOps
@@ -146,38 +150,45 @@ public:
 		ttToolTipFont
 	};
 	
+	typedef std::vector<GraphicsState*> GraphicsStateCollection;
+	typedef GraphicsStateCollection::iterator GraphicsStateIterator;
+	typedef GraphicsStateCollection::const_iterator GraphicsStateConstIterator;
+
+public:
+	void init( );
+
+	bool isAntiAliasingOn( );
 	
-
-	void init();
-
+	void setAntiAliasingOn( bool antiAliasingOn );
+	
 	/**
 	*sets the current font
 	*A copy of the Font is made when this is set
 	*/
-    void setCurrentFont(Font * font);
+	void setCurrentFont(Font * font );
 
 	/**
 	*returns the current Font
 	*/
-	Font* getCurrentFont();
+	Font* getCurrentFont( );
 
 	/**
 	*sets the current fill
 	*/
-    void setCurrentFill(Fill * fill);
+	void setCurrentFill(Fill * fill );
 
 	/**
 	*sets the current stroke
 	*/
-    void setCurrentStroke(Stroke * stroke);
+	void setCurrentStroke(Stroke * stroke );
 
 	void setClippingRect( Rect* rect );
 
 	void setClippingPath( Path* clippingPath );
 
-	Rect getClippingRect();
+	Rect getClippingRect( );
 
-	Path* getClippingPath();
+	Path* getClippingPath( );
 
 	Rect getViewableBounds() {
 		return viewableBounds_;
@@ -189,9 +200,9 @@ public:
 
 	void setDrawingArea( Rect bounds );
 
-	void deleteDrawingArea();
+	void deleteDrawingArea( );
 
-	void flushDrawingArea();
+	void flushDrawingArea( );
 
 	void markRenderAreaDirty() {
 		renderAreaDirty_ = true;
@@ -220,18 +231,144 @@ public:
 		renderBuffer_ = buffer;
 	}
 
+	/**
+	*	saves the state of a Graphics context after the 
+	*	paint operations are done.
+	*	The save/restore idea idea is the same as for Win32 SaveDC and RestoreDC.
+	*	It allows you to save the state of the DC (device context) at a given point in time, 
+	*	and then make a whole bunch of changes to it, and when you're all done 
+	*	just call RestoreDC() and everything is set back.
+	*	\par
+	*	This prevents all sorts of extra SelectObject() calls and is more efficent.
+	*	\par
+	*	Similarly this makes it easy to guarantee that the 
+	*	state of the GraphicsContext is reset correctly.
+	*@return int, the index of the newly saved graphics state.
+	*@see GraphicsContext::restoreState()
+	*/
+	int saveState( );
+
+	/**
+	* restores the state of a Graphics context after the 
+	* paint operations are done.
+	*@param int state, the index of the graphics state we want to restore. All
+	* the graphics states saved after this index are lost as they have lost meaning,
+	* and the current graphics state index is set to the state just restored.
+	*@see GraphicsContext::saveState()
+	*/
+	void restoreState( int state );
+
+
+	void setColor( Color* color );
+
+	Color* getColor( );
+
+	void fillPath( );
+
+	void strokePath( );
+
+	ContextPeer* getPeer( );
+
+	void copyContext( const Rect& sourceRect, const Rect& destRect, GraphicsContext* context );
+
+	/**
+	*Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
+	*screen real estate the context represents
+	*/
+	void setOrigin( const double& x, const double& y );
+	void setOrigin( const Point & pt );
+
+	Point getOrigin( );
+
+	/**
+	*sets the current rotation value of the transformation matrix. The 
+	theta argument is in degrees.
+	*/
+	void setRotation( const double& theta );
+
+	/**
+	Set the x and y translation values for the transformation matrix.
+	*/
+	void setTranslation( const double transX, const double& transY );
+
+	/**
+	Sets the x and y shear values, in degrees, for the transformation
+	matrix
+	*/
+	void setShear( const double& shearX, const double& shearY );
+
+	/**
+	Sets the x and y scale values for the transformation matrix. To double the 
+	size of drawn elements use a scaleX value of 2.0 and a scaleY value of 
+	2.0. To flip the y coordinates use a scaleY of -1.0.
+	*/
+	void setScale( const double& scaleX, const double& scaleY );
+
+	
+	void concatRotation( const double& theta );
+
+	void concatTranslation( const double transX, const double& transY );
+
+	void concatShear( const double& shearX, const double& shearY );
+
+	void concatScale( const double& scaleX, const double& scaleY );
+	
+
+	/**
+	This test to see if the current rotation
+	translation, scale, and shear values are all
+	at their default values.
+	*/
+	bool isDefaultTransform( );
+
+	/**
+	This (re)sets the current values for rotation,
+	shear, scale, and translation to their default values.
+	*/
+	void makeDefaultTransform( );
+
+	double getRotation( );
+
+	double getTranslationX( );
+
+	double getTranslationY( );
+
+	double getShearX( );
+
+	double getShearY( );
+
+	double getScaleX( );
+
+	double getScaleY( );
+
+	/**
+	*returns whether or not the XOR Mode is turned on.
+	*@return bool if the return is true then the
+	*XOR mode is on, which means that colors are alternated
+	*at the pixel level. Thus a line drawn once, and then
+	*a second time at the same coordinates will erase itself
+	*/
+	bool isXORModeOn( );
+
+	/**
+	*Turns the XOR mode on or off.
+	*@param bool XORModeOn, if true then turns the XORMode on
+	*otherwise if it's false it turns it off.
+	*/
+	void setXORModeOn( const bool& XORModeOn );
+
 
 	/**
 	*draws a path. See Path for more info. Basically this simple enumerates all the
 	*path points and uses the current stroke and fill to render the shape
 	*/
-    void draw(Path * path);
+		void draw(Path * path );
 
 	/**
 	*draws an image at the x,y, coordinates
 	*/
-    void drawImage( const double& x, const double& y, Image * image);
-	void drawImage( const Point & pt, Image * image);
+	void drawImage( const double& x, const double& y, Image * image );
+	void drawImage( const Point & pt, Image * image );
 
 
 
@@ -246,7 +383,7 @@ public:
 	*version
 	*Note: as of 8/4/2001 not implemented yet
 	*/
-    void drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled );
+	void drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled );
 	void drawImageWithState( const Point & pt, Image * image, const bool& enabled );
 
 	/**
@@ -281,24 +418,22 @@ public:
 	*into the final transform matrix. These matrices represent the various trnasform
 	*values (i.e. theta_, scaleX_, etc)
 	*/
-	void setCurrentTransform( Matrix2D* transform );
+	void setCurrentTransform( const Matrix2D& transform );
 
-	Matrix2D* getCurrentTransform();
+	Matrix2D* getCurrentTransform( );
 
 	/**
 	*End of high level gaphics functions. The funtions below are lower level
 	*See ContextPeer for more information on the functions below
 	*/
 
-    void setStrokeWidth( const double& width );
+	void setStrokeWidth( const double& width );
 
-	double getStrokeWidth() {
-		return strokeWidth_;
-	}
+	double getStrokeWidth( );
 
 
-	void textAt(const double & x, const double & y, const String & text);
-	void textAt(const Point & pt, const String & text);
+	void textAt( const double & x, const double & y, const String & text );
+	void textAt( const Point & pt, const String & text );
 
 	void textAt( const double & x, const double & y, const String& text, const long drawOptions );
 	void textAt( const Point & pt, const String& text, const long drawOptions );
@@ -327,9 +462,9 @@ public:
 
 	double getTextHeight( const String& text );
 
-    void rectangle(const double & x1, const double & y1, const double & x2, const double & y2);
-    void rectangle(const Rect & rc);
-	void rectangle(const Point & pt1, const Point & pt2);
+	void rectangle( const double & x1, const double & y1, const double & x2, const double & y2 );
+	void rectangle( const Rect & rc );
+	void rectangle( const Point & pt1, const Point & pt2 );
 
 	void rectangle( Rect* r ){
 		if ( NULL != r ) {
@@ -337,9 +472,15 @@ public:
 		}
 	};
 
-    void roundRect(const double & x1, const double & y1, const double & x2, const double & y2, const double & xc, const double & yc);
-    void roundRect(const Rect & rc, const Point & ptc);
-	void roundRect(const Point & pt1, const Point & pt2, const Point & ptc);
+	void lineTo( const double& x, const double& y );
+	void lineTo( const Point & pt );
+
+	void moveTo( const double& x, const double& y );
+	void moveTo( const Point & pt );
+
+	void roundRect( const double & x1, const double & y1, const double & x2, const double & y2, const double & xc, const double & yc );
+	void roundRect( const Rect & rc, const Point & ptc );
+	void roundRect( const Point & pt1, const Point & pt2, const Point & ptc );
 
 	void roundRect( Rect* r, Point * p ){
 		if ( NULL != r && NULL != p ) {
@@ -347,82 +488,32 @@ public:
 		}
 	};
 
-    void circle(const double & x, const double & y, const double & radius);
-    void circle(const Point & pt, const double & radius);
+	void circle( const double & x, const double & y, const double & radius );
+	void circle( const Point & pt, const double & radius );
 
-    void ellipse(const double & x1, const double & y1, const double & x2, const double & y2 );
-    void ellipse(const Point & pt1, const Point & pt2 );
+	void ellipse( const double & x1, const double & y1, const double & x2, const double & y2 );
+	void ellipse( const Point & pt1, const Point & pt2 );
 
-    void arc(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3, const double & y3, const double & x4, const double & y4);
-    void arc(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4);
+	void arc( const double& centerX,  const double& centerY, 
+	          const double& radiusWidth, const double& radiusHeight, 
+	          const double& startAngle, const double& endAngle );
 
-    void pie(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3, const double & y3, const double & x4, const double & y4);
-    void pie(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4);
+	void arc( const Point & centerPt, const Size& radius, 
+	          const double& startAngle, const double& endAngle );
 
-    void chord(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3, const double & y3, const double & x4, const double & y4);
-    void chord(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4);
 
-	void setColor( Color* color );
+	void pie( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3, const double & y3, const double & x4, const double & y4 );
+	void pie( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4 );
 
-	Color* getColor();
+	void chord( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3, const double & y3, const double & x4, const double & y4 );
+	void chord( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4 );
 
-    void polyline( const std::vector<Point> & pts );
+	void polyline( const std::vector<Point> & pts );
 
-    void curve(const double& x1, const double& y1, const double& x2, const double& y2,
-                          const double& x3, const double& y3, const double& x4, const double& y4);
-    void curve(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4);
+	void curve( const double& x1, const double& y1, const double& x2, const double& y2,
+	            const double& x3, const double& y3, const double& x4, const double& y4 );
+	void curve( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4 );
 
-    void lineTo(const double& x, const double& y);
-    void lineTo(const Point & pt);
-
-    void moveTo(const double& x, const double& y);
-    void moveTo(const Point & pt);
-
-    void fillPath();
-
-    void strokePath();
-
-	ContextPeer* getPeer();
-
-	void copyContext( const Rect& sourceRect,
-						const Rect& destRect,
-						GraphicsContext* context );
-
-	/**
-	*Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
-	*screen real estate the context represents
-	*/
-	void setOrigin( const double& x, const double& y );
-	void setOrigin( const Point & pt );
-
-	Point getOrigin();
-
-	/**
-	*sets the current rotation value
-	*/
-	void setRotation( const double& theta );
-
-	void setTranslation( const double transX, const double& transY );
-
-	void setShear( const double& shearX, const double& shearY );
-
-	void setScale( const double& scaleX, const double& scaleY );
-
-	/**
-	*returns whether or not the XOR Mode is turned on.
-	*@return bool if the return is true then the
-	*XOR mode is on, which means that colors are alternated
-	*at the pixel level. Thus a line drawn once, and then
-	*a second time at the same coordinates will erase itself
-	*/
-	bool isXORModeOn();
-
-	/**
-	*Turns the XOR mode on or off.
-	*@param bool XORModeOn, if true then turns the XORMode on
-	*otherwise if it's false it turns it off.
-	*/
-	void setXORModeOn( const bool& XORModeOn );
 
 
 
@@ -524,10 +615,33 @@ public:
 	void drawThemeMenuItem( Rect* rect, MenuState& state );
 
 	void drawThemeText( Rect* rect, TextState& state );
+
 protected:
 
+	void buildArc( double centerX,  double centerY, 
+	               double radiusWidth, double radiusHeight, 
+	               double startAngle, double endAngle, 
+	               std::vector<Point>& pts, const Matrix2D& transform );
+
+	void buildRoundRect( double x1, double y1, double x2, double y2, 
+	                     double cornerArcWidth, double cornerArcHeight, 
+	                     std::vector<Point>& pts, const Matrix2D& transform );
+
+	void buildEllipse( double x1, double y1, double x2, double y2, 
+	                   std::vector<Point>& pts, const Matrix2D& transform );
 
 
+	void checkPathOperations( );
+
+	void execPathOperations( );
+
+
+protected:
+
+	/**
+	*
+	*
+	*/
 	struct PointOperation {
 		enum PrimitiveType{
 			ptMoveTo=0,
@@ -541,37 +655,17 @@ protected:
 			ptClose
 		};
 
-
 		PointOperation( const double& ax=0.0, const double& ay=0.0, PrimitiveType op=ptMoveTo ):
 			x(ax), y(ay),primitive(op) {
 		}
-
 
 		double x;
 		double y;
 		PrimitiveType primitive;
 	};
 
-
-    ContextPeer * contextPeer_;
-	Fill* currentFill_;
-	Stroke* currentStroke_;
-	Font* currentFont_;
-	Path* clippingPath_;
-	Matrix2D transformMatrix_;
-	Point currentMoveTo_;
-
-	GraphicsState currentState_;
-
-	double theta_;
-	double xScale_;
-	double yScale_;
-	double xTranslate_;
-	double yTranslate_;
-	double xShear_;
-	double yShear_;
-	Color color_;
-	double strokeWidth_;
+	ContextPeer* contextPeer_;
+	GraphicsDrawingState currentDrawingState_;
 	std::vector<PointOperation> pathOperations_;
 	Image* drawingArea_;
 	Point drawingAreaTopLeft_;
@@ -579,18 +673,33 @@ protected:
 	bool renderAreaDirty_;
 	Rect viewableBounds_;
 
+	/**
+	* the collection of all the saved Graphics states.
+	*@see GraphicsContext::saveState()
+	*/
+	GraphicsStateCollection stateCollection_;
 
-	void checkPathOperations();
+	/**
+	* the index of the current state in the collection of 
+	* all the saved Graphics states.
+	*@see GraphicsContext::saveState()
+	*/
+	int graphicsStateIndex_;
 
-	void execPathOperations();
+	/**
+	* the current Graphics state that has been saved.
+	*@see GraphicsContext::saveState()
+	*/
+	GraphicsState* currentGraphicsState_;
 
-	void compositeMatrices();
 };
 
 
-// inline
+///////////////////////////////////////////////////////////////////////////////
+// inlines
+
 inline void GraphicsContext::drawImage( const Point & pt, Image * image) {
-	drawImage( pt.x_, pt.y_, image);
+	drawImage( pt.x_, pt.y_, image );
 }
 
 inline void GraphicsContext::drawImageWithState( const Point & pt, Image * image, const bool& enabled ) {
@@ -607,7 +716,7 @@ inline void GraphicsContext::textWithStateAt( const Point & pt, const String& te
 }
 
 
-inline void GraphicsContext::textAt(const Point & pt, const String & text) {
+inline void GraphicsContext::textAt( const Point & pt, const String & text) {
 	textAt( pt.x_, pt.y_, text );
 }
 
@@ -615,52 +724,55 @@ inline void GraphicsContext::textAt( const Point & pt, const String& text, const
 	textAt( pt.x_, pt.y_, text, drawOptions );
 }
 
-inline void GraphicsContext::rectangle(const Point & pt1, const Point & pt2) {
+inline void GraphicsContext::rectangle( const Point & pt1, const Point & pt2) {
 	rectangle( pt1.x_, pt1.y_, pt2.x_, pt2.y_ );
 }
 
-inline void GraphicsContext::rectangle(const Rect & rc) {
+inline void GraphicsContext::rectangle( const Rect & rc) {
 	rectangle( rc.left_, rc.top_, rc.right_, rc.bottom_ );
 }
 
-inline void GraphicsContext::roundRect(const Point & pt1, const Point & pt2, const Point & ptc) {
+inline void GraphicsContext::roundRect( const Point & pt1, const Point & pt2, const Point & ptc) {
 	roundRect( pt1.x_, pt1.y_, pt2.x_, pt2.y_, ptc.x_, ptc.y_ );
 }
 
-inline void GraphicsContext::roundRect(const Rect & rc, const Point & ptc) {
+inline void GraphicsContext::roundRect( const Rect & rc, const Point & ptc) {
 	roundRect( rc.left_, rc.top_, rc.right_, rc.bottom_, ptc.x_, ptc.y_ );
 }
 
-inline void GraphicsContext::circle(const Point & pt, const double & radius) {
+inline void GraphicsContext::circle( const Point & pt, const double & radius) {
 	circle( pt.x_, pt.y_, radius );
 }
 
-inline void GraphicsContext::ellipse(const Point & pt1, const Point & pt2 ) {
-	ellipse( pt1.x_, pt1.y_, pt2.x_, pt2.y_);
+inline void GraphicsContext::ellipse( const Point & pt1, const Point & pt2 ) {
+	ellipse( pt1.x_, pt1.y_, pt2.x_, pt2.y_ );
 }
 
-inline void GraphicsContext::arc(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
-	arc( pt1.x_, pt1.y_, pt2.x_, pt2.y_, pt3.x_, pt3.y_, pt4.x_, pt4.y_ );
+
+inline void GraphicsContext::arc( const Point & centerPt, const Size& radius, 
+								 const double& startAngle, const double& endAngle) {
+	arc( centerPt.x_, centerPt.y_, radius.width_, radius.height_, startAngle, endAngle );
 }
 
-inline void GraphicsContext::pie(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
+
+inline void GraphicsContext::pie( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
 	pie( pt1.x_, pt1.y_, pt2.x_, pt2.y_, pt3.x_, pt3.y_, pt4.x_, pt4.y_ );
 }
 
-inline void GraphicsContext::chord(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
+inline void GraphicsContext::chord( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
 	chord( pt1.x_, pt1.y_, pt2.x_, pt2.y_, pt3.x_, pt3.y_, pt4.x_, pt4.y_ );
 }
 
-inline void GraphicsContext::curve(const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
+inline void GraphicsContext::curve( const Point & pt1, const Point & pt2, const Point & pt3, const Point & pt4) {
 	curve( pt1.x_, pt1.y_, pt2.x_, pt2.y_, pt3.x_, pt3.y_, pt4.x_, pt4.y_ );
 }
 
-inline void GraphicsContext::lineTo(const Point & pt)
+inline void GraphicsContext::lineTo( const Point & pt)
 {
 	lineTo( pt.x_, pt.y_ );
 }
 
-inline void GraphicsContext::moveTo(const Point & pt)
+inline void GraphicsContext::moveTo( const Point & pt)
 {
 	moveTo( pt.x_, pt.y_ );
 }
@@ -678,6 +790,37 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.8  2004/11/07 19:32:20  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.7  2004/10/27 03:12:18  ddiego
+*integrated chrisk changes
+*
+*Revision 1.2.2.6  2004/09/09 03:09:26  marcelloptr
+*minor change for style
+*
+*Revision 1.2.2.5  2004/09/06 03:33:21  ddiego
+*updated the graphic context code to support image transforms.
+*
+*Revision 1.2.2.4  2004/09/03 04:05:46  ddiego
+*fixes to add matrix transform support for images.
+*
+*Revision 1.2.2.3  2004/09/01 03:50:39  ddiego
+*fixed font drawing bug that tinkham pointed out.
+*
+*Revision 1.2.2.2  2004/08/31 21:12:07  ddiego
+*graphice save and restore state
+*
+*Revision 1.2.2.1  2004/08/31 04:12:13  ddiego
+*cleaned up the GraphicsContext class - made more pervasive use
+*of transformation matrix. Added common print dialog class. Fleshed out
+*printing example more.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -98,16 +98,17 @@ public:
 	virtual void setClippingRect( Rect* clipRect ) = 0;
 
 	/**
-	*this is used to determine how to
-	*align text when the windowing systems
-	*draws it. Currently the choices are 2:
-	*either it is aligned to the top, or in other
-	*words the coordinates specified represent the
-	*top, left position to start rendering the text,
-	*or aligned to the baseline, in which the top,
-	*left coordinates represent the baseline point of
-	*origin. The latter setting is useful when
-	*drawing text whith different font styles
+	* this is used to determine how to align text 
+	* when the windowing systems draws it. 
+	* Currently the choices are 2:
+	*  either it is aligned to the top, or in other
+	*  words the coordinates specified represent the
+	*  top, left position to start rendering the text,
+	* or 
+	*  aligned to the baseline, in which the top,
+	*  left coordinates represent the baseline point of
+	*  origin. The latter setting is useful when
+	*  drawing text whith different font styles.
 	*/
 	virtual void setTextAlignment( const bool& alignTobaseline ) = 0;
 
@@ -174,6 +175,12 @@ public:
 	*otherwise if it's false it turns it off.
 	*/
 	virtual void setXORModeOn( const bool& XORModeOn ) = 0;
+
+	virtual bool isAntiAliasingOn() = 0;
+	
+	virtual void setAntiAliasingOn( bool antiAliasingOn ) = 0;
+
+
 
 
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image ) = 0;
@@ -279,6 +286,21 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/01 04:31:42  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+
+*Revision 1.2.2.3  2004/11/07 19:32:20  marcelloptr
+*more documentation
+*
+*Revision 1.2.2.2  2004/10/27 03:12:18  ddiego
+*integrated chrisk changes
+*
+*Revision 1.2.2.1  2004/08/19 03:22:54  ddiego
+*updates so new system tray code compiles
+*
 *Revision 1.3  2004/08/13 18:43:07  ddiego
 *fixed missing roundrect functionality, and incorrect value in vc70/71 projects
 *
