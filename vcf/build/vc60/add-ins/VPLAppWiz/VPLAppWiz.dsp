@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=VPLAppWiz - Win32 Pseudo-Debug
+CFG=VPLAppWiz - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,7 +13,7 @@ CFG=VPLAppWiz - Win32 Pseudo-Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "VPLAppWiz.mak" CFG="VPLAppWiz - Win32 Pseudo-Debug"
+!MESSAGE NMAKE /f "VPLAppWiz.mak" CFG="VPLAppWiz - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -51,12 +51,12 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"vc6/Release\VPLAppWiz_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"vc6/Release/VPLAppWiz_vc6.awx"
+# ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/VPLAppWiz.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
 OutDir=.\vc6/Release
-TargetPath=.\vc6\Release\VPLAppWiz_vc6.awx
-TargetName=VPLAppWiz_vc6
-InputPath=.\vc6\Release\VPLAppWiz_vc6.awx
+TargetPath=.\Release\VPLAppWiz.awx
+TargetName=VPLAppWiz
+InputPath=.\Release\VPLAppWiz.awx
 SOURCE="$(InputPath)"
 
 "$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

@@ -120,7 +120,7 @@ Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Pla
 [Icons]
 Name: {group}\Uninstall VCF; Filename: {uninstallexe}
 Name: {group}\Submit Bug; Filename: http://sourceforge.net/tracker/?group_id=6796&atid=106796; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\Online Documentation; Filename: http://vcf.sourceforge.net/ref.php?src=index.html; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\Online Documentation; Filename: http://vcf.sourceforge.net/docs/ref_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
 Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.VCF-VERSION.chm; Components: Help_Files
 Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.VCF-VERSION.chm; Components: Help_Files
 Name: {group}\VCF Website; Filename: http://vcf.sf.net; IconFilename: {app}\vcf.ico; IconIndex: 0

@@ -51,12 +51,12 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"vc6/Release\MVCAppWizard_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/MVCAppWizard_vc6.awx"
+# ADD LINK32 rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/MVCAppWizard.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
 OutDir=.\vc6/Release
-TargetPath=.\Release\MVCAppWizard_vc6.awx
-TargetName=MVCAppWizard_vc6
-InputPath=.\Release\MVCAppWizard_vc6.awx
+TargetPath=.\Release\MVCAppWizard.awx
+TargetName=MVCAppWizard
+InputPath=.\Release\MVCAppWizard.awx
 SOURCE="$(InputPath)"
 
 "$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=COMTOVCFCLASSWIZARD - WIN32 DEBUG
+CFG=COMToVCFClassWizard - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,7 +13,7 @@ CFG=COMTOVCFCLASSWIZARD - WIN32 DEBUG
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "COMToVCFClassWizard.mak" CFG="COMTOVCFCLASSWIZARD - WIN32 DEBUG"
+!MESSAGE NMAKE /f "COMToVCFClassWizard.mak" CFG="COMToVCFClassWizard - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -49,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"vc6/Release\COMToVCFClassWizard_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"vc6/Release/COMToVCFClassWizard_vc6.dll"
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"Release/COMToVCFClassWizard.dll"
 # Begin Target
 
 # Name "COMToVCFClassWizard - Win32 Release"

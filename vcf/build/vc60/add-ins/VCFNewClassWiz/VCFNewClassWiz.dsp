@@ -49,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"vc6/Release\VCFNewClassWiz_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"vc6/Release/VCFNewClassWiz_vc6.dll"
+# ADD LINK32 Rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/VCFNewClassWiz.dll"
 # Begin Target
 
 # Name "VCFNewClassWiz - Win32 Release"

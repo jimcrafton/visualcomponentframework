@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.7  2003/12/19 21:19:49  ddiego
+#*** empty log message ***
+#
 #Revision 1.6  2003/12/18 05:15:52  ddiego
 #merge from devmain-0-6-2 branch into the stable branch
 #
@@ -102,6 +105,10 @@ XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"
 
 RAW_CHM_FILENAME = vcf_docs.chm
 RAW_CHI_FILENAME = vcf_docs.chi
+
+RAW_SRC_CHM_FILENAME = vcf-docbook-with-src.chm
+RAW_SRC_CHI_FILENAME = vcf-docbook-with-src.chi
+
 
 RAW_VCF_BUILDER_CHM_FILENAME = vcfbuilder_docs.chm
 RAW_VCF_BUILDER_CHI_FILENAME = vcfbuilder_docs.chi
@@ -225,8 +232,8 @@ coredocs_online :  $(VCF_DOCS) test_tools
 	mv vcf_book.xml.bak vcf_book.xml
 
 
-coredocs_hh : htmlhelp.hhp coredocs
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
+coredocs_hh : vcf-docbook.hhp coredocs
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
 	mv $(RAW_CHI_FILENAME) $(VERSIONED_CHI_FILENAME)
 
@@ -257,14 +264,14 @@ coredocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
 	xsltproc --nonet vcf_with_source_docs.xsl vcf_docbook.xml
-	cp htmlhelp.hhp htmlhelp.hhp.bak
-	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" htmlhelp.hhp > htmlhelp.hhp.tmp
-	mv htmlhelp.hhp.tmp htmlhelp.hhp
+	cp vcf-docbook.hhp vcf-docbook.hhp.bak
+	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook.hhp > vcf-docbook.hhp.tmp
+	mv vcf-docbook.hhp.tmp vcf-docbook.hhp
 	cp toc.hhc toc.hhc.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" toc.hhc > toc.hhc.tmp
 	mv toc.hhc.tmp toc.hhc
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
-	mv htmlhelp.hhp.bak htmlhelp.hhp
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
+	mv vcf-docbook.hhp.bak vcf-docbook.hhp
 	mv toc.hhc.bak toc.hhc
 
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
@@ -294,14 +301,14 @@ alldocs : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS)
 
 
 alldocs_hh : alldocs 
-	cp htmlhelp.hhp htmlhelp.hhp.bak
-	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" htmlhelp.hhp > htmlhelp.hhp.tmp
-	mv htmlhelp.hhp.tmp htmlhelp.hhp
+	cp vcf-docbook.hhp vcf-docbook.hhp.bak
+	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook.hhp > vcf-docbook.hhp.tmp
+	mv vcf-docbook.hhp.tmp vcf-docbook.hhp
 	cp toc.hhc toc.hhc.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" toc.hhc > toc.hhc.tmp
 	mv toc.hhc.tmp toc.hhc
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
-	mv htmlhelp.hhp.bak htmlhelp.hhp
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
+	mv vcf-docbook.hhp.bak vcf-docbook.hhp
 	mv toc.hhc.bak toc.hhc
 	
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
@@ -331,7 +338,7 @@ alldocs_online : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS)
 	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
 
 
-alldocs_hh_with_source : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS) doxy doxy_hh
+alldocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
 	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
@@ -351,20 +358,20 @@ alldocs_hh_with_source : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS
 	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
 
 
-	cp htmlhelp.hhp htmlhelp.hhp.bak
-	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" htmlhelp.hhp > htmlhelp.hhp.tmp
-	mv htmlhelp.hhp.tmp htmlhelp.hhp
+	cp vcf-docbook-with-src.hhp vcf-docbook-with-src.hhp.bak
+	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook-with-src.hhp > vcf-docbook-with-src.hhp.tmp
+	mv vcf-docbook-with-src.hhp.tmp vcf-docbook-with-src.hhp
 	cp toc.hhc toc.hhc.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" toc.hhc > toc.hhc.tmp
 	mv toc.hhc.tmp toc.hhc
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
-	mv htmlhelp.hhp.bak htmlhelp.hhp
+	-$(HTMLHELP_COMPILER) vcf-docbook-with-src.hhp
+	mv vcf-docbook-with-src.hhp.bak vcf-docbook-with-src.hhp
 	mv toc.hhc.bak toc.hhc
 
-	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
-	if ( test -f $(RAW_CHI_FILENAME) )\
+	mv $(RAW_SRC_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
+	if ( test -f $(RAW_SRC_CHI_FILENAME) )\
 	then\
-		mv $(RAW_CHI_FILENAME) $(VERSIONED_CHI_FILENAME);\
+		mv $(RAW_SRC_CHI_FILENAME) $(VERSIONED_CHI_FILENAME);\
 	fi
 	
 	if ( test -d $(UPLOADS_DIR) )\
@@ -415,14 +422,14 @@ alldocs_hh_src_separate : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOC
 	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
 
 
-	cp htmlhelp.hhp htmlhelp.hhp.bak
-	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" htmlhelp.hhp > htmlhelp.hhp.tmp
-	mv htmlhelp.hhp.tmp htmlhelp.hhp
+	cp vcf-docbook.hhp vcf-docbook.hhp.bak
+	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook.hhp > vcf-docbook.hhp.tmp
+	mv vcf-docbook.hhp.tmp vcf-docbook.hhp
 	cp toc.hhc toc.hhc.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" toc.hhc > toc.hhc.tmp
 	mv toc.hhc.tmp toc.hhc
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
-	mv htmlhelp.hhp.bak htmlhelp.hhp
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
+	mv vcf-docbook.hhp.bak vcf-docbook.hhp
 	mv toc.hhc.bak toc.hhc
 
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
@@ -469,8 +476,8 @@ vcf_builder_docs : $(VCF_BUILDER_DOCS) test_tools
 	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
 
 
-vcf_builder_hh : vcf_builder_docs htmlhelp.hhp 
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
+vcf_builder_hh : vcf_builder_docs vcf-docbook.hhp 
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
 	mv $(RAW_VCF_BUILDER_CHM_FILENAME) $(VERSIONED_VCFBUILDER_CHM_FILENAME)
 	-mv $(RAW_VCF_BUILDER_CHI_FILENAME) $(VERSIONED_VCFBUILDER_CHI_FILENAME)
 
@@ -484,8 +491,8 @@ xmake_docs : $(XMAKE_DOCS) test_tools
 
 	mv xmake_book.xml.bak xmake_book.xml
 
-xmake_hh : htmlhelp.hhp xmake_docs
-	-$(HTMLHELP_COMPILER) htmlhelp.hhp
+xmake_hh : vcf-docbook.hhp xmake_docs
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
 	mv $(RAW_CHM_FILENAME) $(VERSIONED_XMAKE_CHM_FILENAME)
 	mv $(RAW_CHI_FILENAME) $(VERSIONED_XMAKE_CHI_FILENAME)
 	
