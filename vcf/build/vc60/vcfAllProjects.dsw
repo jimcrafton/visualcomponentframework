@@ -165,18 +165,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CreateBundle"="..\..\src\createbundle\CreateBundle.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "DateTimeUI"="..\..\examples\DateTimeUI\DateTimeUI.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1255,18 +1243,6 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "createinfo"="..\..\src\createinfo\createinfo.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

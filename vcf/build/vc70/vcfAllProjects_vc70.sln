@@ -25,8 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Controls", "..\..\examples\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyAndPaste", "..\..\examples\CopyAndPaste\CopyAndPaste_vc70.vcproj", "{DE96CFED-CED5-422C-A83C-4266F4D52753}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateBundle", "..\..\src\createbundle\CreateBundle_vc70.vcproj", "{4B6ED057-60FE-4513-8958-452E09A92A53}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTimeUI", "..\..\examples\DateTimeUI\DateTimeUI_vc70.vcproj", "{7984EF00-50E9-4E0C-BBB7-CB7CF973FFA1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DatesAndTime", "..\..\examples\DatesAndTime\DatesAndTime_vc70.vcproj", "{E9D89174-8531-4911-992C-40A665CBAA7D}"
@@ -168,8 +166,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorkingWithEnumerators", "..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_vc70.vcproj", "{F16D15FA-3DC1-4DD2-AA6D-EBE1561867DD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_vc70.vcproj", "{4E0BB691-401B-4479-B3EC-8022793BE26F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "createinfo", "..\..\src\createinfo\createinfo_vc70.vcproj", "{D2B6C856-4B9A-46D6-BF1A-0FB24F362860}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", ".\GraphicsKit\libAGG_vc70.vcproj", "{F7DE07BB-B6F8-4823-9974-CF47C8AD9D9A}"
 EndProject
@@ -341,10 +337,6 @@ Global
 		{DE96CFED-CED5-422C-A83C-4266F4D52753}.Generate YY and LL files.ActiveCfg = Release|Win32
 		{DE96CFED-CED5-422C-A83C-4266F4D52753}.GTK Debug.ActiveCfg = Debug|Win32
 		{DE96CFED-CED5-422C-A83C-4266F4D52753}.Release.ActiveCfg = Release|Win32
-		{4B6ED057-60FE-4513-8958-452E09A92A53}.Debug.ActiveCfg = Debug|Win32
-		{4B6ED057-60FE-4513-8958-452E09A92A53}.Generate YY and LL files.ActiveCfg = Debug|Win32
-		{4B6ED057-60FE-4513-8958-452E09A92A53}.GTK Debug.ActiveCfg = Debug|Win32
-		{4B6ED057-60FE-4513-8958-452E09A92A53}.Release.ActiveCfg = Release|Win32
 		{7984EF00-50E9-4E0C-BBB7-CB7CF973FFA1}.Debug.ActiveCfg = Debug|Win32
 		{7984EF00-50E9-4E0C-BBB7-CB7CF973FFA1}.Generate YY and LL files.ActiveCfg = Debug|Win32
 		{7984EF00-50E9-4E0C-BBB7-CB7CF973FFA1}.GTK Debug.ActiveCfg = Debug|Win32
@@ -629,10 +621,6 @@ Global
 		{4E0BB691-401B-4479-B3EC-8022793BE26F}.Generate YY and LL files.ActiveCfg = Release|Win32
 		{4E0BB691-401B-4479-B3EC-8022793BE26F}.GTK Debug.ActiveCfg = Debug|Win32
 		{4E0BB691-401B-4479-B3EC-8022793BE26F}.Release.ActiveCfg = Release|Win32
-		{D2B6C856-4B9A-46D6-BF1A-0FB24F362860}.Debug.ActiveCfg = Debug|Win32
-		{D2B6C856-4B9A-46D6-BF1A-0FB24F362860}.Generate YY and LL files.ActiveCfg = Debug|Win32
-		{D2B6C856-4B9A-46D6-BF1A-0FB24F362860}.GTK Debug.ActiveCfg = Debug|Win32
-		{D2B6C856-4B9A-46D6-BF1A-0FB24F362860}.Release.ActiveCfg = Release|Win32
 		{F7DE07BB-B6F8-4823-9974-CF47C8AD9D9A}.Debug.ActiveCfg = Debug|Win32
 		{F7DE07BB-B6F8-4823-9974-CF47C8AD9D9A}.Generate YY and LL files.ActiveCfg = GTK Debug|Win32
 		{F7DE07BB-B6F8-4823-9974-CF47C8AD9D9A}.GTK Debug.ActiveCfg = GTK Debug|Win32
