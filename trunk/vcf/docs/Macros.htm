@@ -1,0 +1,98 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:fontset("Arial","Arial") -->
+  <!-- $MVD$:fontset("Verdana","Verdana") -->
+  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <TITLE>Macros</TITLE>
+  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <H1>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+  <H1>
+   Macros</H1>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <H6>
+   <SPAN STYLE="font-weight : bold;">Core Class macros</SPAN></H6>
+  <P>
+   BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID )</P>
+  <P>
+   Use this to begin your class's RTTI definition. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
+   is the type of your class, the <SPAN STYLE="font-style : italic;">ClassName</SPAN> 
+   is a String that will represent the name of you class in the 
+   ClassRegistry. It is good practice to include the fully qualified 
+   class name, i.e. if your class is within a namespace then include the 
+   namespace as well as in &quot;VCF::Object&quot;, not 
+   &quot;Object&quot;. The <SPAN STYLE="font-style : italic;">superClassName</SPAN> 
+   is a String as well, that represents the main class that your class 
+   derives from. The same rules apply to this name as to ClassName, a 
+   fully qualified name is preferred. The classID is a string that 
+   represents a <A HREF="JavaScript:hhctrl.TextPopup('A Universally Unique IDentifier that is guaranteed to be unique across computers. In COM this is known as GUID. Commonly used in distributed architectures like CORBA to identify objects or classes.','Arial,8',10,10,00000000,0xc0ffff)">UUID</A>.</P>
+  <P>
+   BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, 
+   classID )</P>
+  <P>
+   This is similar to the BEGIN_CLASSINFO macro, but allows for RTTI 
+   information that supports abstract classes. Calls to the 
+   ClassRegistry's newInstance() method will fail for classes of this type.</P>
+  <P>
+   END_CLASSINFO( ClassType )</P>
+  <P>
+   This ends the class's RTTI information entries. The <SPAN STYLE="font-style : italic;">ClassType</SPAN> 
+   must be the same type as used in the BEGIN_CLASSINFO or 
+   BEGIN_ABSTRACT_CLASSINFO macro.</P>
+  <P>
+   <SPAN STYLE="font-weight : bold;">Property RTTI macros</SPAN></P>
+  <P>
+   EVENT( 
+   eventClassName,eventMethodName,listenerClassName,adapterClassName )</P>
+  <P>
+   PROPERTY( type, propName, getFunc, setFunc, propType )</P>
+  <P>
+   READONLY_PROPERTY( type, propName, getFunc, propType )</P>
+  <P>
+   OBJECT_PROPERTY( type, propName, getFunc, setFunc )</P>
+  <P>
+   READONLY_OBJECT_PROPERTY( type, propName, getFunc )</P>
+  <P>
+   ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper)</P>
+  <P>
+   LABELED_ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper, 
+   count, enumNames)</P>
+  <P>
+   READONLY_ENUM_PROPERTY(type,propName,getFunc,lower, upper)</P>
+  <P>
+   READONLY_LABELED_ENUM_PROPERTY(type,propName,getFunc,lower, upper, 
+   count, enumNames)</P>
+  <P>
+   COLLECTION_PROPERTY( type,propName,getFunc, propType )</P>
+  <P>
+   OBJECT_COLLECTION_PROPERTY( type,propName,getFunc, addFunc, 
+   insertFunc, deleteFunc1, deleteFunc2 )</P>
+  <H6>
+   <SPAN STYLE="font-weight : bold;">Method RTTI macros</SPAN></H6>
+  <P>
+   METHOD_VOID( methodName, classType, methType, methodPtr )</P>
+  <P>
+   METHOD_1VOID( methodName, classType, methType, argType, methodPtr, 
+   argTypeDesc )</P>
+  <P>
+   METHOD_2VOID( methodName, classType, methType, argType1, argType2, 
+   methodPtr, argTypeDesc )</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
+ <OBJECT
+ CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
+ ID="hhctrl"
+    WIDTH="0"
+    HEIGHT="0"
+    BORDER="0"
+    VSPACE="0"
+    HSPACE="0" TYPE="application/x-oleobject">
+ </OBJECT></BODY>
+</HTML>

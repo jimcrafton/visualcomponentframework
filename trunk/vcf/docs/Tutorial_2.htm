@@ -1,0 +1,128 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:fontset("Arial","Arial") -->
+  <!-- $MVD$:fontset("Verdana","Verdana") -->
+  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <TITLE>Tutorial 2</TITLE>
+  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <H1>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+  <H1>
+   Tutorial 2</H1>
+  <P>
+   In this tutorial we are going to take our Employee class and add 
+   support for dynamic <A HREF="JavaScript:hhctrl.TextPopup('RTTI, or Run Time Type Information allows objects to expose information about themselves at run time to objects that know nothing about the specifc object being queried.','Arial,8',10,10,00000000,0xc0ffff)">RTTI</A>.</P>
+  <P>
+   There are several ways to add this support, but a set of macros 
+   exists that does this for us. Basically all they do is simplify the 
+   job of calling the correct registration functions for the various 
+   pieces of RTTI. To start with we'll need to declare basic RTTI 
+   support, and to do so we'll need a string define that represents <A HREF="JavaScript:hhctrl.TextPopup('A Universally Unique IDentifier that is guaranteed to be unique across computers. In COM this is known as GUID. Commonly used in distributed architectures like CORBA to identify objects or classes.','Arial,8',10,10,00000000,0xc0ffff)">UUID</A> 
+   of our class. So, for example, the Employee define would look like this:</P><PRE><SPAN
+    STYLE="font-weight : bold;">#define</SPAN> EMPLOYEE_CLASSID <FONT COLOR="RED">&quot;56EAADD3-1BAE-4496-B68A-15A5E450AE8E&quot;</FONT></PRE><P>
+   you can get this number by running GUIDGEN.exe (at least on Win32 
+   systems ).</P>
+  <P>
+   Next lets add the first macros:</P><PRE><SPAN
+    STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     BEGIN_CLASSINFO(Employee, <FONT
+    COLOR="RED">&quot;Employee&quot;</FONT>, <FONT COLOR="RED">&quot;VCF::Object&quot;</FONT>, EMPLOYEE_CLASSID)<BR>     END_CLASSINFO(Employee)<BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR></PRE><PRE>     ...rest of code omitted....<BR>};</PRE><P>
+   The Employee class now has the basic RTTI which includes a class name 
+   (&quot;Employee&quot;), information about the super class (the 
+   primary class it derives from, which in this case is VCF::Object), 
+   and a class id, as defined by the string EMPLOYEE_CLASSID. So, you 
+   may be asking, what does this really give us ? Well lets take a look 
+   at some sample code to find out:</P><PRE><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">1</SPAN></FONT> <SPAN STYLE="font-weight : bold;">int</SPAN> main()<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">2</FONT></SPAN> {<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">3</FONT></SPAN>     initFoundationKit();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">4</FONT></SPAN>     REGISTER_CLASSINFO( Employee );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">5</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN>     Object* obj = NULL;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">7</FONT></SPAN>     ClassRegistry::getClassRegistry()-&gt;createNewInstance( <FONT COLOR="RED">&quot;Employee&quot;</FONT>, &amp;obj );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">8</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">9</FONT></SPAN>     Class* clazz = obj-&gt;getClass();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">10</FONT></SPAN>    String className = clazz-&gt;getClassName();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">11</FONT></SPAN>    String uuidString = clazz-&gt;getID();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">12</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">13</FONT></SPAN>    Class* superClass = clazz-&gt;getSuperClass();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">14</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">15</FONT></SPAN>    String superClassName = superClass-&gt;getClassName();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">16</FONT></SPAN>    <SPAN STYLE="font-weight : bold;">while</SPAN> ( NULL != superClass ){<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">17</FONT></SPAN>         superClass = superClass-&gt;getSuperClass();<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">18</FONT></SPAN>    }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">19</FONT></SPAN><BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">20</SPAN></FONT>    <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">21</SPAN></FONT> }</PRE><P>
+   Line 3 initializes the FoundationKit library. The next registers the 
+   Employee class with the ClassRegistry. The ClassRegistry is a single 
+   instance that keeps track of all the registered classes. It has a 
+   static method that allows you to retrieve it's global instance called 
+   getClassRegistry(). Once we have this we can create a new instance of 
+   our Employee class on the fly by passing in the name of the class we 
+   want to create (&quot;Employee&quot;), and a pointer to an Object* 
+   variable (obj). <SPAN STYLE="font-style : italic;font-weight : bold;">Note:
+    </SPAN>When defining your class remember that you must have a 
+   constructor defined that either take no arguments, or arguments that 
+   all have default values specified. Dynamic object creation is useful 
+   in all sorts of ways, for example, you might have a file that 
+   contains a list of objects, with the class name of the object 
+   followed by it's data. Then when you read the file in, you could 
+   dynamically create the object's with very simple and generic code by 
+   getting the class name of the objects and calling createNewInstance().</P>
+  <P>
+   Once we have our Employee instance we can retrieve it's Class. A 
+   Class is a special object in the VCF that is basic building block of 
+   the VCF RTTI. Once you have access to a Class instance, you can query 
+   it for a variety of different information, such as the above example 
+   does. We can ask for the name of the class using getClassName() (line 
+   10 ), get the UUID through the getID() method, and get the super 
+   class Class using getSuperClass(). To walk the list of derived 
+   classes we can execute a loop similar to what is found in line 16.</P>
+  <P>
+   So, as you can see, with just a few lines added to our class we get a 
+   significant amount of extra functionality.</P>
+  <P>
+   The next thing we'll add is support for properties. A Property is a 
+   special class that can get or set a value on a specific instance of 
+   an Object at run time. It allows us to describe a class's data 
+   members and provides access to them in a uniform and generic manner, 
+   all of which can be determined dynamically at runtime, with no 
+   knowledge of the particular object's class definition. One example of 
+   how you might use this is to write a generic persistence mechanism 
+   that saves and loads the state of a collection of different objects 
+   entirely through the use of properties. Another might be in a 
+   database program that dynamically generates SQL code based on the 
+   properties of an object.</P>
+  <P>
+   Again, there are a variety of ways to do this with a class, but the 
+   easiest is through the use of macros that the VCF provides, which 
+   correctly register the class's methods with the ClassRegistry. Let's 
+   add support for the Employee class's IQ attribute.</P><PRE><SPAN
+    STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     BEGIN_CLASSINFO(Employee, <FONT
+    COLOR="RED">&quot;Employee&quot;</FONT>, <FONT COLOR="RED">&quot;VCF::Object&quot;</FONT>, EMPLOYEE_CLASSID)<BR>     PROPERTY( <SPAN
+    STYLE="font-weight : bold;">int</SPAN>, <FONT COLOR="RED">&quot;IQ&quot;</FONT>, Employee::getIQ, Employee::setIQ, PROP_INT );<BR>     END_CLASSINFO(Employee)<BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR></PRE><PRE><SPAN
+    STYLE="font-weight : bold;">     int</SPAN> getIQ();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setIQ( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; IQ );<BR><BR></PRE><PRE>     ...rest of code omitted....</PRE><PRE><SPAN
+    STYLE="font-weight : bold;">protected</SPAN>:<BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> m_age;</PRE><PRE>     ...rest of code omitted....<BR>};</PRE><P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
+ <OBJECT
+ CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
+ ID="hhctrl"
+    WIDTH="0"
+    HEIGHT="0"
+    BORDER="0"
+    VSPACE="0"
+    HSPACE="0" TYPE="application/x-oleobject">
+ </OBJECT></BODY>
+</HTML>

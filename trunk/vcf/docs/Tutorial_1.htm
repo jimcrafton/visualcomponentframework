@@ -1,0 +1,156 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:fontset("Arial","Arial") -->
+  <!-- $MVD$:fontset("Verdana","Verdana") -->
+  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <TITLE>Tutorial 1</TITLE>
+  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <H1>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+  <H1>
+   Tutorial 1 : Basics</H1>
+  <P>
+   Lets build a simple class that holds information about an employee. 
+   Let's be extremely creative and call this class Employee, so we end 
+   up with some thing like this:</P><PRE><!-- $MVD$:spaceretainer() --> <BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR><BR>};<BR></PRE><P>
+   OK so far. You'll notice we need to derive from VCF::Object, so we 
+   can take advantage to VCF features. By and large, VCF is a single 
+   rooted framework, which means there is one base class that everything 
+   in the framework derives from (there are exceptions to this but we'll 
+   cover these later). Now out employee will almost certainly have 
+   properties (or attributes) of some sort, otherwise it sure as hell 
+   wouldn't be a very useful class ! Let's assume our employee has a 
+   name, an age, and an IQ (OK, OK, that's probably not very realistic 
+   but it makes it more fun...). So now our class looks like this:</P><PRE><!-- $MVD$:spaceretainer() --> <BR><SPAN
+    STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getAge();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setAge( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; age );<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getIQ();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setIQ( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; IQ );<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getName();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setName( <SPAN STYLE="font-weight : bold;">const</SPAN> VCF::String&amp; Name );<BR><SPAN
+    STYLE="font-weight : bold;">protected</SPAN>:<BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> m_age;<BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> m_IQ;<BR>     VCF::String m_name;<BR>};<BR></PRE><P>
+   All righty then ! I'll leave it up to your own imagination to 
+   implement the get and set methods. So far this doesn't look so 
+   different from any other class you'd write, so lets spice it up a bit 
+   and add support reading and writing the class. In the VCF reading and 
+   writing is done through streams. <A HREF="Stream_Basics.htm">Streams</A> 
+   can exist in a variety of formats, they can be streams to the hard 
+   disk, streams in memory, or even streams that apply a 
+   compression/decompression algorithm to the data being read or written 
+   to or from the stream. Streams come in two major groupings, Input 
+   Streams and Output Streams. Input streams have methods that allow for 
+   data to be <B><I>read</I></B> from the stream, while Output streams 
+   have methods that allow data to be <B><I>written</I></B> to the 
+   stream. Some stream classes support both features in one, such as the 
+   FileStream, which derives from both InputStream and OutputStream, 
+   thus allowing read or write capabilities from the one class.</P>
+  <P>
+   To write to an Output stream you have a couple of options: you can 
+   use the write() method (which is overloaded, and can take all the 
+   basic C++ types, plus a special class Persistable, which I'll explain 
+   in a jiffy), or you can use the insertion operator ( &lt;&lt; ). 
+   Personally I prefer using write(), but realizing that the &lt;&lt; 
+   operator is so commonly used by the STL IOStream library, I included 
+   it for completeness (my reason for preferring write() is one of 
+   clarity - I think it is easy to get confused with the bit shift 
+   &lt;&lt;, and people reading your code for the first time or two may 
+   be confused as to what is going on). Likewise to use the Input stream 
+   you can use the read() method or the extraction operator (). All 
+   basic types are written out/read in according to the implementation 
+   of the stream and the size of the type. String's are handled 
+   similarly and are written out according to the length of the String 
+   (which is defined as number of characters till a null terminator, or 
+   \0), and are read in till a null terminator (\0) is found. Objects 
+   (i.e. anything that is not a basic type or a String) are handled a 
+   bit differently.</P>
+  <P>
+   To send an object to a Stream, the Object must support the 
+   Persistable <A HREF="JavaScript:hhctrl.TextPopup('This does not mean a COM interface, instead it is just a C++ class that has a set of virtual pure methods defined that must be implemented by a deriving class.','Arial,8',10,10,00000000,0xc0ffff)">interface</A>.
+    In doing this you end up implementing <CODE>saveToStream()</CODE> 
+   and <CODE>loadFromStream()</CODE> methods, which allows the 
+   implementing class to save or load it's state from the stream object 
+   that is passed in to the method. To better understand this let's try 
+   an example with our Employee class.</P><PRE><SPAN
+    STYLE="font-weight : bold;">class</SPAN> Employee : <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Object. <SPAN STYLE="font-weight : bold;">public</SPAN> VCF::Persistable {<BR><SPAN
+    STYLE="font-weight : bold;">public</SPAN>:<BR>     Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> ~Employee();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getAge();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setAge( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; age );<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getIQ();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setIQ( <SPAN STYLE="font-weight : bold;">const</SPAN> <SPAN STYLE="font-weight : bold;">int</SPAN>&amp; IQ );<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> getName();<BR><BR>     <SPAN
+    STYLE="font-weight : bold;">void</SPAN> setName( <SPAN STYLE="font-weight : bold;">const</SPAN> VCF::String&amp; Name );<BR>     <BR>     <SPAN
+    STYLE="font-style : italic;"><FONT COLOR="BLUE">//VCF::Persistable methods</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;">     virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> loadFromStream( VCF::InputStream* stream );</PRE><PRE>     <SPAN
+    STYLE="font-weight : bold;">virtual</SPAN> <SPAN STYLE="font-weight : bold;">void</SPAN> saveToStream( VCF::OutputStream* stream );<BR><SPAN
+    STYLE="font-weight : bold;">protected</SPAN>:<BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> m_age;<BR>     <SPAN
+    STYLE="font-weight : bold;">int</SPAN> m_IQ;<BR>     VCF::String m_name;<BR>};</PRE><P>
+   A simple implementation of this might look like this:</P><PRE><SPAN
+    STYLE="font-weight : bold;">void</SPAN> Employee::loadFromStream( VCF::InputStream* stream )<BR>{<BR>     stream-&gt;write( m_age ); <SPAN
+    STYLE="font-style : italic;"><FONT COLOR="BLUE">//or (*stream) &lt;&lt; m_age; for the more traditional.</FONT></SPAN><FONT COLOR="BLUE"><SPAN STYLE="font-style : normal;"> </SPAN></FONT><BR><SPAN
+    STYLE="font-style : normal;">     stream-&gt;write( m_IQ );</SPAN><BR><SPAN
+    STYLE="font-style : normal;">     stream-&gt;write( </SPAN>m_name );<BR>}</PRE><PRE><SPAN
+    STYLE="font-weight : bold;">void</SPAN> Employee::saveToStream( VCF::OutputStream* stream )<BR>{<BR>     stream-&gt;read( m_age ); <SPAN
+    STYLE="font-style : italic;"><FONT COLOR="BLUE">//or (*stream) &gt;&gt; m_age; for the more traditional.</FONT></SPAN><FONT COLOR="BLUE"><SPAN STYLE="font-style : normal;"> </SPAN></FONT><BR>     stream-&gt;read( <SPAN
+    STYLE="font-style : normal;">m_IQ</SPAN> );<BR>     stream-&gt;read( m_name );<BR>}</PRE><P>
+   Now when we want to save our class to a stream we can simply pass in 
+   the Employee instance to a stream, and <SPAN STYLE="font-style : italic;">voila!</SPAN> 
+   our methods above will be invoked. As an example look at the following:</P><PRE><SPAN
+    STYLE="font-weight : bold;">int</SPAN> main()<BR>{<BR>     initFoundationKit(); <FONT
+    COLOR="BLUE"><SPAN STYLE="font-style : italic;">//initializes the VCF FoundationKit library</SPAN></FONT></PRE><PRE>     Employee bob;<BR>     bob.setName( <FONT
+    COLOR="RED">&quot;Bob Johanson&quot;</FONT> ) ;<BR>     bob.setAge( <FONT
+    COLOR="FUCHSIA">50</FONT> );<BR>     bob.setIQ( <FONT
+    COLOR="FUCHSIA">160</FONT> );<BR>     <BR>     FileStream stream( <FONT
+    COLOR="RED">&quot;EmployeeListing.dat&quot;</FONT> );<BR>     stream.write( &amp;bob ); <SPAN
+    STYLE="font-style : italic;"><FONT COLOR="BLUE">//or stream &lt;&lt; &amp;bob</FONT></SPAN><BR><BR>     <SPAN
+    STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR>}</PRE><P>
+   Now some of you may be asking, &quot;Wait a second ! I look up the 
+   write() methods and nowhere does it take a type of Employee* ! What's 
+   up with that !&quot;. Have no fear, due to the magic of multiple 
+   inheritance this transformation takes place for us (those of you who 
+   are familiar with C++ multiple inheritance can skip this section, 
+   folks who are new to multiple inheritance may want to read on). 
+   Remember we defined our class as deriving from Object and 
+   Persistable, and since Persistable has methods that are marked as 
+   virtual pure, we must implement them (at least if we want to allow 
+   people to create instances of our class). Now the compiler is smart 
+   enough to realize that something that is expecting a pointer to a 
+   Persistable object will also, by definition, take a pointer to a 
+   Employee object because the class also derives from Persistable. As 
+   an aside, when implementing multiple inheritance also derive from 
+   your &quot;core&quot; class first, in our case it was VCF::Object, 
+   and your additional interfaces after this. I am not going to go into 
+   the details about why this is, it just seems to work better (at least 
+   in my experience).</P>
+  <P>
+   Wow ! Wonders will never cease - quickly stop what you're doing and 
+   write home to Ma about this one !</P>
+  <P>
+   Anyways, we now have a basic class that has some data and can read 
+   and write itself from a stream. For more exciting coding move lets on 
+   to Tutorial 2...
+ <OBJECT
+ CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
+ ID="hhctrl"
+    WIDTH="0"
+    HEIGHT="0"
+    BORDER="0"
+    VSPACE="0"
+    HSPACE="0" TYPE="application/x-oleobject">
+ </OBJECT></BODY>
+</HTML>
