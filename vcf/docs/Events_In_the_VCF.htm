@@ -282,6 +282,44 @@ fileOpenItem-&gt;addMenuItemClickedHandler( new VCF::EventHandlerInstance&lt;MyA
   be shared and reused for multiple events. One example might be a series of
   menu items that when clicked on, activate a specific type of tool. These menu
   items could share the functionality of their handler code, as the only
-  difference would be the tool being selected. Since all the menu items have a </p>
+  difference would be the tool being selected. Since all the menu items have an
+  index, we could compare the index on the menu item and do something like the
+  following: </p>
+  <PRE>	MenuItem* item1 = ...
+	MenuItem* item2 = ...
+	MenuItem* item3 = ...
+
+	EventHandler* menuItemHandler = new VCF::EventHandlerInstance&lt;MyApplication,VCF::MenuItemEvent&gt;( this, 
+												MyApplication::onToolSelection, 
+												&quot;ToolSelectionHandler&quot; ) );
+	item1-&gt;addMenuItemClickedHandler( menuItemHandler );
+	item2-&gt;addMenuItemClickedHandler( menuItemHandler );
+	item3-&gt;addMenuItemClickedHandler( menuItemHandler );
+	.
+	.
+	.
+}
+
+void MyApplication::onToolSelection( VCF::MenuItemEvent* event )
+{
+	MenuItem* item = (MenuItem*)event-&gt;getSource();
+	switch( item-&gt;getIndex() ) {
+		case 0: {
+			selectTool1();
+		}
+		break;
+		
+		case 1: {
+			selectTool2();
+		}
+		break;
+
+		case 2: {
+			selectTool3();
+		}
+		break;
+	}
+}</PRE>
+  <p>We now have all three menu items connected to one method ! </p>
  </BODY>
 </HTML>

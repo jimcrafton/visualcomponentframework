@@ -34,17 +34,40 @@
   of the programmer by using special functions and classes provided by the VCF
   to accomplish this. Currently there are two approaches to add this
   support to you classes, the first, which will be documented here, uses macros
-  that you add to your class definition. The second, newer method uses the RTTI
+  that you add to your class definition. The second, newer, method uses the VCF RTTI
   Compiler, which can parse the C++ headers of your choice and correctly
   generate C++ code for you that will properly register all of your classes RTTI
   data for you. No macros are necessary when using this method, which perhaps
   results in slightly cleaner code and is potentially less error prone. </p>
+  <p>All data for RTTI is registered into a central repository, called the Class
+  Registry, and implemented in the class <code>VCF::ClassRegistry</code>. The <code>VCF::ClassRegistry</code>
+  has a single global instance that runs while your program is running. The
+  registration is performed through templated functions which create and add the
+  data to the <code>VCF::ClassRegistry</code>. </p>
   <p>Before discussing the macros that are used to register the various RTTI
   data, lets discuss further what each of the data types are. The initial RTTI
   data type is described by the class <code>VCF::Class</code>, which contains
   everything necessary to describe a&nbsp; object's class information at run
-  time. The VCF::Class holds the class name, the super class name, and the UUID
-  that identifies the class. </p>
+  time. The <code> VCF::Class</code> holds the class name, the super class name, and the UUID
+  that identifies the class. In addition it contains methods which allow for
+  creating an instance of a class given only the class name or UUID. The <code>VCF::Class</code>
+  also contains methods to retrieve any associated methods, properties, events,
+  or implemented interfaces that further describe the class. A method is
+  described by the <code>VCF::Method</code> class which identifies the name of
+  the method, the number of arguments the method has, whether or not the method
+  has a return value, and the types of each of the arguments the method accepts
+  (if any). In addition, the <code>VCF::Method</code> may be invoked dynamically
+  via the <code>VCF::Method::invoke()</code> method. A property is described by
+  the <code>VCF::Property</code> class and contains methods to get and set the
+  property, as well as determine what type the property is (i.e. an integer,
+  double, Object, etc). Events are represented by the <code>VCF::EventProperty</code>
+  class which identifies the Event class, the method name that triggers the
+  event, and the event handler class name. Interfaces are defined as an abstract
+  class consisting of a virtual destructor, and zero or more public virtual pure
+  methods. An interface is represented by the <code>VCF::IntefaceClass</code>
+  class, and is quite similar to the VCF::Class class. It contains the name of
+  the interface, the UUID of the interface, and any of the methods of the
+  interface. </p>
   <p>&nbsp; </p>
  </BODY>
 </HTML>
