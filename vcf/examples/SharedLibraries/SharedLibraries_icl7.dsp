@@ -124,7 +124,7 @@ InputPath=SimpleDLL.cpp
 !ELSEIF  "$(CFG)" == "SharedLibraries - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="SimpleDLL.so"	
+USERDEP__SIMPL="SimpleDLL.so"	"SimpleDLL.obj"	
 # Begin Custom Build
 InputPath=SimpleDLL.cpp
 

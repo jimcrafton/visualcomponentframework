@@ -5,6 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libXmake", ".\libXmake_vc71
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmake", ".\xmake_vc71.vcproj", "{BA8899C8-F3E6-403E-A742-846B055AD719}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9B4F3C34-16A9-40B0-8AA6-425E4049940B} = {9B4F3C34-16A9-40B0-8AA6-425E4049940B}
 	EndProjectSection
 EndProject
 Global
