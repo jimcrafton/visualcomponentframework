@@ -44,7 +44,6 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/ImageEvent.h"
 #include "vcf/GraphicsKit/PrintContext.h"
 #include "vcf/GraphicsKit/Printable.h"
-#include "vcf/GraphicsKit/ClippingRegion.h"
 #include "vcf/GraphicsKit/InvalidImage.h"
 #include "vcf/GraphicsKit/ImageLoaderException.h"
 #include "vcf/GraphicsKit/AbstractImage.h"
@@ -53,7 +52,6 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/BasicStroke.h"
 #include "vcf/GraphicsKit/GlyphCollection.h"
 #include "vcf/GraphicsKit/ContextPeer.h"
-#include "vcf/GraphicsKit/Vector2D.h"
 
 //graphics resources
 #include "vcf/GraphicsKit/GraphicsResourceBundle.h"
@@ -90,6 +88,9 @@ namespace VCF
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

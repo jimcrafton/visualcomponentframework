@@ -21,12 +21,13 @@ class GraphicsContext;
 
 /**
 AbstractImage represents a base implementation of the Image interface. It implements
-common functions, such as getWidth, etc, but still requires actually image class GRAPHICSKIT_API to be
+common functions, such as getWidth, etc, but still requires actually image class to be
 derived from it. It also provides basic support for ImageSizeChangedHandlers, so derived classes
 do not have to baother with it. See Image for more information on what the functions do.
 
 @version 1.0
 @author Jim Crafton
+@see Image
 @delegates
 	@del AbstractImage::ImageSizeChanged
 */
@@ -145,6 +146,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/12/02 04:11:10  ddiego
+*removed some old, extraneous files from graphics kit dir.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
