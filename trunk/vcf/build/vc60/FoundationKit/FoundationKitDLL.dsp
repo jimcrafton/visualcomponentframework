@@ -333,6 +333,14 @@ SOURCE=..\..\..\include\exceptions\RuntimeException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Semaphore.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\SemaphorePeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Size.h
 # End Source File
 # Begin Source File
@@ -342,6 +350,10 @@ SOURCE=..\..\..\include\io\Stream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\utils\StringUtils.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\SynchObject.h
 # End Source File
 # Begin Source File
 
@@ -546,6 +558,10 @@ SOURCE=..\..\..\src\Utils\Registry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\Semaphore.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\Stream.cpp
 # End Source File
 # Begin Source File
@@ -611,6 +627,10 @@ SOURCE=..\..\..\src\implementerkit\Win32ProcessPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\implementerkit\Win32Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
 

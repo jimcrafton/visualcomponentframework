@@ -25,7 +25,7 @@ CFG=FoundationKit - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName "FoundationKit"
 # PROP Scc_LocalPath "."
-CPP=cl.exe
+CPP=xicl6.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
@@ -47,7 +47,7 @@ RSC=rc.exe
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_s.lib"
 
@@ -70,7 +70,7 @@ LIB32=link.exe -lib
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
+LIB32=xilink6.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_sd.lib"
 
@@ -134,17 +134,7 @@ SOURCE=..\..\..\src\IO\FileUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\FoundationKit.cpp
-
-!IF  "$(CFG)" == "FoundationKit - Win32 Release"
-
 # ADD CPP /Yc"FoundationKit.h"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
-
-# ADD CPP /Yc"FoundationKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -193,6 +183,10 @@ SOURCE=..\..\..\src\core\Rect.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\Semaphore.cpp
 # End Source File
 # Begin Source File
 
@@ -261,6 +255,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ProcessPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
 
@@ -520,6 +518,14 @@ SOURCE=..\..\..\include\exceptions\RuntimeException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\Semaphore.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\SemaphorePeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Size.h
 # End Source File
 # Begin Source File
@@ -529,6 +535,10 @@ SOURCE=..\..\..\include\io\Stream.h
 # Begin Source File
 
 SOURCE=..\..\..\include\utils\StringUtils.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\SynchObject.h
 # End Source File
 # Begin Source File
 
@@ -613,6 +623,10 @@ SOURCE=..\..\..\include\implementerkit\Win32ProcessPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerkit\Win32Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32SemaphorePeer.h
 # End Source File
 # Begin Source File
 
