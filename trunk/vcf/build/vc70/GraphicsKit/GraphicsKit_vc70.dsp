@@ -160,10 +160,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Circle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\GraphicsKit\ClippingRegion.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\GraphicsKit\Color.cpp
 # End Source File
 # Begin Source File
@@ -326,16 +322,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Size.h
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Stroke.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\Vector2D.cpp
-# End Source File
-
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\Vector2D.h
-# End Source File
-
 # End Group
 # Begin Group "Peers"
 
@@ -384,7 +370,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Image.cpp
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Image.h
 # End Source File
-
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Win32PrintSession.cpp

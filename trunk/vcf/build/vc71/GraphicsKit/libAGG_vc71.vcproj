@@ -73,7 +73,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"				
+				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				BasicRuntimeChecks="3"
@@ -175,7 +175,6 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_arc.cpp">
 			</File>
 			<File
@@ -183,7 +182,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_bspline.cpp">
-
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -210,14 +208,10 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
-
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_curves.cpp">
-
 				<FileConfiguration
-
-
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -243,11 +237,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
-
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_path_storage.cpp">
-
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -278,7 +270,6 @@
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_scanline_aa.cpp">
 				<FileConfiguration
-
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
@@ -304,7 +295,6 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
-
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_trans_affine.cpp">
@@ -314,7 +304,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_vcgen_stroke.cpp">
-
 			</File>
 		</Filter>
 		<Filter

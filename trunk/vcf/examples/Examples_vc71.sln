@@ -142,6 +142,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", ".\Examples\Exam
 		{17DBE2D7-B617-43A0-ACBC-9284925AC7B2} = {17DBE2D7-B617-43A0-ACBC-9284925AC7B2}
 		{33459B8F-E879-4DB5-8F9C-92A2E7E42774} = {33459B8F-E879-4DB5-8F9C-92A2E7E42774}
 		{6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED} = {6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED}
+		{2f0c5f04-4383-428c-86f7-a4015753d09b} = {2f0c5f04-4383-428c-86f7-a4015753d09b}
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec} = {917d25cc-5924-40df-9bc8-0a1ce6676fec}
 		{1ec3dc66-9383-4f30-969a-7e4417d2118e} = {1ec3dc66-9383-4f30-969a-7e4417d2118e}
 		{80F8E769-E6A6-4E2B-95C1-AF3D85828452} = {80F8E769-E6A6-4E2B-95C1-AF3D85828452}
@@ -311,6 +312,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SysTray", ".\SysTray\SysTra
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tables", ".\Tables\Tables_vc71.vcproj", "{6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tabs", ".\Tabs\Tabs_vc71.vcproj", "{2f0c5f04-4383-428c-86f7-a4015753d09b}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -562,6 +567,9 @@ Global
 		{6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED}.Debug.ActiveCfg = Debug|Win32
 		{6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED}.GTK Debug.ActiveCfg = Debug|Win32
 		{6E845B1E-2CDF-48E2-B7A5-6EADCF2621ED}.Release.ActiveCfg = Release|Win32
+		{2f0c5f04-4383-428c-86f7-a4015753d09b}.Debug.ActiveCfg = Debug|Win32
+		{2f0c5f04-4383-428c-86f7-a4015753d09b}.GTK Debug.ActiveCfg = Debug|Win32
+		{2f0c5f04-4383-428c-86f7-a4015753d09b}.Release.ActiveCfg = Release|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.Debug.ActiveCfg = Debug|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.GTK Debug.ActiveCfg = Debug|Win32
 		{917d25cc-5924-40df-9bc8-0a1ce6676fec}.Release.ActiveCfg = Release|Win32
