@@ -148,8 +148,8 @@ public:
 protected:
     Bar* m_barObj;  
 };</pre>
-  <P>In our FooBar class we have a member m_barObj which is a pointer to some
-  instance of class Bar.&nbsp; In this class we have a string reference to the
+  <P>In our <code> FooBar</code> class we have a member <code> m_barObj</code> which is a pointer to some
+  instance of class <code>Bar</code>.&nbsp; In this class we have a strong reference to the
   Bar instance, and want to make sure that whatever else happens to the
   instance, it stays valid until we no longer care about it. So lets modify our <code>setBarObj()</code>
   method to reflect this:</P>
@@ -162,15 +162,15 @@ protected:
         m_barObj-&gt;addRef();  <i>//addref() to prevent the object from being deleted should someone else release() it</i>
     }
 }</pre>
-  <p>So in the setBarObj() method we release() our old instance that we no
+  <p>So in the <code> setBarObj()</code> method we <code> release()</code> our old instance that we no
   longer care about, assign the new value to our member variable, and if it is a
   valid instance (non null), then we take &quot;ownership&quot; of it by calling
-  addRef() on the instance.</p>
+  <code>
+  addRef()</code> on the instance.</p>
   <P>
    <SPAN STYLE="font-style : italic;font-weight : bold;font-size : 12.0pt;">Note</SPAN><SPAN STYLE="font-size : 12.0pt;">:</SPAN> 
    that this whole scheme is aimed at heap based objects. Many objects 
-   that are created on the stack do not need this, though if they have 
-   code in their init() method, this will have to be called.</P>
+   that are created on the stack do not need this.</P>
   <P>
    <!-- $MVD$:spaceretainer() -->&nbsp;</P>
   <P>
