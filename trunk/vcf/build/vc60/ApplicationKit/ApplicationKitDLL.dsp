@@ -777,6 +777,10 @@ SOURCE=..\..\..\include\core\ScrollBarControl.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ScrollbarManager.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\events\ScrollEvent.h
 # End Source File
 # Begin Source File
@@ -1508,6 +1512,10 @@ SOURCE=..\..\..\src\Utils\Resource.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\IO\ResourceStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ScrollbarManager.cpp
 # End Source File
 # Begin Source File
 
