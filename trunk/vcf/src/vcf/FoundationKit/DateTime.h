@@ -635,9 +635,15 @@ public:
 			return dt_ != rhs.dt_;
 		}
 
-		Iterator& operator++() {
+		Iterator& operator++() {		// prefix
 			DateLogic::incr( dt_, 1 );
 			return *this;
+		}
+
+		Iterator operator++(int) {  // postfix
+			Iterator before = (*this);
+			DateLogic::incr( dt_, 1 );
+			return before;
 		}
 
 		Iterator& operator+=( const unsigned long& rhs ) {
@@ -646,9 +652,15 @@ public:
 			return *this;
 		}
 
-		Iterator& operator--() {
+		Iterator& operator--() {		// prefix
 			DateLogic::decr( dt_, 1 );
 			return *this;
+		}
+
+		Iterator operator--(int) {  // postfix
+			Iterator before = (*this);
+			DateLogic::decr( dt_, 1 );
+			return before;
 		}
 
 		Iterator& operator-=( const unsigned long& rhs ) {
@@ -710,9 +722,15 @@ protected:
 			return dt_ != rhs.dt_;
 		}
 
-		Iterator& operator++() {
+		Iterator& operator++() {		// prefix
 			DateLogic::incr( dt_, 1 );
 			return *this;
+		}
+
+		Iterator& operator++(int) { // postfix
+			Iterator before = (*this);
+			DateLogic::incr( dt_, 1 );
+			return before;
 		}
 
 		Iterator& operator+=( const unsigned long& rhs ) {
@@ -721,9 +739,15 @@ protected:
 			return *this;
 		}
 
-		Iterator& operator--() {
+		Iterator& operator--() {		// prefix
 			DateLogic::decr( dt_, 1 );
 			return *this;
+		}
+
+		Iterator& operator--(int) { // postfix
+			Iterator before = (*this);
+			DateLogic::decr( dt_, 1 );
+			return before;
 		}
 
 		Iterator& operator-=( const unsigned long& rhs ) {
@@ -948,6 +972,9 @@ inline void DateTime::get( unsigned long* year, unsigned long* month, unsigned l
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/10 16:39:56  marcelloptr
+*added postfix iterator for the DateTime::Iterator
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
