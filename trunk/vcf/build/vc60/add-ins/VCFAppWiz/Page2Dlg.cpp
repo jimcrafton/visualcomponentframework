@@ -68,6 +68,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // Page2Dlg message handlers
 
+/*
 void Page2Dlg::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
@@ -91,11 +92,15 @@ void Page2Dlg::OnPaint()
 	
 	// Do not call CAppWizStepDlg::OnPaint() for painting messages
 }
+*/
 
 BOOL Page2Dlg::OnInitDialog() 
 {
 	CAppWizStepDlg::OnInitDialog();
-	
+	CStatic* wnd = (CStatic*)this->GetDlgItem( IDC_IMAGE2 );
+	CBitmap bmp;
+	bmp.LoadBitmap( IDB_BITMAP1 );
+	wnd->SetBitmap( (HBITMAP)bmp.Detach() );
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

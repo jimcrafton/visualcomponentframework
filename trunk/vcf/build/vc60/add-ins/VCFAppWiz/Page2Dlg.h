@@ -38,7 +38,7 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(Page2Dlg)
-	afx_msg void OnPaint();
+	//afx_msg void OnPaint();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDynamicLib();
 	afx_msg void OnStaticLib();

@@ -82,7 +82,7 @@ BOOL Page4Dlg::OnInitDialog()
 	CAppWizStepDlg::OnInitDialog();
 	
 	CBitmap bmp;
-	bmp.LoadBitmap( IDB_SPLASH );
+	bmp.LoadBitmap( IDB_BITMAP3 );
 	this->m_image.SetBitmap( (HBITMAP)bmp.Detach() );	
 
 	return TRUE;  // return TRUE unless you set the focus to a control

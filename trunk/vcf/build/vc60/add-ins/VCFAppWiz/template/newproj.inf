@@ -25,6 +25,9 @@ $$ENDIF //STD_HELP_MNU
 $$IF(SPLASH_SCR)
 SplashScreen.CPP	$$SplashScreen$$.cpp
 SplashScreen.h	$$SplashScreen$$.h
+app.rc	$$Root$$.rc
+/res
+=:splash.bmp	res\$$Splash$$.bmp
 $$ENDIF //SPLASH_SCR
 $$ELSE //!ADVANCED_FEATURES
 main.cpp	$$Root$$.cpp

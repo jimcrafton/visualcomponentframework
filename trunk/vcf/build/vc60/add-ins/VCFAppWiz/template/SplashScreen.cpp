@@ -9,15 +9,25 @@ using namespace VCF;
 
 SplashScreen::SplashScreen()
 {
-	setVisible( true );
 	setTop( 400 );
 	setLeft( 300 );
-	setHeight( 250 );
-	setHeight( 300 );
+
+	m_splashImage = Application::getRunningInstance()->getResourceBundle()->getImage( "SPLASH" );
+	if ( NULL != m_splashImage ) {
+		setHeight( m_splashImage->getHeight() );
+		setWidth( m_splashImage->getWidth() );
+	}
+	else {
+		setWidth( 250 );
+		setHeight( 300 );
+	}
+
+	setVisible( true );	
 
 	setFrameStyle( FST_NOBORDER_FIXED );
 	setFrameTopmost( true );
 	setColor( Color::getColor( "white" ) );
+
 	m_thread = new ThreadLooper( this );
 	m_thread->start();
 }
@@ -25,7 +35,10 @@ SplashScreen::SplashScreen()
 
 SplashScreen::~SplashScreen()
 {
-	
+	if ( NULL != m_splashImage ) {
+		delete m_splashImage;
+		m_splashImage = NULL;
+	}
 }
 
 
@@ -35,6 +48,10 @@ void SplashScreen::paint( GraphicsContext* context )
 	Rect bounds(0,0,getWidth(), getHeight() );
 	context->rectangle( &bounds );
 	context->fillPath();
+
+	if ( NULL != m_splashImage ) {
+		context->drawImage( 0, 0, m_splashImage );
+	}
 	context->drawString( bounds.getWidth()/2-50, bounds.getHeight()/2.0, "Welcome to the $$Root$$..." );
 }
 

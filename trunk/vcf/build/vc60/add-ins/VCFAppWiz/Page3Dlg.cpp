@@ -39,38 +39,15 @@ void Page3Dlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(Page3Dlg, CDialog)
 	//{{AFX_MSG_MAP(Page3Dlg)
-	ON_WM_PAINT()
 	ON_BN_CLICKED(IDC_VCFNET, OnVcfnet)
 	ON_BN_CLICKED(IDC_VCFREMOTE, OnVcfremote)
 	ON_BN_CLICKED(IDC_OPENGL, OnOpengl)
+	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // Page3Dlg message handlers
-
-void Page3Dlg::OnPaint() 
-{
-	CPaintDC dc(this); // device context for painting
-	
-	CWnd* wnd = this->GetDlgItem( IDC_IMAGE3 );
-	CDC* pDC = wnd->GetDC();
-	CDC tmpDC;
-	tmpDC.CreateCompatibleDC( NULL );
-	CBitmap bmp;
-	bmp.LoadBitmap( IDB_SPLASH );
-	CBitmap* oldBMP = tmpDC.SelectObject( &bmp );
-	BITMAP bmpInfo = {0};
-	GetObject(bmp, sizeof(BITMAP), &bmpInfo );
-	
-	pDC->BitBlt( 1, 1, bmpInfo.bmWidth, bmpInfo.bmHeight, &tmpDC, 0, 0, SRCCOPY );	
-
-	bmp.DeleteObject();
-	tmpDC.SelectObject( oldBMP );
-	tmpDC.DeleteDC();
-	wnd->ReleaseDC( pDC );
-	// Do not call CDialog::OnPaint() for painting messages
-}
 
 void Page3Dlg::OnVcfnet() 
 {
@@ -93,4 +70,16 @@ void Page3Dlg::OnOpengl()
 {
 	m_useOpenGL = !m_useOpenGL;
 	UpdateData( FALSE );
+}
+
+BOOL Page3Dlg::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	
+	CStatic* wnd = (CStatic*)this->GetDlgItem( IDC_IMAGE3 );
+	CBitmap bmp;
+	bmp.LoadBitmap( IDB_BITMAP2 );
+	wnd->SetBitmap( (HBITMAP)bmp.Detach() );
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
 }

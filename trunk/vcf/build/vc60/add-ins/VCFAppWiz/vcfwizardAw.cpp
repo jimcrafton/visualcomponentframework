@@ -54,8 +54,9 @@ CAppWizStepDlg* CVcfwizardAppWiz::Next(CAppWizStepDlg* pDlg)
 		m_Dictionary[_T("About")] = CString(strRoot+"About");
 		
 		m_Dictionary[_T("MainWindow")] = CString("MainWindow");
+		m_Dictionary[_T("Splash")] = CString("Splash");
 		m_Dictionary[_T("Application")] = CString(strRoot+"Application");
-
+		
 		// Set value of $$Doc$$, $$DOC$$
 		CString strDoc = strRoot.Left(6);
 		m_Dictionary[_T("Doc")] = strDoc;
@@ -264,6 +265,20 @@ LPCTSTR CVcfwizardAppWiz::LoadTemplate( LPCTSTR lpszTemplateName, DWORD& rdwSize
 
 			if ( m_pChooser->NeedsStdFileMenu() ) {
 				m_Dictionary["STD_FILE_MNU"] = "1";
+				std::vector<CString>& extDescs = m_pChooser->GetFileExtDecriptions();
+				std::vector<CString>& exts = m_pChooser->GetFileExts();
+				CString size;
+				size.Format( "%d", extDescs.size() );
+				
+				m_Dictionary[_T("EXT_SIZE")] = size;
+				for (int i=0;i<extDescs.size();i++) {
+					CString s1;
+					s1.Format( "EXT_%d", i );
+					m_Dictionary[s1] = exts[i];
+					CString s2;
+					s2.Format( "EXT_DESC_%d", i );
+					m_Dictionary[s2] = extDescs[i];
+				}
 			}
 
 			if ( m_pChooser->NeedsHelpMenu() ) {

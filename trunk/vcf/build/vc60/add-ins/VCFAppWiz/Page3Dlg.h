@@ -36,11 +36,11 @@ public:
 protected:
 
 	// Generated message map functions
-	//{{AFX_MSG(Page3Dlg)
-	afx_msg void OnPaint();
+	//{{AFX_MSG(Page3Dlg)	
 	afx_msg void OnVcfnet();
 	afx_msg void OnVcfremote();
 	afx_msg void OnOpengl();
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
