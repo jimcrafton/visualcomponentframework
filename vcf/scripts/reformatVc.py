@@ -6090,7 +6090,7 @@ class DspFile( GenericProjectFile ):
 
     def fixFilenameSubdir( self, entryValue, outputDir, oldCompiler, newCompiler, appType, isDebug, config_name ):
         pf = entryValue
-        
+
         sep = FileUtils.getNormSep( app.options.unixStyle )
 
         pf = StringUtils.replace( pf, 'debug' + sep, '', True )
@@ -6742,6 +6742,8 @@ class DspFile( GenericProjectFile ):
                 directory = StringUtils.replace( directory, compilerVc70 + sep, '', True )
                 directory = StringUtils.replace( directory, compilerVc71 + sep, '', True )
                 directory = StringUtils.replace( directory, compilerIcl7 + sep, '', True )
+                if ( directory == '.' + sep ):
+                    directory = ''
                 directory = FileUtils.normPath( directory, app.options.unixStyle, g_keepFirstDot_standard, g_MinPathIsDot_True, g_IsDirForSure_True )
 
             line = self.storeAndRemoveOption( line, '/out:', directory, self.mainFileTitleBase + self.outputExt, False, changeSomething, addDir, addFile, True, forceNoConfigSubdir, forceNoPostfix )
@@ -6752,15 +6754,15 @@ class DspFile( GenericProjectFile ):
                     self.warning_done_dirs_different_between_cfgs = True
                     temp = self.OutputDirOut.lower().replace( self.configNameList[self.nCfg].lower(), self.configNameList[0].lower() )
                     if ( temp != self.OutputDirOutList[0].lower() ):
-                        if ( not self.isInProjectsOutSameDirAsOutputDirList() ):
-                            print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
+                        #if ( self.isInProjectsOutSameDirAsOutputDirList() ): # commented this if the 2004/12/14 is this correct ?
+                        print '  Warning!: the project \'%s\' has a LINK32 /out: directory \'%s\' for the config \'%s\' not corresponding with the directory \'%s\' for the config \'%s\'.' % ( os.path.basename(self.filename), self.OutputDirOutList[self.nCfg], self.configNameList[self.nCfg], self.OutputDirOutList[0], self.configNameList[0] )
 
             if ( self.appType == enumAppTypeExe ):
                 if ( self.OutputDirOut != self.PropIntermeDir ):
                     if ( self.filename.lower().find( g_subdir_examples ) != -1 ):
                         # automatically fixed because it is a very common mistake
-                        if ( not self.isInProjectsOutSameDirAsOutputDirList() ):
-                            print '  Warning!: the executable of %s has a LINK32 /out: directory different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
+                        if ( self.isInProjectsOutSameDirAsOutputDirList() ):
+                            print '  Warning!: the executable of %s has a LINK32 /out: directory x different than the PROP_Output_Dir: \'%s\' != \'%s\'. This will be fixed.' % ( os.path.basename(self.filename), self.OutputDirOut, self.PropOutputDir )
                             self.OutputDirOut = self.PropOutputDir
                             self.OutputDirOutList[self.nCfg] = self.PropOutputDir
                     else:
