@@ -21,6 +21,9 @@ Name: {app}\include; Components: Src
 Name: {app}\src; Components: Src
 Name: {app}\docs
 Name: {app}\Components; Components: Tutorials
+Name: {app}\bin; Components: Binaries
+Name: {app}\lib
+Name: {app}\VC6-Addins; Components: VC_Addins
 
 [Files]
 Source: ..\..\BlackBox\include\ImageHlp.h; DestDir: {app}\BlackBox\include; Components: Src
@@ -294,10 +297,6 @@ Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\VCFNewClassWiz.rc; DestDir: {app
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\VCFNewClassWizAddin.cpp; DestDir: {app}\build\vc60\add-ins\VCFNewClassWiz; Components: Src
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\VCFNewClassWizAddin.h; DestDir: {app}\build\vc60\add-ins\VCFNewClassWiz; Components: Src
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\VCFNewClassWizAddin.rgs; DestDir: {app}\build\vc60\add-ins\VCFNewClassWiz; Components: Src
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\CVS\Entries; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\CVS; Components: Src
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\CVS\Entries.Log; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\CVS; Components: Src
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\CVS\Repository; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\CVS; Components: Src
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\CVS\Root; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\CVS; Components: Src
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\res\bitmap1.bmp; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\res; Components: Src
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\res\VPLAppWiz.ico; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\res; Components: Src
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\Template\confirm.inf; DestDir: {app}\build\vc60\add-ins\VPLAppWiz\Template; Components: Src
@@ -422,17 +421,6 @@ Source: ..\..\build\vc70\add-ins\COMToVCFClassWizard\TypeLibTreeView.cpp; DestDi
 Source: ..\..\build\vc70\add-ins\COMToVCFClassWizard\TypeLibTreeView.h; DestDir: {app}\build\vc70\add-ins\COMToVCFClassWizard; Components: Src
 Source: ..\..\build\vc70\add-ins\COMToVCFClassWizard\util.cpp; DestDir: {app}\build\vc70\add-ins\COMToVCFClassWizard; Components: Src
 Source: ..\..\build\vc70\add-ins\COMToVCFClassWizard\util.h; DestDir: {app}\build\vc70\add-ins\COMToVCFClassWizard; Components: Src
-Source: ..\..\build\vc70\add-ins\CVS\Entries; DestDir: {app}\build\vc70\add-ins\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\CVS\Entries.Log; DestDir: {app}\build\vc70\add-ins\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\CVS\Repository; DestDir: {app}\build\vc70\add-ins\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\CVS\Root; DestDir: {app}\build\vc70\add-ins\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\CVS\Entries; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\CVS\Entries.Log; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\CVS\Repository; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\CVS\Root; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\CVS\Entries; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\CVS\Repository; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\CVS\Root; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res\CVS; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\bitmap1.bmp; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\bitmap2.bmp; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\bitmap3.bmp; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
@@ -440,9 +428,6 @@ Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\bitmap4.bmp; DestDir: {app}\build
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\splash1.bmp; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\VCFAppWiz.ico; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\res\vcfwizard.ico; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\res; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\CVS\Entries; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\CVS\Repository; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template\CVS; Components: Src
-Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\CVS\Root; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template\CVS; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\About.cpp; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\About.h; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template; Components: Src
 Source: ..\..\build\vc70\add-ins\VCFAppWiz\template\app.rc; DestDir: {app}\build\vc70\add-ins\VCFAppWiz\template; Components: Src
@@ -648,10 +633,6 @@ Source: ..\..\build\vc70\RemoteObjectKit\RemoteObjectKit.vcproj; DestDir: {app}\
 Source: ..\..\build\vc70\RemoteObjectKit\RemoteObjectKitStatic.dsp; DestDir: {app}\build\vc70\RemoteObjectKit; Components: Src
 Source: ..\..\build\vc70\RemoteObjectKit\RemoteObjectKitStatic.vcproj; DestDir: {app}\build\vc70\RemoteObjectKit; Components: Src
 Source: ..\..\build\vc70\Tests\AllTests\AllTests.dsp; DestDir: {app}\build\vc70\Tests\AllTests; Components: Src
-Source: ..\..\build\vc70\Tests\CVS\Entries; DestDir: {app}\build\vc70\Tests\CVS; Components: Src
-Source: ..\..\build\vc70\Tests\CVS\Entries.Log; DestDir: {app}\build\vc70\Tests\CVS; Components: Src
-Source: ..\..\build\vc70\Tests\CVS\Repository; DestDir: {app}\build\vc70\Tests\CVS; Components: Src
-Source: ..\..\build\vc70\Tests\CVS\Root; DestDir: {app}\build\vc70\Tests\CVS; Components: Src
 Source: ..\..\build\vc70\Tests\Tests.dsw; DestDir: {app}\build\vc70\Tests; Components: Src
 Source: ..\..\build\vc70\Win32HTMLBrowser\Win32HTMLBrowser.dsp; DestDir: {app}\build\vc70\Win32HTMLBrowser; Components: Src
 Source: ..\..\build\vc70\Win32HTMLBrowser\Win32HTMLBrowser.vcproj; DestDir: {app}\build\vc70\Win32HTMLBrowser; Components: Src
@@ -1979,6 +1960,62 @@ Source: ..\..\tests\Components\Components.rc; DestDir: {app}\Components\; Compon
 Source: ..\..\tests\Components\Components.vcproj; DestDir: {app}\Components\; Components: Tutorials
 Source: ..\..\tests\Components\icon1.bmp; DestDir: {app}\Components\; Components: Tutorials
 Source: ..\..\tests\Components\OldVCFEnums.h; DestDir: {app}\Components\; Components: Tutorials
+Source: ..\..\bin\GraphicsKit_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\ApplicationKit_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\FoundationKit_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\FoundationKit_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\ApplicationKit_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\GraphicsKit_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\ImageFormats_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\ImageFormats_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\NetworkKit_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\NetworkKit_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\RemoteObjectKit_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\RemoteObjectKit_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\Win32HTMLBrowser_vc6.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\bin\Win32HTMLBrowser_vc6_d.dll; DestDir: {app}\bin; Components: Binaries
+Source: ..\..\lib\FreeImage_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ApplicationKit_vc6_d.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ApplicationKit_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ApplicationKit_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\FoundationKit_vc6.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\FoundationKit_vc6_d.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\FoundationKit_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\FoundationKit_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ApplicationKit_vc6.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\FreeImage_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\GraphicsKit_vc6.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\GraphicsKit_vc6_d.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\GraphicsKit_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\GraphicsKit_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\libart_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\libart_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibJPEG_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibJPEG_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibMNG_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibMNG_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibPNG_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibPNG_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibTIFF_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\LibTIFF_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\NetworkKit_vc6.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\NetworkKit_vc6_d.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\NetworkKit_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\NetworkKit_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\RemoteObjectKit_vc6.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\RemoteObjectKit_vc6_d.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\RemoteObjectKit_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\RemoteObjectKit_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\Win32HTMLBrowser_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\Win32HTMLBrowser_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ZLib_vc6_s.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\lib\ZLib_vc6_sd.lib; DestDir: {app}\lib; Components: Binaries
+Source: ..\..\build\vc60\add-ins\COMToVCFClassWizard\vc6\Release\COMToVCFClassWizard_vc6.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins
+Source: ..\..\build\vc60\add-ins\VCFAppWiz\Release\vcfwizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
+Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
+Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
+Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins
+Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards
 
 [Setup]
 OutputDir=D:\code\vcfdev\stable\vcf\installers\win32
