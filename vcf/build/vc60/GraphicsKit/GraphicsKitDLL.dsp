@@ -71,8 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "GRAPHICSKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\libart" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /D "LIBART_DLL" /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\..\include\Graphics" /I "..\..\..\include\Core" /I "..\..\..\include\DragDrop" /I "..\..\..\include\Implementer" /I "..\..\..\include\Events" /I "..\..\..\include\Exceptions" /I "..\..\..\include\io" /I "..\..\..\include\Utils" /I "..\..\..\include\ImplementerKit" /I "..\..\..\libart" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FRAMEWORK_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /D "LIBART_DLL" /Yu"GraphicsKit.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -134,10 +133,6 @@ SOURCE=..\..\..\include\graphics\AlphaGamma.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicFill.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\graphics\BasicFont.h
 # End Source File
 # Begin Source File
 
@@ -382,6 +377,17 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+
+!IF  "$(CFG)" == "GraphicsKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Debug"
+
+# ADD CPP /Yc"GraphicsKit.h"
+
+!ELSEIF  "$(CFG)" == "GraphicsKitDLL - Win32 Fake Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

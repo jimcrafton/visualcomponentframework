@@ -120,11 +120,11 @@ IDI_VCFCONSOLEWIZ       ICON    DISCARDABLE     "res\\VCFConsoleWiz.ico"
 // Dialog
 //
 
-IDD_PAGE1 DIALOGEX 0, 0, 270, 183
+IDD_PAGE1 DIALOGEX 0, 0, 270, 151
 STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         "IDB_BITMAP1",IDC_IMAGE,"Static",SS_BITMAP,3,3,94,177,
+    CONTROL         120,IDC_IMAGE,"Static",SS_BITMAP,3,3,20,20,
                     WS_EX_CLIENTEDGE
     LTEXT           "This Wizard will create a simple console application that uses the FoundationKit, the core VCF library.\n\nThe application will link to the FoundationKit as a Win32 DLL.",
                     IDC_STATIC,105,15,154,54
@@ -144,7 +144,7 @@ BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 267
         TOPMARGIN, 3
-        BOTTOMMARGIN, 180
+        BOTTOMMARGIN, 148
     END
 END
 #endif    // APSTUDIO_INVOKED

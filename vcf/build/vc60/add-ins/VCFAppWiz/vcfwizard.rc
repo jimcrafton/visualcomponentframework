@@ -120,11 +120,11 @@ IDI_ICON1               ICON    DISCARDABLE     "res\\VCFAppWiz.ico"
 // Dialog
 //
 
-IDD_PAGE1 DIALOGEX 0, 0, 283, 190
+IDD_PAGE1 DIALOGEX 0, 0, 283, 152
 STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,92,177,
+    CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,74,142,
                     WS_EX_CLIENTEDGE
     LTEXT           "This Wizard will createa simple Hello World Application, with a single window, that uses the VCF ApplicationKit.\n\nThe application will link to the ApplicationKit as a Win32 DLL.",
                     IDC_STATIC,105,15,154,54
@@ -144,7 +144,7 @@ BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 280
         TOPMARGIN, 3
-        BOTTOMMARGIN, 187
+        BOTTOMMARGIN, 149
     END
 END
 #endif    // APSTUDIO_INVOKED
