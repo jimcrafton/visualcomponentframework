@@ -716,7 +716,14 @@ public:
 		
 	}
 
-	virtual ~DocViewAdvancedWindow(){};
+	virtual ~DocViewAdvancedWindow(){
+		DocumentManager* docMgr = DocumentManager::getDocumentManager();
+		EventHandler* ev = getEventHandler( "DocViewAdvancedWindow::onDocInitialized" );
+		if ( NULL != ev ) {
+			docMgr->DocumentInitialized -= ev;
+		}
+		
+	};
 
 
 	void onDocInitialized( Event* e ) {

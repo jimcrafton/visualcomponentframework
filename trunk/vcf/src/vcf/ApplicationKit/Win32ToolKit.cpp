@@ -666,6 +666,7 @@ public:
 		
 		setUseColorForBackground( true );
 
+		getPeer()->setText( "Win32ToolTip" );
 	};
 
 	virtual void paint( GraphicsContext* ctx ) {
@@ -2083,6 +2084,9 @@ Size Win32ToolKit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/10 03:32:51  ddiego
+*fixed a heap overwrite error in the delegate-event handler code.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
