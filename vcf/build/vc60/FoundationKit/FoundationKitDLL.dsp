@@ -461,14 +461,6 @@ SOURCE=..\..\..\src\IO\TextOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\Thread.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Events\ThreadEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\core\VCFMath.cpp
 # End Source File
 # Begin Source File
