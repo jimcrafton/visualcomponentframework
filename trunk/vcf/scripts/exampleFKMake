@@ -1,0 +1,75 @@
+#!/usr/bin/bash
+
+
+
+PROJ=$1
+FILES=$PROJ
+FILES_CPP=$PROJ.cpp
+
+MAKEFILE=../examples/$PROJ/Makefile
+touch $MAKEFILE
+
+
+MAKE_CONTENTS="#makefile for $PROJ\n"\
+"DEBUG_OUT = Debug\n"\
+"RELEASE_OUT = Release\n"\
+"\n"\
+"OBJECTFILES_D = \$(DEBUG_OUT)/$FILES.o\n"\
+"OBJECTFILES = \$(RELEASE_OUT)/$FILES.o\n"\
+"\n"\
+"\n"\
+"CXX_FLAGS_D=-ggdb -DVCF_GCC -DVCF_POSIX -D_DEBUG -I \$(VCF_INCLUDE) -c\n"\
+"CXX_FLAGS=-DVCF_GCC -DVCF_POSIX -I \$(VCF_INCLUDE) -Os -c\n"\
+"\n"\
+"FOUNDATIONKIT_LIBS_D = -lpthread -lFoundationKit_d\n"\
+"FOUNDATIONKIT_LIBS = -lpthread -lFoundationKit\n"\
+"LINKER_FLAGS_D = -L\$(VCF_LIB) -L\$(VCF_BIN) \$(FOUNDATIONKIT_LIBS_D) -ggdb -o \n"\
+"\n"\
+"LINKER_FLAGS = -L\$(VCF_BIN) \$(FOUNDATIONKIT_LIBS) -o\n"\
+"\n"\
+"\n"\
+"CXX = g++\n"\
+"\n"\
+"LINKER = g++\n"\
+"\n"\
+"\n"\
+"OUT_D = \$(DEBUG_OUT)/$PROJ\n"\
+"OUT = \$(RELEASE_OUT)/$PROJ\n"\
+"\n"\
+"target : \n"\
+"\techo please choose either "debug", "release" or "all" '(for both debug and release)'\n"\
+"\n"\
+"prep_Debug_dirs: \n"\
+"\tif ! \`test -d \$(DEBUG_OUT)\`;then mkdir \$(DEBUG_OUT);fi;\\n"\
+"\n"\
+"prep_Release_dirs: \n"\
+"\tif ! \`test -d \$(RELEASE_OUT)\`;then mkdir \$(RELEASE_OUT);fi;\\n"\
+"\n"\
+"debug : prep_Debug_dirs \$(OUT_D)\n"\
+"\n"\
+"release : prep_Release_dirs \$(OUT)\n"\
+"\n"\
+"\n"\
+"\n"\
+"\$(OUT_D) : \$(OBJECTFILES_D)\n"\
+"\t\$(LINKER) \$(LINKER_FLAGS_D) \$(OUT_D) \$(OBJECTFILES_D) \n"\
+"\n"\
+"\$(OUT) : \$(OBJECTFILES)\n"\
+"\t\$(LINKER) \$(LINKER_FLAGS) \$(OUT) \$(OBJECTFILES)	\n"\
+"\n"\
+"\$(DEBUG_OUT)/$FILES.o : $FILES_CPP\n"\
+"\t\$(CXX) \$(CXX_FLAGS_D) $FILES_CPP -o \$(DEBUG_OUT)/$FILES.o\n"\
+"\n"\
+"\$(RELEASE_OUT)/$FILES.o : $FILES_CPP\n"\
+"\t\$(CXX) \$(CXX_FLAGS) $FILES_CPP -o \$(RELEASE_OUT)/$FILES.o\n"
+
+
+
+
+echo -e $MAKE_CONTENTS > $MAKEFILE
+
+cat $MAKEFILE
+
+
+
+
