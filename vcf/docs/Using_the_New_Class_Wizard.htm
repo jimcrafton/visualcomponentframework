@@ -1,0 +1,113 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:fontset("Arial","Arial") -->
+  <!-- $MVD$:fontset("Verdana","Verdana") -->
+  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <TITLE>Using the New Class Wizard</TITLE>
+  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
+ </SCRIPT><LINK
+  REL="StyleSheet" HREF="default.css"></HEAD>
+  <BODY ONLOAD="BSSCOnLoad();" ONCLICK="BSSCOnClick();" ONUNLOAD="BSSCOnUnload();">
+  <H1>
+   <IMG SRC="vcflogo.gif" WIDTH="230" HEIGHT="172" VSPACE="0" HSPACE="0" BORDER="0"></H1>
+  <H1>
+   Using the New Class Wizard</H1>
+  <P>
+   The Class Wizard can be used any time you would like to create a new 
+   class that supports VCF compliant RTTI. In addition, you can specify 
+   properties that</P>
+  <P>
+   <IMG SRC="dlg.jpg" WIDTH="512" HEIGHT="489" VSPACE="0" HSPACE="0" BORDER="0" USEMAP="#dlg"></P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   The &quot;Name&quot; <A NAME="NameField"></A>is the name of your class.</P>
+  <P>
+   The &quot;Derives from<A NAME="DerivesFrom"></A>:&quot; represent the 
+   class to inherit from. The drop down list shows a possible set of 
+   classes, but any class may be used so long as somewhere along the 
+   line it inherits from VCF::Object. If you choose to derive from a 
+   class that does <SPAN STYLE="font-style : italic;font-weight : bold;">not</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;">&nbsp;ultimately
+    derive from VCF::Object, then you will not be able to use the 
+   advance features of VCF Run Time Type Information (RTTI), such as 
+   dynamic properties, dynamic super class discovery, etc.</SPAN></P>
+  <P>
+   The Header<A NAME="HeaderField"></A> field represents the file name 
+   of the classes header or .h file. It is disabled by default (where 
+   the name of the .h file is the same as the class name), but can be 
+   enabled by clicking on the button with the ellipsis label to the 
+   right of the field. This will bring up a dialog allowing you to save 
+   to a specific directory and/or file name.</P>
+  <P>
+   Browsing<A NAME="BrowseForHeader"></A> for a different directory for 
+   the classes header file can done by clicking on the button with the 
+   ellipsis label to the right of the field. This will bring up a dialog 
+   allowing you to save to a specific directory and/or file name. The 
+   header does not have to in the same directory as the implementation 
+   file (.cpp).</P>
+  <P>
+   The CPP<A NAME="CPPField"></A> field represents the file name of the 
+   class's implementation or .cpp file. It is disabled by default (where 
+   the name of the .cpp file is the same as the class name), but can be 
+   enabled by clicking on the button with the ellipsis label to the 
+   right of the field. This will bring up a dialog allowing you to save 
+   to a specific directory and/or file name.</P>
+  <P>
+   Browsing<A NAME="BrowseForCPP"></A> for a different directory for the 
+   class's implementation file can done by clicking on the button with 
+   the ellipsis label to the right of the field. This will bring up a 
+   dialog allowing you to save to a specific directory and/or file name. 
+   The implementation does not have to in the same directory as the 
+   header file (.h).</P>
+  <P>
+   Checking &quot;Supports VCF RTTI&quot;<A NAME="SupportVCF_RTTI"></A> 
+   allows your class to have access to the advanced <SPAN STYLE="font-style : normal;font-weight : normal;">RTTI
+    features of the VCF. If this is checked then the Class Wizard will 
+   automatically generate the RTTI macros for you. All you have to do to 
+   finish this is to register your class with the VCF ClassRegistry in 
+   your start up code.</SPAN></P>
+  <P>
+   Checking &quot;Abstract Class&quot;<A NAME="AbstractClass"></A> marks 
+   your class as an abstract class. An abstract class cannot be created 
+   from a class name (unlike a normal class with VCF RTTI), but it can 
+   have properties, a super class, and the other features of VCF RTTI.</P>
+  <P>
+   The Properties<A NAME="PropertiesList"></A> list shows all the 
+   properties of the class. It allows you to add properties through the 
+   Wizard, and allow it to generate the correct RTTI macros as well as 
+   simple get and set methods for you. Adding additional properties 
+   later on has to be done by hand, but is pretty simple once you have 
+   the original examples to follow.</P>
+  <P>
+   Clicking &quot;OK&quot;<A NAME="OKBtn"></A> accepts your class 
+   information and generates C++ code for you and automatically adds the 
+   files to your currently active Visual Studio project.</P>
+  <P>
+   Clicking &quot;Cancel&quot;<A NAME="CancelBtn"></A> closes the Wizard 
+   dialog without generating any code.</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;
+  <MAP NAME="dlg">
+   <AREA SHAPE=RECT COORDS="36,68,364,98" HREF="Using_the_New_Class_Wizard.htm#NameField">
+   <AREA SHAPE=RECT COORDS="50,114,362,140" HREF="Using_the_New_Class_Wizard.htm#DerivesFrom">
+   <AREA SHAPE=RECT COORDS="38,166,323,202" HREF="Using_the_New_Class_Wizard.htm#HeaderField">
+   <AREA SHAPE=RECT COORDS="336,171,363,201" HREF="Using_the_New_Class_Wizard.htm#BrowseForHeader">
+   <AREA SHAPE=RECT COORDS="38,214,323,244" HREF="Using_the_New_Class_Wizard.htm#CPPField">
+   <AREA SHAPE=RECT COORDS="334,218,363,242" HREF="Using_the_New_Class_Wizard.htm#BrowseForCPP">
+   <AREA SHAPE=RECT COORDS="36,259,178,276" HREF="Using_the_New_Class_Wizard.htm#SupportVCF_RTTI">
+   <AREA SHAPE=RECT COORDS="52,283,168,307" HREF="Using_the_New_Class_Wizard.htm#AbstractClass">
+   <AREA SHAPE=RECT COORDS="30,321,372,459" HREF="Using_the_New_Class_Wizard.htm#PropertiesList">
+   <AREA SHAPE=RECT COORDS="396,39,497,66" HREF="Using_the_New_Class_Wizard.htm#OKBtn">
+   <AREA SHAPE=RECT COORDS="398,73,498,100" HREF="Using_the_New_Class_Wizard.htm#CancelBtn">
+  </MAP>
+ </BODY>
+</HTML>
