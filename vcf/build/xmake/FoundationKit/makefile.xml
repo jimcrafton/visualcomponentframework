@@ -23,7 +23,8 @@
 
 				<linker name="g++">
 					<flags>
-						<flag value="-shared -o $(BIN_OUT)/libFoundationKit.so"/>
+						<!-- the ldl flag is to link to the dynamic library routines for stuff like dlopen, etc-->
+						<flag value="-ldl -shared -o $(BIN_OUT)/libFoundationKit.so"/>
 					</flags>
 				</linker>
 			</config>
