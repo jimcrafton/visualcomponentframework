@@ -101,6 +101,7 @@ clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
+	-@md bcc
 	-@md $(OBJ)
 	-@md $(BIN)
 	
