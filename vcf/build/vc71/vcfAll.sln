@@ -68,14 +68,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteObjectKitStatic", "RE
 		{4A1C81DA-0143-49B7-97B7-C79409F1EE97} = {4A1C81DA-0143-49B7-97B7-C79409F1EE97}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32HTMLBrowser", "Win32HTMLBrowser\Win32HTMLBrowser.vcproj", "{8AFD95A8-55F1-461B-AE7F-F538F50764CE}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32HTMLBrowser_StaticLib", "Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.vcproj", "{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\thirdparty\common\FreeImage\Source\ZLib\ZLib.vcproj", "{20E376E7-EB22-4BA5-A460-CD8514F4ED19}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -87,15 +79,25 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAll", "vcfAll.vcproj", "{D1553804-4D2B-4EDD-B1C8-FC445BC768E5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{03CC2476-A92C-4ACD-A7D2-4F2EEDE781EC} = {03CC2476-A92C-4ACD-A7D2-4F2EEDE781EC}
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE} = {8AFD95A8-55F1-461B-AE7F-F538F50764CE}
 		{B6D3B6C0-1EB3-46CD-B239-3F7D6509E9BA} = {B6D3B6C0-1EB3-46CD-B239-3F7D6509E9BA}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAllStaticLibs", "vcfAllStaticLibs.vcproj", "{2AF7C47A-DF6B-4DF1-8586-4B3C785373F0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{86B36D0A-388B-467C-9E55-6732FE9ACBC3} = {86B36D0A-388B-467C-9E55-6732FE9ACBC3}
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0} = {F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}
 		{E2A4C178-378F-4971-9BBE-0607C68EC3D5} = {E2A4C178-378F-4971-9BBE-0607C68EC3D5}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32HTMLBrowser_StaticLib", "Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.vcproj", "{2AE46F2D-434B-4F5E-9B80-9463F77A9855}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32HTMLBrowser", "Win32HTMLBrowser\Win32HTMLBrowser.vcproj", "{85B76860-DC86-42EE-89CB-A16AA9B58529}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AllTests", "Tests\AllTests\AllTests.vcproj", "{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}"
+	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Global
@@ -195,18 +197,6 @@ Global
 		{86B36D0A-388B-467C-9E55-6732FE9ACBC3}.GTK Debug.Build.0 = Debug|Win32
 		{86B36D0A-388B-467C-9E55-6732FE9ACBC3}.Release.ActiveCfg = Release|Win32
 		{86B36D0A-388B-467C-9E55-6732FE9ACBC3}.Release.Build.0 = Release|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.Debug.ActiveCfg = Debug|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.Debug.Build.0 = Debug|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.GTK Debug.ActiveCfg = Debug|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.GTK Debug.Build.0 = Debug|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.Release.ActiveCfg = Release|Win32
-		{8AFD95A8-55F1-461B-AE7F-F538F50764CE}.Release.Build.0 = Release|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.Debug.ActiveCfg = Debug|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.Debug.Build.0 = Debug|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.GTK Debug.ActiveCfg = Debug|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.GTK Debug.Build.0 = Debug|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.Release.ActiveCfg = Release|Win32
-		{F49C0C56-0FAB-4351-8D09-18F2E9BFECF0}.Release.Build.0 = Release|Win32
 		{20E376E7-EB22-4BA5-A460-CD8514F4ED19}.Debug.ActiveCfg = Debug|Win32
 		{20E376E7-EB22-4BA5-A460-CD8514F4ED19}.Debug.Build.0 = Debug|Win32
 		{20E376E7-EB22-4BA5-A460-CD8514F4ED19}.GTK Debug.ActiveCfg = Debug|Win32
@@ -231,6 +221,24 @@ Global
 		{2AF7C47A-DF6B-4DF1-8586-4B3C785373F0}.GTK Debug.Build.0 = Debug|Win32
 		{2AF7C47A-DF6B-4DF1-8586-4B3C785373F0}.Release.ActiveCfg = Release|Win32
 		{2AF7C47A-DF6B-4DF1-8586-4B3C785373F0}.Release.Build.0 = Release|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.Debug.ActiveCfg = Debug|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.Debug.Build.0 = Debug|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.GTK Debug.ActiveCfg = Debug|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.GTK Debug.Build.0 = Debug|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.Release.ActiveCfg = Release|Win32
+		{2AE46F2D-434B-4F5E-9B80-9463F77A9855}.Release.Build.0 = Release|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.Debug.ActiveCfg = Debug|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.Debug.Build.0 = Debug|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.GTK Debug.ActiveCfg = Debug|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.GTK Debug.Build.0 = Debug|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.Release.ActiveCfg = Release|Win32
+		{85B76860-DC86-42EE-89CB-A16AA9B58529}.Release.Build.0 = Release|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.Debug.ActiveCfg = Debug|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.Debug.Build.0 = Debug|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.GTK Debug.ActiveCfg = Debug|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.GTK Debug.Build.0 = Debug|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.Release.ActiveCfg = Release|Win32
+		{4E4C2CEA-8736-41E3-A7BE-500E5CD2C521}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
