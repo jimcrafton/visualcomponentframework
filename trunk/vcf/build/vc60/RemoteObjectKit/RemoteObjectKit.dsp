@@ -36,8 +36,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc6/Release"
+# PROP Output_Dir "../../../lib/"
+# PROP Intermediate_Dir "vc6/Release/"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /c
@@ -48,10 +48,11 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\bin\RemoteObjectKit_vc6.bsc"
+# ADD BSC32 /nologo /o"../../../bin/RemoteObjectKit_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 /nologo /dll /machine:I386 /out:"..\..\..\bin/RemoteObjectKit_vc6.dll" /libpath:"..\..\..\lib"
+# ADD LINK32 /nologo /dll /machine:I386 /out:"../../../bin/RemoteObjectKit_vc6.dll" /libpath:"../../../lib"
+# SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 Debug"
 
@@ -62,22 +63,23 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "vc6/Debug"
+# PROP Output_Dir "../../../lib/"
+# PROP Intermediate_Dir "vc6/Debug/"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /D "USE_NETKIT_DLL" /D "USE_FRAMEWORK_DLL" /D "BUILD_REMOTEOBJECTKIT_LIB" /FR /YX /Fd"..\..\..\bin/RemoteObjectKit_vc6_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /D "USE_NETKIT_DLL" /D "USE_FRAMEWORK_DLL" /D "BUILD_REMOTEOBJECTKIT_LIB" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"..\..\..\bin\RemoteObjectKit_vc6_d.bsc"
+# ADD BSC32 /nologo /o"../../../bin/RemoteObjectKit_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /dll /debug /machine:I386 /out:"..\..\..\bin/RemoteObjectKit_vc6_d.dll" /pdbtype:sept /libpath:"..\..\..\lib"
+# ADD LINK32 /nologo /dll /machine:I386 /out:"../../../bin/RemoteObjectKit_vc6_d.dll" /debug /pdbtype:sept /libpath:"../../../lib"
+# SUBTRACT LINK32
 
 !ENDIF 
 
@@ -90,35 +92,35 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\AbstractDistributedApplication.cpp
+SOURCE=../../../src/remote/AbstractDistributedApplication.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\ClassRegistryEntry.cpp
+SOURCE=../../../src/remote/ClassRegistryEntry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\ClassServerInstance.cpp
+SOURCE=../../../src/remote/ClassServerInstance.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\DistributedClassRegistry.cpp
+SOURCE=../../../src/remote/DistributedClassRegistry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\DistributedException.cpp
+SOURCE=../../../src/remote/DistributedException.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\InstanceID.cpp
+SOURCE=../../../src/remote/InstanceID.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\Proxy.cpp
+SOURCE=../../../src/remote/Proxy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\remote\RemoteObjectKit.cpp
+SOURCE=../../../src/remote/RemoteObjectKit.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -126,43 +128,43 @@ SOURCE=..\..\..\src\remote\RemoteObjectKit.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\AbstractDistributedApplication.h
+SOURCE=../../../include/remote/AbstractDistributedApplication.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\ClassRegistryEntry.h
+SOURCE=../../../include/remote/ClassRegistryEntry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\ClassServerInstance.h
+SOURCE=../../../include/remote/ClassServerInstance.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\DistributedClassRegistry.h
+SOURCE=../../../include/remote/DistributedClassRegistry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\DistributedException.h
+SOURCE=../../../include/remote/DistributedException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\InstanceID.h
+SOURCE=../../../include/remote/InstanceID.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\Proxy.h
+SOURCE=../../../include/remote/Proxy.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\RemoteCommon.h
+SOURCE=../../../include/remote/RemoteCommon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\remote\RemoteConfig.h
+SOURCE=../../../include/remote/RemoteConfig.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\RemoteObjectKit.h
+SOURCE=../../../include/RemoteObjectKit.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

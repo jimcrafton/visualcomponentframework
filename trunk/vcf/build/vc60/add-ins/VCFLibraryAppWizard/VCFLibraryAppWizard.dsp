@@ -46,21 +46,25 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Release\VCFLibraryAppWizard_vc6.bsc"
+
+# ADD BSC32 /nologo /o"Release/VCFLibraryAppWizard_vc6.bsc"
+
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"Release/VCFLibraryAppWizard.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
-OutDir=.\Release
-TargetPath=.\Release\VCFLibraryAppWizard.awx
+
+OutDir=./Release
+TargetPath=./Release/VCFLibraryAppWizard.awx
+
 TargetName=VCFLibraryAppWizard
-InputPath=.\Release\VCFLibraryAppWizard.awx
+InputPath=./Release/VCFLibraryAppWizard.awx
 SOURCE="$(InputPath)"
 
-"$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	if not exist "$(MSDEVDIR)\Template\nul" md "$(MSDEVDIR)\Template" 
-	copy "$(TargetPath)" "$(MSDEVDIR)\Template" 
-	if exist "$(OutDir)\$(TargetName).pdb" copy "$(OutDir)\$(TargetName).pdb" "$(MSDEVDIR)\Template" 
+"$(MSDEVDIR)/Template/$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	if not exist "$(MSDEVDIR)/Template/nul" md "$(MSDEVDIR)/Template" 
+	copy "$(TargetPath)" "$(MSDEVDIR)/Template" 
+	if exist "$(OutDir)/$(TargetName).pdb" copy "$(OutDir)/$(TargetName).pdb" "$(MSDEVDIR)/Template" 
 	
 # End Custom Build
 # Begin Target
@@ -71,32 +75,32 @@ SOURCE="$(InputPath)"
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Chooser.cpp
+SOURCE=./Chooser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cstm1Dlg.cpp
+SOURCE=./Cstm1Dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Debug.cpp
+SOURCE=./Debug.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFLibraryAppWizard.cpp
+SOURCE=./VCFLibraryAppWizard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFLibraryAppWizard.rc
+SOURCE=./VCFLibraryAppWizard.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFLibraryAppWizardAw.cpp
+SOURCE=./VCFLibraryAppWizardAw.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -104,32 +108,32 @@ SOURCE=.\VCFLibraryAppWizardAw.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Chooser.h
+SOURCE=./Chooser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cstm1Dlg.h
+SOURCE=./Cstm1Dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Debug.h
+SOURCE=./Debug.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resource.h
+SOURCE=./Resource.h
 # PROP Ignore_Default_Tool 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFLibraryAppWizard.h
+SOURCE=./VCFLibraryAppWizard.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFLibraryAppWizardAw.h
+SOURCE=./VCFLibraryAppWizardAw.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -137,11 +141,11 @@ SOURCE=.\VCFLibraryAppWizardAw.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\bitmap1.bmp
+SOURCE=./res/bitmap1.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\VCFLibraryAppWizard.ico
+SOURCE=./res/VCFLibraryAppWizard.ico
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -149,21 +153,21 @@ SOURCE=.\res\VCFLibraryAppWizard.ico
 # PROP Default_Filter "<templates>"
 # Begin Source File
 
-SOURCE=.\Template\confirm.inf
+SOURCE=./Template/confirm.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\LibMain.cpp
+SOURCE=./Template/LibMain.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\newproj.inf
+SOURCE=./Template/newproj.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -171,7 +175,7 @@ SOURCE=.\Template\newproj.inf
 # End Group
 # Begin Source File
 
-SOURCE=.\ReadMe.txt
+SOURCE=./ReadMe.txt
 # End Source File
 # End Target
 # End Project

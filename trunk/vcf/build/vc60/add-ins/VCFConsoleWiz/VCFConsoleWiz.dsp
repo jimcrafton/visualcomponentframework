@@ -46,21 +46,25 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Release\VCFConsoleWiz_vc6.bsc"
+
+# ADD BSC32 /nologo /o"Release/VCFConsoleWiz_vc6.bsc"
+
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"Release/VCFConsoleWiz.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
-OutDir=.\Release
-TargetPath=.\Release\VCFConsoleWiz.awx
+
+OutDir=./Release
+TargetPath=./Release/VCFConsoleWiz.awx
+
 TargetName=VCFConsoleWiz
-InputPath=.\Release\VCFConsoleWiz.awx
+InputPath=./Release/VCFConsoleWiz.awx
 SOURCE="$(InputPath)"
 
-"$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	if not exist "$(MSDEVDIR)\Template\nul" md "$(MSDEVDIR)\Template" 
-	copy "$(TargetPath)" "$(MSDEVDIR)\Template" 
-	if exist "$(OutDir)\$(TargetName).pdb" copy "$(OutDir)\$(TargetName).pdb" "$(MSDEVDIR)\Template" 
+"$(MSDEVDIR)/Template/$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	if not exist "$(MSDEVDIR)/Template/nul" md "$(MSDEVDIR)/Template" 
+	copy "$(TargetPath)" "$(MSDEVDIR)/Template" 
+	if exist "$(OutDir)/$(TargetName).pdb" copy "$(OutDir)/$(TargetName).pdb" "$(MSDEVDIR)/Template" 
 	
 # End Custom Build
 # Begin Target
@@ -71,32 +75,32 @@ SOURCE="$(InputPath)"
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Chooser.cpp
+SOURCE=./Chooser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Debug.cpp
+SOURCE=./Debug.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Page1Dlg.cpp
+SOURCE=./Page1Dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFConsoleWiz.cpp
+SOURCE=./VCFConsoleWiz.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFConsoleWiz.rc
+SOURCE=./VCFConsoleWiz.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFConsoleWizAw.cpp
+SOURCE=./VCFConsoleWizAw.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -104,31 +108,31 @@ SOURCE=.\VCFConsoleWizAw.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Chooser.h
+SOURCE=./Chooser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Debug.h
+SOURCE=./Debug.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Page1Dlg.h
+SOURCE=./Page1Dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resource.h
+SOURCE=./Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFConsoleWiz.h
+SOURCE=./VCFConsoleWiz.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\VCFConsoleWizAw.h
+SOURCE=./VCFConsoleWizAw.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -136,15 +140,15 @@ SOURCE=.\VCFConsoleWizAw.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\bitmap1.bmp
+SOURCE=./res/bitmap1.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\tmp.bmp
+SOURCE=./res/tmp.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\VCFConsoleWiz.ico
+SOURCE=./res/VCFConsoleWiz.ico
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -152,21 +156,21 @@ SOURCE=.\res\VCFConsoleWiz.ico
 # PROP Default_Filter "<templates>"
 # Begin Source File
 
-SOURCE=.\Template\confirm.inf
+SOURCE=./Template/confirm.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\consoleMain.cpp
+SOURCE=./Template/consoleMain.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\newproj.inf
+SOURCE=./Template/newproj.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1

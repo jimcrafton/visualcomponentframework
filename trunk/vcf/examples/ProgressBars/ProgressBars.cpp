@@ -115,7 +115,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ProgressBarsApplication app( argc, argv );
+	Application* app = new ProgressBarsApplication( argc, argv );
 
 	Application::main();
 	

@@ -184,7 +184,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ToolbarsApplication app( argc, argv );
+	Application* app = new ToolbarsApplication( argc, argv );
 
 	Application::main();
 	

@@ -217,7 +217,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	LabelsApplication app( argc, argv );
+	Application* app = new LabelsApplication( argc, argv );
 
 	Application::main();
 	

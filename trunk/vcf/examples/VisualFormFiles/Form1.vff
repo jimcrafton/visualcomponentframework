@@ -1,0 +1,499 @@
+object Form1 : VisualFormFilesWindow, '6dbafd3f-c8cf-4fc5-9141-43af516db748'
+	caption = 'Form1'
+	height = 500.00000
+	left = 400
+	name = 'Form1'
+	tag = 53
+	top = 300
+	visible = true
+	width = 650
+
+	object label1 : VCF::Label, 'ED88C09F-26AB-11d4-B539-00C04F0196DA'
+		top = 20
+		left = 20
+		width = 300
+		height = 45
+		caption = 'This is a label!'
+		visible = true
+		anchor = [AnchorBottom]
+		color.red = 0.0
+		color.green = 1.0
+		color.blue = 0.5
+		transparent = false
+	end
+	
+	object menuBar : VCF::MenuBar, '7B6F28B4-3E3F-11d4-B555-00C04F0196DA'
+		object fileMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+			caption = '&File'
+
+			object fileOpenMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu1 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu2 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu3 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu4 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu5 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu6 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu7 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu8 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu9 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu10 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu11 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu12 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu13 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu14 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+			object fileOpenMenu15 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu16 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu17 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu18 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu19 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu20 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu21 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu22 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu23 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu24 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu25 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu26 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu27 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu28 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu29 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu30 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu31 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu32 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu33 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu34 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu35 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu36 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu37 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu38 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu39 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu40 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu41 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu42 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu43 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu44 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu45 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu46 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu47 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu48 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu49 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu50 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu51 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu52 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu53 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu54 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu55 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu56 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+			object fileOpenMenu57 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Open...'
+			end	
+
+		end	
+
+
+		object editMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+			caption = '&Edit'
+
+			object editStuffMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu1 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu2 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu3 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu4 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu5 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu6 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu7 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu8 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu9 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu10 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu11 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu12 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu13 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu14 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+			object editStuffMenu15 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu16 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu17 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu18 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu19 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu20 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu21 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu22 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu23 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu24 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu25 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu26 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu27 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu28 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu29 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu30 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu31 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu32 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu33 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu34 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu35 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu36 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu37 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu38 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu39 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu40 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu41 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu42 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu43 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu44 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu45 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu46 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu47 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu48 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu49 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu50 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu51 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu52 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu53 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu54 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu55 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu56 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&Stuff'
+			end	
+
+			object editStuffMenu57 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+				caption = '&editStuffMenu57'
+			end	
+
+		end
+	end
+end

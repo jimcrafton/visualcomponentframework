@@ -257,7 +257,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	StrokesAndFillsApplication app( argc, argv );
+	Application* app = new StrokesAndFillsApplication( argc, argv );
 
 	Application::main();
 	

@@ -46,21 +46,25 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Release\MVCAppWizard_vc6.bsc"
+
+# ADD BSC32 /nologo /o"Release/MVCAppWizard_vc6.bsc"
+
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 rpcrt4.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Release/MVCAppWizard.awx"
 # Begin Custom Build - Copying custom AppWizard to Template directory...
-OutDir=.\Release
-TargetPath=.\Release\MVCAppWizard.awx
+
+OutDir=./Release
+TargetPath=./Release/MVCAppWizard.awx
+
 TargetName=MVCAppWizard
-InputPath=.\Release\MVCAppWizard.awx
+InputPath=./Release/MVCAppWizard.awx
 SOURCE="$(InputPath)"
 
-"$(MSDEVDIR)\Template\$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	if not exist "$(MSDEVDIR)\Template\nul" md "$(MSDEVDIR)\Template" 
-	copy "$(TargetPath)" "$(MSDEVDIR)\Template" 
-	if exist "$(OutDir)\$(TargetName).pdb" copy "$(OutDir)\$(TargetName).pdb" "$(MSDEVDIR)\Template" 
+"$(MSDEVDIR)/Template/$(TargetName).awx" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	if not exist "$(MSDEVDIR)/Template/nul" md "$(MSDEVDIR)/Template" 
+	copy "$(TargetPath)" "$(MSDEVDIR)/Template" 
+	if exist "$(OutDir)/$(TargetName).pdb" copy "$(OutDir)/$(TargetName).pdb" "$(MSDEVDIR)/Template" 
 	
 # End Custom Build
 # Begin Target
@@ -71,23 +75,23 @@ SOURCE="$(InputPath)"
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Debug.cpp
+SOURCE=./Debug.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MVCAppWizard.cpp
+SOURCE=./MVCAppWizard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MVCAppWizard.rc
+SOURCE=./MVCAppWizard.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\MVCAppWizardAw.cpp
+SOURCE=./MVCAppWizardAw.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.cpp
+SOURCE=./StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # End Group
@@ -96,23 +100,23 @@ SOURCE=.\StdAfx.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Debug.h
+SOURCE=./Debug.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MVCAppWizard.h
+SOURCE=./MVCAppWizard.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MVCAppWizardAw.h
+SOURCE=./MVCAppWizardAw.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resource.h
+SOURCE=./Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StdAfx.h
+SOURCE=./StdAfx.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -120,7 +124,7 @@ SOURCE=.\StdAfx.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\res\MVCAppWizard.ico
+SOURCE=./res/MVCAppWizard.ico
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -128,70 +132,70 @@ SOURCE=.\res\MVCAppWizard.ico
 # PROP Default_Filter "<templates>"
 # Begin Source File
 
-SOURCE=.\Template\confirm.inf
+SOURCE=./Template/confirm.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\mvc.xml
+SOURCE=./Template/mvc.xml
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyDocument.cpp
+SOURCE=./Template/MyDocument.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyDocument.h
+SOURCE=./Template/MyDocument.h
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyView.cpp
+SOURCE=./Template/MyView.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyView.h
+SOURCE=./Template/MyView.h
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyWindow.cpp
+SOURCE=./Template/MyWindow.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\MyWindow.h
+SOURCE=./Template/MyWindow.h
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\newproj.inf
+SOURCE=./Template/newproj.inf
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=.\Template\root.cpp
+SOURCE=./Template/root.cpp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -199,7 +203,7 @@ SOURCE=.\Template\root.cpp
 # End Group
 # Begin Source File
 
-SOURCE=.\ReadMe.txt
+SOURCE=./ReadMe.txt
 # End Source File
 # End Target
 # End Project

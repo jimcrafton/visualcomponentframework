@@ -2,6 +2,9 @@
 #VCF Documentation makefile
 #
 #$Log$
+#Revision 1.8  2004/04/03 15:48:26  ddiego
+#Merged over code from the 0-6-3 branch.
+#
 #Revision 1.7  2003/12/19 21:19:49  ddiego
 #*** empty log message ***
 #
@@ -88,10 +91,8 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.3
+VERSION = 0.6.4
 
-#version number for the VCF Builder
-VCFB_VERSION = 1.0.5
 
 #version number for the XMake program
 XMAKE_VERSION = 1.0.5
@@ -103,8 +104,8 @@ XSL_HTMLHELP_IMPORT = "$(XSL_DOCBOOK_DIR)/htmlhelp/htmlhelp.xsl"
 XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"
 
 
-RAW_CHM_FILENAME = vcf_docs.chm
-RAW_CHI_FILENAME = vcf_docs.chi
+RAW_CHM_FILENAME = vcf-docbook.chm
+RAW_CHI_FILENAME = vcf-docbook.chi
 
 RAW_SRC_CHM_FILENAME = vcf-docbook-with-src.chm
 RAW_SRC_CHI_FILENAME = vcf-docbook-with-src.chi
@@ -115,9 +116,6 @@ RAW_VCF_BUILDER_CHI_FILENAME = vcfbuilder_docs.chi
 
 VERSIONED_CHM_FILENAME = VCFDocs.$(VERSION).chm
 VERSIONED_CHI_FILENAME = VCFDocs.$(VERSION).chi
-
-VERSIONED_VCFBUILDER_CHM_FILENAME = VCFBuilderDocs.$(VCFB_VERSION).chm
-VERSIONED_VCFBUILDER_CHI_FILENAME = VCFBuilderDocs.$(VCFB_VERSION).chi
 
 VERSIONED_XMAKE_CHM_FILENAME = XMakeDocs.$(XMAKE_VERSION).chm
 VERSIONED_XMAKE_CHI_FILENAME = XMakeDocs.$(XMAKE_VERSION).chi
@@ -201,7 +199,21 @@ TUTORIAL_ARTICLES = ../examples/HelloWorld/HelloWorldArticle.xml \
 ../examples/Labels/LabelsArticle.xml \
 ../examples/Dictionaries/DictionariesArticle.xml \
 ../examples/Actions/ActionsArticle.xml \
-../examples/Toolbars/ToolbarsArticle.xml 
+../examples/Toolbars/ToolbarsArticle.xml \
+../examples/DateTimeUI/DateTimeUIArticle.xml \
+../examples/DatesAndTime/DatesAndTimeArticle.xml \
+../examples/Conditions/ConditionsArticle.xml \
+../examples/Dictionaries/DictionariesArticle.xml \
+../examples/Localization/LocalizationArticle.xml \
+../examples/Reflection/ReflectionArticle.xml \
+../examples/Splitters/SplittersArticle.xml \
+../examples/Tables/TablesArticle.xml \
+../examples/VisualFormFiles/VisualFormFilesArticle.xml 
+
+
+
+
+
 
 
 
@@ -325,11 +337,7 @@ alldocs_online : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS)
 
 	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
 	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml
-
-	sed "s?VERSION-NUMBER?$(VCFB_VERSION)?g" vcfbuilder_book.xml > vcfbuilder_book.xml.tmp
-	cp vcfbuilder_book.xml vcfbuilder_book.xml.bak
-	mv vcfbuilder_book.xml.tmp vcfbuilder_book.xml
+	mv xmake_book.xml.tmp xmake_book.xml	
 
 	xsltproc --nonet vcf_online.xsl vcf_website_docs.xml
 
@@ -346,10 +354,6 @@ alldocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
 	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
 	cp xmake_book.xml xmake_book.xml.bak
 	mv xmake_book.xml.tmp xmake_book.xml
-
-	sed "s?VERSION-NUMBER?$(VCFB_VERSION)?g" vcfbuilder_book.xml > vcfbuilder_book.xml.tmp
-	cp vcfbuilder_book.xml vcfbuilder_book.xml.bak
-	mv vcfbuilder_book.xml.tmp vcfbuilder_book.xml
 
 	xsltproc --nonet vcf_with_source_docs.xsl vcf_docbook.xml
 
@@ -411,10 +415,6 @@ alldocs_hh_src_separate : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOC
 	cp xmake_book.xml xmake_book.xml.bak
 	mv xmake_book.xml.tmp xmake_book.xml
 
-	sed "s?VERSION-NUMBER?$(VCFB_VERSION)?g" vcfbuilder_book.xml > vcfbuilder_book.xml.tmp
-	cp vcfbuilder_book.xml vcfbuilder_book.xml.bak
-	mv vcfbuilder_book.xml.tmp vcfbuilder_book.xml
-
 	xsltproc --nonet vcf.xsl vcf_website_docs.xml
 
 	mv vcf_book.xml.bak vcf_book.xml
@@ -466,20 +466,7 @@ alldocs_hh_src_separate : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOC
 
 
 
-vcf_builder_docs : $(VCF_BUILDER_DOCS) test_tools
-	sed "s?VERSION-NUMBER?$(VCFB_VERSION)?g" vcfbuilder_book.xml > vcfbuilder_book.xml.tmp
-	cp vcfbuilder_book.xml vcfbuilder_book.xml.bak
-	mv vcfbuilder_book.xml.tmp vcfbuilder_book.xml
 
-	xsltproc --nonet vcfbuilder.xsl vcfbuilder_docbook.xml
-
-	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
-
-
-vcf_builder_hh : vcf_builder_docs vcf-docbook.hhp 
-	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
-	mv $(RAW_VCF_BUILDER_CHM_FILENAME) $(VERSIONED_VCFBUILDER_CHM_FILENAME)
-	-mv $(RAW_VCF_BUILDER_CHI_FILENAME) $(VERSIONED_VCFBUILDER_CHI_FILENAME)
 
 
 xmake_docs : $(XMAKE_DOCS) test_tools

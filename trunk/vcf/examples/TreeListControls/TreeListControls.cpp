@@ -382,7 +382,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	TreeListControlsApplication app(argc,argv);
+	Application* app = new TreeListControlsApplication( argc, argv );
 
 	Application::main();
 	

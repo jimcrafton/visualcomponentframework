@@ -234,7 +234,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	SketchIt app( argc, argv );
+	Application* app = new SketchIt( argc, argv );
 
 	Application::main();
 	

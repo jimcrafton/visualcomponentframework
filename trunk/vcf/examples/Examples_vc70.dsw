@@ -1,0 +1,839 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Actions"="./Actions/Actions_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AdvancedAlignment"="./AdvancedAlignment/AdvancedAlignment_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Alignment"="./Alignment/Alignment_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Anchors"="./Anchors/Anchors_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ApplicationIcons"="./ApplicationIcons/ApplicationIcons_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ApplicationKit"="../build/vc70/ApplicationKit/ApplicationKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ApplicationKitDLL"="../build/vc70/ApplicationKit/ApplicationKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Conditions"="./Conditions/Conditions_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CopyAndPaste"="./CopyAndPaste/CopyAndPaste_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DatesAndTime"="./DatesAndTime/DatesAndTime_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DateTimeUI"="./DateTimeUI/DateTimeUI_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Dictionaries"="./Dictionaries/Dictionaries_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DragAndDrop"="./DragAndDrop/DragAndDrop_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "EventBasics"="./EventBasics/EventBasics_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Examples"="./Examples/Examples_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Actions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name AdvancedAlignment
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Alignment
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Anchors
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ApplicationIcons
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Conditions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CopyAndPaste
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DatesAndTime
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DateTimeUI
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Dictionaries
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DragAndDrop
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name EventBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FilesAndDirectories
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GraphicsAndMouseMoves
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GraphicsBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HeavyAndLight
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HelloWorld3
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ImageViewer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Labels
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Localization
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Processes
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ProgressBars
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Scrolling
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SharedLibraries
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SketchIt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Sliders
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Splitters
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Strings
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name StrokesAndFills
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Tables
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TextLayout
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ThreadBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ThreadsInGUI
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Toolbars
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TreeListControls
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name VisualFormFiles
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FilesAndDirectories"="./FilesAndDirectories/FilesAndDirectories_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FoundationKit"="../build/vc70/FoundationKit/FoundationKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FoundationKitDLL"="../build/vc70/FoundationKit/FoundationKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GraphicsAndMouseMoves"="./GraphicsAndMouseMoves/GraphicsAndMouseMoves_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsBasics"="./GraphicsBasics/GraphicsBasics_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsKit"="../build/vc70/GraphicsKit/GraphicsKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GraphicsKitDLL"="../build/vc70/GraphicsKit/GraphicsKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HeavyAndLight"="./HeavyAndLight/HeavyAndLight_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld"="./HelloWorld/HelloWorld_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld2"="./HelloWorld2/HelloWorld2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld3"="./HelloWorld3/HelloWorld3_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageBasics"="./ImageBasics/ImageBasics_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageViewer"="./ImageViewer/ImageViewer_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Labels"="./Labels/Labels_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"="../build/vc70/GraphicsKit/libAGG_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"="../build/vc70/GraphicsKit/libAGG_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Localization"="./Localization/Localization_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "NetworkKit"="../build/vc70/NetworkKit/NetworkKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NetworkKitDLL"="../build/vc70/NetworkKit/NetworkKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Processes"="./Processes/Processes_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ProgressBars"="./ProgressBars/ProgressBars_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Reflection"="./Reflection/Reflection_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKit"="../build/vc70/RemoteObjectKit/RemoteObjectKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKitStatic"="../build/vc70/RemoteObjectKit/RemoteObjectKitStatic_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Scrolling"="./Scrolling/Scrolling_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SharedLibraries"="./SharedLibraries/SharedLibraries_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SketchIt"="./SketchIt/SketchIt_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sliders"="./Sliders/Sliders_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Splitters"="./Splitters/Splitters_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Strings"="./Strings/Strings_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "StrokesAndFills"="./StrokesAndFills/StrokesAndFills_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tables"="./Tables/Tables_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextLayout"="./TextLayout/TextLayout_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadBasics"="./ThreadBasics/ThreadBasics_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadsInGUI"="./ThreadsInGUI/ThreadsInGUI_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Toolbars"="./Toolbars/Toolbars_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TreeListControls"="./TreeListControls/TreeListControls_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VisualFormFiles"="./VisualFormFiles/VisualFormFiles_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser"="../build/vc70/Win32HTMLBrowser/Win32HTMLBrowser_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser_StaticLib"="../build/vc70/Win32HTMLBrowser/Win32HTMLBrowser_StaticLib_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RemoteObjectKitStatic
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "WorkingWithEnumerators"="./WorkingWithEnumerators/WorkingWithEnumerators_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+

@@ -62,6 +62,7 @@ public:
 		*/
 		mainWindow->setCaption( "Hello World" );
 		
+        mainWindow->setBounds( 100, 100, 500, 500 );
 		/**
 		*show the main window.
 		*By default the window is invisible until 
@@ -78,22 +79,23 @@ public:
 
 
 /**
-*here's the heart of the program, in good old main.
-*yes this will work on Windows without displaying any 
-*console
+here's the heart of the program, in good old main.
+yes this will work on Windows without displaying any 
+console
 */
 int main(int argc, char *argv[])
 {
 	/**
-	*create an instance of the HelloWorldApp class
-	*on the stack. This will be the only instance 
-	*of this class in the process. 
+	create an instance of the HelloWorldApp class
+	on the heap - DO NOT create it on the stack or 
+	you will get a crash whn you close you application. 
+	This will be the only instance of this class in the process. 
 	*/
-	HelloWorldApp app( argc, argv );	
+	Application* app = new HelloWorldApp( argc, argv );
 	
 	/**
-	*hand off the command line to the static appMain() call
-	*which in turn begins the main application loop.
+	hand off the command line to the static appMain() call
+	which in turn begins the main application loop.
 	*/
 	
 	Application::main();

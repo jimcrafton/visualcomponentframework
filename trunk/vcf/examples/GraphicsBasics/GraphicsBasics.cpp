@@ -164,8 +164,8 @@ public:
 
 
 int main(int argc, char *argv[])
-{
-	GraphicsBasicsApplication app( argc, argv );
+{	 
+	Application* app = new GraphicsBasicsApplication( argc, argv );
 
 	Application::main();
 	

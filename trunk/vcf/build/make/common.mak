@@ -3,6 +3,12 @@
 #
 #CVS Log info
 #$Log$
+#Revision 1.5  2004/04/03 15:47:59  ddiego
+#Merged over code from the 0-6-3 branch.
+#
+#Revision 1.4.2.1  2004/02/16 03:00:26  ddiego
+#*** empty log message ***
+#
 #Revision 1.4  2003/12/18 05:15:47  ddiego
 #merge from devmain-0-6-2 branch into the stable branch
 #
@@ -106,6 +112,7 @@ SRC_IO=$(SRC)/io
 SRC_NET=$(SRC)/net
 SRC_REMOTE=$(SRC)/remote
 SRC_UTILS=$(SRC)/utils
+SRC_RTTI=$(SRC)/rtti
 
 
 #include short cuts
@@ -121,6 +128,7 @@ INC_IO=$(INC)/io
 INC_NET=$(INC)/net
 INC_REMOTE=$(INC)/remote
 INC_UTILS=$(INC)/utils
+INC_RTTI=$(INC)/rtti
 
 
 
@@ -225,19 +233,20 @@ FOUNDATIONKIT_HDRS=$(INC)/utils/VCFChar.h \
 	$(INC)/events/NotifyEvent.h \
 	$(INC)/events/OutputReadyEvent.h \
 	$(INC)/events/PropertyChangeEvent.h \
-	$(INC)/core/Class.h \
-	$(INC)/core/ClassInfo.h \
-	$(INC)/core/ClassRegistry.h \
+	$(INC)/rtti/Class.h \
+	$(INC)/rtti/ClassInfo.h \
+	$(INC)/rtti/ClassRegistry.h \
 	$(INC)/core/CommonDefines.h \
 	$(INC)/core/FoundationKitSelectLib.h \
 	$(INC)/core/FrameworkConfig.h \
 	$(INC)/core/Interface.h \
-	$(INC)/core/InterfaceClass.h \
+	$(INC)/rtti/InterfaceClass.h \
 	$(INC)/core/Locales.h \
-	$(INC)/core/Method.h \
+	$(INC)/rtti/Method.h \
+	$(INC)/rtti/Field.h \
 	$(INC)/core/Object.h \
 	$(INC)/core/ObjectWithEvents.h \
-	$(INC)/core/Property.h \
+	$(INC)/rtti/Property.h \
 	$(INC)/core/VCF.h \
 	$(INC)/core/VCFMath.h \
 	$(INC)/core/WarningsOffVc.h \

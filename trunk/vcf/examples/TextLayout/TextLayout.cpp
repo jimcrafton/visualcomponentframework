@@ -371,7 +371,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	TextLayoutApp app( argc, argv );
+	Application* app = new TextLayoutApp( argc, argv );
 
 	Application::main();
 	

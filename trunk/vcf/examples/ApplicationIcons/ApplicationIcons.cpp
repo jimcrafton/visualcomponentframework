@@ -89,7 +89,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ApplicationIconsApplication app( argc, argv );
+	Application* app = new ApplicationIconsApplication( argc, argv );
 
 	Application::main();
 	

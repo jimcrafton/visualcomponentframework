@@ -132,7 +132,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	HelloWorld3Application app( argc, argv );
+	Application* app = new HelloWorld3Application( argc, argv );
 
 	Application::main();
 	

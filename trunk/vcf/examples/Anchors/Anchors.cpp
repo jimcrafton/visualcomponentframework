@@ -105,7 +105,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	AnchorsApplication app( argc, argv );
+	Application* app = new AnchorsApplication( argc, argv );
 
 	Application::main();
 	

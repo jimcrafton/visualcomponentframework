@@ -182,7 +182,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	HeavyAndLightApplication app( argc, argv );
+	Application* app = new HeavyAndLightApplication( argc, argv );
 
 	Application::main();
 	

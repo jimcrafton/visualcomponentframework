@@ -402,7 +402,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	ActionsApplication app( argc, argv );
+	Application* app = new ActionsApplication( argc, argv );
 
 	Application::main();
 	
