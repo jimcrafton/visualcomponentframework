@@ -1,3 +1,8 @@
-This Visual Studio App Wizard will build a Visual 
-Package Library for use with the Visual Component 
-Framework (VCF) on the Microsoft Win32 platform.
+The Wizard will build a Visual Package Library for use with 
+the Visual Component Framework (VCF) on the Microsoft Win32 platform.
+	$$root$$.dsp
+	$$root$$.dsw
+	$$root$$.cpp - contains a DLLMain entry plus an exported function
+	               that you can use to initialize you Package's Classes	
+	$$root$$.h   - the Packages main header
+

@@ -6,6 +6,7 @@
 #include "VPLAppWizaw.h"
 #include <comdef.h>
 #include <atlbase.h>
+#include "Chooser.h"
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -16,8 +17,10 @@ static char THIS_FILE[] = __FILE__;
 //  the state of the custom AppWizard here.
 void CVPLAppWizAppWiz::InitCustomAppWiz()
 {
+	m_pChooser = new CDialogChooser;
+
 	// There are no steps in this custom AppWizard.
-	SetNumberOfSteps(0);
+	SetNumberOfSteps(LAST_DLG);
 
 	// Add build step to .hpj if there is one
 	m_Dictionary[_T("HELP")] = _T("1");
@@ -31,45 +34,58 @@ void CVPLAppWizAppWiz::InitCustomAppWiz()
 // This is called just before the custom AppWizard is unloaded.
 void CVPLAppWizAppWiz::ExitCustomAppWiz()
 {
-	// TODO: Add code here to deallocate resources used by the custom AppWizard
+	ASSERT(m_pChooser != NULL);
+	delete m_pChooser;
+	m_pChooser = NULL;
 }
 
 // This is called when the user clicks "Create..." on the New Project dialog
 CAppWizStepDlg* CVPLAppWizAppWiz::Next(CAppWizStepDlg* pDlg)
 {
-	ASSERT(pDlg == NULL);	// By default, this custom AppWizard has no steps
-
-	// Set template macros based on the project name entered by the user.
-
-	// Get value of $$root$$ (already set by AppWizard)
-	CString strRoot;
-	m_Dictionary.Lookup(_T("root"), strRoot);
+	CAppWizStepDlg* result = m_pChooser->Next(pDlg);
 	
-	// Set value of $$Doc$$, $$DOC$$
-	CString strDoc = strRoot.Left(6);
-	m_Dictionary[_T("Doc")] = strDoc;
-	strDoc.MakeUpper();
-	m_Dictionary[_T("DOC")] = strDoc;
-	CString tmp = strRoot;
-	tmp.MakeUpper();
-	m_Dictionary[_T("ROOT_")] = tmp;
-	CString includeFile; 
-	includeFile = "\"" + strRoot + ".h\"";
-	m_Dictionary[_T("ROOT_INCLUDE")] = includeFile;
-	// Set value of $$MAC_TYPE$$
-	strRoot = strRoot.Left(4);
-	int nLen = strRoot.GetLength();
-	if (strRoot.GetLength() < 4)
-	{
-		CString strPad(_T(' '), 4 - nLen);
-		strRoot += strPad;
+	if ( pDlg == NULL) {	// By default, this custom AppWizard has no steps
+		
+		// Set template macros based on the project name entered by the user.
+		
+		// Get value of $$root$$ (already set by AppWizard)
+		CString strRoot;
+		m_Dictionary.Lookup(_T("root"), strRoot);
+		
+		// Set value of $$Doc$$, $$DOC$$
+		CString strDoc = strRoot.Left(6);
+		m_Dictionary[_T("Doc")] = strDoc;
+		strDoc.MakeUpper();
+		m_Dictionary[_T("DOC")] = strDoc;
+		CString tmp = strRoot;
+		tmp.MakeUpper();
+		m_Dictionary[_T("ROOT_")] = tmp;
+		CString includeFile; 
+		includeFile = "\"" + strRoot + ".h\"";
+		m_Dictionary[_T("ROOT_INCLUDE")] = includeFile;
+		// Set value of $$MAC_TYPE$$
+		strRoot = strRoot.Left(4);
+		int nLen = strRoot.GetLength();
+		if (strRoot.GetLength() < 4)
+		{
+			CString strPad(_T(' '), 4 - nLen);
+			strRoot += strPad;
+		}
+		strRoot.MakeUpper();
+		m_Dictionary[_T("MAC_TYPE")] = strRoot;
+		
+		// Return NULL to indicate there are no more steps.  (In this case, there are
+		//  no steps at all.)
 	}
-	strRoot.MakeUpper();
-	m_Dictionary[_T("MAC_TYPE")] = strRoot;
+	return result;
+}
 
-	// Return NULL to indicate there are no more steps.  (In this case, there are
-	//  no steps at all.)
-	return NULL;
+// This is called when the user clicks "Back" on one of the custom
+//  AppWizard's steps.
+CAppWizStepDlg* CVPLAppWizAppWiz::Back(CAppWizStepDlg* pDlg)
+{
+	// Delegate to the dialog chooser
+	return m_pChooser->Back(pDlg);
 }
 
 void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)

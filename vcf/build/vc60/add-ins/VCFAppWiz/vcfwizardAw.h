@@ -18,6 +18,9 @@ public:
 	virtual void InitCustomAppWiz();
 	virtual void ExitCustomAppWiz();
 	virtual void CustomizeProject(IBuildProject* pProject);
+	virtual CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
+
+	CDialogChooser *m_pChooser;
 };
 
 // This declares the one instance of the CVcfwizardAppWiz class.  You can access

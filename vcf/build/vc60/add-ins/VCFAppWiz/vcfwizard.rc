@@ -83,7 +83,7 @@ BEGIN
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "VCFWIZARD.DLL\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "VCF AppWizard\0"
+            VALUE "ProductName", "Visual Component Framework ApplicationKit AppWizard\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
             VALUE "SpecialBuild", "\0"
         END
@@ -114,6 +114,48 @@ MAIN.CPP                TEMPLATE DISCARDABLE    "template\\main.cpp"
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON1               ICON    DISCARDABLE     "res\\VCFAppWiz.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PAGE1 DIALOGEX 0, 0, 283, 190
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         119,IDC_IMAGE,"Static",SS_BITMAP,3,3,92,177,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "This Wizard will createa simple Hello World Application, with a single window, that uses the VCF ApplicationKit.\n\nThe application will link to the ApplicationKit as a Win32 DLL.",
+                    IDC_STATIC,105,15,154,54
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_PAGE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 280
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 187
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_SPLASH              BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 

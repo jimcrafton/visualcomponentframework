@@ -14,10 +14,14 @@ class CVCFConsoleWizAppWiz : public CCustomAppWiz
 {
 public:
 	virtual CAppWizStepDlg* Next(CAppWizStepDlg* pDlg);
+	CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
 		
 	virtual void InitCustomAppWiz();
 	virtual void ExitCustomAppWiz();
 	virtual void CustomizeProject(IBuildProject* pProject);
+
+	CDialogChooser* m_pChooser;
+
 };
 
 // This declares the one instance of the CVCFConsoleWizAppWiz class.  You can access

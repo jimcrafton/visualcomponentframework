@@ -14,10 +14,12 @@ class CVPLAppWizAppWiz : public CCustomAppWiz
 {
 public:
 	virtual CAppWizStepDlg* Next(CAppWizStepDlg* pDlg);
-		
+	virtual CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);	
 	virtual void InitCustomAppWiz();
 	virtual void ExitCustomAppWiz();
 	virtual void CustomizeProject(IBuildProject* pProject);
+
+	CDialogChooser* m_pChooser;
 };
 
 // This declares the one instance of the CVPLAppWizAppWiz class.  You can access
