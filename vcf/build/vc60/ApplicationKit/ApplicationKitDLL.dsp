@@ -501,6 +501,14 @@ SOURCE=..\..\..\include\events\HelpListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\HTMLBrowserControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\HTMLBrowserPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\HTMLBrowserPeer.h
 # End Source File
 # Begin Source File
@@ -742,10 +750,6 @@ SOURCE=..\..\..\include\core\Scrollable.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\ScrollBarControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\implementer\ScrollbarPeer.h
 # End Source File
 # Begin Source File
 
@@ -1331,6 +1335,10 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\HelpEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\HTMLBrowserControl.cpp
 # End Source File
 # Begin Source File
 
