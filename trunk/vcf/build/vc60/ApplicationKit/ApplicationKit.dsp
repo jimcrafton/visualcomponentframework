@@ -85,6 +85,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=..\..\..\src\core\AbstractApplication.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\AbstractCommand.cpp
 # End Source File
 # Begin Source File
@@ -94,6 +98,10 @@ SOURCE=..\..\..\src\core\AbstractContainer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractListModel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\AbstractScrollable.cpp
 # End Source File
 # Begin Source File
 
@@ -118,7 +126,15 @@ SOURCE=..\..\..\src\core\Application.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
 # ADD CPP /Yc"ApplicationKit.h"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -230,6 +246,14 @@ SOURCE=..\..\..\src\Graphics\ControlGraphicsContext.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\Cursor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\CursorManager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\CustomControl.cpp
 # End Source File
 # Begin Source File
@@ -306,7 +330,19 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\FocusEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Frame.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Events\HelpEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\ImageControl.cpp
 # End Source File
 # Begin Source File
 
@@ -327,6 +363,10 @@ SOURCE=..\..\..\src\Events\KeyboardEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\LibraryApplication.cpp
 # End Source File
 # Begin Source File
 
@@ -450,6 +490,10 @@ SOURCE=..\..\..\src\core\ToolbarSeparator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\ToolTipEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\TreeControl.cpp
 # End Source File
 # Begin Source File
@@ -486,6 +530,10 @@ SOURCE=..\..\..\src\IO\VFFOutputStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\WhatsThisHelpEvent.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32Application.cpp
 # End Source File
 # Begin Source File
@@ -498,10 +546,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ColorDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32ComboBox.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\ImplementerKit\Win32Component.cpp
 # End Source File
 # Begin Source File
@@ -510,7 +554,7 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ControlContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\ImplementerKit\Win32CustomControl.cpp
+SOURCE=..\..\..\src\ImplementerKit\Win32CursorPeer.cpp
 # End Source File
 # Begin Source File
 
@@ -578,6 +622,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32ResourceStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\ImplementerKit\Win32ScrollPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\ImplementerKit\Win32ToolKit.cpp
 # End Source File
 # Begin Source File
@@ -602,11 +650,19 @@ SOURCE=..\..\..\src\Events\WindowEvent.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\..\include\core\AbstractApplication.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\AbstractCommand.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\core\AbstractListModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\AbstractScrollable.h
 # End Source File
 # Begin Source File
 
@@ -623,6 +679,10 @@ SOURCE=..\..\..\include\core\AbstractTreeModel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\AbstractWin32Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\AppKitPeerConfig.h
 # End Source File
 # Begin Source File
 
@@ -822,6 +882,18 @@ SOURCE=..\..\..\include\implementer\ControlPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Cursor.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\CursorManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementer\CursorPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\CustomControl.h
 # End Source File
 # Begin Source File
@@ -966,6 +1038,18 @@ SOURCE=..\..\..\include\implementer\HeaderPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\HelpEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\HelpListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ImageControl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\ImageList.h
 # End Source File
 # Begin Source File
@@ -1014,6 +1098,10 @@ SOURCE=..\..\..\include\core\Label.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\LibraryApplication.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Light3DBorder.h
 # End Source File
 # Begin Source File
@@ -1027,10 +1115,6 @@ SOURCE=..\..\..\include\core\ListBoxControl.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\ListBoxPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\events\Listener.h
 # End Source File
 # Begin Source File
 
@@ -1198,6 +1282,10 @@ SOURCE=..\..\..\include\implementer\RichTextPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\Scrollable.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ScrollBarControl.h
 # End Source File
 # Begin Source File
@@ -1211,6 +1299,10 @@ SOURCE=..\..\..\include\events\ScrollEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\ScrollListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\ScrollPeer.h
 # End Source File
 # Begin Source File
 
@@ -1318,6 +1410,14 @@ SOURCE=..\..\..\include\core\ToolbarSeparator.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\ToolTipEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\ToolTipListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\TreeControl.h
 # End Source File
 # Begin Source File
@@ -1382,6 +1482,14 @@ SOURCE=..\..\..\include\core\View.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\WhatsThisHelpEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\events\WhatsThisHelpListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerKit\Win32Application.h
 # End Source File
 # Begin Source File
@@ -1394,10 +1502,6 @@ SOURCE=..\..\..\include\implementerKit\Win32ColorDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32ComboBox.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\implementerKit\Win32Component.h
 # End Source File
 # Begin Source File
@@ -1406,7 +1510,7 @@ SOURCE=..\..\..\include\implementerkit\Win32ControlContext.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementerKit\Win32CustomControl.h
+SOURCE=..\..\..\include\implementerKit\Win32CursorPeer.h
 # End Source File
 # Begin Source File
 
@@ -1479,6 +1583,10 @@ SOURCE=..\..\..\include\implementerKit\Win32ResourceBundle.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32ResourceStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32ScrollPeer.h
 # End Source File
 # Begin Source File
 

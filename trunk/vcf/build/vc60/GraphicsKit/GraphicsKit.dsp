@@ -93,6 +93,10 @@ SOURCE=..\..\..\src\Graphics\AlphaGamma.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\ArtStroke.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Graphics\BasicFill.cpp
 # End Source File
 # Begin Source File
@@ -126,11 +130,23 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
+
+!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
+
 # ADD CPP /Yc"GraphicsKit.h"
+
+!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
 # End Source File
 # Begin Source File
 
@@ -162,10 +178,6 @@ SOURCE=..\..\..\src\Graphics\RenderPaths.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\Utils\UIGraphicsToolKit.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\Graphics\Vector2D.cpp
 # End Source File
 # Begin Source File
@@ -179,6 +191,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -202,6 +218,14 @@ SOURCE=..\..\..\include\graphics\AlphaGamma.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\ArtStroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Basic3DBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\BasicFill.h
 # End Source File
 # Begin Source File
@@ -211,6 +235,14 @@ SOURCE=..\..\..\include\graphics\BasicRectangle.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\BasicStroke.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Bitmap.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Border.h
 # End Source File
 # Begin Source File
 
@@ -231,6 +263,10 @@ SOURCE=..\..\..\include\graphics\Composition.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\Contextpeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\ControlGraphicsContext.h
 # End Source File
 # Begin Source File
 
@@ -258,6 +294,10 @@ SOURCE=..\..\..\include\graphics\Font.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\FontPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Glyph.h
 # End Source File
 # Begin Source File
@@ -282,11 +322,19 @@ SOURCE=..\..\..\include\graphics\GraphicsResourceMgr.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\utils\GraphicsToolKit.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\graphics\Image.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\ImageBits.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\ImageList.h
 # End Source File
 # Begin Source File
 
@@ -303,6 +351,10 @@ SOURCE=..\..\..\include\graphics\Kernel.h
 # Begin Source File
 
 SOURCE=..\..\..\include\graphics\Layer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\Matrix.h
 # End Source File
 # Begin Source File
 
@@ -366,10 +418,6 @@ SOURCE=..\..\..\include\graphics\TileManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\UIGraphicsToolKit.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\graphics\UVMap.h
 # End Source File
 # Begin Source File
@@ -387,6 +435,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Context.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32Font.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32GraphicsToolkit.h
 # End Source File
 # Begin Source File
 

@@ -113,6 +113,10 @@ SOURCE=..\..\..\src\Events\Event.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Events\EventHandler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\IO\File.cpp
 # End Source File
 # Begin Source File
@@ -129,14 +133,16 @@ SOURCE=..\..\..\src\core\FoundationKit.cpp
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
 
-# ADD CPP /Yc""
+# ADD CPP /Yc"FoundationKit.h"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 Debug"
 
-# ADD CPP /Yc"FoundationKit.h"
-
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\InterfaceClass.cpp
 # End Source File
 # Begin Source File
 
@@ -316,6 +322,10 @@ SOURCE=..\..\..\include\events\Event.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\EventHandler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\io\File.h
 # End Source File
 # Begin Source File
@@ -353,6 +363,10 @@ SOURCE=..\..\..\include\core\FrameworkConfig.h
 # Begin Source File
 
 SOURCE=..\..\..\include\core\Interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\InterfaceClass.h
 # End Source File
 # Begin Source File
 
@@ -408,6 +422,10 @@ SOURCE=..\..\..\include\core\Object.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\ObjectWithEvents.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\exceptions\OutOfBoundsException.h
 # End Source File
 # Begin Source File
@@ -424,7 +442,7 @@ SOURCE=..\..\..\include\core\Point.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\utils\ProcessException.h
+SOURCE=..\..\..\include\exceptions\ProcessException.h
 # End Source File
 # Begin Source File
 
