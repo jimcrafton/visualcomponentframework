@@ -65,9 +65,9 @@ void RadioButtonControl::paint( GraphicsContext* context )
 	//r.left_ = radioBtnRect.right_;
 
 	ButtonState state;
-	state.setActive( true );
+	state.setActive( isActive() );
 	state.setEnabled( isEnabled() );
-	state.setPressed( checked_ );
+	state.setToggled( checked_ );
 	state.setFocused( isFocused() );
 	state.buttonCaption_ = caption_;
 	if ( getUseLocaleStrings() ) {
@@ -156,6 +156,10 @@ RadioButtonControl* RadioButtonControl::getSelectedRadioButtonFromGroup()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2004/08/14 21:13:42  ddiego
+*fixed a drawing bug in the RadioButton. Thanks to duff
+*for pointing this out.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
