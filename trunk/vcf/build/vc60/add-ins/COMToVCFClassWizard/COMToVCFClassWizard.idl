@@ -24,8 +24,8 @@ library COMTOVCFCLASSWIZARDLib
 	]
 	interface ICommands : IDispatch
 	{
-		[id(1), helpstring("method SampleCommand")] 
-		HRESULT SampleCommand();
+		[id(1), helpstring("method ConvertCOMTypeLib")] HRESULT ConvertCOMTypeLib();
+		[id(2), helpstring("method ConvertActiveXControl")] HRESULT ConvertActiveXControl();
 	};
 
 	[

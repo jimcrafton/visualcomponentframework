@@ -3,6 +3,8 @@
 #include "COMToVCFClassWizard.h"
 #include "Commands.h"
 #include "TypeLibraryConverterDlg.h"
+#include "ConvertActiveXCtrlDlg.h"
+#include "TypeLibDump.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CCommands
@@ -14,8 +16,10 @@ CCommands::CCommands()
 /////////////////////////////////////////////////////////////////////////////
 // ICommands
 
-STDMETHODIMP CCommands::SampleCommand()
+STDMETHODIMP CCommands::ConvertCOMTypeLib()
 {
+	AFX_MANAGE_STATE( AfxGetModuleState() );
+
 	// obtain the MSDEV CWinApp object:
 	// (this is the "magic")
 	CWinApp* pApp = AfxGetApp();
@@ -55,3 +59,16 @@ STDMETHODIMP CCommands::SampleCommand()
 }
 
 
+
+STDMETHODIMP CCommands::ConvertActiveXControl()
+{
+	AFX_MANAGE_STATE( AfxGetModuleState() );
+
+	ConvertActiveXCtrlDlg dlg;
+	if ( IDOK == dlg.DoModal() ) {
+		_bstr_t res = GenerateClassHeaderFromCOMCLSID( dlg.m_selectedAxCtrlCLSID );
+		CStdioFile file( "d:\\Res.h", CFile::modeCreate | CFile::modeWrite | CFile::typeText );
+		file.WriteString( res );
+	}
+	return S_OK;
+}

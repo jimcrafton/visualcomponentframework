@@ -122,6 +122,7 @@ IDB_INTERFACE           BITMAP  DISCARDABLE     "res\\bitmap2.bmp"
 IDB_COCLASS             BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
 IDB_INSERTABLE_COCLASS  BITMAP  DISCARDABLE     "res\\bitmap4.bmp"
 IDB_IMAGELIST           BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+IDB_AX_CTRL             BITMAP  DISCARDABLE     "res\\bmp00002.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -178,6 +179,14 @@ BEGIN
         RIGHTMARGIN, 220
         TOPMARGIN, 7
         BOTTOMMARGIN, 230
+    END
+
+    IDD_CONVERT_AX_CTRL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 304
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -348,6 +357,19 @@ BEGIN
     LTEXT           "/**\n*@param int -\n*@return bool -\n*/\nbool fooFunction( int i );",
                     IDC_JAVADOC_COMMENTS_LABEL,93,179,107,46,0,
                     WS_EX_CLIENTEDGE
+END
+
+IDD_CONVERT_AX_CTRL DIALOGEX 0, 0, 311, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Convert ActiveX Control"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,254,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,254,24,50,14
+    CONTROL         "List1",IDC_ACTIVEX_CTRL_LIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
+                    WS_BORDER | WS_TABSTOP,7,26,238,106,WS_EX_CLIENTEDGE
+    LTEXT           "ActiveX Controls",IDC_STATIC,7,16,50,8
 END
 
 
