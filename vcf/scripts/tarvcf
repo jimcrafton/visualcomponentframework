@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo Preparing list of files for vcf version $1...
+#cd to vcf root dir
+cd ../
+
+#find all files
+
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.h -o -iname *.hpp -o -iname *.c -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl > srcfiles.out
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.def -o -iname *.vcfdir -o -iname *.vcp -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.inf -o -iname *.vcproj > srcfiles1.out
+find ./include ./src ./ImageFormats ./build ./VCFBuilder2 ./AppServer ./xmake ./ClassServer -iname *.cpp -o -iname *.CPP -o -iname *.HPP -o -iname *.cxx -o -iname *.CXX -o -iname *.cur -o -iname *.CUR > srcfiles2.out
+
+find ./tests -iname *.h -o -iname *.cpp -o -iname *.CPP -o -iname *.dsw -o -iname *.dsp -o -iname *.bmp -o -iname *.rgs -o -iname *.rc -o -iname *.idl -o -iname *.def -o -iname *.ico -o -iname *.rc2 -o -iname *.odl -o -iname *.vff -o -iname *.html > tests.out
+
+
+#combine the outoput into a master list
+cat srcfiles.out srcfiles1.out srcfiles2.out tests.out > files.out
+
+rm srcfiles.out srcfiles1.out srcfiles2.out tests.out
+
+#display in notepad
+notepad files.out
+
+mkdir tmp
+mkdir tmp/vcf-$1
+
+tar -cf tmp/vcf-$1/tmp.tar -T files.out
+
+tar -xf tmp/vcf-$1/tmp.tar -C tmp/vcf-$1/
+
+rm files.out
+rm tmp/vcf-$1/tmp.tar
+
+cp --parents readme.txt tmp/vcf-$1/
+cp --parents license.txt tmp/vcf-$1/
+
+echo Creating tar file...
+cd tmp
+tar -cf vcf-$1.tar vcf-$1/
+
+echo Compressing tar file with gzip...
+gzip -f vcf-$1.tar
+
+mv vcf-$1.tar.gz ../uploadToSF/vcf-$1.tar.gz
+cd ../
+rm -rf tmp
+
+echo Done ! 

@@ -1,0 +1,14 @@
+sh ./vcfCleanse
+echo "making release and debug builds of the VCF (both as a DLL and a static .lib)..."
+#"$VC_BIN"/MSDEV -ex MakeVCF
+echo this will update everything !
+cd ./uploadToSF
+rm *
+cd ..
+sh ./tarvcf $1
+sh ./tarvcfTT $1
+sh ./vcfDocs $1
+sh ./makeVCFBins $1
+sh ./vcfCleanse
+
+echo Done! 
