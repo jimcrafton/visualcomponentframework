@@ -86,226 +86,83 @@ LIB32=link.exe -lib
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\AbstractImage.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\BasicFill.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\BasicStroke.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Color.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Font.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\FontState.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GlyphCollection.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
 # ADD CPP /Yc"GraphicsKit.h"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-# ADD CPP /Yc"GraphicsKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsObject.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Utils\GraphicsToolKit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ImageEvent.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Polygon.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Vector2D.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Context.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Font.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32FontManager.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"

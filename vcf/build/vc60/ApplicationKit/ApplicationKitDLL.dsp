@@ -53,8 +53,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\bin\ApplicationKit_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
-# SUBTRACT LINK32 /incremental:yes
+# ADD LINK32 opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /pdb:"..\..\..\bin/ApplicationKit_vc6.pdb" /map:"..\..\..\bin/ApplicationKit_vc6.map" /debug /machine:I386 /out:"..\..\..\bin/ApplicationKit_vc6.dll" /libpath:"..\..\..\lib" /libpath:"..\..\..\xml\lib"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
 
@@ -197,6 +197,10 @@ SOURCE=..\..\..\include\core\CheckBoxControl.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\ColorEtchedBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ColumnItem.h
 # End Source File
 # Begin Source File
@@ -317,10 +321,6 @@ SOURCE=..\..\..\include\core\Container.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\Contextpeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\Control.h
 # End Source File
 # Begin Source File
@@ -370,14 +370,6 @@ SOURCE=..\..\..\include\core\CustomControl.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\CustomControlPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DataObjectPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\include\dragdrop\DataType.h
 # End Source File
 # Begin Source File
 
@@ -458,6 +450,10 @@ SOURCE=..\..\..\include\dragdrop\DragSource.h
 # Begin Source File
 
 SOURCE=..\..\..\include\dragdrop\DropTarget.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\graphics\EtchedBorder.h
 # End Source File
 # Begin Source File
 
@@ -577,10 +573,6 @@ SOURCE=..\..\..\include\core\ListBoxControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\implementer\ListBoxPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\include\core\ListItem.h
 # End Source File
 # Begin Source File
@@ -634,6 +626,10 @@ SOURCE=..\..\..\include\implementer\MenuItemPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\events\MenuListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\MessageDialog.h
 # End Source File
 # Begin Source File
 
@@ -849,6 +845,10 @@ SOURCE=..\..\..\include\events\TimerEvent.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\graphics\TitledBorder.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\ToggledButton.h
 # End Source File
 # Begin Source File
@@ -902,6 +902,10 @@ SOURCE=..\..\..\include\events\TreeModelListener.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementer\TreePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\UIMetricsManager.h
 # End Source File
 # Begin Source File
 
@@ -1083,6 +1087,10 @@ SOURCE=..\..\..\include\events\WindowListener.h
 
 SOURCE=..\..\..\include\implementer\WindowPeer.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\core\Wizard.h
+# End Source File
 # End Group
 # Begin Group "Res"
 
@@ -1090,6 +1098,10 @@ SOURCE=..\..\..\include\implementer\WindowPeer.h
 # Begin Source File
 
 SOURCE=..\..\resources\win32\ApplicationKit.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\resources\win32\inform.bmp
 # End Source File
 # Begin Source File
 
@@ -1187,6 +1199,10 @@ SOURCE=..\..\..\src\core\ClipboardDataObject.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\ClipboardEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\ColorEtchedBorder.cpp
 # End Source File
 # Begin Source File
 
@@ -1378,6 +1394,10 @@ SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Graphics\EtchedBorder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\FocusEvent.cpp
 # End Source File
 # Begin Source File
@@ -1467,6 +1487,10 @@ SOURCE=..\..\..\src\Events\MenuItemEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\MessageDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\Model.cpp
 # End Source File
 # Begin Source File
@@ -1548,6 +1572,10 @@ SOURCE=..\..\..\src\core\TimerComponent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Events\TimerEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\Graphics\TitledBorder.cpp
 # End Source File
 # Begin Source File
 

@@ -152,6 +152,7 @@
 			<source name="$(SRC)/ImplementerKit/LinuxSemaphorePeer.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/LinuxSystemPeer.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/LinuxSystemToolkit.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/ImplementerKit/LinuxProcessIORedirector.cpp" partOfConfig="GCC Debug"/>
 		</sources>
 	</project>
 </make>
