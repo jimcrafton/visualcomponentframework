@@ -7,6 +7,112 @@
 </head>
 
 <body>
+<h1>Visual Component Framework 0.6.6&nbsp;</h1>
+<h2>Readme</h2>
+<p>
+Bugs fixed include:
+<ul>
+  <li>1074768	VCF application slows down modal dialogs.
+  <li>1045603 Some comparison operators of the class point are not const
+  <li>1042623 Incorect handling of DC in win32font
+  <li>1026443 Small windows with wrong border
+  <li>1016150 Listbox Horizontal Scrollbar (show-through)
+  <li>1015786 Listbox Horizontal Scrollbar (show-through)
+  <li>1015368 ListBoxControl Mousemove error
+  <li>A number of other miscellaneous bugs were fixed as well.
+</ul>
+</p>
+<p>
+New features include:
+<ul>
+  <li>1015739 recursive findComponent(), findControl()
+  <li>999710 add method to System to get Resources dir
+  <li>999698 migrate resources over to foundation kit
+</ul>
+</p>
+<p>
+Printing, printing, printing!!! We have (finally) added an easy to use API 
+for printing (see the PrintSession class). You can see this in action in the 
+vcf/examples/Printing and vcf/examples/TextEdit examples.
+</p>
+<p>
+We have added support for the system tray on Win32. Not implemented (yet) on OS X.
+</p>
+
+<p>
+We have migrated the ResourceBundle class to the FoundationKit, so that console, 
+non-gui apps can also use resources. 
+</p>
+
+<p>
+We have added support for "bundle" resources, i.e. loading resources based on a 
+formal directory pattern, in addition to be able to load resources from a binary 
+file (i.e. Win32 rc style resources). 
+</p>
+
+<p>
+Along with this "bundle" support we have modified the way processes and shared 
+libraries (DLLs) are loaded, so that we can load a bundle directory as a process 
+(just like OS X can) or shared lib. Along with this comes the notion of extra 
+process/library meta data in the form of the ProgramInfo class. This allows us 
+to retrieve what version the app is, the author, etc. This information may be 
+stored in the exectuable bundle, or directly in the executable itself (Win32 
+only as VS_VERSIONINFO data).
+</p>
+
+<p>
+Full transformation support was cleared up, or fixed in the GraphicsContext class. 
+You can now transform any path, or image. Partial text transforms are supported in 
+the form of translation and rotation. You can see this in the vcf/examples/Transformations 
+example.
+</p>
+
+<p>
+There is also more documentation in this release. A number of the core graphics classes 
+have better, more complete source documentation for how/why they work. Marcello also 
+contributed source documentation to the Document/View classes. Several new examples 
+were added, namely TextEdit, which demonstrates a full Doc/View app that allows you 
+to open, edit, save, and print text documents, and also demonstrated how to add 
+undo/redo support, Resources, a simple console program which demonstrates how to load 
+resources, AppResources, a simple GUI app that demonstrates resource loading, Dialogs, 
+a small app that show how to call up the various standard dialogs as well as write your 
+own custom dialogs, and Transformations, a gui demo that show how to transform graphics. 
+Another example is the ParticleEditor which uses the OpenGLKit and demonstrate a little 
+editor that lets you control a particle system.
+</p>
+
+<p>
+Tasks for this release:
+<ul>
+  <li>56662	implement printer support
+  <li>101508	Add OSX MenuItem peer
+  <li>101516	Add OSX UIToolkit peer
+  <li>101514	Add OSX Window peer
+  <li>101498	Add OSX Control peer
+  <li>101507	Add OSX MenuBar peer
+  <li>101502	Add OSX Dialog peer
+  <li>101495	Add OSX Common folder browser dialog peer
+  <li>101494	Add OSX Common file dialog peer
+  <li>101496	Add OSX Common color dialog peer
+  <li>101484	Add OSX Process peer
+  <li>101480	Add OSX Library peer
+  <li>101492	Add OSX Button peer
+  <li>101500	Add OSX Cursor peer
+</ul>  
+</p>
+
+<p>
+Known issues:<br>
+The OSX port is still a work in progress. Further work was accomplished and the 
+window, and control peers are basically done. Support was added for handling mouse 
+event properly, loading processes and shared libs, using dialogs (including support 
+for sheets), common dialog peers are all but done with the exception of the font 
+dialog. Menu items work, but we still need a bit more work to handle them at the 
+application level, so that differences in how Win32 vs. OS X see menus are all 
+handled transparently. 
+</p>
+
+
 
 <h1>Visual Component Framework 0.6.5&nbsp;</h1>
 <h2>Readme</h2>

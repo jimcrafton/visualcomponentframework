@@ -928,7 +928,7 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		Another related dialog is the CommonFileBrowse. This dialog is used when you
 		want to browse the folders in a tree. Here is an example of how to use the 
 		common file realated dialogs.
-		</para>
+		
 		<programlisting>
                   <![CDATA[
                   
@@ -1043,6 +1043,7 @@ class MyWindow :public Window{
 };
                     ]]>
 		</programlisting>
+		</para>
 		<para>
 		<TODO>Add pictures of dialogs.</TODO>
 		</para>
@@ -1058,8 +1059,8 @@ class MyWindow :public Window{
 		 Using the color and font dialogs is very simple.  The
 		 example below creates and shows an example of the use
 		 of the color and font picker.
-		 </para>
-		<programListing>
+		 
+		<programlisting>
 <![CDATA[
 class UserPrefsExample: public Window{
 
@@ -1098,32 +1099,34 @@ class UserPrefsExample: public Window{
 	...
 };
 ]]>
-</programListing>
+</programlisting>
 		<TODO>Add pictures of font and color picker</TODO>
-		</section>
+		</para>
 		<para>
 		There is also a common dialog for showing a text
 		message to the user.  This is included in the VCF::Dialog
 		class.  To send a popup message simply call the static method,
 		showMessage() and pass in the message and optionally a caption.
 		The signature for the showMessage() function is:
-		</para>
+		
 
+		</para>	
 		<function>
 		<![CDATA[ showMessage(const String& message, const String& caption="")]]>
 		</function>
-
+		
+		<para>
 		If you need custom control of the buttons and message style
 		with the message choose this alternate signature. :
-
+		</para>
 		<function>
 		<![CDATA[ UIToolkit::ModalReturnType showMessage( const String&
 			message, const String& caption,	const long& messageButtons =
 			mbOKCancel,const MessageStyle& messageStyle=msDefault ) ]]>
 		</function>
+		
 		<para>
 		where messageButtons can be any combination of the following :
-		</para>
 		<itemizedlist>
 			<listitem>mbOK 		     - 	Okay button</listitem>
 			<listitem>mbHelp 	     -	a help button</listitem>
@@ -1133,9 +1136,10 @@ class UserPrefsExample: public Window{
 			<listitem>mbRetryCancel      - 	Retry and Cancel buttons</listitem>
 			<listitem>mbAbortRetryIgnore - 	Retry and Ignore buttons</listitem>
 		</itemizedlist>
+		</para>
+		
 		<para>
 		and, messageStyle can be any of the following:
-		</para>
 		<itemizedlist>
 			<listitem>msDefault - 	normal message</listitem>
 			<listitem>msError   - 	error message</listitem>
@@ -1143,6 +1147,8 @@ class UserPrefsExample: public Window{
 			<listitem>msWarning - 	warning message</listitem>
 		</itemizedlist>
 		<TODO>show pictures of all message styles</TODO>
+		</para>		
+	</section>
 
 	<section><title>Custom Dialogs</title>
 		<para>
@@ -1239,9 +1245,9 @@ class MyAbout : public VCF::Dialog {
 		in Microsoft's MFC framework.
 		</para>
 		<para>
-		MVC makes a point of separating the data being used, which generically 
+		MVC makes a point of separating the data being used, which is generically 
 		referred to as the "Model", the control of the interaction, or the "Controller",
-		and the presentation of the Model, referred to as the "View". Some framework
+		and the presentation of the Model, referred to as the "View". Some frameworks
 		merge the View and Controller into one unit, which is also something the VCF does. 
 		</para>
 		<para>
@@ -1447,6 +1453,9 @@ control->setView( view );
 <!--
 CVS Log info
 $Log$
+Revision 1.4  2004/12/03 03:06:01  ddiego
+minor doc changes
+
 Revision 1.3  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 

@@ -360,7 +360,7 @@ NB: This software will not save the world.
 				The red circle indicates the various new Application Wizards that you should see.
 				</para>
 			</section>
-			<section><title>Apple XCode 1.2</title>
+			<section><title>Apple XCode 1.x</title>
 				<para>
 				This will explain how to install the project templates that come 
 				with the VCF so	that you can create VCF enabled applications easily 
@@ -1201,7 +1201,10 @@ String s = f.commonBarRepository;
 			what something does. You can and should use html markup tags for further 
 			clarity, for example the &lt;B&gt; tag to emphasize some point or word. 
 			Also where applicable, feel free to put a sample piece of code that 
-			illustrates proper usage. Use the &lt;PRE&gt; tags for this. 
+			illustrates proper usage. Use the &lt;PRE&gt; tags for this. Note that you can 
+			also use the doxygen <ulink url="http://www.stack.nl/~dimitri/doxygen/commands.html#cmdcode">
+			"\code"</ulink> and <ulink url="http://www.stack.nl/~dimitri/doxygen/commands.html#cmdendcode">
+			"\endcode"</ulink> tags as well.
 			</para>
 			<para>
 			Do not pollute the code, particularly the headers, with tons of "//" 
@@ -1239,6 +1242,92 @@ This is what the method does...
 */
 int myCoolMethod( void* d, bool b, String s );					
 			</programlisting>
+			</para>
+			<para>
+			In addition to the javadoc style tags, since we use doxygen, you can also use the 
+			doxygen <ulink url="http://www.stack.nl/~dimitri/doxygen/commands.html">special tags</ulink>
+			for further control of formatting. Not all of the header docs use these yet, but for 
+			examples that do, see the following files:
+			  <itemizedlist>
+			    <listitem><para>
+				vcf/src/vcf/FoundationKit/Locales.h
+				</para></listitem>
+			  
+				<listitem><para>
+				vcf/src/vcf/GraphicsKit/Image.h
+				</para></listitem>
+				
+				<listitem><para>
+				vcf/src/vcf/GraphicsKit/PrintSession.h
+				</para></listitem>
+			  </itemizedlist>
+			</para>
+			
+			<formalpara><title>Code Blocks</title>
+			</formalpara>
+			<para>
+			While I am sure this is mildly controversial, bordering on hysterical, or perhaps 
+			even blasphemous, I am going to set down some rules for code blocks, i.e. the famed
+			"{" and "}". For consistencies sake please use the following guidelines for code that
+			is in the VCF core source tree (i.e. anything under the vcf/src/vcf directory). Example
+			code is free to diverge from this (though I would encourage it usage there too).
+			</para>
+			<para>
+			For function blocks do not write them on a single line, even for something as simple as 
+			a get method that just returns a member variable. The problem is that, at least on
+			Microsoft compilers/debuggers (and almost certainly GCC/GDB as well), it becomes really
+			difficult to step through code, or examine the variable(s). Beleive it or not, not all of
+			us are <ulink url="http://weblogs.asp.net/oldnewthing/archive/2004/11/11/255800.aspx">
+			assembly level debuggers</ulink>!.
+			<programlisting>
+//Unacceptable			
+class Foo {
+public:
+	int val_;
+	
+	int foo() { return val_; }
+};
+
+//OK
+class Foo {
+public:
+	int val_;
+	
+	int foo() { 
+		return val_; 
+	}
+};
+			</programlisting>
+			</para>
+			<para>
+			For "if..then" blocks use the following:
+			<programlisting>
+if ( condition ) {
+	//code
+}
+			</programlisting>
+			Please don't use 
+			<programlisting>
+if ( condition ) 
+	//single line of code
+
+			</programlisting>
+			Use the "{}" brackets even with the one line. Please avoid using the following constructs:
+			<programlisting>
+//BAD!
+if ( condition ) {
+	//code
+} else {
+
+}
+
+//OK
+if ( condition ) {
+	//code
+} 
+else {
+
+}			</programlisting>
 			</para>
 		</section>
 			
@@ -1518,6 +1607,9 @@ make tutorials
 <!--
 CVS Log info
 $Log$
+Revision 1.5  2004/12/03 03:06:01  ddiego
+minor doc changes
+
 Revision 1.4  2004/08/18 18:22:22  ddiego
 nothing much
 
