@@ -124,6 +124,7 @@ void FindDialog::findClicked( ButtonEvent* e )
 	}
 	else {
 		doc->setSelectionRange( findInfo_.position_, findInfo_.searchString_.size() );
+		findInfo_.position_ += findInfo_.searchString_.size();
 	}
 
 }

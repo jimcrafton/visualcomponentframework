@@ -251,8 +251,24 @@ void TextControl::handleEvent( Event* event )
 						case vkDelete : {
 							ulong32 pos =  textPeer_->getSelectionStart();
 
-							if ( pos <= (model->getSize()-1) ) {
+							//Thanks to Marcello to fixing this!!!
+							ulong32 size = model->getSize();
+							if ( pos <= (size-1) ) {
 								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );							
+
+								// workaround for a '\r\n' sequence: we need to
+								// delete '\n' too at the end of the selection
+								ulong32 pos2 = pos+length-1;
+								if ( pos2 < (size-1)  ) {
+									String text = model->getText();
+									const VCFChar* textBuffer = text.c_str();
+									
+									if ( textBuffer[pos2] == '\r' ) {
+										if ( textBuffer[pos2+1] == '\n' ) {
+											length += 1;
+										}
+									}
+								}
 
 								//Debug diagnostics - JC
 								//String text = model->getText();
@@ -270,10 +286,25 @@ void TextControl::handleEvent( Event* event )
 						break;
 
 						case vkBackSpace : {
-							ulong32 pos =  minVal<ulong32>( model->getSize()-1, textPeer_->getSelectionStart() );
+							ulong32 pos =  minVal<ulong32>( model->getSize(), textPeer_->getSelectionStart() );
+							pos -= 1;
 
 							if ( pos >= 0 ) {
 								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
+
+								// workaround for a '\r\n' sequence: we need to
+								// delete '\r' too at the beginning of the selection
+								if ( pos > 0 ) {
+									String text = model->getText();
+									const VCFChar* textBuffer = text.c_str();
+									
+									if ( textBuffer[pos] == '\n' ) {
+										if ( textBuffer[pos-1] == '\r' ) {
+											pos -= 1;
+											length += 1;
+										}
+									}
+								}
 								
 								//Debug diagnostics - JC
 								//String text = model->getText();								
@@ -322,6 +353,36 @@ void TextControl::handleEvent( Event* event )
 						case vkDownArrow :
 						case vkUpArrow : {
 							//no-op for these, since we don't want to add/delete text for them
+						}
+						break;
+
+						/**
+						JC - added this to account for tab entry - 
+						sometimes you'd end up with a tab character entered when all you 
+						wanted was to tab to the next control
+						*/
+						case vkTab : {
+							if ( keepsTabKey() ) {
+								//process the tab
+								
+								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
+									ulong32 pos =  textPeer_->getCaretPosition();
+									String text;
+									text += ke->getKeyValue();
+									
+									//determnine if we have sleected text. If we 
+									//have, then delete the selection ant *then*
+									//add in the new character(s)
+									
+									ulong32 length = textPeer_->getSelectionCount();
+									if ( length > 0 ) {
+										model->deleteText( pos, length );
+									}
+									
+									
+									model->insertText( pos, text );
+								}
+							}
 						}
 						break;
 
@@ -407,6 +468,9 @@ void TextControl::setReadOnly( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2004/12/16 04:10:43  ddiego
+*fixes for bug 1081652, the actual fix came from Marcello.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -24,7 +24,7 @@ import string
 
 def main():
 	
-	ISS = "\"D:/Program Files/Inno Setup 4/ISCC.exe\""
+	ISS = "\"c:/Program Files/Inno Setup 4/ISCC.exe\""
 
 	VCF_VERSION=''
 	VCF_VERSION_STAGE= ''
