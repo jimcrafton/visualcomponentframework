@@ -119,8 +119,9 @@
    So, as you can see, the simple adddition of a property can be 
    accomplished through the PROPERTY macro, and specifying the 
    apropriate parameters. Let's quickly run through what the parameters 
-   are and then we'll see wht this actually gives you. The first 
-   parameter is the C++ primitive type, i.e. <SPAN STYLE="font-weight : bold;">int</SPAN>,
+   are and then we'll see what this actually gives you.</P>
+  <P>
+   The first parameter is the C++ primitive type, i.e. <SPAN STYLE="font-weight : bold;">int</SPAN>,
     <SPAN STYLE="font-weight : bold;">double</SPAN>, <SPAN STYLE="font-weight : bold;">float</SPAN>,
     etc. The next parameter is the string name of the property. The 
    naming convention of the VCF is to use the property name (such as 
@@ -131,9 +132,10 @@
    functions of the specific property. Please note how they are 
    specified: Class name, followed by the double colon and then the 
    function itself. The last parameter is the enum type that identifies 
-   the C++ type to it's corresponding VCF property type. So now that we 
-   have this let's look at some sample code to see just what we can do 
-   with these properties!</P><PRE><FONT
+   the C++ type to it's corresponding VCF property type.</P>
+  <P>
+   So now that we have this let's look at some sample code to see just 
+   what we can do with these properties!</P><PRE><FONT
     COLOR="GRAY"><SPAN STYLE="font-weight : bold;">1</SPAN></FONT> <SPAN STYLE="font-weight : bold;">int</SPAN> main()<BR><SPAN
     STYLE="font-weight : bold;"><FONT COLOR="GRAY">2</FONT></SPAN> {<BR><SPAN
     STYLE="font-weight : bold;"><FONT COLOR="GRAY">3</FONT></SPAN>     initFoundationKit();<BR><SPAN
@@ -153,48 +155,79 @@
     STYLE="font-weight : bold;"><FONT COLOR="GRAY">17</FONT></SPAN>                String stringVal = propValue-&gt;toString();<BR><SPAN
     STYLE="font-weight : bold;"><FONT COLOR="GRAY">18</FONT></SPAN><BR><SPAN
     STYLE="font-weight : bold;"><FONT COLOR="GRAY">19</FONT></SPAN>                std::cout &lt;&lt; stringVal &lt;&lt; std::endl;<BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">20</FONT></SPAN>            }<BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">21</FONT></SPAN>        } <BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">22</FONT></SPAN>    }<BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">23</FONT></SPAN>    Property* propIQ = clazz-&gt;getProperty( &quot;IQ&quot; );<BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">24</FONT></SPAN>    if ( NULL != propIQ ) {<BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">25</SPAN></FONT>        propIQ-&gt;set( &quot;200&quot; );<BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">2</SPAN></FONT><SPAN STYLE="font-weight : bold;"><FONT COLOR="GRAY">6</FONT></SPAN><BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">27</SPAN></FONT>        VariantData newVal;<BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">28</SPAN></FONT>        newVal = 50;<BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">29</SPAN></FONT>                <BR><FONT
-    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">30</SPAN></FONT>        propIQ-&gt;set( &amp;newVal );          <BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">31</FONT></SPAN>    }   <BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">32</FONT></SPAN><BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">33</FONT></SPAN>    <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><SPAN
-    STYLE="font-weight : bold;"><FONT COLOR="GRAY">34</FONT></SPAN> }</PRE><P>
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">20</FONT></SPAN>                <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">21</FONT></SPAN>                std::cout &lt;&lt; property-&gt;getName() &lt;&lt; std::endl;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">22</FONT></SPAN>            }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">23</FONT></SPAN>        } <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">24</FONT></SPAN>    }<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">25</FONT></SPAN>    Property* propIQ = clazz-&gt;getProperty( &quot;IQ&quot; );<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">26</FONT></SPAN>    if ( NULL != propIQ ) {<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">27</SPAN></FONT>        propIQ-&gt;set( &quot;200&quot; );<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">2</SPAN></FONT><SPAN STYLE="font-weight : bold;"><FONT COLOR="GRAY">8</FONT></SPAN><BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">29</SPAN></FONT>        VariantData newVal;<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">30</SPAN></FONT>        newVal = 50;<BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">31</SPAN></FONT>                <BR><FONT
+    COLOR="GRAY"><SPAN STYLE="font-weight : bold;">32</SPAN></FONT>        propIQ-&gt;set( &amp;newVal );            <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">33</FONT></SPAN>    }   <BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">34</FONT></SPAN><BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">35</FONT></SPAN>    <SPAN STYLE="font-weight : bold;">return</SPAN> <FONT COLOR="FUCHSIA">0</FONT>;<BR><SPAN
+    STYLE="font-weight : bold;"><FONT COLOR="GRAY">36</FONT></SPAN> }</PRE><P>
    Similar to the previous demo, lines 1-9 create a new instance of an 
    Employee and then retrieve a pointer to it's Class. Line 10 may need 
    a bit of explaining though. You'll notice that the properties 
-   variable is a pointer to a templated class Enumerator, with the class 
-   type specified as Property*. The Enumerator class basically provides 
-   a &quot;mask&quot; around the various STL collection iterators, 
-   allowing the developer to iteratively walk the collection forwards or 
-   backwards, and to determine whether or not the end (or begining) has 
-   been reached. This hides the actual collection implementation, 
-   whether it be a vector, list, or map (or theoretically any collection 
-   whose iterator supports ++ and -- operators). Those of you who are 
-   familiar with Java will recognive the interface from Iterator. So we 
-   loop till our properties enumerator has no more elements, each time 
-   calling nextElement() to return the next Property pointer in the 
-   enumeration. Once we have the property (line 13) we can retrieve it's 
-   value by calling get() on the property (line 15). This returns us a 
-   VariantData pointer, which is discussed in more depth in the <A HREF="Variable_Data_Types.htm">RTTI
-    section</A>, but simply put, allows us to dynamically assign and 
-   retreive a wide variety of different data types through a single 
-   object. We can print out the value of the property by calling the 
-   VariantData's toString() function.</P>
+   variable is a pointer to a templated class called an <SPAN STYLE="font-weight : normal;">Enumerator</SPAN>,
+    with the class type specified as Property*. The Enumerator class 
+   basically provides a &quot;mask&quot; around the various STL 
+   collection iterators, allowing the developer to iteratively walk the 
+   collection forwards or backwards, and to determine whether or not the 
+   end (or begining) has been reached. This hides the actual collection 
+   implementation, whether it be a vector, list, or map (or 
+   theoretically any collection whose iterator supports ++ and -- 
+   operators). Those of you who are familiar with Java will recognive 
+   the interface from Iterator. So we loop till our properties 
+   enumerator has no more elements, each time calling nextElement() to 
+   return the next Property pointer in the enumeration. Once we have the 
+   property (line 13) we can retrieve it's value by calling get() on the 
+   property (line 15). This returns us a VariantData pointer, which is 
+   discussed in more depth in the <A HREF="Variable_Data_Types.htm">RTTI section</A>,
+    but simply put, allows us to dynamically assign and retreive a wide 
+   variety of different data types through a single object. We can print 
+   out the value of the property by calling the VariantData's toString() 
+   function. To obtain the name of the property we can call it's 
+   getName() method, as seen in line 21.</P>
   <P>
-   To set a value on the property we can call the set method, either 
-   passing in a string value (as in line 25), or a pointer to a 
+   An alternate way to get a property, if we are looking for a specific 
+   one, is to call the Class's getProperty() method, passing in the name 
+   of the property we wish to search for, in this case we are looking 
+   for a property named &quot;IQ&quot; (line 25). If the search is 
+   succesful we are returned a pointer to a property, otherwise we get a 
+   NULL pointer back.</P>
+  <P>
+   To set a value on the property we can call the set() method, either 
+   passing in a string value (as in line 27), or a pointer to a 
    VariantData. In our example above we pass in the string 
    &quot;200&quot; which is automatically translated into the correct 
-   type if possible, and then a VariantData set to the integer value 50.
+   type if possible (in this case it will be translated into an <SPAN STYLE="font-weight : bold;">int</SPAN>),
+    and then a VariantData set to the integer value 50.</P>
+  <P>
+   So, as you can see, the simple of addition of the PROPERTY macro to 
+   your class definition gives you a great deal of additional power and 
+   flexibility at runtime. The ability to dynamically query for an 
+   objects properties at runtime, and to discover information about 
+   their types, names, and setting and retreiving data from the property 
+   are all extremely useful features, and allows the VCF to perform many 
+   things that it would otherwise be unable to do.</P>
+  <P>
+   In addition to the PROPERTY macro there are other macros as well. We 
+   won't cover their usage here, but briefly, they allow you to specify 
+   that a property is a read only property, and to specify that a 
+   property's data type is an Object derived type (which need to handled 
+   a bit differently internally in the VCF, but otherwise the usage of 
+   the dynamic properties are the same), and to support collections of 
+   data. For more on this please see the <A HREF="Properties.htm">Properties</A> topic.</P>
+  <P>
+   So, we've added RTTI, now lets move on to the next exciting tutorial 
+   where we'll add the ability for our Employee class to fire events! 
  <OBJECT
  CLASSID="clsid:ADB880A6-D8FF-11CF-9377-00AA003B7A11"
  ID="hhctrl"

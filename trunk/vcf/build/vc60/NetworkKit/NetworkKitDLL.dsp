@@ -80,10 +80,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 FoundationKitDLL_d.lib Ws2_32.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\lib/NetworkKitDLL_d.dll" /pdbtype:sept /libpath:"..\..\..\lib"
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Cmds=copy ..\..\..\lib\NetworkKitDLL_d.dll ..\..\..\debug\NetworkKitDLL_d.dll
-# End Special Build Tool
 
 !ENDIF 
 
@@ -105,6 +101,14 @@ SOURCE=..\..\..\src\net\ServerSocketEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\net\Socket.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\net\SocketEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\net\SocketListeningLoop.cpp
 # End Source File
 # Begin Source File
 
@@ -136,7 +140,19 @@ SOURCE=..\..\..\include\net\Socket.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\net\SocketEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\net\SocketException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketListener.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\net\SocketListeningLoop.h
 # End Source File
 # Begin Source File
 
