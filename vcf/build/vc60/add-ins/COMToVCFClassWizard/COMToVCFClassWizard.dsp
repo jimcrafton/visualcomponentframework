@@ -155,6 +155,10 @@ SOURCE=.\shadow.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SourceFormattingOptionsPage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -220,6 +224,10 @@ SOURCE=.\shadow.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SourceFormattingOptionsPage.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.h
 # End Source File
 # Begin Source File
@@ -254,6 +262,26 @@ SOURCE=.\util.h
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\res\bitmap1.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap2.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap3.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap4.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bmp00001.bmp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Commands.rgs

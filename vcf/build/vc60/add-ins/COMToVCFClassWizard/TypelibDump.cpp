@@ -390,9 +390,18 @@ BSTR VTtoString( VARTYPE vt )
 	vt &= ~0xF000 ;
 	if (vt <= VT_CLSID) {
 		str = g_rgszVT[vt]  ;
-		std::map<CString,CString>::iterator found = TypeLibraryConverterDlg::g_TypeConversionMap.find( CString((TCHAR*)str) );
+		CString tmp = (TCHAR*)str;
+		bool isPointer = false;
+		if ( tmp.GetAt(tmp.GetLength()-1) == '*' ) {
+			isPointer = true;
+			tmp.Delete(tmp.GetLength()-1,1); 
+		}
+		std::map<CString,CString>::iterator found = TypeLibraryConverterDlg::g_TypeConversionMap.find( tmp );
 		if ( found != TypeLibraryConverterDlg::g_TypeConversionMap.end() ) {
 			str = found->second;
+			if ( true == isPointer ) {
+				str += "*";
+			}
 		}
 	}
 	else
@@ -1132,6 +1141,7 @@ HRESULT GenerateMethod( ITypeInfo* pMethodTypeInfo, long methodID, MethodHolder*
 	else if ((pfuncdesc->invkind & INVOKE_PROPERTYPUT) || (pfuncdesc->invkind & INVOKE_PROPERTYPUTREF)) {		
 		pMethod->m_isPropertySetter = true;
 	}
+	pMethod->m_methodName = rgbstrNames[0];
 	method += rgbstrNames[0];
 	method += "( ";
 	
@@ -1163,6 +1173,9 @@ HRESULT GenerateMethod( ITypeInfo* pMethodTypeInfo, long methodID, MethodHolder*
 					if ( p!=(pfuncdesc->cParams-1) ) {
 						method += ", ";
 					}
+
+					MethodArgumentHolder methodArg( type, paramName );
+					pMethod->m_arguments.push_back( methodArg );
 				}
 			}
 		}

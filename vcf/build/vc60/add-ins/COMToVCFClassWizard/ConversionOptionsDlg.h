@@ -32,6 +32,8 @@ public:
 	BOOL	m_singleUnitPerClass;
 	CString	m_classPrefix;
 	BOOL	m_implementToString;
+	CString	m_baseClass;
+	BOOL	m_useVCF_RTTI;
 	//}}AFX_DATA
 
 	int m_fileDistributionType;
@@ -50,6 +52,8 @@ protected:
 	//{{AFX_MSG(ConversionOptionsDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSingleUnitPerClass();
+	afx_msg void OnEditchangeBaseClass();
+	afx_msg void OnUseVcfRtti();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -31,6 +31,33 @@ public:
 	std::vector<MethodHolder*> m_methods;
 };
 
+class MethodArgumentHolder {
+public:
+	MethodArgumentHolder() {
+		m_argType = "";
+		m_argName = "";
+	}
+
+	MethodArgumentHolder( _bstr_t argType, _bstr_t argName) {
+		m_argType = argType.copy();
+		m_argName = argName.copy();
+	}
+
+	MethodArgumentHolder( const MethodArgumentHolder& mah ) {
+		m_argType = mah.m_argType.copy();
+		m_argName = mah.m_argName.copy();
+	}
+	
+	MethodArgumentHolder& operator= ( const MethodArgumentHolder& mah ) {
+		m_argType = mah.m_argType.copy();
+		m_argName = mah.m_argName.copy();
+		return *this;
+	}
+	
+	_bstr_t m_argType;
+	_bstr_t m_argName;
+};
+
 class MethodHolder {
 public:
 	MethodHolder() {
@@ -39,14 +66,21 @@ public:
 		m_returnType = "";
 		m_declaration = "";
 		m_methodID = "";
+		m_methodName = "";
 	}
-
+	
+	virtual ~MethodHolder() {
+		m_arguments.clear();
+	}
 
 	_bstr_t m_returnType;
 	_bstr_t m_declaration;	
 	_bstr_t m_methodID;
+	_bstr_t m_methodName;
 	bool m_isPropertyGetter;
-	bool m_isPropertySetter;	
+	bool m_isPropertySetter;
+	
+	std::vector<MethodArgumentHolder> m_arguments;
 };
 
 

@@ -26,6 +26,8 @@ ConversionOptionsDlg::ConversionOptionsDlg()
 	m_singleUnitPerClass = TRUE;
 	m_classPrefix = _T("");
 	m_implementToString = FALSE;
+	m_baseClass = _T("");
+	m_useVCF_RTTI = FALSE;
 	//}}AFX_DATA_INIT
 
 	m_fileDistributionType = SINGLE_FILE_FOR_TLB;
@@ -35,6 +37,11 @@ ConversionOptionsDlg::ConversionOptionsDlg()
 void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
+
+	if ( m_baseClass != "VCF::Object" ) {
+		m_useVCF_RTTI = FALSE;
+	}
+
 	//{{AFX_DATA_MAP(ConversionOptionsDlg)
 	DDX_CBString(pDX, IDC_GET_METHOD, m_getMethodPrefix);
 	DDX_CBString(pDX, IDC_SET_METHOD, m_setMethodPrefix);
@@ -42,7 +49,10 @@ void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_SINGLE_UNIT_PER_CLASS, m_singleUnitPerClass);
 	DDX_Text(pDX, IDC_CLASS_PREFIX, m_classPrefix);
 	DDX_Check(pDX, IDC_TO_STRING, m_implementToString);
+	DDX_CBString(pDX, IDC_BASE_CLASS, m_baseClass);
+	DDX_Check(pDX, IDC_USE_VCF_RTTI, m_useVCF_RTTI);
 	//}}AFX_DATA_MAP
+
 
 	if ( pDX->m_bSaveAndValidate ) {
 		CButton* btn = (CButton*)this->GetDlgItem( IDC_ENTIRE_TYPELIB );
@@ -59,6 +69,9 @@ void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 		if ( btn->GetCheck() ) {			
 			m_fileDistributionType = SINGLE_FILE_FOR_IFACE_TYPEDEF_COCLASS;
 		}
+		CWnd* wnd = this->GetDlgItem( IDC_USE_VCF_RTTI );
+		wnd->EnableWindow( this->m_baseClass == "VCF::Object" );
+		
 	}
 	else {
 		CWnd* wnd = this->GetDlgItem( IDC_SINGLE_FILE_CHOICE );
@@ -92,6 +105,9 @@ void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 			}
 			break;
 		}
+
+		wnd = this->GetDlgItem( IDC_USE_VCF_RTTI );
+		wnd->EnableWindow( this->m_baseClass == "VCF::Object" );
 	}
 }
 
@@ -99,6 +115,8 @@ void ConversionOptionsDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(ConversionOptionsDlg, CPropertyPage)
 	//{{AFX_MSG_MAP(ConversionOptionsDlg)
 	ON_BN_CLICKED(IDC_SINGLE_UNIT_PER_CLASS, OnSingleUnitPerClass)
+	ON_CBN_EDITCHANGE(IDC_BASE_CLASS, OnEditchangeBaseClass)
+	ON_BN_CLICKED(IDC_USE_VCF_RTTI, OnUseVcfRtti)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -121,4 +139,16 @@ void ConversionOptionsDlg::OnSingleUnitPerClass()
 	this->m_singleUnitPerClass = !m_singleUnitPerClass;
 	//this->UpdateData();
 	this->UpdateData( FALSE );
+}
+
+void ConversionOptionsDlg::OnEditchangeBaseClass() 
+{	
+	UpdateData(TRUE);
+}
+
+void ConversionOptionsDlg::OnUseVcfRtti() 
+{
+	this->m_useVCF_RTTI = !m_useVCF_RTTI;
+
+	UpdateData(FALSE);
 }

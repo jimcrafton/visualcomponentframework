@@ -9,6 +9,7 @@
 #include "ConversionOptionsDlg.h"
 #include "TypelibDump.h"
 #include "TypeConversionOptionsPage.h"
+#include "SourceFormattingOptionsPage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -73,6 +74,8 @@ END_MESSAGE_MAP()
 
 BOOL TypeLibraryConverterDlg::OnInitDialog()
 {
+	//
+
 	CDialog::OnInitDialog();
 
 	LoadSettingsFromRegistry();
@@ -85,21 +88,25 @@ BOOL TypeLibraryConverterDlg::OnInitDialog()
 
 	m_imageList.Create( 16, 16, ILC_COLOR4 | ILC_MASK, 0, 5 );
 	CBitmap bmp;
-	bmp.LoadBitmap( IDB_TYPELIB );
-	m_imageList.Add( &bmp, RGB(0,255,0) );
-	bmp.Detach();
-
-	bmp.LoadBitmap( IDB_INTERFACE );
-	m_imageList.Add( &bmp, RGB(0,255,0) );
-	bmp.Detach();
-
-	bmp.LoadBitmap( IDB_COCLASS );
-	m_imageList.Add( &bmp, RGB(0,255,0) );
-	bmp.Detach();	
-
-	bmp.LoadBitmap( IDB_INSERTABLE_COCLASS );
-	m_imageList.Add( &bmp, RGB(0,255,0) );
-	bmp.Detach();
+	{
+		AFX_MANAGE_STATE( AfxGetModuleState() );
+		bmp.LoadBitmap( IDB_TYPELIB );
+		m_imageList.Add( &bmp, RGB(0,255,0) );
+		bmp.Detach();
+		
+		bmp.LoadBitmap( IDB_INTERFACE );
+		m_imageList.Add( &bmp, RGB(0,255,0) );
+		bmp.Detach();
+		
+		bmp.LoadBitmap( IDB_COCLASS );
+		m_imageList.Add( &bmp, RGB(0,255,0) );
+		bmp.Detach();	
+		
+		bmp.LoadBitmap( IDB_INSERTABLE_COCLASS );
+		m_imageList.Add( &bmp, RGB(0,255,0) );
+		bmp.Detach();
+	}
+	
 
 	this->m_typeLibList.SetImageList( &m_imageList, LVSIL_SMALL );
 
@@ -125,6 +132,7 @@ BOOL TypeLibraryConverterDlg::OnInitDialog()
 
 void TypeLibraryConverterDlg::ExpandTypeLibs()
 {
+	AFX_MANAGE_STATE( AfxGetModuleState() );
 	USES_CONVERSION;
 	HKEY    hkTypeLib ;
 	if (RegOpenKey( HKEY_CLASSES_ROOT, _T("TypeLib"), &hkTypeLib) == ERROR_SUCCESS)
@@ -176,12 +184,11 @@ void TypeLibraryConverterDlg::ExpandTypeLibs()
 						item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 						item.iItem  = dwIndex;
 						item.iImage = 0;
-						item.lParam = (LPARAM)pTLBEntry;
+						item.lParam = (LPARAM)pTLBEntry;						
 						pTLBEntry->m_tlbName = szBuf;
 						item.pszText = szBuf;
 						item.cchTextMax = strlen( szBuf );
-						m_typeLibList.InsertItem( &item );
-						
+						m_typeLibList.InsertItem( &item );						
 					}
 				}
 				RegCloseKey( hkGUID ) ;
@@ -302,10 +309,13 @@ void TypeLibraryConverterDlg::OnOptions()
 
 	ConversionOptionsDlg page1;
 	TypeConversionOptionsPage page2;
+	SourceFormattingOptionsPage page3;
 
 	dlg.AddPage( &page1 );
 	dlg.AddPage( &page2 );
-	dlg.SetTitle( "Options" );
+	dlg.AddPage( &page3 );
+	dlg.SetTitle( "Options" );	
+	dlg.m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
 	page1.m_classPrefix = this->m_classPrefix;
 	page1.m_getMethodPrefix = this->m_getMethodPrefix;
@@ -313,6 +323,13 @@ void TypeLibraryConverterDlg::OnOptions()
 	page1.m_setMethodPrefix = this->m_setMethodPrefix;
 	page1.m_singleUnitPerClass = this->m_singleUnitPerClass;
 	page1.m_fileDistributionType = this->m_fileDistributionType;
+	page1.m_baseClass = this->m_baseClass;
+
+	page3.m_useFunctionComments = this->m_useFunctionComments;
+	page3.m_useCPPComments = this->m_useCPPComments;
+	page3.m_useLowerCaseFuncNames = this->m_useLowerCaseFuncNames;
+	page3.m_useJavaDocParamComments = this->m_useJavaDocParamComments;	
+	
 	if ( IDOK == dlg.DoModal() ) {
 		this->m_classPrefix = page1.m_classPrefix;
 		this->m_getMethodPrefix = page1.m_getMethodPrefix;
@@ -320,8 +337,67 @@ void TypeLibraryConverterDlg::OnOptions()
 		this->m_setMethodPrefix = page1.m_setMethodPrefix;
 		this->m_singleUnitPerClass = page1.m_singleUnitPerClass;
 		this->m_fileDistributionType = page1.m_fileDistributionType;
+		this->m_baseClass = page1.m_baseClass;
+
+		this->m_useFunctionComments = page3.m_useFunctionComments;
+		this->m_useCPPComments = page3.m_useCPPComments;
+		this->m_useLowerCaseFuncNames = page3.m_useLowerCaseFuncNames;
+		this->m_useJavaDocParamComments = page3.m_useJavaDocParamComments;
+
 		this->SaveSettingsToRegistry();
 	}
+}
+
+CString TypeLibraryConverterDlg::GenerateMethodComments( MethodHolder* pMethod, int indent )
+{
+	CString result = "";
+	CString tabString = "";
+	for (int i=0;i<indent;i++) {
+		tabString += "\t";
+	}
+	if ( this->m_useFunctionComments ) {
+		if ( this->m_useCPPComments ) {
+			result += tabString + "//\n";
+			int argCount = pMethod->m_arguments.size();
+				for ( int i=0;i<argCount;i++) {
+					MethodArgumentHolder& arg = pMethod->m_arguments[i];
+					result += tabString + "//@param ";
+					result += arg.m_argType;
+					result += " " + arg.m_argName;
+					result += " - \n";
+				}
+
+				CString returnType = (TCHAR*)pMethod->m_returnType;
+				if ( returnType != "void" ) {
+					result += tabString + "//@return " + returnType + " - \n";
+				}
+		}
+		else {
+			if ( this->m_useJavaDocParamComments ) {
+				result += tabString +"/**\n";// + tabString + "*\n" + tabString + "*/\n";
+				int argCount = pMethod->m_arguments.size();
+				for ( int i=0;i<argCount;i++) {
+					MethodArgumentHolder& arg = pMethod->m_arguments[i];
+					result += tabString + "*@param ";
+					result += arg.m_argType;
+					result += " " + arg.m_argName;
+					result += " - \n";
+				}
+
+				CString returnType = (TCHAR*)pMethod->m_returnType;
+				if ( returnType != "void" ) {
+					result += tabString + "*@return " + returnType + " - \n";
+				}
+				result += tabString + "*/\n";
+			}
+			else {
+				result += tabString +"/**\n" + tabString + "*\n" + tabString + "*/\n";	
+			}
+			
+		}			
+	}
+	
+	return result;
 }
 
 CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass, TypeLibHolder* pTypeLibHolder )
@@ -351,12 +427,25 @@ CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass,
 	coClassName += "_CLASSID";
 	header += "#define " + coClassName + " \t\t\"";
 	header += uuid + "\"\n";
-	header += "/**\n";
-	header += "*class " + pCoClass->m_className + "\n";
-	header += "*UUID: " + uuid + "\n";
-	header += "*ProgID: " + pCoClass->m_progID + "\n";
-	header += "*/\n";
-	header += "class " + pCoClass->m_className + " : public VCF::Object";
+	if ( this->m_useCPPComments ) {		
+		header += "//class " + pCoClass->m_className + "\n";
+		header += "//UUID: " + uuid + "\n";
+		header += "//ProgID: " + pCoClass->m_progID + "\n";
+	}
+	else {
+		header += "/**\n";
+		header += "*class " + pCoClass->m_className + "\n";
+		header += "*UUID: " + uuid + "\n";
+		header += "*ProgID: " + pCoClass->m_progID + "\n";
+		header += "*/\n";
+	}
+	
+	if ( m_baseClass.GetLength() > 0 ) {
+		header += "class " + pCoClass->m_className + " : public " + m_baseClass;
+	}
+	else {
+		header += "class " + pCoClass->m_className;
+	}
 	
 	CString s;
 	s += "Adding CoClass " + pCoClass->m_className + "...";
@@ -364,7 +453,12 @@ CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass,
 	
 	int interfaceCount = pCoClass->m_implementedInterfaces.size();
 	if ( interfaceCount > 0 ) {
-		header += ", ";
+		if ( m_baseClass.GetLength() > 0 ) {
+			header += ", ";
+		}
+		else {
+			header += " : ";
+		}
 	}
 	for ( int j=0;j<interfaceCount;j++) {
 		InterfaceHolder* pImplInterface = pCoClass->m_implementedInterfaces[j];
@@ -396,15 +490,47 @@ CString TypeLibraryConverterDlg::GenerateCoClassHeader( CoClassHolder* pCoClass,
 			UpdateProgress( s );
 			
 			MethodHolder* pMethod = pImplInterface->m_methods[m];
+			
+			header += GenerateMethodComments( pMethod, 1 );
 			header += "\tvirtual " + pMethod->m_returnType + " ";
+			
+			CString methodName = "";
 			if ( pMethod->m_isPropertyGetter ) {
-				header += this->m_getMethodPrefix;
+				methodName += this->m_getMethodPrefix;
 			}
 			else if ( pMethod->m_isPropertySetter ) {
-				header += this->m_setMethodPrefix;
+				methodName += this->m_setMethodPrefix;
 			}
+			methodName += pMethod->m_methodName;
+			if ( this->m_useLowerCaseFuncNames ) {
+				CString lwr = methodName.GetAt(0);
+				lwr.MakeLower();
+				methodName.Delete(0,1);
+				methodName = lwr + methodName;
+			}		
+			header += methodName;			
+
+			std::vector<MethodArgumentHolder>::iterator argIter = pMethod->m_arguments.begin();
+			header += "(";
+			if ( pMethod->m_arguments.empty() ) {
+				header += " ";
+			}
+			else {	
+				int argCount = pMethod->m_arguments.size();
+				while ( argIter != pMethod->m_arguments.end() ) {
+					argCount --;
+					MethodArgumentHolder& arg = *argIter;
+					header += " " + arg.m_argType + " " + arg.m_argName;	
+					if ( argCount > 0 ) {
+						header += ",";
+					}
+					argIter ++;
+				}
+				header += " ";
+			}
+			header += ");";
 			
-			header += pMethod->m_declaration + ";";
+			//header += pMethod->m_declaration + ";";
 			
 			CString siName = (TCHAR*)pImplInterface->m_superInterfaceName;
 			if ( siName == "IDispatch" ) {
@@ -488,8 +614,30 @@ CString TypeLibraryConverterDlg::GenerateCoClassImpl( CoClassHolder* pCoClass, T
 			else if ( pMethod->m_isPropertySetter ) {
 				coClassImpl += this->m_setMethodPrefix;
 			}
-			
-			coClassImpl += pMethod->m_declaration + "\n{\n";
+
+			coClassImpl += pMethod->m_methodName;
+			std::vector<MethodArgumentHolder>::iterator argIter = pMethod->m_arguments.begin();
+			coClassImpl += "(";
+			if ( pMethod->m_arguments.empty() ) {
+				coClassImpl += " ";
+			}
+			else {	
+				int argCount = pMethod->m_arguments.size();
+				while ( argIter != pMethod->m_arguments.end() ) {
+					argCount --;
+					MethodArgumentHolder& arg = *argIter;
+					coClassImpl += " " + arg.m_argType + " " + arg.m_argName;	
+					if ( argCount > 0 ) {
+						coClassImpl += ",";
+					}
+					argIter ++;
+				}
+				coClassImpl += " ";
+			}
+			coClassImpl += ");";
+
+			//coClassImpl += pMethod->m_declaration + "\n{\n";
+
 			if ( pMethod->m_isPropertyGetter ) {
 				coClassImpl += "\t" + pMethod->m_returnType + " result;\n\n";
 				coClassImpl += "\treturn result;\n";
@@ -511,10 +659,17 @@ CString TypeLibraryConverterDlg::GenerateInterface( InterfaceHolder* pInterface,
 	CString uuid = (TCHAR*)pInterface->m_interfaceID;
 	uuid.Delete(0,1);
 	uuid.Delete(uuid.GetLength()-1,1);
-	header += "/**\n";
-	header += "*Interface " + pInterface->m_interfaceName + "\n";
-	header += "*UUID: " + uuid + "\n";
-	header += "*/\n";
+	if ( this->m_useCPPComments ) {		
+		header += "//Interface " + pInterface->m_interfaceName + "\n";
+		header += "//UUID: " + uuid + "\n";
+	}
+	else {
+		header += "/**\n";
+		header += "*Interface " + pInterface->m_interfaceName + "\n";
+		header += "*UUID: " + uuid + "\n";
+		header += "*/\n";
+	}
+	
 	header += "class " + pInterface->m_interfaceName + " : public Interface { \n";
 	header += "public:\n";
 	header += "\tvirtual ~" + pInterface->m_interfaceName + "(){};\n\n";
@@ -527,15 +682,45 @@ CString TypeLibraryConverterDlg::GenerateInterface( InterfaceHolder* pInterface,
 		s = "";
 		s.Format( "Adding method %d of %d for interface %s", i, methodCount, (char*)pInterface->m_interfaceName );
 		UpdateProgress( s );
+
+		header += GenerateMethodComments( pMethod, 1 );
 		header += "\tvirtual " + pMethod->m_returnType + " ";
+		
+		CString methodName = "";
 		if ( pMethod->m_isPropertyGetter ) {
-			header += this->m_getMethodPrefix;
+			methodName += this->m_getMethodPrefix;
 		}
 		else if ( pMethod->m_isPropertySetter ) {
-			header += this->m_setMethodPrefix;
+			methodName += this->m_setMethodPrefix;
 		}
-		
-		header += pMethod->m_declaration + " = 0;";
+		methodName += pMethod->m_methodName;
+		if ( this->m_useLowerCaseFuncNames ) {
+			CString lwr = methodName.GetAt(0);
+			lwr.MakeLower();
+			methodName.Delete(0,1);
+			methodName = lwr + methodName;
+		}		
+		header += methodName;
+
+		std::vector<MethodArgumentHolder>::iterator argIter = pMethod->m_arguments.begin();
+		header += "(";
+		if ( pMethod->m_arguments.empty() ) {
+			header += " ";
+		}
+		else {	
+			int argCount = pMethod->m_arguments.size();
+			while ( argIter != pMethod->m_arguments.end() ) {
+				argCount --;
+				MethodArgumentHolder& arg = *argIter;
+				header += " " + arg.m_argType + " " + arg.m_argName;	
+				if ( argCount > 0 ) {
+					header += ",";
+				}
+				argIter ++;
+			}
+			header += " ";
+		}
+		header += ") = 0;";
 		
 		CString siName = (TCHAR*)pInterface->m_superInterfaceName;
 		if ( siName == "IDispatch" ) {
@@ -729,10 +914,17 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 		CString uuid = (TCHAR*)pInterface->m_interfaceID;
 		uuid.Delete(0,1);
 		uuid.Delete(uuid.GetLength()-1,1);
-		header += "/**\n";
-		header += "*Interface " + pInterface->m_interfaceName + "\n";
-		header += "*UUID: " + uuid + "\n";
-		header += "*/\n";
+		if ( this->m_useCPPComments ) {
+			header += "//Interface " + pInterface->m_interfaceName + "\n";
+			header += "//UUID: " + uuid + "\n";
+		}
+		else {
+			header += "/**\n";
+			header += "*Interface " + pInterface->m_interfaceName + "\n";
+			header += "*UUID: " + uuid + "\n";
+			header += "*/\n";
+		}
+		
 		header += "class " + pInterface->m_interfaceName + " : public Interface { \n";
 		header += "public:\n";
 		header += "\tvirtual ~" + pInterface->m_interfaceName + "(){};\n\n";
@@ -745,6 +937,7 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 			s = "";
 			s.Format( "Adding method %d of %d for interface %s", i, methodCount, (char*)pInterface->m_interfaceName );
 			UpdateProgress( s );
+			header += this->GenerateMethodComments( pMethod, 1 );
 			header += "\tvirtual " + pMethod->m_returnType + " ";
 			if ( pMethod->m_isPropertyGetter ) {
 				header += this->m_getMethodPrefix;
@@ -779,11 +972,20 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 		coClassName += "_CLASSID";
 		header += "#define " + coClassName + " \t\t\"";
 		header += uuid + "\"\n";
-		header += "/**\n";
-		header += "*class " + pCoClass->m_className + "\n";
-		header += "*UUID: " + uuid + "\n";
-		header += "*ProgID: " + pCoClass->m_progID + "\n";
-		header += "*/\n";
+
+		if ( this->m_useCPPComments ) {
+			header += "//class " + pCoClass->m_className + "\n";
+			header += "//UUID: " + uuid + "\n";
+			header += "//ProgID: " + pCoClass->m_progID + "\n";
+		}
+		else {
+			header += "/**\n";
+			header += "*class " + pCoClass->m_className + "\n";
+			header += "*UUID: " + uuid + "\n";
+			header += "*ProgID: " + pCoClass->m_progID + "\n";
+			header += "*/\n";
+		}
+		
 		header += "class " + pCoClass->m_className + " : public VCF::Object";
 		
 		CString s;
@@ -824,6 +1026,9 @@ void TypeLibraryConverterDlg::GenerateSingleFileForTLB( TypeLibHolder* pTypeLibH
 				UpdateProgress( s );
 				
 				MethodHolder* pMethod = pImplInterface->m_methods[m];
+				
+				header += this->GenerateMethodComments( pMethod, 1 );
+
 				header += "\tvirtual " + pMethod->m_returnType + " ";
 				if ( pMethod->m_isPropertyGetter ) {
 					header += this->m_getMethodPrefix;
@@ -1131,11 +1336,46 @@ void TypeLibraryConverterDlg::LoadSettingsFromRegistry()
 				delete [] buf;
 			}
 		}
+
+		err = RegQueryValueEx( settings, "baseClass", 0, &type, NULL, &size );
+		if ( err == ERROR_SUCCESS ){
+			if ( (type == REG_SZ) && (size > 0) ){
+				buf = new BYTE[size];
+				memset( buf, 0, size );
+				err = RegQueryValueEx( settings, "baseClass", 0, &type, buf, &size );
+				if ( err == ERROR_SUCCESS ){
+					m_baseClass = (char*)buf;
+				}				
+				delete [] buf;
+			}
+		}
+
+		
 		size = 4;
 		type = REG_DWORD;
 		DWORD boolVal = 0;
 		err = RegQueryValueEx( settings, "singleUnitPerClass", 0, &type, (BYTE*)&boolVal, &size );		
 		m_singleUnitPerClass = boolVal;
+
+		size = 4;
+		type = REG_DWORD;
+		boolVal = 0;
+		err = RegQueryValueEx( settings, "useFunctionComments", 0, &type, (BYTE*)&boolVal, &size );		
+		m_useFunctionComments = boolVal;
+
+		size = 4;
+		type = REG_DWORD;
+		boolVal = 0;
+		err = RegQueryValueEx( settings, "useCPPComments", 0, &type, (BYTE*)&boolVal, &size );		
+		m_useCPPComments = boolVal;
+
+		size = 4;
+		type = REG_DWORD;
+		boolVal = 0;
+		err = RegQueryValueEx( settings, "useJavaDocParamComments", 0, &type, (BYTE*)&boolVal, &size );		
+		m_useJavaDocParamComments = boolVal;
+
+		
 
 		size = 4;
 		type = REG_DWORD;
@@ -1173,12 +1413,29 @@ void TypeLibraryConverterDlg::CreateRegistrySettings()
 		err = RegSetValueEx( settings, "classPrefix", 0, REG_SZ, val, m_classPrefix.GetLength() );
 		m_classPrefix.ReleaseBuffer();
 
+		val = (const unsigned char*)m_baseClass.GetBuffer(0);
+		err = RegSetValueEx( settings, "baseClass", 0, REG_SZ, val, m_baseClass.GetLength() );
+		m_baseClass.ReleaseBuffer();
+		
+
 		DWORD boolval = (DWORD)m_singleUnitPerClass;
 		err = RegSetValueEx( settings, "singleUnitPerClass", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
 
 		DWORD dwVal = m_fileDistributionType;
 		err = RegSetValueEx( settings, "fileDistribution", 0, REG_DWORD, (BYTE*)&dwVal, sizeof(dwVal) );
 		
+		boolval = (DWORD)m_useFunctionComments;
+		err = RegSetValueEx( settings, "useLowerCaseFuncNames", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useCPPComments;
+		err = RegSetValueEx( settings, "useCPPComments", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useLowerCaseFuncNames;
+		err = RegSetValueEx( settings, "useLowerCaseFuncNames", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+		
+		boolval = (DWORD)m_useJavaDocParamComments;
+		err = RegSetValueEx( settings, "useJavaDocParamComments", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
 		RegCloseKey( settings );
 	}
 }
@@ -1208,12 +1465,29 @@ void TypeLibraryConverterDlg::SaveSettingsToRegistry()
 		err = RegSetValueEx( settings, "classPrefix", 0, REG_SZ, val, m_classPrefix.GetLength() );
 		m_classPrefix.ReleaseBuffer();
 
+		val = (const unsigned char*)m_baseClass.GetBuffer(0);
+		err = RegSetValueEx( settings, "baseClass", 0, REG_SZ, val, m_baseClass.GetLength() );
+		m_baseClass.ReleaseBuffer();
+
 		DWORD boolval = (DWORD)m_singleUnitPerClass;
 		err = RegSetValueEx( settings, "singleUnitPerClass", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useFunctionComments;
+		err = RegSetValueEx( settings, "useLowerCaseFuncNames", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useCPPComments;
+		err = RegSetValueEx( settings, "useCPPComments", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useLowerCaseFuncNames;
+		err = RegSetValueEx( settings, "useLowerCaseFuncNames", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+
+		boolval = (DWORD)m_useJavaDocParamComments;
+		err = RegSetValueEx( settings, "useJavaDocParamComments", 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
 
 		DWORD dwVal = m_fileDistributionType;
 		err = RegSetValueEx( settings, "fileDistribution", 0, REG_DWORD, (BYTE*)&dwVal, sizeof(dwVal) );
 
+		
 		RegCloseKey( settings );
 	}
 	else {
@@ -1352,3 +1626,6 @@ void TypeLibraryConverterDlg::OnAddToProject()
 	this->m_addToProject = !m_addToProject;
 	UpdateData();
 }
+
+
+
