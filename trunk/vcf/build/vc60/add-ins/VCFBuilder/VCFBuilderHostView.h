@@ -53,7 +53,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	
-	VCFBuilder::MainUIPanel * m_vcfBuilderUIPanel;
+	//VCFBuilder::MainUIPanel * m_vcfBuilderUIPanel;
 };
 
 /////////////////////////////////////////////////////////////////////////////

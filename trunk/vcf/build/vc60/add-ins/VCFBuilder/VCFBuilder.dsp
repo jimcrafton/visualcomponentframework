@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ApplicationKit.lib GraphicsKit.lib FoundationKit.lib rpcrt4.lib VCFBuilderUI.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin\VCFBuilder.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
+# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\VCFBuilder2\Bin\VCFBuilder.dll" /pdbtype:sept /libpath:"..\..\..\..\VCFBuilder2\Packages" /libpath:"$(VCF_LIB)"
 
 !ENDIF 
 
@@ -101,6 +101,15 @@ SOURCE=.\DevStudioMainWnd.cpp
 # Begin Source File
 
 SOURCE=.\DevStudioMDIClientWnd.cpp
+
+!IF  "$(CFG)" == "VCFBuilder - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -135,6 +144,13 @@ SOURCE=.\VCFBuilder.rc
 # Begin Source File
 
 SOURCE=.\VCFBuilderHostView.cpp
+
+!IF  "$(CFG)" == "VCFBuilder - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "VCFBuilder - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
