@@ -5,6 +5,8 @@
 #include "vcfwizard.h"
 #include "chooser.h"
 #include "Page1Dlg.h"
+#include "Page2Dlg.h"
+#include "Page3Dlg.h"
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -17,6 +19,10 @@ CDialogChooser::CDialogChooser()
 	m_pDlgs[0] = NULL;
 
 	m_pDlgs[1] = new Page1Dlg;	
+
+	m_pDlgs[2] = new Page2Dlg;
+
+	m_pDlgs[3] = new Page3Dlg;
 
 	m_nCurrDlg = 0;
 }
@@ -54,4 +60,28 @@ CAppWizStepDlg* CDialogChooser::Back(CAppWizStepDlg* pDlg)
 
 	m_nCurrDlg--;
 	return m_pDlgs[m_nCurrDlg];
+}
+
+int CDialogChooser::GetLinkType()
+{
+	Page2Dlg* dlg = (Page2Dlg*)m_pDlgs[2];
+	return dlg->m_LibLinkage;
+}
+
+BOOL CDialogChooser::NeedVCFNet()
+{
+	Page3Dlg* dlg = (Page3Dlg*)m_pDlgs[3];
+	return dlg->m_useVCFNet;
+}
+
+BOOL CDialogChooser::NeedVCFRemote()
+{
+	Page3Dlg* dlg = (Page3Dlg*)m_pDlgs[3];
+	return dlg->m_useVCFRemote;
+}
+
+BOOL CDialogChooser::NeedsOpenGLSupport()
+{
+	Page3Dlg* dlg = (Page3Dlg*)m_pDlgs[3];
+	return dlg->m_useOpenGL;
 }

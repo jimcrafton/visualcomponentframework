@@ -4,7 +4,7 @@
 // chooser.h : declaration of the CDialogChooser class
 //             This class keeps track of what dialogs to pop up when.
 
-#define LAST_DLG 1
+#define LAST_DLG 3
 
 class CDialogChooser
 {
@@ -18,7 +18,14 @@ public:
 	//  now, and what to pop up next.
 	CAppWizStepDlg* Next(CAppWizStepDlg* pDlg);
 	CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
+	
+	int GetLinkType();
 
+	BOOL NeedVCFNet();
+
+	BOOL NeedVCFRemote();
+
+	BOOL NeedsOpenGLSupport();
 protected:
 	// Current step's index into the internal array m_pDlgs
 	int m_nCurrDlg;

@@ -7,6 +7,7 @@
 #include <comdef.h>
 #include <atlbase.h>
 #include "Chooser.h"
+#include "Page2Dlg.h"
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -152,27 +153,80 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				setting = "/D_WINDOWS";
 				pConfig->RemoveToolSettings( tool, setting, reserved );				
-
-				setting = "/DFRAMEWORK_DLL";
-				pConfig->AddToolSettings( tool, setting, reserved );
-				setting = "/DGRAPHICSKIT_DLL";
-				pConfig->AddToolSettings( tool, setting, reserved );
-				setting = "/DAPPKIT_DLL";
-				pConfig->AddToolSettings( tool, setting, reserved );
-
-				tool = "link.exe";
-				switch ( t ){
-					case debug: {
-						setting = "ApplicationKitDLL_d.lib GraphicsKitDLL_d.lib FoundationKitDLL_d.lib rpcrt4.lib /libpath:$(VCF_LIB)";
-					}
-					break;
-
-					case release: {
-						setting = "ApplicationKitDLL.lib GraphicsKitDLL.lib FoundationKitDLL.lib rpcrt4.lib /libpath:$(VCF_LIB)";
-					}
-					break;
+				
+				int linkType = this->m_pChooser->GetLinkType();
+				if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
+					setting = "/DFRAMEWORK_DLL";
+					pConfig->AddToolSettings( tool, setting, reserved );
+					setting = "/DGRAPHICSKIT_DLL";
+					pConfig->AddToolSettings( tool, setting, reserved );
+					setting = "/DAPPKIT_DLL";
+					pConfig->AddToolSettings( tool, setting, reserved );
 				}
+				tool = "link.exe";
+				if ( linkType == VCF_DLL_LINK ) {
+					switch ( t ){
+						case debug: {
+							setting = "ApplicationKitDLL_d.lib GraphicsKitDLL_d.lib FoundationKitDLL_d.lib ";
+							if ( m_pChooser->NeedVCFRemote() ) {
+								setting += "NetworkKitDLL_d.lib RemoteObjectKitDLL_d.lib ";
+							}
+							else if ( m_pChooser->NeedVCFNet() ) {
+								setting += "NetworkKitDLL_d.lib ";
+							}
+							setting += "rpcrt4.lib ";
+							if ( m_pChooser->NeedsOpenGLSupport() ) {
+								setting += "opengl32.lib glu32.lib glaux.lib ";
+							}
+							setting += "/libpath:$(VCF_LIB)";
+						}
+						break;
 
+						case release: {
+							setting = "ApplicationKitDLL.lib GraphicsKitDLL.lib FoundationKitDLL.lib ";
+							if ( m_pChooser->NeedVCFRemote() ) {
+								setting += "NetworkKitDLL.lib RemoteObjectKitDLL.lib ";
+							}
+							else if ( m_pChooser->NeedVCFNet() ) {
+								setting += "NetworkKitDLL.lib ";
+							}
+							setting += "rpcrt4.lib ";
+							if ( m_pChooser->NeedsOpenGLSupport() ) {
+								setting += "opengl32.lib glu32.lib glaux.lib ";
+							}
+							setting += "/libpath:$(VCF_LIB)";
+						}
+						break;
+					}
+				}
+				else if ( linkType == VCF_STATIC_LINK ) {
+					switch ( t ){
+						case debug: {
+							//NetworkKit_sd, NetworkKitDLL_d, NetworkKit_s, NetworkKitDLL, RemoteObjectKit_sd, RemoteObjectKit_s, RemoteObjectKitDLL_d, RemoteObjectKitDLL
+							setting = "ApplicationKit_sd.lib GraphicsKit_sd.lib FoundationKit_sd.lib ";
+							if ( m_pChooser->NeedVCFRemote() ) {
+								setting += "NetworkKit_sd.lib RemoteObjectKit_sd.lib ";
+							}
+							else if ( m_pChooser->NeedVCFNet() ) {
+								setting += "NetworkKit_sd.lib ";
+							}
+							setting += "comctl32.lib rpcrt4.lib opengl32.lib glu32.lib glaux.lib /libpath:$(VCF_LIB)";
+						}
+						break;
+
+						case release: {
+							setting = "ApplicationKit_s.lib GraphicsKit_s.lib FoundationKit_s.lib ";
+							if ( m_pChooser->NeedVCFRemote() ) {
+								setting += "NetworkKit_s.lib RemoteObjectKit_s.lib ";
+							}
+							else if ( m_pChooser->NeedVCFNet() ) {
+								setting += "NetworkKit_s.lib ";
+							}
+							setting += "comctl32.lib rpcrt4.lib opengl32.lib glu32.lib glaux.lib /libpath:$(VCF_LIB)";
+						}
+						break;
+					}
+				}
 				if ( ! SUCCEEDED( pConfig->AddToolSettings( tool, setting, reserved ) ) ){
 					TRACE( "failed to set linker variables\n" );
 				}
