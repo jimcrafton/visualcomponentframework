@@ -1,0 +1,12 @@
+<documentTypes>
+	<document classname="$$Root$$Document" classid="$$DOCUUID$$">
+		<property name="mimetype" value="application/x-mydoc"/>
+		<property name="role" value="editor"/>
+		<property name="extension" value=".txt"/>
+		<property name="description" value="$$Root$$Document Document"/>
+		<property name="view" value="$$Root$$View"/>
+		<property name="window" value="$$Root$$Window"/>
+	</document>
+</documentTypes>
+
+

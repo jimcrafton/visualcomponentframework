@@ -1,0 +1,8 @@
+The AppWizard will now create the following files:
+	$$root$$.cpp
+	$$root$$.dsw
+	$$root$$.dsp
+
+$$root$$.cpp contains a main() function.
+
+$$root$$.dsp has the correct settings for linking to the VCF FoundationKit library.

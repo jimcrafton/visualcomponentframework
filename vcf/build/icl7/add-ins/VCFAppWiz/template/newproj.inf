@@ -1,0 +1,34 @@
+$$// newproj.inf = template for list of template files
+$$//  format is 'sourceResName' \t 'destFileName'
+$$//    The source res name may be preceded by any combination of '=', '-',  '!', '?', ':', '#', and/or '*'
+$$//       '=' => the resource is binary
+$$//       '-' => the file should not be added to the project (all files are added to the project by default)
+$$//       '!' => the file should be marked exclude from build
+$$//       '?' => the file should be treated as a help file
+$$//       ':' => the file should be treated as a resource
+$$//       '#' => the file should be treated as a template (implies '!')
+$$//       '*' => bypass the custom AppWizard's resources when loading
+$$//	if name starts with / => create new subdir
+
+
+
+$$IF(ADVANCED_FEATURES)
+UndoApp.cpp	$$Root$$.cpp
+UndoAppApplication.h	$$Application$$.h
+UndoAppApplication.cpp	$$Application$$.cpp
+MainWindow.h	$$MainWindow$$.h
+MainWindow.cpp	$$MainWindow$$.cpp
+$$IF(STD_HELP_MNU)
+UndoAppAbout.CPP	$$About$$.cpp
+UndoAppAbout.h	$$About$$.h
+$$ENDIF //STD_HELP_MNU
+$$IF(SPLASH_SCR)
+SplashScreen.CPP	$$SplashScreen$$.cpp
+SplashScreen.h	$$SplashScreen$$.h
+app.rc	$$Root$$.rc
+/res
+=:splash.bmp	res\$$Splash$$.bmp
+$$ENDIF //SPLASH_SCR
+$$ELSE //!ADVANCED_FEATURES
+main.cpp	$$Root$$.cpp
+$$ENDIF //ADVANCED_FEATURES

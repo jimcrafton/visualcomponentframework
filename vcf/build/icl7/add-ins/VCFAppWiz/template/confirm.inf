@@ -1,0 +1,11 @@
+The VCF Application Wizard has created the following files for you:
+	$$root$$.cpp
+	$$root$$.dsp
+	$$root$$.dsw
+
+	$$root$$.cpp - this is you main program and contains a "Hello World" 
+	app and main window.
+
+	$$root$$.dsp has the correct settings for linking to the VCF FoundationKit,
+	GraphicsKit, and ApplicationKit libraries.
+
