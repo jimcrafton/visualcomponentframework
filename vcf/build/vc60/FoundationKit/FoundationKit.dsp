@@ -25,7 +25,7 @@ CFG=FoundationKit - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName "FoundationKit"
 # PROP Scc_LocalPath "."
-CPP=xicl6.exe
+CPP=cl.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "FoundationKit - Win32 Release"
@@ -47,7 +47,7 @@ RSC=rc.exe
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=xilink6.exe -lib
+LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_s.lib"
 
@@ -70,7 +70,7 @@ LIB32=xilink6.exe -lib
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=xilink6.exe -lib
+LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_sd.lib"
 
@@ -263,6 +263,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32SemaphorePeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32SystemPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -631,6 +635,10 @@ SOURCE=..\..\..\include\implementerKit\Win32SemaphorePeer.h
 # Begin Source File
 
 SOURCE=..\..\..\include\implementerKit\Win32SystemPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\implementerKit\Win32SystemToolkit.h
 # End Source File
 # Begin Source File
 
