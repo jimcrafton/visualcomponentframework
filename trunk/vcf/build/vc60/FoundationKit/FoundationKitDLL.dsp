@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\bin\FoundationKit_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin/FoundationKit_vc6.dll"
+# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /pdb:"..\..\..\bin/FoundationKit_vc6.pdb" /map:"..\..\..\bin/FoundationKit_vc6.map" /debug /machine:I386 /out:"..\..\..\bin/FoundationKit_vc6.dll"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
@@ -285,6 +285,10 @@ SOURCE=..\..\..\include\exceptions\OutOfBoundsException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\OutputReadyEvent.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\utils\Parser.h
 # End Source File
 # Begin Source File
@@ -301,7 +305,15 @@ SOURCE=..\..\..\include\exceptions\ProcessException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementer\ProcessIORedirectionPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementer\ProcessPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\utils\ProcessWithRedirectedIO.h
 # End Source File
 # Begin Source File
 
@@ -441,6 +453,10 @@ SOURCE=..\..\..\include\implementerKit\Win32Mutex.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\implementerKit\Win32ProcessIORedirector.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\implementerkit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
@@ -566,6 +582,10 @@ SOURCE=..\..\..\src\core\Point.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\Utils\ProcessWithRedirectedIO.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\PropertyChangeEvent.cpp
 # End Source File
 # Begin Source File
@@ -639,6 +659,10 @@ SOURCE=..\..\..\src\ImplementerKit\Win32Mutex.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Peer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\ImplementerKit\Win32ProcessIORedirector.cpp
 # End Source File
 # Begin Source File
 

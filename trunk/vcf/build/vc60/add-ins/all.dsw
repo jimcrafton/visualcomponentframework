@@ -99,9 +99,6 @@ Package=<4>
     Project_Dep_Name VCFConsoleWiz
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name VCFNewClassWiz
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name vcfwizard
     End Project Dependency
     Begin Project Dependency

@@ -108,16 +108,22 @@
 			<source name="$(SRC)/Graphics/Vector2D.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
 
 			<!-- Win32 -->
-			<source name="$(SRC)/ImplementerKit/Win32Font.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/Win32Image.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/Win32Context.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
-			<source name="$(SRC)/ImplementerKit/Win32GraphicsToolkit.cpp" partOfConfig="MinGW Debug|GCC Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/Win32Font.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/Win32Image.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/Win32Context.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
+			<source name="$(SRC)/ImplementerKit/Win32GraphicsToolkit.cpp" partOfConfig="MinGW Debug|VC++ Debug"/>
 
 			<!-- X11 -->
 			<source name="$(SRC)/ImplementerKit/X11Font.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/X11Image.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/X11Context.cpp" partOfConfig="GCC Debug"/>
 			<source name="$(SRC)/ImplementerKit/X11GraphicsToolkit.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcBezierCurve2.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcCurve2.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcVector2.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcIntegrate.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcSingleCurve2.cpp" partOfConfig="GCC Debug"/>
+			<source name="$(SRC)/Graphics/MgcMath.cpp" partOfConfig="GCC Debug"/>
 		</sources>
 	</project>
 </make>
