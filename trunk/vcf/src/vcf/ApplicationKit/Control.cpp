@@ -805,6 +805,7 @@ bool Control::isEnabled()
 void Control::setEnabled( const bool& enabled )
 {
 	peer_->setEnabled( enabled );
+	repaint();
 }
 
 void Control::mouseEnter( MouseEvent* event )
@@ -1466,6 +1467,9 @@ void Control::paintBorder( GraphicsContext * context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/02/26 14:47:38  ddiego
+*fixed bug 1152064 with repaint issue on set enabled state.
+*
 *Revision 1.6  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *
