@@ -1,0 +1,311 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\VCFNewClassWiz.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "VCFNEWCLASSWIZ DLL\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "VCFNEWCLASSWIZ\0"
+            VALUE "LegalCopyright", "Copyright (C) 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "VCFNEWCLASSWIZ.DLL\0"
+            VALUE "ProductName", "VCFNEWCLASSWIZ Dynamic Link Library\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_VCFNewClassWiz      REGISTRY DISCARDABLE    "VCFNewClassWizAddin.rgs"
+IDR_COMMANDS            REGISTRY DISCARDABLE    "Commands.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TOOLBAR_MEDIUM      BITMAP  MOVEABLE PURE   "res\\TBarMedm.bmp"
+IDR_TOOLBAR_LARGE       BITMAP  MOVEABLE PURE   "res\\TBarLrge.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_NEWCLASSDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 246
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
+    END
+
+    IDD_PROPERTY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TYPELIB
+//
+
+1                       TYPELIB DISCARDABLE     "VCFNewClassWiz.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_NEWCLASSDLG DIALOGEX 0, 0, 253, 231
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "New VCF Class"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,197,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,197,24,50,14
+    GROUPBOX        "Class Information",IDC_STATIC,7,7,183,217
+    LTEXT           "Name:",IDC_STATIC,17,26,22,8
+    EDITTEXT        IDC_CLASS_NAME,47,23,133,14,ES_AUTOHSCROLL
+    LTEXT           "Derives from:",IDC_STATIC,24,49,42,8
+    COMBOBOX        IDC_DERIVES_FROM,79,47,101,75,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Header:",IDC_STATIC,17,75,26,8
+    PUSHBUTTON      "...",IDC_CHANGE_HDR_BTN,166,74,14,14
+    CONTROL         "Supports VCF RTTI",IDC_SUPPORTS_VCF_RTTI,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,117,114,10
+    LTEXT           "Properties:",IDC_STATIC_PROPS,21,145,34,8
+    EDITTEXT        IDC_HEADER,60,74,99,14,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "CPP:",IDC_STATIC,17,97,17,8
+    PUSHBUTTON      "...",IDC_CHANGE_CPP_BTN,166,96,14,14
+    EDITTEXT        IDC_CPP,60,96,99,14,ES_AUTOHSCROLL | WS_DISABLED
+    CONTROL         "List2",IDC_PROP_LIST,"SysListView32",LVS_REPORT | 
+                    WS_TABSTOP,13,155,172,64,WS_EX_STATICEDGE
+    CONTROL         "Abstract class",IDC_ABSTRACT_CLASS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,27,131,114,10
+END
+
+IDD_PROPERTY DIALOG DISCARDABLE  0, 0, 217, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Property"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,160,8,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,160,24,50,14
+    GROUPBOX        "Property Info",IDC_STATIC,7,7,144,81
+    LTEXT           "Name:",IDC_STATIC,16,23,22,8
+    LTEXT           "Type:",IDC_STATIC,16,46,19,8
+    COMBOBOX        IDC_PROP_TYPE,60,44,84,72,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PROP_NAME,60,21,84,14,ES_AUTOHSCROLL
+    CONTROL         "Read Only Property",IDC_READ_ONLY_PROP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,70,77,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_PROPERTY DLGINIT
+BEGIN
+    IDC_PROP_TYPE, 0x403, 4, 0
+0x6e69, 0x0074, 
+    IDC_PROP_TYPE, 0x403, 5, 0
+0x6f6c, 0x676e, "\000" 
+    IDC_PROP_TYPE, 0x403, 6, 0
+0x6873, 0x726f, 0x0074, 
+    IDC_PROP_TYPE, 0x403, 14, 0
+0x6e75, 0x6973, 0x6e67, 0x6465, 0x6c20, 0x6e6f, 0x0067, 
+    IDC_PROP_TYPE, 0x403, 6, 0
+0x6c66, 0x616f, 0x0074, 
+    IDC_PROP_TYPE, 0x403, 5, 0
+0x6863, 0x7261, "\000" 
+    IDC_PROP_TYPE, 0x403, 7, 0
+0x6f64, 0x6275, 0x656c, "\000" 
+    IDC_PROP_TYPE, 0x403, 5, 0
+0x6f62, 0x6c6f, "\000" 
+    IDC_PROP_TYPE, 0x403, 8, 0
+0x624f, 0x656a, 0x7463, 0x002a, 
+    IDC_PROP_TYPE, 0x403, 6, 0
+0x6e45, 0x6d75, 0x002a, 
+    IDC_PROP_TYPE, 0x403, 7, 0
+0x7453, 0x6972, 0x676e, "\000" 
+    0
+END
+
+IDD_NEWCLASSDLG DLGINIT
+BEGIN
+    IDC_DERIVES_FROM, 0x403, 12, 0
+0x4356, 0x3a46, 0x4f3a, 0x6a62, 0x6365, 0x0074, 
+    IDC_DERIVES_FROM, 0x403, 10, 0
+0x4356, 0x3a46, 0x523a, 0x6365, 0x0074, 
+    IDC_DERIVES_FROM, 0x403, 11, 0
+0x4356, 0x3a46, 0x503a, 0x696f, 0x746e, "\000" 
+    IDC_DERIVES_FROM, 0x403, 15, 0
+0x4356, 0x3a46, 0x433a, 0x6d6f, 0x6f70, 0x656e, 0x746e, "\000" 
+    IDC_DERIVES_FROM, 0x403, 13, 0
+0x4356, 0x3a46, 0x433a, 0x6e6f, 0x7274, 0x6c6f, "\000" 
+    IDC_DERIVES_FROM, 0x403, 19, 0
+0x4356, 0x3a46, 0x433a, 0x7375, 0x6f74, 0x436d, 0x6e6f, 0x7274, 0x6c6f, 
+"\000" 
+    IDC_DERIVES_FROM, 0x403, 11, 0
+0x4356, 0x3a46, 0x503a, 0x6e61, 0x6c65, "\000" 
+    IDC_DERIVES_FROM, 0x403, 11, 0
+0x4356, 0x3a46, 0x463a, 0x6172, 0x656d, "\000" 
+    IDC_DERIVES_FROM, 0x403, 12, 0
+0x4356, 0x3a46, 0x443a, 0x6169, 0x6f6c, 0x0067, 
+    IDC_DERIVES_FROM, 0x403, 12, 0
+0x4356, 0x3a46, 0x573a, 0x6e69, 0x6f64, 0x0077, 
+    IDC_DERIVES_FROM, 0x403, 17, 0
+0x4356, 0x3a46, 0x493a, 0x706e, 0x7475, 0x7453, 0x6572, 0x6d61, "\000" 
+    IDC_DERIVES_FROM, 0x403, 18, 0
+0x4356, 0x3a46, 0x4f3a, 0x7475, 0x7570, 0x5374, 0x7274, 0x6165, 0x006d, 
+
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_PROPSMNU MENU DISCARDABLE 
+BEGIN
+    POPUP "PROPS_POPUP"
+    BEGIN
+        MENUITEM "Add...",                      ID_PROPSPOPUP_ADD
+        MENUITEM "Edit...",                     ID_PROPSPOPUP_EDIT
+        MENUITEM "Remove",                      ID_PROPSPOPUP_REMOVE
+    END
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\VCFNewClassWiz.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
