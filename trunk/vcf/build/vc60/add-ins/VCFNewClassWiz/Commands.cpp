@@ -77,4 +77,3 @@ STDMETHODIMP CCommands::NewVCFClass()
 	return S_OK;
 }
 
-

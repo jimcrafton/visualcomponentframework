@@ -35,7 +35,7 @@ public:
 	CCommands();
 
 // ICommands
-public:
+public:	
 	STDMETHOD(NewVCFClass)();
 };
 

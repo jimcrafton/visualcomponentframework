@@ -206,6 +206,10 @@ SOURCE=.\VCFNewClassWizAddin.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\res\bmp00001.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Commands.rgs
 # End Source File
 # Begin Source File
@@ -215,6 +219,10 @@ SOURCE=.\res\TBarLrge.bmp
 # Begin Source File
 
 SOURCE=.\res\TBarMedm.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\toolbar_.bmp
 # End Source File
 # Begin Source File
 

@@ -33,7 +33,7 @@ STDMETHODIMP CVCFNewClassWiz::OnConnection(IApplication* piApplication, VARIANT_
 	// SampleCommand
 	bstrCmd = "NewVCFClass\nNew VCF Class\nA New Class Addin Command\nNew VCF Class";
 	if (FAILED(piApplication->AddCommand(bstrCmd, bstrSampleCommand, 0, dwCookie, &bRet) || VARIANT_FALSE == bRet))
-		return S_OK;
+		return S_OK;	
 
 	// create toolbar:
 	if (VARIANT_TRUE == bFirstTime)
