@@ -28,8 +28,14 @@ SplashScreen::SplashScreen()
 	setFrameTopmost( true );
 	setColor( Color::getColor( "white" ) );
 
-	m_thread = new ThreadLooper( this );
-	m_thread->start();
+	TimerComponent* tc = new TimerComponent();
+	addComponent( tc );
+
+	tc->setTimeoutInterval( 1000 ); //set timeout interval in milliseconds
+
+	tc->TimerPulse += new GenericEventHandler<SplashScreen>( this, &SplashScreen::onTimer, "SplashScreen::onTimer" );
+
+	tc->setActivated( true );
 }
 
 
@@ -38,6 +44,16 @@ SplashScreen::~SplashScreen()
 	if ( NULL != m_splashImage ) {
 		delete m_splashImage;
 		m_splashImage = NULL;
+	}
+}
+
+void SplashScreen::onTimer( Event* e )
+{
+	static int count = 0;
+	count ++;
+	repaint();
+	if ( count >= 6 ) {
+		close();
 	}
 }
 
@@ -52,24 +68,6 @@ void SplashScreen::paint( GraphicsContext* context )
 	if ( NULL != m_splashImage ) {
 		context->drawImage( 0, 0, m_splashImage );
 	}
-	context->drawString( bounds.getWidth()/2-50, bounds.getHeight()/2.0, "Welcome to the $$Root$$..." );
+	context->textAt( bounds.getWidth()/2-50, bounds.getHeight()/2.0, "Welcome to the $$Root$$..." );
 }
-
-static int sleepCount = 0;
-
-bool SplashScreen::run()
-{	
-	repaint();
-	m_thread->sleep( 500 );
-	sleepCount ++;
-	if ( sleepCount == 6 ) {
-		setVisible( false );
-		close();
-		delete this;
-		return false;
-	}
-	
-	return true;
-}
-
 

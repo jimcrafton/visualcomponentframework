@@ -158,7 +158,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->RemoveToolSettings( tool, setting, reserved );				
 				
 				int linkType = this->m_pChooser->GetLinkType();
-				if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
+				if ( linkType == VCF_DLL_LINK ) {
 					setting = "/DUSE_FRAMEWORK_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 					setting = "/DUSE_GRAPHICSKIT_DLL";
@@ -166,6 +166,15 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					setting = "/DUSE_APPKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				}
+				else if ( linkType == VCF_STATIC_LINK ) {
+					setting = "/DUSE_FRAMEWORK_LIB";
+					pConfig->AddToolSettings( tool, setting, reserved );
+					setting = "/DUSE_GRAPHICSKIT_LIB";
+					pConfig->AddToolSettings( tool, setting, reserved );
+					setting = "/DUSE_APPKIT_LIB";
+					pConfig->AddToolSettings( tool, setting, reserved );
+				}
+				//
 				tool = "link.exe";
 				if ( linkType == VCF_DLL_LINK ) {
 					switch ( t ){
@@ -230,7 +239,8 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 						break;
 					}
 				}
-				if ( ! SUCCEEDED( pConfig->AddToolSettings( tool, setting, reserved ) ) ){
+				HRESULT hr = pConfig->AddToolSettings( tool, setting, reserved );
+				if ( ! SUCCEEDED( hr ) ){
 					TRACE( "failed to set linker variables\n" );
 				}
 				

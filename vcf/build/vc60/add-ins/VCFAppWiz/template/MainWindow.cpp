@@ -18,10 +18,11 @@ MainWindow::MainWindow()
 {
 $$IF(STD_HELP_MNU || STD_FILE_MNU || UNDO_REDO)
 	//build main menu
-	MenuBar* menuBar = new MenuBar();
+	MenuBar* menuBar = new MenuBar( this );
 	this->setMenuBar( menuBar );
+	
 	MenuItem* root = menuBar->getRootMenuItem();
-	MenuItemEventHandler<MainWindow>* menuItemHandler = NULL;
+	EventHandler* menuItemHandler = NULL;
 $$IF(STD_FILE_MNU)
 	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, menuBar );
 
