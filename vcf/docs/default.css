@@ -49,11 +49,11 @@
                         cursor: hand;}
  DFN.collapsed { font-style : italic;
                  font-weight : normal;
-                 display :     'none';
+                 display :      'none';
                  color : red;}
  .mvd-DFN-collapsed { font-style : italic;
                       font-weight : normal;
-                      display :     'none';
+                      display :      'none';
                       color : red;}
  DFN.expanded { font-style : italic;
                 font-weight : normal;
@@ -73,11 +73,11 @@
                        cursor: hand;}
  DFN.glosscollapsed { font-style : italic;
                       font-weight : normal;
-                      display :     'none';
+                      display :      'none';
                       color : blue;}
  .mvd-DFN-glosscollapsed { font-style : italic;
                            font-weight : normal;
-                           display :     'none';
+                           display :      'none';
                            color : blue;}
  DFN.glossexpanded { font-style : italic;
                      font-weight : normal;
@@ -95,4 +95,8 @@
         font-size : 9.0pt;}
  .mvd-CODE { font-family : "Courier New";
              font-size : 9.0pt;}
+ P.NoBackPreformatted { font-family : "Courier New";
+                        font-size : 9.0pt;}
+ .mvd-P-NoBackPreformatted { font-family : "Courier New";
+                             font-size : 9.0pt;}
  

@@ -17,6 +17,109 @@
   <H1>
    Build Steps</H1>
   <P>
-   Type topic text here.
+   Building the full VCF requires an XML parser used in the reading of 
+   Visual Form Files (VFF). Currently I am using the Xerces XML Pareser 
+   from Apache. It can downloaded at the Xerces site, or click below for 
+   a zip file of just the headers, libs, and dlls you need for the VCF. 
+   Please make sure it is installed in the following directory relative 
+   to the VCF root</P>
+  <P CLASS="NoBackPreformatted">
+   root<BR>
+   &nbsp; |<BR>
+   &nbsp; |<BR>
+   &nbsp; +-- vcf<BR>
+   &nbsp; |<BR>
+   &nbsp; |<BR>
+   &nbsp; +--include<BR>
+   &nbsp; |<BR>
+   &nbsp; |... rest of VCF directories<BR>
+   &nbsp; |<BR>
+   &nbsp; |<BR>
+   &nbsp; +--XML &lt;-----this is where the XML stuff goes<BR>
+   &nbsp; |<BR>
+   &nbsp; |<BR>
+   &nbsp; +--bin<BR>
+   &nbsp; |<BR>
+   &nbsp; |<BR>
+   &nbsp; +--include<BR>
+   &nbsp; |<BR>
+   &nbsp; | ....rest of directories under include<BR>
+   &nbsp; |<BR>
+   &nbsp; +--lib<BR>
+   &nbsp;</P>
+  <P>
+   XML Downloads</P>
+  <P>
+   <A HREF="http://vcf.sourceforge.net/VCF_XML.zip">XML libs for VCF</A> 
+   (1.12 MB via http)</P>
+  <P>
+   <A HREF="ftp://vcf.sourceforge.net/pub/vcf/VCF_XML.zip">XML libs for VCF</A> 
+   (1.12 MB via ftp)</P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <H6>
+   Building</H6>
+  <P>
+   Under Win32 with VC++ 6.x</P>
+  <P>
+   The VCF is built using the following settings (these are the 
+   exceptions to the standard settings for DLL projects):</P>
+  <UL>
+   <LI CLASS="mvd-P">
+   <P>
+    C++ RTTI turned on</P>
+   <LI CLASS="mvd-P">
+   <P>
+    Code generation is Multi threaded DLL</P>
+   <LI CLASS="mvd-P">
+   <P>
+    Pre compiled headers are turned off generally, though I am 
+    experimenting with using them on my current build (as of 12/21/2000).</P>
+   <LI CLASS="mvd-P">
+   <P>
+    The following defines are neccessary:</P>
+   <UL>
+    <LI CLASS="mvd-P">
+    <P>
+     FoundationKit : WIN32,_DEBUG,_WINDOWS,_MBCS,_USRDLL,FRAMEWORK_DLL,FRAMEWORK_EXPORTS,NO_MFC</P>
+    <LI CLASS="mvd-P">
+    <P>
+     GraphicsKit:WIN32,_DEBUG,_WINDOWS,_MBCS,_USRDLL,FRAMEWORK_DLL,GRAPHICSKIT_DLL,GRAPHICSKIT_EXPORTS</P>
+    <LI CLASS="mvd-P">
+    <P>
+     ApplicationKit: WIN32,_DEBUG,_WINDOWS,_MBCS,_USRDLL,FRAMEWORK_DLL,GRAPHICSKIT_DLL,APPKIT_DLL,APPKIT_EXPORTS</P>
+    </UL>
+   <LI CLASS="mvd-P">
+   <P>
+    The following includes are required:</P>
+   <LI CLASS="mvd-P">
+   <P>
+    the libraries the VCF links with are (the [] represent optional names 
+    depending on whether the build is a debug or release build):</P>
+   <UL>
+    <LI CLASS="mvd-P">
+    <P>
+     FoundationKit links with <SPAN STYLE="font-weight : bold;">Rpcrt4.lib</SPAN></P>
+    <LI CLASS="mvd-P">
+    <P>
+     <SPAN STYLE="font-weight : normal;">GraphicsKit links with </SPAN><SPAN STYLE="font-weight : bold;">FoundationKitDLL[_d].lib</SPAN><SPAN STYLE="font-weight : normal;">,</SPAN><SPAN STYLE="font-weight : bold;"> opengl32.lib</SPAN>,
+      <SPAN STYLE="font-weight : bold;">glu32.lib</SPAN>, and <SPAN STYLE="font-weight : bold;">glaux.lib</SPAN></P>
+    <LI CLASS="mvd-P">
+    <P>
+     <SPAN STYLE="font-weight : normal;">ApplicationKit links with </SPAN><SPAN STYLE="font-weight : bold;">FoundationKitDLL[_d].lib</SPAN><SPAN STYLE="font-weight : normal;">,</SPAN><SPAN STYLE="font-weight : bold;"> GraphicsKitDLL[_d].lib</SPAN><SPAN STYLE="font-weight : normal;">,</SPAN> <SPAN STYLE="font-weight : bold;">xerces-c_1[D].lib</SPAN><SPAN STYLE="font-weight : normal;">,</SPAN> <SPAN STYLE="font-weight : bold;">comctl32.lib</SPAN>,
+      <SPAN STYLE="font-weight : bold;">rpcrt4.lib</SPAN>, <SPAN STYLE="font-weight : bold;">opengl32.lib</SPAN>,
+      <SPAN STYLE="font-weight : bold;">glu32.lib</SPAN>, and <SPAN STYLE="font-weight : bold;">glaux.lib</SPAN></P>
+    <LI CLASS="mvd-P">
+    <P>
+     <SPAN STYLE="font-weight : normal;">NetworkKit links with </SPAN><SPAN STYLE="font-weight : bold;">FoundationKitDLL[_d].lib</SPAN> 
+     and <SPAN STYLE="font-weight : bold;">Ws2_32.lib</SPAN></P>
+    </UL>
+   </UL>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   When building from scratch, the order of building the various DLL's 
+   is as follows: FoundationKitDLL first, then the GraphicsKitDLL and 
+   then the ApplicationKitDLL. 
  </BODY>
 </HTML>
