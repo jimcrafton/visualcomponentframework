@@ -37,12 +37,12 @@
    prevent multiple inheritance problems (the &quot;deadly diamond&quot; effect).</P>
   <P>
    In addition, an interface does not define a constructor (the default 
-   C++ constructor is OK), and <SPAN STYLE="font-style : italic;font-weight : bold;">MUST</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;"> 
-   declare a destructor as </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;">virtual</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;">,
-    a requirement of the standard C++ RTTI dynamic typing system. The 
-   body of the constructor should also be declared in the header of the 
-   interface ( usually <FONT FACE="d">{}</FONT> implementation is all 
-   that is neccessary)</SPAN></P>
+   C++ constructor is OK), and shoul<SPAN STYLE="font-style : normal;font-weight : normal;">d
+    declare the destructor as </SPAN><SPAN STYLE="font-style : italic;font-weight : normal;">virtual</SPAN><SPAN STYLE="font-style : normal;font-weight : normal;">,
+    a requirement of the standard C++ RTTI dynamic typing system (the class/interface
+    needs at least one virtual method). The body of the constructor 
+   should also be declared in the header of the interface ( usually <FONT FACE="d">{}</FONT> 
+   implementation is all that is neccessary)</SPAN></P>
   <P>
    <SPAN STYLE="font-style : normal;font-weight : normal;">As a naming 
    standard, and to avoid method name collision, methods with common 
