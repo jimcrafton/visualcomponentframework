@@ -26,6 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 CVS Log info
 $Log$
+Revision 1.3  2003/05/18 23:09:37  ddiego
+fixes some mistakes in the docs/Makefile and adds some extra documentation.
+
 Revision 1.2  2003/05/17 20:36:55  ddiego
 this is the checkin for the 0.6.1 release - represents the merge over from
 the devmain-0-6-0 branch plus a few minor bug fixes
@@ -70,7 +73,7 @@ and images
  <!--
  this uses a local path - may need to be modified for others
  -->
-	<xsl:import href="/Users/jimcrafton/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="d:/docbook/xsl/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
