@@ -30,10 +30,21 @@
   and dynamically casting an object to a specific class such that if the object
   does not derive from the class, a null pointer is returned. This allows us to
   &quot;query&quot; for interfaces that a particular object instance may&nbsp;
-  support. To support these other features requires additional work on the part
+  support. To support the more advanced features mentioned above requires additional work on the part
   of the programmer by using special functions and classes provided by the VCF
-  to accomplish just this. Currently there are two approaches to add this
+  to accomplish this. Currently there are two approaches to add this
   support to you classes, the first, which will be documented here, uses macros
-  that you add to your class definition. The second, newer method </p>
+  that you add to your class definition. The second, newer method uses the RTTI
+  Compiler, which can parse the C++ headers of your choice and correctly
+  generate C++ code for you that will properly register all of your classes RTTI
+  data for you. No macros are necessary when using this method, which perhaps
+  results in slightly cleaner code and is potentially less error prone. </p>
+  <p>Before discussing the macros that are used to register the various RTTI
+  data, lets discuss further what each of the data types are. The initial RTTI
+  data type is described by the class <code>VCF::Class</code>, which contains
+  everything necessary to describe a&nbsp; object's class information at run
+  time. The VCF::Class holds the class name, the super class name, and the UUID
+  that identifies the class. </p>
+  <p>&nbsp; </p>
  </BODY>
 </HTML>
