@@ -265,6 +265,10 @@ SOURCE=..\..\..\include\core\CommonFileSave.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\core\CommonFont.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\CommonPrint.h
 # End Source File
 # Begin Source File
@@ -1065,6 +1069,10 @@ SOURCE=..\..\..\src\core\CommonFileSave.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\CommonFont.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\core\CommonPrint.cpp
 # End Source File
 # Begin Source File
@@ -1170,10 +1178,6 @@ SOURCE=..\..\..\src\DragDrop\DropEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\DragDrop\DropTarget.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\core\FlexTreeControl.cpp
 # End Source File
 # Begin Source File
 
