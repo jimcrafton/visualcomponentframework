@@ -122,17 +122,7 @@ SOURCE=..\..\..\src\Graphics\GraphicsContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\GraphicsKit.cpp
-
-!IF  "$(CFG)" == "GraphicsKit - Win32 Release"
-
 # ADD CPP /Yc"GraphicsKit.h"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 Debug"
-
-# ADD CPP /Yc"GraphicsKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -149,10 +139,6 @@ SOURCE=..\..\..\src\Events\ImageEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\Graphics\Matrix2D.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\Graphics\OpenGLContext.cpp
 # End Source File
 # Begin Source File
 
@@ -181,10 +167,6 @@ SOURCE=..\..\..\src\ImplementerKit\Win32GraphicsToolkit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\ImplementerKit\Win32Image.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\ImplementerKit\Win32OpenGLPeer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
