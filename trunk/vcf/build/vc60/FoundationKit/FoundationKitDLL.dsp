@@ -245,6 +245,10 @@ SOURCE=..\..\..\include\exceptions\NoSuchElementException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\events\NotifyListener.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\core\Object.h
 # End Source File
 # Begin Source File
