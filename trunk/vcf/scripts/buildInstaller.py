@@ -31,6 +31,11 @@ INSTALL_FILE_LISTING= '../installers/win32/vcfSrcFiles.iss'
 INSTALL_FILE = '../installers/win32/VCFFullInstaller.iss'
 
 def main():
+	
+	
+			
+		
+
 	fs = file( '../VERSION', 'r' )
 	lines = fs.readlines()
 	VCF_VERSION = string.strip(lines[0])
@@ -47,6 +52,11 @@ def main():
 	FULL_VCF_VERSION = VCF_VERSION + ' ' + VCF_VERSION_STAGE
 	FULL_VCF_DOT_VERSION = VCF_VERSION + '-' + VCF_VERSION_STAGE
 	
+	if ( len(sys.argv) > 1 ) : 
+		arg1 = sys.argv[1:][0]
+		if ( arg1 == "src" ) :
+			print "Building source only installer!"
+			INSTALL_FILE = '../installers/win32/VCFFullInstallerNoBin.iss'
 	
 	os.chdir( '../installers/win32' )
 	
@@ -152,11 +162,11 @@ def main():
 	print os.getcwd()
 	
 	print "Building Debug binaries..."
-	os.system( "msdev ../build/vc60/vcfAllProjects.dsw /MAKE \"vcfAllLibs - Win32 Debug\" /REBUILD /OUT vcfAll-debug.stat.log" )
+	#os.system( "msdev ../build/vc60/vcfAllProjects.dsw /MAKE \"vcfAllLibs - Win32 Debug\" /REBUILD /OUT vcfAll-debug.stat.log" )
 	print "Done building Debug binaries. Read vcfAll-debug.stat.log for more."
 	
 	print "Building Release binaries..."
-	os.system( "msdev ../build/vc60/vcfAllProjects.dsw /MAKE \"vcfAllLibs - Win32 Release\" /REBUILD /OUT vcfAll-release.stat.log" )	
+	#os.system( "msdev ../build/vc60/vcfAllProjects.dsw /MAKE \"vcfAllLibs - Win32 Release\" /REBUILD /OUT vcfAll-release.stat.log" )	
 	print "Done building Release binaries. Read vcfAll-release.stat.log for more."
 	
 	print "Building VC6 Add-in binaries..."
