@@ -93,6 +93,23 @@ String OSXSystemPeer::getEnvironmentVariable( const String& variableName )
 	return result;
 }
 
+void OSXSystemPeer::setEnvironmentVariable( const String& variableName, const String& newValue )
+{
+	if ( 0 != setenv( variableName.ansi_c_str(), newValue.ansi_c_str(), 1 ) ) {
+		throw RuntimeException( "Failed to set variable " + variableName + " with value " + newValue  );
+	}
+}
+
+void OSXSystemPeer::addPathDirectory( const String& directory )
+{
+	const char* env = getenv( "PATH" );
+	String newPath = env;
+	newPath += ":" + directory;
+	if ( 0 != setenv( "PATH", newPath.ansi_c_str(), 1 ) ) {
+		throw RuntimeException( "Failed to set PATH with value " + newPath  );
+	}
+}
+	
 void OSXSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 {
 	chdir( currentDirectory.ansi_c_str() );
@@ -243,6 +260,9 @@ ProgramInfo* OSXSystemPeer::getProgramInfoFromFileName( const String& fileName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:47  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -26,6 +26,10 @@ public:
 	virtual String getCurrentWorkingDirectory();
 
 	virtual String getEnvironmentVariable( const String& variableName );
+	
+	virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
+
+	virtual void addPathDirectory( const String& directory );
 
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory );
 
@@ -58,6 +62,9 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.4  2005/01/08 20:52:47  ddiego
+ *fixed some glitches in osx impl.
+ *
  *Revision 1.3  2004/12/01 04:31:41  ddiego
  *merged over devmain-0-6-6 code. Marcello did a kick ass job
  *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

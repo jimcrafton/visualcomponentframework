@@ -38,7 +38,11 @@ namespace VCF {
 
 		virtual ProgramInfo* getProgramInfo();
 		
-		static ProgramInfo* getProgramInfo( const String& fileName );		
+		static ProgramInfo* getProgramInfo( const String& fileName );
+		
+		virtual OSHandleID getHandleID() {
+			return (OSHandleID) getBundle();
+		}		
 	protected:
 		static ProgramInfo* getProgramInfo( CFBundleRef bundle );
 	
@@ -53,6 +57,9 @@ namespace VCF {
 /**
 CVS Log info
 $Log$
+Revision 1.3  2005/01/08 20:52:47  ddiego
+fixed some glitches in osx impl.
+
 Revision 1.2  2004/12/01 04:31:41  ddiego
 merged over devmain-0-6-6 code. Marcello did a kick ass job
 of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

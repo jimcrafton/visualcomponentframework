@@ -34,9 +34,9 @@ public:
 
 	virtual String desktopGetDirectory();
 
-	virtual ulong32 desktopGetHandleID();
+	virtual OSHandleID desktopGetHandleID();
 
-	virtual ulong32 desktopGetGraphicsContextHandleID();
+	virtual OSHandleID desktopGetGraphicsContextHandleID();
 
 	virtual void desktopSetDesktop( Desktop* desktop );
 
@@ -57,6 +57,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

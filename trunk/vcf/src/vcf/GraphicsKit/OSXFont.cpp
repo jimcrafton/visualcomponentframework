@@ -137,9 +137,9 @@ void OSXFont::init()
 
 }
 
-ulong32 OSXFont::getFontHandleID()
+OSHandleID OSXFont::getFontHandleID()
 {
-	return (ulong32)fontStyle_;
+	return (OSHandleID)fontStyle_;
 }
 
 String OSXFont::getName()
@@ -327,6 +327,9 @@ bool OSXFont::isEqual( Object* object )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:48  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

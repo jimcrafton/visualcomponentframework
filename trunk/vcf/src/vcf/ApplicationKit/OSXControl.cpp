@@ -140,9 +140,9 @@ OSXControl::~OSXControl()
 
 }
 
-long OSXControl::getHandleID()
+OSHandleID OSXControl::getHandleID()
 {
-	return (long) hiView_;
+	return (OSHandleID) hiView_;
 }
 
 EventHandlerUPP OSXControl::getEventHandlerUPP()
@@ -761,6 +761,9 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
@@ -805,6 +808,9 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 *Revision 1.1.2.6  2004/05/23 14:11:59  ddiego
 *osx updates
 *$Log$
+*Revision 1.4  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
