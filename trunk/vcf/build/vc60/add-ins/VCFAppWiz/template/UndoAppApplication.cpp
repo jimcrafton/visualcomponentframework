@@ -12,7 +12,8 @@ using namespace VCF;
 
 
 
-$$Root$$Application::$$Root$$Application()
+$$Root$$Application::$$Root$$Application( int argc, char *argv[] ):
+	Application( argc, argv )
 {
 	
 }

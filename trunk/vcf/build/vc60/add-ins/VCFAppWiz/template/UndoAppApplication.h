@@ -13,7 +13,7 @@ using namespace VCF;
 */
 class $$Root$$Application : public VCF::Application { 
 public:
-	$$Root$$Application();
+	$$Root$$Application( int argc, char *argv[] );
 
 	virtual ~$$Root$$Application();
 

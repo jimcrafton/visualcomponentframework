@@ -14,9 +14,9 @@ using namespace VCF;
 
 int main(int argc, char *argv[])
 {
-	$$Root$$Application app;
+	Application* app = new $$Root$$Application(argc,argv);
 
-	Application::appMain( argc, argv );
+	Application::main();
 	
 	return 0;
 }
