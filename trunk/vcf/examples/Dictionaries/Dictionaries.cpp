@@ -29,19 +29,14 @@ int main( int argc, char** argv ){
 
 	dict["Name"] = "Bob";
 
-	/*
-	//print out the items of the dictionary
-	Dictionary::iterator it = dict.begin();	
 	
-	while ( it != dict.end() ) {
-		Dictionary::pair& item = *it;
+	Dictionary::Enumerator* items = dict.getEnumerator();
+	while ( items->hasMoreElements() ) {
+		Dictionary::pair& item = items->nextElement();
 
 		System::println( "dict[\"%s\"] = %s", item.first.c_str(), item.second.toString().c_str() );
-		
-		it ++;
 	}
-	*/
-	
+
 
 
 	System::println( "Saving dictionary..." );
@@ -77,18 +72,14 @@ int main( int argc, char** argv ){
 	}
 
 
-	/*
-	it = dict.begin();	
-	
-	while ( it != dict.end() ) {
-		Dictionary::pair& item = *it;
+	items = dict.getEnumerator();
+	while ( items->hasMoreElements() ) {
+		Dictionary::pair& item = items->nextElement();
 
 		System::println( "dict[\"%s\"] = %s", item.first.c_str(), item.second.toString().c_str() );
-		
-		it ++;
 	}
-	*/
-
+	
+	
 
 	FoundationKit::terminate();
 	return 0;
