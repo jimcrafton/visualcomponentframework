@@ -77,6 +77,20 @@ Tasks for this release:
 
 
 Known issues:
+You may need to change the output directory on some of the projects so that 
+the executable is output at the same level as the "Resources" directory if one
+is present. The projects that this needs to be done for are:
+
+  -AppResources
+  -Resources
+  -DocViewAdvanced
+  -DocViewBasics
+  -TextEdit
+  -Locales  
+
+Also remove the "vc6" suffix (or vc7, vc71, depending on your compiler) from 
+the executable name in the link settings.
+
 The OSX port is still a work in progress. Further work was accomplished and the window, 
 and control peers are basically done. Support was added for handling mouse event properly, 
 loading processes and shared libs, using dialogs (including support for sheets), common 
