@@ -42,28 +42,45 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>[Explain the purpose of FoundationKit</p>
+      <p>The FoundationKit provides all of the core services for the rest of the
+      VCF. This includes the following:</p>
       <ul>
-        <li>FoundationKit provides core base classes for all of VCF</li>
-        <li>provides basic OS functionality like
+        <li>provides basic OS functionality such as:
           <ul>
-            <li>Threads, Mutexes, Semaphore</li>
-            <li>Files</li>
-            <li>Streaming IO</li>
-            <li>Registry</li>
-            <li>Librarys</li>
-            <li>Process</li>
+            <li>Threads, Mutexes, Semaphore - provides support for multiple
+              threads of execution and for controlling access to resources
+              through synchronization primitives. Allows for several different
+              ways to use threads in your C++ classes.</li>
+            <li>Files - provides basic file support like creating, copying,
+              renaming etc.</li>
+            <li>Streaming IO - allows for flexible streaming mechanism that is
+              simple and intuitive to use. A variety of streams are implemented
+              for you such as file streams, memory streams, text streams, etc.</li>
+            <li>Registry - a central database that allows for application settings
+              to be stored and queried.</li>
+            <li>Librarys - allows for dynamically loading DLLs (or SOs) and
+              invoking exported functions that are exposed by the library.</li>
+            <li>Process - allows for creating a process and querying for
+              information such as the process ID and thread ID and process name.</li>
           </ul>
         </li>
         <li>provides RTTI, Class, Property, etc</li>
-        <li>Error logging</li>
-        <li>XML parsing</li>
-        <li>Exceptions</li>
+        <li>Support Error logging - making it easy to store errors or messages
+          to a log file.</li>
+        <li>XML parsing - supports basic XML parsing, with a non validating
+          parser.&nbsp;</li>
+        <li>Exceptions - provides a nice set of exceptions, which can also
+          output their messages to the Error log if one is in use.</li>
+        <li>Memory tracking in debug mode - allows outputting any unreleased
+          memory to the output buffer making it easier to track down memory
+          leaks.</li>
       </ul>
-      <p>Explain startup and terminate procedures</p>
-      <p>FoundationKit ::init();</p>
-      <p>FoundationKit ::terminate();</p>
-      <p>]</p>
+      <p>When using the FoundationKit you must initialize it&nbsp; (see <a href="#FS_Description">Detailed Description</a>
+      below) since there are a number of objects that need to be created. This
+      is accomplished using the <code>FoundationKit::init()</code> static method
+      call. Likewise when your application shuts down it needs to tell the
+      FoundationKit to clean up, which is accomplished with the <code>FoundationKit::terminate()</code>
+      static method call.</p>
       <table border="0" width="100%">
         <tr>
           <td width="50%">
@@ -83,7 +100,17 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>FoundationKit&nbsp;</p>
+      <table border="0" width="100%">
+        <tr>
+          <td width="50%" bgcolor="#C0C0C0"><b>Class</b></td>
+          <td width="50%" bgcolor="#C0C0C0"><b>Header</b></td>
+        </tr>
+        <tr>
+          <td width="50%">VCF::FoundationKit</td>
+          <td width="50%">vcf/include/FoundationKit.h</td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
       <table border="0" width="100%">
         <tr>
           <td width="50%">
@@ -93,7 +120,32 @@ Main body table
             <p align="right"><a href="#TopicTitle">top</a></td>
         </tr>
       </table>
-      <p>&nbsp;</p>
+      <p>The FoundationKit provides a wide variety of services and classes. Most
+      of these are useful in applications, particularly console applications (
+      applications that require a GUI may use these as well, but have additional
+      requirements that call for using the ApplicationKit instead ).&nbsp;</p>
+      <p>When using the FoundationKit in your application you will need to
+      initialize it with the call to <code>FoundationKit::init()</code> which
+      starts up the basic services and creates the various singletons used in
+      the FoundationKit . These singletons include the following objects:</p>
+      <ul>
+        <li>The VCF::SystemToolkit - this singleton provides access to the
+          various peer classes that represent things like a process or thread or
+          file. These peer's implementation are OS specific. The VCF classes
+          that wrap this functionality, such as the VCF::Process class which
+          contains a VCF::ProcessPeer, must get their peers by talking to the
+          VCF::SystemToolkit.</li>
+        <li>The VCF::System - this singleton provides access to low level OS
+          functions like sleep, print, and error print.</li>
+        <li>The VCF::ClassRegistry -&nbsp;</li>
+      </ul>
+      <p>In addition there a few basic classes that are &quot;registered&quot;
+      into the ClassRegistry at this time. These include:</p>
+      <ul>
+        <li>Object</li>
+        <li>ObjectWithEvents</li>
+        <li>Rect</li>
+      </ul>
       <hr>
       <table border="0" width="100%">
         <tr>
