@@ -1,0 +1,7 @@
+//treelist.rc
+
+MainIcon	BITMAP	"icon1.bmp"
+Open		BITMAP	"icon2.bmp"
+img3		BITMAP	"icon3.bmp"
+img4		BITMAP	"icon4.bmp"
+img5		BITMAP	"icon5.bmp"
