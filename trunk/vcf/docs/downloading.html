@@ -34,9 +34,30 @@ Main body table
     	
       <h1><a name="TopicTitle">Downloading the VCF</a></h1>
       <h2><a name="Introduction">Introduction</a></h2>
-      <p>From where ? Sourceforge</p>
-      <p>Mention how, either the source tar.gz, the Installer or the cvs</p>
-      <p>links to setting SSH and CVS</p>
+        <p>You can download the VCF from <a href="http://sourceforge.net">SourceForge</a>.
+        There are a variety of files, such as documentation, source, installers,
+        all of which can be seen by following this <a href="http://sourceforge.net/project/showfiles.php?group_id=6796">link</a>.</p>
+      <p>For source code you can download the latest source code in a compressed
+      archive, usually of the form vcf&lt;version&gt;.tar.gz (for example the
+      0.5.4 version is named vcf.0.5.4.tar.gz).&nbsp;</p>
+      <p>Alternatively you can download the code anonymously through CVS. You'll
+      have to install CVS on your system first and then once this is done follow
+      these instructions:</p>
+      <p>The module you wish to check out must be specified as <i>vcf</i> for
+      the whole thing. When prompted for a password for <i>anonymous</i>, simply
+      press the Enter key.</p>
+      <p><tt>cvs -d:pserver:anonymous@cvs.vcf.sourceforge.net:/cvsroot/vcf login</tt></p>
+      <p><tt>cvs -z3 -d:pserver:anonymous@cvs.vcf.sourceforge.net:/cvsroot/vcf
+      co <i>vcf</i></tt></p>
+        <p>This will pull down the whole framework and related 3rd party
+        modules.&nbsp;</p>
+        <p>Lastly, you get the framework installed by downloading the VCF
+        Installer, named VCFInstaller&lt;version&gt;.exe, which will set up your
+        system with the VCF and allow you to immediately be ready to start
+        developing with the VCF. This includes setting up any environment
+        variables, MSDN integration of documents (if requested), and registering
+        of the Visual C++ add-ins and VCF application wizards (for Win32
+        installs only).</p>
     </td>
   </tr>
 </table>
