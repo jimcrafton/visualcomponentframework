@@ -25,7 +25,7 @@
 
 SHELL=/bin/sh
 
-# basic GTK+ app makefile
+# basic gcc app makefile
 
 SRC = ../../../src
 INC = ../../../include
@@ -48,17 +48,17 @@ $(SRC)/IO/FileStream.cpp \
 $(SRC)/IO/FileUtils.cpp \
 $(SRC)/core/FoundationKit.cpp \
 $(SRC)/core/InterfaceClass.cpp \
-$(SRC)/utils/Library.cpp \
+$(SRC)/Utils/Library.cpp \
 $(SRC)/core/Locales.cpp \
 $(SRC)/IO/MemoryStream.cpp \
 $(SRC)/Utils/Mutex.cpp \
 $(SRC)/core/Object.cpp \
 $(SRC)/core/ObjectWithEvents.cpp \
-$(SRC)/utils/Parser.cpp \
+$(SRC)/Utils/Parser.cpp \
 $(SRC)/core/Point.cpp \
 $(SRC)/Events/PropertyChangeEvent.cpp \
 $(SRC)/core/Rect.cpp \
-$(SRC)/utils/Registry.cpp \
+$(SRC)/Utils/Registry.cpp \
 $(SRC)/IO/Stream.cpp \
 $(SRC)/Utils/StringUtils.cpp \
 $(SRC)/Utils/System.cpp \
@@ -68,8 +68,7 @@ $(SRC)/IO/TextOutputStream.cpp \
 $(SRC)/Utils/Thread.cpp \
 $(SRC)/Events/ThreadEvent.cpp \
 $(SRC)/core/VCFMath.cpp \
-$(SRC)/utils/VCFProcess.cpp \
-
+$(SRC)/Utils/VCFProcess.cpp \
 
 INCLUDES = -I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptions -I $(INC)/io \
 -I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerkit -I $(INC)/graphics -I /usr/include/g++3
@@ -77,14 +76,11 @@ INCLUDES = -I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptio
 OBJS    = ${SOURCES:.cpp=.o}
 CFLAGS  = -fpic
 
-LDADD   = -shared 
+LDADD   = -shared
 DEFINES = -Dgtk
-CC      = gcc
-PACKAGE = FoundationKit.so
+CC      = g++
+PACKAGE = libFoundationKit.a
 
 all : ${OBJS}
-	${CC} -o ${PACKAGE} ${OBJS} ${LDADD} 
-
-link : *.o
-	${CC} -o ${PACKAGE} *.o ${LDADD} 
-# end of file
+	$(CC) -o libFoundationKit_shared.so $(LDADD) *.o
+	ar rcs libFoundationKit.a *.o
