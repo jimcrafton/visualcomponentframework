@@ -69,9 +69,13 @@ $(SRC)/Utils/Thread.cpp \
 $(SRC)/Events/ThreadEvent.cpp \
 $(SRC)/core/VCFMath.cpp \
 $(SRC)/Utils/VCFProcess.cpp \
+$(SRC)/ImplementerKit/LinuxPeer.cpp \
+$(SRC)/ImplementerKit/LinuxFilePeer.cpp \
+$(SRC)/ImplementerKit/LinuxFileStream.cpp
+
 
 INCLUDES = -I $(INC)/core -I $(INC)/events -I $(INC)/dragdrop -I $(INC)/exceptions -I $(INC)/io \
--I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerkit -I $(INC)/graphics -I /usr/include/g++3
+-I $(INC)/utils -I $(INC)/implementer -I $(INC)/implementerKit -I $(INC)/graphics -I /usr/include/g++3
 
 OBJS    = ${SOURCES:.cpp=.o}
 CFLAGS  = -fpic
@@ -84,3 +88,4 @@ PACKAGE = libFoundationKit.a
 all : ${OBJS}
 	$(CC) -o libFoundationKit_shared.so $(LDADD) *.o
 	ar rcs libFoundationKit.a *.o
+	
