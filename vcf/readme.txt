@@ -1,4 +1,4 @@
-Visual Component Framework 0.2.6 
+Visual Component Framework 0.5.4 
 
 Readme
 
@@ -12,3 +12,9 @@ Add-ins sometimes do not get added automatically to Dev Studio. These can be add
 People experiencing any problems during or after the 
 install should go to VCF Bugs(http://sourceforge.net/tracker/?func=add&group_id=6796&atid=106796) 
 and submit a bug report.
+
+Please note that documentation is currently under flux at the moment, but may be found in the following places:
+	- http://sourceforge.net/docman/?group_id=6796
+	- The installed documentation (for Win32 systems) in HTML Help format (*.chm), which should be in docs
+	  docs directory under the root of wherever you chose to install the VCF.
+	- 
