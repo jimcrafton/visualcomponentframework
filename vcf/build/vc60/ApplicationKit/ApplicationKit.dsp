@@ -98,6 +98,15 @@ SOURCE=..\..\..\src\core\AbstractComponentEditor.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\AbstractContainer.cpp
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+# ADD CPP /Yu
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -136,6 +145,8 @@ SOURCE=..\..\..\src\core\Application.cpp
 SOURCE=..\..\..\src\core\ApplicationKit.cpp
 
 !IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+# ADD CPP /Yc"ApplicationKit.h"
 
 !ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
 
@@ -363,6 +374,10 @@ SOURCE=..\..\..\src\Events\FocusEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\core\Frame.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\core\HeaderControl.cpp
 # End Source File
 # Begin Source File
 

@@ -1403,6 +1403,10 @@ SOURCE=..\..\..\src\core\Frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\core\HeaderControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\Events\HelpEvent.cpp
 # End Source File
 # Begin Source File
