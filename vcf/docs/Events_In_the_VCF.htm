@@ -3,11 +3,11 @@
   <!-- $MVD$:app("RoboHELP HTML Edition by Blue Sky Software, portions by MicroVision Dev. Inc.","769") -->
   <!-- $MVD$:template("","0","0") -->
   <!-- $MVD$:color("18","b5edfb","Code Orange","1") -->
-  <!-- $MVD$:fontset("Arial","Arial") -->
-  <!-- $MVD$:fontset("Verdana","Verdana") -->
-  <!-- $MVD$:fontset("Courier New","Courier New") -->
+  <!-- $MVD$:color("19","ffefce","Custom #1","0") -->
+  <!-- $MVD$:color("20","b58800","Custom #2","0") -->
+  <!-- $MVD$:fontset("Trebuchet MS","Trebuchet MS") -->
   <TITLE>Events In the VCF</TITLE>
-  <META NAME="generator" CONTENT="RoboHELP by Blue Sky Software www.blue-sky.com HTML Edition">
+  <META NAME="generator" CONTENT="Microsoft FrontPage 4.0">
   <SCRIPT LANGUAGE="javascript" TITLE="BSSC Special Effects" SRC="BSSCDHTM.js">
  </SCRIPT><LINK
   REL="StyleSheet" HREF="default.css"></HEAD>
@@ -31,20 +31,171 @@
   <P>
    In most frameworks this is done through callbacks, and their are many 
    different ways to approach this. In C++ this gets a bit tricky due to 
-   nature of C++ member functions, so we need a way to wrap the callback 
-   function, which itself needs to be a member function. In addition, we 
-   need a consistent way to let objects know that we are interested in 
-   being notified when a particular event happens, as well as telling 
-   the same object that we no longer want to be notified.</P>
+   the nature of C++ member functions, so we need a way to wrap the 
+   callback function, which itself needs to be a member function. In 
+   addition, we need a consistent way to let objects know that we are 
+   interested in being notified when a particular event happens, as well 
+   as telling the same object that we no longer want to be notified.</P>
   <P>
-   To accomplish this in the VCF we have EventHandler objects. An 
-   EventHandler encapsulates a member method on some other object that 
-   will be called when the event happens. An EventHandler is an abstract 
-   class that serves as a base class for other classes to derive from. 
-   But wait - what are these other classes ? In order to make the method </P>
+   To accomplish this in the VCF we have event handler that are implemented with
+   the VCF::EventHandler class. The VCF::EventHandler is an abstract class that encapsulates a member method 
+   on some other object that will be called when the event happens, in 
+   other words a callback function. The VCF::EventHandler serves as a base 
+   class for other classes to derive from. But wait - what are these 
+   other classes ? In order to make the method pointer work, the VCF has 
+   a special template class called VCF::EventHandlerInstance which requires a 
+   template types specializing the Source class type, and the Event 
+   class type. It is declared like this:</P><PRE>template &lt;class SOURCE, class EVENT&gt; class EventHandlerInstance : public EventHandler {
+     public:
+     EventHandlerInstance( SOURCE* source, 
+                           OnEventHandlerMethod handlerMethod, 
+                           const String&amp; handlerName=&quot;&quot; )
+     .
+     .
+     .
+}</PRE><P>
+   The SOURCE type is used to create a typedef for the member function 
+   pointer, of the form:</P><PRE>void (SOURCE::*MethodPtr)( EVENT* event );</PRE><P>
+   Because we specify the exact SOURCE type and EVENT type as template 
+   arguments, we can make a type safe method typedef, and do not have to 
+   rely on typecasts to force the function pointer to be correctly assigned.</P>
   <P>
-   Why do it this way ?</P>
-  <P>
-   <!-- $MVD$:spaceretainer() -->&nbsp;
+   To construct an VCF::EventHandlerInstance we must pass in the source 
+   object that will receive the event callbacks, a method pointer of the 
+   source object, and an optional name for the event handler. If we specify a name for the event handler, and the source object derives 
+   from VCF::ObjectWithEvents, then the event handler will automatically be 
+   added to the source object's list of event handlers. This will allow 
+   you to retrieve it later, as well as reclaim the memory for the event 
+   handlers when the source object is destroyed. Because of this 
+   instances of class EventHandlerInstance must <SPAN STYLE="font-style : italic;font-weight : bold;">always</SPAN> 
+   be created on the heap.</P>
+  <H4>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</H4>
+  <H4>
+   Why do it this way ?</H4>
+  <P>Typically in most frameworks, a single method is registered as the 
+   callback for a single event notification. This is OK in the case 
+   where your window object wants to be notified when some one clicks on 
+   it, but what about when other objects, besides the window want to be notified
+  of this event as well ? In other words there is usually a one to one relationship between the event that is fired and the object 
+   that handles the event notification. This is diagrammed visually in Figure 1
+  below:<P>Figure 1<br>
+  <img border="0" src="old_style_event_handling.gif" width="436" height="325"><P> In our example above, typically 
+   the window has to manually pass the event along to the objects, 
+   calling some predetermined method on the object. This is difficult to 
+   keep in synch and doesn't scale well. In addition, it requires the 
+   same kind of code to written over and over again, which in itself is 
+   error prone. In the VCF, the object that fires the event may have an 
+   unlimited number of event handlers that get notified when a particular event
+  happens that the event handler(s) have been registered for. Again, this is
+  diagrammed visually in Figure 2, below:<P>Figure 2<br>
+  <img border="0" src="vcf_event_handling.gif" width="492" height="434"><P>This
+  allows us to scale up much easier and with very little code on the part of the
+  developer. Let's take things a bit further and see exactly how much code is
+  neccessary to hook these pieces together.<PRE>Window* wind = ...
+.
+.
+.
+wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Window,ClickEvent&gt;( wind, Window::onClick, &quot;windClickHandler&quot; ) );
+</PRE>
+  <p>As you can see it doesn't take much - just call the appropriate add<i><b>XXX</b></i>Handler
+  method on the object that fires the events you're interested in (in this case
+  the instance referred to by the <code>wind</code> variable), and create a new
+  EventHandlerInstance, passing in the source object that will receive the
+  notification, the callback method, and the name of the event handler. In our
+  example above we are assuming our imaginary Window object has a <code>addClickedHandler()</code>
+  method, and that is fires off events of type <code>ClickEvent</code>. If we
+  repeat this we can add our other two objects as well, like so:</p>
+  <PRE>Window* wind = ...
+Obj1* obj1 = ...
+Obj2* obj2 = ...
+.
+.
+.
+wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Window,ClickEvent&gt;( wind, Window::onClick, &quot;windClickHandler&quot; ) );
+wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Obj1,ClickEvent&gt;( obj1, Obj1::onClick, &quot;obj1ClickHandler&quot; ) );
+wind-&gt;addClickedHandler( new EventHandlerInstance&lt;Obj2,ClickEvent&gt;( obj2, Obj2::onClick, &quot;obj2ClickHandler&quot; ) );
+</PRE>
+  <p>Now, whenever the clicked event occurs, all three objects will be notified.
+  </p>
+  <p>To simplify things a bit further, in the core framework, particularly the
+  ApplicationKit, there are event handler classes defined for most of the
+  corresponding event classes. For example, all mouse events, such as mouseClick,
+  mouseDown, etc, use the VCF::MouseEvent class when the event is fired off. So
+  a special event handler class is also defined, called, predictably,
+  VCF::MouseEventHandler, which derives from the VCF::EventHandlerInstance as
+  follows:</p>
+  <PRE>template &lt;class SOURCE&gt; class MouseEventHandler: public EventHandlerInstance&lt;SOURCE,MouseEvent&gt;{
+     public:
+     MouseEventHandler( SOURCE* source, 
+                           OnEventHandlerMethod handlerMethod, 
+                           const String&amp; handlerName=&quot;&quot; )
+     .
+     .
+     .
+}</PRE>
+  <p>Note the difference from the VCF::EventHandlerInstance class: when using
+  VCF::MouseEventHandler class you only need to specify the SOURCE template
+  type, then EVENT type is supplied for you. Of course you don't have to use the
+  class, but it makes things a bit simpler. Let's look at a real world example,
+  where an application wants to get notified when a menu item is clicked on</p>
+  <PRE>//class declaration
+class MyApplication : public VCF::Application {
+public:
+	virtual bool initRunningApplication();
+
+protected:
+	void onFileOpen( MenuItemEvent* event );
+
+//rest of class declaration
+	.
+	.
+	.
+};
+
+
+//class implementation
+
+bool MyApplication::initRunningApplication()
+{
+	//rest of initialization, main window and menu items have already been created
+	MenuItem* fileOpenItem = ....
+	fileOpenItem-&gt;addMenuItemClickedHandler( new VCF::MenuItemEventHandler&lt;MyApplication&gt;( this, 
+												MyApplication::onFileOpen, 
+												&quot;fileOpenHandler&quot; ) );
+	.
+	.
+}
+
+void MyApplication::onFileOpen( MenuItemEvent* event )
+{
+	//do stuff here
+}</PRE>
+  <p>Here we have declared a class called <code>MyApplication</code> that
+  derives from <code>VCF::Application</code>. We override the <code>initRunningApplication()</code>
+  method for our own initialization and add a callback method,&nbsp; <code>onFileOpen()</code>,
+  to be invoked whenever the user clicks on the &quot;File &gt; Open&quot; menu
+  item of our application. In our implementation of the <code>initRunningApplication()</code>
+  method we simply add an event handler for menu item clicks to the menu item in
+  question ( stored here in the <code>fileOpenItem</code>&nbsp; variable) via
+  the <code>addMenuItemClickedHandler()</code> method. Notice the difference
+  from the previous example where we passed in new VCF::EventHandlerInstance,
+  whereas here we are simply passing in a new&nbsp; <code>VCF::MenuItemEventHandler</code>
+  object. Like the <code>VCF::MouseEventHandler</code> class, the <code>VCF::MenuItemEventHandler</code>
+  derives from <code>VCF::EventHandlerInstance</code>, and passes in the correct
+  event type to <code>VCF::EventHandlerInstance</code>, in this case a <code>VCF::MenuItemEvent</code>.
+  We could have just as easily used the code below as well, </p>
+  <PRE>
+fileOpenItem-&gt;addMenuItemClickedHandler( new VCF::EventHandlerInstance&lt;MyApplication,VCF::MenuItemEvent&gt;( this, 
+												MyApplication::onFileOpen, 
+												&quot;fileOpenHandler&quot; ) );</PRE>
+  <p>but using the <code>VCF::MenuItemEventHandler</code> class is a little more
+  convenient.</p>
+  <p>Not only is it possible for a single object to have more than one event
+  handler connected to it, allowing the object to &quot;publish&quot; its event
+  to multiple sources, it is also possible for a single event handler to be
+  registered with multiple objects. Figure 3, below, diagrams this relationship.</p>
+  <p>Figure 3<br>
+  <img border="0" src="shared_event_handlers.gif" width="381" height="386"></p>
  </BODY>
 </HTML>
