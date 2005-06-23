@@ -1741,7 +1741,7 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 	if ( state.isVertical() ) {
 		thumbRect.top_ = thumbRect.bottom_ - thumbSize.width_;
 
-		thumbRect.offset( 0, (int)(thumbSize.width_/2)-(int)((state.position_/(state.max_-state.min_))*rect->getHeight()) );
+		thumbRect.offset( 0, (int)(thumbSize.width_/2)-(int)(((state.position_-state.min_)/(state.max_-state.min_))*rect->getHeight()) );
 	}
 	else {
 		thumbRect.right_ = thumbRect.left_ + thumbSize.width_;
@@ -2492,6 +2492,10 @@ void Win32Context::finishedDrawing( long drawingOperation )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/06/23 18:23:45  scottpearson
+*Fixed bug in position of vertical sliders; now, sliders are positioned
+*correctly.
+*
 *Revision 1.5  2005/01/02 03:04:26  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *
