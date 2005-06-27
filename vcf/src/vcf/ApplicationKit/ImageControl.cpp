@@ -23,11 +23,12 @@ ImageControl::ImageControl():
 	transparent_ = false;
 	filename_ = "";
 	setTabStop(false);
+	autoDelete_ = true;
 }
 
 ImageControl::~ImageControl()
 {
-	if ( NULL != image_ ) {
+	if ( (NULL != image_) && autoDelete_ ) {
 		delete image_;
 	}
 
@@ -40,7 +41,7 @@ Image* ImageControl::getImage()
 
 void ImageControl::setImage( Image* image )
 {
-	if ( NULL != image_ ) {
+	if ( (NULL != image_) && autoDelete_ ) {
 		delete image_;
 		image_ = NULL;
 	}
@@ -73,7 +74,7 @@ ImageFilenameString& ImageControl::getFilename()
 void ImageControl::setFilename( const ImageFilenameString& filename )
 {
 	filename_ = filename;
-	if ( NULL != image_ ) {
+	if ( (NULL != image_) && autoDelete_ ) {
 		delete image_;
 		image_ = NULL;
 	}
@@ -175,6 +176,9 @@ void ImagePropertyEditor::showImageEditor( VariantData* data )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/06/27 16:21:15  scottpearson
+*AutoDelete added to ImageControl.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
