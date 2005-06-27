@@ -76,6 +76,15 @@ public:
 	void setFilename( const ImageFilenameString& filename );
 
 	virtual void paint( GraphicsContext* context );
+
+	void setAutoDelete( const bool& autoDelete ) {
+		autoDelete_ = autoDelete;
+	}
+
+	bool getAutoDelete() {
+		return autoDelete_;
+	}
+
 protected:
 
 
@@ -83,6 +92,7 @@ private:
 	Image* image_;
 	bool transparent_;
 	ImageFilenameString filename_;
+	bool autoDelete_;
 };
 
 
@@ -126,6 +136,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/06/27 16:21:15  scottpearson
+*AutoDelete added to ImageControl.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
