@@ -792,6 +792,19 @@ double Win32Font::getDescent()
 	return result;
 }
 
+bool Win32Font::isFixedPitch()
+{
+	bool result = false;
+
+	if ( System::isUnicodeEnabled() ) {		
+		result = ((((TEXTMETRICW*)tm_)->tmPitchAndFamily & TMPF_FIXED_PITCH) != 0) ? true : false;
+	}
+	else {
+		result = ((((TEXTMETRICA*)tm_)->tmPitchAndFamily & TMPF_FIXED_PITCH) != 0) ? true : false;
+	}
+
+	return result;
+}
 
 void Win32Font::setAttributes( const double& pointSize, const bool& bold, const bool& italic,
 								const bool& underlined, const bool& struckOut, const String& name )
@@ -833,11 +846,14 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 		lfTmp.lfStrikeOut = FALSE;
 		lfTmp.lfUnderline = FALSE;
 		lfTmp.lfWeight = FW_NORMAL;
-		
+#if defined(VCF_CW) && defined(UNICODE)
+		memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(WCHAR) );
+		fontName_.copy( lfTmp.lfFaceName, minVal<int>( fontName_.size(), LF_FACESIZE) );
+#else		
 		AnsiString tmpName = fontName_;
 		memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(char) );
 		tmpName.copy( lfTmp.lfFaceName, minVal<int>( tmpName.size(), LF_FACESIZE) );
-		
+#endif		
 		HFONT testFnt = CreateFontIndirect( &lfTmp );
 		if ( testFnt ) {
 			HFONT oldFnt = (HFONT)SelectObject( dc, testFnt );		
@@ -904,8 +920,17 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:01  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/02 03:04:26  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2005/04/13 01:08:49  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.3.2.2  2005/02/16 05:09:34  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.3.2.1  2004/12/19 04:05:05  ddiego
 *made modifications to methods that return a handle type. Introduced

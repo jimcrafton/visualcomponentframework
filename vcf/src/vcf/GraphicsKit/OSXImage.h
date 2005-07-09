@@ -21,6 +21,8 @@ public:
 
 	OSXImage( GraphicsContext* context, Rect* rect );
 
+	OSXImage( CFURLRef url, const String& ext );
+	
     virtual ~OSXImage();
 
 	void init();
@@ -42,6 +44,7 @@ protected:
     GrafPtr grafPort_;
     CGImageRef imageRef_;
 
+	void loadFromURL( CFURLRef url, const String& ext );
 };
 
 
@@ -52,6 +55,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:06:01  ddiego
+*added missing gtk files
+*
+*Revision 1.2.4.1  2005/06/23 01:26:57  ddiego
+*build updates
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -257,6 +257,8 @@ public:
 
 class MenuState : public DrawUIState {
 public:
+	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(kmUndefined){}
+
 	bool isSelected() const {
 		return (state_ & DrawStates::dsSelected) ? true : false;
 	}
@@ -298,7 +300,8 @@ public:
 		}
 	}
 	
-	
+	VirtualKeyCode keyCode_;
+	ulong32 modifierMask_;
 	String menuCaption_;
 };
 
@@ -345,7 +348,7 @@ public:
 		}
 	}
 
-	
+public:	
 	String buttonCaption_;
 };
 
@@ -415,6 +418,7 @@ public:
 	}
 	
 	
+public:	
 	String progressCaption_;
 	double min_;
 	double max_;
@@ -481,6 +485,7 @@ public:
 	
 	
 	
+public:	
 	String sliderCaption_;
 	double min_;
 	double max_;
@@ -553,6 +558,7 @@ public:
 		}
 	}
 	
+public:	
 	double min_;
 	double max_;
 	double position_;
@@ -625,6 +631,7 @@ public:
 		state_ |= DrawStates::dsTabOnRight;
 	}
 	
+public:	
 	String tabCaption_;
 };
 
@@ -647,6 +654,7 @@ public:
 		}
 	}
 	
+public:	
 	int themeFontType_;
 	String text_;
 	bool wrapText_;
@@ -654,7 +662,19 @@ public:
 
 
 
-};
+}; // namespace VCF
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.5  2005/07/09 23:05:58  ddiego
+*added missing gtk files
+*
+*Revision 1.4.2.2  2005/03/14 18:56:48  marcelloptr
+*comments and added an error message to avoid an infinite loop
+*
+*/
 
 
 #endif //_VCF_DRAWUISTATE_H__

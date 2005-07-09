@@ -128,7 +128,7 @@ public:
 	static GraphicsResourceBundlePeer* createGraphicsResourceBundlePeer();
 
 	static GraphicsResourceBundle* getResourceBundle();
-	
+
 
 	/**
 	*Create a image from a filename. The file is loaded into a Bitmap instance.
@@ -156,14 +156,12 @@ public:
 	static Color* getColorFromColormap( const String& colorName );
 
 	/**
-	* finds the named color closest to a color with a given RGB value
+	finds the named color closest to another given one.
+	@param const Color& color, the given color.
+	@return Color*, the closest color found. The color itself if it is 
+	in the map.
 	*/
 	static Color* getColorMatchFromColormap( const Color& color );
-
-	/**
-	* finds a color with a given luminosity contrast with another given color
-	*/
-	static Color getColorContrast( const Color& clrRef, double deltaL = 0.3 );
 
 	static void printColorNameMap( ) ;
 
@@ -198,7 +196,7 @@ protected:
 	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height ) = 0;
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect ) = 0;
-	
+
 	virtual PrintSessionPeer* internal_createPrintSessionPeer() = 0;
 
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer() = 0;
@@ -227,7 +225,7 @@ protected:
 		return NULL;
 	}
 
-	
+
 
 
 
@@ -246,10 +244,8 @@ protected:
 	Color* internal_getColorMatchFromColormap( const Color& color );
 
 	/**
-	* finds a color with a given luminosity contrast with another given color
+	* helper function to print the color map. Used for debugging purposes.
 	*/
-	Color internal_getColorContrast( const Color& clrRef, double deltaL = 0.3 );
-
 	void internal_printColorNameMap( ) const ;
 
 	Enumerator<FontInfo>* internal_getAvailableSystemFonts() {
@@ -261,18 +257,13 @@ protected:
 
 
 	/**
-	this will auto create our list for us - and is the only place where it can be created
-	initialization will happen in the ColorNames constructor
+	maps for colors
 	*/
-	//ColorNames colorNames_;
-
-	std::map<String,String> contentTypes_;
-
 	MapStringColor colorMap_;
 	MapStringColorName* colorNameMap_;
 
 	void initColorMap();
-	void initColorNameMapItem( const VCF::String& colorName, const unsigned char & r, const unsigned char & g, const unsigned char & b);
+	void initColorNameMapItem( const VCF::String& colorName, const uint8& r, const uint8& g, const uint8& b );
 	void destroyColorMaps();
 
 	std::map<unsigned long,Color*> systemColors_;
@@ -281,6 +272,9 @@ protected:
 
 	std::vector<FontInfo> availableSystemFonts_;
 	EnumeratorContainer<std::vector<FontInfo>,FontInfo> fontInfoContainer_;
+
+
+	std::map<String,String> contentTypes_;
 
 
 	/**
@@ -309,8 +303,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/02 03:04:26  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2005/06/11 00:50:50  marcelloptr
+*moved uint8/uint16 to VCF namespace
+*
+*Revision 1.3.2.2  2005/06/09 06:13:10  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
 *
 *Revision 1.3.2.1  2004/12/19 04:05:03  ddiego
 *made modifications to methods that return a handle type. Introduced

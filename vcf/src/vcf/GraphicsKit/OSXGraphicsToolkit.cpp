@@ -30,168 +30,130 @@ OSXGraphicsToolkit::~OSXGraphicsToolkit()
 
 void OSXGraphicsToolkit::loadSystemColors()
 {
-    RGBColor themeColor;
+	RGBColor themeColor;
 
 	Color* sysColor = NULL;
+
 	sysColor = new Color();
 	systemColors_[SYSCOLOR_SHADOW] = sysColor;
-    (*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SHADOW";
-    GetThemeBrushAsColor( kThemeBrushButtonActiveDarkShadow, 32, TRUE, &themeColor );
-	
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SHADOW";
+	GetThemeBrushAsColor( kThemeBrushButtonActiveDarkShadow, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_FACE] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_FACE";
+	GetThemeBrushAsColor( kThemeBrushButtonFaceActive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushButtonFaceActive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
-		
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_HIGHLIGHT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_HIGHLIGHT";
+	GetThemeBrushAsColor( kThemeBrushButtonActiveLightHighlight, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushButtonActiveLightHighlight, 32, TRUE, &themeColor );
-	
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_ACTIVE_CAPTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_CAPTION";
+	GetThemeBrushAsColor( kThemeBrushButtonFaceActive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushButtonFaceActive, 32, TRUE, &themeColor );
-	
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_ACTIVE_BORDER] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_BORDER";
+	GetThemeBrushAsColor( kThemeBrushButtonFrameActive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushButtonFrameActive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color( *Color::getColor("gray128") );
+	sysColor = new Color( *Color::getColor("gray128") );
 	systemColors_[SYSCOLOR_DESKTOP] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_DESKTOP";
 
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_CAPTION_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_CAPTION_TEXT";
+	GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_SELECTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION";
+	GetThemeBrushAsColor( kThemeBrushFocusHighlight, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushFocusHighlight, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_SELECTION_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION_TEXT";
+	GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_INACTIVE_BORDER] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_BORDER";
+	GetThemeBrushAsColor( kThemeBrushButtonFrameInactive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushButtonFrameInactive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_INACTIVE_CAPTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_CAPTION";
-
-    GetThemeBrushAsColor( kThemeBrushButtonFaceInactive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
+	GetThemeBrushAsColor( kThemeBrushButtonFaceInactive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
 
-    sysColor = new Color( *Color::getColor("lemonchiffon") );
+	sysColor = new Color( *Color::getColor("lemonchiffon") );
 	systemColors_[SYSCOLOR_TOOLTIP] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP";
 
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_TOOLTIP_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP_TEXT";
-
-    GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
+	GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_MENU] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU";
+	GetThemeBrushAsColor( kThemeBrushMenuBackground, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushMenuBackground, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_MENU_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU_TEXT";
+	GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_WINDOW] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW";
+	GetThemeBrushAsColor( kThemeBrushUtilityWindowBackgroundActive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeBrushUtilityWindowBackgroundActive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_WINDOW_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_TEXT";
+	GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
-    GetThemeBrushAsColor( kThemeTextColorBlack, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
 
-    sysColor = new Color();
+	sysColor = new Color();
 	systemColors_[SYSCOLOR_WINDOW_FRAME] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_FRAME";
-
-    GetThemeBrushAsColor( kThemeBrushButtonFrameActive, 32, TRUE, &themeColor );
-    sysColor->setRGB( ((double)themeColor.red)/65535.0,
-                        ((double)themeColor.green)/65535.0,
-                        ((double)themeColor.blue)/65535.0 );
+	GetThemeBrushAsColor( kThemeBrushButtonFrameActive, 32, TRUE, &themeColor );
+	sysColor->setRGB16( themeColor.red, themeColor.green, themeColor.blue );
 
 }
 
@@ -243,8 +205,20 @@ double OSXGraphicsToolkit::internal_getDPI( GraphicsContext* context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/08 20:52:48  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.3  2005/06/23 01:26:56  ddiego
+*build updates
+*
+*Revision 1.3.2.2  2005/06/09 06:13:10  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

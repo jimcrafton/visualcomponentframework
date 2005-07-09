@@ -114,7 +114,9 @@ public:
 	
 	virtual void drawThemeFocusRect( Rect* rect, DrawUIState& state );
 
-	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state );
+	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
+	
+	virtual void drawThemeButtonFocusRect( Rect* rect );
 
 	virtual void drawThemeCheckboxRect( Rect* rect, ButtonState& state );
 
@@ -147,12 +149,23 @@ public:
 	virtual void drawThemeBackground( Rect* rect, BackgroundState& state );
 
 	virtual void drawThemeMenuItem( Rect* rect, MenuState& state );
+	
+	virtual void drawThemeMenuItemText( Rect* rect, MenuState& state );
 
 	virtual void drawThemeText( Rect* rect, TextState& state );
 	
 	
 	void setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  );
 	void setPortFromImage( GrafPtr port, uint32 width, uint32 height );
+	
+	
+	CGContextRef getCGContext() {
+		return contextID_;
+	}
+	
+	GrafPtr getGrafPtr() {
+		return grafPort_;
+	}
 protected:
 	CGContextRef contextID_;
     GrafPtr grafPort_;
@@ -190,8 +203,20 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/08 20:52:48  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.3  2005/06/28 04:09:05  ddiego
+*adjusted for marcellos change.
+*
+*Revision 1.3.2.2  2005/06/27 03:28:54  ddiego
+*more osx work.
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

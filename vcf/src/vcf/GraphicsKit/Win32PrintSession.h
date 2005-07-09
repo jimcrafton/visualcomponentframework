@@ -1,7 +1,12 @@
-#ifndef _WIN32PRINTSESSION_H__
-#define _WIN32PRINTSESSION_H__
+#ifndef _VCF_WIN32PRINTSESSION_H__
+#define _VCF_WIN32PRINTSESSION_H__
+//Win32PrintSession.h
 
-
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
 namespace VCF {
 
@@ -118,8 +123,19 @@ namespace VCF {
 };
 
 
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/07/09 23:06:02  ddiego
+*added missing gtk files
+*
+*Revision 1.2.2.1  2005/05/05 13:46:00  marcelloptr
+*added standard VCF formatting
+*
+*/
 
-#endif //_WIN32PRINTSESSION_H__
+
+#endif //_VCF_WIN32PRINTSESSION_H__
 
 
 

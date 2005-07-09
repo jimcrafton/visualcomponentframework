@@ -142,7 +142,7 @@ floating point specialization
 */
 template <>
 struct BGRAPixel<float, true > {
-#if defined(VCF_VC71) || defined(VCF_BCC)
+#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -195,7 +195,7 @@ floating point specialization
 template <>
 struct RGBAPixel<float, true > {
 
-#if defined(VCF_VC71) || defined(VCF_BCC)
+#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -243,7 +243,7 @@ floating point specialization
 template <  >
 struct ARGBPixel<float, true > {
 
-#if defined(VCF_VC71) || defined(VCF_BCC)
+#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -294,7 +294,7 @@ floating point specialization
 template <  >
 struct ABGRPixel<float,true> {
 
-#if defined(VCF_VC71) || defined(VCF_BCC)
+#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -344,7 +344,7 @@ floating point specialization
 template < >
 struct GrayscalePixel<float,true> {
 
-#if defined(VCF_VC71) || defined(VCF_BCC)
+#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -469,6 +469,12 @@ public :
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
+*Revision 1.3.2.1  2005/04/11 17:07:17  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.3  2004/12/01 04:31:43  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

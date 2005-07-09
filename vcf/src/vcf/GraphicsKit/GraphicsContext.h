@@ -17,7 +17,7 @@ where you installed the VCF.
 #ifndef AGG_RENDERING_BUFFER_INCLUDED
 #include "thirdparty/common/agg/include/agg_rendering_buffer.h"
 #endif
-	
+
 
 
 namespace VCF{
@@ -149,7 +149,7 @@ public:
 		ttMessageFont,
 		ttToolTipFont
 	};
-	
+
 	typedef std::vector<GraphicsState*> GraphicsStateCollection;
 	typedef GraphicsStateCollection::iterator GraphicsStateIterator;
 	typedef GraphicsStateCollection::const_iterator GraphicsStateConstIterator;
@@ -158,9 +158,9 @@ public:
 	void init( );
 
 	bool isAntiAliasingOn( );
-	
+
 	void setAntiAliasingOn( bool antiAliasingOn );
-	
+
 	/**
 	*sets the current font
 	*A copy of the Font is made when this is set
@@ -232,16 +232,16 @@ public:
 	}
 
 	/**
-	*	saves the state of a Graphics context after the 
+	*	saves the state of a Graphics context after the
 	*	paint operations are done.
 	*	The save/restore idea idea is the same as for Win32 SaveDC and RestoreDC.
-	*	It allows you to save the state of the DC (device context) at a given point in time, 
-	*	and then make a whole bunch of changes to it, and when you're all done 
+	*	It allows you to save the state of the DC (device context) at a given point in time,
+	*	and then make a whole bunch of changes to it, and when you're all done
 	*	just call RestoreDC() and everything is set back.
 	*	\par
 	*	This prevents all sorts of extra SelectObject() calls and is more efficent.
 	*	\par
-	*	Similarly this makes it easy to guarantee that the 
+	*	Similarly this makes it easy to guarantee that the
 	*	state of the GraphicsContext is reset correctly.
 	*@return int, the index of the newly saved graphics state.
 	*@see GraphicsContext::restoreState()
@@ -249,7 +249,7 @@ public:
 	int saveState( );
 
 	/**
-	* restores the state of a Graphics context after the 
+	* restores the state of a Graphics context after the
 	* paint operations are done.
 	*@param int state, the index of the graphics state we want to restore. All
 	* the graphics states saved after this index are lost as they have lost meaning,
@@ -281,7 +281,7 @@ public:
 	Point getOrigin( );
 
 	/**
-	*sets the current rotation value of the transformation matrix. The 
+	*sets the current rotation value of the transformation matrix. The
 	theta argument is in degrees.
 	*/
 	void setRotation( const double& theta );
@@ -298,13 +298,13 @@ public:
 	void setShear( const double& shearX, const double& shearY );
 
 	/**
-	Sets the x and y scale values for the transformation matrix. To double the 
-	size of drawn elements use a scaleX value of 2.0 and a scaleY value of 
+	Sets the x and y scale values for the transformation matrix. To double the
+	size of drawn elements use a scaleX value of 2.0 and a scaleY value of
 	2.0. To flip the y coordinates use a scaleY of -1.0.
 	*/
 	void setScale( const double& scaleX, const double& scaleY );
 
-	
+
 	void concatRotation( const double& theta );
 
 	void concatTranslation( const double transX, const double& transY );
@@ -312,7 +312,7 @@ public:
 	void concatShear( const double& shearX, const double& shearY );
 
 	void concatScale( const double& scaleX, const double& scaleY );
-	
+
 
 	/**
 	This test to see if the current rotation
@@ -494,11 +494,11 @@ public:
 	void ellipse( const double & x1, const double & y1, const double & x2, const double & y2 );
 	void ellipse( const Point & pt1, const Point & pt2 );
 
-	void arc( const double& centerX,  const double& centerY, 
-	          const double& radiusWidth, const double& radiusHeight, 
+	void arc( const double& centerX,  const double& centerY,
+	          const double& radiusWidth, const double& radiusHeight,
 	          const double& startAngle, const double& endAngle );
 
-	void arc( const Point & centerPt, const Size& radius, 
+	void arc( const Point & centerPt, const Size& radius,
 	          const double& startAngle, const double& endAngle );
 
 
@@ -518,21 +518,23 @@ public:
 
 
 	/**
-	The following functions are related to theme compliant drawing. 
-	These allow the VCF to properly draw various "parts" of the 
-	windowing system that are compliant with the windowing system's 
-	"theme" or visual style. 
+	The following functions are related to theme compliant drawing.
+	These allow the VCF to properly draw various "parts" of the
+	windowing system that are compliant with the windowing system's
+	"theme" or visual style.
 	*/
 	void drawThemeSelectionRect( Rect* rect, DrawUIState& state );
 
 	void drawThemeFocusRect( Rect* rect, DrawUIState& state );
 
-	void drawThemeButtonRect( Rect* rect, ButtonState& state );
+	void drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
+
+	void drawThemeButtonFocusRect( Rect* rect );
 
 	void drawThemeCheckboxRect( Rect* rect, ButtonState& state );
 
 	void drawThemeRadioButtonRect( Rect* rect, ButtonState& state );
-	
+
 	void drawThemeComboboxRect( Rect* rect, ButtonState& state );
 
 	void drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state );
@@ -565,20 +567,20 @@ public:
 	with the native windowing systems default look and feel
 	*/
 	void drawThemeTickMarks( Rect* rect, SliderState& state );
-	
+
 	/**
 	Draws a slider control, like that used for a slider control, that is compliant
 	with the native windowing systems default look and feel
 	*/
 	void drawThemeSlider( Rect* rect, SliderState& state );
-	
+
 	/**
 	Draws a progress bar control, that is compliant
 	with the native windowing systems default look and feel
 	*/
 	void drawThemeProgress( Rect* rect, ProgressState& state );
-	
-	
+
+
 	void drawThemeImage( Rect* rect, Image* image, DrawUIState& state );
 
 	/**
@@ -614,20 +616,27 @@ public:
 	*/
 	void drawThemeMenuItem( Rect* rect, MenuState& state );
 
+	/**
+	Draws the menu items text such that it's compliant with the
+	native windowing platform look and feel. This will take into
+	consideration the accelerator values if present.
+	*/
+	void drawThemeMenuItemText( Rect* rect, MenuState& state );
+
 	void drawThemeText( Rect* rect, TextState& state );
 
 protected:
 
-	void buildArc( double centerX,  double centerY, 
-	               double radiusWidth, double radiusHeight, 
-	               double startAngle, double endAngle, 
+	void buildArc( double centerX,  double centerY,
+	               double radiusWidth, double radiusHeight,
+	               double startAngle, double endAngle,
 	               std::vector<Point>& pts, const Matrix2D& transform );
 
-	void buildRoundRect( double x1, double y1, double x2, double y2, 
-	                     double cornerArcWidth, double cornerArcHeight, 
+	void buildRoundRect( double x1, double y1, double x2, double y2,
+	                     double cornerArcWidth, double cornerArcHeight,
 	                     std::vector<Point>& pts, const Matrix2D& transform );
 
-	void buildEllipse( double x1, double y1, double x2, double y2, 
+	void buildEllipse( double x1, double y1, double x2, double y2,
 	                   std::vector<Point>& pts, const Matrix2D& transform );
 
 
@@ -680,7 +689,7 @@ protected:
 	GraphicsStateCollection stateCollection_;
 
 	/**
-	* the index of the current state in the collection of 
+	* the index of the current state in the collection of
 	* all the saved Graphics states.
 	*@see GraphicsContext::saveState()
 	*/
@@ -749,7 +758,7 @@ inline void GraphicsContext::ellipse( const Point & pt1, const Point & pt2 ) {
 }
 
 
-inline void GraphicsContext::arc( const Point & centerPt, const Size& radius, 
+inline void GraphicsContext::arc( const Point & centerPt, const Size& radius,
 								 const double& startAngle, const double& endAngle) {
 	arc( centerPt.x_, centerPt.y_, radius.width_, radius.height_, startAngle, endAngle );
 }
@@ -790,8 +799,17 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:05:59  ddiego
+*added missing gtk files
+*
 *Revision 1.5  2005/01/02 03:04:25  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.3  2005/06/26 01:27:54  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.4.2.2  2005/03/14 04:17:26  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
 *
 *Revision 1.4.2.1  2004/12/19 04:05:03  ddiego
 *made modifications to methods that return a handle type. Introduced

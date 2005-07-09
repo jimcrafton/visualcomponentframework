@@ -25,7 +25,6 @@ namespace VCF {
 #define DEFAULT_FONT_NAME		"Arial"
 
 class FontPeer;
-class GlyphCollection;
 class Locale;
 class GraphicsContext;
 
@@ -34,9 +33,27 @@ class GraphicsContext;
 class GRAPHICSKIT_API Font : public Object {
 
 public:
+	enum FontChangeEvent{
+		fcFontName = 0xF097,
+		fcFontItalic,
+		fcFontBold,
+		fcFontStrikeOut,
+		fcFontUnderline,
+		fcFontSize,
+		fcFontColor,
+		fcFontLocale,
+		fcAll
+	};
 
+	/**
+	an event is fired every time a font is changed.
+	This let the peer of a control to be notified of the change
+	even when the font is not changed through its
+	associated control.
+	*/
+	DELEGATE(FontChanged);
 
-    Font();
+	Font();
 
 	Font( const String& fontName );
 
@@ -85,10 +102,10 @@ public:
 	void setBold( const bool& bold );
 	bool getBold() const;
 
-    bool getItalic() const;
+	bool getItalic() const;
 	void setItalic( const bool& italic );
 
-    bool getUnderlined() const;
+	bool getUnderlined() const;
 	void setUnderlined( const bool& underlined );
 
 	bool getStrikeOut() const;
@@ -103,11 +120,13 @@ public:
 								const bool& underlined, const bool& struckOut,
 								const Color* color, const String& name );
 
-    GlyphCollection* getGlyphCollection( const String& text );
-
 	FontPeer* getFontPeer();
 
 	virtual void copy( Object* source );
+
+	virtual Object* clone( bool deep ) {
+		return new Font(*this);
+	}
 
 	double getAscent()  const;
 
@@ -115,6 +134,7 @@ public:
 
 	double getHeight()  const;
 
+	bool isFixedPitch() const ;
 	/**
 	Get the locale associated with this font. May be NULL, in which case this
 	is whatever the System's default locale is.
@@ -153,6 +173,8 @@ protected:
 	Color color_;
 	Locale* locale_;
 	GraphicsContext* context_;
+
+	void changed( int eventType );
 };
 
 };
@@ -161,6 +183,21 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:05:58  ddiego
+*added missing gtk files
+*
+*Revision 1.3.2.4  2005/06/29 20:31:09  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.3.2.3  2005/05/30 22:22:30  ddiego
+*fixed readonly mode in text edit and added better default font change support.
+*
+*Revision 1.3.2.2  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:34  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

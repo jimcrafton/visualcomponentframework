@@ -27,11 +27,9 @@ using namespace VCF;
 std::map<ColorNames::ColorID, String> ColorNames::nameMap;
 EnumeratorMapContainer<std::map<ColorNames::ColorID, String>, String > ColorNames::nameMapContainer;
 
-String ColorNames::unknownColorName;
+String ColorNames::unknownColorName_;
 
 const double ColorSpace::HueCriticalMax	= HUECRITICALMAX;	// Hue > HueCriticalMax => rgb.R > 1;
-const int	ColorSpace::RGBMax			= RGBMAX;			// This is what Windows in the Display Properties dialog uses in the ColorPicker tool.
-const int	ColorSpace::HSLMax			= HSLMAX;			// max r/g/b value is 255 in Windows
 
 
 
@@ -50,12 +48,31 @@ const int	ColorSpace::HSLMax			= HSLMAX;			// max r/g/b value is 255 in Windows
 //
 int ColorSpace::getLuminosity( const Color& color )
 {
-	int r = (int)(color.getRed() * 255.0);
-	int g = (int)(color.getGreen() * 255.0);
-	int b = (int)(color.getBlue() * 255.0);
+	int r = (int)(color.r_ * Color::xFF + 0.5);
+	int g = (int)(color.g_ * Color::xFF + 0.5);
+	int b = (int)(color.b_ * Color::xFF + 0.5);
 	int rgbMax = maxVal<>( maxVal<>(r,g), b);
 	int rgbMin = minVal<>( minVal<>(r,g), b);
 	return (int) (double) (((rgbMax+rgbMin) * ColorSpace::HSLMax) + ColorSpace::RGBMax ) / (2 * ColorSpace::RGBMax);
+
+	/*
+	// enhancing the precision ... debug later
+	uint16 r, g, b;
+	color.getRGB16(r, g, b);
+	int rgbMax = maxVal<>( maxVal<>(r,g), b);
+	int rgbMin = minVal<>( minVal<>(r,g), b);
+	return (int) (double) (((double)(rgbMax+rgbMin) * ColorSpace::HSLMax16) + ColorSpace::RGBMax16 ) / (2 * ColorSpace::RGBMax16);
+	*/
+}
+
+void ColorSpace::setLuminosity( Color& color, const int& luminosity )
+{
+	HSLtype hslType = ColorToHSL( color );
+
+	double L = (double)luminosity / ColorSpace::HSLMax;
+	hslType.L = L;
+
+	color = HSLToColor( hslType );
 }
 
 ColorSpace::HSVtype ColorSpace::RGBToHSV( const RGBtype& rgb )
@@ -338,7 +355,7 @@ ColorSpace::RGBtype ColorSpace::HSLToRGB ( const HSLtype& hsl )
   return rgb;
 }
 
-//		Coding the HLS Model
+//		Coding the HSL Model
 //
 //		Normally Hue is expressed as an angle between 0-360 to describe the colour
 //		and a value between 0 and 1 to describe Hue and Saturation.
@@ -440,9 +457,9 @@ ColorSpace::RGBtype ColorSpace::ColorLongToRGB ( const ulong32 color )
 	RGBtype rgb;
 	Color c(color);
 	//the casting is necessary
-	rgb.R = (double) (c.getRed() * 255.0) / ColorSpace::RGBMax;				// red..
-	rgb.G = (double) (c.getGreen() * 255.0) / ColorSpace::RGBMax;				// ..green
-	rgb.B = (double) (c.getBlue() * 255.0) / ColorSpace::RGBMax;				// ..blue color vals
+	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
+	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
+	rgb.B = (double) (c.b_ * Color::xFF) / ColorSpace::RGBMax;
 	return rgb;
 }
 
@@ -459,9 +476,9 @@ ColorSpace::HSLtype ColorSpace::ColorLongToHSL ( const ulong32 color )
 	RGBtype rgb;
 	//the casting is necessary
 	Color c(color);
-	rgb.R = (double) (c.getRed() * 255.0) / ColorSpace::RGBMax;
-	rgb.G = (double) (c.getGreen() * 255.0) / ColorSpace::RGBMax;
-	rgb.B = (double) (c.getBlue() * 255.0) / ColorSpace::RGBMax;
+	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
+	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
+	rgb.B = (double) (c.b_ * Color::xFF) / ColorSpace::RGBMax;
 
 	return RGBToHSL(rgb);
 }
@@ -492,9 +509,9 @@ ColorSpace::HSLrangetype ColorSpace::ColorLongToHSLRange ( ulong32 color )
 	RGBtype rgb;
 	Color c(color);
 	//the casting is necessary
-	rgb.R = (double) (c.getRed() * 255.0) / ColorSpace::RGBMax;
-	rgb.G = (double) (c.getGreen() * 255.0)/ ColorSpace::RGBMax;
-	rgb.B = (double) (c.getBlue() * 255.0) / ColorSpace::RGBMax;
+	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
+	rgb.G = (double) (c.g_ * Color::xFF)/ ColorSpace::RGBMax;
+	rgb.B = (double) (c.b_ * Color::xFF) / ColorSpace::RGBMax;
 
 	return RGBToHSLRange (rgb);
 }
@@ -663,6 +680,245 @@ void ColorSpace::changeHWB ( HWBtype& hwb, const double& percentH, const double&
 	hwb.B = getChanged( hwb.B, percentB );
 }
 
+Color Color::getColorContrast( const Color& color, double deltaL/*=0.3*/ )
+{
+	double deltaLum = deltaL;
+
+	Color clrCnt = color;
+
+	Color clrTst = color;
+
+//#define TEST_RGBToHSLToRGB
+#ifdef TEST_RGBToHSLToRGB
+	//ColorSpace::HSLtype _hslTst = ColorSpace::ColorToHSL( clrTst );
+	ColorSpace::RGBtype rgbTst = ColorSpace::ColorToRGB( clrTst );
+	ColorSpace::HSLtype _hslTst = ColorSpace::RGBToHSL ( rgbTst );
+	//Color clrTest = ColorSpace::HSLToColor( _hslTst );
+	ColorSpace::RGBtype rgbTest = ColorSpace::HSLToRGB (_hslTst);
+	Color clrTest = ColorSpace::RGBToColor( rgbTest );
+#endif
+
+	ColorSpace::HSLtype _hslCnt = ColorSpace::ColorToHSL( clrCnt );
+	int lumin = clrCnt.getLuminosity();
+
+	// not enough contrast ?
+	if ( lumin < 128 ) {
+		if ( 0 < deltaLum ) {
+			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, +deltaLum); // lighter
+		} else {
+			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, -deltaLum); // lighter
+		}
+	} else {
+		if ( 0 < deltaLum ) {
+			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, -deltaLum); // darker
+		} else {
+			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, +deltaLum); // darker
+		}
+	}
+
+	clrCnt = ColorSpace::HSLToColor( _hslCnt );
+
+	return clrCnt;
+}
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Color implementation
+
+Color::Color( const String& colorName ) {
+	( *this ) = (* GraphicsToolkit::getColorFromColormap( colorName ) );
+}
+
+String Color::toHexCode8( const ColorPackScheme& cps, const ColorType& ct )
+{
+	// Remark:
+	//   scheme: 0x00RRGGBB ( it would appear as BB GG RR 00 with Intel architecture ) so it should be:
+	//   code = StringUtils::format( L"%02x%02x%02x", cb, cg, cr ); if we want to see as it would appear with Intel architecture
+
+	String code = "";
+
+	uint8 ua, ub, uc;
+	double a, b, c;
+
+	switch ( ct ) {
+		case Color::ctRGB:
+			a = r_;
+			b = g_;
+			c = b_;
+			break;
+
+		case Color::ctHSV: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HSVtype hsv = ColorSpace::RGBToHSV(rgb);
+			SPLIT_HSV( hsv, a, b, c );
+			}
+			break;
+
+		case Color::ctHSL: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HSLtype hsl = ColorSpace::RGBToHSL(rgb);
+			SPLIT_HSL( hsl, a, b, c );
+			}
+			break;
+
+		case Color::ctHWB: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HWBtype hwb = ColorSpace::RGBToHWB(rgb);
+			SPLIT_HWB( hwb, a, b, c );
+			}
+			break;
+
+	}
+
+	ua = (uint8)(a * Color::xFF + 0.5);
+	ub = (uint8)(b * Color::xFF + 0.5);
+	uc = (uint8)(c * Color::xFF + 0.5);
+
+	switch ( cps ) {
+		case Color::cpsARGB : {
+			//uint32 rgb = 0;
+			//((uint8*)(&rgb))[2] = cr;
+			//((uint8*)(&rgb))[1] = cg;
+			//((uint8*)(&rgb))[0] = cb;
+			code = Format(L"%02X%02X%02X") % ua % ub % uc; // do not prefix '#' here (MP)
+		}
+		break;
+
+		case Color::cpsABGR : {
+			//uint32 rgb = 0;
+			//((uint8*)(&rgb))[0] = cr;
+			//((uint8*)(&rgb))[1] = cg;
+			//((uint8*)(&rgb))[2] = cb;
+			code = Format(L"%02X%02X%02X") % ua % ub % uc; // do not prefix '#' here (MP)
+		}
+		break;
+	}
+
+	return code;
+}
+
+String Color::toHexCode16( const ColorPackScheme& cps, const ColorType& ct )
+{
+	// Remark:
+	//   scheme: 0x00RRGGBB ( it would appear as BB GG RR 00 with Intel architecture ) so it should be:
+	//   code = StringUtils::format( L"%04X%04X%04X", cb, cg, cr ); if we want to see as it would appear with Intel architecture
+
+	String code = "";
+
+	uint16 ua, ub, uc;
+	double a, b, c;
+
+	switch ( ct ) {
+		case Color::ctRGB:
+			a = r_;
+			b = g_;
+			c = b_;
+			break;
+
+		case Color::ctHSV: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HSVtype hsv = ColorSpace::RGBToHSV(rgb);
+			SPLIT_HSV( hsv, a, b, c );
+			}
+			break;
+
+		case Color::ctHSL: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HSLtype hsl = ColorSpace::RGBToHSL(rgb);
+			SPLIT_HSL( hsl, a, b, c );
+			}
+			break;
+
+		case Color::ctHWB: {
+			ColorSpace::RGBtype rgb;
+			MAKE_RGB( rgb, r_, g_ , b_ );
+
+			ColorSpace::HWBtype hwb = ColorSpace::RGBToHWB(rgb);
+			SPLIT_HWB( hwb, a, b, c );
+			}
+			break;
+
+	}
+
+	ua = (uint16)(a * Color::xFFFF + 0.5);
+	ub = (uint16)(b * Color::xFFFF + 0.5);
+	uc = (uint16)(c * Color::xFFFF + 0.5);
+
+	switch ( cps ) {
+		case Color::cpsARGB : {
+			//uint32 rgb = 0;
+			//((uint8*)(&rgb))[2] = cr;
+			//((uint8*)(&rgb))[1] = cg;
+			//((uint8*)(&rgb))[0] = cb;
+			code = Format(L"%04X%04X%04X") % ua % ub % uc; // do not prefix '#' here (MP)
+		}
+		break;
+
+		case Color::cpsABGR : {
+			//uint32 rgb = 0;
+			//((uint8*)(&rgb))[0] = cr;
+			//((uint8*)(&rgb))[1] = cg;
+			//((uint8*)(&rgb))[2] = cb;
+			code = Format(L"%04X%04X%04X") % ua % ub % uc; // do not prefix '#' here (MP)
+		}
+		break;
+	}
+
+	return code;
+}
+
+Color& Color::brighter()
+{
+	throw NotImplementedException();
+	return *this;
+}
+
+Color& Color::darker()
+{
+	throw NotImplementedException();
+	return *this;
+}
+
+Color* Color::getColor( const int& gray )
+{
+	return GraphicsToolkit::getColorFromColormap( gray );
+}
+
+Color* Color::getColor( const String& colorName )
+{
+	return GraphicsToolkit::getColorFromColormap( colorName );
+}
+
+Color* Color::getColorMatch( const Color& color )
+{
+	return GraphicsToolkit::getColorMatchFromColormap( color );
+}
+
+const String Color::getColorNameFromMap( const Color& color )
+{
+	return GraphicsToolkit::getColorNameFromMap( color );
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// ColorNames implementation
 
 ColorNames::ColorNames()
 {
@@ -1397,7 +1653,7 @@ ColorNames::ColorNames()
     ColorNames::nameMap[   transparent              ] = L"transparent";               // 0xFF000000
     ColorNames::nameMap[   unknown                  ] = L"unknown";                   // 0x01000000 ( appears as black )
 
-    ColorNames::unknownColorName = L"unknown";
+    ColorNames::unknownColorName_ = L"unknown";
 }
 
 Enumerator<String>* ColorNames::getColorIDs()
@@ -1411,15 +1667,27 @@ String ColorNames::at( ColorID colorID )
 }
 
 
-String ColorNames::unknownColor()
+String ColorNames::unknownColorName()
 {
-	return ColorNames::unknownColorName;
+	return ColorNames::unknownColorName_;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:05:56  ddiego
+*added missing gtk files
+*
+*Revision 1.2.4.3  2005/06/25 21:40:11  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.2.4.2  2005/06/11 00:50:50  marcelloptr
+*moved uint8/uint16 to VCF namespace
+*
+*Revision 1.2.4.1  2005/06/09 06:13:09  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
@@ -1447,7 +1715,7 @@ String ColorNames::unknownColor()
 *
 *Revision 1.14.2.2  2003/10/20 03:40:25  ddiego
 * made some minor changes fixed a bug in color where we forget to actually
-*assign hls/hsv values.
+*assign hsl/hsv values.
 *
 *Revision 1.14.2.1  2003/08/26 01:20:23  marcelloptr
 *removed inline keyword in Color.cpp in front of some ColorSpace memeber functions definitions
