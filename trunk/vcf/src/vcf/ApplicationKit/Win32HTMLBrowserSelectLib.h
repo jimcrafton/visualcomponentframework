@@ -45,6 +45,9 @@ where you installed the VCF.
 #   ifdef __BORLANDC__
 #   define _LIB_CPLVERNUM "bcc"
 #   endif
+#	ifdef __MWERKS__
+#	define _LIB_CPLVERNUM "cw"
+#	endif
 # endif
 
 
@@ -98,6 +101,12 @@ where you installed the VCF.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

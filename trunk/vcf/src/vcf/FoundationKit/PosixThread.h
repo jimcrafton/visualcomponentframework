@@ -81,8 +81,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.3.4.1  2005/04/17 16:11:32  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
 *
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release

@@ -17,9 +17,17 @@ where you installed the VCF.
 namespace VCF {
 
 
+#define COLUMNLAYOUTCONTAINER_CLASSID		"3df1d3a5-d362-4d33-8b49-2ce693c72006"
+
 class ColumnLayoutContainer : public StandardContainer {
 public:
 	ColumnLayoutContainer(): columnCount_(0) {
+		UIMetricsManager* metricsMgr = UIToolkit::getUIMetricsManager();
+		setBorderWidth( metricsMgr->getPreferredSpacingFor(UIMetricsManager::stWindowBorderDelta) );
+
+	}
+
+	ColumnLayoutContainer(Component* owner): StandardContainer(owner), columnCount_(0) {
 		UIMetricsManager* metricsMgr = UIToolkit::getUIMetricsManager();
 		setBorderWidth( metricsMgr->getPreferredSpacingFor(UIMetricsManager::stWindowBorderDelta) );
 
@@ -55,6 +63,11 @@ public:
 		rows.push_back( maxHeight );
 
 		while ( it != controls_.end() ) {
+			if ( (*it)->isIgnoredForLayout() ) {
+				it ++;
+				continue;
+			}
+
 			maxHeight = maxVal<>(maxHeight,(*it)->getHeight());
 
 			if ( col >= columnCount_ ) {
@@ -76,6 +89,11 @@ public:
 		col = 0;
 		it = controls_.begin();
 		while ( it != controls_.end() ) {
+			if ( (*it)->isIgnoredForLayout() ) {
+				it ++;
+				continue;
+			}
+
 			if ( ((columnCount_-1) == col) &&
 					(ColumnWidthResize == columnWidths_[col]) ) {
 
@@ -133,6 +151,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/03/20 04:29:20  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

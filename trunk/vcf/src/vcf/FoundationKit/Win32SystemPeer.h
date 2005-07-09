@@ -44,6 +44,8 @@ public:
 
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory );
 
+	virtual String getCommonDirectory( System::CommonDirectory directory );
+
 	virtual void setDateToSystemTime( DateTime* date );
 
 	virtual void setDateToLocalTime( DateTime* date );
@@ -60,6 +62,10 @@ public:
 
 	virtual String getOSVersion();
 
+	virtual String getComputerName();
+
+	virtual String getUserName();
+
 	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
 protected:
 };
@@ -70,8 +76,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:24  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.2  2005/03/26 00:10:30  ddiego
+*added some minor funs to system class
 *
 *Revision 1.3.2.1  2004/12/19 04:05:02  ddiego
 *made modifications to methods that return a handle type. Introduced

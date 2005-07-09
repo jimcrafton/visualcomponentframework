@@ -29,27 +29,27 @@ public:
 
 	virtual void destroyControl();
 
-    virtual String getText();
+	virtual String getText();
 
-    virtual void setText( const String& text );
+	virtual void setText( const String& text );
 
-    virtual void setBounds( Rect* rect );
+	virtual void setBounds( Rect* rect );
 
 	virtual bool beginSetBounds( const ulong32& numberOfChildren );
 
 	virtual void endSetBounds();
 
-    virtual Rect getBounds();
+	virtual Rect getBounds();
 
-    virtual void setVisible( const bool& visible );
+	virtual void setVisible( const bool& visible );
 
-    virtual bool getVisible();
+	virtual bool getVisible();
 
-    virtual Control* getControl();
+	virtual Control* getControl();
 
-    virtual void setControl( Control* component );
+	virtual void setControl( Control* component );
 
-    virtual void setCursor( Cursor* cursor );
+	virtual void setCursor( Cursor* cursor );
 
 	virtual void setParent( Control* parent );
 
@@ -113,6 +113,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/29 05:15:41  marcelloptr
+*fixed some white spaces
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

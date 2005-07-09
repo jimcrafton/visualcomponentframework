@@ -18,29 +18,89 @@ PropertyEditorManager::PropertyEditorManager()
 
 PropertyEditorManager::~PropertyEditorManager()
 {
-	std::map<String,PropertyEditor*>::iterator it = propertEditorMap_.begin();
-	while ( it != propertEditorMap_.end() ){
-		PropertyEditor* pe = it->second;
-		delete pe;
-		it++;
-	}
 	propertEditorMap_.clear();
 }
 
-PropertyEditor* PropertyEditorManager::findEditor( const String& className )
+PropertyEditor* PropertyEditorManager::createEditor( const String& className )
 {
-	std::map<String,PropertyEditor*>::iterator found =
-		PropertyEditorManager::propertyEditorMgr->propertEditorMap_.find( className );
 	PropertyEditor* result = NULL;
+
+	std::map<String,Class*>::iterator found =
+		PropertyEditorManager::propertyEditorMgr->propertEditorMap_.find( className );
+	
 	if ( found != PropertyEditorManager::propertyEditorMgr->propertEditorMap_.end() ){
-		result = found->second;
+		Class* editorClass = found->second;
+
+		Object* instance = editorClass->createInstance();
+		if ( NULL != instance ) {
+			result = dynamic_cast<PropertyEditor*>(instance);
+			if ( NULL != result ) {
+				result->internal_setPropertyType( className );
+			}
+			else {
+				instance->free();
+			}
+		}
 	}
 	return result;
 }
 
-void PropertyEditorManager::registerPropertyEditor( PropertyEditor* editor, const String& className )
+bool PropertyEditorManager::registerPropertyEditor( Class* editorClass, const String& className )
 {
-	PropertyEditorManager::propertyEditorMgr->propertEditorMap_[className] = editor;
+	bool result = true;
+	if ( PropertyEditorManager::propertyEditorMgr->propertEditorMap_.find(className) !=
+			PropertyEditorManager::propertyEditorMgr->propertEditorMap_.end() ) {
+		result = false;
+	}
+	else {
+		PropertyEditorManager::propertyEditorMgr->propertEditorMap_[className] = editorClass;
+	}
+	
+	return result;
+}
+
+bool PropertyEditorManager::registerPropertyEditor( const String& editorClassName, const String& className )
+{
+	Class* editorClass = ClassRegistry::getClass( editorClassName );
+	if ( NULL != editorClass ) {
+		return PropertyEditorManager::registerPropertyEditor( editorClass, className );
+	}
+
+	return false;
+}
+
+void PropertyEditorManager::removePropertyEditor( const String& className )
+{
+	Class* editorClass = NULL;
+
+	std::map<String,Class*>::iterator found =
+		PropertyEditorManager::propertyEditorMgr->propertEditorMap_.find( className );
+	PropertyEditor* result = NULL;
+	if ( found != PropertyEditorManager::propertyEditorMgr->propertEditorMap_.end() ){
+		editorClass = found->second;
+	}
+	else {
+		return; //nothing to do
+	}
+
+	//prep to remove dupes if neccessary
+	std::map<String,Class*>::iterator it =
+		 PropertyEditorManager::propertyEditorMgr->propertEditorMap_.begin();
+
+	std::vector<std::map<String,Class*>::iterator> removeList;
+	while ( it != PropertyEditorManager::propertyEditorMgr->propertEditorMap_.end() ) {
+		if ( it->second == editorClass ) {
+			removeList.push_back( it );			
+		}
+		it ++;
+	}
+
+	std::vector<std::map<String,Class*>::iterator>::iterator it2 = 
+		removeList.begin();
+	while ( it2 != removeList.end() ) {
+		PropertyEditorManager::propertyEditorMgr->propertEditorMap_.erase( *it2 );
+		it2 ++;
+	}
 }
 
 void PropertyEditorManager::initPropertyEditorManager()
@@ -68,6 +128,18 @@ void PropertyEditorManager::closePropertyEditorManager()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/03/11 04:28:22  ddiego
+*added some minor modifications to the PropertyEditor interface.
+*
+*Revision 1.2.4.2  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

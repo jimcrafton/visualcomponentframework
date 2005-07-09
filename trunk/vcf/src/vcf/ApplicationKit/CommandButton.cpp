@@ -33,11 +33,11 @@ CommandButton::CommandButton()
 		throw InvalidPeer( MAKE_ERROR_MSG(NO_PEER), __LINE__ );
 	}
 
-	
+
 	peer_->create( this );
 	peer_->setControl( this );
 
-	
+
 
 	commandType_ = BC_NONE;
 
@@ -57,6 +57,58 @@ CommandButton::CommandButton()
 CommandButton::~CommandButton()
 {
 	UIToolkit::removeDefaultButton( this );
+}
+
+void CommandButton::setName( const String& name )
+{
+	Control::setName( name );
+	if ( isDesigning() && getCaption().empty() ) {
+		setCaption( name );
+	}
+}
+
+
+void CommandButton::setCaption( const String& caption )
+{
+	VirtualKeyCode keyCode = UIToolkit::findMnemonic( caption );
+
+	if ( keyCode != vkUndefined ) {
+		AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, kmAlt, NULL, true );
+		addAcceleratorKey( newAccelKey );
+	}
+
+	this->peer_->setText( caption );
+}
+
+String CommandButton::getCaption()
+{
+	String result = peer_->getText();
+	if ( getUseLocaleStrings() ) {
+		result = System::getCurrentThreadLocale()->translate( result );
+	}
+
+	return result;
+}
+
+void CommandButton::setCommandType( const ButtonCommandType& commandType )
+{
+	commandType_ = commandType;
+}
+
+ButtonCommandType CommandButton::getCommandType()
+{
+	return this->commandType_;
+}
+
+double CommandButton::getPreferredHeight()
+{
+	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight );
+}
+
+void CommandButton::mnemonicActivate()
+{
+	Control::mnemonicActivate();
+	click();
 }
 
 void CommandButton::click()
@@ -102,12 +154,12 @@ void CommandButton::click()
 						dialog->setModalReturnValue( UIToolkit::mrNo );
 					}
 					break;
-					
+
 					case BC_ABORT : {
 						dialog->setModalReturnValue( UIToolkit::mrAbort );
 					}
 					break;
-					
+
 					case BC_IGNORE : {
 						dialog->setModalReturnValue( UIToolkit::mrIgnore );
 					}
@@ -117,28 +169,6 @@ void CommandButton::click()
 			frame->close();
 		}
 	}
-}
-
-void CommandButton::setCaption( const String& caption )
-{
-	VirtualKeyCode keyCode = UIToolkit::findMnemonic( caption );
-
-	if ( keyCode != vkUndefined ) {
-		AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, kmAlt, NULL, true );
-		addAcceleratorKey( newAccelKey );
-	}
-
-	this->peer_->setText( caption );
-}
-
-String CommandButton::getCaption()
-{
-	String result = peer_->getText();
-	if ( getUseLocaleStrings() ) {
-		result = System::getCurrentThreadLocale()->translate( result );
-	}
-
-	return result;
 }
 
 void CommandButton::paint(GraphicsContext * context)
@@ -154,35 +184,11 @@ void CommandButton::paint(GraphicsContext * context)
 	state.setDefaultButton( this == UIToolkit::getDefaultButton() );
 	state.buttonCaption_ = getCaption();
 
+	context->setCurrentFont( getFont() );
 	context->drawThemeButtonRect( &rect, state );
-
-//	rect
-
-	/*
-	if ( this == UIToolkit::getDefaultButton() ) {
-		rect.right_ -=1;
-		rect.bottom_ -= 1;
-		context->setColor( Color::getColor( "black" ) );
-		context->rectangle( &rect );
-		context->strokePath();
+	if ( state.isFocused() ) {
+		context->drawThemeButtonFocusRect( &rect ); // MP-
 	}
-	*/
-}
-
-ButtonCommandType CommandButton::getCommandType()
-{
-	return this->commandType_;
-}
-
-void CommandButton::setCommandType( const ButtonCommandType& commandType )
-{
-	commandType_ = commandType;
-}
-
-void CommandButton::mnemonicActivate()
-{
-	Control::mnemonicActivate();
-	click();
 }
 
 void CommandButton::setDefault( const bool& defaultButton )
@@ -197,7 +203,6 @@ void CommandButton::setDefault( const bool& defaultButton )
 
 bool CommandButton::isDefault()
 {
-
 	return (this == UIToolkit::getDefaultButton());
 }
 
@@ -211,15 +216,26 @@ void CommandButton::onFocusLost( FocusEvent* event )
 	UIToolkit::removeDefaultButton( this );
 }
 
-double CommandButton::getPreferredHeight()
-{
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight );
-}
-
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/07/04 03:43:14  marcelloptr
+*PushButton, toggled, needs also an image for FocusDown. Management images improved and fully tested.
+*
+*Revision 1.3.2.3  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.3.2.2  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
+*Revision 1.3.2.1  2005/02/21 16:20:00  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

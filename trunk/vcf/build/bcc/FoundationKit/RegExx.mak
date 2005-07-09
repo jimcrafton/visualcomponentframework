@@ -50,7 +50,7 @@ CFILES=	get.c        \
 	pcre.c       \
 	pcreposix.c  \
 	study.c
-CPPFILES=regexx.cpp
+CPPFILES=
 	
 OBJFILES=$(CFILES:.c=.obj^ ) $(CPPFILES:.cpp=.obj^ )
 

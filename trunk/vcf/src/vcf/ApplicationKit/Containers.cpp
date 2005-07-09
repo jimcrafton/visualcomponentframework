@@ -23,6 +23,16 @@ StandardContainer::StandardContainer():
 
 }
 
+StandardContainer::StandardContainer( Component* owner ):
+	AbstractContainer(owner),
+	bottomBorderHeight_(0.0),
+	topBorderHeight_(0.0),
+	rightBorderWidth_(0.0),
+	leftBorderWidth_(0.0)
+{
+
+}
+
 void StandardContainer::resizeChildren( Control* control )
 {
 	Rect bounds = controlContainer_->getClientBounds();
@@ -39,7 +49,7 @@ void StandardContainer::resizeChildren( Control* control )
 	if ( NULL != control ) {
 		std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 
-		controlJustAdded = (found == controls_.end());
+		controlJustAdded = ( found == (controls_.end()-1) );
 	}
 
 	bool needAnchorWork = anchorWork() ||
@@ -81,7 +91,7 @@ void StandardContainer::alignFixed( Control* initialControl, const bool& control
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
-		if ( (child->getAlignment() == alignment) && (child->getVisible()) ){
+		if ( (child->getAlignment() == alignment) && (child->getVisible()) && !child->isIgnoredForLayout() ){
 			alignmentList.push_back( child );
 		}
 
@@ -89,7 +99,7 @@ void StandardContainer::alignFixed( Control* initialControl, const bool& control
 	}
 
 	if ( NULL != initialControl ) {
-		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) ) {
+		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) && !initialControl->isIgnoredForLayout() ) {
 			alignmentList.push_back( initialControl );
 		}
 	}
@@ -281,7 +291,7 @@ void StandardContainer::doAlign( Control* initialControl, const bool& controlJus
 	std::vector< Control* > alignmentList;
 
 	if ( NULL != initialControl ) {
-		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) ) {
+		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) && !initialControl->isIgnoredForLayout() ) {
 			alignmentList.push_back( initialControl );
 		}
 	}
@@ -291,7 +301,7 @@ void StandardContainer::doAlign( Control* initialControl, const bool& controlJus
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
-		if ( (child->getAlignment() == alignment) && (child->getVisible()) ){
+		if ( (child->getAlignment() == alignment) && (child->getVisible()) && !child->isIgnoredForLayout() ){
 			ulong32 insertIndex = 0;
 			if ( NULL != initialControl && initialControl == child ) {
 				it ++;
@@ -329,7 +339,7 @@ bool StandardContainer::alignWork()
 	std::vector<Control*>::iterator it = controls_.begin();
 
 	while ( it != controls_.end() ) {
-		if ( (*it)->getAlignment() != AlignNone ){
+		if ( (*it)->getAlignment() != AlignNone && !(*it)->isIgnoredForLayout() ){
 			result = true;
 			break;
 		}
@@ -344,7 +354,7 @@ bool StandardContainer::anchorWork()
 
 	std::vector<Control*>::iterator it = controls_.begin();
 	while ( it != controls_.end() ) {
-		if ( AnchorNone != (*it)->getAnchor() ) {
+		if ( AnchorNone != (*it)->getAnchor() && !(*it)->isIgnoredForLayout() ) {
 			result = true;
 			break;
 		}
@@ -361,6 +371,11 @@ void StandardContainer::doAnchors( Control* initialControl, const bool& controlJ
 	std::vector<Control*>::iterator it = controls_.begin();
 	while ( it != controls_.end() ) {
 		Control* child = *it;
+
+		if ( child->isIgnoredForLayout() ) {
+			continue;
+		}
+
 		if ( AnchorNone != child->getAnchor() ) {
 			long anchorType = child->getAnchor();
 
@@ -425,7 +440,7 @@ void StandardContainer::calcAlignmentList( const AlignmentType& alignment, std::
 	alignmentList.clear();
 
 	if ( NULL != initialControl ) {
-		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) ) {
+		if ( (initialControl->getVisible()) && (initialControl->getAlignment() == alignment) && !initialControl->isIgnoredForLayout() ) {
 			alignmentList.push_back( initialControl );
 		}
 	}
@@ -435,7 +450,7 @@ void StandardContainer::calcAlignmentList( const AlignmentType& alignment, std::
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
-		if ( (child->getAlignment() == alignment) && (child->getVisible()) ){
+		if ( (child->getAlignment() == alignment) && (child->getVisible()) && !child->isIgnoredForLayout() ){
 			ulong32 insertIndex = 0;
 			if ( NULL != initialControl && initialControl == child ) {
 				it ++;
@@ -488,7 +503,8 @@ Control* StandardContainer::getControlInAlignmentList( const AlignmentType& alig
 		if ( 0 != alignmentList.size() ) {
 			if ( first ) {
 				control = alignmentList[0];
-			} else {
+			}
+			else {
 				control = alignmentList[alignmentList.size()-1];
 			}
 		}
@@ -584,7 +600,7 @@ void DesignTimeContainer::resizeChildrenUsingBounds( Control* control, Rect* bou
 	if ( NULL != control ) {
 		std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 
-		controlJustAdded = (found == controls_.end());
+		controlJustAdded = ( found == (controls_.end()-1) );
 	}
 
 	bool needAnchorWork = anchorWork() ||
@@ -620,6 +636,19 @@ void DesignTimeContainer::resizeChildrenUsingBounds( Control* control, Rect* bou
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/25 22:47:20  marcelloptr
+*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
+*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
+*
+*Revision 1.2.4.2  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

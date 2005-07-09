@@ -47,43 +47,48 @@ void ToolbarItem::click()
 
 }
 
-void ToolbarItem::update()
+bool ToolbarItem::updateAction()
 {
-	Action* action = getAction();
-	if ( NULL != action ) {
-		action->update();
-	}
-	else {
+	if ( !Component::updateAction() ) {
 		Event event( this, ToolbarItem::tbItemUpdate );
 		ItemUpdate.fireEvent( &event );
+		return true;
 	}
+
+	return false;
 }
 
 void ToolbarItem::handleEvent( Event* event )
 {
 	Component::handleEvent( event );
 	switch ( event->getType() ){
-			case Action::UpdateEvent : {
-				ActionEvent* actionEvent = (ActionEvent*)event;
+		case Action::UpdateEvent : {
+			ActionEvent* actionEvent = (ActionEvent*)event;
 
 
-				setEnabled( actionEvent->isEnabled() );
+			setEnabled( actionEvent->isEnabled() );
 
-				setCaption( actionEvent->getText() );
+			Toolbar* toolbar = (Toolbar*)control_;
 
-				if ( this->isChecked() && (actionEvent->getState() & tisPressed) ) {
-					setPressed( true );
+			if ( NULL != toolbar ) {
+				if ( toolbar->getShowButtonCaptions() ) {
+					setCaption( actionEvent->getText() );
 				}
-				else if ( isChecked() ) {
-					setPressed( false );
+				else {
+					setTooltip( actionEvent->getText() );
 				}
 			}
-			break;
 
-			case Component::COMPONENT_NEEDS_UPDATING : {
-				update();
+			if ( this->isChecked() && (actionEvent->getState() & tisPressed) ) {
+				setPressed( true );
 			}
-			break;
+			else if ( isChecked() ) {
+				setPressed( false );
+			}
+		}
+		break;	
+		
+		
 	}
 }
 
@@ -206,7 +211,7 @@ void ToolbarItem::setSelected( const bool& selected )
 	}
 }
 
-void ToolbarItem::internal_setBounds( Rect& bounds )
+void ToolbarItem::internal_setBounds( const Rect& bounds ) //Parameter made const for ANSI compliance - ACH
 {
 	bounds_ = bounds;
 	if ( NULL != itemControl_ ) {
@@ -396,9 +401,7 @@ Toolbar::Toolbar():
 	buttonCaptionsHorizontal_(false)
 {
 	toolbarPeer_ = UIToolkit::createToolbarPeer( this );
-	peer_ = dynamic_cast<ControlPeer*>(toolbarPeer_);
-
-	addToUpdateTimer();
+	peer_ = dynamic_cast<ControlPeer*>(toolbarPeer_);	
 
 	setViewModel( new ToolbarModel() );
 
@@ -460,6 +463,7 @@ void Toolbar::handleEvent( Event* event )
 {
 	Control::handleEvent( event );
 	switch ( event->getType() ){
+		/*
 		case Component::COMPONENT_NEEDS_UPDATING : {
 			ToolbarModel* model = getToolbarModel();
 			if ( NULL != model ) {
@@ -471,6 +475,7 @@ void Toolbar::handleEvent( Event* event )
 			}
 		}
 		break;
+		*/
 
 		case CONTROL_SIZED:{
 			Control::handleEvent( event );
@@ -528,6 +533,24 @@ Toolbar::FloatingToolbar::~FloatingToolbar()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.3  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.3.2.2  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.3.2.1  2005/01/07 01:13:58  ddiego
+*fixed a foundation kit but that was cause a crash by releasing the system instance and then making use of a member variable for it. The member variable is now static, which is more appropriate.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

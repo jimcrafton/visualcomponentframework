@@ -93,5 +93,8 @@ $(PROJECT): $(OBJFILES) $(RESFILE)
 .c.obj:
       @$(CC) $(CFLAGS) -I$(INCDIR) /c -o$@ $<
 
+#This include sequence is added because of some visual studio
+#generated rc scripts
+#This will only work on CBuilder with installed support for MFC
 .rc.res:
-      @$(RC) -r $<
+      @$(RC) -r -i$(MAKEDIR)\..\Include;$(MAKEDIR)\..\Include\Mfc $<

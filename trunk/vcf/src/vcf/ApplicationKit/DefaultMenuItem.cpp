@@ -11,23 +11,44 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/MenuItemPeer.h"
 #include "vcf/ApplicationKit/Action.h"
 #include "vcf/ApplicationKit/ActionEvent.h"
+#include "vcf/ApplicationKit/MenuManager.h"
+
 
 using namespace VCF;
 
 static DefaultMenuItem* previousSelectedItem = NULL;
 
-DefaultMenuItem::DefaultMenuItem()
+DefaultMenuItem::DefaultMenuItem():
+	//peer_(NULL),
+	//index_(0),
+	data_(NULL),
+	menuOwner_(NULL),
+	parent_(NULL),
+	imageIndex_(-1),
+	currentAccelerator_(NULL),
+	state_(0)
 {
 	init();
 }
 
-DefaultMenuItem::DefaultMenuItem( const String& caption, MenuItem* parent, Menu* menuOwner )
+DefaultMenuItem::DefaultMenuItem( const String& caption, MenuItem* parent, Menu* menuOwner ):
+	//peer_(NULL),
+	//index_(0),
+	data_(NULL),
+	menuOwner_(NULL),
+	parent_(NULL),
+	imageIndex_(-1),
+	currentAccelerator_(NULL),
+	state_(0)
 {
 	init();
-	setCaption( caption );
+
+	setCaption( caption );	
+	
 	if ( NULL != parent ){
 		parent->addChild( this );
 	}
+
 	setMenuOwner( menuOwner );
 }
 
@@ -36,7 +57,7 @@ DefaultMenuItem::~DefaultMenuItem()
 
 	if ( NULL != currentAccelerator_ ) {
 		UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
-																currentAccelerator_->getModifierMask() );
+																currentAccelerator_->getModifierMask(), this );
 	}
 
 	if ( this == previousSelectedItem )	{
@@ -46,18 +67,8 @@ DefaultMenuItem::~DefaultMenuItem()
 		previousSelectedItem = NULL;
 	}
 
-	/*
-	std::vector<MenuItem*>::iterator it = menuItems_.begin();
-	while ( it != menuItems_.end() ){
-		MenuItem* item = *it;
-		delete item;
-		item = NULL;
-		it ++;
-	}
-	*/
-
-	delete Peer_;
-	Peer_ = NULL;
+	//delete peer_;
+	//peer_ = NULL;
 
 	menuItems_.clear();
 }
@@ -65,25 +76,18 @@ DefaultMenuItem::~DefaultMenuItem()
 void DefaultMenuItem::init()
 {
 	setTag(-1);
-	currentAccelerator_ = NULL;
-	selected_ = false;
-	imageIndex_ = 0;
-	parent_ = NULL;
-	radioItem_ = false;
-	visible_ = true;
-	data_ = NULL;
-	separator_ = false;
-	isEnabled_ = true;
-	menuOwner_ = NULL;
 
-	Peer_ = UIToolkit::createMenuItemPeer( this );
+	//peer_ = UIToolkit::createMenuItemPeer( this );
 
-	if ( NULL == Peer_ ){
+	state_ |= MenuItem::mdsEnabled;
+	state_ |= MenuItem::mdsVisible;
+
+	//if ( NULL == peer_ ){
 		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
+	//	throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	//}
 
-	Peer_->setMenuItem( this );
+	//peer_->setMenuItem( this );
 
 	container_.initContainer( menuItems_ );
 
@@ -100,13 +104,17 @@ bool DefaultMenuItem::containsPoint( Point * pt )
 
 unsigned long DefaultMenuItem::getIndex()
 {
-	return index_;
+	Menu* owner = getMenuOwner();
+	if ( NULL == owner ) {
+		return MenuItem::InvalidMenuIndex;
+	}
+	return owner->getItemIndex( this );
 }
 
-void DefaultMenuItem::setIndex( const unsigned long& index )
-{
-	index_ = index;
-}
+void DefaultMenuItem::setIndex( const unsigned long& index ){}
+//{
+//	index_ = index;
+//}
 
 void* DefaultMenuItem::getData()
 {
@@ -143,7 +151,7 @@ void DefaultMenuItem::paint( GraphicsContext* context, Rect* paintRect )
 
 bool DefaultMenuItem::isSelected()
 {
-	return selected_;
+	return (state_ & MenuItem::mdsSelected) ? true : false;
 }
 
 void DefaultMenuItem::setSelected( const bool& selected )
@@ -151,11 +159,19 @@ void DefaultMenuItem::setSelected( const bool& selected )
 	if ( (NULL != previousSelectedItem) && (previousSelectedItem != this) ) {
 		previousSelectedItem->setSelected( false );
 	}
-	selected_ = selected;
-	if ( true == selected_ ) {
-		ItemEvent event( this, ITEM_EVENT_SELECTED );
-		ItemSelected.fireEvent( &event );
+
+	if ( selected ) {
+		state_ |= MenuItem::mdsSelected;
+
+		//ItemEvent event( this, ITEM_EVENT_SELECTED );
+		//ItemSelected.fireEvent( &event );
+
+		getMenuOwner()->itemChanged( MenuItem::miSelected, this );
 	}
+	else {
+		state_ &= ~MenuItem::mdsSelected;
+	}	
+	
 	previousSelectedItem = this;
 }
 
@@ -174,14 +190,18 @@ void DefaultMenuItem::addChild( MenuItem* child )
 		addComponent( child );
 	}
 
-	child->setIndex( menuItems_.size() - 1 );
+	//child->setIndex( menuItems_.size() - 1 );
 
 	child->setMenuOwner( getMenuOwner() );
 
-	Peer_->addChild( child );
+	//peer_->addChild( child );
 
-	ItemEvent event( this, ITEM_EVENT_ADDED );
-	ItemAdded.fireEvent( &event );
+	//ItemEvent event( this, ITEM_EVENT_ADDED );
+	//ItemAdded.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miAdded, child );
+	}
 }
 
 void DefaultMenuItem::insertChild( const unsigned long& index, MenuItem* child )
@@ -192,6 +212,7 @@ void DefaultMenuItem::insertChild( const unsigned long& index, MenuItem* child )
 		addComponent( child );
 	}
 
+	/*
 	std::vector<MenuItem*>::iterator it = menuItems_.begin() + index;
 	unsigned long newIndex = index;
 	while ( it != menuItems_.end() ) {
@@ -199,35 +220,43 @@ void DefaultMenuItem::insertChild( const unsigned long& index, MenuItem* child )
 		it ++;
 		newIndex ++;
 	}
-	
+	*/
 
 	child->setParent( this );
 
 	child->setMenuOwner( getMenuOwner() );
 
-	Peer_->insertChild( index, child );
+	//peer_->insertChild( index, child );
 
-	ItemEvent event( this, ITEM_EVENT_ADDED );
-	ItemAdded.fireEvent( &event );
+	//ItemEvent event( this, ITEM_EVENT_ADDED );
+	//ItemAdded.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miAdded, child );
+	}	
 }
 
 void DefaultMenuItem::deleteChild( MenuItem* child )
 {
-	Peer_->deleteChild( child );
+	//peer_->deleteChild( child );
 
 	std::vector<MenuItem*>::iterator found = std::find( menuItems_.begin(), menuItems_.end(), child );
 	if ( found != menuItems_.end() ){
 		unsigned long index = found - menuItems_.begin();
 	
-		ItemEvent event( this, ITEM_EVENT_DELETED );
-		ItemDeleted.fireEvent( &event );
+		//ItemEvent event( this, ITEM_EVENT_DELETED );
+		//ItemDeleted.fireEvent( &event );
+		Menu* owner = getMenuOwner();
+		if ( NULL != owner ) {
+			owner->itemChanged( MenuItem::miRemoved, child );
+		}
 
 		removeComponent( child );
 
 		menuItems_.erase( found );
 		child->free();
 		child = NULL;
-		
+		/*
 		std::vector<MenuItem*>::iterator it = menuItems_.begin() + index;
 		unsigned long newIndex = index;
 		while ( it != menuItems_.end() ) {
@@ -235,25 +264,31 @@ void DefaultMenuItem::deleteChild( MenuItem* child )
 			it ++;
 			newIndex ++;
 		}
+		*/
 	
 	}
 }
 
 void DefaultMenuItem::deleteChild( const unsigned long& index )
 {
-	Peer_->deleteChild( index );
+	//peer_->deleteChild( index );
 
 	std::vector<MenuItem*>::iterator found = menuItems_.begin() + index;
 	if ( found != menuItems_.end() ){
 
-		ItemEvent event( this, ITEM_EVENT_DELETED );
-		ItemDeleted.fireEvent( &event );
+		//ItemEvent event( this, ITEM_EVENT_DELETED );
+		//ItemDeleted.fireEvent( &event );
+		Menu* owner = getMenuOwner();
+		if ( NULL != owner ) {
+			owner->itemChanged( MenuItem::miRemoved, *found );
+		}
 
 		removeComponent( *found );
 
 		menuItems_.erase( found );
 		(*found)->free();
 		
+		/*
 		std::vector<MenuItem*>::iterator it = menuItems_.begin() + index;
 		unsigned long newIndex = index;
 		while ( it != menuItems_.end() ) {
@@ -261,6 +296,7 @@ void DefaultMenuItem::deleteChild( const unsigned long& index )
 			it ++;
 			newIndex ++;
 		}
+		*/
 	}
 }
 
@@ -274,17 +310,30 @@ void DefaultMenuItem::clearChildren()
 	}
 	menuItems_.clear();
 
-	Peer_->clearChildren();
+	//peer_->clearChildren();
 }
 
 bool DefaultMenuItem::isChecked()
 {
-	return Peer_->isChecked();
+	return ((state_ & MenuItem::mdsChecked) == MenuItem::mdsChecked) ? true : false;// peer_->isChecked();
 }
 
 void DefaultMenuItem::setChecked( const bool& checked )
 {
-	Peer_->setChecked( checked );
+	//peer_->setChecked( checked );
+	if ( checked ) {
+		state_ &= ~MenuItem::mdsUnChecked;
+		state_ |= MenuItem::mdsChecked;
+	}
+	else {
+		state_ &= ~MenuItem::mdsChecked;
+		state_ |= MenuItem::mdsUnChecked;
+	}
+
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miCheckStateChanged, this );
+	}
 }
 
 bool DefaultMenuItem::hasParent()
@@ -313,57 +362,104 @@ MenuItem* DefaultMenuItem::getChildAt( const unsigned long& index )
 
 bool DefaultMenuItem::isEnabled()
 {
-	return isEnabled_;//Peer_->isEnabled();
+	bool result = (state_ & MenuItem::mdsEnabled) ? true : false;
+
+	if ( result ) {
+		MenuBar* menuBar = dynamic_cast<MenuBar*>( menuOwner_ );
+		if ( NULL != menuBar ) {
+			Frame* frame = menuBar->getFrame();
+			if ( NULL != frame ) {
+				result = frame->isEnabled();
+			}
+		}
+	}
+	return result;
 }
 
 void DefaultMenuItem::setEnabled( const bool& enabled )
 {
-	isEnabled_ = enabled;
-	Peer_->setEnabled( enabled );
+	if ( enabled ) {
+		state_ |= MenuItem::mdsEnabled;
+	}
+	else {
+		state_ &= ~MenuItem::mdsEnabled;
+	}
 
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	//peer_->setEnabled( enabled );
+
+	AcceleratorKey* accel = getAccelerator();
+	if ( NULL != accel ) {
+		accel->setEnabled( enabled );
+	}
+
+	//ItemEvent event( this, ITEM_EVENT_CHANGED );
+	//ItemChanged.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miEnabledStateChanged, this );
+	}
 }
 
 bool DefaultMenuItem::isVisible()
 {
-	return visible_;
+	return (state_ & MenuItem::mdsVisible) ? true : false;
 }
 
 void DefaultMenuItem::setVisible( const bool& visible )
 {
-	visible_ = visible;
-	Peer_->setVisible( visible );
+	if ( visible ) {
+		state_ |= MenuItem::mdsVisible;
+	}
+	else {
+		state_ &= ~MenuItem::mdsVisible;
+	}
 
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	//peer_->setVisible( visible );
+
+	//ItemEvent event( this, ITEM_EVENT_CHANGED );
+	//ItemChanged.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miVisibleStateChanged, this );
+	}
 }
 
 bool DefaultMenuItem::getRadioItem()
 {
-	return radioItem_;
+	return (state_ & MenuItem::mdsRadioItem) ? true : false;
 }
 
 void DefaultMenuItem::setRadioItem( const bool& value )
 {
-	radioItem_ = value;
+	if ( value ) {
+		state_ |= MenuItem::mdsRadioItem;
+	}
+	else {
+		state_ &= ~MenuItem::mdsRadioItem;
+	}
 	
-	Peer_->setRadioItem( radioItem_ );
+	//peer_->setRadioItem( value );
 
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	//ItemEvent event( this, ITEM_EVENT_CHANGED );
+	//ItemChanged.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miRadioStateChanged, this );
+	}
 }
 
 void DefaultMenuItem::setCaption( const String& caption )
 {
 	caption_ = caption;
 
-	
+	//peer_->setCaption( caption_ );
 
-	Peer_->setCaption( caption_ );
-
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	//ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
+	//ItemChanged.fireEvent( &event );
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miCaptionChanged, this );
+	}
 }
 
 String DefaultMenuItem::getCaption()
@@ -373,7 +469,7 @@ String DefaultMenuItem::getCaption()
 
 MenuItemPeer* DefaultMenuItem::getPeer()
 {
-	return Peer_;
+	return MenuManager::getMenuItemPeer(this); //peer_;
 }
 
 bool DefaultMenuItem::hasChildren()
@@ -393,7 +489,7 @@ void DefaultMenuItem::click()
 	if ( NULL != action ) {
 		action->perform( &event );
 	}
-	else {
+	else {		
 		MenuItemClicked.fireEvent( &event );
 	}
 }
@@ -422,6 +518,7 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 	while ( it != menuItems_.end() ){
 		MenuItem* child = *it;
 		if ( NULL != child ) {
+			Menu* prevOwner = child->getMenuOwner();
 			child->setMenuOwner( menuOwner );
 		}
 		it++;
@@ -430,23 +527,55 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 
 bool DefaultMenuItem::isSeparator()
 {
-	return separator_;
+	return (state_ & MenuItem::mdsSeparator) ? true : false;;
 }
 
 void DefaultMenuItem::setSeparator( const bool& separator )
 {
-	separator_ = separator;
-	Peer_->setAsSeparator( separator_ );
+	if ( separator ) {
+		state_ |= MenuItem::mdsSeparator;
+	}
+	else {
+		state_ &= ~MenuItem::mdsSeparator;
+	}
+
+	//peer_->setAsSeparator( separator );
+
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miSeparatorStateChanged, this );
+	}
 }
 
 void DefaultMenuItem::setImageIndex( const long& imageIndex )
 {
 	imageIndex_ = imageIndex;
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miImageIndexChanged, this );
+	}
 }
 
 void DefaultMenuItem::setBounds( Rect* bounds )
 {
 	bounds_ = *bounds;
+}
+
+AcceleratorKey* DefaultMenuItem::getAccelerator() 
+{
+	AcceleratorKey* result = NULL;
+
+	if ( NULL != currentAccelerator_ ) {
+		result = currentAccelerator_;
+	}
+	else {
+		Action* action = getAction();
+		if ( NULL != action ) {
+			result = action->getAccelerator();
+		}
+	}
+
+	return result;
 }
 
 void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
@@ -455,17 +584,17 @@ void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ul
 	if ( NULL == eventHandler ) {
 		eventHandler = new KeyboardEventHandler<DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
 	}
-	AcceleratorKey* newAccelKey = new AcceleratorKey( NULL, keyCode, modifierMask, eventHandler );
+	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
 
-	addAcceleratorKey( newAccelKey );
+	setAcceleratorKey( newAccelKey );
 }
 
-void DefaultMenuItem::addAcceleratorKey( AcceleratorKey* accelerator )
+void DefaultMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 {
 	//remove the old if present
 	if ( NULL != currentAccelerator_ ) {
 		UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
-																currentAccelerator_->getModifierMask() );
+																currentAccelerator_->getModifierMask(), this );
 	}
 
 	currentAccelerator_ = accelerator;
@@ -474,6 +603,12 @@ void DefaultMenuItem::addAcceleratorKey( AcceleratorKey* accelerator )
 		UIToolkit::registerAccelerator( currentAccelerator_ );
 	}
 
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miAcceleratorChanged, this );
+	}
+
+	//peer_->setAcceleratorKey( currentAccelerator_ );
 }
 
 void DefaultMenuItem::onAccelerator( KeyboardEvent* e )
@@ -497,8 +632,20 @@ Object* DefaultMenuItem::clone(bool deep)
 	result->setSeparator( isSeparator() );
 
 	AcceleratorKey* accel = getAccelerator();
-	if ( NULL != accel ) {
-		//result->setAcceleratorKey( (VCF::VirtualKeyCode)accel->getKeyCode(), accel->getModifierMask() );
+	if ( NULL != accel ) {		
+		if ( accel->getEventHandler() == 
+				getEventHandler( "DefaultMenuItem::onAccelerator" ) ) {
+
+			VirtualKeyCode keyCode = (VirtualKeyCode)accel->getKeyCode();
+			ulong32 mask = accel->getModifierMask();
+			//remove the old one!
+			UIToolkit::removeAccelerator( keyCode, mask, this );
+			currentAccelerator_ = NULL;
+			result->setAcceleratorKey( keyCode, mask );
+		}
+		else {
+			result->setAcceleratorKey( (AcceleratorKey*)accel->clone() );
+		}
 	}
 
 	return result;
@@ -513,44 +660,56 @@ void DefaultMenuItem::handleEvent( Event* event )
 {
 	Component::handleEvent( event );
 	switch ( event->getType() ){
-			case Action::UpdateEvent : {
-				ActionEvent* actionEvent = (ActionEvent*)event;
+		case Action::UpdateEvent : {
+			ActionEvent* actionEvent = (ActionEvent*)event;
 
-				if ( actionEvent->isModified() ) {
-					setEnabled( actionEvent->isEnabled() );
+			if ( actionEvent->isModified() ) {
+				setEnabled( actionEvent->isEnabled() );
 
-					if ( !actionEvent->getText().empty() ) {
-						setCaption( actionEvent->getText() );
-					}
-
-					if ( actionEvent->isExclusiveChecked() ) {
-						setRadioItem( actionEvent->isChecked() );
-					}
-					else {
-						setChecked( actionEvent->isChecked() );
-					}
+				if ( !actionEvent->getText().empty() ) {
+					setCaption( actionEvent->getText() );
 				}
 
-			}
-			break;
-
-			case Component::COMPONENT_ADDED : {
-				if ( isLoading() ) {
-					ComponentEvent* ev = (ComponentEvent*)event;
-					Component* child = ev->getChildComponent();
-					MenuItem* item = dynamic_cast<MenuItem*>(child);
-					if ( NULL != item ) {
-						item->setMenuOwner( getMenuOwner() );
-						addChild( item );
-					}
+				if ( actionEvent->isExclusiveChecked() ) {
+					setRadioItem( actionEvent->isChecked() );
+				}
+				else {
+					setChecked( actionEvent->isChecked() );
 				}
 			}
-			break;
 
-			case Component::COMPONENT_REMOVED : {
+		}
+		break;
 
+		case Action::AcceleratorChanged : {
+			Action* action = (Action*)event->getSource();
+		
+			//update the peer!
+			//peer_->setAcceleratorKey( action->getAccelerator() );
+			Menu* owner = getMenuOwner();
+			if ( NULL != owner ) {
+				owner->itemChanged( MenuItem::miAcceleratorChanged, this );
 			}
-			break;
+		}
+		break;
+
+		case Component::COMPONENT_ADDED : {
+			if ( isLoading() ) {
+				ComponentEvent* ev = (ComponentEvent*)event;
+				Component* child = ev->getChildComponent();
+				MenuItem* item = dynamic_cast<MenuItem*>(child);
+				if ( NULL != item ) {
+					item->setMenuOwner( getMenuOwner() );
+					addChild( item );
+				}
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+
+		}
+		break;
 	}
 }
 
@@ -595,9 +754,42 @@ MenuItem* DefaultMenuItem::findChildNamed( const String& name )
 	return result;
 }
 
+uint32 DefaultMenuItem::getChildIndex( MenuItem* child )
+{
+	uint32 result = 0;
+
+	std::vector<MenuItem*>::iterator found = std::find( menuItems_.begin(),
+														menuItems_.end(),
+														child );
+	if ( found != menuItems_.end() ) {
+		result = found - menuItems_.begin();
+	}
+	else {
+		result = MenuItem::InvalidMenuIndex;
+	}
+
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.3  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.2  2005/03/15 05:29:01  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
+*Revision 1.3.2.1  2005/03/14 04:17:23  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

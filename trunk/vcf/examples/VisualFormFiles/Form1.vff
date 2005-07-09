@@ -27,78 +27,78 @@ object Form1 : VisualFormFilesWindow, '6dbafd3f-c8cf-4fc5-9141-43af516db748'
 			caption = '&File'
 
 			object fileOpenMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open1...'
 			end	
 
 			object fileOpenMenu1 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open2...'
 			end	
 
 			object fileOpenMenu2 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open3...'
 			end	
 
 			object fileOpenMenu3 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open4...'
 			end	
 
 			object fileOpenMenu4 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open5...'
 			end	
 
 			object fileOpenMenu5 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open5...'
 			end	
 
 			object fileOpenMenu6 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open6...'
 			end	
 
 			object fileOpenMenu7 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open7...'
 			end	
 
 			object fileOpenMenu8 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open8...'
 			end	
 
 			object fileOpenMenu9 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open9...'
 			end	
 
 			object fileOpenMenu10 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open10...'
 			end	
 
 			object fileOpenMenu11 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open11...'
 			end	
 
 			object fileOpenMenu12 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Ope12...'
 			end	
 
 			object fileOpenMenu13 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open13...'
 			end	
 
 			object fileOpenMenu14 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open14...'
 			end	
 			object fileOpenMenu15 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open15...'
 			end	
 
 			object fileOpenMenu16 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open16...'
 			end	
 
 			object fileOpenMenu17 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open17...'
 			end	
 
 			object fileOpenMenu18 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open19...'
 			end	
 
 			object fileOpenMenu19 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
@@ -254,7 +254,7 @@ object Form1 : VisualFormFilesWindow, '6dbafd3f-c8cf-4fc5-9141-43af516db748'
 			end	
 
 			object fileOpenMenu57 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
-				caption = '&Open...'
+				caption = '&Open57...'
 			end	
 
 		end	

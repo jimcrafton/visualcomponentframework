@@ -1,17 +1,37 @@
 #ifndef _TEXTEDITWINDOW_H__
 #define _TEXTEDITWINDOW_H__
+//TextEditWindow.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
 
 
 #define TEXTEDITWINDOW_CLASSID		"60614ad0-b9bb-40d4-94f3-34ceb0683c85"
 
 
 /**
-class TextEditWindow documentation
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
+
+
+/**
+* The TextEditWindow class.
+* 
+* The TextEditWindow acts as a sort of "Controller" between the document
+*   and the edit control, so that when the document's selection changes the text
+*   control's selection is updated, and when the text control changes it's selection
+*   the document is correspondingly updated.
+@see TextEditWindow::onDocInitialized()
 */
 class TextEditWindow  : public VCF::Window{
 public: 
-	BEGIN_CLASSINFO( TextEditWindow, "TextEditWindow", "VCF::Window", TEXTEDITWINDOW_CLASSID )
-	END_CLASSINFO( TextEditWindow )
+	_class_rtti_( TextEditWindow, "VCF::Window", TEXTEDITWINDOW_CLASSID )
+	_class_rtti_end_
 
 	TextEditWindow();
 	virtual ~TextEditWindow();
@@ -31,6 +51,16 @@ protected:
 };
 
 
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/07/09 23:14:45  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.4  2005/05/04 20:58:54  marcelloptr
+*standard file formatting and cvs log section added. More documentation.
+*
+*/
 
 
 #endif //_TEXTEDITWINDOW_H__

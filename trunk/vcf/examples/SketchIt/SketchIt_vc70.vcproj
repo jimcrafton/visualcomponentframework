@@ -28,7 +28,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc70\Release\SketchIt_vc70.pch"
+				PrecompiledHeaderFile=".\vc70\Release\SketchIt.pch"
 				AssemblerListingLocation=".\vc70\Release\"
 				ObjectFile=".\vc70\Release\"
 				ProgramDataBaseFileName=".\vc70\Release\"
@@ -41,11 +41,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc70\Release\SketchIt_vc70.exe"
+				OutputFile=".\SketchIt.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc70\Release\SketchIt_vc70.pdb"
+				ProgramDatabaseFile=".\vc70\Release\SketchIt.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -54,7 +54,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc70\Release\SketchIt_vc70.tlb"/>
+				TypeLibraryName=".\vc70\Release\SketchIt.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -86,7 +86,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc70\Debug\SketchIt_vc70.pch"
+				PrecompiledHeaderFile=".\vc70\Debug\SketchIt.pch"
 				AssemblerListingLocation=".\vc70\Debug\"
 				ObjectFile=".\vc70\Debug\"
 				ProgramDataBaseFileName=".\vc70\Debug\"
@@ -100,12 +100,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc70\Debug\SketchIt_vc70.exe"
+				OutputFile=".\SketchIt.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\vc70\Debug\SketchIt_vc70.pdb"
+				ProgramDatabaseFile=".\vc70\Debug\SketchIt.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"/>
 			<Tool
@@ -114,7 +114,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc70\Debug\SketchIt_vc70.tlb"/>
+				TypeLibraryName=".\vc70\Debug\SketchIt.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

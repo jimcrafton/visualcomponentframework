@@ -18,8 +18,21 @@ namespace VCF
 {
 
 /**
-*Class Lock
-*@author Tiziano Franzoi, Nov 15, 2001
+\par
+The Lock class represents a way to automatically lock or unlock a 
+syncronizeable primitive, like a thread, mutex, or semaphore, by 
+having the lifetime of the Lock stack based. This frees the 
+developer from having to remember to call lock or unlock on the
+sync object. For example:
+\code
+Mutex* mutex = //get a mutex
+Lock l( *mutex );
+//do some operations on a shared resource
+\endcode
+When the lock instance falls off of the stack, and it's destructor is called,
+and the sync object's unlock method will be called.
+@see SynchObject
+@author Tiziano Franzoi, Nov 15, 2001
 */
 class FOUNDATIONKIT_API Lock :public VCF::Object
 {
@@ -58,8 +71,14 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.4  2005/05/15 23:17:39  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
 *
 *Revision 1.2.4.3  2004/12/20 23:49:02  marcelloptr
 *forbidden assignment operator for the Lock class

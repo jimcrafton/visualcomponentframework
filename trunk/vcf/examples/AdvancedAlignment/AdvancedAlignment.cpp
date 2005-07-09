@@ -54,7 +54,7 @@ public:
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
-			controlJustAdded = (found == controls_.end());
+			controlJustAdded = ( found == (controls_.end()-1) );
 		}
 
 		double childCount = AbstractContainer::getChildCount();
@@ -237,7 +237,7 @@ public:
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
-			controlJustAdded = (found == controls_.end());
+			controlJustAdded = ( found == (controls_.end()-1) );
 		}
 
 
@@ -471,6 +471,13 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:14  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.4.1  2005/06/25 22:46:10  marcelloptr
+*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
+*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
+*
 *Revision 1.4  2004/08/07 02:46:54  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

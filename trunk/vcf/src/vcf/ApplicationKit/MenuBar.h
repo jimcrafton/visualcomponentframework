@@ -50,21 +50,22 @@ public:
 
 	void init();
 
+	Frame* getFrame();
+
 	/**
 	Sets the menu bar's frame. If a NULL frame is passed in
 	the menu is removed from it's frame
 	*/
-	void setFrame( Frame* frame );
-
-	void onMenutItemAdded( ItemEvent* event );
-
-	void onMenutItemDeleted( ItemEvent* event );
+	void setFrame( Frame* frame );	
 
 	void handleEvent( Event* event );
 protected:
-	MenuBarPeer* Peer_;
+	MenuBarPeer* peer_;
+	Frame* frame_;
 
+	void onMenutItemAdded( MenuItemEvent* event );
 
+	void onMenutItemDeleted( MenuItemEvent* event );
 
 	virtual void destroy();
 };
@@ -75,6 +76,16 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.2.4.1  2005/03/15 05:29:01  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

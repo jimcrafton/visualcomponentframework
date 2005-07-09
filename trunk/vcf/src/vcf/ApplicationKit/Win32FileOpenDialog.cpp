@@ -50,6 +50,9 @@ bool Win32FileOpenDialog::executeW()
 		ControlPeer* impl = owner_->getPeer();
 		ownerWnd = (HWND)impl->getHandleID();
 	}
+	else {
+		ownerWnd = ::GetActiveWindow();
+	}
 
 	ofn.hwndOwner = ownerWnd;
 	ofn.hInstance = NULL;
@@ -60,17 +63,17 @@ bool Win32FileOpenDialog::executeW()
 
 	if ( true == allowsMultiSelect_ ) {
 		tmpFileName = new WCHAR[MAX_PATH * MAX_PATH];
-		memset(tmpFileName, 0,  MAX_PATH * MAX_PATH);
+		memset(tmpFileName, 0, (MAX_PATH * MAX_PATH)*sizeof(WCHAR));
 		ofn.nMaxFile = MAX_PATH * MAX_PATH;
 	}
 	else {
 		tmpFileName = new WCHAR[MAX_PATH];
-		memset(tmpFileName, 0, MAX_PATH);
+		memset(tmpFileName, 0, MAX_PATH*sizeof(WCHAR));
 		ofn.nMaxFile = MAX_PATH;
 	}
 
 	WCHAR tmpDir[MAX_PATH];
-	memset(tmpDir, 0, MAX_PATH);
+	memset(tmpDir, 0, MAX_PATH*sizeof(WCHAR));
 	directory_.copy( tmpDir, directory_.size() );
 
 	fileName_.copy( tmpFileName, fileName_.size() );
@@ -84,7 +87,7 @@ bool Win32FileOpenDialog::executeW()
 	int titleSz = title_.size();
 	if ( titleSz > 0 ){
 		tmpTitle = new WCHAR[titleSz+1];
-		memset( tmpTitle, 0, titleSz+1 );
+		memset( tmpTitle, 0, (titleSz+1)*sizeof(WCHAR) );
 		title_.copy( tmpTitle, titleSz );
 		tmpTitle[titleSz] = 0;
 	}
@@ -129,7 +132,7 @@ bool Win32FileOpenDialog::executeW()
 
 	int size = _MAX_PATH * filter_.size();
 	WCHAR *tmpFilter = new WCHAR[size];
-	memset( tmpFilter, 0, size );
+	memset( tmpFilter, 0, size*sizeof(WCHAR) );
 
 	filter = filter_.begin();
 	String tmp;
@@ -219,17 +222,17 @@ bool Win32FileOpenDialog::executeA()
 
 	if ( true == allowsMultiSelect_ ) {
 		tmpFileName = new char[MAX_PATH * MAX_PATH];
-		memset(tmpFileName, 0,  MAX_PATH * MAX_PATH);
+		memset(tmpFileName, 0, (MAX_PATH * MAX_PATH)*sizeof(char) );
 		ofn.nMaxFile = MAX_PATH * MAX_PATH;
 	}
 	else {
 		tmpFileName = new char[MAX_PATH];
-		memset(tmpFileName, 0, MAX_PATH);
+		memset(tmpFileName, 0, MAX_PATH*sizeof(char));
 		ofn.nMaxFile = MAX_PATH;
 	}
 
 	char tmpDir[MAX_PATH];
-	memset(tmpDir, 0, MAX_PATH);
+	memset(tmpDir, 0, MAX_PATH*sizeof(char));
 	directory_.copy( tmpDir, directory_.size() );
 
 	fileName_.copy( tmpFileName, fileName_.size() );
@@ -240,10 +243,11 @@ bool Win32FileOpenDialog::executeA()
 
 
 	char* tmpTitle = NULL;
-	if ( title_.size() > 0 ){
-		tmpTitle = new char[title_.size()+1];
-		memset( tmpTitle, 0, title_.size()+1 );
-		title_.copy( tmpTitle, title_.size() );
+	int titleSz = title_.size();
+	if ( titleSz > 0 ){
+		tmpTitle = new char[titleSz+1];
+		memset( tmpTitle, 0, (titleSz+1)*sizeof(char) );
+		title_.copy( tmpTitle, titleSz );
 	}
 
 	ofn.lpstrTitle = tmpTitle;
@@ -285,8 +289,8 @@ bool Win32FileOpenDialog::executeA()
 
 
 	int size = _MAX_PATH * filter_.size();
-	char *tmpFilter = new TCHAR[size];
-	memset( tmpFilter, 0, size );
+	char *tmpFilter = new char[size];
+	memset( tmpFilter, 0, size*sizeof(char) );
 
 	filter = filter_.begin();
 	String tmp;
@@ -429,6 +433,18 @@ void Win32FileOpenDialog::setSelectedFilter( const String& selectedFilter )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.2.4.2  2005/03/28 18:16:50  marcelloptr
+*minor fixes: TCHAR removed
+*
+*Revision 1.2.4.1  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

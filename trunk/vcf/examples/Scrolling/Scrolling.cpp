@@ -43,10 +43,10 @@ public:
 		MenuItem* fileOpenListboxMenu = new DefaultMenuItem( "Open ListBox", fileMenu, menuBar );
 
 		//add our event handler to the menu item
-		fileOpenImageMenu->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" ) );
-		fileOpenListboxMenu->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openListboxMenu, "ScrollingWindow::openListboxMenu" ) );
+		fileOpenImageMenu->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" );
+		fileOpenListboxMenu->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openListboxMenu, "ScrollingWindow::openListboxMenu" );
 
 		// Scrollbar menu
 		MenuItem* scrollMenu = new DefaultMenuItem( "FrameScrollbars", menuBar->getRootMenuItem(), menuBar );
@@ -59,19 +59,19 @@ public:
 		keepVertScrollbarVisibleMenu_   = new DefaultMenuItem( "Keep vertical visible", scrollMenu, menuBar );
 
 		//add our event handler to the scrollbar menu
-		hasHorzScrollbarMenu_->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasHorzScrollbar, "ScrollingWindow::hasHorzScrollbar" ) );
-		hasVertScrollbarMenu_->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasVertScrollbar, "ScrollingWindow::hasVertScrollbar" ) );
-		keepHorzScrollbarVisibleMenu_->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepHorzScrollbarVisible, "ScrollingWindow::keepHorzScrollbarVisible" ) );
-		keepVertScrollbarVisibleMenu_->addMenuItemClickedHandler(
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepVertScrollbarVisible, "ScrollingWindow::keepVertScrollbarVisible" ) );
+		hasHorzScrollbarMenu_->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasHorzScrollbar, "ScrollingWindow::hasHorzScrollbar" );
+		hasVertScrollbarMenu_->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasVertScrollbar, "ScrollingWindow::hasVertScrollbar" );
+		keepHorzScrollbarVisibleMenu_->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepHorzScrollbarVisible, "ScrollingWindow::keepHorzScrollbarVisible" );
+		keepVertScrollbarVisibleMenu_->MenuItemClicked +=
+			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepVertScrollbarVisible, "ScrollingWindow::keepVertScrollbarVisible" );
 
 
 		//set the border of the window, this will give us a nice etched border
 		EtchedBorder* bdr = new EtchedBorder();
-		bdr->setStyle( GraphicsContext::etSunken );
+		bdr->setEdgeStyle( GraphicsContext::etSunken );
 		setBorder( bdr );
 
 		//this is what gives us the capability to easily control the
@@ -182,7 +182,6 @@ public:
 		scrollbarManagerSingle->setHasHorizontalScrollbar( true );		
 		scrollbarManagerSingle->setTarget( listBox_ );
 		scrollbarManagerSingle->setKeepScrollbarsVisible( true, true );
-		scrollbarManagerSingle->setVirtualViewVertStep( 17 );
 		
 		this->add( listBox_, AlignClient );
 		
@@ -244,10 +243,10 @@ public:
 			repaint(); //repaint ourselves to update the new image
 
 			FilePath fp = dlg.getFileName();
-			infoLabel_->setCaption( StringUtils::format( "Image: %s Size: %d, %d",
-															fp.getBaseName(true).c_str(),
-															currentImage_->getWidth(),
-															currentImage_->getHeight() ) );
+			infoLabel_->setCaption( Format( "Image: %s Size: %d, %d" )
+									% fp.getBaseName(true).c_str()
+									% currentImage_->getWidth()
+									% currentImage_->getHeight() );
 		}
 	}
 
@@ -349,6 +348,27 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:14:43  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.5.2.6  2005/06/06 02:34:04  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.5.2.5  2005/04/17 17:19:10  iamfraggle
+*Small fixes
+*
+*Revision 1.5.2.4  2005/04/17 15:11:46  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
+*Revision 1.5.2.3  2005/03/10 17:27:37  marcelloptr
+*set discrete scrolling as default behaviour for ListBoxControls
+*
+*Revision 1.5.2.2  2005/03/06 22:50:56  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.5.2.1  2005/01/17 18:51:15  marcelloptr
+*added discrete scrolling behaviour to examples of ListBoxControl
+*
 *Revision 1.5  2004/12/01 04:15:12  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

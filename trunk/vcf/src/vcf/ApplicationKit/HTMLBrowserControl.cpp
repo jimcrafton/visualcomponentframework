@@ -20,7 +20,16 @@ HTMLBrowserControl::HTMLBrowserControl()
 {
 	browserPeer_ = UIToolkit::createHTMLBrowserPeer( this );
 
+	if ( NULL == browserPeer_ ){
+		throw InvalidPeer( MAKE_ERROR_MSG(NO_PEER), __LINE__ );
+	}
+
 	peer_ = dynamic_cast<ControlPeer*>(browserPeer_);
+	
+	if ( NULL == peer_ ){
+		throw InvalidPeer( MAKE_ERROR_MSG(NO_PEER), __LINE__ );
+	}
+
 	peer_->create( this );
 	setVisible( true );
 }
@@ -125,6 +134,13 @@ void HTMLBrowserControl::setFromHTML( const String& html )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

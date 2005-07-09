@@ -1,10 +1,24 @@
-
 #ifndef _TEXTEDITDOCUMENT_H__
 #define _TEXTEDITDOCUMENT_H__
+//TextEditDocument.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
 
 #include "vcf/ApplicationKit/ModelViewKit.h"
 
 #include "vcf/ApplicationKit/TextModel.h"
+
+/**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
+
 
 
 #define TEXTEDITDOCUMENT_CLASSID		"e0d4c047-60f1-4397-b3af-9e467057b7c4"
@@ -65,7 +79,7 @@ public:
 
 class TextEditDocumentEvent : public VCF::ModelEvent {
 public:
-	TextEditDocumentEvent( VCF::Object* source, const unsigned long& eventType ) 
+	TextEditDocumentEvent( VCF::Object* source, const VCF::uint32& eventType ) 
 		:VCF::ModelEvent(source,eventType),start_(0){
 
 	};
@@ -74,18 +88,20 @@ public:
 		*this = rhs;
 	}
 
+#ifndef _MSC_VER
 	TextEditDocumentEvent& operator=( const TextEditDocumentEvent& rhs ) {
-		ModelEvent::operator = (rhs);
+		VCF::ModelEvent::operator = (rhs);
 
 		start_ = rhs.start_;
 		text_ = rhs.text_;
 		return *this;
 	}
+#endif
 
 	virtual VCF::Object* clone( bool deep=false ) {
 		return new TextEditDocumentEvent(*this);
 	}
-	unsigned long start_;
+	VCF::uint32 start_;
 	VCF::String text_;
 
 };
@@ -96,11 +112,11 @@ class TextEditDocument documentation
 */
 class TextEditDocument : public VCF::Document, public VCF::TextModel {
 public: 
-	BEGIN_CLASSINFO( TextEditDocument, "TextEditDocument", "VCF::Document", TEXTEDITDOCUMENT_CLASSID )
-	END_CLASSINFO(TextEditDocument)
+	_class_rtti_( TextEditDocument, "VCF::Document", TEXTEDITDOCUMENT_CLASSID )
+	_class_rtti_end_
 
 	enum TextDocumentEvents {
-		teTextAdded = Model::MODEL_CHANGED + 1000,
+		teTextAdded = VCF::Model::MODEL_CHANGED + 1000,
 		teTextRemoved,
 		teTextSelectionChanged
 	};
@@ -161,14 +177,14 @@ public:
 	*a zero based index.
 	*@param String the text to insert
 	*/
-    virtual void insertText( const unsigned long& index, const VCF::String& text );
+    virtual void insertText( const VCF::uint32& index, const VCF::String& text );
 
 	/**
 	*replace text into the model in place of the selected text is any,
 	*or at the current position otherwise
 	*@param String the text to replace with
 	*/
-    virtual void replaceText( const unsigned long& index, const unsigned long& len, const VCF::String& text );
+    virtual void replaceText( const VCF::uint32& index, const VCF::uint32& len, const VCF::String& text );
 
 	/**
 	*deletes text from the model, starting at index, and continuing for count characters,
@@ -176,22 +192,19 @@ public:
 	*@param long the starting point. The index is zero based.
 	*@param long the number of characters to delete
 	*/
-    virtual void deleteText( const unsigned long& index, const unsigned long& count );
-
-	/**
-	*adds text to end of the current text data
-	*/
-    virtual void appendText( const VCF::String& text );
+    virtual void deleteText( const VCF::uint32& index, const VCF::uint32& count );
 
 	/**
 	*returns all of the TextModel's text in a string.
 	*/
 	virtual VCF::String getText();
 
+	virtual VCF::String getText( const VCF::uint32& index, const VCF::uint32& count );
+
 	/**
 	*returns the size of the TextModel
 	*/
-	virtual unsigned long getSize() {
+	virtual VCF::uint32 getSize() {
 		return textData_.size();
 	}
 
@@ -204,9 +217,7 @@ public:
 
 	bool replace( ReplaceInfo& replaceInfo );
 
-	bool replaceAll( ReplaceInfo& replaceInfo );
-
-	VCF::String getText( const VCF::ulong32 pos, const VCF::ulong32 length  );	
+	bool replaceAll( ReplaceInfo& replaceInfo );	
 
 	/**
 	sets the selection range 
@@ -247,10 +258,12 @@ public:
 protected:
 	class AddText;
 	class RemoveText;
+	class ReplaceText;
 
 
 	friend class AddText;
 	friend class RemoveText;
+	friend class ReplaceText;
 
 
 	class AddText : public VCF::AbstractCommand {
@@ -267,6 +280,27 @@ protected:
 		TextEditDocument* doc_;
 		VCF::ulong32 pos_;
 		VCF::String text_;
+		VCF::ulong32 selStart_;
+		VCF::ulong32 selLength_;
+	};
+
+	class ReplaceText : public VCF::AbstractCommand {
+	public:
+		ReplaceText(TextEditDocument* doc, VCF::ulong32 pos,
+					VCF::ulong32 length, const VCF::String& originalText,
+					const VCF::String& text );
+
+		virtual void undo();
+
+		virtual void redo();
+
+		virtual void execute();
+		
+		TextEditDocument* doc_;
+		VCF::ulong32 pos_;
+		VCF::ulong32 length_;
+		VCF::String text_;
+		VCF::String originalText_;
 		VCF::ulong32 selStart_;
 		VCF::ulong32 selLength_;
 	};
@@ -297,9 +331,25 @@ protected:
 
 	void internal_insertText( const VCF::ulong32& pos, const VCF::String& text );
 
+	void internal_replaceText( const VCF::ulong32& pos, const VCF::ulong32& length, const VCF::String& text );
+
 	void internal_removeText( const VCF::ulong32& pos, const VCF::ulong32& length );
 };
 
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/07/09 23:14:45  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.4  2005/05/18 03:19:17  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.2.2.3  2005/05/04 20:47:20  marcelloptr
+*standard file formatting and cvs log section added
+*
+*/
 
 
 #endif //_TEXTEDITDOCUMENT_H__

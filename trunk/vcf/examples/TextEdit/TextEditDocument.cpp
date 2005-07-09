@@ -1,3 +1,12 @@
+//TextEditDocument.cpp
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "TextEditDocument.h"
 
@@ -35,6 +44,37 @@ void TextEditDocument::AddText::execute()
 }
 
 
+
+
+TextEditDocument::ReplaceText::ReplaceText( TextEditDocument* doc, 
+												VCF::ulong32 pos, 
+												VCF::ulong32 length,
+												const VCF::String& originalText, 
+												const VCF::String& text ):
+			doc_(doc), pos_(pos), length_(length), text_(text), originalText_(originalText)
+{
+	isUndoable_ = true;
+	commandName_ = "Replaced Text";
+}
+
+void TextEditDocument::ReplaceText::undo()
+{
+	doc_->internal_replaceText( pos_, text_.size(), originalText_ );
+
+	doc_->setSelectionRange( pos_ , 0 );
+}
+
+void TextEditDocument::ReplaceText::redo()
+{
+	doc_->internal_replaceText( pos_, length_, text_ );
+	
+	doc_->setSelectionRange( pos_ + text_.size(), 0 );	
+}
+
+void TextEditDocument::ReplaceText::execute()
+{
+	doc_->internal_replaceText( pos_, length_, text_ );
+}
 
 
 TextEditDocument::RemoveText::RemoveText( TextEditDocument* doc, 
@@ -287,9 +327,8 @@ bool TextEditDocument::replaceAll( ReplaceInfo& replaceInfo )
 	return result;
 }
 
-VCF::String TextEditDocument::getText( const VCF::ulong32 pos, const VCF::ulong32 length  )
-{
-	
+VCF::String TextEditDocument::getText( const VCF::uint32& pos, const VCF::uint32& length  )
+{	
 	return textData_.substr( pos, length );
 }
 
@@ -311,13 +350,13 @@ void TextEditDocument::setText(const VCF::String& text)
 	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( setTextGrp );
 }
 
-void TextEditDocument::insertText( const VCF::ulong32& index, const VCF::String& text )
+void TextEditDocument::insertText( const VCF::uint32& index, const VCF::String& text )
 {
 	
 	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new AddText( this, index, text ) );
 }
 
-void TextEditDocument::deleteText( const VCF::ulong32& pos, const VCF::ulong32& length )
+void TextEditDocument::deleteText( const VCF::uint32& pos, const VCF::uint32& length )
 {
 	
 	String text = textData_.substr( pos, length );
@@ -325,14 +364,12 @@ void TextEditDocument::deleteText( const VCF::ulong32& pos, const VCF::ulong32& 
 	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new RemoveText( this, pos, text ) );
 }
 
-void TextEditDocument::appendText( const String& text )
+
+void TextEditDocument::replaceText( const uint32& index, const uint32& length, const String& text )
 {
+	String originalText = textData_.substr( index, length );
 
-}
-
-void TextEditDocument::replaceText( const unsigned long& index, const unsigned long& len, const String& text )
-{
-
+	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new ReplaceText( this, index, length, originalText, text ) );
 }
 
 void TextEditDocument::setSelectionRange( const long pos, const VCF::ulong32 length  )
@@ -417,9 +454,12 @@ bool TextEditDocument::paste( DataObject* data )
 	}
 	else {
 		if ( selectionLength_ > 0 ) {
-			deleteText( selectionStart_, selectionLength_ );	
+			replaceText( selectionStart_, selectionLength_, text );
 		}
-		insertText( selectionStart_, text ); 
+		else {
+			insertText( selectionStart_, text ); 
+		}
+		
 		setSelectionRange( selectionStart_ + text.size(), 0 );
 	}
 
@@ -439,7 +479,7 @@ void TextEditDocument::internal_insertText( const VCF::ulong32& pos, const VCF::
 	
 	ModelChanged.fireEvent( &e );
 
-	TextEvent event( this, text );
+	TextEvent event( this, TextModel::tmTextInserted, text, pos, text.size() );
 
 	TextModelChanged.fireEvent( &event );
 
@@ -459,9 +499,59 @@ void TextEditDocument::internal_removeText( const VCF::ulong32& pos, const VCF::
 	
 	ModelChanged.fireEvent( &e );
 
-	TextEvent event( this, e.text_ );
+	TextEvent event( this, TextModel::tmTextRemoved, e.text_, pos, length );
 
 	TextModelChanged.fireEvent( &event );
 
 	updateAllViews();
 }
+
+void TextEditDocument::internal_replaceText( const VCF::ulong32& pos, const VCF::ulong32& length, const VCF::String& text )
+{
+	TextEditDocumentEvent e( this, TextEditDocument::teTextAdded );
+
+	e.text_ = textData_.substr( pos, length );
+	e.start_ = pos;	
+
+	//remove old text
+	String removedText = textData_.substr( pos, length );
+
+	textData_.erase( pos, length );
+	//insert new text
+	textData_.insert( pos, text );
+	
+
+	setModified( true );
+	
+	ModelChanged.fireEvent( &e );
+
+
+	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
+							pos, length );
+	TextModelChanged.fireEvent( &event );
+}
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.3  2005/07/09 23:14:45  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.5  2005/06/02 16:28:23  marcelloptr
+*removed obsolete code
+*
+*Revision 1.2.2.4  2005/05/19 02:19:09  ddiego
+*more win32 edit fixes.
+*
+*Revision 1.2.2.3  2005/05/18 03:19:17  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.2.2.2  2005/05/15 23:17:36  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.2.2.1  2005/05/04 20:47:20  marcelloptr
+*standard file formatting and cvs log section added
+*
+*/
+
+

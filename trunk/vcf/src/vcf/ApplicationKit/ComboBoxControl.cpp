@@ -27,20 +27,15 @@ public:
 		// Remark: selectedItem_ differs from comboBoxControl->getListModel()->getSelectedItem() because of the DropDownListBox::mouseMove() action
 		comboBoxControl->selectItems( false );
 
-		
-		GraphicsContext* context = getContext();
-		
-		Font* font = context->getCurrentFont();
-
-		UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
-		setDefaultItemHeight( mgr->getDefaultHeightFor( UIMetricsManager::htListItemHeight ) );//context->getTextHeight("EM") ); //font->getPixelSize() );
-
 		ScrollbarManager* scrollBarMgr = new ScrollbarManager();
 		scrollBarMgr->setTarget( this );
 		addComponent( scrollBarMgr );
 
 		scrollBarMgr->setHasHorizontalScrollbar( false );
 		scrollBarMgr->setHasVerticalScrollbar( true );
+		//scrollBarMgr->setVirtualViewVertStep( getDefaultItemHeight() );
+		scrollBarMgr->setDiscreteScroll( false, comboBoxControl->getDiscreteScroll() );
+
 		setUseColorForBackground( true );
 	}
 
@@ -178,6 +173,14 @@ public:
 		else {
 			itemRect.top_ += comboBoxControl_->getBounds().getHeight();
 			itemRect.bottom_ = itemRect.top_ + winHeight;
+
+			// this fixes the bug that scrollbar is always there even when itemsCount < dropDownCount
+			// +=2 comes from the viewable bounds are one pixel on the top and one pixel on the bottom 
+			// less than the height of the listbox control itself ( see Control::adjustViewableBoundsAndOriginForScrollable() )
+			// +=1 comes from rounding reasons.
+			// Any value less than listBox_->getDefaultItemHeight() would fix the problem.
+			// See also: DropDownListBox::setBounds()
+			itemRect.bottom_ += 3;
 		}
 
 		if ( 0 < comboBoxControl_->getDropDownWidth() ) {
@@ -200,10 +203,14 @@ public:
 
 	}
 
-
 	virtual void destroy() {
 		listBox_->setListModel( NULL );
-		comboBoxControl_->repaint();
+
+		// bugfix [ 1099910 ] commented away. The combobox
+		// may have been already destroyed by another control
+		// since the time dropDown_->close() has been called.
+		//comboBoxControl_->repaint();
+
 		Window::destroy();
 	}
 
@@ -294,6 +301,7 @@ void ComboBoxControl::init()
 	dropDownCount_ = 6;
 	dropDownWidth_ = 0;
 	dropDownExtendFullScreen_ = false;
+	discreteScroll_ = true; // for a combo and any listbox it should be true by default
 	dropDownSelected_ = false;
 	autoLookup_ = true;
 	autoLookupIgnoreCase_ = true;
@@ -509,6 +517,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 		dropDown_->FrameActivation.removeHandler( lostFocusHandler );
 
 		dropDown_->setVisible( false );
+		this->repaint();
 		dropDown_->close();
 
 		if ( NULL != selectedItem  ) {
@@ -519,6 +528,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 				setDropDownSelected( false );
 			}
 		}
+
 		if ( cbsDropDownWithEdit == comboBoxStyle_ ) {
 			ListItem* item = getSelectedItem();
 			if ( NULL != item ) {
@@ -615,6 +625,10 @@ void ComboBoxControl::mouseUp( MouseEvent* event )
 
 void ComboBoxControl::keyPressed( KeyboardEvent* event )
 {
+	// this case is called when the focus is on the DropDownListBox
+	//  control, as it happens when an item is selected;
+	// it is not called when the focus is on the edit_ control
+
 	switch ( event->getVirtualCode() ){
 		case vkUpArrow :{
 			ulong32 index = selectedIndex_ + 1;
@@ -644,6 +658,39 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 			this->repaint();
 		}
 		break;
+
+		case vkEscape : {
+			if ( NULL != dropDown_ ) {
+				Event ev( this );
+				closeDropDown( &ev );
+			}
+		}
+		break;
+
+		case vkReturn : {
+			StringUtils::trace( "ComboBoxControl::keyPressed: vkReturn()\n" );
+			if ( NULL != dropDown_ ) {
+				ListItem* item = ((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
+
+				// we close the drodownbox here because if we do it after, 
+				// we would set back the current selected item, while
+				// the selected item is going to be changed by this code.
+				Event ev( this );
+				closeDropDown( &ev );
+
+				setSelectedItem( item );
+
+				if ( cbsDropDownWithEdit == comboBoxStyle_ ) {
+					item = getSelectedItem();
+					if ( NULL != item ) {
+						setCurrentText( item->getCaption() );
+					}
+				}
+
+			}
+		}
+		break;
+
 	}
 }
 
@@ -668,11 +715,22 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 	if ( NULL != selectedItem_ ) {
 		selectedItem_->setSelected( true );
 		
+		if ( cbsDropDownWithEdit == comboBoxStyle_	) {
+			edit_->getTextModel()->setText( selectedItem_->getCaption() );
+		}
+
 		setFocused();
 
- 		ItemEvent event( selectedItem_, ITEM_EVENT_SELECTED );
+		/**
+		JC
+		I changed this so that the source is the ComboBoxControl
+		instance as opposed to the selected item
+		*/
+ 		ItemEvent event( this, ITEM_EVENT_SELECTED );
+		event.setUserData( (void*)selectedItem_ );
 		SelectionChanged.fireEvent( &event );
 	}
+
 	repaint();
 }
 
@@ -760,55 +818,101 @@ void ComboBoxControl::onEditKeyPressed( KeyboardEvent* event )
 
 void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 {
+	// we get here only if the focus is on the edit control;
+	// if we select an item, the focus will go to the DropDownListBox instead.
+
 	if ( vkReturn == event->getVirtualCode() ) {
-		ListItem* item = this->getSelectedItem();
-		if ( NULL != item ) {
-			item->setCaption( edit_->getTextModel()->getText() );
-			repaint();
+		if ( NULL != dropDown_ ) {
+			ListItem* item = ((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
+
+			// we close the drodownbox now because if we do it after, 
+			// we would set back the current selected item
+			Event ev( this );
+			closeDropDown( &ev );
+
+			setSelectedItem( item );
+
+			if ( cbsDropDownWithEdit == comboBoxStyle_ ) {
+				ListItem* item = getSelectedItem();
+				if ( NULL != item ) {
+					setCurrentText( item->getCaption() );
+				}
+			}
+
 		}
-	} else {
-		if ( autoLookup_ ) {
-			bool hasSpecialKey = ( event->getKeyMask() != 0 );
-			if ( !hasSpecialKey ) {
-				String caption, editCaption;
-				editCaption = edit_->getTextModel()->getText();
-				if ( editCaption != "" ) {
-					if ( autoLookupIgnoreCase_ ) {
-						editCaption = StringUtils::upperCase( editCaption );
-					}
+		else {
+			ListItem* item = this->getSelectedItem();
+			if ( NULL != item ) {
+				// commented as we don't want to change the caption of the items in the list [ bugfix 1112867]
+				//item->setCaption( edit_->getTextModel()->getText() );
+				repaint();
+			}
+		}
 
-					ListItem* similarItem = NULL;
-					Enumerator<ListItem*>* items = getListModel()->getItems();
-					while ( true == items->hasMoreElements() ) {
-						ListItem* item = items->nextElement();
-						caption = item->getCaption();
-						if ( autoLookupIgnoreCase_ ) {
-							caption = StringUtils::upperCase( caption );
-						}
+	}
+	else if ( vkEscape == event->getVirtualCode() ) {
+		Event ev( this );
+		closeDropDown( &ev );
+	}
+	else {
+		if ( NULL != dropDown_ ) {
+			// find the item and select it
+			if ( autoLookup_ ) {
+				bool hasSpecialKey = ( event->getKeyMask() != 0 );
+				if ( !hasSpecialKey ) {
+					String caption, editCaption;
+					editCaption = edit_->getTextModel()->getText();
 
-						if ( NULL != dropDown_ ) {
-							// this privilege the identical item, otherwise it accept the first more similar to the editCaption in the (unsorted) list
-							if ( caption == editCaption ) {
-								similarItem = item;
-								break;
-							} else if ( NULL == similarItem && 0 == caption.find( editCaption ) ) {
-									similarItem = item;
-							}
-						}
-					}
-
-					if ( NULL != similarItem ) {
+					ListItem* found = lookupItem( editCaption, autoLookupIgnoreCase_ );
+					if ( NULL != found ) {
 						this->selectItems( false );
 
-						((ComboBoxDropDown*)dropDown_)->ensureVisible( similarItem, true );		//setSelectedItem( item );
-						similarItem->setSelected( true );
-
-						//break;
+						((ComboBoxDropDown*)dropDown_)->ensureVisible( found, true );
+						found->setSelected( true );
 					}
+
 				}
 			}
 		}
 	}
+}
+
+ListItem* ComboBoxControl::lookupItem( const String& text, const bool& ignoreCase/*=false*/ )
+{
+	ListItem* found = NULL;
+
+	if ( text != "" ) {
+		String txt = text;
+		if ( ignoreCase ) {
+			txt = StringUtils::lowerCase( text );
+		}
+
+		String caption;
+		ListItem* similarItem = NULL;
+		Enumerator<ListItem*>* items = getListModel()->getItems();
+		while ( true == items->hasMoreElements() ) {
+			ListItem* item = items->nextElement();
+			caption = item->getCaption();
+			if ( ignoreCase ) {
+				caption = StringUtils::lowerCase( caption );
+			}
+
+			// this privilege the identical item, otherwise it accept the first more similar to the text in the (unsorted) list
+			if ( caption == txt ) {
+				similarItem = item;
+				break;
+			} else if ( NULL == similarItem ) {
+				if ( 0 == caption.find( txt ) ) {
+						similarItem = item;
+					}
+			}
+		}
+
+		found = similarItem;
+
+	}
+
+	return found;
 }
 
 void ComboBoxControl::setDropDownCount( const ulong32& dropDownCount )
@@ -824,6 +928,11 @@ void ComboBoxControl::setDropDownWidth( const ulong32& dropDownWidth )
 void ComboBoxControl::setDropDownExtendFullScreen( const bool& dropDownExtendFullScreen )
 {
 	dropDownExtendFullScreen_ = dropDownExtendFullScreen;
+}
+
+void ComboBoxControl::setDiscreteScroll( const bool& discreteScroll )
+{
+	discreteScroll_ = discreteScroll;
 }
 
 void ComboBoxControl::setDropDownSelected( const bool& dropDownSelected )
@@ -937,8 +1046,38 @@ void ComboBoxControl::selectItems( const bool& select )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.12  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.11  2005/03/10 00:17:27  marcelloptr
+*set discrete scrolling as default behaviour for ListBoxControls
+*
+*Revision 1.3.2.10  2005/02/16 17:54:31  marcelloptr
+*removed a mark I forgot
+*
+*Revision 1.3.2.9  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.8  2005/01/31 02:47:45  marcelloptr
+*bugfix [1112867] Press Return on ComboBox changes the selected item's caption
+*
+*Revision 1.3.2.7  2005/01/31 01:40:18  marcelloptr
+*bugfix [1112867] Press Return on ComboBox changes the selected item's caption
+*
+*Revision 1.3.2.6  2005/01/31 01:37:29  marcelloptr
+*fixed crash when vkEscape pressed
+*
+*Revision 1.3.2.5  2005/01/31 01:36:34  marcelloptr
+*fixed autolookup. Added behaviour when vkReturn is pressed.
+*
+*Revision 1.3.2.4  2005/01/15 00:52:38  marcelloptr
+*bugfix [ 1099910 ] plus other improvements of the scrolling
 *
 *Revision 1.3.2.3  2004/12/21 21:58:05  marcelloptr
 *bugfix [ 1089382 ] ComboBox fires a SelectionChanged msg when loosing focus

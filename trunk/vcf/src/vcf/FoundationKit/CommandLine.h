@@ -140,6 +140,9 @@ class FOUNDATIONKIT_API CommandLine : public Object {
 
 public:
 
+	CommandLine() {}
+	virtual ~CommandLine() {}
+
 /**
 parse the command line into switches and arguments.
 @return int number of switches found
@@ -245,6 +248,12 @@ the first character of a switch must be non-numeric!
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/18 04:24:27  dougtinkham
+*Added constructor and destructor to remove Internal Compiler Error on DMC
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

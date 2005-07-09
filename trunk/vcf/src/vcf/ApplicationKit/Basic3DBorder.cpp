@@ -24,6 +24,13 @@ Basic3DBorder::Basic3DBorder( bool inverted ):
 
 }
 
+Basic3DBorder::Basic3DBorder( Component* owner ):
+	Border( owner ),
+	inverted_(false)
+{
+
+}
+
 Basic3DBorder::~Basic3DBorder()
 {
 
@@ -158,6 +165,12 @@ void Basic3DBorder::paint( Control* component, GraphicsContext* context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

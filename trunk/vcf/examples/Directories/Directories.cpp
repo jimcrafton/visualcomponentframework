@@ -61,13 +61,13 @@ public:
 				VCF_ASSERT( !( filename == L"." || filename == L".." ) );
 
 				countDirectories_ ++;
-				if ( g_showDirnames ) printf ( "[%s]\n", path.ansi_c_str() );
+				if ( g_showDirnames ) System::print ( Format("[%s]\n") % path.ansi_c_str() );
 				if ( recurse ) {
 					this->loop( path + L"/", recurse, false );
 				}
 			} else {
 				countFiles_ ++;
-				if ( g_showFilenames ) printf ( "%s\n", path.ansi_c_str() );
+				if ( g_showFilenames ) System::print ( Format("%s\n") % path.ansi_c_str() );
 			}
 		}
 		finder->free();
@@ -109,13 +109,13 @@ public:
 				VCF_ASSERT( !( filename == L"." || filename == L".." ) );
 
 				countDirectories_ ++;
-				if ( g_showDirnames ) printf ( "[%s]\n", path.ansi_c_str() );
+				if ( g_showDirnames ) System::print ( Format("[%s]\n") % path.ansi_c_str() );
 				if ( recurse ) {
 					this->loop( path + L"/", recurse, false );
 				}
 			} else {
 				countFiles_ ++;
-				if ( g_showFilenames ) printf ( "%s\n", path.ansi_c_str() );
+				if ( g_showFilenames ) System::print ( Format("%s\n") % path.ansi_c_str() );
 			}
 		}
 		finder->free();
@@ -130,8 +130,9 @@ String formatDirectoryInfos( File* file, const Directory::Finder* finder )
 
 	String st = StringUtils::format( dt, L"%d/%m/%Y %H:%M:%S" );
 
-	String text = StringUtils::format( L"[%d] %s %10s %5s [%s]\n", 
-	                                   finder->getRecursionLevel(), st.c_str(), L"", L"", filename.c_str() );
+	String text = Format(L"[%d] %s %10s %5s [%s]\n") 
+					% finder->getRecursionLevel() % st.c_str() 
+					% L"" % L"" % filename.c_str();
 
 	return text;
 }
@@ -143,11 +144,13 @@ String formatFileInfos( File* file, const Directory::Finder* finder )
 
 	String st = StringUtils::format( dt, L"%d/%m/%Y %H:%M:%S" );
 	String sz = StringUtils::toString( file->getSize() );
-	String sa = StringUtils::format( "%c%c%c%c%c", file->isArchive()?'a':' ', file->isReadOnly()?'r':' ', 
-	                                 file->isHidden()?'h':' ', file->isSystem()?'s':' ', file->isExecutable()?'x':' ' );
+	String sa = Format("%c%c%c%c%c")% (file->isArchive()?'a':' ')
+				% (file->isReadOnly()?'r':' ') % (file->isHidden()?'h':' ')
+                % (file->isSystem()?'s':' ') % (file->isExecutable()?'x':' ') ;
 
-	String text = StringUtils::format( L"[%d] %s %10s %s  %s\n", 
-	                                   finder->getRecursionLevel(), st.c_str(), sz.c_str(), sa.c_str(), filename.c_str() );
+	String text = Format(L"[%d] %s %10s %s  %s\n") 
+					% finder->getRecursionLevel() % st.c_str() % sz.c_str()
+					% sa.c_str() % filename.c_str();
 
 	return text;
 }
@@ -269,8 +272,9 @@ void test( FinderTest& finderTest, const String& name, const bool& recurse = fal
 	DateTime stopTime = DateTime::now();
 	DateTimeSpan deltaTime = stopTime - startTime;
 	double td = (1.0 * (double)deltaTime.getTotalMilliseconds())/1000;
-	printf( "[%s] files: %d, subdirs: %d  Total time: %.3f seconds\n", name.ansi_c_str(), finderTest.countFiles_, finderTest.countDirectories_, td );
-	printf( "\n" );
+	System::println( Format("[%s] files: %d, subdirs: %d  Total time: %.3f seconds\n")
+					% name.ansi_c_str() % finderTest.countFiles_
+					% finderTest.countDirectories_ % td );
 }
 
 void test()

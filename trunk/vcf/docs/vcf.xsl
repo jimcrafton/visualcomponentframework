@@ -33,7 +33,7 @@ NB: This software will not save the world.
  <!--
  this uses a local path - may need to be modified for others
  --> 
-	<xsl:import href="k:/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="c:/code/docbook-xsl-1.68.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
@@ -46,8 +46,8 @@ NB: This software will not save the world.
 	<xsl:param name="htmlhelp.chi.create" select="1"/>
 	<xsl:param name="htmlhelp.hhc.folders.instead.books" select="0"/>
 
-	<xsl:param name="toc.section.depth" select="3"/>
-	<xsl:param name="generate.section.toc.level" select="3"/>	
+	<xsl:param name="toc.section.depth" select="2"/>
+	<xsl:param name="generate.section.toc.level" select="5"/>	
 	<xsl:param name="section.autolabel" select="1"/>
 	<xsl:param name="section.label.includes.component.label" select="1"/>
 
@@ -405,9 +405,9 @@ will be replaced by a sed script in tyhe makefile
  <tr>
   <td class="topCell" width="100%" height="20" align="right" valign="middle">
    &#160;&#160;
-   <a class="topLink" href="http://vcf.sourceforge.net/index.php">The VCF Website Home</a>
+   <a class="topLink" href="http://vcf-online.org/index.php">The VCF Website Home</a>
    &#160;&#160;|&#160;&#160;
-   <a class="topLink" href="http://vcf.sourceforge.net/forums/">Online Discussion Forums</a>
+   <a class="topLink" href="http://vcf-online.org/forums/">Online Discussion Forums</a>
    &#160;&#160;|&#160;&#160;	
    <a class="topLink" href="http://sourceforge.net/projects/vcf/">Sourceforge.net Project Page</a>
    &#160;&#160;
@@ -437,9 +437,9 @@ will be replaced by a sed script in tyhe makefile
  <tr>
   <td class="footerCell" width="100%" height="1" align="center" valign="middle">
    &#160;&#160;
-   <a class="footerLink" href="http://vcf.sourceforge.net/comments.php">Comments or Suggestions?</a>   
+   <a class="footerLink" href="http://vcf-online.org/comments.php">Comments or Suggestions?</a>   
    &#160;&#160;
-   <a class="footerLink" href="http://vcf.sourceforge.net/license.php">License Information</a>
+   <a class="footerLink" href="http://vcf-online.org/license.php">License Information</a>
    &#160;&#160;
   </td>
  </tr>
@@ -462,8 +462,17 @@ will be replaced by a sed script in tyhe makefile
 <!--
 CVS Log info
 $Log$
-Revision 1.7  2004/12/16 04:10:41  ddiego
-fixes for bug 1081652, the actual fix came from Marcello.
+Revision 1.8  2005/07/09 23:14:10  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.6.10.3  2005/06/24 20:43:07  ddiego
+more updates to foundationkit docs.
+
+Revision 1.6.10.2  2005/06/03 21:40:20  ddiego
+more doc updates
+
+Revision 1.6.10.1  2005/04/25 00:11:53  ddiego
+added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
 
 Revision 1.6  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch

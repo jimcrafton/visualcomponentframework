@@ -62,8 +62,8 @@ void Win32ComboBox::createParams()
 void Win32ComboBox::addItem( ListItem * item )
 {
 	String caption = item->getCaption();
-	char* tmp = new char[caption.size()];
-	memset( tmp, 0, caption.size() );
+	VCFChar* tmp = new VCFChar[caption.size()];
+	memset( tmp, 0, caption.size()*sizeof(VCFChar) );
 	caption.copy( tmp, caption.size() );
 	int index = ::SendMessage( this->hwnd_, CB_ADDSTRING, 0, (LPARAM)caption.c_str() );
 	item->setIndex( index );
@@ -109,6 +109,15 @@ void Win32ComboBox::setBounds( VCF::Rect* rect )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/02 16:16:02  marcelloptr
+*fix on memset/unicode issue
+*
+*Revision 1.2.4.2  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

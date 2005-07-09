@@ -22,10 +22,10 @@ Control* Control::previousMouseOverControl = NULL;
 Control::Control():
 	peer_(NULL),
 	context_(NULL),
-    parent_(NULL),
-    aligment_(AlignNone),
+	parent_(NULL),
+	aligment_(AlignNone),
 	anchor_(AnchorNone),
-    bounds_(NULL),
+	bounds_(NULL),
 	clientBounds_(NULL),
 	border_(NULL),
 	color_(NULL),
@@ -42,7 +42,9 @@ Control::Control():
 	tabStop_(true),
 	tabOrder_(-1),
 	useRenderBuffer_(false),
-	container_(NULL)
+	container_(NULL),
+	ignoredForLayout_(false),
+	repaintOnSize_(true)
 {
 	//this (Font) cast is to avoid an internal compiler error on some vc6 versions
 	font_ = new Font( (Font) UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont ) );
@@ -67,6 +69,7 @@ Control::Control():
 
 Control::~Control()
 {
+	componentState_ = Component::csDestroying;
 	/**
 	this shouldn't happen, but it's
 	possible if an exception is thrown in a constructor
@@ -117,10 +120,6 @@ void Control::destroy()
 		delete peer_;
 		peer_ = NULL;
 	}
-	if ( NULL != border_ ){
-		border_->release();
-		border_ = NULL;
-	}
 
 	if ( NULL != font_ ){
 		font_->free();
@@ -142,15 +141,7 @@ void Control::destroy()
 	}
 	view_ = NULL;
 
-	if ( NULL != container_ ) {
-		Object* obj = dynamic_cast<Object*>(container_);
-		if ( NULL != obj ) {
-			obj->release();
-		}
-		else {
-			delete container_;
-		}
-	}
+	
 	container_ = NULL;
 
 	Component::destroy();
@@ -162,16 +153,15 @@ Border* Control::getBorder()
 }
 
 void Control::setBorder( Border* border )
-{
-	if ( NULL != border_ ){
-		border_->release();
-		border_ = NULL;
-	}
+{	
 	border_ = border;
-	if ( NULL != border_ ){
-		border_->addRef();
-	}
 
+	if ( NULL != border_ ) {
+		if ( NULL == border_->getOwner() ) {
+			addComponent( border_ );
+		}
+	}
+	
 	peer_->setBorder( border_ );
 }
 
@@ -287,6 +277,21 @@ AlignmentType Control::getAlignment()
 	return aligment_;
 }
 
+bool Control::isIgnoredForLayout()
+{
+	return ignoredForLayout_;
+}
+
+void Control::setIgnoredForLayout( const bool& val )
+{
+	ignoredForLayout_ = val;
+
+	Control* parent = getParent();
+	if ( NULL != parent ) {
+		parent->getContainer()->resizeChildren( NULL );
+	}
+}
+
 void Control::setBounds( const double& x, const double& y, const double& width, const double& height )
 {
 	setBounds( &Rect( x, y, x+width, y+height ) );
@@ -339,6 +344,12 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**t
 	}
 	else {
 		peer_->setBounds( bounds_ );
+	}
+
+	if ( useRenderBuffer_ ) {
+		if ( NULL == context_->getDrawingArea() ) {
+			context_->setDrawingArea( *bounds_ );
+		}
 	}
 
 	if ( true == anchorDeltasNeedUpdating ) {
@@ -469,9 +480,8 @@ void Control::handleEvent( Event* event )
 				ControlSized.fireEvent( (ControlEvent*)event );
 
 				if ( useRenderBuffer_ ) {
-					Rect bounds = getClientBounds();
-
-					context_->setDrawingArea( bounds );
+					Rect bounds = getClientBounds(false);
+					context_->setDrawingArea( bounds );						
 				}
 			}
 			break;
@@ -500,7 +510,7 @@ void Control::handleEvent( Event* event )
 
 
 				MouseEnter.fireEvent( mouseEvent );
-				if (!event->isConsumed()) {
+				if (!event->isConsumed() && !isDesigning()) {
 					mouseEnter( mouseEvent );
 				}
 			}
@@ -513,7 +523,9 @@ void Control::handleEvent( Event* event )
 				
 
 				MouseDown.fireEvent( mouseEvent );
-				if (!event->isConsumed()) {
+
+				//turn off normal mouse behaviour in design mode
+				if ( !event->isConsumed() && !isDesigning() ) {
 					mouseDown( mouseEvent );
 				}
 			}
@@ -535,7 +547,7 @@ void Control::handleEvent( Event* event )
 				
 				peer_->setCursor( cursor_ );
 				MouseMove.fireEvent( mouseEvent );
-				if (!event->isConsumed()) {
+				if (!event->isConsumed() && !isDesigning()) {
 					mouseMove( mouseEvent );
 				}
 			}
@@ -546,14 +558,15 @@ void Control::handleEvent( Event* event )
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 
 				Point tmpPt = *mouseEvent->getPoint();
+				Point origPt = *mouseEvent->getPoint();
 
 
 				bool rightBtn = mouseEvent->hasRightButton();
 				MouseUp.fireEvent( mouseEvent );
-				if (!mouseEvent->isConsumed()) {
+				if (!mouseEvent->isConsumed() && !isDesigning()) {
 					mouseUp( mouseEvent );
 				}
-				if ( (NULL != popupMenu_) && (true == rightBtn) ){
+				if ( (NULL != popupMenu_) && (true == rightBtn) && !isDesigning() ){
 					Point tmpPt = *mouseEvent->getPoint();
 					if ( NULL != scrollable_ ) {
 						tmpPt.x_ -= scrollable_->getHorizontalPosition();
@@ -572,7 +585,7 @@ void Control::handleEvent( Event* event )
 											MOUSE_CLICK,
 											mouseEvent->getButtonMask(),
 											mouseEvent->getKeyMask(),
-											mouseEvent->getPoint() );
+											&origPt );
 
 
 					handleEvent( &clickEvent );
@@ -586,7 +599,7 @@ void Control::handleEvent( Event* event )
 
 
 				MouseLeave.fireEvent( mouseEvent );
-				if (!mouseEvent->isConsumed()) {
+				if (!mouseEvent->isConsumed() && !isDesigning()) {
 					mouseLeave( mouseEvent );
 				}
 			}
@@ -596,7 +609,9 @@ void Control::handleEvent( Event* event )
 				
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 				MouseClicked.fireEvent( mouseEvent );
-				mouseClick( mouseEvent );
+				if (!mouseEvent->isConsumed() && !isDesigning() ) {
+					mouseClick( mouseEvent );
+				}
 			}
 			break;
 
@@ -604,27 +619,37 @@ void Control::handleEvent( Event* event )
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 
 				MouseDoubleClicked.fireEvent( mouseEvent );
-				mouseDblClick( mouseEvent );
+				if (!mouseEvent->isConsumed() && !isDesigning() ) {
+					mouseDblClick( mouseEvent );
+				}
 			}
 			break;
 
 			case KEYBOARD_DOWN:{
 				KeyboardEvent* kbEvent = (KeyboardEvent*)event;
-				keyDown( kbEvent );
+				
+				if ( !isDesigning() || (NULL != getContainer()) ) {
+					keyDown( kbEvent );					
+				}
 				KeyDown.fireEvent( kbEvent );
 			}
 			break;
 
 			case KEYBOARD_PRESSED:{
 				KeyboardEvent* kbEvent = (KeyboardEvent*)event;
-				keyPressed( kbEvent );
+				if ( !isDesigning() || (NULL != getContainer()) ) {
+					keyPressed( kbEvent );
+				}
+				
 				KeyPressed.fireEvent( kbEvent );
 			}
 			break;
 
 			case KEYBOARD_UP:{
 				KeyboardEvent* kbEvent = (KeyboardEvent*)event;
-				keyUp ( kbEvent );
+				if ( !isDesigning() || (NULL != getContainer()) ) {
+					keyUp ( kbEvent );
+				}
 				KeyUp.fireEvent( kbEvent );
 			}
 			break;
@@ -802,6 +827,23 @@ bool Control::isEnabled()
 	return peer_->isEnabled();
 }
 
+bool Control::areParentsEnabled()
+{
+	if ( !isEnabled() ) {
+		return false;
+	}
+
+	bool result = true;
+
+	Control* parent = getParent();
+	while ( result && (NULL != parent) ) {
+		result = parent->isEnabled();
+		parent = parent->getParent();
+	}
+
+	return result;
+}
+
 void Control::setEnabled( const bool& enabled )
 {
 	peer_->setEnabled( enabled );
@@ -947,9 +989,8 @@ void Control::setUseParentFont( const bool& useParentFont )
 }
 
 void Control::afterCreate( ComponentEvent* event )
-{
+{	
 	
-	peer_->setFont( font_ );
 }
 
 void Control::repaint( Rect* repaintRect )
@@ -1105,18 +1146,27 @@ void Control::updateAnchorDeltas() {
 
 AcceleratorKey* Control::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
 {
-	return UIToolkit::getAccelerator( keyCode, modifierMask );
+	return UIToolkit::getAccelerator( keyCode, modifierMask, this );
 }
 
 void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler )
 {
 	if ( NULL == eventHandler ) {
-		throw InvalidPointerException( MAKE_ERROR_MSG_2("The Event handler passed in is NULL!") );
+		throw InvalidPointerException( MAKE_ERROR_MSG_2("The Event handler passed in for the accelerator is NULL!") );
 	}
 
 	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
 
 	addAcceleratorKey( newAccelKey );
+}
+
+void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Action* action )
+{
+	if ( NULL == action ) {
+		throw InvalidPointerException( MAKE_ERROR_MSG_2("The action instance passed in for the accelerator is NULL!") );
+	}
+
+	addAcceleratorKey( keyCode, modifierMask, action->getAcceleratorEventHandler() );
 }
 
 void Control::addAcceleratorKey( AcceleratorKey* accelerator )
@@ -1215,23 +1265,34 @@ void Control::translateFromScreenCoords( Rect* rect )
 
 void Control::setContainer( Container* container )
 {
-	if ( NULL != container_ ) {
-		Object* obj = dynamic_cast<Object*>(container_);
-		if ( NULL != obj ) {
-			obj->release();
-		}
-	}
-	container_ = container;
+	Container* oldContainer = container_;
+
+	container_ = container;	
 
 	if ( NULL != container_ ) {
-		Object* obj = dynamic_cast<Object*>(container_);
-		if ( NULL != obj ) {
-			obj->addRef();
+		
+		if ( NULL == container_->getOwner() ) {
+			addComponent(container_) ;
 		}
 
 		container_->setContainerControl( this );
 	}
 
+	//transfer over container controls!
+	if ( NULL != container_ && NULL != oldContainer ) {
+		container_->clear();
+
+		int count = oldContainer->getChildCount();
+		for ( int i=0;i<count;i++ ) {
+			Control* control = oldContainer->getControlAtIndex( 0 );
+
+			oldContainer->remove( control );
+
+			container_->add( control );
+		}
+
+		oldContainer->clear();
+	}
 }
 
 void Control::buildTabList( Control* control, std::vector<Control*>& tabList )
@@ -1464,9 +1525,14 @@ void Control::paintBorder( GraphicsContext * context )
 	}
 }
 
+
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.7  2005/02/26 14:47:38  ddiego
 *fixed bug 1152064 with repaint issue on set enabled state.
 *
@@ -1487,6 +1553,60 @@ void Control::paintBorder( GraphicsContext * context )
 *fixes a drag-drop bug, initially listed under the vcfbuilders
 *bug list
 *
+*Revision 1.4.2.18  2005/06/29 20:30:15  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.4.2.17  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.4.2.16  2005/05/06 20:33:37  marcelloptr
+*Error message improved.
+*
+*Revision 1.4.2.14  2005/04/26 04:05:22  ddiego
+*the first half of [ 1184432 ] Tables cell edit box follows scroll movement, is fixed. Still need to get the scrollbars to update.
+*
+*Revision 1.4.2.13  2005/04/20 02:25:59  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.4.2.12  2005/03/29 05:00:16  ddiego
+*fixed an issue in drawing borders when the controls render buffer is turned on.
+*
+*Revision 1.4.2.11  2005/03/29 04:25:37  ddiego
+*fixed an issue in drawing borders when the controls render buffer is turned on.
+*
+*Revision 1.4.2.10  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.4.2.9  2005/03/15 05:29:00  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
+*Revision 1.4.2.8  2005/03/14 04:17:22  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.4.2.7  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.4.2.6  2005/02/28 04:51:55  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.4.2.5  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
+*Revision 1.4.2.4  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.4.2.3  2005/01/01 20:31:07  ddiego
+*made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.
+*
+*Revision 1.4.2.2  2004/12/31 17:41:23  ddiego
+*fixes a drag-drop bug, initially listed under the vcfbuilders
+*bug list
+*
+*Revision 1.4.2.1  2004/12/31 17:39:47  ddiego
+*fixes a drag-drop bug, initially listed under the vcfbuilders
+*bug list
 *Revision 1.4  2004/12/01 04:31:20  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

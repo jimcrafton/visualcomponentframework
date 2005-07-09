@@ -54,7 +54,7 @@ public:
 	virtual void showMessage( const String& message, const String& caption );
 
 	virtual UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-													const long& messageButtons,	const Dialog::MessageStyle& messageStyle );
+	                        const long& messageButtons,	const Dialog::MessageStyle& messageStyle );
 
 	virtual void handleEvent( XEvent* x11Event );
 
@@ -63,6 +63,7 @@ public:
 	virtual void setText( const String& text );
 
 	virtual void setBounds( Rect* rect );
+
 protected:
 	Rect clientBounds_;
 	Atom wmProtocols_;
@@ -78,6 +79,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/29 05:00:03  marcelloptr
+*some white spaces
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

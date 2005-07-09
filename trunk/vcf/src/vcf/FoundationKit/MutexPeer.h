@@ -27,6 +27,8 @@ public:
 
 	virtual bool lock() = 0;
 
+	virtual bool lock( uint32 timeoutInMilliseconds ) = 0;
+
 	virtual bool unlock() = 0;
 
 	virtual OSHandleID getHandleID() = 0;
@@ -39,8 +41,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
 *
 *Revision 1.2.4.1  2004/12/19 04:05:01  ddiego
 *made modifications to methods that return a handle type. Introduced

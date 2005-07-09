@@ -27,10 +27,15 @@ namespace VCF{
 #define SYSTEM_CATEGORY			"System"
 #define DIALOG_CATEGORY			"Dialogs"
 #define NETWORKING_CATEGORY		"Networking"
+#define BORDER_CATEGORY			"Borders"
+#define CONTAINER_CATEGORY		"Containers"
+#define MODEL_CATEGORY			"Models"
+#define VIEW_CATEGORY			"Views"
 
 class ListviewPeer;
 class ComboBoxPeer;
 class TextPeer;
+class TextEditPeer;
 class RichTextPeer;
 class ControlPeer;
 class TreePeer;
@@ -83,6 +88,8 @@ class Toolbar;
 class TimerEvent;
 
 class SystemTrayPeer;
+
+class MenuManagerPeer;
 
 
 
@@ -192,12 +199,17 @@ public:
 	*/
     static TreePeer* createTreePeer( TreeControl* component);
 
+	
 	/**
 	This creates a peer that implements the TextPeer interface. A TextPeer allows you to
 	view and edit text, either in a single line edit control, or a multiline edit control.
 	For Win32 systems this is equivalent to creating a Richedit window handle.
 	*/
-    static TextPeer* createTextPeer( TextControl* component, const bool& isMultiLineControl);
+    static TextPeer* createTextPeer( const bool& autoWordWrap, const bool& multiLined );
+
+	static TextEditPeer* createTextEditPeer( TextControl* component, const bool& isMultiLineControl);
+
+	
 
 	/**
 	This creates a peer that implements the HTMLBrowserPeer interface. The HTMLBrowserPeer
@@ -263,6 +275,8 @@ public:
 
 	static SystemTrayPeer* createSystemTrayPeer();
 
+	static MenuManagerPeer* createMenuManagerPeer();
+
 	static GraphicsResourceBundlePeer* createGraphicsResourceBundlePeer( AbstractApplication* app );
 
 	static bool createCaret( Control* owningControl, Image* caretImage  );
@@ -273,6 +287,56 @@ public:
 
 	static void setCaretPos( Point* point );
 
+	/**
+	\par
+	This method posts an event to the underlying platform's windowing system. 
+	The event handler instance that is passed in is called when the event is 
+	processed later on in the event queue. Once this happens the handler's 
+	invoke() method is called and the event that was passed in to this method 
+	is passed into the EventHandler::invoke() method. Once invoke() returns, 
+	the event is deleted and the event handler is delete \em only if the 
+	deleteHandler parameter to postEvent() was true, otherwise it is left 
+	alone. 
+	@param EventHandler the event handler instance to use when the event is 
+	retrieved off the event queue later on.
+	@param Event the event to pass to the eventHandler's invoke() method. This
+	instance is managed by the UIToolkit, and \em must be created on the heap. If
+	you create the event instance on the stack you'll corrupt memory and crash
+	your program. Consider yourself warned.
+	@param bool this parameter tells the UIToolkit whether or not it should 
+	delete the event handler instance.	This means that you have a choice when
+	calling the postEvent function - you can either have the UIToolkit clean
+	up the event handler instance for you (deleteHandler=true), or you can 
+	manage this instance yourself. If you choose to let the UIToolkit manage
+	the event handler instance, then make sure you don't maintain ownership
+	of the event handler. If you are using EventHandlerInstance classes (
+	like GenericEventHandler, etc) then you can do the following:
+    \code
+	//note that we don't pass in a name for the event handler
+	EventHandler* ev = new GenericEventHandler<MyClass>( this, &MyClass::onMyEvent ); 
+	Event* event = //create some event instance
+	UIToolkit::postEvent( ev, event ); //defaults to deleting the event handler
+	\endcode 
+	Note that in our example above we did \em not give the event handler a name.
+	This prevents the event handler from being added to it's source, and insures 
+	that it will not be owned, allowing the UIToolkit to safely delete it.
+	\par 
+	If we want to manage the event handler ourselves, then we might do the following:
+	\code
+	//assuming that we are in an object instance that derives from ObjectWithEvents.
+	//all control classes do inherit from ObjectWithEvents.
+	EventHandler* ev = getEventHandler( "MyClass::onMyEvent" );
+	if ( NULL == ev ) {
+		ev = new GenericEventHandler<MyClass>( this, &MyClass::onMyEvent ); 
+	}
+	Event* event = //create some event instance
+	UIToolkit::postEvent( ev, event, false ); //defaults to deleting the event handler
+	\endcode 
+
+	@see Event
+	@see EventHandler
+	@see EventHandlerInstance
+	*/
 	static void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
 
 	static void registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
@@ -327,7 +391,7 @@ public:
 
 	static void registerAccelerator( AcceleratorKey* accelerator );
 
-	static void removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	static void removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
 
 	static Button* getDefaultButton();
 
@@ -335,9 +399,21 @@ public:
 
 	static void removeDefaultButton( Button* defaultButton );
 
-	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+
+	/**
+	Finds all the matching accelerators and store them in a list.
+	A matching accelerator is defined as an accelerator that has the same key code, 
+	modifier mask, and event handler. This let the synchronize the state of all
+	the matching accelerators when one of them has its changed enabled/disabled state.
+	*/
+	static bool findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
 
 	static void removeAcceleratorKeysForControl( Control* control );
+
+	static void removeAcceleratorKeysForMenuItem( MenuItem* item );
+
+	static void removeAcceleratorKeysForObject( Object* src );
 
 	static void handleKeyboardEvent( KeyboardEvent* event );
 
@@ -363,7 +439,7 @@ protected:
 	static UIToolkit* toolKitInstance;
 
 	std::map<String,ComponentInfo*> componentInfoMap_;
-	std::map<ulong32,AcceleratorKey*> acceleratorMap_;
+	std::multimap<ulong32,AcceleratorKey*> acceleratorMap_;
 	std::vector<Control*> visitedContainers_;
 	Clipboard* systemClipboard_;
     GraphicsToolkit * graphicsToolKit_;
@@ -402,7 +478,9 @@ protected:
 
     virtual TreePeer* internal_createTreePeer( TreeControl* component) = 0;
 
-    virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl) = 0;
+	virtual TextPeer* internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined ) = 0;
+
+    virtual TextEditPeer* internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl ) = 0;
 
 	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control ) = 0;
 
@@ -454,6 +532,8 @@ protected:
 	virtual CursorPeer* internal_createCursorPeer( Cursor* cursor ) = 0;
 
 	virtual SystemTrayPeer* internal_createSystemTrayPeer() = 0;
+
+	virtual  MenuManagerPeer* internal_createMenuManagerPeer() = 0;
 
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app ) = 0;
 
@@ -524,7 +604,7 @@ protected:
 
 	void internal_registerAccelerator( AcceleratorKey* accelerator );
 
-	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
 
 	Button* internal_getDefaultButton();
 
@@ -532,9 +612,15 @@ protected:
 
 	void internal_removeDefaultButton( Button* defaultButton );
 
-	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
 
 	void internal_removeAcceleratorKeysForControl( Control* control );
+
+	void internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem );
+
+	void internal_removeAcceleratorKeysForObject( Object* src );
+
+	bool internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
 
 
 
@@ -555,6 +641,8 @@ protected:
 	void internal_setUpdateTimerSpeed( const unsigned long& milliseconds );
 
 	void onUpdateComponentsTimer( TimerEvent* e );
+
+	void handleTabKeyboardEvent( KeyboardEvent* event );
 };
 
 };
@@ -563,8 +651,35 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.10  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.9  2005/06/02 16:17:34  marcelloptr
+*some more documentation
+*
+*Revision 1.3.2.8  2005/05/15 23:17:38  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.7  2005/04/25 00:11:57  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.3.2.6  2005/04/20 02:26:00  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.5  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.4  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.3  2005/01/26 22:43:18  ddiego
+*added some docs on event handler and post event mechanics.
 *
 *Revision 1.3.2.2  2004/12/19 07:09:18  ddiego
 *more modifications to better handle resource bundles, especially

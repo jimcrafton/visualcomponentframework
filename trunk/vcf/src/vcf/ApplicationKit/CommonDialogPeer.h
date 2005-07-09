@@ -42,15 +42,15 @@ public:
 
 	virtual void addFilter( const String & description, const String & extension ) = 0;
 
-    virtual void setDirectory( const String & directory ) = 0;
+	virtual void setDirectory( const String & directory ) = 0;
 
 	virtual void setFileName( const String & filename ) = 0;
 
-    virtual String getFileName() = 0;
+	virtual String getFileName() = 0;
 
-    virtual String getDirectory() = 0;
+	virtual String getDirectory() = 0;
 
-    virtual String getFileExtension() = 0;
+	virtual String getFileExtension() = 0;
 
 	virtual uint32 getSelectedFileCount() = 0;
 
@@ -135,6 +135,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -74,13 +74,16 @@ public:
 
 	virtual void setAsSeparator( const bool& isSeperator );
 
+	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
+
 	static MenuItem* getMenuItemFromID( const uint32 id );
 	static MenuItem* getMenuItemFromHandle( HMENU handle );
 
 	void fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo );
 
 	void drawDefaultMenuItem( const UINT& idCtl, DRAWITEMSTRUCT& drawItemStruct );
-private:
+protected:
+
 	HMENU itemHandle_;
 	uint32 itemId_;
 	MenuItem* menuItem_;
@@ -99,6 +102,8 @@ private:
 	static std::map<HMENU,MenuItem*> menuItemHandleMap;
 
 	void fixChildren( MenuItem* child );
+
+	String generateCaption( MenuItem* item, String caption );
 };
 
 };
@@ -107,8 +112,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+
 *Revision 1.3  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
 *
 *Revision 1.2.4.1  2004/12/19 04:05:00  ddiego
 *made modifications to methods that return a handle type. Introduced

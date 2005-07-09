@@ -269,7 +269,8 @@ public:
 
 	virtual void mouseUp( MouseEvent* event );
 
-	virtual void mouseDblClick(  MouseEvent* event );
+	//virtual void mouseDblClick(  MouseEvent* event );
+	virtual void mouseClick(  MouseEvent* event );
 
 	//virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) throw( InvalidPeer );
 
@@ -435,6 +436,21 @@ public:
 	}
 
 	virtual void keyDown( KeyboardEvent* e );
+
+	void resizeColumnWidths();
+	void resizeRowHeights();
+	void resizeColumnRowDimensions();
+
+	/**
+	* autosize the specified column's width to its text
+	*/
+	bool autoSizeColumn( int column, AutoSizeOption autoSizeStyle=asoDefault, bool resetScroll=true );
+
+	/**
+	* autosize the specified row's heigth to its text
+	*/
+	bool autoSizeRow( int row, bool resetScroll=true);
+
 protected:
 
 	enum MouseState{
@@ -462,8 +478,6 @@ protected:
 
 	double getFixedColumnWidth();
 	double getFixedRowHeight();
-
-	void resetColumnWidths();
 
 	void onTableModelChanged( TableModelEvent* event );
 	void onTableCellItemSelected( ItemEvent* event );
@@ -524,11 +538,11 @@ protected:
 	double getTotalRowHeight();
 	double getTotalColumnWidth();
 
-	bool autoSizeColumn( int column, AutoSizeOption autoSizeStyle=asoDefault, bool resetScroll=true );
-
-	bool autoSizeRow( int row, bool resetScroll=true);
-
 	void editCell( const CellID& cell, const Point& pt );
+
+	Rect getEditCellRect( const CellID& editCellID );
+
+protected:
 
 	TableCellItem* selectedCellItem_;
 	Control* currentEditingControl_;
@@ -585,12 +599,26 @@ protected:
 
 };
 
-};
+
+}; // namespace VCF
+
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/03/01 18:28:07  marcelloptr
+*autosize members made public
+*
+*Revision 1.2.4.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

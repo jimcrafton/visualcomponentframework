@@ -10,7 +10,7 @@ namespace VCF {
 		OSXAppResourceBundle( AbstractApplication* app );
 	protected:
 		AbstractApplication* app_;
-		virtual CFBundleRef getBundle();
+		
 	};
 
 };

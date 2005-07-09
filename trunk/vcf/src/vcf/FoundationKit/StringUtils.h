@@ -28,6 +28,8 @@ class type_info;
 namespace VCF {
 
 class DateTime;
+class VariantData;
+class Format;
 
 class FOUNDATIONKIT_API StringUtils  {
 public:
@@ -39,20 +41,39 @@ public:
 	static void trace( const VCF::String& text );
 
 	/**
-	*Similar to trace() but allows variable arguments. Uses the
-	*same formatting rules as printf().
-	*@param String the text to trace out after formatting. See printf()
-	*for formatting rules.
+	Similar to trace() but allows variable arguments. Uses the
+	same formatting rules as printf().
+	@param String the text to trace out after formatting. See printf()
+	for formatting rules.
+	\deprecated 
+	This is now a deprecated function and should not be used at all. Existing
+	code should be changed to make use of the traceWithArgs( const Format& ) function 
+	instead. It will be removed entirely in an upcoming release.
 	*/
 	static void traceWithArgs( VCF::String text,... );
 
+	static void traceWithArgs( const Format& formatter );
+
 	/**
-	*formats a string. Uses the same formatting rules as
-	*sprintf().
-	*@param String the format text to use
-	*@return String the formatted string
+	formats a string. Uses the same formatting rules as
+	sprintf().
+	@param String the format text to use
+	@return String the formatted string
+	\deprecated 
+	This is now a deprecated function and should not be used at all. Existing
+	code should be changed to make use of the traceWithArgs( const Format& ) function 
+	instead. It will be removed entirely in an upcoming release.
 	*/
 	static VCF::String format( VCF::String formatText, ... );
+
+	/**
+	formats a string. Uses the same formatting rules as
+	sprintf().
+	@param Format the formatter to use
+	@return String the formatted string
+	@see Format
+	*/
+	static VCF::String format( const Format& formatter );
 
 	/**
 	*trim all the occurrences of a specified character
@@ -231,6 +252,13 @@ public:
 	*/
 	static VCF::String toString( const bool& value );
 
+
+	/**
+	Converts a VariantData instance to a string.
+	@param VariantData the variant to convert
+	@return String the string returned from calling VariantData::toString
+	*/
+	static VCF::String toString( const VariantData& value );
 
 	/**
 	converts the value to an hexadecimal number
@@ -459,6 +487,12 @@ public:
 	*/
 	static VCF::String convertFormatString( const String& formattedString );
 
+	/**
+	* Translate a VirtualKey code into a human readable string.
+	* This can be used to display an accelerator key into a string to
+	* be displayed in a MenuItem when an accelerator is associated to it.
+	*/
+	static VCF::String translateVKCodeToString( VirtualKeyCode code );
 protected:
 	static String weekdays[];
 	static String abbrevWeekdays[];
@@ -466,12 +500,338 @@ protected:
 	static String abbrevMonths[];
 };
 
-};//end of namespace VCF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
+The following functions provide support for appending and translating various 
+primitive types to string values. This makes it more convenient to write strings
+that also have integers, objects, or other types as part of the string message.
+The goal is to slowly get away from using the variable argument sprintf() style
+functions such as StringUtils::traceWithArgs(), or System::println().
+For example, you might have written the following code:
+\code
+System::println( "Name %s, number %d", str.c_str(), 1223 );
+\endcode
+With the operators below you can now rewrite this like so:
+\code
+System::println( "Name " + str + " number " + 1223 );
+\endcode
+
+*/
+
+	
+String operator+ ( const String& lhs, const int& val );
+
+String& operator+= ( String& lhs, const int& val );
+
+String operator+ ( const String& lhs, const unsigned int& val );
+
+String& operator+= ( String& lhs, const unsigned int& val );
+
+String operator+ ( const String& lhs, const long& val );
+
+String& operator+= ( String& lhs, const long& val );
+
+String operator+ ( const String& lhs, const unsigned long& val );
+
+String& operator+= ( String& lhs, const unsigned long& val );
+
+String operator+ ( const String& lhs, const short& val );
+
+String& operator+= ( String& lhs, const short& val );
+
+String operator+ ( const String& lhs, const double& val );
+
+String& operator+= ( String& lhs, const double& val );
+
+
+String operator+ ( const String& lhs, const float& val );
+
+String& operator+= ( String& lhs, const float& val );
+
+String operator+ ( const String& lhs, const bool& val );
+
+String& operator+= ( String& lhs, const bool& val );
+
+String operator+ ( const String& lhs, const ulong64& val );
+
+String& operator+= ( String& lhs, const ulong64& val );
+
+String operator+ ( const String& lhs, const long64& val );
+
+String& operator+= ( String& lhs, const long64& val );
+
+/*
+void pointers!
+*/
+String operator+ ( const String& lhs, void* val );
+
+String& operator+= ( String& lhs, void* val );
+
+/**
+Objects!
+*/
+String operator+ ( const String& lhs, Object& val );
+
+String& operator+= ( String& lhs, Object& val );
+
+String operator+ ( const String& lhs, Object* val );
+
+String& operator+= ( String& lhs, Object* val );
+
+
+/**
+type info!
+*/
+String operator+ ( const String& lhs, const std::type_info& typeInfo );
+
+String& operator+= ( String& lhs, const std::type_info& typeInfo );
+
+
+
+/**
+Variant data
+*/
+String operator+ ( const String& lhs, const VariantData& rhs );
+
+String& operator+= ( String& lhs, const VariantData& rhs );
+
+
+
+
+};//end of namespace VCF
+
+
+
+
+
+
+namespace VCF {
+/**
+Implementation of string operators
+*/
+
+
+
+inline String operator+ ( const String& lhs, const int& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const int& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const unsigned int& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const unsigned int& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const long& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const long& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const unsigned long& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const unsigned long& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const short& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const short& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const double& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const double& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const float& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const float& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const bool& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const bool& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const ulong64& val )
+{
+	return lhs + StringUtils::toString(val);
+}
+
+inline String& operator+= ( String& lhs, const ulong64& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+inline String operator+ ( const String& lhs, const long64& val )
+{
+	return lhs + StringUtils::toString(val); 
+}
+
+inline String& operator+= ( String& lhs, const long64& val )
+{
+	return lhs += StringUtils::toString(val);
+}
+
+/*
+void pointers!
+*/
+inline String operator+ ( const String& lhs, void* val )
+{
+	char tmp[256];
+	sprintf( tmp, "%p", val );
+	
+	return lhs + tmp;
+}
+
+inline String& operator+= ( String& lhs, void* val )
+{
+	char tmp[256];
+	sprintf( tmp, "%p", val );
+
+	return lhs += tmp;
+}
+
+/**
+Objects!
+*/
+
+inline String operator+ ( const String& lhs, Object& val )
+{
+	return lhs + val.toString();
+}
+
+inline String& operator+= ( String& lhs, Object& val )
+{
+	return lhs += val.toString();
+}
+
+inline String operator+ ( const String& lhs, Object* val )
+{
+	return lhs + ((val != NULL) ? val->toString() : String("null"));
+}
+
+inline String& operator+= ( String& lhs, Object* val )
+{
+	return lhs += ((val != NULL) ? val->toString() : String("null"));
+}
+
+
+/**
+type info!
+*/
+inline String operator+ ( const String& lhs, const std::type_info& typeInfo )
+{
+	return lhs + StringUtils::getClassNameFromTypeInfo( typeInfo );
+}
+
+inline String& operator+= ( String& lhs, const std::type_info& typeInfo )
+{
+	return lhs += StringUtils::getClassNameFromTypeInfo( typeInfo );
+}
+
+/**
+Variant data
+*/
+
+inline String operator+ ( const String& lhs, const VariantData& rhs )
+{
+	return lhs + StringUtils::toString(rhs);
+}
+
+inline String& operator+= ( String& lhs, const VariantData& rhs )
+{
+	return lhs += StringUtils::toString(rhs);
+}
+
+
+};
+/**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.7  2005/04/11 17:07:13  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.3.2.6  2005/03/15 01:51:52  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.5  2005/03/14 18:56:47  marcelloptr
+*comments and added an error message to avoid an infinite loop
+*
+*Revision 1.3.2.4  2005/03/14 05:44:51  ddiego
+*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
+*
+*Revision 1.3.2.3  2005/03/14 04:17:25  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.2  2005/02/20 23:10:15  kiklop74
+*Fixed minor issue wioth ? operator. Borland compiler requires exactly same return types.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:33  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

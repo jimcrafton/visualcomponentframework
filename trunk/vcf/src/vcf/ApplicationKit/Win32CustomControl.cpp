@@ -63,7 +63,11 @@ void Win32CustomControl::registerWndClass()
 		wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 		wcex.hbrBackground	= NULL;//(HBRUSH)(COLOR_BTNFACE+1);
 		wcex.lpszMenuName	= NULL;
+#if defined(VCF_CW) && !defined(UNICODE)
+		wcex.lpszClassName  = this->getClassName().ansi_c_str();
+#else
 		wcex.lpszClassName	= this->getClassName().c_str();
+#endif
 		wcex.hIconSm		= NULL;
 
 		if ( 0 != RegisterClassEx(&wcex) ){
@@ -94,9 +98,9 @@ void Win32CustomControl::setText( const String& text )
 void Win32CustomControl::setBounds( Rect* rect )
 {
 	::SetWindowPos( this->wndHandle_, NULL,
-		            rect->left_, rect->top_,
-		            rect->getWidth(), rect->getHeight(),
-					SWP_NOACTIVATE );
+	                rect->left_, rect->top_,
+	                rect->getWidth(), rect->getHeight(),
+	                SWP_NOACTIVATE );
 }
 
 Rect* Win32CustomControl::getBounds()
@@ -167,6 +171,7 @@ void Win32CustomControl::setControl( Control* component )
 	this->component_ = component;
 }
 
+/* Removed as they are not declared in the header and CodeWarrior complains - ACH
 void Win32CustomControl::getCursor()
 {
 
@@ -176,7 +181,7 @@ void Win32CustomControl::setCursor()
 {
 
 }
-
+*/
 void Win32CustomControl::setParent( Control* parent )
 {
 	ControlPeer* Peer = parent->getPeer();
@@ -245,6 +250,21 @@ void Win32CustomControl::releaseMouseEvents()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.4  2005/06/29 05:00:03  marcelloptr
+*some white spaces
+*
+*Revision 1.2.4.3  2005/04/17 06:10:54  iamfraggle
+*UNICODE fix for CW
+*
+*Revision 1.2.4.2  2005/04/13 00:57:02  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.2.4.1  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

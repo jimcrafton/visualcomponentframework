@@ -54,7 +54,17 @@ where you installed the VCF.
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <memory.h>
+#ifndef __MWERKS__
+	#include <memory.h>
+#else
+	#include <wchar.h>
+	#include <wctype.h>
+	#ifdef VCF_CW_W32
+		#include <memory>
+	#elif defined(VCF_CW_OSX)
+		#include <memory.h>
+	#endif
+#endif //__MWERKS__
 //#include <assert.h>
 #include <vector>
 #include <map>
@@ -78,6 +88,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Interface.h"
 #include "vcf/FoundationKit/Object.h"
 #include "vcf/FoundationKit/CommandLine.h"
+
 
 
 
@@ -118,6 +129,28 @@ namespace VCF{
 	*/
 	class FOUNDATIONKIT_API FoundationKit {
 	public:
+		/**
+		This is a special case exception used \em only for the
+		triggering of an asertion, through the call to 
+		FoundationKit::assertCondition(). By having this as a 
+		special case and \em not deriving from BasicException,
+		an assertion is prevented from being caught in a BasicException
+		try/catch block.
+		*/
+		class Assertion : public std::exception {
+		public:
+			Assertion( const String& msg ) :msg_(msg){}
+			
+			virtual ~Assertion() throw() {} //make GCC happy :)
+			
+			virtual const char *what() const throw() {
+				return msg_.ansi_c_str();
+			}
+			
+		private:
+			String msg_;
+		};
+
 		/**
 		Initialization takes place here, plus creating the various
 		system resources and peer instances.
@@ -170,13 +203,9 @@ namespace VCF{
 
 
 
-
-
-
-
-
-#include "vcf/FoundationKit/StringUtils.h"
 #include "vcf/FoundationKit/ErrorStrings.h"
+#include "vcf/FoundationKit/StringUtils.h"
+
 
 
 #include "vcf/FoundationKit/BasicException.h"
@@ -196,6 +225,9 @@ namespace VCF{
 #include "vcf/FoundationKit/TypeCastException.h"
 
 #include "vcf/FoundationKit/ProcessException.h"
+
+
+#include "vcf/FoundationKit/Format.h"
 
 
 #include "vcf/FoundationKit/ProgramInfo.h"
@@ -236,8 +268,8 @@ namespace VCF{
 #include "vcf/FoundationKit/ClassRegistry.h"
 #include "vcf/FoundationKit/ObjectWithEvents.h"
 
-#include "vcf/FoundationKit/VCFRTTIImpl.h"
-#include "vcf/FoundationKit/ClassInfo.h"
+//#include "vcf/FoundationKit/VCFRTTIImpl.h"
+//#include "vcf/FoundationKit/ClassInfo.h"
 
 
 #include "vcf/FoundationKit/Runnable.h"
@@ -295,6 +327,24 @@ namespace VCF{
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.5  2005/04/17 16:11:31  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
+*
+*Revision 1.4.2.4  2005/04/11 17:07:10  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.4.2.3  2005/03/14 05:44:51  ddiego
+*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
+*
+*Revision 1.4.2.2  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.4.2.1  2005/02/16 05:09:33  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.4  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

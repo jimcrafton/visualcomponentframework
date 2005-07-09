@@ -58,6 +58,7 @@ public:
 		/**
 		Make the image transparent
 		*/
+
 		img->setIsTransparent( true );
 		/**
 		Sets the transparency color
@@ -92,13 +93,13 @@ public:
 		DefaultMenuItem* root = new DefaultMenuItem( "root", NULL, pm );
 
 		DefaultMenuItem* hello = new DefaultMenuItem( "Hello!", root, pm );
-		hello->addMenuItemClickedHandler( new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onHello,"SysTrayWindow::onHello") );
+		hello->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onHello,"SysTrayWindow::onHello");
 
 		DefaultMenuItem* about = new DefaultMenuItem( "About...", root, pm );
-		about->addMenuItemClickedHandler( new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onAbout,"SysTrayWindow::onAbout") );
+		about->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onAbout,"SysTrayWindow::onAbout");
 
 		DefaultMenuItem* quit = new DefaultMenuItem( "Quit", root, pm );
-		quit->addMenuItemClickedHandler( new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onQuit,"SysTrayWindow::onQuit") );
+		quit->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onQuit,"SysTrayWindow::onQuit");
 
 
 		/**

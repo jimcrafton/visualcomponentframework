@@ -38,10 +38,6 @@ Win32Dialog::~Win32Dialog()
 
 }
 
-void Win32Dialog::init()
-{
-	createParams();
-}
 
 void Win32Dialog::create( Control* owningControl )
 {
@@ -52,7 +48,9 @@ void Win32Dialog::create( Control* owningControl )
 	if ( true != isRegistered() ){
 		registerWin32Class( className, wndProc_  );
 	}
-	init();
+	
+	
+	CreateParams params = createParams();
 
 	HWND parent = NULL;
 	if ( NULL != owner_ ){
@@ -60,20 +58,15 @@ void Win32Dialog::create( Control* owningControl )
 		parent = (HWND)owner_->getPeer()->getHandleID();
 	}
 
-	if ( styleMask_ & WS_VISIBLE ) {
-		styleMask_ &= ~WS_VISIBLE;
-	}
-
-
 	String caption = dialogComponent_->getCaption();
 
 	HICON icon = NULL;
 
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( exStyleMask_,
+		hwnd_ = ::CreateWindowExW( params.second,
 		                             className.c_str(),
 									 caption.c_str(),
-									 styleMask_,
+									 params.first,
 		                             0,//bounds_.left_,
 									 0,//bounds_.top_,
 									 0,//bounds_.getWidth(),
@@ -86,10 +79,10 @@ void Win32Dialog::create( Control* owningControl )
 		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( exStyleMask_,
+		hwnd_ = ::CreateWindowExA( params.second,
 		                             className.ansi_c_str(),
 									 caption.ansi_c_str(),
-									 styleMask_,
+									 params.first,
 		                             0,//bounds_.left_,
 									 0,//bounds_.top_,
 									 0,//bounds_.getWidth(),
@@ -105,6 +98,13 @@ void Win32Dialog::create( Control* owningControl )
 
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
+
+		setFont( owningControl->getFont() );
+
+		
+/*
+JC - this needs to be removed as this gives us stupid icon that looks dumb
+and forces us to have a system menu!!!
 		if ( NULL != icon ) {		
 			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
 		}
@@ -117,8 +117,9 @@ void Win32Dialog::create( Control* owningControl )
 			//::RemoveMenu ( sysMenu, SC_SIZE, MF_BYCOMMAND );
 
 		}
+		*/
 
-
+/*
 		DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
 
 
@@ -131,19 +132,28 @@ void Win32Dialog::create( Control* owningControl )
 			}
 			::SetWindowLong( hwnd_, GWL_STYLE, style );
 			::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+			*/
 
 	}
 	setCreated( true );
 }
 
-void Win32Dialog::createParams()
+Win32Object::CreateParams Win32Dialog::createParams()
 {
 	//WS_CLIPCHILDREN was added to fix bug 585239: Painting weirdness in a modal dialog
-	styleMask_ = WS_POPUPWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | /*WS_OVERLAPPED | *//*WS_DLGFRAME |*/ DS_MODALFRAME | DS_3DLOOK;
-	exStyleMask_ = WS_EX_RIGHTSCROLLBAR | WS_EX_WINDOWEDGE | WS_EX_DLGMODALFRAME | WS_EX_CONTEXTHELP;
+	Win32Object::CreateParams result;
+	result.first = WS_POPUPWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | /*WS_OVERLAPPED | *//*WS_DLGFRAME |*/ DS_MODALFRAME | DS_3DLOOK;
+	result.first &= ~WS_MINIMIZEBOX;
+	result.first &= ~WS_MAXIMIZEBOX;
+	
 
-	styleMask_ &= ~WS_MINIMIZEBOX;
-	styleMask_ &= ~WS_MAXIMIZEBOX;
+	if ( result.first & WS_VISIBLE ) {
+		result.first &= ~WS_VISIBLE;
+	}
+
+	result.second = WS_EX_RIGHTSCROLLBAR | WS_EX_WINDOWEDGE | WS_EX_DLGMODALFRAME | WS_EX_CONTEXTHELP;
+
+	return result;
 }
 
 bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
@@ -223,10 +233,13 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 		break;
 
 		case WM_DESTROY:{
-			Dialog* dlg = (Dialog*)peerControl_;
+			
 			Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
-			if ( true == dlg->isModal() ) {
-				PostQuitMessage(0);
+			Dialog* dlg = (Dialog*)peerControl_;
+			if ( NULL != dlg ) {
+				if ( true == dlg->isModal() ) {
+					PostQuitMessage(0);
+				}
 			}
 		}
 		break;
@@ -245,7 +258,7 @@ void Win32Dialog::showMessage( const String& message, const String& caption )
 
 	if ( tmp == "" ){
 		TCHAR modFilename[MAX_PATH];
-		memset(modFilename, 0, MAX_PATH );
+		memset(modFilename, 0, sizeof(modFilename) );
 		GetModuleFileName( GetModuleHandle(NULL), modFilename, MAX_PATH );
 		tmp = modFilename;
 		FilePath fp = tmp;
@@ -287,6 +300,11 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 			mbStyle = MB_ICONWARNING;
 		}
 		break;
+
+		case Dialog::msQuestion: {
+			mbStyle = MB_ICONQUESTION;
+		}
+		break;
 	}
 
 	if ( messageButtons & Dialog::mbOK ) {
@@ -316,14 +334,20 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 	HWND activeWnd = GetActiveWindow();
 	//if ( !IsWindow ( activeWnd ) ) {
 		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
-		activeWnd = toolkit->getDummyParent();
+		/**
+		JC - I commented this line out as it was creating a 
+		new entry in the start bar for the window. I do not think that is
+		correct behaviour. In addition, it would not return focus to the 
+		window that called it. Again I think this is incorrect behaviour
+		*/
+		//activeWnd = toolkit->getDummyParent();
 	//}
 
 	String tmp = caption;
 
 	if ( tmp == "" ){
 		TCHAR modFilename[MAX_PATH];
-		memset(modFilename, 0, MAX_PATH );
+		memset(modFilename, 0, sizeof(modFilename) );
 		GetModuleFileName( GetModuleHandle(NULL), modFilename, MAX_PATH );
 		tmp = modFilename;
 		FilePath fp = tmp;
@@ -393,8 +417,33 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.5  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.7  2005/06/07 21:16:24  marcelloptr
+*added Dialog::msQuestion
+*
+*Revision 1.4.2.6  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.4.2.5  2005/04/20 02:26:00  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.4.2.4  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.4.2.3  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.4.2.2  2005/02/10 20:13:02  ddiego
+*commented out a line of code that was causing a message dialog
+*to popup with a sepateate start bar window entry and non-modal behaviour.
 *
 *Revision 1.4.2.1  2004/12/10 21:14:00  ddiego
 *fixed bug 1082362 App Icons do not appear.

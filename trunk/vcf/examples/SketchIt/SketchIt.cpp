@@ -64,15 +64,15 @@ public:
 			MenuItem* view = new DefaultMenuItem( "&View", root, menuBar );
 			MenuItem* viewAA = new DefaultMenuItem( "&Anti-Aliased", view, menuBar );
 
-			viewAA->addMenuItemClickedHandler(
+			viewAA->MenuItemClicked +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onToggleAntiAliasing,
-													"SketchIt::onToggleAntiAliasing" ) );
+													"SketchIt::onToggleAntiAliasing" );
 
-			viewAA->addMenuItemUpdateHandler(
+			viewAA->MenuItemUpdate +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateToggleAntiAliasing,
-													"SketchIt::onUpdateToggleAntiAliasing" ) );
+													"SketchIt::onUpdateToggleAntiAliasing" );
 
 
 			MenuItem* tools = new DefaultMenuItem( "&Tools", root, menuBar );
@@ -125,15 +125,15 @@ public:
 
 			MenuItem* editDelete = new DefaultMenuItem( "Delete\tDel", NULL, NULL );
 			edit->insertChild( 7, editDelete );
-			editDelete->addMenuItemClickedHandler(
+			editDelete->MenuItemClicked +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onDeleteShape,
-													"SketchIt::onDeleteShape" ) );
+													"SketchIt::onDeleteShape" );
 
-			editDelete->addMenuItemUpdateHandler(
+			editDelete->MenuItemUpdate +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateDeleteShape,
-													"SketchIt::onUpdateDeleteShape" ) );
+													"SketchIt::onUpdateDeleteShape" );
 
 			//add a hotkey to the menuitem
 			editDelete->setAcceleratorKey( vkDelete, 0 );
@@ -143,15 +143,15 @@ public:
 			MenuItem* editFill = new DefaultMenuItem( "Fill Shape", NULL, NULL );
 			edit->insertChild( 8, editFill );
 
-			editFill->addMenuItemClickedHandler(
+			editFill->MenuItemClicked +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onSetFillShape,
-													"SketchIt::onSetFillShape" ) );
+													"SketchIt::onSetFillShape" );
 
-			editFill->addMenuItemUpdateHandler(
+			editFill->MenuItemUpdate +=
 				new MenuItemEventHandler<SketchIt>( this,
 													&SketchIt::onUpdateSetFillShape,
-													"SketchIt::onUpdateSetFillShape" ) );
+													"SketchIt::onUpdateSetFillShape" );
 
 
 		}
@@ -251,6 +251,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/07/09 23:14:43  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.6.2.1  2005/06/06 02:34:04  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.6  2004/12/01 04:15:13  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

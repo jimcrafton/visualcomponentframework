@@ -13,7 +13,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
 #include "vcf/ApplicationKit/ImageControl.h"
-
+#include "vcf/ApplicationKit/MenuManager.h"
 
 //Peers
 
@@ -46,7 +46,7 @@ UIToolkit::UIToolkit():
 
 UIToolkit::~UIToolkit()
 {
-	std::map<ulong32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	std::multimap<ulong32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
 	while ( it != acceleratorMap_.end() ) {
 		delete it->second;
 		it ++;
@@ -65,6 +65,8 @@ UIToolkit::~UIToolkit()
 	delete systemClipboard_;
 
 	Component::clearRegistedComponents();
+
+	MenuManager::terminate();
 
 	delete stopImage_;
 	delete warningImage_;
@@ -89,21 +91,29 @@ void UIToolkit::init()
 	*register basic property editors
 	*/
 
-	PropertyEditorManager::registerPropertyEditor( new IntegerPropertyEditor(), CLASS_INTEGER );
-	PropertyEditorManager::registerPropertyEditor( new DoublePropertyEditor(), CLASS_DOUBLE );
-	PropertyEditorManager::registerPropertyEditor( new BoolPropertyEditor(), CLASS_BOOL );
-	PropertyEditorManager::registerPropertyEditor( new StringPropertyEditor(), CLASS_STRING );
-	PropertyEditorManager::registerPropertyEditor( new EnumPropertyEditor(), CLASS_ENUM );
-	PropertyEditorManager::registerPropertyEditor( new ColorPropertyEditor(), "VCF::Color" );
-	PropertyEditorManager::registerPropertyEditor( new FontPropertyEditor(), "VCF::Font" );
-	PropertyEditorManager::registerPropertyEditor( new DefaultMenuItemPropertyEditor(), "VCF::DefaultMenuItem" );
-	PropertyEditorManager::registerPropertyEditor( new DefaultListModelPropertyEditor(), "VCF::DefaultListModel" );
-	PropertyEditorManager::registerPropertyEditor( new ImageFilenamePropertyEditor(), "VCF::ImageFilenameString" );
-	PropertyEditorManager::registerPropertyEditor( new ImagePropertyEditor(), "VCF::Image" );
-	PropertyEditorManager::registerPropertyEditor( new ImagePropertyEditor(), "VCF::Win32Image" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::IntegerPropertyEditor", CLASS_INTEGER );
+	PropertyEditorManager::registerPropertyEditor( "VCF::DoublePropertyEditor", CLASS_DOUBLE );
+	PropertyEditorManager::registerPropertyEditor( "VCF::BoolPropertyEditor", CLASS_BOOL );
+	PropertyEditorManager::registerPropertyEditor( "VCF::StringPropertyEditor", CLASS_STRING );
+
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::AlignmentType" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::IconStyleType" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::IconAlignType" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::TextAlignmentType" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::TextVerticalAlignment" );
+
+	PropertyEditorManager::registerPropertyEditor( "VCF::ColorPropertyEditor", "VCF::Color" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::FontPropertyEditor", "VCF::Font" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::DefaultMenuItemPropertyEditor", "VCF::DefaultMenuItem" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::DefaultListModelPropertyEditor", "VCF::DefaultListModel" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::ImageFilenamePropertyEditor", "VCF::ImageFilenameString" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::ImagePropertyEditor", "VCF::Image" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::ImagePropertyEditor", "VCF::Win32Image" );
 
 	/**
-	*register the components in categorys
+	register the components in categorys
+	It's entirely possible that this might ultimately make more sense moved to the 
+	VCF Builder at one point.
 	*/
 
 	Component::registerComponent( "VCF::TabbedPages", STANDARD_CATEGORY );
@@ -116,14 +126,40 @@ void UIToolkit::init()
 	Component::registerComponent( "VCF::MultilineTextControl", STANDARD_CATEGORY );
 	Component::registerComponent( "VCF::Label", STANDARD_CATEGORY );
 	Component::registerComponent( "VCF::CheckBoxControl", STANDARD_CATEGORY );
+	Component::registerComponent( "VCF::RadioButtonControl", STANDARD_CATEGORY );
+	Component::registerComponent( "VCF::SliderControl", STANDARD_CATEGORY );
+	Component::registerComponent( "VCF::ProgressControl", STANDARD_CATEGORY );
+
 	Component::registerComponent( "VCF::MenuBar", STANDARD_CATEGORY );
 	Component::registerComponent( "VCF::PopupMenu", STANDARD_CATEGORY );
+
+	Component::registerComponent( "VCF::TimerComponent", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::ScrollbarManager", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::SystemTray", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::PushButton", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::OpenGLControl", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::ImageControl", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::HTMLBrowserControl", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::TableControl", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::Splitter", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::TreeListControl", ADDITIONAL_CATEGORY );
+	Component::registerComponent( "VCF::HeaderControl", ADDITIONAL_CATEGORY );
+
+	Component::registerComponent( "VCF::Basic3DBorder", BORDER_CATEGORY );
+	Component::registerComponent( "VCF::EtchedBorder", BORDER_CATEGORY );
+	Component::registerComponent( "VCF::ColorEtchedBorder", BORDER_CATEGORY );
+	Component::registerComponent( "VCF::Light3DBorder", BORDER_CATEGORY );
+	Component::registerComponent( "VCF::TitledBorder", BORDER_CATEGORY );
+
+
+	Component::registerComponent( "VCF::StandardContainer", CONTAINER_CATEGORY );
+	Component::registerComponent( "VCF::ColumnLayoutContainer", CONTAINER_CATEGORY );
+	Component::registerComponent( "VCF::HorizontalLayoutContainer", CONTAINER_CATEGORY );
+
 
 	internal_setUpdateTimerSpeed( UIToolkit::defaultUpdateSpeed );
 
+	MenuManager::create();
 	//Desktop::getDesktop()->init();
 }
 
@@ -202,9 +238,14 @@ TreePeer* UIToolkit::createTreePeer( TreeControl* component)
 	return UIToolkit::toolKitInstance->internal_createTreePeer( component );
 }
 
-TextPeer* UIToolkit::createTextPeer( TextControl* component, const bool& isMultiLineControl)
+TextPeer* UIToolkit::createTextPeer( const bool& autoWordWrap, const bool& multiLined )
 {
-	return UIToolkit::toolKitInstance->internal_createTextPeer( component, isMultiLineControl );
+	return UIToolkit::toolKitInstance->internal_createTextPeer( autoWordWrap,multiLined );
+}
+
+TextEditPeer* UIToolkit::createTextEditPeer( TextControl* component, const bool& isMultiLineControl)
+{
+	return UIToolkit::toolKitInstance->internal_createTextEditPeer( component, isMultiLineControl );
 }
 
 HTMLBrowserPeer* UIToolkit::createHTMLBrowserPeer( Control* control )
@@ -332,6 +373,11 @@ SystemTrayPeer* UIToolkit::createSystemTrayPeer()
 	return UIToolkit::toolKitInstance->internal_createSystemTrayPeer();
 }
 
+MenuManagerPeer* UIToolkit::createMenuManagerPeer()
+{
+	return UIToolkit::toolKitInstance->internal_createMenuManagerPeer();
+}
+
 GraphicsResourceBundlePeer* UIToolkit::createGraphicsResourceBundlePeer( AbstractApplication* app )
 {
 	return UIToolkit::toolKitInstance->internal_createGraphicsResourceBundlePeer( app );
@@ -433,9 +479,9 @@ void UIToolkit::registerAccelerator( AcceleratorKey* accelerator )
 	UIToolkit::toolKitInstance->internal_registerAccelerator( accelerator );
 }
 
-void UIToolkit::removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+void UIToolkit::removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
 {
-	UIToolkit::toolKitInstance->internal_removeAccelerator( keyCode, modifierMask );
+	UIToolkit::toolKitInstance->internal_removeAccelerator( keyCode, modifierMask, src );
 }
 
 VCF::Button* UIToolkit::getDefaultButton()
@@ -453,15 +499,31 @@ void UIToolkit::removeDefaultButton( Button* defaultButton )
 	UIToolkit::toolKitInstance->internal_removeDefaultButton( defaultButton );
 }
 
-AcceleratorKey* UIToolkit::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+AcceleratorKey* UIToolkit::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
 {
-	return UIToolkit::toolKitInstance->internal_getAccelerator( keyCode, modifierMask );
+	return UIToolkit::toolKitInstance->internal_getAccelerator( keyCode, modifierMask, src );
+}
+
+bool UIToolkit::findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	return UIToolkit::toolKitInstance->internal_findMatchingAccelerators( key, matchingAccelerators );
 }
 
 void UIToolkit::removeAcceleratorKeysForControl( Control* control )
 {
 	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForControl( control );
 }
+
+void UIToolkit::removeAcceleratorKeysForMenuItem( MenuItem* item )
+{
+	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForMenuItem( item );
+}
+
+void UIToolkit::removeAcceleratorKeysForObject( Object* src )
+{
+	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForObject( src );
+}
+
 
 void UIToolkit::handleKeyboardEvent( KeyboardEvent* event )
 {
@@ -570,32 +632,85 @@ void UIToolkit::internal_removeComponentInfo( ComponentInfo* info )
 
 void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 {
-	ulong32 key = 0;
-	key = accelerator->getKeyCode() << 16;
-	key |= accelerator->getModifierMask();
+	AcceleratorKey::Value key;
+	key = accelerator;	
 
-	std::map<ulong32,AcceleratorKey*>::iterator found = acceleratorMap_.find( key );
-	if ( found != acceleratorMap_.end() ) {
-		delete found->second;
-		found->second = accelerator;
+
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
+
+	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		if ( (accelerator->getAssociatedControl() == accel->getAssociatedControl()) && 
+				(accelerator->getAssociatedMenuItem() == accel->getAssociatedMenuItem()) && 
+				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {
+
+			accel->free();
+			//remove old entry!
+			acceleratorMap_.erase( it );
+			break;
+		}
+
+		it ++;
 	}
-	else {
-		acceleratorMap_[key] = accelerator;
-	}
+
+	std::pair<ulong32,AcceleratorKey*> item(key,accelerator);
+	acceleratorMap_.insert( item );
 }
 
-AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+bool UIToolkit::internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	matchingAccelerators.clear();
+
+	AcceleratorKey::Value keyVal;
+	keyVal = key;
+
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( keyVal );
+
+	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		// we don't need to put in the list the accelerator (key) to which all the others are matching.
+		if ( (accel->getEventHandler() == key->getEventHandler()) && 
+				(accel != key) ) {
+			matchingAccelerators.push_back( accel );
+		}
+
+		it ++;
+	}
+
+	return !matchingAccelerators.empty();
+}
+
+AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
 {
 	AcceleratorKey* result = NULL;
 
-	ulong32 key = 0;
-	key = keyCode << 16;
-	key |= modifierMask;
+	AcceleratorKey::Value key( modifierMask, keyCode );
 
-	std::map<ulong32,AcceleratorKey*>::iterator found = acceleratorMap_.find( key );
-	if ( found != acceleratorMap_.end() ) {
-		result = found->second;
+
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
+
+	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		if ( (src == accel->getAssociatedControl()) || 
+				(src == accel->getAssociatedMenuItem()) || 
+				(src == accel->getAssociatedObject()) ) {
+
+			result = accel;
+			break;
+		}
+
+		it ++;
 	}
+
 	return result;
 }
 
@@ -624,19 +739,71 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 		}
 	}
 
+	AcceleratorKey::Value key( event->getKeyMask(), event->getVirtualCode() );
+
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
+
 	//look for accelerator in control then app
 	AcceleratorKey* accelerator = NULL;
 	Control* control = (Control*)event->getSource();
-	if ( control ) {
-		accelerator = control->getAccelerator( (VirtualKeyCode)event->getVirtualCode(), event->getKeyMask() );
-	}
 
-	if ( NULL == accelerator ) {
-		Application* app = Application::getRunningInstance();
-		if ( app ) {
-			accelerator = app->getAccelerator( (VirtualKeyCode)event->getVirtualCode(), event->getKeyMask() );
+
+	AccelMapIter it = range.first;
+	if ( control ) {
+		if ( control->areParentsEnabled() ) {
+
+			while ( it != range.second ) {
+
+				AcceleratorKey* accel = it->second;
+				// check if the control associated to this accelerator is the same having the focus
+				if ( accel->getAssociatedControl() == control ) {
+					accelerator = accel;
+					break;
+				}
+
+				it ++;
+			}
 		}
 	}
+
+
+
+
+	//if accelerator is still null try and find the first matching menu item
+	if ( NULL == accelerator ) {
+		it = range.first;
+		while ( it != range.second ) {
+			AcceleratorKey* accel = it->second;
+			if ( accel->getAssociatedMenuItem() != NULL ) {
+				accelerator = accel;
+				//check to make sure the menu item's frame is enabled!
+				if ( NULL != accel ) {
+					MenuItem* mi = accel->getAssociatedMenuItem();
+					mi->update();
+				}
+				break;
+			}
+
+			it ++;
+		}
+	}
+
+	//if accelerator is still null try and find the first matching object
+	if ( NULL == accelerator ) {
+		it = range.first;
+		while ( it != range.second ) {
+
+			AcceleratorKey* accel = it->second;
+			if ( accel->getAssociatedObject() != NULL ) {
+				accelerator = accel;
+				break;
+			}
+
+			it ++;
+		}
+	}
+
 
 	if ( NULL != accelerator ) {
 
@@ -649,14 +816,27 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 			ev = accelerator->getEventHandler();
 		}
 
-		if ( ev ) {
-			KeyboardEvent* acceleratorEvent = new KeyboardEvent( accelerator, Control::KEYBOARD_ACCELERATOR,
+		if ( NULL != ev ) {
+			if ( accelerator->isEnabled() ) {
+				KeyboardEvent* acceleratorEvent = new KeyboardEvent( accelerator, Control::KEYBOARD_ACCELERATOR,
 																	event->getRepeatCount(),
 																	event->getKeyMask(),
 																	event->getKeyValue(),
 																	event->getVirtualCode() );
 
-			postEvent( ev, acceleratorEvent, false );
+				postEvent( ev, acceleratorEvent, false );
+			}
+
+			//KeyboardEvent acceleratorEvent( accelerator, Control::KEYBOARD_ACCELERATOR,
+			//														event->getRepeatCount(),
+			//														event->getKeyMask(),
+			//														event->getKeyValue(),
+			//														event->getVirtualCode() );
+
+			//ev->invoke( &acceleratorEvent );
+
+
+			// as the event has been processed, we don't let it to be forwarded further to any other controls
 			event->setConsumed( true );
 		}
 	}
@@ -671,75 +851,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 		switch( keyCode ) {
 
 			case vkTab : /*case vkUpArrow : case vkDownArrow : case vkLeftArrow : case vkRightArrow :*/{
-
-				bool goForward = !event->hasShiftKey();
-
-				Control* currentFocused = Control::getCurrentFocusedControl();
-				if ( NULL == currentFocused ) {
-					currentFocused = control;
-				}
-				Frame* parentFrame = currentFocused->getParentFrame();
-
-				std::vector<Control*> tabList;
-				Control::buildTabList( parentFrame, tabList );
-
-				Control* newFocusedControl = NULL;
-				std::vector<Control*>::iterator found = std::find( tabList.begin(), tabList.end(), currentFocused );
-				long index = -1;
-				if ( found != tabList.end() ) {
-					index = found - tabList.begin();
-				}
-				if ( goForward ) {
-					index ++;
-
-					if ( index >= tabList.size() ) {
-						index = 0;
-					}
-
-					if ( index >= 0 ) {
-						while ( index < tabList.size() ) {
-							Control* c = tabList[index];
-							if ( c->canAcceptFocus() ) {
-								if ( c->getTabStop() ) {
-									break;
-								}
-							}
-							index++;
-						}
-					}
-
-					if ( index >= tabList.size() ) {
-						index = 0;
-					}
-
-				}
-				else {
-					index --;
-
-					if ( index <= 0 ) {
-						index = tabList.size()-1;
-					}
-
-					if ( index < tabList.size() ) {
-						while ( index > -1 ) {
-							Control* c = tabList[index];
-							if ( c->canAcceptFocus() ) {
-								if ( c->getTabStop() ) {
-									break;
-								}
-							}
-							index--;
-						}
-					}
-
-					if ( index <= 0 ) {
-						index = tabList.size()-1;
-					}
-				}
-
-
-				newFocusedControl = tabList[index];
-				newFocusedControl->setFocused();
+				handleTabKeyboardEvent( event );
 			}
 			break;
 
@@ -765,6 +877,84 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 			}
 			break;
 		}
+	}
+}
+
+void UIToolkit::handleTabKeyboardEvent( KeyboardEvent* event )
+{
+	Control* control = (Control*) event->getSource();
+
+	if ( !control->keepsTabKey() ) {
+		bool goForward = !event->hasShiftKey();
+
+		Control* currentFocused = Control::getCurrentFocusedControl();
+		if ( NULL == currentFocused ) {
+			currentFocused = control;
+		}
+		Frame* parentFrame = currentFocused->getParentFrame();
+
+		std::vector<Control*> tabList;
+		Control::buildTabList( parentFrame, tabList );
+
+		Control* newFocusedControl = NULL;
+		std::vector<Control*>::iterator found = std::find( tabList.begin(), tabList.end(), currentFocused );
+		long index = -1;
+		if ( found != tabList.end() ) {
+			index = found - tabList.begin();
+		}
+		if ( goForward ) {
+			index ++;
+
+			if ( index >= tabList.size() ) {
+				index = 0;
+			}
+
+			if ( index >= 0 ) {
+				while ( index < tabList.size() ) {
+					Control* c = tabList[index];
+					if ( c->canAcceptFocus() ) {
+						if ( c->getTabStop() ) {
+							break;
+						}
+					}
+					index++;
+				}
+			}
+
+			if ( index >= tabList.size() ) {
+				index = 0;
+			}
+
+		}
+		else {
+			index --;
+
+			if ( index <= 0 ) {
+				index = tabList.size()-1;
+			}
+
+			if ( index < tabList.size() ) {
+				while ( index > -1 ) {
+					Control* c = tabList[index];
+					if ( c->canAcceptFocus() ) {
+						if ( c->getTabStop() ) {
+							break;
+						}
+					}
+					index--;
+				}
+			}
+
+			if ( index <= 0 ) {
+				index = tabList.size()-1;
+			}
+		}
+
+
+		newFocusedControl = tabList[index];
+		newFocusedControl->setFocused();
+
+		event->consume();
 	}
 }
 
@@ -879,22 +1069,40 @@ void UIToolkit::internal_removeDefaultButton( Button* defaultButton )
 	}
 }
 
-void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
 {
-	ulong32 key = 0;
-	key = keyCode << 16;
-	key |= modifierMask;
 
-	std::map<ulong32,AcceleratorKey*>::iterator found = acceleratorMap_.find( key );
-	if ( found != acceleratorMap_.end() ) {
-		found->second->release();
-		acceleratorMap_.erase( found );
+	AcceleratorKey::Value key( modifierMask, keyCode );
+
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );	
+
+	std::vector<AccelMapIter> removeAccels;
+
+	AccelMapIter it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+		if ( (accel->getAssociatedControl() == src) || 
+			(accel->getAssociatedMenuItem() == src) ||
+			(accel->getAssociatedObject() == src) ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+
+		it ++;
+	}
+
+	std::vector<AccelMapIter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
 	}
 }
 
 void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 {
-	typedef std::map<ulong32,AcceleratorKey*>::iterator accel_iter;
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
 
 	std::vector<accel_iter> removeAccels;
 
@@ -916,6 +1124,55 @@ void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 	}
 
 }
+
+void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
+{
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
+
+	std::vector<accel_iter> removeAccels;
+
+	accel_iter it = acceleratorMap_.begin();
+
+	while ( it != acceleratorMap_.end() ) {
+		AcceleratorKey* accel = it->second;
+		if ( accel->getAssociatedMenuItem() == menuItem ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+		it ++;
+	}
+
+	std::vector<accel_iter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+}
+
+void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
+{
+	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
+
+	std::vector<accel_iter> removeAccels;
+
+	accel_iter it = acceleratorMap_.begin();
+
+	while ( it != acceleratorMap_.end() ) {
+		AcceleratorKey* accel = it->second;
+		if ( accel->getAssociatedObject() == src ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+		it ++;
+	}
+
+	std::vector<accel_iter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+}
+
 
 void UIToolkit::addToUpdateTimer( Component* component )
 {
@@ -977,8 +1234,58 @@ void UIToolkit::onUpdateComponentsTimer( TimerEvent* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+
 *Revision 1.4  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.17  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
+*Revision 1.3.2.16  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.15  2005/06/02 16:12:16  marcelloptr
+*some more documentation
+*
+*Revision 1.3.2.14  2005/05/15 23:17:38  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.13  2005/05/04 00:36:17  marcelloptr
+*the accelerator checks first for an unitialized menu item associated to an action... fixed
+*
+*Revision 1.3.2.12  2005/04/25 00:11:57  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.3.2.11  2005/04/20 02:26:00  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.10  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
+*Revision 1.3.2.9  2005/03/21 17:30:38  marcelloptr
+*added a comment
+*
+*Revision 1.3.2.8  2005/03/15 05:29:01  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
+*Revision 1.3.2.7  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.6  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.3.2.5  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.4  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.3.2.3  2005/02/21 16:20:02  ddiego
+*minor changes to various things, property editors, and tree list control.
 *
 *Revision 1.3.2.2  2004/12/19 07:09:18  ddiego
 *more modifications to better handle resource bundles, especially

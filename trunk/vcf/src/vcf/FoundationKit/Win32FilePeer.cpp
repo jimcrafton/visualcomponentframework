@@ -103,7 +103,7 @@ void Win32FilePeer::create(  ulong32 openFlags  )
 			String fileDir = fp.getPathName(true);
 			if ( true == fileDir.empty() ){
 				TCHAR currentDir[MAX_PATH];
-				memset( currentDir, 0 , MAX_PATH );
+				memset( currentDir, 0 , sizeof(currentDir) );
 				GetCurrentDirectory( MAX_PATH, currentDir );
 				filename = "\\" + filename;
 				filename = currentDir +  filename;
@@ -419,7 +419,8 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 				break;
 			}
 			else {
-				String error = "findNextFileInSearch: " + VCFWin32::Win32Utils::getErrorString( GetLastError() );
+				String dirInfo = "\ndirectory: " + file_->getName();
+				String error = "findNextFileInSearch: " + VCFWin32::Win32Utils::getErrorString( GetLastError() ) + dirInfo ;
 				throw BasicException( error );
 			}
 		}
@@ -546,7 +547,8 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 		if ( res = ::GetFileAttributesExW( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
 			copyFromAttributeData( file_, fileAttribData, statMask );
 		}
-	} else {
+	} 
+	else {
 		if ( res = ::GetFileAttributesExA( getName().ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
 			copyFromAttributeData( file_, fileAttribData, statMask );
 		}
@@ -748,7 +750,7 @@ void Win32FilePeer::open( const String& fileName, ulong32 openFlags, File::Share
 	String fileDir = fp.getPathName(true);
 	if ( true == fileDir.empty() ){
 		TCHAR currentDir[MAX_PATH];
-		memset( currentDir, 0 , MAX_PATH );
+		memset( currentDir, 0 , sizeof(currentDir) );
 		GetCurrentDirectory( MAX_PATH, currentDir );
 		winFileName = "\\" + winFileName;
 		winFileName = currentDir +  winFileName;
@@ -798,8 +800,9 @@ void Win32FilePeer::open( const String& fileName, ulong32 openFlags, File::Share
 	if ( (NULL == fileHandle_) || (INVALID_HANDLE_VALUE == fileHandle_) ){
 		fileHandle_ = NULL;
 		//throw exception
-		int err = GetLastError();
-		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to create the specified file " + winFileName));
+		String errmsg = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+		StringUtils::trimWhiteSpaces( errmsg );
+		throw BasicFileError( MAKE_ERROR_MSG_2( errmsg + " - file: " + winFileName ) );
 	}
 }
 
@@ -971,8 +974,24 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:06  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.6  2005/07/01 15:47:59  marcelloptr
+*minor improvements on a message
+*
+*Revision 1.3.2.5  2005/04/09 17:21:32  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.4  2005/02/27 01:46:10  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
+*Revision 1.3.2.3  2005/02/16 17:08:42  marcelloptr
+*improved an error message
 *
 *Revision 1.3.2.2  2004/12/11 17:50:00  ddiego
 *added 2 new projects that are command line tools. One is for

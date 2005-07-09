@@ -11,6 +11,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/MessageLoader.h"
 #include "vcf/FoundationKit/TextCodec.h"
 #include "vcf/FoundationKit/StringsMessageLoader.h"
+#include "vcf/FoundationKit/ThreadManager.h"
+
+
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 #include "vcf/FoundationKit/FoundationKitRTTI.inl"
 
@@ -49,6 +53,7 @@ void FoundationKit::init( int argc, char** argv )
 
 		MessageLoader::registerMessageLoader( "text/strings", new StringsMessageLoader() );
 
+		ThreadManager::create();
 
 	}
 	catch ( BasicException& e ) {
@@ -86,6 +91,7 @@ void FoundationKit::terminate()
 
 	SystemToolkit::terminate();
 
+	ThreadManager::terminate();
 
 #ifdef _VCF_DEBUG_NEW
 	Mutex* mutex = Object::accessMutex_;
@@ -101,6 +107,7 @@ void FoundationKit::terminate()
 }
 
 
+
 CommandLine FoundationKit::getCommandLine()
 {
 	return foundationKitCommandLine;
@@ -110,7 +117,7 @@ void FoundationKit::assertCondition( bool condition, const String& failureMessag
 {
 	if ( !condition ) {
 
-		throw RuntimeException( L"Assertion failure: " + failureMessage );
+		throw FoundationKit::Assertion( L"Assertion failure: " + failureMessage );
 	}
 }
 
@@ -118,6 +125,21 @@ void FoundationKit::assertCondition( bool condition, const String& failureMessag
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.2.4.2  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.2.4.1  2005/02/16 05:09:33  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

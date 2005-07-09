@@ -2,11 +2,14 @@
 EnableISX=true
 
 [Components]
-Name: VC_Addins; Description: VCF Visual Studio 6 Addins; Types: full custom
-Name: Help_Files; Description: VCF Help files; Types: full custom compact
-Name: VC_Wizards; Description: MS Visual C++ 6 Appwizards; Types: full custom
 Name: Src; Description: VCF include files and source code; Types: full custom compact
 Name: Examples; Description: VCF Example projects; Types: full custom
+Name: VC6_Addins; Description: VCF Visual Studio 6 Addins; Types: full custom
+Name: VC6_Wizards; Description: VCF Visual Studio 6 Application wizards; Types: full custom
+Name: Help_Files; Description: VCF Help files; Types: full custom compact
+Name: Help_Files/CHM_Help_Files; Description: Compiled HTML Help files; Types: custom compact full
+Name: Help_Files/VC6_Help_Files; Description: Visual Studio 6/MSDN Help integration files (requires Compiled HTML Help files); Types: custom full; Flags: dontinheritcheck
+Name: Help_Files/VC7_Help_Files; Description: Visual Studio 7/MSDN Help integration files; Types: custom full; Flags: dontinheritcheck
 
 [Dirs]
 Name: {app}\bin
@@ -14,28 +17,41 @@ Name: {app}\lib
 Name: {app}\src; Components: Src
 Name: {app}\build; Components: Src
 Name: {app}\examples; Components: Examples
-Name: {app}\VC6-Addins; Components: VC_Addins
-
-
-
+Name: {app}\VC6-Addins; Components: VC6_Addins
 
 [Files]
 #include "vcfSrcFiles.iss"
 
+; vc60 addins/wizards
+Source: ..\..\build\vc60\add-ins\COMToVCFClassWizard\Release\COMToVCFClassWizard.dll; DestDir: {app}\VC6-Addins; Components: VC6_Addins;  Flags: regserver
+Source: ..\..\build\vc60\add-ins\VCFAppWiz\Release\vcfwizard.awx;                     DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx;             DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll;           DestDir: {app}\VC6-Addins; Components: VC6_Addins;  Flags: regserver
+Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx;                     DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
+Source: C:\WINNT\system32\msvcp60.dll;         DestDir: {app}\VC6-Addins
 
-Source: ..\..\build\vc60\add-ins\COMToVCFClassWizard\Release\COMToVCFClassWizard.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins; Flags: regserver
-Source: ..\..\build\vc60\add-ins\VCFAppWiz\Release\vcfwizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
-Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
-Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
-Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC_Addins; Flags: regserver
-Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC_Wizards; Flags: ignoreversion
+; various help files
+Source: ..\..\docs\VCFDocs.VCF-VERSION.chm;    DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFDocs.VCF-VERSION.chi;    DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
 
-Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
-Source: ..\..\docs\VCFDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files
-Source: ..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {app}
+Source: ..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {app}; Components: Help_Files/VC6_Help_Files
+
+Source: ..\..\docs\VS7\H2Reg.exe;      DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\H2Reg.ini;      DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\H2Reg_cmd.ini;  DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFBook.HxS;    DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFSource.HxS;  DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFHelp2.HxA;   DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFHelp2.HxC;   DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFBook.HxI;    DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFSource.HxI;  DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFHelp2_K.HxK; DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFHelp2.HxT;   DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+Source: ..\..\docs\VS7\VCFHelp2_NamedUrlIndex.HxK; DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
+
 Source: psvince.dll; Flags: dontcopy
 Source: ..\..\build\resources\win32\vcf.ico; DestDir: {app}
 Source: ..\..\src\thirdparty\win32\RegEnVar\RegEnVar.exe; DestDir: {app}
@@ -43,7 +59,7 @@ Source: ..\..\src\thirdparty\win32\RegEnVar\RegEnVar.exe; DestDir: {app}
 [Setup]
 OutputDir=..\..\uploadToSF
 OutputBaseFilename=VCFSrcOnlyInstaller-VCF-VERSION
-AppCopyright=2000-2003 Jim Crafton
+AppCopyright=2000-2005 Jim Crafton
 AppName=Visual Component Framework VCF-LONG-VERSION
 AppVerName=Visual Component Framework VCF-LONG-VERSION
 LicenseFile=..\..\license.txt
@@ -51,7 +67,7 @@ DefaultDirName={pf}\VCF-VCF-VERSION
 DefaultGroupName=Visual Component Framework VCF-VERSION
 AppPublisher=VCF
 AppPublisherURL=http://vcf.sf.net
-AppSupportURL=http://vcf.sf.net
+AppSupportURL=http://vcf-online.org
 AppUpdatesURL=http://vcf.sf.net
 AppVersion=VCF-VERSION
 UninstallDisplayIcon={app}\vcf.ico
@@ -69,25 +85,36 @@ Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Pla
 [Icons]
 Name: {group}\Uninstall VCF; Filename: {uninstallexe}
 Name: {group}\Submit Bug; Filename: http://sourceforge.net/tracker/?group_id=6796&atid=106796; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\Online Documentation; Filename: http://vcf.sourceforge.net/docs/ref_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.VCF-VERSION.chm; Components: Help_Files
-Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.VCF-VERSION.chm; Components: Help_Files
-Name: {group}\VCF Website; Filename: http://vcf.sf.net; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\Online Documentation; Filename: http://vcf-online.org/docs/ref_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\Online Source Documentation; Filename: http://vcf-online.org/docs/src_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
+Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
+Name: {group}\VCF Website; Filename: http://vcf-online.org; IconFilename: {app}\vcf.ico; IconIndex: 0
 
 [Tasks]
-Name: msdnintegrate; Description: Integrate VCF Documentation with Visual C++ 6 MSDN; Components: Help_Files
-Name: addvc6dirs; Description: Add VCF Include and Library path to Microsoft's Visual C++
 Name: addenvpaths; Description: Add VCF environment variables, and update your Path
-Name: installwizards; Description: Install Visual C++ 6 Project Wizards
+Name: addvc6dirs;  Description: Add VCF Include and Library path to Microsoft's Visual C++ 6
+
+Name: msdnintegrate;     Description: Visual Studio 6;       GroupDescription: Integrate VCF Help with Visual Studio/MSDN Help; Flags: unchecked; Components: Help_Files/VC6_Help_Files  Help_Files/CHM_Help_Files;
+Name: VC7_msdnintegrate; Description: Visual Studio 7.0/7.1; GroupDescription: Integrate VCF Help with Visual Studio/MSDN Help; Flags: unchecked; Components: Help_Files/VC7_Help_Files
+
+Name: installwizards;      Description: Visual Studio 6;               GroupDescription: Install Visual Studio Addins/Wizards; Flags: unchecked
+Name: VC70_installwizards; Description: Visual Studio 7.0 (.NET 2002); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+Name: VC71_installwizards; Description: Visual Studio 7.1 (.NET 2003); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
 
 [Run]
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -add -title ""VCF Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi""    -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm""    -add -title ""VCF Documentation""";        StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_BIN ""{app}\bin"""; Components: Src; Tasks: addenvpaths
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_LIB ""{app}\lib"""; Components: Src; Tasks: addenvpaths
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\src"""; Components: Src; Tasks: addenvpaths
 Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_BIN%; Components: Src; Tasks: addenvpaths
+
+Filename: {app}\docs\H2Reg.exe; Parameters: "-R ""cmdfile=H2Reg_cmd.ini"""; Tasks: VC7_msdnintegrate; Components: Help_Files/VC7_Help_Files
+
+Filename: {app}\build\vc70\Add-Ins\Setup.js; Tasks: VC70_installwizards; Components: Src;  Flags: shellexec waituntilterminated
+Filename: {app}\build\vc71\Add-Ins\Setup.js; Tasks: VC71_installwizards; Components: Src;  Flags: shellexec waituntilterminated
 
 [UninstallRun]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
@@ -96,6 +123,11 @@ Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_BIN%; Tasks:
 Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_BIN; Tasks: addenvpaths; Components: Src
 Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_LIB; Tasks: addenvpaths; Components: Src
 Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_INCLUDE; Tasks: addenvpaths; Components: Src
+
+Filename: {app}\docs\H2Reg.exe; Parameters: "-U ""cmdfile=H2Reg_cmd.ini"""; Tasks: VC7_msdnintegrate; Components: Help_Files/VC6_Help_Files
+; Must uninstall VS addins/wizards through IDE, I guess.
+
+
 
 [Code]
 function IsModuleLoaded(modulename: String ):  Boolean;
@@ -124,6 +156,15 @@ begin
 			end
 		end
 
+		module := 'devenv.exe';
+		isloaded := IsModuleLoaded( module );
+		if isloaded then begin
+			mbRes := MsgBox(msg, mbError, MB_YESNO);
+			if ( mbRes = mrNo ) then begin
+				result := false;
+			end
+		end
+
 		msg := 'Setup has detected that Microsoft''s MSDN for Visual Studio 6.0 is running.'#13#10 +
 			'You should shut it down first before continuing.'#13#10 +
 			'To continue with the installation anyways, click "Yes".'#13#10 +
@@ -136,6 +177,21 @@ begin
 				result := false;
 			end
 		end
+
+		msg := 'Setup has detected that Microsoft''s Visual Studio document '#13#10 +
+			'explorer is running (dexplore.exe). You should shut it down first before continuing.'#13#10 +
+			'To continue with the installation anyways, click "Yes".'#13#10 +
+			'To wait and retry again (Setup will attempt to verify that Visual Studio is not running), click "No".';
+
+		module := 'dexplore.exe';
+		isloaded := IsModuleLoaded( module );
+		if isloaded then begin
+			mbRes := MsgBox(msg, mbError, MB_YESNO);
+			if ( mbRes = mrNo ) then begin
+				result := false;
+			end
+		end
+
 
 	end
 end;
@@ -162,7 +218,7 @@ begin
   if ( CurPage = wpFinished ) then begin
     components := WizardSelectedComponents( false );
     tasks := WizardSelectedTasks( false );
-    if ( (Pos( 'installwizards', tasks ) > 0) and (Pos( 'vc_wizards', components ) > 0) ) then begin
+    if ( (Pos( 'installwizards', tasks ) > 0) and (Pos( 'VC6_Wizards', components ) > 0) ) then begin
 
       vc6Key := 'SOFTWARE\Microsoft\VisualStudio\6.0\Setup';
 	  if ( RegValueExists( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir' ) )then begin

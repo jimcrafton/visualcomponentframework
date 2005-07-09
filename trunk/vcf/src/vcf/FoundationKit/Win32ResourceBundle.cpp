@@ -253,6 +253,7 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 
 BOOL CALLBACK Win32ResourceBundle::EnumResTypeProcA( HMODULE hModule, char* lpszType, LPARAM lParam )
 {
+#if !defined(VCF_CW) && !defined(UNICODE)
 	if ( (RT_CURSOR == lpszType) || (RT_ICON == lpszType) || (RT_BITMAP == lpszType) || (RT_STRING == lpszType) || (RT_VERSION == lpszType) || (RT_VXD == lpszType) ) {
 		return TRUE;
 	}
@@ -260,6 +261,9 @@ BOOL CALLBACK Win32ResourceBundle::EnumResTypeProcA( HMODULE hModule, char* lpsz
 		                        lpszType,
 								Win32ResourceBundle::EnumResNameProcA,
 								lParam );
+#else
+	return FALSE;
+#endif
 }
 
 
@@ -408,8 +412,8 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 		return;
 	}
 
-	unsigned char* buf = new unsigned char[size];
-	memset(buf, 0, size);
+	unsigned char* buf = new unsigned char[size*sizeof(VCF::WideChar)];
+	memset(buf, 0, size*sizeof(VCF::WideChar));
 
 	
 
@@ -481,7 +485,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 				// Iterate through the array of pairs of 16-bit language ID values that make up the standard 'Translation' VarFileInfo element.
 				WORD* wordElement = (WORD*) VS_ROUNDPOS(&element->szKey[wcslen(element->szKey)+1], element, 4);
 				for (WORD* wpos = wordElement ; ((byte*) wpos) < (((byte*) wordElement) + element->wValueLength); wpos+=2) {
-					entry.second += StringUtils::format( L"%04x%04x ", (int)*wpos++, (int)(*(wpos+1)) );
+					entry.second += StringUtils::format( Format(L"%04x%04x ") % (int)*wpos++ % (int)(*(wpos+1)) );
 				}
 
 				map.insert( entry );
@@ -511,7 +515,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 	}
 
 	unsigned char* buf = new unsigned char[size];
-	memset(buf, 0, size);
+	memset(buf, 0, size*sizeof(unsigned char));
 
 	
 
@@ -582,7 +586,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 				// Iterate through the array of pairs of 16-bit language ID values that make up the standard 'Translation' VarFileInfo element.
 				WORD* wordElement = (WORD*) VS_ROUNDPOS(&element->szKey[strlen(element->szKey)+1], element, 4);
 				for (WORD* wpos = wordElement ; ((byte*) wpos) < (((byte*) wordElement) + element->wValueLength); wpos+=2) {
-					entry.second += StringUtils::format( L"%04x%04x ", (int)*wpos++, (int)(*(wpos+1)) );
+					entry.second += StringUtils::format( Format(L"%04x%04x ") % (int)*wpos++ % (int)(*(wpos+1)) );
 				}
 
 				map.insert( entry );
@@ -699,6 +703,21 @@ ProgramInfo* Win32ResourceBundle::getProgramInfo()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.3  2005/04/13 02:50:45  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.2.2.2  2005/04/09 17:21:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.2.2.1  2005/03/15 01:51:52  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.2  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

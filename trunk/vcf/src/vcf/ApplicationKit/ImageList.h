@@ -14,8 +14,7 @@ where you installed the VCF.
 #endif
 
 
-namespace VCF
-{
+namespace VCF {
 
 
 #define IMAGELIST_CLASSID				"2EA88629-682F-4b01-BB6F-9990BCF67DD6"
@@ -135,10 +134,15 @@ public:
 	Image* getMasterImage() {
 		return masterImage_;
 	}
+
+private:
+	void changed();
+
 private:
 	unsigned long imageWidth_;
 	unsigned long imageHeight_;
-    Color transparentColor_;
+	Color transparentColor_;
+
 	/**
 	*this represents the number of images the masterImage_
 	*can hold
@@ -152,15 +156,21 @@ private:
 	uint32 totalImageCount_;
 	Image* masterImage_;
 	ulong32 resizeIncrement_;
-	void changed();
 };
 
-};
+
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

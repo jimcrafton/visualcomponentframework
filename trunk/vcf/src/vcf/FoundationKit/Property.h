@@ -33,6 +33,7 @@ public:
 		source_ = NULL;
 		isCollection_ = false;
 		isReadOnly_ = false;
+		type_ = pdUndefined;
 		bound_ = false;
 		//prop_count ++;
 		//StringUtils::trace( "Created Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
@@ -57,6 +58,22 @@ public:
 		//prop_count --;
 		//StringUtils::trace( "Deleted Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
 	};
+
+	Property& operator=( const Property& rhs ) {
+		value_ = rhs.value_;
+		isReadOnly_ = rhs.isReadOnly_;
+		isCollection_ = rhs.isCollection_;
+
+		name_ = rhs.name_;
+		displayName_ = rhs.displayName_;
+		description_ = rhs.description_;
+		type_ = rhs.type_;
+		source_ = rhs.source_;
+		bound_ = rhs.bound_;
+
+		return *this;
+	};
+
 
 	/**
 	*makes a copy of the property. Implemented in the templated
@@ -335,13 +352,14 @@ protected:
 	VariantData value_;
 	bool isCollection_;
 	bool isReadOnly_;
+
 private:
-	bool bound_;
 	String name_;
 	String displayName_;
 	String description_;
 	PropertyDescriptorType type_;
 	Object* source_;
+	bool bound_;
 };
 
 
@@ -453,6 +471,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/07/01 15:34:36  marcelloptr
+*added assignment operator
+*
+*Revision 1.2.4.1  2005/01/07 23:21:48  marcelloptr
+*fixed forgotten initialization
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

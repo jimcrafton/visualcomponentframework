@@ -24,6 +24,8 @@ namespace VCF {
 
 		EtchedBorder( long sidesToPaint, long style );
 
+		EtchedBorder( Component* owner );
+
 		virtual ~EtchedBorder(){};
 
 		virtual void paint( Control* control, GraphicsContext* context );
@@ -44,7 +46,7 @@ namespace VCF {
 			return style_;
 		}
 
-		void setStyle( const long& val ) {
+		void setEdgeStyle( const long& val ) {
 			style_ = val;
 		}
 	protected:
@@ -57,6 +59,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

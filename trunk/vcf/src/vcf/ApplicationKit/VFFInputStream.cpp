@@ -464,16 +464,17 @@ void VFFInputStream::hexToBin( const String& hexString, Persistable* persistable
 {
 	long hexSize = hexString.size();
 	long binSize = hexSize / 2;
-	VCFChar* binBuffer = new VCFChar[binSize];
 
-	const VCFChar* hexStringBuf = hexString.c_str();
-
-	memset( binBuffer, 0, binSize*sizeof(VCFChar) );
 	VCFChar tmpHexBuf[3];
 	memset( tmpHexBuf, 0, 3*sizeof(VCFChar) );
+
+	VCFChar* binBuffer = new VCFChar[binSize];
+	memset( binBuffer, 0, binSize*sizeof(VCFChar) );
+
+	const VCFChar* hexStringBuf = hexString.c_str();
 	VCFChar* tmpBinBuffer = binBuffer;
 
-	//THis is Icky code !!!!
+	//This is Icky code !!!!
 	while ( binSize > 0 ) {
 
 		tmpHexBuf[0] = hexStringBuf[0];
@@ -497,6 +498,12 @@ void VFFInputStream::hexToBin( const String& hexString, Persistable* persistable
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

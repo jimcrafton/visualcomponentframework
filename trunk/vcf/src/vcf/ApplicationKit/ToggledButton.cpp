@@ -39,6 +39,14 @@ void ToggledButton::setChecked( const bool& checked )
 	repaint();
 }
 
+void ToggledButton::setName( const String& name )
+{
+	CustomControl::setName( name );
+	if ( caption_.empty() ) {
+		setCaption( name );
+	}
+}
+
 void ToggledButton::setCaption( const String& caption )
 {
 	caption_ = caption;
@@ -98,6 +106,16 @@ void ToggledButton::click()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.2.4.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

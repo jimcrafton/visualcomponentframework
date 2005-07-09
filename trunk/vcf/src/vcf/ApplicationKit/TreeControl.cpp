@@ -33,6 +33,8 @@ TreeControl::TreeControl():
 	peer_->create( this );
 
 	init();
+
+	setVisible( true );
 }
 
 TreeControl::~TreeControl()
@@ -69,6 +71,8 @@ void TreeControl::init()
 	setTreeModel( new DefaultTreeModel() );
 
 	setBorder( new Basic3DBorder( true ) );
+
+	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 }
 
 void TreeControl::setTreeModel( TreeModel * model )
@@ -172,12 +176,12 @@ void TreeControl::onModelEmptied( ModelEvent* event )
 TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )
 {
 	TreeItem* result = NULL;
-	if ( true == item->containsPoint( pt ) ) {
+	if ( item->containsPoint( pt ) ) {
 		result = item;
 	}
-	else if ( false == item->isLeaf() ){
+	else if ( !item->isLeaf() && item->isExpanded() ){
 		Enumerator<TreeItem*>* children = item->getChildren();
-		while ( true == children->hasMoreElements() ) {
+		while ( children->hasMoreElements() ) {
 			TreeItem* childItem = children->nextElement();
 			result = hitTestForItem( pt, childItem );
 			if ( result != NULL ) {
@@ -351,6 +355,20 @@ void TreeControl::setAllowLabelEditing( const bool& allowLabelEditing )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.3  2005/03/07 01:59:50  ddiego
+*minor fix to win32 scroll peer, and fix to win32 list view for display of list items.
+*
+*Revision 1.3.2.2  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
+*Revision 1.3.2.1  2005/01/28 02:49:01  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -17,28 +17,19 @@ where you installed the VCF.
 namespace VCF {
 
 
+class Rect;
+class Color;
 class Border;
-
 class Font;
-
 class ControlPeer;
-
 class GraphicsContext;
-
 class ControlGraphicsContext;
-
 class PopupMenu;
-
 class Scrollable;
-
 class Cursor;
-
 class Model;
-
 class AcceleratorKey;
-
 class Container;
-
 class Frame;
 
 #define CONTROL_CLASSID		"B91B1828-3639-4bcf-9882-342F16C90E21"
@@ -66,7 +57,7 @@ class Frame;
  control, complete with a header and movable icons, etc.
  To aid in the drawing of a control, all controls are double buffered by default
  to prevent flicker, though this can be turned off and on at will.
- @delegates	
+ @delegates
 	@del Control::ControlSized
 	@del Control::ControlPositioned
 	@del Control::ControlParentChanged
@@ -301,7 +292,7 @@ public:
 
 	/**
 	@delegate ControlModelChanged fires an ControlEvent.
-	Fired by the control when the control's setViewModel is called. This event 
+	Fired by the control when the control's setViewModel is called. This event
 	indicates that the control's model pointer has changed, and anyone interested in
 	listening to the control's model should update accordingly.
 	@event ControlEvent
@@ -312,12 +303,12 @@ public:
 	
 
 	/**
-     This gets called by the ControlPeer for any windowing system mouse events,
-	 as well as for any windowing system keyboard events and for any
-	 windowing system events like size changes, position changes, etc.
-     Once inside the event the Control determines the type, and behaves accordingly,
-     as well as notifying any appropriate listeners.
-     */
+	This gets called by the ControlPeer for any windowing system mouse events,
+	as well as for any windowing system keyboard events and for any
+	windowing system events like size changes, position changes, etc.
+	Once inside the event the Control determines the type, and behaves accordingly,
+	as well as notifying any appropriate listeners.
+	*/
 	virtual void handleEvent( Event* event );
 
 	/**
@@ -333,66 +324,93 @@ public:
 	Border* getBorder();
 
 	/**
-	*sets the border for this control. The control will then
-	*own the border, increasing it's (the border's) reference count.
-	*If the control previously had a valid border object, it will release
-	*it's reference to it.
+	\p
+	Sets the border for this control. The control will check the
+	border's owner value, and if it's NULL then it will set itself
+	as the component owner of the border.
 	*/
 	void setBorder( Border* border );
 
-    /**
-     * returns the bounds in parent coordinates of the Control. The Control derived class must call it's Peer's getBounds() method
-     */
-    virtual Rect getBounds() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	/**
+	returns the bounds in parent coordinates of the Control. The Control derived class must call it's Peer's getBounds() method
+	*/
+	virtual Rect getBounds() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
-	*returns the bounds in terms of the control's coordinates. Thus the top and
-	*left will typically be 0.0, 0.0, and the right and bottom of the bounds
-	*will typically equal the width and height of the control.
+	Returns the bounds in terms of the control's coordinates. Thus the top and
+	left will typically be 0.0, 0.0, and the right and bottom of the bounds
+	will typically equal the width and height of the control.
 	*/
 	virtual Rect getClientBounds( const bool& includeBorder = true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
-	*returns the left position in parent coordinates
+	Returns the left position in parent coordinates
 	*/
-    virtual double getLeft() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual double getLeft() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
-	*returns the right position in parent coordinates
+	Returns the right position in parent coordinates
 	*/
-    virtual double getRight() ;
+	virtual double getRight() ;
 
 	/**
 	*returns the width of the control
 	*/
-    virtual double getWidth() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual double getWidth() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*returns the top position in parent coordinates
 	*/
-    virtual double getTop() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual double getTop() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*returns the bottom position in parent coordinates
 	*/
-    virtual double getBottom() ;
+	virtual double getBottom() ;
 
 	/**
 	*returns the height of the control
 	*/
-    virtual double getHeight() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual double getHeight() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*is this control visible to the user.
 	*@return bool true if the control is visible, otherwise
 	*false.
 	*/
-    virtual bool getVisible() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual bool getVisible() ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
-	*returns the control's alignment
+	\p
+	Returns the control's alignment. These alignment values are used by
+	the basic container type, the StandardContainer class, which uses these
+	values to determine how to layout the controls. Other layout implementations
+	may choose to ignore these values. For example, the HorizontalLayoutContainer
+	doesn't pay any attention to these value, it just lays out the controls
+	as they are added.
+	@see isIgnoredForLayout()
+	@see setIgnoredForLayout()
 	*/
-    AlignmentType getAlignment();
+	AlignmentType getAlignment();
+
+	/**
+	\p
+	Returns whether this control must be ignored in the control container's
+	layout implementation. Unlike the alignment values returned by getAlignment(),
+	which are optional for the container to use, this \em must be honored.
+	Failure to do so may result in dire intergalatic consequences, or
+	worse, result in a shortage of SUVs.
+	\p
+	If this is false, the default value, then the control is laid out however the
+	container is implemented to accomplish this. If the value is true, then the
+	container should simply place the control wherever the controls bounds
+	indicate. Container implementations that have some sort of layout that processes
+	controls sequentially, such as the HorizontalLayoutContainer, \em must
+	ignore a control that returns false.
+	*/
+	bool isIgnoredForLayout();
+
+	void setIgnoredForLayout( const bool& val );
 
 	/**
 	sets the bounds of the control. You can pass in left, top, width and height as the
@@ -411,24 +429,24 @@ public:
 	*implements the Container interface, then any child controls
 	*wil be resized via the Container::resizeChildren() automatically.
 	*/
-    virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*sets the alignment of the control
 	*/
-    void setAlignment( const AlignmentType& alignment );
+	void setAlignment( const AlignmentType& alignment );
 
 	/**
 	*sets the left value for the control, immediately updates the
 	*controls position.
 	*/
-    virtual void setLeft( const double& left ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setLeft( const double& left ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*sets the right value of the control. This value is in the
 	*coordinates of the parent control.
 	*/
-    virtual void setRight( const double& right ) ;
+	virtual void setRight( const double& right ) ;
 
 	/**
 	*sets the width of the control.
@@ -436,19 +454,19 @@ public:
 	*then any child controls will be resized via the
 	*Container::resizeChildren() automatically.
 	*/
-    virtual void setWidth( const double& width ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setWidth( const double& width ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*sets the top value of the control. This value is in the
 	*coordinates of the parent control.
 	*/
-    virtual void setTop( const double& top ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setTop( const double& top ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*sets the bottom value of the control. This value is in the
 	*coordinates of the parent control.
 	*/
-    virtual void setBottom( const double& bottom ) ;
+	virtual void setBottom( const double& bottom ) ;
 
 	/**
 	*sets the height of the control.
@@ -456,29 +474,29 @@ public:
 	*then any child controls will be resized via the
 	*Container::resizeChildren() automatically.
 	*/
-    virtual void setHeight( const double& height ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setHeight( const double& height ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*determines whether or not the control is visible,
 	* and set it visible if it wasn't.
 	*@param bool true to show the control, false to hide it
 	*/
-    virtual void setVisible( const bool& visible ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	virtual void setVisible( const bool& visible ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 
-    /**
-     *if autoStartDragDrop_ is true then this method checks to see if
-	 *the Controls dragging is with the windowing system's tolernace
-	 *for a drag drop operation to start. other wise it returns false.
-     *If  autoStartDragDrop_ is false then it returns false unless some
-	 *derived class overides the functionality.
-     */
-    virtual bool canBeginDragDrop( Point* point );
+	/**
+	*if autoStartDragDrop_ is true then this method checks to see if
+	*the Controls dragging is with the windowing system's tolernace
+	*for a drag drop operation to start. other wise it returns false.
+	*If  autoStartDragDrop_ is false then it returns false unless some
+	*derived class overides the functionality.
+	*/
+	virtual bool canBeginDragDrop( Point* point );
 
 	/**
 	*sets auto start dragging to true or false
 	*/
-    void setAutoStartDragDrop(const bool& canAutoStartDragDrop);
+	void setAutoStartDragDrop(const bool& canAutoStartDragDrop);
 
 	/**
 	*returns whether or not auto dragging is on or off.
@@ -495,7 +513,7 @@ public:
 	*@return bool must return true if a drag-drop operation
 	*was started, otherwise should return false
 	*/
-    virtual bool beginDragDrop( MouseEvent* event );
+	virtual bool beginDragDrop( MouseEvent* event );
 
 	/**
 	*returns the control's native peer interface
@@ -539,6 +557,18 @@ public:
 	bool isEnabled();
 
 	/**
+	This checks not only to see if the control itself is
+	enabled, but will return false if any parent control is
+	not enabled. This function traverse all the parent child
+	relationships till the frame window is hit, and checks the
+	enabled status of each control. The first control that is
+	\em not enabled stops the search and the methods returns
+	false, otherwise it continues till it finds a NULL
+	parent and returns true.
+	*/
+	bool areParentsEnabled();
+
+	/**
 	*sets whether the control is enabled or not.
 	*@param bool true if the control is enabled, otherwise false.
 	*/
@@ -558,12 +588,12 @@ public:
 	*routines for controls. In other words: you implement it, you never call it
 	*yourself.
 	*/
-    virtual void paint( GraphicsContext * context )=0;
+	virtual void paint( GraphicsContext * context )=0;
 
 	/**
-	Paints the border for the control. This is called by the framework during the 
+	Paints the border for the control. This is called by the framework during the
 	painting of the control. Do not count on this being called at the same time as the
-	paint() method, as the order in which this is called is dependant on the 
+	paint() method, as the order in which this is called is dependant on the
 	underlying windowing system. For example, on Win32 systems this call may
 	be made by the framework outside of the WM_PAINT message handling, while on
 	Mac OS X this will be called in the same event handler that dispatches
@@ -715,8 +745,17 @@ public:
 	*/
 	void setColor( Color* color );
 
+	/**
+	* called just prior to completely destroying the control
+	* and it's associated memory.
+	*@see Component::beforeDestroy()
+	*/
 	virtual void beforeDestroy( ComponentEvent* event );
 
+	/**
+	* Special initializations may then happen here.
+	*@see Component::afterCreate()
+	*/
 	virtual void afterCreate( ComponentEvent* event );
 
 	/**
@@ -889,7 +928,7 @@ public:
 	*@see Scrollable::setVirtualViewHeight
 	*@see Scrollable::setVirtualViewWidth
 	*/
-	void setScrollable( Scrollable* scrollable );
+	virtual void setScrollable( Scrollable* scrollable );
 
 	/**
 	Call this method to adjust the view bounds (i.e. what the GraphicsContext::getViewableBounds()
@@ -965,55 +1004,55 @@ public:
 	*mask values for the anchor value, which can have either the value of ANCHOR_NONE
 	*or any combination of the other four mask types.
 	*<table width="100%" cellpadding="2" cellspacing="0" border="1" bordercolor="#C0C0C0">
-    *<tr>
-    *<td width="20%" bgcolor="#C0C0C0" valign=TOP>
-    *Value</td>
-    *<td width="80%" bgcolor="#C0C0C0" valign=TOP>
-    *Meaning</td>
-    *</tr>
-    *<tr>
-    * <td width="20%" valign=TOP>
-    *	<code>ANCHOR_NONE</code></td>
-    * <td width="80%" valign=TOP>
-    *   This is the default value for a control's anchor property. No layout
+	*<tr>
+	*<td width="20%" bgcolor="#C0C0C0" valign=TOP>
+	*Value</td>
+	*<td width="80%" bgcolor="#C0C0C0" valign=TOP>
+	*Meaning</td>
+	*</tr>
+	*<tr>
+	* <td width="20%" valign=TOP>
+	*	<code>ANCHOR_NONE</code></td>
+	* <td width="80%" valign=TOP>
+	*   This is the default value for a control's anchor property. No layout
 	*	adjustments are performed on the control.</td>
-    *</tr>
-    *<tr>
-    * <td width="20%" valign=TOP>
-    *   <code>ANCHOR_TOP</code></td>
-    * <td width="80%" valign=TOP>
-    *   The Control is anchored to the top edge of the parent control it
+	*</tr>
+	*<tr>
+	* <td width="20%" valign=TOP>
+	*   <code>ANCHOR_TOP</code></td>
+	* <td width="80%" valign=TOP>
+	*   The Control is anchored to the top edge of the parent control it
 	*	belongs to. Whatever the distance between the top edge and the top
 	*	coordinate of the control when this is set, is maintained whenever
 	*	the parent control's dimensions change. </td>
-    *</tr>
-    *<tr>
-    * <td width="20%" valign=TOP>
-    *   <code>ANCHOR_LEFT</code></td>
-    * <td width="80%" valign=TOP>
-    *   The Control is anchored to the left edge of the parent control it
+	*</tr>
+	*<tr>
+	* <td width="20%" valign=TOP>
+	*   <code>ANCHOR_LEFT</code></td>
+	* <td width="80%" valign=TOP>
+	*   The Control is anchored to the left edge of the parent control it
 	*	belongs to. Whatever the distance between the left edge and the left
 	*	coordinate of the control when this is set, is maintained whenever
 	*	the parent control's dimensions change. </td>
-    *</tr>
-    *<tr>
-    * <td width="20%" valign=TOP>
-    *   <code>ANCHOR_BOTTOM</code></td>
-    * <td width="80%" valign=TOP>
-    *   The Control is anchored to the bottom edge of the parent control it belongs
+	*</tr>
+	*<tr>
+	* <td width="20%" valign=TOP>
+	*   <code>ANCHOR_BOTTOM</code></td>
+	* <td width="80%" valign=TOP>
+	*   The Control is anchored to the bottom edge of the parent control it belongs
 	*	to. Whatever the distance between the bottom edge and the bottom coordinate
 	*	of the control when this is set, is maintained whenever the parent control's
 	*	dimensions change. </td>
-    *</tr>
-    *<tr>
-    * <td width="20%" valign=TOP>
-    *   <code>ANCHOR_RIGHT</code></td>
-    * <td width="80%" valign=TOP>
-    *   The Control is anchored to the right edge of the parent control it belongs to.
+	*</tr>
+	*<tr>
+	* <td width="20%" valign=TOP>
+	*   <code>ANCHOR_RIGHT</code></td>
+	* <td width="80%" valign=TOP>
+	*   The Control is anchored to the right edge of the parent control it belongs to.
 	*	Whatever the distance between the right edge and the right coordinate of the
 	*	control when this is set, is maintained whenever the parent control's dimensions
 	*	change.</td>
-    *</tr>
+	*</tr>
 	*</table>
 	*/
 	unsigned long getAnchor() {
@@ -1126,34 +1165,43 @@ public:
 
 
 	/**
-	*Returns the AcceleratorKey instance that is associated with this control and
-	*the specified key code and modifier mask. The AcceleratorKey will be activated
-	*whenever the corresponding keyboard combination is pressed.
-	*@param VirtualKeyCode the key code that represents this AcceleratorKey. For
-	*example, vkLetterV is used to indicated an accelerator that is triggered whenever
-	*the "V" key is pressed.
-	*@param ulong32 a mask of special keys that can be pressed together with the
-	*specified key code, such as Shift, Alt or Ctrl.
-	*@see AcceleratorKey
+	Returns the AcceleratorKey instance that is associated with this control and
+	the specified key code and modifier mask. The AcceleratorKey will be activated
+	whenever the corresponding keyboard combination is pressed.
+	@param VirtualKeyCode the key code that represents this AcceleratorKey. For
+	example, vkLetterV is used to indicated an accelerator that is triggered whenever
+	the "V" key is pressed.
+	@param ulong32 a mask of special keys that can be pressed together with the
+	specified key code, such as Shift, Alt or Ctrl.
+	@see AcceleratorKey
 	*/
 	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
 
 	/**
-	*Associates a new AcceleratorKey with the Control.
-	*The key code, modifier mask and event handler
-	*all become the attributes of the new AcceleratorKey
+	Associates a new AcceleratorKey with the Control.
+	The key code, modifier mask and event handler
+	all become the attributes of the new AcceleratorKey
 	*/
 	void addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler );
 
 	/**
-	*
+	Associates a new AcceleratorKey with the Control.
+	The key code, modifier mask and the action's
+	accelerator event handler all become the attributes
+	of the new AcceleratorKey instance.
+	*/
+	void addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Action* action );
+
+	/**
+	This should generally not be called. It's for framework usage only at this
+	point.
 	*/
 	void addAcceleratorKey( AcceleratorKey* accelerator );
 
 	/**
-	*Pressing the accelerator character will cause the control's
-	*mnemonicActivate() method to be fired, which by default
-	*sets focus to the control
+	Pressing the accelerator character will cause the control's
+	mnemonicActivate() method to be fired, which by default
+	sets focus to the control
 	*/
 	virtual void mnemonicActivate();
 
@@ -1166,14 +1214,14 @@ public:
 	Frame* getParentFrame();
 
 	/**
-	This returns a value that indicates whether or not hte control is considered to 
+	This returns a value that indicates whether or not hte control is considered to
 	be active. A control is considered active if it belongs to, i.e. is a child
-	eitehr directly or indirectly, (or is) the active frame. This is 
+	eitehr directly or indirectly, (or is) the active frame. This is
 	determined by checking if the control's getParentFrame() equals the Frame::getActiveFrame().
 	@return bool true if the control is active, otherwise false.
 	*/
 	bool isActive();
-	
+
 	/**
 	Can the control accept focus?
 	This method determines if the control can recieve focus.
@@ -1209,9 +1257,27 @@ public:
 	void setContainer( Container* container );
 
 
+	/**
+	sets a new model for the view
+	Once set, the control fires a ControlModelChanged event.
+	*/
 	virtual void setViewModel( Model* viewModel );
 
+	/**
+	tells if the control is currently sending a repaint message
+	when resizing, or not.
+	*/
+	bool getRepaintOnSize() {
+		return repaintOnSize_;
+	}
 
+	/**
+	let the user to control if the control will send a repaint message
+	when is resized, or not.
+	*/
+	void setRepaintOnSize( const bool& repaint ) {
+		repaintOnSize_ = repaint;
+	}
 
 	/**
 	*returns the current control that has captured the mouse input.
@@ -1239,6 +1305,12 @@ public:
 	static void setPreviousMouseOverControl( Control* control );
 
 	static void buildTabList( Control* control, std::vector<Control*>& tabList );
+
+protected:
+	void updateAnchorDeltas();
+
+	virtual void destroy();
+
 protected:
 	static Control* currentFocusedControl;
 	static Control* previousMouseOverControl;
@@ -1246,10 +1318,10 @@ protected:
 
 	ControlPeer* peer_;
 	ControlGraphicsContext* context_;
-    Control * parent_;
-    AlignmentType aligment_;
+	Control * parent_;
+	AlignmentType aligment_;
 	unsigned long anchor_;
-    Rect* bounds_;
+	Rect* bounds_;
 	Rect* clientBounds_;
 	Border* border_;
 	Color* color_;
@@ -1271,22 +1343,46 @@ protected:
 	Point clickPt_;
 	bool useRenderBuffer_;
 	Container* container_;
-
-
-	void updateAnchorDeltas();
-
-	virtual void destroy();
+	bool ignoredForLayout_;
+	bool repaintOnSize_;
 
 };
 
 
-
-};
+}; // namespace VCF 
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.8  2005/06/29 20:30:15  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.3.2.7  2005/06/29 05:00:03  marcelloptr
+*some white spaces
+*
+*Revision 1.3.2.6  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.5  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.4  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.3.2.3  2005/03/15 05:29:01  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
+*Revision 1.3.2.2  2005/03/10 00:17:27  marcelloptr
+*set discrete scrolling as default behaviour for ListBoxControls
+*
+*Revision 1.3.2.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/12/01 04:31:20  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

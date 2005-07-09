@@ -112,7 +112,7 @@ X11GraphicsToolkit::~X11GraphicsToolkit()
 
 	if ( !colorLookupMap_.empty() ) {
 		unsigned long*  pixels = new unsigned long[colorLookupMap_.size()+1];
-		memset( pixels, 0, sizeof(unsigned long) * colorLookupMap_.size()+1 );
+		memset( pixels, 0, (colorLookupMap_.size()+1) * sizeof(unsigned long) );
 
 		Colormap colorMap = DefaultColormap( X11Display_, X11ScreenID_ );
 
@@ -307,9 +307,8 @@ ulong32 X11GraphicsToolkit::getPixelForColor( Color* color )
 {
 	ulong32 result = 0;
 
-	unsigned char red = (unsigned char)(color->getRed() * 255.0);
-	unsigned char green = (unsigned char)(color->getGreen() * 255.0);
-	unsigned char blue = (unsigned char)(color->getBlue() * 255.0);
+	uint8 red, green, blue;
+	color->getRGB8( red, green, blue );
 	//in the future we can get an alpha value
 
 	ulong32 key = red;
@@ -371,6 +370,18 @@ String X11GraphicsToolkit::getUserFontsPath()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/11 00:50:50  marcelloptr
+*moved uint8/uint16 to VCF namespace
+*
+*Revision 1.2.4.2  2005/06/09 06:13:09  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

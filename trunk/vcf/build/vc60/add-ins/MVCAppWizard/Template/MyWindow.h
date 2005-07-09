@@ -6,12 +6,19 @@
 
 
 /**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
+
+
+/**
 class $$Root$$Window documentation
 */
 class $$Root$$Window  : public VCF::Window{
 public: 
-	BEGIN_CLASSINFO( $$Root$$Window, "$$Root$$Window", "VCF::Window", $$ROOT$$WINDOW_CLASSID )
-	END_CLASSINFO( $$Root$$Window )
+	_class_rtti_( $$Root$$Window, "VCF::Window", $$ROOT$$WINDOW_CLASSID )
+	_class_rtti_end_
 
 	$$Root$$Window();
 	virtual ~$$Root$$Window();

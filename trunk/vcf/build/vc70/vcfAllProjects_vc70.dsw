@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Accelerators"="..\..\examples\Accelerators\Accelerators_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Actions"="..\..\examples\Actions\Actions_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -117,7 +129,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Cards"="..\..\examples\Cards\Cards_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Colors"="..\..\examples\Colors\Colors_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Combos"="..\..\examples\Combos\Combos_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CommonDirectories"="..\..\examples\CommonDirectories\CommonDirectories_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -154,6 +202,18 @@ Package=<4>
 ###############################################################################
 
 Project: "CopyAndPaste"="..\..\examples\CopyAndPaste\CopyAndPaste_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CreateBundle"="..\..\src\createbundle\CreateBundle_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -285,6 +345,9 @@ Package=<4>
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Accelerators
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Actions
     End Project Dependency
     Begin Project Dependency
@@ -306,7 +369,16 @@ Package=<4>
     Project_Dep_Name ApplicationIcons
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Cards
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Colors
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Combos
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CommonDirectories
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Conditions
@@ -348,6 +420,9 @@ Package=<4>
     Project_Dep_Name FilesAndDirectories
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name FrameStyles
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
     End Project Dependency
     Begin Project Dependency
@@ -381,6 +456,12 @@ Package=<4>
     Project_Dep_Name Localization
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name MFCIntegration1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MFCIntegration2
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name MVCBasics
     End Project Dependency
     Begin Project Dependency
@@ -406,6 +487,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Resources
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RunLoops
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Scrolling
@@ -493,6 +577,18 @@ Package=<4>
 ###############################################################################
 
 Project: "FoundationKitDLL"=".\FoundationKit\FoundationKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FrameStyles"="..\..\examples\FrameStyles\FrameStyles_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -762,6 +858,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MFCIntegration1"="..\..\examples\MFCIntegration1\MFCIntegration1_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MFCIntegration2"="..\..\examples\MFCIntegration2\MFCIntegration2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -973,6 +1093,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Resources"="..\..\examples\Resources\Resources_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RunLoops"="..\..\examples\RunLoops\RunLoops_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1243,6 +1375,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "createinfo"="..\..\src\createinfo\createinfo_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

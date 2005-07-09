@@ -27,6 +27,41 @@ public:
 	UIPolicyManager(){};
 	virtual ~UIPolicyManager(){};
 
+
+	/**
+	These are a standard set of 
+	accelerators types that are common
+	to various windowing platforms.
+	Use these values to determine the 
+	proper accelerator key code and 
+	modifier(s) to use rather than
+	hard coding them.
+	*/
+	enum StandardAccelerator{
+		saApplicationQuit = 1,
+		saApplicationAbout,
+		saApplicationPreferences,
+		saFileNew,
+		saFileOpen,
+		saFileSave,		
+		saFileSaveAs,		
+		saFilePrint,
+		saFilePageSetup,		
+		saEditUndo,
+		saEditRedo,
+		saEditCut,
+		saEditCopy,
+		saEditPaste,
+		saEditDelete,
+		saEditSelectAll,
+		saEditFind,
+		saEditFindNext,		
+		saHelpContents,
+		saFileExit = saApplicationQuit,
+		saEditFindAgain = saEditFindNext
+	};
+
+
 	/**
 	* merges the appMenu into the windowMenu
 	* - the windowMenu is filled with menu items clones of the menu items in appMenu
@@ -43,6 +78,28 @@ public:
 	virtual Frame* getOwnerForDialog() = 0;
 	
 	virtual Rect adjustInitialDialogBounds( Dialog* dialog ) = 0;
+
+	/**
+	\p
+	This returns a transformed string that is suitable for passing to text 
+	drawing API's when the input string has mnemonic values in it. This is
+	platform dependant, so not all platforms will handle this the same way.
+	\p
+	For example, the string "&OK" is meant to have a mnemonic in front of 
+	the "O". In Win32 this would be left alone, and the Win32 drawing API's
+	will draw it correctly. On OSX this "&" character would be stripped out.
+	*/
+	virtual String transformMnemonicValues( const String& input ) = 0;
+
+	/**
+	Returns an AcceleratorKey::Value that represents the virtual key code
+	and keyboard modifier(s) for the requested standard accelerator.
+	Some platforms may not support all the accelerators in the
+	StandardAccelerator enum, and if this is the case the returned
+	value will be 0 and AcceleratorKey::Value::isEmpty() will return 
+	true.
+	*/
+	virtual AcceleratorKey::Value getStandardAcceleratorFor( const StandardAccelerator& val ) = 0;
 };
 
 
@@ -54,6 +111,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
+*Revision 1.3.2.1  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

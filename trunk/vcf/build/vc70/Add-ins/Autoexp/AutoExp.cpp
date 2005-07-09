@@ -167,6 +167,7 @@ HRESULT WINAPI VCF_ColorEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int nBa
 
 		if ( 0 == VCF_ColorEvaluate_GraphicsKit_init ) {
 			VCF_ColorEvaluate_GraphicsKit_init ++;
+			// without this the ColorNames map would not be initialized
 			GraphicsKit::init( 0, NULL );
 		}
 
@@ -176,12 +177,12 @@ HRESULT WINAPI VCF_ColorEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int nBa
 
 		ColorSpace::RGBtype rgbType    = ColorSpace::ColorToRGB( color );
 		ColorSpace::RGBrangetype rgbRg = ColorSpace::RGBToRGBRange ( rgbType );
-		String rgbHex                  = Color::getHexCode( color, rgbType.R, rgbType.G, rgbType.B, true );
-		unsigned long rgb              = color.getRGB();
+		String rgbHex                  = Color::getHexCode( rgbRg.R, rgbRg.G, rgbRg.B, Color::cpsABGR );
+		uint32 rgb                     = color.getColorref32();
 
 		ColorSpace::HSLtype hslType    = ColorSpace::ColorToHSL( color );
 		ColorSpace::HSLrangetype hslRg = ColorSpace::HSLToHSLRange ( hslType );
-		String hslHex                  = Color::getHexCode( color, hslType.H, hslType.S, hslType.L, true );
+		String hslHex                  = Color::getHexCode( hslRg.H, hslRg.S, hslRg.L, Color::cpsABGR );
 
 		if ( rgbType.R + rgbType.G + rgbType.B + rgbType.R + rgbType.G + rgbType.B < -1.e6 ) {
 			// not initialized yet
@@ -199,7 +200,12 @@ HRESULT WINAPI VCF_ColorEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int nBa
 		}
 	} 
 	catch ( ... ) {
-		strcpy( tmp, "???*" );
+		strcpy( tmp, "??? !!" );
+	}
+
+	// if too long, we truncate
+	if ( maxlen < strlen( tmp ) ) {
+		tmp[ maxlen ] = 0;
 	}
 
 	strcpy( pResult, tmp );

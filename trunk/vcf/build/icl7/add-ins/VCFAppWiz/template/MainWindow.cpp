@@ -27,12 +27,12 @@ $$IF(STD_FILE_MNU)
 
 	DefaultMenuItem* fileOpenProject = new DefaultMenuItem( "&Open...", file, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileOpenProject, "fileOpen" );
-	fileOpenProject->addMenuItemClickedHandler( menuItemHandler );
+	fileOpenProject->MenuItemClicked += menuItemHandler;
 	
 	
 	DefaultMenuItem* fileSaveProject = new DefaultMenuItem( "&Save...", file, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileSaveProject, "fileSave" );	
-	fileSaveProject->addMenuItemClickedHandler( menuItemHandler );
+	fileSaveProject->MenuItemClicked += menuItemHandler;
 	
 
 	DefaultMenuItem* sep = new DefaultMenuItem( "", file, menuBar );
@@ -40,7 +40,7 @@ $$IF(STD_FILE_MNU)
 	
 	DefaultMenuItem* fileExit = new DefaultMenuItem( "E&xit", file, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onFileExit, "fileExit" );	
-	fileExit->addMenuItemClickedHandler( menuItemHandler );
+	fileExit->MenuItemClicked += menuItemHandler;
 
 $$ENDIF
 $$IF(UNDO_REDO)
@@ -48,18 +48,18 @@ $$IF(UNDO_REDO)
 	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, menuBar );
 	DefaultMenuItem* editUndo = new DefaultMenuItem( "Undo", edit, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditUndo, "editUndoClick" );	
-	editUndo->addMenuItemClickedHandler( menuItemHandler );
+	editUndo->MenuItemClicked += menuItemHandler;
 
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditUndoUpdate, "editUndoUpdate" );	
-	editUndo->addMenuItemUpdateHandler( menuItemHandler );
+	editUndo->MenuItemUpdate += menuItemHandler;
 	
 	
 	DefaultMenuItem* editRedo = new DefaultMenuItem( "Redo", edit, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditRedo, "editRedoClick" );	
-	editRedo->addMenuItemClickedHandler( menuItemHandler );
+	editRedo->MenuItemClicked += menuItemHandler;
 
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onEditRedoUpdate, "editRedoUpdate" );	
-	editRedo->addMenuItemUpdateHandler( menuItemHandler );
+	editRedo->MenuItemUpdate += menuItemHandler;
 
 $$ENDIF
 $$IF(STD_HELP_MNU)
@@ -68,7 +68,7 @@ $$IF(STD_HELP_MNU)
 	DefaultMenuItem* help = new DefaultMenuItem( "&Help", root, menuBar );
 	DefaultMenuItem* helpAbout = new DefaultMenuItem( "About...", help, menuBar );
 	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, MainWindow::onHelpAbout, "helpAbout" );	
-	helpAbout->addMenuItemClickedHandler( menuItemHandler );
+	helpAbout->MenuItemClicked += menuItemHandler;
 
 $$ENDIF
 $$ENDIF
@@ -123,7 +123,7 @@ void MainWindow::onEditUndoUpdate( VCF::MenuItemEvent* e )
 		UndoRedoStack* cmdStack = $$Root$$Application::get$$Root$$Application()->getCommandStack();
 		bool hasUndoableCmds = cmdStack->hasUndoableItems();
 		if ( true == hasUndoableCmds ) {
-			itemToUpdate->setCaption( "Undo \"" + cmdStack->getCurrentUndoComand()->getName() + "\"" );
+			itemToUpdate->setCaption( "Undo \"" + cmdStack->getCurrentUndoCommand()->getName() + "\"" );
 		}
 		else {
 			itemToUpdate->setCaption( "Nothing to Undo" );
@@ -145,7 +145,7 @@ void MainWindow::onEditRedoUpdate( VCF::MenuItemEvent* e )
 		UndoRedoStack* cmdStack = $$Root$$Application::get$$Root$$Application()->getCommandStack();
 		bool hasRedoableCmds = cmdStack->hasRedoableItems();
 		if ( true == hasRedoableCmds ) {
-			itemToUpdate->setCaption( "Redo \"" + cmdStack->getCurrentRedoComand()->getName() + "\"" );
+			itemToUpdate->setCaption( "Redo \"" + cmdStack->getCurrentRedoCommand()->getName() + "\"" );
 		}
 		else {
 			itemToUpdate->setCaption( "Nothing to Redo" );

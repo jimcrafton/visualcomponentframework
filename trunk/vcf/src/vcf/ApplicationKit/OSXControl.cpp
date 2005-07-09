@@ -106,10 +106,12 @@ static const EventTypeSpec osxHIViewEvents[] =
 	{ kEventClassControl, kEventControlTrack },
 	{ kEventClassControl, kEventControlGetSizeConstraints },
 	{ kEventClassControl, kEventControlHit },
+	{ kEventClassControl, kEventControlOwningWindowChanged },
+
 	
 	{ kEventClassKeyboard, kEventRawKeyDown },
 	{ kEventClassKeyboard, kEventRawKeyUp },
-							
+
 	{ kEventClassControl, kEventControlHiliteChanged },
 	{ kEventClassControl, kEventControlActivate },
 	{ kEventClassControl, kEventControlDeactivate },
@@ -191,20 +193,17 @@ void OSXControl::create( Control* owningControl )
 							VCF_PROPERTY_CONTROL_VAL, 
 							sizeof(thisPtr), 
 							&thisPtr );
-							
-		
-		OSStatus err = OSXControl::installStdControlHandler();
-							
+
+
+		OSStatus err = installStdControlHandler();
+
 		if ( err != noErr ) {
 			throw RuntimeException( MAKE_ERROR_MSG_2("InstallEventHandler failed for OSXControl!") );
 		}
-		
-		
-        
 	}
 	else {
 		throw RuntimeException( MAKE_ERROR_MSG_2("OSXControl failed to be created!") );
-	}	
+	}
 }
 
 void OSXControl::destroyControl()
@@ -306,7 +305,7 @@ void OSXControl::setParent( Control* parent )
 		ControlRef parentControlRef = (ControlRef)parent->getPeer()->getHandleID();
 		OSStatus err = HIViewAddSubview( parentControlRef, hiView_ );
 		if ( err != noErr ) {
-			StringUtils::traceWithArgs( "HIViewAddSubview failed, err: %d\n", err );
+			StringUtils::traceWithArgs( Format("HIViewAddSubview failed, err: %d\n") % err );
 		}
 	}
 }
@@ -380,9 +379,7 @@ void OSXControl::setFont( Font* font )
 	}
 	
 	Color* color = font->getColor();
-	fontRec.foreColor.red = (65535.0 * color->getRed());
-	fontRec.foreColor.green = (65535.0 * color->getGreen());
-	fontRec.foreColor.blue = (65535.0 * color->getBlue());
+	color->getRGB16( fontRec.foreColor.red, fontRec.foreColor.green, fontRec.foreColor.blue );
 	SetControlFontStyle( hiView_, &fontRec );	
 }
 
@@ -761,8 +758,32 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.7  2005/06/29 05:04:31  marcelloptr
+*some white spaces
+*
+*Revision 1.3.2.5  2005/06/29 03:46:13  ddiego
+*more osx tree and list coding.
+*
+*Revision 1.3.2.4  2005/06/27 03:28:54  ddiego
+*more osx work.
+*
+*Revision 1.3.2.3  2005/06/09 06:13:08  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.3.2.2  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
@@ -808,8 +829,30 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 *Revision 1.1.2.6  2004/05/23 14:11:59  ddiego
 *osx updates
 *$Log$
+*Revision 1.5  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*
+*
+*Revision 1.3.2.5  2005/06/29 03:46:13  ddiego
+*more osx tree and list coding.
+*
+*Revision 1.3.2.4  2005/06/27 03:28:54  ddiego
+*more osx work.
+*
+*Revision 1.3.2.3  2005/06/09 06:13:08  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.3.2.2  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

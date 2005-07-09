@@ -41,10 +41,29 @@ public:
 
 	virtual ~TableCellItem(){};
 
+	/**
+	\par
+	Calling this will create a new table item editor.
+	\par
+	The implementor is responsible for returning an
+	editor that is properly initialized with the data 
+	from the item.
+	@return TableItemEditor an new instance of an editor, or
+	NULL if no editing is supported. If isReadonly() returns
+	true, then this should return NULL regardless of whether 
+	or not the item implementation supports and editor or 
+	not.
+
+	@see isReadonly()
+	*/
 	virtual TableItemEditor* createItemEditor() = 0;
 
 	virtual bool isSelected() = 0;
 
+	/**
+	Identifies if this item is in a readonly state, or if 
+	it's possible to edit it. 
+	*/
 	virtual bool isReadonly() = 0;
 
 	virtual bool isFixed() = 0;
@@ -68,6 +87,14 @@ public:
 	virtual String getCaption() = 0;
 
 	virtual void setCaption( const String& caption ) = 0;
+
+	/**
+	rerturns the width of the cell, taking into account the
+	text of the cell, and any other formatting rules the 
+	cell wants to consider.
+	*/
+	virtual double getTextCellWidth( GraphicsContext* context ) = 0;
+	virtual double getTextCellHeight( GraphicsContext* context ) = 0;
 };
 
 }
@@ -76,6 +103,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -51,6 +51,8 @@ ListViewControl::ListViewControl():
 		new ItemEventHandler<ListViewControl>( this, &ListViewControl::onItemSelected, "ListViewControl::onItemSelected" );
 
 	init();
+
+	setVisible( true );
 }
 
 
@@ -521,9 +523,21 @@ void ListViewControl::paint( GraphicsContext * context )
 	context->fillPath();
 }
 
+
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.3.2.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

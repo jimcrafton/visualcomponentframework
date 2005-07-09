@@ -31,7 +31,7 @@ public:
 
 	virtual void createSystemCursor( const Cursor::SystemCursorType& systemCursor ) = 0;
 
-	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=0 ) = 0;
+	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=NULL ) = 0;
 
 	virtual long getCursorID() = 0;
 
@@ -49,8 +49,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+
 *Revision 1.3  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

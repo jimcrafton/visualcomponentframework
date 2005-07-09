@@ -230,11 +230,11 @@ bool Win32FolderBrowseDialog::execute()
 	BROWSEINFO info;
 	memset( &info, 0, sizeof(BROWSEINFO) );
 	TCHAR displayName[MAX_PATH];
-	memset(displayName,0,MAX_PATH);
+	memset(displayName,0,sizeof(displayName));
 
 	int sz = title_.size() + 1;
 	TCHAR* title = new TCHAR[sz];
-	memset( title, 0, sz );
+	memset( title, 0, sz*sizeof(TCHAR) );
 	title_.copy( title, title_.size() );
 
 	info.hwndOwner = ::GetActiveWindow();
@@ -248,7 +248,7 @@ bool Win32FolderBrowseDialog::execute()
 	LPITEMIDLIST itemIDList = SHBrowseForFolder( &info );
 	if ( NULL != itemIDList ){
 		TCHAR path[MAX_PATH];
-		memset(path,0,MAX_PATH);
+		memset(path,0,sizeof(path));
 		if ( SHGetPathFromIDList( itemIDList, path ) ){
 			directory_ = path;
 			result = true;
@@ -273,6 +273,12 @@ String Win32FolderBrowseDialog::getDirectory()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

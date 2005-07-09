@@ -45,9 +45,9 @@ public:
 	*/
 	LightWeightControl() : CustomControl(false) {
 		Color color;
-		//set the HLS color, where 240 is the color/hue (240 is Blue in a 360 color wheel)
+		//set the HSL color, where 240 is the color/hue (240 is Blue in a 360 color wheel)
 		//and lightness is at 70% and saturation at 100%
-		color.setHLS(240.0,0.7,1.0);
+		color.setHSL(240.0,0.7,1.0);
 
 		//set the color for the control
 		setColor( &color );
@@ -75,7 +75,7 @@ public:
 
 		//draw the GraphicsContext's peer handler, in Win32 this is the
 		//value of the HDC handle for the GraphicsContext
-		text = StringUtils::format( "GraphicsContext's peer handle: 0x%08X", gc->getPeer()->getContextID() );
+		text = Format( "GraphicsContext's peer handle: 0x%08X") % gc->getPeer()->getContextID();
 		gc->textBoundedBy(&Rect(0,y,bounds.getWidth(),y+h), text, false );
 
 	}
@@ -93,7 +93,7 @@ public:
 	HeavyWeightControl() : CustomControl() {
 		Color color;
 
-		color.setHLS(60.0,0.5,1.0);
+		color.setHSL(60.0,0.5,1.0);
 
 		//set the color for the control
 		setColor( &color );
@@ -118,7 +118,7 @@ public:
 
 		//draw the GraphicsContext's peer handler, in Win32 this is the
 		//value of the HDC handle for the GraphicsContext
-		text = StringUtils::format( "GraphicsContext's peer handle: 0x%08X", gc->getPeer()->getContextID() );
+		text = Format( "GraphicsContext's peer handle: 0x%08X" ) % gc->getPeer()->getContextID();
 		gc->textBoundedBy(&Rect(0,y,bounds.getWidth(),y+h), text, false );
 	}
 };
@@ -154,7 +154,7 @@ public:
 	void paint( GraphicsContext* gc ) {
 		Window::paint( gc );
 
-		String text = StringUtils::format( "GraphicsContext's peer handle: 0x%08X", gc->getPeer()->getContextID() );
+		String text = Format( "GraphicsContext's peer handle: 0x%08X" ) % gc->getPeer()->getContextID();
 
 		gc->textAt( 0, 0, text );
 	}
@@ -201,6 +201,18 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:38  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.4.4  2005/06/28 00:10:10  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.4.4.2  2005/04/17 17:19:09  iamfraggle
+*Small fixes
+*
+*Revision 1.4.4.1  2005/04/17 15:11:44  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.4  2004/08/07 02:47:04  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

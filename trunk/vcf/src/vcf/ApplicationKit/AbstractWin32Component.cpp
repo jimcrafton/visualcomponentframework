@@ -34,7 +34,10 @@ AbstractWin32Component::AbstractWin32Component():
 	memBMP_(NULL),
 	mouseEnteredControl_(false),	
 	memDCState_(0),
-	destroyed_(false)
+	destroyed_(false),
+	canProcessMessages_(false),
+	currentFont_(NULL),
+	cachedMessages_(NULL)
 {
 	init();
 	setPeerControl( NULL );
@@ -46,7 +49,10 @@ AbstractWin32Component::AbstractWin32Component( Control* component ):
 	memBMP_(NULL),
 	mouseEnteredControl_(false),	
 	memDCState_(0),
-	destroyed_(false)
+	destroyed_(false),
+	canProcessMessages_(false),
+	currentFont_(NULL),
+	cachedMessages_(NULL)
 {
 	init();
 	setPeerControl( component );
@@ -63,7 +69,7 @@ void AbstractWin32Component::destroyControl()
 		if ( NULL != hwnd_ ){		
 			if ( IsWindow( hwnd_ ) ) {
 				BOOL err = ::DestroyWindow( hwnd_ );
-				if ( FALSE == err )  {
+				if ( !err )  {
 					//throw RuntimeException( MAKE_ERROR_MSG_2("DestroyWindow failed") );
 					err = GetLastError();
 				}
@@ -101,6 +107,9 @@ void AbstractWin32Component::init()
 {
 	memDC_ = NULL;
 	mouseEnteredControl_ = false;
+
+	cachedMessages_ = new std::vector<MSG>();
+
 	/*
 	JC I remove this cause we don't really need them
 	*/
@@ -158,7 +167,6 @@ void AbstractWin32Component::setText( const VCF::String& text )
 
 void AbstractWin32Component::setBounds( VCF::Rect* rect )
 {
-		
 	/*
 	JEC - I commented this out to simplify/speed up some resize/repaint issues
 	HDWP winPosInfo = NULL;
@@ -176,9 +184,14 @@ void AbstractWin32Component::setBounds( VCF::Rect* rect )
                     (int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER| SWP_NOZORDER );
 	}
 	*/
-	//
 
-	::MoveWindow( hwnd_, (int)rect->left_, (int)rect->top_, rect->getWidth(), (int)rect->getHeight(), TRUE );
+	bool repaint = peerControl_->getRepaintOnSize();
+	//StringUtils::trace( Format( "AbstractWin32Component::MoveWindow: [%d] %s\n" ) % repaint  % peerControl_->getToolTipText());
+
+	::MoveWindow( hwnd_, (int)rect->left_, (int)rect->top_, rect->getWidth(), (int)rect->getHeight(), repaint );
+	//UINT rep = ( repaint ) ? 0 : SWP_NOREDRAW;
+	//::SetWindowPos( hwnd_, NULL, (int)rect->left_, (int)rect->top_,
+	//                (int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER | rep );
 }
 
 
@@ -272,25 +285,40 @@ void AbstractWin32Component::setControl( VCF::Control* component )
 
 void AbstractWin32Component::setParent( VCF::Control* parent )
 {
-	VCF::ControlPeer* parentPeer = parent->getPeer();
-	/*
-	JC I remove this cause we don't really need them
-	*/
-	//parent_ = NULL;
+	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+	HWND dummyParent = toolkit->getDummyParent();
 
-	if ( NULL == dynamic_cast<Frame*>(peerControl_) ){
-		HWND wndParent = (HWND)parentPeer->getHandleID();
-
+	if ( NULL == parent ) {
+		::ShowWindow( hwnd_, SW_HIDE );
+		::SetParent( hwnd_, dummyParent );
+	}
+	else {
+		VCF::ControlPeer* parentPeer = parent->getPeer();
 		/*
 		JC I remove this cause we don't really need them
 		*/
-		//parent_ = (AbstractWin32Component*)(parentPeer);
+		//parent_ = NULL;
+		
+		if ( NULL == dynamic_cast<Frame*>(peerControl_) ){
+			HWND wndParent = (HWND)parentPeer->getHandleID();
+			
+			/*
+			JC I remove this cause we don't really need them
+			*/
+			//parent_ = (AbstractWin32Component*)(parentPeer);
+			
+			if ( NULL == wndParent ){
+				//throw exception !!!
+			}
+			
+			HWND currentParent = ::GetParent( hwnd_ );
 
-		if ( NULL == wndParent ){
-			//throw exception !!!
+			::SetParent( hwnd_, wndParent );
+
+			if ( currentParent == dummyParent ) {
+				::ShowWindow( hwnd_, SW_NORMAL );
+			}		
 		}
-
-		::SetParent( hwnd_, wndParent );
 	}
 }
 
@@ -331,6 +359,7 @@ void AbstractWin32Component::setFont( Font* font )
 			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( win32FontPeer );
 			if ( NULL != fontHandle ){
 				::SendMessage( hwnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(TRUE, 0) );
+				currentFont_ = fontHandle;
 			}
 		}
 		else {
@@ -343,7 +372,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 {
 	HDC result = NULL;
 
-	if ( peerControl_->getComponentState() != Component::csDestroying ) {
+	if ( !peerControl_->isDestroying() ) {
 		
 		if ( NULL == memDC_ ) {
 			// we need a memory HDC, so we create it here one compatible 
@@ -356,15 +385,22 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 		
 		VCF::GraphicsContext* ctx = peerControl_->getContext();
 		
-		ctx->setViewableBounds( Rect(paintRect.left, paintRect.top,
-			paintRect.right, paintRect.bottom ) );
+		Rect viewableRect(paintRect.left, paintRect.top,
+			paintRect.right, paintRect.bottom );
+
+		ctx->setViewableBounds( viewableRect );
+		Image* drawingArea = ctx->getDrawingArea();
 		
-		if ( peerControl_->isUsingRenderBuffer() ) {
+		if ( peerControl_->isUsingRenderBuffer() && 
+				!viewableRect.isNull() && 
+				!viewableRect.isEmpty() &&
+				(NULL != drawingArea) ) {
 			
 			ctx->getPeer()->setContextID( (OSHandleID)paintDC );
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
-			ctx->getDrawingArea()->getImageContext()->setViewableBounds(ctx->getViewableBounds());
+			
+			drawingArea->getImageContext()->setViewableBounds(ctx->getViewableBounds());
 
 			if ( ctx->isRenderAreaDirty() ) {
 
@@ -526,7 +562,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* exclusionRect )
 {	
 
-	if ( peerControl_->getComponentState() != Component::csDestroying ) {
+	if ( !peerControl_->isDestroying() ) {
 		if ( true == peerControl_->isDoubleBuffered() && !peerControl_->isUsingRenderBuffer() ) {
 			VCF_ASSERT( memDCState_ != 0 );
 			VCF_ASSERT( originalMemBMP_ != 0 );
@@ -563,9 +599,64 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 			
 			if ( err == FALSE ) {
 				err = GetLastError();
-				StringUtils::traceWithArgs( "error in BitBlt during drawing of double buffered Comp: error code=%d\n",
-					err );
+				StringUtils::traceWithArgs( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %	
+											err );
 			}
+
+		}
+	}
+}
+
+void AbstractWin32Component::checkForFontChange()
+{	
+	if ( NULL != currentFont_ ) {
+		Font* font = peerControl_->getFont();
+
+		void* lf1 = NULL;
+		void* lf2 = NULL;
+		int lfSize = 0;
+		lf1 = font->getFontPeer()->getFontHandleID();
+
+		LOGFONTW lf2w;
+		LOGFONTA lf2a;
+
+		if ( System::isUnicodeEnabled() ) {			
+			memset( &lf2w, 0, sizeof(LOGFONTW) );
+			GetObjectW( currentFont_, sizeof(LOGFONTW), &lf2w );
+
+			//set lfWidth to 0 - essentially we want to 
+			//ignore this in our compare, as we do
+			//not bother to set it
+			lf2w.lfWidth = 0;
+
+			lf2 = &lf2w;
+			lfSize = sizeof(LOGFONTW);
+		}
+		else {
+			memset( &lf2a, 0, sizeof(LOGFONTW) );		
+			GetObjectA( currentFont_, sizeof(LOGFONTA), &lf2a );
+
+			//set lfWidth to 0 - essentially we want to 
+			//ignore this in our compare, as we do
+			//not bother to set it
+			lf2a.lfWidth = 0;
+
+			lf2 = &lf2a;
+			lfSize = sizeof(LOGFONTA);
+		}	
+		
+		
+		
+		int cmp = memcmp( &lf2, lf1, lfSize );
+		if ( cmp != 0 ) {
+			Win32Font* win32FontPeer = (Win32Font*)font->getFontPeer();
+			
+			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( win32FontPeer );
+			if ( NULL != fontHandle ){
+				::SendMessage( hwnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(FALSE, 0) );
+				currentFont_ = fontHandle;
+			}
+			
 
 		}
 	}
@@ -574,13 +665,83 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	
-	bool result = false;
+	bool result = false;	
+
+	/**
+	JC
+	This check is here to prevent us from processing ANY messages before we are ready to.
+	We aren't erady until we have recv'd a VCF_CONTROL_CREATE message. This prevents
+	exceptions thrown in a control constructor from going awry. What happens is that an
+	exception thrown in the contructor will immediately exit the constructor and then
+	the classes destructor is then called. This causes problems with the pointer
+	and just general ugliness, so we put this check in here to prevent weird things from
+	happening.
+	*/
+	if ( !canProcessMessages_ && (VCF_CONTROL_CREATE != message) ) {
+		
+		if ( (message == WM_SIZE) || 
+			(message == WM_MOVE) ||
+			(message == WM_ERASEBKGND) ||
+			(message == WM_SETFOCUS) ||
+			(message == WM_KILLFOCUS) )  {
+			
+			MSG m = {0};
+			m.hwnd = hwnd_;
+			m.lParam = lParam;
+			m.message = message;
+			m.wParam = wParam;
+			cachedMessages_->push_back( m );
+		}
+
+		/**
+		We don't want WM_ERASEBKGND to go to ::DefWindowProc if we are not
+		processing messages or registered yet. If it does, Windows will do an erase 
+		where this control will be, (but before this control is to be painted), and 
+		we will get a flicker effect.
+		*/
+		if( message == WM_ERASEBKGND )
+		{
+			wndProcResult = 0;			
+			return true;
+		}
+		else{
+			return result;
+		}
+	}
 
 	Win32MSG msg( hwnd_, message, wParam, lParam, peerControl_ );
 
 	Event* event = UIToolkit::createEventFromNativeOSEventData( &msg );
 
 	switch ( message ) {
+		case VCF_CONTROL_CREATE : {
+			canProcessMessages_ = true;
+
+			peerControl_->handleEvent( event );
+
+
+			if ( !cachedMessages_->empty() ) {
+				std::vector<MSG>::iterator it = cachedMessages_->begin();
+				while ( it != cachedMessages_->end() ) {
+					MSG& m = *it;
+					::SendMessage( m.hwnd, m.message, m.wParam, m.lParam );
+					it++;
+				}
+			}
+
+			delete cachedMessages_;
+
+			/*
+			Rect r = peerControl_->getBounds();
+
+			peerControl_->setBounds( &r );
+			Container* c = peerControl_->getContainer();
+			if ( NULL != c ) {
+				c->resizeChildren(NULL);
+			}
+			*/
+		}
+		break;
 
 		case WM_ERASEBKGND :{
 			wndProcResult = 0;
@@ -589,7 +750,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_CTLCOLOREDIT : case WM_CTLCOLORBTN: case WM_CTLCOLORLISTBOX: {
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				HWND hwndCtl = (HWND) lParam; // handle to static control
 				if ( hwndCtl != hwnd_ ) {
 					Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
@@ -615,7 +776,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 			}
 			*/
-			if ( NULL != event && (peerControl_->getComponentState() != Component::csDestroying) ) {
+			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );
 			}
 		}
@@ -633,7 +794,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			}
 			*/
 			
-			if ( NULL != event && (peerControl_->getComponentState() != Component::csDestroying) ) {
+			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );
 			}
 		}
@@ -657,12 +818,19 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 		case WM_PAINT:{
 			if ( true == isCreated() ){
-				if ( peerControl_->getComponentState() != Component::csDestroying ) {
+				//StringUtils::trace( Format( "AbstractWin32Component::WM_PAINT: [%d] %s\n" ) % peerControl_->getRepaintOnSize() % peerControl_->getToolTipText() );
+				if ( !peerControl_->isDestroying() ) {
 					if( !GetUpdateRect( hwnd_, NULL, FALSE ) ){
 						wndProcResult = 0;
 						result = true;
 						return result;
 					}
+
+
+					//check to see if the font needs updating
+					checkForFontChange();
+
+
 
 					PAINTSTRUCT ps;
 					HDC contextID = 0;
@@ -683,7 +851,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 
 		case WM_HELP : {
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				HELPINFO* helpInfo = (HELPINFO*) lParam;
 				if ( HELPINFO_WINDOW == helpInfo->iContextType ) {
 					if ( helpInfo->hItemHandle == hwnd_ ) {
@@ -703,8 +871,13 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		case WM_DESTROY: {
 			VCF_ASSERT( !destroyed_ );
 			
-			if ( (NULL != event) && (NULL != peerControl_) ) {
-				peerControl_->handleEvent( event );
+			if ( isCreated() && (NULL != event) && (NULL != peerControl_) ) {
+				if ( peerControl_->isNormal() || peerControl_->isDestroying() ) {
+					peerControl_->handleEvent( event );
+				}
+				else {
+					StringUtils::trace( "Trying to destroy component in weird state!\n" );
+				}
 			}			
 
 			destroyWindowHandle();
@@ -715,7 +888,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_MOUSEMOVE: {
-			if ( peerControl_->getComponentState() == Component::csNormal ) {
+			if ( peerControl_->isNormal() ) {
 				//result = defaultWndProcedure( message, wParam, lParam );
 			}
 
@@ -743,7 +916,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 
 		case WM_MOUSELEAVE: {
-			if ( peerControl_->getComponentState() == Component::csNormal ) {
+			if ( peerControl_->isNormal() ) {
 				//result = defaultWndProcedure( message, wParam, lParam );
 			}
 
@@ -760,7 +933,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			UINT idCtl = (UINT) wParam;
 			DRAWITEMSTRUCT* drawItemStruct = (DRAWITEMSTRUCT*) lParam;
 
-			if ( (peerControl_->getComponentState() != Component::csDestroying) && (0 == idCtl)
+			if ( (!peerControl_->isDestroying()) && (0 == idCtl)
 					&& (ODT_MENU == drawItemStruct->CtlType) ) {
 				// we have received a draw item for a menu item
 				MenuItem* foundItem = Win32MenuItem::getMenuItemFromID( drawItemStruct->itemID );
@@ -789,7 +962,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				}
 			}
 			else {
-				if ( (peerControl_->getComponentState() != Component::csDestroying) && (ODT_BUTTON == drawItemStruct->CtlType) ) {
+				if ( (!peerControl_->isDestroying()) && (ODT_BUTTON == drawItemStruct->CtlType) ) {
 					HWND hwndCtl = drawItemStruct->hwndItem;
 					Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
 					if ( NULL != win32Obj ){
@@ -808,7 +981,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 			UINT idCtl = (UINT) wParam;
 			MEASUREITEMSTRUCT* measureInfo = (MEASUREITEMSTRUCT*) lParam;
-			if ( (peerControl_->getComponentState() != Component::csDestroying) && (0 == idCtl)
+			if ( (!peerControl_->isDestroying()) && (0 == idCtl)
 					&& (ODT_MENU == measureInfo->CtlType) ) {
 
 				// we have received a draw item for a menu item
@@ -843,7 +1016,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_MENUSELECT : {
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				UINT uItem = (UINT) LOWORD(wParam);
 				UINT fuFlags = (UINT) HIWORD(wParam);
 				HMENU hmenuPopup = (HMENU) lParam;
@@ -863,7 +1036,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_INITMENUPOPUP : {
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				HMENU hmenuPopup = (HMENU) wParam;//thisis the menu handle of the menu popuping up or dropping down
 				if ( GetMenuItemCount( hmenuPopup ) > 0 ) {
 					//UINT Pos = (UINT) LOWORD(lParam);
@@ -910,7 +1083,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		case WM_NOTIFY : {
 			result = true;
 			wndProcResult = defaultWndProcedure( message, wParam, lParam );
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				NMHDR* notificationHdr = (LPNMHDR)lParam;
 				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( notificationHdr->hwndFrom );
 				if ( NULL != win32Obj ){
@@ -925,7 +1098,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			if ( NULL != peerControl_ ) {
 				Scrollable* scrollable = peerControl_->getScrollable();
 
-				if ( (peerControl_->getComponentState() != Component::csDestroying) && (NULL != scrollable) ) {
+				if ( (!peerControl_->isDestroying()) && (NULL != scrollable) ) {
 					short fwKeys = LOWORD(wParam);    // key flags
 					short zDelta = (short) HIWORD(wParam);    // wheel rotation
 					short xPos = (short) LOWORD(lParam);    // horizontal position of pointer
@@ -933,13 +1106,13 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 					if ( scrollable->hasVerticalScrollBar() && (scrollable->getVirtualViewHeight() > peerControl_->getHeight() ) ) {
 						int pos = 0;
-						StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
+						//StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
 						if ( zDelta < 0 ) {
-							pos = min( (long)(scrollable->getVerticalPosition() + 10),
+							pos = VCF::minVal<long>((scrollable->getVerticalPosition() + 10),
 												abs((long)(scrollable->getVirtualViewHeight() - peerControl_->getHeight())) );
 						}
 						else if ( zDelta > 0 ) {
-							pos = max( (long)(scrollable->getVerticalPosition() - 10), 0 );
+							pos = VCF::maxVal<long>((scrollable->getVerticalPosition() - 10), 0 );
 						}
 
 						scrollable->setVerticalPosition( pos );
@@ -947,13 +1120,13 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 					}
 					else if ( scrollable->hasHorizontalScrollBar() && (scrollable->getVirtualViewWidth() > peerControl_->getWidth() ) ) {
 						int pos = 0;
-						StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
+						//StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
 						if ( zDelta < 0 ) {
-							pos = min( (long)(scrollable->getHorizontalPosition() + 10),
+							pos = VCF::minVal<long>((scrollable->getHorizontalPosition() + 10),
 												abs((long)(scrollable->getVirtualViewWidth() - peerControl_->getWidth())) );
 						}
 						else if ( zDelta > 0 ) {
-							pos = max( (long)(scrollable->getHorizontalPosition() - 10), 0 );
+							pos = VCF::maxVal<long>((scrollable->getHorizontalPosition() - 10), 0 );
 						}
 
 						scrollable->setHorizontalPosition( pos );
@@ -964,9 +1137,9 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 #endif
 		case WM_VSCROLL : {
-			result = 0;
+			result = false;
 			if ( NULL != peerControl_ ) {
-				if ( peerControl_->getComponentState() != Component::csDestroying ) {
+				if ( !peerControl_->isDestroying() ) {
 
 					HWND hwndScrollBar = (HWND) lParam;
 
@@ -994,47 +1167,99 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 							case SB_THUMBPOSITION : case SB_THUMBTRACK : {
 
-								scrollable->setVerticalPosition( si.nTrackPos );
+								int pos = si.nTrackPos;
+
+								if ( scrollable->getDiscreteVertScroll() ) {
+									double step = scrollable->getVirtualViewVertStep();
+									if ( 0 != step ) {
+										double n = pos / step;
+										pos = (((int)ceil(n)) * step);
+									}
+								}
+
+								scrollable->setVerticalPosition( pos );
+
 							}
 							break;
 
 							case SB_LINEDOWN: {
-								int step = scrollable->getVirtualViewVertStep();
-								int pos = min( (long)(scrollable->getVerticalPosition() + step),
-												abs((long)(scrollable->getVirtualViewHeight() - height)) );
-								si.nPos += step;
-								si.nPos = min ( si.nPos, si.nMax );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getVerticalPosition() == p );
+								double step = scrollable->getVirtualViewVertStep();
+								int pos = p + step;
+								if ( scrollable->getDiscreteVertScroll() ) {
+									if ( 0 != step ) {
+										double n = p / step;
+										pos = (((int)ceil(n)) * step) + step;
+									}
+								}
+
+								//pos = min( pos, abs((long)(scrollable->getVirtualViewHeight() - height)) );
+								pos = VCF::minVal ( pos, si.nMax );
+								//si.nPos += step;
+								//si.nPos = min ( si.nPos, si.nMax );
+								//pos = si.nPos;
 								scrollable->setVerticalPosition( pos );
+
 							}
 							break;
 
 							case SB_LINEUP: {
-								int step = scrollable->getVirtualViewVertStep();
-								int pos = max( (long)( scrollable->getVerticalPosition() - step ), 0 );
-								si.nPos -= step;
-								si.nPos = max ( si.nPos, si.nMin );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getVerticalPosition() == p );
+								double step = scrollable->getVirtualViewVertStep();
+								int pos = p - step;
+								if ( scrollable->getDiscreteVertScroll() ) {
+									if ( 0 != step ) {
+										double n = p / step;
+										pos = (((int)ceil(n)) * step) - step;
+									}
+								}
+
+								//pos = max( pos, 0 );
+								pos = VCF::maxVal ( pos, si.nMin );
+								//si.nPos -= step;
+								//si.nPos = max ( si.nPos, si.nMin );
+								//pos = si.nPos;
 								scrollable->setVerticalPosition( pos );
+
 							}
 							break;
 
 							case SB_PAGEDOWN: {
-								int pos = min( (long)(scrollable->getVerticalPosition() + 50),
-												abs((long)(scrollable->getVirtualViewHeight() - height)) );
-								si.nPos += si.nPage;
-								si.nPos = min ( si.nPos, si.nMax );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getVerticalPosition() == p );
+								int pos = p + si.nPage;
+								if ( scrollable->getDiscreteVertScroll() ) {
+									double step = scrollable->getVirtualViewVertStep();
+									if ( 0 != step ) {
+										double n = (p + si.nPage) / step;
+										pos = ((int)ceil(n)) * step;
+									}
+								}
+
+								//pos = min( pos, abs((long)(scrollable->getVirtualViewHeight() - height)) );
+								pos = VCF::minVal ( pos, si.nMax );
 								scrollable->setVerticalPosition( pos );
 							}
 							break;
 
 							case SB_PAGEUP: {
-								int pos = max( (long)(scrollable->getVerticalPosition() - 50), 0 );
-								si.nPos -= si.nPage;
-								si.nPos = max ( si.nPos, si.nMin );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getVerticalPosition() == p );
+								int pos = p - si.nPage;
+								if ( scrollable->getDiscreteVertScroll() ) {
+									double step = scrollable->getVirtualViewVertStep();
+									if ( 0 != step ) {
+										double n = (p - si.nPage) / step;
+										pos = ((int)ceil(n)) * step;
+									}
+								}
+
+								//pos = max( pos, 0 );
+								pos = VCF::maxVal( pos, si.nMin );
 								scrollable->setVerticalPosition( pos );
+
 							}
 							break;
 						}
@@ -1045,9 +1270,9 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_HSCROLL : {
-			result = 0;
+			result = false;
 			if ( NULL != peerControl_ ) {
-				if ( peerControl_->getComponentState() != Component::csDestroying ) {
+				if ( !peerControl_->isDestroying() ) {
 
 					HWND hwndScrollBar = (HWND) lParam;
 
@@ -1073,7 +1298,19 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 						switch ( nScrollCode ) {
 							case SB_THUMBPOSITION : case SB_THUMBTRACK : {
-								scrollable->setHorizontalPosition( si.nTrackPos );
+
+								int pos = si.nTrackPos;
+
+								if ( scrollable->getDiscreteHorzScroll() ) {
+									double step = scrollable->getVirtualViewHorzStep();
+									if ( 0 != step ) {
+										double n = pos / step;
+										pos = (((int)ceil(n)) * step);
+									}
+								}
+
+								scrollable->setHorizontalPosition( pos );
+
 							}
 							break;
 
@@ -1089,40 +1326,87 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 							case SB_LINELEFT : {
 								//copied from SB_LINEUP
-								int step = scrollable->getVirtualViewHorzStep();
-								int pos = max( (long)( scrollable->getHorizontalPosition() - step ), 0 );
-								si.nPos -= step;
-								si.nPos = max ( si.nPos, si.nMin );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getHorizontalPosition() == p );
+								double step = scrollable->getVirtualViewHorzStep();
+								int pos = p - step;
+								if ( scrollable->getDiscreteHorzScroll() ) {
+									if ( 0 != step ) {
+										double n = p / step;
+										pos = (((int)ceil(n)) * step) - step;
+									}
+								}
+
+								//pos = max( pos, 0 );
+								pos = VCF::maxVal ( pos, si.nMin );
+								//si.nPos -= step;
+								//si.nPos = max ( si.nPos, si.nMin );
+								//pos = si.nPos;
 								scrollable->setHorizontalPosition( pos );
+
 							}
 							break;
 
 							case SB_LINERIGHT : {
 								//copied from SB_LINEDOWN
-								int step = scrollable->getVirtualViewHorzStep();
-								int pos = min( (long)( scrollable->getHorizontalPosition() + step ),           
-												abs((long)(scrollable->getVirtualViewWidth() - width)) ); 
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getHorizontalPosition() == p );
+								double step = scrollable->getVirtualViewHorzStep();
+								int pos = p + step;
+								if ( scrollable->getDiscreteHorzScroll() ) {
+									if ( 0 != step ) {
+										double n = p / step;
+										pos = (((int)ceil(n)) * step) + step;
+									}
+								}
 
-								si.nPos += step;
-								si.nPos = min ( si.nPos, si.nMax );	//useless: it is automatically done by Window's adjustments
-								pos = si.nPos;
+								//pos = min( pos, abs((long)(scrollable->getVirtualViewWidth() - width)) );
+								pos = VCF::minVal ( pos, si.nMax );
+								//si.nPos += step;
+								//si.nPos = min ( si.nPos, si.nMax );
+								//pos = si.nPos;
 								scrollable->setHorizontalPosition( pos );
+
 							}
 							break;
 
 							case SB_PAGELEFT : {
-								int pos = max( (long)(scrollable->getHorizontalPosition() - 50), 0 );
+								//copied from SB_PAGEUP
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getHorizontalPosition() == p );
+								int pos = p - si.nPage;
+								if ( scrollable->getDiscreteHorzScroll() ) {
+									double step = scrollable->getVirtualViewHorzStep();
+									if ( 0 != step ) {
+										double n = (p - si.nPage) / step;
+										pos = ((int)ceil(n)) * step;
+									}
+								}
 
+								//pos = max( pos, 0 );
+								pos = VCF::maxVal( pos, si.nMin );
 								scrollable->setHorizontalPosition( pos );
+
 							}
 							break;
 
 							case SB_PAGERIGHT : {
-								int pos = min( (long)(scrollable->getHorizontalPosition() + 50),
-												abs((long)( scrollable->getVirtualViewWidth() - width) ) );
+								//copied from SB_PAGEDOWN
+								int p = si.nPos;
+								//VCF_ASSERT( scrollable->getHorizontalPosition() == p );
+								int pos = p + si.nPage;
+								if ( scrollable->getDiscreteHorzScroll() ) {
+									double step = scrollable->getVirtualViewHorzStep();
+									if ( 0 != step ) {
+										double n = (p + si.nPage) / step;
+										pos = ((int)ceil(n)) * step;
+									}
+								}
 
+								//pos = min( pos, abs((long)(scrollable->getVirtualViewWidth() - width)) );
+								pos = VCF::minVal ( pos, si.nMax );
 								scrollable->setHorizontalPosition( pos );
+
 							}
 							break;
 
@@ -1138,7 +1422,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_COMMAND:{
-			if ( peerControl_->getComponentState() != Component::csDestroying ) {
+			if ( !peerControl_->isDestroying() ) {
 				UINT notifyCode = HIWORD(wParam);
 				HWND hwndCtl = (HWND) lParam;
 				Win32Object* win32Obj = NULL;
@@ -1153,7 +1437,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 						StringUtils::trace( "win32Obj == NULL!\n" );
 						UINT wID = LOWORD(wParam);
 						char tmp2[256];
-						memset( tmp2, 0, 256 );
+						memset( tmp2, 0, sizeof(tmp2) );
 						sprintf( tmp2, "command ID: %d\n", wID );
 
 						StringUtils::trace( String(tmp2) );
@@ -1200,6 +1484,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 	return result;
 }
+
 void AbstractWin32Component::repaint( Rect* repaintRect )
 {
 	if ( NULL == repaintRect ){
@@ -1230,7 +1515,7 @@ String AbstractWin32Component::toString()
 {
 	String result = Win32Object::toString();
 	char tmp[256];
-	memset(tmp,0,256);
+	memset(tmp,0,sizeof(tmp));
 	sprintf(tmp, "\n\tpeerControl_=%p\n\tHWND=%p\n", peerControl_, hwnd_ );
 	result += tmp;
 	return result;
@@ -1353,7 +1638,7 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 
 	//return res;
 
-	if ( (NULL != rectToModify) && (peerControl_->getComponentState() != Component::csDestroying) ) {
+	if ( (NULL != rectToModify) && (!peerControl_->isDestroying()) ) {
 		Border* border = peerControl_->getBorder();
 		Rect clientBounds( rectToModify->left, rectToModify->top, rectToModify->right, rectToModify->bottom );
 
@@ -1375,8 +1660,54 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/07/09 23:14:50  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.6  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.5.2.22  2005/06/29 20:33:35  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.5.2.20  2005/06/29 05:00:02  marcelloptr
+*some white spaces
+*
+*Revision 1.5.2.19  2005/06/14 07:33:35  dougtinkham
+*Fixed flicker effect with WM_ERASEBKGND in handleEventMessages
+*
+*Revision 1.5.2.18  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.5.2.17  2005/05/02 02:31:42  ddiego
+*minor text updates.
+*
+*Revision 1.5.2.16  2005/04/27 02:05:38  marcelloptr
+*somehow the first line of the cvs log section got deleted... restored
+*
+*Revision 1.3.2.3  2005/04/26 02:29:39  ddiego
+*fixes font setting bug brought up by scott and glen_f
+*
+*Revision 1.5.2.7  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
+*Revision 1.5.2.6  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.5.2.5  2005/02/16 05:09:30  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.5.2.4  2005/01/28 02:49:01  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
+*Revision 1.5.2.3  2005/01/16 03:02:41  marcelloptr
+*bugfix [ 1099910 ] plus other improvements on the scrolling behaviour
 *
 *Revision 1.5.2.1  2004/12/19 04:04:58  ddiego
 *made modifications to methods that return a handle type. Introduced

@@ -8,8 +8,10 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-//#include "ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/WindowPeer.h"
+#include "vcf/ApplicationKit/MenuManager.h"
+
+
 
 using namespace VCF;
 
@@ -45,6 +47,8 @@ Window::Window()
 	EventHandler* ev = new GenericEventHandler<Frame> ( this, &Frame::handleEvent, "Frame::handleEvent" );
 
 	ComponentAdded += ev;
+
+	MenuManager::registerWindow( this );
 }
 
 Window::Window( Control* control )
@@ -78,7 +82,7 @@ Window::Window( Control* control )
 
 Window::~Window()
 {
-	StringUtils::traceWithArgs( "In Window::~Window for instance %p\n", this );
+	StringUtils::traceWithArgs( Format("In Window::~Window for instance %p\n") % this );
 }
 
 void Window::destroy()
@@ -157,9 +161,8 @@ void Window::setMenuBar( MenuBar* menuBar )
 	menuBar_ = menuBar;
 	if ( NULL != menuBar_ ){
 		menuBar_->setFrame( this );
+		MenuManager::registerMenuBar( menuBar_ );
 	}
-
-	//resizeChildren( NULL );
 }
 
 void Window::close()
@@ -303,6 +306,18 @@ bool Window::isActiveFrame()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:51  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

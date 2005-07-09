@@ -15,48 +15,101 @@ where you installed the VCF.
 
 
 
-
+#ifndef _VCF_TEXTMODEL_H__
+#	include "vcf/ApplicationKit/TextModel.h"
+#endif // _VCF_TEXTMODEL_H__
 
 namespace VCF {
 
-class TextModel;
 
-class APPLICATIONKIT_API TextEvent : public Event {
+
+class APPLICATIONKIT_API TextEvent : public ModelEvent {
 public:
-	TextEvent( Object * source);
+	TextEvent( Object * source):
+		ModelEvent( source,0 ),
+		selectionStart_(-1),
+		selectionLength_(0),
+		changeStart_(0),
+		changeLength_(0) {}
 
-	TextEvent( Object * source, const String& changedText );
+
+
+	TextEvent( Object * source, const String& changedText ) :
+		ModelEvent( source,0 ),
+		changeText_(changedText),
+		selectionStart_(-1),
+		selectionLength_(0),
+		changeStart_(0),
+		changeLength_(0) {}
+
 
 	TextEvent( Object * source, int selectionStart, ulong32 selectionLength ):
-		Event(source),
+		ModelEvent(source,0),
 		selectionStart_(selectionStart),
-		selectionLength_(selectionLength){
+		selectionLength_(selectionLength),
+		changeStart_(0),
+		changeLength_(0){}
 
+	TextEvent( Object * source, ulong32 type, const String& changedText, ulong32 changeStart, ulong32 changeLength ):
+		ModelEvent(source, type),
+		selectionStart_(-1),
+		selectionLength_(0),
+		changeStart_(changeStart),
+		changeLength_(changeLength){
+
+		changeText_ = changedText;
 	}
 
-	TextEvent( const TextEvent& rhs ):Event(rhs),selectionStart_(-1),selectionLength_(0) {
+	TextEvent( Object * source, ulong32 type, const String& replacedText, 
+				const String& changedText, ulong32 replaceStart, ulong32 replaceLength ):
+		ModelEvent(source, type),
+		changeText_(changedText),
+		originalText_(replacedText),
+		selectionStart_(-1),
+		selectionLength_(0),
+		changeStart_(replaceStart),
+		changeLength_(replaceLength){}
+
+		
+
+	TextEvent( const TextEvent& rhs ):ModelEvent(rhs),
+		selectionStart_(-1),selectionLength_(0),
+		changeStart_(0),
+		changeLength_(0){
 		*this = rhs;
 	}
 
-	virtual ~TextEvent();
+	virtual ~TextEvent() {}
 
 	TextEvent& operator= ( const TextEvent& rhs ) {
-		Event::operator =( rhs );
+		ModelEvent::operator =( rhs );
 
 		changeText_ = rhs.changeText_;
+		originalText_ = rhs.originalText_;
 		selectionStart_ = rhs.selectionStart_;
 		selectionLength_ = rhs.selectionLength_;
+
+		changeStart_ = rhs.changeStart_;
+		changeLength_ = rhs.changeLength_;
 
 		return *this;
 	}
 
-    String getChangeText();
+    String getChangeText() {
+		return changeText_;
+	}
+
+	String getOriginalText() {
+		return originalText_;
+	}
 
 	/**
 	*returns the text model associated with this event. May
 	*return null if the source of the event was not a TextModel
 	*/
-	TextModel* getTextModel();
+	TextModel* getTextModel() {
+		return dynamic_cast<TextModel*>(this->getSource() );
+	}
 
 	virtual Object* clone( bool deep=false ) {
 		return new TextEvent(*this);
@@ -78,12 +131,29 @@ public:
 		return selectionLength_;
 	}
 
+	/**
+	returns the start of the change
+	*/
+	ulong32 getChangeStart() const {
+		return changeStart_;
+	}
+
+	/**
+	returns the length of the change
+	*/
+	ulong32 getChangeLength() const {
+		return changeLength_;
+	}
+
 
 private:
 	String changeText_;
+	String originalText_;
 	int selectionStart_;
 	ulong32 selectionLength_;
 
+	ulong32 changeStart_;
+	ulong32 changeLength_;
 };
 
 
@@ -114,6 +184,21 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/05/22 04:05:43  ddiego
+*more text edit fixes.
+*
+*Revision 1.3.2.3  2005/05/18 03:19:17  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.3.2.2  2005/05/16 00:05:06  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.1  2005/05/02 02:31:42  ddiego
+*minor text updates.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

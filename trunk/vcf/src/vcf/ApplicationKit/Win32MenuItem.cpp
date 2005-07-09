@@ -111,12 +111,19 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 		itemName = System::getCurrentThreadLocale()->translate( itemName );
 	}
 
+	itemName = generateCaption( child, itemName );
+
+
 	info.cch = itemName.size();
-
-	char* tmpName = new char[info.cch+1];
-	memset( tmpName, 0, info.cch+1 );
+#if defined(VCF_CW) && defined(UNICODE)
+	wchar_t* tmpName = new wchar_t[info.cch+1];
+	memset( tmpName, 0, (info.cch+1)*sizeof(wchar_t) );
 	itemName.copy( tmpName, info.cch );
-
+#else
+	char* tmpName = new char[info.cch+1];
+	memset( tmpName, 0, (info.cch+1)*sizeof(char) );
+	itemName.copy( tmpName, info.cch );
+#endif
 	info.dwTypeData = tmpName;
 
 	if ( InsertMenuItem( menu, child->getIndex()/*info.wID*/, TRUE, &info ) ) {
@@ -176,9 +183,14 @@ void Win32MenuItem::fixChildren( MenuItem* child )
 
 void Win32MenuItem::addChild( MenuItem* child )
 {
-	if ( NULL != child ){
-		insertSimpleMenuItem( child, (HMENU)getMenuID() );
-	}
+	VCF_ASSERT( NULL != child );
+	
+	insertSimpleMenuItem( child, (HMENU)getMenuID() );	
+
+	//mark the child as being bound to the peer
+	long state = child->getState();
+	state |= MenuItem::mdsBoundToMenuPeer;
+	child->setState( state );
 }
 
 void Win32MenuItem::insertChild( const unsigned long& index, MenuItem* child )
@@ -211,8 +223,8 @@ void Win32MenuItem::clearChildren()
 	for ( int i=0;i<count;i++ ){
 		if ( !DeleteMenu( itemHandle_, 0, MF_BYPOSITION ) ) {
 			int err = GetLastError();
-			StringUtils::traceWithArgs( "DeleteMenu( %p, 0, MF_BYPOSITION ) failed,GetLastError(): %d\n",
-										itemHandle_, err );
+			StringUtils::traceWithArgs( Format("DeleteMenu( %p, 0, MF_BYPOSITION ) failed,GetLastError(): %d\n") %
+										itemHandle_ % err );
 		}
 	}
 }
@@ -222,18 +234,26 @@ bool Win32MenuItem::isChecked()
 	if ( true == menuItem_->isSeparator() ){
 		return false;
 	}
+	/**
+	JC
+	Fix for bug
+	[ 1119206 ] Win32MenuItem::isChecked returns "false". Allways!!!
+	*/
+	MenuItem* parent = getParent();
+	if ( NULL != parent ){
+		MenuItemPeer* parentPeer = parent->getPeer();
+		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		if ( NULL != menuHandle ){
+			MENUITEMINFO info = {0};
+			info.cbSize = sizeof(MENUITEMINFO);
+			info.fMask = MIIM_STATE;
+			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 
-	int index = menuItem_->getIndex();
-
-	MENUITEMINFO info = {0};
-	info.cbSize = sizeof(MENUITEMINFO);
-	info.fMask = MIIM_STATE;
-	HMENU menuHandle = (HMENU)getMenuID();
-	if ( NULL != menuHandle ){
-		if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
-			return ((info.fState & MFS_CHECKED) != 0) ? true : false;
+				return ((info.fState & MFS_CHECKED) != 0) ? true : false;
+			}
 		}
 	}
+
 	return false;
 }
 
@@ -415,12 +435,53 @@ void Win32MenuItem::setMenuItem( MenuItem* item )
 	menuItem_ = item;
 }
 
+String Win32MenuItem::generateCaption( MenuItem* item, String caption )
+{
+	String acceleratorText;
+	VCF::AcceleratorKey* accelerator = item->getAccelerator();
+	//generate accelerator text if we are not owner drawn
+	if ( !item->canPaint() && (NULL != accelerator) ) {
+		
+		if ( accelerator->hasCtrlKey() ) {			
+			acceleratorText += "Ctrl";
+		}
+
+		if ( accelerator->hasShiftKey() ) {
+			if ( !acceleratorText.empty() ) {
+				acceleratorText += "+";
+			}
+			acceleratorText += "Shift";
+		}
+
+		if ( accelerator->hasAltKey() ) {
+			if ( !acceleratorText.empty() ) {
+				acceleratorText += "+";
+			}
+			acceleratorText += "Alt";
+		}
+
+		if ( !acceleratorText.empty() ) {
+			acceleratorText += "+";
+		}
+
+		acceleratorText += StringUtils::translateVKCodeToString( (VirtualKeyCode)accelerator->getKeyCode() );		
+	}
+
+	if ( !acceleratorText.empty() ) {
+		caption = caption + "\t" + acceleratorText;
+	}
+
+	return caption;
+}
+
 void Win32MenuItem::setCaption( const String& caption )
 {
 	if ( true == menuItem_->isSeparator() ){
 		return;
 	}
 	int index = menuItem_->getIndex();
+
+	String realCaption = generateCaption( menuItem_, caption );
 
 	if ( System::isUnicodeEnabled() ) {
 		MENUITEMINFOW info = {0};
@@ -432,11 +493,11 @@ void Win32MenuItem::setCaption( const String& caption )
 			HMENU menuHandle = (HMENU)parentPeer->getMenuID();
 			if ( NULL != menuHandle ){
 				if ( GetMenuItemInfoW( menuHandle, itemId_, FALSE, &info ) ){
-					info.cch = caption.size();
+					info.cch = realCaption.size();
 
 					VCFChar* tmpName = new VCFChar[info.cch+1];
 					memset( tmpName, 0, (info.cch+1)*sizeof(VCFChar) );
-					caption.copy( tmpName, info.cch );
+					realCaption.copy( tmpName, info.cch );
 
 					info.dwTypeData = tmpName;
 
@@ -457,12 +518,12 @@ void Win32MenuItem::setCaption( const String& caption )
 			HMENU menuHandle = (HMENU)parentPeer->getMenuID();
 			if ( NULL != menuHandle ){
 				if ( GetMenuItemInfoA( menuHandle, itemId_, FALSE, &info ) ){
-					AnsiString tmpCaption = caption;
+					AnsiString tmpCaption = realCaption;
 
 					info.cch = tmpCaption.size();
 
 					char* tmpName = new char[info.cch+1];
-					memset( tmpName, 0, info.cch+1 );
+					memset( tmpName, 0, (info.cch+1)*sizeof(char) );
 					tmpCaption.copy( tmpName, info.cch );
 
 					info.dwTypeData = tmpName;
@@ -550,6 +611,15 @@ MenuItem* Win32MenuItem::getMenuItemFromHandle( HMENU handle )
 	return result;
 }
 
+void Win32MenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
+{
+	//just call set caption to reset the menu item caption, 
+	//which will in turn take into consideration the presence of the
+	//accelerator
+
+	setCaption( menuItem_->getCaption() );
+}
+
 void Win32MenuItem::setAsSeparator( const bool& isSeperator )
 {
 	int index = menuItem_->getIndex();
@@ -608,6 +678,8 @@ void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 						if ( menuItem_->getUseLocaleStrings() ) {
 							caption = System::getCurrentThreadLocale()->translate( caption );
 						}
+
+						caption = generateCaption( menuItem_, caption );
 
 						HDC dc = ::CreateCompatibleDC( NULL );// screen DC--I won't actually draw on it
 						HFONT oldFont = (HFONT)SelectObject( dc, menuHFont );
@@ -775,6 +847,8 @@ void Win32MenuItem::drawMenuItemText( HDC dc, RECT rc, COLORREF color )
 		left = System::getCurrentThreadLocale()->translate( left );
 	}
 
+	left = generateCaption( menuItem_, left );
+
 	String right;
 
 	int tabPos = left.find('\t');
@@ -812,8 +886,35 @@ void Win32MenuItem::drawMenuItemText( HDC dc, RECT rc, COLORREF color )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.8  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.2.4.7  2005/04/13 00:57:02  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.2.4.6  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.2.4.5  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.2.4.4  2005/03/14 04:43:53  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.2.4.3  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.2.4.2  2005/02/10 19:56:15  ddiego
+*fixed bug 1119206 in isChecked() impl for Win32.
 *
 *Revision 1.2.4.1  2004/12/19 04:05:00  ddiego
 *made modifications to methods that return a handle type. Introduced

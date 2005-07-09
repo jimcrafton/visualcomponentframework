@@ -72,8 +72,8 @@ void RadioButtonControl::paint( GraphicsContext* context )
 	state.buttonCaption_ = caption_;
 	if ( getUseLocaleStrings() ) {
 		state.buttonCaption_ = System::getCurrentThreadLocale()->translate( caption_ );
-	}	
-	
+	}
+
 	context->drawThemeRadioButtonRect( &radioBtnRect, state );
 }
 
@@ -96,7 +96,7 @@ void RadioButtonControl::setGroupID( const long& groupID )
 }
 
 void RadioButtonControl::setChecked( const bool& checked )
-{	
+{
 	Control* parent = getParent();
 	if ( NULL != parent ) {
 		Container* container = parent->getContainer();
@@ -115,7 +115,7 @@ void RadioButtonControl::setChecked( const bool& checked )
 
 			if ( checked ) {
 				ToggledButton::setChecked( checked  );
-			}		
+			}
 		}
 		else {
 			//Ooh this is very bad !!
@@ -156,6 +156,12 @@ RadioButtonControl* RadioButtonControl::getSelectedRadioButtonFromGroup()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.1  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
 *Revision 1.4  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -86,7 +86,7 @@ void Win32PopupMenu::popup( Point* pt )
 				}
 			}
 			else {
-				StringUtils::traceWithArgs( "TrackPopupMenu failed, err: %d\n", GetLastError() );
+				StringUtils::traceWithArgs( Format("TrackPopupMenu failed, err: %d\n") % GetLastError() );
 			}	
 
 		}
@@ -97,6 +97,15 @@ void Win32PopupMenu::popup( Point* pt )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

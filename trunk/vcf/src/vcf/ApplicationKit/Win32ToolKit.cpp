@@ -55,6 +55,13 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32PrintDialog.h"
 
 
+#include "vcf/ApplicationKit/Win32TextPeer.h"
+
+#include "vcf/ApplicationKit/MenuManagerPeer.h"
+#include "vcf/ApplicationKit/Win32MenuManagerPeer.h"
+
+
+
 #ifdef _LIB
     /* a user not defining USE_WIN32HTMLBROWSER_LIB will not be able to
        link the Win32HTMLBrowser_StaticLib, but also he will not have to
@@ -62,12 +69,12 @@ where you installed the VCF.
 #   ifdef USE_WIN32HTMLBROWSER_LIB
 //     ApplicationKit statically linked in
 #      include "vcf/ApplicationKit/Win32HTMLBrowserApplication.h"
-#      pragma message ( "Win32HTMLBrowser linked in statically" )
+#      pragma message ( "Win32HTMLBrowser is linked in statically" )
 #   endif
 #else
     /* Win32HTMLBrowser will be loaded at runtime */
 #   define RUNTIME_LOADLIBRARY
-#   pragma message ( "Win32HTMLBrowser linked dynamically" )
+#   pragma message ( "Win32HTMLBrowser is linked dynamically" )
 #endif
 
 
@@ -134,11 +141,11 @@ public:
 	virtual ~Win32UIPolicyManager() {
 
 	}
-	
+
 	virtual Rect adjustInitialDialogBounds( Dialog* dialog ) {
 		Rect result;
 		Control* owner = dialog->getOwner();
-		if ( NULL != owner ) {			
+		if ( NULL != owner ) {
 			result.left_ = owner->getLeft() + ( owner->getWidth()/2.0 - dialog->getWidth()/2.0 );
 			result.top_ = owner->getTop() + ( owner->getHeight()/2.0 - dialog->getHeight()/2.0 );
 			result.right_ = result.left_ + dialog->getWidth();
@@ -147,28 +154,28 @@ public:
 				owner->translateToScreenCoords( &result );
 			}
 		}
-		
+
 		return result;
 	}
 
 	virtual Frame* getOwnerForDialog() {
 		Frame* result = NULL;
 		Frame* activeFrame = Frame::getActiveFrame();
-		
+
 		Application* app = Application::getRunningInstance();
-	
+
 		if ( NULL != activeFrame ) {
 			result = activeFrame;
 		}
 		else if ( NULL != app ) {
 			result = app->getMainWindow();
-		}	
-	
+		}
+
 		return result;
 	}
-	
+
 	/**
-	* merges two menus by adding to the menu items of windowMenu 
+	* merges two menus by adding to the menu items of windowMenu
 	* all the items and subitems of appMenu that are not in windowMenu.
 	*/
 	virtual void mergeMenus( Menu* appMenu, Menu* windowMenu ) {
@@ -203,6 +210,115 @@ public:
 		}
 	}
 
+	/**
+	*
+	*/
+	virtual String transformMnemonicValues( const String& input ) {
+		return input;
+	}
+
+	virtual AcceleratorKey::Value getStandardAcceleratorFor( const StandardAccelerator& val ) {
+		AcceleratorKey::Value result;
+
+		switch ( val ) {
+			case UIPolicyManager::saApplicationQuit : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterQ );
+			}
+			break;
+
+			case UIPolicyManager::saApplicationAbout : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterQ );
+			}
+			break;
+
+			case UIPolicyManager::saApplicationPreferences : {
+
+			}
+			break;
+
+			case UIPolicyManager::saFileNew : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterN );
+			}
+			break;
+
+			case UIPolicyManager::saFileOpen : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterO );
+			}
+			break;
+
+			case UIPolicyManager::saFileSave : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterS );
+			}
+			break;
+
+			case UIPolicyManager::saFileSaveAs : {
+				result = AcceleratorKey::Value( kmCtrl | kmShift,vkLetterS );
+			}
+			break;
+
+			case UIPolicyManager::saFilePrint : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterP );
+			}
+			break;
+
+			case UIPolicyManager::saFilePageSetup : {
+
+			}
+			break;
+
+			case UIPolicyManager::saEditUndo : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterZ );
+			}
+			break;
+
+			case UIPolicyManager::saEditRedo : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterY );
+			}
+			break;
+
+			case UIPolicyManager::saEditCut : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterX );
+			}
+			break;
+
+			case UIPolicyManager::saEditCopy : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterC );
+			}
+			break;
+
+			case UIPolicyManager::saEditPaste : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterV );
+			}
+			break;
+
+			case UIPolicyManager::saEditDelete : {
+				result = AcceleratorKey::Value( kmUndefined, vkDelete );
+			}
+			break;
+
+			case UIPolicyManager::saEditSelectAll : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterA );
+			}
+			break;
+
+			case UIPolicyManager::saEditFind : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterF );
+			}
+			break;
+
+			case UIPolicyManager::saEditFindNext : {
+				result = AcceleratorKey::Value( kmUndefined, vkF3 );
+			}
+			break;
+
+			case UIPolicyManager::saHelpContents : {
+				result = AcceleratorKey::Value( kmUndefined, vkF1 );
+			}
+			break;
+		}
+
+		return result;
+	}
 protected:
 
 	/**
@@ -277,8 +393,8 @@ public:
 		Point result;
 		HDC dc = GetDC( ::GetDesktopWindow() );
 
-		double baseUnitY = 0.0;
-		double cx = 0.0;
+		int baseUnitY = 0;
+		int cx = 0;
 
 		HFONT hf = NULL;
 		HFONT old = NULL;
@@ -319,10 +435,12 @@ public:
 
 
 
-		double baseUnitX = (cx / 26.0 + 1.0) / 2.0;
+		int baseUnitX = (cx / 26 + 1) / 2;
+		result.x_ = MulDiv(dlu.x_, baseUnitX, 4);
+		result.y_ = MulDiv(dlu.y_, baseUnitY, 8);
 
-		result.x_ = (dlu.x_ * baseUnitX) / 4.0;
-		result.y_  = (dlu.y_ * baseUnitY) / 8.0;
+		//(dlu.x_ * baseUnitX) / 4;
+		//result.y_  = (dlu.y_ * baseUnitY) / 8;
 
 		SelectObject(dc, old );
 		DeleteObject( hf );
@@ -370,6 +488,7 @@ public:
 
 			case UIMetricsManager::ftControlFont :  case UIMetricsManager::ftSystemFont : {
 				//do nothing the Win32Font already is initialized ot this by default
+				result.setColor( &Color( ::GetSysColor( COLOR_WINDOWTEXT ) ) );
 			}
 			break;
 
@@ -408,14 +527,17 @@ public:
 		switch ( type ) {
 			case UIMetricsManager::htLabelHeight : {
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				result = f.getHeight() * 1.75;
+				//result = f.getHeight();// * 1.75;
+				Point pt = DLUToPixel( Point(0,11), f );
+				result = pt.y_;
 			}
 			break;
 
 			case UIMetricsManager::htComboBoxHeight : {
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 				Point pt = DLUToPixel( Point(0,12), f );
-				result = pt.y_;				
+				result = pt.y_;
+
 			}
 			break;
 
@@ -436,18 +558,15 @@ public:
 			break;
 
 			case UIMetricsManager::htRadioBoxHeight : case UIMetricsManager::htCheckBoxHeight : {
-				//in Win32 a radio box or check box is ALWAYS 10 dialog units high
-				//dialog units are converted by
-				//(2 * average char height dialog font / average char height system font pixels
-				//where average char height dialog font = TEXTMETRIC.tmHeight field or a Font::getHeight()
-
-
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				result = (9.0 * ((2.0 * f.getHeight()) / f.getHeight())) - 4.0;//0.590909;
-
-
-				Point pt = DLUToPixel( Point(0,9), f );
-				result = pt.y_;
+				/**
+				JC
+				Stripped this all out  -
+				it turns out that the height/width is ALWAYS 13 pixels - no matter what
+				the DPI is
+				GetSystemMetrics( SM_CXMENUCHECK ) returns a value that changes based on the DPI
+				13 at 96 DPI and 17 at 120 DPI
+				*/
+				result = 13;
 			}
 			break;
 
@@ -597,7 +716,7 @@ public:
 
 		NONCLIENTMETRICS ncm;
 		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
-		ncm.cbSize = sizeof(NONCLIENTMETRICS);	
+		ncm.cbSize = sizeof(NONCLIENTMETRICS);
 
 		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
 
@@ -610,7 +729,7 @@ public:
 		Size result;
 
 		result.width_ = ::GetSystemMetrics( SM_CXHTHUMB );
-		result.height_ = ::GetSystemMetrics( SM_CYVTHUMB );	
+		result.height_ = ::GetSystemMetrics( SM_CYVTHUMB );
 
 		return result;
 	}
@@ -668,7 +787,7 @@ public:
 		getFont()->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_TOOLTIP_TEXT ) );
 		setFrameStyle( fstNoBorderFixed );
 		setFrameTopmost( true );
-		
+
 		setUseColorForBackground( true );
 
 		getPeer()->setText( "Win32ToolTip" );
@@ -833,7 +952,6 @@ public:
 	void onToolTipLostFocus( WindowEvent* e ) {
 		Window* w = (Window*)e->getSource();
 
-
 		if ( false == w->isActive() ) {
 			w->hide();
 		}
@@ -879,7 +997,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 	switch ( message ){
 
 		case WM_INPUTLANGCHANGE : {
-			StringUtils::traceWithArgs( "WM_INPUTLANGCHANGE\n" );
+			StringUtils::trace( "WM_INPUTLANGCHANGE\n" );
 		}
 		break;
 
@@ -917,6 +1035,13 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				Frame* activeFrame = Frame::getActiveFrame();
 
 				if ( NULL != activeFrame ) {
+					/** - MP -
+					REMARK: if we break here with a crash of the application, we probably had the
+					crash before the main frame window for the application has been fully initialized.
+					In order to see what the cause was, please put a break on the Dialog::showMessage
+					line inside the catch block of Application::main() and then skip it and continue 
+					to run from the throw statement.
+					*/
 					activeFrame->activate();
 				}
 			}
@@ -1179,30 +1304,46 @@ Win32ToolKit::Win32ToolKit():
 	browserLibAvailable_ = false;
 #endif
 
+#if defined(VCF_CW) && defined(UNICODE)
+	VCF_POST_EVENT = RegisterWindowMessage( L"VCF_POST_EVENT" );
+#else
 	VCF_POST_EVENT = RegisterWindowMessage( "VCF_POST_EVENT" );
+#endif
 	if ( 0 == VCF_POST_EVENT ) {
 		//oops it failed - do it the stupid way
 		VCF_POST_EVENT = WM_USER + 2000;
 	}
-
+#if defined(VCF_CW) && defined(UNICODE)
+	HBITMAP bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#else
 	HBITMAP bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#endif
 	if ( NULL != bmp ) {
 		stopImage_ = new Win32Image( bmp );
 	}
-
+#if defined(VCF_CW) && defined(UNICODE)
+	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#else
 	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#endif
 	if ( NULL != bmp ) {
 		warningImage_ = new Win32Image( bmp );
 	}
-
+#if defined(VCF_CW) && defined(UNICODE)
+	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#else
 	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#endif
 	if ( NULL != bmp ) {
 		informationImage_ = new Win32Image( bmp );
 		informationImage_->setTransparencyColor( &Color(0.0,1.0,0.0) );
 		informationImage_->setIsTransparent( true );
 	}
-
+#if defined(VCF_CW) && defined(UNICODE)
+	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#else
 	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+#endif
 	if ( NULL != bmp ) {
 		questionImage_ = new Win32Image( bmp );
 	}
@@ -1233,7 +1374,7 @@ Win32ToolKit::~Win32ToolKit()
 
 	if ( !::DestroyWindow( dummyParentWnd_ ) ) {
 		int err = GetLastError();
-		StringUtils::traceWithArgs( "::DestroyWindow( dummyParentWnd_[=%p] ) failed!, err: %d\n", dummyParentWnd_, err );
+		StringUtils::traceWithArgs( Format("::DestroyWindow( dummyParentWnd_[=%p] ) failed!, err: %d\n") % dummyParentWnd_ % err );
 
 		if ( NULL != toolTipWatcher ) {
 			toolTipWatcher->free();
@@ -1246,7 +1387,12 @@ ApplicationPeer* Win32ToolKit::internal_createApplicationPeer()
 	return new Win32Application();
 }
 
-TextPeer* Win32ToolKit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl)
+TextPeer* Win32ToolKit::internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined )
+{
+	return new Win32TextPeer(autoWordWrap,multiLined);
+}
+
+TextEditPeer* Win32ToolKit::internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl)
 {
 	return new Win32Edit( component, isMultiLineControl );
 }
@@ -1456,6 +1602,12 @@ SystemTrayPeer* Win32ToolKit::internal_createSystemTrayPeer()
 	return new Win32SystemTrayPeer();
 }
 
+
+MenuManagerPeer* Win32ToolKit::internal_createMenuManagerPeer()
+{
+	return new Win32MenuManagerPeer();
+}
+
 GraphicsResourceBundlePeer* Win32ToolKit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
 {
 	return new Win32AppResourceBundle( app );
@@ -1486,7 +1638,7 @@ void Win32ToolKit::internal_postEvent( EventHandler* eventHandler, Event* event,
 	Win32PostEventRecord* postEventRecord = new Win32PostEventRecord( eventHandler, event, deleteHandler );
 	if ( ! ::PostMessage( dummyParentWnd_, VCF_POST_EVENT, 0, (LPARAM)postEventRecord ) ) {
 		int err = ::GetLastError();
-		StringUtils::traceWithArgs( "!!!!!!! WARNING ::PostMessage Failed (GetLastError(): %d !!!!!!\n",
+		StringUtils::traceWithArgs( Format("!!!!!!! WARNING ::PostMessage Failed (GetLastError(): %d !!!!!!\n") %
 									err );
 
 	}
@@ -1784,17 +1936,17 @@ void Win32ToolKit::internal_runEventLoop()
 		}
 
 		if ( msg.message == WM_QUIT ) {
-			StringUtils::traceWithArgs( "WM_QUIT\n" );
+			StringUtils::trace( "WM_QUIT\n" );
 			return;
 		}
 		else if ( msg.message == WM_EXITMENULOOP ) {
-			StringUtils::traceWithArgs( "WM_EXITMENULOOP\n" );
+			StringUtils::trace( "WM_EXITMENULOOP\n" );
 		}
 		else if ( msg.message == WM_INPUTLANGCHANGE ) {
-			StringUtils::traceWithArgs( "WM_INPUTLANGCHANGE\n" );
+			StringUtils::trace( "WM_INPUTLANGCHANGE\n" );
 		}
 		else if ( msg.message == WM_WININICHANGE ) {
-			StringUtils::traceWithArgs( "WM_WININICHANGE\n" );
+			StringUtils::trace( "WM_WININICHANGE\n" );
 		}
 
 		do	{
@@ -1866,14 +2018,23 @@ void Win32ToolKit::internal_runEventLoop()
 						Win32Object* w = Win32Object::getWin32ObjectFromHWND( msg.hwnd );
 
 						Control* control = NULL;
+						Control* currentFocusedControl = Control::getCurrentFocusedControl();
+
 						if ( NULL != w ) {
 							control = w->getPeerControl();
-							Control* currentFocusedControl = Control::getCurrentFocusedControl();
 							if ( NULL != currentFocusedControl ) {
 								if ( (control != currentFocusedControl) && (currentFocusedControl->isLightWeight()) ) {
 									control = currentFocusedControl;
 								}
 							}
+						}
+						/**
+						JC - I put this very small change to attempt to
+						properly capture the "correct" focused control,
+						from the VCF's perspective. It seems to work fine.
+						*/
+						else {
+							control = currentFocusedControl;
 						}
 
 						KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, keyData.repeatCount,
@@ -1894,11 +2055,11 @@ void Win32ToolKit::internal_runEventLoop()
 				}
 
 				if ( msg.message == WM_QUIT ) {
-					StringUtils::traceWithArgs( "WM_QUIT\n" );
+					StringUtils::trace( "WM_QUIT\n" );
 					return;
 				}
 				else if ( msg.message == WM_EXITMENULOOP ) {
-					StringUtils::traceWithArgs( "WM_EXITMENULOOP\n" );
+					StringUtils::trace( "WM_EXITMENULOOP\n" );
 				}
 			}
 			else {
@@ -2095,11 +2256,53 @@ Size Win32ToolKit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.5  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *
-*Revision 1.4  2004/12/10 03:32:51  ddiego
-*fixed a heap overwrite error in the delegate-event handler code.
+*Revision 1.3.2.21  2005/07/04 03:46:07  marcelloptr
+*made the error handling block to break in the right place even when the main application's frame is not fully initialized yet.
+*
+*Revision 1.3.2.15  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.14  2005/05/20 03:04:05  ddiego
+*minor mods to set focused control.
+*
+*Revision 1.3.2.13  2005/05/15 23:17:38  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.12  2005/04/25 00:11:58  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.3.2.11  2005/04/20 02:26:01  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.10  2005/04/13 00:57:02  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.3.2.9  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
+*Revision 1.3.2.8  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.7  2005/03/14 18:56:31  marcelloptr
+*comments and added an error message to avoid an infinite loop
+*
+*Revision 1.3.2.6  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.5  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.4  2005/01/26 20:59:29  ddiego
+*some fixes to table control and to teh table item editor interface
 *
 *Revision 1.3.2.3  2005/01/01 20:31:07  ddiego
 *made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.

@@ -524,7 +524,7 @@ public:
 
 	UnicodeString& operator+=(AnsiChar c);
 
-	UnicodeString& operator+=(AnsiChar* rhs );
+	UnicodeString& operator+=(const AnsiChar* rhs );
 
 	UnicodeString& append(const UnicodeString& str) {
 		data_.append( str.data_ );
@@ -943,7 +943,7 @@ protected:
 	StringData data_;
 	mutable AnsiChar* ansiDataBuffer_;
 
-	inline void modified() {
+	void modified() {
 		if ( NULL != ansiDataBuffer_ ) {
 			delete [] ansiDataBuffer_;
 			ansiDataBuffer_ = NULL;
@@ -955,7 +955,7 @@ protected:
 
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, const UnicodeString& rhs )
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString& rhs )
 {
 	UnicodeString result (lhs);
 
@@ -965,7 +965,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, con
 
 }
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::UniChar* lhs, const UnicodeString& rhs )
+inline UnicodeString operator +( const UnicodeString::UniChar* lhs, const UnicodeString& rhs )
 {
 	UnicodeString result(lhs) ;
 
@@ -975,7 +975,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::UniChar*
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar* rhs )
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar* rhs )
 {
 	UnicodeString result(lhs) ;
 
@@ -985,7 +985,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, con
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::UniChar& lhs, const UnicodeString& rhs )
+inline UnicodeString operator +( const UnicodeString::UniChar& lhs, const UnicodeString& rhs )
 {
 	UnicodeString result(1,lhs) ;
 
@@ -995,7 +995,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::UniChar&
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar& rhs )
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar& rhs )
 {
 	UnicodeString result(lhs) ;
 
@@ -1005,7 +1005,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, con
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::AnsiChar& lhs, const UnicodeString& rhs )
+inline UnicodeString operator +( const UnicodeString::AnsiChar& lhs, const UnicodeString& rhs )
 {
 	UnicodeString result(1,UnicodeString::transformAnsiCharToUnicodeChar( lhs ));
 	result += rhs;
@@ -1013,7 +1013,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::AnsiChar
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar& rhs )
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar& rhs )
 {
 	UnicodeString result(lhs);
 	result += UnicodeString::transformAnsiCharToUnicodeChar( rhs  );
@@ -1021,7 +1021,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, con
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::AnsiChar* lhs, const UnicodeString& rhs )
+inline UnicodeString operator +( const UnicodeString::AnsiChar* lhs, const UnicodeString& rhs )
 {
 	UnicodeString result;
 	UnicodeString::transformAnsiToUnicode( lhs, strlen(lhs), result );
@@ -1031,7 +1031,7 @@ inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString::AnsiChar
 }
 
 
-inline FOUNDATIONKIT_API UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar* rhs )
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar* rhs )
 {
 	UnicodeString result(lhs);
 	UnicodeString tmp;
@@ -1073,7 +1073,6 @@ inline bool operator >=( const UnicodeString& lhs, const UnicodeString& rhs )
 
 
 
-
 //typedef std::basic_string<VCFChar> String;
 
 typedef UnicodeString String;
@@ -1084,6 +1083,25 @@ typedef UnicodeString String;
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:06  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.6  2005/04/13 02:53:11  iamfraggle
+*Remove inadvertantly added 'inline'
+*
+*Revision 1.3.2.5  2005/04/11 22:47:58  marcelloptr
+*minor fix
+*
+*Revision 1.3.2.4  2005/04/11 17:07:14  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.3.2.3  2005/02/16 05:09:33  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.2  2005/01/17 18:04:55  marcelloptr
+*removed unnecessary dllimport/dllexport keyword before global functions defined in the header
+*which was causing problems with the inline keyword. Thank you Fraggle for pointing out and solving this.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

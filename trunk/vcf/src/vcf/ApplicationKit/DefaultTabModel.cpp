@@ -171,6 +171,7 @@ void DefaultTabModel::tabPageChange( ItemEvent* e )
 	updateAllViews();
 }
 
+
 bool DefaultTabModel::isFirstPage( TabPage* page ) 
 {
 	bool result = false;
@@ -192,6 +193,7 @@ bool DefaultTabModel::isLastPage( TabPage* page )
 	}
 	return result;
 }
+
 
 TabPage* DefaultTabModel::nextPage( TabPage* page ) 
 {
@@ -222,9 +224,13 @@ TabPage* DefaultTabModel::previousPage( TabPage* page )
 	
 	return result;
 }
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

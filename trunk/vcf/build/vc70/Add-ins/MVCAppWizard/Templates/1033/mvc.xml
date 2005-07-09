@@ -1,0 +1,12 @@
+<documentTypes>
+	<document classname="[!output PROJECT_NAME]Document" classid="[!output DOC_UUID]">
+		<property name="mimetype" value="application/x-mydoc"/>
+		<property name="role" value="editor"/>
+		<property name="extension" value=".txt"/>
+		<property name="description" value="[!output PROJECT_NAME]Document Document"/>
+		<property name="view" value="[!output PROJECT_NAME]View"/>
+		<property name="window" value="[!output PROJECT_NAME]Window"/>
+	</document>
+</documentTypes>
+
+

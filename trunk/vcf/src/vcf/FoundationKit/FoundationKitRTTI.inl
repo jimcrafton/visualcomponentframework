@@ -10,9 +10,9 @@ where you installed the VCF.
 namespace VCF {
 
 
-BEGIN_CLASSINFO(ObjectWithEvents, "VCF::ObjectWithEvents", "VCF::Object", OBJECTWITHEVENTS_CLASSID)
-EVENT( "VCF::NotifyEventHandler",VCF::ObjectWithEvents,VCF::NotifyEvent, Notified )
-END_CLASSINFO(ObjectWithEvents)
+_class_rtti_(ObjectWithEvents, "VCF::Object", OBJECTWITHEVENTS_CLASSID)
+_event_( "VCF::NotifyEventHandler",VCF::NotifyEvent, Notified )
+_class_rtti_end_
 
 
 };
@@ -21,6 +21,12 @@ END_CLASSINFO(ObjectWithEvents)
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

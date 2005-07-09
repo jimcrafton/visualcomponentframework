@@ -215,6 +215,12 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp">
 			</File>
 			<File
@@ -237,6 +243,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Thread.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h">
 			</File>
 		</Filter>
 		<Filter
@@ -435,25 +447,10 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommandLine.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\DateTime.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\DateTime.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Enumerator.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ErrorLog.cpp">
@@ -468,9 +465,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Library.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Lock.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MessageLoader.cpp">
 			</File>
 			<File
@@ -481,12 +475,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MIMEType.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp">
@@ -513,15 +501,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Registry.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Runnable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Semaphore.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Semaphore.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\StringsMessageLoader.cpp">
 			</File>
 			<File
@@ -537,55 +516,16 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\StringUtils.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\SynchObject.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\System.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\System.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\TextCodec.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\TextCodec.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFChar.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFMath.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFProcess.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFProcess.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFulong64.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Waitable.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\XMLParser.cpp">
@@ -599,6 +539,18 @@
 			Filter="*.h">
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Enumerator.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Format.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Locales.cpp">
@@ -634,10 +586,40 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundle.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\System.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\System.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCF.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFChar.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFMath.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFMath.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFulong64.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\WarningsOffVc.h">
@@ -671,10 +653,16 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SemaphorePeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SystemPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadManagerPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadPeer.h">
@@ -720,6 +708,9 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Property.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RTTIMacros.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VariantData.cpp">
 			</File>
 			<File
@@ -727,6 +718,61 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFRTTIImpl.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Threads"
+			Filter="">
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Lock.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Runnable.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Semaphore.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Semaphore.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\SynchObject.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadKit.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadManager.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Waitable.h">
 			</File>
 		</Filter>
 	</Files>

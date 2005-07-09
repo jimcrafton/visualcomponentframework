@@ -24,44 +24,66 @@ class TableCellItem;
 
 #define TABLEITEMEDITOR_CLASSID		"53EA0BA4-7068-11d4-8F12-00207811CFAB"
 
-class APPLICATIONKIT_API TableItemEditor : public Object{
+/**
+\par
+The TableItemEditor class is used to provide editing capabilities
+for individual cell items in a TableControl. When the TableControl
+detects that an event has occurred to start an edit, it calls the 
+respective TableCellItem's createItemEditor() method. This will 
+create a new instance of a TableItemEditor, as appropriate
+for that cell. A simple implementation of this interface can
+be found in the BasicTableItemEditor class. 
+\par
+The editor allows you to retrieve the item that is currently being edited.
+It also allows access to the control that is used to edit the item. This
+control is managed by the underlying TableControl, all you need to do is create
+the control instance once. One approach might be to create the control in
+your custom class's constructor. Another approach, which the BasicTableItemEditor
+takes, is to set a member variable to NULL in the constructor, and then
+in the implementation of getEditingControl, check the member variable, if it's
+NULL, then create the control at that point and set the member variable, and then
+return the member variable.
+@see TableCellItem::createItemEditor
+@see BasicTableItemEditor
+*/
+class APPLICATIONKIT_API TableItemEditor : public ObjectWithEvents {
 public:
 
 	TableItemEditor(){};
 
 	virtual ~TableItemEditor(){};
 
-	virtual bool isCellEditable() = 0;
-
-	virtual void addCellItemChangedHandler( EventHandler* handler ) = 0;
-
-	virtual void removeCellItemChangedHandler( EventHandler* handler ) = 0;
-
-	virtual void addCellItemValidateChangeHandler( EventHandler* handler ) = 0;
-
-	virtual void removeCellItemValidateChangeHandler( EventHandler* handler ) = 0;
+	/**
+	@delegate CellItemChanged
+	@event ItemEditorEvent
+	*/
+	DELEGATE(CellItemChanged);
 
 	/**
-	*this is called to initialize the table item editor with some value
-	*from the TableCellItem, typically the caption.
+	@delegate CellItemValidateChange
+	@event ItemEditorEvent
+	@eventtype ITEMEDITOR_CHANGED
 	*/
-	virtual void setItemToEdit( TableCellItem* itemToEdit ) = 0;
+	DELEGATE(CellItemValidateChange);
+	
 
+	/**
+	Returns an instance to the item current associated 
+	with this editor.
+	*/
 	virtual TableCellItem* getItemToEdit() = 0;
 
 	/**
-	*updates the item passed in during the setItemToEdit() call, to
-	*change to whatever new value has been set in the editor.
-	*prior to the data transfer, all ItemEditorListeners should have their
-	*ItemEditorListener::onValidateChange() method called. Implementers of
-	*ItemEditorListener::onValidateChange() should throw an exception if
-	*invalid data is detected. This can done by simply calling the
-	*ItemEditrEvent's fireInvalidStateException() method.
-	*the data is presumed to be stored in the Event's setUserData/getUserData
-	*calls.
+	Updates the item to change to whatever new value has been 
+	set in the editor. 
 	*/
 	virtual void updateItem() = 0;
 
+    /**
+	Returns a control instance that belongs to this editor. This control
+	instance is managed by the table control, and it has the same life time
+	as the editor that created it.
+	*/
 	virtual Control* getEditingControl() = 0;
 };
 
@@ -71,6 +93,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:29  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

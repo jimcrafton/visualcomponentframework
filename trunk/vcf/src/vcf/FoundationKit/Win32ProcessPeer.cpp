@@ -22,7 +22,7 @@ Win32ProcessPeer::Win32ProcessPeer()
 	win32ProcessInfo_.hThread = ::GetCurrentThread();
 
 	TCHAR moduleFileName[MAX_PATH];
-	memset( moduleFileName, 0, MAX_PATH );
+	memset( moduleFileName, 0, sizeof(moduleFileName) );
 	//retreive the current running file name
 	::GetModuleFileName( NULL, moduleFileName, MAX_PATH );
 	processFileName_ = moduleFileName;
@@ -121,8 +121,14 @@ ulong32 Win32ProcessPeer::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:24  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/04/09 17:21:34  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
 *
 *Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
 *made modifications to methods that return a handle type. Introduced

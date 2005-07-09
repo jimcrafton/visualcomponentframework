@@ -19,7 +19,7 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF {
 
 class Color;
 
@@ -77,36 +77,46 @@ public:
 
 	virtual ~TreeItem(){};
 
-    virtual Color* getTextColor() = 0;
+	virtual Color* getTextColor() = 0;
 
-    virtual void setTextColor(Color* color) = 0;
+	virtual void setTextColor(Color* color) = 0;
 
-    virtual void setTextBold(const bool& bold) = 0;
+	virtual void setTextBold(const bool& bold) = 0;
 
-    virtual bool getTextBold() = 0;
+	virtual bool getTextBold() = 0;
 
-    virtual bool isLeaf() = 0;
+	virtual bool isLeaf() = 0;
 
 	virtual bool isRoot() = 0;
 
 	virtual bool isExpanded() = 0;
 
+	/* expand this tree item.
+	*@param const bool& isExpanded, true if it expands, false to collapse it.
+	*/
 	virtual void expand( const bool& isExpanded ) = 0;
 
-    virtual TreeItem* getParent() = 0;
+	/* expand this tree item.and all its children recursively.
+	*@param const bool& isExpanded, true to expand, false to collapse.
+	*/
+	virtual void expandAllChildren( const bool& isExpanded ) = 0;
+
+	virtual TreeItem* getParent() = 0;
 
 	virtual void setParent( TreeItem* parent ) = 0;
 
-    virtual TreeItem* getNextChildNodeItem() = 0;
+	virtual TreeItem* getNextChildNodeItem() = 0;
 
-    virtual TreeItem* getPrevChildNodeItem() = 0;
+	virtual TreeItem* getPrevChildNodeItem() = 0;
 
-    virtual String getCaption() = 0;
+	virtual String getCaption() = 0;
 
 	virtual ulong32 getLevel() = 0;
 
 	virtual void setCaption( const String& caption ) = 0;
 
+	virtual uint32 getChildCount() = 0;
+	
 	virtual Enumerator<TreeItem*>* getChildren() = 0;
 
 	virtual void addChild( TreeItem* child ) = 0;
@@ -142,12 +152,22 @@ public:
 	virtual void subItemChanged( SubItem* item ) = 0;
 };
 
-};
+
+}; //namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/29 03:46:13  ddiego
+*more osx tree and list coding.
+*
+*Revision 1.2.4.1  2005/01/31 02:08:05  marcelloptr
+*member function expandAllChildren() added
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -288,7 +288,7 @@ void TabbedPages::onTabPageAdded( TabModelEvent* event )
 	//if the width is gbreater than the controls
 	//width then we need to make the scroll buttons
 	//visible
-	repaint();
+	//repaint();
 
 	resizeChildren(NULL);
 
@@ -350,7 +350,9 @@ void TabbedPages::onTabPageSelected( TabModelEvent* event )
 		while ( true == children->hasMoreElements() ){
 			Control* comp = children->nextElement();
 			if ( comp != page->getPageComponent() ){
-				comp->setVisible( false );
+				if ( comp->getVisible() ) {
+					comp->setVisible( false );
+				}
 			}
 		}
 		page->getPageComponent()->setVisible( true );
@@ -382,7 +384,7 @@ TabPage* TabbedPages::addNewPage( const String& caption )
 	sheet->setBorder( NULL );
 	page->setPageComponent( sheet );
 	add( sheet, AlignClient );
-	sheet->setVisible( true );
+	//sheet->setVisible( true );
 
 	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
 
@@ -391,7 +393,7 @@ TabPage* TabbedPages::addNewPage( const String& caption )
 
 	model->setSelectedPage( page );
 
-	recalcScrollerButtonsPos();
+	//recalcScrollerButtonsPos();
 
 	return page;
 }
@@ -558,6 +560,12 @@ void TabbedPages::ScrollButton::paint( GraphicsContext* ctx )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

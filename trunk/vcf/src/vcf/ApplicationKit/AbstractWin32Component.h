@@ -122,20 +122,6 @@ public:
 	void updatePaintDC( HDC paintDC, RECT paintRect, RECT* exclusionRect );
 
 protected:
-	void init();
-	HDC memDC_;
-	HBITMAP originalMemBMP_;
-	HBITMAP memBMP_;
-	bool mouseEnteredControl_;	
-	int memDCState_;
-
-	/*
-	JC I remove this cause we don't really need them
-	//HDWP winPosInfo_;
-	//AbstractWin32Component* parent_;
-	*/
-	bool destroyed_;
-
 	/**
 	*
 	*
@@ -147,17 +133,69 @@ protected:
 	*
 	*/
 	LRESULT handleNCCalcSize( WPARAM wParam, LPARAM lParam );
+
+	/**
+	let the peer to change its font 
+	when the font has been changed.
+	Actually this function is obsolete, as
+	now the peer listen to a font change notification.
+	@see Font::FontChanged delegate.
+	*/
+	void checkForFontChange();
+
+protected:
+	void init();
+	HDC memDC_;
+	HBITMAP originalMemBMP_;
+	HBITMAP memBMP_;
+	bool mouseEnteredControl_;	
+	int memDCState_;
+	HFONT currentFont_;
+
+	bool destroyed_;
+
+	//this starts off false - the control just ignores messages UNTIL 
+	//it recv's a VCF_CONTROL_CREATE message - at that point it's
+	//set to true
+	bool canProcessMessages_;
+
+	std::vector<MSG>* cachedMessages_;
+
+	/*
+	JC I remove this cause we don't really need them
+	//HDWP winPosInfo_;
+	//AbstractWin32Component* parent_;
+	*/
+
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:50  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.5  2005/06/29 20:30:15  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.3.2.4  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.3.2.3  2005/04/26 02:29:39  ddiego
+*fixes font setting bug brought up by scott and glen_f
+*
+*Revision 1.3.2.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

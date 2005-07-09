@@ -386,7 +386,8 @@ Directory::Finder* Directory::findFiles( FileSearchFilter* filterFileObject/*=NU
 
 
 	if ( FilePath::isRelativePath( fileName_ ) ) {
-		throw BasicException( "Please provide a full path name to the directory when performing a search." );
+		String msg = Format("Please provide a full path name to the directory when performing a file search.\nPath: %s") % fileName_;
+		throw BasicException( MAKE_ERROR_MSG_2( msg ) );
 	}
 
 	//if ( NULL == finder_ ) {
@@ -606,8 +607,23 @@ File* FileSearchFilterStandard::passSearchFilter( const File* file, const Direct
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.5  2005/06/02 15:21:23  marcelloptr
+*minor fix
+*
+*Revision 1.2.4.4  2005/03/15 01:51:51  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.2.4.3  2005/02/16 17:08:40  marcelloptr
+*improved an error message
 *
 *Revision 1.2.4.1  2004/12/10 22:32:42  ddiego
 *fixed bug in the Win32 file peer class that was not properly

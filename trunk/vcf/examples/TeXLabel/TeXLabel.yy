@@ -52,25 +52,25 @@ group
 string
 	: TEXCHAR
 	{
-		$$ = new String();
-		dynamic_cast<String *>($$)->value_ = $1;
+		$$ = new TexString();
+		dynamic_cast<TexString *>($$)->value_ = $1;
 	}
 	| string TEXCHAR
 	{
 		$$ = $1;
-		dynamic_cast<String *>($$)->value_ += $2;
+		dynamic_cast<TexString *>($$)->value_ += $2;
 	}
 	| ACCENT '{' TEXCHAR '}'
 	{
 		$$ = new String();
-		dynamic_cast<String *>($$)->value_ = $3;
-		dynamic_cast<String *>($$)->value_ += $1;
+		dynamic_cast<TexString *>($$)->value_ = $3;
+		dynamic_cast<TexString *>($$)->value_ += $1;
 	}
 	| string ACCENT '{' TEXCHAR '}'
 	{
 		$$ = $1;
-		dynamic_cast<String *>($$)->value_ += $4;
-		dynamic_cast<String *>($$)->value_ += $2;
+		dynamic_cast<TexString *>($$)->value_ += $4;
+		dynamic_cast<TexString *>($$)->value_ += $2;
 	}
 	;
 

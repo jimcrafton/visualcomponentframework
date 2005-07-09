@@ -15,6 +15,41 @@ using namespace VCF;
 
 
 
+AbstractContainer::AbstractContainer():
+	controlContainer_(NULL),
+	currentTabControlIndex_(0),
+	controlHandler_(NULL),
+	mouseHandler_(NULL)
+{
+	init();
+}
+
+AbstractContainer::AbstractContainer( Component* owner ):
+	Container(owner),
+	controlContainer_(NULL),
+	currentTabControlIndex_(0),
+	controlHandler_(NULL),
+	mouseHandler_(NULL)
+{
+	init();
+}
+
+AbstractContainer::~AbstractContainer()
+{
+	if ( NULL != controlContainer_ ){
+		controlContainer_->ControlSized -= controlHandler_;
+
+		controlContainer_->MouseDoubleClicked -= mouseHandler_;
+		controlContainer_->MouseClicked -= mouseHandler_;
+		controlContainer_->MouseMove -= mouseHandler_;
+		controlContainer_->MouseUp -= mouseHandler_;
+		controlContainer_->MouseDown -= mouseHandler_;
+		controlContainer_->MouseLeave -= mouseHandler_;
+		controlContainer_->MouseEnter -= mouseHandler_;
+	}
+
+	controls_.clear();
+}
 
 void AbstractContainer::containerResized( ControlEvent* event )
 {
@@ -139,41 +174,6 @@ void AbstractContainer::onMouseEvent( MouseEvent* event )
 	}
 }
 
-AbstractContainer::AbstractContainer():
-	controlContainer_(NULL),
-	currentTabControlIndex_(0),
-	controlHandler_(NULL),
-	mouseHandler_(NULL)
-{
-	init();
-}
-
-AbstractContainer::~AbstractContainer()
-{
-	if ( NULL != controlContainer_ ){
-		controlContainer_->ControlSized -= controlHandler_;
-
-		controlContainer_->MouseDoubleClicked -= mouseHandler_;
-		controlContainer_->MouseClicked -= mouseHandler_;
-		controlContainer_->MouseMove -= mouseHandler_;
-		controlContainer_->MouseUp -= mouseHandler_;
-		controlContainer_->MouseDown -= mouseHandler_;
-		controlContainer_->MouseLeave -= mouseHandler_;
-		controlContainer_->MouseEnter -= mouseHandler_;
-	}
-
-	/*
-	std::vector<Control*>::iterator it = controls_.begin();
-	while ( it != controls_.end() ){
-		Control* control = *it;
-		control->free();
-		control = NULL;
-		it++;
-	}
-	*/
-	controls_.clear();
-
-}
 
 
 
@@ -191,7 +191,7 @@ void AbstractContainer::init()
 													"AbstractContainer::onMouseEvent");
 
 	controlContainer_ = NULL;
-	initContainer( controls_ );
+	controlsContainer_.initContainer( controls_ );
 }
 
 void AbstractContainer::add( Control * child )
@@ -212,10 +212,11 @@ void AbstractContainer::add( Control * child )
 		}
 
 		child->setParent( controlContainer_ );
-		child->setTabOrder( controls_.size()/*-1*/ );
-		resizeChildren( child );
 
 		controls_.push_back( child );
+
+		child->setTabOrder( controls_.size() - 1 );
+		resizeChildren( child );
 	}
 }
 
@@ -237,10 +238,11 @@ void AbstractContainer::add( Control * child, const AlignmentType& alignment )
 
 		child->setParent( controlContainer_ );
 		child->setAlignment( alignment );
-		child->setTabOrder( controls_.size()/*-1*/ );
-		resizeChildren( child );
 
 		controls_.push_back( child );
+
+		child->setTabOrder( controls_.size() - 1 );
+		resizeChildren( child );
 	}
 }
 
@@ -249,6 +251,9 @@ void AbstractContainer::remove( Control* child )
 	std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), child );
 	if ( found != controls_.end() ){
 		controls_.erase( found );
+
+		child->setParent( NULL );
+
 		resizeChildren(NULL);
 
 		std::map<long,Control*>::iterator it = tabOrderMap_.begin();
@@ -262,19 +267,24 @@ void AbstractContainer::remove( Control* child )
 	}
 }
 
-
+void AbstractContainer::clear()
+{
+	controls_.clear();
+	tabOrderMap_.clear();
+	resizeChildren(NULL);
+}
 
 
 void AbstractContainer::paintChildren( GraphicsContext* context ){
 
-	Enumerator<Control*>* children = getEnumerator();
+	Enumerator<Control*>* children = controlsContainer_.getEnumerator();
 	if ( NULL == controlContainer_ ){
 		throw InvalidPointerException(MAKE_ERROR_MSG(INVALID_POINTER_ERROR), __LINE__);
 	};
-	
+
 	double originX = 0.0;
 	double originY = 0.0;
-	
+
 	Scrollable* scrollable = controlContainer_->getScrollable();
 
 	Rect oldClipRect = context->getClippingRect();
@@ -296,13 +306,13 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 		VCF_ASSERT( NULL != child );
 
 		if ( child->isLightWeight() && child->getVisible() ){
-			bounds = child->getBounds();			
-			
+			bounds = child->getBounds();
+
 			childClipRect.left_ = maxVal<>(bounds.left_,mainBounds.left_);
 			childClipRect.top_ = maxVal<>(bounds.top_,mainBounds.top_);
 			childClipRect.right_ = minVal<>(bounds.right_,mainBounds.right_);
 			childClipRect.bottom_ = minVal<>(bounds.bottom_,mainBounds.bottom_);
-			
+
 			childClipRect.offset( -bounds.left_, -bounds.top_ );
 
 			Point oldOrigin = context->getOrigin();
@@ -317,8 +327,8 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 			context->setOrigin( originX, originY );
 
 
-			//do this to prevent matrix changes from 
-			//screwing up the state for the child control 
+			//do this to prevent matrix changes from
+			//screwing up the state for the child control
 			Matrix2D xfrm;
 			int gcs = context->saveState();
 			context->setCurrentTransform( xfrm );
@@ -339,12 +349,12 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 
 Enumerator<Control*>* AbstractContainer::getChildren()
 {
-	return getEnumerator();
+	return controlsContainer_.getEnumerator();
 }
 
 unsigned long AbstractContainer::getChildCount()
 {
-	return 	controls_.size();
+	return controls_.size();
 }
 
 
@@ -559,6 +569,22 @@ void AbstractContainer::setContainerControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:50  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.5  2005/06/25 22:19:34  marcelloptr
+*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
+*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
+*
+*Revision 1.4.2.3  2005/04/20 02:25:59  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.4.2.2  2005/03/14 04:17:22  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.4.2.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.4  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

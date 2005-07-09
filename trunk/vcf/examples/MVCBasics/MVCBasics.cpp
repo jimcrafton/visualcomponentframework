@@ -291,7 +291,7 @@ public:
 		}
 
 		EtchedBorder bdr;
-		bdr.setStyle( GraphicsContext::etSunken );
+		bdr.setEdgeStyle( GraphicsContext::etSunken );
 		bdr.paint( &r, ctx );
 	}
 };
@@ -345,7 +345,7 @@ public:
 	CircleInfoUI() : CustomControl(true) {
 
 		EtchedBorder* bdr = new EtchedBorder();
-		bdr->setStyle( GraphicsContext::etSunken );
+		bdr->setEdgeStyle( GraphicsContext::etSunken );
 		setBorder( bdr );
 
 
@@ -372,7 +372,7 @@ public:
 	virtual void updateView( Model* model ) {
 		CircleModel* circleModel = (CircleModel*)model;
 
-		String text = StringUtils::format( "Number of circle shapes: %d", circleModel->getCircles().size() );
+		String text = Format( "Number of circle shapes: %d" ) % circleModel->getCircles().size();
 
 		circleCount_->setCaption( text );
 
@@ -593,6 +593,15 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:40  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/04/17 15:11:45  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
+*Revision 1.3.2.1  2005/03/06 22:50:55  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/12/01 04:15:08  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

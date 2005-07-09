@@ -260,53 +260,8 @@ myFont->free();//destroy our font - we don't need it anymore
 gc->textAt( 12, 375, "Hello2!" );
 
 		</programlisting>
-		</para>
-		<para>
-		For advanced techniques like tracing the path of a font's glyphs see the
-		"Glyphs" section.
-		</para>
+		</para>		
 	</section>
-
-	<section><title>Glyphs</title>
-		<para>
-		Font's, in addition to a set of attributes, also have to ability to return
-		a set of gyphs, for more advanced drawing techniques. A glyph represents a 
-		single character, and contains metods to render the single glyph, as well
-		as methods for retreiving all the points associated with the glyph. 
-		<note>
-			<para>
-			This is only applicable to Font objects that are True Type, Open Type,
-			or PostScript fonts.
-			</para>
-		</note>
-		</para>
-		<para>
-		A glyph is represented by the Glyph class. You do not create a Glyph directly,
-		instead you retreive a GlyphCollection, which is a class that maintains
-		a series of 1 or more Glyphs for you, and provides methods for operating on 
-		the collection of Glyphs or retrieving an individual Glyph.
-		</para>
-		<para>
-		To get a GlyphCollection you call a Font instance's getGlyphCollection() method 
-		and pass in a string of text. If the Font support's working with Glyphs then
-		it will return a new instance of a GlyphCollection, for which you are responsible
-		for. The returned GlyphCollection wil contain a Glyph for each character in the 
-		string.
-		</para>
-		<para>
-		The GlyphCollection can render itself as a grayscale (alpha channel) image by 
-		calling GlyphCollection::getImage(). This will return a new Image instance whose
-		height and width will be the dimensions of the bounding rectangle neccessary for 
-		the series of characters rendered in a single line (no word wrapping will 
-		take place). The image will contain a grayscale (256 shades of gray) image of 
-		character rendering.
-		</para>
-		<para>
-		A GlyphCollection can return the path, or vector information for the series
-		of Glyphs.
-		</para>
-	</section>
-
 	<section><title>Paths</title>
 		<para>
 		Paths represent a series of 1 or more points. The points can form a closed shape 
@@ -424,6 +379,12 @@ ImageLoader* GraphicsToolkit::getImageLoaderForFileName( const String& fileName 
 <!--
 CVS Log info
 $Log$
+Revision 1.4  2005/07/09 23:14:10  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.3.4.1  2005/06/03 21:40:19  ddiego
+more doc updates
+
 Revision 1.3  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 

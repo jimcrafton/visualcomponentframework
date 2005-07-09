@@ -67,10 +67,12 @@ public:
 		ofWrite          = 0x2,
 		ofAppend         = 0x4,
 
-		/* open for stat: if yo know the way to use it, please do it !
+		/* open for stat: if you know the way to use it, please do it !
 		   but I don't think we need of it
 		*/
-		ofStat           = 0x4
+		ofStat           = 0x8,
+
+		ofReadWrite = ofRead | ofWrite
 
 	};
 
@@ -87,7 +89,7 @@ public:
 	
 	File( const String& fileName );
 	
-	File( const String& fileName, ulong32 openFlags, ShareFlags shareFlags );
+	File( const String& fileName, ulong32 openFlags, ShareFlags shareFlags = File::shMaskAny );
 
 	virtual ~File();
 
@@ -480,6 +482,12 @@ inline void File::updateTime()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/02/24 05:48:28  marcelloptr
+*A minor fix to the OpenFlags. Also file's ctor has now a default value for sharing: File::shMaskAny
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

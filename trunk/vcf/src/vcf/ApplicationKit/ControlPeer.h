@@ -55,26 +55,26 @@ public:
 	*/
 	virtual void destroyControl() = 0;
 
-    /**
-    returns a ID that identifies this control. On Win32 this corresponds to an HWND.
-    */
-    virtual OSHandleID getHandleID() = 0;
+	/**
+	returns a ID that identifies this control. On Win32 this corresponds to an HWND.
+	*/
+	virtual OSHandleID getHandleID() = 0;
 
-    /**
-    returns a text associated with the component. This usually gets used in the
+	/**
+	returns a text associated with the component. This usually gets used in the
 	Control::getCaption() method.
-    */
-    virtual String getText() = 0;
+	*/
+	virtual String getText() = 0;
 
-    /**
-    sets the text for the control
-     */
-    virtual void setText( const String& text ) = 0;
+	/**
+	sets the text for the control
+	*/
+	virtual void setText( const String& text ) = 0;
 
-    /**
-    sets the bounds for the component. Bounds are specified in the coordinate system of the componenents parent.
-     */
-    virtual void setBounds( Rect* rect ) = 0;
+	/**
+	sets the bounds for the component. Bounds are specified in the coordinate system of the componenents parent.
+	*/
+	virtual void setBounds( Rect* rect ) = 0;
 
 	/**
 	advanced function for changing the size of multiple child windows.
@@ -84,33 +84,33 @@ public:
 
 	virtual void endSetBounds() = 0;
 
-    /**
-    returns the bounds of the component in the coordinate system of the parent.
-    */
-    virtual Rect getBounds() = 0;
+	/**
+	returns the bounds of the component in the coordinate system of the parent.
+	*/
+	virtual Rect getBounds() = 0;
 
-    /**
-    shows or hides the component.
-    This does NOT close the component (if invoked on a frame based component ).
-    */
-    virtual void setVisible( const bool& visible ) = 0;
+	/**
+	shows or hides the component.
+	This does NOT close the component (if invoked on a frame based component ).
+	*/
+	virtual void setVisible( const bool& visible ) = 0;
 
-    /**
-    returns wether or not the component is currently visible.
-    */
-    virtual bool getVisible() = 0;
+	/**
+	returns wether or not the component is currently visible.
+	*/
+	virtual bool getVisible() = 0;
 
-    /**
-     * returns the component that this Peer is attached to.
-     */
-    virtual Control* getControl() = 0;
+	/**
+	* returns the component that this Peer is attached to.
+	*/
+	virtual Control* getControl() = 0;
 
-    /**
-     * attahces the Peer to a particular component. This should only be done once.
-     */
-    virtual void setControl( Control* component ) = 0;
+	/**
+	* attahces the Peer to a particular component. This should only be done once.
+	*/
+	virtual void setControl( Control* component ) = 0;
 
-    virtual void setCursor( Cursor* cursor ) = 0;
+	virtual void setCursor( Cursor* cursor ) = 0;
 
 	virtual void setParent( Control* parent ) = 0;
 
@@ -158,21 +158,26 @@ public:
 	virtual void translateFromScreenCoords( Point* pt ) = 0;
 
 	/**
-	Called by the control when it's border object changes. May or may not 
+	Called by the control when it's border object changes. May or may not
 	need to be implemented depending on the windowing system.
 	*/
 	virtual void setBorder( Border* border ) = 0;
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+
 *Revision 1.3  2005/01/02 03:04:20  ddiego
-*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*Revision 1.2.4.2  2005/06/29 05:00:03  marcelloptr
+*some white spaces
 *
 *Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

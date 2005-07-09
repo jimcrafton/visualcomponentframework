@@ -66,15 +66,15 @@ bool Win32DatagramSocketPeer::startup() {
 
 	// Create Datagram socket
 	sock_ = ::socket(AF_INET, SOCK_DGRAM, 0);
-    if ( sock_ < 0 ) {
+	if ( sock_ < 0 ) {
 		// throw exception
 		return false;
-    }
+	}
 
 	// Bind the socket to port_ and host_ (if specified),
 	// otherwise, bind to default local address and port.
 	memset(&localHostAddr_, 0, sizeof(localHostAddr_));
-    localHostAddr_.sin_family = AF_INET;
+	localHostAddr_.sin_family = AF_INET;
 	if(!socket_->isInitialized(host_)) {
 		localHostAddr_.sin_addr.s_addr = htonl(INADDR_ANY);
 	} else {
@@ -154,6 +154,12 @@ int Win32DatagramSocketPeer::getRemoteHostPort() {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:17  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:21:40  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:19  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

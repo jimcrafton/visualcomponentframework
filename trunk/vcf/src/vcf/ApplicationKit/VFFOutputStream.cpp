@@ -34,7 +34,7 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
 	long bufSize = bos.getSize();
 	long inc =  sizeof( char );
 	VCFChar hexBytes[3];
-	memset( hexBytes, 0, 3 );
+	memset( hexBytes, 0, 3*sizeof(VCFChar) );
 	//this is slow, we might want to figure out a better way !
 	while ( size < bufSize ) {
 		uchar hexVal = *((uchar*)tmpBuffer);
@@ -197,6 +197,12 @@ void VFFOutputStream::writeComponent( Component* component )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -35,6 +35,14 @@ use the same control with either style.
 class APPLICATIONKIT_API TextModel  {
 public:
 
+	enum TextModelEvents {
+		tmTextInserted = VCF::Model::MODEL_CHANGED + 3210,
+		tmTextReplaced,
+		tmTextSet,
+		tmTextRemoved
+	};
+
+
 	TextModel(){
 
 	};
@@ -44,18 +52,18 @@ public:
 	/**
 	*adds a new TextModelEvent handler
 	*/
-    virtual void addTextModelChangedHandler( EventHandler * handler ) = 0;
+	virtual void addTextModelChangedHandler( EventHandler * handler ) = 0;
 
 	/**
 	*removes a TextModelEvent handler
 	*/
-    virtual void removeTextModelChangedHandler( EventHandler * handler ) = 0;
+	virtual void removeTextModelChangedHandler( EventHandler * handler ) = 0;
 
 	/**
 	*sets the contents of the text model, completely changes what was previously
 	*in the model
 	*/
-    virtual void setText( const String& text ) = 0;
+	virtual void setText( const String& text ) = 0;
 
 	/**
 	*inserts text into the model at the given index
@@ -63,14 +71,14 @@ public:
 	*a zero based index.
 	*@param String the text to insert
 	*/
-    virtual void insertText( const unsigned long& index, const String& text ) = 0;
+	virtual void insertText( const uint32& index, const String& text ) = 0;
 
 	/**
 	*replace text into the model in place of the selected text is any,
 	*or at the current position otherwise
 	*@param String the text to replace with
 	*/
-    virtual void replaceText( const unsigned long& index, const unsigned long& len, const String& text ) = 0;
+	virtual void replaceText( const uint32& index, const uint32& count, const String& text ) = 0;
 
 	/**
 	*deletes text from the model, starting at index, and continuing for count characters,
@@ -78,22 +86,23 @@ public:
 	*@param long the starting point. The index is zero based.
 	*@param long the number of characters to delete
 	*/
-    virtual void deleteText( const unsigned long& index, const unsigned long& count ) = 0;
-
-	/**
-	*adds text to end of the current text data
-	*/
-    virtual void appendText( const String& text ) = 0;
-
+	virtual void deleteText( const uint32& index, const uint32& count ) = 0;
+	
 	/**
 	*returns all of the TextModel's text in a string.
 	*/
 	virtual String getText() = 0;
 
 	/**
-	*returns the size of the TextModel
+	*returns a sub string of the TextModel's text in a string.
 	*/
-	virtual unsigned long getSize() = 0;
+	virtual String getText( const uint32& index, const uint32& count ) = 0;
+
+	/**
+	*returns the size of the TextModel. That is the number of charecters in 
+	text string that this model represents.
+	*/
+	virtual uint32 getSize() = 0;
 
 };
 
@@ -105,6 +114,21 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/07/04 03:44:55  marcelloptr
+*spaces spaces spaces
+*
+*Revision 1.3.2.3  2005/05/18 03:19:17  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.3.2.2  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.1  2005/05/02 02:31:42  ddiego
+*minor text updates.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

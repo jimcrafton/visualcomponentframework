@@ -65,6 +65,20 @@ void DefaultTableCellItem::setModel( Model* model )
 	model_ = model;
 }
 
+double DefaultTableCellItem::getTextCellWidth( GraphicsContext* context )
+{
+	double result = context->getTextWidth( getCaption() ) + (5*2) + 2;
+	if ( isFixed() ) {
+		result += 2;
+	}
+	return result;
+}
+
+double DefaultTableCellItem::getTextCellHeight( GraphicsContext* context )
+{
+	return (context->getTextHeight( getCaption() ) + 2) * 1.15;
+}
+
 void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 {
 	bounds_ = *paintRect;
@@ -75,9 +89,12 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 	if ( isFixed() ){
 		bool bold = f->getBold();
 		f->setBold( true );
-		bounds_.inflate( 1, 1 );
+		
+		bounds_.right_ += 1;
+		bounds_.bottom_ += 1;
 
-		Light3DBorder border;
+		//Light3DBorder border;
+		Basic3DBorder border;
 
 		border.setInverted( false );
 
@@ -98,9 +115,12 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 
 
 		border.paint( &bounds_, context );
+
 		f->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW_TEXT ) );
 
-		bounds_.inflate( -1, -1 );
+		bounds_.right_ -= 1;
+		bounds_.bottom_ -= 1;
+
 		f->setBold( bold );
 	}
 	else {
@@ -136,7 +156,12 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 	Rect textRect( x, y, paintRect->right_, paintRect->bottom_ );
 	textRect.inflate( -1, -1 );
 	long options = GraphicsContext::tdoCenterVertAlign;
-	options |= GraphicsContext::tdoLeftAlign;
+	if ( isFixed() ){
+		options |= GraphicsContext::tdoCenterHorzAlign;
+	}
+	else {
+		options |= GraphicsContext::tdoLeftAlign;
+	}
 
 	bool bold = f->getBold();
 	if ( isFixed() ){
@@ -273,6 +298,18 @@ void DefaultTableCellItem::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/02/24 05:45:02  marcelloptr
+*fixed positioning of text inside a table item. Now is centered and looks better
+*
+*Revision 1.2.4.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

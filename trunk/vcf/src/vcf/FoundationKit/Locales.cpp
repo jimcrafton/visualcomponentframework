@@ -1202,7 +1202,7 @@ UnicodeString Locale::translate( const UnicodeString& id )
 
 	FilePath app = cmdLine.getArgument(0);
 
-	String resPath  = System::findResourceDirectory();
+	String resPath  = System::findResourceDirectory( this );
 
 	UnicodeString resFile = resPath + app.getBaseName() + ".strings";
 
@@ -1266,6 +1266,12 @@ Locale::CountryCodes Locale::stringToCountryCode( const UnicodeString& code )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/08 03:27:27  ddiego
+*fix for popup menus
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

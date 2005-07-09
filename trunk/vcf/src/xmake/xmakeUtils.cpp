@@ -104,8 +104,8 @@ String XMakeUtils::generateMakefile( const String& project, const String& makefi
 /**
 *CVS Log info
 *$Log$
-*Revision 1.3  2005/01/02 03:04:27  ddiego
-*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*Revision 1.4  2005/07/09 23:15:18  ddiego
+*merging in changes from devmain-0-6-7 branch.
 *
 *Revision 1.2.4.1  2004/12/21 01:25:17  marcelloptr
 *added cvs log section

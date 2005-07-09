@@ -48,7 +48,7 @@ int main( int argc, char** argv ){
 	else {
 		System::println( "Found resource " + res->getName() + 
 							" size in bytes: " + StringUtils::toString(res->getDataSize()) +
-							" buffer: " + StringUtils::format( "%p", res->getData() ) );
+							" buffer: " + Format( "%p") % res->getData() );
 
 		res->free();
 	}
@@ -63,7 +63,7 @@ int main( int argc, char** argv ){
 	else {
 		System::println( "Found resource " + res->getName() + 
 							" size in bytes: " + StringUtils::toString(res->getDataSize()) +
-							" buffer: " + StringUtils::format( "%p", res->getData() ) );
+							" buffer: " + Format( "%p" ) % res->getData() );
 
 		res->free();
 	}
@@ -82,11 +82,11 @@ int main( int argc, char** argv ){
 	else {
 		System::println( "Program information:" );
 
-		System::println( "%ls", info->getProgramName().c_str() );
-		System::println( "%ls", info->getProgramVersion().c_str() );
-		System::println( "%ls", info->getAuthor().c_str() );
-		System::println( "%ls", info->getCompany().c_str() );
-		System::println( "%ls", info->getDescription().c_str() );		
+		System::println( info->getProgramName() );
+		System::println( info->getProgramVersion() );
+		System::println( info->getAuthor() );
+		System::println( info->getCompany() );
+		System::println( info->getDescription() );		
 
 
 		info->free();

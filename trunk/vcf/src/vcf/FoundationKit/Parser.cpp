@@ -36,7 +36,7 @@ void Parser::resetStream()
 	memset( buffer_, 0, (strSize+1) * sizeof(VCFChar) );
 
 	char* tmp = new char[ strSize+1 ];
-	memset( tmp, 0, (strSize+1) );
+	memset( tmp, 0, (strSize+1) * sizeof(char) );
 
 	stream_->seek( 0, stSeekFromStart );
 
@@ -49,6 +49,9 @@ void Parser::resetStream()
 
 	bufPtr_ = buffer_;
 	bufEnd_ = bufPtr_ + stream_->getSize();
+
+	VCF_ASSERT( bufEnd_ > bufPtr_ );
+
 	sourcePtr_ = buffer_;
 	sourceEnd_ = buffer_;
 	tokenPtr_ = buffer_;
@@ -90,7 +93,7 @@ void Parser::checkToken( const VCFChar& T )
 			break;
 
 			default: {
-				error( StringUtils::format( "Char Expected, instead: %c", T ) );
+				error( StringUtils::format( Format("Char Expected, instead: %c") % T ) );
 			}
 			break;
 		}
@@ -121,7 +124,7 @@ void Parser::checkTokenSymbol( const String& s )
 {
 	bool tki = tokenSymbolIs( s );
 	if ( false == tki ) {
-		error( StringUtils::format( "Symbol Expected, instead: %s", s.c_str() ) );
+		error( StringUtils::format( Format("Symbol Expected, instead: %s") % s.c_str() ) );
 	}
 }
 
@@ -132,7 +135,7 @@ void Parser::error( const String& Ident )
 
 void Parser::errorStr( const String& Message)
 {
-	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( "Parse Error, message: %s", Message.c_str() )) );
+	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( Format("Parse Error, message: %s") % Message.c_str() )) );
 }
 
 VCFChar Parser::nextToken()
@@ -313,6 +316,21 @@ bool Parser::tokenSymbolIs(const String& s)
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/04/20 02:27:44  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.2.4.2  2005/04/09 17:21:30  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.2.4.1  2005/03/15 01:51:51  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

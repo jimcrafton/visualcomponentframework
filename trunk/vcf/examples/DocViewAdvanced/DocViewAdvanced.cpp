@@ -6,6 +6,11 @@
 #include "vcf/ApplicationKit/ModelViewKit.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 
+/**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 
 
@@ -49,8 +54,8 @@ public:
 
 class CircleDocument : public Document {
 public:
-	BEGIN_CLASSINFO( CircleDocument, "CircleDocument", "VCF::Document", CIRCLEDOCUMENT_CLASSID )
-	END_CLASSINFO(CircleDocument)
+	_class_rtti_( CircleDocument, "VCF::Document", CIRCLEDOCUMENT_CLASSID )
+	_class_rtti_end_
 
 
 
@@ -398,7 +403,7 @@ public:
 	CircleInfoUI() : CustomControl(true) {
 
 		EtchedBorder* bdr = new EtchedBorder();
-		bdr->setStyle( GraphicsContext::etSunken );
+		bdr->setEdgeStyle( GraphicsContext::etSunken );
 		setBorder( bdr );
 
 
@@ -425,7 +430,7 @@ public:
 	virtual void updateView( Model* model ) {
 		CircleDocument* circleModel = (CircleDocument*)model;
 
-		String text = StringUtils::format( "Number of circle shapes: %d", circleModel->getCircles().size() );
+		String text = Format("Number of circle shapes: %d") % circleModel->getCircles().size();
 
 		circleCount_->setCaption( text );
 
@@ -501,7 +506,7 @@ public:
 
 
 		EtchedBorder bdr;
-		bdr.setStyle( GraphicsContext::etSunken );
+		bdr.setEdgeStyle( GraphicsContext::etSunken );
 		bdr.paint( &r, ctx );
 
 
@@ -656,8 +661,8 @@ public:
 
 class DocViewAdvancedWindow : public Window {
 public:
-	BEGIN_CLASSINFO( DocViewAdvancedWindow, "DocViewAdvancedWindow", "VCF::Window", DOCVIEWADVANCEDWINDOW_CLASSID )
-	END_CLASSINFO(DocViewAdvancedWindow)
+	_class_rtti_( DocViewAdvancedWindow, "VCF::Window", DOCVIEWADVANCEDWINDOW_CLASSID )
+	_class_rtti_end_
 
 
 

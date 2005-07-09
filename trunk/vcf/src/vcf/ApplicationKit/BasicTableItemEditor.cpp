@@ -13,79 +13,74 @@ where you installed the VCF.
 
 using namespace VCF;
 
-BasicTableItemEditor::BasicTableItemEditor( TableCellItem* editingItem )
+BasicTableItemEditor::BasicTableItemEditor( TableCellItem* editingItem ):
+	editingItem_(editingItem),
+		editingControl_(NULL)
 {
 	editingItem_ = editingItem;
-
-	//NB ! We need to clean up our event handler our selves since we don't deriove from ObjectWithEvents
-	textModelHandler_ =
-		new TextModelEventHandler<BasicTableItemEditor>( this, &BasicTableItemEditor::onEditorTextChanged );
-
 }
 
 BasicTableItemEditor::~BasicTableItemEditor()
 {
-	editorMap_.clear();
-	delete textModelHandler_;
+	
 }
 
-
-bool BasicTableItemEditor::isCellEditable()
-{
-	return true;
-}
-
-void BasicTableItemEditor::setItemToEdit( TableCellItem* itemToEdit )
-{
-	editingItem_ = itemToEdit;
-}
 
 void BasicTableItemEditor::updateItem()
 {
-	if ( NULL != editingItem_ ){
-		TextControl* editingControl = dynamic_cast<TextControl*>(getCurrentEditingControl(editingItem_) );
-		if ( NULL != editingControl ){
-			TextModel* tm = editingControl->getTextModel();
+	VCF_ASSERT( NULL != editingControl_ );
+	VCF_ASSERT( NULL != editingItem_ );
+	
+	TextControl* editingControl = dynamic_cast<TextControl*>( editingControl_ );
+	if ( NULL != editingControl ){
+		TextModel* tm = editingControl->getTextModel();
 
-			String captionOfItem = tm->getText();
+		String captionOfItem = tm->getText();
 
-			void* itemCaptionPtr = (void*)&captionOfItem;
-			ItemEditorEvent event( this, itemCaptionPtr );
-			event.setItemBeingEdited( editingItem_ );
+		void* itemCaptionPtr = (void*)&captionOfItem;
+		ItemEditorEvent event( this, itemCaptionPtr );
+		event.setItemBeingEdited( editingItem_ );
 
-			try {
-				CellItemValidateChange.fireEvent( &event );
+		try {
+			CellItemValidateChange.fireEvent( &event );
 
-				event.setType( ITEMEDITOR_CHANGED );
-				//if we got this far we are OK to send off a change notification !
+			event.setType( ITEMEDITOR_CHANGED );
+			//if we got this far we are OK to send off a change notification !
 
-				editingItem_->setCaption( captionOfItem );
-				CellItemChanged.fireEvent( &event );
-			}
-			catch ( InvalidStateException& ){
-
-			}
-			catch (...){
-				throw;//pass it on to someone else !!
-			}
+			editingItem_->setCaption( captionOfItem );
+			CellItemChanged.fireEvent( &event );
 		}
-	}
+		catch ( InvalidStateException& ){
+
+		}
+		catch (...){
+			throw;//pass it on to someone else !!
+		}
+	}	
 }
 
 Control* BasicTableItemEditor::getEditingControl()
 {
-	if ( NULL != editingItem_ ){
+	if ( NULL == editingControl_ ){
 		TextControl* tc = new TextControl();
-		editorMap_[editingItem_] = tc;
+		tc->setBorder( NULL );
 		TextModel* tm = tc->getTextModel();
 		tm->setText( editingItem_->getCaption() );
+		EventHandler* ev = getEventHandler("BasicTableItemEditor::onEditorTextChanged");
+		if ( NULL == ev ) {
+			ev = new TextModelEventHandler<BasicTableItemEditor>( this, &BasicTableItemEditor::onEditorTextChanged,"BasicTableItemEditor::onEditorTextChanged" );
+		}
 
-		tm->addTextModelChangedHandler( textModelHandler_ );
+		tc->setSelectionMark( 0, editingItem_->getCaption().size() );
 
-		return tc;
+		tm->addTextModelChangedHandler( ev );
+
+		editingControl_ = tc;
 	}
 
-	return NULL;
+	VCF_ASSERT( NULL != editingControl_ );
+
+	return editingControl_;
 }
 
 void BasicTableItemEditor::onEditorTextChanged( TextEvent* event )
@@ -94,21 +89,19 @@ void BasicTableItemEditor::onEditorTextChanged( TextEvent* event )
 
 }
 
-Control* BasicTableItemEditor::getCurrentEditingControl( TableCellItem* currentItem )
-{
-	Control* result = NULL;
-	std::map<TableCellItem*,Control*>::iterator found = editorMap_.find( currentItem );
-	if ( found != editorMap_.end() ){
-		result = found->second;
-	}
-
-	return result;
-}
-
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

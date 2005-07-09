@@ -20,8 +20,8 @@ TextControl::TextControl( const bool& multiLineControl ):
 	model_(NULL),
 	readOnly_(false)
 {
-	textPeer_ =	UIToolkit::createTextPeer( this, multiLineControl );
-	
+	textPeer_ =	UIToolkit::createTextEditPeer( this, multiLineControl );
+
 	if ( NULL == textPeer_ ){
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
 	};
@@ -33,7 +33,7 @@ TextControl::TextControl( const bool& multiLineControl ):
 
 	setColor(  GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
-	
+
 	peer_->create( this );
 
 	setTextModel( new DefaultTextModel() );
@@ -69,6 +69,116 @@ void TextControl::init()
 	setCursorID( Cursor::SCT_TEXT );
 
 	setBorder( new Basic3DBorder(true) );
+
+	/**
+	create default accelerators for handling the 
+	following standard keyboard shortcuts:
+	UIPolicyManager::saEditUndo
+	UIPolicyManager::saEditCut
+	UIPolicyManager::saEditCopy
+	UIPolicyManager::saEditPaste
+	UIPolicyManager::saEditSelectAll
+	*/
+
+	enableStandardAccelerators();
+}
+
+void TextControl::disableStandardAccelerators()
+{
+	UIPolicyManager* mgr = UIToolkit::getUIPolicyManager();
+
+	AcceleratorKey::Value val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditUndo);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditRedo);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCut);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCopy);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditPaste);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditSelectAll);
+	UIToolkit::removeAccelerator( val.getKeyCode(), val.getModifierMask(), this );
+}
+
+void TextControl::enableStandardAccelerators()
+{
+	EventHandler* ev = NULL;
+
+	UIPolicyManager* mgr = UIToolkit::getUIPolicyManager();
+
+	AcceleratorKey::Value val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditUndo);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::undoAccelerator, "TextControl::undoAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditRedo);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::redoAccelerator, "TextControl::redoAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCut);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::cutAccelerator, "TextControl::cutAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCopy);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::copyAccelerator, "TextControl::copyAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditPaste);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::pasteAccelerator, "TextControl::pasteAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditSelectAll);
+	if ( !val.isEmpty() ) {
+		ev = new GenericEventHandler<TextControl>(this, &TextControl::selectAllAccelerator, "TextControl::selectAllAccelerator" );
+		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
+	}
+}
+
+void TextControl::undoAccelerator( Event* e )
+{
+	undo();
+}
+
+void TextControl::redoAccelerator( Event* e )
+{
+	redo();
+}
+
+void TextControl::cutAccelerator( Event* e )
+{
+	cut();
+}
+
+void TextControl::copyAccelerator( Event* e )
+{
+	copy();
+}
+
+void TextControl::pasteAccelerator( Event* e )
+{
+	paste();
+}
+
+void TextControl::selectAllAccelerator( Event* e )
+{
+	selectAll();
 }
 
 void TextControl::paint( GraphicsContext * context )
@@ -76,7 +186,7 @@ void TextControl::paint( GraphicsContext * context )
 	Border* border = getBorder();
 
 	Rect innerBounds = getClientBounds( false );
-	
+
 	context->setColor( getColor() );
 
 	context->rectangle( &innerBounds );
@@ -87,7 +197,7 @@ void TextControl::paint( GraphicsContext * context )
 void TextControl::setTextModel( TextModel * model )
 {
 	model_ = model;
-	
+
 	setViewModel( dynamic_cast<Model*>(model_) );
 }
 
@@ -106,7 +216,7 @@ unsigned long TextControl::getCaretPosition()
 
 void TextControl::setCaretPosition( const unsigned long& caretPos )
 {
-	
+
 	textPeer_->setCaretPosition( caretPos );
 }
 
@@ -165,14 +275,27 @@ void TextControl::setSelectionMark( const unsigned long& start, const unsigned l
 	textPeer_->setSelectionMark( start, count );
 }
 
-void TextControl::setSelectionFont( Font* font )
+void TextControl::selectAll()
 {
-	textPeer_->setSelectionFont( font );
+	TextModel* tm = getTextModel();
+	String text = tm->getText();
+
+	textPeer_->setSelectionMark( 0, text.size() );
 }
 
-void TextControl::setParagraphAlignment( const TextAlignmentType& alignment )
+void TextControl::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
 {
-	textPeer_->setParagraphAlignment( alignment );
+	textPeer_->getStyle( start, length, styles, color );
+}
+
+void TextControl::setStyle( unsigned int start, unsigned int length, Dictionary& styles )
+{
+	textPeer_->setStyle( start, length, styles );
+}
+
+void TextControl::setDefaultStyle( Dictionary& styles )
+{
+	textPeer_->setDefaultStyle( styles );
 }
 
 String TextControl::getSelectedText()
@@ -189,10 +312,14 @@ String TextControl::getSelectedText()
 	return result;
 }
 
-void TextControl::replaceText( const String& text )
+void TextControl::replaceSelectedText( const String& text )
 {
 	unsigned long selectionStart = getSelectionStart();
 	unsigned long selectionCount = getSelectionCount();
+
+	if ( selectionCount == 0 ) {
+		throw RuntimeException( "No characters currently selected. Invalid selection count." );
+	}
 
 	model_->replaceText( selectionStart, selectionCount, text );
 }
@@ -221,7 +348,21 @@ void TextControl::handleEvent( Event* event )
 {
 	switch( event->getType() ) {
 
-		case Control::KEYBOARD_DOWN : {
+		/**
+		I moved these two event types together to hopefully better hadnle the 
+		text processing, at least for Win32 - hopefully this will not screw things
+		up on OSX. 
+		The basic idea is to process things like TAB, back space, delete,etc on
+		Control::KEYBOARD_DOWN events, while processing actual printable characters
+		on the Control::KEYBOARD_PRESSED events
+		*/
+		case Control::KEYBOARD_DOWN : case Control::KEYBOARD_PRESSED : {
+			//do not process any events during design mode
+			if ( isDesigning() ) {
+				Control::handleEvent( event );
+				return;
+			}
+
 			/**
 			HACK ALERT!
 			this is the braindead way - needs to be reworked in the future
@@ -243,18 +384,18 @@ void TextControl::handleEvent( Event* event )
 
 			TextModel* model = getTextModel();
 
-			if ( !getReadOnly() ) {
-				if ( !(getComponentState() & Component::csDesigning) ) {
-					KeyboardEvent* ke = (KeyboardEvent*)event;
+			if ( !getReadOnly() && !(getComponentState() & Component::csDesigning) ) {
+				KeyboardEvent* ke = (KeyboardEvent*)event;
 
+				if ( event->getType() == Control::KEYBOARD_DOWN ) {
 					switch ( ke->getVirtualCode() ) {
 						case vkDelete : {
 							ulong32 pos =  textPeer_->getSelectionStart();
 
 							//Thanks to Marcello to fixing this!!!
 							ulong32 size = model->getSize();
-							if ( pos <= (size-1) ) {
-								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );							
+							if ( ( 0 < size ) && pos <= (size-1) ) {
+								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
 
 								// workaround for a '\r\n' sequence: we need to
 								// delete '\n' too at the end of the selection
@@ -262,7 +403,7 @@ void TextControl::handleEvent( Event* event )
 								if ( pos2 < (size-1)  ) {
 									String text = model->getText();
 									const VCFChar* textBuffer = text.c_str();
-									
+
 									if ( textBuffer[pos2] == '\r' ) {
 										if ( textBuffer[pos2+1] == '\n' ) {
 											length += 1;
@@ -275,7 +416,9 @@ void TextControl::handleEvent( Event* event )
 								//StringUtils::traceWithArgs( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
 								//		text.c_str(), text[pos], text[pos], pos );
 
-								model->deleteText( pos, length );
+								if ( 0 != length ) {
+									model->deleteText( pos, length );
+								}
 
 								//text = model->getText();
 								//StringUtils::traceWithArgs( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
@@ -286,21 +429,25 @@ void TextControl::handleEvent( Event* event )
 						break;
 
 						case vkBackSpace : {
+							ulong32 length = textPeer_->getSelectionCount();
 							ulong32 pos =  minVal<ulong32>( model->getSize(), textPeer_->getSelectionStart() );
-							
-							if ( pos > 0 ) {
-								pos -= 1;
+
+							// if the selection is not empty we delete it, but the cursor doesn't move.
+							if ( 0 == length ) {
+								if ( pos > 0 ) {
+									// we are deleting the previous character
+									pos -= 1;
+									length = 1;
+								}
 							}
 
-							
-							ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
-
+						
 							// workaround for a '\r\n' sequence: we need to
 							// delete '\r' too at the beginning of the selection
 							if ( pos > 0 ) {
 								String text = model->getText();
 								const VCFChar* textBuffer = text.c_str();
-								
+
 								if ( textBuffer[pos] == '\n' ) {
 									if ( textBuffer[pos-1] == '\r' ) {
 										pos -= 1;
@@ -308,21 +455,23 @@ void TextControl::handleEvent( Event* event )
 									}
 								}
 							}
-							
+
 							//Debug diagnostics - JC
-							//String text = model->getText();								
+							//String text = model->getText();
 							//StringUtils::traceWithArgs( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
 							//		text.c_str(), text[pos], text[pos], pos );
 
-							
-							model->deleteText( pos, length );
-							
+
+							if ( 0 != length ) {
+								model->deleteText( pos, length );
+							}
+
 
 							//text = model->getText();
 							//StringUtils::traceWithArgs( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
 							//		text.c_str(), text[pos-length], text[pos-length], pos-length );
-							
-						
+
+
 						}
 						break;
 
@@ -341,7 +490,7 @@ void TextControl::handleEvent( Event* event )
 						case vkPause : 
 						case vkCapsLock : 
 						case vkShift : 
-						case vkF1 : 							
+						case vkF1 :
 						case vkF2 : 
 						case vkF3 : 
 						case vkF4 : 
@@ -367,60 +516,29 @@ void TextControl::handleEvent( Event* event )
 						case vkTab : {
 							if ( keepsTabKey() ) {
 								//process the tab
-								
+
 								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
 									// we add the 'tab' text in place of the selection
 
 									ulong32 pos =  textPeer_->getCaretPosition();
 									String text;
 									text += ke->getKeyValue();
-									
+
 									//determine if we have selected text. If we 
 									//have, then delete the selection and *then*
 									//add in the new character(s)
-									
+
 									ulong32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
 										model->deleteText( pos, length );
 									}
-									
-									
+
+
 									model->insertText( pos, text );
 								}
 							}
 						}
 						break;
-
-
-						/**
-						JC - added this to account for tab entry - 
-						sometimes you'd end up with a tab character entered when all you 
-						wanted was to tab to the next control
-						*/
-// 						case vkTab : {
-// 							if ( keepsTabKey() ) {
-// 								//process the tab
-// 								
-// 								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
-// 									ulong32 pos =  textPeer_->getCaretPosition();
-// 									String text;
-// 									text += ke->getKeyValue();
-// 									
-// 									//determnine if we have sleected text. If we 
-// 									//have, then delete the selection ant *then*
-// 									//add in the new character(s)
-// 									
-// 									ulong32 length = textPeer_->getSelectionCount();
-// 									if ( length > 0 ) {
-// 										model->deleteText( pos, length );
-// 									}
-// 									
-// 									
-// 									model->insertText( pos, text );
-// 								}
-// 							}
-// 						}
-// 						break;
 
 
 						case vkEnter : {
@@ -428,7 +546,7 @@ void TextControl::handleEvent( Event* event )
 								if ( supportsMultiLinedText() ) {
 									ulong32 pos =  textPeer_->getCaretPosition();
 									String text = "\n";
-									
+
 									ulong32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
 										model->deleteText( pos, length );
@@ -436,39 +554,85 @@ void TextControl::handleEvent( Event* event )
 
 									//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
 									//	text.c_str(), text[0], text[0], pos );
-									
+
 									model->insertText( pos, text );
 								}
 							}
 						}
 						break;
+					}
+
+				}
+				else {
+					switch ( ke->getVirtualCode() ) {
+						case vkDelete :
+						case vkBackSpace : 
+						case vkLeftArrow : 
+						case vkRightArrow : 
+						case vkPgUp : 
+						case vkPgDown : 
+						case vkHome : 
+						case vkEnd : 
+						case vkInsert : 
+						case vkAlt : 
+						case vkCtrl : 
+						case vkEscape : 
+						case vkPrintScreen : 
+						case vkScrollLock :
+						case vkPause : 
+						case vkCapsLock : 
+						case vkShift : 
+						case vkF1 : 
+						case vkF2 : 
+						case vkF3 : 
+						case vkF4 : 
+						case vkF5 : 
+						case vkF6 : 
+						case vkF7 : 
+						case vkF8 : 
+						case vkF9 : 
+						case vkF10 : 
+						case vkF11 : 
+						case vkF12 : 
+						case vkDownArrow :
+						case vkUpArrow :
+						case vkTab :
+						case vkEnter :{
+							//no-op for these, since we don't want to add/delete text for them
+						}
+						break;
 
 						default : {
-
+							// control + characters need not to be treated as inserted characters
 							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
+
 								ulong32 pos =  textPeer_->getCaretPosition();
+
 								String text;
 								text += ke->getKeyValue();
 
-								//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-								//	text.c_str(), text[0], text[0], pos );
+								if ( !text.empty() ) {
 
-								//determnine if we have sleected text. If we 
-								//have, then delete the selection ant *then*
-								//add in the new character(s)
+									//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
+									//	text.c_str(), text[0], text[0], pos );
 
-								ulong32 length = textPeer_->getSelectionCount();
-								if ( length > 0 ) {
-									model->deleteText( pos, length );
+									//determnine if we have sleected text. If we 
+									//have, then delete the selection ant *then*
+									//add in the new character(s)
+
+									ulong32 length = textPeer_->getSelectionCount();
+									if ( length > 0 ) {
+										model->deleteText( pos, length );
+									}
+
+
+									model->insertText( pos, text );
 								}
-
-								
-								model->insertText( pos, text );
 							}
-
 						}
 						break;
 					}
+
 				}
 			}
 
@@ -477,11 +641,6 @@ void TextControl::handleEvent( Event* event )
 		break;
 
 		case Control::KEYBOARD_UP : {
-			Control::handleEvent( event );
-		}
-		break;
-
-		case Control::KEYBOARD_PRESSED : {
 			Control::handleEvent( event );
 		}
 		break;
@@ -500,35 +659,92 @@ void TextControl::setReadOnly( const bool& val )
 	textPeer_->setReadOnly( readOnly_ );
 }
 
+void TextControl::cut()
+{
+	if ( readOnly_ ) {
+		return;
+	}
+	textPeer_->cut();
+}
+
+void TextControl::copy()
+{
+	textPeer_->copy();
+}
+
+void TextControl::paste()
+{
+	if ( readOnly_ ) {
+		return;
+	}
+	textPeer_->paste();
+}
+
+bool TextControl::canUndo()
+{
+	return textPeer_->canUndo();
+}
+
+bool TextControl::canRedo()
+{
+	return textPeer_->canRedo();
+}
+
+
+void TextControl::undo()
+{
+	if ( readOnly_ ) {
+		return;
+	}
+	textPeer_->undo();
+}
+
+
+void TextControl::redo()
+{
+	if ( readOnly_ ) {
+		return;
+	}
+	textPeer_->redo();
+}
 
 /**
 *CVS Log info
 *$Log$
-*Revision 1.7  2005/04/05 23:44:22  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
+*Revision 1.8  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
 *
-*Revision 1.6  2005/01/18 00:21:44  ddiego
-*merged in changes from dev for aromans text edit bug
+*Revision 1.3.2.18  2005/06/07 17:28:28  marcelloptr
+*added missed getStyle() function. Fixed underline text that couldn't be removed once introduced.
 *
-<<<<<<< TextControl.cpp
-*Revision 1.5  2005/01/02 03:04:21  ddiego
-*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*Revision 1.3.2.16  2005/05/20 03:04:04  ddiego
+*minor mods to set focused control.
 *
-*Revision 1.4  2004/12/16 04:10:43  ddiego
-*fixes for bug 1081652, the actual fix came from Marcello.
+*Revision 1.3.2.15  2005/05/19 22:24:32  marcelloptr
+*Fixes around Win32Edit: selectAll and Redo operation. Deleting characters. Going to get read of getCRCount :)
 *
-*Revision 1.3.2.2  2004/12/21 00:25:37  marcelloptr
-*comments
+*Revision 1.3.2.11  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
 *
-*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
-*made modifications to methods that return a handle type. Introduced
-*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
-*which was causing a problem for 64bit compiles.
+*Revision 1.3.2.10  2005/04/25 00:11:57  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
 *
-*Revision 1.4  2004/12/16 04:10:43  ddiego
-*fixes for bug 1081652, the actual fix came from Marcello.
+*Revision 1.3.2.9  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
 *
-=======
+*Revision 1.3.2.8  2005/03/21 04:35:45  ddiego
+*updates
+*
+*Revision 1.3.2.7  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.3.2.6  2005/02/24 05:38:07  marcelloptr
+*bugfix [1150771] - When selecting all the text in the editor, setText is called
+*
+*Revision 1.3.2.4  2005/01/28 02:49:01  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
 *Revision 1.3.2.3  2005/01/18 00:15:33  ddiego
 *fixed aromans text edit bug
 *
@@ -543,7 +759,6 @@ void TextControl::setReadOnly( const bool& val )
 *Revision 1.4  2004/12/16 04:10:43  ddiego
 *fixes for bug 1081652, the actual fix came from Marcello.
 *
->>>>>>> 1.3.2.3
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -14,75 +14,47 @@ where you installed the VCF.
 #endif
 
 
-#include "vcf/ApplicationKit/TextPeer.h"
+#include "vcf/ApplicationKit/Win32TextPeer.h"
+
+
 
 namespace VCF
 {
 
 class TextEvent;
+class Win32RichEditOleCallback;
 
-class Win32Edit : public AbstractWin32Component, public VCF::TextPeer
-{
+
+class Win32Edit : public AbstractWin32Component, 
+					public VCF::TextEditPeer, public Win32TextPeer {
 
 public:
+
+	enum EditState {
+		esMultiLined =				0x0001,
+		esStyleChanging =			0x0010,
+		esPeerTextChanging =		0x0100,
+		esModelTextChanging =		0x0200,
+		esExternalTextChanging =	0x0400, /* means something like undo/redo/cut/paste */
+		esKeyEvent =				0x1000
+	};
+
+
 	Win32Edit( TextControl* component, const bool& isMultiLineControl );
 
 	virtual ~Win32Edit();
 
 	virtual void create( Control* owningControl );
-    /**
-     * sets the text for the widget
-     */
-    virtual void setText( const VCF::String& text );
-
-    virtual void setRightMargin( const double & rightMargin );
-
-	virtual void setLeftMargin( const double & leftMargin );
-
-    virtual unsigned long getLineCount();
-
-    virtual unsigned long getCurrentLinePosition();
-
-	virtual void setCaretPosition( const unsigned long& caretPos );
-
-    virtual double getLeftMargin();
-
-    virtual double getRightMargin();
-
-    virtual Point* getPositionFromCharIndex( const unsigned long& index );
-
-    virtual unsigned long getCharIndexFromPosition( Point* point );
-
 	/**
-	*returns the current caret position with in the text control
-	*this is specified by a zero based number representing the
-	*insertion point with the text control's text (stored in the text
-	*control's Model).
-	*@return long the index of the current insertion point in the Model's text
+	* sets the text for the widget
 	*/
-	virtual unsigned long getCaretPosition();
+	virtual void setText( const VCF::String& text );
 
-	virtual void createParams();
+	virtual VCF::String getText();
+
+	virtual CreateParams createParams();
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
-
-	void onTextModelTextChanged( TextEvent* event );
-
-	virtual unsigned long getSelectionStart();
-
-	virtual unsigned long getSelectionCount();
-
-	virtual void setSelectionMark( const unsigned long& start, const unsigned long& count );
-
-	virtual void setSelectionFont( Font* font );
-
-	virtual void setParagraphAlignment( const TextAlignmentType& alignment );
-
-	virtual void scrollToLine( const ulong32& lineIndex );
-
-	virtual void scrollToSelection( const bool& _showEndSel = false );
-
-	virtual void setReadOnly( const bool& readonly );
 
 	virtual void repaint( Rect* repaintRect=NULL );
 
@@ -90,52 +62,179 @@ public:
 		return true;
 	}
 
+
+	//TextPeer interface
+
+	virtual OSHandleID getTextObjectHandle();
+
+	//storage
+	virtual void insertText( unsigned int start, const String& text );
+
+	virtual void deleteText( unsigned int start, unsigned int length );
+
+	virtual unsigned int getTextLength();
+
+	virtual String getText( unsigned int start, unsigned int length );
+
+
+	//display
+	virtual void paint( GraphicsContext* context, const Rect& paintRect );
+
+	virtual void setRightMargin( const double & rightMargin );
+
+	virtual void setLeftMargin( const double & leftMargin );
+
+	virtual void setTopMargin( const double & topMargin );
+
+	virtual void setBottomMargin( const double & bottomMargin );
+
+	virtual double getLeftMargin();
+
+	virtual double getRightMargin();
+
+	virtual double getTopMargin();
+
+	virtual double getBottomMargin();
+
+	virtual unsigned long getLineCount();
+
+	virtual Rect getContentBoundsForWidth(const double& width);
+
+	virtual void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
+
+	virtual void getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color );
+
+	virtual void setDefaultStyle( Dictionary& styles );
+
+
+
+
+
+
+	virtual Point* getPositionFromCharIndex( const unsigned long& index );
+
+	virtual unsigned long getCharIndexFromPosition( Point* point );
+
+	virtual unsigned long getCaretPosition();
+
+	virtual void setCaretPosition( const unsigned long& caretPos );
+
+	virtual unsigned long getCurrentLinePosition();
+
+
+
+	virtual unsigned long getSelectionStart();
+
+	virtual unsigned long getSelectionCount();
+
+	virtual void setSelectionMark( const unsigned long& start, const unsigned long& count );
+
+	virtual void clearSelection();
+
+	virtual void scrollToLine( const ulong32& lineIndex );
+
+	virtual void scrollToSelection( const bool& _showEndSel = false );
+
+	virtual void setReadOnly( const bool& readonly );
+
+
+
 	virtual void print( PrintContext* context, const long& page );
 
 	virtual void finishPrinting();
 
 	virtual ulong32 getTotalPrintablePageCount( PrintContext* context );
+
+	virtual void cut();
+
+	virtual void copy();
+
+	virtual void paste();
+
+	virtual bool canUndo();
+
+	virtual bool canRedo();
+
+	virtual void undo();
+
+	virtual void redo();
+
 protected:
-	//WNDPROC oldEditWndProc_;
 	VCF::Point posAtChar_;
 	HBRUSH backgroundBrush_;
-
-	//unsigned long currentPos_; //JC - I commented this out - it wasn't being used
 	int currentSelLength_;
 	int currentSelStart_;
-
 	TextControl* textControl_;
-	bool isRichedit_;
-	bool isMultiLined_;
-
-	ulong32 numCharsRemainingToStreamIn_;
-	void processTextEvent( VCFWin32::KeyboardData keyData, WPARAM wParam, LPARAM lParam );
-
-	bool OKToResetControlText_;
-
+	int editState_;
 	std::map<ulong32,ulong32> printPageMap_;
+	Win32RichEditOleCallback* richEditCallback_;//only needed in readonly mode
 
+	bool stateAllowsModelChange();
+
+	void onTextModelTextChanged( TextEvent* event );
+
+	void onTextControlFontChanged( Event* event );
 	/**
 	this is a fix from Marcello to work around an apparent bug in Win32's handling of
 	crlf's
 	*/
 	int getCRCount( const unsigned long& begin, const unsigned long& end, const bool& limitCountsAreExact );
-	void getSelectionMark( unsigned long & start, unsigned long & count );
+	void getSelectionMark( unsigned long & start, unsigned long & end );
 
 	void onControlModelChanged( Event* e );
-	
-	
 
-	static DWORD CALLBACK EditStreamCallback( DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb );
+	static uint32 convertCharToVKCode( VCFChar ch );
+
+	//static DWORD CALLBACK EditStreamCallback( DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb );
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.18  2005/06/07 18:35:32  marcelloptr
+*added missed getStyle() function. Fixed underline text that couldn't be removed once introduced.
+*
+*Revision 1.3.2.17  2005/05/30 22:22:29  ddiego
+*fixed readonly mode in text edit and added better default font change support.
+*
+*Revision 1.3.2.16  2005/05/19 22:11:34  marcelloptr
+*Fixes around Win32Edit: selectAll and Redo operation. Deleting characters. Going to get read of getCRCount :)
+*
+*Revision 1.3.2.12  2005/05/18 03:19:18  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.3.2.11  2005/05/15 23:17:38  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.10  2005/05/02 02:31:42  ddiego
+*minor text updates.
+*
+*Revision 1.3.2.9  2005/04/30 11:52:36  marcelloptr
+*added a comment for the enabledSetTextOnControl_ member variable
+*
+*Revision 1.3.2.6  2005/04/25 00:11:58  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.3.2.5  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
+*Revision 1.3.2.4  2005/02/24 06:16:11  marcelloptr
+*bugfix [1150773] - Win32Edit loses last n characters past the last 2048 written
+*
+*Revision 1.3.2.2  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.1  2005/01/28 02:49:02  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

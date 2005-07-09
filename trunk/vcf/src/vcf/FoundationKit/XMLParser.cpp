@@ -280,7 +280,7 @@ void XMLParser::parse( InputStream* stream )
 	}
 
 	char* tmpBuffer = new char[sz+1];
-	memset( tmpBuffer, 0, sz+1);
+	memset( tmpBuffer, 0, (sz+1)*sizeof(char));
 
 	stream->seek( 0, stSeekFromStart );
 	stream->read( tmpBuffer, sz );
@@ -779,6 +779,12 @@ String XMLParser::decodeText( const String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/09 17:21:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -31,15 +31,15 @@ public:
 
 	virtual void addFilter( const String & description, const String & extension );
 
-    virtual void setDirectory( const String & directory );
+	virtual void setDirectory( const String & directory );
 
 	virtual void setFileName( const String & filename );
 
-    virtual String getFileName();
+	virtual String getFileName();
 
-    virtual String getDirectory();
+	virtual String getDirectory();
 
-    virtual String getFileExtension();
+	virtual String getFileExtension();
 
 	virtual uint32 getSelectedFileCount();
 
@@ -56,6 +56,10 @@ public:
 	virtual void setFileMustExist( const bool& fileMustExist );
 
 private:
+	bool executeW();
+	bool executeA();
+
+private:
 	String title_;
 	std::vector<String> filter_;
 	std::vector<String> selectedFiles_;
@@ -68,17 +72,21 @@ private:
 	Control* owner_;
 	String selectedFilter_;
 
-	bool executeW();
-	bool executeA();
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -764,7 +764,7 @@ UIToolkit::ModalReturnType X11UIToolkit::runModalEventLoopFor( Control* control 
 						memset(&keySym, 0, sizeof(KeySym) );
 
 						char keyBuffer[X_KEYBUFFER_SIZE];
-						memset( keyBuffer, 0, X_KEYBUFFER_SIZE );
+						memset( keyBuffer, 0, sizeof(keyBuffer) );
 
 						int count = XLookupString( &xkey, keyBuffer, X_KEYBUFFER_SIZE-1, &keySym, 0 );
 						VirtualKeyCode code = translateKeyCode( keySym );
@@ -864,7 +864,7 @@ VCF::Event* X11UIToolkit::createEventFromNativeOSEventData( void* eventData )
 			memset(&keySym, 0, sizeof(KeySym) );
 
 			char keyBuffer[X_KEYBUFFER_SIZE];
-			memset( keyBuffer, 0, X_KEYBUFFER_SIZE );
+			memset( keyBuffer, 0, sizeof(keyBuffer) );
 
 			int count = XLookupString( &xkey, keyBuffer, X_KEYBUFFER_SIZE-1, &keySym, 0 );
 
@@ -2311,7 +2311,7 @@ String X11UIToolkit::x11GetRequestCodeString( int requestCode )
 int X11UIToolkit::x11ErrorHandler( Display* display, XErrorEvent* xError )
 {
 	char errorText[256];
-	memset( errorText, 0, 256 );
+	memset( errorText, 0, sizeof(errorText) );
 	XGetErrorText( display,  xError->error_code, errorText, 255 );
 	String errorMsg;
 	errorMsg = "X11 Error: ";
@@ -2337,7 +2337,7 @@ void X11UIToolkit::sendPaintEvent( AbstractX11Control* control )
 	paintEvent.xclient.send_event = 0;
 	paintEvent.xclient.display = 0;
 	paintEvent.xclient.format = 8;
-	memset( &paintEvent.xclient.data.b[0], 0, sizeof(char)*20 );
+	memset( &paintEvent.xclient.data.b[0], 0, 20*sizeof(char) );
 	printf( "time to send an XEvent to notify we (%p) are ready to paint\n", control );
 	XSendEvent( x11Display_, (xLib::Window)control->getHandleID(), False, 0, &paintEvent );
 }
@@ -2354,6 +2354,12 @@ void X11UIToolkit::removeControlFromPaintEventQueue( AbstractX11Control* control
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:12  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

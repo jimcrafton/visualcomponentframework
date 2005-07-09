@@ -63,8 +63,9 @@ public:
 
     virtual void broadcast();
 
+
 	virtual OSHandleID getHandleID() {
-		return (OSHandleID)0;
+		return (OSHandleID)queue_;
 	}
 protected:
 	Condition* condition_;
@@ -86,8 +87,22 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:06  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.2.4.2  2005/05/05 12:42:27  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
 *
 *Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
 *made modifications to methods that return a handle type. Introduced

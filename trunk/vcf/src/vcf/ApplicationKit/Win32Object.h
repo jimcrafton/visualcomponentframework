@@ -27,6 +27,9 @@ class Control;
 class APPLICATIONKIT_API Win32Object : public ObjectWithEvents
 {
 public:
+
+	typedef std::pair<DWORD,DWORD> CreateParams;
+
 	Win32Object();
 	virtual ~Win32Object();
 
@@ -42,9 +45,10 @@ public:
 
 	/**
 	*called before the create window is called. Overide this to change the
-	*styleMask_ and exStyleMask_ values for determing the initial look of the window
+	style and style ex parameters. Returns a pair, the pair.first is the style
+	parameter, the pair.second is the style ex paramater.
 	*/
-	virtual void createParams();
+	virtual CreateParams createParams();
 
 	/**
 	*This is where the window is actually created. Called from constructors
@@ -84,8 +88,6 @@ protected:
 
 	static std::vector< String > registeredWindowClasses_;
 	static std::map<HWND, Win32Object*> windowMap_;
-	DWORD styleMask_;
-	DWORD exStyleMask_;
 	/**
 	*this actually contains the current window proc
 	*/
@@ -110,6 +112,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

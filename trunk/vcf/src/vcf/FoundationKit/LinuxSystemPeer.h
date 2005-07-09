@@ -40,8 +40,14 @@ public:
 	virtual String getCurrentWorkingDirectory();
 
 	virtual String getEnvironmentVariable( const String& variableName );
+	
+	virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
+	
+	virtual void addPathDirectory( const String& directory );
 
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory );
+	
+	virtual String getCommonDirectory( System::CommonDirectory directory );
 
 	virtual void setDateToSystemTime( DateTime* date );
 
@@ -57,6 +63,14 @@ public:
 	virtual DateTime convertUTCTimeToLocalTime( const DateTime& date );
 
 	virtual DateTime convertLocalTimeToUTCTime( const DateTime& date );
+	
+	virtual String getOSName();
+	virtual String getOSVersion();
+
+	virtual String getComputerName();
+	virtual String getUserName();
+
+	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
 
 protected:
 	//WEIRDNESS! These member variables need to be
@@ -71,8 +85,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.2.4.1  2005/04/17 16:11:32  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
 *
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable

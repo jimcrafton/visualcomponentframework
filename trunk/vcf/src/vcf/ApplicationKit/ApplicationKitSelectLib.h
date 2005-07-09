@@ -18,6 +18,8 @@ where you installed the VCF.
 *Helps linking with the right library
 */
 
+//If using the All-in-1 library, then this task has already been done
+#if !defined(VCF_USE_ALLIN1_DLL) && !defined(VCF_USE_ALLIN1_LIB)
 
 #ifdef _LIB_CPLVERNUM
 #		undef _LIB_CPLVERNUM
@@ -77,10 +79,16 @@ defined to use the DLL or static libraries.
 
 #endif //_MSC_VER
 
-
+#endif //VCF_USE_ALLIN1_DLL/LIB
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/04/11 17:04:50  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

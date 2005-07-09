@@ -29,22 +29,47 @@ public:
 
 	virtual ~CommonFileOpen();
 
-    virtual bool execute();
+	/**
+	* opens the dialog used to choose the filename(s) to be opened.
+	*/
+	virtual bool execute();
 
+	/**
+	* The dialog will accept a filename only if it exists.
+	* The default implementation is empty as this is used only
+	* with a dialog opening a file.
+	*@param const bool& fileMustExist, true if the typed name must
+	* indicate an existing file.
+	*/
 	virtual void setFileMustExist( const bool& fileMustExist );
 
+	/**
+	* Returns a pointer to an enumerator listing
+	* all the files selected in the dialog.
+	* If the multiple selection is not allowed for the dialog, 
+	* then this list may be empty, but in the default implementation
+	* it contain the chosen filename anyway.
+	*@return Enumerator<String>*, the pointer to the enumerator.
+	*/
 	Enumerator<String>* getSelectedFiles();
+
 protected:
 
 
 };
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

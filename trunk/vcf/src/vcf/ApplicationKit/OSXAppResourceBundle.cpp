@@ -1,4 +1,4 @@
-//OSXAppResourceBundle.cpp
+//OSXAppResourceBundle
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 
@@ -8,14 +8,8 @@
 
 using namespace VCF;
 
-OSXAppResourceBundle::OSXAppResourceBundle( AbstractApplication* app ):
-	OSXGraphicsResourceBundle(),
+OSXAppResourceBundle::OSXAppResourceBundle( AbstractApplication* app ): 
 	app_(app)
 {
-
-}
-
-CFBundleRef OSXAppResourceBundle::getBundle()
-{
-	return OSXGraphicsResourceBundle::getBundle();
+	VCF_ASSERT( NULL != app_ );
 }

@@ -59,7 +59,7 @@ int main( int argc, char** argv )
 			i = func( 23, 245.455 );
 		}
 		//print out some info
-		System::print( "The value of i: %d, from calling func @ %p\n", i, func );
+		System::print( Format("The value of i: %d, from calling func @ %p\n") % i % func );
 		
 		//unload the library. You can specify for the library to unload automatically
 		//in the constructor of the Library if you want
@@ -77,6 +77,12 @@ int main( int argc, char** argv )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:43  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.1  2005/04/17 15:11:47  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.4  2004/12/01 04:15:12  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

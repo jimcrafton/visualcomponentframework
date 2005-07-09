@@ -121,10 +121,6 @@ SOURCE=..\..\..\src\thirdparty\common\pcre\pcre.h
 
 SOURCE=..\..\..\src\thirdparty\common\pcre\pcreposix.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\regexx.h
-# End Source File
 # End Group
 # End Target
 # End Project

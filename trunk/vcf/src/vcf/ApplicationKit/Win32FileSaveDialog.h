@@ -33,18 +33,26 @@ public:
 
 	virtual void addFilter( const String & description, const String & extension );
 
-    virtual void setDirectory( const String & directory );
+	virtual void setDirectory( const String & directory );
 
 	virtual void setFileName( const String & filename );
 
-    virtual String getFileName();
+	virtual String getFileName();
 
-    virtual String getDirectory();
+	virtual String getDirectory();
 
-    virtual String getFileExtension();
+	virtual String getFileExtension();
 
 	virtual uint32 getSelectedFileCount();
 
+	/**
+	* Returns a pointer to an enumerator listing
+	* all the files selected in the dialog.
+	* If the multiple selection is not allowed for the dialog, 
+	* then this list may be empty, as it happens in the default
+	* implementation.
+	*@return Enumerator<String>*, the pointer to the enumerator.
+	*/
 	virtual Enumerator<String>* getSelectedFiles();
 
 	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
@@ -55,7 +63,17 @@ public:
 
 	virtual void setSelectedFilter( const String& selectedFilter );
 
+	/**
+	* The dialog will accept a filename only if it exists.
+	* The default implementation is empty as this is used only
+	* with a dialog opening a file.
+	*/
 	virtual void setFileMustExist( const bool& fileMustExist ){}
+
+private:
+	bool executeW();
+	bool executeA();
+
 private:
 	String title_;
 	std::vector<String> filter_;
@@ -70,12 +88,18 @@ private:
 };
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

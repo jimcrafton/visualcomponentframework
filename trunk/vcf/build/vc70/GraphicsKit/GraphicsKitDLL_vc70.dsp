@@ -208,18 +208,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\FontPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\GraphicsKit\Glyph.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\GlyphCollection.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\GlyphCollection.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp
 # End Source File
 # Begin Source File
@@ -353,6 +341,10 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Win32Font.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32FontManager.h
 # End Source File
 # Begin Source File
 

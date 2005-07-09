@@ -109,6 +109,18 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitPrivate.h
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\MenuManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\MenuManagerPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.h
+# End Source File
 # End Group
 # Begin Group "Res"
 
@@ -168,10 +180,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractContainer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.cpp
 # End Source File
 # Begin Source File
 
@@ -564,15 +572,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\MenuItem.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\MenuManager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\MessageDialog.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\MessageDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp
 # End Source File
 # Begin Source File
 
@@ -661,14 +669,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\View.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h
 # End Source File
 # Begin Source File
 
@@ -888,6 +888,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32MenuItem.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Object.cpp
 # End Source File
 # Begin Source File
@@ -904,6 +908,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp
 # End Source File
 # Begin Source File
@@ -917,6 +929,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32TextPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32TextPeer.h
 # End Source File
 # Begin Source File
 
@@ -1048,10 +1068,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListModelEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\MenuItemEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\MenuItemEvent.h
 # End Source File
 # Begin Source File
@@ -1081,10 +1097,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TextEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -1157,14 +1169,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTextModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTextModel.h
 # End Source File
 # Begin Source File
 
@@ -1453,6 +1457,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListViewControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp
 # End Source File
 # Begin Source File
 

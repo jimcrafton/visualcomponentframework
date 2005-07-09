@@ -42,7 +42,8 @@ Win32Window::~Win32Window()
 
 void Win32Window::create( Control* owningControl )
 {
-	styleMask_ = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+	
+	CreateParams params = createParams();
 
 	String className = getClassName();
 
@@ -64,10 +65,10 @@ void Win32Window::create( Control* owningControl )
 	HICON icon = NULL;
 
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( exStyleMask_,
+		hwnd_ = ::CreateWindowExW( params.second,
 		                             className.c_str(),
 									 NULL,
-									 styleMask_,
+									 params.first,
 		                             0,
 									 0,
 									 0,
@@ -78,10 +79,10 @@ void Win32Window::create( Control* owningControl )
 		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( exStyleMask_,
+		hwnd_ = ::CreateWindowExA( params.second,
 		                             className.ansi_c_str(),
 									 NULL,
-									 styleMask_,
+									 params.first,
 		                             0,
 									 0,
 									 0,
@@ -98,6 +99,8 @@ void Win32Window::create( Control* owningControl )
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
 
+		setFont( owningControl->getFont() );
+
 		if ( NULL != icon ) {		
 			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
 		}
@@ -110,10 +113,16 @@ void Win32Window::create( Control* owningControl )
 	setCreated( true );
 }
 
-void Win32Window::createParams()
+Win32Object::CreateParams Win32Window::createParams()
 {
-	styleMask_ = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
-	styleMask_ &= ~WS_VISIBLE;
+	Win32Object::CreateParams result;
+
+	result.first = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+	result.first &= ~WS_VISIBLE;
+	
+	result.second = 0;
+
+	return result;
 }
 
 Rect Win32Window::getClientBounds()
@@ -425,6 +434,9 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 						return result;
 					}
 
+					//check to see if the font needs updating
+					checkForFontChange();
+
 					PAINTSTRUCT ps;
 					HDC contextID = 0;
 					contextID = ::BeginPaint( hwnd_, &ps);
@@ -496,6 +508,11 @@ void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 
 		case fstFixed :{
 			style |= WS_OVERLAPPEDWINDOW;
+			
+			//remove the max/min box
+			style &= ~WS_MAXIMIZEBOX;
+			style &= ~WS_MINIMIZEBOX;
+
 			style &= ~WS_THICKFRAME;
 			exStyle &= ~WS_EX_TOOLWINDOW;
 		}
@@ -650,7 +667,6 @@ void Win32Window::setIconImage( Image* icon )
 
 	RedrawWindow( hwnd_, NULL, 0, RDW_FRAME | RDW_INVALIDATE );
 
-
 	//JC I commented this out. If this get's called
 	//just before the window is made visible for the first time
 	//then it ends up making everything (all the icons) disapear
@@ -678,8 +694,23 @@ void Win32Window::setText( const VCF::String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.5  2005/04/26 02:29:40  ddiego
+*fixes font setting bug brought up by scott and glen_f
+*
+*Revision 1.3.2.4  2005/04/20 02:26:01  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.3  2005/03/20 04:55:51  ddiego
+*fixes bug [ 1161656 ] Window resize.
+*
+*Revision 1.3.2.2  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.3.2.1  2004/12/10 21:14:00  ddiego
 *fixed bug 1082362 App Icons do not appear.

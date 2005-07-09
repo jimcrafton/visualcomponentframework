@@ -41,6 +41,7 @@ Image* ImageControl::getImage()
 
 void ImageControl::setImage( Image* image )
 {
+	// if ( autoDelete == false ) the ImageControl does not owns the image anymore
 	if ( (NULL != image_) && autoDelete_ ) {
 		delete image_;
 		image_ = NULL;
@@ -66,7 +67,7 @@ void ImageControl::setTransparent( const bool& transparent )
 	}
 }
 
-ImageFilenameString& ImageControl::getFilename()
+ImageFilenameString ImageControl::getFilename()
 {
 	return filename_;
 }
@@ -85,14 +86,16 @@ void ImageControl::setFilename( const ImageFilenameString& filename )
 void ImageControl::paint( GraphicsContext* context )
 {
 	CustomControl::paint( context );
-	if ( NULL != image_ ) {
 
+	if ( NULL != image_ ) {
 		Rect clientRect = getClientBounds();
 
 		double w = clientRect.getWidth();
 		double h = clientRect.getHeight();
-		if ( (w < image_->getWidth()) && (h < image_->getHeight()) ) {
-			context->drawPartialImage( clientRect.left_, clientRect.top_, &Rect(0, 0, w, h ), image_ );
+		if ( (w < image_->getWidth()) || (h < image_->getHeight()) ) {
+			context->drawPartialImage(	maxVal<int>(clientRect.left_,clientRect.left_ + ( (w/2.0) - (image_->getWidth()/2.0) )),
+										maxVal<int>(clientRect.top_,clientRect.top_ + ( (h/2.0) - (image_->getHeight()/2.0) )),
+										&Rect(0, 0, minVal<int>(w,image_->getWidth()), minVal<int>(h,image_->getHeight() )), image_ );
 		}
 		else {
 			context->drawImage( clientRect.left_ + ( (w/2.0) - (image_->getWidth()/2.0) ),
@@ -103,10 +106,9 @@ void ImageControl::paint( GraphicsContext* context )
 
 
 
-
 ImageFilenamePropertyEditor::ImageFilenamePropertyEditor()
 {
-
+	attributes_ = PropertyEditor::paUsesModalDialogForEditing;
 }
 
 ImageFilenamePropertyEditor::~ImageFilenamePropertyEditor()
@@ -114,23 +116,19 @@ ImageFilenamePropertyEditor::~ImageFilenamePropertyEditor()
 
 }
 
-Control* ImageFilenamePropertyEditor::getCustomEditor()
-{
-	return new ModalPropertyEditorControl<ImageFilenamePropertyEditor>(
-			&ImageFilenamePropertyEditor::showFilenameEditor, this->getValue(), this );
-}
 
-void ImageFilenamePropertyEditor::showFilenameEditor( VariantData* data )
+void ImageFilenamePropertyEditor::edit()
 {
 	CommonFileOpen dlg;
 
-	ImageFilenameString& obj = *((ImageFilenameString*)(Object*)*data);
+	ImageFilenameString fileName = *getValue();
 
-	String s = obj;
-	dlg.setFileName( s );
+	
+	dlg.setFileName( fileName );
 	if ( true == dlg.execute() ) {
-		s = dlg.getFileName();
-		obj = s;
+		fileName = dlg.getFileName();		
+		VariantData data = fileName;
+		setValue( &data );
 	}
 }
 
@@ -139,7 +137,7 @@ void ImageFilenamePropertyEditor::showFilenameEditor( VariantData* data )
 
 ImagePropertyEditor::ImagePropertyEditor()
 {
-
+	attributes_ = PropertyEditor::paUsesModalDialogForEditing;
 }
 
 ImagePropertyEditor::~ImagePropertyEditor()
@@ -147,37 +145,35 @@ ImagePropertyEditor::~ImagePropertyEditor()
 
 }
 
-Control* ImagePropertyEditor::getCustomEditor()
+void ImagePropertyEditor::edit()
 {
-	return new ModalPropertyEditorControl<ImagePropertyEditor>(
-			&ImagePropertyEditor::showImageEditor, this->getValue(), this );
-}
-
-void ImagePropertyEditor::showImageEditor( VariantData* data )
-{
-	Image* image = (Image*)(Object*)(*data);
-
-	Dialog* dlg = new Dialog();
-	dlg->setBounds( &Rect( 0, 0, 410, 520 ) );
-	CommandButton* okBtn = new CommandButton();
-	okBtn->setBounds( &Rect(240, 460, 320, 485) );
-	okBtn->setCaption( "OK" );
-	dlg->add( okBtn );
-
-	CommandButton* cancelBtn = new CommandButton();
-	cancelBtn->setBounds( &Rect(330, 460, 400, 485) );
-	cancelBtn->setCaption( "Cancel" );
-	dlg->add( cancelBtn );
-	dlg->showModal();
-	dlg->free();
+	
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/06/27 16:21:15  scottpearson
 *AutoDelete added to ImageControl.
+*
+*Revision 1.2.4.5  2005/06/29 15:34:47  pallindo
+*Fixed ImageControl borders if the image is larger than the bounds.
+*
+*Revision 1.2.4.4  2005/03/28 17:55:51  marcelloptr
+*minor fixes
+*
+*Revision 1.2.4.3  2005/03/27 01:35:02  scottpearson
+*Toggling for AutoDelete added.
+*
+*Revision 1.2.4.2  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable

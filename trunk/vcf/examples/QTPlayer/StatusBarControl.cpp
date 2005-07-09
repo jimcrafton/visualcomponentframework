@@ -85,7 +85,7 @@ void StatusBarControl::addStatusPane( const double& width , const VCF::String& t
 	statusPane->setCaption( text );
 
 	EtchedBorder* border = new EtchedBorder();
-	border->setStyle( GraphicsContext::etRecessed );
+	border->setEdgeStyle( GraphicsContext::etRecessed );
 	statusPane->setBorder( border );
 	statusPane->setVerticalAlignment( tvaTextCenter );
 }

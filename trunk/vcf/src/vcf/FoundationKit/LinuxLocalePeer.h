@@ -67,9 +67,8 @@ public:
 
 	virtual UnicodeString translate( const UnicodeString& id );
 
-	virtual OSHandleID getHandleID()
-	{
-		return ( OSHandleID ) 0;
+	virtual OSHandleID getHandleID() {
+		return (OSHandleID)0;
 	}
 protected:
 	UnicodeString crtLocaleStr_;
@@ -81,8 +80,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.2.4.1  2005/04/17 16:11:31  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
 *
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable

@@ -13,6 +13,11 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+/**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 #define SKETCHVIEW_CLASSID		"f297d0f2-4ece-4fb7-86ef-bea8b395e4af"
 /**
@@ -20,8 +25,8 @@ class SketchView documentation
 */
 class SketchView : public VCF::Object, public VCF::AbstractView {
 public:
-	BEGIN_CLASSINFO( SketchView, "SketchView", "VCF::Object", SKETCHVIEW_CLASSID )
-	END_CLASSINFO( SketchView )
+	_class_rtti_( SketchView, "VCF::Object", SKETCHVIEW_CLASSID )
+	_class_rtti_end_
 
 	SketchView();
 	virtual ~SketchView();
@@ -35,6 +40,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:44  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/03/06 22:50:57  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/08/07 02:47:37  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

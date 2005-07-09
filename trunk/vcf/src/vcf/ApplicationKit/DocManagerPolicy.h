@@ -234,7 +234,7 @@ public:
 		}
 		
 
-		StringUtils::traceWithArgs( "currentDocument_: %p\n", result );
+		//StringUtils::traceWithArgs( Format("currentDocument_: %p\n") % result );
 
 		return result;
 	}
@@ -245,7 +245,7 @@ public:
 	void setCurrentDocument( VCF::Document* doc ) {
 		
 
-		StringUtils::traceWithArgs( "setCurrentDocument( %p )\n", doc );
+		StringUtils::traceWithArgs( Format("setCurrentDocument( %p )\n") % doc );
 
 		if ( NULL != doc ) {
 			doc->getWindow()->activate();
@@ -437,6 +437,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

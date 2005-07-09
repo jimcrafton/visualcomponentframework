@@ -2,8 +2,14 @@
 #VCF Documentation makefile
 #
 #$Log$
-#Revision 1.14  2004/12/16 04:10:41  ddiego
-#fixes for bug 1081652, the actual fix came from Marcello.
+#Revision 1.15  2005/07/09 23:14:09  ddiego
+#merging in changes from devmain-0-6-7 branch.
+#
+#Revision 1.13.2.2  2005/06/03 21:40:18  ddiego
+#more doc updates
+#
+#Revision 1.13.2.1  2005/04/25 00:11:52  ddiego
+#added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
 #
 #Revision 1.13  2004/12/05 21:11:54  ddiego
 #dialog allowClose() fix in peer.
@@ -125,7 +131,7 @@ XMAKE_VERSION = 1.0.5
 
 
 HTMLHELP_COMPILER = "c:/Program Files/HTML Help Workshop/hhc.exe"
-XSL_DOCBOOK_DIR = "k:/docbook-xsl-1.60.1"
+XSL_DOCBOOK_DIR = "c:/code/docbook-xsl-1.68.1"
 XSL_HTMLHELP_IMPORT = "$(XSL_DOCBOOK_DIR)/htmlhelp/htmlhelp.xsl"
 XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"
 
@@ -298,7 +304,7 @@ tutorials : test_tools
 #original contents
 
 #doxy doxy_hh
-coredocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
+coredocs_hh_with_source : $(VCF_DOCS) test_tools 
 	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml

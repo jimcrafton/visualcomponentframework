@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/PopupMenuPeer.h"
-
+#include "vcf/ApplicationKit/MenuManager.h"
 
 
 
@@ -29,6 +29,8 @@ PopupMenu::PopupMenu( Control* control )
 		control->addComponent( this );
 	}
 	setControl( control );
+
+	MenuManager::registerPopupMenu( this );
 }
 
 PopupMenu::PopupMenu( Component* owner ):
@@ -96,6 +98,12 @@ void PopupMenu::setControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

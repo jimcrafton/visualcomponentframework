@@ -47,8 +47,8 @@ struct KeyboardData {
 #define SHIFT_KEY_DOWN \
 	((GetKeyState( VK_SHIFT) & 15 ) == 1)
 
-#define VCF_MESSAGE				WM_USER	+ 100
-#define VCF_CONTROL_CREATE		VCF_MESSAGE + 1
+#define VCF_MESSAGE				WM_APP	+ 100
+#define VCF_CONTROL_CREATE		VCF_MESSAGE + 99
 
 
 /**
@@ -87,6 +87,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/20 02:27:44  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

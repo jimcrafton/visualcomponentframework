@@ -21,23 +21,23 @@ ControlsApplication::ControlsApplication( int argc, char** argv ):
 	Application( argc, argv )
 
 {
-	
+
 }
 
 ControlsApplication::~ControlsApplication()
 {
-	
+
 }
 
 bool ControlsApplication::initRunningApplication(){
 	bool result = Application::initRunningApplication();
 	MainWindow* mainWindow = new MainWindow();
-	
+
 	setMainWindow(mainWindow);
-	mainWindow->setBounds( &Rect( 50.0, 50.0, 650.0, 600.0 ) );
+	mainWindow->setBounds( &Rect( 50.0, 50.0, 650.0, 700.0 ) );
 	mainWindow->setVisible( true );
 	mainWindow->setCaption( "Controls" );
-	
+
 	return result;
 }
 
@@ -45,6 +45,12 @@ bool ControlsApplication::initRunningApplication(){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:34  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.2  2005/06/27 23:58:03  marcelloptr
+*added images to a PushButton
+*
 *Revision 1.2  2004/12/01 04:15:00  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
@@ -54,3 +60,5 @@ bool ControlsApplication::initRunningApplication(){
 *added copyright
 *
 */
+
+

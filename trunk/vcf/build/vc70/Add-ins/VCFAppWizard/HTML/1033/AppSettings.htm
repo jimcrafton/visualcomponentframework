@@ -1,0 +1,416 @@
+<HTML DIR="ltr">
+	<HEAD>
+		<TITLE>VCF Application Wizard</TITLE>
+		<META NAME="vs_targetSchema" CONTENT="http://schemas.microsoft.com/intellisense/ie5">
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+		<STYLE TYPE="text/css">@import url(); 
+		</STYLE>
+		<SCRIPT>
+		var strURL = window.external.FindSymbol("PRODUCT_INSTALLATION_DIR");
+		strURL += "VCWizards/";
+		strURL += window.external.GetHostLocale();
+		strURL += "/NewStyles.css";
+		document.styleSheets(0).imports(0).href = strURL;
+		</SCRIPT>
+	</HEAD>
+	<BODY BGCOLOR="buttonface" TOPMARGIN="0" LEFTMARGIN="0" RIGHTMARGIN="0" BOTTOMMARGIN="0"
+		ONLOAD="InitDocument(document);" ONKEYDOWN="if (!bValidating) OnKey();" ONKEYPRESS="if (!bValidating) OnPress();">
+		<TABLE CLASS="ONE" HEIGHT="100%" WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+			<COLGROUP>
+				<COL WIDTH="178">
+				<COL>
+				<!--OPEN OF INTRODUCTORY INFORMATION TABLE//-->
+				<TR VALIGN="top">
+					<TD HEIGHT="79" WIDTH="100%" COLSPAN="2">
+						<TABLE CLASS="TWO" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+							<COLGROUP>
+								<COL WIDTH="12">
+								<COL>
+								<COL WIDTH="12">
+								<TR>
+									<TD VALIGN="top" HEIGHT="12" WIDTH="12">
+										&nbsp;
+									</TD>
+									<TD VALIGN="top" HEIGHT="12">
+										&nbsp;
+									</TD>
+									<TD VALIGN="top" HEIGHT="12" WIDTH="12">
+										&nbsp;
+									</TD>
+									<TD CLASS="IMAGE" VALIGN="bottom" WIDTH="110" ROWSPAN="2">
+										<DIV CLASS="SMALLA" ID="VCF_IMAGE" STYLE="DISPLAY:block">
+											<IMG CLASS="SMALL" SRC="..\..\Images\VCFAppWizard.gif" ALT="" BORDER="0">
+										</DIV>
+									</TD>
+									<TD VALIGN="top" HEIGHT="12" WIDTH="6" ROWSPAN="2">
+										&nbsp;
+									</TD>
+								</TR>
+								<TR>
+									<TD VALIGN="top" HEIGHT="65" WIDTH="12">
+										&nbsp;
+									</TD>
+									<TD VALIGN="top" HEIGHT="65">
+										<H4 CLASS="HEAD" ID="HEAD">Application Settings</H4>
+										<P CLASS="SUBHEAD" ID="SUBHEAD">Specify the type of application you will build with 
+											this project and the options or libraries you want supported.</P>
+									</TD>
+									<TD VALIGN="top" HEIGHT="65" WIDTH="12">
+										&nbsp;
+									</TD>
+								</TR>
+								<TR>
+									<TD VALIGN="top" CLASS="RULE" COLSPAN="5" HEIGHT="2">
+										<TABLE BORDER="0" WIDTH="100%" HEIGHT="1" CELLPADDING="0" CELLSPACING="0">
+											<TR VALIGN="top">
+												<TD HEIGHT="1" WIDTH="100%" BGCOLOR="buttonshadow"></TD>
+												<TD HEIGHT="1" WIDTH="1" BGCOLOR="window"></TD>
+											</TR>
+										</TABLE>
+									</TD>
+								</TR>
+						</TABLE>
+					</TD>
+				</TR>
+				<!--CLOSE OF INTRODUCTORY INFORMATION TABLE//-->
+				<!--OPEN OF NAVIGATION, CONTENT, AND BUTTON TABLES//-->
+				<TR VALIGN="top">
+					<TD CLASS="Three" VALIGN="top" HEIGHT="100%" WIDTH="178">
+						<TABLE CLASS="fixedSize" HEIGHT="100%" WIDTH="178" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+							<TR VALIGN="top">
+								<TD CLASS="threeCustom" VALIGN="top" STYLE="BACKGROUND-IMAGE: url(../../Images/VCFAppWizard_Background.gif)">
+									<!--OPEN OF NAVIGATION TABLE//-->
+									<TABLE CLASS="THREE" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+										<COLGROUP>
+											<COL WIDTH="12">
+											<COL WIDTH="166">
+											<COL WIDTH="1">
+											<TR>
+												<TD VALIGN="top" COLSPAN="3" HEIGHT="12">
+													&nbsp;
+												</TD>
+											</TR>
+											<TR>
+												<TD VALIGN="top" HEIGHT="100%" WIDTH="12">
+													&nbsp;
+												</TD>
+												<TD VALIGN="top" HEIGHT="100%" WIDTH="165">
+													<!--OPEN OF NAVIGATIONAL LINKS//-->
+													<DIV CLASS="LINK">
+														<TABLE WIDTH="166" HEIGHT="28" BORDER="0" CELLPADDING="0" CELLSPACING="0" CLASS="LINKTEXT">
+															<TR VALIGN="middle">
+																<TD WIDTH="162">
+																	<SPAN CLASS="ACTIVELINK" ID="Default" TITLE="Examine an overview of selections." onClick="Next(document, 'default.htm');"
+																		TABINDEX="1">Overview</SPAN>
+																</TD>
+																<TD WIDTH="4">
+																	<IMG SRC="../../Images/spacer.gif" HEIGHT="1" WIDTH="4">
+																</TD>
+															</TR>
+														</TABLE>
+													</DIV>
+													<DIV CLASS="LINKSELECTED">
+														<SPAN CLASS="VERTLINE1"><IMG SRC="../../Images/spacer.gif" WIDTH="1" HEIGHT="1" ALT="" BORDER="0">
+														</SPAN><SPAN CLASS="HORILINE1">
+															<TABLE WIDTH="167" HEIGHT="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+																<TR VALIGN="top">
+																	<TD CLASS="DOTTEDLINE" HEIGHT="1">
+																	</TD>
+																</TR>
+																<TR VALIGN="top">
+																	<TD HEIGHT="100%">
+																		<IMG SRC="../../Images/spacer.gif" WIDTH="1" HEIGHT="28" ALT="" BORDER="0">
+																	</TD>
+																</TR>
+																<TR VALIGN="top">
+																	<TD CLASS="DOTTEDLINE" HEIGHT="1">
+																	</TD>
+																</TR>
+															</TABLE>
+														</SPAN>
+														<TABLE WIDTH="160" HEIGHT="28" BORDER="0" CELLPADDING="0" CELLSPACING="0" CLASS="LINKTEXTSELECTED">
+															<TR VALIGN="middle">
+																<TD WIDTH="156">
+																	<SPAN ID="AppSettings" TITLE="Specify the type of application you will build with this project and the options or libraries you want supported.">
+																		Application Settings</SPAN>
+																</TD>
+																<TD WIDTH="4">
+																	<IMG SRC="../../Images/spacer.gif" HEIGHT="1" WIDTH="4">
+																</TD>
+															</TR>
+														</TABLE>
+													</DIV>
+													<!--CLOSE OF NAVIGATIONAL LINKS//-->
+												</TD>
+												<TD WIDTH="1">
+													<DIV CLASS="VERTLINE">
+														<IMG SRC="../../Images/spacer.gif" WIDTH="1" HEIGHT="1" ALT="" BORDER="0">
+													</DIV>
+												</TD>
+											</TR>
+									</TABLE>
+								</TD>
+							</TR>
+						</TABLE>
+						<!--CLOSE OF NAVIGATION TABLE//-->
+					</TD>
+					<TD VALIGN="top" HEIGHT="100%">
+						<!--OPEN OF CONTENT AND BUTTON TABLE//-->
+						<TABLE CLASS="ONE" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+							<COLGROUP>
+								<COL WIDTH="100%">
+								<TR VALIGN="top">
+									<TD HEIGHT="100%">
+										<!--OPEN OF CONTENT//-->
+										<TABLE CLASS="CONTENT" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+											<COLGROUP>
+												<COL WIDTH="12">
+												<COL WIDTH="193">
+												<COL WIDTH="12">
+												<COL WIDTH="193">
+												<COL WIDTH="12">
+												<TR>
+													<TD VALIGN="top" HEIGHT="12" COLSPAN="5">
+														&nbsp;
+													</TD>
+												</TR>
+												<TR>
+													<TD VALIGN="top" WIDTH="12">
+														&nbsp;
+													</TD>
+													<TD VALIGN="top">
+														<SPAN CLASS="itemTextTop" ID="LINKING_LABEL" TITLE="">Select whether to 
+															link to the Visual Component Framework through a static library or a dynamic 
+															link library (DLL):
+															<P CLASS="Spacer">&nbsp;</P>
+															<INPUT TYPE="radio" CLASS="Radio" onPropertyChange="InitControls();" NAME="linktype" ID="LIB_STATIC"
+																ACCESSKEY="S" TITLE="">
+															<DIV CLASS="itemTextRadioB" ID="LIB_STATIC_DIV" TITLE="">
+																<LABEL FOR="LIB_STATIC" ID="LIB_STATIC_LABEL"><U>S</U>tatic Library</LABEL>&nbsp;
+															</DIV>
+															<BR>
+															<INPUT TYPE="radio" CLASS="Radio" onPropertyChange="InitControls();" ACCESSKEY="D" NAME="linktype"
+																ID="LIB_DYNAMIC" TITLE="">
+															<DIV CLASS="itemTextRadioB" ID="LIB_DYNAMIC_DIV" TITLE="">
+																<LABEL FOR="LIB_DYNAMIC" ID="LIB_DYNAMIC_LABEL"><U>D</U>ynamic Link Library (DLL)</LABEL>&nbsp;
+															</DIV>
+															<BR>
+														</SPAN>
+														<P CLASS="ElementSpacer">&nbsp;</P>
+														<SPAN CLASS="itemText" ID="ADDITIONAL_LIBRARIES_SPAN" TITLE="">Additional libraries:
+															<P CLASS="Spacer">&nbsp;</P>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="N" ID="LIB_NET" TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="netsupport_title">
+																VCF<U>N</U>et adds support for sockets programming, as well as providing other 
+																useful networking classes.
+															</DIV>
+															<BR>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="R" ID="LIB_REMOTE" TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="remotesupport_title">
+																VCF<U>R</U>emote adds support for distributed objects to your application. 
+																(Requires VCFNet)&nbsp;
+															</DIV>
+														</SPAN>
+													</TD>
+													<TD VALIGN="top" WIDTH="12">
+														&nbsp;
+													</TD>
+													<TD VALIGN="top"></SPAN>
+														<SPAN CLASS="itemTextTop" ID="ADDITIONAL_OPTIONS_SPAN" TITLE="">Additional Options:
+															<P CLASS="Spacer">&nbsp;</P>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="F" ID="FILE_MENU" NAME="support" TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="filemenu_title">
+																<LABEL FOR="FILE_MENU" ID="FILE_MENU_LABEL">Standard "<U>F</U>ile" menu</LABEL>
+															</DIV>
+															<BR>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="H" ID="HELP_MENU" NAME="support" TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="helpmenu_title">
+																<LABEL FOR="HELP_MENU" ID="HELP_MENU_LABEL">Standard "<U>H</U>elp" menu</LABEL>
+															</DIV>
+															<BR>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="U" ID="UNDO_REDO" NAME="support"
+																TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="undoredo_title">
+																<LABEL FOR="UNDO_REDO" ID="UNDO_REDO_LABEL"><U>U</U>ndo/Redo support</LABEL>
+															</DIV>
+															<BR>
+															<INPUT TYPE="checkbox" CLASS="CheckBoxA" ACCESSKEY="S" ID="SPLASH_SCREEN" NAME="support" TITLE=""
+																onPropertyChange="InitControls();">
+															<DIV CLASS="itemTextCheckboxB" TITLE=""
+																ID="splash_title">
+																<LABEL FOR="SPLASH_SCREEN" ID="SPLASH_SCREEN_LABEL"><U>S</U>plash Screen</LABEL>
+															</DIV>
+															<BR>
+															
+														</SPAN>
+													</TD>
+													<TD VALIGN="top" WIDTH="12">
+														&nbsp;
+													</TD>
+												</TR>
+										</TABLE>
+										<!--CLOSE OF CONTENT//-->
+									</TD>
+								</TR>
+								<TR VALIGN="bottom">
+									<TD HEIGHT="48">
+										<!--OPEN OF BUTTON HTML//-->
+										<TABLE HEIGHT="48" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+											<COLGROUP>
+												<COL WIDTH="12">
+												<COL>
+												<COL WIDTH="75">
+												<COL WIDTH="4">
+												<COL WIDTH="75">
+												<COL WIDTH="4">
+												<COL WIDTH="75">
+												<COL WIDTH="12">
+												<TR>
+													<TD VALIGN="top" CLASS="RULE" COLSPAN="8" HEIGHT="2">
+														<TABLE BORDER="0" WIDTH="100%" HEIGHT="1" CELLPADDING="0" CELLSPACING="0">
+															<TR VALIGN="top">
+																<TD HEIGHT="1" WIDTH="100%" BGCOLOR="buttonshadow"></TD>
+																<TD HEIGHT="1" WIDTH="1" BGCOLOR="window"></TD>
+															</TR>
+														</TABLE>
+													</TD>
+												</TR>
+												<TR>
+													<TD VALIGN="top" HEIGHT="11" COLSPAN="8">
+														&nbsp;
+													</TD>
+												</TR>
+												<TR>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="12">
+														&nbsp;
+													</TD>
+													<TD VALIGN="top" HEIGHT="23">
+														&nbsp;
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="75">
+														<BUTTON CLASS="BUTTONS" ID="FinishBtn" onClick="OnFinish(document);" type="button">Finish</BUTTON>
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="4">
+														&nbsp;
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="75">
+														<BUTTON CLASS="BUTTONS" ID="CancelBtn" onClick="window.external.Finish(document, 'cancel');"
+															type="button">Cancel</BUTTON>
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="4">
+														&nbsp;
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="75">
+														<BUTTON CLASS="BUTTONS" ID="HelpBtn" onClick="window.external.OnHelp('vc.appwiz.win32.appset');"
+															type="button">Help</BUTTON>
+													</TD>
+													<TD VALIGN="middle" HEIGHT="23" WIDTH="12">
+														&nbsp;
+													</TD>
+												</TR>
+												<TR>
+													<TD VALIGN="top" HEIGHT="12" COLSPAN="8">
+														&nbsp;
+													</TD>
+												</TR>
+										</TABLE>
+										<!--CLOSE OF BUTTON HTML//-->
+									</TD>
+								</TR>
+						</TABLE>
+						<!--CLOSE OF NAVIGATION, CONTENT, AND BUTTON TABLES//-->
+					</TD>
+				</TR>
+		</TABLE>
+		<SCRIPT LANGUAGE="JSCRIPT">
+
+var tab_array = new Array();
+tab_array[0] = Default;
+tab_array[1] = AppSettings;
+
+function InitDocument(document)
+{
+	setDirection();
+	window.external.Load(document);
+	InitControls();
+}
+
+function Next(document, linkto)
+{
+	window.external.Next(document, linkto);
+}
+
+function OnFinish(document)
+{
+	OnWizFinish(document);
+}
+
+function InitControls()
+{
+/*	if(MIN_APP.checked)
+	{
+		SCENE_YES.disabled = true;
+		SCENE_YES_LABEL.disabled = true;
+		FRAMELISTENER_YES.disabled = true;
+		FRAMELISTENER_YES_LABEL.disabled = true;
+		FRAMEWORK_YES.disabled = false;
+		FRAMEWORK_YES_LABEL.disabled = false;
+		FRAMEWORK_OWN.disabled = false;
+		FRAMEWORK_OWN_LABEL.disabled = false;
+		PRE_COMPILED_HEADER.disabled = false;
+		precompiled_header_title.disabled = false;		
+	}
+
+	if(STANDARD_APP.checked)
+	{
+		SCENE_YES.disabled = false;
+		SCENE_YES_LABEL.disabled = false;
+		FRAMELISTENER_YES.disabled = false;
+		FRAMELISTENER_YES_LABEL.disabled = false;
+		FRAMEWORK_YES.disabled = false;
+		FRAMEWORK_YES_LABEL.disabled = false;
+		FRAMEWORK_OWN.disabled = false;
+		FRAMEWORK_OWN_LABEL.disabled = false;
+		PRE_COMPILED_HEADER.disabled = false;
+		precompiled_header_title.disabled = false;		
+	}
+	
+	if(EMPTY_PROJECT.checked)
+	{
+		SCENE_YES.disabled = true;
+		SCENE_YES_LABEL.disabled = true;
+		FRAMELISTENER_YES.disabled = true;
+		FRAMELISTENER_YES_LABEL.disabled = true;
+		FRAMEWORK_YES.disabled = true;
+		FRAMEWORK_YES_LABEL.disabled = true;
+		FRAMEWORK_OWN.disabled = true;
+		FRAMEWORK_OWN_LABEL.disabled = true;
+		PRE_COMPILED_HEADER.disabled = true;
+		precompiled_header_title.disabled = true;		
+	}*/
+}
+
+		</SCRIPT>
+		<SCRIPT ID="INCLUDE_SCRIPT" LANGUAGE="JSCRIPT"></SCRIPT>
+		<SCRIPT ID="INCLUDE_COMMON" LANGUAGE="JSCRIPT"></SCRIPT>
+		<SCRIPT>
+	var strPath = window.external.FindSymbol("PRODUCT_INSTALLATION_DIR");
+	strPath += "VCWizards/";
+	strPath += window.external.GetHostLocale();
+	var strScriptPath = strPath + "/Script.js";
+	var strCommonPath = strPath + "/Common.js";
+	document.scripts("INCLUDE_SCRIPT").src = strScriptPath;
+	document.scripts("INCLUDE_COMMON").src = strCommonPath;
+		</SCRIPT>
+	</BODY>
+</HTML>

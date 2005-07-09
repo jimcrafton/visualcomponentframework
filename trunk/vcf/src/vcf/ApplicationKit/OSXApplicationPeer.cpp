@@ -63,7 +63,7 @@ String OSXApplicationPeer::getFileName()
 	if ( CFURLGetFileSystemRepresentation( url, true, (UInt8*)buf, sizeof(buf) ) ) {
 		result = buf;
 		result += "/Contents/MacOS/";
-		result += val;//OSXUtils::extractStringValueFromCFType( val );
+		result += val.c_str();//OSXUtils::extractStringValueFromCFType( val );
 	}
 	
 	return result;
@@ -83,8 +83,14 @@ void OSXApplicationPeer::setHandleID( OSHandleID handleID )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.1  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

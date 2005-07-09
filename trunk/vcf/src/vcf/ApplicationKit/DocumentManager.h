@@ -13,6 +13,11 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#ifndef _VCF_MENUMANAGER_H__
+	#include "vcf/ApplicationKit/MenuManager.h"
+#endif //_VCF_MENUMANAGER_H__
+
+
 
 namespace VCF {
 
@@ -175,7 +180,8 @@ public:
 		atEditCut,
 		atEditCopy,
 		atEditPaste,
-		atEditPreferences
+		atEditPreferences,
+		atLast,
 	};
 
 	/**
@@ -298,6 +304,18 @@ public:
 	}
 
 	/**
+	* save a document into a file.
+	* The basic functionality is empty. The real implementation is dependent on the policy.
+	*@param Document* doc, the document.
+	*@param const String& newFileName, the new destination filename. By default it is empty
+	* so the user is prompted with a dialog.
+	*@return bool, true if the operation completed successfully.
+	*/
+	virtual bool saveFileAs( Document* document, const String& newFileName=L"" ){
+		return false;
+	}
+
+	/**
 	* opens a document instance from a file.
 	* the mime type identifying the document is extracted from
 	* the file extension stored with all the DocumentInfo(s)
@@ -325,6 +343,17 @@ public:
 	*/
 	virtual void closeCurrentDocument(){
 	
+	};
+
+	/**
+	* reloads from the hard drive the file for an existing document.
+	* The basic functionality is empty. The real implementation is dependent on the policy.
+	*@param Document* doc, the document whose file needs to be reloaded.
+	*@param const bool& keepPosition, true to reopen the file in the same
+	* position as before. The default is true.
+	*/
+	virtual void reloadDocument( Document* document, const bool& keepPosition=true ) {
+
 	};
 
 	/**
@@ -475,13 +504,6 @@ public:
 
 
 	/**
-	* gets the standard menu built for any document based application.
-	*/
-	Menu* getStandardMenu() {
-		return standardMenu_;
-	}
-
-	/**
 	* creates the menus associated to our document based application.
 	* The basic functionality is empty. The real implementation is dependent on the policy.
 	*/
@@ -543,13 +565,36 @@ public:
 	virtual void redoForDocument( Document* doc );
 
 	/**
-	* gets the undo-redo stack associated to a document.
-	*@param Document& doc, the document.
+	performs an undo operation using
+	the shared undo-redo stack
+	*/
+	void undo();
+
+	/**
+	performs a redo operation using
+	the shared undo-redo stack
+	*/
+	void redo();
+
+	/**
+	* gets the undo-redo stack associated with a document.
+	*@param Document* doc, the document. If this is NULL
+	then the function returns the default undo-redo 
+	stack, that is "global" and not specific to a particular
+	document.
 	*@return UndoRedoStack&, a reference to the document's stack.
 	*/
 	UndoRedoStack& getUndoRedoStack( Document* doc );
 
-
+	/**
+	Returns the shared undo-redo stack for the document 
+	manager.
+	@return UndoRedoStack&, a reference to the document's stack.
+	@see getUndoRedoStack()
+	*/	
+	UndoRedoStack& getSharedUndoRedoStack() {
+		return getUndoRedoStack( NULL );
+	}
 protected:
 
 	/**
@@ -558,46 +603,55 @@ protected:
 	*/
 	DocumentInfo* getDocumentInfo( Document* doc );
 
-	/* called to prepare a file open dialog */
+	/** called to prepare a file open dialog */
 	virtual void prepareOpenDialog( CommonFileOpen* openDialog );
 
-	/* called after the file open dialog has been closed by the user and confirmed Ok */
+	/** called after the file open dialog has been closed by the user and confirmed Ok */
 	virtual void openDialogFinished( CommonFileOpen* openDialog ){};
 
-	/* called to prepare a file save dialog */
+	/** called to prepare a file save dialog */
 	virtual void prepareSaveDialog( CommonFileSave* saveDialog, Document* doc );
 
-	/* called after the file save dialog has been closed by the user and confirmed Ok */
+	/** called after the file save dialog has been closed by the user and confirmed Ok */
 	virtual void saveDialogFinished( CommonFileSave* saveDialog ){};
 
-	/* called to update ... a cut operation */
-	void updateCut( ActionEvent* event, Document* doc );
+	/** called when this target gets notified for update events of the UI of a save operation */
+	virtual void updateSave( ActionEvent* event, Document* doc );
 
-	/* called to update ... a copy operation */
-	void updateCopy( ActionEvent* event, Document* doc );
+	/** called when this target gets notified for update events of the UI of a saveAs operation */
+	virtual void updateSaveAs( ActionEvent* event, Document* doc );
 
-	/* called to update ... a paste operation */
-	void updatePaste( ActionEvent* event, Document* doc );
+	/** called when this target gets notified for update events of the UI of a close operation */
+	virtual void updateClose( ActionEvent* event, Document* doc );
 
-	/* called to update ... an undo operation */
-	void updateUndo( ActionEvent* event, Document* doc );
+	/** called when this target gets notified for update events of the UI of a cut operation */
+	virtual void updateCut( ActionEvent* event, Document* doc );
 
-	/* called to update ... a redo operation */
-	void updateRedo( ActionEvent* event, Document* doc );
+	/** called when this target gets notified for update events of the UI of a copy operation */
+	virtual void updateCopy( ActionEvent* event, Document* doc );
 
-	/* removes the undo redo stack from the specified document */
+	/** called when this target gets notified for update events of the UI of a paste operation */
+	virtual void updatePaste( ActionEvent* event, Document* doc );
+
+	/** called when this target gets notified for update events of the UI of a undo operation */
+	virtual void updateUndo( ActionEvent* event, Document* doc );
+
+	/** called when this target gets notified for update events of the UI of a redo operation */
+	virtual void updateRedo( ActionEvent* event, Document* doc );
+
+	/** removes the undo redo stack from the specified document */
 	void removeUndoRedoStackForDocument( Document* doc );
 
-	/* called to save the changes done on a specified document */
-	UIToolkit::ModalReturnType saveChanges( Document* document );
+	/** called to save the changes done on a specified document */
+	virtual UIToolkit::ModalReturnType saveChanges( Document* document );
 
-	/* add an action to the internal action map */
+	/** add an action to the internal action map */
 	void addAction( ulong32 tag, Action* action );
 
-	/* called to add a document to the document based application */
+	/** called to add a document to the document based application */
 	void addDocument( Document* document );
 
-	/* called to remove a document from the document based application */
+	/** called to remove a document from the document based application */
 	void removeDocument( Document* document );
 
 
@@ -605,27 +659,38 @@ protected:
 	typedef std::map<Document*,UndoRedoStack*> DocumentUndoRedoMap;
 	typedef std::map< ulong32, Action* > ActionMap;
 
-	/* the only document manager instance for the application */
+	/** 
+	the only document manager instance for the application 
+	*/
 	static DocumentManager* docManagerInstance;
 
-	/* the map of all registered DocumentInfo(s) */
+	/**
+	The map of all registered DocumentInfo(s) 
+	*/
 	DocumentInfoMap docInfo_;
 	EnumeratorMapContainer< DocumentInfoMap, DocumentInfo > docInfoContainer_;
 
-	/* the list of all the opened document at this moment */
+	/**
+	The list of all the opened document at this moment 
+	*/
 	std::vector<Document*> openDocuments_;
 	EnumeratorContainer< std::vector<Document*>, Document* > openDocContainer_;
 
-	/* this DocumentManager has a User Interface */
+	/** 
+	this DocumentManager has a User Interface 
+	*/
 	bool shouldCreateUI_;
 
-	/* the standard menu for a Document based application */
-	Menu* standardMenu_;
-
-	/* the map of all actions and their associated tags according to our document manager */
+	
+	/**
+	the map of all actions and their associated tags according 
+	to our document manager 
+	*/
 	ActionMap actionsMap_;
 
-	/* the map of all undo redo stack associated to each document */
+	/** 
+	the map of all undo redo stack associated to each document 
+	*/
 	DocumentUndoRedoMap undoRedoStack_;
 };
 
@@ -678,7 +743,10 @@ public:
 
 	/**
 	* save a document into a file.
-	* the standard behaviour is to show a dialog asking the user which file to open.
+	* the standard behaviour is simply save the file if it has been modified,
+	* and to create a backup copy first if the document specifies to keep one.
+	* If there is a problem with the destination directory, the user is prompted
+	* with a dialog in order to specify an alternative location.
 	* If we don't want this base behaviour, an event handler must be implemented
 	* and added to the SaveFile delegate.
 	*@param Document* doc, the document.
@@ -688,6 +756,28 @@ public:
 	*@eventtype DocumentManager::dmSaveDocument
 	*/
 	virtual bool saveFile( Document* document );
+
+	/**
+	* save a document into a file.
+	* the standard behaviour is to show a dialog asking the user which file to open.
+	* The user is prompted with a dialog if the destination filename is not specified
+	* or if its directory does not exists.
+	* If the document is saved, then a ModelChanged event with type Document::deSaved
+	* is fired.
+	* If we don't want this base behaviour, an event handler must be implemented
+	* and added to the SaveFile delegate.
+	*@param Document* doc, the document.
+	*@param const String& newFileName, the new destination filename. By default it is empty
+	* so the user is prompted with a dialog.
+	*@return bool, true if the operation completed successfully.
+	*@fire DocumentManager::SaveFile
+	*@event DocManagerEvent
+	*@eventtype DocumentManager::dmSaveDocument
+	*@fire Model::ModelChanged
+	*@event ModelEvent
+	*@eventtype Document::deSaved
+	*/
+	virtual bool saveFileAs( Document* document, const String& newFileName=String( L"" ) );
 
 	/**
 	* opens a file.
@@ -705,6 +795,17 @@ public:
 	* according to the policy.
 	*/
 	virtual void closeCurrentDocument();
+
+	/**
+	* reloads a file for an existing document.
+	* If the file is modified, the user is prompted to save it or not.
+	* It the operation fails, the user is warned with a message,
+	* but the document is not closed.
+	*@param Document* doc, the document whose file needs to be reloaded.
+	*@param const bool& keepPosition, true to reopen the file in the same
+	* position as before. The default is true.
+	*/
+	virtual void reloadDocument( Document* document, const bool& keepPosition=true );
 
 	/**
 	* just creates the object from its type using the VCF RTTI
@@ -805,54 +906,78 @@ protected:
 	**/
 
 	/**
-	* saves the current document.
+	* saves the current document, if it has been modified.
 	*/
-	void onSave( Event* e ) {
+	virtual void onSave( Event* e ) {
 		saveFile( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* saves the current document, but let the user to specify an alternative filename and type.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onSaveAs( Event* e ) {
+	virtual void onUpdateSave( ActionEvent* e ) {
+		updateSave( e, DocInterfacePolicy::getCurrentDocument() );
+	}
+
+	/**
+	* saves the current document, but let the user to specify
+	* an alternative filename and type through a dialog box.
+	*/
+	virtual void onSaveAs( Event* e ) {
 		Document* doc = DocInterfacePolicy::getCurrentDocument();
-		doc->setFileName( "" );
-		doc->setModified(true);
-		saveFile( doc );
+
+		saveFileAs( doc );
+	}
+
+	/**
+	* called when this target gets notified for update events
+	*@see Action::update
+	*/
+	virtual void onUpdateSaveAs( ActionEvent* e ) {
+		updateSaveAs( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* opens a document.
 	*/
-	void onOpen( Event* e ) {
+	virtual void onOpen( Event* e ) {
 		openFile();
 	}
 
 	/**
 	* closes a document.
 	*/
-	void onClose( Event* e ) {
+	virtual void onClose( Event* e ) {
 		closeCurrentDocument();
+	}
+
+	/**
+	* called when this target gets notified for update events
+	*@see Action::update
+	*/
+	virtual void onUpdateClose( ActionEvent* e ) {
+		updateClose( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* creates a new document.
 	*/
-	void onNew( Event* e ) {
+	virtual void onNew( Event* e ) {
 		newDocument();
 	}
 
 	/**
 	* let the user to change preferences.
 	*/
-	void onPreferences( Event* e ) {
+	virtual void onPreferences( Event* e ) {
 		editPreferences();
 	}
 
 	/**
 	* handles notification that the user preferences has been changed
 	*/
-	void onUpdatePreferences( ActionEvent* e ) {
+	virtual void onUpdatePreferences( ActionEvent* e ) {
 
 	}
 
@@ -903,82 +1028,82 @@ protected:
 	/**
 	* starts cut operation
 	*/
-	void onCut( Event* e ) {
+	virtual void onCut( Event* e ) {
 		cutFromDocument( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* handles notification that a cut operation has been performed.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onUpdateCut( ActionEvent* e ) {
-
-
+	virtual void onUpdateCut( ActionEvent* e ) {
 		updateCut( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* starts copy operation
 	*/
-	void onCopy( Event* e ) {
+	virtual void onCopy( Event* e ) {
 		copyFromDocument( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* handles notification that a copy operation has been performed.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onUpdateCopy( ActionEvent* e ) {
-
+	virtual void onUpdateCopy( ActionEvent* e ) {
 		updateCopy( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* starts paste operation
 	*/
-	void onPaste( Event* e ) {
+	virtual void onPaste( Event* e ) {
 		pasteToDocument( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* handles notification that a paste operation has been performed.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onUpdatePaste( ActionEvent* e ) {
-
+	virtual void onUpdatePaste( ActionEvent* e ) {
 		updatePaste( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* starts undo operation
 	*/
-	void onUndo( Event* e ) {
+	virtual void onUndo( Event* e ) {
 		undoForDocument( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* handles notification that an undo operation has been performed.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onUpdateUndo( ActionEvent* e ) {
-
+	virtual void onUpdateUndo( ActionEvent* e ) {
 		updateUndo( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
 	* starts redo operation
 	*/
-	void onRedo( Event* e ) {
+	virtual void onRedo( Event* e ) {
 		redoForDocument( DocInterfacePolicy::getCurrentDocument() );
 	}
 
 	/**
-	* handles notification that a redo operation has been performed.
+	* called when this target gets notified for update events
+	*@see Action::update
 	*/
-	void onUpdateRedo( ActionEvent* e ) {
+	virtual void onUpdateRedo( ActionEvent* e ) {
 
 		updateRedo( e, DocInterfacePolicy::getCurrentDocument() );
 	}
 
 
 protected:
-	/* pointer to the application */
+	/** pointer to the application */
 	AppClass* app_;
 
 	bool closingDocument_;
@@ -1025,6 +1150,9 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 	action->Performed += new GenericEventHandler< AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onSave,
 	                        "onSave" );
+	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateSave,
+	                        "onUpdateSave" );
 	addAction( DocumentManager::atFileSave, action );
 
 	action = new Action();
@@ -1032,6 +1160,9 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 	action->Performed += new GenericEventHandler< AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onSaveAs,
 	                        "onSaveAs" );
+	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateSaveAs,
+	                        "onUpdateSaveAs" );
 	addAction( DocumentManager::atFileSaveAs, action );
 
 	action = new Action();
@@ -1039,6 +1170,9 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 	action->Performed += new GenericEventHandler< AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onClose,
 	                        "onClose" );
+	action->Update += new EventHandlerInstance< AppClass,ActionEvent >( app_,
+	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateClose,
+	                        "onUpdateClose" );
 	addAction( DocumentManager::atFileClose, action );
 
 	action = new Action();
@@ -1049,7 +1183,6 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateUndo,
 	                        "onUpdateUndo" );
-
 	addAction( DocumentManager::atEditUndo, action );
 
 	action = new Action();
@@ -1060,7 +1193,6 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateRedo,
 	                        "onUpdateRedo" );
-
 	addAction( DocumentManager::atEditRedo, action );
 
 
@@ -1114,63 +1246,21 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 
 
 template < typename AppClass, typename DocInterfacePolicy >
-bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFile( Document* doc ) {
+bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFile( Document* doc )
+{
 	bool result = false;
 
 	if ( NULL == doc ) {
-
 		return false;
 	}
 
 	if ( doc->isModified() ) {
-		/**
-		* allow the base behaviour to be bypassed if necessary.
-		*@see DocManagerEvent
-		*/
-		DocManagerEvent event( doc, DocumentManager::dmSaveDocument );
-		SaveFile.fireEvent( &event );
-		if ( !event.allowFileOperation() ) {
-			return event.getFileOperationStatus();
-		}
 
-		String fileType;
-		String fileTypes;
-
-		DocumentInfo* info = getDocumentInfo( doc );
-		if ( NULL != info ) {
-			fileType = info->mimetype;
-			fileTypes = info->fileTypes;
-		}
+		FilePath fp = doc->getFileName();
 
 		FilePath tmpName;
-		FilePath fp = doc->getFileName();
-		if ( !File::exists( fp ) ) {
-			String currentDir = System::getCurrentWorkingDirectory();
-			CommonFileSave saveDialog( doc->getWindow(), currentDir );
-
-			prepareSaveDialog( &saveDialog, doc );
-
-			if ( saveDialog.execute() ) {
-
-				saveDialogFinished( &saveDialog );
-
-				fp = saveDialog.getFileName();
-
-				if ( fp.getExtension().empty() ) {
-					String selectedFilter = saveDialog.getSelectedFilter();
-					selectedFilter.erase( 0, 1 );
-					fp = saveDialog.getFileName() + selectedFilter;
-				}
-
-				doc->setFileName( fp );
-			}
-			else {
-
-				return false;
-			}
-		}
-		else {
-			//save back up
+		if ( File::exists( fp ) ) {
+			//save back up first
 			File backup( fp );
 			String tmp = fp.getPathName(true);
 			tmp += "~" + fp.getBaseName() + ".tmp";
@@ -1178,17 +1268,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFile( Document* doc )
 			backup.copyTo( tmpName );
 		}
 
-		if ( fileType.empty() ) {
-			fileType = fp.getExtension();
-		}
-
-		try {
-			result = doc->saveAsType( doc->getFileName(), fileType );
-		}
-		catch ( BasicException& e) {
-			Dialog::showMessage( "Error saving '" + doc->getName() + "'\nError: " + e.getMessage() );
-			result = false;
-		}
+		result = saveFileAs( doc, fp );
 
 		if ( result ) {
 			if ( (!doc->getKeepsBackUpFile()) && File::exists( tmpName ) ) {
@@ -1196,13 +1276,146 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFile( Document* doc )
 				backup.remove();
 			}
 		}
+
 	}
 
 	return result;
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
-void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile() {
+bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc, const String& newFileName )
+{
+	bool result = false;
+
+	if ( NULL == doc ) {
+		return false;
+	}
+
+	/**
+	* allow the base behaviour to be bypassed if necessary.
+	*@see DocManagerEvent
+	*/
+	DocManagerEvent event( doc, DocumentManager::dmSaveDocument );
+	SaveFile.fireEvent( &event );
+	if ( !event.allowFileOperation() ) {
+		return event.getFileOperationStatus();
+	}
+
+	String fileType;
+	String fileTypes;
+
+	DocumentInfo* info = getDocumentInfo( doc );
+	if ( NULL != info ) {
+		fileType = info->mimetype;
+		fileTypes = info->fileTypes;
+	}
+
+
+	// prompts the user with a dialog if the destination filename is empty
+	// or if its directory does not exists.
+	bool prompt = false;
+
+	FilePath fp = newFileName;
+	if ( newFileName.empty() ) {
+		fp = doc->getFileName();
+		prompt = true;
+	}
+
+	String currentDir = fp.getPathName(true);
+	if ( !prompt && !File::exists( currentDir ) ) {
+		prompt = true;
+	}
+
+	if ( prompt ) {
+
+		String basename = fp.getBaseName(true);
+
+		if ( currentDir.empty() ) {
+			currentDir = System::getCurrentWorkingDirectory();
+		}
+		else {
+			if ( !File::exists( currentDir ) ) {
+				// we look for the first existing parent directory
+				String appDir = currentDir;
+				std::vector<String> pathComponents = fp.getPathComponents();
+				std::vector<String>::reverse_iterator it = pathComponents.rbegin();
+
+				bool found = false;
+				while ( it != pathComponents.rend() ) {
+					String s = (*it);
+					int length = (*it).length();// + FilePath::getDirectorySeparator().length();
+
+					appDir.erase( appDir.length()-length, length );
+					
+					if ( File::exists( appDir ) ) {
+						found = true;
+						break;
+					}
+
+					it ++;
+				}
+
+				if ( found ) {
+					currentDir = appDir;
+				}
+				else {
+					currentDir = System::getCurrentWorkingDirectory();
+				}
+			}
+		}
+
+		CommonFileSave saveDialog( doc->getWindow(), currentDir );
+
+		saveDialog.setFileName( currentDir + basename );
+		prepareSaveDialog( &saveDialog, doc );
+		saveDialog.addFilter( ".* files", "*.*" );
+		if ( saveDialog.execute() ) {
+
+			saveDialogFinished( &saveDialog );
+
+			fp = saveDialog.getFileName();
+
+			// adds the filter's extension if specified but missing from the filename
+			String selectedFilter = saveDialog.getSelectedFilter();
+			selectedFilter.erase( 0, 1 );
+			if ( ( !selectedFilter.empty() ) && ( selectedFilter != L".*" ) && 
+			     ( selectedFilter != fp.getExtension() ) ) {
+				fp = fp + selectedFilter;
+			}
+		}
+		else {
+
+			return false;
+		}
+	}
+
+	if ( fileType.empty() ) {
+		fileType = fp.getExtension();
+	}
+
+	try {
+		result = doc->saveAsType( fp, fileType );
+	}
+	catch ( BasicException& e) {
+		Dialog::showMessage( "Error saving '" + doc->getName() + "'\nError: " + e.getMessage() );
+		result = false;
+	}
+
+	if ( result ) {
+		doc->setModified(false); // it already is, we just make sure.
+		doc->setFileName( fp );
+
+		// notifies the UI that the document has changed name
+		ModelEvent e( doc, Document::deSaved );
+		doc->ModelChanged.fireEvent( &e );
+	}
+
+	return result;
+}
+
+template < typename AppClass, typename DocInterfacePolicy >
+void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
+{
 	Document* doc = DocInterfacePolicy::getCurrentDocument();
 
 	/**
@@ -1252,6 +1465,35 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeCurrentDocument()
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
+void DocumentManagerImpl<AppClass,DocInterfacePolicy>::reloadDocument( Document* document, const bool& keepPosition )
+{
+	// returns if the user doesn't want to save the changes.
+	if ( !saveDocument( document ) ) {
+		return;
+	};
+
+	String fileName = document->getFileName();
+
+	//String mimetype = app->getMimeTypeFromFileExtension( fileName );
+	//String mimetype = getDocumentMimeType( document );
+
+	String mimeType;
+	String fileTypes;
+
+	DocumentInfo* info = getDocumentInfo( document );
+	if ( NULL != info ) {
+		mimeType = info->mimetype;
+		fileTypes = info->fileTypes;
+	}
+	//VCF_ASSERT( !mimetype.empty() );
+
+	document->openFromType( fileName, mimeType );
+
+	// reset the undo/redo stack
+	getUndoRedoStack( document).clearCommands();
+}
+
+template < typename AppClass, typename DocInterfacePolicy >
 Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocument( Document* document, const DocumentInfo& info )
 {
 	Window* result;
@@ -1296,7 +1538,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initializeWindowMenus( Wi
 		window->addComponent( menu );
 	}
 
-	DocInterfacePolicy::mergeWindowMenus( standardMenu_, window->getMenuBar() );
+	DocInterfacePolicy::mergeWindowMenus( MenuManager::getMainMenu(), window->getMenuBar() );
 }
 
 
@@ -1424,8 +1666,8 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 	// creates or activates a window for it, and fires event for custom initializations.
 	attachUI( info, document );
 
-	// with its creation, notifies the document has been changed
-	// so the UI updates itself
+	// after the document has been created, we notify that it has
+	// been changed, so the UI can updates itself.
 	ModelEvent e( document, Document::deOpened );
 	document->ModelChanged.fireEvent( &e );
 }
@@ -1477,7 +1719,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 
 
 	if ( NULL != newDocument ) {
-		// calls user user implementation
+		// calls user implementation
 		newDocument->initNew();
 
 		if ( DocumentManager::getShouldCreateUI() ) {
@@ -1516,64 +1758,78 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createDocumentFromTy
 
 template < typename AppClass, typename DocInterfacePolicy >
 void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
-	standardMenu_ = new MenuBar();
-	MenuItem* root = standardMenu_->getRootMenuItem();
-	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, standardMenu_);
+	Menu* standardMenu = MenuManager::getMainMenu();
+	
+	UIPolicyManager* mgr = UIToolkit::getUIPolicyManager();
 
-	DefaultMenuItem* fileNew = new DefaultMenuItem( "&New\tCtrl+N", file, standardMenu_);
-	fileNew->setAcceleratorKey( vkLetterN, kmCtrl );
+	MenuItem* root = standardMenu->getRootMenuItem();
+	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, standardMenu);
+
+	DefaultMenuItem* fileNew = new DefaultMenuItem( "&New", file, standardMenu);
+
+	AcceleratorKey::Value val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileNew);
+
+	fileNew->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	fileNew->setTag( DocumentManager::atFileNew );
 
 
-	DefaultMenuItem* fileOpen = new DefaultMenuItem( "&Open...\tCtrl+O", file, standardMenu_);
-	fileOpen->setAcceleratorKey( vkLetterO, kmCtrl );
+	DefaultMenuItem* fileOpen = new DefaultMenuItem( "&Open...", file, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileOpen);
+	fileOpen->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	fileOpen->setTag( DocumentManager::atFileOpen );
 
-	DefaultMenuItem* fileClose = new DefaultMenuItem( "Close", file, standardMenu_);
+	DefaultMenuItem* fileClose = new DefaultMenuItem( "Close", file, standardMenu);
 	fileClose->setTag( DocumentManager::atFileClose );
 
 
-	DefaultMenuItem* separator = new DefaultMenuItem( "", file, standardMenu_);
+	DefaultMenuItem* separator = new DefaultMenuItem( "", file, standardMenu);
 	separator->setSeparator( true );
 
 
-	DefaultMenuItem* fileSave = new DefaultMenuItem( "&Save...\tCtrl+S", file, standardMenu_);
-	fileSave->setAcceleratorKey( vkLetterS, kmCtrl );
+	DefaultMenuItem* fileSave = new DefaultMenuItem( "&Save", file, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileSave);
+	fileSave->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	fileSave->setTag( DocumentManager::atFileSave );
 
-	DefaultMenuItem* fileSaveAs = new DefaultMenuItem( "Save &As...\tCtrl+Shift+S", file, standardMenu_);
-	fileSaveAs->setAcceleratorKey( vkLetterS, kmCtrl | kmShift );
+	DefaultMenuItem* fileSaveAs = new DefaultMenuItem( "Save &As...", file, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileSaveAs);
+	fileSaveAs->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	fileSaveAs->setTag( DocumentManager::atFileSaveAs );
 
 
-	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, standardMenu_);
-	DefaultMenuItem* editUndo = new DefaultMenuItem( "&Undo\tCtrl+Z", edit, standardMenu_);
-	editUndo->setAcceleratorKey( vkLetterZ, kmCtrl  );
+	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, standardMenu);
+	DefaultMenuItem* editUndo = new DefaultMenuItem( "&Undo", edit, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditUndo);
+	editUndo->setAcceleratorKey( val.getKeyCode(), val.getModifierMask()  );
 	editUndo->setTag( DocumentManager::atEditUndo );
 
-	DefaultMenuItem* editRedo = new DefaultMenuItem( "&Redo\tCtrl+Shift+Z", edit, standardMenu_);
-	editRedo->setAcceleratorKey( vkLetterZ, kmCtrl | kmShift );
+	DefaultMenuItem* editRedo = new DefaultMenuItem( "&Redo", edit, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditRedo);
+	editRedo->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	editRedo->setTag( DocumentManager::atEditRedo );
 
-	separator = new DefaultMenuItem( "", edit, standardMenu_);
+	separator = new DefaultMenuItem( "", edit, standardMenu);
 	separator->setSeparator( true );
 
-	DefaultMenuItem* editCut = new DefaultMenuItem( "Cu&t\tCtrl+X", edit, standardMenu_);
-	editCut->setAcceleratorKey( vkLetterX, kmCtrl );
+	DefaultMenuItem* editCut = new DefaultMenuItem( "Cu&t", edit, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCut);
+	editCut->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	editCut->setTag( DocumentManager::atEditCut );
 
-	DefaultMenuItem* editCopy = new DefaultMenuItem( "&Copy\tCtrl+C", edit, standardMenu_);
-	editCopy->setAcceleratorKey( vkLetterC, kmCtrl );
+	DefaultMenuItem* editCopy = new DefaultMenuItem( "&Copy", edit, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCopy);
+	editCopy->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	editCopy->setTag( DocumentManager::atEditCopy );
 
-	DefaultMenuItem* editPaste = new DefaultMenuItem( "&Paste\tCtrl+V", edit, standardMenu_);
-	editPaste->setAcceleratorKey( vkLetterV, kmCtrl );
+	DefaultMenuItem* editPaste = new DefaultMenuItem( "&Paste", edit, standardMenu);
+	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditPaste);
+	editPaste->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
 	editPaste->setTag( DocumentManager::atEditPaste );
 
-	separator = new DefaultMenuItem( "", edit, standardMenu_);
+	separator = new DefaultMenuItem( "", edit, standardMenu);
 	separator->setSeparator( true );
 
-	DefaultMenuItem* editPreferences = new DefaultMenuItem( "P&references...", edit, standardMenu_);
+	DefaultMenuItem* editPreferences = new DefaultMenuItem( "P&references...", edit, standardMenu);
 	editPreferences->setTag( DocumentManager::atEditPreferences );
 
 
@@ -1603,6 +1859,46 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.14  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.13  2005/06/02 15:56:04  marcelloptr
+*more documentation. Made some handlers virtual. Added some forgotten onUpdateXXX
+*
+*Revision 1.3.2.12  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.11  2005/05/06 20:35:19  marcelloptr
+*Added option to reloadDocument function
+*
+*Revision 1.3.2.9  2005/04/18 14:56:51  marcelloptr
+*removed member variable added too soon
+*
+*Revision 1.3.2.7  2005/04/15 20:25:39  marcelloptr
+*fix: saveAs now notifies the UI that the document has changed name
+*
+*Revision 1.3.2.6  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.5  2005/03/14 04:17:23  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.4  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.3  2005/03/05 18:21:18  ddiego
+*fixed a bug that marcello found in the vcfbuilder that is actually a bug in the document manager (see bug 1157348).
+*
+*Revision 1.3.2.2  2005/03/02 19:41:13  marcelloptr
+*fixed crash when opening a non existing document
+*
+*Revision 1.3.2.1  2005/01/28 02:49:01  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

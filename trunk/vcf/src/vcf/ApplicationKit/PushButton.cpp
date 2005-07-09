@@ -22,12 +22,18 @@ PushButton::PushButton():
 	CustomControl( true )
 {
 	showCaption_ = true;
-	BtnImageIndex_ = -1;
 	imageList_ = NULL;
-	autoSizeForCaption_ = true;
+	autoSize_ = true;
 	isHighlighted_ = false;
-	captionAlignment_ = BCA_RIGHT;
+	captionAlignment_ = bcaCenter;
 	isPressed_ = false;
+	toggled_ = false;
+	wasPressed_ = false;
+	separationImageCaption_ = 5.0;
+	moveImageWhenPressed_ = true;
+	drawFocusRectWhenFocus_ = true;
+	drawFocusRectWhenFocusDown_ = true;
+	imageStateSpecified_ = -1;
 
 	commandType_ = BC_NONE;
 
@@ -43,159 +49,351 @@ PushButton::PushButton():
 PushButton::~PushButton()
 {
 
+	UIToolkit::removeDefaultButton( this );
 }
 
-void PushButton::drawHighLighted( Rect* rect, GraphicsContext* ctx )
+/*
+void PushButton::drawHighLighted( const Rect& rect, GraphicsContext* ctx )
 {
-	Rect tmp = *rect;
+	Rect tmp = rect;
 	tmp.inflate( -1, 0 );
 
 	ButtonState state;
 	state.setActive( true );
 	state.setEnabled( isEnabled() );
 	state.setPressed( isPressed_ );
-	state.setFocused( true );	
-	ctx->drawThemeButtonRect( &tmp, state );	
+	state.setFocused( true );
+	ctx->drawThemeButtonRect( &tmp, state );
 }
 
-void PushButton::drawNormal( Rect* rect, GraphicsContext* ctx )
+void PushButton::drawNormal( const Rect& rect, GraphicsContext* ctx )
 {
-	Rect tmp = *rect;
+	Rect tmp = rect;
 	tmp.inflate( -1, 0 );
 	ButtonState state;
 	state.setActive( true );
 	state.setEnabled( isEnabled() );
 	state.setPressed( isPressed_ );
 	state.setFocused( isFocused() || (this == UIToolkit::getDefaultButton()) );
-	
+
 	ctx->drawThemeButtonRect( &tmp, state );
 }
 
-void PushButton::drawImage( Rect* rect, Rect* imageRect, GraphicsContext* context )
+void PushButton::drawCaption( const Rect& rect, Rect* imageRect, GraphicsContext* context )
+{
+	if ( true == showCaption_ ) {
+		Rect textRect = rect;
+		/\*
+		if ( true == isPressed_ ) {
+			textRect.setRect( textRect.left_ + 1.0, textRect.top_ + 1.0, textRect.right_ + 1.0, textRect.bottom_ + 1.0 );
+		}
+		*\/
+		context->setCurrentFont( getFont() );
+		context->textBoundedBy( &textRect, caption_, false );
+	}
+}
+*/
+
+void PushButton::drawImage( const Rect& rect, const ButtonState& state, const Rect* imageRect, GraphicsContext* context )
 {
 	if ( NULL != this->imageList_ ) {
-		if (this->BtnImageIndex_ >= 0 ) {
-			switch ( captionAlignment_ ) {
-				case BCA_RIGHT : {
-					imageRect->top_ = maxVal<double>( rect->top_, (rect->getHeight()/2.0) - (imageList_->getImageHeight()/2.0) );
-					imageRect->bottom_ = minVal<double>( rect->bottom_, imageRect->top_ + imageList_->getImageHeight() );
 
-					imageRect->left_ = rect->left_ + 2;
-					imageRect->right_ = imageRect->left_ + minVal<double>( rect->getWidth(), imageList_->getImageWidth() );
+		ImageState imageState = bisUp;
+
+		if ( !state.isEnabled() ) {
+			imageState = bisDisable;
+		}
+		else {
+			if ( toggled_ ) {
+				if ( state.isPressed() ) {
+					imageState = bisDown;
+
+					if ( isHighlighted_ && ( imageStateSpecified_ & bisHighlight ) ) {
+						imageState = bisHighlight;
+					}
+					else {
+						if ( state.isFocused() ) {
+							if ( imageStateSpecified_ & bisFocusDown ) {
+								imageState = bisFocusDown;
+							}
+							else if ( imageStateSpecified_ & bisFocus ) {
+								imageState = bisFocus;
+							}
+						}
+					}
+
 				}
-				break;
-
-				case BCA_TOP : {
-					imageRect->top_ += context->getTextHeight( caption_ ) + IMAGE_CAPTION_BUFFER;
-					imageRect->bottom_ = minVal<double>( imageList_->getImageHeight(), rect->getHeight() );
-
-					imageRect->left_ = (rect->getWidth()/2.0) - (imageList_->getImageWidth()/2.0);
-					imageRect->right_ = imageList_->getImageWidth();
+				else {
+					if ( isHighlighted_ && ( imageStateSpecified_ & bisHighlight ) ) {
+						imageState = bisHighlight;
+					}
+					else {
+						if ( state.isFocused() && ( imageStateSpecified_ & bisFocus ) ) {
+							imageState = bisFocus;
+						}
+					}				
 				}
-				break;
-
-				case BCA_LEFT : {
-					imageRect->right_ = rect->right_;
-					imageRect->left_ = maxVal<double>( rect->left_, imageRect->right_ - imageList_->getImageWidth() );
-					imageRect->top_ += context->getTextHeight( caption_ ) + IMAGE_CAPTION_BUFFER;
-					imageRect->bottom_ = minVal<double>( imageList_->getImageHeight(), rect->getHeight() );
-				}
-				break;
-
-				case BCA_BOTTOM : {
-					imageRect->top_ = rect->top_;//context->getTextHeight( caption_ ) + IMAGE_CAPTION_BUFFER;
-					imageRect->bottom_ = imageRect->top_ + ( minVal<double>( imageList_->getImageHeight(), rect->getHeight() ) );
-
-					imageRect->left_ = (rect->getWidth()/2.0) - (imageList_->getImageWidth()/2.0);
-					imageRect->right_ = imageList_->getImageWidth();
-				}
-				break;
 			}
-			//imageRect->inflate( -2, -2 );
-			if ( true == isPressed_ ) {
-				imageRect->setRect( imageRect->left_ + 1.0, imageRect->top_ + 1.0, imageRect->right_ + 1.0, imageRect->bottom_ + 1.0 );
+			else {
+				if ( state.isPressed() ) {
+					imageState = bisDown;
+				}
+				else if ( state.isFocused() ) {
+					imageState = bisFocus;
+				}
+				else if ( isHighlighted_ ) { // state.isHighlighted()
+					imageState = bisHighlight;
+				}
 			}
-			imageList_->draw( context, BtnImageIndex_, imageRect );
+		}
+
+		long btnImageIndex = getBtnImageIndex( imageState );
+		if ( 0 <= btnImageIndex ) {
+			Rect imgRect = *imageRect;
+			//imgRect.inflate( -2, -2 );
+			if ( ( true == isPressed_ ) && ( moveImageWhenPressed_ ) ) {
+				imgRect.setRect( imgRect.left_ + 1.0, imgRect.top_ + 1.0, imgRect.right_ + 1.0, imgRect.bottom_ + 1.0 );
+			}
+
+			if ( 0 == ( imageStateSpecified_ & bisHighlight ) ) {
+				// image manipulation here ?
+			}
+
+			if ( 0 == ( imageStateSpecified_ & bisFocus ) ) {
+				// image manipulation here ?
+			}
+
+			imageList_->draw( context, btnImageIndex, &imgRect );
+
 		}
 	}
 }
 
-void PushButton::drawCaption( Rect* rect, Rect* imageRect, GraphicsContext* context )
+Rect PushButton::calcCenterRect( const Rect& rect, GraphicsContext* context, Rect* captionRect, Rect* imageRect )
 {
-	if ( true == showCaption_ ) {
-		Rect textRect = *rect;
+	Rect captRect, imgRect, rc;
+
+	if ( showCaption_ || ( NULL != imageList_ ) ) {
+		// the caption and the image are both displayed
+		// in a rectangle centered in the button
+
+		double sep = separationImageCaption_;
+
+		double ch = 0;
+		double cw = 0;
+		if ( showCaption_ ) {
+			ch = context->getTextHeight( caption_ );
+			cw = context->getTextWidth( caption_ );
+		}
+
+		double ih = 0;
+		double iw = 0;
+		if ( NULL != imageList_ ) {
+			ih = imageList_->getImageHeight();
+			iw = imageList_->getImageWidth();
+		}
+
+		if ( !showCaption_ || ( NULL == imageList_ ) ) {
+			sep = 0;
+		}
+
+		Rect r = rect;
+		double rh = r.getHeight();
+		double rw = r.getWidth();
+
+		// if the rect is empty, it calculates rect as the minimum rect
+		if ( r.isEmpty() ) {
+			switch ( captionAlignment_ ) {
+				case bcaLeft : case bcaRight : {
+					rh = maxVal<double>( ch, ih );
+					rw = cw + sep + iw;
+				}
+				break;
+
+				case bcaTop : case bcaBottom : {
+					rh = ch + sep + ih;
+					rw = maxVal<double>( cw, iw );
+				}
+				break;
+
+				case bcaCenter : {
+					rh = maxVal<double>( ch, ih );
+					rw = maxVal<double>( cw, iw );
+				}
+				break;
+			}
+			r.bottom_ = r.top_ + rh;
+			r.right_ = r.left_ + rw;
+		}
+
+		Point center( ( r.left_ + rw / 2.0 ), r.top_ + ( rh / 2.0 ) );
+
+		// the centered rectangle including both captionRect and imageRect
+		double h, w;
+		switch ( captionAlignment_ ) {
+			case bcaLeft : case bcaRight : {
+				sep = minVal<double>( sep, rw-(cw+iw) );
+				if ( sep < 0.0 ) sep = 0.0;
+
+				h = maxVal<double>( ch, ih );
+				w = cw + sep + iw;
+			}
+			break;
+
+			case bcaTop : case bcaBottom : {
+				sep = minVal<double>( sep, rh-(ch+ih) );
+				if ( sep < 0.0 ) sep = 0.0;
+
+				h = ch + sep + ih;
+				w = maxVal<double>( cw, iw );
+			}
+			break;
+
+			case bcaCenter : {
+				h = maxVal<double>( ch, ih );
+				w = maxVal<double>( cw, iw );
+			}
+			break;
+		}
+
+		rc.top_ = maxVal<double>( r.top_, center.y_ - h/2.0 );
+		rc.bottom_ = minVal<double>( r.bottom_, center.y_ + h/2.0 );
+
+		rc.left_ = maxVal<double>( r.left_, center.x_ - w/2.0 );
+		rc.right_ = minVal<double>( r.right_, center.x_ + w/2.0 );
 
 		switch ( captionAlignment_ ) {
-			case BCA_RIGHT : {
-				textRect.top_ = maxVal<double>( rect->top_, (rect->getHeight()/2.0) - (context->getTextHeight( caption_ ) / 2.0) );
-				textRect.bottom_ = minVal<double>( rect->bottom_, textRect.top_ + context->getTextHeight( caption_ ) );
-				if ( (NULL != this->imageList_) && (BtnImageIndex_ >= 0) ) {
-					textRect.left_ = imageRect->right_ + IMAGE_CAPTION_BUFFER;
-					textRect.right_ = rect->right_;
-				}
-				else {
-					textRect.left_ = maxVal<double>( rect->left_, (rect->getWidth() / 2.0) - (context->getTextWidth( caption_ )/2.0) );
-					textRect.right_ = minVal<double>( rect->right_, textRect.left_ + context->getTextWidth( caption_ ) );
-				}
+			case bcaLeft : {
+				captRect.top_ = maxVal<double>( rc.top_, center.y_ - ch/2.0 );
+				captRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ch/2.0 );
+				captRect.left_ = rc.left_;
+				captRect.right_ = rc.left_ + cw;
+
+				imgRect.top_ = maxVal<double>( rc.top_, center.y_ - ih/2.0 );
+				imgRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ih/2.0 );
+				imgRect.left_ = rc.right_ - iw;
+				imgRect.right_ = rc.right_;
 			}
 			break;
 
-			case BCA_TOP : {
-				textRect.left_ = maxVal<double>( rect->left_, (rect->getWidth() / 2.0) - (context->getTextWidth( caption_ )/2.0) );
-				textRect.right_ = minVal<double>( rect->right_, textRect.left_ + context->getTextWidth( caption_ ) );
-				if ( (NULL != this->imageList_) && (BtnImageIndex_ >= 0) ) {
-					textRect.top_ = rect->top_;
-					textRect.bottom_ = imageRect->top_;
-				}
-				else {
-					textRect.top_ = maxVal<double>( rect->top_, (rect->getHeight()/2.0) - (context->getTextHeight( caption_ ) / 2.0) );
-					textRect.bottom_ = minVal<double>( rect->bottom_, textRect.top_ + context->getTextHeight( caption_ ) );
-				}
+			case bcaRight : {
+				captRect.top_ = maxVal<double>( rc.top_, center.y_ - ch/2.0 );
+				captRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ch/2.0 );
+				captRect.left_ = rc.right_ - cw;
+				captRect.right_ = rc.right_;
+
+				imgRect.top_ = maxVal<double>( rc.top_, center.y_ - ih/2.0 );
+				imgRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ih/2.0 );
+				imgRect.left_ = rc.left_;
+				imgRect.right_ = rc.left_ + iw;
 			}
 			break;
 
-			case BCA_LEFT : {
-				textRect.top_ = maxVal<double>( rect->top_, (rect->getHeight()/2.0) - (context->getTextHeight( caption_ ) / 2.0) );
-				textRect.bottom_ = minVal<double>( rect->bottom_, textRect.top_ + context->getTextHeight( caption_ ) );
-				if ( (NULL != this->imageList_) && (BtnImageIndex_ >= 0) ) {
-					textRect.left_ = rect->left_;
-					textRect.right_ = imageRect->left_ - IMAGE_CAPTION_BUFFER;
-				}
-				else {
-					textRect.left_ = maxVal<double>( rect->left_, (rect->getWidth() / 2.0) - (context->getTextWidth( caption_ )/2.0) );
-					textRect.right_ = minVal<double>( rect->right_, textRect.left_ + context->getTextWidth( caption_ ) );
-				}
+			case bcaTop : {
+				captRect.top_ = rc.top_;
+				captRect.bottom_ = rc.top_ + ch;
+				captRect.left_ = maxVal<double>( rc.left_, center.x_ - cw/2.0 );
+				captRect.right_ = minVal<double>( rc.right_, center.x_ + cw/2.0 );
+
+				imgRect.top_ = rc.bottom_ - ih;
+				imgRect.bottom_ = rc.bottom_;
+				imgRect.left_ = maxVal<double>( rc.left_, center.x_ - iw/2.0 );
+				imgRect.right_ = minVal<double>( rc.right_, center.x_ + iw/2.0 );
 			}
 			break;
 
-			case BCA_BOTTOM : {
-				textRect.left_ = maxVal<double>( rect->left_, (rect->getWidth() / 2.0) - (context->getTextWidth( caption_ )/2.0) );
-				textRect.right_ = minVal<double>( rect->right_, textRect.left_ + context->getTextWidth( caption_ ) );
-				if ( (NULL != this->imageList_) && (BtnImageIndex_ >= 0) ) {
-					textRect.top_ = imageRect->bottom_;
-					textRect.bottom_ = rect->bottom_;
-				}
-				else {
-					textRect.top_ = maxVal<double>( rect->top_, (rect->getHeight()/2.0) - (context->getTextHeight( caption_ ) / 2.0) );
-					textRect.bottom_ = minVal<double>( rect->bottom_, textRect.top_ + context->getTextHeight( caption_ ) );
-				}
+			case bcaBottom : {
+				captRect.top_ = rc.bottom_ - ch;
+				captRect.bottom_ = rc.bottom_;
+				captRect.left_ = maxVal<double>( rc.left_, center.x_ - cw/2.0 );
+				captRect.right_ = minVal<double>( rc.right_, center.x_ + cw/2.0 );
+
+				imgRect.top_ = rc.top_;
+				imgRect.bottom_ = rc.top_ + ih;
+				imgRect.left_ = maxVal<double>( rc.left_, center.x_ - iw/2.0 );
+				imgRect.right_ = minVal<double>( rc.right_, center.x_ + iw/2.0 );
+			}
+			break;
+
+			case bcaCenter : {
+				captRect.top_ = maxVal<double>( rc.top_, center.y_ - ch/2.0 );
+				captRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ch/2.0 );
+				captRect.left_ = maxVal<double>( rc.left_, center.x_ - cw/2.0 );
+				captRect.right_ = minVal<double>( rc.right_, center.x_ + cw/2.0 );
+
+				imgRect.top_ = maxVal<double>( rc.top_, center.y_ - ih/2.0 );
+				imgRect.bottom_ = minVal<double>( rc.bottom_, center.y_ + ih/2.0 );
+				imgRect.left_ = maxVal<double>( rc.left_, center.x_ - iw/2.0 );
+				imgRect.right_ = minVal<double>( rc.right_, center.x_ + iw/2.0 );
 			}
 			break;
 		}
-		if ( true == isPressed_ ) {
-			textRect.setRect( textRect.left_ + 1.0, textRect.top_ + 1.0, textRect.right_ + 1.0, textRect.bottom_ + 1.0 );
-		}
-		context->setCurrentFont( getFont() );
-		context->textBoundedBy( &textRect, caption_, false );
+
 	}
+
+	if ( showCaption_ && ( NULL != captionRect ) ) {
+		*captionRect = captRect;
+	}
+
+	if ( ( NULL != imageList_ ) && ( NULL != imageRect ) ) {
+		*imageRect = imgRect;
+	}
+
+	return rc;
+}
+
+Rect PushButton::calcCaptionRect( const Rect& rect, GraphicsContext* context )
+{
+	Rect captionRect;
+
+	calcCenterRect( rect, context, &captionRect );
+
+	return captionRect;
+}
+
+Rect PushButton::calcImageRect( const Rect& rect, GraphicsContext* context )
+{
+	Rect captionRect, imageRect;
+
+	calcCenterRect( rect, context, &captionRect, &imageRect );
+
+	return imageRect;
+}
+
+Size PushButton::calcMinimumSize()
+{
+	Size size;
+
+	GraphicsContext* context = this->getContext();
+
+	Rect rect;
+	rect.setEmpty(); // this makes to calculate the minimum rect
+	Rect rc = calcCenterRect( rect, context );
+
+	double cw = rc.getWidth();
+	double ch = rc.getHeight();
+	size.set( cw, ch );
+
+	rect.setRect( 0, 0, cw, ch );
+
+	//// counterbalance what done in paint()
+	//rect.inflate( 2, 3 );
+
+	// drawThemeButtonRect requires this ( 4, 4 are just for the focus rect ).
+	// It seems that under windows the best dimensions are (5,5)
+	rect.inflate( 5, 5 );
+
+	size.set( rect.getWidth(), rect.getHeight() );
+
+	return size;
 }
 
 void PushButton::paint(GraphicsContext * context)
 {
 	CustomControl::paint( context );
 	Rect r( 0,0,getWidth(), getHeight() );
-	r.inflate( -2, -3 );	
-	
+	//r.inflate( -2, -3 );
+
 	ButtonState state;
 	state.setActive( isActive() );
 	state.setEnabled( isEnabled() );
@@ -208,9 +406,26 @@ void PushButton::paint(GraphicsContext * context)
 			state.buttonCaption_ = System::getCurrentThreadLocale()->translate( caption_ );
 		}
 	}
-	
-	context->drawThemeButtonRect( &r, state );	
 
+	if ( NULL != imageList_ ) {
+		// in this order. The image is supposed to stay inside the button border
+		// and its focus rect. Otherwise the bitmap needs to draw that too.
+		Rect captionRect, imageRect;
+		Rect rc = calcCenterRect( r, context, &captionRect, &imageRect );
+		context->drawThemeButtonRect( &r, state, &captionRect );
+		drawImage( r, state, &imageRect, context );
+	}
+	else {
+		context->drawThemeButtonRect( &r, state );
+	}
+
+
+	bool drawFocusRect = ( state.isFocused() &&
+				( (!isPressed_ && drawFocusRectWhenFocus_ ) || ( isPressed_ && drawFocusRectWhenFocusDown_ ) ) );
+
+	if ( drawFocusRect ) {
+		context->drawThemeButtonFocusRect( &r );
+	}
 }
 
 void PushButton::click()
@@ -264,6 +479,14 @@ void PushButton::click()
 	}
 }
 
+void PushButton::setName( const String& name )
+{
+	CustomControl::setName( name );
+	if ( isDesigning() && caption_.empty() ) {
+		setCaption( name );
+	}
+}
+
 void PushButton::setCaption( const String& caption )
 {
 	caption_ = caption;
@@ -275,14 +498,26 @@ String PushButton::getCaption()
 	return this->caption_;
 }
 
+void PushButton::setCommandType( const ButtonCommandType& commandType )
+{
+	commandType_ = commandType;
+}
+
 double PushButton::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight ) + 6;
+	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight );
 }
 
 double PushButton::getPreferredWidth()
 {
 	return 120;
+}
+
+void PushButton::setInitialStatePressed( const bool& pressed )
+{
+	isPressed_ = pressed;
+	wasPressed_ = isPressed_;
+	repaint();
 }
 
 void PushButton::mouseDown( MouseEvent* event )
@@ -298,7 +533,9 @@ void PushButton::mouseMove( MouseEvent* event )
 	CustomControl::mouseMove( event );
 	Point* pt = event->getPoint();
 
-	isPressed_ = false;
+	if ( !toggled_ ) {
+		isPressed_ = false;
+	}
 	if ( true == event->hasLeftButton() ) {
 		Rect r (0, 0, getWidth(), getHeight() );
 		isPressed_ = r.containsPt( pt );
@@ -313,7 +550,13 @@ void PushButton::mouseUp( MouseEvent* event )
 	Rect r( 0, 0, getWidth(), getHeight() );
 	bool ptInBounds = r.containsPt( event->getPoint() );
 	isPressed_ = false;
+
 	if ( (( event->hasLeftButton() || event->hasRightButton()) && ptInBounds) ) {
+		if ( toggled_ ) {
+			isPressed_ = !wasPressed_;
+			wasPressed_ = isPressed_;
+		}
+
 		click();
 	}
 	repaint();
@@ -328,6 +571,9 @@ void PushButton::mouseEnter( MouseEvent* event )
 void PushButton::mouseLeave( MouseEvent* event )
 {
 	isHighlighted_ = false;
+	if ( toggled_ ) {
+		isPressed_ = wasPressed_;
+	}
 	repaint();
 }
 
@@ -354,6 +600,10 @@ void PushButton::keyUp( KeyboardEvent* event )
 	}
 	else if ( vkSpaceBar == event->getVirtualCode() ) {
 		isPressed_ = false;
+		if ( toggled_ ) {
+			isPressed_ = !wasPressed_;
+			wasPressed_ = isPressed_;
+		}
 		repaint();
 		click();
 	}
@@ -361,28 +611,121 @@ void PushButton::keyUp( KeyboardEvent* event )
 
 void PushButton::setShowCaption( const bool& showCaption )
 {
-
+	showCaption_ = showCaption;
+	repaint();
 }
 
-void PushButton::setBtnImageIndex( const long& btnImageIndex )
+long PushButton::getBtnImageIndex( const ImageState& imgState )
 {
+	long index = -1;
+	std::map< long, ulong32 >::iterator found = imageIndexes_.find( imgState );
+	if ( found != imageIndexes_.end() ) {
+		index = found->second;
+	}
 
+	return index;
+}
+
+void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStates, const bool& redraw )
+{
+	if ( NULL == imageList_ ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2( "No image list specified yet" ) );
+	}
+
+	long imageCount = imageList_->getImageCount();
+	if ( ( btnImageIndex < 0 ) || ( imageCount <= btnImageIndex ) ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2( Format("PushButton request to set an image index [%d] outside range [0,%d]") % btnImageIndex % imageCount ) );
+	}
+
+	if ( 0 == imageIndexes_.size() ) {
+		imageIndexes_[ bisUp        ] = btnImageIndex;
+		imageIndexes_[ bisDown      ] = btnImageIndex;
+		imageIndexes_[ bisDisable   ] = btnImageIndex;
+		imageIndexes_[ bisFocus     ] = btnImageIndex;
+		imageIndexes_[ bisFocusDown ] = btnImageIndex;
+		imageIndexes_[ bisHighlight ] = btnImageIndex;
+		imageStateSpecified_ = 0;
+	}
+	else {
+		imageIndexes_[ imgStates & bisUp        ] = btnImageIndex;
+		imageIndexes_[ imgStates & bisDown      ] = btnImageIndex;
+		imageIndexes_[ imgStates & bisDisable   ] = btnImageIndex;
+		imageIndexes_[ imgStates & bisFocus     ] = btnImageIndex;
+		imageIndexes_[ imgStates & bisFocusDown ] = btnImageIndex;
+		imageIndexes_[ imgStates & bisHighlight ] = btnImageIndex;
+	}
+
+	imageStateSpecified_ |= ( imgStates & bisUp        );
+	imageStateSpecified_ |= ( imgStates & bisDown      );
+	imageStateSpecified_ |= ( imgStates & bisDisable   );
+	imageStateSpecified_ |= ( imgStates & bisFocus     );
+	imageStateSpecified_ |= ( imgStates & bisFocusDown );
+	imageStateSpecified_ |= ( imgStates & bisHighlight );
+
+	// if we specified a bisDown state image then we don't move it
+	if ( 0 != ( imageStateSpecified_ & bisDown ) ) {
+		moveImageWhenPressed_ = false;
+	}
+
+	// if we specified a bisDown state image then we don't move it
+	if ( 0 != ( imageStateSpecified_ & bisFocus ) ) {
+		drawFocusRectWhenFocus_ = false;
+	}
+	else {
+		if ( 0 != ( imageStateSpecified_ & bisFocusDown ) ) {
+			// the bisFocusDown state image supplies for the bisFocus one
+			imageIndexes_[ bisFocus     ] = btnImageIndex;
+		}
+	}
+
+	// if we specified a bisFocusDown state image then we don't move it
+	if ( 0 != ( imageStateSpecified_ & bisFocusDown ) ) {
+		drawFocusRectWhenFocusDown_ = false;
+	}
+	else {
+		if ( 0 != ( imageStateSpecified_ & bisFocus ) ) {
+			// the bisFocus state image supplies for the bisFocusDown one
+			imageIndexes_[ bisFocusDown ] = btnImageIndex;
+		}
+	}
+
+	if ( redraw ) {
+		repaint();
+	}
+}
+
+void PushButton::setBtnImageIndex( ImageList* imageList, const long& btnImageIndex, const CaptionAlignment& captionAlignment, const double& separationImageCaption ) {
+	setImageList( imageList );
+	setBtnImageIndex( btnImageIndex, bisNormal );
+	setCaptionAlignment( captionAlignment );
+	setSeparationImageCaption( separationImageCaption );
 }
 
 void PushButton::setImageList( ImageList* imageList )
 {
+	if ( imageList != imageList_ ) {
+		imageList_ = imageList;
 
+		imageIndexes_.clear();
+		moveImageWhenPressed_ = true;
+		drawFocusRectWhenFocus_ = true;
+		imageStateSpecified_ = 0;
+
+		// do not repaint, as we still need to check for the indexes
+		// repaint();
+	}
 }
 
 
-void PushButton::setCaptionAlignment( const PushButtonCaptionAlignment& captionAlignment )
+void PushButton::setCaptionAlignment( const CaptionAlignment& captionAlignment )
 {
-
+	captionAlignment_ = captionAlignment;
 }
 
-void PushButton::setAutoSizeCaption( const bool& autoSizeForCaption )
+void PushButton::setAutoSize( const bool& autoSize )
 {
-
+	//autoSizeForCaption_ = autoSizeForCaption;
+	autoSize_ = autoSize;
 }
 
 void PushButton::setDefault( const bool& defaultButton )
@@ -410,15 +753,35 @@ void PushButton::onFocusLost( FocusEvent* event )
 	UIToolkit::removeDefaultButton( this );
 }
 
-void PushButton::setCommandType( const ButtonCommandType& commandType )
-{
-	commandType_ = commandType;
-}
-
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.12  2005/07/06 00:23:12  marcelloptr
+*two very minor bug fixes more. Hope the last ones.
+*
+*Revision 1.2.4.11  2005/07/05 03:36:00  marcelloptr
+*PushButton, toggled, needs also an image for FocusDown. Management images improved and fully tested.
+*
+*Revision 1.2.4.8  2005/07/02 20:52:37  marcelloptr
+*with the button is pressed, the image was moving when it was higlighted, i.e. when passing the mouse over it
+*
+*Revision 1.2.4.5  2005/07/02 04:15:19  marcelloptr
+*forgotten removeDefaultButton in the dtor was causing crash after closing a MessageDialog
+*
+*Revision 1.2.4.3  2005/07/01 15:45:43  marcelloptr
+*minor improvements on PushButton
+*
+*Revision 1.2.4.2  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.2.4.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -44,10 +44,35 @@ bool Win32SemaphorePeer::unlock()
 	return flag == FALSE? false:true;
 }
 
+bool Win32SemaphorePeer::lock()
+{
+	if (::WaitForSingleObject(hObject_, INFINITE) == WAIT_OBJECT_0)
+		return true;
+	else
+		return false;
+}
+
+bool Win32SemaphorePeer::lock( uint32 timeoutInMilliseconds )
+{
+	if (::WaitForSingleObject(hObject_, timeoutInMilliseconds) == WAIT_OBJECT_0)
+		return true;
+	else
+		return false;
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/05/05 12:42:27  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

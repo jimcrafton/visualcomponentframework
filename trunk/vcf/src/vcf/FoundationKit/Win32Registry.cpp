@@ -168,7 +168,7 @@ String Win32Registry::getStringValue( const String& valuename )
 	if ( resVal == ERROR_SUCCESS ){
 		if ( (type == REG_SZ) && (size > 0) ){
 			buf = new BYTE[size];
-			memset( buf, 0, size );
+			memset( buf, 0, size*sizeof(BYTE) );
 			if ( System::isUnicodeEnabled() ) {
 				resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
 				if ( resVal == ERROR_SUCCESS ){
@@ -272,7 +272,7 @@ void Win32Registry::getDataBufValue( const String& valuename, uint32& dataBuffer
 	if ( resVal == ERROR_SUCCESS ){
 		if ( (type == REG_BINARY) && (size > 0) ){
 			buf = new BYTE[size]; //callers responsibility to clean up
-			memset( buf, 0, size );
+			memset( buf, 0, size*sizeof(BYTE) );
 			if ( System::isUnicodeEnabled() ) {
 				resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
 			}
@@ -299,11 +299,11 @@ Enumerator<String>* Win32Registry::getKeyNames()
 	DWORD index = 0;
 	DWORD size = MAX_PATH + 1;
 	TCHAR* keyName = new TCHAR[size];
-	memset( keyName, 0, size );
+	memset( keyName, 0, size*sizeof(TCHAR) );
 	keys_.clear();
 	while ( ERROR_SUCCESS == RegEnumKey( currentKeyHandle_, index, keyName, size ) ){
 		this->keys_.push_back( String(keyName) );
-		memset( keyName, 0, size );
+		memset( keyName, 0, size*sizeof(TCHAR) );
 		index ++;
 	}
 	keysContainer_.initContainer( keys_ );
@@ -315,7 +315,11 @@ Enumerator<String>* Win32Registry::getKeyNames()
 Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 {
 	DWORD index = 0;
+#if defined(VCF_CW) && defined(UNICODE)
+	WCHAR valName[256];
+#else
 	CHAR valName[256];
+#endif
 	DWORD type = 0;
 	DWORD valNameSize = 256;
 	BYTE buffer[256];
@@ -330,7 +334,7 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 	}
 
 	values_.clear();
-	memset( valName, 0, 256 );
+	memset( valName, 0, sizeof(valName) );
 
 	while ( ERROR_NO_MORE_ITEMS != RegEnumValue( currentKeyHandle_, index, valName, &valNameSize, NULL, &type, (BYTE*)&buffer, &bufferSize ) ){
 		String tmp = String(valName);
@@ -366,7 +370,7 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 		values_.push_back( regVal );
 		bufferSize=256;
 		valNameSize = 256;
-		memset( valName, 0, 256 );
+		memset( valName, 0, 256*sizeof(CHAR) );
 		index ++;
 	}
 	valuesContainer_.initContainer( values_ );
@@ -383,6 +387,15 @@ String Win32Registry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/04/13 02:50:45  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.3.2.1  2005/04/09 17:21:34  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

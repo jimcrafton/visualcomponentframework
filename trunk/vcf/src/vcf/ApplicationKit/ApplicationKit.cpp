@@ -11,9 +11,12 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ModelViewKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
-#include "vcf/FoundationKit/ClassInfo.h"
+
+#include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/ApplicationKitRTTI.inl"
 
+#include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
+#include "vcf/ApplicationKit/ColumnLayoutContainer.h"
 
 using namespace VCF;
 
@@ -52,6 +55,20 @@ void ApplicationKit::init( int argc, char** argv )
 	if ( false == ApplicationKitIsInitialized ) {
 
 		GraphicsKit::init( argc, argv );
+		
+		
+		REGISTER_CLASSINFO_EXTERNAL( AbstractPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( ImagePropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( ImageFilenamePropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( DefaultMenuItemPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( FontPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( ColorPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( EnumPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( StringPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( BoolPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( DoublePropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( IntegerPropertyEditor );
+
 
 		REGISTER_CLASSINFO_EXTERNAL( Item );
 		REGISTER_CLASSINFO_EXTERNAL( ListItem );
@@ -67,11 +84,25 @@ void ApplicationKit::init( int argc, char** argv )
 //		REGISTER_CLASSINFO_EXTERNAL( TextModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeItem );
 //		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
-		REGISTER_CLASSINFO_EXTERNAL( Border );
+		
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractListModel );
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractTextModel );
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractTreeModel );
 		REGISTER_CLASSINFO_EXTERNAL( Component );
+		
+		REGISTER_CLASSINFO_EXTERNAL( Border );
+		REGISTER_CLASSINFO_EXTERNAL( Basic3DBorder );
+		REGISTER_CLASSINFO_EXTERNAL( EtchedBorder );
+		REGISTER_CLASSINFO_EXTERNAL( ColorEtchedBorder );
+		REGISTER_CLASSINFO_EXTERNAL( Light3DBorder );
+		REGISTER_CLASSINFO_EXTERNAL( TitledBorder );
+
+		REGISTER_CLASSINFO_EXTERNAL( Container );
+		REGISTER_CLASSINFO_EXTERNAL( AbstractContainer );
+		REGISTER_CLASSINFO_EXTERNAL( StandardContainer );
+		REGISTER_CLASSINFO_EXTERNAL( ColumnLayoutContainer );
+		REGISTER_CLASSINFO_EXTERNAL( HorizontalLayoutContainer );
+
 		REGISTER_CLASSINFO_EXTERNAL( Control );
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );
 		REGISTER_CLASSINFO_EXTERNAL( ControlContainer );
@@ -98,13 +129,23 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( MenuBar );
 		REGISTER_CLASSINFO_EXTERNAL( PopupMenu );
 		REGISTER_CLASSINFO_EXTERNAL( ListBoxControl );
-		REGISTER_CLASSINFO_EXTERNAL( Basic3DBorder );
+		
 		REGISTER_CLASSINFO_EXTERNAL( CommandButton );
 		//REGISTER_CLASSINFO_EXTERNAL( OpenGLControl );
 		REGISTER_CLASSINFO_EXTERNAL( ComboBoxControl );
 		REGISTER_CLASSINFO_EXTERNAL( ImageControl );
-		REGISTER_CLASSINFO_EXTERNAL( ImageFilenameString );
+//		REGISTER_CLASSINFO_EXTERNAL( ImageFilenameString );
 		REGISTER_CLASSINFO_EXTERNAL( HTMLBrowserControl );
+		REGISTER_CLASSINFO_EXTERNAL( TimerComponent );
+		REGISTER_CLASSINFO_EXTERNAL( ScrollbarManager );
+		REGISTER_CLASSINFO_EXTERNAL( SystemTray );
+		REGISTER_CLASSINFO_EXTERNAL( PushButton );
+		REGISTER_CLASSINFO_EXTERNAL( SliderControl );
+		REGISTER_CLASSINFO_EXTERNAL( ProgressControl );
+		REGISTER_CLASSINFO_EXTERNAL( TableControl );
+		REGISTER_CLASSINFO_EXTERNAL( Splitter );
+		REGISTER_CLASSINFO_EXTERNAL( TreeListControl );
+		REGISTER_CLASSINFO_EXTERNAL( HeaderControl );
 		//REGISTER_CLASSINFO_EXTERNAL( ToolbarDock );
 
 
@@ -165,6 +206,18 @@ void ApplicationKit::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.3  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.3.2.2  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.1  2005/02/28 04:51:55  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

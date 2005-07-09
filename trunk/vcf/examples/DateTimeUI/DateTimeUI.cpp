@@ -66,17 +66,16 @@ public:
 		textRect.bottom_ = 100;
 		textRect.inflate( -5, -5 );
 
-		String s =
-			StringUtils::format( "%ls. %ls",
-						StringUtils::format( currentMonthDate, "The current month starts on %A, %B %d, %Y" ).c_str(),
-						StringUtils::format( current, "Today is %A, %B %d, %Y week %#W" ).c_str() );
+		String s = Format( "%ls. %ls")
+					%	StringUtils::format( currentMonthDate, "The current month starts on %A, %B %d, %Y" ).c_str()
+					%	StringUtils::format( current, "Today is %A, %B %d, %Y week %#W" ).c_str();
 
 		String s2 =
-			StringUtils::format( "\nThe current month has %d days in it, and the current year has %d days in it, starts on week %d,\nand has %d total weeks in the year\n",
-										currentMonthDate.getNumberOfDaysInMonth(),
-										currentMonthDate.getDaysInYear(),
-										currentMonthDate.getWeekOfYearStartingMon(),
-										currentMonthDate.getWeeksInYear() );
+			StringUtils::format( Format("\nThe current month has %d days in it, and the current year has %d days in it, starts on week %d,\nand has %d total weeks in the year\n")
+									%	currentMonthDate.getNumberOfDaysInMonth()
+									%	currentMonthDate.getDaysInYear()
+									%	currentMonthDate.getWeekOfYearStartingMon()
+									%	currentMonthDate.getWeeksInYear() );
 
 		s += s2;
 		s += StringUtils::format( current, "The current time is %#I:%M:%S" );
@@ -480,6 +479,15 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:35  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.2  2005/04/17 17:18:24  iamfraggle
+*Small fixes
+*
+*Revision 1.4.2.1  2005/04/17 15:11:42  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.4  2004/12/01 04:15:00  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

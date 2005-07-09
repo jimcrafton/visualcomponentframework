@@ -15,10 +15,10 @@ using namespace VCF;
 
 CommonColor::CommonColor( Control* owner )
 {
-	Peer_ = NULL;
+	peer_ = NULL;
 
-	Peer_ = UIToolkit::createCommonColorDialogPeer( owner );
-	if ( NULL == Peer_ ){
+	peer_ = UIToolkit::createCommonColorDialogPeer( owner );
+	if ( NULL == peer_ ){
 
 	}
 
@@ -27,28 +27,34 @@ CommonColor::CommonColor( Control* owner )
 
 CommonColor::~CommonColor()
 {
-	delete Peer_;
+	delete peer_;
 }
 
 bool CommonColor::execute()
 {
-	return Peer_->execute();
+	return peer_->execute();
 }
 
 Color* CommonColor::getSelectedColor()
 {
-	return Peer_->getSelectedColor();
+	return peer_->getSelectedColor();
 }
 
 void CommonColor::setSelectedColor( Color* selectedColor )
 {
-	Peer_->setSelectedColor( selectedColor );
+	peer_->setSelectedColor( selectedColor );
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/21 16:20:01  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

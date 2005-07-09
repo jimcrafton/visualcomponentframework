@@ -219,6 +219,19 @@ public:
 	}
 
 	/**
+	*sets true to allow the drop down list to be scrolled only by discrete amounts.
+	*@param bool, true if only discrete amounts are allowed.
+	*/
+	void setDiscreteScroll( const bool& discreteScroll );
+
+	/**
+	*returns true if only a scrolling by discrete amounts are allowed.
+	*/
+	bool getDiscreteScroll() {
+		return discreteScroll_;
+	}
+
+	/**
 	*sets if the item has been selected through the drop down list
 	*( i.e. manually by the user ) or through calls by source code
 	* by using the function setSelectedItem
@@ -233,6 +246,14 @@ public:
 	bool getDropDownSelected() {
 		return dropDownSelected_;
 	}
+
+	/**
+	* lookup for an item in the dropdown list starting by a given text string.
+	*@param const String& text, the string to lookup
+	*@param const bool& ignoreCase, true if the lettercase is ignored in the search
+	*@return ListItem*, the item in the list starting with the given text.
+	*/
+	ListItem* lookupItem( const String& text, const bool& ignoreCase=false );
 
 	/**
 	*sets if the autoLookup of typed items is enabled
@@ -303,6 +324,7 @@ protected:
 	ulong32 dropDownCount_;
 	double dropDownWidth_;
 	bool dropDownExtendFullScreen_;
+	bool discreteScroll_;
 	bool dropDownSelected_;
 	bool autoLookup_;
 	bool autoLookupIgnoreCase_;
@@ -314,8 +336,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.4  2005/01/31 01:36:35  marcelloptr
+*fixed autolookup. Added behaviour when vkReturn is pressed.
+*
+*Revision 1.2.4.3  2005/01/15 00:52:38  marcelloptr
+*bugfix [ 1099910 ] plus other improvements of the scrolling
 *
 *Revision 1.2.4.2  2004/12/21 21:58:05  marcelloptr
 *bugfix [ 1089382 ] ComboBox fires a SelectionChanged msg when loosing focus

@@ -12,7 +12,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/LinuxProcessIORedirector.h"
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/LinuxLocalePeer.h"
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/FoundationKit/LinuxResourceBundle.h"
+
+
 
 using namespace VCF;
 
@@ -98,11 +101,19 @@ ResourceBundlePeer* LinuxSystemToolkit::internal_createResourceBundlePeer()
 	return new LinuxResourceBundle();
 }
 
+
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.2.4.1  2005/04/17 16:11:32  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
 *
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable

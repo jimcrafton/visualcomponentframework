@@ -13,6 +13,12 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+/**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
+
 
 #define SKETCHWINDOW_CLASSID		"e035e1bd-f375-4b97-9736-710c17e672c8"
 
@@ -21,8 +27,8 @@ class SketchWindow documentation
 */
 class SketchWindow : public VCF::Window {
 public:
-	BEGIN_CLASSINFO( SketchWindow, "SketchWindow", "VCF::Window", SKETCHWINDOW_CLASSID )
-	END_CLASSINFO( SketchWindow )
+	_class_rtti_( SketchWindow, "VCF::Window", SKETCHWINDOW_CLASSID )
+	_class_rtti_end_
 
 
 	SketchWindow();
@@ -38,6 +44,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:44  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/03/06 22:50:57  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/08/07 02:47:37  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

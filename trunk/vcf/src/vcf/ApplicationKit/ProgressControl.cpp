@@ -26,7 +26,7 @@ ProgressControl::ProgressControl():
 	stepItIncrement_(1.0)
 {
 	EtchedBorder* border = new EtchedBorder();
-	border->setStyle( GraphicsContext::etSunken );
+	border->setEdgeStyle( GraphicsContext::etSunken );
 	setBorder( border );
 
 	progressBarColor_ = new Color();
@@ -45,7 +45,7 @@ ProgressControl::~ProgressControl()
 }
 
 
-void ProgressControl::setDisplayAlignment( ProgressAlignment val )
+void ProgressControl::setDisplayAlignment( const ProgressAlignment& val )
 {
 	displayAlignment_ = val;
 	repaint();
@@ -67,6 +67,16 @@ void ProgressControl::setPosition( const double& val )
 {
 	position_ = minVal<>( maxVal_, maxVal<>( minVal_, val ) );
 	repaint();
+}
+
+void ProgressControl::setName( const String& name )
+{
+	CustomControl::setName( name );
+	if ( isDesigning() ) {
+		if ( progressFormatString_.empty() ) {
+			setProgressFormatString( name + " %0.3f" );
+		}
+	}
 }
 
 void ProgressControl::setDisplayProgressText( const bool& val )
@@ -196,10 +206,10 @@ Win32 side we can phase in this code
 		Rect textBounds;
 		String text;
 		if ( useProgressFormatString_ && (!progressFormatString_.empty()) ) {
-			text = StringUtils::format( progressFormatString_, position_ );
+			text = StringUtils::format( Format(progressFormatString_) % position_ );
 		}
 		else {
-			text = StringUtils::format( "%0.1f %%", position_ );
+			text = StringUtils::format( Format("%0.1f %%") % position_ );
 		}
 
 
@@ -246,6 +256,22 @@ Win32 side we can phase in this code
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/04/17 06:09:07  iamfraggle
+*Fixed old-style format call
+*
+*Revision 1.3.2.3  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.2  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.3.2.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

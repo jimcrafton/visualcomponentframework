@@ -32,7 +32,7 @@ BasicException::BasicException( const VCF::String & message, const int lineNumbe
 
 	//JC - I commented this out - I am not sure want to FORCE 
 	//this kind of output? It can clutter up the command line.
-	//System::println( "Exception: " + message_ );1
+	//System::println( "Exception: " + message_ );
 	
 }
 
@@ -50,8 +50,17 @@ void BasicException::setMessage( const VCF::String& message )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:01  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.3.2.1  2005/03/15 01:51:51  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

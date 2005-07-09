@@ -23,6 +23,8 @@ namespace VCF {
 
 
 
+#define STANDARDCONTAINER_CLASSID		"a1236d3c-6c40-4f25-b0a1-39065a9d8f0a"
+
 /**
 *Basic implementation of a container
 *handles basic alignment,layout of child components.
@@ -32,6 +34,8 @@ class APPLICATIONKIT_API StandardContainer : public AbstractContainer {
 public:
 
 	StandardContainer();
+
+	StandardContainer( Component* owner );
 
 
 	virtual void resizeChildren( Control* control );
@@ -89,6 +93,8 @@ class APPLICATIONKIT_API DesignTimeContainer : public  StandardContainer  {
 public:
 	DesignTimeContainer(){};
 
+	DesignTimeContainer( Component* owner ):StandardContainer(owner){}
+
 	virtual void resizeChildren( Control* control );
 protected:
 	void resizeChildrenUsingBounds(  Control* control, Rect* bounds );
@@ -102,6 +108,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -130,8 +130,14 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2004/12/22 03:35:21  marcelloptr
+*just reformatting
 *
 *Revision 1.2.4.2  2004/12/22 03:35:21  marcelloptr
 *just reformatting

@@ -14,7 +14,7 @@ where you installed the VCF.
 using namespace VCF;
 
 
-OSXThread::OSXThread( Thread* thread ) :
+OSXThread::OSXThread( Thread* thread, bool mainThread ) :
     queueID_(kInvalidID),
     taskID_(kInvalidID),
     thread_(thread),
@@ -274,6 +274,12 @@ int OSXThread::wait( uint32 milliseconds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

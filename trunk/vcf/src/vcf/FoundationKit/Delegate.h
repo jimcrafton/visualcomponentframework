@@ -205,6 +205,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.5  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *
@@ -213,9 +216,6 @@ protected:
 *
 *Revision 1.3.2.1  2004/12/10 21:14:01  ddiego
 *fixed bug 1082362 App Icons do not appear.
-*
-*Revision 1.4  2004/12/10 03:32:52  ddiego
-*fixed a heap overwrite error in the delegate-event handler code.
 *
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

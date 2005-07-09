@@ -20,7 +20,7 @@ Frame* Frame::currentActiveFrame = NULL;
 
 Frame::State::State()
 {
-
+	
 }
 
 
@@ -264,8 +264,7 @@ void Frame::internal_setActiveFrame( Frame* activeFrame )
 
 void Frame::afterCreate( ComponentEvent* event )
 {
-	Control::afterCreate( event );
-
+	Control::afterCreate( event );	
 }
 
 bool Frame::allowClose()
@@ -282,6 +281,12 @@ bool Frame::allowClose()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

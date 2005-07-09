@@ -1,4 +1,4 @@
- 
+
 
 //#include <windows.h>
 //#include "vcf/FoundationKit/FoundationKit.h"
@@ -84,7 +84,7 @@ HRESULT WINAPI VCF_DateTimeEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int 
 
 		wsprintf( tmp, "%04lu-%02lu-%02lu %02lu:%02lu:%02lu.%04lu", year, month, day, hour, minute, second, millsecond );
 
-	} 
+	}
 	catch ( ... ) {
 		strcpy( tmp, "???*" );
 	}
@@ -117,7 +117,7 @@ HRESULT WINAPI VCF_DateTimeSpanEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, 
 
 		wsprintf( tmp, "%04lu-%02lu-%02lu %02lu:%02lu:%02lu.%04lu", year, month, day, hour, minute, second, millsecond );
 
-	} 
+	}
 	catch ( ... ) {
 		strcpy( tmp, "???*" );
 	}
@@ -167,6 +167,7 @@ HRESULT WINAPI VCF_ColorEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int nBa
 
 		if ( 0 == VCF_ColorEvaluate_GraphicsKit_init ) {
 			VCF_ColorEvaluate_GraphicsKit_init ++;
+			// without this the ColorNames map would not be initialized
 			GraphicsKit::init( 0, NULL );
 		}
 
@@ -176,30 +177,35 @@ HRESULT WINAPI VCF_ColorEvaluate( DWORD dwAddress, DEBUGHELPER *pHelper, int nBa
 
 		ColorSpace::RGBtype rgbType    = ColorSpace::ColorToRGB( color );
 		ColorSpace::RGBrangetype rgbRg = ColorSpace::RGBToRGBRange ( rgbType );
-		String rgbHex                  = Color::getHexCode( color, rgbType.R, rgbType.G, rgbType.B, true );
-		unsigned long rgb              = color.getRGB();
+		String rgbHex                  = Color::getHexCode( rgbRg.R, rgbRg.G, rgbRg.B, Color::cpsABGR );
+		uint32 rgb                     = color.getColorRef32();
 
 		ColorSpace::HSLtype hslType    = ColorSpace::ColorToHSL( color );
 		ColorSpace::HSLrangetype hslRg = ColorSpace::HSLToHSLRange ( hslType );
-		String hslHex                  = Color::getHexCode( color, hslType.H, hslType.S, hslType.L, true );
+		String hslHex                  = Color::getHexCode( hslRg.H, hslRg.S, hslRg.L, Color::cpsABGR );
 
 		if ( rgbType.R + rgbType.G + rgbType.B + rgbType.R + rgbType.G + rgbType.B < -1.e6 ) {
 			// not initialized yet
 			sprintf( tmp, "%-10s [ lum: %3d ]\n { RGB: [%3d,%3d,%3d] [%.2e,%.2e,%.2e] %s }\n { HSL: [%3d,%3d,%3d] [%.2e,%.2e,%.2e] %s }"
 									, name.ansi_c_str(), luminosity
 									, rgbRg.R, rgbRg.G, rgbRg.B, rgbType.R, rgbType.G, rgbType.B, rgbHex.ansi_c_str()
-									, hslRg.H, hslRg.S, hslRg.L, hslType.H, hslType.S, hslType.L, hslHex.ansi_c_str() 
+									, hslRg.H, hslRg.S, hslRg.L, hslType.H, hslType.S, hslType.L, hslHex.ansi_c_str()
 							);
 		} else {
 			sprintf( tmp, "%-10s [ lum: %3d ]\n { RGB: [%3d,%3d,%3d] [%.2lf,%.2lf,%.2lf] %s }\n { HSL: [%3d,%3d,%3d] [%.2lf,%.2lf,%.2lf] %s }"
 									, name.ansi_c_str(), luminosity
 									, rgbRg.R, rgbRg.G, rgbRg.B, rgbType.R, rgbType.G, rgbType.B, rgbHex.ansi_c_str()
-									, hslRg.H, hslRg.S, hslRg.L, hslType.H, hslType.S, hslType.L, hslHex.ansi_c_str() 
+									, hslRg.H, hslRg.S, hslRg.L, hslType.H, hslType.S, hslType.L, hslHex.ansi_c_str()
 							);
 		}
-	} 
+	}
 	catch ( ... ) {
-		strcpy( tmp, "???*" );
+		strcpy( tmp, "??? !!" );
+	}
+
+	// if too long, we truncate
+	if ( maxlen < strlen( tmp ) ) {
+		tmp[ maxlen ] = 0;
 	}
 
 	strcpy( pResult, tmp );

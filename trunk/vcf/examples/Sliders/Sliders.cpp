@@ -136,7 +136,7 @@ public:
 	void onSliderPositionChanged( Event* e ) {
 		Label* label = (Label*)findComponent( "Label1" );
 		SliderControl* slider = (SliderControl*)e->getSource();
-		label->setCaption( StringUtils::format( "Slider1 position: %0.3f", slider->getPosition() ) );
+		label->setCaption( Format( "Slider1 position: %0.3f" ) % slider->getPosition() );
 	}
 };
 
@@ -178,6 +178,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:44  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.4.1  2005/04/17 15:11:47  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.4  2004/08/07 02:47:37  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

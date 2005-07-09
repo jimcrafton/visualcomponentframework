@@ -54,6 +54,18 @@ public:
 
 	virtual double getPreferredHeight();
 	virtual double getPreferredWidth();
+
+protected:
+	/**
+	this is the function doing the real job
+	*/
+	void updateAttachedControl( Point& pt, const bool& shiftAll = false );
+
+	/**
+	this is the function doing the real job when double clicking with the mouse
+	*/
+	void updateAttachedControlJump( Point& pt, const bool& shiftAll = false );
+
 protected:
 	Control* attachedControl_;
 	Point dragPoint_;
@@ -65,9 +77,6 @@ protected:
 	double minimumWidth_;
 	bool dblClickEnabled_;
 
-	void updateAttachedControl( Point* pt, const bool& shiftAll = false );
-
-
 private:
 };
 
@@ -78,6 +87,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/28 20:14:11  marcelloptr
+*first step to remove flickering when dragging a splitter
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

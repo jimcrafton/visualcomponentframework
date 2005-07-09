@@ -73,8 +73,20 @@ String System::findResourceDirectory()
 	return System::findResourceDirectoryForExecutable( cmdLine.getArgument(0) );
 }
 
-String System::findResourceDirectoryForExecutable( const String& fileName )
+String System::findResourceDirectory( Locale* locale )
 {
+	VCF_ASSERT( NULL != locale );
+	
+	CommandLine cmdLine = FoundationKit::getCommandLine();
+
+	return System::findResourceDirectory( cmdLine.getArgument(0), locale );
+}
+
+String System::findResourceDirectory( const String& fileName, Locale* locale )
+{
+	VCF_ASSERT( NULL != locale );
+	VCF_ASSERT( !fileName.empty() );
+
 	String result;	
 
 	FilePath appPath = fileName;
@@ -114,7 +126,7 @@ String System::findResourceDirectoryForExecutable( const String& fileName )
 		//found the top level res dir
 		//now attempt to see if we can use a more locale specific dir
 		//if not, fall back on the default Resources dir
-		String localeName = System::getCurrentThreadLocale()->getName();
+		String localeName = locale->getName();
 		tmp = result + FilePath::getDirectorySeparator() + localeName;
 		if ( File::exists( tmp ) ) {
 			result = tmp;
@@ -127,6 +139,10 @@ String System::findResourceDirectoryForExecutable( const String& fileName )
 	return result;
 }
 
+String System::findResourceDirectoryForExecutable( const String& fileName )
+{
+	return System::findResourceDirectory( fileName, System::getCurrentThreadLocale() );
+}
 
 unsigned long System::getTickCount()
 {
@@ -154,39 +170,41 @@ void System::print( String text, ... )
 	va_start( args, text );
 	int charRequired = 1024;
 	VCFChar* tmpChar = new VCFChar[charRequired];
-	memset( tmpChar, 0, charRequired );
+	memset( tmpChar, 0, charRequired*sizeof(VCFChar) );
 
-#ifdef VCF_GCC
-  #ifdef VCF_OSX
+#if defined(VCF_GCC) || defined(VCF_CW)
+	#ifdef VCF_OSX
 
-    CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
+		CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
 
-	CFStringAppendCharacters( fmt, text.c_str(), text.size() );
+		CFStringAppendCharacters( fmt, text.c_str(), text.size() );
 
-    CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
+		CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
 
-    int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
+		int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
 
-    CFRange range = {0, length };
-    CFStringGetCharacters( res, range, tmpChar );
+		CFRange range = {0, length };
+		CFStringGetCharacters( res, range, tmpChar );
 
-    CFShow( res );
+		CFShow( CFSTR("WARNING: Using deprecated function!!!\n") );
+		CFShow( res );
 
-    CFRelease( res );
-    CFRelease( fmt );
+		CFRelease( res );
+		CFRelease( fmt );
 
-  #else
-	vswprintf( tmpChar, charRequired, text.c_str(), args );
-  #endif
+	#else
+		vswprintf( tmpChar, charRequired, text.c_str(), args );
+	#endif
 #else
 	_vsnwprintf( tmpChar, charRequired, text.c_str(), args );
 #endif
 
 	va_end( args );
 
-  #ifndef VCF_OSX
-    wprintf( tmpChar );
-  #endif
+	#ifndef VCF_OSX
+		wprintf( L"WARNING: Using deprecated function!!!\n" );
+		wprintf( tmpChar );
+	#endif
 
 	if ( NULL != System::systemInstance ) {
 		if ( (NULL != System::systemInstance->errorLogInstance_) && (charRequired>0) ) {
@@ -198,6 +216,31 @@ void System::print( String text, ... )
 	delete [] tmpChar;
 }
 
+void System::print( const Format& formatter )
+{
+	String output = formatter;
+
+	if ( output.empty() ) {
+		return;
+	}
+
+#ifdef VCF_OSX
+	CFMutableStringRef tmp = CFStringCreateMutable( NULL, 0 );
+
+	CFStringAppendCharacters( tmp, output.c_str(), output.size() );
+	CFShow( tmp );
+	CFRelease( tmp );
+#else
+	wprintf( output.c_str() );
+#endif
+
+	if ( NULL != System::systemInstance ) {
+		if ( NULL != System::systemInstance->errorLogInstance_ ) {			
+			System::systemInstance->errorLogInstance_->toLog( output );
+		}
+	}
+}
+
 void System::println(String text, ...)
 {
 	text = StringUtils::convertFormatString( text );
@@ -206,40 +249,42 @@ void System::println(String text, ...)
 	va_start( args, text );
 	int charRequired = 1024;
 	VCFChar* tmpChar = new VCFChar[charRequired];
-	memset( tmpChar, 0, charRequired );
+	memset( tmpChar, 0, charRequired*sizeof(VCFChar) );
 
-#ifdef VCF_GCC
-  #ifdef VCF_OSX
+#if defined(VCF_GCC) || defined(VCF_CW)
+	#ifdef VCF_OSX
 
-    CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
+		CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
 
-	CFStringAppendCharacters( fmt, text.c_str(), text.size() );
+		CFStringAppendCharacters( fmt, text.c_str(), text.size() );
 
-    CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
+		CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
 
-    int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
+		int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
 
-    CFRange range = {0, length };
-    CFStringGetCharacters( res, range, tmpChar );
+		CFRange range = {0, length };
+		CFStringGetCharacters( res, range, tmpChar );
 
-    CFShow( res );
-    CFShow( CFSTR( "\n" ) );
+		CFShow( CFSTR("WARNING: Using deprecated function!!!\n") );
+		CFShow( res );
+		CFShow( CFSTR( "\n" ) );
 
-    CFRelease( res );
-    CFRelease( fmt );
-  #else
-	vswprintf( tmpChar, charRequired, text.c_str(), args );
-  #endif
+		CFRelease( res );
+		CFRelease( fmt );
+	#else
+		vswprintf( tmpChar, charRequired, text.c_str(), args );
+	#endif
 #else
 	_vsnwprintf( tmpChar, charRequired, text.c_str(), args );
 #endif
 
 	va_end( args );
 
-  #ifndef VCF_OSX
-    wprintf( tmpChar );
-    wprintf( L"\n" );
-  #endif
+	#ifndef VCF_OSX
+		wprintf( L"WARNING: Using deprecated function!!!\n" );
+		wprintf( tmpChar );
+		wprintf( L"\n" );
+	#endif
 
 	if ( NULL != System::systemInstance ) {
 		if ( (NULL != System::systemInstance->errorLogInstance_) && (charRequired>0) ) {
@@ -247,7 +292,35 @@ void System::println(String text, ...)
 			System::systemInstance->errorLogInstance_->toLog( tmp );
 		}
 	}
+
 	delete [] tmpChar;
+}
+
+void System::println( const Format& formatter )
+{
+	String output = formatter;
+
+	if ( output.empty() ) {
+		return;
+	}
+
+	output += "\n";
+
+#ifdef VCF_OSX
+	CFMutableStringRef tmp = CFStringCreateMutable( NULL, 0 );
+
+	CFStringAppendCharacters( tmp, output.c_str(), output.size() );
+	CFShow( tmp );
+	CFRelease( tmp );
+#else
+	wprintf( output.c_str() );
+#endif
+
+	if ( NULL != System::systemInstance ) {
+		if ( NULL != System::systemInstance->errorLogInstance_ ) { 
+			System::systemInstance->errorLogInstance_->toLog( output );
+		}
+	}
 }
 
 void System::errorPrint( BasicException* exception )
@@ -283,6 +356,11 @@ String System::getCurrentWorkingDirectory()
 void System::setCurrentWorkingDirectory( const String& currentDirectory )
 {
 	System::systemInstance->systemPeer_->setCurrentWorkingDirectory( currentDirectory );
+}
+
+String System::getCommonDirectory( System::CommonDirectory directory )
+{
+	return System::systemInstance->systemPeer_->getCommonDirectory( directory );
 }
 
 void System::setDateToSystemTime( DateTime* date )
@@ -432,9 +510,8 @@ String System::getInfoFileFromFileName( const String& fileName )
 
 ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
 {
-	ProgramInfo* result = NULL;
-
-	result = System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
+	ProgramInfo* result = 
+		System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
 
 	if ( NULL == result ) {
 		bool found = false;
@@ -575,6 +652,17 @@ String System::getCompiler()
 	return result;
 }
 
+String System::getComputerName()
+{
+	return System::systemInstance->systemPeer_->getComputerName();
+}
+
+
+String System::getUserName()
+{
+	return System::systemInstance->systemPeer_->getUserName();
+}
+
 String System::getBundlePathFromExecutableName( const String& fileName )
 {
 	String result ;
@@ -683,6 +771,9 @@ String System::getExecutableNameFromBundlePath( const String& fileName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.5  2005/01/07 02:38:38  ddiego
 *merged over devmain changes to system class bug.
 *
@@ -694,6 +785,55 @@ loading bug fixes. Also fixes a few other bugs as well.
 *fixed a foundation kit but that was cause a crash by releasing the system instance and 
 then making use of a member variable for it. The member variable is now static, which 
 is more appropriate.
+*
+*Revision 1.3.2.4  2004/12/22 03:26:14  marcelloptr
+*fixed bug in getBundlePathFromExecutableName() coming from the fact
+*that GetModuleFileNameW gives a lowercase path under vc70, but not under vc6
+*
+*Revision 1.3.2.3  2004/12/19 07:09:20  ddiego
+*more modifications to better handle resource bundles, especially
+*if they are part of a LibraryApplication instance.
+*
+*Revision 1.3.2.2  2004/12/19 04:05:01  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.3.2.1  2004/12/11 17:49:59  ddiego
+*added 2 new projects that are command line tools. One is for
+*creating the basic shell for app bundles, the other is for filling in, or
+*updating an info.plist (or info.xml) file.
+*
+
+*Revision 1.3.2.13  2005/07/01 15:52:10  marcelloptr
+*spaces spaces spaces
+*
+*Revision 1.3.2.12  2005/06/08 03:27:28  ddiego
+*fix for popup menus
+*
+*Revision 1.3.2.11  2005/04/11 17:07:14  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.3.2.10  2005/04/09 17:21:32  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.9  2005/03/26 00:10:29  ddiego
+*added some minor funs to system class
+*
+*Revision 1.3.2.8  2005/03/15 01:51:52  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.7  2005/03/14 05:44:51  ddiego
+*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
+*
+*Revision 1.3.2.6  2005/01/08 00:06:38  marcelloptr
+*fixed buffer management for println
+*
+*Revision 1.3.2.5  2005/01/07 01:15:23  ddiego
+*fixed a foundation kit but that was cause a crash by releasing the system instance and then making use of a member variable for it. The member variable is now static, which is more appropriate.
 *
 *Revision 1.3.2.4  2004/12/22 03:26:14  marcelloptr
 *fixed bug in getBundlePathFromExecutableName() coming from the fact
