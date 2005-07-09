@@ -8,7 +8,9 @@ where you installed the VCF.
 
 
 #include "vcf/GraphicsKit/GraphicsKit.h"
-#include "vcf/FoundationKit/ClassInfo.h"
+
+#include "vcf/FoundationKit/RTTIMacros.h"
+
 #include "vcf/GraphicsKit/GraphicsKitRTTI.inl"
 
 using namespace VCF;
@@ -45,6 +47,12 @@ void GraphicsKit::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:05:59  ddiego
+*added missing gtk files
+*
+*Revision 1.2.4.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

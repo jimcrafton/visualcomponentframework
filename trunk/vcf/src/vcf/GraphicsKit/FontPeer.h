@@ -93,14 +93,7 @@ public:
 
 	virtual double getDescent() = 0;
 
-	/**
-	*returns a GlyphCollection that represents the set of shapes
-	*for the specified text string.
-	*@param String text - the group of characters to put in the GlyphCollection
-	*@return GlyphCollection the collection of Glyphs, or vectorized shapes that
-	*represent the text string.
-	*/
-    virtual GlyphCollection* getGlyphCollection( const String& text )  = 0;
+	virtual bool isFixedPitch() = 0;	
 
 	virtual void setFont( Font* font ) = 0;
 };
@@ -111,8 +104,17 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:05:58  ddiego
+*added missing gtk files
+*
 *Revision 1.3  2005/01/02 03:04:25  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.3  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.2.4.2  2005/02/16 05:09:34  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.2.4.1  2004/12/19 04:05:03  ddiego
 *made modifications to methods that return a handle type. Introduced

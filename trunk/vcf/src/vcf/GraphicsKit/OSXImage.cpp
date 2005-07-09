@@ -39,6 +39,15 @@ OSXImage::OSXImage( GraphicsContext* context, Rect* rect ):
     context_->copyContext( Rect(0,0,getWidth(),getHeight()), *rect, context );
 }
 
+OSXImage::OSXImage( CFURLRef url, const String& ext ):
+    AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
+    grafPort_(0),
+    imageRef_(0)
+{
+
+	loadFromURL( url, ext );
+}
+
 OSXImage::~OSXImage()
 {
     if ( NULL != grafPort_ ) {
@@ -180,10 +189,54 @@ void OSXImage::finishedDrawing()
 
 }
 
+void OSXImage::loadFromURL( CFURLRef url, const String& ext )
+{
+	CFRefObject<CFURLRef> urlRef(url);
+	CFRefObject<CGDataProviderRef> provider = CGDataProviderCreateWithURL( url );
+	String tmp = StringUtils::lowerCase(ext);
+	CFRefObject<CGImageRef> urlImage;
+	if ( tmp == "png" ) {
+		urlImage = CGImageCreateWithPNGDataProvider( provider, NULL, false,  kCGRenderingIntentDefault );														
+	}
+	else if ( tmp == "jpg" || tmp == "jpeg" ) {
+		urlImage = CGImageCreateWithJPEGDataProvider( provider, NULL, false,  kCGRenderingIntentDefault );															
+	}
+	
+	if ( NULL != urlImage ) {
+		setSize( CGImageGetWidth(urlImage), CGImageGetHeight(urlImage) );
+		
+
+		int componentCount = getType();
+		int bitsPerPix = getChannelSize() * componentCount;
+		int bytesPerRow = (getWidth() * (bitsPerPix/componentCount) * componentCount) / 8;
+		CFRefObject<CGColorSpaceRef> colorSpace = CGColorSpaceCreateDeviceRGB();
+		
+		CFRefObject<CGContextRef> imgCtx = CGBitmapContextCreate( imageBits_->pixels_,
+														getWidth(),
+														getHeight(),
+														bitsPerPix,
+														bytesPerRow,
+														colorSpace,
+														kCGImageAlphaNoneSkipFirst );
+		
+		CGRect r;
+		r.origin.x = 0;
+		r.origin.x = 0;
+		r.size.width = getWidth();
+		r.size.height = getHeight();
+		CGContextDrawImage( imgCtx, r, urlImage );
+	}
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:06:01  ddiego
+*added missing gtk files
+*
+*Revision 1.2.4.1  2005/06/23 01:26:57  ddiego
+*build updates
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

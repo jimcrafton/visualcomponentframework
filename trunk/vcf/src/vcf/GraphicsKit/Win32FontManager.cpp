@@ -135,13 +135,22 @@ String Win32FontManager::makeStringID(  Win32Font* font )
 {
 	String result = "";
 	if ( NULL != font ){
-		result = StringUtils::format( "%s%d%s%s%s%s",
-										font->getName().c_str(),
-										(int)font->getPixelSize(),
-										font->getBold() ? L"true" : L"false",
-										font->getUnderlined() ? L"true" : L"false",
-										font->getStrikeOut() ? L"true" : L"false",
-										font->getItalic() ? L"true" : L"false" );
+		result += font->getName();
+		result += (int)font->getPixelSize();
+		result += font->getBold();
+		result += font->getUnderlined();
+		result += font->getStrikeOut();
+		result += font->getItalic();
+
+		/*
+		result = StringUtils::format( Format("%s%d%s%s%s%s") %
+										font->getName().c_str() %
+										(int)font->getPixelSize() %
+										(font->getBold() ? L"true" : L"false") %
+										(font->getUnderlined() ? L"true" : L"false") %
+										(font->getStrikeOut() ? L"true" : L"false") %
+										(font->getItalic() ? L"true" : L"false") );
+		*/
 
 	}
 	return result;
@@ -211,6 +220,15 @@ void Win32FontManager::removeFont( Win32Font* font )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:06:01  ddiego
+*added missing gtk files
+*
+*Revision 1.3.2.1  2005/03/15 01:51:54  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

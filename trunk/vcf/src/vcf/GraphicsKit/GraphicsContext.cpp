@@ -20,19 +20,19 @@ namespace VCF {
 *@see GraphicsContext::saveState()
 */
 class GraphicsState {
-public:	
+public:
 
 	GraphicsState();
 	GraphicsState( const GraphicsState& rhs );
 	~GraphicsState();
 
-	GraphicsState& operator=( const GraphicsState& rhs );	
+	GraphicsState& operator=( const GraphicsState& rhs );
 
 	void compositeMatrix();
 
 public:
 	Fill* fill_;
-	Stroke* stroke_;	
+	Stroke* stroke_;
 	Path* clippingPath_;
 	GraphicsContext* owningContext_;
 	Font font_;
@@ -92,13 +92,13 @@ GraphicsState::GraphicsState( const GraphicsState& rhs ):
 
 GraphicsState::~GraphicsState()
 {
-	
+
 	if ( NULL != clippingPath_ ) {
 		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
 		pathObj->release();
 	}
 	clippingPath_ = NULL;
-	
+
 }
 
 GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
@@ -151,7 +151,7 @@ void GraphicsState::compositeMatrix()
 	Matrix2D translation;
 	translation.translate( translateX_, translateY_ );
 
-	Matrix2D tmp;	
+	Matrix2D tmp;
 	tmp.multiply( &scale, &rotate );
 	tmp.multiply( &tmp, &shear );
 	tmp.multiply( &tmp, &translation );
@@ -162,7 +162,7 @@ void GraphicsState::compositeMatrix()
 
 GraphicsContext::GraphicsContext():
 	currentDrawingState_(GraphicsContext::gsNone),
-	drawingArea_(NULL),	
+	drawingArea_(NULL),
 	contextPeer_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
@@ -240,28 +240,14 @@ GraphicsContext::~GraphicsContext()
 		delete contextPeer_;
 	}
 	contextPeer_ = NULL;
-/*
-	if ( NULL != currentFill_ ){
-		delete currentFill_;
-	}
-	currentFill_ = NULL;
 
-	if ( NULL != currentStroke_ ){
-		delete currentStroke_;
-	}
-	currentStroke_ = NULL;
 
-	if ( NULL != currentFont_ ){
-		delete currentFont_;
+	GraphicsStateCollection::iterator it = stateCollection_.begin();
+	while ( it != stateCollection_.end () ) {
+		delete *it;
+		it ++;
 	}
-	currentFont_ = NULL;
-
-	if ( NULL != clippingPath_ ) {
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
-		pathObj->release();
-	}
-	clippingPath_ = NULL;
-*/
+	stateCollection_.clear();
 
 	if ( NULL != drawingArea_ ) {
 		delete drawingArea_;
@@ -271,7 +257,7 @@ GraphicsContext::~GraphicsContext()
 void GraphicsContext::init()
 {
 	//currentFont_ = new Font();
-	//currentFont_->setGraphicsContext( this );	
+	//currentFont_->setGraphicsContext( this );
 	//currentFont_->setPointSize( currentFont_->getPointSize() );
 
 	//transformMatrix_.identity();
@@ -281,13 +267,13 @@ void GraphicsContext::init()
 void GraphicsContext::setCurrentFont(Font * font)
 {
 	Font& currentFont = currentGraphicsState_->font_;
-	currentFont = *font;	
+	currentFont = *font;
 	currentFont.setGraphicsContext( this );
 	currentFont.setPointSize( currentFont.getPointSize() );
 }
 
 void GraphicsContext::setCurrentFill(Fill * fill)
-{	
+{
 	if ( NULL != fill ){
 		fill->setContext( this );
 	}
@@ -457,8 +443,8 @@ void GraphicsContext::ellipse(const double & x1, const double & y1, const double
 }
 
 
-void GraphicsContext::arc( const double& centerX,  const double& centerY, 
-				const double& radiusWidth, const double& radiusHeight, 
+void GraphicsContext::arc( const double& centerX,  const double& centerY,
+				const double& radiusWidth, const double& radiusHeight,
 				const double& startAngle, const double& endAngle)
 {
 	checkPathOperations();
@@ -584,7 +570,7 @@ Matrix2D* GraphicsContext::getCurrentTransform()
 }
 
 void GraphicsContext::setRotation( const double& theta )
-{	
+{
 	currentGraphicsState_->rotation_  = theta;
 	currentGraphicsState_->compositeMatrix();
 }
@@ -664,7 +650,7 @@ Font* GraphicsContext::getCurrentFont()
 }
 
 void GraphicsContext::setColor( Color* color )
-{	
+{
 	if ( NULL != color ) {
 		currentGraphicsState_->color_ = *color;
 	}
@@ -749,7 +735,7 @@ void GraphicsContext::setClippingRect( Rect* rect )
 		rectClipPath->lineTo( rect->left_, rect->bottom_ );
 		rectClipPath->close();
 	}
-	
+
 	Path* clipPath = currentGraphicsState_->clippingPath_;
 
 	if ( NULL != clipPath ) { //release the underlying object instance
@@ -818,9 +804,14 @@ void GraphicsContext::drawThemeFocusRect( Rect* rect, DrawUIState& state )
 	contextPeer_->drawThemeFocusRect( rect, state );
 }
 
-void GraphicsContext::drawThemeButtonRect( Rect* rect, ButtonState& state )
+void GraphicsContext::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect )
 {
-	contextPeer_->drawThemeButtonRect( rect, state );
+	contextPeer_->drawThemeButtonRect( rect, state, captionRect );
+}
+
+void GraphicsContext::drawThemeButtonFocusRect( Rect* rect )
+{
+	contextPeer_->drawThemeButtonFocusRect( rect );
 }
 
 void GraphicsContext::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
@@ -840,7 +831,7 @@ void GraphicsContext::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 
 
 void GraphicsContext::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state )
-{   
+{
 	contextPeer_->drawThemeScrollButtonRect( rect, state );
 }
 
@@ -928,14 +919,14 @@ void GraphicsContext::execPathOperations()
 	double tmpX;
 	double tmpY;
 
-	
+
 	Matrix2D& transform = currentGraphicsState_->transformMatrix_;
 
 	while ( it != pathOperations_.end() ) {
 		PointOperation& pointOp = *it;
 
 		switch ( pointOp.primitive ){
-			case PointOperation::ptMoveTo : {		
+			case PointOperation::ptMoveTo : {
 				currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
 				currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
 
@@ -948,7 +939,7 @@ void GraphicsContext::execPathOperations()
 								(transform[Matrix2D::mei21]);
 
 
-				
+
 				contextPeer_->moveTo( tmpX, tmpY );
 				++it;
 			}
@@ -1059,13 +1050,13 @@ void GraphicsContext::execPathOperations()
 
 			case PointOperation::ptRect:{
 
-				PointOperation& pt1 = *it;				
+				PointOperation& pt1 = *it;
 				++it;
 
 				PointOperation& pt2 = *it;
 				++it;
 
-				
+
 				std::vector<Point> tmpPts(5);
 				tmpPts[0].x_ = pt1.x;
 				tmpPts[0].y_ = pt1.y;
@@ -1111,7 +1102,7 @@ void GraphicsContext::execPathOperations()
 
 				PointOperation& pt2 = *it;
 				++it;
-				
+
 				PointOperation& pt3 = *it;
 				++it;
 
@@ -1265,24 +1256,24 @@ void GraphicsContext::flushDrawingArea()
 	renderAreaDirty_ = false;
 }
 
-void GraphicsContext::buildArc( double centerX,  double centerY, 
-            double radiusWidth, double radiusHeight, 
+void GraphicsContext::buildArc( double centerX,  double centerY,
+            double radiusWidth, double radiusHeight,
             double startAngle, double endAngle, std::vector<Point>& pts, const Matrix2D& transform )
 {
 	agg::path_storage path;
 
-	agg::arc arcPath(centerX, 
-						centerY, 
-						radiusWidth, radiusHeight, 
+	agg::arc arcPath(centerX,
+						centerY,
+						radiusWidth, radiusHeight,
 						Math::degreesToRadians(startAngle), Math::degreesToRadians(endAngle));
 
 	path.add_path( arcPath );
 
 	agg::path_storage::const_iterator it = path.begin();
-	
+
 	while ( it != path.end() ) {
 		const agg::vertex_type& vert = *it;
-		
+
 		Point pt;
 		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
 							vert.y * (transform[Matrix2D::mei10]) +
@@ -1297,58 +1288,60 @@ void GraphicsContext::buildArc( double centerX,  double centerY,
 		++it;
 	}
 
+
+	path.remove_all();
 }
 
 
-void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2, 
-							double cornerArcWidth, double cornerArcHeight, 
+void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2,
+							double cornerArcWidth, double cornerArcHeight,
 							std::vector<Point>& pts, const Matrix2D& transform )
 {
 	agg::path_storage path;
 
 	path.move_to( x1 + cornerArcWidth/2.0, y1 );
 	path.line_to( x2 - cornerArcWidth, y1 );
-	
-	agg::arc arc1(x2 - cornerArcWidth/2.0, 
-		y1 + cornerArcHeight/2.0, 
-		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+
+	agg::arc arc1(x2 - cornerArcWidth/2.0,
+		y1 + cornerArcHeight/2.0,
+		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(270), Math::degreesToRadians(0));
-	
+
 	path.add_path( arc1 );
-	
+
 	path.line_to( x2, y2 - cornerArcHeight/2.0 );
-	
-	agg::arc arc2(x2 - cornerArcWidth/2.0, 
-		y2 - cornerArcHeight/2.0, 
-		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+
+	agg::arc arc2(x2 - cornerArcWidth/2.0,
+		y2 - cornerArcHeight/2.0,
+		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(0), Math::degreesToRadians(90));
-	
+
 	path.add_path( arc2 );
-	
+
 	path.line_to( x1 + cornerArcWidth/2.0, y2 );
-	
-	agg::arc arc3(x1 + cornerArcWidth/2.0, 
-		y2 - cornerArcHeight/2.0, 
-		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+
+	agg::arc arc3(x1 + cornerArcWidth/2.0,
+		y2 - cornerArcHeight/2.0,
+		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(90), Math::degreesToRadians(180));
-	
+
 	path.add_path( arc3 );
-	
+
 	path.line_to( x1, y1 + cornerArcHeight/2.0 );
-	
-	agg::arc arc4(x1 + cornerArcWidth/2.0, 
-		y1 + cornerArcHeight/2.0, 
-		cornerArcWidth/2.0, cornerArcHeight/2.0, 
+
+	agg::arc arc4(x1 + cornerArcWidth/2.0,
+		y1 + cornerArcHeight/2.0,
+		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(180), Math::degreesToRadians(270));
-	
+
 	path.add_path( arc4 );
 
 
 	agg::path_storage::const_iterator it = path.begin();
-	
+
 	while ( it != path.end() ) {
 		const agg::vertex_type& vert = *it;
-		
+
 		Point pt;
 		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
 							vert.y * (transform[Matrix2D::mei10]) +
@@ -1364,7 +1357,7 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 	}
 }
 
-void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2, 
+void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 							std::vector<Point>& pts, const Matrix2D& transform )
 {
 	agg::path_storage path;
@@ -1373,10 +1366,10 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 	path.add_path( ellipseShape );
 
 	agg::path_storage::const_iterator it = path.begin();
-	
+
 	while ( it != path.end() ) {
 		const agg::vertex_type& vert = *it;
-		
+
 		Point pt;
 		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
 							vert.y * (transform[Matrix2D::mei10]) +
@@ -1390,7 +1383,7 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 
 		++it;
 	}
-	
+
 	pts.back() = pts[0];
 }
 
@@ -1400,7 +1393,7 @@ int GraphicsContext::saveState()
 
 	stateCollection_.push_back( newState );
 	graphicsStateIndex_ = stateCollection_.size() - 1;
-	
+
 	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
 
 	return graphicsStateIndex_;
@@ -1418,7 +1411,7 @@ void GraphicsContext::restoreState( int state )
 		stateCollection_.erase( stateCollection_.begin() + state,
 								stateCollection_.end() );
 	}
-	
+
 	graphicsStateIndex_ = maxVal<>(0,(state - 1));
 	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
 }
@@ -1486,12 +1479,12 @@ bool GraphicsContext::isAntiAliasingOn()
 {
 	return contextPeer_->isAntiAliasingOn();
 }
-	
+
 void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 {
 	contextPeer_->setAntiAliasingOn( antiAliasingOn );
 }
-	
+
 
 };	// namespace VCF
 
@@ -1499,8 +1492,17 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:05:58  ddiego
+*added missing gtk files
+*
 *Revision 1.5  2005/01/02 03:04:25  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.4.2.3  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.4.2.2  2005/04/25 00:11:59  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
 *
 *Revision 1.4.2.1  2004/12/19 04:05:03  ddiego
 *made modifications to methods that return a handle type. Introduced

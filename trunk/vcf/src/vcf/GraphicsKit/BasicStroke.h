@@ -56,12 +56,40 @@ public:
 		antiAlias_ = val;
 	}
 
+	/**
+	Adds a dash and gap. Only takes effect if using AGG
+	renering buffer.
+	*/
+	void addDash( const double& dash, const double& gap ) {
+		dashed_ = true;
+		dashGapLen_.push_back( std::make_pair( dash, gap ) );
+	}
+
+	/**
+	Distance at which dashing starts.
+	*/
+	void dashStart( const double& dashStart ) {
+		dashStart_ = dashStart;
+	}
+
+	/**
+	Removes ALL dashes that are set.
+	*/
+	void removeDashes() {
+		dashed_ = false;
+		dashStart_ = 0.0;
+		dashGapLen_.resize(0);
+	}
+
 private:
 	double width_;
 	double opacity_;
 	Color color_;
 	GraphicsContext* context_;
 	bool antiAlias_;
+	bool dashed_;
+	double dashStart_;
+	std::vector< std::pair<double,double> > dashGapLen_;
 
 	void line( const double& x1, const double& y1,
 		       const double& x2, const double& y2 );
@@ -73,6 +101,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:05:56  ddiego
+*added missing gtk files
+*
+*Revision 1.2.4.1  2005/02/01 19:43:51  dougtinkham
+*added dash support for AGG rendering
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

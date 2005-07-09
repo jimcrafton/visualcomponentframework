@@ -41,7 +41,7 @@ GraphicsToolkit::~GraphicsToolkit()
 	destroyColorMaps();
 
 	std::map<String,ImageLoader*>::iterator it3 = imageLoaders_.begin();
-	if ( it3 != imageLoaders_.end() ){
+	while ( it3 != imageLoaders_.end() ){
 		delete it3->second;
 		it3->second = NULL;
 		it3 ++;
@@ -149,11 +149,6 @@ Color* GraphicsToolkit::getColorFromColormap( const String& colorName )
 Color* GraphicsToolkit::getColorMatchFromColormap( const Color& color )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getColorMatchFromColormap( color );
-}
-
-Color GraphicsToolkit::getColorContrast( const Color& clrRef, double deltaL )
-{
-	return GraphicsToolkit::graphicsToolkitInstance->internal_getColorContrast( clrRef, deltaL );
 }
 
 void GraphicsToolkit::printColorNameMap( )
@@ -348,7 +343,7 @@ Color* GraphicsToolkit::internal_getSystemColor( const unsigned long& systemColo
 String GraphicsToolkit::internal_getSystemColorNameFromMap( Color& sysColor ) const
 {
 	// not pointer are used, so any color can be compared
-	String result = ColorNames::unknownColorName;
+	String result = ColorNames::unknownColorName_;
 	GraphicsToolkit::MapStringColorName::const_iterator found = systemColorNameMap_->find( sysColor );
 	if ( found != systemColorNameMap_->end() ){
 		result = found->second;
@@ -368,14 +363,14 @@ Color* GraphicsToolkit::internal_getColorFromColormap( const String& colorName )
 
 Color* GraphicsToolkit::internal_getColorFromColormap( const int& gray )
 {
-	String colorName = StringUtils::format("gray%d", gray);
+	String colorName = StringUtils::format( Format("gray%d") % gray);
 	return getColorFromColormap( colorName );
 }
 
 String GraphicsToolkit::internal_getColorNameFromMap( const Color& color ) const
 {
 	// not pointer are used, so any color can be compared
-	String result = ColorNames::unknownColorName;
+	String result = ColorNames::unknownColorName_;
 	MapStringColorName::const_iterator found = colorNameMap_->find( color );
 	if ( found != colorNameMap_->end() ){
 		result = found->second;
@@ -393,10 +388,10 @@ void GraphicsToolkit::internal_printColorNameMap( ) const
 		double dr = c.getRed();
 		double dg = c.getGreen();
 		double db = c.getBlue();
-		unsigned char cr = (unsigned char)(dr*255);
-		unsigned char cg = (unsigned char)dg*255;
-		unsigned char cb = (unsigned char)db*255;
-		StringUtils::traceWithArgs( "r=%0.06g, g=%0.06g, b=%0.06g - (%-25s) [%3d, %3d, %3d] (0x%02X, 0x%02X, 0x%02X) <%-25s>\n", dr, dg, db, s.c_str(),  cr, cg, cb,  cr, cg, cb, sg.c_str());
+		uint8 cr = (uint8)(dr*255+0.5);
+		uint8 cg = (uint8)(dg*255+0.5);
+		uint8 cb = (uint8)(db*255+0.5);
+		StringUtils::traceWithArgs( Format("r=%0.06g, g=%0.06g, b=%0.06g - (%-25s) [%3d, %3d, %3d] (0x%02X, 0x%02X, 0x%02X) <%-25s>\n") % dr % dg % db % s.c_str() %  cr % cg % cb % cr % cg % cb % sg.c_str());
 		it ++;
 	}
 }
@@ -463,47 +458,6 @@ Color* GraphicsToolkit::internal_getColorMatchFromColormap( const Color& color )
 	return const_cast<Color*>(closestColor);
 }
 
-Color GraphicsToolkit::internal_getColorContrast( const Color& clrRef, double deltaL/*=0.3*/ )
-{
-	double deltaLum = deltaL;
-
-	Color clrCnt = clrRef;
-
-	Color clrTst = clrRef;
-
-//#define TEST_RGBToHSLToRGB
-#ifdef TEST_RGBToHSLToRGB
-	//ColorSpace::HSLtype _hslTst = ColorSpace::ColorToHSL( clrTst );
-	ColorSpace::RGBtype rgbTst = ColorSpace::ColorToRGB( clrTst );
-	ColorSpace::HSLtype _hslTst = ColorSpace::RGBToHSL ( rgbTst );
-	//Color clrTest = ColorSpace::HSLToColor( _hslTst );
-	ColorSpace::RGBtype rgbTest = ColorSpace::HSLToRGB (_hslTst);
-	Color clrTest = ColorSpace::RGBToColor( rgbTest );
-#endif
-
-	ColorSpace::HSLtype _hslCnt = ColorSpace::ColorToHSL( clrCnt );
-	int lumin = clrCnt.getLuminosity();
-
-	// not enough contrast ?
-	if ( lumin < 128 ) {
-		if ( 0 < deltaLum ) {
-			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, +deltaLum); // lighter
-		} else {
-			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, -deltaLum); // lighter
-		}
-	} else {
-		if ( 0 < deltaLum ) {
-			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, -deltaLum); // darker
-		} else {
-			_hslCnt.L = ColorSpace::getChanged( _hslCnt.L, +deltaLum); // darker
-		}
-	}
-
-	clrCnt = ColorSpace::HSLToColor( _hslCnt );
-
-	return clrCnt;
-}
-
 void GraphicsToolkit::initGraphicsToolkit()
 {
 #ifdef WIN32
@@ -554,117 +508,117 @@ void GraphicsToolkit::initColorMap()
     //color name r/g/b hex bg/fg color sample
 	//						name				 , R			   , G				 , B					// 0xFFRRGGBB
     initColorNameMapItem( "black"                   , (VCF::uchar)0x00, (VCF::uchar)0x00, (VCF::uchar)0x00 );   // 0xFF000000   //  0;0;0
-    initColorNameMapItem( "grey"                    , (VCF::uchar)0xBE, (VCF::uchar)0xBE, (VCF::uchar)0xBE );   // 0xFFBEBEBE   //  190;190;190
-    initColorNameMapItem( "dimgray"                 , (VCF::uchar)0x69, (VCF::uchar)0x69, (VCF::uchar)0x69 );   // 0xFF696969   //  105;105;105 // frequently mispelled as dimgrey
+    initColorNameMapItem( "gray"                    , (VCF::uchar)0xBE, (VCF::uchar)0xBE, (VCF::uchar)0xBE );   // 0xFFBEBEBE   //  190;190;190
+    initColorNameMapItem( "dimgray"                 , (VCF::uchar)0x69, (VCF::uchar)0x69, (VCF::uchar)0x69 );   // 0xFF696969   //  105;105;105 // frequently mispelled as dimgray
     initColorNameMapItem( "lightgray"               , (VCF::uchar)0xD3, (VCF::uchar)0xD3, (VCF::uchar)0xD3 );   // 0xFFD3D3D3   //  211;211;211
-    initColorNameMapItem( "lightslategrey"          , (VCF::uchar)0x77, (VCF::uchar)0x88, (VCF::uchar)0x99 );   // 0xFF778899   //  119;136;153
+    initColorNameMapItem( "lightslategray"          , (VCF::uchar)0x77, (VCF::uchar)0x88, (VCF::uchar)0x99 );   // 0xFF778899   //  119;136;153
     initColorNameMapItem( "slategray"               , (VCF::uchar)0x70, (VCF::uchar)0x80, (VCF::uchar)0x90 );   // 0xFF708090   //  112;128;144
     initColorNameMapItem( "slategray1"              , (VCF::uchar)0xC6, (VCF::uchar)0xE2, (VCF::uchar)0xFF );   // 0xFFC6E2FF   //  198;226;255
     initColorNameMapItem( "slategray2"              , (VCF::uchar)0xB9, (VCF::uchar)0xD3, (VCF::uchar)0xEE );   // 0xFFB9D3EE   //  185;211;238
     initColorNameMapItem( "slategray3"              , (VCF::uchar)0x9F, (VCF::uchar)0xB6, (VCF::uchar)0xCD );   // 0xFF9FB6CD   //  159;182;205
     initColorNameMapItem( "slategray4"              , (VCF::uchar)0x6C, (VCF::uchar)0x7B, (VCF::uchar)0x8B );   // 0xFF6C7B8B   //  108;123;139
-    initColorNameMapItem( "slategrey"               , (VCF::uchar)0x70, (VCF::uchar)0x80, (VCF::uchar)0x90 );   // 0xFF708090   //  112;128;144
-    initColorNameMapItem( "grey0"                   , (VCF::uchar)0x00, (VCF::uchar)0x00, (VCF::uchar)0x00 );   // 0xFF000000   //  0;0;0
-    initColorNameMapItem( "grey1"                   , (VCF::uchar)0x03, (VCF::uchar)0x03, (VCF::uchar)0x03 );   // 0xFF030303   //  3;3;3
-    initColorNameMapItem( "grey2"                   , (VCF::uchar)0x05, (VCF::uchar)0x05, (VCF::uchar)0x05 );   // 0xFF050505   //  5;5;5
-    initColorNameMapItem( "grey3"                   , (VCF::uchar)0x08, (VCF::uchar)0x08, (VCF::uchar)0x08 );   // 0xFF080808   //  8;8;8
-    initColorNameMapItem( "grey4"                   , (VCF::uchar)0x0A, (VCF::uchar)0x0A, (VCF::uchar)0x0A );   // 0xFF0A0A0A   //  10;10;10
-    initColorNameMapItem( "grey5"                   , (VCF::uchar)0x0D, (VCF::uchar)0x0D, (VCF::uchar)0x0D );   // 0xFF0D0D0D   //  13;13;13
-    initColorNameMapItem( "grey6"                   , (VCF::uchar)0x0F, (VCF::uchar)0x0F, (VCF::uchar)0x0F );   // 0xFF0F0F0F   //  15;15;15
-    initColorNameMapItem( "grey7"                   , (VCF::uchar)0x12, (VCF::uchar)0x12, (VCF::uchar)0x12 );   // 0xFF121212   //  18;18;18
-    initColorNameMapItem( "grey8"                   , (VCF::uchar)0x14, (VCF::uchar)0x14, (VCF::uchar)0x14 );   // 0xFF141414   //  20;20;20
-    initColorNameMapItem( "grey98"                  , (VCF::uchar)0x17, (VCF::uchar)0x17, (VCF::uchar)0x17 );   // 0xFF171717   //  23;23;23
-    initColorNameMapItem( "grey10"                  , (VCF::uchar)0x1A, (VCF::uchar)0x1A, (VCF::uchar)0x1A );   // 0xFF1A1A1A   //  26;26;26
-    initColorNameMapItem( "grey11"                  , (VCF::uchar)0x1C, (VCF::uchar)0x1C, (VCF::uchar)0x1C );   // 0xFF1C1C1C   //  28;28;28
-    initColorNameMapItem( "grey12"                  , (VCF::uchar)0x1F, (VCF::uchar)0x1F, (VCF::uchar)0x1F );   // 0xFF1F1F1F   //  31;31;31
-    initColorNameMapItem( "grey13"                  , (VCF::uchar)0x21, (VCF::uchar)0x21, (VCF::uchar)0x21 );   // 0xFF212121   //  33;33;33
-    initColorNameMapItem( "grey14"                  , (VCF::uchar)0x24, (VCF::uchar)0x24, (VCF::uchar)0x24 );   // 0xFF242424   //  36;36;36
-    initColorNameMapItem( "grey15"                  , (VCF::uchar)0x26, (VCF::uchar)0x26, (VCF::uchar)0x26 );   // 0xFF262626   //  38;38;38
-    initColorNameMapItem( "grey16"                  , (VCF::uchar)0x29, (VCF::uchar)0x29, (VCF::uchar)0x29 );   // 0xFF292929   //  41;41;41
-    initColorNameMapItem( "grey17"                  , (VCF::uchar)0x2B, (VCF::uchar)0x2B, (VCF::uchar)0x2B );   // 0xFF2B2B2B   //  43;43;43
-    initColorNameMapItem( "grey18"                  , (VCF::uchar)0x2E, (VCF::uchar)0x2E, (VCF::uchar)0x2E );   // 0xFF2E2E2E   //  46;46;46
-    initColorNameMapItem( "grey19"                  , (VCF::uchar)0x30, (VCF::uchar)0x30, (VCF::uchar)0x30 );   // 0xFF303030   //  48;48;48
-    initColorNameMapItem( "grey20"                  , (VCF::uchar)0x33, (VCF::uchar)0x33, (VCF::uchar)0x33 );   // 0xFF333333   //  51;51;51
-    initColorNameMapItem( "grey21"                  , (VCF::uchar)0x36, (VCF::uchar)0x36, (VCF::uchar)0x36 );   // 0xFF363636   //  54;54;54
-    initColorNameMapItem( "grey22"                  , (VCF::uchar)0x38, (VCF::uchar)0x38, (VCF::uchar)0x38 );   // 0xFF383838   //  56;56;56
-    initColorNameMapItem( "grey23"                  , (VCF::uchar)0x3B, (VCF::uchar)0x3B, (VCF::uchar)0x3B );   // 0xFF3B3B3B   //  59;59;59
-    initColorNameMapItem( "grey24"                  , (VCF::uchar)0x3D, (VCF::uchar)0x3D, (VCF::uchar)0x3D );   // 0xFF3D3D3D   //  61;61;61
-    initColorNameMapItem( "grey25"                  , (VCF::uchar)0x40, (VCF::uchar)0x40, (VCF::uchar)0x40 );   // 0xFF404040   //  64;64;64
-    initColorNameMapItem( "grey26"                  , (VCF::uchar)0x42, (VCF::uchar)0x42, (VCF::uchar)0x42 );   // 0xFF424242   //  66;66;66
-    initColorNameMapItem( "grey27"                  , (VCF::uchar)0x45, (VCF::uchar)0x45, (VCF::uchar)0x45 );   // 0xFF454545   //  69;69;69
-    initColorNameMapItem( "grey28"                  , (VCF::uchar)0x47, (VCF::uchar)0x47, (VCF::uchar)0x47 );   // 0xFF474747   //  71;71;71
-    initColorNameMapItem( "grey29"                  , (VCF::uchar)0x4A, (VCF::uchar)0x4A, (VCF::uchar)0x4A );   // 0xFF4A4A4A   //  74;74;74
-    initColorNameMapItem( "grey30"                  , (VCF::uchar)0x4D, (VCF::uchar)0x4D, (VCF::uchar)0x4D );   // 0xFF4D4D4D   //  77;77;77
-    initColorNameMapItem( "grey31"                  , (VCF::uchar)0x4F, (VCF::uchar)0x4F, (VCF::uchar)0x4F );   // 0xFF4F4F4F   //  79;79;79
-    initColorNameMapItem( "grey32"                  , (VCF::uchar)0x52, (VCF::uchar)0x52, (VCF::uchar)0x52 );   // 0xFF525252   //  82;82;82
-    initColorNameMapItem( "grey33"                  , (VCF::uchar)0x54, (VCF::uchar)0x54, (VCF::uchar)0x54 );   // 0xFF545454   //  84;84;84
-    initColorNameMapItem( "grey34"                  , (VCF::uchar)0x57, (VCF::uchar)0x57, (VCF::uchar)0x57 );   // 0xFF575757   //  87;87;87
-    initColorNameMapItem( "grey35"                  , (VCF::uchar)0x59, (VCF::uchar)0x59, (VCF::uchar)0x59 );   // 0xFF595959   //  89;89;89
-    initColorNameMapItem( "grey36"                  , (VCF::uchar)0x5C, (VCF::uchar)0x5C, (VCF::uchar)0x5C );   // 0xFF5C5C5C   //  92;92;92
-    initColorNameMapItem( "grey37"                  , (VCF::uchar)0x5E, (VCF::uchar)0x5E, (VCF::uchar)0x5E );   // 0xFF5E5E5E   //  94;94;94
-    initColorNameMapItem( "grey38"                  , (VCF::uchar)0x61, (VCF::uchar)0x61, (VCF::uchar)0x61 );   // 0xFF616161   //  97;97;97
-    initColorNameMapItem( "grey39"                  , (VCF::uchar)0x63, (VCF::uchar)0x63, (VCF::uchar)0x63 );   // 0xFF636363   //  99;99;99
-    initColorNameMapItem( "grey40"                  , (VCF::uchar)0x66, (VCF::uchar)0x66, (VCF::uchar)0x66 );   // 0xFF666666   //  102;102;102
-    initColorNameMapItem( "grey41"                  , (VCF::uchar)0x69, (VCF::uchar)0x69, (VCF::uchar)0x69 );   // 0xFF696969   //  105;105;105
-    initColorNameMapItem( "grey42"                  , (VCF::uchar)0x6B, (VCF::uchar)0x6B, (VCF::uchar)0x6B );   // 0xFF6B6B6B   //  107;107;107
-    initColorNameMapItem( "grey43"                  , (VCF::uchar)0x6E, (VCF::uchar)0x6E, (VCF::uchar)0x6E );   // 0xFF6E6E6E   //  110;110;110
-    initColorNameMapItem( "grey44"                  , (VCF::uchar)0x70, (VCF::uchar)0x70, (VCF::uchar)0x70 );   // 0xFF707070   //  112;112;112
-    initColorNameMapItem( "grey45"                  , (VCF::uchar)0x73, (VCF::uchar)0x73, (VCF::uchar)0x73 );   // 0xFF737373   //  115;115;115
-    initColorNameMapItem( "grey46"                  , (VCF::uchar)0x75, (VCF::uchar)0x75, (VCF::uchar)0x75 );   // 0xFF757575   //  117;117;117
-    initColorNameMapItem( "grey47"                  , (VCF::uchar)0x78, (VCF::uchar)0x78, (VCF::uchar)0x78 );   // 0xFF787878   //  120;120;120
-    initColorNameMapItem( "grey48"                  , (VCF::uchar)0x7A, (VCF::uchar)0x7A, (VCF::uchar)0x7A );   // 0xFF7A7A7A   //  122;122;122
-    initColorNameMapItem( "grey49"                  , (VCF::uchar)0x7D, (VCF::uchar)0x7D, (VCF::uchar)0x7D );   // 0xFF7D7D7D   //  125;125;125
-    initColorNameMapItem( "grey50"                  , (VCF::uchar)0x7F, (VCF::uchar)0x7F, (VCF::uchar)0x7F );   // 0xFF7F7F7F   //  127;127;127
-    initColorNameMapItem( "grey51"                  , (VCF::uchar)0x82, (VCF::uchar)0x82, (VCF::uchar)0x82 );   // 0xFF828282   //  130;130;130
-    initColorNameMapItem( "grey52"                  , (VCF::uchar)0x85, (VCF::uchar)0x85, (VCF::uchar)0x85 );   // 0xFF858585   //  133;133;133
-    initColorNameMapItem( "grey53"                  , (VCF::uchar)0x87, (VCF::uchar)0x87, (VCF::uchar)0x87 );   // 0xFF878787   //  135;135;135
-    initColorNameMapItem( "grey54"                  , (VCF::uchar)0x8A, (VCF::uchar)0x8A, (VCF::uchar)0x8A );   // 0xFF8A8A8A   //  138;138;138
-    initColorNameMapItem( "grey55"                  , (VCF::uchar)0x8C, (VCF::uchar)0x8C, (VCF::uchar)0x8C );   // 0xFF8C8C8C   //  140;140;140
-    initColorNameMapItem( "grey56"                  , (VCF::uchar)0x8F, (VCF::uchar)0x8F, (VCF::uchar)0x8F );   // 0xFF8F8F8F   //  143;143;143
-    initColorNameMapItem( "grey57"                  , (VCF::uchar)0x91, (VCF::uchar)0x91, (VCF::uchar)0x91 );   // 0xFF919191   //  145;145;145
-    initColorNameMapItem( "grey58"                  , (VCF::uchar)0x94, (VCF::uchar)0x94, (VCF::uchar)0x94 );   // 0xFF949494   //  148;148;148
-    initColorNameMapItem( "grey59"                  , (VCF::uchar)0x96, (VCF::uchar)0x96, (VCF::uchar)0x96 );   // 0xFF969696   //  150;150;150
-    initColorNameMapItem( "grey60"                  , (VCF::uchar)0x99, (VCF::uchar)0x99, (VCF::uchar)0x99 );   // 0xFF999999   //  153;153;153
-    initColorNameMapItem( "grey61"                  , (VCF::uchar)0x9C, (VCF::uchar)0x9C, (VCF::uchar)0x9C );   // 0xFF9C9C9C   //  156;156;156
-    initColorNameMapItem( "grey62"                  , (VCF::uchar)0x9E, (VCF::uchar)0x9E, (VCF::uchar)0x9E );   // 0xFF9E9E9E   //  158;158;158
-    initColorNameMapItem( "grey63"                  , (VCF::uchar)0xA1, (VCF::uchar)0xA1, (VCF::uchar)0xA1 );   // 0xFFA1A1A1   //  161;161;161
-    initColorNameMapItem( "grey64"                  , (VCF::uchar)0xA3, (VCF::uchar)0xA3, (VCF::uchar)0xA3 );   // 0xFFA3A3A3   //  163;163;163
-    initColorNameMapItem( "grey65"                  , (VCF::uchar)0xA6, (VCF::uchar)0xA6, (VCF::uchar)0xA6 );   // 0xFFA6A6A6   //  166;166;166
-    initColorNameMapItem( "grey66"                  , (VCF::uchar)0xA8, (VCF::uchar)0xA8, (VCF::uchar)0xA8 );   // 0xFFA8A8A8   //  168;168;168
-    initColorNameMapItem( "grey67"                  , (VCF::uchar)0xAB, (VCF::uchar)0xAB, (VCF::uchar)0xAB );   // 0xFFABABAB   //  171;171;171
-    initColorNameMapItem( "grey68"                  , (VCF::uchar)0xAD, (VCF::uchar)0xAD, (VCF::uchar)0xAD );   // 0xFFADADAD   //  173;173;173
-    initColorNameMapItem( "grey69"                  , (VCF::uchar)0xB0, (VCF::uchar)0xB0, (VCF::uchar)0xB0 );   // 0xFFB0B0B0   //  176;176;176
-    initColorNameMapItem( "grey70"                  , (VCF::uchar)0xB3, (VCF::uchar)0xB3, (VCF::uchar)0xB3 );   // 0xFFB3B3B3   //  179;179;179
-    initColorNameMapItem( "grey71"                  , (VCF::uchar)0xB5, (VCF::uchar)0xB5, (VCF::uchar)0xB5 );   // 0xFFB5B5B5   //  181;181;181
-    initColorNameMapItem( "grey72"                  , (VCF::uchar)0xB8, (VCF::uchar)0xB8, (VCF::uchar)0xB8 );   // 0xFFB8B8B8   //  184;184;184
-    initColorNameMapItem( "grey73"                  , (VCF::uchar)0xBA, (VCF::uchar)0xBA, (VCF::uchar)0xBA );   // 0xFFBABABA   //  186;186;186
-    initColorNameMapItem( "grey74"                  , (VCF::uchar)0xBD, (VCF::uchar)0xBD, (VCF::uchar)0xBD );   // 0xFFBDBDBD   //  189;189;189
-    initColorNameMapItem( "grey75"                  , (VCF::uchar)0xBF, (VCF::uchar)0xBF, (VCF::uchar)0xBF );   // 0xFFBFBFBF   //  191;191;191
-    initColorNameMapItem( "grey76"                  , (VCF::uchar)0xC2, (VCF::uchar)0xC2, (VCF::uchar)0xC2 );   // 0xFFC2C2C2   //  194;194;194
-    initColorNameMapItem( "grey77"                  , (VCF::uchar)0xC4, (VCF::uchar)0xC4, (VCF::uchar)0xC4 );   // 0xFFC4C4C4   //  196;196;196
-    initColorNameMapItem( "grey78"                  , (VCF::uchar)0xC7, (VCF::uchar)0xC7, (VCF::uchar)0xC7 );   // 0xFFC7C7C7   //  199;199;199
-    initColorNameMapItem( "grey79"                  , (VCF::uchar)0xC9, (VCF::uchar)0xC9, (VCF::uchar)0xC9 );   // 0xFFC9C9C9   //  201;201;201
-    initColorNameMapItem( "grey80"                  , (VCF::uchar)0xCC, (VCF::uchar)0xCC, (VCF::uchar)0xCC );   // 0xFFCCCCCC   //  204;204;204
-    initColorNameMapItem( "grey81"                  , (VCF::uchar)0xCF, (VCF::uchar)0xCF, (VCF::uchar)0xCF );   // 0xFFCFCFCF   //  207;207;207
-    initColorNameMapItem( "grey82"                  , (VCF::uchar)0xD1, (VCF::uchar)0xD1, (VCF::uchar)0xD1 );   // 0xFFD1D1D1   //  209;209;209
-    initColorNameMapItem( "grey83"                  , (VCF::uchar)0xD4, (VCF::uchar)0xD4, (VCF::uchar)0xD4 );   // 0xFFD4D4D4   //  212;212;212
-    initColorNameMapItem( "grey84"                  , (VCF::uchar)0xD6, (VCF::uchar)0xD6, (VCF::uchar)0xD6 );   // 0xFFD6D6D6   //  214;214;214
-    initColorNameMapItem( "grey85"                  , (VCF::uchar)0xD9, (VCF::uchar)0xD9, (VCF::uchar)0xD9 );   // 0xFFD9D9D9   //  217;217;217
-    initColorNameMapItem( "grey86"                  , (VCF::uchar)0xDB, (VCF::uchar)0xDB, (VCF::uchar)0xDB );   // 0xFFDBDBDB   //  219;219;219
-    initColorNameMapItem( "grey87"                  , (VCF::uchar)0xDE, (VCF::uchar)0xDE, (VCF::uchar)0xDE );   // 0xFFDEDEDE   //  222;222;222
-    initColorNameMapItem( "grey88"                  , (VCF::uchar)0xE0, (VCF::uchar)0xE0, (VCF::uchar)0xE0 );   // 0xFFE0E0E0   //  224;224;224
-    initColorNameMapItem( "grey89"                  , (VCF::uchar)0xE3, (VCF::uchar)0xE3, (VCF::uchar)0xE3 );   // 0xFFE3E3E3   //  227;227;227
-    initColorNameMapItem( "grey90"                  , (VCF::uchar)0xE5, (VCF::uchar)0xE5, (VCF::uchar)0xE5 );   // 0xFFE5E5E5   //  229;229;229
-    initColorNameMapItem( "grey91"                  , (VCF::uchar)0xE8, (VCF::uchar)0xE8, (VCF::uchar)0xE8 );   // 0xFFE8E8E8   //  232;232;232
-    initColorNameMapItem( "grey92"                  , (VCF::uchar)0xEB, (VCF::uchar)0xEB, (VCF::uchar)0xEB );   // 0xFFEBEBEB   //  235;235;235
-    initColorNameMapItem( "grey93"                  , (VCF::uchar)0xED, (VCF::uchar)0xED, (VCF::uchar)0xED );   // 0xFFEDEDED   //  237;237;237
-    initColorNameMapItem( "grey94"                  , (VCF::uchar)0xF0, (VCF::uchar)0xF0, (VCF::uchar)0xF0 );   // 0xFFF0F0F0   //  240;240;240
-    initColorNameMapItem( "grey95"                  , (VCF::uchar)0xF2, (VCF::uchar)0xF2, (VCF::uchar)0xF2 );   // 0xFFF2F2F2   //  242;242;242
-    initColorNameMapItem( "grey96"                  , (VCF::uchar)0xF5, (VCF::uchar)0xF5, (VCF::uchar)0xF5 );   // 0xFFF5F5F5   //  245;245;245
-    initColorNameMapItem( "grey97"                  , (VCF::uchar)0xF7, (VCF::uchar)0xF7, (VCF::uchar)0xF7 );   // 0xFFF7F7F7   //  247;247;247
-    initColorNameMapItem( "grey98"                  , (VCF::uchar)0xFA, (VCF::uchar)0xFA, (VCF::uchar)0xFA );   // 0xFFFAFAFA   //  250;250;250
-    initColorNameMapItem( "grey99"                  , (VCF::uchar)0xFC, (VCF::uchar)0xFC, (VCF::uchar)0xFC );   // 0xFFFCFCFC   //  252;252;252
-    initColorNameMapItem( "grey100"                 , (VCF::uchar)0xFF, (VCF::uchar)0xFF, (VCF::uchar)0xFF );   // 0xFFFFFFFF   //  255;255;255
+    initColorNameMapItem( "slategray"               , (VCF::uchar)0x70, (VCF::uchar)0x80, (VCF::uchar)0x90 );   // 0xFF708090   //  112;128;144
+    initColorNameMapItem( "gray0"                   , (VCF::uchar)0x00, (VCF::uchar)0x00, (VCF::uchar)0x00 );   // 0xFF000000   //  0;0;0
+    initColorNameMapItem( "gray1"                   , (VCF::uchar)0x03, (VCF::uchar)0x03, (VCF::uchar)0x03 );   // 0xFF030303   //  3;3;3
+    initColorNameMapItem( "gray2"                   , (VCF::uchar)0x05, (VCF::uchar)0x05, (VCF::uchar)0x05 );   // 0xFF050505   //  5;5;5
+    initColorNameMapItem( "gray3"                   , (VCF::uchar)0x08, (VCF::uchar)0x08, (VCF::uchar)0x08 );   // 0xFF080808   //  8;8;8
+    initColorNameMapItem( "gray4"                   , (VCF::uchar)0x0A, (VCF::uchar)0x0A, (VCF::uchar)0x0A );   // 0xFF0A0A0A   //  10;10;10
+    initColorNameMapItem( "gray5"                   , (VCF::uchar)0x0D, (VCF::uchar)0x0D, (VCF::uchar)0x0D );   // 0xFF0D0D0D   //  13;13;13
+    initColorNameMapItem( "gray6"                   , (VCF::uchar)0x0F, (VCF::uchar)0x0F, (VCF::uchar)0x0F );   // 0xFF0F0F0F   //  15;15;15
+    initColorNameMapItem( "gray7"                   , (VCF::uchar)0x12, (VCF::uchar)0x12, (VCF::uchar)0x12 );   // 0xFF121212   //  18;18;18
+    initColorNameMapItem( "gray8"                   , (VCF::uchar)0x14, (VCF::uchar)0x14, (VCF::uchar)0x14 );   // 0xFF141414   //  20;20;20
+    initColorNameMapItem( "gray98"                  , (VCF::uchar)0x17, (VCF::uchar)0x17, (VCF::uchar)0x17 );   // 0xFF171717   //  23;23;23
+    initColorNameMapItem( "gray10"                  , (VCF::uchar)0x1A, (VCF::uchar)0x1A, (VCF::uchar)0x1A );   // 0xFF1A1A1A   //  26;26;26
+    initColorNameMapItem( "gray11"                  , (VCF::uchar)0x1C, (VCF::uchar)0x1C, (VCF::uchar)0x1C );   // 0xFF1C1C1C   //  28;28;28
+    initColorNameMapItem( "gray12"                  , (VCF::uchar)0x1F, (VCF::uchar)0x1F, (VCF::uchar)0x1F );   // 0xFF1F1F1F   //  31;31;31
+    initColorNameMapItem( "gray13"                  , (VCF::uchar)0x21, (VCF::uchar)0x21, (VCF::uchar)0x21 );   // 0xFF212121   //  33;33;33
+    initColorNameMapItem( "gray14"                  , (VCF::uchar)0x24, (VCF::uchar)0x24, (VCF::uchar)0x24 );   // 0xFF242424   //  36;36;36
+    initColorNameMapItem( "gray15"                  , (VCF::uchar)0x26, (VCF::uchar)0x26, (VCF::uchar)0x26 );   // 0xFF262626   //  38;38;38
+    initColorNameMapItem( "gray16"                  , (VCF::uchar)0x29, (VCF::uchar)0x29, (VCF::uchar)0x29 );   // 0xFF292929   //  41;41;41
+    initColorNameMapItem( "gray17"                  , (VCF::uchar)0x2B, (VCF::uchar)0x2B, (VCF::uchar)0x2B );   // 0xFF2B2B2B   //  43;43;43
+    initColorNameMapItem( "gray18"                  , (VCF::uchar)0x2E, (VCF::uchar)0x2E, (VCF::uchar)0x2E );   // 0xFF2E2E2E   //  46;46;46
+    initColorNameMapItem( "gray19"                  , (VCF::uchar)0x30, (VCF::uchar)0x30, (VCF::uchar)0x30 );   // 0xFF303030   //  48;48;48
+    initColorNameMapItem( "gray20"                  , (VCF::uchar)0x33, (VCF::uchar)0x33, (VCF::uchar)0x33 );   // 0xFF333333   //  51;51;51
+    initColorNameMapItem( "gray21"                  , (VCF::uchar)0x36, (VCF::uchar)0x36, (VCF::uchar)0x36 );   // 0xFF363636   //  54;54;54
+    initColorNameMapItem( "gray22"                  , (VCF::uchar)0x38, (VCF::uchar)0x38, (VCF::uchar)0x38 );   // 0xFF383838   //  56;56;56
+    initColorNameMapItem( "gray23"                  , (VCF::uchar)0x3B, (VCF::uchar)0x3B, (VCF::uchar)0x3B );   // 0xFF3B3B3B   //  59;59;59
+    initColorNameMapItem( "gray24"                  , (VCF::uchar)0x3D, (VCF::uchar)0x3D, (VCF::uchar)0x3D );   // 0xFF3D3D3D   //  61;61;61
+    initColorNameMapItem( "gray25"                  , (VCF::uchar)0x40, (VCF::uchar)0x40, (VCF::uchar)0x40 );   // 0xFF404040   //  64;64;64
+    initColorNameMapItem( "gray26"                  , (VCF::uchar)0x42, (VCF::uchar)0x42, (VCF::uchar)0x42 );   // 0xFF424242   //  66;66;66
+    initColorNameMapItem( "gray27"                  , (VCF::uchar)0x45, (VCF::uchar)0x45, (VCF::uchar)0x45 );   // 0xFF454545   //  69;69;69
+    initColorNameMapItem( "gray28"                  , (VCF::uchar)0x47, (VCF::uchar)0x47, (VCF::uchar)0x47 );   // 0xFF474747   //  71;71;71
+    initColorNameMapItem( "gray29"                  , (VCF::uchar)0x4A, (VCF::uchar)0x4A, (VCF::uchar)0x4A );   // 0xFF4A4A4A   //  74;74;74
+    initColorNameMapItem( "gray30"                  , (VCF::uchar)0x4D, (VCF::uchar)0x4D, (VCF::uchar)0x4D );   // 0xFF4D4D4D   //  77;77;77
+    initColorNameMapItem( "gray31"                  , (VCF::uchar)0x4F, (VCF::uchar)0x4F, (VCF::uchar)0x4F );   // 0xFF4F4F4F   //  79;79;79
+    initColorNameMapItem( "gray32"                  , (VCF::uchar)0x52, (VCF::uchar)0x52, (VCF::uchar)0x52 );   // 0xFF525252   //  82;82;82
+    initColorNameMapItem( "gray33"                  , (VCF::uchar)0x54, (VCF::uchar)0x54, (VCF::uchar)0x54 );   // 0xFF545454   //  84;84;84
+    initColorNameMapItem( "gray34"                  , (VCF::uchar)0x57, (VCF::uchar)0x57, (VCF::uchar)0x57 );   // 0xFF575757   //  87;87;87
+    initColorNameMapItem( "gray35"                  , (VCF::uchar)0x59, (VCF::uchar)0x59, (VCF::uchar)0x59 );   // 0xFF595959   //  89;89;89
+    initColorNameMapItem( "gray36"                  , (VCF::uchar)0x5C, (VCF::uchar)0x5C, (VCF::uchar)0x5C );   // 0xFF5C5C5C   //  92;92;92
+    initColorNameMapItem( "gray37"                  , (VCF::uchar)0x5E, (VCF::uchar)0x5E, (VCF::uchar)0x5E );   // 0xFF5E5E5E   //  94;94;94
+    initColorNameMapItem( "gray38"                  , (VCF::uchar)0x61, (VCF::uchar)0x61, (VCF::uchar)0x61 );   // 0xFF616161   //  97;97;97
+    initColorNameMapItem( "gray39"                  , (VCF::uchar)0x63, (VCF::uchar)0x63, (VCF::uchar)0x63 );   // 0xFF636363   //  99;99;99
+    initColorNameMapItem( "gray40"                  , (VCF::uchar)0x66, (VCF::uchar)0x66, (VCF::uchar)0x66 );   // 0xFF666666   //  102;102;102
+    initColorNameMapItem( "gray41"                  , (VCF::uchar)0x69, (VCF::uchar)0x69, (VCF::uchar)0x69 );   // 0xFF696969   //  105;105;105
+    initColorNameMapItem( "gray42"                  , (VCF::uchar)0x6B, (VCF::uchar)0x6B, (VCF::uchar)0x6B );   // 0xFF6B6B6B   //  107;107;107
+    initColorNameMapItem( "gray43"                  , (VCF::uchar)0x6E, (VCF::uchar)0x6E, (VCF::uchar)0x6E );   // 0xFF6E6E6E   //  110;110;110
+    initColorNameMapItem( "gray44"                  , (VCF::uchar)0x70, (VCF::uchar)0x70, (VCF::uchar)0x70 );   // 0xFF707070   //  112;112;112
+    initColorNameMapItem( "gray45"                  , (VCF::uchar)0x73, (VCF::uchar)0x73, (VCF::uchar)0x73 );   // 0xFF737373   //  115;115;115
+    initColorNameMapItem( "gray46"                  , (VCF::uchar)0x75, (VCF::uchar)0x75, (VCF::uchar)0x75 );   // 0xFF757575   //  117;117;117
+    initColorNameMapItem( "gray47"                  , (VCF::uchar)0x78, (VCF::uchar)0x78, (VCF::uchar)0x78 );   // 0xFF787878   //  120;120;120
+    initColorNameMapItem( "gray48"                  , (VCF::uchar)0x7A, (VCF::uchar)0x7A, (VCF::uchar)0x7A );   // 0xFF7A7A7A   //  122;122;122
+    initColorNameMapItem( "gray49"                  , (VCF::uchar)0x7D, (VCF::uchar)0x7D, (VCF::uchar)0x7D );   // 0xFF7D7D7D   //  125;125;125
+    initColorNameMapItem( "gray50"                  , (VCF::uchar)0x7F, (VCF::uchar)0x7F, (VCF::uchar)0x7F );   // 0xFF7F7F7F   //  127;127;127
+    initColorNameMapItem( "gray51"                  , (VCF::uchar)0x82, (VCF::uchar)0x82, (VCF::uchar)0x82 );   // 0xFF828282   //  130;130;130
+    initColorNameMapItem( "gray52"                  , (VCF::uchar)0x85, (VCF::uchar)0x85, (VCF::uchar)0x85 );   // 0xFF858585   //  133;133;133
+    initColorNameMapItem( "gray53"                  , (VCF::uchar)0x87, (VCF::uchar)0x87, (VCF::uchar)0x87 );   // 0xFF878787   //  135;135;135
+    initColorNameMapItem( "gray54"                  , (VCF::uchar)0x8A, (VCF::uchar)0x8A, (VCF::uchar)0x8A );   // 0xFF8A8A8A   //  138;138;138
+    initColorNameMapItem( "gray55"                  , (VCF::uchar)0x8C, (VCF::uchar)0x8C, (VCF::uchar)0x8C );   // 0xFF8C8C8C   //  140;140;140
+    initColorNameMapItem( "gray56"                  , (VCF::uchar)0x8F, (VCF::uchar)0x8F, (VCF::uchar)0x8F );   // 0xFF8F8F8F   //  143;143;143
+    initColorNameMapItem( "gray57"                  , (VCF::uchar)0x91, (VCF::uchar)0x91, (VCF::uchar)0x91 );   // 0xFF919191   //  145;145;145
+    initColorNameMapItem( "gray58"                  , (VCF::uchar)0x94, (VCF::uchar)0x94, (VCF::uchar)0x94 );   // 0xFF949494   //  148;148;148
+    initColorNameMapItem( "gray59"                  , (VCF::uchar)0x96, (VCF::uchar)0x96, (VCF::uchar)0x96 );   // 0xFF969696   //  150;150;150
+    initColorNameMapItem( "gray60"                  , (VCF::uchar)0x99, (VCF::uchar)0x99, (VCF::uchar)0x99 );   // 0xFF999999   //  153;153;153
+    initColorNameMapItem( "gray61"                  , (VCF::uchar)0x9C, (VCF::uchar)0x9C, (VCF::uchar)0x9C );   // 0xFF9C9C9C   //  156;156;156
+    initColorNameMapItem( "gray62"                  , (VCF::uchar)0x9E, (VCF::uchar)0x9E, (VCF::uchar)0x9E );   // 0xFF9E9E9E   //  158;158;158
+    initColorNameMapItem( "gray63"                  , (VCF::uchar)0xA1, (VCF::uchar)0xA1, (VCF::uchar)0xA1 );   // 0xFFA1A1A1   //  161;161;161
+    initColorNameMapItem( "gray64"                  , (VCF::uchar)0xA3, (VCF::uchar)0xA3, (VCF::uchar)0xA3 );   // 0xFFA3A3A3   //  163;163;163
+    initColorNameMapItem( "gray65"                  , (VCF::uchar)0xA6, (VCF::uchar)0xA6, (VCF::uchar)0xA6 );   // 0xFFA6A6A6   //  166;166;166
+    initColorNameMapItem( "gray66"                  , (VCF::uchar)0xA8, (VCF::uchar)0xA8, (VCF::uchar)0xA8 );   // 0xFFA8A8A8   //  168;168;168
+    initColorNameMapItem( "gray67"                  , (VCF::uchar)0xAB, (VCF::uchar)0xAB, (VCF::uchar)0xAB );   // 0xFFABABAB   //  171;171;171
+    initColorNameMapItem( "gray68"                  , (VCF::uchar)0xAD, (VCF::uchar)0xAD, (VCF::uchar)0xAD );   // 0xFFADADAD   //  173;173;173
+    initColorNameMapItem( "gray69"                  , (VCF::uchar)0xB0, (VCF::uchar)0xB0, (VCF::uchar)0xB0 );   // 0xFFB0B0B0   //  176;176;176
+    initColorNameMapItem( "gray70"                  , (VCF::uchar)0xB3, (VCF::uchar)0xB3, (VCF::uchar)0xB3 );   // 0xFFB3B3B3   //  179;179;179
+    initColorNameMapItem( "gray71"                  , (VCF::uchar)0xB5, (VCF::uchar)0xB5, (VCF::uchar)0xB5 );   // 0xFFB5B5B5   //  181;181;181
+    initColorNameMapItem( "gray72"                  , (VCF::uchar)0xB8, (VCF::uchar)0xB8, (VCF::uchar)0xB8 );   // 0xFFB8B8B8   //  184;184;184
+    initColorNameMapItem( "gray73"                  , (VCF::uchar)0xBA, (VCF::uchar)0xBA, (VCF::uchar)0xBA );   // 0xFFBABABA   //  186;186;186
+    initColorNameMapItem( "gray74"                  , (VCF::uchar)0xBD, (VCF::uchar)0xBD, (VCF::uchar)0xBD );   // 0xFFBDBDBD   //  189;189;189
+    initColorNameMapItem( "gray75"                  , (VCF::uchar)0xBF, (VCF::uchar)0xBF, (VCF::uchar)0xBF );   // 0xFFBFBFBF   //  191;191;191
+    initColorNameMapItem( "gray76"                  , (VCF::uchar)0xC2, (VCF::uchar)0xC2, (VCF::uchar)0xC2 );   // 0xFFC2C2C2   //  194;194;194
+    initColorNameMapItem( "gray77"                  , (VCF::uchar)0xC4, (VCF::uchar)0xC4, (VCF::uchar)0xC4 );   // 0xFFC4C4C4   //  196;196;196
+    initColorNameMapItem( "gray78"                  , (VCF::uchar)0xC7, (VCF::uchar)0xC7, (VCF::uchar)0xC7 );   // 0xFFC7C7C7   //  199;199;199
+    initColorNameMapItem( "gray79"                  , (VCF::uchar)0xC9, (VCF::uchar)0xC9, (VCF::uchar)0xC9 );   // 0xFFC9C9C9   //  201;201;201
+    initColorNameMapItem( "gray80"                  , (VCF::uchar)0xCC, (VCF::uchar)0xCC, (VCF::uchar)0xCC );   // 0xFFCCCCCC   //  204;204;204
+    initColorNameMapItem( "gray81"                  , (VCF::uchar)0xCF, (VCF::uchar)0xCF, (VCF::uchar)0xCF );   // 0xFFCFCFCF   //  207;207;207
+    initColorNameMapItem( "gray82"                  , (VCF::uchar)0xD1, (VCF::uchar)0xD1, (VCF::uchar)0xD1 );   // 0xFFD1D1D1   //  209;209;209
+    initColorNameMapItem( "gray83"                  , (VCF::uchar)0xD4, (VCF::uchar)0xD4, (VCF::uchar)0xD4 );   // 0xFFD4D4D4   //  212;212;212
+    initColorNameMapItem( "gray84"                  , (VCF::uchar)0xD6, (VCF::uchar)0xD6, (VCF::uchar)0xD6 );   // 0xFFD6D6D6   //  214;214;214
+    initColorNameMapItem( "gray85"                  , (VCF::uchar)0xD9, (VCF::uchar)0xD9, (VCF::uchar)0xD9 );   // 0xFFD9D9D9   //  217;217;217
+    initColorNameMapItem( "gray86"                  , (VCF::uchar)0xDB, (VCF::uchar)0xDB, (VCF::uchar)0xDB );   // 0xFFDBDBDB   //  219;219;219
+    initColorNameMapItem( "gray87"                  , (VCF::uchar)0xDE, (VCF::uchar)0xDE, (VCF::uchar)0xDE );   // 0xFFDEDEDE   //  222;222;222
+    initColorNameMapItem( "gray88"                  , (VCF::uchar)0xE0, (VCF::uchar)0xE0, (VCF::uchar)0xE0 );   // 0xFFE0E0E0   //  224;224;224
+    initColorNameMapItem( "gray89"                  , (VCF::uchar)0xE3, (VCF::uchar)0xE3, (VCF::uchar)0xE3 );   // 0xFFE3E3E3   //  227;227;227
+    initColorNameMapItem( "gray90"                  , (VCF::uchar)0xE5, (VCF::uchar)0xE5, (VCF::uchar)0xE5 );   // 0xFFE5E5E5   //  229;229;229
+    initColorNameMapItem( "gray91"                  , (VCF::uchar)0xE8, (VCF::uchar)0xE8, (VCF::uchar)0xE8 );   // 0xFFE8E8E8   //  232;232;232
+    initColorNameMapItem( "gray92"                  , (VCF::uchar)0xEB, (VCF::uchar)0xEB, (VCF::uchar)0xEB );   // 0xFFEBEBEB   //  235;235;235
+    initColorNameMapItem( "gray93"                  , (VCF::uchar)0xED, (VCF::uchar)0xED, (VCF::uchar)0xED );   // 0xFFEDEDED   //  237;237;237
+    initColorNameMapItem( "gray94"                  , (VCF::uchar)0xF0, (VCF::uchar)0xF0, (VCF::uchar)0xF0 );   // 0xFFF0F0F0   //  240;240;240
+    initColorNameMapItem( "gray95"                  , (VCF::uchar)0xF2, (VCF::uchar)0xF2, (VCF::uchar)0xF2 );   // 0xFFF2F2F2   //  242;242;242
+    initColorNameMapItem( "gray96"                  , (VCF::uchar)0xF5, (VCF::uchar)0xF5, (VCF::uchar)0xF5 );   // 0xFFF5F5F5   //  245;245;245
+    initColorNameMapItem( "gray97"                  , (VCF::uchar)0xF7, (VCF::uchar)0xF7, (VCF::uchar)0xF7 );   // 0xFFF7F7F7   //  247;247;247
+    initColorNameMapItem( "gray98"                  , (VCF::uchar)0xFA, (VCF::uchar)0xFA, (VCF::uchar)0xFA );   // 0xFFFAFAFA   //  250;250;250
+    initColorNameMapItem( "gray99"                  , (VCF::uchar)0xFC, (VCF::uchar)0xFC, (VCF::uchar)0xFC );   // 0xFFFCFCFC   //  252;252;252
+    initColorNameMapItem( "gray100"                 , (VCF::uchar)0xFF, (VCF::uchar)0xFF, (VCF::uchar)0xFF );   // 0xFFFFFFFF   //  255;255;255
 
     //shades of blue
     //color name r/g/b hex bg/fg color sample
@@ -1280,7 +1234,7 @@ void GraphicsToolkit::initColorMap()
 
     //colorMap_[WHITE]                   =   new Color( 1.0f, 1.0f, 1.0f );
     //colorMap_[BLACK]                   =   new Color( 0.0f, 0.0f, 0.0f );
-    //colorMap_[GREY]                    =   new Color( 0.5f, 0.5f, 0.5f );
+    //colorMap_[GRAY]                    =   new Color( 0.5f, 0.5f, 0.5f );
     //colorMap_[YELLOW]                  =   new Color( 1.0f, 1.0f, 0.0f );
     //colorMap_[GREEN]                   =   new Color( 0.0f, 1.0f, 0.0f );
     //colorMap_[BLUE]                    =   new Color( 0.0f, 0.0f, 1.0f );
@@ -1289,24 +1243,49 @@ void GraphicsToolkit::initColorMap()
     //colorMap_[LT_BLUE]                 =   new Color( 0.0f, 1.0f, 1.0f );
 
 
-	String s;
+#endif	// VCF_LARGE_COLOR_LIST
+
+
+	String name;
 	for (int c = 0; c <= 255; c++) {
-		s = StringUtils::format("gray%d", c);
-		initColorNameMapItem( s, (VCF::uchar)c, (VCF::uchar)c, (VCF::uchar)c );	// 0xFFF0F8FF
+		name = StringUtils::format( Format("gray%d") % c);
+		initColorNameMapItem( name, (VCF::uchar)c, (VCF::uchar)c, (VCF::uchar)c );	// 0xFFF0F8FF
 	}
 
-#endif	// VCF_LARGE_COLOR_LIST
 
 }
 
 
-void GraphicsToolkit::initColorNameMapItem( const VCF::String& colorName, const unsigned char & r, const unsigned char & g, const unsigned char & b)
+void GraphicsToolkit::initColorNameMapItem( const VCF::String& colorName, const uint8& r, const uint8& g, const uint8& b)
 {
-	Color* color = new Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b );
+	MapStringColor::iterator found = colorMap_.find( colorName );
+	if ( found != colorMap_.end() ) {
+		// we update the color values associated to the color name 
+		// and prevent memory leak
+		Color* clr = found->second;
 
-	colorMap_[colorName] = color;
+		// what happens if we are using the color map inside a loop somewherelse ?
+		// May we get into an infinite loop ? I think no, if the loop is well written.
+		clr->setRGB8( r, g, b );
 
-	(*colorNameMap_)[*color] = colorName;
+		// we keep only one color for the same color name
+		MapStringColorName::iterator it = colorNameMap_->begin();
+		while ( it != colorNameMap_->end() ) {
+			String name = it->second;
+			if ( name == colorName ) {
+				colorNameMap_->erase( it );
+				(*colorNameMap_)[*clr] = colorName;
+				break;
+			}
+			++it;
+		}
+	}
+	else {
+		Color* color = new Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b );
+
+		colorMap_[colorName] = color;
+		(*colorNameMap_)[*color] = colorName;
+	}
 }
 
 void GraphicsToolkit::destroyColorMaps()
@@ -1356,8 +1335,32 @@ void GraphicsToolkit::destroySystemColorNameMap()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:05:59  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/02 03:04:25  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.7  2005/06/25 21:44:23  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.3.2.6  2005/06/11 00:50:50  marcelloptr
+*moved uint8/uint16 to VCF namespace
+*
+*Revision 1.3.2.5  2005/06/09 06:13:10  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.3.2.4  2005/04/26 03:02:01  ddiego
+*fixes 1176555Mem Leak bug
+*
+*Revision 1.3.2.3  2005/04/09 17:21:38  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.2  2005/03/15 01:51:53  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3.2.1  2004/12/19 04:05:03  ddiego
 *made modifications to methods that return a handle type. Introduced

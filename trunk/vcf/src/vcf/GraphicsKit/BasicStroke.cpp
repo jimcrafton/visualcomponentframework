@@ -10,6 +10,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/AggCommon.h"
 #include "thirdparty/common/agg/include/agg_scanline_p.h"
+#include "thirdparty/common/agg/include/agg_conv_dash.h"
 
 
 using namespace VCF;
@@ -20,7 +21,9 @@ BasicStroke::BasicStroke():
 	context_(NULL),
 	width_(0.0),
 	color_ (*Color::getColor( VCF::ColorNames::at( VCF::ColorNames::black ) )),
-	antiAlias_(true)
+	antiAlias_(true),
+	dashed_(false),
+	dashStart_(0.0)
 {
 
 }
@@ -197,14 +200,31 @@ void BasicStroke::render( Path * path )
 
 			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
 
-			
-			
-			agg::conv_stroke< agg::conv_transform< agg::conv_curve< agg::path_storage > > >  stroke(xfrmedPath);
+			if( dashed_ ) {
+				
+				agg::conv_dash< agg::conv_transform< agg::conv_curve< agg::path_storage > > > dash(xfrmedPath);
+				
+				for(unsigned int j=0; j<dashGapLen_.size(); ++j) {
+					dash.add_dash( dashGapLen_[j].first, dashGapLen_[j].second );
+				}
 
-			stroke.width( maxVal<>( 0.5, width_ ) );
+				dash.dash_start(dashStart_);				
+				
+				agg::conv_stroke< agg::conv_dash< agg::conv_transform< agg::conv_curve< agg::path_storage > > > >  stroke(dash);
+				
+				stroke.width( maxVal<>( 0.5, width_ ) );
+				
+				rasterizer.add_path( stroke );
+			}
+			else {
 
+				agg::conv_stroke< agg::conv_transform< agg::conv_curve< agg::path_storage > > >  stroke(xfrmedPath);
+				
+				stroke.width( maxVal<>( 0.5, width_ ) );
+				
+				rasterizer.add_path( stroke );
+			}			
 
-			rasterizer.add_path( stroke );
 
 			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
 
@@ -244,6 +264,12 @@ void BasicStroke::line( const double& x1, const double& y1,
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:05:56  ddiego
+*added missing gtk files
+*
+*Revision 1.3.2.1  2005/02/01 19:43:50  dougtinkham
+*added dash support for AGG rendering
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

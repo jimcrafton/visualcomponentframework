@@ -67,134 +67,134 @@ public:
 
 public:
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setContext( GraphicsContext* context );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual GraphicsContext* getContext();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual OSHandleID getContextID();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setContextID( OSHandleID handle );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	void init();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setOrigin( const double& x, const double& y );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual Point getOrigin();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual bool isAntiAliasingOn(){
 		return false;
 	}
-	
-	/**
-	* 
-	* 
-	*/
-	virtual void setAntiAliasingOn( bool antiAliasingOn ) {} //no-op for now
-	
 
 	/**
-	* 
-	* 
+	*
+	*
+	*/
+	virtual void setAntiAliasingOn( bool antiAliasingOn ) {} //no-op for now
+
+
+	/**
+	*
+	*
 	*/
 	virtual bool prepareForDrawing( long drawingOperation );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void finishedDrawing( long drawingOperation );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual bool isMemoryContext();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void copyContext( const Rect& sourceRect, const Rect& destRect,
 	                          ContextPeer* sourceContext );
 
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void textAt( const Rect& bounds, const String & text, const long& drawOptions=0 );
 
 	/**
-	* 
+	*
 	*/
 	virtual double getTextWidth( const String& text );
 
 	/**
-	* 
+	*
 	*/
 	virtual double getTextHeight( const String& text );
 
 
 	/**
-	* 
+	*
 	*/
 	virtual void lineTo( const double & x, const double & y );
 
 	/**
-	* 
+	*
 	*/
 	virtual void moveTo( const double & x, const double & y );
 
 	/**
-	* 
+	*
 	*/
 	virtual void rectangle( const double & x1, const double & y1, const double & x2, const double & y2 );
 
 	/**
-	* 
+	*
 	*/
 	virtual void roundRect( const double & x1, const double & y1, const double & x2, const double & y2,
 	                        const double & xc, const double & yc );
 
 
 	/**
-	* 
+	*
 	*/
 	virtual void ellipse( const double & x1, const double & y1, const double & x2, const double & y2 );
 
 	/**
-	* 
+	*
 	*/
 	virtual void arc( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
 	                  const double & y3, const double & x4, const double & y4 );
@@ -208,19 +208,19 @@ public:
 */
 
 	/**
-	* 
+	*
 	*/
 	virtual void polyline( const std::vector<Point>& pts );
 
 	/**
-	* 
+	*
 	*/
 	virtual void curve( const double & x1, const double & y1, const double & x2, const double & y2,
 	                    const double & x3, const double & y3, const double & x4, const double & y4 );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image );
 
@@ -228,8 +228,8 @@ public:
 	/* utility functions */
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	void copyToImage( Win32Image* image );
 
@@ -237,7 +237,7 @@ public:
 	* make sure we always have the HDC ( device context handle ) we need.
 	* Normally the paint function already receives the correct handle
 	* so this is a no-op (does nothing).
-	* In the case of a control we may need to get a different HDC, for example when 
+	* In the case of a control we may need to get a different HDC, for example when
 	* painting under a mouse move event or getting other informations depending
 	* on the device context.
 	* @see releaseHandle()
@@ -247,81 +247,86 @@ public:
 	/**
 	* Does the opposite operation of checkHandle(), i.e. restores
 	* the previous HDC if it has been changed by checkHandle().
-	* Normally the paint function already receives the correct handle 
+	* Normally the paint function already receives the correct handle
 	* in checkHandle() so this one too is a no-op.
 	* @see checkHandle()
 	*/
 	virtual void releaseHandle();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual bool isXORModeOn();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setXORModeOn( const bool& XORModeOn );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setTextAlignment( const bool& alignTobaseline );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual bool isTextAlignedToBaseline();
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setClippingPath( Path* clippingPath );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void setClippingRect( Rect* clipRect );
 
 
 	/**
-	* 
+	*
 	*/
 	virtual void drawThemeSelectionRect( Rect* rect, DrawUIState& state );
 
 	/**
-	* 
+	*
 	*/
 	virtual void drawThemeFocusRect( Rect* rect, DrawUIState& state );
 
 	/**
-	* 
+	*
 	*/
-	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state );
+	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
 
 	/**
-	* 
+	*
+	*/
+	virtual void drawThemeButtonFocusRect( Rect* rect );
+
+	/**
+	*
 	*/
 	virtual void drawThemeCheckboxRect( Rect* rect, ButtonState& state );
 
 	/**
-	* 
+	*
 	*/
 	virtual void drawThemeRadioButtonRect( Rect* rect, ButtonState& state );
 
 	/**
-	* 
+	*
 	*/
 	virtual void drawThemeComboboxRect( Rect* rect, ButtonState& state );
 
 	/**
-	* 
+	*
 	*/
 	virtual void drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state );
 
@@ -353,22 +358,22 @@ public:
 	* with the native windowing systems default look and feel
 	*/
 	virtual void drawThemeTickMarks( Rect* rect, SliderState& state );
-	
+
 	/**
 	* Draws a slider control, like that used for a slider control, that is compliant
 	* with the native windowing systems default look and feel
 	*/
 	virtual void drawThemeSlider( Rect* rect, SliderState& state );
-	
+
 	/**
 	* Draws a progress bar control, that is compliant
 	* with the native windowing systems default look and feel
 	*/
-	virtual void drawThemeProgress( Rect* rect, ProgressState& state );	
-	
+	virtual void drawThemeProgress( Rect* rect, ProgressState& state );
+
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void drawThemeImage( Rect* rect, Image* image, DrawUIState& state );
 
@@ -405,9 +410,11 @@ public:
 	*/
 	virtual void drawThemeMenuItem( Rect* rect, MenuState& state );
 
+	virtual void drawThemeMenuItemText( Rect* rect, MenuState& state );
+
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	virtual void drawThemeText( Rect* rect, TextState& state );
 
@@ -415,14 +422,14 @@ public:
 protected:
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	void prepareDCWithContextFont( HFONT& fontHandle );
 
 	/**
-	* 
-	* 
+	*
+	*
 	*/
 	HDC getDC();
 
@@ -450,7 +457,7 @@ private:
 	*          fully implemented.
 	*@return bool, false if themed drawing was not possible.
 	*/
-	bool drawThemeButtonRectDLL( Rect* rect, ButtonState& state );
+	bool drawThemeButtonRectDLL( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
 #endif
 
 protected:
@@ -485,8 +492,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:01  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/02 03:04:26  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2005/06/26 01:27:54  marcelloptr
+*added images to a PushButton
+*
+*Revision 1.3.2.2  2005/03/14 04:17:26  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
 *
 *Revision 1.3.2.1  2004/12/19 04:05:05  ddiego
 *made modifications to methods that return a handle type. Introduced

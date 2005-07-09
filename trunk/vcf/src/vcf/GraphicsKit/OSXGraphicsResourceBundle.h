@@ -8,6 +8,8 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+
+
 #include "vcf/FoundationKit/OSXResourceBundle.h"
 
 
@@ -27,7 +29,7 @@ public:
 
 	
 protected:
-	virtual CFBundleRef getBundle();
+	
 	
 };
 
@@ -39,8 +41,11 @@ protected:
 /**
 *CVS Log info
 *$Log$
-*Revision 1.1  2005/01/08 20:52:48  ddiego
-*fixed some glitches in osx impl.
+*Revision 1.2  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
+*Revision 1.1.2.2  2005/06/23 01:26:56  ddiego
+*build updates
 *
 */
 

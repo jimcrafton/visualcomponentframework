@@ -1,5 +1,12 @@
 //Win32PrintSession.cpp
 
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 #include <commdlg.h>
@@ -12,6 +19,11 @@ using namespace VCF;
 
 
 
+#if defined(VCF_CW) && defined(UNICODE)
+	static wchar_t szDefaultDocName[] = L"Untitled";
+#else
+	static char szDefaultDocName[] = "Untitled";
+#endif
 
 
 Win32PrintSession::Win32PrintSession():
@@ -79,10 +91,10 @@ void Win32PrintSession::setDefaultPageSettings()
 	}
 	
 
-	printInfo_.docInfo_.lpszDocName = "Untitled";
+	// [bugfix 1227570] do not assign this to a temporary
+	printInfo_.docInfo_.lpszDocName = szDefaultDocName;
 
 	printerDC_ = hDC;
-
 
 	::SetAbortProc( printerDC_, Win32PrintSession::AbortProc );
 
@@ -172,7 +184,11 @@ void Win32PrintSession::abort()
 
 PrintContext* Win32PrintSession::beginPrintingDocument()
 {
+#if defined(VCF_CW) && defined(UNICODE)
+	printInfo_.docInfo_.lpszDocName = title_.c_str();	
+#else
 	printInfo_.docInfo_.lpszDocName = title_.ansi_c_str();
+#endif
 	if ( !::StartDoc( printerDC_, &printInfo_.docInfo_ ) ) {
 		//throw exception???		
 		return NULL;
@@ -222,3 +238,20 @@ void Win32PrintSession::setPrintablePages( const std::vector<ulong32>& printable
 {
 	printInfo_.pages_ = printablePages;
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2005/07/09 23:06:02  ddiego
+*added missing gtk files
+*
+*Revision 1.2.2.5  2005/06/25 23:10:24  marcelloptr
+*[bugfix 1227570] Win32PrintSession::setDefaultPageSettings assigns a pointer to a temporary
+*
+*Revision 1.2.2.3  2005/04/29 15:03:40  marcelloptr
+*added cvs log section
+*
+*/
+
+

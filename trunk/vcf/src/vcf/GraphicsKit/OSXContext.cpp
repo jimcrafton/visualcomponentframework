@@ -432,7 +432,7 @@ VCF::Size OSXContext::getLayoutDimensions( const String& text )
 	ATSUTextLayout tmpTextLayout = NULL;
 	OSStatus err = ATSUCreateAndCopyTextLayout( textLayout_, &tmpTextLayout );
 	if ( err != noErr ) {
-		String msg = StringUtils::format( "ATSUCreateAndCopyTextLayout failed, err: %d, textLayout_: %p, tmpTextLayout: %p", err, textLayout_, tmpTextLayout );
+		String msg = StringUtils::format( Format("ATSUCreateAndCopyTextLayout failed, err: %d, textLayout_: %p, tmpTextLayout: %p") % err % textLayout_ % tmpTextLayout );
 		throw RuntimeException( MAKE_ERROR_MSG_2(msg) );
 	}	
 	
@@ -1328,7 +1328,7 @@ void OSXContext_drawThemeButtonText( const ::Rect * bounds, ThemeButtonKind kind
 }
 
 
-void OSXContext::drawThemeButtonRect( Rect* rect, ButtonState& state )
+void OSXContext::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect )
 {
 	Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
@@ -1369,6 +1369,11 @@ void OSXContext::drawThemeButtonRect( Rect* rect, ButtonState& state )
     DrawThemeButton( r, kThemePushButton, &btnInfo, NULL, NULL, btnDrawUPP, (UInt32)&state );
 	
 	DisposeThemeButtonDrawUPP(btnDrawUPP);
+}
+
+void OSXContext::drawThemeButtonFocusRect( Rect* rect )
+{
+
 }
 
 void OSXContext::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
@@ -1965,7 +1970,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 			err = SetThemeBackground( state.isActive() ? kThemeBrushButtonFaceActive : kThemeBrushButtonFaceInactive,
 									32, TRUE );
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( "SetThemeBackground() failed, err: %d\n", err );
+				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			EraseRect( r );
 		}
@@ -2076,7 +2081,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 			err = SetThemeBackground( state.isHighlighted() ? kThemeBrushMenuBackgroundSelected : kThemeBrushMenuBackground,
 									32, TRUE );
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( "SetThemeBackground() failed, err: %d\n", err );
+				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
 			EraseRect( r );
@@ -2098,7 +2103,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 									32, TRUE );
 									
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( "SetThemeBackground() failed, err: %d\n", err );
+				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
 			EraseRect( r );
@@ -2189,6 +2194,11 @@ void OSXContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 	
 }
 
+void OSXContext::drawThemeMenuItemText( Rect* rect, MenuState& state )
+{
+
+}
+
 void OSXContext::drawThemeText( Rect* rect, TextState& state )
 {
 	Rect tmp = *rect;
@@ -2271,8 +2281,23 @@ void OSXContext::drawThemeText( Rect* rect, TextState& state )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:06:00  ddiego
+*added missing gtk files
+*
 *Revision 1.4  2005/01/08 20:52:47  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.3  2005/06/28 04:09:05  ddiego
+*adjusted for marcellos change.
+*
+*Revision 1.3.2.2  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:54  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3  2004/12/01 04:31:43  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
