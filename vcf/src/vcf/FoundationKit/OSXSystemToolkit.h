@@ -22,8 +22,12 @@ public:
 
 		virtual ProcessIORedirectionPeer* internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process );
 
-		virtual ThreadPeer* internal_createThreadPeer( Thread* thread );
+		virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
 
+		virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+
+		virtual ThreadManagerPeer* internal_createThreadManagerPeer();
+	
 		virtual SystemPeer* internal_createSystemPeer();
 
 		virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount, long maxCount );
@@ -53,6 +57,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

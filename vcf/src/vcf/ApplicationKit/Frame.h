@@ -23,12 +23,52 @@ namespace VCF{
 
 #define FRAME_CLASSID			"ED88C0A2-26AB-11d4-B539-00C04F0196DA"
 
+
+/**
+These are enumerations for the possible frame styles
+that can be set on Frame instance.
+*/
 enum FrameStyleType {
+	/**
+	The default style, this uses the default frame border
+	and is resizeable. The exact "look" of this is dependant
+	on the platforms windowing system. In Win32 this
+	is a window that has a full size caption bar, with
+	title, and frame edge borders that can be sized.
+	*/
 	fstSizeable = 0,
+
+	/**
+	This is a sizeable frame with no border, but can still be resized.
+	Again, the exact "look" is depedant on the platforms windowing system.
+	*/
 	fstNoBorder,
+
+	/**
+	This makes the frame fixed, like a dialog. The frame will not be allowed 
+	to be resized. While the look is windowing system dependant, on Win32 this 
+	would look like a normal dialog, with the border edges on the frame.
+	*/
 	fstFixed,
+
+	/**
+	This makes the frame have no border, and disallows resizing.
+	*/
 	fstNoBorderFixed,
+
+	/**
+	This marks the frame so that is has a toolbar border and caption area
+	and is resizeable.
+	Again, the precise "look" is windowing system dependant, but for 
+	Win32 this would create a window that looks like a toolbar, it would
+	have the smaller caption bar and smaller border edges.
+	*/
 	fstToolbarBorder,
+
+	/**
+	This creates a look much like fstToolbarBorder, but the frame is not
+	resizeable.
+	*/
 	fstToolbarBorderFixed
 };
 
@@ -175,7 +215,10 @@ public:
 	virtual void setFrameTopmost( const bool& isTopmost );
 
 	/**
-	returns the current frame style.
+	returns the current frame style. This determines whether the frame is allowed to
+	be resizeable through user interaction, or wether it's got a fixed size. This can 
+	also determine the border style of the frame.
+	@see FrameStyleType
 	*/
 	virtual FrameStyleType getFrameStyle(){
 		return 	frameStyle_;
@@ -183,6 +226,7 @@ public:
 
 	/**
 	Sets the frame style
+	@ see FrameStyleType
 	*/
 	virtual void setFrameStyle( const FrameStyleType& frameStyle ) = 0;
 
@@ -300,6 +344,13 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

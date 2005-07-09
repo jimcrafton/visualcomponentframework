@@ -61,6 +61,7 @@ OBJFILES=agg_arc.obj  \
 	agg_rasterizer_scanline_aa.obj  \
 	agg_trans_affine.obj  \
 	agg_vcgen_bspline.obj  \
+	agg_vcgen_dash.obj  \
 	agg_vcgen_stroke.obj
          
 LIBFILES=ODBC32.LIB UUID.LIB

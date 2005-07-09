@@ -27,6 +27,7 @@ class GraphicsContext;
 #define ITEM_EVENT_ADDED				CUSTOM_EVENT_TYPES + ITEM_CONST + 4
 #define ITEM_EVENT_DELETED				CUSTOM_EVENT_TYPES + ITEM_CONST + 5
 #define ITEM_EVENT_TEXT_CHANGED			CUSTOM_EVENT_TYPES + ITEM_CONST + 6
+#define ITEM_EVENT_UNSELECTED			CUSTOM_EVENT_TYPES + ITEM_CONST + 7
 
 
 class APPLICATIONKIT_API ItemEvent : public Event
@@ -91,6 +92,16 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/01/17 22:44:50  augusto_roman
+*ErrorStrings - Fixed VCF namespace in VCF_ASSERT
+*ItemEvent - Added item unselected event
+*TreeListControl:
+*- Added handling for sending unselected event
+*- Added correct state drawing for checked/unchecked items
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

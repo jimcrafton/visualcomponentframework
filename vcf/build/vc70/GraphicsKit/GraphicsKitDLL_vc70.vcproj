@@ -239,15 +239,6 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\FontPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Glyph.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GlyphCollection.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GlyphCollection.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp">
 			</File>
 			<File
@@ -349,6 +340,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.cpp">

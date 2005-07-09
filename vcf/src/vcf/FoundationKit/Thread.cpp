@@ -8,7 +8,13 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/RunLoop.h"
+#include "vcf/FoundationKit/ThreadManager.h"
+
 using namespace VCF;
+
+Thread* Thread::mainThread = NULL;
+
 
 Thread::Thread():
 	canContinue_(true),
@@ -16,9 +22,10 @@ Thread::Thread():
 	peer_(NULL),
 	autoDelete_(true),
 	autoDeleteRunnable_(false),
-	stopped_(false)
+	stopped_(false),
+	runLoop_(NULL)
 {
-	peer_ = SystemToolkit::createThreadPeer( this );
+	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
 		throw NoPeerFoundException();
 	}
@@ -30,9 +37,10 @@ Thread::Thread( Runnable* runnableObject ):
 	peer_(NULL),
 	autoDelete_(true),
 	autoDeleteRunnable_(true),
-	stopped_(false)
+	stopped_(false),
+	runLoop_(NULL)
 {
-	peer_ = SystemToolkit::createThreadPeer( this );
+	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
 		throw NoPeerFoundException();
 	}
@@ -44,9 +52,10 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDelete ):
 	peer_(NULL),
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
-	stopped_(false)
+	stopped_(false),
+	runLoop_(NULL)
 {
-	peer_ = SystemToolkit::createThreadPeer( this );
+	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
 		throw NoPeerFoundException();
 	}
@@ -58,9 +67,10 @@ Thread::Thread( const bool& autoDelete ):
 	peer_(NULL),
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
-	stopped_(false)
+	stopped_(false),
+	runLoop_(NULL)
 {
-	peer_ = SystemToolkit::createThreadPeer( this );
+	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
 		throw NoPeerFoundException();
 	}
@@ -73,9 +83,26 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDeleteRunnable,
 	peer_(NULL),
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(autoDeleteRunnable),
-	stopped_(false)
+	stopped_(false),
+	runLoop_(NULL)
 {
-	peer_ = SystemToolkit::createThreadPeer( this );
+	peer_ = SystemToolkit::createThreadPeer( this, false );
+	if ( NULL == peer_ ) {
+		throw NoPeerFoundException();
+	}
+}
+
+Thread::Thread( bool mainThread, Runnable* runnableObject, const bool& autoDeleteRunnable,
+		const bool& autoDelete ):
+	canContinue_(true),
+	runnableObject_(runnableObject),
+	peer_(NULL),
+	autoDelete_(autoDelete),
+	autoDeleteRunnable_(autoDeleteRunnable),
+	stopped_(false),
+	runLoop_(NULL)
+{
+	peer_ = SystemToolkit::createThreadPeer( this, mainThread );
 	if ( NULL == peer_ ) {
 		throw NoPeerFoundException();
 	}
@@ -83,6 +110,9 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDeleteRunnable,
 
 Thread::~Thread()
 {
+
+	ThreadManager::removeThread( this );
+
 	canContinue_ = false;
 	autoDelete_ = false;
 
@@ -97,6 +127,8 @@ Thread::~Thread()
 	if ( autoDeleteRunnable_ ) {
 		delete runnableObject_;
 	}
+
+	delete runLoop_;
 }
 
 bool Thread::run()
@@ -114,6 +146,10 @@ bool Thread::run()
 
 void Thread::stop()
 {
+	if ( Thread::getMainThread() == this ) {
+		return;
+	}
+
 	//set this to true immediately
 	stopped_ = true;
 	/**
@@ -144,6 +180,10 @@ void Thread::stop()
 
 bool Thread::start()
 {
+	if ( Thread::getMainThread() == this ) {
+		return true;
+	}
+
 	return peer_->start();
 }
 
@@ -178,10 +218,49 @@ Waitable::WaitResult Thread::wait( uint32 milliseconds )
 	return (Waitable::WaitResult) peer_->wait(milliseconds);
 }
 
+OSHandleID Thread::getPeerHandleID()
+{
+	return peer_->getHandleID();
+}
+
+
+RunLoop* Thread::getRunLoop()
+{
+	if ( NULL == runLoop_ ) {
+		runLoop_ = new RunLoop( this );
+	}
+
+	return runLoop_;
+}
+
+void Thread::internal_initBeforeRun()
+{
+	ThreadManager::addThread( this );
+}
+
+
+Thread* Thread::getMainThread()
+{
+	if ( NULL == Thread::mainThread ) {
+		Thread::mainThread = new Thread( true, NULL, false, false );
+	}
+
+	return Thread::mainThread;
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

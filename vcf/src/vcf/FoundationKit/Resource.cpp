@@ -14,11 +14,11 @@ using namespace VCF;
 
 Resource::Resource( void* data, const uint32& size, const String& name )
 {
-	this->data_ = new char[size];
-	memset( data_, 0, size );
-	memcpy( data_, data, size );
-	this->size_ = size;
-	this->name_ = name;
+	data_ = new char[size];
+	memset( data_, 0, size*sizeof(char) );
+	memcpy( data_, data, size*sizeof(char) );
+	size_ = size;
+	name_ = name;
 }
 
 Resource::~Resource()
@@ -50,6 +50,12 @@ uint32 Resource::getDataSize()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.1  2005/04/09 17:21:32  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

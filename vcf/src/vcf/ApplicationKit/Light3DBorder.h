@@ -28,6 +28,8 @@ public:
 	Light3DBorder();
 
 	Light3DBorder( bool inverted );
+
+	Light3DBorder( Component* owner );
  
 	virtual ~Light3DBorder();
 
@@ -40,9 +42,11 @@ public:
 	void setInverted( const bool& inverted ) {
 		inverted_ = inverted;
 	}
-protected:
 
-private:
+	bool isInverted() {
+		return inverted_;
+	}
+protected:
 	bool inverted_;
 };
 
@@ -53,6 +57,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

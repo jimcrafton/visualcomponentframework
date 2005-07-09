@@ -39,8 +39,20 @@ public:
 	DefaultTableModel();
 
 	virtual ~DefaultTableModel();
-
 	
+   /* These functions override those in VCF::TableModel.  This is done
+	* due to a complicated multiple inheritance rule that only the
+	* pedantic CodeWarrior enforces. ACH 
+	* The same thing happens with Borland compiler.
+	*/
+#if defined(VCF_CW) || defined(VCF_BCC)
+	VCF::Delegate& getTableCellAdded(){ return TableCellAdded; } 
+	VCF::Delegate& getTableCellDeleted(){ return TableCellDeleted; } 
+	VCF::Delegate& getTableRowsAdded(){ return TableRowsAdded; } 
+	VCF::Delegate& getTableRowsDeleted(){ return TableRowsDeleted; } 
+	VCF::Delegate& getTableColumnsAdded(){ return TableColumnsAdded; } 
+	VCF::Delegate& getTableColumnsDeleted(){ return TableColumnsDeleted; }
+#endif	
     /**
      * validate the model.
      * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
@@ -141,6 +153,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/05/29 13:04:07  kiklop74
+*Fixed problem with compiling on borland free compiler
+*
+*Revision 1.3.2.1  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

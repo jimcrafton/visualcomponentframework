@@ -13,7 +13,7 @@ template <typename DataType, typename ControlType>
 class DataExchangeImpl : public VCF::ObjectWithEvents/*, public DataExchange*/ {
 public:
 	typedef ControlType Control;
-	typedef ControlType::BaseType ControlBase;
+	typedef typename ControlType::BaseType ControlBase;
 
 	typedef DataExchangeImpl<DataType,ControlType> DataExchangeType;
 

@@ -494,6 +494,7 @@ int main( int argc, char** argv ){
 	//add 2 elements to the dictionary.
 
 	dict.insert( "size", 200 );
+
 	dict["width"] = 150;
 
 	dict["Name"] = "Bob";
@@ -503,7 +504,7 @@ int main( int argc, char** argv ){
 	while ( items->hasMoreElements() ) {
 		Dictionary::pair item = items->nextElement();
 
-		System::println( "dict[\"%ls\"] = %ls", item.first.c_str(), item.second.toString().c_str() );
+		System::println( Format("dict[\"%s\"] = %s") % item.first % item.second.toString() );
 	}
 
 
@@ -547,7 +548,7 @@ int main( int argc, char** argv ){
 	while ( items->hasMoreElements() ) {
 		Dictionary::pair item = items->nextElement();
 
-		System::println( "dict[\"%ls\"] = %ls", item.first.c_str(), item.second.toString().c_str() );
+		System::println( Format("dict[\"%s\"] = %s") % item.first % item.second.toString() );
 	}
 
 
@@ -560,8 +561,28 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.9  2005/07/09 23:14:35  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.8  2005/01/02 03:04:18  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.7.2.1  2004/12/19 04:04:57  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.7.2.5  2005/06/25 19:53:32  marcelloptr
+*forgotten MP mark
+*
+*Revision 1.7.2.4  2005/06/07 15:50:39  marcelloptr
+*project change on use of Format
+*
+*Revision 1.7.2.3  2005/04/25 00:11:55  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.7.2.2  2005/04/17 15:11:43  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
 *
 *Revision 1.7.2.1  2004/12/19 04:04:57  ddiego
 *made modifications to methods that return a handle type. Introduced

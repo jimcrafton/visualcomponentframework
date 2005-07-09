@@ -14,7 +14,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32Clipboard.h"
 #include <shellapi.h>
 
-#ifndef __GNUWIN32__
+#if !defined(__GNUWIN32__) && !defined(VCF_CW_W32)
 #include <comdef.h>
 #endif
 
@@ -32,19 +32,20 @@ HRESULT COMUtils::createCOMObject( const String& progID, IID interfaceID,
 
 	CLSID clsid;
 
-#ifdef __GNUWIN32__
-    wchar_t* tmp = new wchar_t[progID.size()+1];
-	memset( tmp, 0 , progID.size()+1 );
-	if ( 0 == MultiByteToWideChar( CP_ACP, 0, progID.c_str(), progID.size(), tmp, progID.size() ) ) {
-	    return comResult;
+#if defined(__GNUWIN32__) || defined(VCF_CW_W32)
+	wchar_t* tmp = new wchar_t[progID.size()+1];
+	memset( tmp, 0 , (progID.size()+1)*sizeof(wchar_t) );
+	AnsiString id = progID;
+	if ( 0 == MultiByteToWideChar( CP_ACP, 0, id.c_str(), id.size(), tmp, progID.size() ) ) {
+		return comResult;
 	}
 
 
  	BSTR tmpProgID = SysAllocString( tmp );
-    if ( NULL == tmpProgID ) {
-        delete [] tmp;
-        return comResult;
-    }
+	if ( NULL == tmpProgID ) {
+		delete [] tmp;
+		return comResult;
+	}
 
 	comResult = CLSIDFromProgID( tmpProgID, &clsid );
 
@@ -55,10 +56,10 @@ HRESULT COMUtils::createCOMObject( const String& progID, IID interfaceID,
 	SysFreeString( tmpProgID );
 	delete [] tmp;
 #else
-    _bstr_t tmpProgID;
-    tmpProgID = progID.c_str();
+	_bstr_t tmpProgID;
+	tmpProgID = progID.c_str();
 
-    comResult = CLSIDFromProgID( tmpProgID, &clsid );
+	comResult = CLSIDFromProgID( tmpProgID, &clsid );
 
 	if ( SUCCEEDED(comResult) ){
 		comResult = createCOMObject( clsid, interfaceID, object );
@@ -95,24 +96,24 @@ HRESULT COMUtils::createCOMObject( CLSID clsid, IID interfaceID,
 HRESULT COMUtils::BSTRtoString( const BSTR src, String& dest )
 {
 	HRESULT result = E_FAIL;
-#ifdef __GNUWIN32__
-    String tmpString;
+#if defined(__GNUWIN32__) || defined(VCF_CW_W32)
+	String tmpString;
 	SAFEARRAY* safeArray = NULL;
 	result = VectorFromBstr(src, &safeArray );
 	if ( SUCCEEDED(result) ){
-        wchar_t *buf = NULL;
-        ulong32 bstrSize = SysStringLen( src );
-        result = SafeArrayAccessData(safeArray, (void**)&buf );
-        if ( SUCCEEDED(result) ) {
+		wchar_t *buf = NULL;
+		ulong32 bstrSize = SysStringLen( src );
+		result = SafeArrayAccessData(safeArray, (void**)&buf );
+		if ( SUCCEEDED(result) ) {
 			char* tmp = new char[bstrSize+1];
-			memset( tmp, 0, bstrSize+1 );
+			memset( tmp, 0, (bstrSize+1)*sizeof(char) );
 			WideCharToMultiByte( CP_ACP, 0, buf, bstrSize, tmp, bstrSize, NULL, NULL );
 			tmpString = tmp;
 			delete [] tmp;
 			result = S_OK;
-        }
-        SafeArrayUnaccessData( safeArray );
-        SafeArrayDestroy( safeArray );
+		}
+		SafeArrayUnaccessData( safeArray );
+		SafeArrayDestroy( safeArray );
 	}
 #else
 	_bstr_t tmp( src );
@@ -126,9 +127,11 @@ HRESULT COMUtils::BSTRtoString( const BSTR src, String& dest )
 HRESULT COMUtils::UUIDtoString( const UUID id, String& dest )
 {
 	HRESULT result = E_FAIL;
-
+#if defined(VCF_CW) && defined(UNICODE)
+	unsigned short *tmpid = NULL;
+#else
 	unsigned char *tmpid = NULL;
-
+#endif
 	RPC_STATUS rpcresult = UuidToString( const_cast<UUID*>( &id ), &tmpid );
 
 	if ( RPC_S_OUT_OF_MEMORY == rpcresult ) {
@@ -149,8 +152,13 @@ HRESULT COMUtils::UUIDtoString( const UUID id, String& dest )
 HRESULT COMUtils::StringtoUUID( const String& src, UUID& destID )
 {
 	HRESULT result = E_FAIL;
+#if defined(VCF_CW) && defined(UNICODE)
+	//this is derived from the #else statement so if that's a bad idea, so is this! - ACH
+	unsigned short *tmpid = (unsigned short*) ( src.c_str() );
+#else
 	//the (unsigned char*) cast below might be a bad idea ????
 	unsigned char *tmpid = (unsigned char*) const_cast<char*>( src.ansi_c_str() );
+#endif
 	UUID tmpUUID;
 
 	RPC_STATUS rpcresult = UuidFromString ( tmpid, &tmpUUID );
@@ -200,7 +208,11 @@ HRESULT COMUtils::getPidlsFromHGlobal(const HGLOBAL HGlob, std::vector<String>& 
 		LPCITEMIDLIST pidlf = NULL;
 		pidlf = (LPCITEMIDLIST)( ((UINT)pCIDA) + pCIDA->aoffset[0]);
 
+#if defined(VCF_CW) && defined(UNICODE)
+		wchar_t pathf[MAX_PATH] = L"";
+#else
 		char pathf[MAX_PATH] = "";
+#endif
 		SHGetPathFromIDList(pidlf, pathf);
 
 		String fixedPath( pathf );
@@ -208,7 +220,11 @@ HRESULT COMUtils::getPidlsFromHGlobal(const HGLOBAL HGlob, std::vector<String>& 
 		LPCITEMIDLIST pidl = NULL;
 		pidl = (LPCITEMIDLIST)( ((UINT)pCIDA) + pCIDA->aoffset[i+1]);
 
+#if defined(VCF_CW) && defined(UNICODE)
+		wchar_t path[MAX_PATH] = L"";
+#else
 		char path[MAX_PATH] = "";
+#endif
 		SHGetPathFromIDList(pidl, path);
 		String pidlPath( path );
 		int pos = pidlPath.find_last_of( "\\");
@@ -232,11 +248,18 @@ HRESULT COMUtils::StringtoBSTR( const String& src, BSTR& dest )
 {
 	HRESULT result = E_FAIL;
 
-#ifdef __GNUWIN32__
+/*#if defined(__GNUWIN32__) || defined(VCF_CW_W32)
     wchar_t* tmp = new wchar_t[src.size()+1];
 	memset( tmp, 0 , src.size()+1 );
-	if ( 0 == MultiByteToWideChar( CP_ACP, 0, src.c_str(), src.size(), tmp, src.size() ) ) {
-	    return result;
+	AnsiString asrc = src;
+	if ( 0 == MultiByteToWideChar( CP_ACP, 0, asrc.c_str(), asrc.size(), tmp, src.size() ) ) {
+	    return result;*/
+#if defined(__GNUWIN32__) || defined(VCF_CW_W32)
+	wchar_t* tmp = new wchar_t[src.size()+1];
+	memset( tmp, 0 , (src.size()+1)*sizeof(wchar_t) );
+	AnsiString asrc = src;
+	if ( 0 == MultiByteToWideChar( CP_ACP, 0, asrc.c_str(), asrc.size(), tmp, src.size() ) ) {
+		return result;
 	}
 
 	result = SysReAllocString( &dest, tmp );
@@ -576,7 +599,6 @@ VCF::Persistable* COMUtils_createPersistableFromHGlobal( STGMEDIUM& stg, const V
 					fp = String(tmp);
 				}
 
-
 				if ( i > 0 ) {
 					data += "\n";
 				}
@@ -584,7 +606,7 @@ VCF::Persistable* COMUtils_createPersistableFromHGlobal( STGMEDIUM& stg, const V
 				data += fp;
 			}
 
-			result = new BinaryPersistable( (const unsigned char*)data.c_str(), data.size() );
+			result = new BinaryPersistable( (const unsigned char*)data.c_str(), data.size_in_bytes() );
 		}
 	}
 	else {
@@ -895,6 +917,18 @@ VCF::DataObject* COMUtils::getDataObjectFromOLEDataObject( const VCF::String dat
 
 void COMUtils::registerDataTypes()
 {
+#if defined(VCF_CW) && defined(UNICODE)
+	VCFCOM::COMUtils::standardWin32DataTypes[STRING_DATA_TYPE] = CF_TEXT;
+	VCFCOM::COMUtils::standardWin32DataTypes[INTEGER_DATA_TYPE] = ::RegisterClipboardFormat( L"text/x-vcf-integer" );
+	VCFCOM::COMUtils::standardWin32DataTypes[OBJECT_DATA_TYPE] = ::RegisterClipboardFormat( L"application/x-vcf-object" );
+	VCFCOM::COMUtils::standardWin32DataTypes[FILE_DATA_TYPE] = CF_HDROP;
+	VCFCOM::COMUtils::standardWin32DataTypes[BYTE_STREAM_DATA_TYPE] = ::RegisterClipboardFormat( L"application/octet-stream" );
+	VCFCOM::COMUtils::standardWin32DataTypes[IMAGE_DATA_TYPE] = ::RegisterClipboardFormat( L"image/x-vcf-image" );
+	VCFCOM::COMUtils::standardWin32DataTypes["image/application-x-wmf"] = CF_METAFILEPICT;
+	VCFCOM::COMUtils::standardWin32DataTypes["image/application-x-emf"] = CF_ENHMETAFILE;
+	VCFCOM::COMUtils::standardWin32DataTypes["image/bmp"] = CF_BITMAP;
+	VCFCOM::COMUtils::standardWin32DataTypes[COMPONENT_DATA_TYPE] = ::RegisterClipboardFormat( L"text/x-vcf-vff" );
+#else
 	VCFCOM::COMUtils::standardWin32DataTypes[STRING_DATA_TYPE] = CF_TEXT;
 	VCFCOM::COMUtils::standardWin32DataTypes[INTEGER_DATA_TYPE] = ::RegisterClipboardFormat( "text/x-vcf-integer" );
 	VCFCOM::COMUtils::standardWin32DataTypes[OBJECT_DATA_TYPE] = ::RegisterClipboardFormat( "application/x-vcf-object" );
@@ -905,12 +939,28 @@ void COMUtils::registerDataTypes()
 	VCFCOM::COMUtils::standardWin32DataTypes["image/application-x-emf"] = CF_ENHMETAFILE;
 	VCFCOM::COMUtils::standardWin32DataTypes["image/bmp"] = CF_BITMAP;
 	VCFCOM::COMUtils::standardWin32DataTypes[COMPONENT_DATA_TYPE] = ::RegisterClipboardFormat( "text/x-vcf-vff" );
+#endif
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.4  2005/04/13 00:57:01  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.2.4.3  2005/04/11 17:04:50  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.2.4.2  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.2.4.1  2005/02/23 03:53:31  ddiego
+*fixed a bug in the com translation of file names.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

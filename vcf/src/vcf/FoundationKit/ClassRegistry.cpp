@@ -522,6 +522,10 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 			}
 			tmp = superClass;
 			superClass = tmp->getSuperClass();
+
+			if ( superClass == tmp ) {
+				throw BasicException( MAKE_ERROR_MSG_2( "Error: the class '" + className + "' has been registered with a superclass name that is the same of its own class name." ) );
+			}
 		}
 	}
 }
@@ -788,6 +792,12 @@ void ClassRegistry::removeInterface( InterfaceClass* interfaceClass )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/03/14 19:07:28  marcelloptr
+*comments and added an error message to avoid an infinite loop
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

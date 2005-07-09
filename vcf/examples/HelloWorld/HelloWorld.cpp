@@ -25,7 +25,6 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "vcf/ApplicationKit/ControlsKit.h"
 
 
 /**
@@ -120,6 +119,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:38  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.4.1  2005/03/06 22:50:53  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.4  2004/08/07 02:47:04  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

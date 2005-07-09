@@ -27,8 +27,8 @@ where you installed the VCF.
 namespace VCF {
 
 
-class TextPeer;
-
+class TextEditPeer;
+class Dictionary;
 
 
 #define TEXTCONTROL_CLASSID			"ED88C09E-26AB-11d4-B539-00C04F0196DA"
@@ -45,11 +45,11 @@ public:
 
 	virtual void paint( GraphicsContext * context );
 
-    void setTextModel( TextModel * model );
+	void setTextModel( TextModel * model );
 
-    TextModel* getTextModel();
+	TextModel* getTextModel();
 
-	unsigned long getCaretPosition() ; /**throw (InvalidPeer);JEC FIXME*/
+	unsigned long getCaretPosition() ;
 
 	void setCaretPosition( const unsigned long& caretPos );
 
@@ -69,19 +69,32 @@ public:
 
 	unsigned long getCharIndexFromPosition( Point* point );
 
+	/**
+	*returns the zero based index that indicates where the current selection begins.
+	*It may be the same index that getCaretPosition() returns
+	*/
 	unsigned long getSelectionStart();
 
+	/**
+	gives the number of characters selected.
+	@return unsigned long, the number of characters selected, a return value
+	of 0 indicates that no characters are currently selected.
+	*/
 	unsigned long getSelectionCount();
 
 	void setSelectionMark( const unsigned long& start, const unsigned long& count );
 
-	void setSelectionFont( Font* font );
+	void selectAll();
 
-	void setParagraphAlignment( const TextAlignmentType& alignment );
+	void getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color );
+
+	void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
+
+	void setDefaultStyle( Dictionary& styles );
 
 	String getSelectedText();
 
-	void replaceText( const String& text );
+	void replaceSelectedText( const String& text );
 
 	virtual bool keepsTabbingCharacters() {
 		return keepTabbingCharacters_;
@@ -112,23 +125,149 @@ public:
 	virtual bool supportsMultiLinedText() {
 		return false;
 	}
+
+	/**
+	Call this function to disable the standard, built-in,
+	accelerator's that make sure the platforms standard 
+	shortcut's for cut, copy, paste, undo, and redo get
+	handled by the underlying platform. You may choose
+	to turn these off if your use of a text control
+	provides more advanced cut/copy/paste/undo/redo support.
+	If you're using the DocView arcichtecture you'll
+	almost certainly want to turn them off.
+	*/
+	void disableStandardAccelerators();
+
+	/**
+	Call this function to enable the standard, built-in,
+	accelerator's that make sure the platforms standard 
+	shortcut's for cut, copy, paste, undo, and redo get
+	handled by the underlying platform.
+	By default these are enabled for every text control.
+	*/
+	void enableStandardAccelerators();
+
+	/**
+	Cuts the selection and places it in the clipboard.
+	This uses the standard cut implementation provided by the
+	underlying windowing platform. 
+	*/
+	void cut();
+
+	/**
+	Copies the selection and places it in the clipboard.
+	This uses the standard copy implementation provided by the
+	underlying windowing platform. 
+	*/
+	void copy();
+
+	/**
+	Pastes the contents of the clipboard into the text control.
+	This uses the standard paste implementation provided by the
+	underlying windowing platform. 
+	*/
+	void paste();
+
+	/**
+	Returns a bool to indicate whether or not an undo operation can be
+	performed. 
+	@return bool true if an an undo operation can be performed. This 
+	indicates that a call to undo() will succeed. Returns false to 
+	indicate no undo is possible and any calls to undo() will
+	be no-ops.
+	*/
+	bool canUndo();
+
+	/**
+	Returns a bool to indicate whether or not a redo operation can be
+	performed. 
+	@return bool true if an a redo operation can be performed. This 
+	indicates that a call to redo() will succeed. Returns false to 
+	indicate no redo is possible and any calls to redo() will
+	be no-ops.
+	*/
+	bool canRedo();
+
+	/**
+	Undoes the last operation.
+	This uses the standard undo implementation provided by the
+	underlying windowing platform. 
+	*/
+	void undo();
+
+	/**
+	Redoes the last operation.
+	This uses the standard redo implementation provided by the
+	underlying windowing platform. 
+	*/
+	void redo();
+
 protected:
-	TextPeer * textPeer_;
+	/**
+	handlers of some standard accelerator events.
+	*/
+	void undoAccelerator( Event* e );
+	void redoAccelerator( Event* e );
+	void cutAccelerator( Event* e );
+	void copyAccelerator( Event* e );
+	void pasteAccelerator( Event* e );
+	void selectAllAccelerator( Event* e );
+
+	/**
+	handler called when the control is getting the focus.
+	By default it is added only to a single line control,
+	so we can select all the text whenever we get the focus.
+	*/
+	virtual void onFocusGained( FocusEvent* event );
+
+protected:
+	TextEditPeer * textPeer_;
 	TextModel* model_;
 	bool keepTabbingCharacters_;
 	bool keepReturnCharacter_;
 	bool readOnly_;
-	void onFocusGained( FocusEvent* event );
-
 
 };
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.11  2005/06/09 03:40:38  marcelloptr
+*removed a forgotten comment
+*
+*Revision 1.3.2.10  2005/06/09 02:25:50  ddiego
+*updated osx build
+*
+*Revision 1.3.2.9  2005/06/07 17:23:53  marcelloptr
+*added missed getStyle() function. Fixed underline text that couldn't be removed once introduced.
+*
+*Revision 1.3.2.8  2005/05/20 03:04:05  ddiego
+*minor mods to set focused control.
+*
+*Revision 1.3.2.7  2005/05/19 22:07:45  marcelloptr
+*Fixes around Win32Edit: selectAll and Redo operation. Deleting characters. Going to get read of getCRCount :)
+*
+*Revision 1.3.2.6  2005/05/16 16:02:00  marcelloptr
+*minor change on doc
+*
+*Revision 1.3.2.5  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.4  2005/04/25 00:11:57  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+*
+*Revision 1.3.2.3  2005/03/28 18:07:37  marcelloptr
+*minor fixes or comments
+*
+*Revision 1.3.2.1  2005/03/27 05:25:13  ddiego
+*added more fixes to accelerator handling.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

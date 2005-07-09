@@ -15,11 +15,7 @@ using namespace VCF;
 
 CheckBoxControl::CheckBoxControl()
 {
-	setVisible( true );
-
-	useFixedCheckboxSize_ = true;
-
-	fixedCheckboxHeight_ = UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htCheckBoxHeight );
+	setVisible( true );	
 }
 
 CheckBoxControl::~CheckBoxControl()
@@ -41,13 +37,15 @@ void CheckBoxControl::paint( GraphicsContext* context )
 {
 	ToggledButton::paint( context );
 
-	Rect r( 0.0, 0.0, getWidth(), getHeight() );
+	Rect r = getClientBounds();//( 0.0, 0.0, getWidth(), getHeight() );
 
-	Rect checkBtnRect = r;
-	if ( true == useFixedCheckboxSize_ ) {
+//	Rect checkBtnRect = r;
+/*
+	double checkBoxHeight = UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htCheckBoxHeight );
+
 		checkBtnRect.top_ = maxVal<double>( 0, r.top_ + (r.getHeight() / 2.0 - fixedCheckboxHeight_/2.0));
 		checkBtnRect.bottom_ = minVal<double>( r.bottom_, checkBtnRect.top_ + fixedCheckboxHeight_ );
-	}
+*/	
 	
 	ButtonState buttonState;
 	buttonState.setActive( isActive() );
@@ -64,26 +62,19 @@ void CheckBoxControl::paint( GraphicsContext* context )
 	}
 
 	
-	context->drawThemeCheckboxRect( &checkBtnRect, buttonState );
-}
-
-
-void CheckBoxControl::setFixedCheckboxHeight( const double& fixedCheckboxHeight )
-{
-	fixedCheckboxHeight_ = minVal<double>( fixedCheckboxHeight, getHeight() );
-	repaint();
-}
-
-void CheckBoxControl::setUseFixedCheckboxSize( const bool& fixedCheckboxSize )
-{
-	useFixedCheckboxSize_ = fixedCheckboxSize;
-	repaint();
+	context->drawThemeCheckboxRect( &r, buttonState );
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

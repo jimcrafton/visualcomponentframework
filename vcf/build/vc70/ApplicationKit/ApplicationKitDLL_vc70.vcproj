@@ -154,6 +154,15 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h">
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuManagerPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="Res"
@@ -212,9 +221,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.h">
@@ -520,13 +526,13 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuItem.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuManager.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenu.cpp">
@@ -593,12 +599,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\View.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Window.cpp">
@@ -764,6 +764,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuItem.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Object.cpp">
 			</File>
 			<File
@@ -776,6 +779,12 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp">
 			</File>
 			<File
@@ -786,6 +795,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TextPeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TextPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Toolbar.cpp">
@@ -885,9 +900,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModelEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuItemEvent.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MenuItemEvent.h">
 			</File>
 			<File
@@ -910,9 +922,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TabModelEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TextEvent.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TextEvent.h">
@@ -968,12 +977,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractModel.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTextModel.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTextModel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp">
@@ -1191,6 +1194,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.h">

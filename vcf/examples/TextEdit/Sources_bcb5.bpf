@@ -1,0 +1,10 @@
+USEUNIT("TextEdit.cpp");
+USEUNIT("FindDialog.cpp");
+USEUNIT("ReplaceDialog.cpp");
+USEUNIT("TextEditDocument.cpp");
+USEUNIT("TextWindowEdit.cpp");
+//---------------------------------------------------------------------------
+This file is used by the project manager only and should be treated like the project file
+
+
+WinMain

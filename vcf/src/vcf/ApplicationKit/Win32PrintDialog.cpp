@@ -33,7 +33,11 @@ UINT CALLBACK Win32PrintDialog::PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wPa
 			Win32PrintDialog* thisPtr = (Win32PrintDialog*)printInfo->lCustData;
 			
 			if ( !thisPtr->title_.empty() ) {
+#if defined(VCF_CW) && defined(UNICODE)
+				SetWindowText( hdlg, thisPtr->title_.c_str() );
+#else
 				SetWindowText( hdlg, thisPtr->title_.ansi_c_str() );
+#endif
 			}
 
 			return TRUE;
@@ -206,6 +210,12 @@ PrintSession::PrintJob Win32PrintDialog::getPrintJobType()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.1  2005/04/13 00:57:02  iamfraggle
+*Enable Unicode in CodeWarrior
+*
 *Revision 1.2  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

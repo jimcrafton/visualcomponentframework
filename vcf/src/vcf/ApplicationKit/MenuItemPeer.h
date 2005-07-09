@@ -63,6 +63,8 @@ public:
 	virtual void setCaption( const String& caption ) = 0;
 
 	virtual void setAsSeparator( const bool& isSeperator ) = 0;
+
+	virtual void setAcceleratorKey( AcceleratorKey* accelerator ) = 0;
 };
 
 };
@@ -71,8 +73,14 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
 *
 *Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

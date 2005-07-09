@@ -140,6 +140,10 @@ SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_bspline.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_dash.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_stroke.cpp
 # End Source File
 # End Group

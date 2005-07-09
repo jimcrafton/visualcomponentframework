@@ -1,0 +1,7 @@
+PROJECT=TextEdit_bcc.exe
+TARG=GUI
+USERDEFINES=USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL;_RTLDLL
+RESFILE=
+OBJFILES=FindDialog.obj ReplaceDialog.obj TextEdit.obj TextEditDocument.obj TextEditWindow.obj
+LIBFILES=comctl32.lib
+DEFFILE=

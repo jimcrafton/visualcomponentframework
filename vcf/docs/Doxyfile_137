@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Visual Component Framework"
-PROJECT_NUMBER         = "0.6.6"
+PROJECT_NUMBER         = "0.6.8"
 OUTPUT_DIRECTORY       = ./
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES

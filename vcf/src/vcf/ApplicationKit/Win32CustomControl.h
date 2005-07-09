@@ -26,65 +26,65 @@ public:
 	static bool windowClassRegistered_;
 
 	/**
-     * returns a ID that identifies this control. On Win32 this corresponds to an HWND.
-     */
-    virtual long getHandleID();
+	* returns a ID that identifies this control. On Win32 this corresponds to an HWND.
+	*/
+	virtual long getHandleID();
 
-    /**
-     * returns a text associated with the component. This usually gets used in the Component::getCaption() method.
-     */
-    virtual VCF::String getText();
+	/**
+	* returns a text associated with the component. This usually gets used in the Component::getCaption() method.
+	*/
+	virtual VCF::String getText();
 
-    /**
-     * sets the text for the widget
-     */
-    virtual void setText( const VCF::String& text );
+	/**
+	* sets the text for the widget
+	*/
+	virtual void setText( const VCF::String& text );
 
-    /**
-     * sets the bounds for the component. Bounds are specified in the coordinate system of the componenents parent.
-     */
-    virtual void setBounds( VCF::Rect* rect );
+	/**
+	* sets the bounds for the component. Bounds are specified in the coordinate system of the componenents parent.
+	*/
+	virtual void setBounds( VCF::Rect* rect );
 
-    /**
-     * returns the bounds of the component in the coordinate system of the parent.
-     */
-    virtual VCF::Rect* getBounds();
+	/**
+	* returns the bounds of the component in the coordinate system of the parent.
+	*/
+	virtual VCF::Rect* getBounds();
 
-    /**
-     * shows or hides the component.
-     * This does NOT close the component (if invoked on a frame based component ).
-     */
-    virtual void setVisible( const bool& visible );
+	/**
+	* shows or hides the component.
+	* This does NOT close the component (if invoked on a frame based component ).
+	*/
+	virtual void setVisible( const bool& visible );
 
-    /**
-     * returns wether or not the component is currently visible.
-     */
-    virtual bool getVisible();
+	/**
+	* returns wether or not the component is currently visible.
+	*/
+	virtual bool getVisible();
 
-    /**
-     * returns a bit-masked unsigned long that contains style constants.
-     *  These style constants are defined in the VCF, and must
-     * be translated to the particular windowing system being used.
-     */
-    virtual unsigned long getStyleMask();
+	/**
+	* returns a bit-masked unsigned long that contains style constants.
+	*  These style constants are defined in the VCF, and must
+	* be translated to the particular windowing system being used.
+	*/
+	virtual unsigned long getStyleMask();
 
-    /**
-     * sets the current style mask.
-     *  Should cause a repaint of the component, if neccessary.
-     */
-    virtual void setStyleMask( const unsigned long& styleMask );
+	/**
+	* sets the current style mask.
+	*  Should cause a repaint of the component, if neccessary.
+	*/
+	virtual void setStyleMask( const unsigned long& styleMask );
 
-    /**
-     * returns the component that this Peer is attached to.
-     */
-    virtual VCF::Control* getControl();
+	/**
+	* returns the component that this Peer is attached to.
+	*/
+	virtual VCF::Control* getControl();
 
-    /**
-     * attahces the Peer to a particular component. This should only be done once.
-     */
-    virtual void setControl( VCF::Control* component );
+	/**
+	* attahces the Peer to a particular component. This should only be done once.
+	*/
+	virtual void setControl( VCF::Control* component );
 
-    virtual void setParent( VCF::Control* parent );
+	virtual void setParent( VCF::Control* parent );
 
 	virtual VCF::Control* getParent();
 
@@ -117,6 +117,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/29 05:00:03  marcelloptr
+*some white spaces
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

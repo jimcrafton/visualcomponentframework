@@ -140,12 +140,52 @@ VCF_BCC - compiling with Borland's C++ compiler
 #endif // __BORLANDC__
 
 
+
+#ifdef __MWERKS__
+	#define VCF_CW
+	#ifdef OSX
+		#define VCF_CW_OSX
+	#elif defined(WIN32)
+		#define VCF_CW_W32
+	#endif // OS
+	#if (__MWERKS__ == 0x2400)
+		#define VCF_CW6
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"CW6"
+	#endif
+#endif // __MWERKS__
+
+
+// This will discover the GCC compiler and it's version number (eg 3.4.2)
+// __GNUC_VERSION__ contains the version number in integer form (eg 30402) - ACH
+#ifdef __GNUC__
+	#undef VCF_GCC
+	#define VCF_GCC
+	#if defined(__GNU_PATCHLEVEL__)
+		#define __GNUC_VERSION__ (__GNUC__ * 10000 \
+                            + __GNUC_MINOR__ * 100 \
+                            + __GNUC_PATCHLEVEL__)
+	#else
+		#define __GNUC_VERSION__ (__GNUC__ * 10000 \
+                            + __GNUC_MINOR__ * 100)
+	#endif
+	#undef VCF_COMPILER_NAME
+	
+	//The below does NOT compile under GCC 3.3.3. Does anyone know why not???
+	//#define VCF_COMPILER_NAME "GCC"__GNUC__"."__GNUC_MINOR__"."__GNUC_PATCHLEVEL__
+	#define VCF_COMPILER_NAME String("GCC") + __GNUC__ + "."
+#endif // __GNUC__
+
+
+
 #ifdef WIN32
 	//define VCF_WIN32
 	#define VCF_WIN32
 #endif
 
-
+#ifdef OSX
+	#define VCF_OSX
+#endif
 
 #ifdef WIN32
 
@@ -225,9 +265,9 @@ namespace VCF {
 //this section will turn the advanced RTTI features on or off. By default they are on
 //Note: Turning them off means that code that depends on the RTTI API's will fail.
 
-
-#define VCF_RTTI	//comment this define out to turn off RTTI in the framework
-
+#ifndef VCF_NO_RTTI
+	#define VCF_RTTI
+#endif
 
 //comment this out to prevent the framework from using it's debug operator new() functions
 
@@ -296,8 +336,142 @@ this define is to fix:
 #endif //WIN32
 
 
+//Macros to handle the All-in-1 library option
+//Note that you are able to create an All-in-1 with chosen kits excluded.
+//If you exclude a kit that supports an included kit (eg FoundationKit),
+//then you are responsible for providing the excluded kit separately.
+#ifdef VCF_USE_ALLIN1_DLL
+#	ifndef VCF_ALLIN1_NO_OPENGLKIT
+#		define USE_OPENGLKIT_DLL
+#	elif !defined(VCF_ALLIN1_NO_APPLICATIONKIT)
+#		define USE_APPLICATIONKIT_DLL
+#	elif !define(VCF_ALLIN1_NO_GRAPHICSKIT)
+#		define USE_GRAPHICS_KIT	/*
+#	elif !define(VCF_ALLIN1_NO_NETKIT)
+#		define USE_NETKIT_DLL	*/
+#	elif !define(VCF_ALLIN1_NO_FOUNDATIONKIT)
+#		pragma error("You're trying to use an All-in-1 dll with nothing in it!")
+#	endif
+#elif defined(VCF_USE_ALLIN1_LIB)
+#	ifndef VCF_ALLIN1_NO_OPENGLKIT
+#		define USE_OPENGLKIT_LIB
+#	elif !defined(VCF_ALLIN1_NO_APPLICATIONKIT)
+#		define USE_APPLICATIONKIT_LIB
+#	elif !define(VCF_ALLIN1_NO_GRAPHICSKIT)
+#		define USE_GRAPHICS_KIT	/*
+#	elif !define(VCF_ALLIN1_NO_NETKIT)
+#		define USE_NETKIT_LIB	*/
+#	elif !define(VCF_ALLIN1_NO_FOUNDATIONKIT)
+#		pragma error("You're trying to use an All-in-1 lib with nothing in it!")
+#	endif
+#endif
 
-#if defined (_MSC_VER) || defined (__DMC__) || defined (__GNUWIN32__) || defined(__BORLANDC__)
+#ifdef VCF_ALLIN1_DLL
+#	ifndef VCF_ALLIN1_NO_FOUNDATIONKIT
+#		define FOUNDATIONKIT_DLL
+#	endif
+#	ifndef VCF_ALLIN1_NO_GRAPHICSKIT
+#		define GRAPHICSKIT_DLL
+#	endif
+#	ifndef VCF_ALLIN1_NO_APPLICATIONKIT
+#		define APPLICATIONKIT_DLL
+#	endif
+#	ifndef VCF_ALLIN1_NO_OPENGLKIT
+#		define OPENGLKIT_DLL
+#	endif	/*
+#	ifndef VCF_ALLIN1_NO_NETKIT
+#		define NETKIT_DLL
+#	endif
+#	ifndef VCF_ALLIN1_NO_REMOTEKIT
+#		define REMOTEKIT_DLL
+#	endif	*/
+#endif
+
+#ifdef VCF_ALLIN1_EXPORTS
+#	ifndef VCF_ALLIN1_NO_FOUNDATIONKIT
+#		define FOUNDATIONKIT_EXPORTS
+#	endif
+#	ifndef VCF_ALLIN1_NO_GRAPHICSKIT
+#		define GRAPHICSKIT_EXPORTS
+#	endif
+#	ifndef VCF_ALLIN1_NO_APPLICATIONKIT
+#		define APPLICATIONKIT_EXPORTS
+#	endif
+#	ifndef VCF_ALLIN1_NO_OPENGLKIT
+#		define OPENGLKIT_EXPORTS
+#	endif	/*
+#	ifndef VCF_ALLIN1_NO_NETKIT
+#		define NETKIT_EXPORTS
+#	endif
+#	ifndef VCF_ALLIN1_NO_REMOTEKIT
+#		define REMOTEKIT_EXPORTS
+#	endif	*/
+#endif
+
+#if defined(VCF_ALLIN1_DLL) || defined(VCF_ALLIN1_LIB)
+
+#ifdef _LIB_CPLVERNUM
+#		undef _LIB_CPLVERNUM
+#endif
+
+
+# if defined(__INTEL_COMPILER)
+#   define _LIB_CPLVERNUM "icl7"
+# elif defined(__ICL)
+#   define _LIB_CPLVERNUM "icl6"
+# else
+#   if (_MSC_VER >= 1310)
+#     define _LIB_CPLVERNUM "vc71"
+#   elif (_MSC_VER >= 1300)
+#     define _LIB_CPLVERNUM "vc70"
+#   elif (_MSC_VER >= 1200)
+#		ifdef VCF_GTK
+#			define _LIB_CPLVERNUM "gtk"
+#		else
+#			define _LIB_CPLVERNUM "vc6"
+#		endif
+#   elif (_MSC_VER >= 1100)
+#     define _LIB_CPLVERNUM "vc5"
+#		endif
+#   ifdef __BORLANDC__
+#   define _LIB_CPLVERNUM "bcc"
+#   endif
+# endif
+
+
+/**
+All of this is here so that if we use this kit in our programs, all we
+have to do is pull in this one file, and we'll automatically
+link to the correct library! This does mean that our app that uses this
+kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
+"VCF_USE_ALLIN1_LIB" defined to use the DLL or static libraries.
+*/
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+
+	#ifdef VCF_USE_ALLIN1_DLL
+	//	using dynamic link library
+	#	ifdef _DEBUG
+	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_d.lib")
+	#	else
+	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM".lib")
+	#	endif
+	#elif defined VCF_USE_ALLIN1_LIB
+	#		pragma comment(lib, "version.lib") //link to the version lib for retreiving version info
+	//	using statically linked library
+	#	ifdef _DEBUG
+	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_sd.lib")
+	#	else
+	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_s.lib")
+	#	endif
+	#else
+	//	creating the static or dynamic link library
+	#endif
+
+#endif //_MSC_VER
+
+#endif //VCF_ALLIN1_DLL/LIB
+
+#if defined (_MSC_VER) || defined (__DMC__) || defined (__GNUWIN32__) || defined(__BORLANDC__) || defined(__MWERKS__)
   // when we use USE_FOUNDATIONKIT_DLL we always want FOUNDATIONKIT_DLL
 	// and we save a MACRO defines at the same time.
 	// Nevertheless USE_FOUNDATIONKIT_DLL cannot replace FOUNDATIONKIT_DLL
@@ -305,10 +479,12 @@ this define is to fix:
 	// USE_APPLICATIONKIT_DLL implies USE_GRAPHICSKIT_DLL
 	// USE_GRAPHICSKIT_DLL    implies USE_FOUNDATIONKIT_DLL
 	// USE_NETKIT_DLL         implies USE_FOUNDATIONKIT_DLL
+	// USE_OPENGLKIT_DLL	  implies USE_APPLICATIONKIT_DLL
 	// and 
 	// USE_APPLICATIONKIT_LIB implies USE_GRAPHICSKIT_LIB
 	// USE_GRAPHICSKIT_LIB    implies USE_FOUNDATIONKIT_LIB
 	// USE_NETKIT_LIB         implies USE_FOUNDATIONKIT_LIB
+	// USE_OPENGLKIT_LIB	  implies USE_OPENGLKIT_LIB
 
 	#ifdef USE_NETKIT_DLL
 	# 	ifndef NETKIT_DLL
@@ -322,6 +498,20 @@ this define is to fix:
 	#			define USE_FOUNDATIONKIT_LIB
 	# 	endif
 	#endif
+
+	#ifdef USE_OPENGLKIT_DLL
+	# 	ifndef OPENGLKIT_DLL
+	#			define OPENGLKIT_DLL
+	# 	endif
+	# 	ifndef USE_APPLICATIONKIT_DLL
+	#			define USE_APPLICATIONKIT_DLL
+	# 	endif
+  #elif defined USE_OPENGLKIT_LIB
+	# 	ifndef USE_APPLICATIONKIT_LIB
+	#			define USE_APPLICATIONKIT_LIB
+	# 	endif
+	#endif
+	
 
 	#ifdef USE_APPLICATIONKIT_DLL
 	# 	ifndef APPLICATIONKIT_DLL
@@ -357,7 +547,70 @@ this define is to fix:
 
 #endif
 
+// Moved here in order to avoid unnecessary repetition later on - ACH
+#ifdef FOUNDATIONKIT_DLL
+	#if defined(FOUNDATIONKIT_EXPORTS)
+		#define FOUNDATIONKIT_API __declspec(dllexport)
+		#define FOUNDATIONKIT_EXPIMP_TEMPLATE
+	#else
+		#define FOUNDATIONKIT_API __declspec(dllimport)
+		#define FOUNDATIONKIT_EXPIMP_TEMPLATE extern
+	#endif
+#else
+	#define FOUNDATIONKIT_API
+#endif //FOUNDATIONKIT_DLL
 
+
+#ifdef GRAPHICSKIT_DLL
+	#if defined(GRAPHICSKIT_EXPORTS)
+		#define GRAPHICSKIT_API __declspec(dllexport)
+		#define GRAPHICSKIT_EXPIMP_TEMPLATE
+	#else
+		#define GRAPHICSKIT_API __declspec(dllimport)
+		#define GRAPHICSKIT_EXPIMP_TEMPLATE extern
+	#endif
+#else
+	#define GRAPHICSKIT_API
+#endif //GRAPHICSKIT_DLL
+
+
+#ifdef APPLICATIONKIT_DLL
+	#if defined(APPLICATIONKIT_EXPORTS)
+		#define APPLICATIONKIT_API __declspec(dllexport)
+		#define APPLICATIONKIT_EXPIMP_TEMPLATE
+	#else
+		#define APPLICATIONKIT_API __declspec(dllimport)
+		#define APPLICATIONKIT_EXPIMP_TEMPLATE extern
+	#endif
+#else
+	#define APPLICATIONKIT_API
+#endif //APPLICATIONKIT_DLL
+
+
+#ifdef OPENGLKIT_DLL
+	#if defined(OPENGLKIT_EXPORTS)
+		#define OPENGLKIT_API __declspec(dllexport)
+		#define OPENGLKIT_EXPIMP_TEMPLATE
+	#else
+		#define OPENGLKIT_API __declspec(dllimport)
+		#define OPENGLKIT_EXPIMP_TEMPLATE extern
+	#endif
+#else
+	#define OPENGLKIT_API
+#endif //OPENGLKIT_DLL
+
+
+#ifdef NETKIT_DLL
+	#if defined(NETKIT_EXPORTS)
+		#define NETKIT_API __declspec(dllexport)
+		#define NETKIT_EXPIMP_TEMPLATE
+	#else
+		#define NETKIT_API __declspec(dllimport)
+		#define NETKIT_EXPIMP_TEMPLATE extern
+	#endif
+#else
+	#define NETKIT_API
+#endif //NETKIT_DLL
 
 #ifdef _MSC_VER //we are compiling with Microsoft's Visual C++ compiler
 
@@ -371,226 +624,21 @@ this define is to fix:
 		#define _typename_ typename
 	#endif
 
-	#ifdef FOUNDATIONKIT_DLL
-		#if defined(FOUNDATIONKIT_EXPORTS)
-			#define FOUNDATIONKIT_API __declspec(dllexport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define FOUNDATIONKIT_API __declspec(dllimport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define FOUNDATIONKIT_API
-	#endif //FOUNDATIONKIT_DLL
-
-
-	#ifdef GRAPHICSKIT_DLL
-		#if defined(GRAPHICSKIT_EXPORTS)
-			#define GRAPHICSKIT_API __declspec(dllexport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE
-		#else
-			#define GRAPHICSKIT_API __declspec(dllimport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define GRAPHICSKIT_API
-	#endif //GRAPHICSKIT_DLL
-
-
-	#ifdef APPLICATIONKIT_DLL
-		#if defined(APPLICATIONKIT_EXPORTS)
-			#define APPLICATIONKIT_API __declspec(dllexport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define APPLICATIONKIT_API __declspec(dllimport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define APPLICATIONKIT_API
-	#endif //APPLICATIONKIT_DLL
-
-
-	#ifdef NETKIT_DLL
-		#if defined(NETKIT_EXPORTS)
-			#define NETKIT_API __declspec(dllexport)
-			#define NETKIT_EXPIMP_TEMPLATE
-		#else
-			#define NETKIT_API __declspec(dllimport)
-			#define NETKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define NETKIT_API
-	#endif //NETKIT_DLL
-
-
 #elif defined(__DMC__)
 
 	#define _typename_
-	#ifdef FOUNDATIONKIT_DLL
-		#if defined(FOUNDATIONKIT_EXPORTS)
-			#define FOUNDATIONKIT_API __declspec(dllexport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define FOUNDATIONKIT_API __declspec(dllimport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define FOUNDATIONKIT_API
-	#endif //FOUNDATIONKIT_DLL
-
-
-	#ifdef GRAPHICSKIT_DLL
-		#if defined(GRAPHICSKIT_EXPORTS)
-			#define GRAPHICSKIT_API __declspec(dllexport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE
-		#else
-			#define GRAPHICSKIT_API __declspec(dllimport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define GRAPHICSKIT_API
-	#endif //GRAPHICSKIT_DLL
-
-
-	#ifdef APPLICATIONKIT_DLL
-		#if defined(APPLICATIONKIT_EXPORTS)
-			#define APPLICATIONKIT_API __declspec(dllexport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define APPLICATIONKIT_API __declspec(dllimport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define APPLICATIONKIT_API
-	#endif //APPLICATIONKIT_DLL
-
-
-	#ifdef NETKIT_DLL
-		#if defined(NETKIT_EXPORTS)
-			#define NETKIT_API __declspec(dllexport)
-			#define NETKIT_EXPIMP_TEMPLATE
-		#else
-			#define NETKIT_API __declspec(dllimport)
-			#define NETKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define NETKIT_API
-	#endif //NETKIT_DLL
-
 
 #elif defined(__GNUWIN32__)
 
-	#ifdef FOUNDATIONKIT_DLL
-		#if defined(FOUNDATIONKIT_EXPORTS)
-			#define FOUNDATIONKIT_API __declspec(dllexport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define FOUNDATIONKIT_API __declspec(dllimport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define FOUNDATIONKIT_API
-	#endif //FOUNDATIONKIT_DLL
 
-
-	#ifdef GRAPHICSKIT_DLL
-		#if defined(GRAPHICSKIT_EXPORTS)
-			#define GRAPHICSKIT_API __declspec(dllexport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE
-		#else
-			#define GRAPHICSKIT_API __declspec(dllimport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define GRAPHICSKIT_API
-	#endif //GRAPHICSKIT_DLL
-
-
-	#ifdef APPLICATIONKIT_DLL
-		#if defined(APPLICATIONKIT_EXPORTS)
-			#define APPLICATIONKIT_API __declspec(dllexport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define APPLICATIONKIT_API __declspec(dllimport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define APPLICATIONKIT_API
-	#endif //APPLICATIONKIT_DLL
-
-
-	#ifdef NETKIT_DLL
-		#if defined(NETKIT_EXPORTS)
-			#define NETKIT_API __declspec(dllexport)
-			#define NETKIT_EXPIMP_TEMPLATE
-		#else
-			#define NETKIT_API __declspec(dllimport)
-			#define NETKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define NETKIT_API
-	#endif //NETKIT_DLL
 
 #elif defined(VCF_BCC)
+
 	#define _typename_ typename
 
-	#ifdef FOUNDATIONKIT_DLL
-		#if defined(FOUNDATIONKIT_EXPORTS)
-			#define FOUNDATIONKIT_API __declspec(dllexport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define FOUNDATIONKIT_API __declspec(dllimport)
-			#define FOUNDATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define FOUNDATIONKIT_API
-	#endif //FOUNDATIONKIT_DLL
+#elif defined(VCF_CW)
 
-
-	#ifdef GRAPHICSKIT_DLL
-		#if defined(GRAPHICSKIT_EXPORTS)
-			#define GRAPHICSKIT_API __declspec(dllexport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE
-		#else
-			#define GRAPHICSKIT_API __declspec(dllimport)
-			#define GRAPHICSKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define GRAPHICSKIT_API
-	#endif //GRAPHICSKIT_DLL
-
-
-	#ifdef APPLICATIONKIT_DLL
-		#if defined(APPLICATIONKIT_EXPORTS)
-			#define APPLICATIONKIT_API __declspec(dllexport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE
-		#else
-			#define APPLICATIONKIT_API __declspec(dllimport)
-			#define APPLICATIONKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define APPLICATIONKIT_API
-	#endif //APPLICATIONKIT_DLL
-
-
-	#ifdef NETKIT_DLL
-		#if defined(NETKIT_EXPORTS)
-			#define NETKIT_API __declspec(dllexport)
-			#define NETKIT_EXPIMP_TEMPLATE
-		#else
-			#define NETKIT_API __declspec(dllimport)
-			#define NETKIT_EXPIMP_TEMPLATE extern
-		#endif
-	#else
-		#define NETKIT_API
-	#endif //NETKIT_DLL
-
-#else
-
-	#define FOUNDATIONKIT_API
-	#define GRAPHICSKIT_API
-	#define APPLICATIONKIT_API
-	#define NETKIT_API
+	#define _typename_ typename
 
 #endif //_MSC_VER
 
@@ -607,17 +655,20 @@ The same is with BCC.
 #endif
 
 
-
-#ifdef VCF_GCC
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"GCC"
-#endif 
-
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.6  2005/04/17 16:11:31  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
+*
+*Revision 1.3.2.5  2005/04/11 17:07:12  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
 *
 *Revision 1.3.2.4  2004/12/22 03:38:43  marcelloptr
 *fixed VCF_COMPILER_NAME macro so less error prone.

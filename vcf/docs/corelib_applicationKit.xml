@@ -26,9 +26,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NB: This software will not save the world.
 -->
 
-<section><title>ApplicationKit</title>
-	<para>
+<section><title>ApplicationKit</title>	
+	<section><title>Introduction</title>
+	  <para>
+		The ApplicationKit is the primary library used for writing applications
+		that need a Graphical User Interface (GUI). It depends on both the FoundationKit
+		and the GraphicsKit. 
 	</para>
+	<para>
+	The following sections will go over all the major features of the ApplicationKit
+	starting with a very brief example of creating an application (for more
+	on the exact details of this see the HelloWorld examples in the 
+	vcf/examples directory). It will then explain the basic features of the
+	UIToolkit class, and then on to the specific features of the ApplicationKit
+	library.
+	</para>
+	</section>
 	<section><title>Applications </title>
 		<para>
 		<indexterm><primary>UI Applications</primary></indexterm>
@@ -47,9 +60,9 @@ NB: This software will not save the world.
 		</para>
 		<para>
 		<indexterm><primary>apps</primary></indexterm>
-		An application either represents a program (or process) or a library in the
+		An application either represents a program (or process), or a library in the
 		form of a dynamic link library (DLL) or shared object (SO). If the application
-		is part of a library then the specific instance must be dericed from 
+		is part of a library then the specific instance must be derived from 
 		VCF::LibraryApplication. There can be more than one LibraryApplication instance
 		loaded. 
 		</para>
@@ -59,16 +72,32 @@ NB: This software will not save the world.
 		incorrect and will break the application.
 		</para>
 		<para>
-		To use the Application class, simply create an instance on the stack in your programs
-		main() function, and then call the Application's static method, Application::appMain().
+		To create a program that has a main Application class, create a new custom 
+		class that derives from VCF::Application. Add a constructor that takes an int
+		argument and a char** argument, and then call the derived Application's 
+		constructor. Override the virtual method Application::initRunningApplication() 
+		and put in your own custom initialization code. In the program's main() function
+		create a single instance of your class and then call the Application::appMain()
+		function. And <emphasis>Voila!</emphasis> you have created a simple application
+		with a running event loop. As an example:
 		<programlisting>
+<![CDATA[		
+class MyApp : public Application {
+public:
+	MyApp( int argc, char** argv ) : Application(argc,argv){}
+	virtual bool initRunningApplication() {
+		//your custom initialization here
+		return Application::initRunningApplication();
+	}
+};
+
 int main( int argc, char** argv ) 
 {
-	Application app;
-	
-	Application::appMain( argc, argv );
+	Application* app = new MyApp( argc, argv );	
+	Application::appMain();
 	return 0;
 }
+]]>
 		</programlisting>
 		</para>
 		<para>
@@ -81,7 +110,9 @@ int main( int argc, char** argv )
 		<para>
 		You can customize the initialization of your application by overriding the 
 		Application's initialize() method.
+
 		<programlisting>
+<![CDATA[
 class MyApplication : public Application {
 public:
 	virtual bool initRunningApplication() {		
@@ -92,6 +123,7 @@ public:
 		return result;
 	}
 };
+]]>
 		</programlisting>
 		<note>
 			<para>
@@ -99,23 +131,13 @@ public:
 			may see incorrect or undefined behaviour.
 			</para>
 		</note>
-		
-		You can use your new class like so:
-		<programlisting>
-int main( int argc, char** argv ) 
-{
-	MyApplication app;
-	
-	Application::appMain( argc, argv );
-	return 0;
-}
-		</programlisting>
-		
+				
 		</para>
 		<para>
 		You can customize functionality for closing the Application as well by overriding the 
 		terminateRunningApplication() method. 
 		<programlisting>
+<![CDATA[		
 class MyApplication : public Application {
 public:
 	//rest of declaration
@@ -125,6 +147,7 @@ public:
 		Application::terminateRunningApplication();
 	}
 };
+]]>
 		</programlisting>
 		</para>
 	</section>
@@ -136,34 +159,26 @@ public:
 			The UI Toolkit is used to create instances of various peer's needed by the 
 			VCF, as well as providing certain low level services, such as modal and
 			non-modal event loops, and getting at UI metrics. Each system the VCF is 
-			ported to has a concrete implementation of the UIToolkit. Below are the
-			available port for UIToolkit.
+			ported to has a concrete implementation of the UIToolkit. For eample, 
+			the VCF version that runs on Win32 compatible operating systems has 
+			a concrete implementation of the UIToolkit called the Win32Toolkit. Likewise
+			for Mac OSX there's the OSXUIToolkit.
 			</para>
 			<para>
-			 	Windows	-> Win32Toolkit	
-				Linux	-> GTKUIToolkit
-				OSX	-> OSXUIToolkit
-				X11	-> X11UIToolkit
+			Many of the functions on the UIToolkit are used primarily by the framework. A 
+			developer using the VCF generally does not need to call or be aware of them
+			as there are higher level classes that deal these. 
 			</para>
 			<para>
-                        The UIToolkit is a singleton, and there should only be <emphasis>one</emphasis>
-			instance for a given process running the VCF libraries.
+            The UIToolkit is a singleton, and there is only <emphasis>one</emphasis>
+			instance for a given process running the VCF libraries. As a developer you will
+			never create this instance - it's lifetime is completely managed by the 
+			framework. 
 			</para>
 			<para>
-			To work with the toolkit you retreive it's instance via a static function,
-			<function>UIToolkit::getDefaultUIToolkit()</function>. If no toolkit is found
-			(which is an extremely bad thing!) a NoToolKitFoundException is thrown. A 
-			quick example:
-			<programlisting>
-try {			
-	UIToolkit* toolkit = UIToolkit::getDefaultUIToolkit();
-}
-catch ( NoToolKitFoundException &amp; e ) {
-	//we are screwed!!!
-	System::print( e.getMessage() );
-}
-
-			</programlisting>
+			Any of the functions that a developer might want to call are static 
+			functions, which in	turn call a concrete implementation on the 
+			singleton instance of the toolkit. 
 			</para>
 		</section>
 		
@@ -175,7 +190,7 @@ catch ( NoToolKitFoundException &amp; e ) {
 			spacing between controls. These values are read only and may not be changed.
 			</para>
 			<para>
-			The UI Metrics are intended to be a guide. It allows you properly control the 
+			UI Metrics are intended to be a guide. It allows you properly control the 
 			spacing between controls, something that is frequently guess work and done 
 			with hard coded values. By using the UI Metrics provided by the toolkit, you 
 			can ensure that the values you work with are standard and consistent for the 
@@ -195,6 +210,37 @@ catch ( NoToolKitFoundException &amp; e ) {
 			versus the font used in a message dialog, is frequently different, and may 
 			depend on the users settings within the system. By using the UI Metrics you 
 			dont' have to resort to guess work as to what this is.
+			</para>	
+			<para>
+			Now that we know what metrics are for, lets look at some example usage.
+			Lets examine how to get the proper spacing between two controls:
+			<programlisting>
+<![CDATA[
+UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
+
+Label* label = new Label();
+TextControl* edit = new TextControl();
+
+label->setBounds( 10, 10, 50, label->getPreferredHeight() );
+Rect bounds = label->getBounds();
+bounds.offset( metricMgr->getPreferredSpacingFor(UIMetricsManager::stControlHorizontalSpacing),
+				0 );
+edit->setBounds( &bounds );	
+]]>
+			</programlisting>
+			Here's an example of retrieving the correct font. Lets say you want to 
+			draw some text is the right font for displaying messages:
+			<programlisting>	
+<![CDATA[			
+void drawSomeText( GraphicsContext* ctx )
+{
+	UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
+	Font font = metricMgr->getDefaultFontFor(UIMetricsManager::ftMessageFont);
+	ctx->setCurrentFont( &font );
+	ctx->textAt( 20, 20, "Here's a message!" );
+}
+]]>
+			</programlisting>			
 			</para>			
 		</section>
 		
@@ -221,18 +267,17 @@ catch ( NoToolKitFoundException &amp; e ) {
 			<para>
 			To add a timer all you have to do is call the toolkit's 
 			<function>
-                         <![CDATA[
+			<![CDATA[
 			UIToolkit::registerTimerHandler(Object* source, EventHandler*
 			handler, const ulong32& timeoutInMilliSeconds )
 			 ]]>
 			 </function> function.
-			This method is not static, so you'll first need to get an instance of the 
-			toolkit. The source is an instance of 
+			The source is an instance of 
 			a VCF::Object (or some class derived from it), the handler is a
-			VCF::EventHandler instance. The timeoutInMilliSeconds term is the duration 
-			of the timer, or how long to wait till the next time to call the handler's 
-			invoke() method. The Object you pass in represents the source that is used 
-			for all TimerEvents that get created.  
+			VCF::EventHandler instance. The timeoutInMilliSeconds term is the 
+			duration of the timer, or how long to wait till the next time to call the 
+			handler's invoke() method. The Object you pass in represents the source that 
+			is used for all TimerEvents that get created.  
 			</para>
 			
 
@@ -258,8 +303,8 @@ class TimerEx :public EventHandler, Object
     		UIToolkit::registerTimerHandler( this, this, 4000L);
     	}
 
-    	//The invoke takes an Event. For timers the event type is TimerEvent.
-	void invoke(TimerEvent * evt){
+	//The invoke takes an Event. For timers the event type is TimerEvent.
+	void invoke(Event * evt){
 		Object * src = evt->getSource();
 
 		//Invoke any time specific code tied to this timer.
@@ -325,7 +370,7 @@ class TimerEx2 :public EventHandler, Object
 			Alternativly, A new timer class could be created that would send all timer
 			events on seperate threads.  This could consume significant resources if
 			there are many events getting fired at near real-time.
-			</para>
+			</para>			
 		</section>
 
 		<section><title>Carets</title>
@@ -360,27 +405,62 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 			]]>
 			</programlisting>
 			However when you post an event, you <emphasis>must</emphasis> create the 
-			event on heap, since you will not have control over when it gets destroyed. 
+			event on heap, since you will not have control over when it gets destroyed 
+			(instead the framework will take care of the destruction for you). 
 			If you already have an existing event the easiest thing to do is to 
 			clone it, by calling the event's clone() method, and pass this cloned event 
 			instance to the post method. 
 
 			
 			 <note>
-			 this is actually a virtual method first defined in VCF::Object.
+			 Object::clone() is actually a virtual method first defined in the
+			 VCF::Object class.
 			 </note>
 			
 			</para>
 			<para>
 			Once you have an event instance ready, you can post the event by either 
 			creating a new event handler instance or getting an existing one, and then 
-			call the <![CDATA[ UIToolkit::postEvent(EventHandler* eventHandler, Event*
-			event, const bool& deleteHandler=true)]]> method.
+			call the 
+			<function>
+			<![CDATA[ UIToolkit::postEvent(EventHandler* eventHandler, Event*
+			event, const bool& deleteHandler=true)]]> </function> method.
 			You can optionally tell the toolkit to <emphasis>not</emphasis> 
 			auotmatically delete the handler for you by setting the deleteHandler to 
 			false (the default behaviour is to delete the handler you pass in). The 
 			event instance that is passed in is deleted automatically for you when the 
 			event is finished processing.
+			</para>
+			<para>
+			Let's look at a simple example:
+			<programlisting>
+<![CDATA[
+class MyControl : public CustomControl {
+public:
+	MyControl() {
+		EventHandler* ev = 
+			new GenericEventHandler<MyControl>(this, &MyControl::myPostedEventHandler,
+										"MyControl::myPostedEventHandler" );
+	}
+	void myPostedEventHandler( Event* e ) {
+		Dialog::showMessage( "Recv'd the Event!" );
+	}
+	
+	virtual void mouseDown( MouseEvent* e ) {
+		CustomControl::mouseDown( e );
+		Event* e = (Event*)e->clone();
+		UIToolkit::postEvent( getEventHandler("MyControl::myPostedEventHandler"), e, false );
+	}
+};
+]]>
+			</programlisting>
+			We create a new event handler in our constructor. Then when the control's
+			mouseDown method is called we clone the mouse event, and call the
+			UIToolkit's postEvent() method, passing our newly cloned event instance,
+			our event handler (named "MyControl::myPostedEventHandler"), and a flag that 
+			tells the UIToolkit <emphasis>not</emphasis> to delete the event handler when 
+			posted event has been processed. The new event instance will be deleted by the
+			UIToolkit, so you don't need to worry about a memory leak here.
 			</para>
 		</section>
 		
@@ -458,6 +538,10 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 			Once you have created the AcceleratorKey, call the toolkit's 
 			registerAccelerator() and pass in the new AcceleratorKey instance.
 			</para>
+			<para>
+			For more details on usage and how accelerators work pelase see the
+			<link linkend="Accelerator_Keys">Accelerator Keys section</link>.
+			</para>
 		</section>
 		
 		
@@ -479,7 +563,7 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 	
 	<section id="AppKit_EventLoops"><title>Event loops </title>
 		<para>
-		An event loop is a special loop that runs and retreives and dispatches
+		An event loop is a special loop that runs and retrieves and dispatches
 		events from the native windowing system's event queue. In general there
 		are two main types of event loops. The most commonly used is the non-modal
 		event loop. This is typically the main event loop that runs the application.
@@ -813,16 +897,39 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		The PackageInfo class describes the library the component is part of. It specifies 
 		the author of the package library, the company, copyright info, and text for other 
 		information. It gives out the name of the library <emphasis>excluding</emphasis> the 
-		platform specific extension (such as .lib or .a or .so). It indicates the platforms/
-		toolchains it supports (if no source is provided). It indicates whether it allows 
-		static linkage, dynamic linkage, or both.
+		platform specific extension (such as .lib or .a or .so). It indicates the 
+		platforms/toolchains it supports (if no source is provided). It indicates whether 
+		it allows static linkage, dynamic linkage, or both.
 		</para>
 
 		<para>
 		Components can be "owned" by other components, freeing the developer from having to 
 		worry about deleting the Components later on. To add a Component you simply call the 
 		Component's <function>addComponent()</function> method, passing in the instance of 
-		the component you want to "own".
+		the component you want to "own". Once the component is added, it's owner will take 
+		care of destroying it when the owner is destroyed. You can also remove a component. 
+		If you remove a component, and then do not add it back to some other owner, the 
+		responsibility for destroying the component is up to you. 
+		</para>
+		<para>
+		When components get added or removed they fire an event which can be handled. You
+		can register for this event by adding an event handler to the either the 
+		Component's ComponentAdded or ComponentRemoved delegate. 
+		</para>
+		<para>
+		Component's also have state. This indicates the state of the component. In general 
+		the	component's state is csNormal indicating that it's been created. When a component 
+		is in the process of being read in from a stream, it's state is marked as csLoading, 
+		and	when the component is being written to a stream it's state is marked as csSaving. 
+		As a general rule most event's are only fired if the component's state is csNormal. 
+		The other important state is the csDesigning state. This is set when the component 
+		is being edited through some visual editing tool (like the VCF Builder's Form Designer). 
+		A component in the csDesigning state can process some event, but ignores most others. 
+		This is particularly true if the component is a control. For example, if the component 
+		is a TextControl, then any keyboard events are ignored if it's state is set to 
+		csDesigning.
+		</para>
+		<para>
 		</para>
 	</section>
 	
@@ -843,69 +950,222 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		</para>
 
 		<para>
-		A Control has "parent" property which indicates the "container" the control. A control
-		that has a parent is known as a child control. Typically controls with no parent
-		are top level controls like a Window, Toolbar, or Dialog. The parent control is responsible 
-		for resizing the child if appropriate (see <link linkend="Layout">Layout</link> for 
-		more information on this). It is okay for a parent to be NULL for top level controls
-		like a Window or Dialog.
+		A Control has a "parent" property which indicates the parent control that
+		contains the child control. A control that has a parent is known as a child control. 
+		Typically controls with no parent are top level controls like a Window, Toolbar, 
+		or Dialog. The parent control is responsible for resizing the child if appropriate 
+		(see <link linkend="Layout">Layout</link> for more information on this). It is okay 
+		for a parent to be NULL for top level controls like a Window or Dialog.
 		</para>
 
 		<para>
-		Each Control has the potential to be a container. A container means the control
-		can act as a parent for other child controls. You can dynamically specify or
-		query the specific type of container by using the Control's setContainer()
-		and/or getContainer(). In either case you'll be working with an instance of the 
-		Container class. 
+		Each Control has the potential to act or behave as a container. This means the 
+		control	can act as a parent for other child controls. You can dynamically specify 
+		or query the specific type of container by using the Control's setContainer()
+		and/or getContainer() methods. In either case you'll be working with an instance 
+		of the Container class. The following examle shows how to retreive the container 
+		instance of a control:
+		<programlisting>
+<![CDATA[
+Control* panel = new Panel();
+Container* container = panel->getContainer();
+if ( NULL != container ) {
+	Label* label = new Label();
+	container->add( label, AlignTop );
+}
+]]>
+		</programlisting>
+		This next fragment shows how to set the container of a control:
+		<programlisting>
+<![CDATA[
+Control* panel = new Panel();
+panel->setContainer( new HorizontalLayoutContainer () );
+]]>
+		</programlisting>		
 		</para>
 
 		<para>
 		A Container has methods for adding, inserting, and removing controls. A Container 
-		instance owns all the child controls it has, and is responsible for deleting them 
-		when the container itself is destroyed. The container is owned by the Control it 
-		belongs to. The Container class itself cannot be created, as it is an abstract 
-		interface class. Instead you must create some concrete class derived from the 
-		Container class.
+		instance owns all the child controls it has, meaning that the control's addComponent()
+		method is called whenever a control is added to the container. The Container class 
+		itself cannot be created, as it is an abstract class. Instead you must create some 
+		concrete class derived from the Container class. Unless you want to completely 
+		control the collection type used to hold the child controls	you don't need to 
+		derive directly from VCF::Container, but instead can derive from VCF::StandardContainer 
+		which does some of the basic grunge work for you. VCF::StandardContainer uses 
+		a vector to maintain it's collection of child controls. 
 		</para>
-
 		<para>
 		A Containers primary job is to manage a collection of child controls
 		and to respond to certain events, forwarding them along to other child controls. 
 		Containers can automatically resize their child controls when a resize event happens
 		to the Control that owns the Container. When this happens, the 
 		<emphasis>default</emphasis> behaviour is to follow standard <link linkend="Layout">
-		layout rules</link> depending on the child's alignment or anchor settings. The event 
-		forwarding behaviour only takes place for child controls that are lightweight. 
-		Heavyweight controls do not need this, as they will receive events directly from the
-		windowing system.
+		layout rules</link> depending on the child's alignment or anchor settings. The 
+		event forwarding behaviour only takes place for child controls that are lightweight. 
+		Heavyweight controls do not need this, as they will receive events directly from 
+		the windowing system. This event forwarding is implemented in VCF::StandardContainer, 
+		which is yet another reason to derive from this class when implementing a custom 
+		container type.
 		</para>
 		
 		<para>
 		
 		</para>
 
-
+		<section><title>Control Listing</title>
+			<para>		
+			</para>
+			<formalpara><title>CustomControl</title>
+			</formalpara>
+			<formalpara><title>CommandButton</title>
+			</formalpara>
+			<formalpara><title>ListViewControl</title>
+			</formalpara>
+			<formalpara><title>TreeControl</title>
+			</formalpara>
+			<formalpara><title>Toolbar</title>
+			</formalpara>
+			<formalpara><title>TextControl</title>
+			</formalpara>
+			<formalpara><title>MultilineTextControl</title>
+			</formalpara>
+			<formalpara><title>HTMLBrowserControl</title>
+			</formalpara>
+			<formalpara><title>Label</title>
+			</formalpara>
+			<formalpara><title>ComboBoxControl</title>
+			</formalpara>
+			<formalpara><title>HeaderControl</title>
+			</formalpara>
+			<formalpara><title>ImageControl</title>
+			</formalpara>
+			<formalpara><title>ListBoxControl</title>
+			</formalpara>
+			<formalpara><title>OpenGLControl</title>
+			</formalpara>
+			<formalpara><title>ProgressControl</title>
+			</formalpara>			
+			<formalpara><title>PushButton</title>
+			</formalpara>
+			<formalpara><title>SliderControl</title>
+			</formalpara>
+			<formalpara><title>Splitter</title>
+			</formalpara>
+			<formalpara><title>TabbedPages</title>
+			</formalpara>
+			<formalpara><title>TableControl</title>			
+			</formalpara>
+			<formalpara><title>TreeListControl</title>
+			</formalpara>
+			<formalpara><title>CheckBoxControl</title>
+			</formalpara>
+			<formalpara><title>RadioButtonControl</title>
+			</formalpara>
+		</section>
 	</section>
 	
 	<section id="Layout"><title>Layout </title>
 		<para>
+		Layout in the VCF is accomplished by the use of the Container class. The container 
+		maintains a list of all the child controls it owns. Using this list of controls the
+		container decides how to layout the controls. The default layout algorithm uses the 
+		alignment value of it's child controls to determine how to lay them out within the 
+		parent control's client bounds. Layout is performed whenever the resizeChildren()
+		method is called.
+		</para>
+		<para>
+		The default layout algorithm, as implemented in the VCF::StandardContainer class,
+		does the following:
+		<itemizedlist>
+		  <listitem>
+		  Get the container controls client bounds
+		  </listitem>
+		  <listitem>
+		  Adjust these bounds for the StandardContainer's top, left, right, and bottom
+		  border widths (which are 0.0 by default).
+		  </listitem>
+		  <listitem>
+		  Determine if there are any child controls that may need to have their bounds 
+		  adjusted because their are anchored to one or more sides of their parent control.
+		  </listitem>
+		  <listitem>
+		  Determine if there are any child controls that may need to have their bounds 
+		  adjusted because their are aligned to some side of the parent control.
+		  </listitem>
+		  <listitem>
+		  If alignment work is needed, then adjust any child control bounds that is aligned
+		  to the top of the parent control. The child controls original height is respected
+		  but it's width is adjusted to that of the container's client bounds.
+		  </listitem>
+		  <listitem>
+		  If alignment work is needed, then adjust any child control bounds that is aligned
+		  to the bottom of the parent control. The child controls original height is respected
+		  but it's width is adjusted to that of the container's client bounds.
+		  </listitem>
+		  <listitem>
+		  If alignment work is needed, then adjust any child control bounds that is aligned
+		  to the left of the parent control. The child controls original width is respected
+		  but it's height is adjusted to that of the container's client bounds.
+		  </listitem>
+		  <listitem>
+		  If alignment work is needed, then adjust any child control bounds that is aligned
+		  to the right of the parent control. The child controls original height is respected
+		  but it's width is adjusted to that of the container's client bounds.
+		  </listitem>
+		  <listitem>
+		  If alignment work is needed, then adjust any child control bounds that is aligned
+		  to the client area of the parent control. The child control's bounds are assigned 
+		  to whatever remaining bounds are left after aligning the appropriate child controls 
+		  to top, bottom, left, and right.
+		  </listitem>
+		  <listitem>
+		  If anchor work is needed, then adjust each child control that has anchors accordingly.
+		  </listitem>
+		  <listitem>
+		  Any control that has it's alignment marked as AlignNone is left wherever it's bounds 
+		  say it is - no adjusting at all is performed.
+		  </listitem>
+		</itemizedlist>
+		</para>
+		<para>
+		More advanced layouts can be achieved by writing a custom Container class and 
+		overriding the resizeChildren method. For examples of this see the 
+		HorizontalLayoutContainer and ColumnLayoutContainer classes.
+		
 		</para>
 	</section>
+	
 	<section><title>Frames, Dialogs, and Windows</title>
 		<para>
-		Most applications today are GUI based.  The main components of any 
-		GUI application are frames, dialogs, and windows. Many vendors claim
-		platform independence it usually does not involve the GUI.  Each 
-		platform has its own style guidlines and look and feel.  
-		</para>
+		In most GUI applications there exist a special set of controls
+		(or widgets) that house the rest of the user interface. In the 
+		VCF we refer to these as Frames. A frame (which is represented 
+		by the VCF::Frame class) is an abstract concept that represents 
+		the top level control (for lack of a better term) usually with 
+		some sort of "decoration" in the form of a caption bar and special 
+		buttons for closing the frame as well as buttons for minimizing 
+		and/or maximizing the frame. A frame can be resized and or/moved. 
+		Depending on the style of the frame it may be a standard frame or 
+		a floating toolbar style frame. The exact look of the frame is 
+		determined by the underlying windowing platform, and is not under 
+		the control of the VCF.
+		</para>		
 		<para>
-		Java was originally promised to be able to write once and run anywhere.  
-		That did not totally turn out to be true though.  C++ libraries for
-		platfom independet graphics have existed in the past ;however, they were
-		cumbersome to use.  Many also suffered from licensing cost and divergence 
-		from the platforms standard.  VCF provides a clean and easy to use 
-		framework that goes well beyond common graphics packages and adheres 
-		strictly to platform look and feel guidelines.
+		Frames are further broken down into two divisions: the Dialog 
+		(represented by the VCF::Dialog class) and the Window (represented
+		by the VCF::Window class). A Window is the concrete implementation 
+		that represents the top level frame that a user will see and manipulate. 
+		Open a new browser window, and the frame that holds all the controls 
+		and HTML view is considers a "Window" in the VCF. A Dialog is a similar
+		to a Window but is used specifically for either getting input from a user,
+		such as a dialog that asks the user to input the number of pages to print,
+		or to present a message to the user. Usually a dialog is run in a modal
+		state, which means that all other user input is ignored by the application
+		till the user dismisses the dialog. As a general rule a dialog is not 
+		resizeable, while a window is. There may be some subtle (or not so subtle) 
+		visual cues as well that distinguish a dialog from a window, but this
+		depends on the underlying windowing platform.
 		</para>
 		<section><title>Dialog usage in VFC</title>
 		<para>
@@ -914,21 +1174,28 @@ someControl->handleEvent( &e ); //we block here till all the event handling is d
 		supports modal and non modal dialog types.   
 		</para>
 		
-                <section><title>Standard Dialogs</title>
+        <section><title>Standard Dialogs</title>
 		<para>
-                There are several standard dialogs already in VCF.
+		There are several standard dialogs already in VCF.
 		</para>
-                <note>These common dialogs are fully supported in Windows in this
-		version.  The OSX platform has no support in this release.  The
+		<note>These common dialogs are fully supported in Windows in this
+		version.  The OSX platform has full support in this release.  The
 		linux platform has partial support in this release.
 		</note>
 		<para>
-		File load and save dialogs are derived from CommonFileDialog.  To open a file load dialog use the
-		CommonFileOpen class. To bring up a save dialog, use the CommonFileSave class. 
-		Another related dialog is the CommonFileBrowse. This dialog is used when you
-		want to browse the folders in a tree. Here is an example of how to use the 
-		common file realated dialogs.
-		
+		The standard pattern of usage is to create the dialog, set various
+		fields as appropriate, and then call the dialog instance's execute()
+		method. This will show the dialog in a modal state. If the uses 
+		dismisses the dialog through whatever means (such as hitting the "Esc"
+		key, or clicking the "Cancel" button) execute() will return false. If
+		the options/settings on the dialog are accepted, execute will return true.
+		</para>
+		<para>
+		File load and save dialogs are derived from CommonFileDialog.  To open a 
+		file dialog use the	CommonFileOpen class. To bring up a save dialog, use the 
+		CommonFileSave class. Another related dialog is the CommonFileBrowse. This 
+		dialog is used when you	want to browse the folders in a tree. Here is an example 
+		of how to use the common file related dialogs.		
 		<programlisting>
                   <![CDATA[
                   
@@ -994,9 +1261,6 @@ class MyWindow :public Window{
 		saveDialog.setCaption("Saving " + filename);
 		saveDialog.setFilename(filename);
 
-		// now show the dialog
-		saveDialog.showModal();
-
 		//Now get the results.
 		if( openDialog.execute()){
 		    Enumerator<String>* fileList = saveDialog.getSelectedFiles();
@@ -1029,9 +1293,6 @@ class MyWindow :public Window{
 
 		//set initial direcory
 		browseDialog.setDirectory(path);
-
-		// now show the dialog
-		browseDialog.showModal();
 
 		if( browseDialog.execute()){
 			String dir = browseDialog.getDirectory();
@@ -1223,18 +1484,119 @@ class MyAbout : public VCF::Dialog {
 
 		</section>
 		<section><title>Frame usage in the VFC</title>
-		
+		<para>
+		In the VCF you never create a Frame instance directly. Instead you create either a 
+		Window or Dialog instance (or classes that derive from Window or Dialog). However the 
+		Frame class has a number of methods that you can use to change things like it's style,
+		it's icon image (this depends greatly on the windowing platform), controlling the 
+		background color, and whether or not the frame is a topmost frame. 
+		</para>
+		<para>
+		You can change the frame's style by calling the Frame::setFrameStyle() method and pass in
+		one of the 6 standard frame style enumeration values. These can be either fstSizeable,
+		fstNoBorder, fstFixed, fstNoBorderFixed, fstToolbarBorder, or fstToolbarBorderFixed. These
+		are "hints" to the windowing platform to behave in the following ways:
+		<itemizedlist>
+		  <listitem><para>
+		  fstSizeable - the frame is sizeable and has the standard frame decorations like
+		  caption bar, etc. This is the default for a Window instance.
+		  </para></listitem>
+		  <listitem><para>
+		  fstNoBorder - the frame's border is removed leaving only the frame 
+		  rectangle. Some platforms may still leave the resize border (Win32).
+		  </para></listitem>
+		  <listitem><para>
+		  fstFixed - the frame is <emphasis>not</emphasis> resizeable but still has 
+		  the standard border. This is the default for Dialogs.
+		  </para></listitem>
+		  <listitem><para>
+		  fstNoBorderFixed - the frame has no border area and is not resizeable. You
+		  might use this for a splashscreen.
+		  </para></listitem>
+		  <listitem><para>
+		  fstToolbarBorder - the frame's border is decorated as a toolbar. Typically this 
+		  means that the caption bar's height is shorter and the caption font is smaller.
+		  The frame is resizeable.
+		  </para></listitem>		  
+		  <listitem><para>
+		  fstToolbarBorderFixed - similar to fstToolbarBorder but the frame is 
+		  <emphasis>not</emphasis> resizeable.
+		  </para></listitem>
+		</itemizedlist>
+		</para>
+		<para>
+		Frequently a frame has a small image associated with it. For example, on Win32
+		systems this is displayed on the border areas far left side. You can set this
+		image by creating a small image, and then calling the Frame's setIconImage() 
+		function. Note that at the moment the image <emphasis>must</emphasis> be 32 
+		by 32 pixels in size. 
+		<programlisting>
+<![CDATA[
+Window* newWindow = Window();
+
+//assumes a resource exists named icon1
+Image* img = Application::getRunningInstance()->getResourceBundle()->getImage( "icon1" );
+newWindow->setIconImage( img );
+delete img;
+
+newWindow->setBounds( 300, 300, 500, 500 );
+newWindow->show();
+]]>
+		</programlisting>
+		Note that you need to delete the image you created once the call to setIconImage()
+		returns.
+		</para>		
+		<para>
+		A Frame can have either a custom background color (that's set by calling 
+		Control::setColor() ) or it can be painted using the default theme background. The 
+		latter is the default for any frame. Calling Frame::setUseColorForBackground ()
+		toggles this behaviour. A value of true will cause the frame's color as set in 
+		Control::setColor() to be used, a value of false will enable the theme background
+		to be used.
+		</para>
+		<para>
+		A frame can be toggled to be the topmost frame by calling Frame::setFrameTopmost().
+		A top most frame will be on the top of the Z-order of windows. This is typically 
+		called by frames that used as toolbar frames.
+<![CDATA[
+Window* newWindow = Window();
+
+//makes the frame float on top of all others
+newWindow->setFrameTopmost( true );
+newWindow->setBounds( 300, 300, 500, 500 );
+newWindow->show();
+]]>
+		</para>
 		</section>
 		<section><title>Window usage in the VFC</title>
+		A Window is simply created and then one can add controls to it. By default
+		the window instance is <emphasis>not</emphasis> visible when first created.
+		To make the window visible you must call the Window's show() method. For example,
+		let's create a window and add a multi-lined text control to it:
+		<programlisting>
+<![CDATA[
+Window* newWindow = Window();
+
+MultilineTextControl* edit = new MultilineTextControl ();
+newWindow->add( edit, AlignClient ); //add the text edit control
+
+//position the window at 300,300 
+//and give it a width/height of 500,500
+newWindow->setBounds( 300, 300, 500, 500 );
+
+//display the window!
+newWindow->show();
+]]>
+		</programlisting>
 		</section>
 
 	</section>
-	<section><title>Model View Controller</title>
+	<section><title>Model/View/Controller</title>
                 <para>
-		MVC, also known as Model-View-Controller, is a common pattern
+		MVC, also known as Model/View/Controller, is a common pattern
 		for implementing UI interaction between the User, the presentation,
 		and the data being viewed or modified. The pattern was pioneered in the
-		mid ot later 1970's at Xerox's PARC research center. It orginated in
+		mid to late 1970's at Xerox's PARC research center. It orginated in
 		Alan Kay's Learning Research Group, the same group that would take Kay's
 		Smalltalk language and implement it on PARC's Alto, Dorado, and later
 		the commercial Xerox Star computer systems. 
@@ -1415,7 +1777,7 @@ control->setView( view );
 	</section>
 	
 	<section><title>Control Focus and Activation </title>
-		<para>
+	<para>
 		A control with focus is able to receive
 		keyboard events. Without focus, <emphasis>no</emphasis> keyboard events will be 
 		received by the control. Only one control at a time may have the focus. 
@@ -1435,7 +1797,7 @@ control->setView( view );
 		
 	</section>
 	
-	<section><title>Accelerator Keys ("Hot Keys") </title>
+	<section id="Accelerator_Keys"><title>Accelerator Keys ("Hot Keys") </title>
 		<para>
 		</para>
 	</section>		
@@ -1453,6 +1815,24 @@ control->setView( view );
 <!--
 CVS Log info
 $Log$
+Revision 1.5  2005/07/09 23:14:09  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.4.2.5  2005/06/24 20:43:07  ddiego
+more updates to foundationkit docs.
+
+Revision 1.4.2.4  2005/06/15 21:02:41  ddiego
+updates
+
+Revision 1.4.2.3  2005/06/06 02:34:02  ddiego
+menu changes to better support win32 and osx.
+
+Revision 1.4.2.2  2005/06/02 19:52:27  ddiego
+updates to docs
+
+Revision 1.4.2.1  2005/06/01 21:05:23  ddiego
+docs udpates
+
 Revision 1.4  2004/12/03 03:06:01  ddiego
 minor doc changes
 

@@ -62,10 +62,21 @@ ProcessIORedirectionPeer* SystemToolkit::createProcessIORedirectionPeer( Process
 	return SystemToolkit::getSystemToolkit()->internal_createProcessIORedirectionPeer(process);
 }
 
-ThreadPeer* SystemToolkit::createThreadPeer( Thread* thread )
+ThreadPeer* SystemToolkit::createThreadPeer( Thread* thread, bool mainThread )
 {
-	return SystemToolkit::getSystemToolkit()->internal_createThreadPeer(thread);
+	return SystemToolkit::getSystemToolkit()->internal_createThreadPeer(thread,mainThread);
 }
+
+RunLoopPeer* SystemToolkit::createRunLoopPeer( RunLoop* runLoop )
+{
+	return SystemToolkit::getSystemToolkit()->internal_createRunLoopPeer(runLoop);
+}
+
+ThreadManagerPeer* SystemToolkit::createThreadManagerPeer()
+{
+	return SystemToolkit::getSystemToolkit()->internal_createThreadManagerPeer();
+}
+
 
 SystemPeer* SystemToolkit::createSystemPeer()
 {
@@ -126,6 +137,15 @@ ResourceBundlePeer* SystemToolkit::createResourceBundlePeer()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

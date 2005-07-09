@@ -28,12 +28,12 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book 0.6.6</title>
-	<titleabbrev>VCF Documentation 0.6.6</titleabbrev>
+<title>The VCF Book 0.6.8</title>
+	<titleabbrev>VCF Documentation 0.6.8</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
-			Copyright (c) 2000-2003, Jim Crafton
+			Copyright (c) 2000-2005, Jim Crafton
 			</para>
 			<para>
 			All rights reserved.
@@ -89,6 +89,7 @@ NB: This software will not save the world.
 			<year>2002</year>
 			<year>2003</year>
 			<year>2004</year>
+			<year>2005</year>
 			<holder>Jim Crafton, VCF Project</holder>
 		</copyright>
 
@@ -136,6 +137,13 @@ NB: This software will not save the world.
 			  <revremark>Added a few more examples</revremark>
 			</revision>
 
+			<revision>
+			  <revnumber>0.6.8</revnumber>
+			  <date>June 23 2005</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Added further documentation</revremark>
+			</revision>
+			
 		</revhistory>
 	</bookinfo>
 
@@ -183,6 +191,10 @@ NB: This software will not save the world.
 		</section>
 
 		<section><title>VCF Builder</title>
+		<para>
+		For more information regarding this project, please see the <ulink url="http://vcfbuilder.org/">VCF Builder website</ulink>
+		and/or the <ulink url="http://www.sourceforge.net/projects/vcfbuilder/">VCF Builder SourceForge project page</ulink>
+		</para>
 		</section>
 	</chapter>
 		
@@ -193,23 +205,15 @@ NB: This software will not save the world.
 			The VCF would like to thank the following people for contributing time and effort to project:
 			<simplelist>
 				<member>Marcello Pietrobon</member>
-				<member>Mike Goebel</member>				
-				<member>Cesar Mello</member>
-				<member>Henrique Sambiase</member>
-				<member>Vic Hargrave</member>
-				<member>Tiziano Franzoi</member>
-				<member>Ning Ke</member>				
-				<member>Endre Somogyi</member>
-				<member>Bobby Ward</member>
-				<member>Raghavendra Chandrashekara </member>
-				<member>Chandra Penke</member>
-				<member>Augusto Roman</member>
-				<member>Abelardo Gutierrez</member>
-				<member>Sorin Ionescu</member>
-				<member>Marcus Portmann</member>
-
-				<member>jacmoe</member>
 				<member>Doug Tinkham</member>
+				<member>Scott Pearson</member>	
+				<member>Ian Wallis</member>	
+				<member>Fraggle</member>	
+				<member>Mike Goebel</member>												
+				<member>Augusto Roman</member>
+				<member>Abelardo Gutierrez</member>				
+				<member>Marcus Portmann</member>
+				<member>jacmoe</member>				
 				<member>Ed Monjay</member>
 				<member>kiklop</member>
 				<member>Marc Weber</member>
@@ -217,7 +221,16 @@ NB: This software will not save the world.
 				<member>Alan Fischer</member>				
 				<member>ChrisKr</member>
 				<member>Darko Miletic</member>
-				
+				<member>Vic Hargrave</member>
+				<member>Tiziano Franzoi</member>
+				<member>Ning Ke</member>				
+				<member>Endre Somogyi</member>
+				<member>Bobby Ward</member>
+				<member>Raghavendra Chandrashekara </member>
+				<member>Chandra Penke</member>
+				<member>Cesar Mello</member>
+				<member>Henrique Sambiase</member>
+				<member>Sorin Ionescu</member>
 			</simplelist>
 			If we missed someone please let us know about it!
 			</para>
@@ -279,6 +292,15 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.7  2005/07/09 23:14:10  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.6.2.2  2005/06/27 05:56:36  dougtinkham
+0.6.x->0.6.8, (c) to 2005
+
+Revision 1.6.2.1  2005/06/24 20:51:30  ddiego
+more updates to foundationkit docs.
+
 Revision 1.6  2004/12/02 04:54:02  ddiego
 added some more documentation to the graphics kit classes.
 

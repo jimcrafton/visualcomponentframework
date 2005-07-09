@@ -31,6 +31,9 @@ DBGDLL=_d
 .c.obj:
       @$(CC) $(CFLAGS) -I$(INCDIR) -n$(OBJ) /c $<
 
+#This include sequence is added because of some visual studio
+#generated rc scripts
+#This will only work on CBuilder with installed support for MFC
 .rc.res:
       @echo Compiling $(<F)
-      @$(RC) $(RFLAGS) -fo$@ $< > NUL:
+      @$(RC) $(RFLAGS) -i$(MAKEDIR)\..\Include;$(MAKEDIR)\..\Include\Mfc -fo$@ $< > NUL:

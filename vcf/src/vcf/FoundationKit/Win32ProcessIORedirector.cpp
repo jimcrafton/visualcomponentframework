@@ -316,7 +316,7 @@ bool Win32ProcessIORedirector::createProcess( const String& processName, const S
 			((STARTUPINFOW*)startInfoPtr_)->hStdError = childStdoutWrHandle_;
 
 			VCFChar tmp[4096];
-			memset(tmp,0,4096*sizeof(VCFChar));
+			memset(tmp,0,sizeof(tmp));
 			shellCmdLine.copy( tmp, minVal<int>( 4095,shellCmdLine.size() ) );
 
 
@@ -339,7 +339,7 @@ bool Win32ProcessIORedirector::createProcess( const String& processName, const S
 			((STARTUPINFOA*)startInfoPtr_)->hStdError = childStdoutWrHandle_;
 
 			char tmp[4096];
-			memset(tmp,0,4096*sizeof(VCFChar));
+			memset(tmp,0,sizeof(tmp));
 			AnsiString tmp2 = shellCmdLine;
 
 			tmp2.copy( tmp, minVal<int>( 4095,tmp2.size() ) );
@@ -433,6 +433,12 @@ ulong32 Win32ProcessIORedirector::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:21:34  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

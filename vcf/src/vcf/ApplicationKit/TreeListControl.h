@@ -41,8 +41,7 @@ where you installed the VCF.
 #endif // _VCF_COLUMNMODELEVENT_H__
 
 
-namespace VCF
-{
+namespace VCF {
 
 class ImageList;
 
@@ -51,8 +50,9 @@ class HeaderControl;
 #define TREELISTCONTROL_CLASSID		"C7ED6506-98BD-45e9-ABCD-7704EE00A027"
 
 
-class APPLICATIONKIT_API TreeListControl : public CustomControl, public DelegatedContainer<TreeListControl>
-{
+
+
+class APPLICATIONKIT_API TreeListControl : public CustomControl, public DelegatedContainer<TreeListControl> {
 public:
 
 	TreeListControl();
@@ -107,6 +107,10 @@ public:
 
 	virtual void mouseUp( MouseEvent* event );
 
+	virtual void mouseDblClick(  MouseEvent* event );
+
+	virtual void keyDown( KeyboardEvent* e );
+
 	void setImageList( ImageList* imageList );
 
 	void setStateImageList( ImageList* imageList );
@@ -127,9 +131,7 @@ public:
 
 	bool getAllowLabelEditing();
 
-	void setAllowLabelEditing( const bool& allowLabelEditing );
-
-	virtual void setBounds( Rect* rect, const bool &anchorDeltasNeedUpdating=true );
+	void setAllowLabelEditing( const bool& allowLabelEditing );	
 
 	HeaderControl* getHeader() {
 		return header_;
@@ -167,8 +169,17 @@ public:
 	void showColumnHeader( const bool& show );
 
 	void clearSelectedItems();
+
+	TreeItem* getNextItem( TreeItem* item, bool skipChildren=false );
+	TreeItem* getPrevItem( TreeItem* item );
+
+	int hitTestForEditColumn( Point* pt );
+
+	Rect getBoundsForEdit( TreeItem* item, int column );
+
+	void scrollToNextItem( TreeItem* item, bool scrollDown ); 
 protected:
-	void onModelChanged( TreeModelEvent* event );
+	
 
 	HeaderControl* header_;
 
@@ -201,6 +212,12 @@ protected:
 	bool draggingSelectionRect_;
 	std::vector<TreeItem*> draggingSelectedItems_;
 
+	int currentEditColumn_;
+	Control* currentEditingControl_;
+
+	void onModelChanged( TreeModelEvent* event );
+	void onModelEmptied( Event* event );
+
 	bool singleSelectionChange( MouseEvent* event );
 	bool multiSelectionChange( MouseEvent* event );
 
@@ -225,11 +242,42 @@ protected:
 	double getCurrentIndent( TreeItem* item );
 
 	Rect getStateRect( TreeItem* item, const double& indent );
+	Rect getExpanderRect( TreeItem* item );
 
 	bool hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*>& hitTestList );
 
-	void recalcScrollable();
+	void recalcScrollable();	
 
+	void onEditingControlKeyPressed( KeyboardEvent* event );
+	void onEditorFocusLost( Event* e );
+	void postFinishedEditing( Event* e );
+
+	//editing functions 
+	void cancelEditing();
+	void finishEditing( bool applyEdit=true );
+	void editItem( TreeItem* item, Point* point );
+
+	//virtual functions - should be overriden in derived classes
+
+	/**
+	this is a no-op - sub classes need to derive this
+	*/
+	virtual void finishEditingItem( TreeItem* item, Control* editControl ) {};
+
+	/**
+	this is a no-op - sub classes need to derive this
+	*/
+	virtual Control* createEditor( TreeItem* item, int column ) {
+		return NULL;
+	}
+
+	/**
+	virtual function to control whether or not to allow an edit to finish due to 
+	focus loss. 
+	@return bool return true to enable the edit session to finish, otherwise
+	return false.
+	*/
+	virtual bool finishEditingFromFocusLoss( Control* lostFocusCtrl, Control* currentFocusedCtrl );
 };
 
 
@@ -239,6 +287,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/02/21 16:20:02  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

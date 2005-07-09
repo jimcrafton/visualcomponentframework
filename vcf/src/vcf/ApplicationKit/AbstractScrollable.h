@@ -158,6 +158,10 @@ public:
 	virtual bool getKeepHorzScrollbarVisible();
 	virtual bool getKeepVertScrollbarVisible();
 
+	virtual void setDiscreteScroll( const bool& horzDiscrete, const bool& vertDiscrete );
+	virtual bool getDiscreteHorzScroll();
+	virtual bool getDiscreteVertScroll();
+
 	void setVerticalScrollingDelegate( Delegate* delegate ) {
 		vertDelegate_ = delegate;
 	}
@@ -195,6 +199,8 @@ protected:
 	double rightScrollSpace_;
 	bool keepHorzScrollbarVisible_;
 	bool keepVertScrollbarVisible_;
+	bool discreteHorzScroll_;
+	bool discreteVertScroll_;
 	Delegate* vertDelegate_;
 	Delegate* horzDelegate_;
 
@@ -207,6 +213,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:50  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/01/15 00:52:38  marcelloptr
+*bugfix [ 1099910 ] plus other improvements of the scrolling
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

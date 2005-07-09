@@ -53,17 +53,10 @@ bool Win32FontDialog::execute()
 		chooseFont.lpLogFont = &logFont;
 		chooseFont.Flags = CF_SCREENFONTS | CF_EFFECTS | CF_INITTOLOGFONTSTRUCT;
 		Color* c = font_.getColor();
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
-		c->getRGB( r, g, b );
-		chooseFont.rgbColors = RGB( c->getRed()*255, c->getGreen()*255, c->getBlue()*255 );
+		chooseFont.rgbColors = c->getColorRef32();
 
 		if ( ChooseFontW( &chooseFont ) ){
-			r = GetRValue( chooseFont.rgbColors );
-			g = GetGValue( chooseFont.rgbColors );
-			b = GetBValue( chooseFont.rgbColors );
-			c->setRGB( r,g,b);
+			c->setColorRef32(chooseFont.rgbColors);
 			LOGFONTW* fontLogFont = (LOGFONTW*)font_.getFontPeer()->getFontHandleID();
 			memcpy( fontLogFont, chooseFont.lpLogFont, sizeof(LOGFONTW) );
 			result = true;
@@ -88,17 +81,10 @@ bool Win32FontDialog::execute()
 		chooseFont.lpLogFont = &logFont;
 		chooseFont.Flags = CF_SCREENFONTS | CF_EFFECTS | CF_INITTOLOGFONTSTRUCT;
 		Color* c = font_.getColor();
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
-		c->getRGB( r, g, b );
-		chooseFont.rgbColors = RGB( c->getRed()*255, c->getGreen()*255, c->getBlue()*255 );
+		chooseFont.rgbColors = c->getColorRef32();
 
 		if ( ChooseFontA( &chooseFont ) ){
-			r = GetRValue( chooseFont.rgbColors );
-			g = GetGValue( chooseFont.rgbColors );
-			b = GetBValue( chooseFont.rgbColors );
-			c->setRGB( r,g,b);
+			c->setColorRef32(chooseFont.rgbColors);
 			LOGFONTA* fontLogFont = (LOGFONTA*)font_.getFontPeer()->getFontHandleID();
 			memcpy( fontLogFont, chooseFont.lpLogFont, sizeof(LOGFONTA) );
 			result = true;
@@ -123,6 +109,15 @@ void Win32FontDialog::setSelectedFont( Font* selectedFont )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/26 01:53:03  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.2.4.1  2005/06/09 06:13:08  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

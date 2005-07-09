@@ -11,9 +11,16 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/DateTime.h"
 
-#ifdef VCF_OSX
+#ifdef VCF_OSX 
     #include <cxxabi.h>  //add this so we can demangle the GCC typeinfo names
 #endif
+
+#ifdef VCF_POSIX
+    #include <cxxabi.h>  //add this so we can demangle the GCC typeinfo names
+#endif
+
+
+
 
 #define TO_STRING_TXT_SIZE		50
 
@@ -39,7 +46,7 @@ text = StringUtils::convertFormatString( text );
 	VCFChar* buf = new VCFChar[MAX_TRACE_STRING];
 	memset( buf, 0, MAX_TRACE_STRING*sizeof(VCFChar) );
 
-#ifdef VCF_GCC
+#if defined(VCF_GCC) || defined(VCF_CW)
     #ifdef VCF_OSX
     CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
 
@@ -63,12 +70,17 @@ text = StringUtils::convertFormatString( text );
 
 	va_end( argList );              // Reset variable arguments.
 
+	StringUtils::trace( String("WARNING: Using deprecated function!!!\n") );
 	StringUtils::trace( String(buf) );
 
 	delete [] buf;
 //#endif
 }
 
+void StringUtils::traceWithArgs( const Format& formatter )
+{
+	StringUtils::trace( formatter );
+}
 
 void StringUtils::trace( const String& text )
 {
@@ -94,11 +106,11 @@ String StringUtils::trimLeft( const String& text, const char& c )
 	String result = text;
 
 	for (int n=0; n<result.length(); ++n) {
-		if (result[0] != c) {
+		if (result[n] != c) {
 			break;
 		}
-		result.erase(0,1);
 	}
+	result.erase(0,n);
 
 	return result;
 }
@@ -264,7 +276,7 @@ VCF::String StringUtils::toStringFromHexNumber( const uchar& value )
 	result = cfTmp;
 #else
 	VCFChar hexBytes[50];
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 	swprintf( hexBytes, sizeof(hexBytes)-1, L"%02X", value  );
 #else
 	swprintf( hexBytes, L"%02X", value );
@@ -285,7 +297,7 @@ VCF::String StringUtils::toString( const int& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_INT_CONVERSION, value  );
 	#else
 		swprintf( tmp, W_STR_INT_CONVERSION, value );
@@ -305,7 +317,7 @@ VCF::String StringUtils::toString( const VCF::uint32& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_UINT_CONVERSION, value  );
 	#else
 		swprintf( tmp, W_STR_UINT_CONVERSION, value );
@@ -325,7 +337,7 @@ VCF::String StringUtils::toString( const long& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_LONG_CONVERSION, value  );
 	#else
 		swprintf( tmp, W_STR_LONG_CONVERSION, value );
@@ -346,7 +358,7 @@ VCF::String StringUtils::toString( const VCF::ulong32& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, value  );
 	#else
 		swprintf( tmp, W_STR_ULONG_CONVERSION, value );
@@ -371,7 +383,7 @@ VCF::String StringUtils::toString( const VCF::long64& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		// if ( 0 != valHi )
 		// swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%lu%lu", value.hi(), value.lo() );
 		// would be a wrong implementation
@@ -398,7 +410,7 @@ VCF::String StringUtils::toString( const VCF::ulong64& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		// if ( 0 != valHi )
 		// swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%lu%lu", value.hi(), value.lo() );
 		// would be a wrong implementation
@@ -423,7 +435,7 @@ VCF::String StringUtils::toString( const float& value )
 #else
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%.5f", value  );
 	#else
 		swprintf( tmp, L"%.5f", value );
@@ -445,7 +457,7 @@ VCF::String StringUtils::toString( const double& value )
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
 
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%.5f", value  );
 	#else
 		swprintf( tmp, L"%.5f", value );
@@ -466,7 +478,7 @@ VCF::String StringUtils::toString( const char& value )
 	VCFChar tmp[TO_STRING_TXT_SIZE];
 	memset( tmp, 0, TO_STRING_TXT_SIZE * sizeof(VCFChar) );
 
-	#ifdef VCF_POSIX
+	#if defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_CHAR_CONVERSION, value  );
 	#else
 		swprintf( tmp, W_STR_CHAR_CONVERSION, value );
@@ -486,8 +498,11 @@ VCF::String StringUtils::newUUID()
 #ifdef WIN32
 	UUID id;
 	if ( RPC_S_OK == ::UuidCreate( &id ) ){
+#if defined(VCF_CW) && defined(UNICODE)
+		unsigned short *tmpid = NULL;
+#else
 		unsigned char *tmpid = NULL;
-
+#endif
 		RPC_STATUS rpcresult = UuidToString(  &id, &tmpid );
 
 		if ( RPC_S_OUT_OF_MEMORY != rpcresult ) {
@@ -508,8 +523,16 @@ VCF::String StringUtils::newUUID()
 	return result;
 }
 
+
+VCF::String StringUtils::format( const Format& formatter )
+{
+	return formatter;
+}
+
 VCF::String StringUtils::format( VCF::String formatText, ... )
 {
+	StringUtils::trace( String("WARNING: Using deprecated function!!!\n") );
+
 	VCF::String result = "";
 
 
@@ -536,7 +559,7 @@ VCF::String StringUtils::format( VCF::String formatText, ... )
 	CFRelease( res );
 	CFRelease( fmt );
 
-#elif VCF_POSIX
+#elif defined(VCF_POSIX) || defined(VCF_CW_W32)
 	vswprintf( buf, MAX_TRACE_STRING, formatText.c_str(), argList );
 #else
 	_vsnwprintf( buf, MAX_TRACE_STRING, formatText.c_str(), argList );
@@ -556,10 +579,24 @@ VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInf
 	VCF::String result = "";
 #ifdef WIN32 //don't know if we really need this here
 		std::string tmp = typeInfo.name();  //put back in when we find typeid
-		//strip out the preceding "class" or "enum" or whatever
-		std::string::size_type idx = tmp.find( " " );
-		if ( idx != tmp.npos ) {
-			tmp = tmp.substr( idx+1 );
+		if ( tmp != "void *" ) {//void* is a special case!
+			//strip out the preceding "class" or "enum" or whatever
+			std::string::size_type idx = tmp.find( "class " );
+			if ( idx != tmp.npos ) {
+				tmp = tmp.substr( idx+std::string("class ").size() );
+			}
+			else {
+				idx = tmp.find( "enum " );
+				if ( idx != tmp.npos ) {
+					tmp = tmp.substr( idx+std::string("enum ").size() );
+				}
+				else {
+					idx = tmp.find( "struct " );
+					if ( idx != tmp.npos ) {
+						tmp = tmp.substr( idx+std::string("struct ").size() );
+					}
+				}
+			}
 		}
 
 	#ifndef KEEP_NAMESPACE_IN_CLASSNAME
@@ -585,7 +622,7 @@ VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInf
 	/*
 		static String classPrefix( "class " );
 		String name( typeInfo.name() );
-
+#ifdef VCF_POSIX
 		// Work around gcc 3.0 bug: strip number before type name.
 		unsigned int firstNotDigitIndex = 0;
 		while ( firstNotDigitIndex < name.length()  &&
@@ -601,8 +638,14 @@ VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInf
 		}
 	*/
 	result = c_name;
+#elif VCF_POSIX
+	int status = 0;
+	char* c_name = 0;
+
+	c_name = abi::__cxa_demangle( typeInfo.name(), 0, 0, &status );
+	result = c_name;
 #else
-    result = typeInfo.name();
+	result = typeInfo.name();
 #endif
 
 	return result;
@@ -643,13 +686,30 @@ void check_true_error( const VCF::String& value )
 int StringUtils::fromStringAsHexNumber( const VCF::String& value )
 {
 	int result = 0;
-	#ifdef VCF_OSX
-		int ret = sscanf( value.ansi_c_str(), "%X", &result );
+
+	String::size_type size = value.size();
+
+#ifdef VCF_OSX
+		// is the string beginning with "0x" ?
+		const UnicodeString::AnsiChar* p = value.ansi_c_str();
+		if ( 2 < size ) {
+			if ( ( '0' == p[0] ) && ( 'x' == p[1] ) ) {
+				p += 2;
+			}
+		}
+		int ret = sscanf( p, "%X", &result );
 		if ( ret != 1 ) {
 			throw BasicException( L"Unable to convert: " + value );
 		}
 	#else
-		int ret = swscanf( value.c_str(), L"%X", &result );
+		// is the string beginning with "0x" ?
+		const UnicodeString::UniChar* p = value.c_str();
+		if ( 2 < size ) {
+			if ( ( '0' == p[0] ) && ( 'x' == p[1] ) ) {
+				p += 2;
+			}
+		}
+		int ret = swscanf( p, L"%X", &result );
 		if ( ret != 1 ) {
 			throw BasicException( L"Unable to convert: " + value );
 		}
@@ -1053,7 +1113,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%d - Day of month as decimal number (01 – 31)
+				//	%d - Day of month as decimal number (01  31)
 				case 'd' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1064,7 +1124,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), d );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[ minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, sizeof(tmp)-1, L"%d", d );
 						#else
 							swprintf( tmp, L"%d", d );
@@ -1078,7 +1138,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), d );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[ minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", d );
 						#else
 							swprintf( tmp, L"%02d", d );
@@ -1103,7 +1163,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 						cfStr.format( CFSTR("%d"), date.getDayOfYear() );
 						cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 						tmp[ minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-					#elif VCF_POSIX
+					#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 						swprintf( tmp, tmpLen-1, L"%d", date.getDayOfYear() );
 					#else
 						swprintf( tmp, L"%d", date.getDayOfYear() );
@@ -1117,7 +1177,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%H - Hour in 24-hour format (00 – 23)
+				//	%H - Hour in 24-hour format (00  23)
 				case 'H' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1128,7 +1188,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getHour() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getHour() );
 						#else
 							swprintf( tmp, L"%d", date.getHour() );
@@ -1142,7 +1202,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), date.getHour() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", date.getHour() );
 						#else
 							swprintf( tmp, L"%02d", date.getHour() );
@@ -1157,7 +1217,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%I - Hour in 12-hour format (01 – 12)
+				//	%I - Hour in 12-hour format (01  12)
 				case 'I' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1172,7 +1232,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), h );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[ minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", h );
 						#else
 							swprintf( tmp, L"%d", h );
@@ -1186,7 +1246,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), h );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", h );
 						#else
 							swprintf( tmp, L"%02d", h );
@@ -1202,7 +1262,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 					}
 				break;
 
-				//	%j - Day of year as decimal number (001 – 366)
+				//	%j - Day of year as decimal number (001  366)
 				case 'j' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1213,7 +1273,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getDayOfYear() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getDayOfYear()  );
 						#else
 							swprintf( tmp, L"%d", date.getDayOfYear()  );
@@ -1228,7 +1288,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%03d"), date.getDayOfYear() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%03d", date.getDayOfYear()  );
 						#else
 							swprintf( tmp, L"%03d", date.getDayOfYear()  );
@@ -1244,7 +1304,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%m - Month as decimal number (01 – 12)
+				//	%m - Month as decimal number (01  12)
 				case 'm' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1255,7 +1315,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), m );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", m  );
 						#else
 							swprintf( tmp, L"%d", m  );
@@ -1269,7 +1329,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), m );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", m  );
 						#else
 							swprintf( tmp, L"%02d", m  );
@@ -1285,7 +1345,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%M - Minute as decimal number (00 – 59)
+				//	%M - Minute as decimal number (00  59)
 				case 'M' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1296,7 +1356,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getMinute() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getMinute()  );
 						#else
 							swprintf( tmp, L"%d", date.getMinute()  );
@@ -1310,7 +1370,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), date.getMinute() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", date.getMinute()  );
 						#else
 							swprintf( tmp, L"%02d", date.getMinute()  );
@@ -1338,7 +1398,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%S - Second as decimal number (00 – 59)
+				//	%S - Second as decimal number (00  59)
 				case 'S' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1349,7 +1409,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getSecond() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getSecond()  );
 						#else
 							swprintf( tmp, L"%d", date.getSecond()  );
@@ -1363,7 +1423,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), date.getSecond() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", date.getSecond()  );
 						#else
 							swprintf( tmp, L"%02d", date.getSecond()  );
@@ -1380,7 +1440,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%U - Week of year as decimal number, with Sunday as first day of week (00 – 53)
+				//	%U - Week of year as decimal number, with Sunday as first day of week (00  53)
 				case 'U' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1391,7 +1451,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getWeekOfYearStartingSun() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getWeekOfYearStartingSun()  );
 						#else
 							swprintf( tmp, L"%d", date.getWeekOfYearStartingSun()  );
@@ -1405,7 +1465,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), date.getWeekOfYearStartingSun() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", date.getWeekOfYearStartingSun()  );
 						#else
 							swprintf( tmp, L"%02d", date.getWeekOfYearStartingSun()  );
@@ -1421,7 +1481,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%w - Weekday as decimal number (0 – 6; Sunday is 0)
+				//	%w - Weekday as decimal number (0  6; Sunday is 0)
 				case 'w' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1430,7 +1490,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 						cfStr.format( CFSTR("%d"), date.getWeekDay() );
 						cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 						tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-					#elif VCF_POSIX
+					#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 						swprintf( tmp, tmpLen-1, L"%d", (int)date.getWeekDay()  );
 					#else
 						swprintf( tmp, L"%d", (int)date.getWeekDay()  );
@@ -1444,7 +1504,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%W - Week of year as decimal number, with Monday as first day of week (00 – 53)
+				//	%W - Week of year as decimal number, with Monday as first day of week (00  53)
 				case 'W' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1455,7 +1515,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), date.getWeekOfYearStartingMon() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", date.getWeekOfYearStartingMon()  );
 						#else
 							swprintf( tmp, L"%d", date.getWeekOfYearStartingMon()  );
@@ -1469,7 +1529,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), date.getWeekOfYearStartingMon() );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", date.getWeekOfYearStartingMon()  );
 						#else
 							swprintf( tmp, L"%02d", date.getWeekOfYearStartingMon()  );
@@ -1508,7 +1568,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				}
 				break;
 
-				//	%y - Year without century, as decimal number (00 – 99)
+				//	%y - Year without century, as decimal number (00  99)
 				case 'y' : {
 					result.append( current, (P-current) -formatArgCount );
 
@@ -1519,7 +1579,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%d"), y % 100 );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%d", y % 100  );
 						#else
 							swprintf( tmp, L"%d", y % 100  );
@@ -1533,7 +1593,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 							cfStr.format( CFSTR("%02d"), y % 100 );
 							cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 							tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-						#elif VCF_POSIX
+						#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 							swprintf( tmp, tmpLen-1, L"%02d", y % 100  );
 						#else
 							swprintf( tmp, L"%02d", y % 100  );
@@ -1559,7 +1619,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 						cfStr.format( CFSTR("%04d"), y );
 						cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 						tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-					#elif VCF_POSIX
+					#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 						swprintf( tmp, tmpLen-1, L"%04d", y  );
 					#else
 						swprintf( tmp, L"%04d", y  );
@@ -1583,7 +1643,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 						cfStr.format( CFSTR("%04d"), date.getMillisecond() );
 						cfStr.copy( tmp, minVal<uint32>(cfStr.length(),tmpLen-1) );
 						tmp[minVal<uint32>(cfStr.length(),tmpLen-1) ] = 0;
-					#elif VCF_POSIX
+					#elif defined(VCF_POSIX) || defined(VCF_CW_W32) || defined(VCF_DMC)
 						swprintf( tmp, tmpLen-1, L"%04d", date.getMillisecond()  );
 					#else
 						swprintf( tmp, L"%04d", date.getMillisecond()  );
@@ -1634,10 +1694,575 @@ String StringUtils::convertFormatString( const String& formattedString )
 	#endif
 }
 
+VCF::String StringUtils::toString( const VariantData& value )
+{
+	return value.toString();
+}
+
+VCF::String StringUtils::translateVKCodeToString( VirtualKeyCode code )
+{
+	VCF::String result;
+
+	switch ( code ) {
+		case vkF1: {			
+			result = "F1";
+		}
+		break;
+		
+		case vkF2: {			
+			result = "F2";
+		}
+		break;
+
+		case vkF3: {			
+			result = "F3";
+		}
+		break;
+
+		case vkF4: {			
+			result = "F4";
+		}
+		break;
+
+		case vkF5: {			
+			result = "F5";
+		}
+		break;
+
+		case vkF6: {			
+			result = "F6";
+		}
+		break;
+
+		case vkF7: {			
+			result = "F7";
+		}
+		break;
+
+		case vkF8: {			
+			result = "F8";
+		}
+		break;
+
+		case vkF9: {			
+			result = "F9";
+		}
+		break;
+
+		case vkF10: {			
+			result = "F10";
+		}
+		break;
+
+		case vkF11: {			
+			result = "F11";
+		}
+		break;
+
+		case vkF12: {			
+			result = "F12";
+		}
+		break;
+
+		case vkUpArrow: {			
+			result = "Up";
+		}
+		break;
+
+		case vkDownArrow: {			
+			result = "Down";
+		}
+		break;
+
+		case vkLeftArrow: {			
+			result = "Left";
+		}
+		break;
+
+		case vkRightArrow: {			
+			result = "Right";
+		}
+		break;
+
+		case vkPgUp: {
+			result = "Page Up";
+		}
+		break;
+
+		case vkPgDown: {
+			result = "Page Down";
+		}
+		break;
+
+		case vkHome: {
+			result = "Home";
+		}
+		break;
+
+		case vkEnd: {
+			result = "End";
+		}
+		break;
+
+		case vkInsert: {
+			result = "Ins";
+		}
+		break;
+
+		case vkDelete: {
+			result = "Del";
+		}
+		break;
+
+		case vkBackSpace: {
+			result = "Back";
+		}
+		break;
+
+		case vkNumber0: {
+			result = "0";
+		}
+		break;
+
+		case vkNumber1: {
+			result = "1";
+		}
+		break;
+
+		case vkNumber2: {
+			result = "2";
+		}
+		break;
+
+		case vkNumber3: {
+			result = "3";
+		}
+		break;
+
+		case vkNumber4: {
+			result = "4";
+		}
+		break;
+
+		case vkNumber5: {
+			result = "5";
+		}
+		break;
+
+		case vkNumber6: {
+			result = "6";
+		}
+		break;
+
+		case vkNumber7: {
+			result = "7";
+		}
+		break;
+
+		case vkNumber8: {
+			result = "8";
+		}
+		break;
+
+		case vkNumber9: {
+			result = "9";
+		}
+		break;
+
+		case vkLetterA: {
+			result = "A";
+		}
+		break;
+
+		case vkLetterB: {
+			result = "B";
+		}
+		break;
+
+		case vkLetterC: {
+			result = "C";
+		}
+		break;
+
+		case vkLetterD: {
+			result = "D";
+		}
+		break;
+
+		case vkLetterE: {
+			result = "E";
+		}
+		break;
+
+		case vkLetterF: {
+			result = "F";
+		}
+		break;
+			
+		case vkLetterG: {
+			result = "G";
+		}
+		break;
+
+		case vkLetterH: {
+			result = "H";
+		}
+		break;
+
+		case vkLetterI: {
+			result = "I";
+		}
+		break;
+
+		case vkLetterJ: {
+			result = "J";
+		}
+		break;
+
+		case vkLetterK: {
+			result = "K";
+		}
+		break;
+
+		case vkLetterL: {
+			result = "L";
+		}
+		break;
+
+		case vkLetterM: {
+			result = "M";
+		}
+		break;
+
+		case vkLetterN: {
+			result = "N";
+		}
+		break;
+
+		case vkLetterO: {
+			result = "O";
+		}
+		break;
+
+		case vkLetterP: {
+			result = "P";
+		}
+		break;
+
+		case vkLetterQ: {
+			result = "Q";
+		}
+		break;
+
+		case vkLetterR: {
+			result = "R";
+		}
+		break;
+
+		case vkLetterS: {
+			result = "S";
+		}
+		break;
+
+		case vkLetterT: {
+			result = "T";
+		}
+		break;
+
+		case vkLetterU: {
+			result = "U";
+		}
+		break;
+
+		case vkLetterV: {
+			result = "V";
+		}
+		break;
+
+		case vkLetterW: {
+			result = "W";
+		}
+		break;
+
+		case vkLetterX: {
+			result = "X";
+		}
+		break;
+
+		case vkLetterY: {
+			result = "Y";
+		}
+		break;
+
+		case vkLetterZ: {
+			result = "Z";
+		}
+		break;
+
+		case vkSpaceBar: {
+			result = "Space";
+		}
+		break;
+
+		case vkReturn: {
+			result = "Enter";
+		}
+		break;
+
+		case vkAlt: {
+			result = "Alt";
+		}
+		break;
+
+		case vkShift: {
+			result = "Shift";
+		}
+		break;
+
+		case vkCtrl: {
+			result = "Ctrl";
+		}
+		break;
+
+		case vkTab: {
+			result = "Tab";
+		}
+		break;
+
+		case vkEscape: {
+			result = "Esc";
+		}
+		break;
+
+		case vkLeftApostrophe: {
+			result = "`";
+		}
+		break;
+			//`
+		case vkTilde: {
+			result = "~";
+		}
+		break;
+					//~
+		case vkExclamation: {
+			result = "!";
+		}
+		break;
+				//!
+		case vkCommercialAt: {
+			result = "@";
+		}
+		break;
+				//@
+		case vkNumberSign: {
+			result = "#";
+		}
+		break;
+				//#
+		case vkDollarSign: {
+			result = "$";
+		}
+		break;
+				//$
+		case vkPercent: {
+			result = "%";
+		}
+		break;
+					//%
+		case vkCircumflex: {
+			result = "^";
+		}
+		break;
+				//^
+		case vkAmpersand: {
+			result = "&";
+		}
+		break;
+				//&
+		case vkAsterix: {
+			result = "*";
+		}
+		break;
+					//*
+		case vkOpenParen: {
+			result = "(";
+		}
+		break;
+				//(
+		case vkCloseParen: {
+			result = ")";
+		}
+		break;
+				//)
+		case vkHyphen: {
+			result = "-";
+		}
+		break;
+					//-
+		case vkUnderbar: {
+			result = "_";
+		}
+		break;
+					//_
+		case vkEqualsSign: {
+			result = "=";
+		}
+		break;
+				//=
+		case vkPlusSign: {
+			result = "+";
+		}
+		break;
+					//+
+		case vkUprightBar: {
+			result = "|";
+		}
+		break;
+				//|
+		case vkBackSlash: {
+			result = "\\";
+		}
+		break;
+				/* \   */
+		case vkOpenBracket: {
+			result = "[";
+		}
+		break;
+				//[
+		case vkOpenBrace: {
+			result = "{";
+		}
+		break;
+				//{
+		case vkCloseBracket: {
+			result = "]";
+		}
+		break;
+				//]
+		case vkCloseBrace: {
+			result = "}";
+		}
+		break;
+				//}
+		case vkSemiColon: {
+			result = ";";
+		}
+		break;
+
+		case vkColon: {
+			result = ":";
+		}
+		break;
+
+		case vkSingleQuote: {
+			result = "'";
+		}
+		break;
+
+		case vkDoubleQuote: {
+			result = "\"";
+		}
+		break;
+
+		case vkComma: {
+			result = ",";
+		}
+		break;
+
+		case vkLessThan: {
+			result = "<";
+		}
+		break;
+
+		case vkPeriod: {
+			result = ".";
+		}
+		break;
+
+		case vkGreaterThan: {
+			result = ">";
+		}
+		break;
+
+		case vkForwardSlash: {
+			result = "/";
+		}
+		break;
+
+		case vkQuestionMark: {
+			result = "?";
+		}
+		break;
+
+		//miscellaneous
+		case vkPrintScreen: {
+			result = "Print Screen";
+		}
+		break;
+
+		case vkScrollLock: {
+			result = "Scroll Lock";
+		}
+		break;
+
+		case vkPause: {
+			result = "Pause";
+		}
+		break;
+
+		case vkCapsLock: {
+			result = "Caps Lock";
+		}
+		break;
+
+	}
+
+	return result;
+}
+
+
+
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.10  2005/06/25 21:49:06  marcelloptr
+*fixes on trimLeft and fromStringAsHexNumber
+*
+*Revision 1.3.2.9  2005/04/18 12:41:29  dougtinkham
+*changes for DMC
+*
+*Revision 1.3.2.8  2005/04/18 04:26:25  dougtinkham
+*change for DMC, on swprintf calls
+*
+*Revision 1.3.2.7  2005/04/17 16:11:32  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
+*
+*Revision 1.3.2.6  2005/04/13 02:50:45  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.3.2.5  2005/04/11 17:07:12  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
+*Revision 1.3.2.4  2005/03/15 01:51:51  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.3  2005/03/14 05:44:51  ddiego
+*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
+*
+*Revision 1.3.2.2  2005/03/14 04:17:24  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:33  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

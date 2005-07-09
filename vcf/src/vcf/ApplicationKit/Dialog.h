@@ -105,7 +105,8 @@ public:
 		msDefault = 0,
 		msError,
 		msInfo,
-		msWarning
+		msWarning,
+		msQuestion,
 	};
 
 	enum MessageButtons {
@@ -263,6 +264,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/07 21:16:24  marcelloptr
+*added Dialog::msQuestion
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

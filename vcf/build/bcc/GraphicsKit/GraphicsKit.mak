@@ -68,28 +68,27 @@ SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_GRAPHICSKIT_LIB;$(SYSDEFINES)
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
 CPPFILES=GraphicsKit.cpp \
-	GraphicsToolKit.cpp \
-	AbstractImage.cpp \
-	BasicFill.cpp \
-	BasicStroke.cpp \
-	BezierCurve.cpp \
-	Color.cpp \
-	Font.cpp \
-	GlyphCollection.cpp \
-	GraphicsContext.cpp \
-	GraphicsResourceBundle.cpp \
-	ImageEvent.cpp \
-	Matrix2D.cpp \
-	Point.cpp \
-	PrintSession.cpp \
-	Rect.cpp \
-	Win32Context.cpp \
-	Win32Font.cpp \
-	Win32FontManager.cpp \
-	Win32GraphicsResourceBundle.cpp \
-	Win32GraphicsToolkit.cpp \
-	Win32Image.cpp \
-	Win32PrintSession.cpp
+         GraphicsToolKit.cpp \
+         AbstractImage.cpp \
+         BasicFill.cpp \
+         BasicStroke.cpp \
+         BezierCurve.cpp \
+         Color.cpp \
+         Font.cpp \
+         GraphicsContext.cpp \
+         GraphicsResourceBundle.cpp \
+         ImageEvent.cpp \
+         Matrix2D.cpp \
+         Point.cpp \
+         PrintSession.cpp \
+         Rect.cpp \
+         Win32Context.cpp \
+         Win32Font.cpp \
+         Win32FontManager.cpp \
+         Win32GraphicsResourceBundle.cpp \
+         Win32GraphicsToolkit.cpp \
+         Win32Image.cpp \
+         Win32PrintSession.cpp
 	
 OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=ODBC32.LIB UUID.LIB

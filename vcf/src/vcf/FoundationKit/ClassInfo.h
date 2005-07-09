@@ -106,91 +106,6 @@ protected:
 }; //end of namespace VCF
 
 
-/**
-*Object creation macros
-*/
-
-/**
-*makes create with the default constructor pattern, i.e.
-*a create() method with no arguments
-*/
-#define CREATE( ClassType ) \
-	static ClassType* create() {\
-		ClassType* result = new ClassType();\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-/**
-*makes a create() method with the copy constructor pattern.
-*The create() method takes a pointer to a object instance
-*of the same type.
-*@param ClassType a pointer an object to copy it's
-*initial data from
-*/
-#define CREATE_COPY( ClassType ) \
-	static ClassType* create( ClassType* ClassType##Val ) {\
-		ClassType* result = new ClassType( *ClassType##Val );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-
-/**
-*makes a create() method with a single argument. Requires a
-*constructor to also be declared that accepts a single argument
-*of the same type.
-*@param ArgType the type of argument to use in the create() method
-*/
-#define CREATE_1( ClassType, ArgType ) \
-	static ClassType* create( ArgType arg ) {\
-		ClassType* result = new ClassType( arg );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-#define CREATE_2( ClassType, ArgType1, ArgType2 ) \
-	static ClassType* create( ArgType1 arg1,  ArgType2 arg2 ) {\
-		ClassType* result = new ClassType( arg1, arg2 );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-#define CREATE_3( ClassType, ArgType1, ArgType2, ArgType3 ) \
-	static ClassType* create( ArgType1 arg1,  ArgType2 arg2, ArgType3 arg3 ) {\
-		ClassType* result = new ClassType( arg1, arg2, arg3 );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-#define CREATE_4( ClassType, ArgType1, ArgType2, ArgType3, ArgType4 ) \
-	static ClassType* create( ArgType1 arg1,  ArgType2 arg2, ArgType3 arg3, ArgType4 arg4 ) {\
-		ClassType* result = new ClassType( arg1, arg2, arg3, arg4 );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-#define CREATE_5( ClassType, ArgType1, ArgType2, ArgType3, ArgType4, ArgType5 ) \
-	static ClassType* create( ArgType1 arg1,  ArgType2 arg2, ArgType3 arg3, ArgType4 arg4, ArgType5 arg5 ) {\
-		ClassType* result = new ClassType( arg1, arg2, arg3, arg4, arg5 );\
-		result->init(); \
-		return result;\
-	};\
-	\
-
-#define CREATE_6( ClassType, ArgType1, ArgType2, ArgType3, ArgType4, ArgType5, ArgType6 ) \
-	static ClassType* create( ArgType1 arg1,  ArgType2 arg2, ArgType3 arg3, ArgType4 arg4, ArgType5 arg5, ArgType6 arg6 ) {\
-		ClassType* result = new ClassType( arg1, arg2, arg3, arg4, arg5, arg6 );\
-		result->init(); \
-		return result;\
-	};\
-	\
 
 
 #ifdef VCF_RTTI
@@ -219,6 +134,8 @@ protected:
 *This macro must be paired with the END_CLASSINFO macro once
 *you are finished defining your RTTI.
 */
+
+/*
 #define BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID ) \
 	class ClassType##_rtti_ClassInfo : public VCF::ClassInfo<ClassType> { \
 	public: \
@@ -228,6 +145,7 @@ protected:
 			if ( true == isClassRegistered()  ){ \
 			\
 
+*/
 /**
 *When defining your classes RTTI info in the VCF you will always start
 *with either this macro or the BEGIN_ABSTRACT_CLASSINFO macro.
@@ -248,6 +166,8 @@ protected:
 *This macro must be paired with the END_CLASSINFO macro once
 *you are finished defining your RTTI.
 */
+
+/*
 #define BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, classID ) \
 	class ClassType##_rtti_ClassInfo : public VCF::AbstractClassInfo<ClassType> { \
 	public: \
@@ -256,6 +176,7 @@ protected:
 			VCF::String tmpClassName = ClassName; \
 			if ( true == isClassRegistered()  ){ \
 			\
+*/
 
 /**
 *When defining your interfaces RTTI info in the VCF you will always start
@@ -296,7 +217,7 @@ protected:
 		\
 
 
-
+/*
 #define FIELD(SourceType,FieldType,Field)\
 	VCF::registerFieldType<FieldType>( tmpClassName, VCF::String(#Field), offsetof(SourceType,Field) );\
 	\
@@ -306,24 +227,7 @@ protected:
 	\
 
 
-/**
-*Registers that the class fires an event. By declaring this it is expected that
-*there are methods for adding event handler of the specified type that fire
-*events of the specified event type.
-*@param handlerClassName the name of the EventHandler derived class. This class
-*will contain a method pointer to some source object that wants to get notified
-*for the event.
-*@param eventClassName the class name of the Event type that is fired
-*by this class.
-*@param eventMethod the method name that is used in the supporting
-*event methods. So you might pass in "StreamExhausted". You could then
-*expect to find methods as follows declared in the class:
-*<pre>
-*   void addStreamExhaustedHandler( EventHandler* handler ) ;
-*   void removeStreamExhaustedHandler( EventHandler* handler ) ;
-*   void fireOnStreamExhausted( eventClassName* event ) ;
-*</pre>
-*/
+
 #define EVENT(handlerClassName,SourceType,EventType,DelegateID) \
 		VCF::registerEvent<SourceType,EventType>( NULL, NULL, tmpClassName, \
 							VCF::String(handlerClassName), VCF::String(#EventType), \
@@ -463,6 +367,7 @@ protected:
 												  (VCF::TypedObjectCollectionProperty<type>::DeleteFunction1)&deleteFunc1, \
 												  (VCF::TypedObjectCollectionProperty<type>::DeleteFunction2)&deleteFunc2 ); \
 										            \
+*/
 
 #define METHOD_VOID( classType, method ) \
 	{\
@@ -810,6 +715,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:02  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

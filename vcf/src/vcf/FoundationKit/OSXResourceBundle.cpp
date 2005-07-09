@@ -22,6 +22,10 @@ CFBundleRef OSXResourceBundle::getBundle()
 	return CFBundleGetMainBundle();
 }
 
+OSHandleID OSXResourceBundle::getHandleID()
+{
+	return (OSHandleID)getBundle();
+}
 
 String OSXResourceBundle::getString( const String& resourceName )
 {

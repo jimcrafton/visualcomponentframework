@@ -99,6 +99,20 @@ public:
 		ctx->setCurrentStroke( &stroke );
 
 		/**
+		Add a dash pattern to the stroke.
+		*/
+		stroke.addDash( 10.0, 5.0 );
+		stroke.addDash( 3.0,  5.0 );
+
+		/** 
+		Start dashing pattern at 15.0 (10.0 + 5.0), so the first part
+		of line displayed will correspond to the short dashed segment
+		specified above (3.0). 
+		*/
+		stroke.dashStart( 15.0 );	
+		
+		
+		/**
 		Add two points to the path
 		*/
 		shape.moveTo( 100, 100 );
@@ -112,6 +126,13 @@ public:
 		*/
 		ctx->draw( &shape );
 
+		/**
+		Remove dash from stroke, so any use of stroke
+		below will NOT be dashed.
+		*/
+		stroke.removeDashes();
+		
+		
 		/**
 		Adjust the GraphicsContext's matrix
 		to offset by 0 pixels to the left, and 50 pixel down
@@ -274,6 +295,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:14:45  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.5.4.1  2005/02/01 19:45:02  dougtinkham
+*added dashing
+*
 *Revision 1.5  2004/08/07 02:47:38  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

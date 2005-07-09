@@ -24,7 +24,7 @@ public:
     };
 
     /* Creates a normal priority, joinable thread */
-    OSXThread( Thread* thread );
+    OSXThread( Thread* thread, bool mainThread );
 
     /* Cancels the thread if it is still running */
 	virtual ~OSXThread();
@@ -80,8 +80,14 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.5  2005/07/09 23:15:04  ddiego
+ *merging in changes from devmain-0-6-7 branch.
+ *
  *Revision 1.4  2005/01/08 20:52:47  ddiego
  *fixed some glitches in osx impl.
+ *
+ *Revision 1.3.4.1  2005/05/08 19:55:32  ddiego
+ *osx updates, not yet functional.
  *
  *Revision 1.3  2004/08/08 22:09:33  ddiego
  *final checkin before the 0-6-5 release

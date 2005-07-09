@@ -49,6 +49,7 @@ DefaultListItem::~DefaultListItem()
 
 void DefaultListItem::init()
 {
+	state_ = Item::idsNone;
 	tag_ = -1;
 	model_ = NULL;
 	owningControl_ = NULL;
@@ -207,6 +208,12 @@ void DefaultListItem::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

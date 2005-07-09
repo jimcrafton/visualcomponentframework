@@ -307,13 +307,13 @@ public:
 		String result = "";
 
 		if ( true == namesAvailable_ ){
-			result = enumNames_[get()];
+			int index = get();
+			if ( (index >= lower_) && (index <= upper_) ) {				
+				result = enumNames_[index];
+			}
 		}
 		else {
-			char tmp[25];
-			memset( tmp, 0, 25 );
-			sprintf( tmp, "%d", get() );
-			result += tmp;
+			result += get();
 		}
 		return result;
 	};
@@ -2406,6 +2406,89 @@ public:
 
 
 
+/*
+pdUndefined = 0,
+	pdInt,
+	pdLong,
+	pdShort,
+	pdULong,
+	pdFloat,
+	pdChar,
+	pdDouble,
+	pdObject,
+	pdBool,
+	pdString,
+	pdEnum,
+	pdInterface,
+	pdEnumMask
+*/
+static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
+{
+	PropertyDescriptorType result = pdUndefined;
+
+	String typeName = typeInfo.name();
+
+#ifdef WIN32 //don't know if we really need this here		
+		//strip out the preceding "class" or "enum" or whatever
+		std::string::size_type idx = typeName.find( " " );
+		if ( idx != typeName.npos ) {
+			typeName = typeName.substr( idx+1 );
+		}
+#endif
+
+
+	if ( typeName.find( "basic_string" ) != String::npos ) {
+		result = pdString;
+	}
+	else if ( typeName.find( "UnicodeString" ) != String::npos ) {
+		result = pdString;
+	}
+	else if ( typeName.find( "AnsiString" ) != String::npos ) {
+		result = pdString;
+	}
+	else if ( typeName.find( "int" ) != String::npos ) {
+		result = pdInt;
+	}
+	else if ( typeName.find( "unsigned" ) != String::npos ) {
+		
+		if ( typeName.find( "long" ) != String::npos ) {
+			result = pdULong;
+		}
+		else if ( typeName.find( "int" ) != String::npos ) {
+			result = pdULong;
+		}
+		else if ( typeName.find( "short" ) != String::npos ) {
+			result = pdShort;
+		}
+		else if ( typeName.find( "char" ) != String::npos ) {
+			result = pdChar;
+		}
+	}
+	else if ( typeName.find( "long" ) != String::npos ) {
+		result = pdLong;
+	}
+	else if ( typeName.find( "short" ) != String::npos ) {
+		result = pdShort;
+	}
+	else if ( typeName.find( "char" ) != String::npos ) {
+		result = pdChar;
+	}
+	else if ( typeName.find( "double" ) != String::npos ) {
+		result = pdDouble;
+	}
+	else if ( typeName.find( "float" ) != String::npos ) {
+		result = pdFloat;
+	}
+	else if ( typeName.find( "bool" ) != String::npos ) {
+		result = pdBool;
+	}
+	else if ( !typeName.empty() ) {
+		result = pdObject;
+	}
+
+
+	return result;
+}
 
 
 
@@ -2425,42 +2508,48 @@ public:
 *setting values on the property
 *@param PropertyDescriptorType the property type
 */
-template <class PROPERTY_TYPE>  void registerPrimitiveProperty( const String& className,
-                                                 const String& propertyName,
-                                                 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-                                                 _typename_ TypedProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
-                                                 const PropertyDescriptorType& propertyFieldDescriptor ){
 
-
+template <typename PROPERTY_TYPE>  
+void registerPrimitiveProperty( const String& className,
+								 const String& propertyName,
+								 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+								 _typename_ TypedProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+								 const String& description ){
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedProperty<PROPERTY_TYPE>* newProperty =
-							new TypedProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                             propertySetFunction,
-														 propertyFieldDescriptor );
+			TypedProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedProperty<PROPERTY_TYPE>( propertyGetFunction, 
+							                             propertySetFunction, 
+														 getDescriptor(typeid(PROPERTY_TYPE)) );
+			newProperty->setDescription( description );
 			newProperty->setName( propertyName );
 			clazz->addProperty( newProperty );
 		}
 	}
 }
 
-template <class PROPERTY_TYPE>  void registerTypeDefProperty( const String& className,
-                                                 const String& propertyName,
-                                                 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-                                                 _typename_ TypedProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
-                                                 const PropertyDescriptorType& propertyFieldDescriptor,
-												 const String& typeDefName ){
-
-
+template <typename PROPERTY_TYPE>  
+void registerTypeDefProperty( const String& className,
+                                 const String& propertyName,
+                                 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+                                 _typename_ TypedProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+                                 const String& typeDefName,
+								const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypeDefProperty<PROPERTY_TYPE>* newProperty =
-							new TypeDefProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                             propertySetFunction,
-														 propertyFieldDescriptor, typeDefName  );
+			TypeDefProperty<PROPERTY_TYPE>* newProperty = 
+							new TypeDefProperty<PROPERTY_TYPE>( propertyGetFunction, 
+							                             propertySetFunction, 
+														 getDescriptor(typeid(PROPERTY_TYPE)), typeDefName  );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2477,39 +2566,43 @@ template <class PROPERTY_TYPE>  void registerTypeDefProperty( const String& clas
 *retreiving values from the property
 *@param PropertyDescriptorType the property type
 */
-template <class PROPERTY_TYPE>  void registerPrimitiveReadOnlyProperty(
-												 const String& className,
-												 const String& propertyName,
-												 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												 const PropertyDescriptorType& propertyFieldDescriptor ){
-
-
+template <typename PROPERTY_TYPE>  
+void registerPrimitiveReadOnlyProperty( const String& className, 
+										 const String& propertyName,
+										 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+										 const String& description ){
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedProperty<PROPERTY_TYPE>* newProperty =
-							new TypedProperty<PROPERTY_TYPE>( propertyGetFunction,
-														 propertyFieldDescriptor );
+			TypedProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedProperty<PROPERTY_TYPE>( propertyGetFunction, 
+														 getDescriptor(typeid(PROPERTY_TYPE)) );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
 }
 
-template <class PROPERTY_TYPE>  void registerTypeDefReadOnlyProperty( const String& className,
+
+template <typename PROPERTY_TYPE>  
+void registerTypeDefReadOnlyProperty( const String& className,
                                                  const String& propertyName,
-                                                 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-                                                 const PropertyDescriptorType& propertyFieldDescriptor,
-												 const String& typeDefName ){
-
-
+                                                 _typename_ TypedProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,                                                 
+                                                 const String& typeDefName,
+												 const String& description ){
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypeDefProperty<PROPERTY_TYPE>* newProperty =
-							new TypeDefProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                             propertySetFunction, typeDefName  );
+			TypeDefProperty<PROPERTY_TYPE>* newProperty = 
+							new TypeDefProperty<PROPERTY_TYPE>( propertyGetFunction, 
+							                             getDescriptor(typeid(PROPERTY_TYPE)), typeDefName  );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2525,32 +2618,39 @@ template <class PROPERTY_TYPE>  void registerTypeDefReadOnlyProperty( const Stri
 *@param TypedObjectProperty<PROPERTY_TYPE>::GetFunction - the property's get function, allows for
 *retreiving values from the property
 */
-template <class PROPERTY_TYPE>  void registerObjectReadOnlyProperty( const String& className,
-												         const String& propertyName,
-												         _typename_ TypedObjectProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction ){
-
-
+template <typename PROPERTY_TYPE>
+void registerObjectReadOnlyProperty( const String& className, 
+									 const String& propertyName,
+									 _typename_ TypedObjectProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+									 const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedObjectProperty<PROPERTY_TYPE>* newProperty =
+			TypedObjectProperty<PROPERTY_TYPE>* newProperty = 
 							new TypedObjectProperty<PROPERTY_TYPE>( propertyGetFunction );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
 }
 
-template <class PROPERTY_TYPE>  void registerObjectReadOnlyPropertyRef( const String& className, const String& propertyName,
-												_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction ){
-
-
+template <typename PROPERTY_TYPE>
+void registerObjectReadOnlyPropertyRef( const String& className, const String& propertyName,
+										_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+										const String& description ){
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedObjectRefProperty<PROPERTY_TYPE>* newProperty =
+			TypedObjectRefProperty<PROPERTY_TYPE>* newProperty = 
 							new TypedObjectRefProperty<PROPERTY_TYPE>( propertyGetFunction );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2568,17 +2668,21 @@ template <class PROPERTY_TYPE>  void registerObjectReadOnlyPropertyRef( const St
 *@param PROPERTY_TYPE the lower bound of enum
 *@param PROPERTY_TYPE the upper bound of enum
 */
-template <class PROPERTY_TYPE>  void registerEnumReadOnlyProperty( const String& className, const String& propertyName,
-												         _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												         PROPERTY_TYPE lower, PROPERTY_TYPE upper ){
-
-
+template <class PROPERTY_TYPE>  
+void registerEnumReadOnlyProperty( const String& className, const String& propertyName,
+								 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+								 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
+								const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedEnumProperty<PROPERTY_TYPE>* newProperty =
+			TypedEnumProperty<PROPERTY_TYPE>* newProperty = 
 							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction, lower, upper );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2600,23 +2704,27 @@ template <class PROPERTY_TYPE>  void registerEnumReadOnlyProperty( const String&
 *@param String a pointer to an array of Strings that holds a human
 *readable value for each enum type.
 */
-template <class PROPERTY_TYPE>  void registerEnumReadOnlyPropertyWithLabels( const String& className, const String& propertyName,
-												         _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												         PROPERTY_TYPE lower, PROPERTY_TYPE upper,
-												         const unsigned long& enumNameCount,
-												         String* enumNames ){
-
-
+template <typename PROPERTY_TYPE>  
+void registerEnumReadOnlyPropertyWithLabels( const String& className, const String& propertyName,
+											 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+											 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
+											 const unsigned long& enumNameCount, 
+											 String* enumNames,
+											 const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedEnumProperty<PROPERTY_TYPE>* newProperty =
-							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction,
-															 NULL,
+			TypedEnumProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction, 
+															 NULL,			
 															 lower, upper,
 															 enumNameCount,
 															 enumNames );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2628,21 +2736,24 @@ template <class PROPERTY_TYPE>  void registerEnumReadOnlyPropertyWithLabels( con
 
 
 static void registerEnumSetReadOnlyPropertyWithLabels( const String& className, const String& propertyName,
-												         EnumSetProperty::GetFunction propertyGetFunction,
-												         const unsigned long& enumNameCount,
-														 unsigned long* enumMaskValues,
-												         String* enumNames ){
-
-
+												         EnumSetProperty::GetFunction propertyGetFunction,												         
+												         const unsigned long& enumNameCount, 
+														 unsigned long* enumMaskValues, 
+												         String* enumNames,
+														 const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			EnumSetProperty* newProperty =
+			EnumSetProperty* newProperty = 
 							new EnumSetProperty( propertyGetFunction,
 												enumNameCount,
 												enumMaskValues,
 												enumNames );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2651,23 +2762,25 @@ static void registerEnumSetReadOnlyPropertyWithLabels( const String& className, 
 static void registerEnumSetPropertyWithLabels( const String& className, const String& propertyName,
 								         EnumSetProperty::GetFunction propertyGetFunction,
 										 EnumSetProperty::SetFunction propertySetFunction,
-								         const unsigned long& enumNameCount,
-										 unsigned long* enumMaskValues,
-								         String* enumNames ){
-
-
+								         const unsigned long& enumNameCount, 
+										 unsigned long* enumMaskValues, 
+								         String* enumNames,
+										 const String& description ){
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			EnumSetProperty* newProperty =
+			EnumSetProperty* newProperty = 
 							new EnumSetProperty( propertyGetFunction,
-												propertySetFunction,
+												propertySetFunction,	
 												enumNameCount,
 												enumMaskValues,
 												enumNames );
 
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2685,35 +2798,43 @@ static void registerEnumSetPropertyWithLabels( const String& className, const St
 *@param TypedObjectProperty<PROPERTY_TYPE>::SetFunction - the property's set function, allows for
 *setting values on the property
 */
-template <class PROPERTY_TYPE>  void registerObjectProperty( const String& className, const String& propertyName,
-												_typename_ TypedObjectProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												_typename_ TypedObjectProperty<PROPERTY_TYPE>::SetFunction propertySetFunction ){
-
-
+template <typename PROPERTY_TYPE>  
+void registerObjectProperty( const String& className, const String& propertyName,
+							_typename_ TypedObjectProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+							_typename_ TypedObjectProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+							const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedObjectProperty<PROPERTY_TYPE>* newProperty =
-							new TypedObjectProperty<PROPERTY_TYPE>( propertyGetFunction,
+			TypedObjectProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedObjectProperty<PROPERTY_TYPE>( propertyGetFunction, 
 							                             propertySetFunction );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
 };
 
-template <class PROPERTY_TYPE>  void registerObjectPropertyRef( const String& className, const String& propertyName,
-												_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::SetFunction propertySetFunction ){
-
-
+template <typename PROPERTY_TYPE>
+void registerObjectPropertyRef( const String& className, const String& propertyName,
+								_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+								_typename_ TypedObjectRefProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+								const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedObjectRefProperty<PROPERTY_TYPE>* newProperty =
-							new TypedObjectRefProperty<PROPERTY_TYPE>( propertyGetFunction,
+			TypedObjectRefProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedObjectRefProperty<PROPERTY_TYPE>( propertyGetFunction, 
 							                             propertySetFunction );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2732,19 +2853,23 @@ template <class PROPERTY_TYPE>  void registerObjectPropertyRef( const String& cl
 *@param PROPERTY_TYPE the lower bound of enum
 *@param PROPERTY_TYPE the upper bound of enum
 */
-template <class PROPERTY_TYPE>  void registerEnumProperty( const String& className, const String& propertyName,
-												 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												 _typename_ TypedEnumProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
-												 PROPERTY_TYPE lower, PROPERTY_TYPE upper ){
-
-
+template <typename PROPERTY_TYPE>
+void registerEnumProperty( const String& className, const String& propertyName,
+						 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+						 _typename_ TypedEnumProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+						 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
+						 const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedEnumProperty<PROPERTY_TYPE>* newProperty =
-							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction,
+			TypedEnumProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction, 
 							                                 propertySetFunction, lower, upper );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -2768,24 +2893,28 @@ template <class PROPERTY_TYPE>  void registerEnumProperty( const String& classNa
 *@param String a pointer to an array of Strings that holds a human
 *readable value for each enum type.
 */
-template <class PROPERTY_TYPE>  void registerEnumPropertyWithLabels( const String& className, const String& propertyName,
-												 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												 _typename_ TypedEnumProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
-												 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
-												 const unsigned long& enumNameCount,
-												 String* enumNames ){
-
-
+template <typename PROPERTY_TYPE>  
+void registerEnumPropertyWithLabels( const String& className, const String& propertyName,
+									 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
+									 _typename_ TypedEnumProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
+									 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
+									 const unsigned long& enumNameCount, 
+									 String* enumNames,
+									 const String& description )
+{
+	
+	
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedEnumProperty<PROPERTY_TYPE>* newProperty =
-							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                                 propertySetFunction,
+			TypedEnumProperty<PROPERTY_TYPE>* newProperty = 
+							new TypedEnumProperty<PROPERTY_TYPE>( propertyGetFunction, 
+							                                 propertySetFunction, 
 															 lower, upper,
 															 enumNameCount,
 															 enumNames );
 			newProperty->setName( propertyName );
+			newProperty->setDescription( description );
 			clazz->addProperty( newProperty );
 		}
 	}
@@ -3318,6 +3447,15 @@ void registerVoidMethodArg6( SOURCE_TYPE* fakeParam,
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.1  2005/02/21 17:55:32  ddiego
+*fixed a bug in the Enum property type class.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

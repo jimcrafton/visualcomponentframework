@@ -35,18 +35,18 @@ ParticleEditor::ParticleEditor():Window(){
 
 		DefaultMenuItem *fileLoad=new DefaultMenuItem("&Load",file,menuBar);
 		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileLoad);
-		fileLoad->addMenuItemClickedHandler(menuItemHandler);
+		fileLoad->MenuItemClicked += menuItemHandler;
 
 		DefaultMenuItem *fileSave=new DefaultMenuItem("&Save",file,menuBar);
 		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileSave);
-		fileSave->addMenuItemClickedHandler(menuItemHandler);
+		fileSave->MenuItemClicked += menuItemHandler;
 
 		DefaultMenuItem *sep=new DefaultMenuItem("",file,menuBar);
 		sep->setSeparator(true);
 
 		DefaultMenuItem *fileExit=new DefaultMenuItem("E&xit",file,menuBar);
 		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileExit);
-		fileExit->addMenuItemClickedHandler(menuItemHandler);
+		fileExit->MenuItemClicked += menuItemHandler;
 	}
 
 	{
@@ -736,6 +736,12 @@ void ParticleEditor::onFileExit(MenuItemEvent *e){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:40  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.2.1  2005/06/06 02:34:04  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.2  2004/12/01 04:15:09  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

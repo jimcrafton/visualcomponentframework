@@ -56,14 +56,27 @@ void Library::load( const String& libraryFilename )
 	String fullLibraryName = libraryFilename;
 
 	{
-		File libFile(libraryFilename);
-		if ( libFile.isDirectory() ) {
-			
-			fullLibraryName = System::getExecutableNameFromBundlePath( libraryFilename );			
-
-			if ( fullLibraryName.empty() ) {
-				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name. Points to a directory with no program/library information available.") );
+		try {
+			//does this file exist?
+			//probably won't if we have passed in 
+			//just the .dll name (i.e. "foo.dll") and 
+			//are relying on the path to fill in teh rest
+			//if that's the case don't assume it's a bundle
+			if ( File::exists( libraryFilename ) ) {
+				File libFile(libraryFilename);			
+				if ( libFile.isDirectory() ) {
+					
+					fullLibraryName = System::getExecutableNameFromBundlePath( libraryFilename );			
+					
+					if ( fullLibraryName.empty() ) {
+						throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name. Points to a directory with no program/library information available.") );
+					}
+				}
 			}
+		}
+		catch ( ... ) {
+			//assume it's not a directory :)
+			//move on...
 		}
 	}	
 
@@ -128,8 +141,15 @@ void* Library::getFunction( const String& functionName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.2  2005/02/27 01:46:10  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
 *
 *Revision 1.3.2.1  2004/12/19 07:09:19  ddiego
 *more modifications to better handle resource bundles, especially

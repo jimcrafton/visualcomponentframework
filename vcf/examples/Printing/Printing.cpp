@@ -35,12 +35,12 @@ public:
 		DefaultMenuItem* printingPrintHard = new DefaultMenuItem( "Print the &Hard way...", printing, menuBar );
 		printingPrintHard->setTag( printHardWay );
 	
-		printingPrintHard->addMenuItemClickedHandler( new GenericEventHandler<PrintingWindow>(this,&PrintingWindow::onPrint,"PrintingWindow::onPrint") );
+		printingPrintHard->MenuItemClicked += new GenericEventHandler<PrintingWindow>(this,&PrintingWindow::onPrint,"PrintingWindow::onPrint");
 
 		DefaultMenuItem* printingPrintEasy = new DefaultMenuItem( "Print the &Easy Way...", printing, menuBar );
 		printingPrintEasy->setTag( printEasyWay );
 	
-		printingPrintEasy->addMenuItemClickedHandler( getEventHandler("PrintingWindow::onPrint") );
+		printingPrintEasy->MenuItemClicked += getEventHandler("PrintingWindow::onPrint");
 	}
 
 	virtual void paint( GraphicsContext* context ) {
@@ -145,7 +145,7 @@ public:
 	}
 
 	void onPrintPage( PrintEvent* e ) {
-		StringUtils::traceWithArgs( "Printing page %d\n", e->getCurrentPage() );
+		StringUtils::traceWithArgs( Format("Printing page %d\n") % e->getCurrentPage() );
 
 		PrintSession* printSession = (PrintSession*)e->getSource();
 		doDrawing( e->getPrintContext(), e->getPageBounds() );

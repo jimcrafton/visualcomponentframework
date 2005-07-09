@@ -17,7 +17,8 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Win32Condition.h"
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/FoundationKit/Win32ResourceBundle.h"
-
+#include "vcf/FoundationKit/Win32RunLoopPeer.h"
+#include "vcf/FoundationKit/Win32ThreadManagerPeer.h"
 
 
 using namespace VCF;
@@ -50,11 +51,21 @@ ProcessIORedirectionPeer* Win32SystemToolkit::internal_createProcessIORedirectio
 	return result;
 }
 
-ThreadPeer* Win32SystemToolkit::internal_createThreadPeer( Thread* thread )
+ThreadPeer* Win32SystemToolkit::internal_createThreadPeer( Thread* thread, bool mainThread )
 {
 	ThreadPeer* result = NULL;
 
-	return new Win32Thread( thread );
+	return new Win32Thread( thread, mainThread );
+}
+
+RunLoopPeer* Win32SystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
+{
+	return new Win32RunLoopPeer( runLoop );
+}
+
+ThreadManagerPeer* Win32SystemToolkit::internal_createThreadManagerPeer()
+{
+	return new Win32ThreadManagerPeer();
 }
 
 SystemPeer* Win32SystemToolkit::internal_createSystemPeer()
@@ -115,6 +126,15 @@ ResourceBundlePeer* Win32SystemToolkit::internal_createResourceBundlePeer()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/05/05 12:42:27  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

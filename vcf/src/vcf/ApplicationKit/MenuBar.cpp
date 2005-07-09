@@ -8,56 +8,41 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-
 #include "vcf/ApplicationKit/MenuBarPeer.h"
+#include "vcf/ApplicationKit/MenuItemPeer.h"
 
 using namespace VCF;
 
-MenuBar::MenuBar()
+MenuBar::MenuBar():
+	Menu(),
+	peer_(NULL),
+	frame_(NULL)
 {
 	init();
-	Peer_ = UIToolkit::createMenuBarPeer( this );
-
-	if ( NULL == Peer_ ){
-		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
 }
 
 MenuBar::MenuBar( Component* owner ):
-	Menu( owner )
+	Menu( owner ),
+	peer_(NULL),
+	frame_(NULL)
 {
-	init();
-	Peer_ = UIToolkit::createMenuBarPeer( this );
-
-	if ( NULL == Peer_ ){
-		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
+	init();	
 }
 
 MenuBar::MenuBar( const String& name, Component* owner ):
-	Menu( name, owner )
+	Menu( name, owner ),
+	peer_(NULL),
+	frame_(NULL)
 {
-	init();
-	Peer_ = UIToolkit::createMenuBarPeer( this );
-
-	if ( NULL == Peer_ ){
-		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
+	init();	
 }
 
 MenuBar::MenuBar( const String& name ):
-	Menu( name )
+	Menu( name ),
+	peer_(NULL),
+	frame_(NULL)
 {
 	init();
-	Peer_ = UIToolkit::createMenuBarPeer( this );
-
-	if ( NULL == Peer_ ){
-		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
 }
 
 
@@ -68,9 +53,9 @@ MenuBar::~MenuBar()
 
 void MenuBar::destroy()
 {
-	if ( NULL != Peer_ ){
-		delete Peer_;
-		Peer_ = NULL;
+	if ( NULL != peer_ ){
+		delete peer_;
+		peer_ = NULL;
 	}
 
 	Menu::destroy();
@@ -78,20 +63,33 @@ void MenuBar::destroy()
 
 void MenuBar::init()
 {
-	Peer_ = NULL;
+	peer_ = UIToolkit::createMenuBarPeer( this );
+
+	if ( NULL == peer_ ){
+		//throw exception
+		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	}
 
 	setRootMenuItem( new DefaultMenuItem() );
 	MenuItem* item = getRootMenuItem();
 
-	ItemEventHandler<MenuBar>* mih =
-		new ItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemAdded, "MenuBar::onMenutItemAdded" );
+	peer_->setMenuItems( item );
 
-	item->addItemAddedHandler( mih );
+	item->setMenuOwner( this );
+	item->setName( "RootMenuItem" );
+
+	EventHandler* mih =
+		new MenuItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemAdded, "MenuBar::onMenutItemAdded" );
+
+	MenuItemChanged += mih;
+	//item->addItemAddedHandler( mih );
 
 	mih =
-		new ItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemDeleted, "MenuBar::onMenutItemDeleted" );
+		new MenuItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemDeleted, "MenuBar::onMenutItemDeleted" );
 
-	item->addItemDeletedHandler( mih );
+	MenuItemChanged += mih;
+
+	//item->addItemDeletedHandler( mih );
 
 	EventHandler* ev = new GenericEventHandler<MenuBar> ( this, &MenuBar::handleEvent, "MenuBar::handleEvent" );
 
@@ -99,36 +97,45 @@ void MenuBar::init()
 	ComponentRemoved += ev;
 }
 
-void MenuBar::onMenutItemAdded( ItemEvent* event )
+void MenuBar::onMenutItemAdded( MenuItemEvent* event )
 {
-	Peer_->update();
+	if ( event->getType() == MenuItem::miAdded ) {
+		peer_->update();
+	}
 }
 
-void MenuBar::onMenutItemDeleted( ItemEvent* event )
+void MenuBar::onMenutItemDeleted( MenuItemEvent* event )
 {
-	Peer_->update();
+	if ( event->getType() == MenuItem::miRemoved ) {
+		peer_->update();
+	}
+}
+
+Frame* MenuBar::getFrame()
+{
+	return frame_;
 }
 
 void MenuBar::setFrame( Frame* frame )
 {
-	if ( NULL == Peer_ ){
-		//throw exception
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-	Peer_->setFrame( frame );
+	peer_->setFrame( frame );
+	frame_ = frame;
 }
 
 void MenuBar::handleEvent( Event* event )
 {
 	Menu::handleEvent( event );
+	/*
 	switch ( event->getType() ){
 		case Component::COMPONENT_ADDED : {
 			ComponentEvent* ev = (ComponentEvent*)event;
 			Component* child = ev->getChildComponent();
 			MenuItem* item = dynamic_cast<MenuItem*>(child);
 			if ( NULL != item ) {
-				item->setMenuOwner( this );
 				getRootMenuItem()->addChild( item );
+				if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
+					getRootMenuItem()->getPeer()->addChild( item );
+				}
 			}
 		}
 		break;
@@ -138,12 +145,26 @@ void MenuBar::handleEvent( Event* event )
 		}
 		break;
 	}
+	*/
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
+*Revision 1.2.4.2  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.2.4.1  2005/03/15 05:29:01  ddiego
+*makes the accelerator check logic a bit smarter and also changes
+*teh way menu items test to check whether or not they are enabled.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

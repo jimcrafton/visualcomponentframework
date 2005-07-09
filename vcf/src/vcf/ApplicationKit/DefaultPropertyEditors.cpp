@@ -24,9 +24,7 @@ using namespace VCF;
 
 BoolPropertyEditor::BoolPropertyEditor()
 {
-	comboBoxHandler_ =
-		new ItemEventHandler<BoolPropertyEditor>( this, &BoolPropertyEditor::onSelectionChange, "ComboBoxAdapter" );
-
+	attributes_ = PropertyEditor::paHasValues;
 }
 
 BoolPropertyEditor::~BoolPropertyEditor()
@@ -34,39 +32,16 @@ BoolPropertyEditor::~BoolPropertyEditor()
 
 }
 
-Control* BoolPropertyEditor::getCustomEditor()
-{
-	combo_ = new ComboBoxControl();
-	combo_->SelectionChanged.addHandler( comboBoxHandler_ );
-
-	ListModel* lm = combo_->getListModel();
-	if ( NULL != lm ){
-		lm->addItem( new DefaultListItem( lm, "true" ) );
-		lm->addItem( new DefaultListItem( lm, "false" ) );
-	}
-
-	bool val = *(this->getValue());
-	ulong32 selectedIndex = (val) ? 0 : 1;
-	combo_->setSelectedItemIndex( selectedIndex );
-
-	return 	combo_;
-}
-
-void BoolPropertyEditor::onSelectionChange( ItemEvent* event )
-{
-	ListItem* item = (ListItem*)event->getSource();
-	if ( NULL != item ){
-		ulong32 selectedIndex = item->getIndex();
-		this->data_ = (selectedIndex == 0) ? true : false;
-	}
-
+std::vector<String> BoolPropertyEditor::getStringValues(){
+	std::vector<String> result(2);
+	result[0] = StringUtils::toString(true);
+	result[1] = StringUtils::toString(false);
+	return result;
 }
 
 EnumPropertyEditor::EnumPropertyEditor()
 {
-	comboBoxHandler_ =
-		new ItemEventHandler<EnumPropertyEditor>( this, &EnumPropertyEditor::onSelectionChange, "ComboBoxAdapter" );
-
+	attributes_ = PropertyEditor::paHasValues;
 }
 
 EnumPropertyEditor::~EnumPropertyEditor()
@@ -74,66 +49,36 @@ EnumPropertyEditor::~EnumPropertyEditor()
 
 }
 
-Control* EnumPropertyEditor::getCustomEditor()
-{
-	combo_ = new ComboBoxControl();
-	combo_->SelectionChanged.addHandler( comboBoxHandler_ );
-
-	ListModel* lm = combo_->getListModel();
+std::vector<String> EnumPropertyEditor::getStringValues(){
+	std::vector<String> result;
+	
 
 	Enum* val = *(this->getValue());
-
 	int current = val->get();
-
 	int end = val->end();
 	int start = val->begin();
-	String s1 = val->toString();
+	
+	result.push_back( val->toString() );	
+
 	int next = val->next();
-	String s2 = val->toString();
-	if ( NULL != lm ){
-		lm->addItem( new DefaultListItem( lm, s1 ) );
-		lm->addItem( new DefaultListItem( lm, s2 ) );
-		while ( next != end ) {
-			next = val->next();
-			lm->addItem( new DefaultListItem( lm, val->toString() ) );
-		}
+
+	while ( next != end ) {
+		result.push_back( val->toString() );
+		next = val->next();		
 	}
+	
+	val->end();
 
-	combo_->setSelectedItemIndex( current );
+	result.push_back( val->toString() );
 
-	return 	combo_;
+	return result;
 }
-
-void EnumPropertyEditor::onSelectionChange( ItemEvent* event )
-{
-	ListItem* item = (ListItem*)event->getSource();
-	if ( NULL != item ){
-		ulong32 selectedIndex = item->getIndex();
-		Enum* val = data_;
-		val->set( selectedIndex );
-
-		this->data_ = val;
-	}
-}
-
-
-
-class ColorPanel : public Panel {
-public:
-	ColorPanel(){
-
-	}
-
-	virtual ~ColorPanel(){
-
-	}
-
-};
-
 
 ColorPropertyEditor::ColorPropertyEditor()
 {
-
+	attributes_ = PropertyEditor::paHasValues | PropertyEditor::paUsesModalDialogForEditing | 
+					PropertyEditor::paNeedsCustomPaint | PropertyEditor::paSortValues |
+					PropertyEditor::paValueNeedsDuplicating;
 }
 
 ColorPropertyEditor::~ColorPropertyEditor()
@@ -141,9 +86,9 @@ ColorPropertyEditor::~ColorPropertyEditor()
 
 }
 
-void ColorPropertyEditor::paintValue( GraphicsContext* context, const Rect& bounds )
+void ColorPropertyEditor::paintValue( VariantData* value, GraphicsContext* context, const Rect& bounds, const DrawUIState& state )
 {
-	Color* c = (Color*)(Object*)(*(this->getValue()));
+	Color* c = (Color*)(Object*)(*value);
 	Color* oldColor = context->getColor();
 
 	Rect innerBds = bounds;
@@ -160,28 +105,59 @@ void ColorPropertyEditor::paintValue( GraphicsContext* context, const Rect& boun
 	context->setColor( oldColor );
 }
 
-Control* ColorPropertyEditor::getCustomEditor()
+void ColorPropertyEditor::setValueAsText( const String& textValue )
 {
-	return new ModalPropertyEditorControl<ColorPropertyEditor>(
-			&ColorPropertyEditor::showColorEditor, this->getValue(), this );
+	//AbstractPropertyEditor::data_
+	Color* color = Color::getColor(textValue);
+	if ( NULL != color ) {
+		Color* valColor = (Color*) (Object*)data_;
+		if ( NULL != valColor ) {
+			*valColor = *color;
+		}
+	}
+	else {
+		AbstractPropertyEditor::setValueAsText( textValue );
+	}
 }
 
-void ColorPropertyEditor::showColorEditor( VariantData* data )
+
+void ColorPropertyEditor::edit()
 {
 	CommonColor clrDlg;
 	Color* c = (Color*)(Object*)(*(this->getValue()));
 	clrDlg.setSelectedColor( c );
-	if ( true == clrDlg.execute() ){
+	if ( clrDlg.execute() ) {
 		VariantData data;
-		c->copy( clrDlg.getSelectedColor() );
+		*c = *clrDlg.getSelectedColor();
 		data = c;
-		this->setValue( &data );
+		setValue( &data );
 	}
 }
 
+bool ColorPropertyEditor::sort( const String& strVal1, const String& strVal2 )
+{
+	return strVal1 > strVal2;
+}
+
+std::vector<String> ColorPropertyEditor::getStringValues()
+{
+	int count = ColorNames::uniqueColorLast-ColorNames::uniqueColorFirst;
+	std::vector<String> result(count);
+
+	for ( int i=ColorNames::uniqueColorFirst;i<ColorNames::uniqueColorLast;i++ ) {
+		result[i-ColorNames::uniqueColorFirst] = ColorNames::at( (ColorNames::ColorID)i );
+	}
+
+	return result;
+}
+
+
 FontPropertyEditor::FontPropertyEditor()
 {
-
+	//later on it would be nice to be able to get the list of system fonts here
+	attributes_ = PropertyEditor::paUsesModalDialogForEditing | 
+					PropertyEditor::paNeedsCustomPaint |
+					PropertyEditor::paHasSubProperties;
 }
 
 FontPropertyEditor::~FontPropertyEditor()
@@ -189,11 +165,14 @@ FontPropertyEditor::~FontPropertyEditor()
 
 }
 
-void FontPropertyEditor::paintValue( GraphicsContext* context, const Rect& bounds )
+void FontPropertyEditor::paintValue( VariantData* value, GraphicsContext* context, const Rect& bounds, const DrawUIState& state )
 {
-	Font* f = (Font*)(Object*)(*(this->getValue()));
-	Font* oldFont = context->getCurrentFont();
-	Color* oldColor = context->getColor();
+	int gcs = context->saveState();
+
+	Font* f = (Font*)(Object*)(*value);
+	Font fontCopy = *f;
+	fontCopy.setPixelSize( 10 );
+	
 	Rect innerBds = bounds;
 
 	innerBds.inflate( -2, -2 );
@@ -201,22 +180,15 @@ void FontPropertyEditor::paintValue( GraphicsContext* context, const Rect& bound
 	context->rectangle( &innerBds );
 	context->strokePath();
 
-	context->setColor( oldColor );
-
 	innerBds.inflate( -3, 0 );
-	//context->setCurrentFont( f );
+	context->setCurrentFont( &fontCopy );
 	context->textAt( innerBds.left_ + 2, innerBds.top_, "ABC" );
 
-	context->setCurrentFont( oldFont );
+	context->restoreState(gcs);
 }
 
-Control* FontPropertyEditor::getCustomEditor()
-{
-	return new ModalPropertyEditorControl<FontPropertyEditor>(
-			&FontPropertyEditor::showFontEditor, this->getValue(), this );
-}
 
-void FontPropertyEditor::showFontEditor( VariantData* data )
+void FontPropertyEditor::edit()
 {
 	CommonFont fontDlg(NULL);
 	Font* f = (Font*)(Object*)(*(this->getValue()));
@@ -229,6 +201,30 @@ void FontPropertyEditor::showFontEditor( VariantData* data )
 	}
 }
 
+std::vector<PropertyEditor*> FontPropertyEditor::getSubProperties()
+{
+	std::vector<PropertyEditor*> result;
+
+	Class* fontClass = ClassRegistry::getClass( "VCF::Font" );
+	
+	if ( NULL != fontClass ) {
+		Enumerator<Property*>* properties = fontClass->getProperties();
+
+		while ( properties->hasMoreElements() ) {
+			Property* property = properties->nextElement();
+			Object* obj = *getValue();
+			property->setSource( obj );
+
+			PropertyEditor* editor = PropertyEditorManager::createEditor( property->getTypeClassName () );
+			if ( NULL != editor ) {
+				result.push_back( editor );
+			}
+		}
+	}
+
+	return result;
+}
+
 DefaultMenuItemPropertyEditor::DefaultMenuItemPropertyEditor()
 {
 
@@ -237,17 +233,6 @@ DefaultMenuItemPropertyEditor::DefaultMenuItemPropertyEditor()
 DefaultMenuItemPropertyEditor::~DefaultMenuItemPropertyEditor()
 {
 
-}
-
-Control* DefaultMenuItemPropertyEditor::getCustomEditor()
-{
-	return new ModalPropertyEditorControl<DefaultMenuItemPropertyEditor>(
-			&DefaultMenuItemPropertyEditor::showDefaultMenuItemEditor, this->getValue(), this );
-}
-
-void DefaultMenuItemPropertyEditor::showDefaultMenuItemEditor( VariantData* data )
-{
-	Dialog::showMessage( "DefaultMenuItemPropertyEditor::showDefaultMenuItemEditor( VariantData* data )" );
 }
 
 DefaultListModelPropertyEditor::DefaultListModelPropertyEditor()
@@ -260,83 +245,24 @@ DefaultListModelPropertyEditor::~DefaultListModelPropertyEditor()
 
 }
 
-Control* DefaultListModelPropertyEditor::getCustomEditor()
-{
-	return new ModalPropertyEditorControl<DefaultListModelPropertyEditor>(
-			&DefaultListModelPropertyEditor::showDefaultListModelEditor, this->getValue(), this );
-}
 
-
-void DefaultListModelPropertyEditor::showDefaultListModelEditor( VariantData* data )
-{
-	Dialog* d = new Dialog();
-
-	d->setBounds( &Rect(400,400,750,650) );
-
-	Panel* contents = new Panel();
-
-	Panel* bottom = new Panel();
-	bottom->setBounds( &Rect(0,0,10,30) );
-	d->add( bottom, AlignBottom );
-	d->add( contents, AlignClient );
-	contents->setBorder( NULL );
-	bottom->setBorder( NULL );
-
-	CommandButton* okBtn = new CommandButton();
-	okBtn->setBounds( &Rect(160,4,240,26) );
-	okBtn->setCaption( "OK" );
-	okBtn->setCommandType( BC_OK );
-
-	CommandButton* cancelBtn = new CommandButton();
-	cancelBtn->setBounds( &Rect(252,4,332,26) );
-	cancelBtn->setCaption( "Cancel" );
-	cancelBtn->setCommandType( BC_CANCEL );
-	bottom->add( okBtn );
-	bottom->add( cancelBtn );
-
-	d->setCaption( "Edit List Model" );
-
-	Rect r = contents->getBounds();
-	r.inflate( -5,-5 );
-
-	ListBoxControl* lbc = new ListBoxControl();
-	lbc->setBounds( &Rect( 5, 5, 120, r.bottom_ ) );
-	contents->add( lbc );
-
-	ListModel* lm = lbc->getListModel();
-
-	Label* l = new Label();
-	TextControl* tc = new TextControl();
-	Rect dlgRect = d->getBounds();
-	tc->setBounds( &Rect( dlgRect.getWidth() - 120, 10, dlgRect.getWidth() - 5, 35 ) );
-	l->setBounds( &Rect( tc->getLeft() - 80, 10, tc->getLeft(), 35 ) );
-	l->setCaption( "Item Caption" );
-	contents->add( l );
-	contents->add( tc );
-
-	CommandButton* addBtn = new CommandButton();
-	Rect tcRect = tc->getBounds();
-	addBtn->setBounds( &Rect( tc->getLeft(), tcRect.getBottom() + 10, tc->getLeft() + 80, tcRect.getBottom() + 35 ) );
-	addBtn->setCaption( "Add Item" );
-
-	tcRect = addBtn->getBounds();
-	CommandButton* removeBtn = new CommandButton();
-	removeBtn->setBounds( &Rect( tc->getLeft(), tcRect.getBottom() + 10, tc->getLeft() + 80, tcRect.getBottom() + 35 ) );
-	removeBtn->setCaption( "Remove Item" );
-
-	contents->add( addBtn );
-	contents->add( removeBtn );
-
-	d->showModal();
-
-	d->free();
-	d = NULL;
-}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.2.4.2  2005/02/21 16:20:01  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

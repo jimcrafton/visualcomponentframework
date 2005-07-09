@@ -24,9 +24,10 @@ ObjectWithEvents::~ObjectWithEvents()
 
 	std::map<String,EventHandler*>::iterator it = eventHandlers_.begin();
 	while ( it != eventHandlers_.end() ){
+		EventHandler* ev = it->second;
 
-
-		delete it->second;
+		ev->free();
+		//delete it->second;
 
 		it++;
 	}
@@ -68,6 +69,12 @@ void ObjectWithEvents::addEventHandlerList( EventHandler::Vector* eventHandlerLi
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/05/15 23:17:39  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

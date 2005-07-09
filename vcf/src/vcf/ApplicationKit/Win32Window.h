@@ -33,9 +33,9 @@ public:
 
 	virtual void setText( const String& text );
 
-    virtual void setBounds( VCF::Rect* rect );
+	virtual void setBounds( VCF::Rect* rect );
 
-    virtual void setVisible( const bool& visible );
+	virtual void setVisible( const bool& visible );
 
 	virtual void setParent( VCF::Control* parent );
 
@@ -43,7 +43,7 @@ public:
 
 	virtual void  setClientBounds( Rect* bounds );
 
-	virtual void createParams();
+	virtual Win32Object::CreateParams createParams();
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 
@@ -81,6 +81,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/06/29 05:15:41  marcelloptr
+*fixed some white spaces
+*
+*Revision 1.3.2.1  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -141,9 +141,6 @@
 			<File
 				RelativePath="..\..\..\src\thirdparty\common\pcre\pcreposix.h">
 			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\regexx.h">
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

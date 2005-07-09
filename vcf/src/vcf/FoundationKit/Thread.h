@@ -18,6 +18,8 @@ namespace VCF
 {
 
 class ThreadPeer;
+class RunLoop;
+
 
 /**
 *The Thread class represents a thread of execution in a process.
@@ -210,6 +212,18 @@ public:
     bool isActive();
 
 
+	virtual WaitResult wait();
+
+	virtual Waitable::WaitResult wait( uint32 milliseconds );
+
+	virtual OSHandleID getPeerHandleID();
+
+	RunLoop* getRunLoop();
+
+
+	static Thread* getMainThread();
+
+
 	/**
 	for thread peer's usage only -
 	called to see if the thread is
@@ -220,9 +234,11 @@ public:
 		return stopped_;
 	}
 	
-	virtual WaitResult wait();
-
-	virtual Waitable::WaitResult wait( uint32 milliseconds );
+	/**
+	Called by the thread peer implementation. Initializes the thread
+	with the thread manager.
+	*/
+	void internal_initBeforeRun();
 
 protected:
 
@@ -232,18 +248,15 @@ protected:
 	bool autoDelete_;
 	bool autoDeleteRunnable_;
 	bool stopped_;
+	RunLoop* runLoop_;
 
+	static Thread* mainThread;
+private:
+	//this is used ONLY to create a wrapper around the main thread
+	Thread( bool mainThread, Runnable* runnableObject, const bool& autoDeleteRunnable,
+		const bool& autoDelete );
 };
 
-/*
-class FOUNDATIONKIT_API ThreadLooper : public Thread {
-public :
-	ThreadLooper( Runnable* runnableObject=NULL, const bool& autoDelete=true );
-
-	virtual ~ThreadLooper();
-
-};
-*/
 
 };
 
@@ -251,6 +264,15 @@ public :
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

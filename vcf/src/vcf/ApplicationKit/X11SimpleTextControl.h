@@ -49,17 +49,17 @@ public:
 
 	virtual void setLeftMargin( const double & leftMargin );
 
-    virtual unsigned long getLineCount();
+	virtual unsigned long getLineCount();
 
-    virtual unsigned long getCurrentLinePosition();
+	virtual unsigned long getCurrentLinePosition();
 
-    virtual double getLeftMargin();
+	virtual double getLeftMargin();
 
-    virtual double getRightMargin();
+	virtual double getRightMargin();
 
-    virtual Point* getPositionFromCharIndex( const unsigned long& index );
+	virtual Point* getPositionFromCharIndex( const unsigned long& index );
 
-    virtual unsigned long getCharIndexFromPosition( Point* point );
+	virtual unsigned long getCharIndexFromPosition( Point* point );
 
 	/**
 	*returns the current caret position with in the text control
@@ -92,6 +92,7 @@ public:
 	virtual void setParagraphAlignment( const TextAlignmentType& alignment );
 
 	virtual void scrollToLine( const ulong32& lineIndex );
+
 protected:
 	void onTextModelTextChanged( TextEvent* event );
 
@@ -100,7 +101,15 @@ protected:
 	Point posAtChar_;
 	ulong32 selectionStart_;
 	ulong32 selectionEnd_;
-	bool okToResetControlText_;
+
+	/**
+	this is introduced in order to prevent getting into a stack overflow situation 
+	due to infinite callback from the TextModel::setText() 
+	Set this to false to prevent the control to change its content when the text model is changed,
+	but remember to set it back to true when not necessary anymore.
+	*/
+	bool enabledSetTextOnControl_;
+
 	double leftMargin_;
 	double rightMargin_;
 };
@@ -112,6 +121,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/04/30 11:52:36  marcelloptr
+*added a comment for the enabledSetTextOnControl_ member variable
+*
 *Revision 1.2  2004/08/07 02:49:12  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -20,7 +20,7 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF {
 
 class CommonFileDialogPeer;
 
@@ -32,37 +32,99 @@ public:
 
 	virtual ~CommonFileDialog();
 
-    virtual void addFilter( const String & description, const String & extension );
+	/**
+	* adds a filter to the File dialog.
+	* This is composed of the filter name or description
+	* and its associated extension(s).
+	*@param const String& description, the description or name of the filter.
+	*@param const String& extension, the extension associated to the filter.
+	* This may be a list of extensions separated by a semicolon ( under windows )
+	* or any other separator depending on the OS. The dialog will display only
+	* the files with any extension existing in this string list.
+	*/
+	virtual void addFilter( const String & description, const String & extension );
 
-    virtual void setDirectory( const String & directory );
+	/**
+	* sets the default directory whose files will be displayed in the dialog.
+	*@param const String& directory, the displayed directory.
+	*/
+	virtual void setDirectory( const String & directory );
 
+	/**
+	* sets the default filename suggested by the dialog.
+	* This may include the directory set for the dialog.
+	*@param const String& filename, the default displayed filename.
+	*/
 	virtual void setFileName( const String & filename );
 
-    virtual String getFileName();
+	/**
+	* gets the directory chosen with the dialog.
+	*@return String, the chosen directory.
+	*/
+	virtual String getDirectory();
 
-    virtual String getDirectory();
+	/**
+	* gets the filename chosen with the dialog.
+	* This includes the path to the directory chosen with the dialog.
+	*@return String, the filename chosen by the user.
+	*/
+	virtual String getFileName();
 
-    virtual String getFileExtension();
+	/**
+	* gets the filter's extension chosen with the dialog.
+	*@return String, the filter's extension chosen by the user.
+	*/
+	virtual String getFileExtension();
 
+	/**
+	* gets the filter selected the previous time this dialog has been openened.
+	* If the filters are composed by pairs of strings ( the filter's name 
+	* and the associated extension ), the given string is the first string
+	* of the selected pair.
+	*/
 	virtual String getSelectedFilter();
 
+	/**
+	* sets the default selected filter for the dialog
+	* The value to be set is usually the one selected the previous time 
+	* the dialog has been openened.
+	*@param const String& selectedFilter, the default filter to be used.
+	*/
 	void setSelectedFilter( const String& selectedFilter );
 
+	/**
+	* sets the flags allowing multiple selection of the items in the dialog.
+	*@param const bool& allowsMultiSelect, true if allowed.
+	*/
 	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
 
+	/**
+	* sets the title of the dialog.
+	*@param const String& title, the title.
+	*/
 	virtual void setTitle( const String& title );
 
 protected:
+	/**
+	* the pointer to the peer for the OS specific implementation 
+	* of the File dialog.
+	*/
 	CommonFileDialogPeer* peer_;
 
 };
 
-}
+} // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

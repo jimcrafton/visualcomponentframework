@@ -10,6 +10,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/MessageDialog.h"
 #include "vcf/ApplicationKit/CommandButton.h"
+#include "vcf/ApplicationKit/PushButton.h"
 #include "vcf/ApplicationKit/Label.h"
 #include "vcf/ApplicationKit/Panel.h"
 #include "vcf/ApplicationKit/ImageControl.h"
@@ -24,7 +25,7 @@ MessageDialog::MessageDialog():
 {
 	UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
 
-	setWidth( 400 );
+	setWidth( 415 );
 
 	imagePane_ = new Panel();
 	imagePane_->setBorder( NULL );
@@ -115,7 +116,7 @@ MessageDialog::MessageDialog():
 
 	ic->setBounds( x, y, applicationIcon_->getWidth(), applicationIcon_->getHeight() );
 
-	imagePane_->add( ic );
+	imagePane_->add( ic, AlignClient );
 	ic->setImage( applicationIcon_ );
 	ic->setTransparent( true );
 }
@@ -219,6 +220,101 @@ void MessageDialog::addActionButton( const String& caption, const UIToolkit::Mod
 	buttons_.push_back( newButton );
 }
 
+PushButton* MessageDialog::addPushButton( const String& caption, const UIToolkit::ModalReturnType returnVal, const bool& defaultButton )
+{
+	PushButton* newButton = new PushButton();
+
+	newButton->setCaption( caption );
+	//////////////////////////////////////////////////////////
+	//TODO::: switch the types for the CommandButton::setCommandType()  -
+	//it should take the same type (UIToolkit::ModalReturnType) and adjust
+	//accordingly
+	//////////////////////////////////////////////////////////
+	switch ( returnVal ) {
+		case UIToolkit::mrNone: {
+			newButton->setCommandType(BC_NONE);
+		}
+		break;
+
+		case UIToolkit::mrOK: {
+			newButton->setCommandType(BC_OK);
+		}
+		break;
+
+		case UIToolkit::mrCancel: {
+			newButton->setCommandType(BC_CANCEL);
+		}
+		break;
+
+		case UIToolkit::mrYes: {
+			newButton->setCommandType(BC_YES);
+		}
+		break;
+
+		case UIToolkit::mrNo: {
+			newButton->setCommandType(BC_NO);
+		}
+		break;
+
+		case UIToolkit::mrRetry: {
+			newButton->setCommandType(BC_NONE);
+		}
+		break;
+
+		case UIToolkit::mrIgnore: {
+			newButton->setCommandType(BC_NONE);
+		}
+		break;
+
+		case UIToolkit::mrHelp: {
+			newButton->setCommandType(BC_NONE);
+		}
+		break;
+
+		case UIToolkit::mrAbort: {
+			newButton->setCommandType(BC_NONE);
+		}
+		break;
+	}
+
+
+	//set dimensions
+	newButton->setHeight( newButton->getPreferredHeight() );
+	newButton->setWidth( newButton->getPreferredWidth() );
+
+	//this is a REALLY lame way to do this - need to
+	//add some sort of vertical/horizontal  spacing rules for alignment layout
+	if ( 0 == commandPane_->getChildCount() ) {
+		Label* l = new Label();
+		l->setCaption("");
+		UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
+		l->setWidth( metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) );
+		l->setHeight( newButton->getHeight() );
+
+		commandPane_->add( l, AlignRight );
+	}
+
+	Label* l = new Label();
+	l->setCaption("");
+	UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
+	l->setWidth( metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) );
+	l->setHeight( newButton->getHeight() );
+
+	commandPane_->add( newButton, AlignRight );
+	commandPane_->add( l, AlignRight );
+
+	if ( defaultButton ) {
+		newButton->setDefault( true );
+		newButton->setFocused();
+	}
+
+	buttons_.push_back( newButton );
+
+	//this->setWidth( ( newButton->getWidth() + l->getWidth() ) * buttons_.size() + l->getWidth() );
+
+	return newButton;
+}
+
 void MessageDialog::setMessage( const String& message )
 {
 	message_ = message;
@@ -296,7 +392,7 @@ void MessageDialog::verifyUIState()
 	}
 
 	if ( true == buttons_.empty() ) {
-		throw InvalidMessageDialogException( MAKE_ERROR_MSG_2("No command buttons are present. This is incorrect and useless - please fix!!!") );
+		throw InvalidMessageDialogException( MAKE_ERROR_MSG_2("No buttons are present. This is incorrect and useless - please fix!!!") );
 	}
 
 
@@ -306,6 +402,15 @@ void MessageDialog::verifyUIState()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/07/01 15:30:53  marcelloptr
+*added support for PushButtons with images
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

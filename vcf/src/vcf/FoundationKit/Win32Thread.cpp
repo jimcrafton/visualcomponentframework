@@ -60,7 +60,7 @@ using namespace VCF;
 
 
 
-Win32Thread::Win32Thread( Thread* thread ):
+Win32Thread::Win32Thread( Thread* thread, bool mainThread ):
 	security_(NULL),
 	threadID_(0),
 	initFlags_(CREATE_SUSPENDED),
@@ -68,15 +68,22 @@ Win32Thread::Win32Thread( Thread* thread ):
 	threadHandle_(0),
 	thread_(thread),
 	owningProcessID_(0),
-	active_(false)
+	active_(false),
+	mainThread_(mainThread)
 {
 
 	//threadCollection[thread_] = this;
+
+	if ( mainThread_ ) {
+		threadHandle_ = (unsigned int)::GetCurrentThread();
+		threadID_ = ::GetCurrentThreadId();
+		owningProcessID_ = GetCurrentProcessId();
+	}
 }
 
 Win32Thread::~Win32Thread()
 {
-	if ( 0 != threadHandle_ )	{
+	if ( (0 != threadHandle_) && (!mainThread_) )	{
 		int err = CloseHandle( (HANDLE)threadHandle_ );
 		if ( !err ) {
 			err = GetLastError();
@@ -92,6 +99,8 @@ bool Win32Thread::start()
 		threadHandle_ = _beginthreadex( security_, stackSize_, Win32Thread::threadProc, (void*)this, initFlags_, &threadID_ );
 
 		owningProcessID_ = GetCurrentProcessId();
+
+		thread_->internal_initBeforeRun();
 
 //	Why was this put in here?
 //		SetThreadPriority( (HANDLE)threadHandle_, THREAD_PRIORITY_LOWEST );
@@ -126,8 +135,7 @@ unsigned __stdcall Win32Thread::threadProc( void* param )
 		peer->active_ = true;
 
 		Thread* thread = peer->thread_;
-		bool autoDeleteThread = thread->canAutoDelete();
-
+		bool autoDeleteThread = thread->canAutoDelete();		
 
 		if ( !thread->run() ) {
 			result = 1;
@@ -212,6 +220,15 @@ int Win32Thread::wait( uint32 milliseconds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/05/05 12:42:27  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

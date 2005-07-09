@@ -17,6 +17,8 @@ where you installed the VCF.
 namespace VCF {
 
 
+class AcceleratorKey;
+
 /**
 <p>
 The Action class is used to represent an "action" that gets performed because of
@@ -57,8 +59,21 @@ public:
 	virtual ~Action();
 
 	enum {
+		/**
+		This event type is used when the update method is invoked.
+		*/
 		UpdateEvent = 40521,
-		ActionPerformedEvent = 40511
+
+		/**
+		This is used when an action event is fired.
+		*/
+		ActionPerformedEvent = 40511,
+
+		/**
+		This is used when the action's accelerator is changed, specifically
+		by the method setAcceleratorKey().
+		*/
+		AcceleratorChanged = 40541
 	};
 
 	/**
@@ -81,6 +96,13 @@ public:
 	/**
 	This is called by a target (or the framework itself) to tell the action to fire off an
 	update event to all the actions targets.
+	First an Update event is fired in order to let the application to set, in the event(s) 
+	handler(s) of this action, the desired state for the ActionEvent ( e.g. enabled
+	or not, checked or not.
+	Then the update ActionEvent is fired off to all the actions targets.
+	The enabled state of the accelerator associated to this action, if any, is also updated
+	accordingly.
+	@see ActionEvent
 	*/
 	void update();
 
@@ -111,9 +133,58 @@ public:
 	*/
 	unsigned long getTargetCount();
 
+	/**
+	\p
+	This sets the accelerator key object for the action item. If one already exists
+	it is removed for this action item. The accelerator is assigned the 
+	key code and modifier mask passed in, and is given a default event handler which
+	calls the action item's perform method.
+	\p
+	An action may have only one accelerator associated with it at any given time.
+	\p
+	Internally this method creates a new AcceleratorKey isntance and then calls the 
+	setAcceleratorKey( AcceleratorKey* ) method. See this method's documentation for
+	more details.
+	@see setAcceleratorKey
+	*/
+	void setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+
+	/**
+	\p
+	Sets the acclerator object for this action item. If one already exists then it 
+	is removed.
+	\p
+	To ensure that any targets of this action are properly updated, the action 
+	creates a Event instance, sets it's event type to Action::AcceleratorChanged, 
+	loops through all it's targets, and then calls each target's handleEvent() method
+	passing in the event instance. Targets should respond accordingly to this event
+	if it makes sense.
+	*/
+	void setAcceleratorKey( AcceleratorKey* accelerator );
+
+	/**
+	Returns the accelerator for the action item.
+	*/
+	AcceleratorKey* getAccelerator();
+
+	/**
+	Returns the event handler used to trigger the action's 
+	perform() method when the appropriate key combination
+	is pressed. If no event handler exists at the time of this
+	call, a new instance will be created.
+	*/
+	EventHandler* getAcceleratorEventHandler();
 protected:
+	/**
+	* the default event handler for the accelerator associated to this action.
+	*/
+	void onAccelerator( KeyboardEvent* e );
+
+protected:
+	AcceleratorKey* currentAccelerator_;
 	std::vector<Component*> targets_;
 	EnumeratorContainer<std::vector<Component*>,Component*> targetsContainer_;
+
 };
 
 
@@ -125,6 +196,21 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.5  2005/06/02 15:26:54  marcelloptr
+*more documentation
+*
+*Revision 1.2.4.4  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.2.4.3  2005/03/14 19:02:02  marcelloptr
+*comments and added an error message to avoid an infinite loop
+*
+*Revision 1.2.4.1  2005/03/14 04:17:22  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

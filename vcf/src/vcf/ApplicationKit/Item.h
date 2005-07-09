@@ -59,11 +59,11 @@ public:
 	*is selected
 	*/
 	enum ItemDisplayState{
-		idsNone = 0,
-		idsChecked = 5,
-		idsUnChecked = 6,
-		idsRadioUnpressed = 7,
-		idsRadioPressed = 8
+		idsNone =			0x0000,
+		idsChecked =		0x0005,
+		idsUnChecked =		0x0006,
+		idsRadioUnpressed = 0x0007,
+		idsRadioPressed =	0x0008
 	};
 
 
@@ -172,6 +172,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

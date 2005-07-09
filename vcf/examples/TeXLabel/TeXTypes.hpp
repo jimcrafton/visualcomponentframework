@@ -36,7 +36,7 @@ struct Pair : Tex
 	Tex *value1_, *value2_;
 };
 
-struct String : Tex
+struct TexString : Tex
 {
 	void paint(VCF::GraphicsContext *, VCF::Rect &, VCF::Font *);
 	VCF::String value_;

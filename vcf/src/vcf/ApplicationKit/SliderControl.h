@@ -19,6 +19,14 @@ namespace VCF {
 
 #define SLIDERCONTROL_CLASSID		"e5b77d23-4a5f-42e5-adba-e2bde202206e"
 
+	
+static String DisplayOrientationNames[] = { "SliderControl::doHorizontal",
+                                         "SliderControl::doVertical" };
+
+
+static String TickMarkStyleNames[] = { "SliderControl::tmsNone",
+                                         "SliderControl::tmsTopLeft",
+										"SliderControl::tmsBottomRight" };
 
 class APPLICATIONKIT_API SliderControl : public CustomControl {
 public:
@@ -143,6 +151,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

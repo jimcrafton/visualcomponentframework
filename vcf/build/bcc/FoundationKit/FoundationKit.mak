@@ -82,6 +82,10 @@ CPPFILES=FoundationKit.cpp \
 	Win32SystemPeer.cpp \
 	Win32SystemToolkit.cpp \
 	Win32Thread.cpp \
+	Win32ThreadManagerPeer.cpp \
+	Win32RunLoopPeer.cpp \
+	ThreadManager.cpp \
+	RunLoop.cpp \
 	BasicException.cpp \
 	Event.cpp \
 	EventHandler.cpp \

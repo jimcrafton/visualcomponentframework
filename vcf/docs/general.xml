@@ -44,7 +44,7 @@ NB: This software will not save the world.
 				This means that while the VCF is incredibly powerful as a framework 
 				for writing GUI based applications, if you just want to use the 
 				core features, such as threads, file IO, and RTTI you can do so, 
-				with out having to have dependencies on all the GUI code. 
+				without having dependencies on all the GUI code. 
 				</para></listitem>
 				
 				<listitem><para>
@@ -69,7 +69,7 @@ NB: This software will not save the world.
 				</para></listitem>
 				
 				<listitem><para>
-				Easy to use, and powerful event system, suitable for console as 
+				Easy to use and powerful event system, suitable for console as 
 				well as GUI based applications. 
 				</para></listitem>
 				
@@ -88,7 +88,7 @@ NB: This software will not save the world.
 				(also a part of the VCF) a wide variety of additional image types 
 				are also supported. Currently the ImageFormats library uses 
 				<ulink url="http://freeimage.sourceforge.net">FreeImage</ulink> 
-				to support a image types such as .TIFF, .TGA, .PSD, .PNG, .PCX, 
+				to support image types such as .TIFF, .TGA, .PSD, .PNG, .PCX, 
 				.SGI, .MNG, .RAS, .PBM, .PPM, and many others. 
 				</para></listitem>
 				
@@ -141,7 +141,7 @@ NB: This software will not save the world.
 				<listitem><para>
 				Because of the RTTI features and the event handlers, the VCF easily 
 				supports component programming. Objects can easily register event 
-				handlers with other object in the system at runtime, without knowing 
+				handlers with other objects in the system at runtime, without knowing 
 				the specifics of each other.
 				</para></listitem>
 				
@@ -174,7 +174,10 @@ NB: This software will not save the world.
 	</section>
 
 	<section><title>Downloading the VCF</title>
-		<para>To be done </para>
+		<para>The VCF can be downloaded from the project's Sourceforge.net 
+		<ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">download site</ulink>. 
+		Further details for your platform are given in the next section. 		
+		</para>
 	</section>
 
 	<section><title>Required Tools</title>
@@ -191,11 +194,11 @@ NB: This software will not save the world.
 				<para>
 					For this platform the preferred compiler is currently the Microsoft 
 					Visual C++ 6 compiler with Service Pack 5 applied. Microft Visual C++ 7 
-					also works but some setting may be slightly different or found in 
+					also works great, but some settings may be slightly different or found in 
 					different places than described in the documentation.
 				</para>
 				<para>
-					Currently the support compilers for the Win32 platform are:
+					Currently, the supported compilers for the Win32 platform are:
 					<itemizedlist>
 						<listitem>
 							Microsoft Visual C++ 6 (service pack 5 or better preferred).
@@ -236,8 +239,8 @@ NB: This software will not save the world.
 				<para>
 					The linux port requires the GCC toolchain be installed in order 
 					to build the VCF from source. The VCF has been found to compile 
-					with versions of GCC including 2.95, 3.1, 3.2, and the most recent 
-					3.3 release (the 3.3 is reccommended). In addition, the GraphicsKit 
+					with versions of GCC including 2.95, 3.1, 3.2, and the 
+					3.3 release (3.3 is reccommended). In addition, the GraphicsKit 
 					and ApplicationKit require the presence of GTK 2.x shared libraries 
 					and headers and whatever dependencies that entails.
 				</para>
@@ -329,7 +332,7 @@ NB: This software will not save the world.
 		<section><title>VCF Tools</title>
 			<section><title>Microsoft Visual C++ 6</title>				
 				<para>
-				The first thing you'll want to is build the various add-ins for 
+				The first thing you'll want to do is build the various add-ins for 
 				Developer Studio. Open the main workspace found in vcf/build/vc60/add-ins/all.dsw. 
 				Build the "Win32 Release" configuration, making sure that the "all" 
 				project is the current active project. This should build the 
@@ -347,14 +350,16 @@ NB: This software will not save the world.
 			</section>		
 			<section><title>Microsoft Visual C++ 7/7.1</title>				
 				<para>
-				The first thing you'll want to is build the various add-ins for 
-				Developer Studio. 
-				</para>
-				<para>
-				Someone needs to fill in the rest of this...
-				</para>
+				The first thing you'll want to do is install the various wizards for 
+				Developer Studio. To install, navigate to the directory	vcf/build/vc70/add-ins (for 
+				Visual Studio.NET) OR vcf/build/vc71/add-ins (for Visual Studio.NET2003), and run 
+				(double click) Setup.js.  This will install the	various wizards for use in the IDE. 
+				To verify that these were installed correctly,	go to "File | New | Projects" and 
+				click on the "Visual C++ Projects" directory icon and you should see something like 
+				the	following:
+				</para>				
 				<screenshot>
-					<graphic fileref="gfx/insert-some-vc7-screenshot-here.png"></graphic>
+					<graphic fileref="gfx/addins_vc71_verify.png"></graphic>
 				</screenshot>
 				<para>
 				The red circle indicates the various new Application Wizards that you should see.
@@ -382,7 +387,7 @@ NB: This software will not save the world.
 		<section><title>Building the VCF Libraries</title>
 			<section><title>Win32</title>
 				<formalpara><title>Microsoft Visual C++ 6</title>
-				The following section deals with build the VCF libraries using the Microsoft 
+				The following section deals with building the VCF libraries using the Microsoft 
 				Visual C++ 6 IDE.
 				</formalpara>
 				<para>
@@ -428,11 +433,11 @@ NB: This software will not save the world.
 				</para>
 	
 				<formalpara><title>Microsoft Visual C++ 7.0</title>
-				The following section deals with build the VCF libraries using the Microsoft 
+				The following section deals with building the VCF libraries using the Microsoft 
 				Visual C++ 7.0 IDE.
 				</formalpara>
 				<para>
-				To build the VCF open the vcf/build/vc70/vcfAllProjects.dsw workspace. 
+				To build the VCF open the vcf/build/vc70/vcfAllProjects_vc70.dsw workspace. 
 				This workspace has all the various framework projects, both as 
 				static .lib files and DLL projects. Visual Studio should prompt
 				you to convert the Visual C++ 6 projects into the new Visual Studio 7 
@@ -449,17 +454,16 @@ NB: This software will not save the world.
 				</para>
 				
 				<formalpara><title>Microsoft Visual C++ 7.1</title>
-				The following section deals with build the VCF libraries using the Microsoft 
-				Visual C++ 7.0 IDE.
+				The following section deals with building the VCF libraries using the Microsoft 
+				Visual C++ 7.1 IDE.
 				</formalpara>
 				<para>
-				To build the VCF open the vcf/build/vc71/vcfAllProjects.dsw workspace. 
+				To build the VCF open the vcf/build/vc71/vcfAllProjects_vc71.dsw workspace. 
 				This workspace has all the various framework projects, both as 
 				static .lib files and DLL projects. Visual Studio should prompt
 				you to convert the Visual C++ 6 projects into the new Visual Studio 7.1 
-				format. Click the "Yes to All" option, and all the projects should then
-				get converted. Alternately you should be able to open the VC71 Solution in
-				vcf/build/vc71/vcfAllProjects.sln.
+				format. Click the "Yes to All" option, and all the projects should then 
+				get converted. 
 				<graphic fileref="gfx/vc71-open.png"></graphic>
 				</para>
 				
@@ -471,15 +475,19 @@ NB: This software will not save the world.
 				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
 				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
 				just the static libraries, build the "vcfAllStaticLibs" project. To
-				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.			
+				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project. 
+				After having built the VCF for the first time, you can
+				typically open the vcf/build/vc71/vcfAllProjects_vc71.sln solution file 
+				instead of the workspace file should you decide to rebuild any of the projects at 
+				a later time.			
 				</para>				
 				
 				<formalpara><title>Microsoft Visual C++ 6 using the Intel C/C++ compiler</title>
-				The following section deals with build the VCF libraries using the Microsoft 
+				The following section deals with building the VCF libraries using the Microsoft 
 				Visual C++ 7.0 IDE with the Intel C/C++ compiler installed.
 				</formalpara>
 				<para>
-				To build the VCF open the vcf/build/icl7/vcfAllProjects.dsw workspace. 
+				To build the VCF open the vcf/build/icl7/vcfAllProjects_icl7.dsw workspace. 
 				This workspace has all the various framework projects, both as 
 				static .lib files and DLL projects. To build all the VCF libraries select 
 				the "vcfAllLibs" project and make it the active project. Building this 
@@ -550,7 +558,7 @@ NB: This software will not save the world.
 	<programlisting>
 	echo `pkg-config gtk+-2.0 --cflags`
 	</programlisting>
-				You should see some sort GCC compiler flags - if you get back error messages 
+				You should see some sort of GCC compiler flags - if you get back error messages 
 				like:
 	<programlisting>
 	pkg-config: command not found
@@ -669,12 +677,10 @@ NB: This software will not save the world.
 vcfcode/
 	dev/
 		vcf/
-		     include/...
-		       src/...
+		    src/...
 	stable/
-		  vcf/
-		     include/...
-		     src/...
+		vcf/
+		    src/...
 			</screen>
 			</para>
 			<para>
@@ -1336,7 +1342,7 @@ else {
 			The VCF uses DocBook for all documentation that is not generated from 
 			source code. For source code generated documentation, we use doxygen. 
 			This section will concentrate on explaining how to edit	and work with 
-			the VCF DocBook documentation. If y0ou have never used DocBook before, 
+			the VCF DocBook documentation. If you have never used DocBook before, 
 			take a glance at this 
 			<ulink url="http://www.codeproject.com/winhelp/docbook_howto.asp">CodeProject article</ulink> 
 			that thoroughly explains how to get set up and running with DocBook on 
@@ -1377,7 +1383,7 @@ else {
 			Next edit vcf/docs/vcf.xsl. Make sure the line:
 			<programlisting>
 			<![CDATA[
-<xsl:import href="d:/code/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+<xsl:import href="d:/code/docbook-xsl-1.68.1/htmlhelp/htmlhelp.xsl"/>
 			]]>
 			</programlisting>
 			Points to the right doc book directory on your system where your DocBook 
@@ -1391,7 +1397,7 @@ make coredocs_hh
 			</programlisting>
 			This should generate the VCF documentation for you in HTML Help chm 
 			format (including all tutorials). Look for a file called 
-			"VCFDocs.0.6.2.chm" (or whatever the current version is set at).
+			"VCFDocs.0.6.8.chm" (or whatever the current version is set at).
 			</para>
 			<formalpara><title>Editing the VCF DocBook Documentation</title>
 			To edit the docs open and edit the various .xml files in the vcf/docs 
@@ -1424,13 +1430,13 @@ make coredocs_hh
 make tutorials
 			</programlisting>	
 			This will generate separate "articles" in each tutorial directory 
-			(with the top level director being vcf/examples). 
+			(with the top level directory being vcf/examples). 
 			</formalpara>
 			
 			<formalpara><title>Editing and Adding Tutorials</title>
 			To add a tutorial article you have to edit/create several files to 
 			ensure that the tutorial documentation is added to the full VCF 
-			DocBook documentation, and that spearate articles 
+			DocBook documentation, and that seperate articles 
 			can be created.
 			</formalpara>
 			<para>
@@ -1438,8 +1444,8 @@ make tutorials
 			of ENTITY declarations, each of which point to specific file that 
 			contains further documentation. This is done to break the documentation 
 			into smaller, more manageable sections. To add a tutorial, you'll need to 
-			add a new entity for each tutorial. Let say we had a tutorial for "FooBar", 
-			we'd add and an entity for your tutorial(after the last ENTITY), like so:
+			add a new entity for each tutorial. Let's say we had a tutorial for "FooBar", 
+			we'd add an entity for your tutorial(after the last ENTITY), like so:
 			<programlisting>
 <![CDATA[
 <!ENTITY foobar SYSTEM "../examples/FooBar/FooBar.xml">
@@ -1590,13 +1596,13 @@ make tutorials
 		<para>
 		There is a <ulink url="http://lists.sourceforge.net/lists/listinfo/vcf-development">development 
 		mailing list</ulink> that can be subscribed to. Do not use them. Use the 
-		<ulink url="http://vcf.sourceforge.net/forums/">forums</ulink> instead.
+		<ulink url="http://vcf-online.org/forums/">forums</ulink> instead.
 		</para>
 	</section>
 	
 	<section><title>Forums</title>
 		<para>
-			There are <ulink url="http://vcf.sourceforge.net/forums/">forums</ulink> 
+			There are <ulink url="http://vcf-online.org/forums/">forums</ulink> 
 			covering a wide range of topics that everyone is encouraged to visit 
 			and participate in. There is also a private developer forum, 
 			for VCF registered developers only.
@@ -1607,6 +1613,18 @@ make tutorials
 <!--
 CVS Log info
 $Log$
+Revision 1.6  2005/07/09 23:14:10  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.5.2.3  2005/06/28 05:32:12  dougtinkham
+very minor changes throughout
+
+Revision 1.5.2.2  2005/06/27 05:54:40  dougtinkham
+minor changes
+
+Revision 1.5.2.1  2005/06/07 03:56:26  dougtinkham
+vc71 AppWizard installation.
+
 Revision 1.5  2004/12/03 03:06:01  ddiego
 minor doc changes
 

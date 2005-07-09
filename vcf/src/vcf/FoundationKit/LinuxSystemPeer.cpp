@@ -97,6 +97,23 @@ void LinuxSystemPeer::addPathDirectory( const String& directory )
 	throw RuntimeException( "Failed to add to PATH value " + directory );
 }
 
+void LinuxSystemPeer::setEnvironmentVariable( const String& variableName, const String& newValue )
+{
+
+}
+	
+void LinuxSystemPeer::addPathDirectory( const String& directory )
+{
+
+}
+
+String LinuxSystemPeer::getCommonDirectory( System::CommonDirectory directory )
+{
+	String result;
+	
+	return result;
+}
+	
 void LinuxSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 {
 	chdir( currentDirectory.ansi_c_str() );
@@ -139,12 +156,51 @@ DateTime LinuxSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	return result;
 }
 
+String LinuxSystemPeer::getOSName()
+{
+	String result;
+	
+	return result;
+}
+
+String LinuxSystemPeer::getOSVersion()
+{
+	String result;
+	
+	return result;
+}
+
+String LinuxSystemPeer::getComputerName()
+{
+	String result;
+	
+	return result;
+}
+
+String LinuxSystemPeer::getUserName()
+{
+	String result;
+	
+	return result;
+}
+
+ProgramInfo* LinuxSystemPeer::getProgramInfoFromFileName( const String& fileName )
+{
+	return NULL;
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:03  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
+*
+*Revision 1.2.4.1  2005/04/17 16:11:32  ddiego
+*brought the foundation, agg, and graphics kits uptodate on linux
 *
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable

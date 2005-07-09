@@ -1,4 +1,12 @@
-//QuickTimeMovie.h
+//QuickTimeMovie.cpp
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "QuickTimeMovie.h"
 
@@ -12,10 +20,10 @@ QuickTimeMovie::QuickTimeMovie():
 	aspectRatio_(1.0),
 	playState_(psStopped)
 {
-	memset( &currentTime_, 0, sizeof(TimeRecord) );	
+	memset( &currentTime_, 0, sizeof(TimeRecord) );
 }
 
-QuickTimeMovie::QuickTimeMovie( VCF::Control* displayControl ):	
+QuickTimeMovie::QuickTimeMovie( VCF::Control* displayControl ):
 	qtMovie_(NULL),
 	displayControl_(displayControl),
 	isMovieOpen_(false),
@@ -28,7 +36,7 @@ QuickTimeMovie::QuickTimeMovie( VCF::Control* displayControl ):
 	}
 
 	HWND hwnd = (HWND) displayControl_->getPeer()->getHandleID();
-	CreatePortAssociation( hwnd, NULL, 0L);	
+	CreatePortAssociation( hwnd, NULL, 0L);
 }
 
 QuickTimeMovie::QuickTimeMovie( VCF::Control* displayControl, const String& filename ):
@@ -65,7 +73,7 @@ void QuickTimeMovie::setDisplayControl( VCF::Control* displayControl )
 {
 	if ( NULL != displayControl_ ) {
 		HWND hwnd = (HWND) displayControl_->getPeer()->getHandleID();
-		
+
 		DestroyPortAssociation( (CGrafPtr)GetNativeWindowPort( hwnd ) );
 	}
 
@@ -76,7 +84,7 @@ void QuickTimeMovie::setDisplayControl( VCF::Control* displayControl )
 	}
 
 	HWND hwnd = (HWND) displayControl_->getPeer()->getHandleID();
-	CreatePortAssociation( hwnd, NULL, 0L);	
+	CreatePortAssociation( hwnd, NULL, 0L);
 }
 
 bool QuickTimeMovie::open( const String& filename )
@@ -104,7 +112,7 @@ bool QuickTimeMovie::open( const String& filename )
 		// Make a FSSpec with a pascal string filename
 		FSMakeFSSpec(0,0L, (const unsigned char*)theFullPath, &sfFile);
 
-		// Set the port	
+		// Set the port
 		HWND hwnd = NULL;
 		if ( NULL != displayControl_ ) {
 			hwnd = (HWND) displayControl_->getPeer()->getHandleID();
@@ -120,20 +128,20 @@ bool QuickTimeMovie::open( const String& filename )
 									nil, 
 									newMovieActive, /* flags */
 									nil);
-		
+
 			// Close the movie file
 			CloseMovieFile(movieResFile);
 
-			if (err == noErr)	{			
-			   	
+			if (err == noErr)	{
+
 				isMovieOpen_ = true;
-				
+
 				result = true;
 
 				p2cstr((unsigned char*)theFullPath);
 
 				if ( NULL != displayControl_ ) {
-					SetMovieGWorld ( qtMovie_, (CGrafPtr)GetNativeWindowPort((void *) hwnd ), nil );    				
+					SetMovieGWorld ( qtMovie_, (CGrafPtr)GetNativeWindowPort((void *) hwnd ), nil );
 				}
 				originalBounds_ = getBounds();//initialize the bounds
 
@@ -148,13 +156,13 @@ bool QuickTimeMovie::open( const String& filename )
 			else {
 				theFullPath[0] = '\0'; 
 			}
-				
+
 		} 
 		else {
 			theFullPath[0] = '\0';
 		}
 	}
-	
+
 	if ( result ) {
 		setTitle();
 
@@ -177,7 +185,7 @@ void QuickTimeMovie::reset()
 void QuickTimeMovie::play()
 {
 	SetMovieTime ( qtMovie_, &currentTime_ );
-	StartMovie( qtMovie_ );	
+	StartMovie( qtMovie_ );
 	playState_ = psPlaying;
 }
 
@@ -210,14 +218,14 @@ bool QuickTimeMovie::close()
 
 	bool result = false;
 
-	
-	isMovieOpen_ = false;	
-		
+
+	isMovieOpen_ = false;
+
 	if ( NULL != qtMovie_ ) {
 		DisposeMovie( qtMovie_ );
 		result = true;
-	}		
-	
+	}
+
 	qtMovie_ = NULL;
 	playState_ = psStopped;
 
@@ -268,14 +276,14 @@ void QuickTimeMovie::setBounds( const double& x, const double& y, const double& 
 }
 
 TimeRecord QuickTimeMovie::getCurrentTime()
-{	
+{
 	GetMovieTime ( qtMovie_, &currentTime_ );
 
 	return currentTime_;
 }
 
 void QuickTimeMovie::setCurrentTime( TimeRecord* time )
-{	
+{
 	memcpy( &currentTime_, time, sizeof(TimeRecord) );
 	currentTime_.base = GetMovieTimeBase( qtMovie_ );
 	SetMovieTime ( qtMovie_, &currentTime_ );
@@ -300,25 +308,25 @@ void QuickTimeMovie::redrawMovie()
 	OSErr 		err = noErr;
 	QuickTimeMovie::QTRect		movieRect;
 	RgnHandle	clipRegion = NULL;
-	
-	
+
+
 	if ( qtMovie_ == NULL ) goto bail;
-	
+
 	clipRegion = NewRgn();
 	if ( clipRegion == NULL ) goto bail;
-	
+
 	GetClip( clipRegion );
 	GetMovieBox( qtMovie_, &movieRect ); 
 	ClipRect( &movieRect );
-	
+
 	UpdateMovie( qtMovie_ );
 	MoviesTask( qtMovie_, 0 );
-	
+
 	SetClip(clipRegion);
-	
+
 	/* Closure. Clean up if we have handles. */
-bail:	
-	
+bail:
+
 	if	(clipRegion != NULL)
 	{
 		DisposeRgn(clipRegion);
@@ -343,9 +351,9 @@ double QuickTimeMovie::getCurrentTimeValue()
 
 bool QuickTimeMovie::hasMovieTrack()
 {
-	ulong32 count = GetMovieTrackCount( qtMovie_ );		
-	
-	
+	ulong32 count = GetMovieTrackCount( qtMovie_ );
+
+
 	for (ulong32 index = 1; index <= count; index++) {
 		Track track = GetMovieIndTrack(qtMovie_, index);
 
@@ -357,7 +365,7 @@ bool QuickTimeMovie::hasMovieTrack()
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -368,24 +376,24 @@ void QuickTimeMovie::nextFrame()
 	short   flags;
 	OSType   types[1];
 	OSErr   myErr = noErr;
-	
-		
+
+
 	flags = nextTimeStep;         // we want the next frame in the movie's media
 	types[0] = VisualMediaCharacteristic;     // we want video samples
 	currentTime = GetMovieTime(qtMovie_, NULL);
-	
+
 	unsigned long f = 1 << 16;
 	GetMovieNextInterestingTime(qtMovie_, flags, 1, types, currentTime, f, &nextTime, NULL);
-	
-	
+
+
 	if ( (nextTime < 0) || (nextTime > GetMovieDuration(qtMovie_)) ) {
 		return ;
 	}
-	
+
 	SetMovieTimeValue(qtMovie_, nextTime);
-	
+
 	UpdateMovie(qtMovie_);
-	
+
 	movieTask();
 }
 
@@ -396,25 +404,25 @@ void QuickTimeMovie::previousFrame()
 	short   flags;
 	OSType   types[1];
 	OSErr   myErr = noErr;
-	
-		
+
+
 	flags = nextTimeStep;         // we want the next frame in the movie's media
 	types[0] = VisualMediaCharacteristic;     // we want video samples
 	currentTime = GetMovieTime(qtMovie_, NULL);
-	
+
 	long f = 1 << 16;
 
 	GetMovieNextInterestingTime(qtMovie_, flags, 1, types, currentTime, -f, &prevTime, NULL);
-	
-	
+
+
 	if ( (prevTime < 0) || (prevTime > GetMovieDuration(qtMovie_)) ) {
 		return ;
 	}
-	
+
 	SetMovieTimeValue(qtMovie_, prevTime);
-	
+
 	UpdateMovie(qtMovie_);
-	
+
 	movieTask();
 }
 
@@ -427,7 +435,7 @@ void QuickTimeMovie::getMovieMetaInfo( std::vector<QuickTimeMovie::MovieMetaInfo
 
 
 
-	UserData data = GetMovieUserData( qtMovie_ );	
+	UserData data = GetMovieUserData( qtMovie_ );
 
 	OSType udType;
 	Handle hData = NULL;
@@ -557,7 +565,7 @@ void QuickTimeMovie::getMovieMetaInfo( std::vector<QuickTimeMovie::MovieMetaInfo
 							case kUserDataTextChapter : {
 								info.first = L"Chapter";
 							}
-							break;						
+							break;
 						}
 
 						infoList.push_back(info);
@@ -586,35 +594,35 @@ void QuickTimeMovie::getMovieMetaInfo( std::vector<QuickTimeMovie::MovieMetaInfo
 
 
 	VCF::Rect bounds = getBounds();
-	movieInfo.second = StringUtils::format( L"%d x %d pixels", (int)bounds.getWidth(), (int)bounds.getHeight() );
+	movieInfo.second = Format( L"%d x %d pixels" ) % (int)bounds.getWidth() % (int)bounds.getHeight();
 
 	infoList.push_back(movieInfo);
 
-	movieInfo.first = L"Duration";	
+	movieInfo.first = L"Duration";
 
-	double scale = GetMovieTimeScale( qtMovie_ );	
+	double scale = GetMovieTimeScale( qtMovie_ );
 	double seconds = getDuration()/scale;//time.value.lo / scale;
-	
-	
+
+
 	int i_seconds = seconds;
 	int hours = i_seconds / 3600;
 	i_seconds = i_seconds - (hours*3600);
 	int minutes = i_seconds / 60;
 	i_seconds = i_seconds - (minutes*60);
 
-	movieInfo.second = StringUtils::format( "%02d:%02d:%02d", hours, minutes, i_seconds );	
+	movieInfo.second = Format( "%02d:%02d:%02d" ) % hours % minutes % i_seconds;
 	infoList.push_back(movieInfo);
-	
-	
 
-	movieInfo.first = L"Movie FPS";	
-	movieInfo.second = StringUtils::format( "%0.2f", scale/100.0 );	
+
+
+	movieInfo.first = L"Movie FPS";
+	movieInfo.second = Format( "%0.2f" ) % (scale/100.0);
 	infoList.push_back(movieInfo);
 
 
 	uint32 dataSize = GetMovieDataSize ( qtMovie_, 0, getDuration() );
 
-	movieInfo.first = L"Data Size";	
+	movieInfo.first = L"Data Size";
 
 	movieInfo.second = System::getCurrentThreadLocale()->toString( dataSize ) + " bytes";
 	infoList.push_back(movieInfo);
@@ -626,7 +634,7 @@ void QuickTimeMovie::setTitle()
 	FilePath fp = filename_;
 	title_ = fp.getBaseName();
 
-	UserData data = GetMovieUserData( qtMovie_ );	
+	UserData data = GetMovieUserData( qtMovie_ );
 
 	OSType udType;
 	Handle hData = NULL;
@@ -660,3 +668,17 @@ void QuickTimeMovie::setTitle()
 
 	DisposeHandle(hData);
 }
+
+
+/**
+*CVS Log info
+*$Log$
+*Revision 1.4  2005/07/09 23:14:41  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.3  2005/05/05 14:19:52  marcelloptr
+*standard VCF formatting
+*
+*/
+
+

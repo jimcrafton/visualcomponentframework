@@ -24,6 +24,28 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXFileSaveDialog.h"
 #include "vcf/ApplicationKit/OSXMenuBar.h"
 #include "vcf/ApplicationKit/OSXMenuItem.h"
+#include "vcf/ApplicationKit/OSXDropTargetPeer.h"
+#include "vcf/ApplicationKit/OSXDragDropPeer.h"
+
+#include "vcf/ApplicationKit/ListViewControl.h"
+#include "vcf/ApplicationKit/OSXListview.h"
+
+#include "vcf/ApplicationKit/OSXPopupMenu.h"
+#include "vcf/ApplicationKit/OSXTree.h"
+
+#include "vcf/ApplicationKit/MenuManagerPeer.h"
+#include "vcf/ApplicationKit/OSXMenuManagerPeer.h"
+#include "vcf/ApplicationKit/OSXTextPeer.h"
+
+#include "vcf/ApplicationKit/Toolbar.h"
+#include "vcf/ApplicationKit/OSXToolbar.h"
+#include "vcf/ApplicationKit/OSXScrollPeer.h"
+
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/ApplicationKit/OSXAppResourceBundle.h"
+
+
 
 
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
@@ -621,6 +643,16 @@ public:
 		
 		return result;
 	}
+	
+	virtual String transformMnemonicValues( const String& input ) {
+		return "";
+	}
+	
+	virtual AcceleratorKey::Value getStandardAcceleratorFor( const StandardAccelerator& val ) {
+		AcceleratorKey::Value result;
+		
+		return result;
+	}
 };
 
 
@@ -667,6 +699,10 @@ OSXUIToolkit::OSXUIToolkit():
     if ( err != noErr ) {
         printf( "InstallEventHandler failed" );
     }
+	
+	
+	
+	
 }
 
 OSXUIToolkit::~OSXUIToolkit()
@@ -692,19 +728,25 @@ ApplicationPeer* OSXUIToolkit::internal_createApplicationPeer()
     return new OSXApplicationPeer();
 }
 
-TextPeer* OSXUIToolkit::internal_createTextPeer( TextControl* component, const bool& isMultiLineControl )
+TextPeer* OSXUIToolkit::internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined )
 {
-    return NULL;
+	return new OSXTextPeer(autoWordWrap,multiLined);
 }
 
+TextEditPeer* OSXUIToolkit::internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl )
+{
+	return NULL;
+}
+	
+	
 TreePeer* OSXUIToolkit::internal_createTreePeer( TreeControl* component )
 {
-    return NULL;
+    return new OSXTree(component);
 }
 
 ListviewPeer* OSXUIToolkit::internal_createListViewPeer( ListViewControl* component )
 {
-    return NULL;
+    return new OSXListview(component);
 }
 
 DialogPeer* OSXUIToolkit::internal_createDialogPeer( Control* owner, Dialog* component )
@@ -742,7 +784,7 @@ WindowPeer* OSXUIToolkit::internal_createWindowPeer( Control* control, Control* 
 
 ToolbarPeer* OSXUIToolkit::internal_createToolbarPeer( Toolbar* toolbar )
 {
-    return NULL;
+    return new OSXToolbar(toolbar);
 }
 
 MenuItemPeer* OSXUIToolkit::internal_createMenuItemPeer( MenuItem* item )
@@ -757,7 +799,7 @@ MenuBarPeer* OSXUIToolkit::internal_createMenuBarPeer( MenuBar* menuBar )
 
 PopupMenuPeer* OSXUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu )
 {
-    return NULL;
+    return new OSXPopupMenu(popupMenu);
 }
 
 ButtonPeer* OSXUIToolkit::internal_createButtonPeer( CommandButton* component )
@@ -802,7 +844,7 @@ CommonFontDialogPeer* OSXUIToolkit::internal_createCommonFontDialogPeer( Control
 
 DragDropPeer* OSXUIToolkit::internal_createDragDropPeer()
 {
-    return NULL;
+    return new OSXDragDropPeer();
 }
 
 DataObjectPeer* OSXUIToolkit::internal_createDataObjectPeer()
@@ -812,7 +854,7 @@ DataObjectPeer* OSXUIToolkit::internal_createDataObjectPeer()
 
 DropTargetPeer* OSXUIToolkit::internal_createDropTargetPeer()
 {
-    return NULL;
+    return new OSXDropTargetPeer();
 }
 
 DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
@@ -822,7 +864,7 @@ DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
 
 ScrollPeer* OSXUIToolkit::internal_createScrollPeer( Control* control )
 {
-    return NULL;
+    return new OSXScrollPeer(control);
 }
 
 GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
@@ -833,6 +875,16 @@ GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundleP
 SystemTrayPeer* OSXUIToolkit::internal_createSystemTrayPeer()
 {
 	return NULL;
+}
+
+MenuManagerPeer* OSXUIToolkit::internal_createMenuManagerPeer()
+{
+	return new OSXMenuManagerPeer();
+}
+
+GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
+{
+	return new OSXAppResourceBundle(app);
 }
 
 CommonPrintDialogPeer* OSXUIToolkit::internal_createCommonPrintDialogPeer( Control* owner )
@@ -1349,8 +1401,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 						//result = NULL;
 					}
 
-					StringUtils::traceWithArgs( "keyMask: %d, virtKeyValue: %d\n",
-												keyMask, virtKeyValue );
+					StringUtils::traceWithArgs( Format("keyMask: %d, virtKeyValue: %d\n") %
+												keyMask% virtKeyValue );
                 }
                 break;
 
@@ -1975,6 +2027,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                 }
                 break;
 
+
                 case kEventControlBoundsChanged : {
 					UInt32 attributes = 0;
 					OSStatus err = GetEventParameter( msg->osxEvent_,
@@ -2175,8 +2228,34 @@ VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*Revision 1.3.2.7  2005/07/07 23:28:58  ddiego
+*last osx checkins before release - not complete :(
+*
+*Revision 1.3.2.6  2005/06/23 01:26:55  ddiego
+*build updates
+*
+*Revision 1.3.2.5  2005/06/23 00:35:36  ddiego
+*added osx classes
+*
+*Revision 1.3.2.4  2005/06/22 03:59:30  ddiego
+*added osx stub classes for peers
+*
+*Revision 1.3.2.3  2005/06/09 02:25:50  ddiego
+*updated osx build
+*
+*Revision 1.3.2.2  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3.2.1  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
 *
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

@@ -29,18 +29,18 @@ Win32Button::~Win32Button()
 
 void Win32Button::create( Control* owningControl )
 {
-	createParams();
-
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
 
 	String className = getClassName();
 
+	CreateParams params = createParams();
+
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( exStyleMask_,
+		hwnd_ = ::CreateWindowExW( params.second,
 		                             L"BUTTON",
 									 windowCaption_.c_str(),
-									 styleMask_,
+									 params.first,
 		                             0,
 									 0,
 									 1,
@@ -51,10 +51,10 @@ void Win32Button::create( Control* owningControl )
 									 NULL );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( exStyleMask_,
+		hwnd_ = ::CreateWindowExA( params.second,
 		                             "BUTTON",
 									 windowCaption_.ansi_c_str(),
-									 styleMask_,
+									 params.first,
 		                             0,
 									 0,
 									 1,
@@ -70,6 +70,7 @@ void Win32Button::create( Control* owningControl )
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
 		subclassWindow();
+		setFont( owningControl->getFont() );
 	}
 	else {
 		//throw exception
@@ -78,9 +79,13 @@ void Win32Button::create( Control* owningControl )
 	setCreated( true );
 }
 
-void Win32Button::createParams()
+Win32Object::CreateParams Win32Button::createParams()
 {
-	styleMask_ = WS_VISIBLE | WS_CHILD | BS_OWNERDRAW;
+	Win32Object::CreateParams result;
+	result.first = WS_VISIBLE | WS_CHILD | BS_OWNERDRAW;
+	result.second = 0;
+
+	return result;
 }
 
 Image* Win32Button::getImage()
@@ -106,6 +111,9 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 	switch ( message ) {
 		case WM_PAINT:{
+			//check to see if the font needs updating
+			checkForFontChange();
+
 			//result = CallWindowProc( oldButtonWndProc_, hwnd_, message, wParam, lParam );
 			
 		}
@@ -177,7 +185,7 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 				if ( err == FALSE ) {
 					err = GetLastError();
-					StringUtils::traceWithArgs( "error in BitBlt during drawing of double buffered Comp: error code=%d\n",
+					StringUtils::traceWithArgs( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %
 						err );
 				}
 			}
@@ -264,8 +272,31 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
+*made modifications to methods that return a handle type. Introduced
+*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
+*which was causing a problem for 64bit compiles.
+*
+*Revision 1.3.2.5  2005/04/26 02:29:39  ddiego
+*fixes font setting bug brought up by scott and glen_f
+*
+*Revision 1.3.2.4  2005/04/20 02:26:00  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.3  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
 *
 *Revision 1.3.2.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

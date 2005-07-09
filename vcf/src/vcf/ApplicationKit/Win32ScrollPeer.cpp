@@ -41,7 +41,9 @@ Win32ScrollPeer::Win32ScrollPeer( Control* scrollableControl )
 
 Win32ScrollPeer::~Win32ScrollPeer()
 {
-	scrollCorner_->free();
+	if ( NULL != scrollCorner_ ) {
+		scrollCorner_->free();
+	}
 }
 
 void Win32ScrollPeer::removeScrollBarsFromMap()
@@ -96,12 +98,19 @@ void Win32ScrollPeer::setScrollableControl( Control* scrollableControl )
 		else {
 			hInst = ::GetModuleHandle(NULL);
 		}
+#if defined(VCF_CW) && defined(UNICODE)
+		vScrollHWnd_ = CreateWindowEx( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
+			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
+
+		hScrollHWnd_ = CreateWindowEx( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
+			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
+#else
 		vScrollHWnd_ = CreateWindowEx( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
 			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
 
 		hScrollHWnd_ = CreateWindowEx( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
 			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
-
+#endif
 		scrollCorner_ = new Win32ScrollCorner();
 		HWND scHwnd = (HWND)scrollCorner_->getPeer()->getHandleID();
 		SetParent( scHwnd, hwnd );
@@ -457,6 +466,15 @@ void Win32ScrollPeer::getAdjustedPositions( double& xPosition, double& yPosition
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/04/13 00:57:02  iamfraggle
+*Enable Unicode in CodeWarrior
+*
+*Revision 1.3.2.1  2005/03/07 01:59:51  ddiego
+*minor fix to win32 scroll peer, and fix to win32 list view for display of list items.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

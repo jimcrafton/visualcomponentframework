@@ -25,18 +25,18 @@ namespace VCF
 
 class APPLICATIONKIT_API MenuItemEvent : public Event {
 public:
-	MenuItemEvent( Object * source);
+	MenuItemEvent( Object * source): Event( source ){}
 
-	MenuItemEvent( Object* source, const unsigned long& eventType );
+	MenuItemEvent( Object* source, const unsigned long& eventType ):
+		Event( source, eventType ){}
 
-	virtual ~MenuItemEvent();
+	virtual ~MenuItemEvent(){}
 
 	virtual Object* clone( bool deep=false ) {
 		return new MenuItemEvent(*this);
 	}
 
 };
-
 
 
 
@@ -66,6 +66,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

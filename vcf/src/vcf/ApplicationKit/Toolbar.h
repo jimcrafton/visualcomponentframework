@@ -237,7 +237,7 @@ public:
 	/**
 	Utility method - not meant for public use
 	*/
-	void internal_setBounds( Rect& bounds );
+	void internal_setBounds( const Rect& bounds ); //Parameter made const for ANSI compliance - ACH
 
 	void setGrouped( const bool& val );
 
@@ -247,7 +247,7 @@ public:
 
 	bool isChecked();
 
-	void update();
+	virtual bool updateAction();
 
 	virtual void handleEvent( Event* event );
 
@@ -411,6 +411,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:56  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/05/15 23:17:38  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.1  2005/04/11 17:04:51  iamfraggle
+*Changes allowing compilation of Win32 port under CodeWarrior
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

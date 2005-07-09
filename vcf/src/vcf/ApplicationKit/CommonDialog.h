@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-namespace VCF{
+namespace VCF {
 
 class APPLICATIONKIT_API CommonDialog : public Component {
 public:
@@ -23,17 +23,30 @@ public:
 
 	virtual ~CommonDialog(){};
 
-    virtual bool execute() =0;
+	/**
+	* opens the dialog.
+	*/
+	virtual bool execute() = 0;
 
+	/**
+	* Special initializations may then happen here.
+	*@see Component::afterCreate()
+	*/
 	virtual void afterCreate( ComponentEvent* event ){};
 };
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

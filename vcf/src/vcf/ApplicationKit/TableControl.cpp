@@ -83,7 +83,7 @@ void TableControl::paint( GraphicsContext * context )
 		context->setViewableBounds( oldViewBounds );
 	}
 
-	TableModel* tm = this->getTableModel();
+	TableModel* tm = getTableModel();
 	ulong32 rowCount = tm->getRowCount();
 	ulong32 columnCount = tm->getColumnCount();
 
@@ -374,13 +374,14 @@ void TableControl::init()
 
 
 	defaultColumnWidth_ = DEFAULT_COLUMN_WIDTH;
-	defaultRowHeight_ = UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+	defaultRowHeight_ = 
+		UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
 
 	mouseState_ = msNone;
 
 	resizeCaptureRange_ = 5;
 
-	if ( NULL == this->getViewModel() ){
+	if ( NULL == getViewModel() ){
 		setTableModel( new DefaultTableModel() );
 	}
 	EventHandler* tmh =
@@ -420,7 +421,6 @@ void TableControl::init()
 
 	ev = new GenericEventHandler<TableControl>(this, &TableControl::onHorizontalScrolling, "TableControl::onHorizontalScrolling" );
 	scroller->HorizontalScrolling += ev;
-
 }
 
 void TableControl::onTableModelEmptied( ModelEvent* e )
@@ -601,7 +601,7 @@ void TableControl::onFocusLost( FocusEvent* e )
 void TableControl::mouseDown( MouseEvent* event ){
 	CustomControl::mouseDown( event );
 
-	Scrollable* scrollable = this->getScrollable();
+	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		event->getPoint()->x_ -= scrollable->getHorizontalPosition();
 		event->getPoint()->y_ -= scrollable->getVerticalPosition();
@@ -987,7 +987,7 @@ Rect TableControl::getBoundsForItem( TableCellItem* item )
 void TableControl::mouseMove( MouseEvent* event ){
 	CustomControl::mouseMove( event );
 
-	Scrollable* scrollable = this->getScrollable();
+	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		event->getPoint()->x_ -= scrollable->getHorizontalPosition();
 		event->getPoint()->y_ -= scrollable->getVerticalPosition();
@@ -1123,7 +1123,7 @@ void TableControl::mouseMove( MouseEvent* event ){
 void TableControl::mouseUp( MouseEvent* event ){
 	CustomControl::mouseUp( event );
 
-	Scrollable* scrollable = this->getScrollable();
+	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		event->getPoint()->x_ -= scrollable->getHorizontalPosition();
 		event->getPoint()->y_ -= scrollable->getVerticalPosition();
@@ -1184,11 +1184,11 @@ void TableControl::mouseUp( MouseEvent* event ){
 	mouseState_ = msNone;
 }
 
-void TableControl::mouseDblClick(  MouseEvent* event )
+void TableControl::mouseClick(  MouseEvent* event )
 {
-	CustomControl::mouseDblClick( event );
+	CustomControl::mouseClick( event );
 
-	Scrollable* scrollable = this->getScrollable();
+	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		event->getPoint()->x_ -= scrollable->getHorizontalPosition();
 		event->getPoint()->y_ -= scrollable->getVerticalPosition();
@@ -1196,7 +1196,7 @@ void TableControl::mouseDblClick(  MouseEvent* event )
 
 	Point &pt = *event->getPoint();
 
-	CellID cell = this->getCellIDFromPoint( pt );
+	CellID cell = getCellIDFromPoint( pt );
 	if ( !cell.isValid() ) {
 		return;
 	}
@@ -1227,10 +1227,10 @@ void TableControl::mouseDblClick(  MouseEvent* event )
             return;
 		}
 
-        autoSizeColumn(cell.column, this->autoSizeStyle_ );
+        autoSizeColumn(cell.column, autoSizeStyle_ );
 		repaint();
 	}
-	else if ( this->rowResizeAreaHitTest( pt ) ) {
+	else if ( rowResizeAreaHitTest( pt ) ) {
 		Point start;
         if (!getCellOrigin( CellID(0, cell.column), start))
             return;
@@ -1256,7 +1256,7 @@ void TableControl::mouseDblClick(  MouseEvent* event )
         autoSizeRow(cell.row);
         repaint();
 	}
-	else if ( this->mouseState_ == TableControl::msNone ) {
+	else if ( mouseState_ == TableControl::msNone ) {
         TableModel* tm = getTableModel();
 
 		Point pointClickedRel = getClickedPoint( cell, pt );
@@ -1272,7 +1272,7 @@ void TableControl::mouseDblClick(  MouseEvent* event )
 
 		*/
 
-        if ( cell.row >= tm->getFixedRowsCount() && this->clickCell_.isValid() &&
+        if ( cell.row >= tm->getFixedRowsCount() && clickCell_.isValid() &&
             cell.column >= tm->getFixedColumnsCount() )  {
 
 			editCell( cell, pointClickedRel );
@@ -1297,8 +1297,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 
 
 
-	if ( item->isEditable() ) {
-		Rect bounds = getBoundsForCell( cell );
+	if ( item->isEditable() ) {	
 
 		if ( NULL != currentItemEditor_ ) {
 			finishEditing();
@@ -1306,10 +1305,12 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 
 		currentItemEditor_ = item->createItemEditor();
 
-		if ( NULL != currentItemEditor_ ) {
-			currentItemEditor_->setItemToEdit( item );
+		if ( NULL != currentItemEditor_ ) {			
 			Control* editorControl = currentItemEditor_->getEditingControl();
 			if ( NULL != editorControl ){
+				Rect bounds = bounds = getEditCellRect( cell );
+				bounds.inflate( -1, -1 );
+				
 				editorControl->setBounds( &bounds );
 
 				EventHandler* ev = getEventHandler( "TableControl::onFocusLost" );
@@ -1322,7 +1323,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 				currentEditingControl_->setFocused();
 
 				EventHandler* kl = getEventHandler( TABLECONTROL_KBRD_HANDLER );
-				currentEditingControl_->KeyPressed.addHandler( kl );
+				currentEditingControl_->KeyDown.addHandler( kl );
 			}
 			else {
 				finishEditing();
@@ -1331,6 +1332,49 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 
 	}
 
+}
+
+Rect TableControl::getEditCellRect( const CellID& editCellID )
+{
+	Rect result;
+
+	Rect visibleRect;
+	CellRange visibleCellRange = getVisibleNonFixedCellRange(&visibleRect,true);
+
+	Rect bounds = getBoundsForCell(editCellID);
+	Rect visibleTopLeftNonFixedBounds = getBoundsForCell( CellID(visibleCellRange.getMinRow(),visibleCellRange.getMinCol()) );
+	
+	//offset bounds to "origin" of the visibleTopLeftNonFixedBounds
+	bounds.offset( -visibleTopLeftNonFixedBounds.left_, -visibleTopLeftNonFixedBounds.top_ );
+	//offset of fixed cols/rows
+	bounds.offset( getFixedColumnWidth(), getFixedRowHeight() );
+
+	//now bounds is OK, it's in the regular coord space of the visible control area
+	//but we need to adjust for the presense of scroll bars and possibly clip
+	//the bounds accordingly
+	Scrollable* scrollable = getScrollable();
+	if ( NULL != scrollable ) {
+		Rect clientRect = getClientBounds();
+		if ( (editCellID.column >= (visibleCellRange.getMaxCol()-1)) && 
+				scrollable->isVerticalScrollbarVisible() ) {
+			if ( bounds.right_ > (clientRect.right_ - scrollable->getVerticalScrollbarWidth()) ) {
+				bounds.right_ = clientRect.right_;
+				bounds.right_ -= scrollable->getVerticalScrollbarWidth();
+			}
+		}
+		
+		if ( (editCellID.row >= (visibleCellRange.getMaxRow()-1)) && 
+				scrollable->isHorizontalScrollbarVisible() ) {
+			if ( bounds.bottom_ > (clientRect.bottom_ - scrollable->getHorizontalScrollbarHeight()) ) {
+				bounds.bottom_ = clientRect.bottom_;
+				bounds.bottom_ -= scrollable->getHorizontalScrollbarHeight();
+			}
+		}
+	}
+
+	result = bounds;
+
+	return result;
 }
 
 void TableControl::setColumnWidth( const uint32& column, const uint32& width )
@@ -1382,9 +1426,28 @@ void TableControl::setAutoResizeColumns( const bool& autoResizeColumns )
 	autoResizeColumns_ = autoResizeColumns;
 }
 
-void TableControl::resetColumnWidths()
+void TableControl::resizeColumnWidths()
 {
+	TableModel* tm = getTableModel();
 
+	for ( int col=0;col<tm->getColumnCount();col++ ) {
+		autoSizeColumn( col );
+	}
+}
+
+void TableControl::resizeRowHeights()
+{
+	TableModel* tm = getTableModel();
+
+	for ( int row=0;row<tm->getRowCount();row++ ) {
+		autoSizeRow( row );
+	}
+}
+
+void TableControl::resizeColumnRowDimensions()
+{
+	resizeColumnWidths();
+	resizeRowHeights();
 }
 
 void TableControl::onEditingControlKeyPressed( KeyboardEvent* event )
@@ -1429,8 +1492,8 @@ void TableControl::onFinishEditing( Event* e )
 	Control* editingControl = (Control*)e->getSource();
 	TableItemEditor* editor = fe->editor_;
 	if ( NULL != editingControl ){
-		StringUtils::traceWithArgs( "TableControl::finishEditing(), editor[%s]@ %s\n",
-									editor->getClassName().c_str(), editor->toString().c_str() );
+		StringUtils::traceWithArgs( Format("TableControl::finishEditing(), editor[%s]@ %s\n") %
+									editor->getClassName().c_str() % editor->toString().c_str() );
 		remove( editingControl );
 		removeComponent( editingControl );
 		editingControl->free();
@@ -1455,12 +1518,11 @@ void TableControl::cancelEditing()
 
 void TableControl::finishEditing()
 {
-	if ( NULL != currentItemEditor_ ){
-		currentItemEditor_->updateItem();
-	}
-	else {
+	if ( NULL == currentItemEditor_ ){
 		return;
 	}
+
+	currentItemEditor_->updateItem();
 
 	EventHandler* ev =
 		new GenericEventHandler<TableControl>( this, &TableControl::onFinishEditing );
@@ -2160,12 +2222,22 @@ void TableControl::onVerticalScrolling( Event* e )
 {
 	topLeftCell_.row = -1;
 	getTopLeftNonFixedCell();
+
+	if ( NULL != currentEditingControl_ ) {
+		Rect bounds = getEditCellRect( currentCell_ );
+		currentEditingControl_->setBounds( &bounds );
+	}	
 }
 
 void TableControl::onHorizontalScrolling( Event* e )
 {
 	topLeftCell_.column = -1;
 	getTopLeftNonFixedCell();
+
+	if ( NULL != currentEditingControl_ ) {
+		Rect bounds = getEditCellRect( currentCell_ );
+		currentEditingControl_->setBounds( &bounds );
+	}
 }
 
 bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=asoDefault*/,
@@ -2197,12 +2269,12 @@ bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=as
     int startRow = (autoSizeStyle & TableControl::asoHeader)? 0 : tm->getFixedRowsCount();
     int endRow   = (autoSizeStyle & TableControl::asoData)? tm->getRowCount()-1 : tm->getFixedRowsCount()-1;
 
-	GraphicsContext* ctx = this->getContext();
+	GraphicsContext* ctx = getContext();
 	double width = 0;
 
 	for (int row = startRow; row <= endRow; row++)  {
         TableCellItem* cell = tm->getItem( row, column );
-        width = ctx->getTextWidth( cell->getCaption() );
+		width = cell->getTextCellWidth( ctx );
 
         if ( width > columnWidth ) {
             columnWidth = width;
@@ -2238,13 +2310,13 @@ bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
     int rowHeight = 0;
     int columnCount = tm->getColumnCount();
 
-	GraphicsContext* ctx = this->getContext();
+	GraphicsContext* ctx = getContext();
 	double height = 0;
 
     for (int col = 0; col < columnCount; col++) {
 		TableCellItem* cell = tm->getItem( row, col );
 
-        height = ctx->getTextHeight( cell->getCaption() ) + 10;
+        height = cell->getTextCellHeight( ctx );
 
         if ( height > rowHeight) {
             rowHeight = height;
@@ -2254,7 +2326,7 @@ bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
     rowHeights_[row] = rowHeight;
 
     if ( resetScroll ) {
-		this->recalcScrollBars();
+		recalcScrollBars();
 	}
 
     return true;
@@ -2320,6 +2392,27 @@ void TableControl::keyDown( KeyboardEvent* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.5  2005/04/26 04:05:22  ddiego
+*the first half of [ 1184432 ] Tables cell edit box follows scroll movement, is fixed. Still need to get the scrollbars to update.
+*
+*Revision 1.3.2.4  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.3  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.2  2005/01/31 00:40:53  marcelloptr
+*minor change in the code... easier to debug
+*
+*Revision 1.3.2.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -13,18 +13,7 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-
-#ifndef _VCF_PANEL_H__
-#	include "vcf/ApplicationKit/Panel.h"
-#endif // _VCF_PANEL_H__
-
-namespace VCF
-{
-
-class Control;
-
-class ItemEvent;
-
+namespace VCF {
 
 
 
@@ -60,42 +49,22 @@ private:
 };
 
 
-class ComboBoxControl;
-
 class APPLICATIONKIT_API BoolPropertyEditor : public AbstractPropertyEditor {
 public:
 	BoolPropertyEditor();
 
 	virtual ~BoolPropertyEditor();
 
-	virtual bool hasCustomEditor(){
-		return true;
-	};
-
-	virtual Control* getCustomEditor();
-
-	void onSelectionChange( ItemEvent* event );
-private:
-	ComboBoxControl* combo_;
-	ItemEventHandler<BoolPropertyEditor>* comboBoxHandler_;
+	virtual std::vector<String> getStringValues();
 };
 
 class APPLICATIONKIT_API EnumPropertyEditor : public AbstractPropertyEditor{
 public:
 	EnumPropertyEditor();
 
-	virtual ~EnumPropertyEditor();
+	virtual ~EnumPropertyEditor();	
 
-	virtual bool hasCustomEditor(){
-		return true;
-	};
-
-	virtual Control* getCustomEditor();
-
-	void onSelectionChange( ItemEvent* event );
-private:
-	ComboBoxControl* combo_;
-	ItemEventHandler<EnumPropertyEditor>* comboBoxHandler_;
+	virtual std::vector<String> getStringValues();
 };
 
 
@@ -106,21 +75,17 @@ public:
 
 	virtual ~ColorPropertyEditor();
 
-	virtual bool hasCustomEditor(){
-		return true;
-	};
+	virtual void paintValue( VariantData* value, GraphicsContext* context, const Rect& bounds, const DrawUIState& state );
 
-	virtual bool canPaintValue(){
-		return true;
-	}
+	virtual std::vector<String> getStringValues();
 
-	virtual void paintValue( GraphicsContext* context, const Rect& bounds );
+	virtual void edit();
 
-	virtual Control* getCustomEditor();
+	virtual bool sort( const String& strVal1, const String& strVal2 );
 
-	void showColorEditor( VariantData* data );
-private:
-
+	//takes a value as text - try and look up the text color value
+	//in our color list
+	virtual void setValueAsText( const String& textValue );	
 };
 
 class APPLICATIONKIT_API FontPropertyEditor : public AbstractPropertyEditor {
@@ -129,20 +94,11 @@ public:
 
 	virtual ~FontPropertyEditor();
 
-	virtual bool hasCustomEditor(){
-		return true;
-	};
+	virtual void paintValue( VariantData* value, GraphicsContext* context, const Rect& bounds, const DrawUIState& state );
 
-	virtual bool canPaintValue(){
-		return true;
-	}
+	virtual void edit();
 
-	virtual void paintValue( GraphicsContext* context, const Rect& bounds );
-
-	virtual Control* getCustomEditor();
-
-	void showFontEditor( VariantData* data );
-private:
+	virtual std::vector<PropertyEditor*> getSubProperties();
 
 };
 
@@ -153,15 +109,6 @@ public:
 
 	virtual ~DefaultMenuItemPropertyEditor();
 
-	virtual bool hasCustomEditor(){
-		return true;
-	};
-
-	virtual Control* getCustomEditor();
-
-	void showDefaultMenuItemEditor( VariantData* data );
-private:
-
 };
 
 class APPLICATIONKIT_API DefaultListModelPropertyEditor : public AbstractPropertyEditor {
@@ -169,55 +116,13 @@ public:
 	DefaultListModelPropertyEditor();
 
 	virtual ~DefaultListModelPropertyEditor();
-
-	virtual bool hasCustomEditor(){
-		return true;
-	};
-
-	virtual Control* getCustomEditor();
-
-	void showDefaultListModelEditor( VariantData* data );
-private:
-
 };
 
 
 
 
-template <class T> class ModalPropertyEditorControl : public Panel {
-public:
-	typedef void (T::*ShowEditorDialog)( VariantData* data );
 
-	ModalPropertyEditorControl( ShowEditorDialog showEditorMethod, VariantData* data, T* source ){
-		showEditorMethod_ = showEditorMethod;
-		data_ = data;
-		source_ = source;
 
-		CommandButton* btn = new CommandButton();
-
-		ButtonEventHandler<ModalPropertyEditorControl>* handler =
-			new ButtonEventHandler<ModalPropertyEditorControl>( this, &ModalPropertyEditorControl<T>::onBtnClick, "ButtonClickHandler"  );
-
-		btn->addButtonClickHandler( handler );
-
-		btn->setBounds( &Rect(0,0,16,16) );
-		btn->setCaption( "..." );
-		this->add( btn, AlignRight );
-
-		this->setColor( Color::getColor("white") );
-		this->setBorder( NULL );
-	}
-
-	virtual ~ModalPropertyEditorControl(){};
-
-	void onBtnClick( ButtonEvent* event ){
-		(source_->*showEditorMethod_)( data_ );
-	}
-private:
-	ShowEditorDialog showEditorMethod_;
-	VariantData* data_;
-	T* source_;
-};
 
 
 };
@@ -226,6 +131,18 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.2.4.2  2005/02/21 16:20:01  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
+*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

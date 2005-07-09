@@ -1,0 +1,50 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCAppWizard", "MVCAppWizard\MVCAppWizard.vcproj", "{F5C18EE2-F25E-4796-ACC8-F66DDB06096B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCFAppWizard", "VCFAppWizard\VCFAppWizard.vcproj", "{D2AE58EC-8D34-48C3-8268-FCF861BB925F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCFConsoleWizard", "VCFConsoleWizard\VCFConsoleWizard.vcproj", "{69EC0C18-5D5C-4C79-88E2-72BD2C4B65A2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCFLibraryAppWizard", "VCFLibraryAppWizard\VCFLibraryAppWizard.vcproj", "{8371B2BE-EB42-49C9-948E-1C832A2C1FE4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VPLAppWizard", "VPLApplicationWizard\VPLApplicationWizard.vcproj", "{44EC889A-D872-4FDA-9076-8EA284B11708}"
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Generate YY and LL files
+		ConfigName.2 = GTK Debug
+		ConfigName.3 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F5C18EE2-F25E-4796-ACC8-F66DDB06096B}.Debug.ActiveCfg = Debug|Win32
+		{F5C18EE2-F25E-4796-ACC8-F66DDB06096B}.Generate YY and LL files.ActiveCfg = Release|Win32
+		{F5C18EE2-F25E-4796-ACC8-F66DDB06096B}.GTK Debug.ActiveCfg = Debug|Win32
+		{F5C18EE2-F25E-4796-ACC8-F66DDB06096B}.Release.ActiveCfg = Release|Win32
+		{D2AE58EC-8D34-48C3-8268-FCF861BB925F}.Debug.ActiveCfg = Debug|Win32
+		{D2AE58EC-8D34-48C3-8268-FCF861BB925F}.Generate YY and LL files.ActiveCfg = Release|Win32
+		{D2AE58EC-8D34-48C3-8268-FCF861BB925F}.GTK Debug.ActiveCfg = Debug|Win32
+		{D2AE58EC-8D34-48C3-8268-FCF861BB925F}.Release.ActiveCfg = Release|Win32
+		{69EC0C18-5D5C-4C79-88E2-72BD2C4B65A2}.Debug.ActiveCfg = Debug|Win32
+		{69EC0C18-5D5C-4C79-88E2-72BD2C4B65A2}.Generate YY and LL files.ActiveCfg = Debug|Win32
+		{69EC0C18-5D5C-4C79-88E2-72BD2C4B65A2}.GTK Debug.ActiveCfg = Debug|Win32
+		{69EC0C18-5D5C-4C79-88E2-72BD2C4B65A2}.Release.ActiveCfg = Release|Win32
+		{8371B2BE-EB42-49C9-948E-1C832A2C1FE4}.Debug.ActiveCfg = Debug|Win32
+		{8371B2BE-EB42-49C9-948E-1C832A2C1FE4}.Generate YY and LL files.ActiveCfg = Release|Win32
+		{8371B2BE-EB42-49C9-948E-1C832A2C1FE4}.GTK Debug.ActiveCfg = Debug|Win32
+		{8371B2BE-EB42-49C9-948E-1C832A2C1FE4}.Release.ActiveCfg = Release|Win32
+		{44EC889A-D872-4FDA-9076-8EA284B11708}.Debug.ActiveCfg = Debug|Win32
+		{44EC889A-D872-4FDA-9076-8EA284B11708}.Generate YY and LL files.ActiveCfg = Debug|Win32
+		{44EC889A-D872-4FDA-9076-8EA284B11708}.GTK Debug.ActiveCfg = Debug|Win32
+		{44EC889A-D872-4FDA-9076-8EA284B11708}.Release.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

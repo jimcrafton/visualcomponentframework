@@ -71,6 +71,39 @@ public:
 		*/
 		listBoxSingle->setAllowsMultiSelect( false );
 
+		ImageList* imgList = new ImageList(this);
+		GraphicsResourceBundle* bundle = Application::getRunningInstance()->getResourceBundle();
+		imgList->setImageHeight( 16 );
+		imgList->setImageWidth( 16 );
+		imgList->setTransparentColor( &Color(0.0f, 1.0f, 0.0f) );
+		Image* img = bundle->getImage("plain.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("ie.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("access.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("excel.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("fp.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("powerpt.bmp");
+		imgList->addImage( img );
+		delete img;
+
+		img = bundle->getImage("word.bmp");
+		imgList->addImage( img );
+		delete img;
+
 		/**
 		This sets the selection style to single selection. We really
 		don't need to set this now, because if allowsMultiSelect_ is false,
@@ -78,6 +111,7 @@ public:
 		*/
 		listBoxSingle->setAllowsExtendedSelect( false );
 
+		listBoxSingle->setImageList( imgList );
 
 		ListBoxControl* listBoxMulti = new ListBoxControl();
 		listBoxMulti->setName( L"listBoxMulti" );
@@ -168,7 +202,12 @@ public:
 			String indx = StringUtils::toString(j);
 			String capt = L"DefaultListItem " + indx;
 		
-			singleModel->addItem( new DefaultListItem( singleModel, capt ) );
+			ListItem* item = new DefaultListItem( singleModel, capt );
+			item->setImageIndex( j / 9 );
+			if ( j == 0 ) {
+				item->setState( Item::idsChecked );
+			}
+			singleModel->addItem( item );
 			multiModel->addItem( new DefaultListItem( multiModel, capt ) );
 			extendedModel->addItem( new DefaultListItem( extendedModel, capt ) );
 		}

@@ -57,46 +57,11 @@ interface.
 	@del BasicTableItemEditor::CellItemChanged
 	@del BasicTableItemEditor::CellItemValidateChange
 */
-class APPLICATIONKIT_API BasicTableItemEditor : public TableItemEditor{
-public:
-
-
-	BasicTableItemEditor( TableCellItem* editingItem = NULL );
+class APPLICATIONKIT_API BasicTableItemEditor : public TableItemEditor {
+public:	
+	BasicTableItemEditor( TableCellItem* editingItem );
 
 	virtual ~BasicTableItemEditor();
-
-	virtual bool isCellEditable();
-
-	/**
-	@delegate CellItemChanged
-	@event ItemEditorEvent
-	*/
-	DELEGATE(CellItemChanged)
-
-	/**
-	@delegate CellItemValidateChange
-	@event ItemEditorEvent
-	@eventtype ITEMEDITOR_CHANGED
-	*/
-	DELEGATE(CellItemValidateChange)
-
-	virtual void addCellItemChangedHandler( EventHandler* handler ) {
-		CellItemChanged += handler;
-	}
-
-	virtual void removeCellItemChangedHandler( EventHandler* handler ) {
-		CellItemChanged -= handler;
-	}
-
-	virtual void addCellItemValidateChangeHandler( EventHandler* handler ) {
-		CellItemValidateChange += handler;
-	}
-
-	virtual void removeCellItemValidateChangeHandler( EventHandler* handler )  {
-		CellItemValidateChange -= handler;
-	}
-
-	virtual void setItemToEdit( TableCellItem* itemToEdit );
 
 	virtual TableCellItem* getItemToEdit(){
 		return 	editingItem_;
@@ -105,18 +70,13 @@ public:
 	virtual void updateItem();
 
 	virtual Control* getEditingControl();
-
-	Control* getCurrentEditingControl( TableCellItem* currentItem );
-private:
+protected:
 	TableCellItem* editingItem_;
-	/**
-	*this is here just in case we get reused by multiple items
-	*/
-	std::map<TableCellItem*,Control*> editorMap_;
+	Control* editingControl_;
 
 	void onEditorTextChanged( TextEvent* event );
 
-	TextModelEventHandler<BasicTableItemEditor>* textModelHandler_;
+	
 };
 
 }; //end of namespace VCF
@@ -125,6 +85,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.2.4.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

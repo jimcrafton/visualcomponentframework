@@ -181,6 +181,9 @@
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_vcgen_bspline.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_vcgen_dash.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\thirdparty\common\agg\src\agg_vcgen_stroke.cpp">
 			</File>
 		</Filter>

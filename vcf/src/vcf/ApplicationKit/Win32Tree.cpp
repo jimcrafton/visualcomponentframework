@@ -122,7 +122,7 @@ using namespace VCF;
 
 Win32Tree::Win32Tree( TreeControl* tree ):
 	AbstractWin32Component( tree ),
-	treeControl_( tree ),	
+	treeControl_( tree ),
 	imageListCtrl_(NULL),
 	stateImageListCtrl_(NULL),
 	internalTreeItemExpanded_(false)
@@ -145,9 +145,9 @@ void Win32Tree::create( Control* owningControl )
 {
 	init();
 
-	createParams();
+	CreateParams params = createParams();
 
-	backColor_.copy( treeControl_->getColor() );
+	backColor_ = *treeControl_->getColor();
 
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
@@ -155,10 +155,10 @@ void Win32Tree::create( Control* owningControl )
 	String className = getClassName();
 
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( exStyleMask_,
+		hwnd_ = ::CreateWindowExW( params.second,
 										 WC_TREEVIEWW,
 										 NULL,
-										 styleMask_,
+										 params.first,
 										 0,
 										 0,
 										 1,
@@ -169,10 +169,10 @@ void Win32Tree::create( Control* owningControl )
 										 NULL );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( exStyleMask_,
+		hwnd_ = ::CreateWindowExA( params.second,
 										 WC_TREEVIEWA,
 										 NULL,
-										 styleMask_,
+										 params.first,
 										 0,
 										 0,
 										 1,
@@ -189,11 +189,17 @@ void Win32Tree::create( Control* owningControl )
 
 		subclassWindow();
 
+		setFont( owningControl->getFont() );
+
 		treeControl_ = (TreeControl*)owningControl;
 		peerControl_ = owningControl;
 
-		peerControl_->ControlModelChanged += 
+		peerControl_->ControlModelChanged +=
 			new GenericEventHandler<Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
+
+		COLORREF backColor = backColor_.getColorRef32();
+
+		TreeView_SetBkColor( hwnd_, backColor );
 	}
 	else {
 		//throw exception
@@ -223,17 +229,23 @@ void Win32Tree::init()
 
 }
 
-void Win32Tree::createParams()
+Win32Object::CreateParams Win32Tree::createParams()
 {
-	exStyleMask_ = 0;
-	styleMask_ = BORDERED_VIEW | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_NOTOOLTIPS | TVS_SHOWSELALWAYS;
+	Win32Object::CreateParams result;
 
-	styleMask_ &= ~WS_BORDER;
-	styleMask_ &= ~WS_VISIBLE;
 
-	styleMask_ |= WS_HSCROLL | WS_VSCROLL;
+	result.first = BORDERED_VIEW | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | /*TVS_NOTOOLTIPS | */ TVS_SHOWSELALWAYS;
 
-	styleMask_ |= TVS_DISABLEDRAGDROP;
+	result.first &= ~WS_BORDER;
+	result.first &= ~WS_VISIBLE;
+
+	result.first |= WS_HSCROLL | WS_VSCROLL;
+
+	result.first |= TVS_DISABLEDRAGDROP;
+	result.second = 0;
+
+
+	return result;
 }
 
 TreeModel* Win32Tree::getTreeModel()
@@ -279,7 +291,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 
 		/*
 		JC added this cause it appears that for 32bit images the alpa val
-		matters! If it's not set back to 0 then the transparency affect doesn't 
+		matters! If it's not set back to 0 then the transparency affect doesn't
 		work? Bizarre
 		*/
 		SysPixelType* pix = win32Img->getImageBits()->pixels_;
@@ -321,7 +333,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 			sz --;
 			pix[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
-		
+
 		delete [] oldAlpaVals;
 
 
@@ -348,6 +360,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 	switch ( message ) {
 		case WM_PAINT:{
+			//check to see if the font needs updating
+			checkForFontChange();
+
 			PAINTSTRUCT ps;
 
 			HDC dc = BeginPaint( hwnd_, &ps );
@@ -364,7 +379,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 			VCF::GraphicsContext* ctx = peerControl_->getContext();
-			
+
 			ctx->setViewableBounds( Rect(paintRect.left, paintRect.top,
 									paintRect.right, paintRect.bottom ) );
 
@@ -379,25 +394,33 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			POINT oldOrg = {0};
 			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 
+			Color* color = peerControl_->getColor();
+			COLORREF backColor = color->getColorRef32();
+
+			HBRUSH bkBrush = CreateSolidBrush( backColor );
+			FillRect( memDC_, &paintRect, bkBrush );
+			DeleteObject( bkBrush );
+
+
 			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
 
-			
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );				
-			
+
+			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+
 			int gcs = ctx->saveState();
 
 			//paint the control here - double buffered
 			peerControl_->paint( ctx );
 
 
-			ctx->restoreState( gcs );		
+			ctx->restoreState( gcs );
 
 
 			//reset back to original origin
 			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
-			
+
 			//let the tree control's DefWndProc do windwos painting
-						
+
 			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
 
 
@@ -410,18 +433,18 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					  memDC_, paintRect.left, paintRect.top, SRCCOPY );
 
 			::RestoreDC ( memDC_, memDCState_ );
-			
+
 			::DeleteObject( memBMP_ );
-			
+
 			memBMP_ = NULL;
 			originalMemBMP_ = NULL;
 			memDCState_ = 0;
 
-			
 
-			
+
+
 			EndPaint( hwnd_, &ps );
-			
+
 			wndProcResult = 1;
 			result = true;
 		}
@@ -439,24 +462,22 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
-		case WM_ERASEBKGND :{/*
+		case WM_ERASEBKGND :{
 			Color* color = treeControl_->getColor();
-			if ( (backColor_.getRed() != color->getRed()) || (backColor_.getGreen() != color->getGreen()) || (backColor_.getBlue() != color->getBlue()) ) {
-				COLORREF backColor = RGB(color->getRed() * 255.0,
-									color->getGreen() * 255.0,
-									color->getBlue() * 255.0 );
+			if ( backColor_ != *color ) {
+				COLORREF backColor = color->getColorRef32();
+				TreeView_SetBkColor( hwnd_, backColor );
 
-				//TreeView_SetBkColor( hwnd_, backColor );
-
-				backColor_.copy( color );
+				backColor_ = *color;
 			}
-			*/
+
+
 			wndProcResult = 0;
 			result = true;
 		}
 		break;
 
-		case WM_LBUTTONDOWN : {			
+		case WM_LBUTTONDOWN : {
 
 
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
@@ -497,7 +518,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			Win32MSG msg( hwnd_, message, wParam, lParam, peerControl_ );
 			Event* event = UIToolkit::createEventFromNativeOSEventData( &msg );
 
-			
+
 			if ( NULL != event && (peerControl_->getComponentState() != Component::csDestroying) ) {
 				peerControl_->handleEvent( event );
 
@@ -510,30 +531,31 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
+
 		case TVN_BEGINDRAGW:{
 			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam ;
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
-			
-			if ( NULL != item ) {				
+
+			if ( NULL != item ) {
 				Point pt( treeview->ptDrag.x, treeview->ptDrag.y );
 
 				TreeItem* oldItem = treeControl_->getSelectedItem();
 				if ( item != oldItem ) {
-					//hmm, we haven't selected this item before, so 
+					//hmm, we haven't selected this item before, so
 					//let's go ahead and make it selected now
-					//we do this because the TVN_SELECTIONCHANGED 
+					//we do this because the TVN_SELECTIONCHANGED
 					//won't get called at this point
-					
+
 					item->setSelected( true );
-					
+
 					ItemEvent event( treeControl_, TREEITEM_SELECTED );
-					
-					event.setUserData( (void*)item );				
-					
+
+					event.setUserData( (void*)item );
+
 					event.setPoint( &pt );
-					
+
 					treeControl_->handleEvent( &event );
-					
+
 					if ( NULL != oldItem ) {
 						oldItem->setSelected( false );
 					}
@@ -558,7 +580,6 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 										mbmLeftButton, keyMask, &pt );
 
 				treeControl_->beginDragDrop( &event );
-
 			}
 		}
 		break;
@@ -566,27 +587,27 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_BEGINDRAGA:{
 			NMTREEVIEWA* treeview = (NMTREEVIEWA*)lParam ;
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
-			
-			if ( NULL != item ) {				
+
+			if ( NULL != item ) {
 				Point pt( treeview->ptDrag.x, treeview->ptDrag.y );
 
 				TreeItem* oldItem = treeControl_->getSelectedItem();
 				if ( item != oldItem ) {
-					//hmm, we haven't selected this item before, so 
+					//hmm, we haven't selected this item before, so
 					//let's go ahead and make it selected now
-					//we do this because the TVN_SELECTIONCHANGED 
+					//we do this because the TVN_SELECTIONCHANGED
 					//won't get called at this point
-					
+
 					item->setSelected( true );
-					
+
 					ItemEvent event( treeControl_, TREEITEM_SELECTED );
-					
-					event.setUserData( (void*)item );				
-					
+
+					event.setUserData( (void*)item );
+
 					event.setPoint( &pt );
-					
+
 					treeControl_->handleEvent( &event );
-					
+
 					if ( NULL != oldItem ) {
 						oldItem->setSelected( false );
 					}
@@ -638,7 +659,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				String text = lptvdi->item.pszText;
 				TreeItem* item = (TreeItem*)lptvdi->item.lParam;
 				item->setCaption( text );
-				
+
 				wndProcResult = 1;
 				result = true;
 			}
@@ -726,7 +747,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			internalTreeItemExpanded_ = true;
 			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam;
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
-			
+
 			if ( NULL != item ) {
 
 				if ( treeview->action & TVE_EXPAND ) {
@@ -765,11 +786,11 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_SELCHANGEDW:{
 			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam;
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
-		
+
 			if ( NULL != item ) {
 
 				item->setSelected( true );
-				
+
 				POINT tmpPt = {0,0};
 				GetCursorPos( &tmpPt );
 				::ScreenToClient( hwnd_, &tmpPt );
@@ -829,7 +850,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		}
 		break;
-
+/*
+JC
+Do we need these? What advantage does processing these events have for us???
 		case NM_RCLICK :{
 			POINT pt = {0,0};
 			GetCursorPos( &pt );
@@ -848,13 +871,14 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			GetCursorPos( &pt );
 			ScreenToClient( hwnd_, &pt );
 			Point tmpPt( pt.x, pt.y );
-			VCF::MouseEvent event( getControl(), Control::MOUSE_UP,
+			VCF::MouseEvent event( getControl(), Control::MOUSE_CLICK,
 						mbmLeftButton, kmUndefined, &tmpPt );
 			if ( peerControl_ ) {
 					peerControl_->handleEvent( &event );
 			}
 		}
 		break;
+		*/
 
 		case NM_CUSTOMDRAW:{
 			static Rect itemRect;
@@ -872,7 +896,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 					case CDDS_ITEMPREPAINT : {
 						RECT r;
-						TreeView_GetItemRect( hwnd_, 
+						TreeView_GetItemRect( hwnd_,
 											(HTREEITEM) treeViewDraw->nmcd.dwItemSpec,
 											&r, TRUE );
 
@@ -886,10 +910,10 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					break;
 
 					case CDDS_ITEMPOSTPAINT : {
-						
-						
+
+
 						wndProcResult = CDRF_DODEFAULT;
-						
+
 						if ( NULL != treeViewDraw->nmcd.lItemlParam ) {
 							TreeItem* item = (TreeItem*)treeViewDraw->nmcd.lItemlParam;
 
@@ -901,7 +925,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					break;
 
 					default : {
-						
+
 						wndProcResult = 0;
 					}
 					break;
@@ -962,7 +986,7 @@ void Win32Tree::addItem( TreeItem* item )
 
 		tvItem.cchTextMax = 0;//item->getCaption().size()+1;
 		//VCFChar* tmpName = new VCFChar[tvItem.cchTextMax];
-		//memset( tmpName, 0, tvItem.cchTextMax );
+		//memset( tmpName, 0, tvItem.cchTextMax*sizeof(VCFChar) );
 		//item->getCaption().copy( tmpName, tvItem.cchTextMax-1 );
 
 		tvItem.pszText = LPSTR_TEXTCALLBACKW;//tmpName;
@@ -1011,7 +1035,7 @@ void Win32Tree::addItem( TreeItem* item )
 
 		tvItem.cchTextMax = 0;//item->getCaption().size()+1;
 		//VCFChar* tmpName = new VCFChar[tvItem.cchTextMax];
-		//memset( tmpName, 0, tvItem.cchTextMax );
+		//memset( tmpName, 0, tvItem.cchTextMax*sizeof(VCFChar) );
 		//item->getCaption().copy( tmpName, tvItem.cchTextMax-1 );
 
 		tvItem.pszText = LPSTR_TEXTCALLBACKA;//tmpName;
@@ -1276,7 +1300,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 		HBITMAP hBMPcopy = (HBITMAP)CopyImage( win32Img->getBitmap(), IMAGE_BITMAP, 0, 0, NULL );
 		//flip the bits
 
-		int err = ImageList_AddMasked( stateImageListCtrl_, hBMPcopy, transparentColor->getRGB() );
+		int err = ImageList_AddMasked( stateImageListCtrl_, hBMPcopy, transparentColor->getColorRef32() );
 
 		if ( err < 0 ) {
 			//error condition !
@@ -1288,7 +1312,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 			sz --;
 			pix[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
-		
+
 		delete [] oldAlpaVals;
 
 		TreeView_SetImageList( hwnd_, stateImageListCtrl_, TVSIL_STATE );
@@ -1357,8 +1381,39 @@ void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:59  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.13  2005/06/26 01:31:20  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.3.2.12  2005/06/09 06:13:08  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.3.2.11  2005/05/02 02:31:42  ddiego
+*minor text updates.
+*
+*Revision 1.3.2.10  2005/04/26 02:29:40  ddiego
+*fixes font setting bug brought up by scott and glen_f
+*
+*Revision 1.3.2.9  2005/04/20 02:26:01  ddiego
+*fixes for single line text and formatting problems in text window creation.
+*
+*Revision 1.3.2.8  2005/04/09 17:20:36  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.7  2005/02/16 05:09:32  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
+*Revision 1.3.2.6  2005/01/28 02:49:02  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
+*Revision 1.3.2.5  2005/01/07 01:13:59  ddiego
+*fixed a foundation kit but that was cause a crash by releasing the system instance and then making use of a member variable for it. The member variable is now static, which is more appropriate.
 *
 *Revision 1.3.2.4  2005/01/01 20:31:08  ddiego
 *made an adjustment to quitting and event loop, and added some changes to the DefaultTabModel.

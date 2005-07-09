@@ -41,7 +41,7 @@ void Pair::paint(VCF::GraphicsContext *ctx, VCF::Rect& bounds, VCF::Font *f)
 		value2_->paint(ctx, bounds, f);
 }
 
-void String::paint(VCF::GraphicsContext *ctx, VCF::Rect& bounds, VCF::Font *)
+void TexString::paint(VCF::GraphicsContext *ctx, VCF::Rect& bounds, VCF::Font *)
 {
 	ctx->textBoundedBy(&bounds, value_,
 		(long)(VCF::GraphicsContext::tdoLeftAlign | VCF::GraphicsContext::tdoBottomAlign));

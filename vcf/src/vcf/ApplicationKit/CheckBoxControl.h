@@ -40,40 +40,7 @@ public:
 	virtual double getPreferredHeight();
 
 	virtual double getPreferredWidth();
-
-	/**
-	*indicates whether or not the check box is drawn with a
-	*fixed size. If it is not then it will be scaled to
-	*the total width and height of the control bounds
-	*@bool returns true if the checkbox is fixed otherwise
-	*false
-	*/
-	bool getUseFixedCheckboxSize() {
-		return useFixedCheckboxSize_;
-	}
-
-	/**
-	*sets whether or not to use the fixed checkbox size
-	*when drawing the check box
-	*/
-	void setUseFixedCheckboxSize( const bool& fixedCheckboxSize );
-
-	/**
-	*returns the fixed check box height
-	*@return double the check box height
-	*/
-	double getFixedCheckboxHeight() {
-		return fixedCheckboxHeight_;
-	}
-
-	/**
-	*sets the fixed check box height
-	*/
-	void setFixedCheckboxHeight( const double& fixedCheckboxHeight );
-
 protected:
-	bool useFixedCheckboxSize_;
-	double fixedCheckboxHeight_;
 
 
 };
@@ -84,6 +51,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/02/16 05:09:31  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

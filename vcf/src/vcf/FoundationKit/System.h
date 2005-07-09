@@ -23,6 +23,7 @@ class BasicException;
 class DateTime;
 class Locale;
 class ResourceBundle;
+class Format;
 
 /**
 The System object represents basic lower level OS functions. 
@@ -34,6 +35,83 @@ System peer implementation.
 */
 class FOUNDATIONKIT_API System : public Object {
 public:
+	
+	/**
+	This enum is used to represent various 
+	identifiers for common directories
+	on the system. These each represent a 
+	valid file path, or an empty string if
+	there is no such equivalent for the
+	platform. 
+	@see getCommonDirectory()
+	*/
+	enum CommonDirectory {
+		/**
+		This is the home directory for the current user
+		account that the framework is being executed
+		from.
+		*/
+		cdUserHome = 0,
+
+		/**
+		This is the directory for storing application
+		specific data for the current user
+		account that the framework is being executed
+		from.
+		*/
+		cdUserProgramData,
+
+		/**
+		This is the directory that represents the
+		desktop for the current user
+		account that the framework is being executed
+		from.
+		*/
+		cdUserDesktop,
+
+		/**
+		This is the directory that represents
+		where the user would store "favorites" (typically
+		bookmarks, and the like) for the current user
+		account that the framework is being executed
+		from.
+		*/
+		cdUserFavorites,
+
+		/**
+		This is the directory that represents
+		where the user would store their documents (by default)
+		for the current user account that the framework 
+		is being executed from.
+		*/
+		cdUserDocuments,
+
+		/**
+		This is the temp (or "scratch") directory for the current user
+		account that the framework is being executed
+		from.
+		*/
+		cdUserTemp,		
+
+		/**
+		This is the default, top level directory that the system
+		stores programs/applications in. On Win32 this generally
+		"C:\Program Files\". On Mac OSX this would generally be 
+		"/Applications/".
+		*/
+		cdSystemPrograms,
+
+		/**
+		This is the system temp directory.
+		*/
+		cdSystemTemp,
+
+		/**
+		This is the system root directory.
+		*/
+		cdSystemRoot
+	};
+
 	/**
 	This is for internal usage only - don't call
 	*/
@@ -132,8 +210,11 @@ public:
 	*/
 	static String findResourceDirectory();
 
+	static String findResourceDirectory( Locale* locale );
+
+	static String findResourceDirectory( const String& fileName, Locale* locale );
+
 	static String findResourceDirectoryForExecutable( const String& fileName );
-	
 
 
 	/**
@@ -170,6 +251,18 @@ public:
 
 	*/
 	static String getCompiler();
+
+	/**
+	Returns the computer's name, assuming this is supported 
+	by the platform, otherwise an empty string.
+	*/
+	static String getComputerName();
+
+	/**
+	Returns the current user name that the framework is being 
+	executed under.
+	*/
+	static String getUserName();
 
 	/**
 	Returns the current "tick" count. On Win32 systems this is analagous to the 
@@ -215,13 +308,26 @@ public:
 	\endcode
 	This will ensure that on all platforms the unicode string gets properly
 	handled and output.
+
+	\deprecated 
+	This is now a deprecated function and should not be used at all. Existing
+	code should be changed to make use of the print( const Format& ) function 
+	instead. It will be removed entirely in an upcoming release.
 	*/
 	static void print( String text, ... );
 
+	static void print( const Format& formatter );
+
 	/**
 	@see System::print
+	\deprecated 
+	This is now a deprecated function and should not be used at all. Existing
+	code should be changed to make use of the println( const Format& ) function 
+	instead. It will be removed entirely in an upcoming release.
 	*/
 	static void println( String text, ... );
+
+	static void println( const Format& formatter );
 
 	/**
 	This will print the contents of the exception to stdout and the 
@@ -263,6 +369,11 @@ public:
 	Sets the current working directory
 	*/
 	static void setCurrentWorkingDirectory( const String& currentDirectory );
+
+	/**
+
+	*/
+	static String getCommonDirectory( CommonDirectory directory );
 
 	/**
 	Sets the date instance to the current system time (UTC based).
@@ -368,6 +479,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.6  2005/01/07 02:38:39  ddiego
 *merged over devmain changes to system class bug.
 *
@@ -375,11 +489,26 @@ protected:
 *merged over some of the changes from the dev branch because 
 they're important resoource loading bug fixes. Also fixes a 
 few other bugs as well.
+*Revision 1.4.2.8  2005/06/08 13:46:26  marcelloptr
+*very minor change
+*
+*Revision 1.4.2.7  2005/06/08 03:27:28  ddiego
+*fix for popup menus
+*
+*Revision 1.4.2.6  2005/03/26 00:10:30  ddiego
+*added some minor funs to system class
+*
+*Revision 1.4.2.5  2005/03/15 01:51:52  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.4.2.4  2005/03/14 05:44:51  ddiego
+*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
 *
 *Revision 1.4.2.3  2005/01/07 01:15:23  ddiego
-*fixed a foundation kit but that was cause a crash by releasing 
-the system instance and then making use of a member variable for 
-it. The member variable is now static, which is more appropriate.
+*fixed a foundation kit but that was cause a crash by releasing the system instance and then making use of a member variable for it. The member variable is now static, which is more appropriate.
 *
 *Revision 1.4.2.2  2004/12/19 07:09:20  ddiego
 *more modifications to better handle resource bundles, especially

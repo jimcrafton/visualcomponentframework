@@ -20,6 +20,8 @@ namespace VCF {
 
 #define PROGRESSCONTROL_CLASSID		"afb8b792-f354-4234-884d-ecccd277f9e8"
 
+static String ProgressAlignmentNames[] = { "ProgressControl::paVertical",
+                                         "ProgressControl::paHorizontal" };
 
 /**
 The ProgressControl is a class that displays a vertical or horizontal
@@ -30,17 +32,20 @@ public:
 	enum ProgressAlignment {
 		paVertical = 0,
 		paHorizontal
-	};
+	};	
+
 
 	ProgressControl();
 
 	virtual ~ProgressControl();
 
+	virtual void setName( const String& name );
+
 	ProgressAlignment getDisplayAlignment() {
 		return displayAlignment_;
 	}
 
-	void setDisplayAlignment( ProgressAlignment val );
+	void setDisplayAlignment( const ProgressAlignment& val );
 
 	double getMinValue() {
 		return minVal_;
@@ -121,6 +126,16 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/02/28 04:51:56  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.2.4.1  2005/02/27 01:45:33  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

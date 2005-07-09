@@ -8,7 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-
+#include "vcf/ApplicationKit/MenuBarPeer.h"
+#include "vcf/ApplicationKit/MenuItemPeer.h"
 
 using namespace VCF;
 
@@ -67,10 +68,61 @@ void Menu::setRootMenuItem( MenuItem* item )
 	}
 }
 
+void Menu::itemChanged( const int& eventType, MenuItem* item )
+{
+	MenuItemEvent event(item,eventType);
+
+	MenuItemChanged.fireEvent( &event );
+}
+
+uint32 Menu::getItemIndex( MenuItem* item )
+{
+	uint32 result = 0;
+
+	MenuItem* parent = item->getParent();
+	if ( NULL != parent ) {
+		result = parent->getChildIndex( item );
+	}
+
+	return result;
+}
+
+void Menu::handleEvent( Event* event )
+{
+	Component::handleEvent( event );
+	switch ( event->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			MenuItem* item = dynamic_cast<MenuItem*>(child);
+			if ( NULL != item ) {
+				getRootMenuItem()->addChild( item );
+				if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
+					getRootMenuItem()->getPeer()->addChild( item );
+				}
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+
+		}
+		break;
+	}
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
+*Revision 1.2.4.1  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

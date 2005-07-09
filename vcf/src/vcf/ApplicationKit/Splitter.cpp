@@ -151,194 +151,11 @@ void Splitter::mouseDown( MouseEvent* e )
 	//}
 }
 
-void Splitter::updateAttachedControl( Point* pt, const bool& shiftAll/*=false*/ )
-{
-	//StringUtils::trace( "updateAttachedControl\r\n" );
-
-	double parentWidth = getParent()->getWidth()-1;
-	double parentHeight = getParent()->getHeight()-1;
-
- 	Container* container = getParent()->getContainer();
-	if ( NULL == container ) {
-		return;
-	}
-
-	Control* controlLast = (dynamic_cast<StandardContainer*>(container))->getControlInAlignmentList( this->getAlignment(), false );
-	if ( NULL == controlLast ) {
-		return;
-	}
-
-	// This doesn't seems to make a difference though for the minor flickering (?) problem
-	// This doesn't really seems to be a flickering problem, but instead the fact that the
-	// scrollbars don't move with the control ( immediately ) as they should
-	// If that is the problem then beginSetBounds / endSetBounds should be removed from here
-	container->getContainerControl()->getPeer()->beginSetBounds( 2 );	// 2 or 3 ? I think 2
-
-	bool shouldResize = true;
-	double delta, deltaAlt, width, widthMax, newWidth, widthAlt, newWidthAlt;
-
-	switch ( this->getAlignment() ) {
-		case AlignLeft : {
-			delta = pt->x_ - dragPoint_.x_;
-			if ( 0 < delta && controlLast->getWidth() < minimumWidth_ ) {
-				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getWidth() );
-				shouldResize = false;
-			}
-			if ( NULL != attachedControl_ ) {
-				width = attachedControl_->getWidth();
-				widthMax = parentWidth - attachedControl_->getLeft() - minimumWidth_ - this->getWidth();
-				newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
-				if ( width != newWidth ) {
-					if ( !shiftAll && NULL != attachedControlAlt_ ) {
-						delta = ( newWidth - width );
-						widthAlt = attachedControlAlt_->getWidth();
-						widthMax = attachedControlAlt_->getRight() - minimumWidth_ - this->getWidth();
-						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
-						deltaAlt = ( newWidthAlt - widthAlt );
-						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
-							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
-						}
-						if ( shouldResize ) {
-							attachedControlAlt_->setLeft( attachedControlAlt_->getLeft() - deltaAlt );
-							attachedControlAlt_->setWidth( newWidthAlt );
-							//StringUtils::traceWithArgs( "updateAttachedControl newWidthAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
-						}
-					}
-					if ( shouldResize ) {
-						attachedControl_->setWidth( newWidth );
-						//StringUtils::traceWithArgs( "updateAttachedControl newWidth: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
-					}
-				}
-			}
-		}
-		break;
-
-		case AlignTop : {
-			delta = pt->y_ - dragPoint_.y_;
-			if ( 0 < delta && controlLast->getHeight() < minimumWidth_ ) {
-				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getHeight() );
-				shouldResize = false;
-			}
-			if ( NULL != attachedControl_ ) {
-				width = attachedControl_->getHeight();
-				widthMax = parentHeight - attachedControl_->getTop() - minimumWidth_ - this->getHeight();
-				newWidth = VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
-				if ( width != newWidth ) {
-					if ( !shiftAll && NULL != attachedControlAlt_ ) {
-						delta = ( newWidth - width );
-						widthAlt = attachedControlAlt_->getHeight();
-						widthMax = attachedControlAlt_->getBottom() - minimumWidth_ - this->getHeight();
-						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
-						deltaAlt = ( newWidthAlt - widthAlt );
-						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
-							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
-						}
-						if ( shouldResize ) {
-							attachedControlAlt_->setTop( attachedControlAlt_->getTop() - deltaAlt );
-							attachedControlAlt_->setHeight( newWidthAlt );
-							//StringUtils::traceWithArgs( "updateAttachedControl newHeightAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
-						}
-					}
-					if ( shouldResize ) {
-						attachedControl_->setHeight( newWidth );
-						//StringUtils::traceWithArgs( "updateAttachedControl newHeight: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
-					}
-				}
-			}
-		}
-		break;
-
-		case AlignRight : {
-			//delta_ = dragPoint_.x_ - pt->x_;
-			delta = -(pt->x_ - dragPoint_.x_);
-			if ( 0 < delta && controlLast->getWidth() < minimumWidth_ ) {
-				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getWidth() );
-				shouldResize = false;
-			}
-			if ( NULL != attachedControl_ ) {
-				width = attachedControl_->getWidth();
-				widthMax = attachedControl_->getRight() - minimumWidth_ - this->getWidth();	//2ch
-				newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
-				if ( width != newWidth ) {
-					if ( !shiftAll && NULL != attachedControlAlt_ ) {
-						delta = ( newWidth - width );
-						widthAlt = attachedControlAlt_->getWidth();
-						widthMax = parentWidth - attachedControlAlt_->getLeft() - minimumWidth_ - this->getWidth();	//2ch
-						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
-						deltaAlt = ( newWidthAlt - widthAlt );
-						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
-							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
-						}
-						if ( shouldResize ) {
-							attachedControlAlt_->setRight( attachedControlAlt_->getRight() - deltaAlt );	//2ch
-							attachedControlAlt_->setWidth( newWidthAlt );
-							//StringUtils::traceWithArgs( "updateAttachedControl newWidthAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
-						}
-					}
-					if ( shouldResize ) {
-						attachedControl_->setWidth( newWidth );
-						//StringUtils::traceWithArgs( "updateAttachedControl newWidth: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
-					}
-				}
-			}
-		}
-		break;
-
-		case AlignBottom : {
-			//delta_ = dragPoint_.y_ - pt->y_;
-			delta = -(pt->y_ - dragPoint_.y_);
-			if ( 0 < delta && controlLast->getHeight() < minimumWidth_ ) {
-				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getHeight() );
-				shouldResize = false;
-			}
-			if ( NULL != attachedControl_ ) {
-				width = attachedControl_->getHeight();
-				widthMax = attachedControl_->getBottom() - minimumWidth_ - this->getHeight();	//2ch
-				newWidth = VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
-				if ( width != newWidth ) {
-					if ( !shiftAll && NULL != attachedControlAlt_ ) {
-						delta = ( newWidth - width );
-						widthAlt = attachedControlAlt_->getHeight();
-						widthMax = parentHeight - attachedControlAlt_->getTop() - minimumWidth_ - this->getHeight();	//2ch
-						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
-						deltaAlt = ( newWidthAlt - widthAlt );
-						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
-							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
-						}
-						if ( shouldResize ) {
-							attachedControlAlt_->setBottom( attachedControlAlt_->getBottom() - deltaAlt );	//2ch
-							attachedControlAlt_->setHeight( newWidthAlt );
-							//StringUtils::traceWithArgs( "updateAttachedControl newHeightAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
-						}
-					}
-					if ( shouldResize ) {
-						attachedControl_->setHeight( newWidth );
-						//StringUtils::traceWithArgs( "updateAttachedControl newHeight: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
-					}
-				}
-			}
-		}
-		break;
-
-	}
-
-	// This doesn't seems to make a difference though for the minor flickering (?) problem
-	// This doesn't really seems to be a flickering problem, but instead the fact that the
-	// scrollbars don't move with the control ( immediately ) as they should
-	// If that is the problem then beginSetBounds / endSetBounds should be removed from here
-	container->getContainerControl()->getPeer()->endSetBounds();
-
- 	//Container* container = getParent()->getContainer();
-	//if ( NULL != container ) {
-	container->resizeChildren( NULL );
-	//}
-}
-
 void Splitter::mouseMove( MouseEvent* e )
 {
 	CustomControl::mouseMove( e );
 	if ( e->hasLeftButton() ) {
-		updateAttachedControl( e->getPoint(), e->hasShiftKey() );
+		updateAttachedControl( *e->getPoint(), e->hasShiftKey() );
 	}
 }
 
@@ -349,7 +166,7 @@ void Splitter::mouseUp( MouseEvent* e )
 	CustomControl::mouseUp( e );
 	this->releaseMouseEvents();
 
-	updateAttachedControl( e->getPoint(), e->hasShiftKey() );
+	updateAttachedControl( *e->getPoint(), e->hasShiftKey() );
 }
 
 void Splitter::mouseDblClick( MouseEvent* e )
@@ -362,147 +179,381 @@ void Splitter::mouseDblClick( MouseEvent* e )
 
 	CustomControl::mouseDblClick( e );
 	if ( e->hasLeftButton() ) {
-		Point pt = *(e->getPoint());
-
-		double parentWidth = getParent()->getWidth()-1;
-		double parentHeight = getParent()->getHeight()-1;
-		double width, widthMax;
-		double newWidth = 0.0;
-
-		switch ( this->getAlignment() ) {
-			case AlignLeft : {
-				if ( e->hasShiftKey() )
-				{
-					if ( NULL != attachedControl_ ) {
-						width = attachedControl_->getWidth();// - minimumWidth_ - this->getWidth();
-						widthMax = parentWidth - attachedControl_->getLeft() - minimumWidth_ - this->getWidth();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.x_ += deltaRestore_;
-						} else {
-							pt.x_ -= newWidth - minimumWidth_;
-							deltaRestore_ = newWidth - minimumWidth_;
-						}
-					}
-				}
-				else
-				{
-					if ( NULL != attachedControlAlt_ ) {
-						width = attachedControlAlt_->getWidth() - minimumWidth_ - this->getWidth();
-						widthMax = attachedControlAlt_->getRight() - minimumWidth_ - this->getWidth();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.x_ -= deltaRestore_;
-						} else {
-							pt.x_ += newWidth;
-							deltaRestore_ = newWidth /*+ minimumWidth_ + this->getWidth()*/;
-						}
-					}
-				}
-				//StringUtils::traceWithArgs( "mouseDblClick delta_: %3.1f\r\n" ,delta_ );
-			}
-			break;
-
-			case AlignTop : {
-				if ( e->hasShiftKey() )
-				{
-					if ( NULL != attachedControl_ ) {
-						width = attachedControl_->getHeight();
-						widthMax = parentHeight - attachedControl_->getTop();// - minimumWidth_ - this->getHeight();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.y_ += deltaRestore_;
-						} else {
-							pt.y_ -= newWidth - minimumWidth_;
-							deltaRestore_ = newWidth - minimumWidth_;
-						}
-					}
-				}
-				else
-				{
-					if ( NULL != attachedControlAlt_ ) {
-						width = attachedControlAlt_->getHeight() - minimumWidth_ - this->getHeight();
-						widthMax = attachedControlAlt_->getBottom() - minimumWidth_ - this->getHeight();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.y_ -= deltaRestore_;
-						} else {
-							pt.y_ += newWidth;
-							deltaRestore_ = newWidth /*+ minimumWidth_ + this->getWidth()*/;
-						}
-					}
-				}
-			}
-			break;
-
-			case AlignRight : {
-				if ( e->hasShiftKey() )
-				{
-					if ( NULL != attachedControl_ ) {
-						width = attachedControl_->getWidth();// - minimumWidth_ - this->getWidth();
-						widthMax = attachedControl_->getRight() - minimumWidth_ - this->getWidth();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.x_ -= deltaRestore_;
-						} else {
-							pt.x_ += newWidth - minimumWidth_;
-							deltaRestore_ = newWidth - minimumWidth_;
-						}
-					}
-				}
-				else
-				{
-					if ( NULL != attachedControlAlt_ ) {
-						width = attachedControlAlt_->getWidth() - minimumWidth_ - this->getWidth();
-						widthMax = parentWidth - attachedControlAlt_->getLeft() - minimumWidth_ - this->getWidth();
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.x_ += deltaRestore_;
-						} else {
-							pt.x_ -= newWidth;
-							deltaRestore_ = newWidth;
-						}
-					}
-				}
-			}
-			break;
-
-			case AlignBottom : {
-				if ( e->hasShiftKey() )
-				{
-					if ( NULL != attachedControl_ ) {
-						width = attachedControl_->getHeight();// - minimumWidth_ - this->getHeight();	//2ch
-						widthMax = attachedControl_->getBottom() - minimumWidth_ - this->getHeight();	//2ch
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.y_ -= deltaRestore_;
-						} else {
-							pt.y_ += newWidth - minimumWidth_;
-							deltaRestore_ = newWidth - minimumWidth_;
-						}
-					}
-				}
-				else
-				{
-					if ( NULL != attachedControlAlt_ ) {
-						width = attachedControlAlt_->getHeight() - minimumWidth_ - this->getHeight();	//2ch
-						widthMax = parentWidth - attachedControlAlt_->getTop() - minimumWidth_ - this->getHeight();	//2ch
-						newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
-						if ( newWidth == minimumWidth_ ) {
-							pt.y_ += deltaRestore_;
-						} else {
-							pt.y_ -= newWidth;
-							deltaRestore_ = newWidth;
-						}
-					}
-				}
-			}
-			break;
-
-		}
-
-		updateAttachedControl( &pt, e->hasShiftKey() );
+		updateAttachedControlJump( *e->getPoint(), e->hasShiftKey() );
 	}
+}
+
+void Splitter::updateAttachedControl( Point& pt, const bool& shiftAll/*=false*/ )
+{
+	Rect parentBounds = getParent()->getBounds();
+
+	double parentWidth = parentBounds.getWidth()-1;
+	double parentHeight = parentBounds.getHeight()-1;
+
+ 	Container* container = getParent()->getContainer();
+	if ( NULL == container ) {
+		return;
+	}
+
+	Control* controlLast = (dynamic_cast<StandardContainer*>(container))->getControlInAlignmentList( this->getAlignment(), false );
+	if ( NULL == controlLast ) {
+		return;
+	}
+
+	bool shouldResize = true;
+	double delta, deltaAlt, width, widthMax, newWidth, widthAlt, newWidthAlt;
+
+	switch ( this->getAlignment() ) {
+		case AlignLeft : {
+			delta = pt.x_ - dragPoint_.x_;
+			if ( 0 < delta && controlLast->getWidth() < minimumWidth_ ) {
+				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getWidth() );
+				shouldResize = false;
+			}
+			if ( NULL != attachedControl_ ) {
+				Rect attachedCtrlBounds = attachedControl_->getBounds();
+				width = attachedCtrlBounds.getWidth();
+				widthMax = parentWidth - attachedCtrlBounds.getLeft() - minimumWidth_ - this->getWidth();
+				newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
+				if ( width != newWidth ) {
+					if ( !shiftAll && NULL != attachedControlAlt_ ) {
+						delta = ( newWidth - width );
+						Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+						widthAlt = attachedCtrlAltBounds.getWidth();
+						widthMax = attachedCtrlAltBounds.getRight() - minimumWidth_ - this->getWidth();
+						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
+						deltaAlt = ( newWidthAlt - widthAlt );
+						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
+							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
+						}
+						if ( shouldResize ) {
+							Rect boundsAlt = attachedCtrlAltBounds;
+							boundsAlt.setLeft( attachedCtrlAltBounds.getLeft() - deltaAlt );
+							boundsAlt.setWidth( newWidthAlt );
+							attachedControlAlt_->setRepaintOnSize( false );
+							//StringUtils::trace( Format( "Splitter:ctrlAlt : [false] %s\n" ) % attachedControlAlt_->getToolTipText() );
+							attachedControlAlt_->setBounds( &boundsAlt );
+							attachedControlAlt_->setRepaintOnSize( true );
+							//StringUtils::traceWithArgs( "updateAttachedControl newWidthAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
+						}
+					}
+					if ( shouldResize ) {
+						Rect bounds = attachedControl_->getBounds();
+						bounds.setWidth( newWidth );
+						attachedControl_->setRepaintOnSize( false );
+						//StringUtils::trace( Format( "Splitter: ctrl : [false] %s\n" ) % attachedControlAlt_->getToolTipText() );
+						attachedControl_->setBounds( &bounds );
+						attachedControl_->setRepaintOnSize( true );
+						//StringUtils::traceWithArgs( "updateAttachedControl newWidth: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
+					}
+				}
+			}
+		}
+		break;
+
+		case AlignTop : {
+			delta = pt.y_ - dragPoint_.y_;
+			if ( 0 < delta && controlLast->getHeight() < minimumWidth_ ) {
+				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getHeight() );
+				shouldResize = false;
+			}
+			if ( NULL != attachedControl_ ) {
+				Rect attachedCtrlBounds = attachedControl_->getBounds();
+				width = attachedCtrlBounds.getHeight();
+				widthMax = parentHeight - attachedCtrlBounds.getTop() - minimumWidth_ - this->getHeight();
+				newWidth = VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
+				if ( width != newWidth ) {
+					if ( !shiftAll && NULL != attachedControlAlt_ ) {
+						delta = ( newWidth - width );
+						Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+						widthAlt = attachedCtrlAltBounds.getHeight();
+						widthMax = attachedCtrlAltBounds.getBottom() - minimumWidth_ - this->getHeight();
+						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
+						deltaAlt = ( newWidthAlt - widthAlt );
+						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
+							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
+						}
+						if ( shouldResize ) {
+							Rect boundsAlt = attachedCtrlAltBounds;
+							boundsAlt.setTop( attachedCtrlAltBounds.getTop() - deltaAlt );
+							boundsAlt.setHeight( newWidthAlt );
+							attachedControlAlt_->setRepaintOnSize( false );
+							attachedControlAlt_->setBounds( &boundsAlt );
+							attachedControlAlt_->setRepaintOnSize( true );
+							//StringUtils::traceWithArgs( "updateAttachedControl newHeightAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
+						}
+					}
+					if ( shouldResize ) {
+						Rect bounds = attachedControl_->getBounds();
+						bounds.setHeight( newWidth );
+						attachedControl_->setRepaintOnSize( false );
+						attachedControl_->setBounds( &bounds );
+						attachedControl_->setRepaintOnSize( true );
+						//StringUtils::traceWithArgs( "updateAttachedControl newHeight: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
+					}
+				}
+			}
+		}
+		break;
+
+		case AlignRight : {
+			//delta_ = dragPoint_.x_ - pt.x_;
+			delta = -(pt.x_ - dragPoint_.x_);
+			if ( 0 < delta && controlLast->getWidth() < minimumWidth_ ) {
+				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getWidth() );
+				shouldResize = false;
+			}
+			if ( NULL != attachedControl_ ) {
+				Rect attachedCtrlBounds = attachedControl_->getBounds();
+				width = attachedCtrlBounds.getWidth();
+				widthMax = attachedCtrlBounds.getRight() - minimumWidth_ - this->getWidth();	//2ch
+				newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
+				if ( width != newWidth ) {
+					if ( !shiftAll && NULL != attachedControlAlt_ ) {
+						delta = ( newWidth - width );
+						Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+						widthAlt = attachedCtrlAltBounds.getWidth();
+						widthMax = parentWidth - attachedCtrlAltBounds.getLeft() - minimumWidth_ - this->getWidth();	//2ch
+						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
+						deltaAlt = ( newWidthAlt - widthAlt );
+						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
+							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
+						}
+						if ( shouldResize ) {
+							Rect boundsAlt = attachedCtrlAltBounds;
+							boundsAlt.setRight( attachedCtrlAltBounds.getRight() - deltaAlt );	//2ch
+							boundsAlt.setWidth( newWidthAlt );
+							attachedControlAlt_->setRepaintOnSize( false );
+							attachedControlAlt_->setBounds( &boundsAlt );
+							attachedControlAlt_->setRepaintOnSize( true );
+							//StringUtils::traceWithArgs( "updateAttachedControl newWidthAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
+						}
+					}
+					if ( shouldResize ) {
+						Rect bounds = attachedControl_->getBounds();
+						bounds.setWidth( newWidth );
+						attachedControl_->setRepaintOnSize( false );
+						attachedControl_->setBounds( &bounds );
+						attachedControl_->setRepaintOnSize( true );
+						//StringUtils::traceWithArgs( "updateAttachedControl newWidth: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
+					}
+				}
+			}
+		}
+		break;
+
+		case AlignBottom : {
+			//delta_ = dragPoint_.y_ - pt.y_;
+			delta = -(pt.y_ - dragPoint_.y_);
+			if ( 0 < delta && controlLast->getHeight() < minimumWidth_ ) {
+				//too complicated and it does not work right: delta -= ( minimumWidth_ - controlLast->getHeight() );
+				shouldResize = false;
+			}
+			if ( NULL != attachedControl_ ) {
+				Rect attachedCtrlBounds = attachedControl_->getBounds();
+				width = attachedCtrlBounds.getHeight();
+				widthMax = attachedCtrlBounds.getBottom() - minimumWidth_ - this->getHeight();	//2ch
+				newWidth = VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width + delta ) );
+				if ( width != newWidth ) {
+					if ( !shiftAll && NULL != attachedControlAlt_ ) {
+						delta = ( newWidth - width );
+						Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+						widthAlt = attachedCtrlAltBounds.getHeight();
+						widthMax = parentHeight - attachedCtrlAltBounds.getTop() - minimumWidth_ - this->getHeight();	//2ch
+						newWidthAlt =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, widthAlt - delta ) );
+						deltaAlt = ( newWidthAlt - widthAlt );
+						if ( !shouldResize && minimumWidth_ < newWidthAlt ) {
+							shouldResize = true;	// let the splitter to resize even if the last control is already at the minimum size
+						}
+						if ( shouldResize ) {
+							Rect boundsAlt = attachedCtrlAltBounds;
+							boundsAlt.setBottom( attachedCtrlAltBounds.getBottom() - deltaAlt );	//2ch
+							boundsAlt.setHeight( newWidthAlt );
+							attachedControlAlt_->setRepaintOnSize( false );
+							attachedControlAlt_->setBounds( &boundsAlt );
+							attachedControlAlt_->setRepaintOnSize( true );
+							//StringUtils::traceWithArgs( "updateAttachedControl newHeightAlt: %3.1f  deltaAlt: [%.3f]\r\n" ,newWidthAlt, deltaAlt );
+						}
+					}
+					if ( shouldResize ) {
+						Rect bounds = attachedControl_->getBounds();
+						bounds.setHeight( newWidth );
+						attachedControl_->setRepaintOnSize( false );
+						attachedControl_->setBounds( &bounds );
+						attachedControl_->setRepaintOnSize( true );
+						//StringUtils::traceWithArgs( "updateAttachedControl newHeight: %3.1f  delta: [%.3f]\r\n" ,newWidth, delta );
+					}
+				}
+			}
+		}
+		break;
+
+	}
+
+	//StringUtils::trace( Format( "Splitter: calling resizeChildren( NULL )\n" ) );
+	if ( NULL != attachedControlAlt_ ) {
+		attachedControlAlt_->repaint();
+	}
+	if ( NULL != attachedControl_ ) {
+		attachedControl_->repaint();
+	}
+	container->resizeChildren( NULL );
+}
+
+void Splitter::updateAttachedControlJump( Point& pt, const bool& shiftAll )
+{
+	//if ( !dblClickEnabled_ ) {
+	//	return;
+	//}
+
+	Rect parentBounds = getParent()->getBounds();
+
+	double parentWidth = parentBounds.getWidth()-1;
+	double parentHeight = parentBounds.getHeight()-1;
+	double width, widthMax;
+	double newWidth = 0.0;
+
+	switch ( this->getAlignment() ) {
+		case AlignLeft : {
+			if ( shiftAll )
+			{
+				if ( NULL != attachedControl_ ) {
+					Rect attachedCtrlBounds = attachedControl_->getBounds();
+					width = attachedCtrlBounds.getWidth();// - minimumWidth_ - this->getWidth();
+					widthMax = parentWidth - attachedCtrlBounds.getLeft() - minimumWidth_ - this->getWidth();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.x_ += deltaRestore_;
+					} else {
+						pt.x_ -= newWidth - minimumWidth_;
+						deltaRestore_ = newWidth - minimumWidth_;
+					}
+				}
+			}
+			else
+			{
+				if ( NULL != attachedControlAlt_ ) {
+					Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+					width = attachedCtrlAltBounds.getWidth() - minimumWidth_ - this->getWidth();
+					widthMax = attachedCtrlAltBounds.getRight() - minimumWidth_ - this->getWidth();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.x_ -= deltaRestore_;
+					} else {
+						pt.x_ += newWidth;
+						deltaRestore_ = newWidth /*+ minimumWidth_ + this->getWidth()*/;
+					}
+				}
+			}
+			//StringUtils::traceWithArgs( "mouseDblClick delta_: %3.1f\r\n" ,delta_ );
+		}
+		break;
+
+		case AlignTop : {
+			if ( shiftAll )
+			{
+				if ( NULL != attachedControl_ ) {
+					Rect attachedCtrlBounds = attachedControl_->getBounds();
+					width = attachedCtrlBounds.getHeight();
+					widthMax = parentHeight - attachedCtrlBounds.getTop();// - minimumWidth_ - this->getHeight();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.y_ += deltaRestore_;
+					} else {
+						pt.y_ -= newWidth - minimumWidth_;
+						deltaRestore_ = newWidth - minimumWidth_;
+					}
+				}
+			}
+			else
+			{
+				if ( NULL != attachedControlAlt_ ) {
+					Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+					width = attachedCtrlAltBounds.getHeight() - minimumWidth_ - this->getHeight();
+					widthMax = attachedCtrlAltBounds.getBottom() - minimumWidth_ - this->getHeight();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.y_ -= deltaRestore_;
+					} else {
+						pt.y_ += newWidth;
+						deltaRestore_ = newWidth /*+ minimumWidth_ + this->getWidth()*/;
+					}
+				}
+			}
+		}
+		break;
+
+		case AlignRight : {
+			if ( shiftAll )
+			{
+				if ( NULL != attachedControl_ ) {
+					Rect attachedCtrlBounds = attachedControl_->getBounds();
+					width = attachedCtrlBounds.getWidth();// - minimumWidth_ - this->getWidth();
+					widthMax = attachedCtrlBounds.getRight() - minimumWidth_ - this->getWidth();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.x_ -= deltaRestore_;
+					} else {
+						pt.x_ += newWidth - minimumWidth_;
+						deltaRestore_ = newWidth - minimumWidth_;
+					}
+				}
+			}
+			else
+			{
+				if ( NULL != attachedControlAlt_ ) {
+					Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+					width = attachedCtrlAltBounds.getWidth() - minimumWidth_ - this->getWidth();
+					widthMax = parentWidth - attachedCtrlAltBounds.getLeft() - minimumWidth_ - this->getWidth();
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.x_ += deltaRestore_;
+					} else {
+						pt.x_ -= newWidth;
+						deltaRestore_ = newWidth;
+					}
+				}
+			}
+		}
+		break;
+
+		case AlignBottom : {
+			if ( shiftAll )
+			{
+				if ( NULL != attachedControl_ ) {
+					Rect attachedCtrlBounds = attachedControl_->getBounds();
+					width = attachedCtrlBounds.getHeight();// - minimumWidth_ - this->getHeight();	//2ch
+					widthMax = attachedCtrlBounds.getBottom() - minimumWidth_ - this->getHeight();	//2ch
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.y_ -= deltaRestore_;
+					} else {
+						pt.y_ += newWidth - minimumWidth_;
+						deltaRestore_ = newWidth - minimumWidth_;
+					}
+				}
+			}
+			else
+			{
+				if ( NULL != attachedControlAlt_ ) {
+					Rect attachedCtrlAltBounds = attachedControlAlt_->getBounds();
+					width = attachedCtrlAltBounds.getHeight() - minimumWidth_ - this->getHeight();	//2ch
+					widthMax = parentWidth - attachedCtrlAltBounds.getTop() - minimumWidth_ - this->getHeight();	//2ch
+					newWidth =  VCF::minVal<double>( widthMax, VCF::maxVal<double>( minimumWidth_, width ) );
+					if ( newWidth == minimumWidth_ ) {
+						pt.y_ += deltaRestore_;
+					} else {
+						pt.y_ -= newWidth;
+						deltaRestore_ = newWidth;
+					}
+				}
+			}
+		}
+		break;
+
+	}
+
+	updateAttachedControl( pt, shiftAll );
 }
 
 void Splitter::paint( GraphicsContext* ctx )
@@ -526,6 +577,18 @@ double Splitter::getPreferredWidth()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/29 21:18:16  marcelloptr
+*minor bug fixed
+*
+*Revision 1.2.4.2  2005/06/29 20:30:16  marcelloptr
+*second step to remove flickering when dragging a splitter
+*
+*Revision 1.2.4.1  2005/06/28 20:14:11  marcelloptr
+*first step to remove flickering when dragging a splitter
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1017,8 +1017,8 @@ yyreduce:
   case 5:
 #line 54 ".\\TeXLabel.yy"
     {
-		yyval.markup = new String();
-		dynamic_cast<String *>(yyval.markup)->value_ = yyvsp[0].ch;
+		yyval.markup = new TexString();
+		dynamic_cast<TexString *>(yyval.markup)->value_ = yyvsp[0].ch;
 	;}
     break;
 
@@ -1026,16 +1026,16 @@ yyreduce:
 #line 59 ".\\TeXLabel.yy"
     {
 		yyval.markup = yyvsp[-1].markup;
-		dynamic_cast<String *>(yyval.markup)->value_ += yyvsp[0].ch;
+		dynamic_cast<TexString *>(yyval.markup)->value_ += yyvsp[0].ch;
 	;}
     break;
 
   case 7:
 #line 64 ".\\TeXLabel.yy"
     {
-		yyval.markup = new String();
-		dynamic_cast<String *>(yyval.markup)->value_ = yyvsp[-1].ch;
-		dynamic_cast<String *>(yyval.markup)->value_ += yyvsp[-3].ch;
+		yyval.markup = new TexString();
+		dynamic_cast<TexString *>(yyval.markup)->value_ = yyvsp[-1].ch;
+		dynamic_cast<TexString *>(yyval.markup)->value_ += yyvsp[-3].ch;
 	;}
     break;
 
@@ -1043,8 +1043,8 @@ yyreduce:
 #line 70 ".\\TeXLabel.yy"
     {
 		yyval.markup = yyvsp[-4].markup;
-		dynamic_cast<String *>(yyval.markup)->value_ += yyvsp[-1].ch;
-		dynamic_cast<String *>(yyval.markup)->value_ += yyvsp[-3].ch;
+		dynamic_cast<TexString *>(yyval.markup)->value_ += yyvsp[-1].ch;
+		dynamic_cast<TexString *>(yyval.markup)->value_ += yyvsp[-3].ch;
 	;}
     break;
 

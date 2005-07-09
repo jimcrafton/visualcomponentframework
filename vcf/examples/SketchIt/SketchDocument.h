@@ -18,6 +18,12 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/BezierCurve.h"
 
+/**
+Include this file to access the various RTTI macros
+for declaring RTTI information for your class(es)
+*/
+#include "vcf/FoundationKit/RTTIMacros.h"
+
 
 class Shape {
 public:
@@ -67,8 +73,8 @@ class SketchDocument documentation
 class SketchDocument : public VCF::Document {
 public:
 
-	BEGIN_CLASSINFO( SketchDocument, "SketchDocument", "VCF::Document", SKETCHDOCUMENT_CLASSID )
-	END_CLASSINFO( SketchDocument )
+	_class_rtti_( SketchDocument, "VCF::Document", SKETCHDOCUMENT_CLASSID )
+	_class_rtti_end_
 
 	SketchDocument();
 
@@ -131,6 +137,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:43  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/03/06 22:50:56  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/08/07 02:47:36  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -37,12 +37,10 @@ namespace VCF {
 		virtual Resource* getResource( const String& resourceName );
 
 		virtual ProgramInfo* getProgramInfo();
+	
+		static ProgramInfo* getProgramInfo( const String& fileName );	
 		
-		static ProgramInfo* getProgramInfo( const String& fileName );
-		
-		virtual OSHandleID getHandleID() {
-			return (OSHandleID) getBundle();
-		}		
+		virtual OSHandleID getHandleID();
 	protected:
 		static ProgramInfo* getProgramInfo( CFBundleRef bundle );
 	
@@ -57,8 +55,13 @@ namespace VCF {
 /**
 CVS Log info
 $Log$
+Revision 1.4  2005/07/09 23:15:04  ddiego
+merging in changes from devmain-0-6-7 branch.
+
 Revision 1.3  2005/01/08 20:52:47  ddiego
 fixed some glitches in osx impl.
+Revision 1.2.2.1  2005/05/08 19:55:32  ddiego
+osx updates, not yet functional.
 
 Revision 1.2  2004/12/01 04:31:41  ddiego
 merged over devmain-0-6-6 code. Marcello did a kick ass job

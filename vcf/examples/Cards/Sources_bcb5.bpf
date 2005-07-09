@@ -1,0 +1,9 @@
+USEUNIT("Cards.cpp");
+USE("Cards.h", File);
+USE("CardContainer.h", File);
+USE("Cardclass.h", File);
+//---------------------------------------------------------------------------
+This file is used by the project manager only and should be treated like the project file
+
+
+WinMain

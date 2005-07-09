@@ -1,0 +1,169 @@
+#define WIN32
+//#define _WIN32_WINDOWS 0x0410 // For Win98 upwards
+#define _WIN32_WINNT 0x0400 // For NT4 upwards
+#define WINVER 0x0400
+//#define _WIN32_IE 0x0400 // unsure about what to set this to
+
+#ifdef VCF_ALLIN1
+
+// All-in-1 kit dll exclusions here
+//#define VCF_ALLIN1_NO_OPENGLKIT
+// Don't forget to remove the relevant .cpp files from the target
+
+#endif
+
+// UNICODE define may or may not be appropriate
+//#define UNICODE
+
+#if __ide_target("W32 All-in-1 DLL")
+
+#pragma precompile_target "W32Allin1DLL.mch"
+
+#pragma always_inline on
+
+#define VCF_ALLIN1_DLL
+#define VCF_ALLIN1_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 All-in-1 DLL (D)")
+
+#pragma precompile_target "W32Allin1DLLDebug.mch"
+
+#pragma always_inline on
+
+#define _DEBUG
+
+#define VCF_ALLIN1_DLL
+#define VCF_ALLIN1_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 FoundationKit DLL")
+
+#pragma precompile_target "W32FoundationDLL.mch"
+
+#pragma always_inline on
+
+#define FOUNDATIONKIT_DLL
+#define FOUNDATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 FoundationKit DLL (D)")
+
+#pragma precompile_target "W32FoundationDLLDebug.mch"
+
+#pragma always_inline on
+
+#define _DEBUG
+
+#define FOUNDATIONKIT_DLL
+#define FOUNDATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 GraphicsKit DLL")
+
+#pragma precompile_target "W32GraphicsDLL.mch"
+
+#pragma always_inline on
+
+#define GRAPHICSKIT_DLL
+#define GRAPHICSKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 GraphicsKit DLL (D)")
+
+#pragma precompile_target "W32GraphicsDLLDebug.mch"
+
+#pragma always_inline on
+
+#define _DEBUG
+
+#define GRAPHICSKIT_DLL
+#define GRAPHICSKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 ApplicationKit DLL")
+
+#pragma precompile_target "W32ApplicationDLL.mch"
+
+#pragma always_inline on
+
+#define APPLICATIONKIT_DLL
+#define APPLICATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 ApplicationKit DLL (D)")
+
+#pragma precompile_target "W32ApplicationDLLDebug.mch"
+
+#pragma always_inline on
+
+#define _DEBUG
+
+#define APPLICATIONKIT_DLL
+#define APPLICATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 OpenGLKit DLL")
+
+#pragma precompile_target "W32OpenGLDLL.mch"
+
+#pragma always_inline on
+
+#define OPENGLKIT_DLL
+#define OPENGLKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+#if __ide_target("W32 OpenGLKit DLL (D)")
+
+#pragma precompile_target "W32OpenGLDLLDebug.mch"
+
+#pragma always_inline on
+
+#define _DEBUG
+
+#define OPENGLKIT_DLL
+#define OPENGLKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#endif
+
+// #pragma once on
+#include "ansi_prefix.win32.h"
+#define NOMINMAX
+
+// VCF Includes
+
+#include "vcf/OpenGLKit/OpenGLKit.h"
+#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+#include "vcf/GraphicsKit/GraphicsKitPrivate.h"
+#include "vcf/FoundationKit/FoundationKitPrivate.h"
+
+//#include <windows.h>

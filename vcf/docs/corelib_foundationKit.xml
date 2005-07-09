@@ -28,52 +28,130 @@ NB: This software will not save the world.
 
 <section><title>FoundationKit</title>
 	<para>
+	The FoundationKit is the base library of the entire VCF.
+	Both the GraphicsKit and the ApplicationKit build upon it,
+	especially the ApplicationKit. 
 	</para>
+	<section><title>Uses</title>
+	<para>
+	So what is the FoundationKit good for? Just about any application that 
+	would run on a command line, will find a set of useful classes within the 
+	FoundationKit. This includes support for the VCF's RTTI, input and output
+	classes (with support for file IO too), thread and synchronization primitives
+	like mutexs, semaphores and conditions, locale support, string support, 
+	date/time classes, support for string formatting, and even 
+	support for run loops for control over code that runs in a loop. This makes
+	many application tasks easy to deal with, and takes care of many of the
+	more error prone activities that you have to deal with as a programmer.
+	</para>
+	<para>
+	The following sections will deal with each of the core sections of the
+	FoundationKit separately and in more detail.
+	</para>
+	</section>
+	<section><title>Startup and Shutdown</title>
+		<para>
+		The FoundationKit needs to be initialized before you can use
+		it, and likewise needs to terminated just before your program
+		ends. The FoundationKit is initialized by calling the static 
+		FoundationKit::init() once in your program's main() function.
+		To shutdown the FoundationKit, and reclaim any memory it's 
+		allocated for it's own use, you need to call the FoundationKit::terminate()
+		function. Here's an example:
+		<programlisting>
+<![CDATA[
+int main( int argc, char** argv )
+{
+	VCF::FoundationKit::init( argc, argv );
+	
+	//rest of your program's code here....
+	
+	VCF::FoundationKit::terminate();
+	
+	return 0;
+}
+]]>
+		</programlisting>
+		Every executable that uses the FoundationKit needs to start something like the
+		above example, or else the FoundationKit's runtime instance's will not be properly
+		created.
+		</para>
+	</section>
+	<section><title>Command line parameters</title>
+		<para>
+		One thing you'll want to do with your programs is identify the command line
+		parameters that may have been passed into your program. To do this with the VCF
+		you use the CommandLine class. In hte previous example, you'll note that we 
+		initialize the FoundationKit with the initial command line parameters passed into
+		the programs main() entry point function. We can access these at any time by calling
+		the FoundationKit::getCommandLine() function, which returns CommandLine object.
+		<programlisting>
+<![CDATA[
+void someFunction()
+{
+	CommandLine cmdLine = FoundationKit::getCommandLine();
+	if ( cmdLine.hasSwitch( "-version" ) ) {
+		//display the version message! 
+	}
+}
+]]>
+		</programlisting>
+		For more detailed documentation see the source docs for the VCF::CommandLine class.
+		</para>
+	</section>
 	<section><title>VCF::Object - the VCF base class</title>
 		<formalpara><title>Intro</title>
-		The VCF is (mostly, with a few exceptions) designed as a single rooted 
-		class hierarchy, with the VCF::Object class as the root or base class for the 
-		rest of the framework. VCF::Object support several virtual method that you can 
-		override, such as the VCF::Object::hash() method for return a hash value for the
-		object instance. VCF::Object::clone() can be used to "clone" a new instance from an
-		existing one.
+		The VCF is (mostly, with a few exceptions) designed as a single 
+		rooted class hierarchy, with the VCF::Object class as the root 
+		or base class for the rest of the framework. VCF::Object support 
+		several virtual method that you can override, such as the 
+		VCF::Object::hash() method for return a hash value for the 
+		object instance. VCF::Object::clone() can be used to "clone" a 
+		new instance from an existing one.
 		</formalpara>
 		<formalpara><title>Reference Counting</title>
-		The VCF::Object class also supports reference counting for instances that have been
-		allocated on the heap. A new instance starts with it's refcount initialized to 0.
-		Calling VCF::Object::addRef() increments the refcount, and calling VCF::Object::release()
-		decrements the refcount. If VCF::Object::release() is called and the refcount is 
+		The VCF::Object class also supports reference counting for instances 
+		that have been allocated on the heap. A new instance starts with 
+		it's refcount initialized to 0.	Calling VCF::Object::addRef() increments 
+		the refcount, and calling VCF::Object::release() decrements the 
+		refcount. If VCF::Object::release() is called and the refcount is 
 		equal to 0, then the object is destroyed by a call to VCF::Object::free().
 		</formalpara>
 		<formalpara><title>Creating and destroying Objects</title>
-		Creating objects on the heap is done using the typical operator new(). However, to 
-		destroy an instance that is directly or indirectly derived from VCF::Object, you should
-		call VCF::Object::free() if you own the object, or VCF::Object::release() to decrement the
-		refcount on the object. When the VCF::Object::free() is called it first calls the virtual 
-		VCF::Object::destroy() method, allowing you customize the clean up of your class, and 
-		making it safe to call otehr virtual methods. After VCF::Object::destroy() returns, it 
-		then deletes the instance. So, if you have a class that is intended to be used on the heap,
-		it's a good idea to override the destroy() method (keeping it in protected scope), and put
-		your clean ciode in there, instead of the destructor.
+		Creating objects on the heap is done using the typical operator 
+		new(). However, to destroy an instance that is directly or indirectly 
+		derived from VCF::Object, you should call VCF::Object::free() if 
+		you own the object, or VCF::Object::release() to decrement the 
+		refcount on the object. When the VCF::Object::free() is called it 
+		first calls the virtual VCF::Object::destroy() method, allowing 
+		you customize the clean up of your class, and making it safe to 
+		call otehr virtual methods. After VCF::Object::destroy() returns, 
+		it then deletes the instance. So, if you have a class that is 
+		intended to be used on the heap, it's a good idea to override the 
+		destroy() method (keeping it in protected scope), and put your 
+		clean code in there, instead of the destructor.
 		</formalpara>
 		<formalpara><title>RTTI</title>
-		You can get the VCF::Class instance from any instance of a VCF::Object by calling 
-		VCF::Object::getClass() method. If the class has been properly registered in the
-		Class Registry, the VCF::Object::getClass() will return a pointer to the Class instance.
-		If not, then it will return NULL. You can also get the class name of the Object instance
+		You can get the VCF::Class instance from any instance of a VCF::Object 
+		by calling VCF::Object::getClass() method. If the class has been 
+		properly registered in the Class Registry, the VCF::Object::getClass() 
+		will return a pointer to the Class instance. If not, then it will 
+		return NULL. You can also get the class name of the Object instance
 		by calling VCF::Object::getClassName().
 		</formalpara>
 	</section>
 
 	<section><title>System Toolkit</title>
 		<para>
-		The System Toolkit is used by VCF developers to create instances of various FoundationKit
-		peer interfaces. For example, the Thread class uses the System Toolkit to create the thread's
-		internal ThreadPeer instance. You generally do not need to call any functions on this class
+		The System Toolkit is used by VCF developers to create instances of 
+		various FoundationKit peer interfaces. For example, the Thread class 
+		uses the System Toolkit to create the thread's internal ThreadPeer 
+		instance. You generally do not need to call any functions on this class
 		unless you are implementing low level functionality within the FoundationKit itself.
 		</para>
-		<para>This class is implemented for each platform that the VCF is ported to. The 
-		relationship between the OS and the System Toolkit can be seen below.
+		<para>This class is implemented for each platform that the VCF is 
+		ported to. The relationship between the OS and the System Toolkit 
+		can be seen below.
 		<figure><title>System Toolkit</title>
 		<graphic fileref="gfx/systoolkit.png"/>
 		</figure>
@@ -82,78 +160,96 @@ NB: This software will not save the world.
 
 	<section><title>Reference Counting</title>
 		<para>
-		As mentioned above, the VCF::Object class supports reference counting. Reference counting
-		is useful as a form of garbage collection, albeit a manual one. It is most appropriate
-		to use when you are unsure of the lifetime of a particular object, and/or the fact that
-		the object may have multiple "owners" who need to keep track of the object. In this 
-		situation it helps to have reference counting. 
+		As mentioned above, the VCF::Object class supports reference counting. 
+		Reference counting is useful as a form of garbage collection, albeit 
+		a manual one. It is most appropriate to use when you are unsure 
+		of the lifetime of a particular object, and/or the fact that the 
+		object may have multiple "owners" who need to keep track of the 
+		object. In this situation it helps to have reference counting. 
 		</para>
 		<para>It should be noted that this is only appropriate to use on 
 		<emphasis>heap allocated</emphasis> objects.
-		Objects that allocated on the stack do not, and should not use the reference counting 
-		functionality.
+		Objects that allocated on the stack do not, and should not use 
+		the reference counting functionality.
 		</para>
 		<para>
-		One example might be the use of a model. For example, imagine that we have created a model
-		object, and that 3 different objects all need to hold a reference or pointer to the single
-		instance of the model. Yet all 3 "owners" may have different lifetimes, so who then 
-		becomes responsible for destroying the model? If one of the three were to delete the model
-		instance <emphasis>before</emphasis>, and then one of the other "owners" were to make use of
-		it's pointer, your program would crash, due to a reference to invalid memory that had been
-		freed. The solution is to use reference counting. When each "owner" object is assigned the 
-		pointer to the model, it should increment the model's refcount by calling 
-		VCF::Object::addRef(). Likewise, when the owner is destroyed, it should release the object 
+		One example might be the use of a model. For example, imagine that 
+		we have created a model object, and that 3 different objects all 
+		need to hold a reference or pointer to the single instance of the 
+		model. Yet all 3 "owners" may have different lifetimes, so who then 
+		becomes responsible for destroying the model? If one of the three 
+		were to delete the model instance <emphasis>before</emphasis>, 
+		and then one of the other "owners" were to make use of it's pointer, 
+		your program would crash, due to a reference to invalid memory 
+		that had been freed. The solution is to use reference counting. 
+		When each "owner" object is assigned the pointer to the model, it 
+		should increment the model's refcount by calling VCF::Object::addRef(). 
+		Likewise, when the owner is destroyed, it should release the object 
 		by calling VCF::Object::release(), as opposed to deleting it.
 		</para>
 	</section>
 
 	<section><title>Exceptions</title>
 		<para>
-		The VCF uses exceptions throughout the framework as a way of indicating error conditions, 
-		as opposed to returning error codes. The rationale for this is largely practical: error codes,
-		while useful, frequently (if not always) get ignored in real world code. Because nothing 
-		forces you to check the error code, error conditions can go unnoticed until later on,
-		making it difficult to track down bugs. Exceptions, on the other hand, if not caught, tend to 
-		do ugly things immediately, making it much more obvious where things went wrong.
+		The VCF uses exceptions throughout the framework as a way of indicating
+		error conditions, as opposed to returning error codes. The rationale 
+		for this is largely practical: error codes, while useful, frequently 
+		(if not always) get ignored in real world code. Because nothing 
+		forces you to check the error code, error conditions can go unnoticed 
+		until later on,	making it difficult to track down bugs. Exceptions, 
+		on the other hand, if not caught, tend to do ugly things immediately, 
+		making it much more obvious where things went wrong.
 		</para>
 		<para>
-		The root exception class is VCF::BasicException. All other VCF exceptions derive from this. 
-		To get the error message from a VCF exception, call VCF::BasicException::getMessage().
+		The root exception class is VCF::BasicException. All other VCF 
+		exceptions derive from this. To get the error message from a VCF 
+		exception, call VCF::BasicException::getMessage().
 		</para>
 		<para>
-		To throw a VCF exception, you create the exception on the stack, and pass in a VCF::String
-		to the exceptions constructor. Some of the specific exception classes has a default 
-		constructor that fills in a default message for you. If you would like to include line and
-		file information with your excepton message you can use the MAKE_ERROR_MSG_2 macro, for example:
-		<programlisting><![CDATA[
+		To throw a VCF exception, you create the exception on the stack, 
+		and pass in a VCF::String to the exceptions constructor. Some of 
+		the specific exception classes has a default constructor that fills 
+		in a default message for you. If you would like to include line 
+		and file information with your excepton message you can use the 
+		MAKE_ERROR_MSG_2 macro, for example:
+		<programlisting>
+<![CDATA[
 String fileName = getMyFileName();
 if ( fileName.empty() ) {
 	throw BasicException( MAKE_ERROR_MSG_2("My File Name is Empty - please fix this ASAP!"));
-}			]]>
+}
+]]>
 		</programlisting>
-		This will take you error string and append the source file and line number that the exception
-		was thrown in, which can be useful in tracking errors down.
+		This will take you error string and append the source file and 
+		line number that the exception was thrown in, which can be useful 
+		in tracking errors down.
 		</para>
 	</section>
 
 	<section><title>RTTI</title>
 		<formalpara><title>Introduction</title>
-		RTTI, or Run Time Type Information, is the process of identifying the class information about a
-		particular object instance at run time. If you used Java at all, this is often referred to as 
-		"Reflection", and if you compare the VCF RTTI classes with Java's you'll see a great deal of 
-		similarity between the two. Other languages like Java, C#, ObjectPascal, Smalltalk, 
-		Objective C (to name a few), as well as other C++ frameworks, such as Qt, wxWindows, MFC, 
-		COM (well this isn't really a C++ only framework but we'll let that go), VRS3D and many others, 
-		also implement some sort of RTTI system to varying degrees complexity. Most of the languages mentioned
-		previously offer full support for things like dynamic object creation from a class name, 
-		dynamic property enumeration, and dynamic method invocation. Some also have support for discovering 
-		the fields of a class (like Java) and for discovering the events the class supports. Unfortunately C++ 
-		itself offers only the ability to determine the super class of a given class, i.e. using the 
-		dynamic_cast operator, you can tell if class B inherits in some way from class A. In addition the 
-		typeid() method will return a type_info class which can tell you the class name of a particular 
-		instance at runtime. Obviously this is not enough, so many of the C++ frameworks tend to implement 
-		some form of their own RTTI. What makes the VCF unusual is the depth to which it offers RTTI features, 
-		namely:
+		RTTI, or Run Time Type Information, is the process of identifying 
+		the class information about a particular object instance at run 
+		time. If you used Java at all, this is often referred to as "Reflection", 
+		and if you compare the VCF RTTI classes with Java's you'll see a 
+		great deal of similarity between the two. Other languages like 
+		Java, C#, ObjectPascal, Smalltalk, Objective C (to name a few), 
+		as well as other C++ frameworks, such as Qt, wxWindows, MFC, COM 
+		(well this isn't really a C++ only framework but we'll let that go), 
+		VRS3D and many others, also implement some sort of RTTI system 
+		to varying degrees complexity. Most of the languages mentioned
+		previously offer full support for things like dynamic object 
+		creation from a class name, dynamic property enumeration, and 
+		dynamic method invocation. Some also have support for discovering 
+		the fields of a class (like Java) and for discovering the events 
+		the class supports. Unfortunately C++ itself offers only the ability 
+		to determine the super class of a given class, i.e. using the dynamic_cast 
+		operator, you can tell if class B inherits in some way from class 
+		A. In addition the typeid() method will return a type_info class 
+		which can tell you the class name of a particular instance at runtime. 
+		Obviously this is not enough, so many of the C++ frameworks tend 
+		to implement some form of their own RTTI. What makes the VCF unusual 
+		is the depth to which it offers RTTI features, namely:
 		<itemizedlist>
 			<listitem><para>
 			object creation from a class name	
@@ -179,57 +275,72 @@ if ( fileName.empty() ) {
 		</itemizedlist>
 		</formalpara>
 		<formalpara><title>The Basics</title>
-		RTTI in the VCF is described through a series of abstract classes, and implemented through 
-		heavy use of templates. This makes it type safe, and does not require any weird void pointer 
-		type casting. To simplify matters, a number of macros exist that enable you to specify the 
-		RTTI elements you would like to expose in your class declaration, so there are no separate 
-		build steps like IDL compiling or other pre-processor tools. These macros basically "collect" 
-		all the stuff that the C++ compiler knows about during compilation, but throws away. 
+		RTTI in the VCF is described through a series of abstract classes, 
+		and implemented through heavy use of templates. This makes it type 
+		safe, and does not require any weird void pointer type casting. 
+		To simplify matters, a number of macros exist that enable you to 
+		specify the RTTI elements you would like to expose in your class 
+		declaration, so there are no separate build steps like IDL compiling 
+		or other pre-processor tools. These macros basically "collect" 
+		all the stuff that the C++ compiler knows about during compilation, 
+		but throws away. 
 		</formalpara>
 		<para>
-		Each RTTI element is registered in a central repository called the VCF::ClassRegistry - 
-		a singleton instance that is created when the FoundationKit is initialized and destroyed 
-		when the FoundationKit is terminated. This registering of a class happens only once per 
-		class type, if another attempt is made to register an existing class, the registration will fail.
+		Each RTTI element is registered in a central repository called 
+		the VCF::ClassRegistry - a singleton instance that is created when 
+		the FoundationKit is initialized and destroyed when the FoundationKit 
+		is terminated. This registering of a class happens only once per 
+		class type, if another attempt is made to register an existing 
+		class, the registration will fail.
 		</para> 
 		<para>
-		The basic RTTI element is the VCF::Class class - this holds all the necessary information to 
-		describe a C++ class at runtime. At a glance, a VCF::Class has the following methods:
+		The basic RTTI element is the VCF::Class class - this holds all 
+		the necessary information to describe a C++ class at runtime. At 
+		a glance, a VCF::Class has the following methods:
 		<itemizedlist>
 			<listitem><para>
-			getSuperClass() - returns a VCF::Class pointer to the next super class of the class in question.
-			Using this method, you can walk up the class hierarchy.
+			getSuperClass() - returns a VCF::Class pointer to the next 
+			super class of the class in question. Using this method, 
+			you can walk up the class hierarchy.
 			</para></listitem>
 			<listitem><para>
 			getClassName() - returns the class name.
 			</para></listitem>
 			<listitem><para>
-			getID - returns a string that <emphasis>should</emphasis> be a unique ID. While the generation
-			of this is left to the developer, all the VCF classes that are registered use UUID's created with
-			uuidgen, or some similar tool. It is highly recommended to use the same approach for your own classes
-			when adding RTTI support.
+			getID - returns a string that <emphasis>should</emphasis> 
+			be a unique ID. While the generation of this is left to 
+			the developer, all the VCF classes that are registered use 
+			UUID's created with uuidgen, or some similar tool. It is 
+			highly recommended to use the same approach for your own 
+			classes when adding RTTI support.
 			</para></listitem>
 			<listitem><para>
-			createInstance() - this allows you to create a new default instance of the class.
+			createInstance() - this allows you to create a new default 
+			instance of the class.
 			</para></listitem>
 			<listitem><para>
-			getInterfaces() - this allows you to enumerate all the interfaces that a class may implement.
+			getInterfaces() - this allows you to enumerate all the 
+			interfaces that a class may implement.
 			</para></listitem>
 			<listitem><para>
-			getMethods() - allows you to enumerate all the methods the class has
+			getMethods() - allows you to enumerate all the methods 
+			the class has
 			</para></listitem>
 			<listitem><para>
-			getProperties()	- allows you to enumerate all the properties of a class
+			getProperties()	- allows you to enumerate all the properties 
+			of a class
 			</para></listitem>
 			<listitem><para>
-			getEvents() - allows you to enumerate all the events a class has
+			getEvents() - allows you to enumerate all the events a class 
+			has
 			</para></listitem>
 		</itemizedlist>
 		</para>
 		<formalpara><title>Registering RTTI for a class</title>
-		In order to take advantage of these features, you have to register your class
-		with the VCF's ClassRegistry. To make this simple, there are a set of macros
-		you can use. For example, lets declare a class called "Foo" and register it:
+		In order to take advantage of these features, you have to register 
+		your class with the VCF's ClassRegistry. To make this simple, there 
+		are a set of macros you can use. For example, lets declare a class 
+		called "Foo" and register it:
 <programlisting>
 <![CDATA[
 class Foo : public VCF::Object {
@@ -253,12 +364,13 @@ int main( int argc, char** argv )
 }
 ]]>
 </programlisting>
-		As you can see it's relatively easy to register the class - the only catch is 
-		that the FoundationKit library <emphasis>must</emphasis> be initialized prior
-		to registering the class.
+		As you can see it's relatively easy to register the class - the 
+		only catch is that the FoundationKit library <emphasis>must</emphasis> 
+		be initialized prior to registering the class.
 		</formalpara>
-		<para>Once registered with the VCF you can now work with the RTTI features.
-		For example we could create and instance of the class like so:
+		<para>Once registered with the VCF you can now work with the RTTI 
+		features. For example we could create and instance of the class 
+		like so:
 <programlisting>
 <![CDATA[
 //class definition omitted for clarity
@@ -278,7 +390,8 @@ int main( int argc, char** argv )
 }
 ]]>
 </programlisting>
-		Once the object is created we can confirm the class type by querying it's name:
+		Once the object is created we can confirm the class type by querying 
+		it's name:
 <programlisting>
 <![CDATA[
 Object* object = ClassRegistry::createNewInstance( "Foo" );
@@ -287,16 +400,18 @@ Class* clazz = object->getClass();
 System::println( clazz->getClassName() );
 ]]>
 </programlisting>
-		At this point, you now have a Class object, that you can call the methods mentioned 
-		above.
+		At this point, you now have a Class object, that you can call the 
+		methods mentioned above.
 		</para>
 		<formalpara><title>Properties</title>
-		You can query for a class's proeprties easily by just calling the Class::getProperties()
-		method. This will return an enumeration of Property instances. Each property
-		can be queried for it's name, description, it's type (an enumeration of PropertyDescriptorType
-		which indicates either the primitive type, or the fact that it's an instance of a 	
-		VCF::Object), and probably most importantly, the ability to get and set the values
-		of the property. Let's look a little closer:
+		You can query for a class's proeprties easily by just calling the 
+		Class::getProperties() method. This will return an enumeration of 
+		Property instances. Each property can be queried for it's name, 
+		description, it's type (an enumeration of PropertyDescriptorType
+		which indicates either the primitive type, or the fact that it's 
+		an instance of a VCF::Object), and probably most importantly, the 
+		ability to get and set the values of the property. Let's look a 
+		little closer:
 <programlisting>
 <![CDATA[
 Class* clazz = object->getClass();
@@ -313,27 +428,28 @@ while ( properties->hasMoreElements() ) {
 </programlisting>
 		</formalpara>
 		<para>
-		Note the call to Property::get() to retreive the current value of the 
-		Property instance. It returns a VariantData object which is acts like VB's
-		Variant type, or CORBA's Any object. A VariantData instance can store any
-		primitive type or Object type.
+		Note the call to Property::get() to retreive the current value 
+		of the Property instance. It returns a VariantData object which 
+		is acts like VB's Variant type, or CORBA's Any object. A VariantData 
+		instance can store any primitive type or Object type.
 		</para>
 	</section>
 
 	<section><title>Events</title>
 		<para>
-		Events happen to us every day. When we open a door, when we go to work, 
-		when we fall asleep. Objects in a framework, particularly objects that 
-		represent a user interface, are no different. Events are triggered 
-		when a user closes a window, or clicks on a button. Events can happen 
-		when the state of an object changes, such as reading data from a stream, 
-		or upon the object's creation. Not only do events happen, but quite 
-		often one object wants to be notified when a particular event happens 
-		to another object, and frequently the two objects may have no direct 
-		knowledge of each other beyond a basic base class. To further complicate 
-		matters, it is entirely possible that more than one object wants to 
-		notified when the event happens!</para>
-<para>
+		Events happen to us every day. When we open a door, when we go 
+		to work, when we fall asleep. Objects in a framework, particularly 
+		objects that represent a user interface, are no different. Events 
+		are triggered when a user closes a window, or clicks on a button. 
+		Events can happen when the state of an object changes, such as 
+		reading data from a stream, or upon the object's creation. Not 
+		only do events happen, but quite often one object wants to be notified 
+		when a particular event happens to another object, and frequently 
+		the two objects may have no direct knowledge of each other beyond 
+		a basic base class. To further complicate matters, it is entirely 
+		possible that more than one object wants to notified when the 
+		event happens!</para>
+		<para>
 		One of the goals of the VCF is to provide a uniform architecture for
 		this and provide a solution that allows events to be used every where 
 		in the framework, but that in no way ties their usage just to user 
@@ -349,55 +465,56 @@ while ( properties->hasMoreElements() ) {
 		being notified when a particular event happens, as well as telling the 
 		same object when we are no longer interested in the notifications.
 		</para>
-<para>
-To accomplish this in the VCF we have three main players: the source, or 
-object that fires the event, the event, which is itself represented by 
-an object, and the observer ( also called listener ), or the object that wishes 
-to receive some notification when the event occurs and have that notification 
-call a method on the observer object. Each of these objects has to have certain 
-responsibilities as described in the table below.
-<table frame="none" pgwide="1">
-	<tgroup cols="2" align="left" colsep="1" rowsep="1">
-		<thead>
-			<row>
-				<entry>Object</entry>
-				<entry>Responsibilities</entry>
-			</row>							
-		</thead>
-		<tbody>
-			<row>
-				<entry>Source object</entry>
-				<entry>The source must provide a way to register, and un-register one 
-						or more observer objects with a particular event that will
-						be fired by the source object.</entry>
-			</row>
-			<row>
-				<entry>Event object</entry>
-				<entry>The Event object must provide data to be used by the observer 
-				objects. For example, mouse event object would contain data about the 
-				position of the mouse, the buttons that were held down, etc. In 
-				addition, the event must be able to expose who actually fired the 
-				event, in other words provide a pointer back to the source of the 
-				event.
-				</entry>
-			</row>
-			<row>
-				<entry>Observer object</entry>
-				<entry>The observer must define one or more callback methods that 
-				will be invoked during the firing of a specific event by the
-				source object that the observer has registered with.</entry>
-			</row>
-		</tbody>	
-	</tgroup>
-</table>
-</para>
-<para>
-To make all of this work in the VCF there are three main classes that are used. The first
-is the EventHandler class. This provides an interface that wraps a C++ callback function, 
-be it a static function, or a class member function. The EventHandler class itself is an
-abstract class, the developer creates concrete template classes when using event handlers.
-For example:
-<programlisting>
+		<para>
+		To accomplish this in the VCF we have three main players: the source, or 
+		object that fires the event, the event, which is itself represented by 
+		an object, and the observer ( also called listener ), or the object that wishes 
+		to receive some notification when the event occurs and have that notification 
+		call a method on the observer object. Each of these objects has to have certain 
+		responsibilities as described in the table below.
+		<table frame="none" pgwide="1">
+			<tgroup cols="2" align="left" colsep="1" rowsep="1">
+				<thead>
+					<row>
+						<entry>Object</entry>
+						<entry>Responsibilities</entry>
+					</row>							
+				</thead>
+				<tbody>
+					<row>
+						<entry>Source object</entry>
+						<entry>The source must provide a way to register, and un-register 
+								one or more observer objects with a particular event that 
+								will be fired by the source object.
+						</entry>
+					</row>
+					<row>
+						<entry>Event object</entry>
+						<entry>The Event object must provide data to be used by the observer 
+						objects. For example, mouse event object would contain data about the 
+						position of the mouse, the buttons that were held down, etc. In 
+						addition, the event must be able to expose who actually fired the 
+						event, in other words provide a pointer back to the source of the 
+						event.
+						</entry>
+					</row>
+					<row>
+						<entry>Observer object</entry>
+						<entry>The observer must define one or more callback methods that 
+						will be invoked during the firing of a specific event by the
+						source object that the observer has registered with.</entry>
+					</row>
+				</tbody>	
+			</tgroup>
+		</table>
+		</para>
+		<para>
+		To make all of this work in the VCF there are three main classes that are 
+		used. The first is the EventHandler class. This provides an interface that 
+		wraps a C++ callback function, be it a static function, or a class member 
+		function. The EventHandler class itself is an abstract class, the developer 
+		creates concrete template classes when using event handlers. For example:
+		<programlisting>
 <![CDATA[
 class MyClass : public VCF::Object {
 public:
@@ -410,15 +527,16 @@ MyClass* myClassInstance = ..... //get a MyClass instance
 VCF::EventHandler* handler = 
 	new ButtonEventHandler<MyClass>( myClassInstance, &MyClass::onButtonClick, "onButtonClick" );
 ]]>
-</programlisting>
-The above example creates an event handler and attaches the calss member function MyClass::onButtonClick
-to the event handler.
-</para>
-<para>
-The next part of this is the Delegate class. The Delegate represents a single event that would 
-be fired by the source object, and holds a collection of EventHandlers. The Delegate allows 
-you to add or remove event handlers at will. For example:
-<programlisting>
+		</programlisting>
+		The above example creates an event handler and attaches the calss member 
+		function MyClass::onButtonClick	to the event handler.
+		</para>
+		<para>
+		The next part of this is the Delegate class. The Delegate represents a 
+		single event that would be fired by the source object, and holds a collection 
+		of EventHandlers. The Delegate allows you to add or remove event handlers 
+		at will. For example:
+		<programlisting>
 <![CDATA[
 EventHandler* handler = ...//get handler from somewhere
 
@@ -435,30 +553,31 @@ d += handler;
 //to remove the handler
 d -= handler;
 ]]>
-</programlisting>
-The Delegate also handles routing a single Event instance, as the result of the source object
-firing an event, to all of the handlers that have registered with it. This is accomplished
-by calling the Delegate::fireEvent() method, and passing in an event.
-<programlisting>
+		</programlisting>
+		The Delegate also handles routing a single Event instance, as the result 
+		of the source object firing an event, to all of the handlers that have 
+		registered with it. This is accomplished by calling the Delegate::fireEvent() 
+		method, and passing in an event.
+		<programlisting>
 <![CDATA[
 Delegate d;
 Event event( this, 123 );
 //fire the event
 d.fireEvent( &event );
 ]]>
-</programlisting>
-That's all there is to it! Delegate::fireEvent() will take the event, and 
-loop through it's list of event handler's. For each handler, it will check 
-to verify the event has not been marked as being consumed (Event::isConsumed() 
-returns false), and then call the EventHandler::invoke() method on the 
-handler, which in turn invokes the callback function.
-</para>
-<para>
-The next step os to actually use the Delegate class within your source 
-object, so that the source can fire events. The VCF does this by declaring
-a public member variable of type Delegate and giving it the name of the
-event that will be fired. For example:
-<programlisting>
+		</programlisting>
+		That's all there is to it! Delegate::fireEvent() will take the event, and 
+		loop through it's list of event handler's. For each handler, it will check 
+		to verify the event has not been marked as being consumed (Event::isConsumed() 
+		returns false), and then call the EventHandler::invoke() method on the 
+		handler, which in turn invokes the callback function.
+		</para>
+		<para>
+		The next step is to actually use the Delegate class within your source 
+		object, so that the source can fire events. The VCF does this by declaring
+		a public member variable of type Delegate and giving it the name of the
+		event that will be fired. For example:
+		<programlisting>
 <![CDATA[
 class Foo : public VCF::Object {
 public :
@@ -474,11 +593,11 @@ public :
 	}
 };
 ]]>
-</programlisting>
-We have exposed the talking event by declaring a Delegate named Talking. Now 
-any interested observer can register their callback (or event handler) with 
-this and be notified when a talking event is fired. For example:
-<programlisting>
+		</programlisting>
+		We have exposed the talking event by declaring a Delegate named Talking. Now 
+		any interested observer can register their callback (or event handler) with 
+		this and be notified when a talking event is fired. For example:
+		<programlisting>
 <![CDATA[
 class FooObserver : public VCF::ObjectWithEvents {
 public:
@@ -508,27 +627,185 @@ int main( int argc, char** argv )
 	return 0;
 }
 ]]>
-</programlisting>
-Talking events are fired if the Foo::speak() method is called, and we can see 
-how we have connected the two object (source and observer) through the use 
-of Delegates and EventHandlers.
-</para>
+		</programlisting>
+		Talking events are fired if the Foo::speak() method is called, and we can see 
+		how we have connected the two object (source and observer) through the use 
+		of Delegates and EventHandlers.
+		</para>
 
 	</section>
 
+
+	<section><title>Synchronization Primitives</title>
+		<para>
+		The VCF has several classes that can be used to synchronize 
+		access to resources (for example a collection of integers)
+		in a multi-threaded program. 
+		</para>
+		<section><title>SynchObjects</title>
+			<para>
+			In the VCF an object is considered syncronizeable if it 
+			implements the SynchObject interface. This means it must
+			provide methods for locking the object (either for 
+			an infinite amout of time, or some shorter amount of 
+			time specified in milliseconds), and for unlocking the object.
+			The SynchObject object interfaces specifies both of these in 
+			it's SynchObject::lock() and SynchObject::unlock() methods. 
+			When a SynchObject's lock method is called, the first thread 
+			that completes the call will have the object "locked", and 
+			all other threads that attempt to lock the object will block
+			until the thread that has the object locked releases it with a 
+			call to SynchObject::unlock().
+			</para>
+			<para>
+			In connection with the SynchObject class, there's the Lock
+			class which is intended to be used on the stack, making it easy
+			to use a SynchObject, without forgetting to unlock the 
+			SynchObject when finished. For example:
+			<programlisting>
+<![CDATA[			
+void MTDoIt( Mutex* m )
+{
+  Lock l(*m);
+  //access some critical data
+  .
+  .
+  .  
+}
+]]>
+			</programlisting>
+			When the Lock instance's constructor is called, it calls the 
+			SynchObject's lock() method. When the Lock instance falls off the 
+			stack, it's destructor is called and the SynchObject's unlock() method
+			is called. Using the Lock class with SynchObjects makes it impossible 
+			to forget to unlock a SynchObject.
+			</para>
+		</section>
+		<section><title>Waiting for ...</title>
+			<para>
+			In addition to synchronized objects, it's also possible to 
+			"wait" on certain objects. An object is said to be "waitable" if
+			it implements the VCF::Waitable interface. The Waitable interface
+			has two wait functions, one that blocks forever, and the other that
+			only block for a specified number of milliseconds. Waiting on something 
+			means that the caller of the wait() function is blocked until the 
+			waitable object completes what it's doing, or is set or a "signaled"
+			state. For example, waiting on a thread means that caller will be 
+			blocked till the thread exits. In the VCF both threads and conditions 
+			implement the Waitable interface.  Let's look at a simple example:
+			<programlisting>
+<![CDATA[
+class MyThread : public Thread {
+public:
+	virtual bool run() {
+		int count = 0;
+		while (  count < 1000 ) {
+			sleep(100);
+			count ++;
+		}
+	}
+};
+
+Thread* thread = new MyThread();
+thread->start();
+switch ( thread->wait() ) {
+	case Waitable::wrTimedOut : {
+		System::println( "Wait timed out!" );
+	}
+	break;
+	
+	case Waitable::wrWaitFinished : {
+		System::println( "Wait completed succesfully" );
+	}
+	break;
+	
+	case Waitable::wrWaitFailed : {
+		System::println( "Wait FAILED!" );
+	}
+	break;
+}
+]]>
+			</programlisting>
+			The above example will block until the MyThread instance's run() method is 
+			completed.
+			</para>
+			<para>
+			The Waitable interface is used to wait on a single instance. If you have 
+			more than 1 waitable object, and you'd like to wait on the group, then you
+			can use the ThreadManager's wait() functions which allow you to pass
+			in a vector of Waitable objects in.
+			</para>
+		</section>
+		<section><title>Mutexes</title>
+			<para>
+			A mutex is used to synchronize access to a resource amongst more than one 
+			thread. It's the simplest of the 3 synchronization primitives. The first
+			thread to obtain a lock forces all others to block until it's lock is
+			released (see Mutex::unlock).
+			</para>
+		</section>
+		
+		<section><title>Semaphores</title>
+			<para>
+			A semaphore is used to synchronize access to a resource amongst more than one 
+			thread. A semaphore is created with an intial count. Each unlock of
+			the semaphore decrements the semaphores count by one, and when it reaches 0, 
+			it is allows one of the blocked threads to return and carry on.
+			</para>
+		</section>
+		
+		<section><title>Conditions</title>
+			<para>
+			A condition is modeled after the Unix pthread condition primitive. The
+			primary difference between a condition and a mutex or semaphore is that
+			a mutex/semaphore will only allow one thread to "wake up" from a blocked
+			state. A condition, on the other hand, can have multiple threads waiting on 
+			it, and wake them all up.
+			</para>
+		</section>				
+	</section>
+	
 	<section><title>Threads</title>
 		<para>
 		Threads in the VCF are quite simple to use and work with. A thread 
-		represents a piece of code that can be run, hence the reason that
-		the Thread class implements the Runnable interface. Any class that
-		implements the Runnable interface can be run in a separate thread.		
+		represents a piece of code that can be run, or executed. Since the code
+		is "runnable", we have a special class in the VCF called VCF::Runnable
+		which is used to indicate executable code. Since a thread is executable
+		the VCF::Thread class implements the Runnable interface. Any class that
+		implements the Runnable interface can be run in a separate thread.
 		</para>
 		<para>
+		To help manage threads the VCF has a ThreadManager class. The ThreadManager
+		allows you to wait on multiple threads, and to obtain the current running
+		thread. Note that all programs have at least one thread of execution, even
+		if you don't create a VCF::Thread instance explicitly. The "main" thread
+		instance is	created for you autmotically by the ThreadManager when it is 
+		initialized. For example:
+		<programlisting>
+<![CDATA[
+int main( int argc, char** argv )
+{
+	FoundationKit::init( argc, argv );
+	
+	Thread* mainThread = ThreadManager::getCurrentThread();
+	
+	System::println( Format("Main thread ID: %u") % mainThread->getThreadID() );
+	
+	FoundationKit::terminate();
+	return 0;
+}
+]]>
+		</programlisting>
+		Even though we have not created a thread instance explicitly, we are stil able 
+		to obtain the main thread and get information from it, as in the example
+		above.
+		</para>
+		<formalpara><title>Implementing Threads</title>
 		The Runnable interface provides two methods - one called run(), 
 		which is where your thread specific code goes, and another
 		called stop(), which is where you should put code to cleanly
 		stop your executing code in your run() method.		
-		</para>
+		</formalpara>
 		<para>
 		A Thread implements both these methods, and you can derive your own 
 		thread classes directly from the Thread class. If you do this you 
@@ -566,7 +843,7 @@ public:
 		</para>
 		<para>
 		A Thread can automatically delete itself when it stops running, and this is
-		the default behaviour. By passing in a boolean flag set ot false in the 
+		the default behaviour. By passing in a boolean flag set to false in the 
 		Threads constructor, you can prevent this behaviour. In this case, it
 		is up to the caller who created the thread to delete it. Lets look at a 
 		short example:
@@ -671,29 +948,1105 @@ int main( int argc, char** argv )
 		
 	</section>
 
-	<section><title>Streams</title>
+	<section><title>Run Loops</title>
 		<para>
 		</para>
+		
+		<section><title>Relationship to Threads</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>Run Loop Source</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>Timers</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>Posting Events</title>
+			<para>
+			</para>
+		</section>
+	</section>
+	
+	<section><title>Strings</title>
+		<para>
+		Strings in the VCF are represented by the VCF::UnicodeString
+		class, which is typedeffed as "String" to make it more convenient
+		to use. Almost all functions that require a string use the String 
+		class as opposed to a "char*" or "const char*" parameters. All
+		string data is stored as unicode, but it's trivial to convert to
+		ansi if neccessary. Conversion can either be automatic, or you can 
+		explicitly control it via the use of text codecs. Automatic conversion
+		relys on the underlying platform for unicode-to-ansi or ansi-to-unicode 
+		conversion routines.
+		</para>
+		<section><title>STL usage</title>
+			<para>
+			The VCF's String can't derive from std::basic_string&lt;&gt;
+			due to the design of std::basic_string&lt;&gt;. Instead it
+			wraps an instance of std::basic_string and has the exact
+			same interface as std::basic_string. It also has a conversion
+			operators for std::basic_string&lt;&gt;, which should make it easy to
+			get at the underlying std::basic_string&lt;&gt; instance if it's needed.
+			<note>
+			The reason the VCF::UnicodeString class can't derive from std::basic_string 
+			is due to the fact that it has a non virtual destructor. The C++ standard 
+			says that deriving from a class with a non virtual destructor leads 
+			to undefined behaviour.
+			</note>
+			</para>
+		</section>
+		
+		<section><title>Data Representation</title>
+			<para>
+			The UnicodeString uses a 16 bit unsigned short as it's data type. This means
+			that, in general, each "character" is 16 bits - double the size of what 
+			you'd use in an ansi string. Thus the std::basic_string&lt;&gt; template is instantiated
+			as std::basic_string&lt;unsigned short&gt;. This makes the underlying buffer storage 
+			the same on major platforms like Mac OS X and Win32, both of which use Unicode
+			and both of which store the unicode data as 16 bit unsigned shorts. 
+			</para>
+			<para>
+			The one problematic side affect is that not all compilers treat wchar_t as a 
+			16 bit value. The C++ standard has no definition of the size of wchar_t and 
+			naturally each compiler vendor does something different. Some compilers treat it
+			as a 16 bit value (Microsoft Visual C++ and Borland), and some default to a 32 
+			bit value (GCC, Code Warrior). The problem occurs with string literals. When
+			the following:
+			<programlisting>
+<![CDATA[
+String str = L"Hello World";
+]]>
+			</programlisting>
+			is compiled by a compiler like Visual C++, the wchar_t string literal is treated 
+			as a 16 bit unicode string, and no conversion needs to take place. However, when 
+			compiled by a compiler like GCC, the wchar_t string literal is treated as a 32
+			bit array of characters, and <emphasis>does</emphasis> require a conversion to
+			take place. It may be that for consistencies sake, when using string literals, 
+			it's better to use ansi string literals ("Hello World" as opposed to L"Hello 
+			World") than their wchar_t counterparts.
+			</para>
+		</section>
+		
+		<section><title>Conversion and Text Codecs</title>
+			<para>
+			Conversion happens either automatically, or through the use
+			of the UnicodeString::encode() or UnicodeString::decode()
+			functions. Using UnicodeString::encode() or UnicodeString::decode()
+			alows the developer to explicitly specify the codec to use and 
+			control how the transformation from unicode to ansi (or vice-versa)
+			is performed.			
+			</para>
+			<para>
+			Automatic conversion applies whenever you assign a string literal
+			to a UnicodeString or pass it to a constructor. For example:
+			<programlisting>
+<![CDATA[
+String uniStr = "Hello World";
+]]>
+			</programlisting>
+			This uses the default conversion routines of the native platform, with the 
+			default character encoding, to convert the ansi string literal to a UTF16 
+			unicode string. If this is insufficent for you then you need to use the 
+			UnicodeString::encode() or UnicodeString::decode() methods.
+			</para>
+			
+			<formalpara><title>Custom Text Codecs</title>
+			You can create a custom text code by creating a new class and deriving
+			from VCF::TextCodec. You need to implement the following methods, like so:
+			<programlisting>
+<![CDATA[
+class MyTextCodec : public VCF::TextCodec {
+public:
+	/**
+	These are the 4 methods you have to implement
+	*/
+	virtual ulong32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
+										const ulong32& ansiStrBufferLength );
+
+	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c );
+
+	virtual UnicodeString convertToUnicodeString( const UnicodeString& str );
+
+	virtual UnicodeString convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength );
+
+	
+	//You need to return a name, which needs to be unique, for your codec
+	virtual String getName() {
+		return "MyTextCodec";
+	}
+};
+]]>			
+			</programlisting>
+			The first method, convertToAnsiString(), converts a UnicodeString to an ansi string,
+			and writes the resuls to the buffer supplied in ansiStrBuffer, writing no more than 
+			ansiStrBufferLength bytes to the buffer.
+			</formalpara>
+			<para>
+			The next method, convertToAnsiChar() converts a single unicode character to an ansi
+			character.
+			</para>
+			<para>
+			The third method, convertToUnicodeString() converts one unicode string to another 
+			unicode string, using different encoding rules.
+			</para>
+			<para>
+			The fourth method, convertToUnicodeString() converts an ansi string buffer
+			into a unicode string, reading only stringLength bytes from the ansi buffer.
+			</para>			
+			<para>
+			The last method, getName(), returns a string name that should uniquely identify the 
+			text codec. This is used by the TextCodec's registerCodec() method to register the
+			codec with the FoundationKit's list of registered codecs. 
+			</para>
+			<para>
+			You can use your codec like so:
+			<programlisting>
+<![CDATA[
+UnicodeString str = "A longer string to convert!";
+char convertedAnsiStr[256];
+MyTextCodec codec;
+str.decode_ansi( &codec, convertedAnsiStr, sizeof(convertedAnsiStr) );
+]]>
+			</programlisting>
+			</para>
+			<formalpara><title>Registering Text Codecs</title>
+			It's possible to register a single instance of a text codec with the FoundatKit runtime.
+			You can do this by calling the static TextCodec::registerCodec() function. You can
+			access the codec at a later time by calling the TextCodec::getCodec() function and
+			passing in the correct codec name. For example:
+			<programlisting>
+<![CDATA[
+//initilization code...
+TextCodec::registerCodec( new MyTextCodec() );
+
+.
+.
+.
+.
+.
+void someOtherFunction() 
+{
+	UnicodeString str = "A longer string to convert!";
+	char convertedAnsiStr[256];
+
+	str.decode_ansi( TextCodec::getCodec("MyTextCodec"), convertedAnsiStr, sizeof(convertedAnsiStr) );
+}
+]]>
+			</programlisting>
+			</formalpara>
+		</section>
+		<section><title>Formatting</title>
+			<para>
+			The VCF does not make use of variable argument functions ( i.e. functions 
+			that use the "..." feature of C/C++) for formatting a string. Instead 
+			the VCF::Format class is used. The Format class takes a string argument 
+			that is the message string, and then the developer adds "arguments" by
+			using the overloaded operator "%" of the Format class. A simple example:
+			<programlisting>
+<![CDATA[
+String formattedStr = Format( "Hello %d times!" ) % 100;
+]]>
+			</programlisting>			
+			</para>
+		</section>
+		<section><title>Utilty Functions</title>
+			<para>
+			There are a number of utility functions for strings, contained as static functions
+			in the StringUtils class. 
+			</para>
+			<section><title>Trimming</title>
+				<para>
+				The StringUtils class has several functions for "trimming" a string, particularly 
+				useful for removing whitespace.
+				</para>
+			</section>
+			<section><title>Number conversion</title>
+				<para>
+				There are a number of functions, most named StringUtils::toString(), that
+				allow you to convert various number types, like int, long, short,
+				double, and float to a string representation. Note that if you want real,
+				pretty, locale correct string values, please use the Locale::toString() 
+				methods.
+				</para>
+			</section>
+			<section><title>UUID generation</title>
+				<para>
+				The StringUtils::newUUID() function returns a string that represents the
+				value of a newly generated UUID. UUIDs are generated by the OS and are 
+				guaranteed to be unique (they are 128 bit numbers).
+				</para>
+			</section>
+			<section><title>Type ID</title>
+				<para>
+				The StringUtils::getClassNameFromTypeInfo() is used to extract a useable
+				class name from a std::type_info instance as returned by using the typeid() 
+				function in C++. Each compiler returns different values for this, even
+				for something that's the same type. For example, Microsoft compilers prefix the
+				type name with a "class " or "struct " prefix. GCC typenames are name mangled
+				and need to be decoded to be "user friendly".
+				</para>
+			</section>
+			<section><title>Formatting</title>
+				<para>
+				There's support for formatting a DateTime instance and transforming it's
+				value to a string. For example:
+				<programlisting>
+<![CDATA[
+String dtStr = StringUtils::format( DateTime::now(), "%a %B %#d, %Y" );
+]]>
+				</programlisting>
+				The value in dtStr should read something like "Mon June 2, 2005" after 
+				StringUtils::format() returns. Using the "#" causes leading 0's to be 
+				stripped from the string conversion. For a complete list of the 
+				various format specifiers, see the source documentation of 
+				StringUtils::format().
+				</para>
+			</section>
+		</section>
+	</section>
+	
+	<section><title>Locales</title>
+		<para>
+		To support internationalization (i18n) and localization (i10n)
+		the VCF has a Locale class. Each locale instance represents a
+		way to identify a language/country/region and to indication to 
+		the underlying OS that it should use this identifier for certain
+		operations. For example, on platforms that support this, you can
+		tell the OS to set the locale of a specific thread, so that all
+		operations are made with that locale in mind. The Locale class
+		also provides specific methods to convert date/time, numeric, and 
+		currency values into string values appropriate to the locale. 
+		</para>
+		<section><title>Naming</title>
+			<para>
+			Each locale is identified by a string name that is composed of
+			(currently) several elements. The first is a language identifier
+			as specified by ISO-639-1 (e.g. English is "en", Polish is 
+			"pl", and Italian is "it"). The second is the 2 character country 
+			identifier as specified by ISO-3166 (e.g. the United States is
+			"US", Poland is "PL", and Italy is "IT"). 
+			</para>
+			<para>
+			These two codes are then joined together, separated by an "_" 
+			character to form a complete identifier for the locale, such as 
+			"en_US", or "en_GB".
+			</para>
+			<para>
+			This identifier is then used in the construction of a locale:
+			<programlisting>
+<![CDATA[
+Locale loc("en_US); //american english locale
+Locale loc2("ar_AE); //UAE arabic locale
+]]>
+			</programlisting>
+			Depending on your platform, it's possible that a valid locale identifier
+			may not be supported which will cause an exception to be thrown by the 
+			locale. For example your OS may not support arabic, thus the "ar_AE", 
+			while valid, would cause an exception.
+			</para>
+			<para>
+			Once created a locale instance maintains a peer that maps directly to the
+			OS's support for locale operations.
+			</para>
+		</section>
+		
+		<section><title>Numeric Formatting</title>
+			<para>
+			The locale class supports formatting numeric values to strings appropriate
+			to the locale in question. Any integer value may be converted to a string
+			using the Locale::toString() methods. For example:
+			<programlisting>
+<![CDATA[
+Locale loc("en_US");
+String numStr = loc.toString( 203456 ); 
+]]>
+			</programlisting>
+			The numStr variable will now contain the string value "203,456". Note that
+			this is different than what StringUtils::toString() does, which is to just do 
+			a plain conversion of the 203456 value into "203456". Floating point 
+			conversion is also supported in the form of converting float and double
+			types.
+			</para>
+			<para>
+			Currency values may be converted using the Locale::toStringFromCurrency() 
+			function which takes a single double value. 
+			<programlisting>
+<![CDATA[
+Locale loc("en_US");
+String numStr = loc.toStringFromCurrency( 120034.231 ); 
+]]>
+			</programlisting>
+			</para>
+		</section>
+		
+		<section><title>Date Time Formatting</title>
+			<para>
+			There are two separate functions for transformating a DateTime instance 
+			into a string. The first, Locale::toStringFromDate(), only uses the 
+			date portion of a DateTime instance. The second, Locale::toStringFromTime(),
+			only uses the time portion of a DateTime instance. 
+			<note>
+			<para>
+			The format codes used by Locale::toStringFromTime() and Locale::toStringFromDate()
+			are not the same as the format codes used by StringUtils::format(DateTime). 
+			</para>
+			</note>
+			An empty format string (the default value for the argument) means the
+			implementation should use whatever default values are most appropriate.
+			An example of using this:
+			<programlisting>
+<![CDATA[
+Locale loc("it_IT");
+String dateStr = loc.toStringFromDate( DateTime::now() );
+String timeStr = loc.toStringFromTime( DateTime::now() );
+]]>
+			</programlisting>
+			
+			</para>
+		</section>
+		
+		<section><title>Collation</title>
+			<para>
+			Collation means comparing to string values for equivalency or order. The Locale
+			class has two functions for this, one for case sensitive compares, 
+			Locale::collate(), and another for case in-sensitive compares, Locale::collateCaseInsensitive().
+			Both return an integer value that is one of the following: 
+				<itemizedlist>
+					<listitem>
+					0 - Indicates that both strings should be considered equal.
+					</listitem>
+					<listitem>
+					-1 - Indicates that the first string is "less than", or should
+					come before, the second string.
+					</listitem>
+					<listitem>
+					1 - Indicates that the first string is "greater than", or should
+					come after, the second string.
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		
+		<section><title>Translation</title>
+			<para>
+			The Locale class also supports translating a string in one language, into
+			the language represented by the Locale instance. Typically the "source" 
+			string is in english. For instance, here's an example of using the
+			string "Hello", and translating it with a French locale:
+			<programlisting>
+<![CDATA[
+Locale loc("fr_FR");
+String frHelloStr = loc.translate( "Hello" );
+]]>
+			</programlisting>
+			After loc.translate() returns the frHelloStr variable should contain "Salute", 
+			assuming a translation could be found. If no translation is found, then the 
+			return value is the same as the source.
+			</para>
+			
+			<formalpara><title>Mechanics</title>
+			The translation works by using some sort of localized key/value file. A special
+			class called the MessageLoader is used to look up and extract data from the file. 
+			The default translation file is a ".strings" file, but because the MessageLoader
+			class allows a developer to register a specific MessageLoader instance with
+			a mimetype (matched to a file name extension), it's possible to add support for 
+			other localization files, such as .po/.mo files and the gettext API.
+			</formalpara>
+			<para>
+			The default file format used to store translation files is the "strings" format.
+			This is pretty much identical to the format specifed for Mac OSX systems
+			and you can read more about it here:  
+			<ulink url="http://developer.apple.com/documentation/Cocoa/Conceptual/Internationalization/index.html#//apple_ref/doc/uid/10000003i">
+			Strings Files (Apple Documentation)</ulink>. Basically a .strings file is a very
+			simple that that contains 1 or more key/value pairs. You can also have comments
+			using C style "/*" and "*/" comment brackets. For example, here's a sample:
+			<programlisting>
+<![CDATA[
+/*
+Some comments!
+*/
+"Hello" = "Salute" /*this is Hello in french*/
+
+"I understand" = "Je comprends"
+]]>
+			</programlisting>
+			When Locale::translate("Hello") is called, if this file is loaded by the appropriate
+			MessageLoader, the string "Hello" will be matched to "Salute" and the return value of 
+			Locale::translate() will be "Salute". Since a .strings file is considered a resource, 
+			they are stored under the application's resource folder. See <link linkend="Resources">
+			Resources</link> for more information about how resource folders work.
+			</para>
+			
+			<formalpara><title>Custom Message Parsing</title>
+			It's possible to create a custom message parser to handle other translation
+			file formats, such as the .po/.mo file format used in many linux applications.
+			You do this by creating a new class that derives from VCF::MessageLoader
+			and override the MessageLoader::loadMessageFile() and MessageLoader::getMessageFromID()
+			functions. 
+			</formalpara>
+			
+			<formalpara><title>Registering Your MessageLoader</title>
+			You need to register an instance of your MessageLoader class
+			with the FoundationKit. You can do this by calling MessageLoader::registerMessageLoader().
+			In your initialization code you might do the following:
+			<programlisting>
+<![CDATA[
+MessageLoader::registerMessageLoader( "text/cool", new MyCustomMessageLoader() );
+]]>
+			</programlisting>
+			Files whose mime type corresponds to "text/cool" will be opened with the MyCustomMessageLoader
+			instance.
+			</formalpara>
+		</section>
+	</section>
+	
+	<section id="Resources"><title>Resources</title>
+		<para>
+		A resource is considered a chunk of data used by the program at runtime. For example,
+		a look up table of string translations, or an xml file contaning program settings. The 
+		VCF allows you access these resources in a variety of ways, all exposed through the
+		use of a ResourceBundle. The ResourceBundle holds 0 or more resources, each accessed by
+		a string name. The resource may be stored in some platform dependant way (such as embedded
+		resources created vi .rc scripts and the Win32 resource compiler), or in a generic platform
+		independant method that closely mirrors how resources are handled on Mac OSX.
+		</para>	
+		<section><title>Accessing a resource</title>
+		<para>
+		Access to a resource is provided by the ResourceBundle. For a given program there is 
+		one and only one ResourceBundle, and you gain access to it by calling the System::getResourceBundle()
+		function. Once you have a ResourceBundle instance, you can get access to a particular
+		resource by calling one of it's functions. The lowest level way to do this is calling the
+		ResourceBundle::getResource() function:
+		<programlisting>
+<![CDATA[
+ResourceBundle* resBundle = System::getResourceBundle();
+Resource* res = resBundle->getResource( "stuff" );
+BasicInputStream bis( (const char*)res->getData(), res->getDataSize () );
+//extract data from input stream...
+]]>
+		</programlisting>
+		Each resource is named, and then the Resource class allows acces to the buffer of data for the
+		resource.
+		</para>	
+		
+		<para>
+		If you don't want to deal with a Resource instance directly, there's a function for 
+		extracting text resources (there are also other resource types like images but those 
+		are covered	in the GraphicsKit). 
+		<programlisting>
+<![CDATA[
+ResourceBundle* resBundle = System::getResourceBundle();
+String text = resBundle->getString( "Text1" );
+]]>
+		</programlisting>
+		This will return a string resource that corresponds to the name "Text1". 
+		</para>
+		
+		</section>		
+		<section><title>Program Information</title>
+		<para>
+		Another common resource is program information. You can think of this as metadata
+		about the running executable. For example, the name of the program, it's copyright
+		information, the author(s) of the program, and so on. Like regular resources, this can be
+		stored either in a platform dependant way (in Win32 as an embedded VS_VERSION_INFO 
+		struct), or in a platform neutral way that is extremely similar to the way this is 
+		stored on Mac OS X. Either way, you can retreive this information by calling the 
+		ResourceBundle's getProgramInfo() function, which returns a ProgramInfo instance.
+		</para>	
+		<para>
+		Once a ProgramInfo instance is obtained, you can access the following information:
+		<itemizedlist>
+			<listitem>	
+			Program Name - see ProgramInfo::getProgramName()
+			</listitem>
+			<listitem>
+			Program Version - see ProgramInfo::getProgramVersion()
+			</listitem>
+			<listitem>
+			Program File name - see ProgramInfo::getProgramFileName()
+			</listitem>
+			<listitem>
+			File Version - see ProgramInfo::getFileVersion()
+			</listitem>
+			<listitem>
+			Description - see ProgramInfo::getDescription()
+			</listitem>
+			<listitem>
+			Copyright - see ProgramInfo::getCopyright()
+			</listitem>
+			<listitem>
+			Company name (and/or description) - see ProgramInfo::getCompany()
+			</listitem>
+			<listitem>
+			Author (or authors) - see ProgramInfo::getAuthor()
+			</listitem>
+		</itemizedlist>		
+		A quick example:
+		<programlisting>
+<![CDATA[
+ResourceBundle* resBundle = System::getResourceBundle();
+ProgramInfo* info = resBundle->getProgramInfo();
+//retrieve data
+delete info;
+]]>
+		</programlisting>
+		</para>
+		</section>
+		
+			
+		<section><title>Platform Specific</title>
+		<para>
+		The VCF resource system supports embedded resources on Win32 when created using
+		.rc scripts. On OS X if you store your resources in an app bundle, the VCF 
+		supports that as well. Program information can be stored using the VS_VERSION_INFO
+		on Win32 (see MSDN for how to add this resource type to your .rc script).
+		Mac OS X developers can use their Info.plist files to store program information.
+		</para>	
+		</section>
+		
+		<section><title>Platform Neutral</title>
+		<para>
+		An alternate option is to store resources in a platform neutral way. The 
+		VCF does this by largely following the bundle layout that is used on Mac OSX.
+		Instead of directly enbedding the resource in the executable image, a
+		specific directory structure is followed, and resources are placed inside as 
+		a file. The name of the resource <emphasis>must</emphasis> be the same 
+		as the name of resource file. If you want to add localized string 
+		trnaslations using the default .strings format, then the name of the file 
+		must be the same as the name of you executable (e.g. a program called
+		"bleep" would store it's localized strings in a file called "bleep.strings").
+		</para>
+		<para>
+		The basic idea is that there's a resource directory. Each resource is then stored in
+		this directory as a file. Localized resources are supported by creating a sub directory
+		named for the locale (like "en_US"), and then putting localized resource files in each
+		locale specific sub directory. For example (assuming this is for a program called "bleep"):
+		<screen>
+Resources\
+	SomeData.dat
+	bleep.strings
+		</screen>
+		If we add locale support for Italian, German, and Polish then we'd have:
+		<screen>
+Resources\
+	SomeData.dat
+	bleep.strings
+	it_IT\
+		bleep.strings
+	de_DE\
+		bleep.strings
+	pl_PL\
+		bleep.strings
+		</screen>
+		</para>
+		<para>
+		The precise location of the "Resources" directory can be somewhat varied. There are four
+		main "styles" that the developer can follow and that the VCF runtime understands in
+		order to look up resource files. Some styles may not be compatible with Mac OSX's 
+		resource look up patterns. The examples below will all assume a program called "bleep".
+		</para>
+		<formalpara><title>Style A</title>
+		This is the simplest style (but it's not OSX compatible).
+		<screen>
+<![CDATA[		
+<application directory>/
+	bleep.exe
+	Resources/
+		SomeData.dat
+		bleep.strings
+		it_IT/
+			bleep.strings
+		de_DE/
+			bleep.strings
+		pl_PL/
+			bleep.strings
+]]>				
+		</screen>
+		</formalpara>
+		
+		<formalpara><title>Style B</title>
+		Using the Contents directory - this <emphasis>is</emphasis> OSX compatible.
+		<screen>
+<![CDATA[		
+<application directory>/
+	Contents/
+		bleep.exe
+		Resources/
+			SomeData.dat
+			bleep.strings
+			it_IT/
+				bleep.strings
+			de_DE/
+				bleep.strings
+			pl_PL/
+				bleep.strings
+]]>				
+		</screen>
+		</formalpara>
+		
+		<formalpara><title>Style C</title>
+		With contents and platform directory - OSX compatible	
+		<screen>
+<![CDATA[		
+<application directory>/
+	Contents/
+		<OS Name>/
+			bleep.exe
+		Resources/
+			SomeData.dat
+			bleep.strings
+			it_IT/
+				bleep.strings
+			de_DE/
+				bleep.strings
+			pl_PL/
+				bleep.strings
+]]>				
+		</screen>
+		</formalpara>
+		
+		<formalpara><title>Style D</title>
+		With contents, platform, and compiler - OSX compatible
+		<screen>
+<![CDATA[		
+<application directory>/
+	Contents/
+		<OS Name>/
+			<Compiler Name>/
+				bleep.exe
+		Resources/
+			SomeData.dat
+			bleep.strings
+			it_IT/
+				bleep.strings
+			de_DE/
+				bleep.strings
+			pl_PL/
+				bleep.strings
+]]>				
+		</screen>
+		</formalpara>
+		
+		</section>
+	</section>
+	
+	<section><title>System Functions</title>
+		<para>
+		The System is a singleton class that has a variety of useful functions
+		that all deal with low level OS functionality.
+		</para>
+		
+		<section><title>String functions</title>
+			<para>
+			There are several functions that return string information about the
+			OS the VCF is running on. These include the operating system name,
+			the OS version, the compiler the VCF was built with, the name of the
+			computer (the hostname). I simple example of how to use these:
+			<programlisting>
+<![CDATA[
+String os = System::getOSName();
+String version = System::getOSVersion();
+String compiler = System::getCompiler();
+String hostName = System::getComputerName();
+String user = System::getUserName();
+System::println( "OS: " + os + " version: " + version + 
+				"\nBuilt with " + compiler + " compiler\nComputer: " + 
+				hostName + " has user " + user + " logged in." );	
+]]>
+			</programlisting>			
+			</para>
+		</section>
+		
+		<section><title>Filesystem Functions</title>
+			<para>
+			The System class also exposes several file system functions. It allows 
+			you to get or set the current working directory with System::getCurrentWorkingDirectory()
+			and System::setCurrentWorkingDirectory() respectively. It also 
+			allows you to determine if, given a valid file name, a file exists on the file system.
+			This is done using the System::doesFileExist() function. 
+			</para>
+			<para>
+			Finally the System class also lets you get standard directory locations for 
+			common directories like the users home directory, where user favorites might 
+			be located, where the users temp directory is, where the systems temp directory
+			is, and others. For example:
+			<programlisting>
+<![CDATA[
+String homeDir = System::getCommonDirectory( System::cdUserHome );
+String systemTemp = System::getCommonDirectory( System::cdSystemTemp );
+]]>
+			</programlisting>			
+			</para>
+		</section>
+		
+		<section><title>Date/Time Functions</title>
+			<para>
+			The System class has functions for both getting and setting various 
+			date/time values. You can query the current "tick" count, meaning the number 
+			of milliseconds the system has been up and running. This value may wrap
+			depending on the OS, so it's not useful for any long range time calculations.
+			<programlisting>
+<![CDATA[
+ulong32 tick1 = System::getTickCount();
+
+doSomeLengthyCalculation();
+
+ulong32 tick2 = System::getTickCount();
+
+System::println( Format("It took %d millsecs for calc.") % (tick2-tick1) );
+]]>
+			</programlisting>
+			You can ask the system to "sleep" for a set number of milliseconds by 
+			calling the System::sleep() function. This 
+			is effective for the current thread that the call is made in.
+			</para>
+			<para>
+			It also possible to get the current system time, in either UTC (GMT) or
+			local time, and store this in a DateTime instance. 
+			<TODO>
+			RENAME these functions - these are piss poor names and are quite confusing
+			as to what they do. Also it's debateable that we need BOTH functions - perhaps
+			only one would do.
+			</TODO>
+			<programlisting>
+<![CDATA[
+DateTime localSysTime;
+System::setDateToLocalTime( &localSysTime );
+
+DateTime utcSysTime;
+System::setDateToSystemTime( &utcSysTime );
+]]>
+			</programlisting>
+			In addition to this, you can translate a date/time value from local to GMT or
+			from GMT to local by using the System::convertLocalTimeToUTCTime() and 
+			System::convertUTCTimeToLocalTime() functions respectively.
+			<programlisting>
+<![CDATA[
+DateTime localTime(2004,2,24,10,32,12); //February 24, 2004 10:32:12
+DateTime utcTime = System::convertLocalTimeToUTCTime( localTime );
+
+System::println( utcTime );
+
+DateTime utcTime2(2004,2,24,10,32,12); //February 24, 2004 10:32:12;
+
+localTime = System::convertUTCTimeToLocalTime( &utcTime );
+System::println( localTime );
+]]>
+			</programlisting>
+			</para>
+		</section>
+		
+		<section><title>Environment Functions</title>
+			<para>
+			You can query and set environment variable easily by using the 
+			System::getEnvironmentVariable() and System::setEnvironmentVariable()
+			functions. System::getEnvironmentVariable() returns a string that 
+			represents the environment variable name passed into the function. 
+			System::setEnvironmentVariable() lets you set the value of a specific
+			environment variable. Setting these values does so only for the
+			lifetime of the program that makes these calls. You don't need to 
+			include the "%" or "$" prefixs to variable names.
+			</para>
+			<para>
+			You can add a new directory to the system path variable. This is the
+			variable that the OS uses in order to find an executable. In Windows
+			this is the %PATH% variable, in unix systems this is the $PATH variable.
+			The System::addPathDirectory() allows you to pass in a directory to
+			add to this environment variable.
+			</para>
+		</section>
+		
+		<section><title>Resource functions</title>
+			<para>
+			The System class has several functions that deal exclusively with resources. 
+			Several of these deal with either gaining access to the Resource bundle,
+			or determining the directory where it exists. Use System::findResourceDirectoryForExecutable()
+			to determine what the resource bundle directory for a program would be. 
+			Note that this just gives the directory name, there may not be anything there, 
+			or the directory may not even exist if the program is not using resources. 
+			System::findResourceDirectoryForExecutable() takes the path to an executable as 
+			it's only argument. So if you have a path to another program (that's VCF 
+			based) you can use this function to determine it's resource bundle 
+			location. As a general rule, you'll have little need for this as a developer.
+			<programlisting>
+<![CDATA[
+String resDir = System::findResourceDirectoryForExecutable( "/usr/local/bin/foo" );
+]]>
+			</programlisting>
+			System::findResourceDirectory() is identical to
+			System::findResourceDirectoryForExecutable() but it uses the current program
+			executable path as the path to System::findResourceDirectoryForExecutable().
+			<programlisting>
+<![CDATA[
+String resDir = System::findResourceDirectory();
+]]>
+			</programlisting>
+			</para>
+			<para>
+			You can obtain the resource bundle of the running program by calling 
+			System::getResourceBundle() which will return a pointer to the program
+			ResourceBundle. See <link linkend="Resources">
+			Resources</link> for more information about Resource Bundles. 			
+			</para>
+			<para>
+			The next functions deal with program "meta data". Calling System::getProgramInfoFromFileName()
+			allows you to access the programs information, such as the program copyright (if it 
+			exists), the author, and so forth. The functions returns a pointer to a new instance of a 
+			ProgramInfo object. You're responsible for deleting it, and if no information can be found
+			the function may return a NULL value. You can determine the "bundle" directory of full
+			program path by calling System::getBundlePathFromExecutableName(). For example (assuming
+			we are running on Mac OS X):
+			<programlisting>
+<![CDATA[
+String programBundleDir = 
+	System::getBundlePathFromExecutableName("/Applications/Bob/Contents/MacOS/BobsYourUncle.exe");
+]]>
+			</programlisting>
+			This would result in programBundleDir being assigned the string value "/Applications/Bob". 
+			Again, as a general rule, these functions are more useful to the internals of the VCF than
+			to an application developer. To do the opposite, to retrieve the full program
+			path from just a "bundle" path, you can use the System::getExecutableNameFromBundlePath()
+			function. For example:
+			<programlisting>
+<![CDATA[
+String bobExePath = 
+	System::getBundlePathFromExecutableName("C:\Program Files\Bob.app");
+]]>
+			</programlisting>
+			Now bobExePath would equal "C:\Program Files\Bob.app\Contents\WinNT\Bob.exe". 
+			</para>
+		</section>
+		
+		<section><title>Locale functions</title>
+			<para>
+			The System allows you to get and set the locale instance of the current thread. 
+			You can retrieve the current thread's locale by calling System::getCurrentThreadLocale().
+			You can set the current thread's locale by calling System::setCurrentThreadLocale().
+			Setting the thread's locale means that any VCF locale sensitive functions will default
+			to this new locale value for the thread. Depending on the platform, there may be 
+			other effects when setting the thread locale. On Win32 calling 
+			System::setCurrentThreadLocale() also affects <emphasis>any</emphasis> Win32 API
+			calls since, under the hood, System::setCurrentThreadLocale() ends up calling 
+			the API SetThreadLocale() function. On Mac OS X, there's no concept of per thread 
+			locales so this is not an issue.			
+			</para>
+		</section>
+		
+		<section><title>Miscellaneous functions</title>
+			<para>
+			Since some platform may or may not support Unicode you can query this
+			by calling the System::isUnicodeEnabled() function. If the platform supports 
+			Unicode then System::isUnicodeEnabled() will return true, otherwise it will
+			return false. So on Windows 98, a VCF program calling System::isUnicodeEnabled()
+			would be returned a false value, while the same program running on Windows NT
+			would get a true value.
+			</para>
+		</section>		
+	</section>
+	
+	<section><title>Dates and Time</title>
+		<para>
+		The DateTime class is used to represent all date-time values in the
+		VCF. 
+		</para>
+		
+		<section><title>Data Representation</title>
+			<para>
+			The data of the DateTime class is stored as a 64 bit value. It is based
+			on the concept of a Julian Day (see Claus Tøndering's 
+			<ulink url="http://www.tondering.dk/claus/cal/">Calendar FAQ</ulink>for 
+			more information on this) and has a resolution of 1 millisecond.
+			</para>
+			
+			<formalpara><title>Use of custom 64 bit integer class</title>
+			The 64 bit data value is a class that in turns wraps some 64 bit number. 
+			The class was used to make access to the value uniform and less of a 
+			hassle to deal with. See the VCF::ulong64 and VCF::long64 class 
+			documentation for more details.	YOu can use it just like you would any
+			other primitive integer type.
+			</formalpara>
+		</section>
+		
+		<section><title>Date Time Spans</title>
+			<para>
+			Given two dates there exists a "span", or delta value between the two date-time
+			values. This delta or span value is represented by the DateTimeSpan class.
+			You can subtract two DateTime values from each other and get a DateTimeSpan
+			as a the result, as well as adding (or subtracting) a DateTimeSpan to (or from)
+			a DateTime instance.
+			<programlisting>
+<![CDATA[
+DateTime dt1(2003,2,12);
+DateTime dt2(2005,6,3);
+DateTimeSpan span = dt2 - dt1;
+
+DateTime dt3 = dt1 + span;
+]]>		
+			</programlisting>
+			Given a DateTimeSpan instance, you can get the total minutes, seconds, hours, and so forth
+			from the span. See the VCF::DateTimeSpan class documentation for more information.
+			</para>
+		</section>
+		
+		<section><title>Iterating</title>
+			<para>
+			You can iterate through a DateTime instance. You can either move forward 
+			or backward, and you can do so at different levels of granularity. For example,
+			if you wish to move forward in time  by 2 years, you can use the DateTime::incrYear()
+			and pass in a 2 for the amount to increment by. You can also iterate through time
+			using the DateTime::Iterator. This allows you to completely customize the logic
+			of incrementing or decrementing by some value. The DateTime::Iterator supports
+			iterating through operator ++ or operator-- functions.
+			<programlisting>
+<![CDATA[
+DateTime dt1(2003,2,12);
+DateTime::Iterator<ByHour> byHour = dt1;
+for (int i=0;i<5;i++ ) {
+	byHour ++;
+	DateTime& current = *byHour;
+	System::println( StringUtils::format( "%H:%M:%s", current ) );
+}
+]]>
+			</programlisting>
+			The above example iterates across 4 hours, incrementing value by 1 hour 
+			each pass.
+			</para>
+		</section>
+		
+		<section><title>String Formatting</title>
+			<para>
+			A DateTime instance can be transformed into a string by calling the 
+			StringUtils::format() function and passing in certain formatting strings. 
+			For example:
+			<programlisting>
+<![CDATA[
+DateTime dt1(2003,2,12);
+String s = StringUtils::format( "%a %B %#d, %Y", dt );
+]]>
+			</programlisting>
+			This would result in the string value "Monday January 2, 2003". The 
+			precise formatting codes are specified ing the documentation for the 
+			StringUtils::format() function.
+			</para>
+		</section>
+	</section>
+	
+	<section><title>Streams</title>
+		<para>
+		Streams are used to store data, either input or output. A stream object 
+		allows you to either read or write an arbitrary number of bytes to (or 
+		from) the stream. A stream may be used to store data in memory, or it may 
+		be used to access the file system (such as a FileInputStream). Streams may 
+		be "chained" together to form a more complex interaction. For example a text 
+		output stream, that converts data to a format suitable for text storage, 
+		might be chained to a file output stream, that takes this data from the 
+		text outptu stream and then writes it 
+		to disk.
+		<programlisting>
+<![CDATA[
+FileOutputStream fs("out.txt");
+TextOutputStream tos(&fs);
+tos << 12345;
+]]>
+		</programlisting>
+		This will output the integer value 12345, convert it to a string of "12345", 
+		and then write that	data to disk.
+		</para>
+		
+		<section><title>Base Functionality</title>
+			<para>
+			The base functionality of any stream is to access the data buffer of 
+			the stream, retreive the stream's size (in bytes), get the current seek 
+			position (in bytes) from the beginning of the stream, and to move, or 
+			seek, to a specific position (again, specified in bytes) within the stream.
+			Note that some stream implements may not implement these functions
+			due to constraints of the specific stream type being implemented.
+			</para>
+			<para>
+			The base class for all streams is the VCF::Stream class which declares the 
+			above mentioned functionality in four functions: VCF::Stream::seek(), 
+			VCF::Stream::getCurrentSeekPos(), VCF::Stream::getSize(), and VCF::Stream::getBuffer().
+			</para>
+		</section>
+		
+		<section><title>Input Streams</title>
+			<para>
+			Input streams are used to <emphasis>read</emphasis> data 
+			the stream. The base class for all input streams is the VCF::InputStream 
+			class. All other input stream implementations derive from this. 
+			</para>
+			<para>
+			The basic method for reading data from a stream is the 
+			InputStream::read()	method, which takes a pointer to a buffer of bytes, 
+			and length argument, indicating the size (in bytes) of the buffer passed
+			in. In addition to this basic read() method, the InputStream class also
+			has a number of "helper" methods to make it easy to read 
+			</para>
+		</section>
+		
+		<section><title>Output Streams</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>Serializing classes</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>Serializing Variants</title>
+			<para>
+			</para>
+		</section>
 	</section>
 
 	<section><title>Files</title>
 		<para>
 		</para>
+		<section><title>File Searching</title>
+			<para>
+			</para>
+		</section>
 	</section>
 
 	<section><title>Dynamic Libraries</title>
 		<para>
 		</para>
+		
+		<section><title>Init and term functions</title>
+			<para>
+			</para>
+		</section>
 	</section>
 
 	<section><title>Processes</title>
 		<para>
 		</para>
+		<section><title>Process Output</title>
+			<para>
+			</para>
+		</section>
 	</section>
 
 	<section><title>XML Parsing</title>
 		<para>
 		</para>
+		
+		<section><title>SAX style parsing</title>
+			<para>
+			</para>
+		</section>
+		
+		<section><title>DOM style parsing</title>
+			<para>
+			</para>
+		</section>
 	</section>
 
 	<section><title>Peer classes</title>
@@ -705,6 +2058,36 @@ int main( int argc, char** argv )
 <!-- 
 CVS Log info
 $Log$
+Revision 1.4  2005/07/09 23:14:10  ddiego
+merging in changes from devmain-0-6-7 branch.
+
+Revision 1.3.4.9  2005/07/07 02:24:15  ddiego
+docs update
+
+Revision 1.3.4.8  2005/06/28 21:11:00  ddiego
+update docs
+
+Revision 1.3.4.7  2005/06/24 20:43:07  ddiego
+more updates to foundationkit docs.
+
+Revision 1.3.4.6  2005/06/15 21:02:42  ddiego
+updates
+
+Revision 1.3.4.5  2005/06/09 21:00:55  ddiego
+update
+
+Revision 1.3.4.4  2005/06/08 21:09:51  ddiego
+more docs updates
+
+Revision 1.3.4.3  2005/06/06 21:21:18  ddiego
+updates again
+
+Revision 1.3.4.2  2005/06/03 21:40:19  ddiego
+more doc updates
+
+Revision 1.3.4.1  2005/06/02 21:27:41  ddiego
+updates to docs
+
 Revision 1.3  2004/08/07 02:46:52  ddiego
 merged in the devmain-0-6-5 branch to stable
 

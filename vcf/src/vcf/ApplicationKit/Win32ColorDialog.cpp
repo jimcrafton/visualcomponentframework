@@ -28,17 +28,17 @@ Win32ColorDialog::~Win32ColorDialog()
 
 Color* Win32ColorDialog::getSelectedColor()
 {
-	return &this->color_;
+	return &color_;
 }
 
 void Win32ColorDialog::setSelectedColor( Color* selectedColor )
 {
-	this->color_.copy( selectedColor );
+	color_.copy( selectedColor );
 }
 
 void Win32ColorDialog::setTitle( const String& title )
 {
-	this->title_ = title;
+	title_ = title;
 }
 
 bool Win32ColorDialog::execute()
@@ -49,26 +49,25 @@ bool Win32ColorDialog::execute()
 	memset( &color, 0, sizeof(CHOOSECOLOR) );
 	color.lStructSize = sizeof(CHOOSECOLOR);
 	COLORREF customColors[16];
-	color.lpCustColors =
-		customColors;
+	color.lpCustColors = customColors;
+
 	color.hInstance = NULL;
 	color.hwndOwner = NULL;
 
 	if ( NULL != owner_ ){
-		ControlPeer* impl = owner_->getPeer();
-		color.hwndOwner = (HWND) impl->getHandleID();
+		color.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
+	}
+	else {
+		color.hwndOwner = GetActiveWindow();
 	}
 
-	color.rgbResult = this->color_.getRGB();
+	color.rgbResult = color_.getColorRef32();
 
-	color.Flags = CC_ANYCOLOR | CC_FULLOPEN;
+	color.Flags = CC_ANYCOLOR | CC_FULLOPEN | CC_RGBINIT;
 
 	if ( ChooseColor( &color ) ){
 		result = true;
-		uchar r = GetRValue( color.rgbResult );
-		uchar g = GetGValue( color.rgbResult );
-		uchar b = GetBValue( color.rgbResult );
-		this->color_.setRGB( r, g, b );
+		color_.setColorRef32( color.rgbResult );
 	}
 
 	return result;
@@ -78,6 +77,18 @@ bool Win32ColorDialog::execute()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:57  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.3  2005/06/26 01:31:20  marcelloptr
+*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
+*
+*Revision 1.2.4.2  2005/06/09 06:13:08  marcelloptr
+*simpler and more useful use of Color class with ctor and getters/setters
+*
+*Revision 1.2.4.1  2005/02/21 16:20:16  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

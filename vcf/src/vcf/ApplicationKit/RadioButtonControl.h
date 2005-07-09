@@ -23,11 +23,13 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF {
 
 #define RADIOBUTTONCONTROL_CLASSID		"DC2FDA9C-5D3E-4949-B4BE-160B409BA7AF"
 
-
+/**
+class RadioButtonControl documentation.
+*/
 class APPLICATIONKIT_API RadioButtonControl : public ToggledButton {
 public:
 
@@ -78,12 +80,19 @@ protected:
 
 };
 
-};
+
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

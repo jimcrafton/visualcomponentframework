@@ -28,6 +28,13 @@ EtchedBorder::EtchedBorder( long sidesToPaint, long style ):
 
 }
 
+EtchedBorder::EtchedBorder( Component* owner ):
+	Border(owner),		
+	sidesToPaint_(GraphicsContext::etAllSides),
+	style_(GraphicsContext::etEtched)
+{
+
+}
 
 void EtchedBorder::paint( Control* control, GraphicsContext* context )
 {
@@ -63,6 +70,12 @@ Rect EtchedBorder::getClientRect( Rect* initialBounds, Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/03/06 22:50:59  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -22,7 +22,6 @@ using namespace VCF;
 DocumentManager* DocumentManager::docManagerInstance = NULL;
 
 DocumentManager::DocumentManager():
-	standardMenu_(NULL),
 	shouldCreateUI_(true)
 {
 	DocumentManager::docManagerInstance = this;
@@ -106,15 +105,6 @@ void DocumentManager::init()
 }
 
 void DocumentManager::terminate() {
-	standardMenu_->free();
-	standardMenu_ = NULL;
-
-	ActionMap::iterator actionIt =  actionsMap_.begin();
-	while ( actionIt != actionsMap_.end() ) {
-		actionIt->second->free();
-		actionIt ++;
-	}
-
 	DocumentUndoRedoMap::iterator it = undoRedoStack_.begin();
 	while ( it != undoRedoStack_.end() ) {
 		delete it->second;
@@ -236,6 +226,14 @@ void DocumentManager::redoForDocument( Document* doc ) {
 	getUndoRedoStack( doc ).redo();
 }
 
+void DocumentManager::undo() {
+	getSharedUndoRedoStack().undo();
+}
+
+
+void DocumentManager::redo() {
+	getSharedUndoRedoStack().redo();
+}
 
 UIToolkit::ModalReturnType DocumentManager::saveChanges( Document* document )
 {
@@ -247,8 +245,9 @@ UIToolkit::ModalReturnType DocumentManager::saveChanges( Document* document )
 		caption = app->getName();
 	}
 	MessageDialog saveDocPrompt;
-	String message = StringUtils::format( "Do you want to save the changes you made to document \"%s\" ?",
-											document->getName().c_str() );
+	String message = StringUtils::format( Format("Do you want to save the changes you made to the document \"%s\" ?") %
+	                                              document->getName() );
+
 	saveDocPrompt.setMessage( message );
 	saveDocPrompt.setCaption( caption );
 	saveDocPrompt.setInformation( "Your changes will be lost if you don't save them." );
@@ -365,10 +364,10 @@ void DocumentManager::updateUndo( ActionEvent* event, Document* doc )
 
 		bool hasUndoableCmds = undoRedoStack.hasUndoableItems();
 		if ( true == hasUndoableCmds ) {
-			event->setText( "Undo " + undoRedoStack.getCurrentUndoCommand()->getName() + "\tCtrl+Z" );
+			event->setText( "Undo " + undoRedoStack.getCurrentUndoCommand()->getName() );
 		}
 		else {
-			event->setText( "Nothing to Undo\tCtrl+Z" );
+			event->setText( "Nothing to Undo" );
 		}
 		event->setEnabled( hasUndoableCmds );
 	}
@@ -380,10 +379,10 @@ void DocumentManager::updateRedo( ActionEvent* event, Document* doc )
 		UndoRedoStack& undoRedoStack = getUndoRedoStack( doc );
 		bool hasRedoableCmds = undoRedoStack.hasRedoableItems();
 		if ( true == hasRedoableCmds ) {
-			event->setText( "Redo " + undoRedoStack.getCurrentRedoCommand()->getName()+ "\tCtrl+Shift+Z" );
+			event->setText( "Redo " + undoRedoStack.getCurrentRedoCommand()->getName() );
 		}
 		else {
-			event->setText( "Nothing to Redo\tCtrl+Shift+Z" );
+			event->setText( "Nothing to Redo" );
 		}
 		event->setEnabled( hasRedoableCmds );
 	}
@@ -406,6 +405,21 @@ bool DocumentManager::saveDocument( Document* doc )
 	}
 
 	return result;
+}
+
+void DocumentManager::updateSave( ActionEvent* event, Document* doc )
+{
+	event->setEnabled( NULL != doc );
+}
+
+void DocumentManager::updateSaveAs( ActionEvent* event, Document* doc )
+{
+	event->setEnabled( NULL != doc );
+}
+
+void DocumentManager::updateClose( ActionEvent* event, Document* doc )
+{
+	event->setEnabled( NULL != doc );
 }
 
 DocumentManager* DocumentManager::getDocumentManager()
@@ -526,16 +540,25 @@ Enumerator<Document*>* DocumentManager::getOpenedDocuments()
 
 Document* DocumentManager::openFromFileName( const String& fileName )
 {
+	//throw an exception for invalid file names!!
 	if ( fileName.empty() ) {
-		return NULL;
+		throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name. For whatever reason a file name was passed in that was an empty string (\"\").") );
 	}
 
+	/**
+	Whoops! Someone alert Bozo The Clown, we've been passed a 
+	bogus file name!!!
+	*/
+	if ( !File::exists( fileName ) ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager: the file \"" + fileName + "\" does not exists." ) );
+	}
 
 	FilePath fp = fileName;
 	String mimetype = getMimeTypeFromFileExtension( fp );
 
 	Document* doc = NULL;
 	if ( !mimetype.empty() )  {
+		// provides a default document to 'host' the file, and its UI too if it should
 		doc = newDefaultDocument( mimetype );
 	}
 
@@ -551,7 +574,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 			closeCurrentDocument();
 			doc = NULL;
 
-			throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager failed to to open file.") );
+			throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager failed to open the file \" + fileName + \"" ) );
 		}
 	}
 	else {
@@ -579,12 +602,51 @@ void DocumentManager::addAction( ulong32 tag, Action* action )
 {
 	actionsMap_[tag] = action;
 	action->setTag( tag );
+
+	MenuManager::getMainMenu()->addComponent( action );
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.10  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.9  2005/06/02 15:56:03  marcelloptr
+*more documentation. Made some handlers virtual. Added some forgotten onUpdateXXX
+*
+*Revision 1.3.2.8  2005/04/09 17:20:35  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
+*Revision 1.3.2.7  2005/03/31 01:25:01  ddiego
+*fixed a string format glitch in doc mgr.
+*
+*Revision 1.3.2.6  2005/03/21 17:26:04  marcelloptr
+*openFromFileName now throws an exception sooner when trying to open a file that does not exist
+*
+*Revision 1.3.2.5  2005/03/15 01:51:49  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
+*Revision 1.3.2.4  2005/03/14 04:17:23  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
+*
+*Revision 1.3.2.3  2005/03/05 18:21:18  ddiego
+*fixed a bug that marcello found in the vcfbuilder that is actually a bug in the document manager (see bug 1157348).
+*
+*Revision 1.3.2.2  2005/03/02 19:41:10  marcelloptr
+*fixed crash when opening a non existing document
+*
+*Revision 1.3.2.1  2005/01/28 02:49:01  ddiego
+*fixed bug 1111096 where the text control was properly handlind
+*input from the numbpad keys.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

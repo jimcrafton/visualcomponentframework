@@ -25,15 +25,17 @@ DefaultTextModel::~DefaultTextModel()
 
 void DefaultTextModel::setText( const String& text )
 {
-	bool changed = ( text != text_ );
-	//text_ = text;	//this must stay commented
-	if ( true == changed ) {
-		text_ = text;
-		
-		TextEvent event( dynamic_cast<Object*>(this), text );
-		
-		TextModelChanged.fireEvent( &event );
+	if ( text == text_ ) {
+		//do nothing  - there's no reason to change the text 
+		//as it's equivalent! This also avoids unwanted recursions.
+		return;
 	}
+
+	text_ = text;
+
+	TextEvent event( this, TextModel::tmTextSet, text, 0, text.size() );
+
+	TextModelChanged.fireEvent( &event );
 }
 
 void DefaultTextModel::empty()
@@ -43,61 +45,87 @@ void DefaultTextModel::empty()
 	AbstractModel::empty();
 }
 
-void DefaultTextModel::insertText( const unsigned long& index, const String& text )
+void DefaultTextModel::insertText( const uint32& index, const String& text )
 {
-	String changeText = getText();
-	changeText.insert( index, text );
+	text_.insert( index, text );
 
-	DefaultTextModel::setText( changeText );
+	TextEvent event( this, TextModel::tmTextInserted, text, index, text.size() );
+
+	TextModelChanged.fireEvent( &event );
 }
 
-void DefaultTextModel::replaceText( const unsigned long& index, const unsigned long& len, const String& text )
+void DefaultTextModel::replaceText( const uint32& index, const uint32& count, const String& text )
 {
-	String changeText = getText();
-	unsigned long length, pos;
-	length = changeText.size();
-	pos = VCF::minVal< unsigned long > ( index+len, length );
-	length = VCF::maxVal< unsigned long > ( 0, length-pos );
-	String preText = changeText.substr( 0, index );
-	String postText = changeText.substr( pos, length );
-	changeText = preText + text + postText;
+	VCF_ASSERT( count > 0 );
+	VCF_ASSERT( (index+count) <= text_.size() );
 
-	DefaultTextModel::setText( changeText );
-}
 
-void DefaultTextModel::deleteText( const unsigned long& index, const unsigned long& count )
-{
-	String changeText = this->text_.substr( index, count );
+	//remove old text
+	String removedText = text_.substr( index, count );
 
+	// this relies on STL to be smart enough to delete only
+	// the count character that are part of the string
 	text_.erase( index, count );
 
-	TextEvent event( dynamic_cast<Object*>(this), changeText );
+	//insert new text
+	text_.insert( index, text );
 
-	TextModelChanged.fireEvent( &event );	
+	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
+							index, count );
+	TextModelChanged.fireEvent( &event );
 }
 
-void DefaultTextModel::appendText( const String& text )
+void DefaultTextModel::deleteText( const uint32& index, const uint32& count )
 {
-	String changeText = getText();
-	changeText.append( text );
+	String changeText = text_.substr( index, count );
 
-	DefaultTextModel::setText( changeText );
+	// this relies on STL to be smart enough to delete only
+	// the count character that are part of the string
+	text_.erase( index, count );
+
+	TextEvent event( this, TextModel::tmTextRemoved, changeText, index, count );
+
+	TextModelChanged.fireEvent( &event );
 }
+
 
 String DefaultTextModel::getText()
 {
-	return this->text_;
+	return text_;
 }
 
-unsigned long DefaultTextModel::getSize()
+String DefaultTextModel::getText( const uint32& index, const uint32& count )
 {
-	return this->text_.size();
+	return text_.substr( index, count );
+}
+
+uint32 DefaultTextModel::getSize()
+{
+	return text_.size();
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.7  2005/07/05 14:57:11  marcelloptr
+*minor change on an assertion in ReplaceText so it can replace all text
+*
+*Revision 1.3.2.6  2005/06/02 15:43:27  marcelloptr
+*more documentation
+*
+*Revision 1.3.2.4  2005/05/18 16:43:55  marcelloptr
+*minor comment
+*
+*Revision 1.3.2.2  2005/05/18 03:19:17  ddiego
+*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
+*
+*Revision 1.3.2.1  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

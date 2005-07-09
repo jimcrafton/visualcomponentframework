@@ -24,6 +24,7 @@ controls.
 class MyDialog : public Dialog {
 public:
 	MyDialog() {
+
 		setWidth( 350 );
 		setHeight( 150 );
 
@@ -294,10 +295,10 @@ public:
 		if ( dlg.execute() ) {
 			Color color = *dlg.getSelectedColor();
 
-			String hexName = StringUtils::format( "#%02X%02X%02X", 
-													(int)(color.getRed() * 255.0),
-													(int)(color.getGreen() * 255.0),
-													(int)(color.getBlue() * 255.0) );
+			String hexName = StringUtils::format( Format("#%02X%02X%02X") 
+												%	(int)(color.getRed() * 255.0)
+												%	(int)(color.getGreen() * 255.0)
+												%	(int)(color.getBlue() * 255.0) );
 
 			Dialog::showMessage( "You chose color (in hex) : " + hexName );
 		}

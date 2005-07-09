@@ -332,52 +332,52 @@ VCF::ulong32 Win32Utils::translateVKCode( UINT vkCode )
 		break;
 		//from WINUSER.h
 		/* VK_0 thru VK_9 are the same as ASCII '0' thru '9' (0x30 - 0x39) */
-		case 0x30 :{
+		case VK_NUMPAD0: case 0x30 :{
 			result = VCF::vkNumber0;
 		}
 		break;
 
-		case 0x31 :{
+		case VK_NUMPAD1: case 0x31 :{
 			result = VCF::vkNumber1;
 		}
 		break;
 
-		case 0x32 :{
+		case VK_NUMPAD2: case 0x32 :{
 			result = VCF::vkNumber2;
 		}
 		break;
 
-		case 0x33 :{
+		case VK_NUMPAD3: case 0x33 :{
 			result = VCF::vkNumber3;
 		}
 		break;
 
-		case 0x34 :{
+		case VK_NUMPAD4: case 0x34 :{
 			result = VCF::vkNumber4;
 		}
 		break;
 
-		case 0x35 :{
+		case VK_NUMPAD5: case 0x35 :{
 			result = VCF::vkNumber5;
 		}
 		break;
 
-		case 0x36 :{
+		case VK_NUMPAD6: case 0x36 :{
 			result = VCF::vkNumber6;
 		}
 		break;
 
-		case 0x37 :{
+		case VK_NUMPAD7: case 0x37 :{
 			result = VCF::vkNumber7;
 		}
 		break;
 
-		case 0x38 :{
+		case VK_NUMPAD8: case 0x38 :{
 			result = VCF::vkNumber8;
 		}
 		break;
 
-		case 0x39 :{
+		case VK_NUMPAD9: case 0x39 :{
 			result = VCF::vkNumber9;
 		}
 		break;
@@ -558,7 +558,7 @@ VCF::ulong32 Win32Utils::translateVKCode( UINT vkCode )
 		case VK_DIVIDE :{
 			result = VCF::vkDivideSign;
 		}
-		break;
+		break;		
 	}
 
 	return result;
@@ -606,6 +606,12 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:07  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/17 04:06:36  ddiego
+*fixed bug in handling wm_keydown event in win32edit
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -106,27 +106,27 @@ public:
 		MenuItem* root = menuBar->getRootMenuItem();
 		MenuItem* test = new DefaultMenuItem( "Test", root, menuBar );
 		MenuItem* menuItem = new DefaultMenuItem( "Remove Selected Item", test, menuBar );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::removeSelectedItem, "TreeListControlsWindow::removeSelectedItem" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::removeSelectedItem, "TreeListControlsWindow::removeSelectedItem" );
 
 
 		menuItem = new DefaultMenuItem( "Set Multi select", test, menuBar );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setMultiSelection, "TreeListControlsWindow::setMultiSelection" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setMultiSelection, "TreeListControlsWindow::setMultiSelection" );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection", test, menuBar );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelect, "TreeListControlsWindow::setFullRowSelect" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelect, "TreeListControlsWindow::setFullRowSelect" );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection Off", test, menuBar );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelectOff, "TreeListControlsWindow::setFullRowSelectOff" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelectOff, "TreeListControlsWindow::setFullRowSelectOff" );
 
 		menuItem = new DefaultMenuItem( "Change Caption", test, menuBar );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" );
 
 
 		ImageList* listIL = new ImageList();
@@ -165,8 +165,8 @@ public:
 		root = popup->getRootMenuItem();
 
 		menuItem = new DefaultMenuItem( "Enumerate Selected items", root, popup );
-		menuItem->addMenuItemClickedHandler(
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::enumerateSelectedItems, "TreeListControlsWindow::enumerateSelectedItems" ) );
+		menuItem->MenuItemClicked +=
+			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::enumerateSelectedItems, "TreeListControlsWindow::enumerateSelectedItems" );
 
 
 		ScrollbarManager* scrollbarManager = new ScrollbarManager();
@@ -212,13 +212,22 @@ public:
 
 		TreeItem* child = treeList->addItem( item, "foo 1a" );
 		child = treeList->addItem( item, "foo 1b" );
+		child->setTextBold( true );
 
-		child->addSubItem( "Sub item 1", NULL );
+		TreeItem::SubItem* subItm = new TreeItem::SubItem(item);
+		subItm->setCaption( "Sub item 1" );
+		//subItm->setTextBold( true );
+		child->addSubItem( "Sub item 2", NULL );
 
 		child = treeList->addItem( item, "foo 1c" );
 		child = treeList->addItem( item, "foo 1d" );
 		child = treeList->addItem( item, "foo 1e" );
 		child = treeList->addItem( item, "foo 1f" );
+		child->setTextColor( Color::getColor("red") );
+		subItm = new TreeItem::SubItem(item);
+		subItm->setCaption( "Sub item 3" );
+		//subItm->setTextColor( Color::getColor("magenta") );
+		child->addSubItem( "Sub item 2", NULL );
 		child = treeList->addItem( item, "foo 1g" );
 		child = treeList->addItem( item, "foo 1h" );
 		child = treeList->addItem( item, "foo 1i" );
@@ -351,9 +360,10 @@ public:
 	}
 
 	void onTreeItemState( ItemEvent* e ) {
+
 		TreeItem* item = (TreeItem*)e->getSource();
 		String s;
-		s = StringUtils::format( "State item: %s, state: %d", item->getCaption().c_str(), item->getState() );
+		s = Format( "State item: %s, state: %d" ) % item->getCaption().c_str() % item->getState();
 
 		if ( item->getState() == Item::idsChecked ) {
 			s += ", Item is Checked!";
@@ -404,6 +414,24 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/07/09 23:14:46  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.6.2.5  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.6.2.4  2005/04/17 15:12:05  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
+*Revision 1.6.2.3  2005/03/04 19:59:22  marcelloptr
+*minor improvement to the example
+*
+*Revision 1.6.2.2  2005/03/04 04:42:22  ddiego
+*fixed a bug in the tree list control that was not taking into account the tree item text color or text bold.
+*
+*Revision 1.6.2.1  2005/02/16 05:09:30  ddiego
+*bunch o bug fixes and enhancements to the property editor and treelist control.
+*
 *Revision 1.6  2004/12/01 04:15:36  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

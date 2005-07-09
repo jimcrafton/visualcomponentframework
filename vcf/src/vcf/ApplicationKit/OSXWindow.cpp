@@ -17,22 +17,22 @@ where you installed the VCF.
 
 class WndSwitchPort {
 public:
-    WndSwitchPort( WindowRef ptr ) :current(GetWindowPort(ptr)){
-        GetPort( &old );
-        if ( old != current ) {
-            //make switch
-            SetPort( current ) ;
-        }
-    }
+	WndSwitchPort( WindowRef ptr ) :current(GetWindowPort(ptr)){
+		GetPort( &old );
+		if ( old != current ) {
+			//make switch
+			SetPort( current ) ;
+		}
+	}
 
-    ~WndSwitchPort() {
-        if ( old != current ) {
-            //make switch
-            SetPort( old ) ;
-        }
-    }
+	~WndSwitchPort() {
+		if ( old != current ) {
+			//make switch
+			SetPort( old ) ;
+		}
+	}
 
-    operator GrafPtr () {
+	operator GrafPtr () {
 		return current;
 	}
 
@@ -40,10 +40,10 @@ public:
 
 
 private:
-    GrafPtr current;
-    GrafPtr old;
-    WndSwitchPort( const WndSwitchPort& rhs );
-    WndSwitchPort& operator=(const WndSwitchPort& rhs );
+	GrafPtr current;
+	GrafPtr old;
+	WndSwitchPort( const WndSwitchPort& rhs );
+	WndSwitchPort& operator=(const WndSwitchPort& rhs );
 };
 
 
@@ -58,10 +58,10 @@ namespace VCF {
 
 
 OSXWindow::OSXWindow():
-    windowRef_(0),
-    control_(NULL),
-    handlerRef_(NULL),
-    internalClose_(false),
+	windowRef_(0),
+	control_(NULL),
+	handlerRef_(NULL),
+	internalClose_(false),
 	mouseTrackRef_(NULL),
 	currentMouseBtn_(0),
 	contentViewHandlerRef_(NULL)
@@ -71,10 +71,10 @@ OSXWindow::OSXWindow():
 
 
 OSXWindow::OSXWindow( Control* control, Control* owner ):
-    windowRef_(0),
-    control_(control),
-    handlerRef_(NULL),
-    internalClose_(false),
+	windowRef_(0),
+	control_(control),
+	handlerRef_(NULL),
+	internalClose_(false),
 	mouseTrackRef_(NULL),
 	currentMouseBtn_(0),
 	contentViewHandlerRef_(NULL)
@@ -89,18 +89,18 @@ OSXWindow::~OSXWindow()
 
 EventHandlerUPP OSXWindow::getEventHandlerUPP()
 {
-    static EventHandlerUPP result = NULL;
-    if ( NULL == result ) {
-        result = NewEventHandlerUPP( OSXWindow::handleOSXEvents );
-    }
-    return result;
+	static EventHandlerUPP result = NULL;
+	if ( NULL == result ) {
+		result = NewEventHandlerUPP( OSXWindow::handleOSXEvents );
+	}
+	return result;
 }
 
 WindowAttributes OSXWindow::getCreationWinAttrs()
 {
 	return kWindowCloseBoxAttribute | kWindowFullZoomAttribute | kWindowCollapseBoxAttribute |
-              kWindowResizableAttribute | kWindowCloseBoxAttribute | kWindowCompositingAttribute |
-              kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute | kWindowInWindowMenuAttribute;
+			  kWindowResizableAttribute | kWindowCloseBoxAttribute | kWindowCompositingAttribute |
+			  kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute | kWindowInWindowMenuAttribute;
 }
 
 WindowClass OSXWindow::getCreationWinClass()
@@ -110,57 +110,57 @@ WindowClass OSXWindow::getCreationWinClass()
 
 void OSXWindow::create( Control* owningControl )
 {
-    WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
-    
-    ::Rect bounds = {0,0,0,0};
+	WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
+	
+	::Rect bounds = {0,0,0,0};
 
-    OSStatus err = CreateNewWindow( getCreationWinClass(), attrs, &bounds, &windowRef_ );
-    if ( noErr != err ) {
-        throw RuntimeException( MAKE_ERROR_MSG_2("CreateNewWindow() failed!") );
-    }
-    else {
+	OSStatus err = CreateNewWindow( getCreationWinClass(), attrs, &bounds, &windowRef_ );
+	if ( noErr != err ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("CreateNewWindow() failed!") );
+	}
+	else {
 		OSXWindow* thisPtr = this;
-        err = SetWindowProperty( windowRef_, 
+		err = SetWindowProperty( windowRef_, 
 								VCF_PROPERTY_CREATOR, 
 								VCF_PROPERTY_WINDOW_VAL, 
 								sizeof(OSXWindow*), 
 								&thisPtr );
 
 		if ( noErr != err ) {
-            throw RuntimeException( MAKE_ERROR_MSG_2("SetWindowProperty() failed!") );
-        }
+			throw RuntimeException( MAKE_ERROR_MSG_2("SetWindowProperty() failed!") );
+		}
 		
 		SetThemeWindowBackground( windowRef_, kThemeBrushSheetBackgroundTransparent, true );
-		
-        static EventTypeSpec eventsToHandle[] ={
-                            // { kEventClassWindow, kEventWindowGetIdealSize },
-                            { kEventClassCommand, kEventCommandProcess },
-                            //{ kEventClassCommand, kEventCommandUpdateStatus },
-                            { kEventClassWindow, kEventWindowClose },
-                            { kEventClassWindow, kEventWindowActivated },
-                            { kEventClassWindow, kEventWindowDeactivated },
-                            { kEventClassWindow, kEventWindowFocusAcquired },
-                            { kEventClassWindow, kEventWindowFocusRelinquish },
 
-                            { kEventClassWindow, kEventWindowDrawContent },
-                            { kEventClassMouse, kEventMouseDown },
-                            { kEventClassMouse, kEventMouseUp },
-                            { kEventClassMouse, kEventMouseMoved },
-                            { kEventClassMouse, kEventMouseDragged },
-                            { kEventClassMouse, kEventMouseEntered },
-                            { kEventClassMouse, kEventMouseExited },
-                            { kEventClassMouse, kEventMouseWheelMoved },
-                            { kEventClassKeyboard, kEventRawKeyDown },
-                            { kEventClassKeyboard, kEventRawKeyUp },
-                            { kEventClassWindow, kEventWindowBoundsChanged } };
+		static EventTypeSpec eventsToHandle[] ={
+		                    // { kEventClassWindow, kEventWindowGetIdealSize },
+		                    { kEventClassCommand, kEventCommandProcess },
+		                    //{ kEventClassCommand, kEventCommandUpdateStatus },
+		                    { kEventClassWindow, kEventWindowClose },
+		                    { kEventClassWindow, kEventWindowActivated },
+		                    { kEventClassWindow, kEventWindowDeactivated },
+		                    { kEventClassWindow, kEventWindowFocusAcquired },
+		                    { kEventClassWindow, kEventWindowFocusRelinquish },
+
+		                    { kEventClassWindow, kEventWindowDrawContent },
+		                    { kEventClassMouse, kEventMouseDown },
+		                    { kEventClassMouse, kEventMouseUp },
+		                    { kEventClassMouse, kEventMouseMoved },
+		                    { kEventClassMouse, kEventMouseDragged },
+		                    { kEventClassMouse, kEventMouseEntered },
+		                    { kEventClassMouse, kEventMouseExited },
+		                    { kEventClassMouse, kEventMouseWheelMoved },
+		                    { kEventClassKeyboard, kEventRawKeyDown },
+		                    { kEventClassKeyboard, kEventRawKeyUp },
+		                    { kEventClassWindow, kEventWindowBoundsChanged } };
 
 
-        InstallWindowEventHandler( windowRef_,
-                                    OSXWindow::getEventHandlerUPP(),
-                                    sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
-                                    eventsToHandle,
-                                    this,
-                                    &handlerRef_ );
+		    InstallWindowEventHandler( windowRef_,
+		                               OSXWindow::getEventHandlerUPP(),
+		                               sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
+		                               eventsToHandle,
+		                               this,
+		                               &handlerRef_ );
 		
 				
 		static EventTypeSpec contentViewEvents[] ={ { kEventClassControl, kEventControlDraw } };
@@ -173,21 +173,21 @@ void OSXWindow::create( Control* owningControl )
 							this, 
 							&contentViewHandlerRef_ );
 		
-        UIToolkit::postEvent( new GenericEventHandler<Control>( owningControl, &Control::handleEvent ),
+		UIToolkit::postEvent( new GenericEventHandler<Control>( owningControl, &Control::handleEvent ),
 						new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );		
-	   
-    }
+
+	}
 }
 
 void OSXWindow::destroyControl()
 {
-    //StringUtils::trace( "OSXWindow::destroyControl\n" );
+	//StringUtils::trace( "OSXWindow::destroyControl\n" );
 	//VCF::ComponentEvent event( control_, Component::COMPONENT_DELETED );
 
 	//control_->handleEvent( &event );
 
-    DisposeWindow( windowRef_ );
-    StringUtils::traceWithArgs( "windowRef_: %p, destroyed\n", windowRef_ );
+	DisposeWindow( windowRef_ );
+	StringUtils::traceWithArgs( Format("windowRef_: %p, destroyed\n") % windowRef_ );
 
 	//DisposeRgn( mouseTrackRgn_ );
 	ReleaseMouseTrackingRegion( mouseTrackRef_ );
@@ -197,29 +197,29 @@ void OSXWindow::destroyControl()
 
 String OSXWindow::getText()
 {
-    VCF::String result;
-    CFStringRef wndTitle;
-    CopyWindowTitleAsCFString( windowRef_, &wndTitle );
+	VCF::String result;
+	CFStringRef wndTitle;
+	CopyWindowTitleAsCFString( windowRef_, &wndTitle );
 
-    CFTextString text;
-    text = wndTitle;
-    result = text;
+	CFTextString text;
+	text = wndTitle;
+	result = text;
 
-    return result;
+	return result;
 }
 
 void OSXWindow::setText( const String& text )
 {
-    CFTextString wndTitle;
-    wndTitle = text;
-    SetWindowTitleWithCFString( windowRef_, wndTitle );
+	CFTextString wndTitle;
+	wndTitle = text;
+	SetWindowTitleWithCFString( windowRef_, wndTitle );
 }
 
 void OSXWindow::setBounds( Rect* rect )
 {
-    OSXRect r = rect;
+	OSXRect r = rect;
 
-    SetWindowBounds( windowRef_, kWindowStructureRgn, r );
+	SetWindowBounds( windowRef_, kWindowStructureRgn, r );
 	
 	if ( NULL != mouseTrackRef_ ) {
 		ReleaseMouseTrackingRegion( mouseTrackRef_ );
@@ -262,7 +262,7 @@ void OSXWindow::setBounds( Rect* rect )
 
 bool OSXWindow::beginSetBounds( const ulong32& numberOfChildren )
 {
-    return true;
+	return true;
 }
 
 void OSXWindow::endSetBounds()
@@ -272,21 +272,21 @@ void OSXWindow::endSetBounds()
 
 Rect OSXWindow::getBounds()
 {
-    OSXRect r;
-    GetWindowBounds( windowRef_, kWindowStructureRgn, r );
+	OSXRect r;
+	GetWindowBounds( windowRef_, kWindowStructureRgn, r );
 
-    VCF::Rect result = r;
+	VCF::Rect result = r;
 
-    return result;
+	return result;
 }
 
 void OSXWindow::setVisible( const bool& visible )
 {
-    if ( !visible ) {
-        HideWindow( windowRef_ );
-    }
-    else {
-        bool doResize = false;
+	if ( !visible ) {
+		HideWindow( windowRef_ );
+	}
+	else {
+		bool doResize = false;
 		if ( !IsWindowVisible( windowRef_ ) ) {
 			doResize = true;
 		}
@@ -297,22 +297,22 @@ void OSXWindow::setVisible( const bool& visible )
 			control_->getContainer()->resizeChildren( NULL );
 		}
 		repaint( NULL );
-    }
+	}
 }
 
 bool OSXWindow::getVisible()
 {
-    return IsWindowVisible( windowRef_ ) ? true : false;
+	return IsWindowVisible( windowRef_ ) ? true : false;
 }
 
 Control* OSXWindow::getControl()
 {
-    return control_;
+	return control_;
 }
 
 void OSXWindow::setControl( Control* control )
 {
-    control_ = control;
+	control_ = control;
 }
 
 void OSXWindow::setCursor( Cursor* cursor )
@@ -339,23 +339,23 @@ void OSXWindow::setParent( Control* parent )
 
 Control* OSXWindow::getParent()
 {
-    return NULL;
+	return NULL;
 }
 
 bool OSXWindow::isFocused()
 {
-    WindowRef wndRef = GetUserFocusWindow();
-    return (wndRef == windowRef_) ? true : false;
+	WindowRef wndRef = GetUserFocusWindow();
+	return (wndRef == windowRef_) ? true : false;
 }
 
 void OSXWindow::setFocused()
 {
-    SetUserFocusWindow( windowRef_ );
+	SetUserFocusWindow( windowRef_ );
 }
 
 bool OSXWindow::isEnabled()
 {
-    return IsWindowActive( windowRef_ ) ? true : false;
+	return IsWindowActive( windowRef_ ) ? true : false;
 }
 
 void OSXWindow::setEnabled( const bool& enabled )
@@ -370,17 +370,17 @@ void OSXWindow::setFont( Font* font )
 
 void OSXWindow::repaint( Rect* repaintRect )
 {
-    OSXRect r;
-    if ( NULL == repaintRect ) {
-        r = getClientBounds();
-    }
-    else {
-        r = repaintRect;
-    }
+	OSXRect r;
+	if ( NULL == repaintRect ) {
+		r = getClientBounds();
+	}
+	else {
+		r = repaintRect;
+	}
 
 	HIViewSetNeedsDisplay( getRootControl(), true );
 
-    //InvalWindowRect( windowRef_, r );
+	//InvalWindowRect( windowRef_, r );
 }
 
 void OSXWindow::keepMouseEvents()
@@ -404,8 +404,8 @@ void OSXWindow::translateToScreenCoords( Point* pt )
 	WndSwitchPort port(windowRef_);
 
 	::Point point;
-    point.h = pt->x_;
-    point.v = pt->y_;
+	point.h = pt->x_;
+	point.v = pt->y_;
 
 	LocalToGlobal( &point );
 
@@ -418,8 +418,8 @@ void OSXWindow::translateFromScreenCoords( Point* pt )
 	WndSwitchPort port(windowRef_);
 
 	::Point point;
-    point.h = pt->x_;
-    point.v = pt->y_;
+	point.h = pt->x_;
+	point.v = pt->y_;
 
 	GlobalToLocal( &point );
 
@@ -430,43 +430,43 @@ void OSXWindow::translateFromScreenCoords( Point* pt )
 
 Rect OSXWindow::getClientBounds()
 {
-    ::Rect r;
-    GetWindowBounds( windowRef_, kWindowContentRgn, &r );
+	::Rect r;
+	GetWindowBounds( windowRef_, kWindowContentRgn, &r );
 
-    WndSwitchPort port(windowRef_);
+	WndSwitchPort port(windowRef_);
 
-    ::Point pt;
-    pt.h = r.left;
-    pt.v = r.top;
+	::Point pt;
+	pt.h = r.left;
+	pt.v = r.top;
 
-    VCF::Rect result;
+	VCF::Rect result;
 
-    GlobalToLocal(&pt);
+	GlobalToLocal(&pt);
 
-    result.left_ = pt.h;
-    result.top_ = pt.v;
+	result.left_ = pt.h;
+	result.top_ = pt.v;
 
-    pt.h = r.right;
-    pt.v = r.bottom;
+	pt.h = r.right;
+	pt.v = r.bottom;
 
-    GlobalToLocal(&pt);
+	GlobalToLocal(&pt);
 
-    result.right_ = pt.h;
-    result.bottom_ = pt.v;
+	result.right_ = pt.h;
+	result.bottom_ = pt.v;
 
 
-    return result;
+	return result;
 }
 
 void  OSXWindow::setClientBounds( Rect* bounds )
 {
-    OSXRect r = bounds;
-    SetWindowBounds( windowRef_, kWindowContentRgn, r );
+	OSXRect r = bounds;
+	SetWindowBounds( windowRef_, kWindowContentRgn, r );
 }
 
 void OSXWindow::close()
 {
-    if ( !internalClose_ ){
+	if ( !internalClose_ ){
 		internalClose_ = true;
 		Application* app = Application::getRunningInstance();
 		if ( NULL != app ){
@@ -480,16 +480,16 @@ void OSXWindow::close()
 	EventRef closeWindowEvent = NULL;
 	
 	OSStatus err = CreateEvent( NULL,
-                                kEventClassWindow,
-                                kEventWindowClose,
-                                0,
-                                kEventAttributeUserEvent,
-                                &closeWindowEvent );
+	                          kEventClassWindow,
+	                          kEventWindowClose,
+	                          0,
+	                          kEventAttributeUserEvent,
+	                          &closeWindowEvent );
 	
 	err = SetEventParameter( closeWindowEvent, kEventParamDirectObject,
-							 typeWindowRef, sizeof(WindowRef), &windowRef_ );
+	                         typeWindowRef, sizeof(WindowRef), &windowRef_ );
 	//SendEventToEventTarget( closeWindowEvent, GetWindowEventTarget(parent) );	
-	//CFRelease( result );				
+	//CFRelease( result );
 	
 	PostEventToQueue( GetCurrentEventQueue(), closeWindowEvent, kEventPriorityStandard );
 }
@@ -506,27 +506,27 @@ void OSXWindow::setFrameTopmost( const bool& isTopmost )
 
 bool OSXWindow::isMaximized()
 {
-    return IsWindowInStandardState( windowRef_, NULL, NULL ) ? true : false;
+	return IsWindowInStandardState( windowRef_, NULL, NULL ) ? true : false;
 }
 
 void OSXWindow::setMaximized( const bool maximised )
 {
-    if ( maximised ) {
-        ZoomWindow( windowRef_, inZoomOut, true );
-    }
-    else {
-        ZoomWindow( windowRef_, inZoomIn, false );
-    }
+	if ( maximised ) {
+		ZoomWindow( windowRef_, inZoomOut, true );
+	}
+	else {
+		ZoomWindow( windowRef_, inZoomIn, false );
+	}
 }
 
 bool OSXWindow::isMinimized()
 {
-    return IsWindowCollapsed( windowRef_ ) ? true : false;
+	return IsWindowCollapsed( windowRef_ ) ? true : false;
 }
 
 void OSXWindow::setMinimized( const bool& minimized )
 {
-    CollapseWindow( windowRef_, minimized );
+	CollapseWindow( windowRef_, minimized );
 }
 
 void OSXWindow::restore()
@@ -541,33 +541,33 @@ void OSXWindow::setIconImage( Image* icon )
 
 OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef theEvent )
 {
-    OSStatus result = eventNotHandledErr;
-    
+	OSStatus result = eventNotHandledErr;
+	
 	Event* vcfEvent = NULL;
-    
+	
 
-    OSXEventMsg msg( theEvent, control_ );
-    //Event* vcfEvent = UIToolkit::createEventFromNativeOSEventData( &msg );
+	OSXEventMsg msg( theEvent, control_ );
+	//Event* vcfEvent = UIToolkit::createEventFromNativeOSEventData( &msg );
 
-    UInt32 whatHappened = GetEventKind (theEvent);
-    UInt32 attributes = 0;   
+	UInt32 whatHappened = GetEventKind (theEvent);
+	UInt32 attributes = 0;   
 	
 	if ( GetEventClass( theEvent ) !=  kEventClassMouse ) {
 		OSXEventMsg msg( theEvent, control_ );
 		vcfEvent = UIToolkit::createEventFromNativeOSEventData( &msg );
 	}
-    
-	                        
-    switch ( GetEventClass( theEvent ) )  {				
+
+
+	switch ( GetEventClass( theEvent ) ) {
 		case kEventClassMouse : {
 			::Point mousePos;
-            GetEventParameter( theEvent, kEventParamMouseLocation, typeQDPoint, NULL,
-                                sizeof (mousePos), NULL, &mousePos);
+			GetEventParameter( theEvent, kEventParamMouseLocation, typeQDPoint, NULL,
+			                   sizeof (mousePos), NULL, &mousePos);
 			VCF::Point pt( mousePos.h , 
 						   mousePos.v );
-						   					
+
 			switch( whatHappened ) {
-                case kEventMouseMoved : {
+				case kEventMouseMoved : {
 					
 					result = CallNextEventHandler( nextHandler, theEvent );
 					
@@ -661,55 +661,55 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 		break;
 		
 
-        case kEventClassWindow : {
-            switch( whatHappened ) {
-                case kEventWindowClose : {
+		case kEventClassWindow : {
+			switch( whatHappened ) {
+				case kEventWindowClose : {
 
-                    result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
+					result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
 
-                    VCF::Window* window = (VCF::Window*)getControl();
+					VCF::Window* window = (VCF::Window*)getControl();
 
-                    if ( window->allowClose() ) {
+					if ( window->allowClose() ) {
 
-                        VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
+						VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
 
 
-                        window->FrameClose.fireEvent( &event );
+						window->FrameClose.fireEvent( &event );
 
-                        if ( false == internalClose_ ){
-                            //check if the main window is clossing - if it is
-                            //then close the app !
+						if ( false == internalClose_ ){
+							//check if the main window is clossing - if it is
+							//then close the app !
 
-                            Application* app = Application::getRunningInstance();
-                            if ( NULL != app ){
-                                Window* mainWindow = app->getMainWindow();
-                                if ( mainWindow == getControl() ){
-                                    //::PostMessage( hwnd_, WM_QUIT, 0, 0 );
-                                }
-                            }
-                        }
+							Application* app = Application::getRunningInstance();
+							if ( NULL != app ){
+								Window* mainWindow = app->getMainWindow();
+								if ( mainWindow == getControl() ){
+									//::PostMessage( hwnd_, WM_QUIT, 0, 0 );
+								}
+							}
+						}
 
 						result = ::CallNextEventHandler( nextHandler, theEvent );
 
-                    }
+					}
 					else {
 						result = noErr;
 					}
-                }
-                break;
+				}
+				break;
 
-                case kEventWindowDrawContent: {
+				case kEventWindowDrawContent: {
 					result = ::CallNextEventHandler( nextHandler, theEvent );
 
 					//handleDraw( true, theEvent );
-                }
+				}
 				break;
 
 
 				case kEventWindowDeactivated: case kEventWindowActivated: {
 					result = CallNextEventHandler( nextHandler, theEvent );
 
-                    if ( !control_->isDestroying() ) {
+					if ( !control_->isDestroying() ) {
 						//handleDraw( false, theEvent );
 
 						if ( NULL != vcfEvent ) {
@@ -723,7 +723,7 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 				}
 				break;
 
-                case kEventWindowBoundsChanged: {
+				case kEventWindowBoundsChanged: {
 
 					if ( !control_->isDestroying() ) {
 
@@ -749,47 +749,47 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 					else {
 						result = ::CallNextEventHandler( nextHandler, theEvent );
 					}
-                }
-                break;
+				}
+				break;
 
-                default : {
-                    result = CallNextEventHandler( nextHandler, theEvent );
+				default : {
+					result = CallNextEventHandler( nextHandler, theEvent );
 
-                    if ( !control_->isDestroying() ) {
+					if ( !control_->isDestroying() ) {
 						if ( NULL != vcfEvent ) {
 							control_->handleEvent( vcfEvent );
 						}
 					}
-                }
-                break;
-            }
-        }
-        break;
+				}
+				break;
+			}
+		}
+		break;
 
-        default : {
-            result = CallNextEventHandler( nextHandler, theEvent );
-            if ( !control_->isDestroying() ) {
+		default : {
+			result = CallNextEventHandler( nextHandler, theEvent );
+			if ( !control_->isDestroying() ) {
 				if ( NULL != vcfEvent ) {
 					control_->handleEvent( vcfEvent );
 				}
-            }
-        }
-        break;
-    }
+			}
+		}
+		break;
+	}
 
-    if ( NULL != vcfEvent ) {
-        delete vcfEvent;
-    }
+	if ( NULL != vcfEvent ) {
+		delete vcfEvent;
+	}
 
-    return result;
+	return result;
 }
 
 
 OSStatus OSXWindow::handleOSXEvents( EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
 {
-    OSXWindow* window = (OSXWindow*)userData;
+	OSXWindow* window = (OSXWindow*)userData;
 
-    return window->handleOSXEvent( nextHandler, theEvent );
+	return window->handleOSXEvent( nextHandler, theEvent );
 }
 
 bool OSXWindow::isComposited()
@@ -1034,6 +1034,18 @@ void OSXWindow::copyControlsFromWndRef( WindowRef oldWndRef )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.2  2005/06/29 05:15:41  marcelloptr
+*fixed some white spaces
+*
+*Revision 1.3.2.1  2005/03/15 01:51:50  ddiego
+*added support for Format class to take the place of the
+*previously used var arg funtions in string utils and system. Also replaced
+*existing code in the framework that made use of the old style var arg
+*functions.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

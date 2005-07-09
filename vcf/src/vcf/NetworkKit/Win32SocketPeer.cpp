@@ -321,7 +321,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 		char* totalDataBuf = NULL;
 		int totalSize = VCFNET_MAX_SOCKET_SIZE;
 		std::vector<MemStruct*> dataList;
-		memset( buf, 0 , VCFNET_MAX_SOCKET_SIZE );
+		memset( buf, 0 , VCFNET_MAX_SOCKET_SIZE*sizeof(char) );
 
 		//read first chunk of data
 		int recvResult = recv( clientSock, buf, VCFNET_MAX_SOCKET_SIZE, 0 );
@@ -357,7 +357,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 				// NK: First add data received so far into dataList.
 				MemStruct* memStruct = new MemStruct;
 				memStruct->data = new char[recvResult];
-				memset( memStruct->data, 0, recvResult );
+				memset( memStruct->data, 0, recvResult*sizeof(char) );
 				memStruct->size = recvResult;
 				memcpy(memStruct->data, buf, recvResult );
 				dataList.push_back( memStruct );
@@ -371,7 +371,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 					while ( res > 0 ){ //continue to pull data
 						MemStruct* memStruct = new MemStruct;
 						memStruct->data = new char[res];
-						memset( memStruct->data, 0, res );
+						memset( memStruct->data, 0, res*sizeof(char) );
 						memStruct->size = res;
 						recvResult = recv( clientSock, memStruct->data, res, 0 );
 						if ( recvResult != SOCKET_ERROR ){
@@ -387,7 +387,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 
 				if ( ! dataList.empty() ){
 					totalDataBuf = new char[totalSize];
-					memset( totalDataBuf, 0, totalSize );
+					memset( totalDataBuf, 0, totalSize*sizeof(char) );
 					char* tmpBuf = totalDataBuf;
 					int insertData = 0;
 					std::vector<MemStruct*>::iterator dataIt = dataList.begin();
@@ -507,6 +507,12 @@ int Win32SocketPeer::getSocketPeerID()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:17  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/04/09 17:21:40  marcelloptr
+*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
+*
 *Revision 1.2  2004/08/07 02:49:19  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -17,7 +17,7 @@ namespace VCF {
 class OSXWindow : public Object, public ControlPeer, public WindowPeer {
 public:
 
-        enum WindowState{
+	enum WindowState{
 		wsNone = 0,
 		wsMaximized,
 		wsMinimized,
@@ -38,27 +38,27 @@ public:
 
 	virtual void destroyControl();
 
-    virtual String getText();
+	virtual String getText();
 
-    virtual void setText( const String& text );
+	virtual void setText( const String& text );
 
-    virtual void setBounds( Rect* rect );
+	virtual void setBounds( Rect* rect );
 
 	virtual bool beginSetBounds( const ulong32& numberOfChildren );
 
 	virtual void endSetBounds();
 
-    virtual Rect getBounds();
+	virtual Rect getBounds();
 
-    virtual void setVisible( const bool& visible );
+	virtual void setVisible( const bool& visible );
 
-    virtual bool getVisible();
+	virtual bool getVisible();
 
-    virtual Control* getControl();
+	virtual Control* getControl();
 
-    virtual void setControl( Control* component );
+	virtual void setControl( Control* component );
 
-    virtual void setCursor( Cursor* cursor );
+	virtual void setCursor( Cursor* cursor );
 
 	virtual void setParent( Control* parent );
 
@@ -95,7 +95,7 @@ public:
 	}
 
 
-    //Window peer methods
+	//Window peer methods
 	virtual Rect getClientBounds();
 
 	virtual void  setClientBounds( Rect* bounds );
@@ -120,7 +120,7 @@ public:
 	
 	virtual bool isActiveWindow();
 
-    virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
+	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 
 	bool isComposited();
 	
@@ -141,7 +141,7 @@ protected:
 	WindowRef windowRef_;
 	Control* control_;
 	Rect bounds_;
-    EventHandlerRef handlerRef_;
+	EventHandlerRef handlerRef_;
 	EventHandlerRef contentViewHandlerRef_;	
 	//RgnHandle mouseTrackRgn_;
 	MouseTrackingRef mouseTrackRef_;	
@@ -150,7 +150,7 @@ protected:
 
 	RgnHandle determineUnobscuredClientRgn();
 	
-    static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 	
    	Control* getControlForMouseEvent( EventRef event );
 	
@@ -168,8 +168,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*
+*Revision 1.3.2.2  2005/06/29 05:15:41  marcelloptr
+*fixed some white spaces
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job

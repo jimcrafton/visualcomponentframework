@@ -12,6 +12,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ListBoxControl.h"
 #include "vcf/ApplicationKit/DefaultListModel.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
+
 
 using namespace VCF;
 
@@ -25,7 +27,10 @@ ListBoxControl::ListBoxControl():
 	currentMaxHeight_(0),
 	leftGutter_(2),
 	rightGutter_(2),
-	textBounded_(false)
+	textBounded_(false),
+	imageList_(NULL),
+	stateImageList_(NULL),
+	stateItemIndent_(19)
 {
 	setListModel( new DefaultListModel() );
 
@@ -39,7 +44,10 @@ ListBoxControl::ListBoxControl( ListModel* listModel ):
 	currentMaxHeight_(0),
 	leftGutter_(2),
 	rightGutter_(2),
-	textBounded_(false)
+	textBounded_(false),
+	imageList_(NULL),
+	stateImageList_(NULL),
+	stateItemIndent_(19)
 {
 	setListModel( listModel );
 	init();
@@ -55,7 +63,11 @@ void ListBoxControl::init()
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
-	defaultItemHeight_ = getContext()->getTextHeight( "EM" ) + 4;
+	GraphicsContext* context = getContext();
+	Font* font = context->getCurrentFont();
+	UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
+	defaultItemHeight_ = mgr->getDefaultHeightFor( UIMetricsManager::htListItemHeight );//context->getTextHeight("EM") ); //font->getPixelSize() );
+	//defaultItemHeight_ = getContext()->getTextHeight( "EM" ) + 4;
 
 	EventHandler* lmh =
 		new ListModelEventHandler<ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
@@ -75,6 +87,8 @@ void ListBoxControl::init()
 	selectedItemsContainer_.initContainer( selectedItems_ );
 
 	setUseColorForBackground( true );
+
+
 }
 
 ListBoxControl::~ListBoxControl()
@@ -191,7 +205,13 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 	currentMaxHeight_ += item->getBounds()->getHeight();
 
-	currentMaxWidth_ = maxVal<double>( ctx->getTextWidth( item->getCaption() ) + leftGutter_ + rightGutter_, currentMaxWidth_ ); 
+	double imageWidth = 0.0;
+
+	if ( NULL != imageList_ ) {
+		imageWidth += imageList_->getImageWidth();
+	}
+
+	currentMaxWidth_ = maxVal<double>( ctx->getTextWidth( item->getCaption() ) + leftGutter_ + rightGutter_ + imageWidth, currentMaxWidth_ ); 
 
 	if ( NULL != scrollable ) {
 		if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
@@ -276,6 +296,163 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 	}
 }
 
+
+Rect ListBoxControl::getStateRect( ListItem* item )
+{
+	Rect result;
+
+	if ( item->getState() != Item::idsNone ) {
+		Rect* itemBounds = item->getBounds();
+
+		result = *itemBounds;
+
+		result.left_ += leftGutter_;
+		if ( NULL != stateImageList_ ) {
+			result.right_ = result.left_ + stateImageList_->getImageWidth();
+			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - stateImageList_->getImageHeight()/2.0);
+			result.bottom_ = result.top_ + stateImageList_->getImageHeight();
+		}
+		else {
+			result.right_ = result.left_ + stateItemIndent_;
+			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - (minVal<double>(stateItemIndent_,defaultItemHeight_)/2.0));
+			result.bottom_ = result.top_ + (minVal<double>(stateItemIndent_,defaultItemHeight_));
+		}
+
+		if ( NULL != imageList_ ) {
+			if ( NULL != stateImageList_ ) {
+				result.offset( (maxVal<double>( imageList_->getImageWidth(), stateImageList_->getImageWidth() )), 0 );
+			}
+			else {
+				result.offset( (maxVal<double>( imageList_->getImageWidth(), stateItemIndent_ )), 0 );
+			}
+		}
+		else {
+			if ( NULL != stateImageList_ ) {
+				result.offset( (maxVal<double>( stateItemIndent_, stateImageList_->getImageWidth() )), 0 );
+			}
+			else {
+				//result.offset( -stateItemIndent_, 0 );
+			}
+		}
+
+	}
+	return result;
+}
+
+void ListBoxControl::paintItemState( GraphicsContext* ctx, Rect& itemRect, ListItem* item )
+{
+	Rect stateRect = getStateRect( item );
+
+	stateRect.inflate( -1, -1 );
+
+	if ( NULL != stateImageList_ ) {
+		itemRect.left_ = stateRect.right_;
+		stateImageList_->draw( ctx, item->getStateImageIndex(), &stateRect );
+	}
+	else {		
+		stateRect.inflate( -1, -1 );
+		
+		itemRect.left_ = stateRect.right_;
+
+		long state = item->getState();
+
+		ButtonState buttonState;
+		buttonState.setActive( true );
+
+		if ( (state & Item::idsChecked) || 
+				(state & Item::idsUnChecked) ) {
+
+			buttonState.setPressed( state == Item::idsChecked ? true : false );
+			ctx->drawThemeCheckboxRect( &stateRect, buttonState );
+		}
+		else if ( (state & Item::idsRadioPressed) || 
+				(state & Item::idsRadioUnpressed) ) {
+
+			buttonState.setPressed( state == Item::idsRadioPressed ? true : false );
+			ctx->drawThemeRadioButtonRect( &stateRect, buttonState );
+		}		
+	}
+}
+
+void ListBoxControl::paintItemImage( GraphicsContext* ctx, Rect& itemRect, ListItem* item )
+{
+	Rect imageRect;
+	imageRect.left_ += leftGutter_;
+	imageRect.right_ = imageRect.left_ + imageList_->getImageWidth();
+
+	ulong32 index = item->getImageIndex();	
+
+	imageRect.top_ = itemRect.top_ + (itemRect.getHeight()/2.0 - imageList_->getImageHeight()/2.0);
+	imageRect.bottom_ = imageRect.top_ + imageList_->getImageHeight();
+	
+	if ( !imageRect.isEmpty() ) {
+
+		imageRect.inflate( -1, -1 );
+
+		itemRect.left_ = imageRect.right_;
+
+		imageList_->draw( ctx, index, &imageRect );
+	}
+}
+
+void ListBoxControl::paintItem( GraphicsContext* ctx, Rect& itemRect, 
+							   double currentTop, Color* selectedTextColor, 
+							   const Rect& bounds, double scrollWidth, double offsetX,
+							   ListItem* item )
+{
+	double y = currentTop + ( (itemRect.getHeight()/2.0) - (ctx->getTextHeight( "EM" )/2.0) );
+	if ( item->isSelected() ) {
+		paintSelectionRect( ctx, &Rect(bounds.left_-leftGutter_, itemRect.top_, itemRect.right_, itemRect.bottom_), item );
+		ctx->getCurrentFont()->setColor( selectedTextColor );
+	}
+	else {
+		ctx->getCurrentFont()->setColor( getFont()->getColor() );
+	}
+	
+	
+	Rect tmp = itemRect;
+
+	bool stateNeedsDrawing = false;
+	bool imageNeedsDrawing = false;
+
+	if ( NULL != imageList_ ) {
+		imageNeedsDrawing = true;
+	}
+
+	if ( Item::idsNone != item->getState() ) {
+		stateNeedsDrawing = true;
+	}
+
+	itemRect.setLeft( bounds.left_ );
+
+	if ( imageNeedsDrawing ) {
+		paintItemImage( ctx, itemRect, item );
+	}
+
+	if ( stateNeedsDrawing ) {
+		paintItemState( ctx, itemRect, item );
+	}	
+
+	String itemText = item->getCaption();
+	if ( getUseLocaleStrings() ) {
+		itemText = System::getCurrentThreadLocale()->translate( itemText );
+	}
+	
+	if( textBounded_ ){
+		Rect itemPaintRect;
+		itemPaintRect.setRect(itemRect.left_ + leftGutter_, currentTop, offsetX + bounds.getWidth() - scrollWidth - leftGutter_, currentTop + defaultItemHeight_ );
+		ctx->textBoundedBy( &itemPaintRect, itemText, false );
+	}
+	else{
+		ctx->textAt( itemRect.left_ + leftGutter_, y, itemText );
+	}
+	
+
+	if ( item->canPaint() ) {
+		item->paint( ctx, &tmp );
+	}
+}
+
 void ListBoxControl::paint( GraphicsContext* ctx )
 {
 	CustomControl::paint( ctx );
@@ -309,7 +486,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 
 
 		Color oldFontColor;
-			oldFontColor = *getFont()->getColor();
+		oldFontColor = *getFont()->getColor();
 
 
 
@@ -323,37 +500,11 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 
 			if ( ((itemRect.top_ <= viewBounds.bottom_ ) && (itemRect.bottom_ >= viewBounds.top_ )) ||
 					(itemRect.containsPt( &viewBounds.getTopLeft()) || (itemRect.containsPt( &viewBounds.getBottomRight() )) ) ) {
-				totalHeight += itemRect.getHeight();
+				totalHeight += itemRect.getHeight();			
 
-				double y = currentTop + ( (itemRect.getHeight()/2.0) - (ctx->getTextHeight( "EM" )/2.0) );
-
-				if ( true == item->isSelected() ) {
-					paintSelectionRect( ctx, &Rect(itemRect.left_-leftGutter_, itemRect.top_, itemRect.right_, itemRect.bottom_), item );
-					ctx->getCurrentFont()->setColor( selectedTextColor );
-					//ctx->setColor( selectedTextColor );
-				}
-				else {
-					ctx->getCurrentFont()->setColor( &oldFontColor );
-					//ctx->setColor( &oldFontColor );
-				}
+				paintItem( ctx, itemRect, currentTop, selectedTextColor, 
+							bounds, scrollW, offsetx, item );
 				
-
-				String itemText = item->getCaption();
-				if ( getUseLocaleStrings() ) {
-					itemText = System::getCurrentThreadLocale()->translate( itemText );
-				}
-
-				if( textBounded_ ){
-					itemPaintRect.setRect(bounds.left_ + leftGutter_, currentTop, offsetx + width - scrollW - leftGutter_, currentTop + defaultItemHeight_ );
-					ctx->textBoundedBy( &itemPaintRect, itemText, false );
-				}
-				else{
-					ctx->textAt( bounds.left_ + leftGutter_, y, itemText );
-				}
-				
-				if ( true == item->canPaint() ) {
-					item->paint( ctx, &itemRect );
-				}
 			}
 
 			currentTop += itemRect.getHeight();
@@ -400,6 +551,17 @@ ListItem* ListBoxControl::findSingleSelectedItem( Point* pt )
 	return result;
 }
 
+bool ListBoxControl::stateHitTest( Point* point, ListItem* item )
+{
+	bool result = false;
+
+	Rect stateRect = getStateRect( item );
+
+	result = stateRect.containsPt( point );
+
+	return result;
+}
+
 void ListBoxControl::mouseDown( MouseEvent* event )
 {
 	CustomControl::mouseDown( event );
@@ -407,7 +569,35 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 		keepMouseEvents();
 
 		ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
-		if ( NULL != foundItem ) {			
+		if ( NULL != foundItem ) {
+			//check state hit test first!
+			if ( foundItem->getState() != Item::idsNone ) {
+				if ( stateHitTest( event->getPoint(), foundItem ) ) {
+					long state = foundItem->getState();
+					if ( Item::idsChecked == state ) {
+						state = Item::idsUnChecked;
+					}
+					else if ( Item::idsUnChecked == state ) {
+						state = Item::idsChecked;
+					}
+					else if ( Item::idsRadioUnpressed == state ) {
+						state = Item::idsRadioPressed;
+					}
+					else if ( Item::idsRadioPressed == state ) {
+						state = Item::idsRadioUnpressed;
+					}
+					foundItem->setState( state );
+
+					ItemEvent event( foundItem, ListBoxControl::lbeItemStateChangeRequested );
+					ItemStateChangeRequested.fireEvent( &event );
+
+					repaint();
+
+					return;
+				}
+			}
+
+
 			if ( true == allowsMultiSelect_ && true == allowsExtendedSelect_ ) {
 				if( event->hasShiftKey() ){
 					if( foundItem == singleSelectedItem_ ){
@@ -456,10 +646,16 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 					}
 				}
 				else{
-					for( ulong32 j=0;j<selectedItems_.size();j++ ){
-						selectedItems_[j]->setSelected(false);
-					}
-					selectedItems_.clear();
+
+					if( !(selectedItems_.empty()) ) {
+
+						for( ulong32 j=0;j<selectedItems_.size();j++ ){
+							selectedItems_[j]->setSelected(false);
+						}
+
+						selectedItems_.clear();
+					}					
+					
 					selectedItems_.push_back(foundItem);
 					foundItem->setSelected( true );
 					singleSelectedItem_ = foundItem;
@@ -500,7 +696,7 @@ void ListBoxControl::mouseMove( MouseEvent* event )
 					singleSelectedItem_ = foundItem; 
 				}
 				else {
-					selectedItems_.push_back( foundItem );
+					//selectedItems_.push_back( foundItem );
 					setSelectedItem( foundItem );
 				}
 			}
@@ -508,13 +704,13 @@ void ListBoxControl::mouseMove( MouseEvent* event )
 				if ( foundItem != singleSelectedItem_ )  {	   
 					//JC - Integrated change by Berkano (Thanks Brian!) - fixes bug [1015368] ListBoxControl Mousemove error 
 					if(!selectedItems_.empty()) {
-					selectedItems_[0] = foundItem;//assumes index 0 exists
+					// selectedItems_[0] = foundItem;//assumes index 0 exists
 					setSelectedItem( foundItem );
+					}
 				}
 			}
 		}
 	}
-}
 }
 
 void ListBoxControl::mouseUp( MouseEvent* event )
@@ -599,14 +795,27 @@ void ListBoxControl::selectionChanged( ListItem* item )
 
 void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 {
-	if ( NULL != singleSelectedItem_ && true != allowsMultiSelect_ ) {
-		singleSelectedItem_->setSelected( false );
+	if ( true != allowsMultiSelect_ ) {
+
+		if( NULL != singleSelectedItem_ ) singleSelectedItem_->setSelected( false );		
+		
+		if( !(selectedItems_.empty()) ) {
+
+			for( ulong32 j=0;j<selectedItems_.size();j++ ){
+				selectedItems_[j]->setSelected(false);
+			}
+
+			selectedItems_.clear();
+		}
 	}
+	
 	singleSelectedItem_ = selectedItem;
 	if ( NULL != singleSelectedItem_ ) {
-		singleSelectedItem_->setSelected( true );
-
-		selectionChanged( singleSelectedItem_ );
+		if( !(selectedItem->isSelected()) ) { //If already selected, it is already in selectedItems_!!			
+			singleSelectedItem_->setSelected( true );			
+			selectedItems_.push_back( selectedItem );//should try to find it find it first, but!			
+			selectionChanged( singleSelectedItem_ );
+		}
 	}
 
 	repaint();
@@ -656,23 +865,62 @@ void ListBoxControl::setTextBounded( const bool& istextbounded ){
 	textBounded_ = istextbounded;
 }
 
+void ListBoxControl::setScrollable( Scrollable* scrollable )
+{
+	Control ::setScrollable( scrollable );
+
+	scrollable_->setVirtualViewVertStep( getDefaultItemHeight() );
+	scrollable_->setDiscreteScroll( false, true );
+}
+
+void ListBoxControl::setImageList( ImageList* imageList )
+{
+	imageList_ = imageList;
+	repaint();
+}
+
+void ListBoxControl::setStateImageList( ImageList* stateImageList )
+{
+	stateImageList_ = stateImageList;
+	repaint();
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.5.2.7  2005/06/16 20:13:02  dougtinkham
+*fixed horizontal scrolling
+*
+*Revision 1.5.2.6  2005/03/21 05:08:31  dougtinkham
+*fixed selection/deselection bug.
+*
+*Revision 1.5.2.5  2005/03/21 00:41:59  dougtinkham
+*more fixes to selection through code.
+*
+*Revision 1.5.2.4  2005/03/20 20:46:32  dougtinkham
+*fixed to allow selection through code to work properly. BugFix 1166682 by glen_f.
+*
+*Revision 1.5.2.3  2005/03/20 04:29:21  ddiego
+*added ability to set image lists for list box control.
+*
+*Revision 1.5.2.2  2005/03/10 00:27:47  marcelloptr
+*set discrete scrolling as default behaviour for ListBoxControls
+*
 *Revision 1.5  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
 *that he found. Many, many thanks for this Marcello.
 *
-
 *Revision 1.4  2004/08/20 23:59:16  ddiego
 *minor fix to listboxcontrol
 *
 *Revision 1.3  2004/08/19 02:24:54  ddiego
 *fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 *
-
 *Revision 1.2.2.8  2004/09/21 23:41:23  ddiego
 *made some big changes to how the base list, tree, text, table, and tab models are laid out. They are not just plain interfaces. The actual
 *concrete implementations of them now derive from BOTH Model and the specific
@@ -706,7 +954,6 @@ void ListBoxControl::setTextBounded( const bool& istextbounded ){
 *Revision 1.3  2004/08/19 02:24:54  ddiego
 *fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 *
-
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

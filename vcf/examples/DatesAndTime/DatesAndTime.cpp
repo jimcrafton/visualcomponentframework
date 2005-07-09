@@ -32,7 +32,7 @@ int main( int argc, char** argv ){
 	Output the date time instance using the Object::toString method
 	*/
     String timeStr = currentTime.toString();
-	System::println( "currentTime: %ls", timeStr.c_str() );
+	System::println( Format("currentTime: %ls") % timeStr.c_str() );
 
 
 	/**
@@ -44,21 +44,21 @@ int main( int argc, char** argv ){
 	/**
 	Output the date time instance using the StringUtils::format() method
 	*/
-	System::println( "currentTime from StringUtils::format():\n\t%ls",
-					StringUtils::format( currentTime, "Day %#j in the year %Y, week %#U, %A day %#d of %B month %#m" ).c_str() );
+	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
+					% StringUtils::format( currentTime, "Day %#j in the year %Y, week %#U, %A day %#d of %B month %#m" ).c_str() );
 
 	/**
 	Output the time portion of the date time instance using the StringUtils::format() method
 	*/
-	System::println( "currentTime from StringUtils::format():\n\t%ls",
-					StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
+	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
+					% StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
 	/**
 	Modify the time, hours, minutes and seconds
 	*/
 	currentTime.setTime( 9, 45, 12 );
-	System::println( "currentTime from StringUtils::format():\n\t%ls",
-					StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
+	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
+					% StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
 
 	/**
@@ -66,8 +66,8 @@ int main( int argc, char** argv ){
 	*/
 	currentTime.set( 1982, 5, 21, 18, 23, 10, 456 );
 
-	System::println( "currentTime from StringUtils::format():\n\t%ls",
-					StringUtils::format( currentTime, "%Y/%m/%d-%H:%M:%S.%s" ).c_str() );
+	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
+					% StringUtils::format( currentTime, "%Y/%m/%d-%H:%M:%S.%s" ).c_str() );
 
 
 	/**
@@ -77,14 +77,14 @@ int main( int argc, char** argv ){
 		currentTime.setDate( 2003, 45, 12 );
 	}
 	catch ( std::exception& e ) {
-		System::println( "Setting the date/time failed due to : %s", e.what() );
+		System::println( Format("Setting the date/time failed due to : %s") % e.what() );
 	}
 
 	try {
 		currentTime.setTime( 2003, 45, 12 );
 	}
 	catch ( std::exception& e ) {
-		System::println( "Setting the date/time failed due to : %s", e.what() );
+		System::println( Format("Setting the date/time failed due to : %s") % e.what() );
 	}
 
 	DateTime dt1(2003,12,23);
@@ -95,8 +95,8 @@ int main( int argc, char** argv ){
 	*/
 
 	if ( dt1 == dt2 ) {
-		System::println( "Date {%ls} equals date {%ls}",
-							dt1.toString().c_str(), dt2.toString().c_str() );
+		System::println( Format("Date {%ls} equals date {%ls}")
+						% dt1.toString().c_str() % dt2.toString().c_str() );
 	}
 
 	/**
@@ -105,8 +105,8 @@ int main( int argc, char** argv ){
 	dt2.incrHour( 10 );
 
 	if ( dt1 < dt2 ) {
-		System::println( "Date {%ls} is earlier than date {%ls}",
-							dt1.toString().c_str(), dt2.toString().c_str() );
+		System::println( Format("Date {%ls} is earlier than date {%ls}")
+						% dt1.toString().c_str() % dt2.toString().c_str() );
 	}
 
 	/**
@@ -115,8 +115,8 @@ int main( int argc, char** argv ){
 	dt2.decrYear( 10 );
 
 	if ( dt1 > dt2 ) {
-		System::println( "Date {%ls} is after than date {%ls}",
-							dt1.toString().c_str(), dt2.toString().c_str() );
+		System::println( Format("Date {%ls} is later than date {%ls}")
+						% dt1.toString().c_str() % dt2.toString().c_str() );
 	}
 
 
@@ -135,13 +135,13 @@ int main( int argc, char** argv ){
 
 	DateTimeSpan howLong = dt3 - dt4;
 
-	System::println( "Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %ls seconds!",
-						howLong.getYears(),
-						howLong.getMonths(),
-						howLong.getDays(),
-						howLong.getHours(),
-						howLong.getMinutes(),
-						System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ).c_str() );
+	System::println( Format("Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %ls seconds!")
+					%	howLong.getYears()
+					%	howLong.getMonths()
+					%	howLong.getDays()
+					%	howLong.getHours()
+					%	howLong.getMinutes()
+					%	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ).c_str() );
 
 
 	/**
@@ -159,17 +159,17 @@ int main( int argc, char** argv ){
 
 		fs << &storeMe;
 
-		System::println( "storeMe (%ls) saved!", storeMe.toString().c_str() );
+		System::println( Format("storeMe (%ls) saved!")%  storeMe.toString().c_str() );
 	}
 
 	DateTime loadMe;
-	System::println( "loadMe is equal to %ls", loadMe.toString().c_str() );
+	System::println( Format("loadMe is equal to %ls") % loadMe.toString().c_str() );
 	{
 		FileInputStream fs( "datetime.out" );
 
 		fs >> static_cast<VCF::Persistable*>(&loadMe);
 
-		System::println( "loadMe (%ls) loaded!", loadMe.toString().c_str() );
+		System::println( Format("loadMe (%ls) loaded!") % loadMe.toString().c_str() );
 	}
 
 
@@ -181,6 +181,12 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:35  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.1  2005/04/17 15:11:42  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.4  2004/12/01 04:15:01  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

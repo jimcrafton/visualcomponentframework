@@ -1,0 +1,16 @@
+[! if HELP_MENU]
+UndoAppAbout.cpp
+UndoAppAbout.h
+[!endif]
+UndoApp.cpp
+UndoAppApplication.h
+UndoAppApplication.cpp
+[! if SPLASH_SCREEN]
+SplashScreen.cpp
+SplashScreen.h
+res\app.rc
+res\splash.bmp
+[!endif]
+MainWindow.h
+MainWindow.cpp
+readme.txt

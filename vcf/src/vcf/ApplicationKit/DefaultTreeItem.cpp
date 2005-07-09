@@ -71,7 +71,9 @@ void DefaultTreeItem::init()
 	childNodeItems_.clear();
 	parent_ = NULL;
 	textBold_ = false;
-	TextColor_.setRGB( 0.0, 0.0, 0.0 );
+
+	TextColor_ = *GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW_TEXT );
+
 	userData_ = NULL;
 	enumContainer_.initContainer( childNodeItems_ );
 
@@ -199,6 +201,11 @@ void DefaultTreeItem::setCaption( const String& caption )
 	caption_ = caption;
 
 	changed( ITEM_EVENT_TEXT_CHANGED );
+}
+
+uint32 DefaultTreeItem::getChildCount()
+{
+	return childNodeItems_.size();
 }
 
 Enumerator<TreeItem*>* DefaultTreeItem::getChildren()
@@ -329,6 +336,18 @@ void DefaultTreeItem::expand( const bool& isExpanded )
 	changed( DefaultTreeItem::teItemExpanded );
 }
 
+void DefaultTreeItem::expandAllChildren( const bool& isExpanded )
+{
+	expand( isExpanded );
+
+	Enumerator<TreeItem*>* children = getChildren();
+	while ( children->hasMoreElements() ) {
+		TreeItem* item = children->nextElement();
+
+		item->expandAllChildren( isExpanded );
+	}
+}
+
 ulong32 DefaultTreeItem::getLevel()
 {
 	ulong32 result = 0;
@@ -394,6 +413,7 @@ void DefaultTreeItem::addSubItem( const String& caption, void* data )
 	SubItem* subItem = new SubItem(this);
 	subItems_.push_back( subItem );
 	subItem->setCaption( caption );
+	subItem->setData( data );
 
 	changed( ITEM_EVENT_CHANGED );
 }
@@ -446,6 +466,21 @@ void DefaultTreeItem::changed( const ulong32& eventType )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.5  2005/06/29 03:46:13  ddiego
+*more osx tree and list coding.
+*
+*Revision 1.3.2.4  2005/03/04 04:41:54  ddiego
+*fixed a bug in the tree list control that was not taking into account the tree item text color or text bold.
+*
+*Revision 1.3.2.3  2005/01/31 02:36:14  marcelloptr
+*member function expandAllChildren() added
+*
+*Revision 1.3.2.1  2005/01/26 02:09:10  ddiego
+*fixed bug 1108954
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -26,6 +26,7 @@ class ComponentEvent;
 class APPLICATIONKIT_API Menu : public Component {
 public:
 
+	DELEGATE(MenuItemChanged);
 
 	Menu();
 
@@ -40,10 +41,13 @@ public:
 
 	MenuItem* getRootMenuItem();
 
-	void setRootMenuItem( MenuItem* item );
+	void setRootMenuItem( MenuItem* item );	
 
-	virtual void afterCreate( ComponentEvent* event ){};//no-op for now
+	void itemChanged( const int& eventType, MenuItem* item );
 
+	uint32 getItemIndex( MenuItem* item );
+
+	virtual void handleEvent( Event* event );
 protected:
 	MenuItem* rootMenuItem_;
 
@@ -60,6 +64,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.2  2005/06/08 03:27:26  ddiego
+*fix for popup menus
+*
+*Revision 1.2.4.1  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

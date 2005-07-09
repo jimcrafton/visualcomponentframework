@@ -51,7 +51,8 @@ public:
 
 
 void StaticTalkingCallBack( Event* e ) {
-	System::println( "StaticTalkingCallBack called by object: %s", e->getSource()->toString().c_str() );
+	System::println( Format("StaticTalkingCallBack called by object: %s")
+					% e->getSource()->toString().c_str() );
 }
 
 /**
@@ -156,7 +157,8 @@ public:
 	They may be virtual methods.
 	*/
 	void onTalking( Event* e ) {
-		System::println( "We got a talking event! Event source: %s", e->getSource()->toString().c_str() );
+		System::println( Format("We got a talking event! Event source: %s")
+						% e->getSource()->toString().c_str() );
 	}
 };
 
@@ -217,6 +219,12 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:36  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/04/17 15:11:44  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.3  2004/08/07 02:47:01  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

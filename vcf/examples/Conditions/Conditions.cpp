@@ -23,14 +23,16 @@ class Reporter : public Runnable {
 public:
 	virtual bool run() {
 		int count = 0;
-		System::println( "Reporter %p starting...", this );
+		System::println( Format("Reporter %p starting...") % this );
 
 		while ( count < 10 && !producerDone ) {
 			Lock l(*theMutex);
 
 			theCondition->wait();
 
-			System::println( "Reporter: Done waiting report %d, reporting from %p:\n\tNews Flash! Yada yada yada!", count + 1, this );
+			System::println( Format("Reporter: Done waiting report %d, " \
+							"reporting from %p:\n\tNews Flash! " \
+							"Yada yada yada!") % (count + 1) % this );
 			count ++;
 		}
 
@@ -52,7 +54,8 @@ public:
 		while ( count < 10 ) {
 			Lock l(*theMutex);
 
-			System::println("Producer chomping %d vitamins...\n\tchomp, chomp, chomp...", count );
+			System::println( Format("Producer chomping %d vitamins..." \
+							"\n\tchomp, chomp, chomp...") % count );
 			System::sleep( 300 );
 			System::println( "Yawn...Burp!" );
 			System::sleep( 100 );
@@ -181,7 +184,7 @@ public:
 		int n = 0;
 		while (n < 100) {
 			buffer->send(n);
-			System::println( "sent: %d", n );
+			System::println( Format("sent: %d") % n );
 			++n;
 		}
 		buffer->send(-1);
@@ -200,7 +203,7 @@ public:
 		int n;
 		do {
 			n = buffer->receive();
-			System::println( "received: %d", n );
+			System::println( Format("received: %d") % n );
 		} while (n != -1); // -1 indicates end of buffer
 
 		threadsDone --;
@@ -247,6 +250,12 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:33  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.1  2005/04/17 15:11:42  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.3  2004/08/07 02:46:56  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

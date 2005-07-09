@@ -39,7 +39,7 @@ public:
 
 	void setSelectedColor( Color* selectedColor );
 private:
-	CommonColorDialogPeer* Peer_;
+	CommonColorDialogPeer* peer_;
 };
 
 }
@@ -48,6 +48,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/02/21 16:20:01  ddiego
+*minor changes to various things, property editors, and tree list control.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

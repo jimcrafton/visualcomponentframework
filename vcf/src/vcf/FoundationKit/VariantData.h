@@ -13,6 +13,13 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+/*
+ Uncomment this to have a variant of 64 bits at least
+ This enables the automatic conversion of DateTime objects too
+ Please the 15th of July whne the DateTime class will be fully implemented.
+*/
+// #define VCF_VARIANT64
+
 
 namespace VCF {
 
@@ -198,6 +205,49 @@ public:
 		type = pdInterface;
 	}
 
+#ifdef VCF_VARIANT64
+	/**
+	*creates a Variant initialized by a long64 value
+	*/
+	VariantData( const VCF::long64& val ) {
+		Long64Val = val;
+		type = pdLong64;
+	};
+
+	/**
+	*creates a Variant initialized by a ulong64 value
+	*/
+	VariantData( const VCF::ulong64& val ) {
+		ULong64Val = val;
+		type  = pdULong64;
+	};
+
+	/**
+	*creates a Variant initialized by a DateTime value
+	*/
+	VariantData( const DateTime& val ) {
+		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+		type  = pdDateTime;
+	};
+
+	/**
+	*creates a Variant initialized by a DateTimeSpan value
+	*/
+	VariantData( const DateTimeSpan& val ) {
+		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+		type  = pdDateTimeSpan;
+	};
+
+	///**
+	//*creates a Variant initialized by a Color value
+	//*/
+	//VariantData( const Color& val ) {
+	//	Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+	//	type  = pdDateTimeSpan;
+	//};
+
+#endif // VCF_VARIANT64
+
 	/**
 	*copy constructor
 	*/
@@ -206,34 +256,41 @@ public:
 		this->setValue( value );
 	};
 
+	/**
+	*destructor
+	*/
 	virtual ~VariantData(){};
+
+public:
+
 
 	/**
 	*defines the data type of the VariantData, where type can represent
 	* an int, unsigned int, long, unsigned long, short, char, 
 	* double, float, bool, string, Enum pointer, or Object pointer.
+	*comparison operator
 	*/
-	PropertyDescriptorType type;
-
-	union{
-			int IntVal;
-			long LongVal;
-			short ShortVal;
-			unsigned int UIntVal;
-			unsigned long ULongVal;
-			float FloatVal;
-			char CharVal;
-			double DblVal;
-			bool BoolVal;
-			Object* ObjVal;
-			EnumValue EnumVal;
-			Interface* InterfaceVal;
-	};
+	bool operator == ( const VariantData& v ) const {
+		return (	type == v.type &&
+		          ( ( type == pdString && StringVal == v.StringVal ) ||
+		            ( type != pdString && ObjVal == v.ObjVal ) )
+		          );
+	}
 
 	/**
-	*string are a special case, not allowed in unions
+	*comparison operator
 	*/
-	String StringVal;
+	bool operator != ( const VariantData& v ) const {
+		return ( !operator==( v ) );
+	}
+
+	/**
+	*
+	*conversion operators
+	*
+	*/
+
+
 
 	/**
 	*converts the VariantData to an int
@@ -339,6 +396,62 @@ public:
 	operator Enum& () const {
 		return *EnumVal.getEnum();
 	};
+
+#ifdef VCF_VARIANT64
+	/**
+	*converts the Variant to a long64
+	*/
+	operator VCF::long64 () const {
+		return Long64Val;
+	};
+
+	/**
+	*converts the Variant to an ulong64
+	*/
+	operator VCF::ulong64 () const {
+		return ULong64Val;
+	};
+
+	/**
+	*converts the Variant to a DateTime
+	*/
+	operator VCF::DateTime () const {
+		return (long64) Long64Val; // uses the conversion DateTime::operator long64()
+	};
+
+	/**
+	*converts the Variant to a DateTimeSpan
+	*/
+	operator VCF::DateTimeSpan () const {
+		return (long64) Long64Val; // uses the conversion DateTimeSpan::operator long64()
+	};
+
+	///**
+	//*converts the Variant to a Color
+	//*/
+	//operator VCF::Color () const {
+	//	return Color(ULong64Val);
+	//};
+#endif // VCF_VARIANT64
+
+
+
+	/*
+	*
+	*	Assignments
+	*
+	*/
+
+	VariantData& operator= ( const VariantData& newValue ) {
+		setValue( newValue );
+		return *this;
+	}
+
+	VariantData& operator= ( VariantData* newValue ) {
+		setValue( *newValue );
+		return *this;
+	}
+
 
 	/**
 	*Assigns an int value to the VariantData
@@ -487,15 +600,46 @@ public:
 		return *this;
 	};
 
-	VariantData& operator= ( const VariantData& newValue ) {
-		setValue( newValue );
-		return *this;
-	}
 
-	VariantData& operator= ( VariantData* newValue ) {
-		setValue( *newValue );
+#ifdef VCF_VARIANT64
+	/**
+	*Assigns a long64 value to the Variant
+	*/
+	VariantData& operator= ( const long64& newValue ){
+		Long64Val = newValue;
+		type = pdLong64;
 		return *this;
-	}
+	};
+
+	/**
+	*Assigns an ulong64 value to the Variant
+	*/
+	VariantData& operator= ( const ulong64& newValue ){
+		ULong64Val = newValue;
+		type = pdULong64;
+		return *this;
+	};
+
+	/**
+	*Assigns a DateTime value to the Variant
+	*/
+	VariantData& operator= ( const DateTime& newValue ){
+		Long64Val = ( newValue.operator long64() ).data_;
+		type = pdDateTime;
+		return *this;
+	};
+
+	/**
+	*Assigns a DateTimeSpan value to the Variant
+	*/
+	VariantData& operator= ( const DateTimeSpan& newValue ){
+		Long64Val = ( newValue.operator long64() ).data_;
+		type = pdDateTimeSpan;
+		return *this;
+	};
+#endif // VCF_VARIANT64
+
+
 
 	/**
 	*converts the VariantData to a string, no matter
@@ -513,18 +657,64 @@ public:
 
 protected:
 	void setValue( const VariantData& value );
+
+
+public:
+	union{
+			int IntVal;
+			long LongVal;
+			short ShortVal;
+			unsigned int UIntVal;
+			unsigned long ULongVal;
+			float FloatVal;
+			char CharVal;
+			double DblVal;
+			bool BoolVal;
+			Object* ObjVal;
+			EnumValue EnumVal;
+			Interface* InterfaceVal;
+#ifdef VCF_VARIANT64
+			VCF::ulong64::int64_t Long64Val;
+			VCF::ulong64::u64_t   ULong64Val;
+#endif // VCF_VARIANT64
+	};
+
+	/**
+	*string are a special case, not allowed in unions
+	*/
+	String StringVal;
+
+	/**
+	*defines the data type of the VariantData, where type can represent
+	* an int, unsigned int, long, unsigned long, short, char, 
+	* double, float, bool, string, Enum pointer, or Object pointer.
+	*/
+	PropertyDescriptorType type;
+
 };
 
 
 
-};
+}; // namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:06  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.7  2005/06/26 01:49:59  marcelloptr
+*added support for long64 and ulong64 and DateTime classes previous VCF_VARIANT64 macro
+*
+*Revision 1.2.4.4  2005/06/07 16:32:48  marcelloptr
+*code simply rearranged
+*
+*Revision 1.2.4.3  2005/02/24 05:51:05  marcelloptr
+*Added comparison operators to VariantData
 *
 *Revision 1.2.4.2  2004/12/24 04:53:59  marcelloptr
 *added support for unsigned int in VariantData. Fixed other glitches of this class.

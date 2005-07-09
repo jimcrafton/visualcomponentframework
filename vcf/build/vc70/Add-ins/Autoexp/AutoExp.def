@@ -1,5 +1,5 @@
 	LIBRARY   AutoExp
-	DESCRIPTION "Implements Custom Evaluator for Microsoft Debugger"
+	;DESCRIPTION "Implements Custom Evaluator for Microsoft Debugger"
 	EXPORTS
 	VCF_ColorEvaluate			@1
 	VCF_DateTimeEvaluate			@2

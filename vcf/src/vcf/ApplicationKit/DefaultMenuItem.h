@@ -32,70 +32,26 @@ public:
 
 	void init();
 
-	DELEGATE(ItemPaint);
-	DELEGATE(ItemChanged);
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemAdded);
-	DELEGATE(ItemDeleted);
+	virtual void addItemPaintHandler( EventHandler* handler ){}
 
-	virtual void addItemPaintHandler( EventHandler* handler ){
-		ItemPaint +=  handler;
-	}
+	virtual void addItemChangedHandler( EventHandler* handler ){}
 
-	virtual void addItemChangedHandler( EventHandler* handler ){
-		ItemChanged += handler;
-	}
+	virtual void addItemSelectedHandler( EventHandler* handler ){}
 
-	virtual void addItemSelectedHandler( EventHandler* handler ){
-		ItemSelected += handler;
-	}
+	virtual void addItemAddedHandler( EventHandler* handler ){}
 
-	virtual void addItemAddedHandler( EventHandler* handler ){
-		ItemAdded += handler;
-	}
+	virtual void addItemDeletedHandler( EventHandler* handler ){}
 
-	virtual void addItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted += handler;
-	}
+	virtual void removeItemPaintHandler( EventHandler* handler ){}
 
-	virtual void removeItemPaintHandler( EventHandler* handler ){
-		ItemPaint -= handler;
-	}
+	virtual void removeItemChangedHandler( EventHandler* handler ){}
 
-	virtual void removeItemChangedHandler( EventHandler* handler ){
-		ItemChanged -= handler;
-	}
+	virtual void removeItemSelectedHandler( EventHandler* handler ){}
 
-	virtual void removeItemSelectedHandler( EventHandler* handler ){
-		ItemSelected -= handler;
-	}
+	virtual void removeItemAddedHandler( EventHandler* handler ){}
 
-	virtual void removeItemAddedHandler( EventHandler* handler ){
-		ItemAdded -= handler;
-	}
-
-	virtual void removeItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted -= handler;
-	}
-
-	DELEGATE(MenuItemClicked);
-	DELEGATE(MenuItemUpdate);
-
-	virtual void addMenuItemClickedHandler( EventHandler* handler ) {
-		MenuItemClicked += handler;
-	}
-
-	virtual void removeMenuItemClickedHandler( EventHandler* handler ) {
-		MenuItemClicked -= handler;
-	}
-
-	virtual void addMenuItemUpdateHandler( EventHandler* handler ) {
-		MenuItemUpdate += handler;
-	}
-
-	virtual void removeMenuItemUpdateHandler( EventHandler* handler ) {
-		MenuItemUpdate -= handler;
-	}
+	virtual void removeItemDeletedHandler( EventHandler* handler ){}	
+	
 
 
 	virtual bool containsPoint( Point * pt );
@@ -203,10 +159,12 @@ public:
 	}
 
 	virtual long getState(){
-		return 0;
+		return state_;
 	}
 
-	virtual void setState( const long& state ){}
+	virtual void setState( const long& state ){
+		state_ = state;
+	}
 
 	virtual void setBounds( Rect* bounds );
 
@@ -224,11 +182,11 @@ public:
 
 	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
 
-	virtual void addAcceleratorKey( AcceleratorKey* accelerator );
+	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 
-	virtual AcceleratorKey* getAccelerator() {
-		return currentAccelerator_;
-	}
+	virtual AcceleratorKey* getAccelerator();
+
+	virtual uint32 getChildIndex( MenuItem* child );
 	
 	virtual Object* clone(bool deep=false);
 
@@ -237,23 +195,16 @@ protected:
 	void onAccelerator( KeyboardEvent* e );
 
 protected:
-	MenuItemPeer* Peer_;
 	std::vector<MenuItem*> menuItems_;
 	EnumeratorContainer<std::vector<MenuItem*>, MenuItem*> container_;
 	String caption_;
-	bool visible_;
-	ulong32 index_;
-	bool selected_;
 	void* data_;
 	Menu* menuOwner_;
-	bool separator_;
 	MenuItem* parent_;
-	bool radioItem_;
 	long imageIndex_;
-	bool isEnabled_;
 	Rect bounds_;
 	AcceleratorKey* currentAccelerator_;
-
+	uint32 state_;
 };
 
 
@@ -276,12 +227,22 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.2  2005/03/14 04:17:23  ddiego
+*adds a fix plus better handling of accelerator keys, ands auto menu title for the accelerator key data.
 *
 *Revision 1.3.2.1  2004/12/20 23:15:55  marcelloptr
 *some documentation
 *
+
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

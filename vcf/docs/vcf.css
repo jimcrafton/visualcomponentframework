@@ -108,3 +108,19 @@ pre {
 	margin-right  : 10px; 
 	margin-bottom : 0px; 
 }
+
+.note {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #4682B4;
+	background: #fcfcfc;
+}
+
+.screen {
+	border-style: solid;
+	border-width: 0px;
+	margin-left    : 15px;
+	border-left-width: 1px;
+	border-color: black;
+}
+

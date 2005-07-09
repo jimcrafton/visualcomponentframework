@@ -49,6 +49,8 @@ AbstractScrollable::AbstractScrollable():
 	rightScrollSpace_(0.0),
 	keepHorzScrollbarVisible_(false),
 	keepVertScrollbarVisible_(false),
+	discreteHorzScroll_(false),
+	discreteVertScroll_(false),
 	vertDelegate_(NULL),
 	horzDelegate_(NULL)
 {
@@ -204,11 +206,33 @@ bool AbstractScrollable::getKeepVertScrollbarVisible()
 	return keepVertScrollbarVisible_;
 }
 
+void AbstractScrollable::setDiscreteScroll( const bool& horzDiscrete, const bool& vertDiscrete )
+{
+	discreteHorzScroll_ = horzDiscrete;
+	discreteVertScroll_ = vertDiscrete;
+}
+
+bool AbstractScrollable::getDiscreteHorzScroll()
+{
+	return discreteHorzScroll_;
+}
+
+bool AbstractScrollable::getDiscreteVertScroll()
+{
+	return discreteVertScroll_;
+}
+
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:50  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/01/15 00:52:38  marcelloptr
+*bugfix [ 1099910 ] plus other improvements of the scrolling
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

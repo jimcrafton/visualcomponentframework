@@ -85,6 +85,8 @@ void Component::destroy()
 	Action* action = getAction();
 	if ( NULL != action ) {
 		action->removeTarget( this );
+	
+		removeFromUpdateTimer();	
 	}
 
 	std::vector<Component*>::iterator componentIter = components_.begin();
@@ -132,6 +134,11 @@ void Component::handleEvent( Event* event )
 				ComponentDeleted.fireEvent( componentEvent );
 			}
 			break;
+
+			case Component::COMPONENT_NEEDS_UPDATING : {
+				updateAction();
+			}
+			break;				
 		}
 	}
 }
@@ -149,7 +156,21 @@ ulong32 Component::getComponentState()
 
 void Component::setComponentState( const ulong32& componentState )
 {
+	//check for design mode here since we have async creation handling 
+	//at the moment
+	bool designing = isDesigning();
+
 	componentState_ = componentState;
+	
+	if ( !(componentState & Component::csDesigning) ) {
+		if ( designing ) {
+			componentState_ |= Component::csDesigning;
+		}
+		else {
+			componentState_ &= ~Component::csDesigning;
+		}
+	}
+
 	std::vector<Component*>::iterator it = components_.begin();
 	while ( it != components_.end() ){
 		Component* child = *it;
@@ -209,7 +230,7 @@ unsigned long Component::getComponentCount()
 	return components_.size();
 }
 
-Component* Component::findComponent( const String& componentName )
+Component* Component::findComponent( const String& componentName, const bool& recursive )
 {
 	Component* result = NULL;
 	//this is very slow !! for the moment !
@@ -220,7 +241,14 @@ Component* Component::findComponent( const String& componentName )
 			result = child;
 			break;
 		}
-		it ++;
+		else if (recursive) {
+			//call the child component's findComponent
+			result = child->findComponent( componentName, recursive );
+			if ( NULL != result ) {
+				break;
+			}
+		}
+		++ it;
 	}
 
 	return result;
@@ -377,6 +405,24 @@ void Component::clearRegistedComponents()
 void Component::setAction( Action* action )
 {
 	action_ = action;
+
+	if ( NULL == action_ ) {
+		removeFromUpdateTimer();
+	}
+	else {
+		addToUpdateTimer();
+	}
+}
+
+bool Component::updateAction()
+{
+	Action* action = getAction();
+	if ( NULL != action ) {
+		action->update();
+		return true;
+	}
+
+	return false;
 }
 
 void Component::addToUpdateTimer()
@@ -415,12 +461,12 @@ void Component::saved()
 
 bool Component::isNormal() const
 {
-	return (Component::csNormal == componentState_) ? true : false;
+	return (Component::csNormal & componentState_) ? true : false;
 }
 
 bool Component::isDestroying() const
 {
-	return (Component::csDestroying == componentState_) ? true : false;
+	return (Component::csDestroying & componentState_) ? true : false;
 }
 
 bool Component::isLoading() const
@@ -484,6 +530,24 @@ void Component::setUseLocaleStrings( const bool& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.4  2005/06/06 02:34:05  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.3  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.2  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
+*Revision 1.3.2.1  2005/02/28 04:51:55  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
 *Revision 1.3  2004/12/01 04:31:20  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -58,7 +58,9 @@ public:
 
 	virtual ApplicationPeer* internal_createApplicationPeer();
 
-	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl);
+	virtual TextPeer* internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined );
+
+	virtual TextEditPeer* internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl);
 
 	virtual TreePeer* internal_createTreePeer( TreeControl* component);
 
@@ -115,6 +117,8 @@ public:
 	virtual ClipboardPeer* internal_createClipboardPeer();
 
 	virtual SystemTrayPeer* internal_createSystemTrayPeer();
+
+	virtual  MenuManagerPeer* internal_createMenuManagerPeer();
 
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app );
 
@@ -180,8 +184,17 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.3.2.3  2005/06/06 02:34:06  ddiego
+*menu changes to better support win32 and osx.
+*
+*Revision 1.3.2.2  2005/04/25 00:11:59  ddiego
+*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
 *
 *Revision 1.3.2.1  2004/12/19 07:09:19  ddiego
 *more modifications to better handle resource bundles, especially

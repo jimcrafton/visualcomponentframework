@@ -65,10 +65,10 @@ public:
 		context->setColor( &titleColor );
 		context->rectangle( &titleRect );
 		context->fillPath();
-		
+
 		titleRect.left_ += 10;
 		long options = GraphicsContext::tdoCenterVertAlign;
-		context->textBoundedBy( &titleRect, title_, options );		
+		context->textBoundedBy( &titleRect, title_, options );
 		context->restoreState( gcs );
 	}
 
@@ -135,9 +135,9 @@ public:
 		if ( this->isSelected() ) {
 			col = *GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 			double h,l,s;
-			col.getHLS(h,l,s);
+			col.getHSL(h,l,s);
 			l += 0.10;
-			col.setHLS( h,l,s );
+			col.setHSL( h,l,s );
 			ctx->getCurrentFont()->setColor( Color::getColor("black") );
 		}
 		else {
@@ -151,18 +151,18 @@ public:
 		ctx->rectangle( &r );
 		ctx->fillPath();
 		long options = GraphicsContext::tdoCenterVertAlign;
-		ctx->textBoundedBy( paintRect, this->getCaption(), options );		
+		ctx->textBoundedBy( paintRect, this->getCaption(), options );
 
 		if ( this->isSelected() ) {
 			ctx->setColor( Color::getColor("black") );
 			ctx->moveTo( r.getTopLeft() );
 			ctx->lineTo( r.getTopRight() );
 			ctx->strokePath();
-			
+
 			ctx->moveTo( r.left_, r.bottom_ - 1 );
 			ctx->lineTo( r.right_, r.bottom_ - 1 );
 			ctx->strokePath();
-		}		
+		}
 
 		ctx->restoreState( gcs );
 	}
@@ -198,13 +198,13 @@ public:
 
 	virtual void paint( GraphicsContext* ctx ) {
 		Panel::paint(ctx);
-		
+
 		if ( NULL != selectedItem_ ) {
 
 			Rect commentsRect;
 			commentsRect = getClientBounds();
 
-			
+
 			commentsRect.top_ = commentsRect.bottom_ - 100;
 			commentsRect.offset( 0, -20 );
 			commentsRect.inflate( -10, 0 );
@@ -225,7 +225,7 @@ public:
 			commentsRect.inflate( -5, -5 );
 
 			Rect title = commentsRect;
-			
+
 
 			ctx->getCurrentFont()->setName( "Tahoma" );
 			ctx->getCurrentFont()->setPointSize( 11 );
@@ -250,7 +250,7 @@ public:
 class CategoryTemplatePanel : public Panel {
 public:
 	CategoryTemplatePanel() {
-		setBorder( new WhiteBorder("Choose Wank Style") );
+		setBorder( new WhiteBorder("Choose Style") );
 
 		HorizontalLayoutContainer* container = new HorizontalLayoutContainer();
 		container->setMaximizeLastRow( true );
@@ -277,10 +277,10 @@ public:
 
 		add( catPanel_ );
 
-		categories_ = new TreeControl();		
+		categories_ = new TreeControl();
 		categories_->setVisible( true );
 		categories_->setBorder( NULL );
-		categories_->ItemSelected += 
+		categories_->ItemSelected +=
 			new GenericEventHandler<CategoryTemplatePanel>(this,&CategoryTemplatePanel::onCatItemSelected, "CategoryTemplatePanel::onCatItemSelected");
 
 		categories_->setHeight( 300 );
@@ -313,12 +313,12 @@ public:
 
 		Color col = *GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 		double h,l,s;
-		col.getHLS(h,l,s);
+		col.getHSL(h,l,s);
 		l += 0.10;
-		col.setHLS( h,l,s );
-		
+		col.setHSL( h,l,s );
 
-		templates_ = new ListViewControl();		
+
+		templates_ = new ListViewControl();
 		templates_->setVisible( true );
 		templates_->setColor( &col );
 		templates_->setBorder( NULL );
@@ -333,7 +333,7 @@ public:
 		templateItem->setComments( "Creates structures relevant to value-add propositions within the relevant vertical Oggle markets." );
 
 		templates_->addItem( templateItem );
-		
+
 		templateItem = new TemplateItem();
 		templateItem->setCaption( "Sub Tactical Design" );
 		templateItem->setImageIndex( 1 );
@@ -351,7 +351,7 @@ public:
 
 		templates_->ItemSelectionChanged +=
 			new GenericEventHandler<CategoryTemplatePanel>(this,&CategoryTemplatePanel::onTemplItemSelected, "CategoryTemplatePanel::onTemplItemSelected");
-		
+
 
 		add( templates_ );
 
@@ -401,7 +401,7 @@ public:
 	}
 
 	void onTemplItemSelected( Event* e ) {
-		
+
 		catPanel_->selectedItem_ = (TemplateItem*)templates_->getSelectedItem();
 		catPanel_->repaint();
 
@@ -423,7 +423,7 @@ public:
 		if ( NULL != categories_->getSelectedItem() ) {
 			itemRect = *categories_->getSelectedItem()->getBounds();
 		}
-		
+
 		categories_->translateToScreenCoords( &itemRect );
 
 		translateFromScreenCoords( &itemRect );
@@ -460,13 +460,13 @@ public:
 
 		Color col = *GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 		double h,l,s;
-		col.getHLS(h,l,s);
+		col.getHSL(h,l,s);
 		l += 0.10;
-		col.setHLS( h,l,s );
+		col.setHSL( h,l,s );
 		ctx->setColor( &col );
 
-		
-		
+
+
 		Point rrSize(20,20);
 
 		//ctx->roundRect( &templateBounds, &rrSize );
@@ -479,22 +479,22 @@ public:
 
 
 
-		
+
 
 
 		ctx->restoreState( gcs );
 	}
-};	
+};
 
 class AdvancedUIWindow : public Window {
 public:
 	AdvancedUIWindow() {
-		setCaption( "AdvancedUI" );		
+		setCaption( "AdvancedUI" );
 
 		Panel* p = new CategoryTemplatePanel();
 
 		add( p, AlignClient );
-		
+
 	}
 
 	virtual ~AdvancedUIWindow(){};
@@ -513,12 +513,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new AdvancedUIWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -530,7 +530,7 @@ int main(int argc, char *argv[])
 	Application* app = new AdvancedUIApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
 

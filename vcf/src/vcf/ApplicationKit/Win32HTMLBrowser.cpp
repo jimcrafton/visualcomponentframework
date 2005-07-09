@@ -345,13 +345,15 @@ void Win32HTMLBrowser::create( VCF::Control* owningControl )
 			registerWin32Class( className, wndProc_  );
 		}
 
+		CreateParams params = createParams();
+
 		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 		HWND parent = toolkit->getDummyParent();
 
 		if ( System::isUnicodeEnabled() ) {
 
-			hwnd_ = ::CreateWindowExW( exStyleMask_, className.c_str(),
-										L"",	styleMask_,
+			hwnd_ = ::CreateWindowExW( params.second, className.c_str(),
+										L"",	params.first,
 										0, 0,
 										1,
 										1,
@@ -359,8 +361,8 @@ void Win32HTMLBrowser::create( VCF::Control* owningControl )
 										NULL, ::GetModuleHandleW(NULL), NULL );
 		}
 		else {
-			hwnd_ = ::CreateWindowExA( exStyleMask_, className.ansi_c_str(),
-										"",	styleMask_,
+			hwnd_ = ::CreateWindowExA( params.second, className.ansi_c_str(),
+										"",	params.first,
 										0, 0,
 										1,
 										1,
@@ -481,10 +483,13 @@ bool Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPARAM 
 	return  result;
 }
 
-void Win32HTMLBrowser::createParams()
+Win32Object::CreateParams Win32HTMLBrowser::createParams()
 {
-	exStyleMask_ = 0;
-	styleMask_ = BORDERED_VIEW;
+	Win32Object::CreateParams result;
+	result.second = 0;
+	result.first = BORDERED_VIEW;
+
+	return result;
 }
 
 
@@ -639,6 +644,12 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:58  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/02/21 19:07:10  ddiego
+*fixed missing code from createParam changes in win32 html browser kit
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

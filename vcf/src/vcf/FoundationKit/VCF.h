@@ -24,26 +24,37 @@ where you installed the VCF.
 
 namespace VCF {
 
-	typedef unsigned long	ulong32;
-	typedef long			long32;
-	typedef unsigned char	uchar;
-	typedef unsigned int	uint32;
-	typedef unsigned short  ushort;
-	typedef int				int32;
+	typedef char           int8;
+	typedef short          int16;
+	typedef int            int32;
+	typedef long           long32;
+	typedef unsigned char  uchar;
+	typedef unsigned short ushort;
+	typedef unsigned char  uint8;
+	typedef unsigned short uint16;
+	typedef unsigned int   uint32;
+	typedef unsigned long  ulong32;
 
 	/**
 	This is used as a wrapper around some platform
 	object or handle. 
 	*/
 	typedef void*			OSHandleID;
+
 };
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/06/11 00:50:50  marcelloptr
+*moved uint8/uint16 to VCF namespace
 *
 *Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
 *made modifications to methods that return a handle type. Introduced

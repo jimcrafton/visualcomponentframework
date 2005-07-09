@@ -67,6 +67,10 @@ where you installed the VCF.
 #endif // _VCF_HTMLBROWSERCONTROL_H__
 
 
+#ifndef _VCF_PUSHBUTTON_H__
+#	include "vcf/ApplicationKit/PushButton.h"
+#endif // _VCF_PUSHBUTTON_H__
+
 #ifndef _VCF_TOGGLEDBUTTON_H__
 #	include "vcf/ApplicationKit/ToggledButton.h"
 #endif // _VCF_TOGGLEDBUTTON_H__
@@ -102,10 +106,6 @@ where you installed the VCF.
 #ifndef _VCF_HEADERCONTROL_H__
 #	include "vcf/ApplicationKit/HeaderControl.h"
 #endif // _VCF_HEADERCONTROL_H__
-
-#ifndef _VCF_PUSHBUTTON_H__
-#	include "vcf/ApplicationKit/PushButton.h"
-#endif // _VCF_PUSHBUTTON_H__
 
 #ifndef _VCF_SPLITTER_H__
 #	include "vcf/ApplicationKit/Splitter.h"
@@ -150,6 +150,12 @@ where you installed the VCF.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:52  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/26 01:27:53  marcelloptr
+*added images to a PushButton
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

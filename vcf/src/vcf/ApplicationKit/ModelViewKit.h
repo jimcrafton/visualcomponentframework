@@ -164,10 +164,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/DefaultListModel.h"
 #endif // _VCF_DEFAULTLISTMODEL_H__
 
-#ifndef _VCF_ABSTRACTTEXTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractTextModel.h"
-#endif // _VCF_ABSTRACTTEXTMODEL_H__
-
 #ifndef _VCF_DEFAULTTEXTMODEL_H__
 #	include "vcf/ApplicationKit/DefaultTextModel.h"
 #endif // _VCF_DEFAULTTEXTMODEL_H__
@@ -213,6 +209,12 @@ where you installed the VCF.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

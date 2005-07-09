@@ -19,250 +19,276 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/DefaultMenuItem.h"
 #include "vcf/ApplicationKit/DefaultMenuItem.h"
 #include "vcf/ApplicationKit/SystemTray.h"
+#include "vcf/ApplicationKit/ColumnLayoutContainer.h"
+#include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 
 
 namespace VCF {
 
 
-BEGIN_CLASSINFO(ImageList, "VCF::ImageList", "VCF::Component", IMAGELIST_CLASSID )
-OBJECT_PROPERTY( Color, "transparentColor", ImageList::getTransparentColor, ImageList::setTransparentColor );
-EVENT("VCF::ImageListEventHandler", ImageList, VCF::ImageListEvent, SizeChanged );
-EVENT("VCF::ImageListEventHandler", ImageList, VCF::ImageListEvent, ImageAdded );
-EVENT("VCF::ImageListEventHandler", ImageList, VCF::ImageListEvent, ImageDeleted );
-END_CLASSINFO(ImageList)
+_class_rtti_(ImageList, "VCF::Component", IMAGELIST_CLASSID )
+_property_object_( Color, "transparentColor", getTransparentColor, setTransparentColor, "" );
+_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, SizeChanged );
+_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, ImageAdded );
+_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, ImageDeleted );
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(Border, "VCF::Border", "VCF::Object", BORDER_CLASSID)
-END_CLASSINFO(Border)
+_class_abstract_rtti_(Border, "VCF::Component", BORDER_CLASSID)
+_class_rtti_end_
 
-BEGIN_CLASSINFO(Basic3DBorder, "VCF::Basic3DBorder", "VCF::Border", BASIC3DBORDER_CLASSID)
-END_CLASSINFO(Basic3DBorder)
-
-BEGIN_CLASSINFO(ColorEtchedBorder, "VCF::ColorEtchedBorder", "VCF::EtchedBorder", COLORETCHEDBORDER_CLASSID)
-END_CLASSINFO(ColorEtchedBorder)
-
-BEGIN_CLASSINFO(EtchedBorder, "VCF::EtchedBorder", "VCF::Border", ETCHEDBORDER_CLASSID)
-END_CLASSINFO(EtchedBorder)
-
-BEGIN_CLASSINFO(Light3DBorder, "VCF::Light3DBorder", "VCF::Border", LIGHT3DBORDER_CLASSID)
-END_CLASSINFO(Light3DBorder)
-
-BEGIN_CLASSINFO(TitledBorder, "VCF::TitledBorder", "VCF::Border", TITLEDBORDER_CLASSID)
-END_CLASSINFO(TitledBorder)
+_class_rtti_(Basic3DBorder, "VCF::Border", BASIC3DBORDER_CLASSID)
+_property_( bool, "inverted", isInverted, setInverted, "" );
+_class_rtti_end_
 
 
+_class_rtti_(EtchedBorder, "VCF::Border", ETCHEDBORDER_CLASSID)
+_property_( long, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
+_property_( long, "edgeStyle", getEdgeStyle, setEdgeStyle, "" );
+_class_rtti_end_
+
+
+
+_class_rtti_(ColorEtchedBorder, "VCF::EtchedBorder", COLORETCHEDBORDER_CLASSID)
+_property_object_( Color, "highlight", getHighlight, setHighlight, "" );
+_property_object_( Color, "shadow", getShadow, setShadow, "" );
+_class_rtti_end_
+
+
+_class_rtti_(Light3DBorder, "VCF::Border", LIGHT3DBORDER_CLASSID)
+_property_( bool, "inverted", isInverted, setInverted, "" );
+_class_rtti_end_
+
+_class_rtti_(TitledBorder, "VCF::Border", TITLEDBORDER_CLASSID)
+_property_( long, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
+_property_object_( Font, "font", getFont, setFont, "" );
+_property_( String, "caption", getCaption, setCaption, "" );
+_class_rtti_end_
+
+
+_class_abstract_rtti_(Container, "VCF::Component", CONTAINER_CLASSID)
+_class_rtti_end_
+
+_class_abstract_rtti_(AbstractContainer, "VCF::Container", ABSTRACTCONTAINER_CLASSID)
+_class_rtti_end_
+
+_class_rtti_(StandardContainer, "VCF::AbstractContainer", STANDARDCONTAINER_CLASSID)
+_property_( double, "bottomBorderHeight", getBottomBorderHeight, setBottomBorderHeight, "" );
+_property_( double, "topBorderHeight", getTopBorderHeight, setTopBorderHeight, "" );
+_property_( double, "rightBorderWidth", getRightBorderWidth, setRightBorderWidth, "" );
+_property_( double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "" );
+_class_rtti_end_
+
+_class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAINER_CLASSID)
+_class_rtti_end_
+
+_class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)
+_class_rtti_end_
 /*
-BEGIN_ABSTRACT_CLASSINFO(AbstractListModel, "VCF::AbstractListModel", "VCF::ListModel", ABSTRACTLISTMODEL_CLASSID)
-EVENT( "VCF::ModelEventHandler", AbstractListModel, VCF::ModelEvent, ModelEmptied )
-EVENT( "VCF::ModelValidationEventHandler", AbstractListModel, VCF::ValidationEvent, ModelValidate )
-EVENT( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ContentsChanged )
-EVENT( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemAdded )
-EVENT( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemDeleted )
-END_CLASSINFO(AbstractListModel)
+_class_abstract_rtti_(AbstractListModel, "VCF::AbstractListModel", "VCF::ListModel", ABSTRACTLISTMODEL_CLASSID)
+_event_( "VCF::ModelEventHandler", AbstractListModel, VCF::ModelEvent, ModelEmptied )
+_event_( "VCF::ModelValidationEventHandler", AbstractListModel, VCF::ValidationEvent, ModelValidate )
+_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ContentsChanged )
+_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemAdded )
+_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemDeleted )
+_class_rtti_end_
 */
 
-BEGIN_ABSTRACT_CLASSINFO(AbstractModel, "VCF::AbstractModel", "VCF::Model", ABSTRACTMODEL_CLASSID)
-EVENT( "VCF::ModelEventHandler", AbstractModel, VCF::ModelEvent, ModelChanged )
-EVENT( "VCF::ModelValidationEventHandler", AbstractModel, VCF::ValidationEvent, ModelValidate )
-END_CLASSINFO(AbstractModel)
+_class_abstract_rtti_(AbstractModel, "VCF::Model", ABSTRACTMODEL_CLASSID)
+_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelChanged )
+_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+_class_rtti_end_
 
 /*
-BEGIN_ABSTRACT_CLASSINFO(TextModel, "VCF::TextModel", "VCF::Model", TEXTMODEL_CLASSID)
-ABSTRACT_EVENT("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, TextModelChanged )
-END_CLASSINFO(TextModel)
+_class_abstract_rtti_(TextModel, "VCF::TextModel", "VCF::Model", TEXTMODEL_CLASSID)
+_abstract_event_("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, TextModelChanged )
+_class_rtti_end_
 */
 
-/*
-BEGIN_ABSTRACT_CLASSINFO(AbstractTextModel, "VCF::AbstractTextModel", "VCF::TextModel", ABSTRACTTEXTMODEL_CLASSID)
-
-EVENT("VCF::TextModelEventHandler", AbstractTextModel, VCF::TextEvent, TextModelChanged )
-END_CLASSINFO(AbstractTextModel)
-*/
-
-BEGIN_ABSTRACT_CLASSINFO(ColumnItem, "VCF::ColumnItem", "VCF::Item", COLUMNITEM_CLASSID)
-END_CLASSINFO(ColumnItem)
+_class_abstract_rtti_(ColumnItem, "VCF::Item", COLUMNITEM_CLASSID)
+_class_rtti_end_
 
 
 
 
-BEGIN_ABSTRACT_CLASSINFO(ColumnModel, "VCF::ColumnModel", "VCF::Model", COLUMNMODEL_CLASSID)
-ABSTRACT_EVENT( "VCF::ColumnModelEventHandler", ColumnModel, VCF::ColumnModelEvent, ContentsChanged )
-ABSTRACT_EVENT( "VCF::ColumnModelEventHandler", ColumnModel, VCF::ColumnModelEvent, ItemAdded )
-ABSTRACT_EVENT( "VCF::ColumnModelEventHandler", ColumnModel, VCF::ColumnModelEvent, ItemDeleted )
-END_CLASSINFO(ColumnModel)
+_class_abstract_rtti_(ColumnModel, "VCF::Model", COLUMNMODEL_CLASSID)
+_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ContentsChanged )
+_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemAdded )
+_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemDeleted )
+_class_rtti_end_
 
-BEGIN_ABSTRACT_CLASSINFO(Component, "VCF::Component", "VCF::Object", COMPONENT_CLASSID)
-PROPERTY( long, "tag", Component::getTag, Component::setTag, pdLong );
-PROPERTY( String, "name", Component::getName, Component::setName, pdString );
-EVENT("VCF::ComponentEventHandler", Component, VCF::ComponentEvent, ComponentCreated );
-EVENT("VCF::ComponentEventHandler", Component, VCF::ComponentEvent, ComponentDeleted );
-END_CLASSINFO(Component);
-
-
-BEGIN_ABSTRACT_CLASSINFO(Control, "VCF::Control", "VCF::Component", CONTROL_CLASSID);
-PROPERTY( double, "left", Control::getLeft, Control::setLeft, pdDouble );
-PROPERTY( double, "top", Control::getTop, Control::setTop, pdDouble );
-PROPERTY( double, "right", Control::getRight, Control::setRight, pdDouble );
-PROPERTY( double, "bottom", Control::getBottom, Control::setBottom, pdDouble );
-PROPERTY( bool, "visible", Control::getVisible, Control::setVisible, pdBool );
-PROPERTY( double, "width", Control::getWidth, Control::setWidth, pdDouble );
-PROPERTY( double, "height", Control::getHeight, Control::setHeight, pdDouble );
-PROPERTY( bool, "enabled", Control::isEnabled, Control::setEnabled, pdBool );
-PROPERTY( bool, "doubleBuffered", Control::isDoubleBuffered, Control::setDoubleBuffered, pdBool );
-PROPERTY( bool, "useParentFont", Control::useParentFont, Control::setUseParentFont, pdBool );
-PROPERTY( bool, "autoStartDragDrop", Control::getAutoStartDragDrop, Control::setAutoStartDragDrop, pdBool );
-PROPERTY( bool, "tabStop", Control::getTabStop, Control::setTabStop, pdBool );
-PROPERTY( long, "tabOrder", Control::getTabOrder, Control::setTabOrder, pdLong );
-PROPERTY( String, "whatThisHelpString", Control::getWhatThisHelpString, Control::setWhatThisHelpString, pdString );
-PROPERTY( String, "toolTipText", Control::getToolTipText, Control::setToolTipText, pdString );
-OBJECT_PROPERTY( Border, "border", Control::getBorder, Control::setBorder );
-OBJECT_PROPERTY( Color, "color", Control::getColor, Control::setColor );
-OBJECT_PROPERTY( Font, "font", Control::getFont, Control::setFont );
-OBJECT_PROPERTY( PopupMenu, "popupMenu", Control::getPopupMenu, Control::setPopupMenu );
-LABELED_ENUM_PROPERTY( AlignmentType, "alignment", Control::getAlignment, Control::setAlignment,
-					   AlignNone, AlignClient, 6, AlignmentTypeNames);
-
-ENUM_SET_PROPERTY( "anchor", Control::getAnchor, Control::setAnchor, 5, AnchorTypeValues, AnchorTypeNames  );
-
-EVENT("VCF::ControlEventHandler", Control, VCF::ControlEvent, ControlSized );
-EVENT("VCF::ControlEventHandler", Control, VCF::ControlEvent, ControlPositioned );
-EVENT("VCF::ControlEventHandler", Control, VCF::ControlEvent, ControlParentChanged );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseDoubleClicked );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseClicked );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseMove );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseUp );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseDown );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseEnter );
-EVENT("VCF::MouseEventHandler", Control, VCF::MouseEvent, MouseLeave );
-EVENT("VCF::KeyboardEventHandler", Control, VCF::KeyboardEvent, KeyPressed  );
-EVENT("VCF::KeyboardEventHandler", Control, VCF::KeyboardEvent, KeyDown  );
-EVENT("VCF::KeyboardEventHandler", Control, VCF::KeyboardEvent, KeyUp  );
-EVENT("VCF::WhatsThisHelpEventHandler", Control, VCF::WhatsThisHelpEvent, ControlHelpRequested );
-EVENT("VCF::HelpEventHandler", Control, VCF::HelpEvent, HelpRequested );
-EVENT("VCF::FocusEventHandler", Control, VCF::FocusEvent, FocusLost  );
-EVENT("VCF::FocusEventHandler", Control, VCF::FocusEvent, FocusGained );
-
-EVENT("VCF::ToolTipEventHandler", Control, VCF::ToolTipEvent, ToolTipRequested  );
-EVENT("VCF::ToolTipEventHandler", Control, VCF::ToolTipEvent, ToolTip  );
-
-END_CLASSINFO(Control);
+_class_abstract_rtti_(Component, "VCF::Object", COMPONENT_CLASSID)
+_property_( long, "tag", getTag, setTag, "" );
+_property_( String, "name", getName, setName, "" );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentCreated );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentDeleted );
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(Document, "VCF::Document", "VCF::AbstractModel", DOCUMENT_CLASSID)
-END_CLASSINFO(Document)
+_class_abstract_rtti_(Control,  "VCF::Component", CONTROL_CLASSID);
+_property_( double, "left", getLeft, setLeft, "" );
+_property_( double, "top", getTop, setTop, "" );
+_property_( double, "right", getRight, setRight, "" );
+_property_( double, "bottom", getBottom, setBottom, "" );
+_property_( bool, "visible", getVisible, setVisible, "" );
+_property_( double, "width", getWidth, setWidth, "" );
+_property_( double, "height", getHeight, setHeight, "" );
+_property_( bool, "enabled", isEnabled, setEnabled, "" );
+_property_( bool, "doubleBuffered", isDoubleBuffered, setDoubleBuffered, "" );
+_property_( bool, "useParentFont", useParentFont, setUseParentFont, "" );
+_property_( bool, "autoStartDragDrop", getAutoStartDragDrop, setAutoStartDragDrop, "" );
+_property_( bool, "tabStop", getTabStop, setTabStop, "" );
+_property_( long, "tabOrder", getTabOrder, setTabOrder, "" );
+_property_( String, "whatThisHelpString", getWhatThisHelpString, setWhatThisHelpString, "" );
+_property_( String, "toolTipText", getToolTipText, setToolTipText, "" );
+_property_object_( Border, "border", getBorder, setBorder, "" );
+_property_object_( Color, "color", getColor, setColor, "" );
+_property_object_( Font, "font", getFont, setFont, "" );
+_property_object_( PopupMenu, "popupMenu", getPopupMenu, setPopupMenu, "" );
+_property_object_( Container, "container", getContainer, setContainer, "" );
+_property_enum_labeled_( AlignmentType, "alignment", getAlignment, setAlignment,
+					   AlignNone, AlignClient, 6, AlignmentTypeNames, "");
+
+_property_enumset_( "anchor", getAnchor, setAnchor, 5, AnchorTypeValues, AnchorTypeNames, ""  );
+
+_event_("VCF::ControlEventHandler",  VCF::ControlEvent, ControlSized );
+_event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlPositioned );
+_event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlParentChanged );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseDoubleClicked );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseClicked );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseMove );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseUp );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseDown );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseEnter );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseLeave );
+_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyPressed  );
+_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyDown  );
+_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyUp  );
+_event_("VCF::WhatsThisHelpEventHandler", VCF::WhatsThisHelpEvent, ControlHelpRequested );
+_event_("VCF::HelpEventHandler", VCF::HelpEvent, HelpRequested );
+_event_("VCF::FocusEventHandler", VCF::FocusEvent, FocusLost  );
+_event_("VCF::FocusEventHandler", VCF::FocusEvent, FocusGained );
+
+_event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTipRequested  );
+_event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTip  );
+
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(Frame, "VCF::Frame", "VCF::Control", FRAME_CLASSID )
-PROPERTY( String, "caption", Frame::getCaption, Frame::setCaption, pdString );
-PROPERTY( bool, "isTopmost", Frame::isFrameTopmost, Frame::setFrameTopmost, pdBool );
-LABELED_ENUM_PROPERTY( FrameStyleType, "frameStyle", Frame::getFrameStyle, Frame::setFrameStyle,
-					   fstSizeable, fstToolbarBorderFixed, 6, FrameStyleTypeNames);
-EVENT("VCF::FrameEventHandler", Frame, FrameEvent, FrameClosing)
-EVENT("VCF::WindowEventHandler", Frame, WindowEvent, FrameClose )
-EVENT("VCF::WindowEventHandler", Frame, WindowEvent, FrameActivation )
-END_CLASSINFO(Frame)
+_class_abstract_rtti_(Document, "VCF::AbstractModel", DOCUMENT_CLASSID)
+_class_rtti_end_
+
+
+_class_abstract_rtti_(Frame, "VCF::Control", FRAME_CLASSID )
+_property_( String, "caption", getCaption, setCaption, "" );
+_property_( bool, "isTopmost", isFrameTopmost, setFrameTopmost, "" );
+_property_( bool, "useColorForBackground", getUseColorForBackground, setUseColorForBackground, "" );
+_property_enum_labeled_( FrameStyleType, "frameStyle", getFrameStyle, setFrameStyle,
+					   fstSizeable, fstToolbarBorderFixed, 6, FrameStyleTypeNames, "");
+_event_("VCF::FrameEventHandler", FrameEvent, FrameClosing)
+_event_("VCF::WindowEventHandler", WindowEvent, FrameClose )
+_event_("VCF::WindowEventHandler", WindowEvent, FrameActivation )
+_class_rtti_end_
 
 
 
 
-BEGIN_ABSTRACT_CLASSINFO(Item, "VCF::Item", "VCF::Object", ITEM_CLASSID)
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, ItemPaint );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, ItemChanged );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, ItemSelected );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, ItemAdded );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, ItemDeleted );
-END_CLASSINFO(Item)
+_class_abstract_rtti_(Item, "VCF::Object", ITEM_CLASSID)
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(ListItem, "VCF::ListItem", "VCF::Item", LISTITEM_CLASSID)
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, SubItemChanged );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, SubItemAdded );
-ABSTRACT_EVENT("VCF::ItemEventHandler", Item, VCF::ItemEvent, SubItemDeleted );
-PROPERTY( String, "name", ListItem::getCaption, ListItem::setCaption, pdString )
-END_CLASSINFO(ListItem)
+_class_abstract_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemChanged );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemAdded );
+_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemDeleted );
+_property_( String, "name", getCaption, setCaption, "" )
+_class_rtti_end_
 
 
 /*
-BEGIN_ABSTRACT_CLASSINFO(ListModel, "VCF::ListModel", "VCF::Model", LISTMODEL_CLASSID)
+_class_abstract_rtti_(ListModel, "VCF::ListModel", "VCF::Model", LISTMODEL_CLASSID)
 OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
-ABSTRACT_EVENT( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ContentsChanged )
-ABSTRACT_EVENT( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemAdded )
-ABSTRACT_EVENT( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemDeleted )
-END_CLASSINFO(ListModel)
+_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ContentsChanged )
+_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemAdded )
+_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemDeleted )
+_class_rtti_end_
 */
 
 
-BEGIN_ABSTRACT_CLASSINFO(MenuItem, "VCF::MenuItem", "VCF::Item", MENUITEM_CLASSID)
-ABSTRACT_EVENT( "VCF::MenuItemEventHandler", MenuItem, VCF::MenuItemEvent, MenuItemClicked )
-ABSTRACT_EVENT( "VCF::MenuItemEventHandler", MenuItem, VCF::MenuItemEvent, MenuItemUpdate )
-PROPERTY( String, "caption", MenuItem::getCaption, MenuItem::setCaption, pdString )
-END_CLASSINFO(MenuItem)
+_class_abstract_rtti_(MenuItem, "VCF::Item", MENUITEM_CLASSID)
+_abstract_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemClicked )
+_abstract_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemUpdate )
+_property_( String, "caption", getCaption, setCaption, "" )
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(Model, "VCF::Model", "VCF::Object", MODEL_CLASSID)
-ABSTRACT_EVENT( "VCF::ModelEventHandler", Model, VCF::ModelEvent, ModelEmptied )
-ABSTRACT_EVENT( "VCF::ModelValidationEventHandler", Model, VCF::ValidationEvent, ModelValidate )
-END_CLASSINFO(Model)
+_class_abstract_rtti_(Model, "VCF::Object", MODEL_CLASSID)
+_abstract_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelEmptied )
+_abstract_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+_class_rtti_end_
 
 /* 
 JC - Note that we should change this to RTTI as an interface!!!
-BEGIN_ABSTRACT_CLASSINFO(TabModel, "VCF::TabModel", "VCF::Model", TABMODEL_CLASSID )
-ABSTRACT_EVENT("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageAdded)
-ABSTRACT_EVENT("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageRemoved)
-ABSTRACT_EVENT("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageSelected)
-END_CLASSINFO(TabModel)
+_class_abstract_rtti_(TabModel, "VCF::TabModel", "VCF::Model", TABMODEL_CLASSID )
+_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageAdded)
+_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageRemoved)
+_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageSelected)
+_class_rtti_end_(TabModel)
 */
 
 
-BEGIN_ABSTRACT_CLASSINFO(TabPage, "VCF::TabPage", "VCF::Item", TABPAGE_CLASSID)
-END_CLASSINFO(TabPage)
+_class_abstract_rtti_(TabPage, "VCF::Item", TABPAGE_CLASSID)
+_class_rtti_end_
 
 
-BEGIN_ABSTRACT_CLASSINFO(TableCellItem, "VCF::TableCellItem", "VCF::Item", TABLECELLITEM_CLASSID)
-END_CLASSINFO(TableCellItem)
+_class_abstract_rtti_(TableCellItem, "VCF::Item", TABLECELLITEM_CLASSID)
+_class_rtti_end_
 
-BEGIN_ABSTRACT_CLASSINFO(TableItemEditor, "VCF::TableItemEditor", "VCF::Object", TABLEITEMEDITOR_CLASSID)
-ABSTRACT_EVENT("VCF::ItemEditorEventHandler", TableItemEditor, VCF::ItemEditorEvent, CellItemChanged )
-ABSTRACT_EVENT("VCF::ItemEditorEventHandler", TableItemEditor, VCF::ItemEditorEvent, CellItemValidateChange )
-END_CLASSINFO(TableItemEditor)
+_class_abstract_rtti_(TableItemEditor, "VCF::Object", TABLEITEMEDITOR_CLASSID)
+_event_("VCF::ItemEditorEventHandler", VCF::ItemEditorEvent, CellItemChanged )
+_event_("VCF::ItemEditorEventHandler", VCF::ItemEditorEvent, CellItemValidateChange )
+_class_rtti_end_
 
 
 /*
-BEGIN_ABSTRACT_CLASSINFO(TableModel, "VCF::TableModel", "VCF::AbstractModel", TABLEMODEL_CLASSID )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellAdded )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellDeleted )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsAdded )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsDeleted )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsAdded )
-EVENT( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsDeleted )
-END_CLASSINFO(TableModel);
+_class_abstract_rtti_(TableModel, "VCF::TableModel", "VCF::AbstractModel", TABLEMODEL_CLASSID )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellAdded )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellDeleted )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsAdded )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsDeleted )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsAdded )
+_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsDeleted )
+_class_rtti_end_(TableModel);
 */
 
 
 
 
-BEGIN_ABSTRACT_CLASSINFO(ToggledButton, "VCF::ToggledButton", "VCF::CustomControl", TOGGLEDBUTTON_CLASSID)
-PROPERTY(bool, "checked", ToggledButton::isChecked, ToggledButton::setChecked, pdBool);
-PROPERTY(String, "caption", ToggledButton::getCaption, ToggledButton::setCaption, pdString);
-EVENT( "VCF::ButtonEventHandler", ToggledButton, VCF::ButtonEvent, ButtonClicked )
-END_CLASSINFO(ToggledButton)
+_class_abstract_rtti_(ToggledButton, "VCF::CustomControl", TOGGLEDBUTTON_CLASSID)
+_property_(bool, "checked", isChecked, setChecked, "");
+_property_(String, "caption", getCaption, setCaption, "");
+_event_( "VCF::ButtonEventHandler", VCF::ButtonEvent, ButtonClicked )
+_class_rtti_end_
 
 
 
-BEGIN_ABSTRACT_CLASSINFO(TreeItem, "VCF::TreeItem", "VCF::Item", TREEITEM_CLASSID)
-OBJECT_COLLECTION_PROPERTY(TreeItem*, "children", TreeItem::getChildren,
-	           TreeItem::addChild, TreeItem::insertChild, TreeItem::deleteChild, TreeItem::deleteChildAtIndex )
-PROPERTY( String, "name", TreeItem::getCaption, TreeItem::setCaption, pdString )
-END_CLASSINFO(TreeItem)
+_class_abstract_rtti_(TreeItem, "VCF::Item", TREEITEM_CLASSID)
+_property_( String, "name", getCaption, setCaption, "" )
+_class_rtti_end_
 
 
 /*
-BEGIN_ABSTRACT_CLASSINFO(TreeModel, "VCF::TreeModel", "VCF::Model", TREEMODEL_CLASSID)
-//	OBJECT_PROPERTY( TreeItem, "root", TreeModel::getRoot, TreeModel::setRoot );
-ABSTRACT_EVENT( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, RootNodeChanged )
-ABSTRACT_EVENT( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeAdded )
-ABSTRACT_EVENT( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeDeleted )
-END_CLASSINFO(TreeModel)
+_class_abstract_rtti_(TreeModel, "VCF::TreeModel", "VCF::Model", TREEMODEL_CLASSID)
+//	_property_object_( TreeItem, "root", TreeModel::getRoot, TreeModel::setRoot );
+_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, RootNodeChanged )
+_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeAdded )
+_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeDeleted )
+_class_rtti_end_
 */
 
 
@@ -271,365 +297,460 @@ END_CLASSINFO(TreeModel)
 */
 
 /*
-BEGIN_CLASSINFO(AbstractTreeModel, "VCF::AbstractTreeModel", "VCF::TreeModel", ABSTRACTTREEMODEL_CLASSID)
-EVENT( "VCF::ModelEventHandler", AbstractTreeModel, VCF::ModelEvent, ModelEmptied )
-EVENT( "VCF::ModelValidationEventHandler", AbstractTreeModel, VCF::ValidationEvent, ModelValidate )
-EVENT( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, RootNodeChanged )
-EVENT( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeAdded )
-EVENT( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeDeleted )
-END_CLASSINFO(AbstractTreeModel)
+_class_rtti_(AbstractTreeModel, "VCF::AbstractTreeModel", "VCF::TreeModel", ABSTRACTTREEMODEL_CLASSID)
+_event_( "VCF::ModelEventHandler", AbstractTreeModel, VCF::ModelEvent, ModelEmptied )
+_event_( "VCF::ModelValidationEventHandler", AbstractTreeModel, VCF::ValidationEvent, ModelValidate )
+_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, RootNodeChanged )
+_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeAdded )
+_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeDeleted )
+_class_rtti_end_
 */
 
 
-BEGIN_CLASSINFO(BasicTableItemEditor, "VCF::BasicTableItemEditor", "VCF::TableItemEditor", BASICTABLEITEMEDITOR_CLASSID)
-EVENT("VCF::ItemEditorEventHandler", BasicTableItemEditor, VCF::ItemEditorEvent, CellItemChanged )
-EVENT("VCF::ItemEditorEventHandler", BasicTableItemEditor, VCF::ItemEditorEvent, CellItemValidateChange )
-END_CLASSINFO(BasicTableItemEditor)
+_class_rtti_(CheckBoxControl, "VCF::ToggledButton", CHECKBOXCONTROL_CLASSID )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(CheckBoxControl, "VCF::CheckBoxControl", "VCF::ToggledButton", CHECKBOXCONTROL_CLASSID )
-END_CLASSINFO(CheckBoxControl)
 
+_class_rtti_(ComboBoxControl, "VCF::CustomControl", COMBOBOXCONTROL_CLASSID )
+_event_("ItemEventHandler", VCF::ItemEvent, SelectionChanged )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(ComboBoxControl, "VCF::ComboBoxControl", "VCF::CustomControl", COMBOBOXCONTROL_CLASSID )
-EVENT("ItemEventHandler", ComboBoxControl, VCF::ItemEvent, SelectionChanged )
-END_CLASSINFO(ComboBoxControl)
 
+_class_rtti_(CommandButton, "VCF::Control", COMMANDBUTTON_CLASSID)
+_property_( String, "caption", getCaption, setCaption, "" );
+_property_enum_labeled_( ButtonCommandType, "commandType", getCommandType, setCommandType,
+					   BC_NONE, BC_MAYBE, 6, ButtonCommandTypeNames, "");
+_event_( "VCF::ButtonEventHandler", VCF::ButtonEvent, ButtonClicked )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(CommandButton, "VCF::CommandButton", "VCF::Control", COMMANDBUTTON_CLASSID)
-PROPERTY( String, "caption", CommandButton::getCaption, CommandButton::setCaption, pdString );
-LABELED_ENUM_PROPERTY( ButtonCommandType, "commandType", CommandButton::getCommandType, CommandButton::setCommandType,
-					   BC_NONE, BC_MAYBE, 6, ButtonCommandTypeNames);
-EVENT( "VCF::ButtonEventHandler", CommandButton, VCF::ButtonEvent, ButtonClicked )
-END_CLASSINFO(CommandButton)
 
+_class_rtti_(ControlContainer, "VCF::CustomControl", CONTROLCONTAINER_CLASSID)
+_property_(double, "bottomBorderHeight", getBottomBorderHeight, setBottomBorderHeight, "");
+_property_(double, "topBorderHeight", getTopBorderHeight, setTopBorderHeight, "");
+_property_(double, "rightBorderWidth", getRightBorderWidth, setRightBorderWidth, "");
+_property_(double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "");
+_property_(double, "borderSize", getBorderSize, setBorderSize, "");
+_class_rtti_end_
 
-BEGIN_CLASSINFO(ControlContainer, "VCF::ControlContainer", "VCF::CustomControl", CONTROLCONTAINER_CLASSID)
-PROPERTY(double, "bottomBorderHeight", ControlContainer::getBottomBorderHeight, ControlContainer::setBottomBorderHeight, pdDouble);
-PROPERTY(double, "topBorderHeight", ControlContainer::getTopBorderHeight, ControlContainer::setTopBorderHeight, pdDouble);
-PROPERTY(double, "rightBorderWidth", ControlContainer::getRightBorderWidth, ControlContainer::setRightBorderWidth, pdDouble);
-PROPERTY(double, "leftBorderWidth", ControlContainer::getLeftBorderWidth, ControlContainer::setLeftBorderWidth, pdDouble);
-PROPERTY(double, "borderSize", ControlContainer::getBorderSize, ControlContainer::setBorderSize, pdDouble);
-END_CLASSINFO(ControlContainer)
 
+_class_rtti_(CustomControl, "VCF::Control", CUSTOMCONTROL_CLASSID )
+_property_( bool, "transparent", isTransparent, setTransparent, "" );
+_property_( bool, "useColorForBackground", getUseColorForBackground, setUseColorForBackground, "" );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(CustomControl, "VCF::CustomControl", "VCF::Control", CUSTOMCONTROL_CLASSID )
-PROPERTY( bool, "transparent", CustomControl::isTransparent, CustomControl::setTransparent, pdBool );
-END_CLASSINFO(CustomControl)
 
+_class_rtti_(DefaultColumnItem, "VCF::ColumnItem", DEFAULTCOLUMNITEM_CLASSID)
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultColumnItem, "VCF::DefaultColumnItem", "VCF::ColumnItem", DEFAULTCOLUMNITEM_CLASSID)
-EVENT("VCF::ItemEventHandler", DefaultColumnItem, VCF::ItemEvent, ItemPaint );
-EVENT("VCF::ItemEventHandler", DefaultColumnItem, VCF::ItemEvent, ItemChanged );
-EVENT("VCF::ItemEventHandler", DefaultColumnItem, VCF::ItemEvent, ItemSelected );
-EVENT("VCF::ItemEventHandler", DefaultColumnItem, VCF::ItemEvent, ItemAdded );
-EVENT("VCF::ItemEventHandler", DefaultColumnItem, VCF::ItemEvent, ItemDeleted );
-END_CLASSINFO(DefaultColumnItem)
+_class_rtti_(DefaultColumnModel, "VCF::ColumnModel", DEFAULTCOLUMNMODEL_CLASSID)
+_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ContentsChanged )
+_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ItemAdded )
+_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ItemDeleted )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultColumnModel, "VCF::DefaultColumnModel", "VCF::ColumnModel", DEFAULTCOLUMNMODEL_CLASSID)
-EVENT( "VCF::ColumnModelEventHandler", DefaultColumnModel, VCF::ColumnModelEvent, ContentsChanged )
-EVENT( "VCF::ColumnModelEventHandler", DefaultColumnModel, VCF::ColumnModelEvent, ItemAdded )
-EVENT( "VCF::ColumnModelEventHandler", DefaultColumnModel, VCF::ColumnModelEvent, ItemDeleted )
-END_CLASSINFO(DefaultColumnModel)
+_class_rtti_(DefaultMenuItem, "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
+_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemClicked )
+_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemUpdate )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultMenuItem, "VCF::DefaultMenuItem", "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
-EVENT( "VCF::MenuItemEventHandler", DefaultMenuItem, VCF::MenuItemEvent, MenuItemClicked )
-EVENT( "VCF::MenuItemEventHandler", DefaultMenuItem, VCF::MenuItemEvent, MenuItemUpdate )
-END_CLASSINFO(DefaultMenuItem)
 
+_class_rtti_(DefaultListItem, "VCF::ListItem", DEFAULTLISTITEM_CLASSID)
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemChanged );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemAdded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemDeleted );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultListItem, "VCF::DefaultListItem", "VCF::ListItem", DEFAULTLISTITEM_CLASSID)
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, ItemPaint );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, ItemChanged );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, ItemSelected );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, ItemAdded );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, ItemDeleted );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, SubItemChanged );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, SubItemAdded );
-EVENT("VCF::ItemEventHandler", DefaultListItem, VCF::ItemEvent, SubItemDeleted );
-END_CLASSINFO(DefaultListItem)
 
+_class_rtti_(DefaultListModel, "VCF::AbstractModel", DEFAULTLISTMODEL_CLASSID)
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultListModel, "VCF::DefaultListModel", "VCF::AbstractModel", DEFAULTLISTMODEL_CLASSID)
-END_CLASSINFO(DefaultListModel)
 
+_class_rtti_(DefaultTabModel, "VCF::AbstractModel", DEFAULTTABMODEL_CLASSID )
+	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageAdded )
+	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageRemoved )
+	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageSelected )
+	_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelEmptied )
+	_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultTabModel, "VCF::DefaultTabModel", "VCF::AbstractModel", DEFAULTTABMODEL_CLASSID )
-	EVENT("VCF::TabModelEventHandler", DefaultTabModel, VCF::TabModelEvent, TabPageAdded )
-	EVENT("VCF::TabModelEventHandler", DefaultTabModel, VCF::TabModelEvent, TabPageRemoved )
-	EVENT("VCF::TabModelEventHandler", DefaultTabModel, VCF::TabModelEvent, TabPageSelected )
-	EVENT( "VCF::ModelEventHandler", DefaultTabModel, VCF::ModelEvent, ModelEmptied )
-	EVENT( "VCF::ModelValidationEventHandler", DefaultTabModel, VCF::ValidationEvent, ModelValidate )
-END_CLASSINFO(DefaultTabModel)
 
+_class_rtti_(DefaultTabPage, "VCF::TabPage", DEFAULTTABPAGE_CLASSID)
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
 
-BEGIN_CLASSINFO(DefaultTabPage, "VCF::DefaultTabPage", "VCF::TabPage", DEFAULTTABPAGE_CLASSID)
-	EVENT("VCF::ItemEventHandler", DefaultTabPage, VCF::ItemEvent, ItemPaint );
-	EVENT("VCF::ItemEventHandler", DefaultTabPage, VCF::ItemEvent, ItemChanged );
-	EVENT("VCF::ItemEventHandler", DefaultTabPage, VCF::ItemEvent, ItemSelected );
-	EVENT("VCF::ItemEventHandler", DefaultTabPage, VCF::ItemEvent, ItemAdded );
-EVENT("VCF::ItemEventHandler", DefaultTabPage, VCF::ItemEvent, ItemDeleted );
+_class_rtti_end_
 
-END_CLASSINFO(DefaultTabPage)
 
+_class_rtti_(DefaultTableCellItem, "VCF::TableCellItem", DEFAULTTABLECELLITEM_CLASSID)
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
 
-BEGIN_CLASSINFO(DefaultTableCellItem, "VCF::DefaultTableCellItem", "VCF::TableCellItem", DEFAULTTABLECELLITEM_CLASSID)
-	EVENT("VCF::ItemEventHandler", DefaultTableCellItem, VCF::ItemEvent, ItemPaint );
-	EVENT("VCF::ItemEventHandler", DefaultTableCellItem, VCF::ItemEvent, ItemChanged );
-	EVENT("VCF::ItemEventHandler", DefaultTableCellItem, VCF::ItemEvent, ItemSelected );
-	EVENT("VCF::ItemEventHandler", DefaultTableCellItem, VCF::ItemEvent, ItemAdded );
-	EVENT("VCF::ItemEventHandler", DefaultTableCellItem, VCF::ItemEvent, ItemDeleted );
+_class_rtti_end_
 
-END_CLASSINFO(DefaultTableCellItem)
 
+_class_rtti_(DefaultTableModel, "VCF::AbstractModel", DEFAULTTABLEMODEL_CLASSID )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellAdded )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellDeleted )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableRowsAdded )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableRowsDeleted )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableColumnsAdded )
+	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableColumnsDeleted )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultTableModel, "VCF::DefaultTableModel", "VCF::AbstractModel", DEFAULTTABLEMODEL_CLASSID )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableCellAdded )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableCellDeleted )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableRowsAdded )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableRowsDeleted )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableColumnsAdded )
-	EVENT( "VCF::TableModelEventHandler", DefaultTableModel, VCF::TableModelEvent, TableColumnsDeleted )
-END_CLASSINFO(DefaultTableModel)
 
+_class_rtti_(DefaultTextModel, "VCF::AbstractModel", DEFAULTTEXTMODEL_CLASSID)
+	_event_("VCF::TextModelEventHandler", VCF::TextEvent, TextModelChanged )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultTextModel, "VCF::DefaultTextModel", "VCF::AbstractModel", DEFAULTTEXTMODEL_CLASSID)
-	EVENT("VCF::TextModelEventHandler", DefaultTextModel, VCF::TextEvent, TextModelChanged )
-END_CLASSINFO(DefaultTextModel)
 
+_class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultTreeItem, "VCF::DefaultTreeItem", "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
-	EVENT("VCF::ItemEventHandler", DefaultTreeItem, VCF::ItemEvent, ItemPaint );
-	EVENT("VCF::ItemEventHandler", DefaultTreeItem, VCF::ItemEvent, ItemChanged );
-	EVENT("VCF::ItemEventHandler", DefaultTreeItem, VCF::ItemEvent, ItemSelected );
-	EVENT("VCF::ItemEventHandler", DefaultTreeItem, VCF::ItemEvent, ItemAdded );
-	EVENT("VCF::ItemEventHandler", DefaultTreeItem, VCF::ItemEvent, ItemDeleted );
-END_CLASSINFO(DefaultTreeItem)
 
+_class_rtti_(DefaultTreeModel, "VCF::AbstractModel", DEFAULTTREEMODEL_CLASSID)
+	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, RootNodeChanged )
+	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeAdded )
+	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeDeleted )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(DefaultTreeModel, "VCF::DefaultTreeModel", "VCF::AbstractModel", DEFAULTTREEMODEL_CLASSID)
-	EVENT( "VCF::TreeModelEventHandler", DefaultTreeModel, VCF::TreeModelEvent, RootNodeChanged )
-	EVENT( "VCF::TreeModelEventHandler", DefaultTreeModel, VCF::TreeModelEvent, NodeAdded )
-	EVENT( "VCF::TreeModelEventHandler", DefaultTreeModel, VCF::TreeModelEvent, NodeDeleted )
-END_CLASSINFO(DefaultTreeModel)
 
+_class_rtti_(Dialog, "VCF::Frame", DIALOG_CLASSID )
+_class_rtti_end_
 
-BEGIN_CLASSINFO(Dialog, "VCF::Dialog", "VCF::Frame", DIALOG_CLASSID )
-END_CLASSINFO(Dialog)
 
+_class_rtti_(HTMLBrowserControl, "VCF::Control", HTMLBROWSERCONTROL_CLASSID)
+_property_( String, "currentURL", getCurrentURL, setCurrentURL, "" );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(HTMLBrowserControl, "VCF::HTMLBrowserControl", "VCF::Control", HTMLBROWSERCONTROL_CLASSID)
-END_CLASSINFO(HTMLBrowserControl)
+_class_rtti_(HeaderControl, "VCF::CustomControl", HEADERCONTROL_CLASSID)
+	_property_object_( ColumnModel, "columnModel", getColumnModel, setColumnModel, "" );
+	_event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
+	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ColumnWidthChanged );
+_class_rtti_end_
 
-BEGIN_CLASSINFO(HeaderControl, "VCF::HeaderControl", "VCF::CustomControl", HEADERCONTROL_CLASSID)
-	OBJECT_PROPERTY( ColumnModel, "columnModel", HeaderControl::getColumnModel, HeaderControl::setColumnModel );
-	EVENT("VCF::MouseEventHandler", HeaderControl, VCF::MouseEvent, ColumnItemClicked );
-	EVENT("VCF::ItemEventHandler", HeaderControl, VCF::ItemEvent, ColumnWidthChanged );
-END_CLASSINFO(HeaderControl)
 
 
-BEGIN_CLASSINFO(ImageFilenameString, "VCF::ImageFilenameString", "VCF::Object", IMAGEFILENAMESTRING_CLASSID);
-END_CLASSINFO( ImageFilenameString );
+_class_rtti_(ImageControl, "VCF::CustomControl", IMAGECONTROL_CLASSID)
+_property_object_( Image, "image", getImage, setImage, "" );
+_property_(bool, "transparent", getTransparent, setTransparent, "");
+//this is a typedef property registration, which allows a normal type, like a string, to 
+//become defined with a different type name.
+_property_typedef_( String, "filename", getFilename, setFilename, "VCF::ImageFilenameString", "" );
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(ImageControl, "VCF::ImageControl", "VCF::CustomControl", IMAGECONTROL_CLASSID)
-OBJECT_PROPERTY( Image, "image", ImageControl::getImage, ImageControl::setImage );
-PROPERTY(bool, "transparent", ImageControl::getTransparent, ImageControl::setTransparent, pdBool);
-OBJECT_PROPERTY_REF(ImageFilenameString, "filename", ImageControl::getFilename, ImageControl::setFilename);
-END_CLASSINFO(ImageControl)
 
+_class_rtti_(Label, "VCF::CustomControl", LABEL_CLASSID )
+_property_( String, "caption", getCaption, setCaption, "" );
+_property_enum_labeled_( TextAlignmentType, "textAlignment", getTextAlignment, setTextAlignment,
+					   taTextLeft, taTextRight, 3, TextAlignmentTypeNames, "");
+_property_enum_labeled_( TextVerticalAlignment, "verticalAlignment", getVerticalAlignment, setVerticalAlignment,
+					   tvaTextTop, tvaTextBottom, 3, TextVerticalAlignmentNames, "");
 
+_property_object_( Control, "focusControl", getFocusControl, setFocusControl, "" );
 
-BEGIN_CLASSINFO(Label, "VCF::Label", "VCF::CustomControl", LABEL_CLASSID )
-PROPERTY( String, "caption", Label::getCaption, Label::setCaption, pdString );
-LABELED_ENUM_PROPERTY( TextAlignmentType, "textAlignment", Label::getTextAlignment, Label::setTextAlignment,
-					   taTextLeft, taTextRight, 3, TextAlignmentTypeNames);
-LABELED_ENUM_PROPERTY( TextVerticalAlignment, "verticalAlignment", Label::getVerticalAlignment, Label::setVerticalAlignment,
-					   tvaTextTop, tvaTextBottom, 3, TextVerticalAlignmentNames);
+_property_( bool, "wordWrap", getWordWrap, setWordWrap, "" );
 
-OBJECT_PROPERTY( Control, "focusControl", Label::getFocusControl, Label::setFocusControl );
+_class_rtti_end_
 
-PROPERTY( bool, "wordWrap", Label::getWordWrap, Label::setWordWrap, pdBool );
 
-END_CLASSINFO(Label)
 
+_class_rtti_(ListBoxControl, "VCF::CustomControl", LISTBOXCONTROL_CLASSID )
+_property_( double, "defaultItemHeight", getDefaultItemHeight, setDefaultItemHeight, "" );
+_property_( bool, "allowsMultiSelect", getAllowsMultiSelect, setAllowsMultiSelect, "" );
+_property_object_( ListModel, "listModel", getListModel, setListModel, "" );
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(ListBoxControl, "VCF::ListBoxControl", "VCF::CustomControl", LISTBOXCONTROL_CLASSID )
-PROPERTY( double, "defaultItemHeight", ListBoxControl::getDefaultItemHeight, ListBoxControl::setDefaultItemHeight, pdDouble );
-PROPERTY( bool, "allowsMultiSelect", ListBoxControl::getAllowsMultiSelect, ListBoxControl::setAllowsMultiSelect, pdBool );
-OBJECT_PROPERTY( ListModel, "listModel", ListBoxControl::getListModel, ListBoxControl::setListModel );
-END_CLASSINFO(ListBoxControl)
 
+_class_rtti_(ListViewControl, "VCF::Control", LISTVIEWCONTROL_CLASSID )
+_property_enum_labeled_( IconStyleType, "iconStyle", getIconStyle, setIconStyle,
+					   isLargeIcon, isDetails, 4, IconStyleTypeNames, "");
+_property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIconAlignment,
+					   iaNone, iaAutoArrange, 4, IconAlignTypeNames, "");
+_property_object_( ListModel, "listModel", getListModel, setListModel, "" );
 
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelectionChanged );
+_event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
 
-BEGIN_CLASSINFO(ListViewControl, "VCF::ListViewControl", "VCF::Control", LISTVIEWCONTROL_CLASSID )
-LABELED_ENUM_PROPERTY( IconStyleType, "iconStyle", ListViewControl::getIconStyle, ListViewControl::setIconStyle,
-					   isLargeIcon, isDetails, 4, IconStyleTypeNames);
-LABELED_ENUM_PROPERTY( IconAlignType, "iconAlignment", ListViewControl::getIconAlignment, ListViewControl::setIconAlignment,
-					   iaNone, iaAutoArrange, 4, IconAlignTypeNames);
-OBJECT_PROPERTY( ListModel, "listModel", ListViewControl::getListModel, ListViewControl::setListModel );
+_class_rtti_end_
 
-EVENT("VCF::ItemEventHandler", ListViewControl, VCF::ItemEvent, ItemSelectionChanged );
-EVENT("VCF::MouseEventHandler", ListViewControl, VCF::MouseEvent, ColumnItemClicked );
 
-END_CLASSINFO(ListViewControl)
+_class_rtti_(Menu, "VCF::Component", MENU_CLASSID )
+_property_object_( MenuItem, "rootMenuItem", getRootMenuItem, setRootMenuItem, "" );
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(Menu, "VCF::Menu", "VCF::Component", MENU_CLASSID )
-OBJECT_PROPERTY( MenuItem, "rootMenuItem", Menu::getRootMenuItem, Menu::setRootMenuItem );
-END_CLASSINFO(Menu)
 
 
+_class_rtti_(MenuBar, "VCF::Menu", MENUBAR_CLASSID )
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(MenuBar, "VCF::MenuBar", "VCF::Menu", MENUBAR_CLASSID )
-END_CLASSINFO(MenuBar)
+_class_rtti_( MessageDialog, "VCF::Dialog", MESSAGEDIALOG_CLASSID )
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO( MessageDialog, "VCF::MessageDialog", "VCF::Dialog", MESSAGEDIALOG_CLASSID )
-END_CLASSINFO( MessageDialog )
-
-
-BEGIN_CLASSINFO(MultilineTextControl, "VCF::MultilineTextControl", "VCF::TextControl", MULTILINETEXTCONTROL_CLASSID)
-END_CLASSINFO(MultilineTextControl)
+_class_rtti_(MultilineTextControl, "VCF::TextControl", MULTILINETEXTCONTROL_CLASSID)
+_class_rtti_end_
 
 /*
-BEGIN_CLASSINFO(OpenGLControl, "VCF::OpenGLControl", "VCF::CustomControl", OPENGLCONTROL_CLASSID )
-END_CLASSINFO(OpenGLControl)
+_class_rtti_(OpenGLControl, "VCF::OpenGLControl", "VCF::CustomControl", OPENGLCONTROL_CLASSID )
+_class_rtti_end_(OpenGLControl)
 */
 
-BEGIN_CLASSINFO(Panel, "VCF::Panel", "VCF::ControlContainer", PANEL_CLASSID )
-END_CLASSINFO(Panel)
+_class_rtti_(Panel, "VCF::ControlContainer", PANEL_CLASSID )
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(PopupMenu, "VCF::PopupMenu", "VCF::Menu", POPUPMENU_CLASSID )
-END_CLASSINFO(PopupMenu)
+_class_rtti_(PopupMenu, "VCF::Menu", POPUPMENU_CLASSID )
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(PushButton, "PushButton", "VCF::Object", PUSHBUTTON_CLASSID)
-END_CLASSINFO(PushButton)
+_class_rtti_(PushButton, "VCF::Object", PUSHBUTTON_CLASSID)
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(RadioButtonControl, "VCF::RadioButtonControl", "VCF::ToggledButton", RADIOBUTTONCONTROL_CLASSID )
-PROPERTY( long, "groupID", RadioButtonControl::getGroupID, RadioButtonControl::setGroupID, pdLong );
-END_CLASSINFO(RadioButtonControl)
-
-
-
-BEGIN_CLASSINFO(ScrollbarManager, "VCF::ScrollbarManager", "VCF::Component", SCROLLBARMANAGER_CLASSID)
-OBJECT_PROPERTY( Control, "target", ScrollbarManager::getTarget, ScrollbarManager::setTarget );
-PROPERTY( double, "virtualViewHeight", ScrollbarManager::getVirtualViewHeight, ScrollbarManager::setVirtualViewHeight, pdDouble );
-PROPERTY( double, "virtualViewWidth", ScrollbarManager::getVirtualViewWidth, ScrollbarManager::setVirtualViewWidth, pdDouble );
-PROPERTY( double, "verticalPosition", ScrollbarManager::getVerticalPosition, ScrollbarManager::setVerticalPosition, pdDouble );
-PROPERTY( double, "horizontalPosition", ScrollbarManager::getHorizontalPosition, ScrollbarManager::setHorizontalPosition, pdDouble );
-PROPERTY( double, "verticalTopScrollSpace", ScrollbarManager::getVerticalTopScrollSpace, ScrollbarManager::setVerticalTopScrollSpace, pdDouble );
-PROPERTY( double, "verticalBottomScrollSpace", ScrollbarManager::getVerticalBottomScrollSpace, ScrollbarManager::setVerticalBottomScrollSpace, pdDouble );
-PROPERTY( double, "horizontalLeftScrollSpace", ScrollbarManager::getHorizontalLeftScrollSpace, ScrollbarManager::setHorizontalLeftScrollSpace, pdDouble );
-PROPERTY( double, "horizontalRightScrollSpace", ScrollbarManager::getHorizontalRightScrollSpace, ScrollbarManager::setHorizontalRightScrollSpace, pdDouble );
-PROPERTY( bool, "hasVerticalScrollbar", ScrollbarManager::hasVerticalScrollBar, ScrollbarManager::setHasVerticalScrollbar, pdBool );
-PROPERTY( bool, "hasHorizontalScrollbar", ScrollbarManager::hasHorizontalScrollBar, ScrollbarManager::setHasHorizontalScrollbar, pdBool );
-END_CLASSINFO(ScrollbarManager)
+_class_rtti_(RadioButtonControl, "VCF::ToggledButton", RADIOBUTTONCONTROL_CLASSID )
+_property_( long, "groupID", getGroupID, setGroupID, "" );
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(Splitter, "VCF::Splitter", "VCF::CustomControl", SPLITTER_CLASSID)
-//PROPERTY(bool,"updateAttachedControl",Splitter::getUpdateAttachedControl, Splitter::setUpdateAttachedControl,pdBool)
-END_CLASSINFO(Splitter)
-
-
-BEGIN_CLASSINFO(StatusBar, "VCF::StatusBar", "VCF::ControlContainer", STATUSBAR_CLASSID)
-END_CLASSINFO(StatusBar)
-
-
-BEGIN_CLASSINFO(TabbedPages, "VCF::TabbedPages", "VCF::CustomControl", TABBEDPAGES_CLASSID );
-END_CLASSINFO(TabbedPages);
-
-
-
-BEGIN_CLASSINFO(TableControl, "VCF::TableControl", "VCF::CustomControl", TABLECONTROL_CLASSID );
-END_CLASSINFO(TableControl);
+_class_rtti_(ScrollbarManager, "VCF::Component", SCROLLBARMANAGER_CLASSID)
+_property_object_( Control, "target", getTarget, setTarget, "" );
+_property_( double, "virtualViewHeight", getVirtualViewHeight, setVirtualViewHeight, "" );
+_property_( double, "virtualViewWidth", getVirtualViewWidth, setVirtualViewWidth, "" );
+_property_( double, "verticalPosition", getVerticalPosition, setVerticalPosition, "" );
+_property_( double, "horizontalPosition", getHorizontalPosition, setHorizontalPosition, "" );
+_property_( double, "verticalTopScrollSpace", getVerticalTopScrollSpace, setVerticalTopScrollSpace, "" );
+_property_( double, "verticalBottomScrollSpace", getVerticalBottomScrollSpace, setVerticalBottomScrollSpace, "" );
+_property_( double, "horizontalLeftScrollSpace", getHorizontalLeftScrollSpace, setHorizontalLeftScrollSpace, "" );
+_property_( double, "horizontalRightScrollSpace", getHorizontalRightScrollSpace, setHorizontalRightScrollSpace, "" );
+_property_( bool, "hasVerticalScrollbar", hasVerticalScrollBar, setHasVerticalScrollbar, "" );
+_property_( bool, "hasHorizontalScrollbar", hasHorizontalScrollBar, setHasHorizontalScrollbar, "" );
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(TextControl, "VCF::TextControl", "VCF::Control", TEXTCONTROL_CLASSID )
-END_CLASSINFO(TextControl)
+_class_rtti_(Splitter, "VCF::CustomControl", SPLITTER_CLASSID)
+//_property_(bool,"updateAttachedControl",Splitter::getUpdateAttachedControl, Splitter::setUpdateAttachedControl,"")
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(TimerComponent, "VCF::TimerComponent", "VCF::Component", TIMERCOMPONENT_CLASSID)
-PROPERTY( bool, "active", TimerComponent::isActive, TimerComponent::setActivated, pdBool );
-PROPERTY( long, "timeoutInterval", TimerComponent::getTimeoutInterval, TimerComponent::setTimeoutInterval, pdLong );
-EVENT("VCF::TimerEventHandler", TimerComponent, VCF::TimerEvent, TimerActivated );
-EVENT("VCF::TimerEventHandler", TimerComponent, VCF::TimerEvent, TimerDeactivated );
-EVENT("VCF::TimerEventHandler", TimerComponent, VCF::TimerEvent, TimerPulse );
-END_CLASSINFO(TimerComponent)
+_class_rtti_(StatusBar, "VCF::ControlContainer", STATUSBAR_CLASSID)
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(Toolbar, "VCF::Toolbar", "VCF::Control", TOOLBAR_CLASSID);
-END_CLASSINFO(Toolbar);
+_class_rtti_(TabbedPages, "VCF::CustomControl", TABBEDPAGES_CLASSID );
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(ToolbarDock, "VCF::ToolbarDock", "VCF::CustomControl", TOOLBARDOCK_CLASSID);
-LABELED_ENUM_PROPERTY( ToolbarDockSide, "dockSide", ToolbarDock::getDockSide, ToolbarDock::setDockSide,
-					   tdsTop, tdsBottom, 4, ToolbarDockSideNames);
-
-LABELED_ENUM_PROPERTY( ToolbarBackgroundStyle, "backgroundStyle", ToolbarDock::getBackgroundStyle, ToolbarDock::setBackgroundStyle,
-					   tbksNone, tbksStretch, 3, ToolbarBackgroundStyleNames);
-
-OBJECT_PROPERTY( Image, "background", ToolbarDock::getBackground, ToolbarDock::setBackground );
-
-PROPERTY( bool, "usingBackground", ToolbarDock::isUsingBackground, ToolbarDock::setUsingBackground, pdBool );
-PROPERTY( bool, "allowsDragging", ToolbarDock::allowsDragging, ToolbarDock::setAllowsDragging, pdBool );
-
-END_CLASSINFO(ToolbarDock);
+_class_rtti_(TableControl, "VCF::CustomControl", TABLECONTROL_CLASSID );
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(TreeControl, "VCF::TreeControl", "VCF::Control", TREECONTROL_CLASSID )
-OBJECT_PROPERTY( TreeModel, "treeModel", TreeControl::getTreeModel, TreeControl::setTreeModel );
-EVENT("VCF::ItemEventHandler", TreeControl, VCF::ItemEvent, ItemSelected );
-EVENT("VCF::ItemEventHandler", TreeControl, VCF::ItemEvent, ItemExpanded );
-EVENT("VCF::ItemEventHandler", TreeControl, VCF::ItemEvent, ItemStateChangeRequested );
-END_CLASSINFO(TreeControl)
+_class_rtti_(TextControl, "VCF::Control", TEXTCONTROL_CLASSID )
+_class_rtti_end_
+
+
+_class_rtti_(TimerComponent, "VCF::Component", TIMERCOMPONENT_CLASSID)
+_property_( bool, "active",isActive, setActivated, "" );
+_property_( long, "timeoutInterval", getTimeoutInterval, setTimeoutInterval, "" );
+_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerActivated );
+_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerDeactivated );
+_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerPulse );
+_class_rtti_end_
+
+
+_class_rtti_(Toolbar, "VCF::Control", TOOLBAR_CLASSID);
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(TreeListControl, "VCF::TreeListControl", "VCF::CustomControl", TREELISTCONTROL_CLASSID )
-OBJECT_PROPERTY( TreeModel, "treeModel", TreeListControl::getTreeModel, TreeListControl::setTreeModel );
-EVENT("VCF::ItemEventHandler", TreeListControl, VCF::ItemEvent, ItemSelected );
-EVENT("VCF::ItemEventHandler", TreeListControl, VCF::ItemEvent, ItemExpanded );
-EVENT("VCF::ItemEventHandler", TreeListControl, VCF::ItemEvent, ItemStateChangeRequested );
-END_CLASSINFO(TreeListControl)
+_class_rtti_(ToolbarDock, "VCF::CustomControl", TOOLBARDOCK_CLASSID);
+_property_enum_labeled_( ToolbarDockSide, "dockSide", getDockSide, setDockSide,
+					   tdsTop, tdsBottom, 4, ToolbarDockSideNames, "");
+
+_property_enum_labeled_( ToolbarBackgroundStyle, "backgroundStyle", getBackgroundStyle, setBackgroundStyle,
+					   tbksNone, tbksStretch, 3, ToolbarBackgroundStyleNames, "");
+
+_property_object_( Image, "background", getBackground, setBackground, "" );
+
+_property_( bool, "usingBackground", isUsingBackground, setUsingBackground, "" );
+_property_( bool, "allowsDragging", allowsDragging, setAllowsDragging, "" );
+
+_class_rtti_end_
+
+
+
+_class_rtti_(TreeControl, "VCF::Control", TREECONTROL_CLASSID )
+_property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemExpanded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemStateChangeRequested );
+_class_rtti_end_
+
+
+
+_class_rtti_(TreeListControl, "VCF::CustomControl", TREELISTCONTROL_CLASSID )
+_property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemExpanded );
+_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemStateChangeRequested );
+_class_rtti_end_
 
 /*
-BEGIN_CLASSINFO(UIApplication, "UIApplication", "Application", UIAPPLICATION_CLASSID)
-END_CLASSINFO(UIApplication)
+_class_rtti_(UIApplication, "UIApplication", "Application", UIAPPLICATION_CLASSID)
+_class_rtti_end_(UIApplication)
 */
 
 
-BEGIN_CLASSINFO(Window, "VCF::Window", "VCF::Frame", WINDOW_CLASSID )
-OBJECT_PROPERTY( MenuBar, "menuBar", Window::getMenuBar, Window::setMenuBar );
-EVENT("VCF::WindowEventHandler", Window, VCF::WindowEvent, WindowRestore )
-EVENT("VCF::WindowEventHandler", Window, VCF::WindowEvent, WindowMaximize )
-EVENT("VCF::WindowEventHandler", Window, VCF::WindowEvent, WindowMinimize )
-END_CLASSINFO(Window)
+_class_rtti_(Window, "VCF::Frame", WINDOW_CLASSID )
+_property_object_( MenuBar, "menuBar", getMenuBar, setMenuBar, "" );
+_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowRestore )
+_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowMaximize )
+_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowMinimize )
+_class_rtti_end_
 
 
 
-BEGIN_CLASSINFO(ProgressControl, "VCF::ProgressControl", "VCF::CustomControl", PROGRESSCONTROL_CLASSID )
-END_CLASSINFO(ProgressControl)
+_class_rtti_(ProgressControl, "VCF::CustomControl", PROGRESSCONTROL_CLASSID )
+_property_( double, "minValue", getMinValue, setMinValue, "" );
+_property_( double, "maxValue", getMaxValue, setMaxValue, "" );
+_property_( double, "position", getPosition, setPosition, "" );
+_property_( bool, "displayProgressText", getDisplayProgressText, setDisplayProgressText, "" );
+_property_( bool, "useProgressFormatString", getUseProgressFormatString, setUseProgressFormatString, "" );
+_property_( double, "stepItIncrement", getStepItIncrement, setStepItIncrement, "" );
+_property_object_( Color, "progressBarColor", getProgressBarColor, setProgressBarColor, "" );
+_property_object_( Color, "progressTextColor", getProgressTextColor, setProgressTextColor, "" );
+_property_enum_labeled_( ProgressControl::ProgressAlignment, "displayAlignment", getDisplayAlignment, setDisplayAlignment,
+					   ProgressControl::paVertical, ProgressControl::paHorizontal, 
+					   2, ProgressAlignmentNames, "");
+
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(SliderControl, "VCF::SliderControl", "VCF::CustomControl", SLIDERCONTROL_CLASSID )
-END_CLASSINFO(SliderControl)
+_class_rtti_(SliderControl, "VCF::CustomControl", SLIDERCONTROL_CLASSID )
+_property_enum_labeled_( SliderControl::DisplayOrientation, "displayOrientation", getDisplayOrientation, setDisplayOrientation,
+					   SliderControl::doHorizontal, SliderControl::doVertical, 2, ProgressAlignmentNames, "");
+_property_( double, "minValue", getMinValue, setMinValue, "" );
+_property_( double, "maxValue", getMaxValue, setMaxValue, "" );
+_property_( double, "position", getPosition, setPosition, "" );
+_property_( bool, "tickMarks", hasTickMarks, setHasTickMarks, "" );
+_property_( long, "tickFrequency", getTickFrequency, setTickFrequency, "" );
+_property_( double, "stepIncrement", getStepIncrement, setStepIncrement, "" );
+_property_( double, "stepIncrement", getPageIncrement, setPageIncrement, "" );
+_class_rtti_end_
 
 
-BEGIN_CLASSINFO(SystemTray, "VCF::SystemTray", "VCF::Component", SYSTEMTRAY_CLASSID )
-	EVENT("VCF::GenericEventHandler", SystemTray, VCF::Event, TrayIconChanged )
-	OBJECT_PROPERTY( PopupMenu, "popupMenu", SystemTray::getPopupMenu, Control::setPopupMenu );
-	PROPERTY( String, "tooltipText", SystemTray::getTooltipText, SystemTray::setTooltipText, pdString );
-END_CLASSINFO(SystemTray)
+_class_rtti_(SystemTray, "VCF::Component", SYSTEMTRAY_CLASSID )
+	_event_("VCF::GenericEventHandler", VCF::Event, TrayIconChanged )
+	_property_object_( PopupMenu, "popupMenu", getPopupMenu, setPopupMenu, "" );
+	_property_( String, "tooltipText", getTooltipText, setTooltipText, "" );
+_class_rtti_end_
 
+
+
+//property editors!
+
+
+
+#define ABSTRACTPROPERTYEDITOR_CLASSID	"e7bfe231-713e-4d32-b32f-fb8eecb4cf84"
+
+_class_abstract_rtti_(AbstractPropertyEditor, "VCF::ObjectWithEvents", ABSTRACTPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define IMAGEPROPERTYEDITOR_CLASSID "c1ab05f9-ee5c-4e1d-a535-94a8f475fc81"
+
+_class_rtti_(ImagePropertyEditor, "VCF::AbstractPropertyEditor", IMAGEPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define IMAGEFILENAMEPROPERTYEDITOR_CLASSID "4a519d27-c486-4501-8591-552f56609c00"
+
+_class_rtti_(ImageFilenamePropertyEditor, "VCF::AbstractPropertyEditor", IMAGEFILENAMEPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define INTEGERPROPERTYEDITOR_CLASSID "4ab9c999-16e2-45b0-b586-0ff1c2dc6c6f"
+
+_class_rtti_(IntegerPropertyEditor, "VCF::AbstractPropertyEditor", INTEGERPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define DOUBLEPROPERTYEDITOR_CLASSID "7f34bc88-c020-48fb-80a0-20d6d512fbfc"
+
+_class_rtti_(DoublePropertyEditor, "VCF::AbstractPropertyEditor", DOUBLEPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define STRINGPROPERTYEDITOR_CLASSID "7039e0b6-17fd-4317-8749-d662822744ea"
+
+_class_rtti_(StringPropertyEditor, "VCF::AbstractPropertyEditor", STRINGPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+
+#define BOOLPROPERTYEDITOR_CLASSID "cd440a0d-9f08-4c48-8185-b8cb2c6f7ef9"
+
+_class_rtti_(BoolPropertyEditor, "VCF::AbstractPropertyEditor", BOOLPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define ENUMPROPERTYEDITOR_CLASSID "2221d216-6c19-4e7f-82a0-07c6b018ead6"
+
+_class_rtti_(EnumPropertyEditor, "VCF::AbstractPropertyEditor", ENUMPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define COLORPROPERTYEDITOR_CLASSID "5f7c1d05-78da-4e6b-b22b-fc290e5207e4"
+
+_class_rtti_(ColorPropertyEditor, "VCF::AbstractPropertyEditor", COLORPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define FONTPROPERTYEDITOR_CLASSID "192e8624-94c6-46fb-8092-16ee2cb6fb27"
+
+_class_rtti_(FontPropertyEditor, "VCF::AbstractPropertyEditor", FONTPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+
+#define DEFAULTMENUITEMPROPERTYEDITOR_CLASSID "b4cf4ef4-f135-4a23-8237-486144e5ba06"
+
+_class_rtti_(DefaultMenuItemPropertyEditor, "VCF::AbstractPropertyEditor", DEFAULTMENUITEMPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define DEFAULTLISTMODELPROPERTYEDITOR_CLASSID "9f39a5a5-9910-4ae2-a6b3-c6ff38682283"
+
+_class_rtti_(DefaultListModelPropertyEditor, "VCF::AbstractPropertyEditor", DEFAULTLISTMODELPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
 
 
 
@@ -640,6 +761,28 @@ END_CLASSINFO(SystemTray)
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:51  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.6  2005/05/15 23:17:37  ddiego
+*fixes for better accelerator handling, and various fixes in hwo the text model works.
+*
+*Revision 1.3.2.5  2005/03/09 05:11:19  ddiego
+*fixed property editor class.
+*
+*Revision 1.3.2.4  2005/03/06 22:50:58  ddiego
+*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
+*
+*Revision 1.3.2.3  2005/02/28 04:51:55  ddiego
+*fixed issue in handling componenent state and events when in design mode
+*
+*Revision 1.3.2.2  2005/02/27 01:45:32  ddiego
+*fixed bug in testing whether a path should be loaded as a bundle.
+*added some additional rtti info for certain classes in app kit.
+*
+*Revision 1.3.2.1  2005/01/26 20:59:28  ddiego
+*some fixes to table control and to teh table item editor interface
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

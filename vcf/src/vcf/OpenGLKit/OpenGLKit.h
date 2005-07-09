@@ -15,26 +15,6 @@ where you installed the VCF.
 
 
 /**
-All of this nonsense is to properly declare the OPENGLKIT_API
-macro so that we'll export/import classes as needed for
-dll builds.
-*/
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-  #ifndef OPENGLKIT_DLL
-    #define OPENGLKIT_API
-  #else
-    #ifdef OPENGLKIT_EXPORTS
-      #define OPENGLKIT_API __declspec(dllexport)
-    #else
-      #define OPENGLKIT_API __declspec(dllimport)
-    #endif
-  #endif
-#else
-  #define OPENGLKIT_API
-#endif
-
-
-/**
 Handle the extension based on the compiler
 */
 # if defined(__INTEL_COMPILER)
@@ -113,6 +93,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:17  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/06/28 21:39:27  pallindo
+*Removed now reduncent OPENGLKIT_API definition.
+*
 *Revision 1.3  2004/12/01 04:31:45  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

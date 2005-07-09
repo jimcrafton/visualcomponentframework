@@ -319,8 +319,15 @@ void ImageList::afterCreate( ComponentEvent* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.1  2004/12/20 23:39:47  marcelloptr
+*added an assertion addImage in so we know sooner if we had problem
+*loading an image
 *
 *Revision 1.2.4.1  2004/12/20 23:39:47  marcelloptr
 *added an assertion addImage in so we know sooner if we had problem

@@ -8584,25 +8584,35 @@ class Workspace( DspFile ):
             if ( 0 == len( self.prjConfigFullNameList ) ):
                 raise Exception( 'updateSlnProjectEntries: self.prjConfigFullNameList is empty. File: \'%s\'' % ( self.filename ) )
             for configFullName in self.prjConfigFullNameList:
+                addLine = False
                 dict = slnPrjData.prjConfigFullNameExCfgPlatfAssocDict
                 if ( 0 == len( dict ) ):
                     dict = referenceSolution.dictSlnProjectDataByName[ prjNameLwr ].prjConfigFullNameExCfgPlatfAssocDict
                 if ( dict.has_key( configFullName ) ):
                     confignamePlatf = dict[ configFullName ]
+                    addLine = True
                 else:
-                    configName = configFullName.split( ' ' )[-1]
-                    confignamePlatf = dict[ configName ]
+                    # not sure why I was using only the last part !
+                    #configName = configFullName.split( ' ' )[-1]
+                    #if ( not dict.has_key(configName) ):
+                    #    configName = configFullName
+                    configName = configFullName
+                    if ( dict.has_key(configName) ):
+                        confignamePlatf = dict[ configName ]
+                        addLine = True
 
-                if ( g_options_showNamesForUuids ):
-                    line = '\t\t{%s}.%s.ActiveCfg = %s : {%s}\n' % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
-                    lines.append( line )
-                    #line = '\t\t{%s}.%s.Build.0 = %s : {%s}\n'   % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
-                    #lines.append( line )
-                else:
-                    line = '\t\t{%s}.%s.ActiveCfg = %s\n'        % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
-                    lines.append( line )
-                    #line = '\t\t{%s}.%s.Build.0 = %s\n'          % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
-                    #lines.append( line )
+                if ( addLine ):
+                    if ( g_options_showNamesForUuids ):
+                        line = '\t\t{%s}.%s.ActiveCfg = %s : {%s}\n' % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
+                        lines.append( line )
+                        #line = '\t\t{%s}.%s.Build.0 = %s : {%s}\n'   % ( slnPrjData.prjUuid, configFullName, confignamePlatf, slnPrjData.prjName )
+                        #lines.append( line )
+                    else:
+                        line = '\t\t{%s}.%s.ActiveCfg = %s\n'        % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
+                        lines.append( line )
+                        #line = '\t\t{%s}.%s.Build.0 = %s\n'          % ( slnPrjData.prjUuid, configFullName, confignamePlatf )
+                        #lines.append( line )
+                        
         lines.append( '\tEndGlobalSection\n' )
 
 
@@ -9496,5 +9506,8 @@ To do:
 
         Creates a list of projects ( for vc70 and vc71 ) that can be updated from the vcproj version (vc7x) instead than from the dsp version (vc6)
             At this moment it is responsability of the person having the vcproj to keep updated the vc6 version
+
+
+        libAGG is duplicated in examples.dsw
 
 """

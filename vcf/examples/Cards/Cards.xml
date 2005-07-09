@@ -1,0 +1,18 @@
+<!--
+
+Copyright (c) 2005, Darko Miletic
+
+-->
+
+
+<section><title>Cards</title>
+	<para>
+		This is just a bare bone sample that shows custom implementation
+		of user lightweight control. Drawing with native API functions using
+		VCF handle infrastructure.
+	</para>
+</section>
+
+
+
+

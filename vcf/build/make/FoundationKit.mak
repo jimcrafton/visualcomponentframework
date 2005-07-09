@@ -28,14 +28,14 @@ LinuxPeer.cpp \
 LinuxProcessIORedirector.cpp \
 LinuxProcessPeer.cpp \
 LinuxRegistry.cpp \
-LinuxResourceBundle.cpp \
 LinuxSemaphorePeer.cpp \
 LinuxSystemPeer.cpp \
 LinuxSystemToolkit.cpp \
+LinuxResourceBundle.cpp \
 Locales.cpp \
+MIMEType.cpp \
 MemoryStream.cpp \
 MessageLoader.cpp \
-MIMEType.cpp \
 Mutex.cpp \
 Object.cpp \
 ObjectWithEvents.cpp \
@@ -46,14 +46,12 @@ PosixMutex.cpp \
 PosixThread.cpp \
 ProcessWithRedirectedIO.cpp \
 PropertyChangeEvent.cpp \
-regexx.cpp \
 Registry.cpp \
 ResourceBundle.cpp \
-Resource.cpp \
 Semaphore.cpp \
 Stream.cpp \
-StringsMessageLoader.cpp \
 StringUtils.cpp \
+StringsMessageLoader.cpp \
 System.cpp \
 SystemToolkit.cpp \
 TextCodec.cpp \
@@ -61,8 +59,8 @@ TextInputStream.cpp \
 TextOutputStream.cpp \
 Thread.cpp \
 ThreadEvent.cpp \
-VariantData.cpp \
 VCFMath.cpp \
 VCFProcess.cpp \
 VCFString.cpp \
+VariantData.cpp \
 XMLParser.cpp

@@ -7,6 +7,7 @@
 
 #include "QTML.h"
 #include "Movies.h"
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 #define QUICKTIMECONTROL_CLASSID		"a9bb58ff-fd84-4a03-ae1f-126f1bba828b"
 
@@ -29,10 +30,10 @@ public:
 	};
 
 
-	BEGIN_CLASSINFO(QuickTimeControl, "QuickTimeControl", "VCF::CustomControl", QUICKTIMECONTROL_CLASSID)
+	_class_rtti_(QuickTimeControl, "VCF::CustomControl", QUICKTIMECONTROL_CLASSID)
 	//EVENT("VCF::GenericEventHandler", "VCF::Event", "MovieChanged" );
 	//EVENT("VCF::GenericEventHandler", "VCF::Event", "MovieFrameChanged" );
-	END_CLASSINFO(QuickTimeControl)
+	_class_rtti_end_
 
 	DELEGATE(MovieChanged);
 
@@ -116,8 +117,8 @@ protected:
 
 class QuickTimeScrubber : public VCF::CustomControl { 
 public:
-	BEGIN_CLASSINFO(QuickTimeScrubber, "QuickTimeScrubber", "VCF::CustomControl", QUICKTIMESCRUBBER_CLASSID)	
-	END_CLASSINFO(QuickTimeScrubber)
+	_class_rtti_(QuickTimeScrubber, "VCF::CustomControl", QUICKTIMESCRUBBER_CLASSID)	
+	_class_rtti_end_
 
 	QuickTimeScrubber();
 	virtual ~QuickTimeScrubber();

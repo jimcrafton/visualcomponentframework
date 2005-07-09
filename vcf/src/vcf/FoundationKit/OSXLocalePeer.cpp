@@ -23,7 +23,9 @@ std::map<String,AppleLocalePair> OSXLocalePeer::localeMaping;
 
 
 OSXLocalePeer::OSXLocalePeer():
-    localeRef_(NULL)
+    localeRef_(NULL),
+	collateLocaleRef_(NULL),
+	numberFormatterRef_(NULL)
 {
 
     if ( OSXLocalePeer::localeMaping.empty() ) {
@@ -249,28 +251,58 @@ OSXLocalePeer::OSXLocalePeer():
 
 void OSXLocalePeer::setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant )
 {
+	String name = language + "_" + country;
 	if ( language.empty() && country.empty() ) {
 
-		localeRef_ = NULL;
+		collateLocaleRef_ = NULL;
 	}
 	else {
-        String name = language + "_" + country;
-		std::map<String,AppleLocalePair>::iterator found = OSXLocalePeer::localeMaping.find( name );
+        std::map<String,AppleLocalePair>::iterator found = OSXLocalePeer::localeMaping.find( name );
         if ( found != OSXLocalePeer::localeMaping.end() ) {
             AppleLocalePair& localePair = found->second;
-            OSStatus err = LocaleRefFromLangOrRegionCode( localePair.first, localePair.second, &localeRef_ );
+            OSStatus err = LocaleRefFromLangOrRegionCode( localePair.first, localePair.second, &collateLocaleRef_ );
             if ( err != noErr ) {
                 throw RuntimeException( MAKE_ERROR_MSG_2( "LocaleRefFromLangOrRegionCode failed!" ) );
             }
         }
 	}
+	
+	
+	if ( NULL != localeRef_ ) {
+		CFRelease( localeRef_ );
+		localeRef_ = NULL;
+	}
+
+	if ( NULL != numberFormatterRef_ ) {
+		CFRelease( numberFormatterRef_ );
+		numberFormatterRef_ = NULL;
+	}
+
+	
+	
+	CFTextString localeName;
+	
+	localeName = name;
+	
+	localeRef_ = CFLocaleCreate( kCFAllocatorDefault, localeName );
+	if ( NULL == localeRef_ ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2( "CFLocaleCreate failed for locale " + name ) );
+	}
+	
+	numberFormatterRef_ = CFNumberFormatterCreate( kCFAllocatorDefault, localeRef_, kCFNumberFormatterNoStyle );
+	
+	if ( NULL == numberFormatterRef_ ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2( "CFNumberFormatterCreate failed for locale " + name ) );
+	}
 }
 
 int OSXLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 {
-    int result = 0;
+    
+	int result = 0;
+	
     CollatorRef collatorRef = 0;
-    OSStatus err = UCCreateCollator( localeRef_, 0, 0, &collatorRef );
+    OSStatus err = UCCreateCollator( collateLocaleRef_, 0, 0, &collatorRef );
     if ( err == noErr ) {
         Boolean matched = FALSE;
         SInt32 order = 0;
@@ -291,6 +323,7 @@ int OSXLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 
         UCDisposeCollator( &collatorRef );
     }
+	
 	return result;
 }
 
@@ -299,7 +332,7 @@ int OSXLocalePeer::collateCaseInsensitive( const UnicodeString& s1, const Unicod
 {
 	int result = 0;
     CollatorRef collatorRef = 0;
-    OSStatus err = UCCreateCollator( localeRef_, 0, kUCCollateCaseInsensitiveMask, &collatorRef );
+    OSStatus err = UCCreateCollator( collateLocaleRef_, 0, kUCCollateCaseInsensitiveMask, &collatorRef );
     if ( err == noErr ) {
         Boolean matched = FALSE;
         SInt32 order = 0;
@@ -326,32 +359,46 @@ int OSXLocalePeer::collateCaseInsensitive( const UnicodeString& s1, const Unicod
 
 UnicodeString OSXLocalePeer::toString( const int& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberIntType, &val );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toString( const unsigned int& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	SInt64 tmp = val;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberSInt64Type, &tmp );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toString( const long& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberLongType, &val );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toString( const unsigned long& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	SInt64 tmp = val;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberSInt64Type, &tmp );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toString( const double& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberDoubleType, &val );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toString( const float& val )
 {
-	return StringUtils::toString( val );
+	CFTextString result;
+	result = CFNumberFormatterCreateStringWithValue( NULL, numberFormatterRef_, kCFNumberFloatType, &val );
+	return result;
 }
 
 UnicodeString OSXLocalePeer::toStringFromCurrency( const double& val )
@@ -599,6 +646,12 @@ ulong32 OSXLocalePeer::getCountryCode()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.2.4.1  2005/06/23 01:26:56  ddiego
+*build updates
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

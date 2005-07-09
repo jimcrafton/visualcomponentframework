@@ -28,6 +28,9 @@ class System;
 class SystemPeer;
 class LocalePeer;
 class ResourceBundlePeer;
+class RunLoop;
+class RunLoopPeer;
+class ThreadManagerPeer;
 
 /**
 \par
@@ -64,7 +67,13 @@ public:
 	/**
 	*creates a new ThreadPeer instance
 	*/
-	static ThreadPeer* createThreadPeer( Thread* thread );
+	static ThreadPeer* createThreadPeer( Thread* thread, bool mainThread );
+
+	static RunLoopPeer* createRunLoopPeer( RunLoop* runLoop );
+
+	static ThreadManagerPeer* createThreadManagerPeer();
+
+	
 
 	/**
 	*creates a new system peer
@@ -114,8 +123,13 @@ protected:
 	A port of the FoundationKit to a new platform requires a new class that derives from the 
 	SystemToolkit and implements this method.	
 	*/
-	virtual ThreadPeer* internal_createThreadPeer( Thread* thread ) = 0;
+	virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread ) = 0;
 
+	virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop ) = 0;
+
+	virtual ThreadManagerPeer* internal_createThreadManagerPeer() = 0;
+
+	
 	/**
 	*creates a new system peer
 	A port of the FoundationKit to a new platform requires a new class that derives from the 
@@ -194,6 +208,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:15:05  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.1  2005/05/05 12:42:26  ddiego
+*this adds initial support for run loops,
+*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
+*changes to teh etxt model so that notification of text change is more
+*appropriate.
+*
 *Revision 1.4  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

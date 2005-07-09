@@ -7,7 +7,7 @@
 	<dependsOn>
 	</dependsOn>
 
-	<target name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
+	<target name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" active="true" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
 		<dependsOn>
 			<dependency name="./vcf_docbook.xml" id="76e9e3b1-434b-4751-a82d-8603ab0ded80"/>
 		</dependsOn>
@@ -23,7 +23,7 @@
 		</tool>
 	</config>
 
-	<target name="vcf-docbook-chm" id="???????????????????" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" active="true" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
+	<target name="vcf-docbook-chm" id="???????????????????" parent="f936d9e6-4cf5-4e66-b9de-352b7db36d88" config="docbook" configID="b7b6e6cc-36f6-4a22-bc6e-61f5c208be37" >
 		<dependsOn>
 			<dependency name="vcfdocs" id="03614354-e48b-44f1-829a-3c85407db31a"/>
 		</dependsOn>
@@ -84,6 +84,7 @@
 		<file src="../examples/Dictionaries/Dictionaries.xml" id="f78b5f5b-ef56-494e-aced-87d24dc0bb98" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 		<file src="../examples/SharedLibraries/SharedLibraries.xml" id="f7a32c55-a693-485d-a82f-884be3e92f0d" parent="2b37d6fb-c055-4e7e-9769-4e7419479926"/>
 	</files>
+
 	<folders>
 		<folder name="example-tutorials" ext="" id="2b37d6fb-c055-4e7e-9769-4e7419479926" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>
 		<folder name="stylesheets" ext="" id="52ec4c1c-b3e5-44cf-9d50-9dff14c452a4" parent="a3138d6c-d0a3-48ec-88ae-b5462d8a1074"/>

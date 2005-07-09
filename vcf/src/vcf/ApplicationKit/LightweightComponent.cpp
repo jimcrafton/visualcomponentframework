@@ -13,6 +13,8 @@ where you installed the VCF.
 
 using namespace VCF;
 
+
+
 LightweightComponent::LightweightComponent( Control* component )
 {
 	component_ = component;
@@ -109,7 +111,44 @@ void LightweightComponent::setControl( VCF::Control* component )
 
 void LightweightComponent::setParent( VCF::Control* parent )
 {
+	Container* container = component_->getContainer();
 
+	int i = 0;
+
+	if ( NULL == parent ) {
+		hiddenControls_.clear();
+		
+		if ( NULL != container ) {
+			hiddenControls_.resize( container->getChildCount() );
+			Enumerator<Control*>* children = container->getChildren();
+			
+			while ( children->hasMoreElements() ) {
+				Control* child = children->nextElement();
+
+				hiddenControls_[i] = child->getVisible();
+				child->setVisible( false );
+				i++;
+			}
+		}
+	}
+	else {
+		if ( !hiddenControls_.empty() ) {
+
+			std::vector<bool>::iterator it = hiddenControls_.begin();
+			Enumerator<Control*>* children = container->getChildren();
+			
+			VCF_ASSERT( hiddenControls_.size() == container->getChildCount() );
+
+			i = 0;
+			while ( children->hasMoreElements() ) {
+				Control* child = children->nextElement();
+				child->setVisible( hiddenControls_[i] );
+				i++;
+			}
+
+			hiddenControls_.clear();
+		}
+	}
 }
 
 VCF::Control* LightweightComponent::getParent()
@@ -302,8 +341,14 @@ void LightweightComponent::translateFromScreenCoords( Point* pt )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:53  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.3  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*
+*Revision 1.2.4.2  2005/04/20 02:26:00  ddiego
+*fixes for single line text and formatting problems in text window creation.
 *
 *Revision 1.2.4.1  2004/12/19 04:04:59  ddiego
 *made modifications to methods that return a handle type. Introduced

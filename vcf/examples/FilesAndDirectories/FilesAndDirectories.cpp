@@ -48,18 +48,18 @@ int main( int argc, char** argv ){
 	String extension = fileName.getExtension();
 	String nativeOSFilePath = FilePath::transformToOSSpecific( fileName );
 
-	System::println( "The filename %ls has the following components:\n"\
+	System::println( Format("The filename %ls has the following components:\n"\
 						"\tdrive: %ls\n"\
 						"\tdirectoryPath: %ls\n"\
 						"\tname: %ls\n"\
 						"\textension: %ls\n"\
-						"\tnativeOSFilePath: %ls",
-						fileName.getFileName().c_str(),
-						drive.c_str(),
-						directoryPath.c_str(),
-						name.c_str(),
-						extension.c_str(),
-						nativeOSFilePath.c_str() );
+						"\tnativeOSFilePath: %ls")
+					%	fileName.getFileName().c_str()
+					%	drive.c_str()
+					%	directoryPath.c_str()
+					%	name.c_str()
+					%	extension.c_str()
+					%	nativeOSFilePath.c_str() );
 
 
 	/**
@@ -80,7 +80,7 @@ int main( int argc, char** argv ){
 	FileOutputStream fs(fileName);
 	String text = "here's some text to put in the file";
 	fs << text;
-	System::println( "FileOutputStream current size: %d", fs.getSize() );
+	System::println( Format("FileOutputStream current size: %d") % fs.getSize() );
 	fs.close();
 
 
@@ -90,7 +90,9 @@ int main( int argc, char** argv ){
 	*/
 	{
 		File file( fileName );		
-		System::println( "The file %ls's size: %d", fileName.getFileName().c_str(), (ulong32)file.getSize() );
+		System::println( Format("The file %ls's size: %d") 
+						% fileName.getFileName().c_str()
+						% (ulong32)file.getSize() );
 
 
 		/**
@@ -192,7 +194,7 @@ int main( int argc, char** argv ){
 		String s;
 		tis >> s;
 		
-		System::println( "File contents of \"%ls\" :\n%ls", f1.getName().c_str(), s.c_str() );
+		System::println( Format("File contents of \"%ls\" :\n%ls") % f1.getName().c_str() % s.c_str() );
 
 		fis->free();
 
@@ -208,6 +210,15 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:14:37  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.4.2  2005/04/17 17:19:09  iamfraggle
+*Small fixes
+*
+*Revision 1.3.4.1  2005/04/17 15:11:44  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
 *Revision 1.3  2004/08/07 02:47:02  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

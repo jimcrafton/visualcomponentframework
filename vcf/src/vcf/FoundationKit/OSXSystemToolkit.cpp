@@ -14,6 +14,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/FoundationKit/OSXResourceBundle.h"
 #include "vcf/FoundationKit/OSXLibraryPeer.h"
+#include "vcf/FoundationKit/RunLoopPeer.h"
+#include "vcf/FoundationKit/OSXRunLoopPeer.h"
+#include "vcf/FoundationKit/ThreadManagerPeer.h"
+#include "vcf/FoundationKit/OSXThreadManagerPeer.h"
 
 
 
@@ -39,11 +43,21 @@ ProcessPeer* OSXSystemToolkit::internal_createProcessPeer( Process* process )
 	return result;
 }
 
-ThreadPeer* OSXSystemToolkit::internal_createThreadPeer( Thread* thread )
+ThreadPeer* OSXSystemToolkit::internal_createThreadPeer( Thread* thread, bool mainThread )
 {
-	return new OSXThread( thread );
+	return new OSXThread( thread, mainThread );
 }
 
+RunLoopPeer* OSXSystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
+{
+	return new OSXRunLoopPeer( runLoop );
+}
+
+ThreadManagerPeer* OSXSystemToolkit::internal_createThreadManagerPeer()
+{
+	return new OSXThreadManagerPeer();
+}
+		
 SystemPeer* OSXSystemToolkit::internal_createSystemPeer()
 {
 	return new OSXSystemPeer();
@@ -109,6 +123,12 @@ ResourceBundlePeer* OSXSystemToolkit::internal_createResourceBundlePeer()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/09 23:15:04  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

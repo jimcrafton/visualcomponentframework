@@ -135,8 +135,10 @@ public:
 
 	virtual ApplicationPeer* internal_createApplicationPeer();
 
-	virtual TextPeer* internal_createTextPeer( TextControl* component, const bool& isMultiLineControl );
+	virtual TextPeer* internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined );
 
+    virtual TextEditPeer* internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl );
+	
 	virtual TreePeer* internal_createTreePeer( TreeControl* component );
 
 	virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component );
@@ -185,9 +187,13 @@ public:
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
 
+	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app );
+	
 	virtual SystemTrayPeer* internal_createSystemTrayPeer();
 	
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer( AbstractApplication* app );
+
+	virtual  MenuManagerPeer* internal_createMenuManagerPeer();
 
 	virtual CursorPeer* internal_createCursorPeer( Cursor* cursor );
 
@@ -258,8 +264,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/09 23:14:55  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
 *Revision 1.4  2005/01/08 20:52:46  ddiego
 *fixed some glitches in osx impl.
+*
+
+*Revision 1.3.2.2  2005/06/09 02:25:50  ddiego
+*updated osx build
+*
+*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
+*osx updates, not yet functional.
 *
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
