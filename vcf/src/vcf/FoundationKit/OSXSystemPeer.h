@@ -30,10 +30,6 @@ public:
 	virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
 
 	virtual void addPathDirectory( const String& directory );
-
-	virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
-	
-	virtual void addPathDirectory( const String& directory );
 	
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory );
 
@@ -71,6 +67,9 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.6  2005/07/10 00:20:40  ddiego
+ *updated osx code from merge over of devmain-0-6-7.
+ *
  *Revision 1.5  2005/07/09 23:15:04  ddiego
  *merging in changes from devmain-0-6-7 branch.
  *

@@ -882,11 +882,6 @@ MenuManagerPeer* OSXUIToolkit::internal_createMenuManagerPeer()
 	return new OSXMenuManagerPeer();
 }
 
-GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
-{
-	return new OSXAppResourceBundle(app);
-}
-
 CommonPrintDialogPeer* OSXUIToolkit::internal_createCommonPrintDialogPeer( Control* owner )
 {
 	return NULL;
@@ -2228,6 +2223,9 @@ VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/10 00:20:40  ddiego
+*updated osx code from merge over of devmain-0-6-7.
+*
 *Revision 1.5  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
