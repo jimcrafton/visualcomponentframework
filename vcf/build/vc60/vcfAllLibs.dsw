@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ApplicationKit"=.\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
+Project: "ApplicationKit"=".\ApplicationKit\ApplicationKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -18,7 +18,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"=.\ApplicationKit\ApplicationKitDLL.dsp - Package Owner=<4>
+Project: "ApplicationKitDLL"=".\ApplicationKit\ApplicationKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -33,7 +33,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKit"=.\FoundationKit\FoundationKit.dsp - Package Owner=<4>
+Project: "FoundationKit"=".\FoundationKit\FoundationKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -45,7 +45,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKitDLL"=.\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
+Project: "FoundationKitDLL"=".\FoundationKit\FoundationKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -57,7 +57,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FreeImageLib"=..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib.dsp - Package Owner=<4>
+Project: "FreeImageLib"="..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -84,7 +84,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKit"=.\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
+Project: "GraphicsKit"=".\GraphicsKit\GraphicsKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -102,7 +102,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKitDLL"=.\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
+Project: "GraphicsKitDLL"=".\GraphicsKit\GraphicsKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -120,7 +120,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ImageFormats"=.\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
+Project: "ImageFormats"=".\GraphicsKit\ImageFormats.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -135,7 +135,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"=..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+Project: "LibJPEG"="..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -147,7 +147,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibMNG"=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.dsp - Package Owner=<4>
+Project: "LibMNG"="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -159,7 +159,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"=..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
+Project: "LibPNG"="..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -171,7 +171,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"=..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
+Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -183,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NetworkKit"=.\NetworkKit\NetworkKit.dsp - Package Owner=<4>
+Project: "NetworkKit"=".\NetworkKit\NetworkKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -198,7 +198,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NetworkKitDLL"=.\NetworkKit\NetworkKitDLL.dsp - Package Owner=<4>
+Project: "NetworkKitDLL"=".\NetworkKit\NetworkKitDLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -213,88 +213,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OpenGLKit"=.\OpenGLKit\OpenGLKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "OpenGLKitDLL"=.\OpenGLKit\OpenGLKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RegExx"=.\FoundationKit\RegExx.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKit"=.\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKitStatic"=.\RemoteObjectKit\RemoteObjectKitStatic.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKit
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser"=.\Win32HTMLBrowser\Win32HTMLBrowser.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"=.\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.dsp - Package Owner=<4>
+Project: "OpenGLKit"=".\OpenGLKit\OpenGLKit.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -309,7 +228,22 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"=..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
+Project: "OpenGLKitDLL"=".\OpenGLKit\OpenGLKitDLL.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RegExx"=".\FoundationKit\RegExx.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -321,7 +255,67 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libAGG"=.\GraphicsKit\libAGG.dsp - Package Owner=<4>
+Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKitStatic"=".\RemoteObjectKit\RemoteObjectKitStatic.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser"=".\Win32HTMLBrowser\Win32HTMLBrowser.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Win32HTMLBrowser_StaticLib"=".\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -333,7 +327,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllDynamicLibs"=.\vcfAllDynamicLibs.dsp - Package Owner=<4>
+Project: "libAGG"=".\GraphicsKit\libAGG.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "vcfAllDynamicLibs"=".\vcfAllDynamicLibs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -360,7 +366,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllLibs"=.\vcfAllLibs.dsp - Package Owner=<4>
+Project: "vcfAllLibs"=".\vcfAllLibs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -378,7 +384,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllStaticLibs"=.\vcfAllStaticLibs.dsp - Package Owner=<4>
+Project: "vcfAllStaticLibs"=".\vcfAllStaticLibs.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

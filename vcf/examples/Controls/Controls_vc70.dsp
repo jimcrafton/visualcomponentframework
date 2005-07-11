@@ -130,6 +130,10 @@ SOURCE=Spacers.h
 
 SOURCE=Controls.rc
 # End Source File
+# Begin Source File
+
+SOURCE=iconSaveDown.bmp
+# End Source File
 # End Group
 # End Target
 # End Project
