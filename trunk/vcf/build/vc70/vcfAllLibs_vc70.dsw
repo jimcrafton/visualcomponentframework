@@ -213,6 +213,36 @@ Package=<4>
 
 ###############################################################################
 
+Project: "OpenGLKit"=".\OpenGLKit\OpenGLKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKitDLL"=".\OpenGLKit\OpenGLKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "RegExx"=".\FoundationKit\RegExx_vc70.dsp" - Package Owner=<4>
 
 Package=<5>

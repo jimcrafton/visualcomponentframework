@@ -170,6 +170,9 @@
 			<File
 				RelativePath="Controls.rc">
 			</File>
+			<File
+				RelativePath="iconSaveDown.bmp">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
