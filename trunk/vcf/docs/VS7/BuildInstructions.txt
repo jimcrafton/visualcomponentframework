@@ -1,0 +1,74 @@
+
+A. BUILD VCFSrcDocs.0.X.x.HxS HELP FILES
+
+1.  Create directory vcf/docs/vc7/doxy_html/gfx
+2.  Copy logo.png from vcf/docs/gfx to this new directory
+3.  Open docs/Doxyfile_vc7  in your text editor (or Doxywizard) and check settings. 
+     Most settings should be ok, but make sure you have these set like this:
+	OUTPUT_DIRECTORY       = ./vc7
+	INPUT                  = ../src/vcf
+	GENERATE_HTML          = YES
+	HTML_OUTPUT            = doxy_html	
+	HTML_HEADER            = doxy_header_vc7.html
+	HTML_FOOTER            = doxy_footer.html
+	HTML_STYLESHEET        = vcf.css	
+	GENERATE_HTMLHELP      = YES
+	
+    Specify a name for compiled help output file (reflecting the current version):
+	CHM_FILE               = VCFSrcDocs.0.6.8.chm
+    Give the path to the location of your HTML Help Workshop compiler.
+    On my machine, it is:
+	HHC_LOCATION           = "C:/Program Files/HTML Help Workshop/hhc.exe"
+
+    Also, note the project name setting. We will need this later:
+	PROJECT_NAME           = "Visual Component Framework"    
+
+    You can play around with other settings to generate help as you like it.
+
+
+4.  Now, run Doxygen with the input file Doxyfile_vc7. This should produce HTML files, an HTML Help project file, and compiled help files, and they should be located in vcf/docs/vc7/doxy_html.
+
+5.  We will now use Visual Studio to convert the HTML help project file (created by Doxygen) to a MSHELP2 project.
+    Alternatively, we could just convert the compiled help file (*.chm) to MSHELP2 format. In Visual Studio:
+	- File->New->Project
+	- Project Types->Other Projects->Help Projects->Convert 1.x Project (or Convert 1.x .chm File)
+	- Under Location:, specify the path to your vcf/docs/vc7  directory.
+	- Give a Name, such as VCFSrcDocs.0.6.8
+	- Click Ok, then select your HTMLHelp project file (vcf/docs/vc7/doxy_html/index.hhp)
+	- A dialog box then prompts for output file encoding. I chose UTF-8. Click Convert button
+	- Conversion takes a little while, so be patient.
+    After conversion, you will get a warning message. Ignore it for now unless you want to resolve it.
+
+6.  Change project properties settings (Project->Properties)
+	- General Tab: Fill in Version # and Copyright
+	- Navigation Tab: Uncheck 'Create Full-Text Index' for a shorter index
+	- Compile Tab: Change Namespace and Unique Identifier to match the Output File Name, with vcf. prepended and .HxS removed:
+	    e.g. vcf.VCFSrcDocs.0.6.8
+	- Click ok to save settings and close dialog.
+7.  We are now going to do some Search/Replacing in out HTML files to make a better Index. 
+    Remember the PROJECT_NAME in our Doxyfile_vc7 file noted above. That name gets added to the <title> tag of
+    every HTML file, and we don't want it there. The name above was "Visual Component Frameworl".
+	- Edit->Find In Files, and specify to Find "<title>Visual Component Framework: " and Replace with "<title>", and 
+	  make sure to specify ONLY the folder containing your project *.html files, and choose the File Types that list .html files.
+	- Replace All. This takes a while to complete.
+	- Do a Save All
+
+8.  Modify "Index.HxK", our Index file. Doxygen appears to screw up some of the indexing. I think it is associated with un-named structs.
+	- In the Solution Explorer, open the file Index.HxK. Notice that the very first Keyword tag is <Keyword Term = "@0">. Actually, the 
+	first 11 top-level Keyword tags have "@#" values. We Want to delete all these Keyword sections. The first one
+	is "@0" and the last one shoule be "@9". Select all of these sections, and delete them. After doing this, my
+	first Keyword is now <Keyword Term = "__WFILE__"> .
+	- Save the Index.HxK file.
+
+9. We can now build the help. Build->Solution.
+
+
+
+B. BUILD VCFDocs.0.X.x.HxS HELP FILES
+
+
+
+
+C. COMBINE INTO 1 HELP COLLECTION (VCFDocumentation.0.X.x.HxC)
+
+D. BUILD INSTALLER or Register with VS on your machine.

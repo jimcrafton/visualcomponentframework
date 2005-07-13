@@ -437,9 +437,9 @@ will be replaced by a sed script in tyhe makefile
  <tr>
   <td class="footerCell" width="100%" height="1" align="center" valign="middle">
    &#160;&#160;
-   <a class="footerLink" href="http://vcf-online.org/comments.php">Comments or Suggestions?</a>   
+   <a class="footerLink" href="http://vcf-online.org/?q=node/14">Comments or Suggestions?</a>   
    &#160;&#160;
-   <a class="footerLink" href="http://vcf-online.org/license.php">License Information</a>
+   <a class="footerLink" href="http://vcf-online.org/?q=node/4">License Information</a>
    &#160;&#160;
   </td>
  </tr>
@@ -462,6 +462,9 @@ will be replaced by a sed script in tyhe makefile
 <!--
 CVS Log info
 $Log$
+Revision 1.10  2005/07/13 04:04:33  ddiego
+updated more doc stuff.
+
 Revision 1.9  2005/07/13 01:55:43  ddiego
 doc updates.
 
