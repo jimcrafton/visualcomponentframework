@@ -323,10 +323,176 @@ namespace VCF{
 
 
 
+/**
+What follows is documentation for the main VCF source documentaion page.
+
+\mainpage
+\par
+This document is meant, first of all, as a general introduction to the VCF. It 
+intends to orient you to the basic concepts of how the VCF is designed and how 
+to begin using the features. Here’s what it won’t do: It won’t teach you how 
+to program; nor will it show you details about features of the framework (see 
+the Reference Manual for this information); nor will it present you with 
+step-by-step information about how to build a program. No, this document will 
+paint a “big picture” of what’s going on in the VCF. Enough rambling… now onto 
+the details.
+
+\par Understanding the kits of the VCF
+The VCF is organized into a series of kits. Each one is built into a separate 
+library. Here are the main ones:
+
+\li ApplicationKit: This kit contains the items directly used in building an 
+application, items like combo boxes, radio buttons, and panels. These are 
+generally GUI-oriented items. If you are developing a standard application, you 
+will use this kit most often.
+
+\li FoundationKit: This kit contains items foundational to the features in any 
+application, items like threads, strings, and XML parsers. Without a doubt, this 
+kit will make your application more powerful.
+
+\li GraphicsKit: This kit contains items pertaining to the graphics features in 
+any application, items like fonts, lines, and Bezier curves. If you want to add 
+pizzazz to your application, this kit is your best bet.
+
+\par
+The VCF also has additional secondary kits that perform specific functions. At 
+the moment, we have three:
+\li OpenGLKit: This kit facilitates the display of OpenGL code within an application. If you wish to use three-dimensional graphics, an OpenGLControl will be a good friend.
+
+\li NetworkKit: This kit contains items pertaining to network interactions in any 
+application, containing items like sockets. If your application demands 
+multi-party interaction, use this kit.
+
+\li RemoteObjectKit: This is kit was started as an experiment to determine if the 
+  RTTI functions could be used to create a small library suitable for distributed 
+  objects, something akin to COM/DCOM but much more practical and easy to use. At 
+  this point it is more of a proof of concept - it works, but needs to be revamped 
+  before using it for anything more than experiments.
+
+\par
+Since components’ interactions with the operating system vary from system to 
+system, each kit contains implementations of the generalized components. Classes 
+prefaced with Win32 pertain to 32-bit Windows environments; those prefaced with 
+Linux, to Linux; with OSX, to Mac OS X. Generally, you need not access the 
+specific implementation; you can keep to the generalized classes. (In other 
+words, use class VCF::Thread, not class VCF::Win32Thread.). These classes also 
+represent the concrete implementations of the various peer interfaces that are 
+used to describe the various OS services. Peer classes are used by the internals 
+of the framework.
+
+\par Using examples to start your application
+A standard download of the VCF will contain an examples directory, replete with 
+basic demonstrations of features of the VCF. If you are completely unaware of how 
+to use a feature, it is best first to consult one of these examples.
+
+\par
+For example, if you want to use a slider control (like one Windows uses to control 
+the volume), use VisualStudio to open up the project in examples/Sliders. If you 
+build this project, it will appear in the examples/Sliders/vcXX/Debug directory. 
+Here, you will see horizontal and vertical sliders, sliders with different begin 
+and end values, sliders which send update events upon moving, etc. You can read 
+the code and use these ideas to begin your application.
+
+\par
+If you aren’t sure which example contains a certain item, perform a recursive 
+search through the examples directory with your item’s name. Then open up one of 
+the projects that contains the item.
+
+\par Fine-tuning your application via the source manual
+Of course, examples can’t exhaustively demonstrate all of the features of an 
+application. Thus the API is available to facilitate your creative use of the 
+features. To view this, see the Source Manual. The Class List will show a list 
+of the classes.
+
+\par
+When you click on a class, you will see its inheritance diagram. If you wish to 
+view the class’s inherited members, click the “List of all members” link.
+
+\par Sifting through the functions
+The purpose of each function is designed to be easily understandable and not 
+cryptic. If the class is a control, a paint method will paint the control; you 
+should not call this method as it is called automatically.
+
+
+\par
+Sometimes methods have models which represent a collection of multiple items. For 
+example, a ListBoxControl (a vertical list of items) uses a ListModel (available 
+via the getListModel command) to manage a group of ListItems. To build a list, 
+create a DefaultListItem (an implementation of ListItem), add it to the ListModel 
+via addItem, and it will be added to the ListBoxControl.
+
+\par
+Other methods use events. There may be various event-handler methods present in 
+a class. Again, you will usually not access these directly.
+
+
+\par
+A control can be positioned and sized via the setBounds method, or via setLeft, 
+setRight, setTop, setBottom, setWidth, and setHeight methods. These are 
+universally inherited from the base Control class.
+
+\par
+Some items use enumerations to specify particular functionalities. You can click 
+on the class name to view a full description of the enumeration. An example from 
+the directory should help you flesh this out.
+
+
+\par Understanding accessories
+If you wish to add event handlers to a control, various delegates are accessible 
+in a class. The delegate names should adequately describe their functionality as 
+distinguished from each other. An EventHandler can be added to each delegate to 
+handle an event occurring at a certain point in the code. There are several types 
+of EventHandlers; you can use the \c GenericEventHandler or fetch the specific type 
+of EventHandler for your specific need.
+
+\par
+In the following example, an EventHandler is added to a ListBoxControl, calling 
+the function onChange every time the selection is changed in the ListBox.
+
+\code
+VCF::ListBoxControl *lbc = new VCF::ListBoxControl();
+lbc->SelectionChanged += new
+   ListModelEventHandler<ThisClassName>(this,
+   &ThisClassName::onChange,
+   “ThisClassName::onChange”);
+\endcode
+
+Sometimes, a method is available to add events, in lieu of a Delegate.
+
+\par Going back to the original source
+If you need to know the exact details of how a function acts, you may access the 
+original source code. Sometimes, you may need to access the specific 
+implementation for your operating system. It will be available in the 
+src/vcf/[KitName]/ directory. Be sure to read the class – header and cxx file – 
+thoroughly so that you understand everything that is going on.
+
+\par Suggesting new functionality
+Suppose you wish to change how a function operates, or that you wish to add new 
+functionality to a class. You can change the source code directly to make this 
+happen. You may want to suggest the change in the forums or talk over the change 
+to ensure that you don’t unnecessarily break something.
+
+\par 
+Or suppose that you wish to create your own custom classes. You can inherit from 
+a base class much as the already existing classes do. For example, you can 
+inherit from class VCF::CustomControl to make your own control. You may need to 
+write the paint method, much as the other controls do, to be sure that it is 
+painted correctly.
+
+\par
+If you run into trouble, be sure to pose a question in the forums. Chances are 
+that someone will be able to relate to your concern.
+
+*/
+
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/13 01:55:43  ddiego
+*doc updates.
+*
 *Revision 1.5  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
