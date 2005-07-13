@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE HelpTOC>
+<HelpTOC DTDVersion="1.0" LangId = "" PluginStyle="Hierarchical" PluginTitle="Visual Component Framework 0.6.8">
+<HelpTOCNode NodeType="TOC" Url="VCFSrcDocs.0.6.8"/>
+<HelpTOCNode NodeType="TOC" Url="vcf-docbook.0.6.8"/>
+</HelpTOC>

@@ -1859,7 +1859,7 @@ String bobExePath =
 		<section><title>Data Representation</title>
 			<para>
 			The data of the DateTime class is stored as a 64 bit value. It is based
-			on the concept of a Julian Day (see Claus T&#248;ndering's 
+			on the concept of a Julian Day (see Claus Tøndering's 
 			<ulink url="http://www.tondering.dk/claus/cal/">Calendar FAQ</ulink>for 
 			more information on this) and has a resolution of 1 millisecond.
 			</para>
@@ -1977,7 +1977,7 @@ tos << 12345;
 		
 		<section><title>Input Streams</title>
 			<para>
-			Input streams are used to <emphasis>read</emphasis> data 
+			Input streams are used to <emphasis>read</emphasis> data from
 			the stream. The base class for all input streams is the VCF::InputStream 
 			class. All other input stream implementations derive from this. 
 			</para>
@@ -1986,17 +1986,137 @@ tos << 12345;
 			InputStream::read()	method, which takes a pointer to a buffer of bytes, 
 			and length argument, indicating the size (in bytes) of the buffer passed
 			in. In addition to this basic read() method, the InputStream class also
-			has a number of "helper" methods to make it easy to read 
+			has a number of "helper" methods to make it easy to read common primitive 
+			types like an int, a double, a String, etc.
+			</para>
+			<para>
+			Here's a simple example that reads data from a file, and reads out 3 values,
+			an int, a double, and a bool.
+			<programlisting>
+<![CDATA[
+FileInputStream fis("test.dat");
+int intVal = 0;
+fis.read( intVal );
+
+double dblVal = 0.0;
+fis.read( dblVal );
+
+bool boolVal = false;
+fis.read( boolVal );
+]]>
+			</programlisting>
+			Input streams also support the "&gt;&gt;" extraction operator, so you could 
+			rewrite the previous example like so:
+			<programlisting>
+<![CDATA[
+FileInputStream fis("test.dat");
+int intVal = 0;
+fis >> intVal;
+
+double dblVal = 0.0;
+fis >> dblVal;
+
+bool boolVal = false;
+fis >> boolVal;
+]]>
+			</programlisting>
 			</para>
 		</section>
 		
 		<section><title>Output Streams</title>
 			<para>
+			Output streams are used to <emphasis>write</emphasis> data to
+			the stream. The base class for all output streams is the VCF::OutputStream 
+			class. All other output stream implementations derive from this. 
+			</para>
+			<para>
+			The basic method for writing data to a stream is the 
+			OutputStream::write() method, which takes a const pointer to a buffer 
+			of bytes, and length argument, indicating the size (in bytes) of the 
+			buffer passed in. In addition to this basic write() method, the OutputStream 
+			class also has a number of "helper" methods to make it easy to write 
+			common primitive types like an int, a double, a String, etc.
+			</para>
+			<para>
+			Here's a simple example that writes data to a file, and writes out 3 values,
+			an int, a double, and a bool.
+			<programlisting>
+<![CDATA[
+FileOutputStream fos("test.dat");
+fos.write( 23403 );
+
+fos.write( 0.040543298 );
+
+fos.write( false );
+]]>
+			</programlisting>
+			Output streams also support the "&lt;&lt;" insertion operator, so you could 
+			rewrite the previous example like so:
+			<programlisting>
+<![CDATA[
+FileInputStream fis("test.dat");
+
+fis << 23403;
+
+fis << 0.040543298;
+
+fis << false;
+]]>
+			</programlisting>
 			</para>
 		</section>
 		
 		<section><title>Serializing classes</title>
 			<para>
+			One way to serialize a data from a class is to use the Persistable interface.
+			Any class that implement the Persistable is said to be "persistable" 
+			(deep huh?). The Persistable defines two methods, one for saving to an output 
+			stream	and another for reading from an input stream. You can pass an instance
+			of a perstable object to an InputStream's read() method or an OutputStream's 
+			write() method. Here's a quick example of how you might use this:
+			<programlisting>
+<![CDATA[
+class Stuff : public Persistable {
+public:
+  virtual void 	saveToStream (OutputStream *stream) {
+	stream->write( cookies );
+	stream->write( veggies );
+	stream->write( seeds );
+  }
+
+  virtual void 	loadFromStream (InputStream *stream) {
+    stream->read( cookies );
+	stream->read( veggies );
+	stream->read( seeds );
+  }
+  
+  int cookies;
+  int veggies;
+  int seeds;
+};
+
+Stuff stuff1;
+stuff1.cookies = 12;
+stuff1.veggies = 233;
+stuff1.seeds = 9232;
+
+
+FileOutputStream fos("test.dat");
+fos.write( &stuff1 );
+
+
+Stuff stuff2;
+
+FileInputStream fis("test.dat");
+fis.read( &stuff2 );
+]]>
+			</programlisting>
+			We create a simple class (Stuff) with three integer member variables, 
+			and then implement the Persistable interface's loadFromStream() and 
+			saveToStream() methods by simply reading and writing the member variables 
+			from the stream. The example initializes the stuff instance and then writes
+			it to disk using the FileOutputStream. The reverse is then performed to 
+			read the data from the disk using the FileInputStream.
 			</para>
 		</section>
 		
@@ -2036,8 +2156,7 @@ tos << 12345;
 
 	<section><title>XML Parsing</title>
 		<para>
-		</para>
-		
+		</para>		
 		<section><title>SAX style parsing</title>
 			<para>
 			</para>
@@ -2047,17 +2166,17 @@ tos << 12345;
 			<para>
 			</para>
 		</section>
-	</section>
+	</section>	
 
-	<section><title>Peer classes</title>
-		<para>
-		</para>
-	</section>
 </section>
 
 <!-- 
 CVS Log info
 $Log$
+Revision 1.6  2005/07/13 04:04:33  ddiego
+updated more doc stuff.
+
+
 Revision 1.5  2005/07/13 01:55:43  ddiego
 doc updates.
 
