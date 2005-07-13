@@ -1859,7 +1859,7 @@ String bobExePath =
 		<section><title>Data Representation</title>
 			<para>
 			The data of the DateTime class is stored as a 64 bit value. It is based
-			on the concept of a Julian Day (see Claus Tøndering's 
+			on the concept of a Julian Day (see Claus T&#248;ndering's 
 			<ulink url="http://www.tondering.dk/claus/cal/">Calendar FAQ</ulink>for 
 			more information on this) and has a resolution of 1 millisecond.
 			</para>
@@ -2173,6 +2173,9 @@ fis.read( &stuff2 );
 <!-- 
 CVS Log info
 $Log$
+Revision 1.7  2005/07/13 04:34:50  ddiego
+more doc updates
+
 Revision 1.6  2005/07/13 04:04:33  ddiego
 updated more doc stuff.
 
