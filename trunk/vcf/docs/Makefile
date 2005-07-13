@@ -1,129 +1,11 @@
 ###############################################################################
 #VCF Documentation makefile
 #
-#$Log$
-#Revision 1.15  2005/07/09 23:14:09  ddiego
-#merging in changes from devmain-0-6-7 branch.
-#
-#Revision 1.13.2.2  2005/06/03 21:40:18  ddiego
-#more doc updates
-#
-#Revision 1.13.2.1  2005/04/25 00:11:52  ddiego
-#added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
-#
-#Revision 1.13  2004/12/05 21:11:54  ddiego
-#dialog allowClose() fix in peer.
-#
-#Revision 1.12  2004/12/01 04:14:53  ddiego
-#merged over devmain-0-6-6 code. Marcello did a kick ass job
-#of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-#that he found. Many, many thanks for this Marcello.
-#
-#Revision 1.11  2004/08/19 02:24:52  ddiego
-#fixed bug [ 1007039 ] lightweight controls do not paint correctly.
-#
-#Revision 1.10.2.1  2004/11/17 05:25:05  ddiego
-#updated the docbook to pull in the new examples. now all we have to do is actually put some content in there...
-#
-#Revision 1.10  2004/08/08 22:09:31  ddiego
-#final checkin before the 0-6-5 release
-#
-#Revision 1.9  2004/08/07 02:46:51  ddiego
-#merged in the devmain-0-6-5 branch to stable
-#
-#Revision 1.8.2.1  2004/06/07 03:06:46  ddiego
-#more osx updates dealing with mouse handling
-#
-#Revision 1.8  2004/04/03 15:48:26  ddiego
-#Merged over code from the 0-6-3 branch.
-#
-#Revision 1.7  2003/12/19 21:19:49  ddiego
-#*** empty log message ***
-#
-#Revision 1.6  2003/12/18 05:15:52  ddiego
-#merge from devmain-0-6-2 branch into the stable branch
-#
-#Revision 1.5.2.13  2003/12/16 03:47:44  ddiego
-#some changes to documentation and a few minor changes to class wiz's
-#
-#Revision 1.5.2.12  2003/12/13 15:56:07  ddiego
-#*** empty log message ***
-#
-#Revision 1.5.2.11  2003/12/08 05:05:27  ddiego
-#added a bunch more documentation to classes, and added support for new doc
-#keywords (@delegates, @del, @delegate, @event, and @eventtype). This
-#makes it easier to see at a glance what events a class fires off.
-#Added finishing touches for the Action implementation and have a partially
-#complete example for this checked in.
-#
-#Revision 1.5.2.10  2003/11/23 15:14:05  ddiego
-#added more docs, and updated to account for new Dictionary tutorial
-#
-#Revision 1.5.2.9  2003/10/25 04:30:20  ddiego
-#added two more examples one for progress bars and one for slider controls.
-#also added two more control classes to the ApplicationKit, a SliderControl
-#and a ProgressControl.
-#
-#Revision 1.5.2.8  2003/10/22 21:14:37  ddiego
-#adjusted the xsl stylesheet so it works with new version of xsltproc
-#
-#Revision 1.5.2.7  2003/10/22 03:56:43  ddiego
-#added two more tutorials for advanced alignment and another for anchors
-#also finished off the alignment tutorial. yay :)
-#
-#Revision 1.5.2.6  2003/10/20 03:35:54  ddiego
-#added the alignment tutorial to the list
-#
-#Revision 1.5.2.5  2003/10/01 04:34:52  ddiego
-#more faq editing
-#
-#Revision 1.5.2.4  2003/09/29 03:45:38  ddiego
-#added some further tweaks to update the docs with the upcoming
-#website revision.
-#
-#Revision 1.5.2.3  2003/09/27 23:04:57  ddiego
-#added tutorial sections to documentation
-#
-#Revision 1.5.2.2  2003/09/24 19:41:18  ddiego
-#switched the sgml files over to xml file extensions
-#made a slight adjustment to the docbook makefile
-#
-#Revision 1.5.2.1  2003/08/11 03:28:42  ddiego
-#addressed some issues with the installer
-#
-#Revision 1.5  2003/08/09 21:01:40  ddiego
-#minor changes to doc makefile
-#
-#Revision 1.4  2003/05/18 23:09:37  ddiego
-#fixes some mistakes in the docs/Makefile and adds some extra documentation.
-#
-#Revision 1.3  2003/05/17 20:58:39  ddiego
-#removed some old files, mostly script junk that are no longer needed
-#----------------------------------------------------------------------
-#
-#Revision 1.2  2003/05/17 20:36:51  ddiego
-#this is the checkin for the 0.6.1 release - represents the merge over from
-#the devmain-0-6-0 branch plus a few minor bug fixes
-#
-#Revision 1.1.2.14  2003/05/15 03:00:59  ddiego
-#added initial osx source( FoundationKit only),
-#plus some fixes to compile under GCC 3.x compilers
-#
-#Revision 1.1.2.13  2003/04/17 04:29:44  ddiego
-#updated scintilla, added gtk support for the application kit, with stubs
-#for the basic peers.
-#
-#Revision 1.1.2.12  2003/04/07 03:38:46  ddiego
-#did some documentation work, and got everything to compile cleanly with some
-#of the new additions, particularly the chnages inteh Image/ImageBits classes.
-#
-#
-#
 ###############################################################################
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.6
+VERSION = 0.6.8
 
 
 #version number for the XMake program
@@ -131,7 +13,7 @@ XMAKE_VERSION = 1.0.5
 
 
 HTMLHELP_COMPILER = "c:/Program Files/HTML Help Workshop/hhc.exe"
-XSL_DOCBOOK_DIR = "c:/code/docbook-xsl-1.68.1"
+XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.68.1"
 XSL_HTMLHELP_IMPORT = "$(XSL_DOCBOOK_DIR)/htmlhelp/htmlhelp.xsl"
 XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"
 
@@ -651,3 +533,126 @@ clean :
 	rm -f hrefmunger hrefmunger.o
 	mv doxy_footer.html.bak doxy_footer.html
 	mv doxy_header.html.bak doxy_header.html
+
+
+
+###############################################################################
+#$Log$
+#Revision 1.16  2005/07/13 01:55:42  ddiego
+#doc updates.
+#
+#Revision 1.15  2005/07/09 23:14:09  ddiego
+#merging in changes from devmain-0-6-7 branch.
+#
+#Revision 1.13.2.2  2005/06/03 21:40:18  ddiego
+#more doc updates
+#
+#Revision 1.13.2.1  2005/04/25 00:11:52  ddiego
+#added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
+#
+#Revision 1.13  2004/12/05 21:11:54  ddiego
+#dialog allowClose() fix in peer.
+#
+#Revision 1.12  2004/12/01 04:14:53  ddiego
+#merged over devmain-0-6-6 code. Marcello did a kick ass job
+#of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+#that he found. Many, many thanks for this Marcello.
+#
+#Revision 1.11  2004/08/19 02:24:52  ddiego
+#fixed bug [ 1007039 ] lightweight controls do not paint correctly.
+#
+#Revision 1.10.2.1  2004/11/17 05:25:05  ddiego
+#updated the docbook to pull in the new examples. now all we have to do is actually put some content in there...
+#
+#Revision 1.10  2004/08/08 22:09:31  ddiego
+#final checkin before the 0-6-5 release
+#
+#Revision 1.9  2004/08/07 02:46:51  ddiego
+#merged in the devmain-0-6-5 branch to stable
+#
+#Revision 1.8.2.1  2004/06/07 03:06:46  ddiego
+#more osx updates dealing with mouse handling
+#
+#Revision 1.8  2004/04/03 15:48:26  ddiego
+#Merged over code from the 0-6-3 branch.
+#
+#Revision 1.7  2003/12/19 21:19:49  ddiego
+#*** empty log message ***
+#
+#Revision 1.6  2003/12/18 05:15:52  ddiego
+#merge from devmain-0-6-2 branch into the stable branch
+#
+#Revision 1.5.2.13  2003/12/16 03:47:44  ddiego
+#some changes to documentation and a few minor changes to class wiz's
+#
+#Revision 1.5.2.12  2003/12/13 15:56:07  ddiego
+#*** empty log message ***
+#
+#Revision 1.5.2.11  2003/12/08 05:05:27  ddiego
+#added a bunch more documentation to classes, and added support for new doc
+#keywords (@delegates, @del, @delegate, @event, and @eventtype). This
+#makes it easier to see at a glance what events a class fires off.
+#Added finishing touches for the Action implementation and have a partially
+#complete example for this checked in.
+#
+#Revision 1.5.2.10  2003/11/23 15:14:05  ddiego
+#added more docs, and updated to account for new Dictionary tutorial
+#
+#Revision 1.5.2.9  2003/10/25 04:30:20  ddiego
+#added two more examples one for progress bars and one for slider controls.
+#also added two more control classes to the ApplicationKit, a SliderControl
+#and a ProgressControl.
+#
+#Revision 1.5.2.8  2003/10/22 21:14:37  ddiego
+#adjusted the xsl stylesheet so it works with new version of xsltproc
+#
+#Revision 1.5.2.7  2003/10/22 03:56:43  ddiego
+#added two more tutorials for advanced alignment and another for anchors
+#also finished off the alignment tutorial. yay :)
+#
+#Revision 1.5.2.6  2003/10/20 03:35:54  ddiego
+#added the alignment tutorial to the list
+#
+#Revision 1.5.2.5  2003/10/01 04:34:52  ddiego
+#more faq editing
+#
+#Revision 1.5.2.4  2003/09/29 03:45:38  ddiego
+#added some further tweaks to update the docs with the upcoming
+#website revision.
+#
+#Revision 1.5.2.3  2003/09/27 23:04:57  ddiego
+#added tutorial sections to documentation
+#
+#Revision 1.5.2.2  2003/09/24 19:41:18  ddiego
+#switched the sgml files over to xml file extensions
+#made a slight adjustment to the docbook makefile
+#
+#Revision 1.5.2.1  2003/08/11 03:28:42  ddiego
+#addressed some issues with the installer
+#
+#Revision 1.5  2003/08/09 21:01:40  ddiego
+#minor changes to doc makefile
+#
+#Revision 1.4  2003/05/18 23:09:37  ddiego
+#fixes some mistakes in the docs/Makefile and adds some extra documentation.
+#
+#Revision 1.3  2003/05/17 20:58:39  ddiego
+#removed some old files, mostly script junk that are no longer needed
+#----------------------------------------------------------------------
+#
+#Revision 1.2  2003/05/17 20:36:51  ddiego
+#this is the checkin for the 0.6.1 release - represents the merge over from
+#the devmain-0-6-0 branch plus a few minor bug fixes
+#
+#Revision 1.1.2.14  2003/05/15 03:00:59  ddiego
+#added initial osx source( FoundationKit only),
+#plus some fixes to compile under GCC 3.x compilers
+#
+#Revision 1.1.2.13  2003/04/17 04:29:44  ddiego
+#updated scintilla, added gtk support for the application kit, with stubs
+#for the basic peers.
+#
+#Revision 1.1.2.12  2003/04/07 03:38:46  ddiego
+#did some documentation work, and got everything to compile cleanly with some
+#of the new additions, particularly the chnages inteh Image/ImageBits classes.
+#

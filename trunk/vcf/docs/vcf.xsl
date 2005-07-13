@@ -33,7 +33,7 @@ NB: This software will not save the world.
  <!--
  this uses a local path - may need to be modified for others
  --> 
-	<xsl:import href="c:/code/docbook-xsl-1.68.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="f:/code/docbook-xsl-1.68.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
@@ -462,6 +462,9 @@ will be replaced by a sed script in tyhe makefile
 <!--
 CVS Log info
 $Log$
+Revision 1.9  2005/07/13 01:55:43  ddiego
+doc updates.
+
 Revision 1.8  2005/07/09 23:14:10  ddiego
 merging in changes from devmain-0-6-7 branch.
 
