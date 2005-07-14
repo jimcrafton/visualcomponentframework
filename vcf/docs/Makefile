@@ -266,16 +266,9 @@ alldocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
 
-	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
-	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml
-
 	xsltproc --nonet vcf_with_source_docs.xsl vcf_docbook.xml
 
 	mv vcf_book.xml.bak vcf_book.xml
-	mv xmake_book.xml.bak xmake_book.xml
-	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
-
 
 	cp vcf-docbook-with-src.hhp vcf-docbook-with-src.hhp.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook-with-src.hhp > vcf-docbook-with-src.hhp.tmp
@@ -326,16 +319,9 @@ alldocs_hh_src_separate : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOC
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
 
-	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
-	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml
-
 	xsltproc --nonet vcf.xsl vcf_website_docs.xml
 
 	mv vcf_book.xml.bak vcf_book.xml
-	mv xmake_book.xml.bak xmake_book.xml
-	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
-
 
 	cp vcf-docbook.hhp vcf-docbook.hhp.bak
 	sed "s?VCF-SOURCE-CHM?$(VERSIONED_SRC_CHM_FILENAME)?g" vcf-docbook.hhp > vcf-docbook.hhp.tmp
@@ -383,30 +369,14 @@ alldocs_hh_src_separate : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOC
 
 
 
-
-xmake_docs : $(XMAKE_DOCS) test_tools
-	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
-	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml
-
-	xsltproc vcf.xsl xmake_docbook.xml
-
-	mv xmake_book.xml.bak xmake_book.xml
-
-xmake_hh : vcf-docbook.hhp xmake_docs
-	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
-	mv $(RAW_CHM_FILENAME) $(VERSIONED_XMAKE_CHM_FILENAME)
-	mv $(RAW_CHI_FILENAME) $(VERSIONED_XMAKE_CHI_FILENAME)
-	
-
 test_tools : 
-#	if ( test -f $(HTMLHELP_COMPILER) )\
-#	then\
-#		echo HTML Help compiler found;\
-#	else\
-#		echo Html Help compiler not found;\
-#		exit 1;\
-#	fi
+	if ( test -f $(HTMLHELP_COMPILER) )\
+	then\
+		echo HTML Help compiler found;\
+	else\
+		echo Html Help compiler not found;\
+		exit 1;\
+	fi
 
 	if ( test -f $(XSL_HTMLHELP_IMPORT) )\
 	then\
@@ -538,6 +508,9 @@ clean :
 
 ###############################################################################
 #$Log$
+#Revision 1.17  2005/07/14 03:44:20  ddiego
+#update of installer.
+#
 #Revision 1.16  2005/07/13 01:55:42  ddiego
 #doc updates.
 #
