@@ -217,13 +217,17 @@ var
 begin
   if ( CurPage = wpFinished ) then begin
     components := WizardSelectedComponents( false );
-    tasks := WizardSelectedTasks( false );
-    if ( (Pos( 'installwizards', tasks ) > 0) and (Pos( 'VC6_Wizards', components ) > 0) ) then begin
+	
+	tasks := WizardSelectedTasks( false );
+	
+	if ( (Pos( 'installwizards', tasks ) > 0) and (Pos( 'vc6_wizards', components ) > 0) ) then begin		
 
       vc6Key := 'SOFTWARE\Microsoft\VisualStudio\6.0\Setup';
 	  if ( RegValueExists( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir' ) )then begin
-	    RegQueryStringValue( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir', VsCommonDir );
+		
+		RegQueryStringValue( HKEY_LOCAL_MACHINE, vc6Key, 'VsCommonDir', VsCommonDir );
 	    templatesDir := VsCommonDir + '\MSDev98\Template\';
+					
 	    FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VPLAppWiz.awx', templatesDir + 'VPLAppWiz.awx', true );
         FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFLibraryAppWizard.awx', templatesDir + 'VCFLibraryAppWizard.awx', true );
         FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFConsoleWiz.awx', templatesDir + 'VCFConsoleWiz.awx', true );

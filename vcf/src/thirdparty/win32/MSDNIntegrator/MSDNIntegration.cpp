@@ -199,36 +199,44 @@ bool CMSDNIntegration::GetMSDNDatPath()
     // where hhcolreg.dat should be located, otherwise we will make
     // an educated guess.
 
-    CLoadLibrary libModule(_T("Shell32.dll"));
-    if (libModule.GetModuleVersion() < VERSION_SH471)
-    {
-        m_strMSDNDat.Format(IDS_NEW_DAT, m_spMSDNCol.GetDrive());
-    }
-    else
-    {
-        TCHAR lpszFolderPath[_MAX_PATH];
-        ::ZeroMemory(lpszFolderPath, sizeof(lpszFolderPath));
-        
-        if ( !GetSpecialFolderPath( NULL,
-            lpszFolderPath, CSIDL_COMMON_APPDATA, FALSE ) )
-		{
-			return false;
-		}
-        
-        m_strMSDNDat.Format(IDS_NEWER_DAT, lpszFolderPath);
-    }
-	
-	// Check to see if the registry file was found.
-	if (_taccess(m_strMSDNDat, 0) == -1)
-	{
-		// Old MSDN collection? hhcolreg.dat is located in the
-		// Windows\Help directory possibly.
-		m_strMSDNDat.Format(IDS_OLD_DAT, m_strWinDir);
+    
+
+	// Old MSDN collection? hhcolreg.dat is located in the
+	// Windows\Help directory possibly.
+	m_strMSDNDat.Format(IDS_OLD_DAT, m_strWinDir);
+
+	if ( -1 == _taccess(m_strMSDNDat,0) ) {
 		
-		// Still not found, return error.
+		CLoadLibrary libModule(_T("Shell32.dll"));
+		if (libModule.GetModuleVersion() < VERSION_SH471)
+		{
+			m_strMSDNDat.Format(IDS_NEW_DAT, m_spMSDNCol.GetDrive());
+		}
+		else
+		{
+			TCHAR lpszFolderPath[_MAX_PATH];
+			::ZeroMemory(lpszFolderPath, sizeof(lpszFolderPath));
+			
+			if ( !GetSpecialFolderPath( NULL,
+				lpszFolderPath, CSIDL_COMMON_APPDATA, FALSE ) )
+			{
+				return false;
+			}
+			
+			m_strMSDNDat.Format(IDS_NEWER_DAT, lpszFolderPath);
+		}
+		
+		
+		// Check to see if the registry file was found.
 		if (_taccess(m_strMSDNDat, 0) == -1)
+		{			
+			// Still not found, return error.		
 			return DisplayMessage(IDS_ERR_DATNOTFOUND);
+		}
+		
 	}
+
+
 
 	// open the .dat file.
 	CStdioFile stdRead( m_strMSDNDat, CFile::modeRead | CFile::typeText );
