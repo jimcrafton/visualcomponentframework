@@ -50,28 +50,28 @@ public:
 	void load( const String& libraryFilename );
 
 	/**
-	*unloads the DLL/SO
+	unloads the DLL/SO
 	*/
 	void unload();
 
 	/**
-	*returns an exported function of the library
-	*@param String the name of the function to return
-	*@return void* a void pointer to the exported function.
-	*Callers are responsible for actually typecasting this
-	*to a meaningful function pointer. For example:
-	*<pre>
-	*	typedef int (*MyFunctionPtr)( int, bool);
-	*	... //more code
-	*	MyFunctionPtr funcPtr = (MyFunctionPtr) lib->getFunction( "DummyFunction" );
-	*	int res = funcPtr( 12, true );
-	*</pre>
-	*if the function does not exist then the method returns null
+	returns an exported function of the library
+	@param String the name of the function to return
+	@return void* a void pointer to the exported function.
+	Callers are responsible for actually typecasting this
+	to a meaningful function pointer. For example:
+	\code
+		typedef int (MyFunctionPtr)( int, bool);
+		... //more code
+		MyFunctionPtr funcPtr = (MyFunctionPtr) lib->getFunction( "DummyFunction" );
+		int res = funcPtr( 12, true );
+	\endcode
+	if the function does not exist then the method returns null
 	*/
 	void* getFunction( const String& functionName );
 
 	/**
-	*initializes the library object
+	initializes the library object
 	*/
 	void init();
 private:
@@ -84,67 +84,70 @@ private:
 
 
 /**
-*CVS Log info
+CVS Log info
 *$Log$
-*Revision 1.4  2004/12/01 04:31:41  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
 *
-*Revision 1.3.2.1  2004/09/17 11:38:06  ddiego
-*added program info support in library and process classes.
+Revision 1.4  2004/12/01 04:31:41  ddiego
+merged over devmain-0-6-6 code. Marcello did a kick ass job
+of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+that he found. Many, many thanks for this Marcello.
 *
-*Revision 1.3  2004/08/08 22:09:33  ddiego
-*final checkin before the 0-6-5 release
+Revision 1.3.2.1  2004/09/17 11:38:06  ddiego
+added program info support in library and process classes.
 *
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
+Revision 1.3  2004/08/08 22:09:33  ddiego
+final checkin before the 0-6-5 release
 *
-*Revision 1.1.2.3  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
+Revision 1.2  2004/08/07 02:49:13  ddiego
+merged in the devmain-0-6-5 branch to stable
 *
-*Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
+Revision 1.1.2.3  2004/06/06 07:05:32  marcelloptr
+changed macros, text reformatting, copyright sections
 *
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
+Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
+reformatting of source files: macros and csvlog and copyright sections
 *
-*Revision 1.9.4.1  2004/04/26 21:58:48  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
+Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
+migration towards new directory structure
 *
-*Revision 1.9  2003/12/18 05:15:59  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
+Revision 1.9.4.1  2004/04/26 21:58:48  marcelloptr
+changes for dir reorganization: _VCF_MACRO_H__
 *
-*Revision 1.8.4.1  2003/10/23 04:24:51  ddiego
-*more musical chairs with headers again, in yet another attempt to make
-*them more efficent to speed up compiles.
-*Removed all teh template RTTI classes and put them all in one header
-*called VCFRTTIImpl.h. This should help compile speeds a bit.
-*The next step is to look at some of the event classes and remove ones
-*that aren't really neccessary - I'd estimate that 50% of the current
-*event classes are unneccessary and can be removed.
+Revision 1.9  2003/12/18 05:15:59  ddiego
+merge from devmain-0-6-2 branch into the stable branch
 *
-*Revision 1.8  2003/05/17 20:37:17  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
+Revision 1.8.4.1  2003/10/23 04:24:51  ddiego
+more musical chairs with headers again, in yet another attempt to make
+them more efficent to speed up compiles.
+Removed all teh template RTTI classes and put them all in one header
+called VCFRTTIImpl.h. This should help compile speeds a bit.
+The next step is to look at some of the event classes and remove ones
+that aren't really neccessary - I'd estimate that 50% of the current
+event classes are unneccessary and can be removed.
 *
-*Revision 1.7.16.1  2003/03/12 03:11:50  ddiego
-*switched all member variable that used the "m_"<name> prefix to
+Revision 1.8  2003/05/17 20:37:17  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+*
+Revision 1.7.16.1  2003/03/12 03:11:50  ddiego
+switched all member variable that used the "m_"<name> prefix to
 * <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
+Also changed all vcf builder files to accomadate this.
+Changes were made to the Stream classes to NOT multiple inheritance and to
+be a little more correct. Changes include breaking the FileStream into two
+distinct classes, one for input and one for output.
 *
-*Revision 1.7  2002/05/09 03:10:43  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
+Revision 1.7  2002/05/09 03:10:43  ddiego
+merged over code from development branch devmain-0-5-1a into the main CVS trunk
 *
-*Revision 1.6.4.1  2002/03/20 21:56:56  zzack
-*Changed Include Style of FoundationKit
+Revision 1.6.4.1  2002/03/20 21:56:56  zzack
+Changed Include Style of FoundationKit
 *
-*Revision 1.6  2002/01/24 01:46:49  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
+Revision 1.6  2002/01/24 01:46:49  ddiego
+added a cvs "log" comment to the top of all files in vcf/src and vcf/include
+to facilitate change tracking
 *
 */
 

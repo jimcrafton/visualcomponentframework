@@ -21,11 +21,11 @@ namespace VCF {
 /**
 Class for breaking a string into a series of one or more tokens
 
-<p>
+\par
 Usage:
-<pre>
+\code
 
-StringTokenizer stk("Diddly piddly, dock, a big fat tock!", " \n\r\f\t" );
+StringTokenizer stk("Diddly piddly, dock, a big fat piece of apple nut cake!", " \n\r\f\t" );
 
 while ( stk.hasMoreElements(true) ) {
 	String s1 = stk.nextElement();
@@ -33,7 +33,7 @@ while ( stk.hasMoreElements(true) ) {
 	printf( "s1 = %s, s2 = %s\n", s1.c_str(), s2.c_str() );
 }
 
-</pre>
+\endcode
 
 */
 class StringTokenizer : public Object, public Enumerator<String> {
@@ -206,6 +206,9 @@ protected:
 /**
 CVS Log info
 $Log$
+Revision 1.3  2005/07/18 03:54:19  ddiego
+documentation updates.
+
 Revision 1.2  2004/08/07 02:49:15  ddiego
 merged in the devmain-0-6-5 branch to stable
 
@@ -244,18 +247,6 @@ the devmain-0-6-0 branch plus a few minor bug fixes
 Revision 1.1.2.1  2003/04/23 03:44:36  ddiego
 added a string tokenizer class, long overdue :)
 
-*/
-
-
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:13  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
 */
 
 

@@ -23,48 +23,49 @@ class Mutex;
 #define OBJECT_CLASSID		"ED88C099-26AB-11d4-B539-00C04F0196DA"
 
 /**
-*Base class for entire Visual Component Framework.
-*New as of July 5,2001, Object will also support
-*refcounting for those who need this kind of support.
-*There are several places in the ApplicationKit that will need to make use
-*of this fairly soon.
-*<p>
-*Also Object supports a new technique for destroying Object derived instances.
-*In general, in C++, when creating a destroying an object instance on the heap (free-store)
-*you would use the operator delete() function. This is being phased out in the VCF
-*for a variety of reasons, in favor of a different scheme.
-*Destroying the memory now happens in two ways: The first is the equivalent of the operator delete()
-*call. This involves calling the objects free() method, which will call the virtual destroy() method
-*before calling operator delete() on itself;
-*The second way an object can be destroyed is if it's refcount drops to 0, at which point the object's
-*free() method will be invoked. Calling the object's release() method decrements the reference count
-*on the object.
-*By default if an obejct is created on the heap via new, and no one addref()'s it, then a
-*single call to the release() method will free up it's memory.
-*</p>
-*<p>
-*<code>destroy()</code> is a virtual method, where common shared cleanup may take place. Because this
-*is called before the delete() method, it is still safe to call virtual methods and have them
-*execute correctly (in C++ virtual calls inside of a constructor or destructor are not allowed
-*and if made then the behaviour is undefined).
-*<p>
-*Classes which are heap based (such as all of the UI classes that derive from Component) should
-*define their destructor as having protected access. In addition the majority of the cleanup code
-*should be placed in the overridden <code>destroy()</code> method as opposed to the class destructor.
-*Anything that requires method calls to other object or the class itself (particularly if the method
-*is a virtual one) should be moved to the
-*</p>
-*<p>
-*Semantics of the addRef/release usage are as follows:
-*An object's refcount indicates "ownership " of the object. In other words, the "owner" of the
-*object is responsible for releasing it's hold on the object, thus decrementing the objects
-*refcount, which, when reduced to 0, causes the object to be deleted. This is also known as
-*a strong reference to an object, as opposed to a weak reference where the "owner" doesn't
-*claim any responsibility over the object.
-*
-*Note that this whole scheme is aimed at heap based objects. Many objects that are created on the stack
-*do not need this. For example, common utility objects like Rect or Point do not need this - they
-*can be created on the stack.
+\par
+Base class for entire Visual Component Framework.
+New as of July 5,2001, Object will also support
+refcounting for those who need this kind of support.
+There are several places in the ApplicationKit that will need to make use
+of this fairly soon.
+\par
+Also Object supports a new technique for destroying Object derived instances.
+In general, in C++, when creating a destroying an object instance on the heap (free-store)
+you would use the operator delete() function. This is being phased out in the VCF
+for a variety of reasons, in favor of a different scheme.
+Destroying the memory now happens in two ways: The first is the equivalent of the operator delete()
+call. This involves calling the objects free() method, which will call the virtual destroy() method
+before calling operator delete() on itself;
+The second way an object can be destroyed is if it's refcount drops to 0, at which point the object's
+free() method will be invoked. Calling the object's release() method decrements the reference count
+on the object.
+By default if an object is created on the heap via new, and no one addref()'s it, then a
+single call to the release() method will free up it's memory.
+
+\par
+Object::destroy() is a virtual method, where common shared cleanup may take place. Because this
+is called before the delete() method, it is still safe to call virtual methods and have them
+execute correctly (in C++ virtual calls inside of a constructor or destructor are not allowed
+and if made then the behaviour is undefined).
+\par
+Classes which are heap based (such as all of the UI classes that derive from Component) should
+define their destructor as having protected access. In addition the majority of the cleanup code
+should be placed in the overridden Object::destroy() method as opposed to the class destructor.
+Anything that requires method calls to other object or the class itself (particularly if the method
+is a virtual one) should be moved to the
+
+\par
+Semantics of the addRef/release usage are as follows:
+An object's refcount indicates "ownership " of the object. In other words, the "owner" of the
+object is responsible for releasing it's hold on the object, thus decrementing the objects
+refcount, which, when reduced to 0, causes the object to be deleted. This is also known as
+a strong reference to an object, as opposed to a weak reference where the "owner" doesn't
+claim any responsibility over the object.
+\par
+Note that this whole scheme is aimed at heap based objects. Many objects that are created on the stack
+do not need this. For example, common utility objects like Rect or Point do not need this - they
+can be created on the stack.
 */
 class FOUNDATIONKIT_API Object {
 public:
@@ -91,22 +92,22 @@ public:
 
 	/**
 	*increments the reference count of the object
-	*@param Object* the optional owner of the new referenced object
-	*for use in future, more sophisticated refcounting schemes
-	*@return unsigned long the current reference count of the object
+	@param Object* the optional owner of the new referenced object
+	for use in future, more sophisticated refcounting schemes
+	@return unsigned long the current reference count of the object
 	*/
 	virtual unsigned long addRef(Object* owner=NULL);
 
 	/**
-	*decrements the reference count of the object
-	*@param Object* the optional owner of the new referenced object
-	*for use in future, more sophisticated refcounting schemes
-	*when the refCount_ drops to 0 the object is destroyed
+	decrements the reference count of the object
+	@param Object* the optional owner of the new referenced object
+	for use in future, more sophisticated refcounting schemes
+	when the refCount_ drops to 0 the object is destroyed
 	*/
 	virtual unsigned long release(Object* owner=NULL);
 
 	/**
-	*returns the number of outstanding references for this object
+	returns the number of outstanding references for this object
 	*/
 	unsigned long getRefCount(){
 		return refCount_;
@@ -139,11 +140,11 @@ public:
 	/**
 	Makes a complete clone of this object.
 	A typical implementation might be:
-	<pre>
+	\code
 	virtual Object* clone( bool deep ) {
-		return new MyObject( *this );
+		return new MyObject( this );
 	}
-	</pre>
+	\endcode
 	In which the implementer simply creates a new instance on the heap
 	and calls the copy constructor.
 	Objects which support cloning <b>should</b> also have a copy
@@ -162,20 +163,20 @@ public:
 	};
 
 	/**
-	*returns the RTTI Class instance associated object
-	*of this type
+	returns the RTTI Class instance associated object
+	of this type
 	*/
 	Class* getClass() ;
 
 	/**
-	*returns a hash value that represents the object instance
+	returns a hash value that represents the object instance
 	*/
 	virtual unsigned long hash();
 
 	/**
-	*Ptr is a smart pointer class for use with refcounted objects.
-	*This class should <b><i>NEVER</i></b> be created on the heap,
-	*instead create instances on the stack.
+	Ptr is a smart pointer class for use with refcounted objects.
+	This class should <b><i>NEVER</i></b> be created on the heap,
+	instead create instances on the stack.
 	*/
 	template <class OBJECT_TYPE> class Ptr {
 	public:
@@ -184,47 +185,47 @@ public:
 		}
 
 		/**
-		*constructor for the Ptr passing in a
-		*new instance of an OBJECT_TYPE
+		constructor for the Ptr passing in a
+		new instance of an OBJECT_TYPE
 		*/
 		Ptr( OBJECT_TYPE* o ){
 			ptr_ = o;
 		}
 
 		/**
-		*allows access to the underlying pointer
+		allows access to the underlying pointer
 		*/
 		OBJECT_TYPE* operator ->() {
 			return ptr_;
 		}
 
 		/**
-		*conversion operator
-		*@return OBJECT_TYPE returns the underlying pointer
+		conversion operator
+		@return OBJECT_TYPE returns the underlying pointer
 		*/
 		operator OBJECT_TYPE* () {
 			return ptr_;
 		}
 
 		/**
-		*equality operator.
-		*Compares the object passed in with the internal
-		*object.
-		**@param OBJECT_TYPE the object to compare with. Current
-		*comparison is only a simple pointer comparison. This may
-		*become more sophisticated.
+		equality operator.
+		Compares the object passed in with the internal
+		object.
+		*@param OBJECT_TYPE the object to compare with. Current
+		comparison is only a simple pointer comparison. This may
+		become more sophisticated.
 		*/
 		bool operator ==( OBJECT_TYPE* object ) const	{
 			return 	ptr_ == object;
 		}
 
 		/**
-		*assignment operator.
-		*assigns a new object value to the Ptr instance.
+		assignment operator.
+		assigns a new object value to the Ptr instance.
 		*/
 		Ptr& operator= ( OBJECT_TYPE* o ) {
 			ptr_ = o;
-			return *this;
+			return this;
 		}
 
 		bool operator !()	{
@@ -232,7 +233,7 @@ public:
 		}
 
 		OBJECT_TYPE& operator *() {
-			return *ptr_;
+			return ptr_;
 		}
 
 		OBJECT_TYPE** operator &( ) {
@@ -321,8 +322,8 @@ public:
 
 protected:
 	/**
-	*called by the free() method. Should be overriden
-	*and any clean up code performed here
+	called by the free() method. Should be overriden
+	and any clean up code performed here
 	*/
 	virtual void destroy();
 
@@ -337,6 +338,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

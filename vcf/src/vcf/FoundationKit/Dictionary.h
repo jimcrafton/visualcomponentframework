@@ -101,7 +101,7 @@ private:
 
 
 /**
-<p>
+\par
 The Dictionary class is a utility class useful storing a collection
 of key-value pairs. It is not a separate implementation, but instead
 uses the STL std::map as it's underlying data member. Usage of the
@@ -110,29 +110,29 @@ as working with a std::map<String,VariantData>. The class
 is intended for use when you want to have a named collection
 of various values. Using the VariantData as the value type, allows
 you to easily store any type of value. For example:
-<pre>
+\code
 Dictionary dict;
 
 dict["size"] = 200;
 dict["Name"] = "Bob";
-</pre>
+\endcode
 We now have two entries, one name "Name" and one named "size".
-</p>
-<p>
+
+\par
 The other primary difference from a std::map<String,VariantData> is
 the support for persistence. The Dictionary class implements
 the Persistable interface, and can be written to, or read from, an
 OutputStream or InputStream (respectively). For example, to save to a file:
-<pre>
+\code
 FileOutputStream fs("test.dict.txt");
 fs &lt;&lt; &amp;dict;
-</pre>
+\endcode
 And to read from a file:
-<pre>
+\code
 FileInputStream fs("test.dict.txt");
 fs &gt;&gt; &amp;dict;
-</pre>
-</p>
+\endcode
+
 */
 class FOUNDATIONKIT_API Dictionary : public Persistable {
 public:
@@ -195,6 +195,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

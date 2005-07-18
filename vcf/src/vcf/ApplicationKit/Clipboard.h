@@ -30,25 +30,25 @@ class ClipboardPeer;
 
 
 /**
-*The Clipboard represents a common place to put shared
-*data between objects and/or between applications.
-*The Clipboard maintains one or more ClipboardDataObjects
-*that actually hold the data, according to their DataType.
-*<p>
-*The clipboard is never created directly - this is taken care of
-*by the UIToolkit. To access the clipboard you call the
-*UIToolkit::getSystemClipboard() method which will return a
-*reference to the Clipboard singleton.
-*<p>
-*In Win32 the Clipboard is implemented with full support for
-*COM's IDataObject for actual data transfer, so objects
-*that put data into the Clipboard in the VCF can easily share
-*the data with other Win32 programs.
+The Clipboard represents a common place to put shared
+data between objects and/or between applications.
+The Clipboard maintains one or more ClipboardDataObjects
+that actually hold the data, according to their DataType.
+\par
+The clipboard is never created directly - this is taken care of
+by the UIToolkit. To access the clipboard you call the
+UIToolkit::getSystemClipboard() method which will return a
+reference to the Clipboard singleton.
+\par
+In Win32 the Clipboard is implemented with full support for
+COM's IDataObject for actual data transfer, so objects
+that put data into the Clipboard in the VCF can easily share
+the data with other Win32 programs.
 *
-*@see DataObject
-*@see DataType
-*@see ClipboardPeer
-*@see UIToolkit::getSystemClipboard()
+@see DataObject
+@see DataType
+@see ClipboardPeer
+@see UIToolkit::getSystemClipboard()
 @delegates
 	@del Clipboard::ClipboardContentsChanged
 	@del Clipboard::ClipboardItemCopied
@@ -83,46 +83,46 @@ public:
 	DELEGATE(ClipboardItemPasted)
 
 	/**
-	*does the Clipboard have a DataObject that
-	*matches the requested dataType
-	*@param String the datatype to look for
-	*@return bool return true if the Clipboard has the kind of
-	*data specified in dataType, otherwise returns false
+	does the Clipboard have a DataObject that
+	matches the requested dataType
+	@param String the datatype to look for
+	@return bool return true if the Clipboard has the kind of
+	data specified in dataType, otherwise returns false
 	*/
 	bool hasDataType( const String& dataType );
 
 	/**
-	*copies the specified dataObject into the clipboard.
-	*The Clipboard takes ownership of the dataObject object
-	*passed in which must be created on the heap.
-	*@param DataObject the data object to place in the
-	*Clipboard
-	*<p>
-	*For example:
-	*<pre>
+	copies the specified dataObject into the clipboard.
+	The Clipboard takes ownership of the dataObject object
+	passed in which must be created on the heap.
+	@param DataObject the data object to place in the
+	Clipboard
+	\par
+	For example:
+	\code
 		Clipboard* clipboard = UIToolkit::getDefaultUIToolkit()->getSystemClipboard();
 
 		String selectedText = "Hello World - here's some clipboard text";
 		DataObject* textDataObj = new TextDataObject( selectedText );
 		clipboard->copyTo( textDataObj );
 
-	*</pre>
-	*@see DataObject
+	\endcode
+	@see DataObject
 	*/
 	void copyTo( DataObject* dataObject );
 
 	/**
-	*pastes the data, specified in dataType, from the Clipboard
-	*and returns it.
-	*@param DataType the type of data to paste from the clipboard
-	*@see DataType
-	*@return DataObject* the new data from the clipboard or NULL
-	*if no data object exists for the specified data type.
+	pastes the data, specified in dataType, from the Clipboard
+	and returns it.
+	@param DataType the type of data to paste from the clipboard
+	@see DataType
+	@return DataObject* the new data from the clipboard or NULL
+	if no data object exists for the specified data type.
 	*/
 	DataObject* pasteFrom( const String& dataType );
 
 	/**
-	*internal VCF use only
+	internal VCF use only
 	*/
 	void internal_deleteDataObject( DataObject* dataObject );
 
@@ -136,6 +136,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

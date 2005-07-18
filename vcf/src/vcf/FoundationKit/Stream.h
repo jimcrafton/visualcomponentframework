@@ -51,61 +51,55 @@ class Persistable;
 
 
 /**
-*Stream interface defines a core set of funcationality for streams
-*in the Visual Component Framework derived Streams should support "stream chaining",
-*the ability of the stream constructor to support an incoming stream from
-*someother stream object. For example:
-*	<p><pre>
-*		MyStream s = new MyStream( new MemStream( new GZIPStream( SomeBigDataObject ) ) );
-*	</pre></p>
-*	assuming SomeBigDataObject supports Persistable, then the object is read into the
-*	GZIPStream and compressed, the compressed bytes are sent to the Memory stream, and
-*	then this is sent to MyStream.
+Stream interface defines a core set of funcationality for streams
+in the Visual Component Framework derived Streams should support "stream chaining",
+the ability of the stream constructor to support an incoming stream from
+someother stream object. For example:
+\code
+	MyStream s = new MyStream( new MemStream( new GZIPStream( SomeBigDataObject ) ) );
+\endcode
+assuming SomeBigDataObject supports Persistable, then the object is read into the
+GZIPStream and compressed, the compressed bytes are sent to the Memory stream, and
+then this is sent to MyStream.
+
+Streams are meant as alternative to the C++ streams, though in some
+cases they may extend the standard C++ stream library.
 *
-*Streams are meant as alternative to the C++ streams, though in some
-*cases they may extend the standard C++ stream library.
-*
-*@author Jim Crafton
-*@version 1.0
+@author Jim Crafton
+@version 1.0
 */
 class FOUNDATIONKIT_API Stream {
 public:
 
-    /*
-	Stream(Stream * incomingChainedStream){
-
-	};
-	*/
-
-	virtual ~Stream(){};
+    virtual ~Stream(){};
 
 	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom)=0;
 
 	/**
-	*returns the size of the stream. The size represents the
-	*number of bytes that have been <b>written</b>, or <b>read</b> to/from the stream
+	returns the size of the stream. The size represents the
+	number of bytes that have been \b written, or \b read to/from the stream
 	*/
     virtual unsigned long getSize() =0;
 
 	/**
-	*returns a pointer to the buffer that holds the stream memory
+	returns a pointer to the buffer that holds the stream memory
 	*/
 	virtual char* getBuffer() = 0;
 
 	/**
-	*this is a global offset from the beggining of the stream
+	this is a global offset from the beggining of the stream
 	*/
 	virtual ulong32 getCurrentSeekPos() = 0;
 };
 
 /**
-*InputStream, basic interface describing the requirements to
-*support streaming data into a stream. Support for the basic
-*primitive types is done through the extraction operator( >> ),
-*as well as providing support for the Persistable interface,
-*and reading in an arbitrary chunk of memory
+InputStream, basic interface describing the requirements to
+support streaming data into a stream. Support for the basic
+primitive types is done through the extraction operator( >> ),
+as well as providing support for the Persistable interface,
+and reading in an arbitrary chunk of memory
 */
-class FOUNDATIONKIT_API InputStream : public Stream /*,public std::istream */{
+class FOUNDATIONKIT_API InputStream : public Stream {
 public:
 
 	virtual ~InputStream(){};
@@ -153,13 +147,13 @@ public:
 };
 
 /**
-*OutputStream, basic interface describing the requirements to
-*support streaming data into a stream. Support for the basic
-*primitive types is done through the insertion operator( << ),
-*as well as providing support for the Persistable interface,
-*and writing out an arbitrary chunk of memory
+OutputStream, basic interface describing the requirements to
+support streaming data into a stream. Support for the basic
+primitive types is done through the insertion operator( << ),
+as well as providing support for the Persistable interface,
+and writing out an arbitrary chunk of memory
 */
-class FOUNDATIONKIT_API OutputStream : public Stream /*, public std::ostream */{
+class FOUNDATIONKIT_API OutputStream : public Stream {
 public:
 	virtual ~OutputStream(){};
 
@@ -210,6 +204,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

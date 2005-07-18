@@ -37,7 +37,7 @@ the control is over.
 A drop target works by being registered with a control. This registration is
 accomplished by calling the addTargetControl() on the drop target and passing
 in a control instance. For example:
-<pre>
+\code
 TextControl* textControl = ...//get the control from somewhere
 Panel* somePanel = ...//get the panel from somewhere
 
@@ -45,7 +45,7 @@ DropTarget dropTarget;
 dropTarget.addTargetControl( textControl );
 dropTarget.addTargetControl( somePanel );
 
-</pre>
+\endcode
 
 @delegates
 	@del DropTarget::DropTargetDraggingOver
@@ -147,6 +147,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

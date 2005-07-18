@@ -2122,15 +2122,86 @@ fis.read( &stuff2 );
 		
 		<section><title>Serializing Variants</title>
 			<para>
+			A VariantData object is a special holder for any sort of data, be it a 
+			primitive type, like an int, double, or bool, or some object instance.
+			The simplest, though not neccessarily the most efficient, way to serialize 
+			a VariantData object is to call it's VariantData::toString() or 
+			VariantData::setFromString() methods. VariantData::toString() is used to
+			store the data in a text format, while VariantData::setFromString()
+			takes a string and converts it to an appropriate data type.
+			</para>
+			<para>
+			If you need to be more efficient about how the data encapsulated in a VariantData
+			is serialized, then you should examine the VariantData's type member variable
+			and read or write to the stream accordingly. If the VariantData::type member is 
+			set to pdObject, then you should use the dynamic_cast&lt;Persistable*&gt; to
+			determine if the object instance supports this form opf streaming.
 			</para>
 		</section>
 	</section>
 
 	<section><title>Files</title>
 		<para>
+		Files are manipulated by using the VCF::File class. There is one static 
+		function used to determine if a given file name exists on the system. 
+		In addition to actual files, you can also manipulate file names using the
+		FilePath class.
+		</para>
+		<para>
+		The VCF::File class allows you to open and query various traits about a given
+		file or directory. You can use it to determine if the file name is a directory,
+		or if you have read or write permissions to the file. You can determine the file
+		size (e.g. the number of bytes the file takes on disk as reported by
+		the filesystem) to an accuracy of 64 bits. For example:
+		<programlisting>
+<![CDATA[
+File file( "C:\Foo\Bar\Baz.txt" );	
+ulong64 sizeInBytes =  file.getSize();
+
+if ( file.isReadable() ) {
+	System::prinln("Readable!");
+}
+
+if ( file.isWriteable() ) {
+	System::prinln("Writeable!");
+}
+]]>
+		</programlisting>
+		Assuming you have read and/or write access to the file, you can get access to the 
+		file input/output streams by calling File::getInputStream() or File::getOutputStream().
+		As the caller of this function, you're responsible for deleting the new instance of the
+		input or output stream returned (if any). This is functionally equivalent to using the
+		FileIntputStream or FileOutputStream classes.
+		</para>
+		<para>
+		In addition to querying for information about a file, you can also perform certain 
+		common file operations on File instance. You can create a new file, remove (delete)
+		an existing file, copy, or move (rename) an existing file. For example:
+		<programlisting>
+<![CDATA[
+File newFile;
+newFile.create( "HelloWorld.txt", File::ofReadWrite );
+OutputStream* os = newFile.getOutputStream();
+if ( NULL != os ) {
+	os->write( "Hello" );
+	os->free();
+}
+
+try {
+	newFile.copyTo( "HelloWorld-redux.txt" );
+	newFile.move( "Stuff.txt" );
+	newFile.remove();
+}
+catch (	BasicException& e ) {
+	System::println( String("Error!:\n\t") + e );
+}
+]]>
+		</programlisting>
 		</para>
 		<section><title>File Searching</title>
 			<para>
+			You can also easily search for files using the Directory and Directory::Finder
+			classes.
 			</para>
 		</section>
 	</section>
@@ -2173,6 +2244,9 @@ fis.read( &stuff2 );
 <!-- 
 CVS Log info
 $Log$
+Revision 1.8  2005/07/18 03:54:19  ddiego
+documentation updates.
+
 Revision 1.7  2005/07/13 04:34:50  ddiego
 more doc updates
 
