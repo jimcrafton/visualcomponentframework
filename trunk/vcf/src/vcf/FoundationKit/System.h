@@ -277,13 +277,13 @@ public:
 	static void sleep( const uint32& milliseconds );
 
 	/**
-	*sets the System's ErrorLog.
-	*Note the Errolog is NOT owned by the System,
-	*so it is the caller's responsibility to clean up the
-	*memory. The suggested use is to create an ErrorLog
-	*object on the stack in your main() function and
-	*then pass it to the System after initialization of the
-	*FoundationKit is done (i.e. after initFoundationKit() )
+	sets the System's ErrorLog.
+	Note the Errolog is NOT owned by the System,
+	so it is the caller's responsibility to clean up the
+	memory. The suggested use is to create an ErrorLog
+	object on the stack in your main() function and
+	then pass it to the System after initialization of the
+	FoundationKit is done (i.e. after initFoundationKit() )
 	*/
 	static void setErrorLog( ErrorLog* errorLog );
 
@@ -479,6 +479,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.7  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -24,17 +24,17 @@ class WindowEvent;
 class Library;
 
 /**
- *Represents the main process for a application.
- *Each application contains a main window, pointed to by  mainWindow_.
- *Application are started by some entry point of the executing process.
- *Once the entry point has been called, usually main(),
- *the static function Application::appMain() is called to start
- *the application initializing itself.
- *While the Application instance is optional, if it is present
- *there should only be one instance that is created on the stack.
- *<p>
- *Typically the startup code looks like this:
- *<pre>
+Represents the main process for a application.
+Each application contains a main window, pointed to by  mainWindow_.
+Application are started by some entry point of the executing process.
+Once the entry point has been called, usually main(),
+the static function Application::appMain() is called to start
+the application initializing itself.
+While the Application instance is optional, if it is present
+there should only be one instance that is created on the stack.
+ \par
+ Typically the startup code looks like this:
+ *\code
  int main( int argc, char** argv ) {
 		Application theApp(argc, argv);
 
@@ -42,7 +42,7 @@ class Library;
 
 		return 0;
   }
- *</pre>
+ *\endcode
  *
  *@version 1.0
  *@author Jim Crafton
@@ -53,18 +53,18 @@ class Library;
 class APPLICATIONKIT_API Application : public AbstractApplication {
 public:
 	/**
-	Every derived class <b>must</b> at least take argc, and argv
+	Every derived class \b must at least take argc, and argv
 	arguments to it's constructor. These in turn get passed to
 	the ApplicationKit and it's underlying platform implementation
 	in order to properly initialize them.
 	These arguments can be retrieved in the form of the
 	CommandLine instance that is part of the FoundationKit. For
 	example:
-	<pre>
+	\code
 	CommandLine cmdLine =  FoundationKit::getCommandLine();
 	//get the first argument
 	cmdLine.getArgument(0);
-	</pre>
+	\endcode
 
 	@see CommandLine
 	*/
@@ -155,9 +155,9 @@ public:
 	@param Event this instance has in it's UserData a pointer to a wrapper struct. For Win32
 	systems please see the Win32Toolkit.h and look at the Win32MSG class. This will wrap
 	up a MSG struct that you can use.
-	<p>
+	\par
 	Example (this is pertinent ONLY to Win32 systems):
-	<pre>
+	\code
 		void MyApp::onOSNativeEvent( Event* e )
 		{
 			//comment the next line out if you want to prevent the
@@ -170,7 +170,7 @@ public:
 				//do whatever here
 			}
 		}
-	</pre>
+	\endcode
 	*/
 	virtual void onOSNativeEvent( Event* nativeOSEvent ) {
 		nativeOSEventReceived.fireEvent( nativeOSEvent );
@@ -192,6 +192,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

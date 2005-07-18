@@ -129,12 +129,12 @@ protected:
 	/**
 	Implementer note: flags_ needs to be intialized in the constructor of the
 	platform implementation of the Image class. For Win32 an example might be:
-	<pre>
+	\code
 	ImageBits::Traits::setChannelType( flags_, ImageBits::Traits::getTraitsChannelType() );
 	ImageBits::Traits::setChannelSize( flags_, ImageBits::Traits::getTraitsChannelSize() );
 	ImageBits::Traits::setImageType( flags_, ImageBits::Traits::getTraitsImageType() );
 	ImageBits::Traits::setPixelLayoutOrder( flags_, Image::ploBGRA );
-	</pre>
+	\endcode
 	*/
 	ImageDescriptor flags_;
 
@@ -146,6 +146,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

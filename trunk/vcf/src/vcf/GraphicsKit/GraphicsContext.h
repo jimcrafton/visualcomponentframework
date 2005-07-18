@@ -46,31 +46,32 @@ class GraphicsState;
 
 
 /**
-*A Graphics Context provides the lowest level graphics interface to the
-*native systems 2D drawing operations. Based loosely on PostScript,
-*a Context takes a series of of drawing operations, or commands
+A Graphics Context provides the lowest level graphics interface to the
+native systems 2D drawing operations. Based loosely on PostScript,
+a Context takes a series of of drawing operations, or commands
 *(lineTo, moveTo, etc), and then executes them by either filling or
-*strokeing the path(s) that result from the commands. Thus calling
-*ellipse() will not draw anything till the strokePath() or fillPath()
-*methods have been called. All path commands should add their information
-*to a stack of some sort that is then looped through and executed
-*using the appropriate native graphics calls. At each path command
-*a test should be made as to whether the buffer should be cleared.
-*The buffer should be cleared only after the stroke of fill methods
-*have been  called. For example:
-*
-*<p><pre>
-*	ellipse(23,23,45,67) //added to buffer
-*	moveTo(89,100) //add to buffer
-*	lineTo(300,40) //add to buffer
-*	strokePath()
-*	fillPath()
-*	rectangle(200,300,400,400)//buffer cleared, then add to buffer
-*</pre></p>
-*
-*@version 1.0
-*@author Jim Crafton
-*
+strokeing the path(s) that result from the commands. Thus calling
+ellipse() will not draw anything till the strokePath() or fillPath()
+methods have been called. All path commands should add their information
+to a stack of some sort that is then looped through and executed
+using the appropriate native graphics calls. At each path command
+a test should be made as to whether the buffer should be cleared.
+The buffer should be cleared only after the stroke of fill methods
+have been  called. For example:
+
+\par
+\code
+	ellipse(23,23,45,67) //added to buffer
+	moveTo(89,100) //add to buffer
+	lineTo(300,40) //add to buffer
+	strokePath()
+	fillPath()
+	rectangle(200,300,400,400)//buffer cleared, then add to buffer
+\endcode
+
+@version 1.0
+@author Jim Crafton
+
 */
 class GRAPHICSKIT_API GraphicsContext : public Object {
 public:
@@ -114,7 +115,7 @@ public:
 	};
 
 	/**
-	*text drawing options
+	text drawing options
 	*/
 	enum TextDrawingOptions{
 		tdoNone=0,
@@ -162,23 +163,23 @@ public:
 	void setAntiAliasingOn( bool antiAliasingOn );
 
 	/**
-	*sets the current font
-	*A copy of the Font is made when this is set
+	sets the current font
+	A copy of the Font is made when this is set
 	*/
 	void setCurrentFont(Font * font );
 
 	/**
-	*returns the current Font
+	returns the current Font
 	*/
 	Font* getCurrentFont( );
 
 	/**
-	*sets the current fill
+	sets the current fill
 	*/
 	void setCurrentFill(Fill * fill );
 
 	/**
-	*sets the current stroke
+	sets the current stroke
 	*/
 	void setCurrentStroke(Stroke * stroke );
 
@@ -243,18 +244,18 @@ public:
 	*	\par
 	*	Similarly this makes it easy to guarantee that the
 	*	state of the GraphicsContext is reset correctly.
-	*@return int, the index of the newly saved graphics state.
-	*@see GraphicsContext::restoreState()
+	@return int, the index of the newly saved graphics state.
+	@see GraphicsContext::restoreState()
 	*/
 	int saveState( );
 
 	/**
 	* restores the state of a Graphics context after the
 	* paint operations are done.
-	*@param int state, the index of the graphics state we want to restore. All
+	@param int state, the index of the graphics state we want to restore. All
 	* the graphics states saved after this index are lost as they have lost meaning,
 	* and the current graphics state index is set to the state just restored.
-	*@see GraphicsContext::saveState()
+	@see GraphicsContext::saveState()
 	*/
 	void restoreState( int state );
 
@@ -272,8 +273,8 @@ public:
 	void copyContext( const Rect& sourceRect, const Rect& destRect, GraphicsContext* context );
 
 	/**
-	*Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
-	*screen real estate the context represents
+	Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
+	screen real estate the context represents
 	*/
 	void setOrigin( const double& x, const double& y );
 	void setOrigin( const Point & pt );
@@ -281,7 +282,7 @@ public:
 	Point getOrigin( );
 
 	/**
-	*sets the current rotation value of the transformation matrix. The
+	sets the current rotation value of the transformation matrix. The
 	theta argument is in degrees.
 	*/
 	void setRotation( const double& theta );
@@ -342,30 +343,30 @@ public:
 	double getScaleY( );
 
 	/**
-	*returns whether or not the XOR Mode is turned on.
-	*@return bool if the return is true then the
-	*XOR mode is on, which means that colors are alternated
-	*at the pixel level. Thus a line drawn once, and then
-	*a second time at the same coordinates will erase itself
+	returns whether or not the XOR Mode is turned on.
+	@return bool if the return is true then the
+	XOR mode is on, which means that colors are alternated
+	at the pixel level. Thus a line drawn once, and then
+	a second time at the same coordinates will erase itself
 	*/
 	bool isXORModeOn( );
 
 	/**
-	*Turns the XOR mode on or off.
-	*@param bool XORModeOn, if true then turns the XORMode on
-	*otherwise if it's false it turns it off.
+	Turns the XOR mode on or off.
+	@param bool XORModeOn, if true then turns the XORMode on
+	otherwise if it's false it turns it off.
 	*/
 	void setXORModeOn( const bool& XORModeOn );
 
 
 	/**
-	*draws a path. See Path for more info. Basically this simple enumerates all the
-	*path points and uses the current stroke and fill to render the shape
+	draws a path. See Path for more info. Basically this simple enumerates all the
+	path points and uses the current stroke and fill to render the shape
 	*/
 	void draw(Path * path );
 
 	/**
-	*draws an image at the x,y, coordinates
+	draws an image at the x,y, coordinates
 	*/
 	void drawImage( const double& x, const double& y, Image * image );
 	void drawImage( const Point & pt, Image * image );
@@ -373,39 +374,39 @@ public:
 
 
 	/**
-	*draws an image at the x,y, coordinates, with
-	*state
-	*@param double x coordinate
-	*@param double y coordinate
-	*@param Image the image to draw
-	*@param bool the state of the image, if true then draws the
-	*image normally, if false draws a grayed out and embossed
-	*version
-	*Note: as of 8/4/2001 not implemented yet
+	draws an image at the x,y, coordinates, with
+	state
+	@param double x coordinate
+	@param double y coordinate
+	@param Image the image to draw
+	@param bool the state of the image, if true then draws the
+	image normally, if false draws a grayed out and embossed
+	version
+	Note: as of 8/4/2001 not implemented yet
 	*/
 	void drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled );
 	void drawImageWithState( const Point & pt, Image * image, const bool& enabled );
 
 	/**
-	*draws a portion of the image.
-	*@param Rect boudns - the left_, top_ members of the bounds rect describe
-	*where on the GraphicsContext the image will be drawn, while the height
-	*and width of the bounds tells how much of the image to draw. A height or width
-	*greater than the Image is ignored, and the whole image is draw. A height
-	*or width less than the image results in only a portion of the image getting
-	*drawn, or the top, left of the image to the specified height and width.
-	*@param Image the image to draw
+	draws a portion of the image.
+	@param Rect boudns - the left_, top_ members of the bounds rect describe
+	where on the GraphicsContext the image will be drawn, while the height
+	and width of the bounds tells how much of the image to draw. A height or width
+	greater than the Image is ignored, and the whole image is draw. A height
+	or width less than the image results in only a portion of the image getting
+	drawn, or the top, left of the image to the specified height and width.
+	@param Image the image to draw
 	*/
 	void drawImageWithinBounds( Rect* bounds, Image* image );
 
 	/**
-	*draws a partial image at the x,y, coordinates specified
-	*@param double x - the x coordinate on the GraphicsContext
-	*@param double y - the y coordinate on the GraphicsContext
-	*@param Rect* imageBounds - a rectangle in the coordinate space
-	*of the image that specifies which rectangular portion of the
-	*image to draw
-	*@param Image image - the image to draw
+	draws a partial image at the x,y, coordinates specified
+	@param double x - the x coordinate on the GraphicsContext
+	@param double y - the y coordinate on the GraphicsContext
+	@param Rect* imageBounds - a rectangle in the coordinate space
+	of the image that specifies which rectangular portion of the
+	image to draw
+	@param Image image - the image to draw
 	*/
 	void drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image );
 	void drawPartialImage( const Point & pt, Rect* imageBounds, Image* image );
@@ -413,18 +414,18 @@ public:
 
 
 	/**
-	*returns current transform matrix for this GraphicsContext instance.
-	*Before the matrix is returned, a new matrix is created and then multiplied
-	*into the final transform matrix. These matrices represent the various trnasform
-	*values (i.e. theta_, scaleX_, etc)
+	returns current transform matrix for this GraphicsContext instance.
+	Before the matrix is returned, a new matrix is created and then multiplied
+	into the final transform matrix. These matrices represent the various trnasform
+	values (i.e. theta_, scaleX_, etc)
 	*/
 	void setCurrentTransform( const Matrix2D& transform );
 
 	Matrix2D* getCurrentTransform( );
 
 	/**
-	*End of high level gaphics functions. The funtions below are lower level
-	*See ContextPeer for more information on the functions below
+	End of high level gaphics functions. The funtions below are lower level
+	See ContextPeer for more information on the functions below
 	*/
 
 	void setStrokeWidth( const double& width );
@@ -442,16 +443,16 @@ public:
 	void textWithStateAt( const Point & pt, const String& text, const bool& enabled );
 
 	/**
-	*draws text within the bounds specified. If specified the
-	*text will be word wrapped within the bounds.
-	*@param Rect bounds - the left, top, right, and bottom of the
-	*rectangle to draw the text within
-	*@param String the text to draw
-	*@param bool wordWrap whether or not wrap the text to
-	*bounds specified. If wordWrap is false, then the text is
-	*treated as a single line, and any text extending past the
-	*right coordinate value will be clipped using an ellipsis.
-	*So if "Hello World" is passed in and the bounds only fits
+	draws text within the bounds specified. If specified the
+	text will be word wrapped within the bounds.
+	@param Rect bounds - the left, top, right, and bottom of the
+	rectangle to draw the text within
+	@param String the text to draw
+	@param bool wordWrap whether or not wrap the text to
+	bounds specified. If wordWrap is false, then the text is
+	treated as a single line, and any text extending past the
+	right coordinate value will be clipped using an ellipsis.
+	So if "Hello World" is passed in and the bounds only fits
 	*"Hello W", then the string will be drawn as "Hello..."
 	*/
 	void textBoundedBy( Rect* bounds, const String& text, const bool& wordWrap=true );
@@ -683,21 +684,21 @@ protected:
 	Rect viewableBounds_;
 
 	/**
-	* the collection of all the saved Graphics states.
-	*@see GraphicsContext::saveState()
+	the collection of all the saved Graphics states.
+	@see GraphicsContext::saveState()
 	*/
 	GraphicsStateCollection stateCollection_;
 
 	/**
-	* the index of the current state in the collection of
-	* all the saved Graphics states.
-	*@see GraphicsContext::saveState()
+	the index of the current state in the collection of
+	all the saved Graphics states.
+	@see GraphicsContext::saveState()
 	*/
 	int graphicsStateIndex_;
 
 	/**
-	* the current Graphics state that has been saved.
-	*@see GraphicsContext::saveState()
+	the current Graphics state that has been saved.
+	@see GraphicsContext::saveState()
 	*/
 	GraphicsState* currentGraphicsState_;
 
@@ -799,6 +800,9 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.6  2005/07/09 23:05:59  ddiego
 *added missing gtk files
 *

@@ -77,47 +77,47 @@ protected:
 // DateTime class declaration
 
 /**
-<p>
+\par
 This class is used to represent a point in time. The internal structure is a
 64bit unsigned long that counts the number of milliseconds from ~ 4700BC. The
 calendar used is the Gregorian calendar. There is logic to support switching
 to the Julian calendar for days before the Gregorian switch. At the moment
 there is no time zone support. This will be coming next.
-</p>
-<p>
+
+\par
 There are a wide number of functions for retrieving all sorts of handy date/time
 info, such as :
-<ul>
-<li>getting the Month enumeration
-<li>getting the day of the week
-<li>getting the day of the year
-<li>getting the week of the year (starting on either Sun or Mon)
-<li>getting the number of days in a year
-<li>getting the number of weeks in a year
-<li>getting the number of weeks in a year
-<li>getting AM or PM
-<li>getting the time as C time(i.e. positive number of seconds since Jan 1, 1970)
-</ul>
+
+\li getting the Month enumeration
+\li getting the day of the week
+\li getting the day of the year
+\li getting the week of the year (starting on either Sun or Mon)
+\li getting the number of days in a year
+\li getting the number of weeks in a year
+\li getting the number of weeks in a year
+\li getting AM or PM
+\li getting the time as C time(i.e. positive number of seconds since Jan 1, 1970)
+
 There is iteration support in the form of the DateTime::Iterator class which allows
 templatized iterator logic and lets you:
-<ul>
-  <li>incrementing or decrementing dates by a single unit in millisecond, second,
+
+  \li incrementing or decrementing dates by a single unit in millisecond, second,
   minute, hour, day, month, or year resolution. This is done with the
   operator++ or operator --.
-  <li>incrementing or decrementing dates by a 1 or more units in millisecond, second,
+  \li incrementing or decrementing dates by a 1 or more units in millisecond, second,
   minute, hour, day, month, or year resolution. This is done with the
   operator+=(n) or operator -=(n).
-</ul>
+
 Since the iterator template type is customizable, you can create your own iteration logic classes
 to perform custom iteration logic.
-</p>
-<p>
+
+\par
 You can modify the date time object in a variety of ways, by specifying the year, month, day, or
 set the time specifying hour, minute, second, or have more control by setting all fields
 (year, month, day, hour, minute, second, millisecond).
-</p>
-<p>
-Most of the algorithms that this class uses come from: <br>
+
+\par
+Most of the algorithms that this class uses come from: 
 http://www.tondering.dk/claus/cal/
 
 */
@@ -181,11 +181,11 @@ public:
 	specified month and year (i.e. for Feb 2004 the range would be 1-29, while Feb 2003
 	the range would be 1-28).
 	An example:
-	<pre>
+	\code
 	DateTime bobs31stBirthday(2004,2,24); //valid date - February 24, 2004 00:00:00
 
 	DateTime bobs32stBirthday(2005,14,24); //invalid date! BadDateFormat will be thrown
-	</pre>
+	\endcode
 	@throw BadDateFormat
 	*/
 	DateTime( unsigned long year, unsigned long month, unsigned long day );
@@ -198,11 +198,11 @@ public:
 	the hour value is between 0 and 23, and valid ranges for minutes, or seconds
 	are between 0 and 59.
 	An example:
-	<pre>
+	\code
 	DateTime bobs31stBirthday(2004,2,24,10,32,12); //valid date - February 24, 2004 10:32:12
 
 	DateTime bobs32stBirthday(2005,2,24,60,32,12); //invalid date! BadTimeFormat will be thrown
-	</pre>
+	\endcode
 	@throw BadDateFormat
 	@throw BadTimeFormat
 	*/
@@ -366,13 +366,13 @@ public:
 	/**
 	Allows for assignment of C time values to this
 	date time object. For example:
-	<pre>
+	\code
 	time_t ctime = 0;
 	time( &amp;ctime );
 
 	DateTime dt;
 	dt = ctime;
-	</pre>
+	\endcode
 	*/
 	DateTime& operator =( const time_t& rhs );
 
@@ -594,13 +594,13 @@ public:
 	templatized class for iterating a date, either forward
 	or backard in time, where the template type DateLogic
 	is a class with the following static methods:
-	<pre>
+	\code
 	class SomeDateLogic {
 	public:
 		static void incr( DateTime& dt, unsigned long offset );
 		static void decr( DateTime& dt, unsigned long offset );
 	};
-	</pre>
+	\endcode
 	*/
 	template <typename DateLogic>
 	class Iterator 
@@ -814,7 +814,7 @@ values. You can get the individual components of the span by calling the various
 getYears(), getMonths(), etc methods, or you can get the total amount of time
 this span covers in a praticular format, such the total minutes, or the total
 seconds. An example of this might look like so:
-<pre>
+\code
 DateTime dt1(2003,2,10); //2003, Feb 10th
 DateTime dt2(2003,2,23); //2003, Feb 23rd
 DateTimeSpan span = dt1 - dt2;
@@ -824,7 +824,7 @@ int totalMinutes = span.getTotalMinutes(); //returns 18,720 (or 60 * 24 * 13)
 int days = span.getDays(); //returns 13
 int months = span.getMonths(); //returns 0
 int minutes = span.getMinutes(); //returns 0
-</pre>
+\endcode
 
 */
 class FOUNDATIONKIT_API DateTimeSpan {
@@ -972,6 +972,9 @@ inline void DateTime::get( unsigned long* year, unsigned long* month, unsigned l
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.5  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

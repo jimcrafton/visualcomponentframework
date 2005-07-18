@@ -288,11 +288,11 @@ protected:
 
 	static GraphicsToolkit* graphicsToolkitInstance;
 	/**
-	*ImageLoaders are stored in map, keyed by the MIME content type
-	*Thus JPEG loaders are stored under the key:
-	*<p><pre>
-	*	"image/jpeg"
-	*</pre></p>
+	ImageLoaders are stored in a map, keyed by the MIME content type
+	Thus JPEG loaders are stored under the key:
+	\code
+		"image/jpeg"
+	\endcode
 	*/
 	std::map<String, ImageLoader*> imageLoaders_;
 };
@@ -303,6 +303,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.5  2005/07/09 23:06:00  ddiego
 *added missing gtk files
 *

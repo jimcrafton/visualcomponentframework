@@ -25,36 +25,36 @@ namespace VCF {
 
 
 /**
-*VariantData represents an unknown type of variable - similiar to
-*Visual Basic's Variant object.
-*VariantData objects can store int, long, double, bool String, or Object*.
-*VariantData overrides conversion operators and provides operator equals overloads
-*to handle the conversion from one type to another. Setting the value of a VariantData
-*automatically sets the type. For example:
-*<pre>
-*	VariantData val;
-*	<b>int</b> i = 123;
-*	val = i; <i>//automatically sets the VariantData::type to equal pdInt</i>
-*</pre>
-*To convert from one type to another is equally simple:
-*<pre>
-*	VariantData val;
-*	<b>int</b> i;
-*	<b>double</b> d;
-*	val = 234.8546; <i>//val is 234.8546 and is set to the correct type</i>
-*	d = val; <i>//val is converted to a double and d is assigned the value 234.8546</i>
-*	val = 123; <i>//val is now assigned an int (or whatever the compiler assumes 123 is )</i>
-*	i = val;	<i>//i is now equal to 123</i>
-*</pre>
-*Strings are a special case, since the compiler will not allow a union to be made with them,
-*thus the reason for the StringVal member outside of the union.
-*VariantData objects can also have their data render as a string and can be assigned strings
-*and convert then to the correct data value.
+VariantData represents an unknown type of variable - similiar to
+Visual Basic's Variant object.
+VariantData objects can store int, long, double, bool String, or Object*.
+VariantData overrides conversion operators and provides operator equals overloads
+to handle the conversion from one type to another. Setting the value of a VariantData
+automatically sets the type. For example:
+\code
+	VariantData val;
+	int i = 123;
+	val = i; //automatically sets the VariantData::type to equal pdInt
+\endcode
+To convert from one type to another is equally simple:
+\code
+	VariantData val;
+	int i;
+	double d;
+	val = 234.8546; //val is 234.8546 and is set to the correct type
+	d = val; //val is converted to a double and d is assigned the value 234.8546
+	val = 123; //val is now assigned an int (or whatever the compiler assumes 123 is )
+	i = val;	//i is now equal to 123
+\endcode
+Strings are a special case, since the compiler will not allow a union to be made with them,
+thus the reason for the StringVal member outside of the union.
+VariantData objects can also have their data render as a string and can be assigned strings
+and convert then to the correct data value.
 *
 *@version 1.0
 *@author Jim Crafton
 */
-class FOUNDATIONKIT_API VariantData /*: public Object*/ {
+class FOUNDATIONKIT_API VariantData  {
 public:
 
 	enum {
@@ -62,7 +62,7 @@ public:
 	};
 
 	/**
-	*creates an empty, undefined object
+	creates an empty, undefined object
 	*/
 	VariantData(){
 		ObjVal = NULL;
@@ -70,7 +70,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by an int value
+	creates a VariantData initialized by an int value
 	*/
 	VariantData( const int& val ) {
 		IntVal = val;
@@ -78,7 +78,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by an unsigned int value
+	creates a VariantData initialized by an unsigned int value
 	*/
 	VariantData( const unsigned int& val ) {
 		UIntVal = val;
@@ -86,7 +86,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a long value
+	creates a VariantData initialized by a long value
 	*/
 	VariantData( const long& val ) {
 		LongVal = val;
@@ -94,7 +94,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by an unsigned long value
+	creates a VariantData initialized by an unsigned long value
 	*/
 	VariantData( const unsigned long& val ) {
 		ULongVal = val;
@@ -102,7 +102,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a float value
+	creates a VariantData initialized by a float value
 	*/
 	VariantData( const float& val ) {
 		FloatVal = val;
@@ -110,7 +110,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a double value
+	creates a VariantData initialized by a double value
 	*/
 	VariantData( const double& val ) {
 		DblVal = val;
@@ -118,7 +118,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a char value
+	creates a VariantData initialized by a char value
 	*/
 	VariantData( const char& val ) {
 		CharVal = val;
@@ -126,7 +126,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a bool value
+	creates a VariantData initialized by a bool value
 	*/
 	VariantData( const bool& val ) {
 		BoolVal = val;
@@ -134,7 +134,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a short value
+	creates a VariantData initialized by a short value
 	*/
 	VariantData( const short& val ) {
 		ShortVal = val;
@@ -142,7 +142,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a String value
+	creates a VariantData initialized by a String value
 	*/
 	VariantData( const String& val ) {
 		StringVal = val;
@@ -150,7 +150,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a Enum value
+	creates a VariantData initialized by a Enum value
 	*/
 	VariantData( const Enum& val ) {
 		EnumVal.set( const_cast<Enum*>(&val) );
@@ -158,7 +158,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a Enum value
+	creates a VariantData initialized by a Enum value
 	*/
 	VariantData( Enum& val ) {
 		EnumVal.set( &val );
@@ -166,7 +166,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a Enum* value
+	creates a VariantData initialized by a Enum* value
 	*/
 	VariantData( Enum* val ) {
 		EnumVal.set( val );
@@ -174,7 +174,7 @@ public:
 	};
 
 	/**
-	*creates a VariantData initialized by a Object* value
+	creates a VariantData initialized by a Object* value
 	*/
 	VariantData( Object* val ) {
 		ObjVal = val;
@@ -182,7 +182,7 @@ public:
 	}
 
 	/**
-	*creates a VariantData initialized by a Object& value
+	creates a VariantData initialized by a Object& value
 	*/
 	VariantData( Object& val ) {
 		ObjVal = &val;
@@ -190,7 +190,7 @@ public:
 	}
 
 	/**
-	*creates a VariantData initialized by a const Object& value
+	creates a VariantData initialized by a const Object& value
 	*/
 	VariantData( const Object& val ){
 		ObjVal = const_cast<Object*>(&val);
@@ -198,7 +198,7 @@ public:
 	}
 
 	/**
-	*creates a VariantData initialized by a Interface* value
+	creates a VariantData initialized by a Interface* value
 	*/
 	VariantData( Interface* val ){
 		InterfaceVal = val;
@@ -207,7 +207,7 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	*creates a Variant initialized by a long64 value
+	creates a Variant initialized by a long64 value
 	*/
 	VariantData( const VCF::long64& val ) {
 		Long64Val = val;
@@ -215,7 +215,7 @@ public:
 	};
 
 	/**
-	*creates a Variant initialized by a ulong64 value
+	creates a Variant initialized by a ulong64 value
 	*/
 	VariantData( const VCF::ulong64& val ) {
 		ULong64Val = val;
@@ -223,7 +223,7 @@ public:
 	};
 
 	/**
-	*creates a Variant initialized by a DateTime value
+	creates a Variant initialized by a DateTime value
 	*/
 	VariantData( const DateTime& val ) {
 		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
@@ -231,7 +231,7 @@ public:
 	};
 
 	/**
-	*creates a Variant initialized by a DateTimeSpan value
+	creates a Variant initialized by a DateTimeSpan value
 	*/
 	VariantData( const DateTimeSpan& val ) {
 		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
@@ -239,7 +239,7 @@ public:
 	};
 
 	///**
-	//*creates a Variant initialized by a Color value
+	//creates a Variant initialized by a Color value
 	//*/
 	//VariantData( const Color& val ) {
 	//	Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
@@ -249,7 +249,7 @@ public:
 #endif // VCF_VARIANT64
 
 	/**
-	*copy constructor
+	copy constructor
 	*/
 	VariantData( const VariantData& value ){
 		this->type = value.type;
@@ -257,7 +257,7 @@ public:
 	};
 
 	/**
-	*destructor
+	destructor
 	*/
 	virtual ~VariantData(){};
 
@@ -265,10 +265,10 @@ public:
 
 
 	/**
-	*defines the data type of the VariantData, where type can represent
+	defines the data type of the VariantData, where type can represent
 	* an int, unsigned int, long, unsigned long, short, char, 
 	* double, float, bool, string, Enum pointer, or Object pointer.
-	*comparison operator
+	comparison operator
 	*/
 	bool operator == ( const VariantData& v ) const {
 		return (	type == v.type &&
@@ -278,7 +278,7 @@ public:
 	}
 
 	/**
-	*comparison operator
+	comparison operator
 	*/
 	bool operator != ( const VariantData& v ) const {
 		return ( !operator==( v ) );
@@ -286,112 +286,112 @@ public:
 
 	/**
 	*
-	*conversion operators
+	conversion operators
 	*
 	*/
 
 
 
 	/**
-	*converts the VariantData to an int
+	converts the VariantData to an int
 	*/
 	operator int () const {
 		return IntVal;
 	};
 
 	/**
-	*converts the VariantData to an long
+	converts the VariantData to an long
 	*/
 	operator long () const {
 		return LongVal;
 	};
 
 	/**
-	*converts the VariantData to an short
+	converts the VariantData to an short
 	*/
 	operator short () const {
 		return ShortVal;
 	};
 
 	/**
-	*converts the VariantData to an unsigned int
+	converts the VariantData to an unsigned int
 	*/
 	operator unsigned int () const {
 		return UIntVal;
 	};
 
 	/**
-	*converts the VariantData to an unsigned long
+	converts the VariantData to an unsigned long
 	*/
 	operator unsigned long () const {
 		return ULongVal;
 	};
 
 	/**
-	*converts the VariantData to an float
+	converts the VariantData to an float
 	*/
 	operator float () const {
 		return FloatVal;
 	};
 
 	/**
-	*converts the VariantData to an char
+	converts the VariantData to an char
 	*/
 	operator char () const {
 		return CharVal;
 	};
 
 	/**
-	*converts the VariantData to an double
+	converts the VariantData to an double
 	*/
 	operator double () const {
 		return DblVal;
 	};
 
 	/**
-	*converts the VariantData to an Interface pointer
+	converts the VariantData to an Interface pointer
 	*/
 	operator Interface* () const {
 		return InterfaceVal;
 	}
 
 	/**
-	*converts the VariantData to an Object pointer
+	converts the VariantData to an Object pointer
 	*/
 	operator Object* () const {
 		return ObjVal;
 	};
 
 	/**
-	*converts the VariantData to an Object reference
+	converts the VariantData to an Object reference
 	*/
 	operator Object& () const {
 		return *ObjVal;
 	};
 
 	/**
-	*converts the VariantData to an String
+	converts the VariantData to an String
 	*/
 	operator String () const {
 		return StringVal;
 	};
 
 	/**
-	*converts the VariantData to a bool
+	converts the VariantData to a bool
 	*/
 	operator bool () const {
 		return BoolVal;
 	};
 
 	/**
-	*converts the VariantData to an Enum pointer
+	converts the VariantData to an Enum pointer
 	*/
 	operator Enum* () const {
 		return EnumVal.getEnum();
 	};
 
 	/**
-	*converts the VariantData to an Enum reference
+	converts the VariantData to an Enum reference
 	*/
 	operator Enum& () const {
 		return *EnumVal.getEnum();
@@ -399,35 +399,35 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	*converts the Variant to a long64
+	converts the Variant to a long64
 	*/
 	operator VCF::long64 () const {
 		return Long64Val;
 	};
 
 	/**
-	*converts the Variant to an ulong64
+	converts the Variant to an ulong64
 	*/
 	operator VCF::ulong64 () const {
 		return ULong64Val;
 	};
 
 	/**
-	*converts the Variant to a DateTime
+	converts the Variant to a DateTime
 	*/
 	operator VCF::DateTime () const {
 		return (long64) Long64Val; // uses the conversion DateTime::operator long64()
 	};
 
 	/**
-	*converts the Variant to a DateTimeSpan
+	converts the Variant to a DateTimeSpan
 	*/
 	operator VCF::DateTimeSpan () const {
 		return (long64) Long64Val; // uses the conversion DateTimeSpan::operator long64()
 	};
 
 	///**
-	//*converts the Variant to a Color
+	//converts the Variant to a Color
 	//*/
 	//operator VCF::Color () const {
 	//	return Color(ULong64Val);
@@ -463,7 +463,7 @@ public:
 	};
 
 	/**
-	*Assigns an long value to the VariantData
+	Assigns an long value to the VariantData
 	*/
 	VariantData& operator=( const long& newValue ){
 		LongVal = newValue;
@@ -472,7 +472,7 @@ public:
 	};
 
 	/**
-	*Assigns an short value to the VariantData
+	Assigns an short value to the VariantData
 	*/
 	VariantData& operator=( const short& newValue ){
 		ShortVal = newValue;
@@ -481,7 +481,7 @@ public:
 	};
 
 	/**
-	*Assigns an unsigned int value to the VariantData
+	Assigns an unsigned int value to the VariantData
 	*/
 	VariantData& operator=( const unsigned int& newValue ){
 		UIntVal = newValue;
@@ -490,7 +490,7 @@ public:
 	};
 
 	/**
-	*Assigns an unsigned long value to the VariantData
+	Assigns an unsigned long value to the VariantData
 	*/
 	VariantData& operator=( const unsigned long& newValue ){
 		ULongVal = newValue;
@@ -499,7 +499,7 @@ public:
 	};
 
 	/**
-	*Assigns an float value to the VariantData
+	Assigns an float value to the VariantData
 	*/
 	VariantData& operator=( const float& newValue ){
 		FloatVal = newValue;
@@ -508,7 +508,7 @@ public:
 	};
 
 	/**
-	*Assigns an char value to the VariantData
+	Assigns an char value to the VariantData
 	*/
 	VariantData& operator=( const char& newValue ){
 		CharVal = newValue;
@@ -517,7 +517,7 @@ public:
 	};
 
 	/**
-	*Assigns an double value to the VariantData
+	Assigns an double value to the VariantData
 	*/
 	VariantData& operator=( const double& newValue ){
 		DblVal = newValue;
@@ -526,7 +526,7 @@ public:
 	};
 
 	/**
-	*Assigns an bool value to the VariantData
+	Assigns an bool value to the VariantData
 	*/
 	VariantData& operator=( const bool& newValue ){
 		BoolVal = newValue;
@@ -535,7 +535,7 @@ public:
 	};
 
 	/**
-	*Assigns an string (as an array of char's) to the VariantData
+	Assigns an string (as an array of char's) to the VariantData
 	*/
 	VariantData& operator=( const char* newValue ){
 		StringVal = newValue;
@@ -544,7 +544,7 @@ public:
 	};
 
 	/**
-	*Assigns an Interface pointer to the VariantData
+	Assigns an Interface pointer to the VariantData
 	*/
 	VariantData& operator=( Interface* newValue ){
 		//ObjVal->copy( newValue );
@@ -554,7 +554,7 @@ public:
 	};
 
 	/**
-	*Assigns an Object pointer to the VariantData
+	Assigns an Object pointer to the VariantData
 	*/
 	VariantData& operator=( Object* newValue ){
 		//ObjVal->copy( newValue );
@@ -564,7 +564,7 @@ public:
 	};
 
 	/**
-	*Assigns an Object reference to the VariantData
+	Assigns an Object reference to the VariantData
 	*/
 	VariantData& operator=( const Object& newValue ){
 		//ObjVal->copy( newValue );
@@ -574,7 +574,7 @@ public:
 	};
 
 	/**
-	*Assigns an string (as an String) to the VariantData
+	Assigns an string (as an String) to the VariantData
 	*/
 	VariantData& operator=( const String& newValue ){
 		StringVal = newValue;
@@ -583,7 +583,7 @@ public:
 	};
 
 	/**
-	*Assigns an Enum pointer to the VariantData
+	Assigns an Enum pointer to the VariantData
 	*/
 	VariantData& operator=( Enum* newValue ){
 		EnumVal.set( newValue );
@@ -592,7 +592,7 @@ public:
 	};
 
 	/**
-	*Assigns an Enum reference to the VariantData
+	Assigns an Enum reference to the VariantData
 	*/
 	VariantData& operator=( const Enum& newValue ){
 		EnumVal.set( const_cast<Enum*>(&newValue) );
@@ -603,7 +603,7 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	*Assigns a long64 value to the Variant
+	Assigns a long64 value to the Variant
 	*/
 	VariantData& operator= ( const long64& newValue ){
 		Long64Val = newValue;
@@ -612,7 +612,7 @@ public:
 	};
 
 	/**
-	*Assigns an ulong64 value to the Variant
+	Assigns an ulong64 value to the Variant
 	*/
 	VariantData& operator= ( const ulong64& newValue ){
 		ULong64Val = newValue;
@@ -621,7 +621,7 @@ public:
 	};
 
 	/**
-	*Assigns a DateTime value to the Variant
+	Assigns a DateTime value to the Variant
 	*/
 	VariantData& operator= ( const DateTime& newValue ){
 		Long64Val = ( newValue.operator long64() ).data_;
@@ -630,7 +630,7 @@ public:
 	};
 
 	/**
-	*Assigns a DateTimeSpan value to the Variant
+	Assigns a DateTimeSpan value to the Variant
 	*/
 	VariantData& operator= ( const DateTimeSpan& newValue ){
 		Long64Val = ( newValue.operator long64() ).data_;
@@ -642,16 +642,16 @@ public:
 
 
 	/**
-	*converts the VariantData to a string, no matter
-	*what the type. Object* are persisted to a TextOutputStream
-	*if they support Persistable, otherwise the Object's toString()
-	*method is invoked.
+	converts the VariantData to a string, no matter
+	what the type. Object* are persisted to a TextOutputStream
+	if they support Persistable, otherwise the Object's toString()
+	method is invoked.
 	*/
 	virtual String toString() const;
 
 	/**
-	*Assigns the VariantData's data from a string. The conversion
-	*process is dependent on the type of the VariantData.
+	Assigns the VariantData's data from a string. The conversion
+	process is dependent on the type of the VariantData.
 	*/
 	void setFromString( const String& value );
 
@@ -680,14 +680,14 @@ public:
 	};
 
 	/**
-	*string are a special case, not allowed in unions
+	string are a special case, not allowed in unions
 	*/
 	String StringVal;
 
 	/**
-	*defines the data type of the VariantData, where type can represent
-	* an int, unsigned int, long, unsigned long, short, char, 
-	* double, float, bool, string, Enum pointer, or Object pointer.
+	defines the data type of the VariantData, where type can represent
+	an int, unsigned int, long, unsigned long, short, char, 
+	double, float, bool, string, Enum pointer, or Object pointer.
 	*/
 	PropertyDescriptorType type;
 
@@ -701,6 +701,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:15:06  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

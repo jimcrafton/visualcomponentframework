@@ -19,8 +19,8 @@ where you installed the VCF.
 
 
 /**
-*The StringUtils class is a collection of static
-*utility methods for operating on strings.
+The StringUtils class is a collection of static
+utility methods for operating on strings.
 */
 // forward declaration needed for bcc32
 class type_info;
@@ -35,8 +35,8 @@ class FOUNDATIONKIT_API StringUtils  {
 public:
 
 	/**
-	*outs the text to the debugger output
-	*@param String the text to output
+	outs the text to the debugger output
+	@param String the text to output
 	*/
 	static void trace( const VCF::String& text );
 
@@ -76,178 +76,178 @@ public:
 	static VCF::String format( const Format& formatter );
 
 	/**
-	*trim all the occurrences of a specified character
+	trim all the occurrences of a specified character
 	* at the beginning of the string
-	* until it is met the first character from the left that is different
-	*@param String the text to trim
-	*@param char the character to trim
-	*@return String the trimmed string
+	 until it is met the first character from the left that is different
+	@param String the text to trim
+	@param char the character to trim
+	@return String the trimmed string
 	*/
 	static VCF::String trimLeft( const VCF::String& text, const char& c );
 
 	/**
-	*trim all the occurrences of a specified character
-	* at the end of the string
-	* until it is met the first character from the right that is different
-	*@param String the text to trim
-	*@param char the character to trim
-	*@return String the trimmed string
+	trim all the occurrences of a specified character
+	at the end of the string
+	until it is met the first character from the right that is different
+	@param String the text to trim
+	@param char the character to trim
+	@return String the trimmed string
 	*/
 	static VCF::String trimRight( const VCF::String& text, const char& c );
 
 	/**
-	*trim all the occurrences of a specified character
-	* at the beginning and the end of the string
-	* i.e. calls trimLeft + trimRight
-	*@param String the text to trim
-	*@param char the character to trim
-	*@return String the trimmed string
+	trim all the occurrences of a specified character
+	at the beginning and the end of the string
+	i.e. calls trimLeft + trimRight
+	@param String the text to trim
+	@param char the character to trim
+	@return String the trimmed string
 	*/
 	static VCF::String trim( const VCF::String& text, const char& c );
 
 	/**
-	*trim all the occurrences of any <space>, <tab>, <CR> and <LF>
-	* at the beginning of the string
-	* until it is met the first character from the left that is not a whitespace one
-	*@param String the text to trim
+	trim all the occurrences of any <space>, <tab>, <CR> and <LF>
+	at the beginning of the string
+	until it is met the first character from the left that is not a whitespace one
+	@param String the text to trim
 	*/
 	static void trimWhiteSpacesLeft( VCF::String& text );
 
 	/**
-	*trim all the occurrences of any <space>, <tab>, <CR> and <LF>
-	* at the end of the string
-	* until it is met the first character from the right that is not a whitespace one
-	*@param String the text to trim
+	trim all the occurrences of any <space>, <tab>, <CR> and <LF>
+	at the end of the string
+	until it is met the first character from the right that is not a whitespace one
+	@param String the text to trim
 	*/
 	static void trimWhiteSpacesRight( VCF::String& text );
 
 	/**
-	*trim all the occurrences of any <<space>, <tab>, <CR> and <LF>
-	* at the beginning and the end of the string
-	* i.e. calls trimWhiteSpacesLeft + trimWhiteSpacesRight
-	*@param String the text to trim
+	trim all the occurrences of any <<space>, <tab>, <CR> and <LF>
+	at the beginning and the end of the string
+	i.e. calls trimWhiteSpacesLeft + trimWhiteSpacesRight
+	@param String the text to trim
 	*/
 	static void trimWhiteSpaces( VCF::String& text );
 
 	/**
-	*gets a copy of the string that is having erased all its characters on the left 
-	*of the count-th occurrence of the character ch.
-	*If the character is not found, the result string is equal to the original one.
-	*@param String the source string
-	*@param const VCFChar& ch, the char to be searched
-	*@param const bool& included, includes the found char in the erasing. By default is false.
-	*@param const int& count, number of occurrences of the character to search for.
-	*A negative value means a search from the end of the string. Default is +1.
-	*in the string. A count = 0 means no erasing on the string. It the count exceeds the
-	*number of occurrences in the string then search stops at the last one.
-	*@return String, the modified string.
+	gets a copy of the string that is having erased all its characters on the left 
+	of the count-th occurrence of the character ch.
+	If the character is not found, the result string is equal to the original one.
+	@param String the source string
+	@param const VCFChar& ch, the char to be searched
+	@param const bool& included, includes the found char in the erasing. By default is false.
+	@param const int& count, number of occurrences of the character to search for.
+	A negative value means a search from the end of the string. Default is +1.
+	in the string. A count = 0 means no erasing on the string. It the count exceeds the
+	number of occurrences in the string then search stops at the last one.
+	@return String, the modified string.
 	*/
 	static String eraseLeftOfChar( const String& s, const VCFChar& ch, const bool& included=false, const int& count=1 );
 
 	/**
-	*gets a copy of the string that is having erased all its characters on the right 
-	*of the count-th occurrence of the character ch.
-	*If the character is not found, the result string is equal to the original one.
-	*@param String the source string
-	*@param const VCFChar& ch, the char to be searched
-	*@param const bool& included, includes the found char in the erasing. By default is false.
-	*@param const int& count, number of occurrences of the character to search for.
-	*A negative value means a search from the end of the string. Default is +1.
-	*in the string. A count = 0 means no erasing on the string. It the count exceeds the
-	*number of occurrences in the string then search stops at the last one.
-	*@return String, the modified string.
+	gets a copy of the string that is having erased all its characters on the right 
+	of the count-th occurrence of the character ch.
+	If the character is not found, the result string is equal to the original one.
+	@param String the source string
+	@param const VCFChar& ch, the char to be searched
+	@param const bool& included, includes the found char in the erasing. By default is false.
+	@param const int& count, number of occurrences of the character to search for.
+	A negative value means a search from the end of the string. Default is +1.
+	in the string. A count = 0 means no erasing on the string. It the count exceeds the
+	number of occurrences in the string then search stops at the last one.
+	@return String, the modified string.
 	*/
 	static String eraseRightOfChar( const String& s, const VCFChar& ch, const bool& included=false, const int& count=1 );
 
 	/**
-	*converts the string to lower case
-	*@param String the text to convert
-	*@return String the converted string
+	converts the string to lower case
+	@param String the text to convert
+	@return String the converted string
 	*/
 	static VCF::String lowerCase( const VCF::String& text );
 
 	/**
-	*converts the string to upper case
-	*@param String the text to convert
-	*@return String the converted string
+	converts the string to upper case
+	@param String the text to convert
+	@return String the converted string
 	*/
 	static VCF::String upperCase( const VCF::String& text );
 
 
 	/**
-	*converts the value to a string
-	*@param uchar the hexadecimal value to convert
-	*@return String the string representation of the hexadecimal value
+	converts the value to a string
+	@param uchar the hexadecimal value to convert
+	@return String the string representation of the hexadecimal value
 	*/
 	static VCF::String toStringFromHexNumber( const uchar& value );
 
 	/**
-	*converts the value to a string
-	*@param int the value to convert
-	*@return String the string representation of the int value
+	converts the value to a string
+	@param int the value to convert
+	@return String the string representation of the int value
 	*/
 	static VCF::String toString( const int& value );
 
 	/**
-	*converts the value to a string
-	*@param uint32 the value to convert
-	*@return String the string representation of the unsigned int value
+	converts the value to a string
+	@param uint32 the value to convert
+	@return String the string representation of the unsigned int value
 	*/
 	static VCF::String toString( const VCF::uint32& value );
 
 	/**
-	*converts the value to a string
-	*@param long the value to convert
-	*@return String the string representation of the long value
+	converts the value to a string
+	@param long the value to convert
+	@return String the string representation of the long value
 	*/
 	static VCF::String toString( const long& value );
 
 	/**
-	*converts the value to a string
-	*@param ulong32 the value to convert
-	*@return String the string representation of the unsigned long value
+	converts the value to a string
+	@param ulong32 the value to convert
+	@return String the string representation of the unsigned long value
 	*/
 	static VCF::String toString( const VCF::ulong32& value );
 
 	/**
-	*converts the value to a string
-	*@param VCF::long64 the value to convert
-	*@return String the string representation of the VCF::long64 value
+	converts the value to a string
+	@param VCF::long64 the value to convert
+	@return String the string representation of the VCF::long64 value
 	*/
 	static VCF::String toString( const VCF::long64& value );
 
 	/**
-	*converts the value to a string
-	*@param VCF::ulong64 the value to convert
-	*@return String the string representation of the VCF::ulong64 value
+	converts the value to a string
+	@param VCF::ulong64 the value to convert
+	@return String the string representation of the VCF::ulong64 value
 	*/
 	static VCF::String toString( const VCF::ulong64& value );
 
 	/**
-	*converts the value to a string
-	*@param float the value to convert
-	*@return String the string representation of the float value
+	converts the value to a string
+	@param float the value to convert
+	@return String the string representation of the float value
 	*/
 	static VCF::String toString( const float& value );
 
 	/**
-	*converts the value to a string
-	*@param double the value to convert
-	*@return String the string representation of the double value
+	converts the value to a string
+	@param double the value to convert
+	@return String the string representation of the double value
 	*/
 	static VCF::String toString( const double& value );
 
 	/**
-	*converts the value to a string
-	*@param char int the value to convert
-	*@return String the string representation of the char value
+	converts the value to a string
+	@param char int the value to convert
+	@return String the string representation of the char value
 	*/
 	static VCF::String toString( const char& value );
 
 	/**
-	*converts the value to a string
-	*@param char bool the value to convert
-	*@return String the string representation of the bool value
+	converts the value to a string
+	@param char bool the value to convert
+	@return String the string representation of the bool value
 	*(either "true" or "false")
 	*/
 	static VCF::String toString( const bool& value );
@@ -349,19 +349,19 @@ public:
 
 
 	/**
-	*generates a new UUID and returns the string representation
-	*@return String the new UUID as a string value
+	generates a new UUID and returns the string representation
+	@return String the new UUID as a string value
 	*/
 	static VCF::String newUUID();
 
 	/**
-	*gets the class name from a type_info struct.
-	*@param type_info the value returned from the
-	*expression :
-	*<pre>
-	*	typeid(AClass)
-	*</pre>
-	*@return String the name of the class the typeInfo references
+	gets the class name from a type_info struct.
+	@param type_info the value returned from the
+	expression :
+	\code
+		typeid(AClass)
+	\endcode
+	@return String the name of the class the typeInfo references
 	*/
 	static VCF::String getClassNameFromTypeInfo( const std::type_info& typeInfo );
 
@@ -488,9 +488,9 @@ public:
 	static VCF::String convertFormatString( const String& formattedString );
 
 	/**
-	* Translate a VirtualKey code into a human readable string.
-	* This can be used to display an accelerator key into a string to
-	* be displayed in a MenuItem when an accelerator is associated to it.
+	Translate a VirtualKey code into a human readable string.
+	This can be used to display an accelerator key into a string to
+	be displayed in a MenuItem when an accelerator is associated to it.
 	*/
 	static VCF::String translateVKCodeToString( VirtualKeyCode code );
 protected:
@@ -805,6 +805,9 @@ inline String& operator+= ( String& lhs, const VariantData& rhs )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -23,7 +23,7 @@ For platforms that support a 64bit int we just wrap that. If a platform doesn't 
 this, then we would have to add some specialized routines to deal with this. This class
 is intended to bu used exactly like you would a long or an int, and support the various
 constructors, copy constructors, operator overloads, etc to facilitate this. For example:
-<pre>
+\code
 ulong64 num = 123;
 int num2 = num;
 num -= 12;
@@ -34,14 +34,14 @@ ulong64 num3(12);
 ulong64 num4(num);
 
 if ( num3 == num4 ) { //do something }
-</pre>
+\endcode
 In addition you can get the high and low 32 bit component via the hi() and lo() methods,
 as in this example:
-<pre>
+\code
 ulong64 num = 0x1234abcd5678cdef;
 unsigned long lo = num.lo(); //lo == 0x5678cdef
 unsigned long hi = num.hi(); //hi == 0x1234abcd
-</pre>
+\endcode
 */
 
 class FOUNDATIONKIT_API ulong64 {
@@ -1094,6 +1094,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:15:06  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

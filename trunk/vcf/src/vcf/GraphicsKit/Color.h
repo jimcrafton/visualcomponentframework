@@ -70,14 +70,18 @@ class Color;
 ColorSpace
 class managing all the color transformations between different color spaces
 
-<p>ColorSpace interface
- <p>Hue Luminosity management
-	<p>WebPage: <br>
+\par
+ColorSpace interface
+ \par
+ Hue Luminosity management
+	\par
+	WebPage: <br>
 			http:www.acm.org/jgt/papers/SmithLyons96/  <br>
 			http:www.scottandmichelle.net/scott/code/index2.mv?codenum=045<br>
 			(google search advanced all words: hue saturation source code)<br>
 
-<p>Author: <br>
+\par
+Author: <br>
 				Alvy Ray Smith <br>
 				Microsoft <br>
 				Redmond, Washington <br>
@@ -86,7 +90,8 @@ class managing all the color transformations between different color spaces
 				Mill Valley, California <br>
 				lyons@nbn.com <br>
 
-<p>Abstract:
+\par
+Abstract:
 	The two most common color selector models, other than RGB (Red-Green-Blue),
 	are the hue-based HSV (Hue-Saturation-Value) and HSL (Hue-Saturation-Lightness) color models.
 	It is shown that both of these models are flawed.
@@ -95,8 +100,10 @@ class managing all the color transformations between different color spaces
 	Choose a hue. Lighten it with white. Darken it with black.
 	We explain that lightening is not the opposite of darkening.
 
-<p>Modified, with some fixes to the algorithms, by Marcello Pietrobon
-<p>Modified, by Jim Crafton, fixed some errors due to inclusion of Win32 types
+\par
+Modified, with some fixes to the algorithms, by Marcello Pietrobon
+\par
+Modified, by Jim Crafton, fixed some errors due to inclusion of Win32 types
 */
 class GRAPHICSKIT_API ColorSpace {
 public:
@@ -274,7 +281,7 @@ public:
 
 	/**
 	Example: To draw the Titlebars of a window with a color gradient do the following:
-	<pre>
+	\code
 		Color color_right = color;
 
 		// enabled window (color)
@@ -283,7 +290,7 @@ public:
 		// disable window (gray)
 		Color color_left = changeHSL( color_right, 0.0, 0.0, -0.33333333333333 );
 		drawGradientBackground(pc, color_left, color_right);
-	</pre>
+	\endcode
 	*/
 	static Color changeHSV ( const Color& color, const double& percentH, const double& percentS, const double& percentV );
 	static Color changeHSL ( const Color& color, const double& percentH, const double& percentS, const double& percentL );
@@ -761,39 +768,39 @@ private:
 
 	Some notes for the future programmer.
 
-	<p>
+	\par
 	Note: The choice of using the const  qualifier for s_ makes difficult to add a new color
 	( it is not a const pointer though ).
-	</p>
-	<p>
+	
+	\par
 	To check if a color has a name you need to use some constructor.
-	</p>
-	<p>
+	
+	\par
 	Example:
-	<pre>
+	\code
 	Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) )
-	</pre>
-	</p>
+	\endcode
+	
 
-	<p>
+	\par
 	We have some difficulties only if we have to add a new color. And the only way to
 	avoid these difficulties is to declare s_ without the 'const' qualifier,
 	which would cause worse problems though.
-	</p>
-	<p>
+	
+	\par
 	Usage : <br>
 	To add a new color, check if the color already exists with a name:
 
-	<pre>
+	\code
 	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-	</pre>
+	\endcode
 	or
-	<pre>
+	\code
 	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-	</pre>
+	\endcode
 	Then:
 
-	<pre>
+	\code
 	String* s = getColorNameFromMap(cTmp);
 	if ( s == ColorNames::unknownColorName() ) {
 		//allocate the memory for the colorName, then:
@@ -803,13 +810,13 @@ private:
 		//Color color = Color ( s, cTmp ); or
 		Color color = cTmp;
 	}
-	</pre>
+	\endcode
 
 	Maybe I will think something better if you'll have to continuously add new colors:
 	but in this case it is probably better to just use:
-	<pre>
+	\code
 	Color cTmp = Color( (String*)NULL, (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) );
-	</pre>
+	\endcode
 	*/
 
 };
@@ -2230,6 +2237,9 @@ inline ulong32 ColorSpace::changeHue( const ulong32& color, const double& deltaH
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:05:57  ddiego
 *added missing gtk files
 *

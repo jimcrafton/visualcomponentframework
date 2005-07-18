@@ -52,14 +52,14 @@ struct CmdParam {
 };
 
 /**
-<p>
+\par
 A utility for parsing command lines.
-<p>
+\par
 This was originally written by Chris Losinger, changes were simply
 removing the inheritance from std::map<>, and adding a map as a member
 variable instead. Also made some cosmetic name changes to conform better with
 VCF naming standards.
-<p>
+\par
 Example :
 
    Our example application uses a command line that has two
@@ -80,7 +80,7 @@ Example :
       Also, assume that the app displays a 'help' screen if the '-h' switch
       is present on the command line.
 
-<pre>
+\code
    #include "CmdLine.h"
 
    void main(int argc, char **argv)
@@ -132,7 +132,7 @@ Example :
       .... and so on....
 
    }
-   </pre>
+   \endcode
    @version 1.0 Chris Losinger
    @version 2.0 Jim Crafton
 */
@@ -155,14 +155,14 @@ parse the command line into switches and arguments.
 
 	/**
 	was the switch found on the command line ?
-	<pre>
+	\code
     ex. if the command line is : app.exe -a p1 p2 p3 -b p4 -c -d p5
 
       call                          return
       ----                          ------
       cmdLine.hasSwitch("-a")       true
       cmdLine.hasSwitch("-z")       false
-	  </pre>
+	  \endcode
 	  @return bool true if it has the swith, otherwise false
 	*/
 	bool hasSwitch( const String& aSwitch );
@@ -171,9 +171,9 @@ parse the command line into switches and arguments.
 	fetch an argument associated with a switch . if the parameter at
 	index iIdx is not found, this will return the default that you
     provide.
-	<p>
+	\par
 	example :
-	<pre>
+	\code
 	command line is : app.exe -a p1 p2 p3 -b p4 -c -d p5
 
       call                                      return
@@ -182,7 +182,7 @@ parse the command line into switches and arguments.
       cmdLine.getSafeArgument("-a", 1, "zz")    p2
       cmdLine.getSafeArgument("-b", 0, "zz")    p4
       cmdLine.getSafeArgument("-b", 1, "zz")    zz
-	  </pre>
+	  \endcode
 	*/
 
 	String getSafeArgument(const String& aSwitch, int iIdx, const String& aDefault);
@@ -190,16 +190,16 @@ parse the command line into switches and arguments.
 	/**
 	fetch a argument associated with a switch. throws an exception
 	of (int)0, if the parameter at index iIdx is not found.
-	<p>
+	\par
 	example :
-	<pre>
+	\code
 	command line is : app.exe -a p1 p2 p3 -b p4 -c -d p5
 
       call                             return
       ----                             ------
       cmdLine.getArgument("-a", 0)     p1
       cmdLine.getArgument("-b", 1)     throws (int)0, returns an empty string
-	  </pre>
+	  \endcode
 	*/
 	String getArgument( const String& aSwitch, int iIdx );
 
@@ -248,6 +248,9 @@ the first character of a switch must be non-numeric!
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

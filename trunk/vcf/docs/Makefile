@@ -398,7 +398,6 @@ doxy :
 	cp vcf.css doxy_html/
 
 
-#stripper hrefmunger imgmunger
 online_doxy :  
 	cp Doxyfile.online Doxyfile.bak
 	sed "s?VERSION-NUMBER?$(VERSION)?g" Doxyfile.online > Doxyfile.tmp
@@ -508,6 +507,9 @@ clean :
 
 ###############################################################################
 #$Log$
+#Revision 1.18  2005/07/18 03:54:19  ddiego
+#documentation updates.
+#
 #Revision 1.17  2005/07/14 03:44:20  ddiego
 #update of installer.
 #

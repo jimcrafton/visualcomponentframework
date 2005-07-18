@@ -19,103 +19,104 @@ class FileSearchFilter;
 
 
 /**
-*  A Directory represents a directory in a filesystem.
-*  and therefore it is a File object with all its features.
-*
-*  In addition they can instantiate a Directory::Finder object
-*  in the moment the user wants them to perform a search into
-*  its files and subdirectories based on a search filter.
-*
-*  The Directory::Finder class has been written to be very performant
-*  even when recursing.
-*
-*  The way to use this class is:
-*  <code>
-*      String filepath = L"./";
-*
-*      String filename;
-*      File* file = NULL;
-*
-*      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
-*
-*      Directory::Finder* finder = dir.findFiles( "*.cpp" );
-*      finder->setDisplayMode( Directory::Finder::dmFiles );
-*      while ( finder->nextElement() ) {
-*        file = finder->getCurrentElement();
-*        filename = file->getName();
-*
-*        if ( file->isDirectory() ) {
-*          printf ( "[%s]\n", filename.ansi_c_str() )
-*        } else {
-*          printf ( "%s\n", filename.ansi_c_str() )
-*        }
-*      }
-*      finder->free();
-*  </code>
-*
-*  The user is also able to create more than one finder
-*  from the same directory instance. But in order to achieve
-*  that we made the user responsible of freeing the finder.
-*
-*  The statements:
-*  <code>
-*      finder->setMaskFilterFileAttribs( File::faArchive );
-*      finder->ignoreStat( File::smMaskDateAll );
-*  </code>
-*    can be used to speed up the search.
-*
-*
-*  It is possible to easily recurse into subdirectories.
-*
-*  The following code will let you to recurse up to 10 levels
-*  while applying a personalized filter.
-*  The filter can be as flexible as desired.
-*
-*  <code>
-*      FilSearchFilterStandard filterFilesObj( L"*.h", L"src/vcf" );
-*
-*      String filepath = L"./";
-*
-*      String filename;
-*      File* file = NULL;
-*
-*      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
-*      Directory::Finder* finder = dir.findFiles( filterFilesObj, filterDirsObj );
-*      finder->setDisplayMode( Directory::Finder::dmAny );
-*      finder->setRecursion( true, 10 );
-*      while ( finder->nextElement() ) {
-*        file = finder->getCurrentElement();
-*        filename = file->getName();
-*
-*        if ( file->isDirectory() ) {
-*          String st = StringUtils::format( convertUtcToLocal( file->getDateModified() ), L"%d/%m/%Y %H:%M:%S" );
-*          printf ( "[%d] %s %10s %5s [%s]\n", finder->getRecursionLevel(), st.ansi_c_str(), "", "", filename.ansi_c_str() );
-*        } else {
-*          String sz = StringUtils::toString( file->getSize() );
-*          String st = StringUtils::format( file->getDateModified(), L"%d/%m/%Y %H:%M:%S" );
-*          String sa = StringUtils::format( "%c%c%c%c%c", file->isArchive()?'a':' ', file->isReadOnly()?'r':' ', 
-*                                           file->isHidden()?'h':' ', file->isSystem()?'s':' ', file->isExecutable()?'x':' ' );
-*          printf ( "[%d] %s %10s %s  %s\n", finder->getRecursionLevel(), st.ansi_c_str(), sz.ansi_c_str(), sa.ansi_c_str(), filename.ansi_c_str() );
-*        }
-*      }
-*      finder->free();
-*  </code>
-*
-*  The statements:
-*  <code>
-*      finder->setDisplayMode( Directory::Finder::dmAny );
-*      finder->setDisplayOrder( Directory::Finder::dmFiles );
-*  </code>
-*    can be used to control how the found files are displayed
-*    and their order.
-*
-*  Normally the filenames are displayed in the native format,
-*  but the statement:
-*  <code>
-*      finder->setKeepOSSpecificFormat( true );
-*  </code>
-*  will let the user to mantain the format specific for the OS.
-*
+\par
+  A Directory represents a directory in a filesystem.
+  and therefore it is a File object with all its features.
+\par
+  In addition they can instantiate a Directory::Finder object
+  in the moment the user wants them to perform a search into
+  its files and subdirectories based on a search filter.
+\par
+  The Directory::Finder class has been written to be very performant
+  even when recursing.
+\par
+  The way to use this class is:
+  \code
+      String filepath = L"./";
+
+      String filename;
+      File* file = NULL;
+
+      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
+
+      Directory::Finder* finder = dir.findFiles( "*.cpp" );
+      finder->setDisplayMode( Directory::Finder::dmFiles );
+      while ( finder->nextElement() ) {
+        file = finder->getCurrentElement();
+        filename = file->getName();
+
+        if ( file->isDirectory() ) {
+          printf ( "[%s]\n", filename.ansi_c_str() )
+        } else {
+          printf ( "%s\n", filename.ansi_c_str() )
+        }
+      }
+      finder->free();
+  \endcode
+\par
+  The user is also able to create more than one finder
+  from the same directory instance. But in order to achieve
+  that we made the user responsible of freeing the finder.
+\par
+  The statements:
+  \code
+      finder->setMaskFilterFileAttribs( File::faArchive );
+      finder->ignoreStat( File::smMaskDateAll );
+  \endcode
+    can be used to speed up the search.
+
+\par
+  It is possible to easily recurse into subdirectories.
+\par
+  The following code will let you to recurse up to 10 levels
+  while applying a personalized filter.
+  The filter can be as flexible as desired.
+
+  \code
+      FilSearchFilterStandard filterFilesObj( L"*.h", L"src/vcf" );
+
+      String filepath = L"./";
+
+      String filename;
+      File* file = NULL;
+
+      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
+      Directory::Finder* finder = dir.findFiles( filterFilesObj, filterDirsObj );
+      finder->setDisplayMode( Directory::Finder::dmAny );
+      finder->setRecursion( true, 10 );
+      while ( finder->nextElement() ) {
+        file = finder->getCurrentElement();
+        filename = file->getName();
+
+        if ( file->isDirectory() ) {
+          String st = StringUtils::format( convertUtcToLocal( file->getDateModified() ), L"%d/%m/%Y %H:%M:%S" );
+          printf ( "[%d] %s %10s %5s [%s]\n", finder->getRecursionLevel(), st.ansi_c_str(), "", "", filename.ansi_c_str() );
+        } else {
+          String sz = StringUtils::toString( file->getSize() );
+          String st = StringUtils::format( file->getDateModified(), L"%d/%m/%Y %H:%M:%S" );
+          String sa = StringUtils::format( "%c%c%c%c%c", file->isArchive()?'a':' ', file->isReadOnly()?'r':' ', 
+                                           file->isHidden()?'h':' ', file->isSystem()?'s':' ', file->isExecutable()?'x':' ' );
+          printf ( "[%d] %s %10s %s  %s\n", finder->getRecursionLevel(), st.ansi_c_str(), sz.ansi_c_str(), sa.ansi_c_str(), filename.ansi_c_str() );
+        }
+      }
+      finder->free();
+  \endcode
+
+  The statements:
+  \code
+      finder->setDisplayMode( Directory::Finder::dmAny );
+      finder->setDisplayOrder( Directory::Finder::dmFiles );
+  \endcode
+    can be used to control how the found files are displayed
+    and their order.
+
+  Normally the filenames are displayed in the native format,
+  but the statement:
+  \code
+      finder->setKeepOSSpecificFormat( true );
+  \endcode
+  will let the user to mantain the format specific for the OS.
+
 */
 
 class FOUNDATIONKIT_API Directory : public File {
@@ -123,20 +124,26 @@ public:
 
 
 	/**
-	*A Finder object is used to iterate a
-	*set of files contained in a Directory object
-	*that represents the directory.
-	*Only Directory objects may create a Finder object.
-	*A Finder is similar to an Enumerator but it doesn't follow
-	*the same pattern.
-	*The only important method is nextElement() which returns a pointer
-	*to an internal File object into which all the informations about
-	*the valid files found are copied.
-	*All the other methods are used to narrow or speed up the search.
-	*Custom filtering can be done in a simple way by specifying
-	*some filter strings, or in a fully flexible way through any
-	*class derived from FileSearchFilter.
-	*
+	\par
+	A Finder object is used to iterate a
+	set of files contained in a Directory object
+	that represents the directory.
+	Only Directory objects may create a Finder object.
+	\par
+	A Finder is similar to an Enumerator but it doesn't 
+	follow the exact same pattern. Specifically it doesn't 
+	allow you to go "backwards" - you can only reset the
+	finder, and then progress to the next element.
+	The most import method for iterating the elements in 
+	a Finder isntance is the nextElement() function which 
+	returns a pointer to an internal File object which is updated
+	for each file element.
+	\par
+	All the other methods are used to narrow or speed up the search.
+	Custom filtering can be done the simple way by specifying
+	filter strings, or in a fully flexible way through any
+	class derived from FileSearchFilter.
+	
 	*/
 	class FOUNDATIONKIT_API Finder : public Object {
 	public:
@@ -151,104 +158,104 @@ public:
 		virtual ~Finder();
 
 		/**
-		*gets the pointer to the last searched element.
-		*@return the pointer to the last searched element.
+		Gets the pointer to the last searched element.
+		@return the pointer to the last searched element.
 		*/
 		File* getCurrentElement() const;
 
 		/**
-		*advances the finder to the next element in the search.
-		*@return bool true if we found another element fulfilling
-		*the conditions set by the user, false otherwise.
+		Advances the finder to the next element in the search.
+		@return bool true if we found another element fulfilling
+		the conditions set by the user, false otherwise.
 		*/
 		bool nextElement();
 
 		/**
-		* resets the search.
+		Resets the search.
 		*/
 		void reset();
 
 		/**
-		* Are there any more elements in this Finder ?
-		* This function doesn't affect the search in any way.
-		* @return bool true if the there are more elements yet to search.
+		Are there any more elements in this Finder ?
+		This function doesn't affect the search in any way.
+		@return bool true if the there are more elements yet to search.
 		*/
 		inline bool hasMoreElements() const {
 			return searchHasMoreElements_;
 		}
 
 		/**
-		*returns the Directory object that created
-		*this Finder.
-		*@return Directory the owning directory for this finder.
+		Returns the Directory object that created.
+		this Finder.
+		@return Directory the owning directory for this finder.
 		*/
 		Directory* getOwningDirectory() {
 			return owningDirectory_;
 		}
 
 		/**
-		* set flags for DisplayMode enabled
-		* It can be set for files ( dmFiles ) or dirs ( dmDirs )
-		* or both ( dmAny ). If it is set for files, the finder
-		* will still be able to recurse into subdirectories
-		* if specified.
-		* Do not modify the display mode during the search 
-		* unless you know what you are doing.
+		set flags for DisplayMode enabled
+		It can be set for files ( dmFiles ) or dirs ( dmDirs )
+		or both ( dmAny ). If it is set for files, the finder
+		will still be able to recurse into subdirectories
+		if specified.
+		Do not modify the display mode during the search 
+		unless you know what you are doing.
 		*@param displayMode the display mode
 		*/
 		void setDisplayMode( DisplayMode displayMode );
 
 		/**
-		* tells the current display mode
-		*@return DisplayMode the current display mode
+		Tells the current display mode
+		@return DisplayMode the current display mode
 		*/
 		DisplayMode getDisplayMode() const {
 			return displayMode_;
 		}
 
 		/**
-		*set the order used by the Finder for displaying files and directories.
-		*The possible modes are: to display files first ( dmFiles )
-		*and then directories; or vice-versa ( dmDirs ) in two search steps;
-		*or to display both of them, unsorted, in only one search step ( dmAny ).
-		*@param DisplayMode the display order.
+		Set the order used by the Finder for displaying files and directories.
+		The possible modes are: to display files first ( dmFiles )
+		and then directories; or vice-versa ( dmDirs ) in two search steps;
+		or to display both of them, unsorted, in only one search step ( dmAny ).
+		@param DisplayMode the display order.
 		*/
 		void setDisplayOrder( DisplayMode displayOrder );
 
 		/**
-		*tells the order used by the Finder for displaying files and directories
-		*@return DisplayMode the current display order.
+		Tells the order used by the Finder for displaying files and directories
+		@return DisplayMode the current display order.
 		*/
 		DisplayMode getDisplayOrder() const {
 			return displayOrder_;
 		}
 
 		/**
-		*sets the Directory::Finder for recursion into subdirectories.
-		*@param recurse to allow recursion into subdirectories
-		*@param recursionLevelMax maximum level of subdirectories to recurse into
-		* ( default is -1 so no limit is set, 0 implies no recursion )
+		Sets the Directory::Finder for recursion into subdirectories.
+		@param recurse to allow recursion into subdirectories
+		@param recursionLevelMax maximum level of subdirectories to recurse into
+		( default is -1 so no limit is set, 0 implies no recursion )
 		*/
 		void setRecursion( const bool& recurse, const int& recursionLevelMax = -1 );
 
 		/**
-		*tells if the Finder is set for recursion into suybdirectories
-		*@return true if recursion is allowed
+		Tells if the Finder is set for recursion into suybdirectories
+		@return true if recursion is allowed
 		*/
 		inline bool getRecurse() const {
 			return recurse_;
 		}
 
 		/**
-		*gets the maximum subdirectory level the Finder is allowed to recurse into, 0 means no recursion
-		*@return the maximum recursion level.
+		Gets the maximum subdirectory level the Finder is allowed to recurse into, 0 means no recursion
+		@return the maximum recursion level.
 		*/
 		inline int getRecursionLevelMax() const {
 			return recursionLevelMax_;
 		}
 
 		/**
-		*sets the maximum subdirectory level up to where the Finder is allowed to recurse into.
+		Sets the maximum subdirectory level up to where the Finder is allowed to recurse into.
 		*@param the maximum recursion level. 0 means only current directory. -1 means no limits.
 		*/
 		inline void setRecursionLevelMax( const int& recursionLevelMax ) {
@@ -256,8 +263,8 @@ public:
 		}
 
 		/**
-		*gets the current subdirectory level where the Finder is currently recursing into, 0 is 
-		* the root level of the search.
+		Gets the current subdirectory level where the Finder is currently recursing into, 0 is 
+		the root level of the search.
 		*@return the maximum recursion level.
 		*/
 		inline int getRecursionLevel() const {
@@ -276,8 +283,8 @@ public:
 
 
 		/**
-		*gets the relative path of the file to the directory where the search started
-		*@return the relative path to the root of the search.
+		Gets the relative path of the file to the directory where the search started
+		@return the relative path to the root of the search.
 		*/
 		inline String getRelativePathToRootSearch() const {
 			return relativePathToRootSearch_;
@@ -288,8 +295,8 @@ public:
 		}
 
 		/**
-		*sets the search filter used with files by this Finder.
-		*@param the search filter object used to filter the files
+		sets the search filter used with files by this Finder.
+		@param the search filter object used to filter the files
 		*/
 		inline void setSearchFilterFileObject( FileSearchFilter* searchFilterFileObject, const bool& ownFilterFileObject = false ) {
 			searchFilterFileObject_ = searchFilterFileObject;
@@ -297,36 +304,36 @@ public:
 		}
 
 		/**
-		*returns the search filter used with files by this Finder.
-		*@return FileSearchFilter the search filter object for files used by this Finder
+		Returns the search filter used with files by this Finder.
+		@return FileSearchFilter the search filter object for files used by this Finder
 		*/
 		inline FileSearchFilter* getSearchFilterFileObject() const {
 			return searchFilterFileObject_;
 		}
 
 		/**
-		* set the file attributes mask used to limit the search for files ( not directories )
-		*@param maskFilterFileAttribs the file attributes mask for files
+		Set the file attributes mask used to limit the search for files ( not directories ).
+		@param maskFilterFileAttribs the file attributes mask for files
 		*/
 		inline void setMaskFilterFileAttribs( File::FileAttributes maskFilterFileAttribs ) {
 			maskFilterFileAttribs_ = maskFilterFileAttribs;
 		}
 
 		/**
-		* gets the file attributes mask used to limit the search for files ( not directories )
-		*@return the file attributes mask for files
+		Gets the file attributes mask used to limit the search for files ( not directories ).
+		@return the file attributes mask for files
 		*/
 		inline File::FileAttributes getMaskFilterFileAttribs() const {
 			return maskFilterFileAttribs_;
 		}
 
 		/**
-		* sets the mask for the informations we want to extract from a file
-		* This filter is meant to increase the performance, but be careful:
-		* this speed up the search significantly, but then if later you'll 
-		* frequently need of the infos you choosed to exclude, then the 
-		* performance will end up to be worse.
-		*@param StatMask the mask
+		Sets the mask for the informations we want to extract from a file.
+		This filter is meant to increase the performance, but be careful:
+		this speed up the search significantly, but then if later you'll 
+		frequently need of the infos you choosed to exclude, then the 
+		performance will end up to be worse.
+		@param StatMask the mask
 		*/
 		inline void setStatMask( ulong32 statMask ) {
 			statMask_ = (StatMask)statMask;
@@ -338,7 +345,7 @@ public:
 		}
 
 		/**
-		* gets the mask for the informations we want to extract from a file
+		Gets the mask for the informations we want to extract from a file
 		*@return the mask
 		*/
 		inline StatMask getStatMask() const {
@@ -346,9 +353,9 @@ public:
 		}
 
 		/**
-		* sets the mask for the informations we just don't care about.
-		* see setStatMask for more informations
-		*@param StatMask the mask of infos we want to ignore
+		Sets the mask for the informations we just don't care about.
+		@param StatMask the mask of infos we want to ignore
+		@see setStatMask
 		*/
 		inline void ignoreStat( ulong32 ignoreMask ) {
 			ulong32 statMask = File::smMaskAll & ~ignoreMask;
@@ -612,8 +619,8 @@ public:
 // FileSearchFilter 
 
 /**
-*   FileSearchFilter is an abstract class for any user defined Filter object
-*   working with the Directory::Finder
+   FileSearchFilter is an abstract class for any user defined Filter object
+   working with the Directory::Finder
 */
 
 class FOUNDATIONKIT_API FileSearchFilter {
@@ -637,25 +644,25 @@ public:
 };
 
 /**
-*   FileSearchFilterStandard is the predefined Filter object
-*   used for simple searches.
+   FileSearchFilterStandard is the predefined Filter object
+   used for simple searches.
 */
 
 class FOUNDATIONKIT_API FileSearchFilterStandard : public FileSearchFilter {
 public:
 
 	/**
-	* the constructor
-	* @param String the filter list for files.
-	* @param String the filter list for subdirectories.
-	* The items in these list are separated by separator, 
-	* which is the ';' character by default.
-	* The wildcard character '*' is accepted, 
-	* as in the implementation of FilePath::wildCharsMatchName()
-	* A specification like "*.vpl" does not implies that we are excluding directories
-	* from the search. Please use setDisplayMode( Directory::Finder::dmFiles ) for this.
-	* @param String the separator between items in filterFileList and filterDirList.
-	* @param fileAttributes the file attributes of the files we want to retrieve.
+	  the constructor
+	  @param String the filter list for files.
+	  @param String the filter list for subdirectories.
+	  The items in these list are separated by separator, 
+	  which is the ';' character by default.
+	  The wildcard character '*' is accepted, 
+	  as in the implementation of FilePath::wildCharsMatchName()
+	  A specification like "*.vpl" does not implies that we are excluding directories
+	  from the search. Please use setDisplayMode( Directory::Finder::dmFiles ) for this.
+	  @param String the separator between items in filterFileList and filterDirList.
+	  @param fileAttributes the file attributes of the files we want to retrieve.
 	*/
 	FileSearchFilterStandard(  const String& basenameFilterList, const String& pathnameFilterList = L"", const String& separator = L";" );
 
@@ -664,9 +671,9 @@ public:
 	virtual File* passSearchFilter( const File* file, const Directory* subdir, const Directory::Finder* finder );
 
 	/**
-	* build the filter starting from the filter string 
-	* @param String the filter string for files.
-	* @param String the filter string for subdirectories.
+	build the filter starting from the filter string 
+	@param String the filter string for files.
+	@param String the filter string for subdirectories.
 	*/
 	void buildSearchFilters( const String& basenameFilterList, const String& pathnameFilterList = L"", const String& separator = L";" );
 
@@ -702,6 +709,9 @@ inline void Directory::setName( const String& fileName ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.5  2005/01/02 03:04:22  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

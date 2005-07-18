@@ -38,182 +38,179 @@ class Field;
 #define CLASS_STRING		"string"
 
 /**
-*Class is the base class for all RTTI in the Framework. Class was written
-*because C++ RTTI is shockingly primitive, and many of these features are
-*found in other OO languages (i.e. ObjectPascal, ObjectiveC, SmallTalk, Java, et. al)
-*and are immensely useful and powerful.
-*Class is an abstract base class that template class's derive from. Classes provide
-*the following information:
-*<ul>
-*	<li>
-*	the name of the Class - this is stored in a member variable rather
-*	than relying on typeid().name() to retreive the class name. Not all
-*	compiler's support the typeid().name() function (i.e. MSVC 6.0 does, Borland
-*	probably does, but GCC does not)
-*	</li>
-*
-*	<li>
-*	the Class ID - this represents a UUID for the class. This will prove useful
-*	when distributed features creep in.
-*	</li>
-*
-*	<li>
-*	the ability to discover all the properties of a Class at runtime. A property
-*	is defined as some class attribute that is provided access to via getter and
-*	setter methods. Properties can be primitive types (int, long double, etc) or
-*	Object derived types, or enums. Properties can also be collections of other
-*	properties.
-*	</li>
-*
-*	<li>
-*	retreiving the super class of the class.
-*	</li>
-*
-*	<li>
-*	the ability to create a new instance of the class the Class object represents.
-*	This of course assumes a default constructor is available.
-*	</li>
-*</ul>
-*
-*In order for the RTTI to work in the Framework developers of derived classes must do
-*three things for their classes to participate in the Framework. Failure to implement these
-*steps will mean their classes will not have correct RTTI. A series of macros (defined in
-*ClassInfo.h) have been written to make this easier.
-*<p>
-*The first step is (obviously) making sure that your class is derived from a Framework object.
-*For example:
-*<pre>
-*	<b>class</b> Foo : <b>public</b> VCF::Object {  <i>//this is OK</i>
-*	...
-*	};
-*
-*	<b>class</b> Foo {  <i>//this is bad - there is no way to hook the RTTI up without at</i>
-*	...					<i>//least deriving from VCF::Object</i>
-*	};
-*</pre>
-*</p>
-*<p>
-*Next you should define a class id (as a string) for your class. If you are on winblows use
-*guidgen.exe to create UUID's for you. The define should look something like this:
-*<pre>
-*<b>#define</b> FOO_CLASSID			"1E8CBE21-2915-11d4-8E88-00207811CFAB"
-*</pre>
-*The next step is to add to macros to your class defintion (.h/.hpp file). These are required
-*for the basic RTTI info (class-super class relation ships) and to make sure you'll inherit
-*any properties of your super class. For example:
-*<pre>
-*	<b>class</b> Foo : <b>public</b> VCF::Object {
-*		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-*		END_CLASSINFO(Foo)
-*	...
-*	};
-*</pre>
-*The macros create a public nested class used to register your class that you're writing.
-*The above macros generate the following inline code for the developer of the Foo class (
-*shown in red ).
-*<pre>
-*	<b>class</b> Foo : <b>public</b> VCF::Object {
-*<font color="red">
-*		<b>class</b> FooInfo : <b>public</b> ClassInfo&ltFoo&gt {
-*		<b>public:</b>
-*			FooInfo( Foo* source ):
-* 				ClassInfo&ltFoo&gt( source, "Foo", "VCF::Object", "1E8CBE21-2915-11d4-8E88-00207811CFAB" ){
-*				<b>if</b> ( true == isClassRegistered()  ){
-*
-*				}
-*			};
-*
-*			<b>virtual</b> ~FooInfo(){};
-*
-*		};<i>//end of FooInfo</i>
-*</font>
-*		...
-*	};
-*</pre>
-*
-*The next step is to add any properties to the class. This is optional and is only neccessary if
-*the you want to expose the properties of the class you're writing. Adding properties is also
-*done through macros and looks like this:
-*<pre>
-*	<b>class</b> Foo : <b>public</b> VCF::Object {
-*		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-*		PROPERTY( double, "fooVal", Foo::getFooVal, Foo::setFooVal, PROP_DOUBLE )
-*		END_CLASSINFO(Foo)
-*	...
-*	<b>double</b> getFooVal();
-*	<b>void</b> setFooVal( <b>const double</b>& val );
-*	...
-*	};
-*</pre>
-*If the properties are Object derived properties then the following can be done:
-*<pre>
-*	<b>class</b> Foo : <b>public</b> VCF::Object {
-*		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-*		OBJECT_PROPERTY( Foo, "fooObj", Foo::getFoo, Foo::setFoo )
-*		END_CLASSINFO(Foo)
-*	...
-*	Foo* getFoo();
-*	<b>void</b> setFoo( Foo* val );
-*	...
-*	};
-*</pre>
-*@author Jim Crafton
-*@version 1.0
+\par
+Class is the base class for all RTTI in the Framework. Class was written
+because C++ RTTI is shockingly primitive, and many of these features are
+found in other OO languages (i.e. ObjectPascal, ObjectiveC, SmallTalk, 
+Java, et. al) and are immensely useful and powerful.
+\par
+Class is an abstract base class that template class's derive from. Classes 
+provide the following information:
+	\li
+	the name of the Class - this is stored in a member variable rather
+	than relying on typeid().name() to retreive the class name. Not all
+	compiler's support the typeid().name() function (i.e. MSVC 6.0 does, Borland
+	probably does, but GCC does not)
+	
+
+	\li
+	the Class ID - this represents a UUID for the class. This will prove useful
+	when distributed features creep in.
+	
+
+	\li
+	the ability to discover all the properties of a Class at runtime. A property
+	is defined as some class attribute that is provided access to via getter and
+	setter methods. Properties can be primitive types (int, long double, etc) or
+	Object derived types, or enums. Properties can also be collections of other
+	properties.
+	
+
+	\li
+	retreiving the super class of the class.
+	
+
+	\li
+	the ability to create a new instance of the class the Class object represents.
+	This of course assumes a default constructor is available.
+	
+\par
+In order for the RTTI to work in the Framework developers of derived classes 
+must do three things for their classes to participate in the Framework. Failure 
+to implement these steps will mean their classes will not have correct RTTI. A 
+series of macros (defined in ClassInfo.h) have been written to make this easier.
+\par
+The first step is (obviously) making sure that your class is derived from a Framework object.
+For example:
+\code
+	class Foo : public VCF::Object {  //this is OK
+	...
+	};
+
+	class Foo {  //this is bad - there is no way to hook the RTTI up without at
+	...					//least deriving from VCF::Object
+	};
+\endcode
+
+\par
+Next you should define a class id (as a string) for your class. If you are on winblows use
+guidgen.exe to create UUID's for you. The define should look something like this:
+\code
+#define FOO_CLASSID			"1E8CBE21-2915-11d4-8E88-00207811CFAB"
+\endcode
+The next step is to add to macros to your class defintion (.h/.hpp file). These are required
+for the basic RTTI info (class-super class relation ships) and to make sure you'll inherit
+any properties of your super class. For example:
+\code
+	class Foo : public VCF::Object {
+		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
+		END_CLASSINFO(Foo)
+	...
+	};
+\endcode
+The macros create a public nested class used to register your class that you're writing.
+The above macros generate the following inline code for the developer of the Foo class.
+\code
+	class Foo : public VCF::Object {
+		class FooInfo : public ClassInfo&ltFoo&gt {
+		public:
+			FooInfo( Foo* source ):
+ 				ClassInfo&ltFoo&gt( source, "Foo", "VCF::Object", "1E8CBE21-2915-11d4-8E88-00207811CFAB" ){
+				if ( true == isClassRegistered()  ){
+
+				}
+			};
+
+			virtual ~FooInfo(){};
+
+		};//end of FooInfo
+		...
+	};
+\endcode
+
+The next step is to add any properties to the class. This is optional and is only neccessary if
+the you want to expose the properties of the class you're writing. Adding properties is also
+done through macros and looks like this:
+\code
+	class Foo : public VCF::Object {
+		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
+		PROPERTY( double, "fooVal", Foo::getFooVal, Foo::setFooVal, PROP_DOUBLE )
+		END_CLASSINFO(Foo)
+	...
+	double getFooVal();
+	void setFooVal( const double& val );
+	...
+	};
+\endcode
+If the properties are Object derived properties then the following can be done:
+\code
+	class Foo : public VCF::Object {
+		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
+		OBJECT_PROPERTY( Foo, "fooObj", Foo::getFoo, Foo::setFoo )
+		END_CLASSINFO(Foo)
+	...
+	Foo* getFoo();
+	void setFoo( Foo* val );
+	...
+	};
+\endcode
+@author Jim Crafton
+@version 1.0
 */
 class FOUNDATIONKIT_API Class {
 public:
 	/**
-	*the constructor for a new Class.
-	*@param String the class name of the class
-	*@param String the class id for the class. This MUST be a string
-	*that represents unique ID as returned by a UUID function/algorithm
-	*the format is this:
-	*96B6A350-2873-11d4-8E88-00207811CFAB
-	*
-	*@param String the name of the class's super class
+	the constructor for a new Class.
+	@param String the class name of the class
+	@param String the class id for the class. This MUST be a string
+	that represents unique ID as returned by a UUID function/algorithm
+	the format is this:
+	96B6A350-2873-11d4-8E88-00207811CFAB
+	
+	@param String the name of the class's super class
 	*/
 	Class( const String& className, const String& classID, const String& superClass );
 
 	virtual ~Class();
 
 	/**
-	*returns the super class for the class. If the Rect::getClass() was called
-	*and then getSuperClass() was called on the return value of Rect::getClass(),
-	*the return would be a Class* for Object.
+	returns the super class for the class. If the Rect::getClass() was called
+	and then getSuperClass() was called on the return value of Rect::getClass(),
+	the return would be a Class* for Object.
 	*/
 	Class* getSuperClass();
 
 	/**
-	*returns the class id for the class. Class's may have the same name
-	*so to prevent this, an ID is provided. This is ID MUST be generated using
-	*some algorithm that guarantees a valid UUID
+	returns the class id for the class. Class's may have the same name
+	so to prevent this, an ID is provided. This is ID MUST be generated using
+	some algorithm that guarantees a valid UUID
 	*/
 	String getID();
 
 	/**
-	*returns the class name for the Class
+	returns the class name for the Class
 	*/
 	String getClassName();
 
 	/**
-	*returns an enumerator containing the Property values
-	*the enumerator does not reflect the order in which the properties were added.
+	returns an enumerator containing the Property values
+	the enumerator does not reflect the order in which the properties were added.
 	*/
 	Enumerator<Property*>* getProperties(){
 		return propertyContainer_.getEnumerator();
 	};
 
 	/**
-	*returns an enumerator containing the Field values
-	*the enumerator does not reflect the order in which the fields were added.
+	returns an enumerator containing the Field values
+	the enumerator does not reflect the order in which the fields were added.
 	*/
 	Enumerator<Field*>* getFields(){
 		return fieldContainer_.getEnumerator();
 	};
 
 	/**
-	*returns an enumerator containing the Methods of the Class
-	*the enumerator does not reflect the order in which the properties were added.
+	returns an enumerator containing the Methods of the Class
+	the enumerator does not reflect the order in which the properties were added.
 	*/
 	Enumerator<Method*>* getMethods(){
 		return methodContainer_.getEnumerator();
@@ -221,27 +218,27 @@ public:
 
 
 	/**
-	*adds a new property to the Class's property map.
+	adds a new property to the Class's property map.
 	*/
 	void addProperty( Property* property );
 
 	/**
-	*does the Class have a have a particular property ?
-	*@param String the name of the property to find
-	*@return bool true if the class has the specified property, otherwise false
+	does the Class have a have a particular property ?
+	@param String the name of the property to find
+	@return bool true if the class has the specified property, otherwise false
 	*/
 	bool hasProperty( const String& propertyName );
 
 	/**
-	*the number of properties the Class has
+	the number of properties the Class has
 	*/
 	unsigned long getPropertyCount();
 
 	/**
-	*gets the property specified by propertyName, if the class
-	*has that property.
-	*@param String the name of the property to try and retrieve
-	*@return Property a pointer to a property of the class.
+	gets the property specified by propertyName, if the class
+	has that property.
+	@param String the name of the property to try and retrieve
+	@return Property a pointer to a property of the class.
 	*/
 	Property* getProperty( const String& propertyName );
 
@@ -249,84 +246,84 @@ public:
 
 
 	/**
-	*adds a new property to the Class's property map.
+	adds a new property to the Class's property map.
 	*/
 	void addField( Field* field );
 
 	/**
-	*does the Class have a have a particular property ?
-	*@param String the name of the property to find
-	*@return bool true if the class has the specified property, otherwise false
+	does the Class have a have a particular property ?
+	@param String the name of the property to find
+	@return bool true if the class has the specified property, otherwise false
 	*/
 	bool hasField( const String& fieldName );
 
 	/**
-	*the number of fields the Class has
+	the number of fields the Class has
 	*/
 	unsigned long getFieldCount();
 
 	/**
-	*gets the field (or member variable) specified by fieldName, if the class
-	*has that field.
-	*@param String the name of the field to try and retrieve
-	*@return Field a pointer to a field of the class.
+	gets the field (or member variable) specified by fieldName, if the class
+	has that field.
+	@param String the name of the field to try and retrieve
+	@return Field a pointer to a field of the class.
 	*/
 	Field* getField( const String& fieldName );
 
 
 	/**
-	*adds a new property to the Class's property map.
+	adds a new property to the Class's property map.
 	*/
 	void addMethod( Method* method );
 
 	/**
-	*does the Class have a have a particular property ?
-	*@param String the name of the property to find
-	*@return bool true if the class has the specified property, otherwise false
+	does the Class have a have a particular property ?
+	@param String the name of the property to find
+	@return bool true if the class has the specified property, otherwise false
 	*/
 	bool hasMethod( const String& methodName );
 
 	/**
-	*the number of methods the Class has
+	the number of methods the Class has
 	*/
 	unsigned long getMethodCount();
 
 	/**
-	*gets the method specified by methodName, if the class
-	*has that method.
-	*@param String the name of the method to try and retrieve
-	*@return Method a pointer to a method of the class.
+	gets the method specified by methodName, if the class
+	has that method.
+	@param String the name of the method to try and retrieve
+	@return Method a pointer to a method of the class.
 	*/
 	Method* getMethod( const String& methodName );
 
 	/**
-	*Adds an event to the Class
-	*@param EventProperty* the event to add - see EventProperty for more info.
+	Adds an event to the Class
+	@param EventProperty* the event to add - see EventProperty for more info.
 	*/
 	void addEvent( EventProperty* event );
 
 	/**
-	*does the Class have this particular event handler ?
-	*@return bool returns true if the Class has an event handler by this name
+	does the Class have this particular event handler ?
+	@return bool returns true if the Class has an event handler by this name
 	*/
 	bool hasEventHandler( const String& delegateName );
 
 	/**
-	*returns an enumerator containing the EventProperty values.
-	*the enumerator does not reflect the order in which the events were added.
+	returns an enumerator containing the EventProperty values.
+	the enumerator does not reflect the order in which the events were added.
 	*/
 	Enumerator<EventProperty*>* getEvents(){
 		return eventContainer_.getEnumerator();
 	};
 
 	/**
-	*Returns an EventProperty by name
-	*@param String the event delegate to return
+	Returns an EventProperty by name
+	@param String the event delegate to return
 	*/
 	EventProperty* getEvent( const String& delegateName );
 
 	/**
-	*Returns an enumeration of interfaces implemented by this class
+	Returns an enumeration of interfaces implemented by this class
 	*/
 	Enumerator<InterfaceClass*>* getInterfaces() {
 		return interfaceContainer_.getEnumerator();
@@ -345,9 +342,9 @@ public:
 	void addInterface( InterfaceClass* newInterface );
 
 	/**
-	*compares an object to the stored object instance. This uses
-	*typeid which is OK in GCC. The actual compare is made in compareObject()
-	*which is implemented in the derived Template classes
+	compares an object to the stored object instance. This uses
+	typeid which is OK in GCC. The actual compare is made in compareObject()
+	which is implemented in the derived Template classes
 	@param Object another Class instance to compare this Class instance to
 	@return bool true if the object's typeid is equal to this' typeid
 	*/
@@ -356,29 +353,29 @@ public:
 	};
 
 	/**
-	*creates a new instance of an Object based on the Class Type.
-	*Actual implementation is performed by the template instance of the
-	*class.
+	creates a new instance of an Object based on the Class Type.
+	Actual implementation is performed by the template instance of the
+	class.
 	*/
 	virtual Object* createInstance() const = 0;
 
 	/**
-	*Used to compare the object instance passed in with the class type.
-	*Implemented in the template derived class so a type safe compare is
-	*made.
+	Used to compare the object instance passed in with the class type.
+	Implemented in the template derived class so a type safe compare is
+	made.
 	*/
 	virtual bool compareObject( Object* object )const = 0;
 
 	/**
-	*sets the source of all properties in the Class to source.
-	*@param Object the source to which the properties are set
+	sets the source of all properties in the Class to source.
+	@param Object the source to which the properties are set
 	*/
 	void setSource( Object* source );
 
 	/**
-	*returns the class name of a Property. This will also
-	*return the correct type for C++ basic pritives (i.e. int,
-	*bool, etc)
+	returns the class name of a Property. This will also
+	return the correct type for C++ basic pritives (i.e. int,
+	bool, etc)
 	*/
 	static String getClassNameForProperty( Property* property );
 private:
@@ -411,6 +408,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

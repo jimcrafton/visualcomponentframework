@@ -19,10 +19,10 @@ where you installed the VCF.
 
 namespace VCF{
 /**
- * This is a template class that provides an interface for
- * iterating through a collection, and provides a standard set of methods.
- * Either multiply inherited by classes that want to public expose a single set of children,
- *or as  a returned object for safe enumeration of data collections.
+ This is a template class that provides an interface for
+ iterating through a collection, and provides a standard set of methods.
+ Either multiply inherited by classes that want to public expose a single set of children,
+ or as  a returned object for safe enumeration of data collections.
  */
 
 template <class COLLECTION_TYPE> class Enumerator{
@@ -34,43 +34,43 @@ public:
 	virtual ~Enumerator(){};
 
 	/**
-	*indicates whether there are any more children to enumerate
-	*through
-	*@param bool specifies whether the enumeration should be forwards
-	*or backwards. The default value is true for enumerating forwards.
-	*@return bool true if there are any elements left to enumerate,
-	*otherwise returns false.
+	indicates whether there are any more children to enumerate
+	through
+	@param bool specifies whether the enumeration should be forwards
+	or backwards. The default value is true for enumerating forwards.
+	@return bool true if there are any elements left to enumerate,
+	otherwise returns false.
 	*/
 	virtual bool hasMoreElements(const bool& backward=false)=0;
 
 	/**
-	*returns the next element in the enumeration. Moves the internal
-	*iterator forward
-	*@return COLLECTION_TYPE returns a COLLECTION_TYPE value of whatever type
-	*was specified in the template argument to the Enumerator
+	returns the next element in the enumeration. Moves the internal
+	iterator forward
+	@return COLLECTION_TYPE returns a COLLECTION_TYPE value of whatever type
+	was specified in the template argument to the Enumerator
 	*/
 	virtual COLLECTION_TYPE nextElement()=0;
 
 	/**
-	*returns the previous element in the enumeration. Moves the internal
-	*iterator backward
-	*@return COLLECTION_TYPE returns a COLLECTION_TYPE value of whatever type
-	*was specified in the template argument to the Enumerator
+	returns the previous element in the enumeration. Moves the internal
+	iterator backward
+	@return COLLECTION_TYPE returns a COLLECTION_TYPE value of whatever type
+	was specified in the template argument to the Enumerator
 	*/
 	virtual COLLECTION_TYPE prevElement()=0;
 
 	/**
-	*Resets the Enumerator's internal iterator back to the beginning (or end,
-	*if backward is true).
-	*@param bool specifies which direction to reset to
+	Resets the Enumerator's internal iterator back to the beginning (or end,
+	if backward is true).
+	@param bool specifies which direction to reset to
 	*/
 	virtual void reset(const bool& backward=false)=0;
 
 	/**
-	*Currently not used. Will allow editing of the Enumerator in the
-	*future, in which case this will return whether or not this instance
-	*of the enumerator allows adding or removing of elements
-	*@return bool true if the enumerator allows editing, otherwise false.
+	Currently not used. Will allow editing of the Enumerator in the
+	future, in which case this will return whether or not this instance
+	of the enumerator allows adding or removing of elements
+	@return bool true if the enumerator allows editing, otherwise false.
 	*/
 	bool supportsEditing(){
 		return supportsEditing_;
@@ -82,21 +82,27 @@ protected:
 
 
 /**
-*EnumeratorContainer is based on some COLLECTION class that represents a collection
-*class of some sort, i.e. std::vector<>, std::list, et al.
-*The internal implementation counts on the collection having a common interface to
-*STL's collection classes.
-*The collection must support forward and reverse iterators
-*The COLLECTION type specifies the full collection associated with
-*the enumerator. FOr example, an enumerator container of Object* using
-*a std::vector as it's collection would like this:
-*<pre>
+\par
+EnumeratorContainer is based on some COLLECTION class that represents a collection
+class of some sort, i.e. std::vector<>, std::list, et al.
+\par
+The internal implementation counts on the collection having a common interface to
+STL's collection classes.
+\par
+The collection must support forward and reverse iterators
+\par
+The COLLECTION type specifies the full collection associated with
+the enumerator. 
+\par
+For example, an enumerator container of Object* using
+a std::vector as it's collection type would look like this:
+\code
 *	EnumeratorContainer<std::vector<Object*>,Object*> objectVecEnumerator;
-*</pre>
-*The COLLECTION_TYPE represents the type of an individual element in the enumerator.
-*Passing in a reference to the collection variable in the contstructor will automatically
-*set up the internal iterator, nothing further need be done. Alternatively, you may
-*call the initContainer() method with a reference to the collection
+\endcode
+The COLLECTION_TYPE represents the type of an individual element in the enumerator.
+Passing in a reference to the collection variable in the contstructor will automatically
+set up the internal iterator, nothing further need be done. Alternatively, you may
+call the initContainer() method with a reference to the collection
 */
 template <class COLLECTION, class COLLECTION_TYPE> class EnumeratorContainer : public Enumerator<COLLECTION_TYPE>{
 public:
@@ -113,8 +119,8 @@ public:
 	virtual ~EnumeratorContainer(){};
 
 	/**
-	*Initializes the container with a reference to an
-	*existing collection
+	Initializes the container with a reference to an
+	existing collection
 	*/
 	virtual void initContainer( COLLECTION &container ){
 		container_ = &container;
@@ -160,11 +166,11 @@ public:
 	};
 
 	/**
-	*returns a pointer to the Enumerator interface of this
-	*container. Automatically resets the collection before
-	*returning the pointer.
-	*@return Enumerator<COLLECTION_TYPE> a pointer to the
-	*collection as an Enumerator interface.
+	returns a pointer to the Enumerator interface of this
+	container. Automatically resets the collection before
+	returning the pointer.
+	@return Enumerator<COLLECTION_TYPE> a pointer to the
+	collection as an Enumerator interface.
 	*/
 	virtual Enumerator<COLLECTION_TYPE>* getEnumerator(){
 		reset();
@@ -178,20 +184,26 @@ private:
 };
 
 /**
-*EnumeratorMapContainer is based on some COLLECTION class that represents
-*an  associative collection of some sort, i.e. std::map<>
-*The internal implementation counts on the collection having a common interface to
-*STL's collection classes.
-*The collection must support forward and reverse iterators
-*The COLLECTION type specifies the full collection associated with
-*the enumerator. FOr example, an enumerator container of Object* using
-*a std::map as it's collection would like this:
-*<pre>
-*	EnumeratorMapContainer<std::map<String,Object*>,Object*> objectMapEnumerator;
-*</pre>
-*The COLLECTION_TYPE represents the type of an individual element in the enumerator.
-*In EnumeratorMapContainer the enumeration will only return the value of the maps
-*pair, not the key.
+\par
+EnumeratorMapContainer is based on some COLLECTION class that represents
+an  associative collection of some sort, i.e. std::map<>
+\par
+The internal implementation counts on the collection having a common interface to
+STL's collection classes.
+\par
+The collection must support forward and reverse iterators
+\par
+The COLLECTION type specifies the full collection associated with
+the enumerator. 
+\par
+For example, an enumerator container of Object* using
+a std::map as it's collection type would look like this:
+\code
+	EnumeratorMapContainer<std::map<String,Object*>,Object*> objectMapEnumerator;
+\endcode
+The COLLECTION_TYPE represents the type of an individual element in the enumerator.
+In EnumeratorMapContainer the enumeration will only return the value of the maps
+pair, not the key.
 */
 template <class COLLECTION, class COLLECTION_TYPE> class EnumeratorMapContainer : public Enumerator<COLLECTION_TYPE>{
 public:
@@ -267,71 +279,74 @@ private:
 
 
 /**
-*CVS Log info
+CVS Log info
 *$Log$
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
+*Revision 1.3  2005/07/18 03:54:19  ddiego
+*documentation updates.
 *
-*Revision 1.1.2.2  2004/04/29 04:07:07  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
+Revision 1.2  2004/08/07 02:49:13  ddiego
+merged in the devmain-0-6-5 branch to stable
 *
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
+Revision 1.1.2.2  2004/04/29 04:07:07  marcelloptr
+reformatting of source files: macros and csvlog and copyright sections
 *
-*Revision 1.10.4.1  2004/04/26 21:58:48  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
+Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
+migration towards new directory structure
 *
-*Revision 1.10  2003/12/18 05:15:59  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
+Revision 1.10.4.1  2004/04/26 21:58:48  marcelloptr
+changes for dir reorganization: _VCF_MACRO_H__
 *
-*Revision 1.9.4.3  2003/10/23 04:24:51  ddiego
-*more musical chairs with headers again, in yet another attempt to make
-*them more efficent to speed up compiles.
-*Removed all teh template RTTI classes and put them all in one header
-*called VCFRTTIImpl.h. This should help compile speeds a bit.
-*The next step is to look at some of the event classes and remove ones
-*that aren't really neccessary - I'd estimate that 50% of the current
-*event classes are unneccessary and can be removed.
+Revision 1.10  2003/12/18 05:15:59  ddiego
+merge from devmain-0-6-2 branch into the stable branch
 *
-*Revision 1.9.4.2  2003/08/19 14:18:56  ddiego
-*fixed a mistake in the fix of bug [ 789902 ], oops! OK now
+Revision 1.9.4.3  2003/10/23 04:24:51  ddiego
+more musical chairs with headers again, in yet another attempt to make
+them more efficent to speed up compiles.
+Removed all teh template RTTI classes and put them all in one header
+called VCFRTTIImpl.h. This should help compile speeds a bit.
+The next step is to look at some of the event classes and remove ones
+that aren't really neccessary - I'd estimate that 50% of the current
+event classes are unneccessary and can be removed.
 *
-*Revision 1.9.4.1  2003/08/18 02:55:41  ddiego
-*added fix for bug [ 789902 ] EnumeratorContainer::prevElement() points to container_->end, also added an example
+Revision 1.9.4.2  2003/08/19 14:18:56  ddiego
+fixed a mistake in the fix of bug [ 789902 ], oops! OK now
 *
-*Revision 1.9  2003/05/17 20:37:16  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
+Revision 1.9.4.1  2003/08/18 02:55:41  ddiego
+added fix for bug [ 789902 ] EnumeratorContainer::prevElement() points to container_->end, also added an example
 *
-*Revision 1.8.16.2  2003/03/23 03:23:53  marcelloptr
+Revision 1.9  2003/05/17 20:37:16  ddiego
+this is the checkin for the 0.6.1 release - represents the merge over from
+the devmain-0-6-0 branch plus a few minor bug fixes
+*
+Revision 1.8.16.2  2003/03/23 03:23:53  marcelloptr
 *3 empty lines at the end of the files
 *
-*Revision 1.8.16.1  2003/03/12 03:11:49  ddiego
-*switched all member variable that used the "m_"<name> prefix to
+Revision 1.8.16.1  2003/03/12 03:11:49  ddiego
+switched all member variable that used the "m_"<name> prefix to
 * <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
+Also changed all vcf builder files to accomadate this.
+Changes were made to the Stream classes to NOT multiple inheritance and to
+be a little more correct. Changes include breaking the FileStream into two
+distinct classes, one for input and one for output.
 *
-*Revision 1.8  2002/05/09 03:10:43  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
+Revision 1.8  2002/05/09 03:10:43  ddiego
+merged over code from development branch devmain-0-5-1a into the main CVS trunk
 *
-*Revision 1.7.4.3  2002/03/26 02:35:33  ddiego
-*fixes include removing the __declspec(export) from the various template based
-*classes in the VCF. Aparrently this causes problems in VC7.
-*Also include a feature for memory tracking in debug mode.
+Revision 1.7.4.3  2002/03/26 02:35:33  ddiego
+fixes include removing the __declspec(export) from the various template based
+classes in the VCF. Aparrently this causes problems in VC7.
+Also include a feature for memory tracking in debug mode.
 *
-*Revision 1.7.4.2  2002/03/25 04:19:46  ddiego
-*fixed some file checking problems in xmake and fixed some general
-*code to be able to compile with GCC and Borland C++
+Revision 1.7.4.2  2002/03/25 04:19:46  ddiego
+fixed some file checking problems in xmake and fixed some general
+code to be able to compile with GCC and Borland C++
 *
-*Revision 1.7.4.1  2002/03/20 21:56:56  zzack
-*Changed Include Style of FoundationKit
+Revision 1.7.4.1  2002/03/20 21:56:56  zzack
+Changed Include Style of FoundationKit
 *
-*Revision 1.7  2002/01/24 01:46:48  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
+Revision 1.7  2002/01/24 01:46:48  ddiego
+added a cvs "log" comment to the top of all files in vcf/src and vcf/include
+to facilitate change tracking
 *
 */
 

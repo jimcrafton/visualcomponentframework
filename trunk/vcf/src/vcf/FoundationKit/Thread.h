@@ -22,14 +22,17 @@ class RunLoop;
 
 
 /**
-*The Thread class represents a thread of execution in a process.
-*A Thread object can automatically delete itself if neccessary.
-*A Thread can either be derived from and the run() method overridden,
-*or a separate class that derives from Runnable may be passed into the
-*Thread's constructor and this class's run() method will get called.
-*For example:<br>
-*Method 1) deriving a new thread class and over riding the run() method
-*<pre>
+\par
+The Thread class represents a thread of execution in a process.
+A Thread object can automatically delete itself if neccessary.
+A Thread can either be derived from and the run() method overridden,
+or a separate class that derives from Runnable may be passed into the
+Thread's constructor and this class's run() method will get called.
+
+\par
+For example:
+\li Method 1) deriving a new thread class and over riding the run() method
+\code
 class MyThread : public VCF::Thread {
 public:
 	MyThread() : VCF::Thread() {};
@@ -71,10 +74,10 @@ int main() {
 	FoundationKit::terminate();
 	return 0;
 }
-*</pre>
-*<br>
-*Method 2) deriving a new class from Runnable and pass it to a Thread you create
-*<pre>
+\endcode
+
+\li Method 2) deriving a new class from Runnable and pass it to a Thread you create
+\code
 class MyMultiThreadedClass : public VCF::Object, public VCF::Runnable  {
 public:
 	MyMultiThreadedClass() {};
@@ -115,7 +118,7 @@ int main() {
 	FoundationKit::terminate();
 	return 0;
 }
-*</pre>
+\endcode
 */
 class FOUNDATIONKIT_API Thread : public Object, public Runnable, public Waitable {
 public:
@@ -124,14 +127,14 @@ public:
 	Thread( const bool& autoDelete );
 
 	/**
-	*creates a thread with the attached runnableObject (if appropriate)
-	*@param Runnable the runnableObject the thread will use. By default this
-	*is NULL, which means the Thread's run method has been overridden in
-	*a derived class.
-	*@param bool indicates whose responsibility it is to clean up after the
-	*thread is stopped. If autoDelete is true then the thread instance will
-	*clean up for itself, if autoDelete is false, then it is the caller's
-	*responsibility to clean up
+	creates a thread with the attached runnableObject (if appropriate)
+	@param Runnable the runnableObject the thread will use. By default this
+	is NULL, which means the Thread's run method has been overridden in
+	a derived class.
+	@param bool indicates whose responsibility it is to clean up after the
+	thread is stopped. If autoDelete is true then the thread instance will
+	clean up for itself, if autoDelete is false, then it is the caller's
+	responsibility to clean up
 	*/
 	Thread( Runnable* runnableObject, const bool& autoDelete );
 
@@ -148,58 +151,58 @@ public:
 	virtual ~Thread();
 
 	/**
-	*run method for the thread. Overide this method to provide additional functionality.
-	*If runnableObject_ is non NULL then it's run() will be called in here.
+	run method for the thread. Overide this method to provide additional functionality.
+	If runnableObject_ is non NULL then it's run() will be called in here.
 	*/
 	virtual bool run();
 
 
 	/**
-	*gracefully stops the thread and shuts it down, releasing
-	*any OS resources associated with the thread.
-	*Once a thread is stopped that thread instance may NOT be
-	*started again. If the thread is set of automatic deletion
-	*this is where it will happen
+	gracefully stops the thread and shuts it down, releasing
+	any OS resources associated with the thread.
+	Once a thread is stopped that thread instance may NOT be
+	started again. If the thread is set of automatic deletion
+	this is where it will happen
 	*/
 	virtual void stop();
 
 	/**
-	*Starts (or resumes) a thread running.
+	Starts (or resumes) a thread running.
 	*/
 	bool start();
 
 	/**
-	*causes the thread the thread to sleep for the specified number of
-	*milliseconds
-	*@param uint32 - the number of milliseconds to sleep
+	causes the thread the thread to sleep for the specified number of
+	milliseconds
+	@param uint32 - the number of milliseconds to sleep
 	*/
 	void sleep( unsigned int milliseconds );
 
 	/**
-	*can the thread continue to execute ?
-	*@return bool true if the thread can safely continue to execute, otherwise false
-	*indicating it should stop executing.
+	can the thread continue to execute ?
+	@return bool true if the thread can safely continue to execute, otherwise false
+	indicating it should stop executing.
 	*/
 	bool canContinue(){
 		return canContinue_;
 	}
 
 	/**
-	*can the thread auto delete itself ?
-	*@return bool true if the thread will auto delete itself. Determined by the parameters
-	*passed into the thread's constructor
+	can the thread auto delete itself ?
+	@return bool true if the thread will auto delete itself. Determined by the parameters
+	passed into the thread's constructor
 	*/
 	bool canAutoDelete(){
 		return autoDelete_;
 	}
 
 	/**
-	*returns the thread associated with this thread of execution
+	returns the thread associated with this thread of execution
 	*/
 	uint32 getThreadID();
 
 	/**
-	*returns the process ID that this thread is part of
+	returns the process ID that this thread is part of
 	*/
 	uint32 getOwningProcessID();
 
@@ -207,7 +210,8 @@ public:
 		return peer_;
 	}
 
-    /*Returns TRUE if thread is running, FALSE if not
+    /**
+	Returns TRUE if thread is running, FALSE if not.
 	*/
     bool isActive();
 
@@ -264,6 +268,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

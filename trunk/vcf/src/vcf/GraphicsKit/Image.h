@@ -193,13 +193,13 @@ public:
 	4 channel RGBA images, and 1 channel grayscale images.
 	@return ImageType the value that represent the images type. The
 	values have the follwing meanings:
-	<ul>
-		<li>Image::itColor - indicate a full color image with red, green, blue, and alpha
+	
+		\li Image::itColor - indicate a full color image with red, green, blue, and alpha
 		channels present. The integer value of this is 4 and can be used in operations
-		to determine the total data size of the image, for example.</li>
-		<li>Image::itGrayscale - indicates a grayscale image with a single channel. The
-		numerical value of this is 1.</li>
-	</ul>
+		to determine the total data size of the image, for example.
+		\li Image::itGrayscale - indicates a grayscale image with a single channel. The
+		numerical value of this is 1.
+	
 
 	*/
 	virtual ImageType getType() const = 0;
@@ -210,16 +210,16 @@ public:
 	taking 8 bits, thus a single of pixel of this type of image takes up 32 bits - 4 channels
 	with each channel component 8 bits in size.
 	@return the channel's component size. Can be one of the following values:
-	<ul>
-		<li>Image::ics8Bit - each channel component is 8 bits in sizem, thus the numerical
+	
+		\li Image::ics8Bit - each channel component is 8 bits in sizem, thus the numerical
 		value of this enum is 8.
 
-		<li>Image::ics16Bit - each channel component is 8 bits in sizem, thus the numerical
+		\li Image::ics16Bit - each channel component is 8 bits in sizem, thus the numerical
 		value of this enum is 16.
 
-		<li>Image::ics32Bit - each channel component is 8 bits in sizem, thus the numerical
+		\li Image::ics32Bit - each channel component is 8 bits in sizem, thus the numerical
 		value of this enum is 32.
-	</ul>
+	
 	The last two types (Image::ics16Bit and Image::ics32Bit) are typically used for high end imaging.
 	*/
 	virtual ImageChannelSize getChannelSize() const = 0;
@@ -227,14 +227,14 @@ public:
 	/**
 	returns whether the values for a channel are integer based or floating point based.
 	@return ImageChannelType the image channel's value type. Can be one of
-	<ul>
-		<li> Image::ictInteger - the value of a channel is integer based. It's min and max values
+	
+		\li  Image::ictInteger - the value of a channel is integer based. It's min and max values
 		can be expressed by ImageBits::Traits::minVal() and ImageBits::Traits::maxVal() respectively.
 		Typically this is a value between 0 and 2<sup>getChannelSize()</sup> (inclusive).
-		<li> Image::ictFloatingPoint - the value of a channel is integer based. It's min and max values
+		\li  Image::ictFloatingPoint - the value of a channel is integer based. It's min and max values
 		can be expressed by ImageBits::Traits::minVal() and ImageBits::Traits::maxVal() respectively.
 		Typically this is a value in the range of 0.0 and 1.0 inclusive.
-	</ul>
+	
 	*/
 	virtual ImageChannelType getChannelType() const = 0;
 
@@ -242,71 +242,71 @@ public:
 	returns the pixel layout order. This explains how the individual color components
 	of each of the color channels are laid out.
 	@return PixelLayoutOrder the binary layout order of a single pixel value. Can be one of
-	<ul>
-		<li> Image::ploRGBA - indicates the Red value is in the MSB position, followed
+	
+		\li  Image::ploRGBA - indicates the Red value is in the MSB position, followed
 		by Green, Blue and finally Alpha values. In code it might
 		look like this for an Image with integer based 8 bit color channels
-		<pre>
+		\code
 			ulong32 pixelColor = (redVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (blueVal &lt;&lt; 8) | (alphaVal);
-		</pre>
+		\endcode
 		Extracting the values from a single pixel color would be:
-		<pre>
+		\code
 			redVal	= (pixelColor &amp; 0xFF000000) &gt;&gt; 24;
 			greenVal = (pixelColor &amp; 0x00FF0000) &gt;&gt; 16;
 			blueVal = (pixelColor &amp; 0x0000FF00) &gt;&gt; 8;
 			alphaVal = (pixelColor &amp; 0x000000FF);
-		</pre>
-		</li>
+		\endcode
+		
 
-		<li> Image::ploBGRA - indicates the Blue value is in the MSB position, followed
+		\li  Image::ploBGRA - indicates the Blue value is in the MSB position, followed
 		by Green, Red and finally Alpha values. In code it might look like this for an
 		Image with integer based 8 bit color channels
-		<pre>
+		\code
 			ulong32 pixelColor = (blueVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (redVal &lt;&lt; 8) | (alphaVal);
-		</pre>
+		\endcode
 		Extracting the values from a single pixel color would be:
-		<pre>
+		\code
 			blueVal	= (pixelColor &amp; 0xFF000000) &gt;&gt; 24;
 			greenVal = (pixelColor &amp; 0x00FF0000) &gt;&gt; 16;
 			redVal = (pixelColor &amp; 0x0000FF00) &gt;&gt; 8;
 			alphaVal = (pixelColor &amp; 0x000000FF);
-		</pre>
-		</li>
+		\endcode
+		
 
-		<li> Image::ploARGB - indicates the Alpha value is in the MSB position, followed
+		\li  Image::ploARGB - indicates the Alpha value is in the MSB position, followed
 		by Red, Green and finally Blue values. In code it might look like this for an
 		Image with integer based 8 bit color channels
-		<pre>
+		\code
 			ulong32 pixelColor = (alphaVal &lt;&lt; 24) | (redVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (blueVal);
-		</pre>
+		\endcode
 		Extracting the values from a single pixel color would be:
-		<pre>
+		\code
 			alphaVal	= (pixelColor &amp; 0xFF000000) &gt;&gt; 24;
 			redVal = (pixelColor &amp; 0x00FF0000) &gt;&gt; 16;
 			greenVal = (pixelColor &amp; 0x0000FF00) &gt;&gt; 8;
 			blueVal = (pixelColor &amp; 0x000000FF);
-		</pre>
+		\endcode
 		This is typically the way it would be stored on a linux based port of VCF.
-		</li>
+		
 
 
-		<li> Image::ploABGR - indicates the Alpha value is in the MSB position, followed
+		\li  Image::ploABGR - indicates the Alpha value is in the MSB position, followed
 		by Blue, Green and finally Red values. In code it might look like this for an
 		Image with integer based 8 bit color channels
-		<pre>
+		\code
 			ulong32 pixelColor = (alphaVal &lt;&lt; 24) | (blueVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (redVal);
-		</pre>
+		\endcode
 		Extracting the values from a single pixel color would be:
-		<pre>
+		\code
 			alphaVal	= (pixelColor &amp; 0xFF000000) &gt;&gt; 24;
 			blueVal = (pixelColor &amp; 0x00FF0000) &gt;&gt; 16;
 			greenVal = (pixelColor &amp; 0x0000FF00) &gt;&gt; 8;
 			redVal = (pixelColor &amp; 0x000000FF);
-		</pre>
+		\endcode
 		This is typically the way it would be stored on a Win32 based port of VCF.
-		</li>
+		
 
-		</ul>
+		
 	*/
 	virtual PixelLayoutOrder getPixelLayoutOrder() const = 0;
 
@@ -332,7 +332,7 @@ public:
 	virtual void finishedDrawing() = 0;
 
 	/**
-	<p>
+	\par
 	This retreives a graphics context for drawing on. Any drawing performed
 	on the graphics context will be reflected in the internal pixel data of the
 	image. On some platforms this may be "instantaneous" because the pixel
@@ -344,7 +344,7 @@ public:
 	implemententations of this class will transfer the image's contents to
 	the GraphicsContext for beginDrawing(), finishedDrawing() will update
 	the image's data due to any changes in the GraphicsContext. An example:
-	<pre>
+	\code
 	Image* image = getImage(); //get an image from somewhere
 	image->beginDrawing();
 
@@ -354,7 +354,7 @@ public:
 
 	image->finishedDrawing();
 
-	</pre>
+	\endcode
 
 	*/
 	virtual GraphicsContext* getImageContext() = 0;
@@ -386,6 +386,9 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/18 03:54:19  ddiego
+*documentation updates.
+*
 *Revision 1.3  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *
