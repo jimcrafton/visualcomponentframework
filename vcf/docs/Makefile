@@ -211,20 +211,14 @@ coredocs_hh_with_source : $(VCF_DOCS) test_tools
 	
 
 
-alldocs : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS)
+alldocs : $(VCF_DOCS) test_tools 
 	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
-
-	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
-	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml
 		
 	xsltproc --nonet vcf.xsl vcf_docbook.xml
 
 	mv vcf_book.xml.bak vcf_book.xml
-	mv xmake_book.xml.bak xmake_book.xml	
-
 
 
 alldocs_hh : alldocs 
@@ -250,16 +244,9 @@ alldocs_online : $(VCF_DOCS) test_tools $(VCF_BUILDER_DOCS) $(XMAKE_DOCS)
 	cp vcf_book.xml vcf_book.xml.bak
 	mv vcf_book.xml.tmp vcf_book.xml
 
-	sed "s?VERSION-NUMBER?$(XMAKE_VERSION)?g" xmake_book.xml > xmake_book.xml.tmp
-	cp xmake_book.xml xmake_book.xml.bak
-	mv xmake_book.xml.tmp xmake_book.xml	
-
 	xsltproc --nonet vcf_online.xsl vcf_website_docs.xml
 
 	mv vcf_book.xml.bak vcf_book.xml
-	mv xmake_book.xml.bak xmake_book.xml
-	mv vcfbuilder_book.xml.bak vcfbuilder_book.xml
-
 
 alldocs_hh_with_source : $(VCF_DOCS) test_tools doxy doxy_hh
 	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
@@ -507,6 +494,9 @@ clean :
 
 ###############################################################################
 #$Log$
+#Revision 1.19  2005/07/19 03:05:01  ddiego
+#doc makefile changes.
+#
 #Revision 1.18  2005/07/18 03:54:19  ddiego
 #documentation updates.
 #
