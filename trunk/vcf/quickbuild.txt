@@ -1,0 +1,87 @@
+Quick Build Instructions for Win32
+
+This will briefly cover the basics of building the VCF binaries using Microsoft's 
+Visual C++ IDE versions 6, 7, or 7.1. For more details on this please see the 
+VCF documentation installed with MSDN, or view it online at 
+http://vcf-online.org/docs/ref_manual/. Additional information is also provided 
+for users of Intel's C/C++ compiler.
+
+Microsoft Visual C++ 6.  The following section deals with building the VCF libraries 
+using the Microsoft Visual C++ 6 IDE.
+
+To build the VCF open the vcf/build/vc60/vcfAllProjects.dsw workspace. This workspace 
+has all the various framework projects, both as static .lib files and DLL projects. 
+To build all the VCF libraries select the "vcfAllLibs" project and make it the active 
+project. Building this project will automatically build the FoundationKit, GraphicsKit, 
+ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries will be built as 
+both static and DLL binaries. To build just the static libraries, build the 
+"vcfAllStaticLibs" project. To build all the libraries as DLL's, build the 
+"vcfAllDynamicLibs" project.
+
+There are several additional projects you can build as well for additional features.
+
+
+The ImageFormats project, which adds support for a wide variety of image formats 
+by using the FreeImage library. Build this if you would like to add this support 
+to your project.
+
+
+
+The Win32HTMLBrowser (and Win32HTMLBrowser_StaticLib) project, for an HTML browser 
+peer (currently implemented using the Internet Explorer IWebBrowser COM interface, 
+though experiments have been done using the Gecko component from mozilla).
+
+
+The build will take a bit, so now would be a good time for coffee, tea, or perhaps 
+reading some Dostoevsky...
+
+Once the build is finished you are ready to go ! All binaries will be put in the 
+vcf/bin directory when built.
+
+Microsoft Visual C++ 7.0.  The following section deals with building the VCF libraries 
+using the Microsoft Visual C++ 7.0 IDE.
+
+To build the VCF open the vcf/build/vc70/vcfAllProjects_vc70.dsw workspace. This 
+workspace has all the various framework projects, both as static .lib files and DLL 
+projects. Visual Studio should prompt you to convert the Visual C++ 6 projects into 
+the new Visual Studio 7 format. Click the "Yes to All" option, and all the projects 
+should then get converted. To build all the VCF libraries select the "vcfAllLibs" 
+project and make it the active project. Building this project will automatically 
+build the FoundationKit, GraphicsKit, ApplicationKit, NetworkKit, and RemoteObjectKit. 
+The libraries will be built as both static and DLL binaries. To build just the static 
+libraries, build the "vcfAllStaticLibs" project. To build all the libraries as DLL's, 
+build the "vcfAllDynamicLibs" project.
+
+Microsoft Visual C++ 7.1.  The following section deals with building the VCF libraries 
+using the Microsoft Visual C++ 7.1 IDE.
+
+To build the VCF open the vcf/build/vc71/vcfAllProjects_vc71.dsw workspace. This 
+workspace has all the various framework projects, both as static .lib files and DLL 
+projects. Visual Studio should prompt you to convert the Visual C++ 6 projects into 
+the new Visual Studio 7.1 format. Click the "Yes to All" option, and all the projects 
+should then get converted.
+
+To build all the VCF libraries select the "vcfAllLibs" project and make it the active 
+project.
+
+Building this project will automatically build the FoundationKit, GraphicsKit, 
+ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries will be built as 
+both static and DLL binaries. To build just the static libraries, build the 
+"vcfAllStaticLibs" project. To build all the libraries as DLL's, build the 
+"vcfAllDynamicLibs" project. After having built the VCF for the first time, you 
+can typically open the vcf/build/vc71/vcfAllProjects_vc71.sln solution file 
+instead of the workspace file should you decide to rebuild any of the projects 
+at a later time.
+
+Microsoft Visual C++ 6 using the Intel C/C++ compiler.  The following section deals 
+with building the VCF libraries using the Microsoft Visual C++ 7.0 IDE with the 
+Intel C/C++ compiler installed.
+
+To build the VCF open the vcf/build/icl7/vcfAllProjects_icl7.dsw workspace. This 
+workspace has all the various framework projects, both as static .lib files and 
+DLL projects. To build all the VCF libraries select the "vcfAllLibs" project and 
+make it the active project. Building this project will automatically build the 
+FoundationKit, GraphicsKit, ApplicationKit, NetworkKit, and RemoteObjectKit. The 
+libraries will be built as both static and DLL binaries. To build just the static 
+libraries, build the "vcfAllStaticLibs" project. To build all the libraries as 
+DLL's, build the "vcfAllDynamicLibs" project.
