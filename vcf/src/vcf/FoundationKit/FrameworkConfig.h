@@ -408,11 +408,11 @@ this define is to fix:
 #	endif	*/
 #endif
 
-#if defined(VCF_ALLIN1_DLL) || defined(VCF_ALLIN1_LIB)
+#if defined(VCF_ALLIN1_DLL) || defined(VCF_ALLIN1_LIB) || defined(VCF_USE_ALLIN1_DLL) || defined(VCF_USE_ALLIN1_LIB)
 
-#ifdef _LIB_CPLVERNUM
-#		undef _LIB_CPLVERNUM
-#endif
+#  ifdef _LIB_CPLVERNUM
+#    undef _LIB_CPLVERNUM
+#  endif
 
 
 # if defined(__INTEL_COMPILER)
@@ -432,12 +432,13 @@ this define is to fix:
 #		endif
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
-#		endif
+#	endif
 #   ifdef __BORLANDC__
-#   define _LIB_CPLVERNUM "bcc"
+#     define _LIB_CPLVERNUM "bcc"
 #   endif
 # endif
 
+#endif //VCF_ALLIN1_DLL/LIB
 
 /**
 All of this is here so that if we use this kit in our programs, all we
@@ -451,17 +452,19 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	#ifdef VCF_USE_ALLIN1_DLL
 	//	using dynamic link library
 	#	ifdef _DEBUG
-	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_d.lib")
+	#		pragma comment(lib, "VCF_"_LIB_CPLVERNUM"_d.lib")
 	#	else
-	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM".lib")
+	#		pragma comment(lib, "VCF_"_LIB_CPLVERNUM".lib")
 	#	endif
-	#elif defined VCF_USE_ALLIN1_LIB
+	#elif defined (VCF_USE_ALLIN1_LIB)
 	#		pragma comment(lib, "version.lib") //link to the version lib for retreiving version info
+	#		pragma comment(lib, "comctl32.lib") //link to the version lib for retreiving version info
+	#		pragma comment(lib, "rpcrt4.lib") //link to the version lib for retreiving version info
 	//	using statically linked library
 	#	ifdef _DEBUG
-	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_sd.lib")
+	#		pragma comment(lib, "VCF_"_LIB_CPLVERNUM"_sd.lib")
 	#	else
-	#		pragma comment(lib, "Allin1_"_LIB_CPLVERNUM"_s.lib")
+	#		pragma comment(lib, "VCF_"_LIB_CPLVERNUM"_s.lib")
 	#	endif
 	#else
 	//	creating the static or dynamic link library
@@ -469,7 +472,7 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 
 #endif //_MSC_VER
 
-#endif //VCF_ALLIN1_DLL/LIB
+
 
 #if defined (_MSC_VER) || defined (__DMC__) || defined (__GNUWIN32__) || defined(__BORLANDC__) || defined(__MWERKS__)
   // when we use USE_FOUNDATIONKIT_DLL we always want FOUNDATIONKIT_DLL
@@ -493,7 +496,7 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	# 	ifndef USE_FOUNDATIONKIT_DLL
 	#			define USE_FOUNDATIONKIT_DLL
 	# 	endif
-  #elif defined USE_NETKIT_LIB
+  #elif defined (USE_NETKIT_LIB)
 	# 	ifndef USE_FOUNDATIONKIT_LIB
 	#			define USE_FOUNDATIONKIT_LIB
 	# 	endif
@@ -506,7 +509,7 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	# 	ifndef USE_APPLICATIONKIT_DLL
 	#			define USE_APPLICATIONKIT_DLL
 	# 	endif
-  #elif defined USE_OPENGLKIT_LIB
+  #elif defined (USE_OPENGLKIT_LIB)
 	# 	ifndef USE_APPLICATIONKIT_LIB
 	#			define USE_APPLICATIONKIT_LIB
 	# 	endif
@@ -520,7 +523,7 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	# 	ifndef USE_GRAPHICSKIT_DLL
 	#			define USE_GRAPHICSKIT_DLL
 	# 	endif
-  #elif defined USE_APPLICATIONKIT_LIB
+  #elif defined (USE_APPLICATIONKIT_LIB)
 	# 	ifndef USE_GRAPHICSKIT_LIB
 	#			define USE_GRAPHICSKIT_LIB
 	# 	endif
@@ -533,7 +536,7 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	# 	ifndef USE_FOUNDATIONKIT_DLL
 	#			define USE_FOUNDATIONKIT_DLL
 	# 	endif
-  #elif defined USE_GRAPHICSKIT_LIB
+  #elif defined (USE_GRAPHICSKIT_LIB)
 	# 	ifndef USE_FOUNDATIONKIT_LIB
 	#			define USE_FOUNDATIONKIT_LIB
 	# 	endif
@@ -658,6 +661,9 @@ The same is with BCC.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/21 00:41:36  ddiego
+*minor changes.
+*
 *Revision 1.5  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
