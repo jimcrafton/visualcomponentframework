@@ -37,6 +37,12 @@ Source: ..\..\docs\VCFDocs.VCF-VERSION.chi;    DestDir: {app}\docs; Components: 
 Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
 Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
 
+;readme files
+Source: ..\..\readme.txt;     DestDir: {app};
+Source: ..\..\readme.html;     DestDir: {app};
+Source: ..\..\quickbuild.txt;     DestDir: {app};
+Source: ..\..\quickbuild.html;     DestDir: {app};
+
 Source: ..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {app}; Components: Help_Files/VC6_Help_Files
 
 Source: ..\..\docs\VS7\H2Reg.exe;      DestDir: {app}\docs; Components: Help_Files/VC7_Help_Files
@@ -98,30 +104,36 @@ Name: msdnintegrate;     Description: Visual Studio 6;       GroupDescription: I
 Name: VC7_msdnintegrate; Description: Visual Studio 7.0/7.1; GroupDescription: Integrate VCF Help with Visual Studio/MSDN Help; Flags: unchecked; Components: Help_Files/VC7_Help_Files
 
 Name: installwizards;      Description: Visual Studio 6;               GroupDescription: Install Visual Studio Addins/Wizards; Flags: unchecked
-Name: VC70_installwizards; Description: Visual Studio 7.0 (.NET 2002); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+;we are not supporting VC70 for wizards at the moment
+;Name: VC70_installwizards; Description: Visual Studio 7.0 (.NET 2002); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+
 Name: VC71_installwizards; Description: Visual Studio 7.1 (.NET 2003); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
 
 [Run]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi""    -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm""    -add -title ""VCF Documentation""";        StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_BIN ""{app}\bin"""; Components: Src; Tasks: addenvpaths
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_LIB ""{app}\lib"""; Components: Src; Tasks: addenvpaths
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\src"""; Components: Src; Tasks: addenvpaths
-Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_BIN%; Components: Src; Tasks: addenvpaths
+Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_BIN ""{app}\bin"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_LIB ""{app}\lib"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\src"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_BIN%; Components: Src; Tasks: addenvpaths; Flags: runhidden
 
 Filename: {app}\docs\H2Reg.exe; Parameters: "-R ""cmdfile=H2Reg_cmd.ini"""; Tasks: VC7_msdnintegrate; Components: Help_Files/VC7_Help_Files
 
-Filename: {app}\build\vc70\Add-Ins\Setup.js; Tasks: VC70_installwizards; Components: Src;  Flags: shellexec waituntilterminated
+;run the quick build instructions!
+Filename: {app}\quickbuild.html; Description: "Read Quick build Instructions"; Flags: shellexec nowait postinstall skipifsilent
+
+;we are not supporting VC70 for wizards at the moment
+;Filename: {app}\build\vc70\Add-Ins\Setup.js; Tasks: VC70_installwizards; Components: Src;  Flags: shellexec waituntilterminated
 Filename: {app}\build\vc71\Add-Ins\Setup.js; Tasks: VC71_installwizards; Components: Src;  Flags: shellexec waituntilterminated
 
 [UninstallRun]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -remove -title ""VCF Source Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
-Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_BIN%; Tasks: addenvpaths; Components: Src
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_BIN; Tasks: addenvpaths; Components: Src
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_LIB; Tasks: addenvpaths; Components: Src
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_INCLUDE; Tasks: addenvpaths; Components: Src
+Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_BIN%; Tasks: addenvpaths; Components: Src; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_BIN; Tasks: addenvpaths; Components: Src; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_LIB; Tasks: addenvpaths; Components: Src; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_INCLUDE; Tasks: addenvpaths; Components: Src; Flags: runhidden
 
 
 Filename: {app}\docs\H2Reg.exe; Parameters: "-U ""cmdfile=H2Reg_cmd.ini"""; Tasks: VC7_msdnintegrate; Components: Help_Files/VC7_Help_Files
