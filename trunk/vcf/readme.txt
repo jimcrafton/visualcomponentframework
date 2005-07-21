@@ -1,3 +1,91 @@
+Visual Component Framework 0.6.8
+
+Readme
+
+Bugs fixed include:
+1212502 The TabbedPages control flickers
+1044515	Selection problem in a tree control
+940183	VCFSrcOnlyInstaller-0.6.4.exe doesn't 'install' VS6 wizards
+585091	AcceleratorKey not routed correctly
+1044747	PushButton has wrong size
+1082362	App Icons do not appear on the Task Manager and others can't
+1089345	CommonColor needs first choose basic colors on Win32
+1089382	ComboBox fires a SelectionChanged msg when loosing focus
+1096732	Application crashes when closing
+1099910	ComboBox of AbstractPropertyEditor crash when loosing focus
+1103156	Scrolling error in ListBox in Controls example
+1108954	user "data" is not assigned to the SubItem of the TreeItem
+1109025	The check mark is not drawn on CheckBox TreeItem
+1111096	input by num keypad arent registered by TextControls
+1112867	Press Return on ComboBox changes the selected item's caption
+1119206	Win32MenuItem::isChecked returns "false". Allways!!!
+1150771	When selecting all the text in the editor, setText is called
+1150773	Win32Edit loses last n characters past the last 2048 written
+1152064	Control's setEnabled doesn't force a repaint
+1152067	PushButton doesn't show disabled status
+1155518	Multi-column TreeListControl
+1157348	SaveAs and cancel cause problem in DocumentManager class
+1159282	ListBoxControl::setImageList
+1161656	Window resize
+1166682	Selecting a Listbox item through code
+1175667	Lack of SysTray Icon Transparency
+1176555	Mem Leak
+1177879	Changing MultilineTextControl color in Window create
+1177882	Changing Font color on a TextControl doesn't work
+1177893	Most controls ignore system text color
+1184431	Window scrollbars not visible until resize
+1184432	Tables cell edit box follows scroll movement
+1197970	UnicodeString::copy(UnicodeString::AnsiChar
+1197974	Accelerator looks on a single control ony (recursive lookup)
+1200128	TextControl's replaceText method doesn't work properly
+1208948	DocViewAdvanced throws unknown framework exception.
+1214627	Horizontal Scrolling bug
+1216187	Add vc70 vc71 app wizards to installers
+1227549	HorizontalLayoutContainer set the heights in the wrong rows.
+1179853	memory problems around memset
+1160871	VCF::String has no operator <<
+1044740	PushButton ignores the second click of a double-click
+
+Other bugs fixed were some goofs in the ResourceBundle implementation,
+performance issues, miscellaneous bugs in the TableControl and 
+TreeListControl.
+
+
+New features include:
+
+RunLoops, which allow for repitive loop behaviour, and the ability to 
+now post an event from any RunLoop to another RunLoop. Each RunLoop
+associated with a Thread.
+
+Introduction of a ThreadManager to help manage threads and run loops.
+
+Format class for replacing var arg functions like System::println().
+Conceptually similar to boost's format class but not as fancy, at 
+least not yet.
+
+Consolidation of menu handling with addition of MenuManager. This was 
+done to make menu handling work better both on Mac OSX and Win32.
+
+Adjustments in the TextPeer class to allow for more flexible handling
+of styled text. 
+
+Port of VCF to CodeWarrior IDE completed.
+
+Adjustments and some new features added to use AcceleratorKey objects.
+
+
+
+Other work included a lot more documentation, both in the reference 
+manual and in the source documentation.
+
+Some refactoring in the Model classes and events, and changes in the 
+TextModel.
+
+Further work on OSX, almost all peer classes now implemented, at least 
+to some degree.
+
+
+
 Visual Component Framework 0.6.6
 
 Readme
