@@ -112,44 +112,59 @@ ProgramInfo* ResourceBundle::getProgramInfo()
 						}
 
 						if ( (NULL != val) && (node->getName() == "key") ) {
-							if ( node->getCDATA() == "CFBundleName" ) {
+							String cdata = node->getCDATA();
+							StringUtils::trimWhiteSpaces( cdata );
+
+							if ( cdata == "CFBundleName" ) {
 								name = val->getCDATA();
+								StringUtils::trimWhiteSpaces( name );
 							}
-							else if ( node->getCDATA() == "CFBundleDisplayName" ) {
+							else if ( cdata == "CFBundleDisplayName" ) {
 								name = val->getCDATA();
+								StringUtils::trimWhiteSpaces( name );
 							}
-							else if ( node->getCDATA() == "CFBundleVersion" ) {
+							else if ( cdata == "CFBundleVersion" ) {
 								fileVersion = programVersion = val->getCDATA();
+								StringUtils::trimWhiteSpaces( fileVersion );
 							}
-							else if ( node->getCDATA() == "CFBundleGetInfoString" ) {
+							else if ( cdata == "CFBundleGetInfoString" ) {
 								copyright = programVersion = val->getCDATA();
+								StringUtils::trimWhiteSpaces( copyright );
 							}
-							else if ( node->getCDATA() == "NSHumanReadableCopyright" ) {
+							else if ( cdata == "NSHumanReadableCopyright" ) {
 								copyright = programVersion = val->getCDATA();							
+								StringUtils::trimWhiteSpaces( copyright );
 							}
 
 							
 							//VCF cross platform keys
-							else if ( node->getCDATA() == "ProgramVersion" ) {
+							else if ( cdata == "ProgramVersion" ) {
 								programVersion = val->getCDATA();
+								StringUtils::trimWhiteSpaces( programVersion );
 							}
-							else if ( node->getCDATA() == "FileVersion" ) {
+							else if ( cdata == "FileVersion" ) {
 								programVersion = val->getCDATA();
+								StringUtils::trimWhiteSpaces( programVersion );
 							}
-							else if ( node->getCDATA() == "ProductName" ) {
+							else if ( cdata == "ProductName" ) {
 								name = val->getCDATA();
+								StringUtils::trimWhiteSpaces( name );
 							}
-							else if ( node->getCDATA() == "Copyright" ) {
+							else if ( cdata == "Copyright" ) {
 								copyright = val->getCDATA();
+								StringUtils::trimWhiteSpaces( copyright );
 							}
-							else if ( node->getCDATA() == "Author" ) {
+							else if ( cdata == "Author" ) {
 								author = val->getCDATA();
+								StringUtils::trimWhiteSpaces( author );
 							}
-							else if ( node->getCDATA() == "Company" ) {
+							else if ( cdata == "Company" ) {
 								company = val->getCDATA();
+								StringUtils::trimWhiteSpaces( company );
 							}
-							else if ( node->getCDATA() == "Description" ) {
+							else if ( cdata == "Description" ) {
 								description = val->getCDATA();
+								StringUtils::trimWhiteSpaces( description );
 							}
 						}
 					}
@@ -173,6 +188,9 @@ String ResourceBundle::getResourcesDirectory()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/24 14:58:24  ddiego
+*bug fix for program info extraction.
+*
 *Revision 1.4  2005/01/08 20:52:47  ddiego
 *fixed some glitches in osx impl.
 *
