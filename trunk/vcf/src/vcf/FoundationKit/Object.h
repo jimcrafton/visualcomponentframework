@@ -225,7 +225,7 @@ public:
 		*/
 		Ptr& operator= ( OBJECT_TYPE* o ) {
 			ptr_ = o;
-			return this;
+			return *this;
 		}
 
 		bool operator !()	{
@@ -233,7 +233,7 @@ public:
 		}
 
 		OBJECT_TYPE& operator *() {
-			return ptr_;
+			return *ptr_;
 		}
 
 		OBJECT_TYPE** operator &( ) {
@@ -338,6 +338,9 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/07/27 01:45:53  ddiego
+*fixed mistake in object ptr class.
+*
 *Revision 1.4  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *
