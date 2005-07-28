@@ -18,7 +18,8 @@ where you installed the VCF.
 #  define VCF_NO_OUT_OF_CLASS_TEMPLATE_DEFINITIONS
 #endif
 
-#if defined(VCF_GCC) || defined(VCF_DMC) || defined(VCF_VC60) || defined(VCF_VC70) || defined(VCF_BCC)
+//JC Note: apparently VC71 needs to be added to this list as well.
+#if defined(VCF_GCC) || defined(VCF_DMC) || defined(VCF_VC60) || defined(VCF_VC70) || defined(VCF_VC71) || defined(VCF_BCC)
 // these compilers do not want 'template <DataType>' specified before the specialization
 // JC - it appears GCC 3.3.3 doesn't like this - do we need to have this here at all!?
 #  define VCF_NO_TEMPLATE_SPECIFICATION_FOR_MEMBER_TEMPLATE_SPECIALIZATION
@@ -358,6 +359,9 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2005/07/28 15:17:21  ddiego
+*fixed vc71 compile bug with format class.
+*
 *Revision 1.2  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
