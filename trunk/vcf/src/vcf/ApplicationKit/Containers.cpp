@@ -49,7 +49,7 @@ void StandardContainer::resizeChildren( Control* control )
 	if ( NULL != control ) {
 		std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 
-		controlJustAdded = ( found == (controls_.end()-1) );
+		controlJustAdded = ( found == controls_.end() );
 	}
 
 	bool needAnchorWork = anchorWork() ||
@@ -600,7 +600,7 @@ void DesignTimeContainer::resizeChildrenUsingBounds( Control* control, Rect* bou
 	if ( NULL != control ) {
 		std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 
-		controlJustAdded = ( found == (controls_.end()-1) );
+		controlJustAdded = ( found == controls_.end() );
 	}
 
 	bool needAnchorWork = anchorWork() ||
@@ -636,6 +636,12 @@ void DesignTimeContainer::resizeChildrenUsingBounds( Control* control, Rect* bou
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/07/30 15:37:10  ddiego
+*rolled back a few conatainer changes.
+*
+*Revision 1.3.2.1  2005/07/29 03:04:25  ddiego
+*rolled back a few conatainer changes.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

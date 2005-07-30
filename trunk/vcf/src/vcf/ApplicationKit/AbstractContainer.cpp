@@ -211,12 +211,12 @@ void AbstractContainer::add( Control * child )
 			}
 		}
 
-		child->setParent( controlContainer_ );
+		child->setParent( controlContainer_ );		
+
+		child->setTabOrder( controls_.size() );
+		resizeChildren( child );
 
 		controls_.push_back( child );
-
-		child->setTabOrder( controls_.size() - 1 );
-		resizeChildren( child );
 	}
 }
 
@@ -239,10 +239,10 @@ void AbstractContainer::add( Control * child, const AlignmentType& alignment )
 		child->setParent( controlContainer_ );
 		child->setAlignment( alignment );
 
-		controls_.push_back( child );
-
-		child->setTabOrder( controls_.size() - 1 );
+		child->setTabOrder( controls_.size() );
 		resizeChildren( child );
+
+		controls_.push_back( child );
 	}
 }
 
@@ -569,6 +569,12 @@ void AbstractContainer::setContainerControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/07/30 15:37:10  ddiego
+*rolled back a few conatainer changes.
+*
+*Revision 1.5.2.1  2005/07/29 03:04:25  ddiego
+*rolled back a few conatainer changes.
+*
 *Revision 1.5  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
