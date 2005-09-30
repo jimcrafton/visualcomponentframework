@@ -77,12 +77,18 @@ defined to use the DLL or static libraries.
 	//	creating the static or dynamic link library
 	#endif // FOUNDATIONKIT_LIB
 
+	//Always link to Rpcrt4.lib version.lib no matter what
+	#		pragma comment(lib, "Rpcrt4.lib")
+	#		pragma comment(lib, "version.lib")
 #endif //_MSC_VER
 
 #endif //VCF_ALLIN1_DLL/LIB
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2005/09/30 02:23:46  ddiego
+*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*
 *Revision 1.5  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -77,12 +77,17 @@ defined to use the DLL or static libraries.
 	//	creating the static or dynamic link library
 	#endif // APPLICATIONKIT_LIB
 
+	//Always link to comctl32.lib no matter what
+	#		pragma comment(lib, "comctl32.lib")
 #endif //_MSC_VER
 
 #endif //VCF_USE_ALLIN1_DLL/LIB
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/09/30 02:23:42  ddiego
+*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*
 *Revision 1.4  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

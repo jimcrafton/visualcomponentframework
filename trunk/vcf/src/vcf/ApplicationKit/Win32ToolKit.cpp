@@ -1865,34 +1865,48 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 
 		case WM_CHAR: case WM_KEYDOWN: case WM_KEYUP: {
 			KeyboardData keyData = Win32Utils::translateKeyData( msg->msg_.hwnd, msg->msg_.lParam );
+			
 			unsigned long eventType = 0;
+			unsigned long repeatCount = keyData.repeatCount;
+
+			unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
+
+			VCFChar keyVal = 0;
+			
+			VirtualKeyCode virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( keyData.VKeyCode );
+
 			switch ( msg->msg_.message ){
 				case WM_CHAR: {
 					eventType = Control::KEYBOARD_PRESSED;
+					keyVal = (VCFChar)msg->msg_.wParam;
+					if ( isgraph( keyVal ) ) {
+						virtualKeyCode = (VirtualKeyCode)Win32Utils::convertCharToVKCode( keyVal );
+					}
 				}
 				break;
 
 				case WM_KEYDOWN: {
+					keyVal = keyData.character;
 					eventType = Control::KEYBOARD_DOWN;//KEYBOARD_EVENT_DOWN;
+					virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( msg->msg_.wParam );
 				}
 				break;
 
 				case WM_KEYUP: {
 					eventType = Control::KEYBOARD_UP;
+					keyVal = keyData.character;
+					virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( msg->msg_.wParam );
 				}
 				break;
 			}
 
-			unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
 
-			ulong32 virtKeyCode = Win32Utils::translateVKCode( keyData.VKeyCode );
 			result = new VCF::KeyboardEvent( msg->control_,
 											eventType,
-											keyData.repeatCount,
+											repeatCount,
 											keyMask,
-											(VCF::VCFChar)keyData.character,
-											(VirtualKeyCode)virtKeyCode );
-
+											keyVal,
+											virtualKeyCode );
 
 		}
 		break;
@@ -2256,6 +2270,9 @@ Size Win32ToolKit::internal_getDragDropDelta()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2005/09/30 02:23:43  ddiego
+*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*
 *Revision 1.6  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
