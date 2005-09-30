@@ -183,8 +183,6 @@ protected:
 
 	void onControlModelChanged( Event* e );
 
-	static uint32 convertCharToVKCode( VCFChar ch );
-
 	//static DWORD CALLBACK EditStreamCallback( DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb );
 };
 
@@ -195,6 +193,9 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2005/09/30 02:23:43  ddiego
+*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*
 *Revision 1.4  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

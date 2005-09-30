@@ -602,10 +602,361 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 	return result;
 }
 
+VCF::uint32 Win32Utils::convertCharToVKCode( VCF::VCFChar ch )
+{
+	VCF::uint32 result = 0;
+
+	ch = tolower( ch );
+	switch ( ch ) {
+		case 'a' : {
+			result = VCF::vkLetterA;
+		}
+		break;
+
+		case 'b' : {
+			result = VCF::vkLetterB;
+		}
+		break;
+
+		case 'c' : {
+			result = VCF::vkLetterC;
+		}
+		break;
+
+		case 'd' : {
+			result = VCF::vkLetterD;
+		}
+		break;
+
+		case 'e' : {
+			result = VCF::vkLetterE;
+		}
+		break;
+
+		case 'f' : {
+			result = VCF::vkLetterF;
+		}
+		break;
+
+		case 'g' : {
+			result = VCF::vkLetterG;
+		}
+		break;
+
+		case 'h' : {
+			result = VCF::vkLetterH;
+		}
+		break;
+
+		case 'i' : {
+			result = VCF::vkLetterI;
+		}
+		break;
+
+		case 'j' : {
+			result = VCF::vkLetterJ;
+		}
+		break;
+
+		case 'k' : {
+			result = VCF::vkLetterK;
+		}
+		break;
+
+		case 'l' : {
+			result = VCF::vkLetterL;
+		}
+		break;
+
+		case 'm' : {
+			result = VCF::vkLetterM;
+		}
+		break;
+
+		case 'n' : {
+			result = VCF::vkLetterN;
+		}
+		break;
+
+		case 'o' : {
+			result = VCF::vkLetterO;
+		}
+		break;
+
+		case 'p' : {
+			result = VCF::vkLetterP;
+		}
+		break;
+
+		case 'q' : {
+			result = VCF::vkLetterQ;
+		}
+		break;
+
+		case 'r' : {
+			result = VCF::vkLetterR;
+		}
+		break;
+
+		case 's' : {
+			result = VCF::vkLetterS;
+		}
+		break;
+
+		case 't' : {
+			result = VCF::vkLetterT;
+		}
+		break;
+
+		case 'u' : {
+			result = VCF::vkLetterU;
+		}
+		break;
+
+		case 'v' : {
+			result = VCF::vkLetterV;
+		}
+		break;
+
+		case 'w' : {
+			result = VCF::vkLetterW;
+		}
+		break;
+
+		case 'x' : {
+			result = VCF::vkLetterX;
+		}
+		break;
+
+		case 'y' : {
+			result = VCF::vkLetterY;
+		}
+		break;
+
+		case 'z' : {
+			result = VCF::vkLetterZ;
+		}
+		break;
+
+		case '0' : {
+			result = VCF::vkNumber0;
+		}
+		break;
+
+		case '1' : {
+			result = VCF::vkNumber1;
+		}
+		break;
+
+		case '2' : {
+			result = VCF::vkNumber2;
+		}
+		break;
+
+		case '3' : {
+			result = VCF::vkNumber3;
+		}
+		break;
+
+		case '4' : {
+			result = VCF::vkNumber4;
+		}
+		break;
+
+		case '5' : {
+			result = VCF::vkNumber5;
+		}
+		break;
+
+		case '6' : {
+			result = VCF::vkNumber6;
+		}
+		break;
+
+		case '7' : {
+			result = VCF::vkNumber7;
+		}
+		break;
+
+		case '8' : {
+			result = VCF::vkNumber8;
+		}
+		break;
+
+		case '9' : {
+			result = VCF::vkNumber9;
+		}
+		break;
+
+		case '/' : {
+			result = VCF::vkDivideSign;
+		}
+		break;
+
+		case '+' : {
+			result = VCF::vkPlusSign;
+		}
+		break;
+
+		case '-' : {
+			result = VCF::vkMinusSign;
+		}
+		break;
+
+		case '=' : {
+			result = VCF::vkEqualsSign;
+		}
+		break;
+
+		case '_' : {
+			result = VCF::vkUnderbar;
+		}
+		break;
+
+		case '|' : {
+			result = VCF::vkUprightBar;
+		}
+		break;
+
+		case '{' : {
+			result = VCF::vkOpenBrace;
+		}
+		break;
+
+		case '}' : {
+			result = VCF::vkCloseBrace;
+		}
+		break;
+
+		case '[' : {
+			result = VCF::vkOpenBracket;
+		}
+		break;
+
+		case ']' : {
+			result = VCF::vkCloseBracket;
+		}
+		break;
+
+		case '<' : {
+			result = VCF::vkLessThan;
+		}
+		break;
+
+		case '>' : {
+			result = VCF::vkGreaterThan;
+		}
+		break;
+
+		case '.' : {
+			result = VCF::vkPeriod;
+		}
+		break;
+
+		case ',' : {
+			result = VCF::vkComma;
+		}
+		break;
+
+		case '!' : {
+			result = VCF::vkExclamation;
+		}
+		break;
+
+		case '~' : {
+			result = VCF::vkTilde;
+		}
+		break;
+
+		case '`' : {
+			result = VCF::vkLeftApostrophe;
+		}
+		break;
+
+		case '@' : {
+			result = VCF::vkCommercialAt;
+		}
+		break;
+
+		case '#' : {
+			result = VCF::vkNumberSign;
+		}
+		break;
+
+		case '$' : {
+			result = VCF::vkDollarSign;
+		}
+		break;
+
+		case '%' : {
+			result = VCF::vkPercent;
+		}
+		break;
+
+		case '^' : {
+			result = VCF::vkCircumflex;
+		}
+		break;
+
+		case '&' : {
+			result = VCF::vkAmpersand;
+		}
+		break;
+
+		case '*' : {
+			result = VCF::vkAsterix;
+		}
+		break;
+
+		case '(' : {
+			result = VCF::vkOpenParen;
+		}
+		break;
+
+		case ')' : {
+			result = VCF::vkCloseParen;
+		}
+		break;
+
+		case ':' : {
+			result = VCF::vkColon;
+		}
+		break;
+
+		case ';' : {
+			result = VCF::vkSemiColon;
+		}
+		break;
+
+		case '"' : {
+			result = VCF::vkDoubleQuote;
+		}
+		break;
+
+		case '\'' : {
+			result = VCF::vkSingleQuote;
+		}
+		break;
+
+		case '\\' : {
+			result = VCF::vkBackSlash;
+		}
+		break;
+
+		case '?' : {
+			result = VCF::vkQuestionMark;
+		}
+		break;
+	}
+	return result;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2005/09/30 02:23:46  ddiego
+*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*
 *Revision 1.3  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
