@@ -27,5 +27,5 @@
 #This line below will email BOTH email accounts. For now we'll just notify the 
 #SourceForge account.
 #$DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} vcf-cvs-development@lists.sourceforge.net; /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} cvs.changes@vcf-online.org
-$DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} vcf-cvs-development@lists.sourceforge.net
+DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} vcf-cvs-development@lists.sourceforge.net
 
