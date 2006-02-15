@@ -1,1 +1,8 @@
-This directory is intended as a testing ground of new vcf tech, without comitting it to the main VCF source tree. It's not meant to be used other than as a developer sandbox, so consider yourself warned. If code here turns your computer into a molten slag heap of plastic and silicon, it's not our fault! Of course, gdb can easily provide the same results, so go figure...
+This directory is intended as a testing ground of 
+new vcf tech, without comitting it to the main VCF 
+source tree. It's not meant to be used other than 
+as a developer sandbox, so consider yourself warned. 
+If code here turns your computer into a molten slag 
+heap of plastic and silicon, it's not our fault! Of 
+course, gdb can easily provide the same results, so 
+go figure...
