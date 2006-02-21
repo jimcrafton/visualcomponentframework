@@ -24,8 +24,10 @@ namespace VCF {
 
 namespace VCF {
 
+	class Socket;
 	class SocketPeer;
 
+	typedef  std::vector<Socket*> SocketArray;
 
 	class Socket : public Object {
 	public:
@@ -33,7 +35,27 @@ namespace VCF {
 			stStream,
 			stDatagram
 		};
+
+		enum {
+			/**
+			Select should check and then return immediately
+			*/
+			SelectNoWait = (uint32)0,
+
+			/**
+			Select will wait indefinitely, until one of the 
+			sockets passed in is flagged with data.
+			*/
+			SelectWaitForever = (uint32)-1
+		};
 		
+		enum SocketState{
+			ssError	=		0x0001,
+			ssReadable	=	0x0002,
+			ssWriteable	=	0x0004,
+			ssConnected =	0x0010,
+			ssListening	=	0x0020
+		};
 
 		//socket options
 		/**
@@ -144,6 +166,53 @@ namespace VCF {
 		SocketType getSocketType() {
 			return type_;
 		}
+
+		bool isReadable() const {
+			return (state_ & Socket::ssReadable) ? true : false;
+		}
+
+		bool hasError() const {
+			return (state_ & Socket::ssError) ? true : false;
+		}
+
+		bool isWriteable() const {
+			return (state_ & Socket::ssWriteable) ? true : false;
+		}
+
+		bool isConnected() const {
+			return (state_ & Socket::ssConnected) ? true : false;
+		}
+
+		bool isListening() const {
+			return (state_ & Socket::ssListening) ? true : false;
+		}
+
+		void internal_setErrorState( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssError;
+			}
+			else {
+				state_ &= ~Socket::ssError;
+			}
+		}
+
+		void internal_setReadable( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssReadable;
+			}
+			else {
+				state_ &= ~Socket::ssReadable;
+			}
+		}
+
+		void internal_setWriteable( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssWriteable;
+			}
+			else {
+				state_ &= ~Socket::ssWriteable;
+			}
+		}
 	protected:
 		/**
 		Creates a socket from an existing peer
@@ -155,12 +224,21 @@ namespace VCF {
 
 		SocketPeer* peer_;
 		SocketType type_;
+
+		int state_;
 	};
 
 };
 
 
 const VCF::String VCF::Socket::soBlocking = "soBlocking"; 
+const VCF::String VCF::Socket::soBroadcast = "soBroadcast";
+const VCF::String VCF::Socket::soDontLinger = "soDontLinger";
+const VCF::String VCF::Socket::soDontRoute = "soDontRoute";
+const VCF::String VCF::Socket::soKeepAlive = "soKeepAlive";
+const VCF::String VCF::Socket::soRecvBuffer = "soRecvBuffer";
+const VCF::String VCF::Socket::soReuseAddress = "soReuseAddress";
+const VCF::String VCF::Socket::soSendBuffer = "soSendBuffer";
 
 
 
@@ -281,6 +359,38 @@ namespace VCF {
 		false if it would not. 
 		*/
 		virtual bool wouldOperationBlock() = 0;
+
+		/**
+		performs a select, using the various read, write, and/or error socket 
+		lists. Will block for a maximum of timeout milliseconds. If the all
+		the read, write, and error socket arrays are NULL, then the 
+		select is performed only on the socket instance itself.
+		@param uint32 the maximum number of milliseconds to wait for. 
+			@see Socket::SelectNoWait,
+			@see Socket::SelectWaitForever
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they can be read from. This may vector
+		may be null if the	caller is not interested in read notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually ready to be 
+		read from.
+
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they may be written to. This may vector
+		may be null if the	caller is not interested in write notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually ready to be 
+		written to.
+
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they have errors. This may vector
+		may be null if the	caller is not interested in write notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually in an error 
+		state.
+		*/
+		virtual void select( uint32 timeout, SocketArray* readSockets, SocketArray* writeSockets,
+						SocketArray* errorSockets ) = 0;
 	};
 
 };
@@ -373,6 +483,9 @@ namespace VCF {
 		virtual Dictionary getOptions();
 
 		virtual bool wouldOperationBlock();
+
+		virtual void select( uint32 timeout, SocketArray* readSockets, SocketArray* writeSockets,
+						SocketArray* errorSockets );
 
 	protected:
 		SOCKET handle_;
@@ -669,13 +782,100 @@ unsigned short Win32SocketPeer::getPort()
 }
 
 void Win32SocketPeer::setOptions( Dictionary& options )
-{
-	
+{	
+	Dictionary::Enumerator* enumerator = options.getEnumerator();	
+
+	while ( enumerator->hasMoreElements() ) {
+		Dictionary::pair element = enumerator->nextElement();
+		if ( element.first == Socket::soBlocking ) {
+			bool blocking = element.second;
+			unsigned long val = blocking ? 0 : 1;
+
+			::ioctlsocket( handle_, FIONBIO, &val );
+		}
+		else if ( element.first == Socket::soBroadcast ) {
+			bool blocking = element.second;
+			BOOL val = blocking ? TRUE : FALSE;
+			::setsockopt( handle_, SOL_SOCKET, SO_BROADCAST, (const char*)&val, sizeof(val) );
+		}
+		else if ( element.first == Socket::soDontLinger ) {
+			bool dontLinger = element.second;
+			BOOL val = dontLinger ? TRUE : FALSE;
+			::setsockopt( handle_, SOL_SOCKET, SO_DONTLINGER, (const char*)&val, sizeof(val) );			
+		}
+		else if ( element.first == Socket::soDontRoute ) {
+			bool dontRoute = element.second;
+			BOOL val = dontRoute ? TRUE : FALSE;
+			::setsockopt( handle_, SOL_SOCKET, SO_DONTROUTE, (const char*)&val, sizeof(val) );
+		}
+		else if ( element.first == Socket::soKeepAlive ) {
+			bool keepAlive = element.second;
+			BOOL val = keepAlive ? TRUE : FALSE;
+			::setsockopt( handle_, SOL_SOCKET, SO_KEEPALIVE, (const char*)&val, sizeof(val) );
+		}
+		else if ( element.first == Socket::soRecvBuffer ) {
+			int recvBuffer = element.second;
+			::setsockopt( handle_, SOL_SOCKET, SO_RCVBUF, (const char*)&recvBuffer, sizeof(recvBuffer) );
+		}
+		else if ( element.first == Socket::soReuseAddress ) {
+			bool reuseAddr = element.second;
+			BOOL val = reuseAddr ? TRUE : FALSE;
+			::setsockopt( handle_, SOL_SOCKET, SO_REUSEADDR, (const char*)&val, sizeof(val) );
+		}
+		else if ( element.first == Socket::soSendBuffer ) {
+			int sendBuffer = element.second;
+			::setsockopt( handle_, SOL_SOCKET, SO_SNDBUF, (const char*)&sendBuffer, sizeof(sendBuffer) );
+		}
+	}
 }
 
 Dictionary Win32SocketPeer::getOptions()
 {
 	Dictionary result;
+
+	BOOL boolVal = 0;
+	int valSize = sizeof(boolVal);
+
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_BROADCAST, (char*)&boolVal, &valSize ) ) {
+		result[Socket::soBroadcast] = boolVal ? true : false;
+	}
+
+	boolVal = 0;
+	valSize = sizeof(boolVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_DONTLINGER, (char*)&boolVal, &valSize ) ) {
+		result[Socket::soDontLinger] = boolVal ? true : false;
+	}
+
+	boolVal = 0;
+	valSize = sizeof(boolVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_DONTROUTE, (char*)&boolVal, &valSize ) ) {
+		result[Socket::soDontRoute] = boolVal ? true : false;
+	}
+
+	boolVal = 0;
+	valSize = sizeof(boolVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_KEEPALIVE, (char*)&boolVal, &valSize ) ) {
+		result[Socket::soKeepAlive] = boolVal ? true : false;
+	}
+
+	int intVal = 0;
+	valSize = sizeof(intVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_RCVBUF, (char*)&intVal, &valSize ) ) {
+		result[Socket::soRecvBuffer] = intVal;
+	}
+
+	boolVal = 0;
+	valSize = sizeof(boolVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_REUSEADDR, (char*)&boolVal, &valSize ) ) {
+		result[Socket::soReuseAddress] = boolVal ? true : false;
+	}
+
+
+	intVal = 0;
+	valSize = sizeof(intVal);
+	if( SOCKET_ERROR != getsockopt( handle_, SOL_SOCKET, SO_SNDBUF, (char*)&intVal, &valSize ) ) {
+		result[Socket::soSendBuffer] = intVal;
+	}
 
 	return result;
 }
@@ -684,6 +884,231 @@ bool Win32SocketPeer::wouldOperationBlock()
 {
 	return WSAGetLastError() == WSAEWOULDBLOCK ? true : false;
 }
+
+void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets, 
+								SocketArray* writeSockets,
+								SocketArray* errorSockets )
+{
+	fd_set* readers = NULL;
+	fd_set* writers = NULL;
+	fd_set* errors = NULL;
+
+	//set up the read/write/error FD's
+	fd_set readfd;
+	FD_ZERO(&readfd);
+
+	fd_set writefd;
+	FD_ZERO(&writefd);
+	
+	fd_set exceptionfd;
+	FD_ZERO(&exceptionfd);
+
+	unsigned int maxSockHandle = 0;
+
+	bool selectOnSelf = false;
+
+	if ( (NULL == readSockets) && (NULL == writeSockets) && (NULL == writeSockets) ) {
+		//select on self!
+		selectOnSelf = true;
+		unsigned int sockID = (unsigned int) getHandleID();
+		FD_SET ( sockID, &readfd) ;
+		FD_SET ( sockID, &writefd) ;
+		FD_SET ( sockID, &exceptionfd) ;
+
+		readers = &readfd;
+		writers = &writefd;
+		errors = &exceptionfd;
+		if ( sockID > maxSockHandle ){
+			maxSockHandle = sockID;	
+		}
+	}
+	else {	
+		if ( NULL != readSockets ) {
+			SocketArray::iterator it = readSockets->begin();
+			
+			while ( it != readSockets->end() ){
+				Socket* so = *it;
+				VCF_ASSERT( so != NULL );
+				
+				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+				
+				FD_SET ( sockID, &readfd) ;
+				if ( sockID > maxSockHandle ){
+					maxSockHandle = sockID;	
+				}
+				it++;
+			}
+			
+			readers = &readfd;
+		}
+
+		if ( NULL != writeSockets ) {
+			SocketArray::iterator it = writeSockets->begin();
+			
+			while ( it != writeSockets->end() ){
+				Socket* so = *it;
+				VCF_ASSERT( so != NULL );
+				
+				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+				
+				FD_SET ( sockID, &writefd) ;
+				if ( sockID > maxSockHandle ){
+					maxSockHandle = sockID;	
+				}
+				it++;
+			}
+			
+			writers = &writefd;
+		}
+
+		if ( NULL != errorSockets ) {
+			SocketArray::iterator it = errorSockets->begin();
+			
+			while ( it != errorSockets->end() ){
+				Socket* so = *it;
+				VCF_ASSERT( so != NULL );
+				
+				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+				
+				FD_SET ( sockID, &exceptionfd) ;
+				if ( sockID > maxSockHandle ){
+					maxSockHandle = sockID;	
+				}
+				it++;
+			}
+			
+			errors = &exceptionfd;
+		}
+	}
+
+	//setup the select timeout struct...
+	struct timeval timeoutTime;	
+	//initialized to 0 values - this will return immediately
+	timeoutTime.tv_sec = 0; 
+	timeoutTime.tv_usec = 0;
+
+	struct timeval* timeoutVal;
+	if ( Socket::SelectWaitForever == timeout ) {
+		timeoutVal = NULL;
+	}
+	else if ( Socket::SelectNoWait == timeout ) {
+		timeoutVal = &timeoutTime;
+	}
+	else {
+		timeoutTime.tv_sec = timeout / 1000; //timeout is in milliseconds
+		timeoutTime.tv_usec = (timeout % 1000) * 1000;
+		timeoutVal = &timeoutTime;
+	}
+
+	//now all our FD's are set up, we can begin the select process...
+
+	int err = ::select( maxSockHandle + 1, readers, writers, errors, timeoutVal );
+
+	if ( err > 0 ) {
+		if ( selectOnSelf ) {
+
+		}
+		else {
+			SocketArray tmpSockList;
+			if ( NULL != readSockets ) {		
+				tmpSockList.clear();
+				
+				SocketArray::iterator it = readSockets->begin();
+				//check out the socket id's to see if they 
+				//are flagged as readable, if they are copy the
+				//socket to the temp list
+				while ( it != readSockets->end() ){
+					Socket* so = *it;
+					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+					if ( FD_ISSET ( sockID, readers) ) {						
+						tmpSockList.push_back( so );
+						so->internal_setReadable( true );
+					}
+					else {
+						so->internal_setReadable( false );
+					}
+					it++;
+				}
+				
+				//clear out the passed in array
+				readSockets->clear();
+				
+				//re-assign the temp list to the passed in array
+				*readSockets = tmpSockList;
+			}
+
+			if ( NULL != writeSockets ) {		
+				tmpSockList.clear();
+				
+				SocketArray::iterator it = writeSockets->begin();
+				//check out the socket id's to see if they 
+				//are flagged as writeable, if they are copy the
+				//socket to the temp list
+				while ( it != writeSockets->end() ){
+					Socket* so = *it;
+					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+					if ( FD_ISSET ( sockID, writers) ) {
+						tmpSockList.push_back( so );
+						so->internal_setWriteable( true );
+					}
+					else {
+						so->internal_setReadable( false );
+					}
+					it++;
+				}
+				
+				//clear out the passed in array
+				writeSockets->clear();
+				
+				//re-assign the temp list to the passed in array
+				*writeSockets = tmpSockList;
+			}
+
+			if ( NULL != errorSockets ) {		
+				tmpSockList.clear();
+				
+				SocketArray::iterator it = errorSockets->begin();
+				//check out the socket id's to see if they 
+				//are flagged as writeable, if they are copy the
+				//socket to the temp list
+				while ( it != errorSockets->end() ){
+					Socket* so = *it;
+					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
+					if ( FD_ISSET ( sockID, errors) ) {
+						tmpSockList.push_back( so );
+						so->internal_setErrorState( true );
+					}
+					else {
+						so->internal_setErrorState( false );
+					}
+					it++;
+				}
+				
+				//clear out the passed in array
+				errorSockets->clear();
+				
+				//re-assign the temp list to the passed in array
+				*errorSockets = tmpSockList;
+			}
+		}
+	}
+	else {
+		//error
+
+		if ( NULL != readSockets ) {
+			readSockets->clear();
+		}
+		
+		if ( NULL != writeSockets ) {
+			writeSockets->clear();
+		}
+
+		if ( NULL != errorSockets ) {
+			errorSockets->clear();
+		}
+	}
+}
+
 
 }
 
@@ -697,7 +1122,8 @@ namespace VCF {
 
 Socket::Socket():
 	peer_(NULL),
-	type_(Socket::stStream)
+	type_(Socket::stStream),
+	state_(0)
 {
 	peer_ = NetworkToolkit::createSocketPeer();
 
@@ -712,7 +1138,8 @@ Socket::Socket():
 
 Socket::Socket( unsigned short port ):
 	peer_(NULL),
-	type_(Socket::stStream)
+	type_(Socket::stStream),
+	state_(0)
 {
 	peer_ = NetworkToolkit::createSocketPeer();
 
@@ -728,7 +1155,8 @@ Socket::Socket( unsigned short port ):
 
 Socket::Socket( const String& host, unsigned short port ):
 	peer_(NULL),
-	type_(Socket::stStream)
+	type_(Socket::stStream),
+	state_(0)
 {
 	peer_ = NetworkToolkit::createSocketPeer();
 	
@@ -743,7 +1171,8 @@ Socket::Socket( const String& host, unsigned short port ):
 
 Socket::Socket( SocketPeer* peer ):
 	peer_(peer),
-	type_(Socket::stStream)
+	type_(Socket::stStream),
+	state_(0)
 {
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("NULL peer instance passed in to Socket constructor.") );
@@ -766,6 +1195,7 @@ void Socket::open()
 
 void Socket::close()
 {
+	state_ = 0;
 	if ( 0 != peer_->close() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Attempt to close peer failed.") );
 	}
@@ -776,6 +1206,8 @@ void Socket::connect( const String& host, unsigned short port )
 	if ( 0 != peer_->connect( host, port ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed connect.") );
 	}
+
+	state_ |= Socket::ssConnected;
 }
 
 void Socket::listen( unsigned short port )
@@ -783,6 +1215,8 @@ void Socket::listen( unsigned short port )
 	if ( 0 != peer_->listen( port ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed listen.") );
 	}
+
+	state_ |= Socket::ssListening;
 }
 
 Socket* Socket::accept()
@@ -800,6 +1234,29 @@ Socket* Socket::accept()
 bool Socket::validateOptions( Dictionary& options )
 {
 	bool result = true;
+
+	Dictionary::Enumerator* enumerator = options.getEnumerator();
+
+	static std::map<String,String> validOptionTypes;
+	if ( validOptionTypes.empty() ) {
+		validOptionTypes[Socket::soBlocking] = Socket::soBlocking;
+		validOptionTypes[Socket::soBroadcast] = Socket::soBroadcast;
+		validOptionTypes[Socket::soDontLinger] = Socket::soDontLinger;
+		validOptionTypes[Socket::soDontRoute] = Socket::soDontRoute;
+		validOptionTypes[Socket::soKeepAlive] = Socket::soKeepAlive;
+		validOptionTypes[Socket::soRecvBuffer] = Socket::soRecvBuffer;
+		validOptionTypes[Socket::soReuseAddress] = Socket::soReuseAddress;
+		validOptionTypes[Socket::soSendBuffer] = Socket::soSendBuffer;
+	}
+
+
+	while ( enumerator->hasMoreElements() ) {
+		Dictionary::pair element = enumerator->nextElement();
+		if ( validOptionTypes.find( element.first ) == validOptionTypes.end() ) {
+			result = false;
+			break;	
+		}
+	}
 
 	return result;
 }
@@ -861,6 +1318,37 @@ void NetworkKit::terminate()
 using namespace VCF;
 
 
+class ReadThread : public Thread {
+public:
+	virtual bool run() {
+		return true;
+	}
+};
+
+
+class ServerThread : public Thread {
+public:
+	virtual bool run() {
+
+		Socket server;
+		server.listen( 10032 );
+
+		while ( canContinue() ) {
+			Socket* client = server.accept();
+
+			if ( NULL != client ) {
+				AnsiString s = "Hello World!!!";
+				client->getPeer()->send( (const unsigned char*) s.c_str(), s.size() );
+
+				clients.push_back( client );
+			}
+		}
+
+		return true;
+	}
+	SocketArray clients;
+};
+
 
 
 int main( int argc, char** argv ){
@@ -869,29 +1357,55 @@ int main( int argc, char** argv ){
 
 	NetworkKit::init(  argc, argv );
 	
+	Socket server;
+	Dictionary options;
+	options[Socket::soBlocking] = false;
+	server.setOptions( options );
+
+	server.listen( 10032 );
+
+	System::println( "Listening on port: " + StringUtils::toString(server.getPort()) );
+
+	SocketArray clients;
+
+	while (true ) {
+		Socket* client = server.accept();
+		if ( NULL != client ) {
+			clients.push_back( client );
+			client->setOptions( options );
+			System::println( "Recv'd connect! From: " + client->getHostIPAddress() );
+		}
+		else {
+			if ( server.
+			System::sleep( 100 );
+
+			SocketArray readList = clients;	
+			SocketArray writeList = clients;
+			SocketArray errorList = clients;
+
+			server.getPeer()->select( 100, &readList, &writeList, &errorList );
+
+			uchar tmp[256];
+			SocketArray::iterator it;
+			for (it=readList.begin();it != readList.end(); it++ ) {
+				Socket* s = *it;
+				int err = s->getPeer()->recv( tmp, sizeof(tmp) );
+				if ( err <= 0 ) {
+					System::println( "Disconnect!" );
+
+					clients.erase( std::find(clients.begin(),clients.end(),s) );
+				}
+				else {
+					tmp[err] = 0;
+					System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
+				}
+			}
 
 
+		}
 
-	Socket sock;
-
+	}
 	
-	sock.connect( "www.microsoft.com", 23 );
-
-	String s = sock.getHostIPAddress();
-	String s2 = sock.getHostName();
-	int p = sock.getPort();
-
-	sock.close();
-
-	sock.open();
-
-	sock.listen( 10032 );
-
-	s = sock.getHostIPAddress();
-	s2 = sock.getHostName();
-	p = sock.getPort();
-
-
 
 	NetworkKit::terminate();
 
