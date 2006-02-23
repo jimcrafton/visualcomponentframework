@@ -1,0 +1,191 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <option name="OPTION_DEBUG">
+        <values>0,1</values>
+        <values-description>Release,Debug</values-description>
+        <default-value>1</default-value>
+        <description>
+            The build configuration:
+        </description>
+    </option>
+
+    <define-tag name="headers" rules="dll,lib,exe,module">
+        <if cond="FORMAT in ['msvc6prj','msevc4prj']">
+            <msvc-project-files>$(value)</msvc-project-files>
+        </if>
+    </define-tag>
+
+    <set var="OBJDIR" make_var="1">
+        $(FORMAT)$(substituteFromDict( OPTION_DEBUG, {'0':'', '1':'_d'} ))
+    </set>
+
+    <set var="BUILDDIR">
+        $(OBJDIR)
+    </set>
+
+    <template id="base">
+        <debug-info>$(substituteFromDict( OPTION_DEBUG, {'0':'off', '1':'on'} ))</debug-info>
+        <debug-runtime-libs>$(substituteFromDict( OPTION_DEBUG, {'0':'off', '1':'on'} ))</debug-runtime-libs>
+        <optimize>$(substituteFromDict( OPTION_DEBUG, {'0':'speed', '1':'off'} ))</optimize>
+        <runtime-libs>dynamic</runtime-libs>
+        <threading>multi</threading>
+        <cxx-rtti>on</cxx-rtti>
+        <cxx-exceptions>on</cxx-exceptions>
+        <warnings>default</warnings>
+
+        <define>$(substituteFromDict( OPTION_DEBUG, {'0':'NDEBUG', '1':'_DEBUG'} ))</define>
+
+        <if cond="PLATFORM_WIN32=='1'">
+           <define>_WINDOWS</define>
+           <define>_WIN32</define>
+           <define>WIN32</define>
+        </if>
+
+        <if cond="FORMAT=='borland'">
+            <sys-lib>ole2w32</sys-lib>
+        </if>
+
+        <if cond="FORMAT=='gnu'">
+           <define>VCF_POSIX</define>
+        </if>
+
+        <if cond="FORMAT=='mingw'">
+           <define>VCF_MINGW</define>
+           <ldflags>-Wl,--enable-runtime-pseudo-reloc</ldflags>
+        </if>
+
+        <if cond="FORMAT in ['mingw','gnu']">
+           <cppflags>-Wno-multichar</cppflags>
+           <define>_UNICODE</define>
+        </if>
+
+        <if cond="FORMAT in ['msvc','msvc6prj']">
+          <define>_CRT_SECURE_NO_DEPRECATE</define>
+          <define>_SCL_SECURE_NO_DEPRECATE</define>
+          <define>_CRT_NON_CONFORMING_SWPRINTFS</define>
+        </if>
+
+        <if cond="FORMAT!='autoconf' and FORMAT!='gnu'">
+	        <if cond="FORMAT!='borland'">
+                <sys-lib>rpcrt4</sys-lib>
+                <sys-lib>odbc32</sys-lib>
+                <sys-lib>odbccp32</sys-lib>
+                <sys-lib>version</sys-lib>
+                <sys-lib>kernel32</sys-lib>
+                <sys-lib>user32</sys-lib>
+                <sys-lib>gdi32</sys-lib>
+                <sys-lib>winspool</sys-lib>
+                <sys-lib>comdlg32</sys-lib>
+                <sys-lib>advapi32</sys-lib>
+                <sys-lib>shell32</sys-lib>
+                <sys-lib>ole32</sys-lib>
+                <sys-lib>oleaut32</sys-lib>
+                <sys-lib>uuid</sys-lib>
+                <sys-lib>odbc32</sys-lib>
+                <sys-lib>odbccp32</sys-lib>
+                <sys-lib>comctl32</sys-lib>
+                <sys-lib>ws2_32</sys-lib>
+                <sys-lib>opengl32</sys-lib>
+                <sys-lib>glu32</sys-lib>
+            </if>
+
+            <if cond="FORMAT in ['msvc','msvc6prj','borland']">
+                <sys-lib>oleacc</sys-lib>
+                <sys-lib>urlmon</sys-lib>
+            </if>
+        </if>
+
+    </template>
+
+
+    <!-- ONIGURUMA -->
+
+    <include file="OnigFiles.bkl"/>
+
+    <template id="Onig_base">
+        <headers>$(ONIG_HDR)</headers>
+        <sources>$(ONIG_SRC)</sources>
+
+        <include>$(SRCDIR)</include>
+        <define>NOT_RUBY</define>
+    </template>
+
+
+    <lib id="Onig_lib" template="Onig_base,base">
+        <define>ONIG_EXTERN=extern</define>
+    </lib>
+
+    <dll id="Onig_dll" template="Onig_base,base">
+        <define>EXPORT</define>
+    </dll>
+
+    
+    <template id="sample_lib" template="base">
+        <app-type>console</app-type>
+        <include>$(SRCDIR)</include>
+        <define>ONIG_EXTERN=extern</define>
+        <library>Onig_lib</library>
+    </template>
+
+    <template id="sample_dll" template="base">
+        <app-type>console</app-type>
+        <include>$(SRCDIR)</include>
+        <library>Onig_dll</library>
+    </template>
+
+
+    <exe id="sample_lib_testc" template="sample_lib">
+        <sources>sample/testc.c</sources>
+    </exe>
+    <exe id="sample_lib_encode" template="sample_lib">
+        <sources>sample/encode.c</sources>
+    </exe>
+    <exe id="sample_lib_listcap" template="sample_lib">
+        <sources>sample/listcap.c</sources>
+    </exe>
+    <exe id="sample_lib_names" template="sample_lib">
+        <sources>sample/names.c</sources>
+    </exe>
+    <exe id="sample_lib_posix" template="sample_lib">
+        <sources>sample/posix.c</sources>
+    </exe>
+    <exe id="sample_lib_simple" template="sample_lib">
+        <sources>sample/simple.c</sources>
+    </exe>
+    <exe id="sample_lib_sql" template="sample_lib">
+        <sources>sample/sql.c</sources>
+    </exe>
+    <exe id="sample_lib_syntax" template="sample_lib">
+        <sources>sample/syntax.c</sources>
+    </exe>
+
+
+    <exe id="sample_dll_testc" template="sample_dll">
+        <sources>sample/testc.c</sources>
+    </exe>
+    <exe id="sample_dll_encode" template="sample_dll">
+        <sources>sample/encode.c</sources>
+    </exe>
+    <exe id="sample_dll_listcap" template="sample_dll">
+        <sources>sample/listcap.c</sources>
+    </exe>
+    <exe id="sample_dll_names" template="sample_dll">
+        <sources>sample/names.c</sources>
+    </exe>
+    <exe id="sample_dll_posix" template="sample_dll">
+        <sources>sample/posix.c</sources>
+    </exe>
+    <exe id="sample_dll_simple" template="sample_dll">
+        <sources>sample/simple.c</sources>
+    </exe>
+    <exe id="sample_dll_sql" template="sample_dll">
+        <sources>sample/sql.c</sources>
+    </exe>
+    <exe id="sample_dll_syntax" template="sample_dll">
+        <sources>sample/syntax.c</sources>
+    </exe>
+
+
+</makefile>
