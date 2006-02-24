@@ -187,6 +187,8 @@ namespace VCF {
 			return (state_ & Socket::ssListening) ? true : false;
 		}
 
+		bool pending() const;
+
 		void internal_setErrorState( bool val ) {
 			if ( val ) {
 				state_ |= Socket::ssError;
@@ -250,6 +252,7 @@ namespace VCF {
 		
 		virtual ~SocketPeer(){};
 
+		virtual void setPeerOwner( Socket* socket ) = 0;
 		/**
 		\par
 		Creates a new OS specific socket handle. In the 
@@ -456,6 +459,10 @@ namespace VCF {
 
 		Win32SocketPeer( SOCKET handle );
 
+		virtual void setPeerOwner( Socket* socket ) {
+			socket_ = socket;
+		}
+
 		virtual int create( Socket::SocketType type );
 
 		virtual int close();
@@ -490,6 +497,7 @@ namespace VCF {
 	protected:
 		SOCKET handle_;
 		struct sockaddr_in sockAddr_;
+		Socket* socket_;
 
 	};
 
@@ -581,13 +589,15 @@ SocketPeer* Win32NetworkToolkit::internal_createSocketPeer()
 namespace VCF {
 
 Win32SocketPeer::Win32SocketPeer():
-	handle_(NULL)		
+	handle_(NULL),
+	socket_(NULL)
 {
 	memset( &sockAddr_, 0, sizeof(sockAddr_) );
 }
 
 Win32SocketPeer::Win32SocketPeer( SOCKET handle ):
-	handle_(handle)
+	handle_(handle),
+	socket_(NULL)
 {
 	VCF_ASSERT( NULL != handle_ );
 	VCF_ASSERT( INVALID_SOCKET != handle_ );
@@ -910,6 +920,10 @@ void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets,
 	if ( (NULL == readSockets) && (NULL == writeSockets) && (NULL == writeSockets) ) {
 		//select on self!
 		selectOnSelf = true;
+		socket_->internal_setReadable( false );
+		socket_->internal_setWriteable( false );
+		socket_->internal_setErrorState( false );
+
 		unsigned int sockID = (unsigned int) getHandleID();
 		FD_SET ( sockID, &readfd) ;
 		FD_SET ( sockID, &writefd) ;
@@ -1006,7 +1020,19 @@ void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets,
 
 	if ( err > 0 ) {
 		if ( selectOnSelf ) {
+			unsigned int sockID = (unsigned int) getHandleID();
 
+			if ( FD_ISSET ( sockID, readers) ) {
+				socket_->internal_setReadable( true );
+			}
+			
+			if ( FD_ISSET ( sockID, writers) ) {
+				socket_->internal_setWriteable( true );
+			}
+
+			if ( FD_ISSET ( sockID, errors) ) {
+				socket_->internal_setErrorState( true );
+			}
 		}
 		else {
 			SocketArray tmpSockList;
@@ -1131,6 +1157,8 @@ Socket::Socket():
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
 	}
 
+	peer_->setPeerOwner( this );
+
 	if ( 0 != peer_->create( type_ ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
 	}
@@ -1147,7 +1175,8 @@ Socket::Socket( unsigned short port ):
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
 	}
 
-	
+	peer_->setPeerOwner( this );
+
 	open();
 
 	listen( port );
@@ -1164,6 +1193,8 @@ Socket::Socket( const String& host, unsigned short port ):
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
 	}
 
+	peer_->setPeerOwner( this );
+
 	open();
 
 	connect( host, port );
@@ -1177,10 +1208,13 @@ Socket::Socket( SocketPeer* peer ):
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("NULL peer instance passed in to Socket constructor.") );
 	}
+
+	peer_->setPeerOwner( this );
 }
 
 Socket::~Socket()
 {
+	peer_->setPeerOwner( NULL );
 	delete peer_;
 }
 
@@ -1292,6 +1326,14 @@ unsigned short Socket::getPort()
 	return peer_->getPort();
 }
 
+
+bool Socket::pending() const
+{
+	peer_->select( Socket::SelectNoWait, NULL, NULL, NULL ); 
+
+	return isReadable() || isWriteable();
+}
+
 }
 
 
@@ -1376,29 +1418,35 @@ int main( int argc, char** argv ){
 			System::println( "Recv'd connect! From: " + client->getHostIPAddress() );
 		}
 		else {
-			if ( server.
+			
 			System::sleep( 100 );
 
 			SocketArray readList = clients;	
 			SocketArray writeList = clients;
 			SocketArray errorList = clients;
 
+			
 			server.getPeer()->select( 100, &readList, &writeList, &errorList );
 
 			uchar tmp[256];
 			SocketArray::iterator it;
 			for (it=readList.begin();it != readList.end(); it++ ) {
 				Socket* s = *it;
-				int err = s->getPeer()->recv( tmp, sizeof(tmp) );
-				if ( err <= 0 ) {
-					System::println( "Disconnect!" );
 
-					clients.erase( std::find(clients.begin(),clients.end(),s) );
-				}
-				else {
-					tmp[err] = 0;
-					System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
-				}
+				do {
+					int err = s->getPeer()->recv( tmp, sizeof(tmp) );
+					if ( err <= 0 ) {
+						System::println( "Disconnect!" );
+						
+						clients.erase( std::find(clients.begin(),clients.end(),s) );
+						break;
+					}
+					else {
+						tmp[err] = 0;
+						System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
+					}
+				} while( s->pending() && s->isReadable() );
+
 			}
 
 
