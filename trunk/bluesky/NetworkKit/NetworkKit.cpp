@@ -27,27 +27,42 @@ namespace VCF {
 	class Socket;
 	class SocketPeer;
 
-	class InetAddrPeer;
+	class IPAddressPeer;
 	
 
+	class SocketEvent : public Event {
+	public:
+		SocketEvent( Object* source, const unsigned long& eventType ) : 
+		  Event(source,eventType),socket(NULL){
+
+		}
+
+		virtual Object* clone( bool deep=false ) {
+			return new SocketEvent(*this);
+		}
+
+		Socket* socket;
+	};
+
+
 
 	
-	class InternetAddress : public Object {
+	class IPAddress : public Object {
 	public:
 		typedef std::vector<unsigned char>	RawBytes;
 
-		InternetAddress();
-		InternetAddress( const String& host );
-		InternetAddress( const RawBytes& ipAddr );		
-		InternetAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 );		
-		InternetAddress( unsigned char* bytes, size_t bytesLength );	
-		virtual ~InternetAddress();
+		IPAddress();
+		IPAddress( const String& host );
+		IPAddress( const RawBytes& ipAddr );		
+		IPAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 );		
+		IPAddress( unsigned char* bytes, size_t bytesLength );	
+		virtual ~IPAddress();
 
 		RawBytes getAddressBytes();
 		String getHostName();
 		String getHostAddress();
 	protected:
-		InetAddrPeer* peer_;
+		IPAddressPeer* peer_;
 	};
 
 	typedef  std::vector<Socket*> SocketArray;
@@ -77,9 +92,17 @@ namespace VCF {
 			ssReadable	=	0x0002,
 			ssWriteable	=	0x0004,
 			ssConnected =	0x0010,
-			ssListening	=	0x0020
+			ssListening	=	0x0020,
+			ssOpen =		0x0100,
+			ssClosed =		0x0000,
 		};
 
+		enum SocketEvents {			
+			seClientConnected = 112491,
+			seClientDisconnected,
+			seReadyToRead,
+			seReadyToWrite,
+		};
 		//socket options
 		/**
 		This key indicates whether or not the 
@@ -162,6 +185,16 @@ namespace VCF {
 
 		virtual ~Socket();
 
+
+		//only applicable if the socket is 
+		//listening.
+		DELEGATE( ClientConnected );
+		DELEGATE( ClientDisconnected );
+
+		DELEGATE( ReadyToRead );
+		DELEGATE( ReadyToWrite );
+
+
 		void open();
 
 		void close();
@@ -210,8 +243,20 @@ namespace VCF {
 			return (state_ & Socket::ssListening) ? true : false;
 		}
 
+		bool isOpen() const {
+			return (state_ & Socket::ssOpen) ? true : false;
+		}
+
+		bool isClosed() const {
+			return (state_ == Socket::ssClosed) ? true : false;
+		}
+
 		bool pending() const;
 
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
 		void internal_setErrorState( bool val ) {
 			if ( val ) {
 				state_ |= Socket::ssError;
@@ -221,6 +266,10 @@ namespace VCF {
 			}
 		}
 
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
 		void internal_setReadable( bool val ) {
 			if ( val ) {
 				state_ |= Socket::ssReadable;
@@ -230,6 +279,10 @@ namespace VCF {
 			}
 		}
 
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
 		void internal_setWriteable( bool val ) {
 			if ( val ) {
 				state_ |= Socket::ssWriteable;
@@ -238,6 +291,16 @@ namespace VCF {
 				state_ &= ~Socket::ssWriteable;
 			}
 		}
+
+		/**
+		Indicates whether the current operation would block.
+		Assumes a non blocking socket. This is roughly equivalent
+		to getting a an EWOULDBLOCK or WSAEWOULDBLOCK error number.
+
+		@return bool True if the operation would block, otherwise
+		false if it would not. 
+		*/
+		bool wouldOperationBlock();
 	protected:
 		/**
 		Creates a socket from an existing peer
@@ -268,15 +331,15 @@ const VCF::String VCF::Socket::soSendBuffer = "soSendBuffer";
 
 
 namespace VCF {
-	class InetAddrPeer {
+	class IPAddressPeer {
 	public:
 
 		virtual void initWithHostName( const String& host ) = 0;
-		virtual void initWithIPAddr( const InternetAddress::RawBytes& ipAddr ) = 0;
+		virtual void initWithIPAddr( const IPAddress::RawBytes& ipAddr ) = 0;
 		virtual void initAsLocalHost() = 0;
 
 
-		virtual InternetAddress::RawBytes getAddressBytes() = 0;
+		virtual IPAddress::RawBytes getAddressBytes() = 0;
 		virtual String getHostName() = 0;
 		virtual String getHostAddress() = 0;
 		virtual bool isIPV4() = 0;
@@ -449,7 +512,7 @@ namespace VCF {
 
 
 		static SocketPeer* createSocketPeer();
-		static InetAddrPeer* createInetAddrPeer();
+		static IPAddressPeer* createIPAddressPeer();
 		
 
 	protected:
@@ -460,7 +523,7 @@ namespace VCF {
 		static NetworkToolkit* Instance;
 
 		virtual SocketPeer* internal_createSocketPeer() = 0;
-		virtual InetAddrPeer* internal_createInetAddrPeer() = 0;
+		virtual IPAddressPeer* internal_createIPAddressPeer() = 0;
 	};
 
 };
@@ -468,6 +531,189 @@ namespace VCF {
 
 
 
+
+
+
+
+namespace VCF {
+
+	class SocketInputStream  : public InputStream {
+	public:
+
+		SocketInputStream( Socket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw RuntimeException( "You cannot seek in a Socket Input stream" );
+		}
+
+		virtual unsigned long getSize() {
+			return totalBytesRecvd_;
+		}
+
+		/**
+		Returns NULL - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw RuntimeException( "You cannot access the buffer pointer in a Socket Input stream" );
+			return NULL;
+		}
+
+		
+		virtual ulong32 getCurrentSeekPos() {
+			throw RuntimeException( "You cannot access the seek position in a Socket Input stream" );
+			return 0;	
+		}
+
+		virtual bool isEOS() {
+			return false;
+		}
+
+		/**
+		Attempts to read sizeOfBytes from the socket associated 
+		with this stream. The method will return the number of bytes
+		read from the socket. The return may be the following:
+		\li A number greater than 0 but less than sizeOfBytes that 
+		indicates the number of bytes successfully read from
+		the socket
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were read. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. This 
+		indicates that the read operation will be completable
+		in the future.
+		If the socket is a blocking socket, then this is probably
+		a disconnect.
+		\li If the socket's peer reports an error in reading  
+		from the socket, then the method will throw a RuntimeException.
+		*/
+		virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
+
+	protected:
+		unsigned long totalBytesRecvd_;
+		Socket* socket_;
+	};
+
+
+
+	class SocketOutputStream  : public OutputStream {
+	public:
+
+		SocketOutputStream( Socket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw RuntimeException( "You cannot seek in a Socket Output stream" );
+		}
+
+		virtual unsigned long getSize() {
+			return totalBytesWritten_;
+		}
+
+		/**
+		Returns NULL - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw RuntimeException( "You cannot access the buffer pointer in a Socket Output stream" );
+			return NULL;
+		}
+
+		
+		virtual ulong32 getCurrentSeekPos() {
+			throw RuntimeException( "You cannot access the seek position in a Socket Output stream" );
+			return 0;	
+		}
+
+		/**
+		Attempts to write sizeOfBytes to the socket associated 
+		with this stream. The method will return the number of bytes
+		written to the socket. The return value may be the following:
+		\li A number greater than 0 but less than sizeOfBytes that 
+		indicates the number of bytes successfully written to
+		the socket
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were written. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. 
+		If the socket is a blocking socket, then this is probably
+		an error.
+		\li If the socket's peer reports an error in writing to 
+		the socket, then the method will throw a RuntimeException.
+		*/
+		virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
+
+	protected:
+		unsigned long totalBytesWritten_;
+		Socket* socket_;
+	};
+
+};
+
+
+
+namespace VCF {
+
+SocketInputStream::SocketInputStream( Socket& socket ):
+	totalBytesRecvd_(0),
+	socket_(&socket)
+{
+
+}
+
+
+unsigned long SocketInputStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+{
+	unsigned long bytesRead = 0;
+
+	int err = socket_->getPeer()->recv( bytesToRead, sizeOfBytes );
+	if ( err >= 0 ) {
+		bytesRead = err;
+	}
+	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
+
+		throw RuntimeException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
+	}
+	
+	totalBytesRecvd_ += bytesRead;
+
+	return bytesRead;
+}
+
+
+
+SocketOutputStream::SocketOutputStream( Socket& socket ):
+	totalBytesWritten_(0),
+	socket_(&socket)
+{
+
+}
+
+unsigned long SocketOutputStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+{
+	unsigned long bytesWritten = 0;
+
+	int err = socket_->getPeer()->send( bytesToWrite, sizeOfBytes );
+
+	if ( err >= 0 ) {
+		bytesWritten = err;
+	}
+	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
+
+		throw RuntimeException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
+	}
+
+	totalBytesWritten_ += bytesWritten;
+
+	return bytesWritten;
+}
+
+}
 
 
 
@@ -483,7 +729,7 @@ namespace VCF {
 		virtual ~Win32NetworkToolkit();
 
 		virtual SocketPeer* internal_createSocketPeer();
-		virtual InetAddrPeer* internal_createInetAddrPeer();
+		virtual IPAddressPeer* internal_createIPAddressPeer();
 	};
 
 };
@@ -497,17 +743,17 @@ namespace VCF {
 namespace VCF {
 
 
-	class Win32InetAddrPeer : public InetAddrPeer {
+	class Win32IPAddressPeer : public IPAddressPeer {
 	public:
-		Win32InetAddrPeer();
-		virtual ~Win32InetAddrPeer();
+		Win32IPAddressPeer();
+		virtual ~Win32IPAddressPeer();
 
 		virtual void initWithHostName( const String& host );
-		virtual void initWithIPAddr( const InternetAddress::RawBytes& ipAddr );
+		virtual void initWithIPAddr( const IPAddress::RawBytes& ipAddr );
 		virtual void initAsLocalHost();
 
 
-		virtual InternetAddress::RawBytes getAddressBytes();
+		virtual IPAddress::RawBytes getAddressBytes();
 		virtual String getHostName();
 		virtual String getHostAddress();
 		virtual bool isIPV4();
@@ -602,9 +848,9 @@ SocketPeer*	NetworkToolkit::createSocketPeer()
 	return NetworkToolkit::Instance->internal_createSocketPeer();
 }
 
-InetAddrPeer* NetworkToolkit::createInetAddrPeer()
+IPAddressPeer* NetworkToolkit::createIPAddressPeer()
 {
-	return NetworkToolkit::Instance->internal_createInetAddrPeer();
+	return NetworkToolkit::Instance->internal_createIPAddressPeer();
 }
 
 };
@@ -650,9 +896,9 @@ SocketPeer* Win32NetworkToolkit::internal_createSocketPeer()
 	return result;
 }
 
-InetAddrPeer* Win32NetworkToolkit::internal_createInetAddrPeer()
+IPAddressPeer* Win32NetworkToolkit::internal_createIPAddressPeer()
 {
-	return new Win32InetAddrPeer();
+	return new Win32IPAddressPeer();
 }
 
 
@@ -661,22 +907,22 @@ InetAddrPeer* Win32NetworkToolkit::internal_createInetAddrPeer()
 
 namespace VCF { 
 
-Win32InetAddrPeer::Win32InetAddrPeer()
+Win32IPAddressPeer::Win32IPAddressPeer()
 {
 	
 }
 
-Win32InetAddrPeer::~Win32InetAddrPeer()
+Win32IPAddressPeer::~Win32IPAddressPeer()
 {
 
 }
 
-void Win32InetAddrPeer::initWithHostName( const String& host )
+void Win32IPAddressPeer::initWithHostName( const String& host )
 {
 	host_ = host;
 }
 
-void Win32InetAddrPeer::initWithIPAddr( const InternetAddress::RawBytes& ipAddr )
+void Win32IPAddressPeer::initWithIPAddr( const IPAddress::RawBytes& ipAddr )
 {
 	struct in_addr addr;
 	memset( &addr,0,sizeof(addr) );
@@ -688,14 +934,14 @@ void Win32InetAddrPeer::initWithIPAddr( const InternetAddress::RawBytes& ipAddr 
 	ipAddress_ = inet_ntoa(addr);
 }
 
-void Win32InetAddrPeer::initAsLocalHost()
+void Win32IPAddressPeer::initAsLocalHost()
 {
 	host_ = "localhost";
 }
 
-InternetAddress::RawBytes Win32InetAddrPeer::getAddressBytes()
+IPAddress::RawBytes Win32IPAddressPeer::getAddressBytes()
 {
-	InternetAddress::RawBytes result(4);
+	IPAddress::RawBytes result(4);
 
 	struct in_addr addr;
 
@@ -721,7 +967,7 @@ InternetAddress::RawBytes Win32InetAddrPeer::getAddressBytes()
 	return result;
 }
 
-String Win32InetAddrPeer::getHostName()
+String Win32IPAddressPeer::getHostName()
 {
 	String result;
 
@@ -742,7 +988,7 @@ String Win32InetAddrPeer::getHostName()
 	return result;
 }
 
-String Win32InetAddrPeer::getHostAddress()
+String Win32IPAddressPeer::getHostAddress()
 {
 	String result;
 
@@ -766,12 +1012,12 @@ String Win32InetAddrPeer::getHostAddress()
 	return result;
 }
 
-bool Win32InetAddrPeer::isIPV4()
+bool Win32IPAddressPeer::isIPV4()
 {
 	return true;
 }
 
-bool Win32InetAddrPeer::isIPV6()
+bool Win32IPAddressPeer::isIPV6()
 {
 	return false;
 }
@@ -1410,6 +1656,7 @@ Socket::Socket( SocketPeer* peer ):
 
 Socket::~Socket()
 {
+	close();
 	peer_->setPeerOwner( NULL );
 	delete peer_;
 }
@@ -1421,11 +1668,13 @@ void Socket::open()
 	if ( 0 != peer_->create( type_ ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
 	}
+
+	state_ = Socket::ssOpen;
 }
 
 void Socket::close()
 {
-	state_ = 0;
+	state_ = Socket::ssClosed;
 	if ( 0 != peer_->close() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Attempt to close peer failed.") );
 	}
@@ -1456,6 +1705,10 @@ Socket* Socket::accept()
 	SocketPeer* newSockPeer = peer_->accept();
 	if ( NULL != newSockPeer ) {
 		result = new Socket( newSockPeer );
+
+		SocketEvent e(this,Socket::seClientConnected);
+		e.socket = result;
+		ClientConnected.fireEvent( &e );
 	}
 
 	return result;
@@ -1530,6 +1783,12 @@ bool Socket::pending() const
 	return isReadable() || isWriteable();
 }
 
+
+bool Socket::wouldOperationBlock()
+{
+	return peer_->wouldOperationBlock();
+}
+
 }
 
 
@@ -1537,10 +1796,10 @@ bool Socket::pending() const
 
 namespace VCF {
 
-InternetAddress::InternetAddress():
+IPAddress::IPAddress():
 	peer_(NULL)
 {
-	peer_ = NetworkToolkit::createInetAddrPeer();
+	peer_ = NetworkToolkit::createIPAddressPeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
 	}
@@ -1548,30 +1807,30 @@ InternetAddress::InternetAddress():
 	peer_->initAsLocalHost();
 }
 
-InternetAddress::InternetAddress( const String& host ):
+IPAddress::IPAddress( const String& host ):
 	peer_(NULL)
 {
-	peer_ = NetworkToolkit::createInetAddrPeer();
+	peer_ = NetworkToolkit::createIPAddressPeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
 	}
 	peer_->initWithHostName(host);
 }
 
-InternetAddress::InternetAddress( const RawBytes& ipAddr ):
+IPAddress::IPAddress( const RawBytes& ipAddr ):
 	peer_(NULL)
 {
-	peer_ = NetworkToolkit::createInetAddrPeer();
+	peer_ = NetworkToolkit::createIPAddressPeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
 	}
 	peer_->initWithIPAddr(ipAddr);
 }
 
-InternetAddress::InternetAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 ):
+IPAddress::IPAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 ):
 	peer_(NULL)
 {
-	peer_ = NetworkToolkit::createInetAddrPeer();
+	peer_ = NetworkToolkit::createIPAddressPeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
 	}
@@ -1584,10 +1843,10 @@ InternetAddress::InternetAddress( unsigned char b1, unsigned char b2, unsigned c
 	peer_->initWithIPAddr(ipAddr);
 }
 
-InternetAddress::InternetAddress( unsigned char* bytes, size_t bytesLength ):
+IPAddress::IPAddress( unsigned char* bytes, size_t bytesLength ):
 	peer_(NULL)
 {
-	peer_ = NetworkToolkit::createInetAddrPeer();
+	peer_ = NetworkToolkit::createIPAddressPeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
 	}
@@ -1604,22 +1863,22 @@ InternetAddress::InternetAddress( unsigned char* bytes, size_t bytesLength ):
 	peer_->initWithIPAddr(ipAddr);
 }
 
-InternetAddress::~InternetAddress()
+IPAddress::~IPAddress()
 {
 	delete peer_;
 }
 
-InternetAddress::RawBytes InternetAddress::getAddressBytes()
+IPAddress::RawBytes IPAddress::getAddressBytes()
 {
 	return peer_->getAddressBytes();
 }
 
-String InternetAddress::getHostName()
+String IPAddress::getHostName()
 {
 	return peer_->getHostName();
 }
 
-String InternetAddress::getHostAddress()
+String IPAddress::getHostAddress()
 {
 	return peer_->getHostAddress();
 }
@@ -1688,19 +1947,19 @@ int main( int argc, char** argv ){
 	NetworkKit::init(  argc, argv );
 	
 
-	InternetAddress::RawBytes ip(4);
+	IPAddress::RawBytes ip(4);
 	ip[0] = 123;
 	ip[1] = 168;
 	ip[2] = 23;
 	ip[3] = 103;
 
-	InternetAddress addr(ip);
+	IPAddress addr(ip);
 
-	InternetAddress addr2;
+	IPAddress addr2;
 
-	InternetAddress addr3("www.google.com");
+	IPAddress addr3("www.google.com");
 
-	InternetAddress::RawBytes ipBytes = addr.getAddressBytes();
+	IPAddress::RawBytes ipBytes = addr.getAddressBytes();
 	System::println( Format("%d.%d.%d.%d") % ipBytes[0] % ipBytes[1] % ipBytes[2] % ipBytes[3] ) ;
 
 	System::println( Format("host address: %s") % addr.getHostAddress() );
@@ -1730,7 +1989,8 @@ int main( int argc, char** argv ){
 		if ( NULL != client ) {
 			clients.push_back( client );
 			client->setOptions( options );
-			System::println( "Recv'd connect! From: " + client->getHostIPAddress() );
+			System::println( "Recv'd connect! From: " + client->getHostIPAddress() +
+							" port: " + (int)client->getPort() );
 		}
 		else {
 			
@@ -1748,25 +2008,32 @@ int main( int argc, char** argv ){
 			for (it=readList.begin();it != readList.end(); it++ ) {
 				Socket* s = *it;
 
+				SocketInputStream sis(*s);
+
 				do {
-					int err = s->getPeer()->recv( tmp, sizeof(tmp) );
-					if ( err <= 0 ) {
-						System::println( "Disconnect!" );
+					try {
+						ulong32 err = sis.read( tmp, sizeof(tmp) );
 						
+						if ( err == 0 ) {
+							System::println( "Disconnect!" );
+							
+							clients.erase( std::find(clients.begin(),clients.end(),s) );
+							break;
+						}
+						else {
+							tmp[err] = 0;
+							System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
+						}
+					}
+					catch ( BasicException& ) {
+						System::println( "Socket error! Manually disconnecting!" );
+							
 						clients.erase( std::find(clients.begin(),clients.end(),s) );
 						break;
 					}
-					else {
-						tmp[err] = 0;
-						System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
-					}
 				} while( s->pending() && s->isReadable() );
-
 			}
-
-
 		}
-
 	}
 	
 
