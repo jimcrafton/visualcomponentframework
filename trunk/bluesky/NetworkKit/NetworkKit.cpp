@@ -27,6 +27,29 @@ namespace VCF {
 	class Socket;
 	class SocketPeer;
 
+	class InetAddrPeer;
+	
+
+
+	
+	class InternetAddress : public Object {
+	public:
+		typedef std::vector<unsigned char>	RawBytes;
+
+		InternetAddress();
+		InternetAddress( const String& host );
+		InternetAddress( const RawBytes& ipAddr );		
+		InternetAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 );		
+		InternetAddress( unsigned char* bytes, size_t bytesLength );	
+		virtual ~InternetAddress();
+
+		RawBytes getAddressBytes();
+		String getHostName();
+		String getHostAddress();
+	protected:
+		InetAddrPeer* peer_;
+	};
+
 	typedef  std::vector<Socket*> SocketArray;
 
 	class Socket : public Object {
@@ -245,6 +268,24 @@ const VCF::String VCF::Socket::soSendBuffer = "soSendBuffer";
 
 
 namespace VCF {
+	class InetAddrPeer {
+	public:
+
+		virtual void initWithHostName( const String& host ) = 0;
+		virtual void initWithIPAddr( const InternetAddress::RawBytes& ipAddr ) = 0;
+		virtual void initAsLocalHost() = 0;
+
+
+		virtual InternetAddress::RawBytes getAddressBytes() = 0;
+		virtual String getHostName() = 0;
+		virtual String getHostAddress() = 0;
+		virtual bool isIPV4() = 0;
+		virtual bool isIPV6() = 0;
+	};
+
+};
+
+namespace VCF {
 
 
 	class SocketPeer {
@@ -408,6 +449,8 @@ namespace VCF {
 
 
 		static SocketPeer* createSocketPeer();
+		static InetAddrPeer* createInetAddrPeer();
+		
 
 	protected:
 
@@ -417,6 +460,7 @@ namespace VCF {
 		static NetworkToolkit* Instance;
 
 		virtual SocketPeer* internal_createSocketPeer() = 0;
+		virtual InetAddrPeer* internal_createInetAddrPeer() = 0;
 	};
 
 };
@@ -439,6 +483,7 @@ namespace VCF {
 		virtual ~Win32NetworkToolkit();
 
 		virtual SocketPeer* internal_createSocketPeer();
+		virtual InetAddrPeer* internal_createInetAddrPeer();
 	};
 
 };
@@ -451,6 +496,28 @@ namespace VCF {
 
 namespace VCF {
 
+
+	class Win32InetAddrPeer : public InetAddrPeer {
+	public:
+		Win32InetAddrPeer();
+		virtual ~Win32InetAddrPeer();
+
+		virtual void initWithHostName( const String& host );
+		virtual void initWithIPAddr( const InternetAddress::RawBytes& ipAddr );
+		virtual void initAsLocalHost();
+
+
+		virtual InternetAddress::RawBytes getAddressBytes();
+		virtual String getHostName();
+		virtual String getHostAddress();
+		virtual bool isIPV4();
+		virtual bool isIPV6();
+
+	protected:
+		AnsiString ipAddress_;
+		AnsiString host_;
+		
+	};
 
 	class Win32SocketPeer : public SocketPeer {
 	public:	
@@ -535,7 +602,10 @@ SocketPeer*	NetworkToolkit::createSocketPeer()
 	return NetworkToolkit::Instance->internal_createSocketPeer();
 }
 
-
+InetAddrPeer* NetworkToolkit::createInetAddrPeer()
+{
+	return NetworkToolkit::Instance->internal_createInetAddrPeer();
+}
 
 };
 
@@ -580,8 +650,134 @@ SocketPeer* Win32NetworkToolkit::internal_createSocketPeer()
 	return result;
 }
 
+InetAddrPeer* Win32NetworkToolkit::internal_createInetAddrPeer()
+{
+	return new Win32InetAddrPeer();
+}
+
 
 }
+
+
+namespace VCF { 
+
+Win32InetAddrPeer::Win32InetAddrPeer()
+{
+	
+}
+
+Win32InetAddrPeer::~Win32InetAddrPeer()
+{
+
+}
+
+void Win32InetAddrPeer::initWithHostName( const String& host )
+{
+	host_ = host;
+}
+
+void Win32InetAddrPeer::initWithIPAddr( const InternetAddress::RawBytes& ipAddr )
+{
+	struct in_addr addr;
+	memset( &addr,0,sizeof(addr) );
+	addr.S_un.S_un_b.s_b1 = ipAddr[0];
+	addr.S_un.S_un_b.s_b2 = ipAddr[1];
+	addr.S_un.S_un_b.s_b3 = ipAddr[2];
+	addr.S_un.S_un_b.s_b4 = ipAddr[3];
+
+	ipAddress_ = inet_ntoa(addr);
+}
+
+void Win32InetAddrPeer::initAsLocalHost()
+{
+	host_ = "localhost";
+}
+
+InternetAddress::RawBytes Win32InetAddrPeer::getAddressBytes()
+{
+	InternetAddress::RawBytes result(4);
+
+	struct in_addr addr;
+
+	if ( ipAddress_.empty() ) {
+		
+		memset( &addr,0,sizeof(addr) );
+
+		hostent* host = gethostbyname( host_.c_str() );
+		if ( NULL != host ) {
+			memcpy( &(addr.s_addr), host->h_addr, host->h_length );
+		}
+		ipAddress_ = inet_ntoa(addr);
+	}
+	else {
+		addr.S_un.S_addr = inet_addr( ipAddress_.c_str() );
+	}
+	
+	result[0] = addr.S_un.S_un_b.s_b1;
+	result[1] = addr.S_un.S_un_b.s_b2;
+	result[2] = addr.S_un.S_un_b.s_b3;
+	result[3] = addr.S_un.S_un_b.s_b4;
+
+	return result;
+}
+
+String Win32InetAddrPeer::getHostName()
+{
+	String result;
+
+	
+	struct in_addr addr;
+	memset( &addr,0,sizeof(addr) );
+	addr.S_un.S_addr = inet_addr( ipAddress_.c_str() );
+
+	hostent* host = gethostbyaddr( (const char*)&addr.S_un, sizeof(addr.S_un), 0 );
+	if ( NULL != host ) {
+		host_ = host->h_name;
+	}
+	
+
+	result = host_;
+	
+
+	return result;
+}
+
+String Win32InetAddrPeer::getHostAddress()
+{
+	String result;
+
+	
+	struct in_addr addr;
+	memset( &addr,0,sizeof(addr) );
+	
+	hostent* host = gethostbyname( host_.c_str() );
+	if ( NULL != host ) {
+		memcpy( &(addr.s_addr), host->h_addr, host->h_length );
+		
+		if ( host->h_name != host_ ) {
+			host_ = host->h_name;
+		}
+	}
+	ipAddress_ = inet_ntoa(addr);
+	
+	
+	result = ipAddress_;
+
+	return result;
+}
+
+bool Win32InetAddrPeer::isIPV4()
+{
+	return true;
+}
+
+bool Win32InetAddrPeer::isIPV6()
+{
+	return false;
+}
+
+}
+
 
 
 
@@ -1341,6 +1537,98 @@ bool Socket::pending() const
 
 namespace VCF {
 
+InternetAddress::InternetAddress():
+	peer_(NULL)
+{
+	peer_ = NetworkToolkit::createInetAddrPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+
+	peer_->initAsLocalHost();
+}
+
+InternetAddress::InternetAddress( const String& host ):
+	peer_(NULL)
+{
+	peer_ = NetworkToolkit::createInetAddrPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+	peer_->initWithHostName(host);
+}
+
+InternetAddress::InternetAddress( const RawBytes& ipAddr ):
+	peer_(NULL)
+{
+	peer_ = NetworkToolkit::createInetAddrPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+	peer_->initWithIPAddr(ipAddr);
+}
+
+InternetAddress::InternetAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 ):
+	peer_(NULL)
+{
+	peer_ = NetworkToolkit::createInetAddrPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+
+	RawBytes ipAddr(4);
+	ipAddr[0] = b1;
+	ipAddr[1] = b2;
+	ipAddr[2] = b3;
+	ipAddr[3] = b4;
+	peer_->initWithIPAddr(ipAddr);
+}
+
+InternetAddress::InternetAddress( unsigned char* bytes, size_t bytesLength ):
+	peer_(NULL)
+{
+	peer_ = NetworkToolkit::createInetAddrPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+
+	if ( bytesLength < 4 ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Invalid byte array, it's too short to represent an IP Address.") );
+	}
+	
+	RawBytes ipAddr(4);
+	ipAddr[0] = bytes[0];
+	ipAddr[1] = bytes[1];
+	ipAddr[2] = bytes[2];
+	ipAddr[3] = bytes[3];
+	peer_->initWithIPAddr(ipAddr);
+}
+
+InternetAddress::~InternetAddress()
+{
+	delete peer_;
+}
+
+InternetAddress::RawBytes InternetAddress::getAddressBytes()
+{
+	return peer_->getAddressBytes();
+}
+
+String InternetAddress::getHostName()
+{
+	return peer_->getHostName();
+}
+
+String InternetAddress::getHostAddress()
+{
+	return peer_->getHostAddress();
+}
+
+}
+
+
+namespace VCF {
+
 
 void NetworkKit::init( int argc, char** argv )
 {
@@ -1399,6 +1687,33 @@ int main( int argc, char** argv ){
 
 	NetworkKit::init(  argc, argv );
 	
+
+	InternetAddress::RawBytes ip(4);
+	ip[0] = 123;
+	ip[1] = 168;
+	ip[2] = 23;
+	ip[3] = 103;
+
+	InternetAddress addr(ip);
+
+	InternetAddress addr2;
+
+	InternetAddress addr3("www.google.com");
+
+	InternetAddress::RawBytes ipBytes = addr.getAddressBytes();
+	System::println( Format("%d.%d.%d.%d") % ipBytes[0] % ipBytes[1] % ipBytes[2] % ipBytes[3] ) ;
+
+	System::println( Format("host address: %s") % addr.getHostAddress() );
+
+	System::println( Format("host address: %s") % addr2.getHostAddress() );
+	System::println( Format("host name: %s") % addr2.getHostName() );
+
+	System::println( Format("host address: %s") % 	addr3.getHostAddress() );
+	System::println( Format("host name: %s") % addr3.getHostName() );
+
+
+
+
 	Socket server;
 	Dictionary options;
 	options[Socket::soBlocking] = false;

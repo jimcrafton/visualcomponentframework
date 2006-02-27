@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "InternetKitDLL"=..\..\dev\vcf\build\vc60\InternetKit\InternetKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "NetworkKit"=.\NetworkKit.dsp - Package Owner=<4>
 
 Package=<5>
