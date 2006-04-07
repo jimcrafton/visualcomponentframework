@@ -27,6 +27,8 @@ public:
 	virtual ulong32 getLanguageCode();
 	virtual ulong32 getCountryCode();
 
+	virtual String getLanguage();
+
 	virtual int collate( const UnicodeString& s1, const UnicodeString& s2 );
 	virtual int collateCaseInsensitive( const UnicodeString& s1, const UnicodeString& s2 );
 
@@ -91,6 +93,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/23 05:15:39  ddiego
+*fix to localize the locale language name.
+*
 *Revision 1.3  2005/01/02 03:04:24  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

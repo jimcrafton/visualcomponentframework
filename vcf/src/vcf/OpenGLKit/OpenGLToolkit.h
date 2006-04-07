@@ -20,8 +20,18 @@ class OpenGLPeer;
 
 class GraphicsContext;
 
+/**
+The OpenGLToolkit is a singleton class
+that creates instances of a OpenGLPeer 
+specific to the windowing system the
+toolkit is running on. 
+*/
 class OPENGLKIT_API OpenGLToolkit{
 public:
+	/**
+	Creates an instance of the OpenGLPeer. The framework calls this for you,
+	you should never need to call this directly.
+	*/
 	static OpenGLPeer* createOpenGLPeer(GraphicsContext *context, OpenGLControl* owningControl);
 };
 
@@ -31,6 +41,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:48  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/12 22:01:46  ddiego
+*doc updates.
+*
 *Revision 1.3  2004/12/01 04:31:45  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

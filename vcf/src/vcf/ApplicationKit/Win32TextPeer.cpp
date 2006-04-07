@@ -44,6 +44,74 @@ const IID IID_ITextHost = { // c5bdd8d0-d26e-11ce-a89e-00aa006cadc5
 
 #include "thirdparty/win32/Microsoft/textserv.h"
 
+#if defined(VCF_MINGW)
+
+#define CFM_ALL (CFM_EFFECTS | CFM_SIZE | CFM_FACE | CFM_OFFSET | CFM_CHARSET)
+  
+#define	PFM_ALL (PFM_STARTINDENT | PFM_RIGHTINDENT | PFM_OFFSET	| \
+				 PFM_ALIGNMENT   | PFM_TABSTOPS    | PFM_NUMBERING | \
+				 PFM_OFFSETINDENT| PFM_RTLPARA)
+
+#define CFM_SMALLCAPS		0x0040			/* (*)	*/
+#define	CFM_ALLCAPS			0x0080			/* Displayed by 3.0	*/
+#define	CFM_HIDDEN			0x0100			/* Hidden by 3.0 */
+#define	CFM_OUTLINE			0x0200			/* (*)	*/
+#define	CFM_SHADOW			0x0400			/* (*)	*/
+#define	CFM_EMBOSS			0x0800			/* (*)	*/
+#define	CFM_IMPRINT			0x1000			/* (*)	*/
+#define CFM_DISABLED		0x2000
+#define	CFM_REVISED			0x4000
+
+#define CFM_BACKCOLOR		0x04000000
+#define CFM_LCID			0x02000000
+#define	CFM_UNDERLINETYPE	0x00800000		/* Many displayed by 3.0 */
+#define	CFM_WEIGHT			0x00400000
+#define CFM_SPACING			0x00200000		/* Displayed by 3.0	*/
+#define CFM_KERNING			0x00100000		/* (*)	*/
+#define CFM_STYLE			0x00080000		/* (*)	*/
+#define CFM_ANIMATION		0x00040000		/* (*)	*/
+#define CFM_REVAUTHOR		0x00008000
+
+#define CFE_SUBSCRIPT		0x00010000		/* Superscript and subscript are */
+#define CFE_SUPERSCRIPT		0x00020000		/*  mutually exclusive			 */
+
+#define CFM_SUBSCRIPT		CFE_SUBSCRIPT | CFE_SUPERSCRIPT
+#define CFM_SUPERSCRIPT		CFM_SUBSCRIPT
+
+#define	CFM_EFFECTS2 (CFM_EFFECTS | CFM_DISABLED | CFM_SMALLCAPS | CFM_ALLCAPS \
+					| CFM_HIDDEN  | CFM_OUTLINE | CFM_SHADOW | CFM_EMBOSS \
+					| CFM_IMPRINT | CFM_DISABLED | CFM_REVISED \
+					| CFM_SUBSCRIPT | CFM_SUPERSCRIPT | CFM_BACKCOLOR)
+
+#define CFM_ALL2	 (CFM_ALL | CFM_EFFECTS2 | CFM_BACKCOLOR | CFM_LCID \
+					| CFM_UNDERLINETYPE | CFM_WEIGHT | CFM_REVAUTHOR \
+					| CFM_SPACING | CFM_KERNING | CFM_STYLE | CFM_ANIMATION)
+
+#define	CFE_SMALLCAPS		CFM_SMALLCAPS
+#define	CFE_ALLCAPS			CFM_ALLCAPS
+#define	CFE_HIDDEN			CFM_HIDDEN
+#define	CFE_OUTLINE			CFM_OUTLINE
+#define	CFE_SHADOW			CFM_SHADOW
+#define	CFE_EMBOSS			CFM_EMBOSS
+#define	CFE_IMPRINT			CFM_IMPRINT
+#define	CFE_DISABLED		CFM_DISABLED
+#define	CFE_REVISED			CFM_REVISED
+  
+/* NOTE: CFE_AUTOCOLOR and CFE_AUTOBACKCOLOR correspond to CFM_COLOR and
+   CFM_BACKCOLOR, respectively, which control them */
+#define CFE_AUTOBACKCOLOR	CFM_BACKCOLOR
+
+/* CHARFORMAT effects */
+#define CFE_BOLD		0x0001
+#define CFE_ITALIC		0x0002
+#define CFE_UNDERLINE	0x0004
+#define CFE_STRIKEOUT	0x0008
+#define CFE_PROTECTED	0x0010
+#define CFE_LINK		0x0020
+#define CFE_AUTOCOLOR	0x40000000		/* NOTE: this corresponds to */
+  
+#endif
+  
 
 static PCreateTextServices CreateTextServicesFunc;
 
@@ -1050,6 +1118,12 @@ void Win32TextPeer::setDefaultStyle( Dictionary&  styles )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.1  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
 *Revision 1.2  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

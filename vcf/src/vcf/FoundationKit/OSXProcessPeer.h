@@ -48,9 +48,15 @@ public:
 	}
 
     virtual ulong32 terminate();
+	
+	virtual Waitable::WaitResult wait( uint32 milliseconds );
+
+	virtual Waitable::WaitResult wait();
 protected:
 	OSXProcessHandle processHandle_;
 	VCF::String processFileName_;
+	bool processTerminated_;
+	static OSStatus osxProcessTerminated( EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData );
 };
 
 }; //end of namespace VCF
@@ -59,6 +65,12 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.6  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.5.2.1  2006/01/14 21:49:22  ddiego
+ *general osx checkin
+ *
  *Revision 1.5  2005/07/09 23:15:04  ddiego
  *merging in changes from devmain-0-6-7 branch.
  *

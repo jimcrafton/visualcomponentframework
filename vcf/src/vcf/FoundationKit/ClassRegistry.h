@@ -13,12 +13,30 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+/**
+
+This macro is used in a way similar to the C++ typeid operator.
+Where typeid() returns a const type_info reference, the classid()
+"operator" returns a Class pointer or NULL if no class can be found
+in the ClassRegistry. For example:
+\code
+Class* clazz = classid(Window);
+\endcode
+The clazz variable will now point to a Class instance associated with
+the Window class.
+
+*/
+#define classid(classType) \
+	VCF::ClassRegistry::getClass( #classType )\
+	\
+
 
 namespace VCF
 {
 
 
 /**
+\class ClassRegistry ClassRegistry.h "vcf/FoundationKit/ClassRegistry.h"
 *ClassRegistry contains all Class's in the Framework Runtime.
 *The ClassRegistry is used by the Framework Runtime to register Classes
 *and properties for Classes. The ClassRegistry is also used to dynamically
@@ -260,12 +278,27 @@ protected:
 
 
 
+
+
+
 };
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.2.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.2.6.1  2005/08/24 05:03:22  ddiego
+*better component loading and creation functions.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

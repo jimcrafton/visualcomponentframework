@@ -17,7 +17,9 @@ where you installed the VCF.
 namespace VCF {
 
 
-
+/**
+\class RegistryPeer RegistryPeer.h "vcf/FoundationKit/RegistryPeer.h"
+*/
 class FOUNDATIONKIT_API RegistryPeer {
 public:
 	virtual ~RegistryPeer(){};
@@ -36,13 +38,13 @@ public:
 
 	virtual bool setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename ) = 0;
 
-	virtual String getStringValue( const String& valuename ) = 0;
+	virtual bool getStringValue( const String& valuename, String& value ) = 0;
 
-	virtual uint32 getIntValue( const String& valuename ) = 0;
+	virtual bool getIntValue( const String& valuename, uint32& value ) = 0;
 
-	virtual bool getBoolValue( const String& valuename ) = 0;
+	virtual bool getBoolValue( const String& valuename, bool& value ) = 0;
 
-	virtual void getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer ) = 0;
+	virtual bool getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer ) = 0;
 
 	virtual Enumerator<String>* getKeyNames() = 0;
 
@@ -57,6 +59,16 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.2.6.1  2005/09/05 18:17:17  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

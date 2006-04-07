@@ -26,6 +26,7 @@ class ResourceBundle;
 class Format;
 
 /**
+\class System System.h "vcf/FoundationKit/System.h"
 The System object represents basic lower level OS functions. 
 The System instance is a singleton, and may not be created or 
 deleted directly. Instead the FunctionKit::init() and FoundationKit::terminate()
@@ -187,7 +188,7 @@ public:
 	\endcode				
 
 	D): with contents, platform, and compiler - OSX compatible		
-	\endcode
+	\code
 	Bundle/
 		/Contents
 			/<OS-Name>
@@ -217,8 +218,7 @@ public:
 	static String findResourceDirectoryForExecutable( const String& fileName );
 
 
-	/**
-	\par
+	/**	
 	Returns the name of the operating system that the VCF is currently running on.
 	@return String the operating system name. Can be:
 		\li "MacOS" for Mac OS
@@ -288,46 +288,43 @@ public:
 	static void setErrorLog( ErrorLog* errorLog );
 
 	/**
-	\par
+	
 	Prints out the text to stdout. Allows for formatted text, just like printf() does.
 	Please see printf documentation for the various formatting flags.
-	\par
+	
 	When using this to print out strings, there are some special rules to fullow
 	due to the fact that the VCF uses all unicode strings internally. For
 	example:
 	\code
 	String aName = "Bob Jones";
-	System::print( "User Name: %s", aName.c_str() );
+	System::print( Format("User Name: %s") % aName.c_str() );
 	\endcode
 	On Win32 platforms the use of %s will work fine, but on others it may 
 	not. To ensure that strings get printed out correctly, consider using the 
 	%ls formatter, like so:
 	\code
 	String aName = "Bob Jones";
-	System::print( "User Name: %ls", aName.c_str() );
+	System::print( Format("User Name: %ls") % aName.c_str() );
 	\endcode
+	or
+
+	\code
+	String aName = "Bob Jones";
+	System::print( Format("User Name: %s") % aName );
+	\endcode
+
 	This will ensure that on all platforms the unicode string gets properly
 	handled and output.
-
-	\deprecated 
-	This is now a deprecated function and should not be used at all. Existing
-	code should be changed to make use of the print( const Format& ) function 
-	instead. It will be removed entirely in an upcoming release.
+	@see Format
 	*/
-	static void print( String text, ... );
-
-	static void print( const Format& formatter );
+	static void print( const String& text );
 
 	/**
+	This function does what System::print() does, except that it adds a trailing
+	cr/lf.
 	@see System::print
-	\deprecated 
-	This is now a deprecated function and should not be used at all. Existing
-	code should be changed to make use of the println( const Format& ) function 
-	instead. It will be removed entirely in an upcoming release.
 	*/
-	static void println( String text, ... );
-
-	static void println( const Format& formatter );
+	static void println( const String& text );
 
 	/**
 	This will print the contents of the exception to stdout and the 
@@ -343,7 +340,7 @@ public:
 	\code
 	String val = System::getEnvironmentVariable( "PATH" );	
 	\endcode
-	val would equal "C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;d:\Program Files\doxygen\bin;E:\dm\bin;E:\code\vcfdev\dev\vcf\bin;D:\Program Files\HTML Help Workshop;D:\cygwin\bin;D:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;D:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;D:\Program Files\Microsoft Visual Studio\Common\Tools;D:\Program Files\Microsoft Visual Studio\VC98\bin;D:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin\IDE".
+	val would equal "C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;...".
 	*/
 	static String getEnvironmentVariable( const String& variableName );
 
@@ -371,9 +368,34 @@ public:
 	static void setCurrentWorkingDirectory( const String& currentDirectory );
 
 	/**
-
+	This returns the name of a standard directory for the 
+	OS. 
+	@see CommonDirectory
 	*/
 	static String getCommonDirectory( CommonDirectory directory );
+
+	/**
+	This creates a temp file name. You can pass in a standard 
+	directory type to indicate the directory to use in 
+	creating the file name. For example to create 
+	a temp file in the user's temp directory you might use:
+	\code
+	String tempFile = System::createTempFileName( System::cdUserTemp );
+	\endcode
+	*/
+	static String createTempFileName( CommonDirectory directory );
+
+	/**
+	This creates a temp file name. You can pass in directory 
+	name to indicate the directory to use in 
+	creating the file name. The directory is empty
+	by default. For example to create 
+	just a temp file name (no directory) you might use:
+	\code
+	String tempFile = System::createTempFileName();
+	\endcode
+	*/
+	static String createTempFileName( const String& directory = "" );
 
 	/**
 	Sets the date instance to the current system time (UTC based).
@@ -435,6 +457,26 @@ public:
 
 
 	/**
+	Returns a new ProgramInfo instance from a given info.xml or info.plist.
+	If the infoFileName points to an invalid file, or there is some other 
+	problem reading the file, then the return value is NULL. The caller
+	is responsible for deleting the ProgramInfo instance if a valid 
+	instance is returned.
+	*/
+	static ProgramInfo* getProgramInfoFromInfoFile( const String& infoFileName );
+
+	/**
+	Returns a new ProgramInfo instance from a given info.xml or info.plist.
+	If the infoFileName points to an invalid file, or there is some other 
+	problem reading the file, then the return value is NULL. The caller
+	is responsible for deleting the ProgramInfo instance if a valid 
+	instance is returned.
+	@param String the full path of the info.plist/info.xml file
+	@param String the path of the initial value for the program file
+	*/
+	static ProgramInfo* getProgramInfoFromInfoFile( const String& infoFileName, const String& programFileName );
+
+	/**
 	Returns a string that is the package directory for the
 	executable file name. If the file name is not a bundle, then an
 	empty string is returned. For example, if passed in a file name such as 
@@ -479,6 +521,24 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.9  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.8.2.5  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.8.2.4  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
+*Revision 1.8.2.3  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
+*Revision 1.8.2.2  2005/09/07 04:19:55  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.8.2.1  2005/07/24 02:30:27  ddiego
+*fixed bug in retreiving program info.
+*
 *Revision 1.8  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

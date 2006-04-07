@@ -8,16 +8,17 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
+#include "vcf/FoundationKit/LocalePeer.h"
+
 #include <cstdlib>
+#include <sys/utsname.h>
+#include <pwd.h>
 
 using namespace VCF;
 
-struct timezone LinuxSystemPeer::timeZone;
-struct timeval LinuxSystemPeer::time;
-
 LinuxSystemPeer::LinuxSystemPeer()
 {
-	::gettimeofday( &LinuxSystemPeer::time, &LinuxSystemPeer::timeZone );
+	::gettimeofday( &time_, &timeZone_ );
 }
 
 LinuxSystemPeer::~LinuxSystemPeer()
@@ -29,8 +30,8 @@ unsigned long LinuxSystemPeer::getTickCount()
 	struct timezone timeZone;
 	::gettimeofday( &now, &timeZone );
 
-	double t1 = double( LinuxSystemPeer::time.tv_sec * 1000 ) +
-	            double( LinuxSystemPeer::time.tv_usec / ( 1000 ) );
+	double t1 = double( LinuxSystemPeer::time_.tv_sec * 1000 ) +
+	            double( LinuxSystemPeer::time_.tv_usec / ( 1000 ) );
 
 	double t2 = double( now.tv_sec * 1000 ) +
 	            double( now.tv_usec / ( 1000 ) ); //convert to Milliseconds
@@ -45,7 +46,7 @@ void LinuxSystemPeer::sleep( const uint32& milliseconds )
 	}
 	struct timespec req, rem;
 	req.tv_sec = milliseconds / 1000;
-	req.tv_nsec = ( milliseconds % 1000 ) * 1000;
+	req.tv_nsec = ((milliseconds * 1000) % 1000000) * 1000;
 	::nanosleep( &req, &rem );
 }
 
@@ -97,23 +98,68 @@ void LinuxSystemPeer::addPathDirectory( const String& directory )
 	throw RuntimeException( "Failed to add to PATH value " + directory );
 }
 
-void LinuxSystemPeer::setEnvironmentVariable( const String& variableName, const String& newValue )
-{
-
-}
-	
-void LinuxSystemPeer::addPathDirectory( const String& directory )
-{
-
-}
-
 String LinuxSystemPeer::getCommonDirectory( System::CommonDirectory directory )
 {
 	String result;
-	
+
+    switch( directory ) {
+        case System::cdUserHome :{
+            result = getEnvironmentVariable("HOME");
+            if(result.empty())
+            {
+                passwd *pswd = getpwuid(getuid());
+                assert(pswd != NULL);
+                result = pswd->pw_dir;
+            }
+        }
+        break;
+
+        case System::cdUserProgramData :
+            result = "usr/share";
+        break;
+
+        case System::cdUserDesktop :
+            result = getCommonDirectory(System::cdUserHome);
+        break;
+
+        case System::cdUserFavorites :
+            result = getCommonDirectory(System::cdUserHome);
+        break;
+
+        case System::cdUserDocuments :
+            result = getCommonDirectory(System::cdUserHome);
+        break;
+
+        case System::cdUserTemp :
+            result = getCommonDirectory(System::cdUserHome);
+        break;
+
+        case System::cdSystemPrograms :
+            result = "/usr/bin";
+        break;
+
+        case System::cdSystemTemp :
+            result = "/tmp";
+        break;
+
+        case System::cdSystemRoot :
+            return "/";
+        break;
+
+        default:
+            // Unkown CommonDirectory type
+            VCF_ASSERT(false);
+        break;
+    }
+
 	return result;
 }
-	
+
+String LinuxSystemPeer::createTempFileName( const String& directory )
+{
+    return tempnam(directory.ansi_c_str(), "vcftmp");;
+}
+
 void LinuxSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 {
 	chdir( currentDirectory.ansi_c_str() );
@@ -127,7 +173,6 @@ String LinuxSystemPeer::getOSName()
 	return "GNU/Linux";
 }
 
-
 String LinuxSystemPeer::getOSVersion()
 {
 	return "";
@@ -135,64 +180,81 @@ String LinuxSystemPeer::getOSVersion()
 
 ProgramInfo* LinuxSystemPeer::getProgramInfoFromFileName( const String& fileName )
 {
-	return 0; //LinuxResourceBundle::getProgramInfo( fileName );
+	return 0;
 }
 
 void LinuxSystemPeer::setDateToLocalTime( DateTime* date )
-{}
+{
+	::timeval tmv;
+	::gettimeofday(&tmv, NULL);
+	ulong64 millisecs = ulong64(tmv.tv_sec)*1000+ulong64(tmv.tv_usec)/1000;
+	DateTime tmp(1970, 1, 1);
+	millisecs += tmp.getMilliseconds();
+	date->setMilliseconds( millisecs );
+}
 
 void LinuxSystemPeer::setCurrentThreadLocale( Locale* locale )
-{}
+{
+    uselocale( reinterpret_cast<locale_t>(locale->getPeer()->getHandleID()));
+}
 
 DateTime LinuxSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 {
-	DateTime result;
+	DateTime result = date;
 	return result;
 }
 
 DateTime LinuxSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 {
-	DateTime result;
-	return result;
-}
-
-String LinuxSystemPeer::getOSName()
-{
-	String result;
-	
-	return result;
-}
-
-String LinuxSystemPeer::getOSVersion()
-{
-	String result;
-	
+	DateTime result = date;
 	return result;
 }
 
 String LinuxSystemPeer::getComputerName()
 {
-	String result;
-	
-	return result;
+    utsname uts;
+    uname(&uts);
+    String result = uts.nodename;
+    return result;
 }
 
 String LinuxSystemPeer::getUserName()
 {
-	String result;
-	
-	return result;
-}
-
-ProgramInfo* LinuxSystemPeer::getProgramInfoFromFileName( const String& fileName )
-{
-	return NULL;
+    String result;
+    passwd *pswd = getpwuid(getuid());
+    if(pswd != NULL)
+    {
+        result = pswd->pw_gecos;
+    }
+    if(result.empty())
+    {
+        result = getlogin();
+    }
+    return result;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.5  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.4.2.4  2005/12/01 01:13:00  obirsoy
+*More linux improvements.
+*
+*Revision 1.4.2.3  2005/11/18 16:02:53  obirsoy
+*changes required for gcc under Linux, and some warning clean up.
+*
+*Revision 1.4.2.2  2005/11/11 00:21:00  ddiego
+*comitting mostuffs linux foundationkit patchs [1351922].
+*
+*Revision 1.4.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

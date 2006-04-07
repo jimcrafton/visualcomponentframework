@@ -79,6 +79,9 @@ public:
 
 	virtual ulong32 terminate();
 	
+	virtual Waitable::WaitResult wait( uint32 milliseconds );
+
+	virtual Waitable::WaitResult wait();
 protected:
 	//this is the handle to the child process that gets started
 	ulong32 childProcess_;
@@ -94,6 +97,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -77,7 +77,7 @@ void Win32Toolbar::create( Control* control )
 
 		subclassWindow();
 
-		setFont( control->getFont() );
+		registerForFontChanges();
 
 		SendMessage(hwnd_, TB_BUTTONSTRUCTSIZE, (WPARAM) sizeof(TBBUTTON), 0);
 
@@ -139,10 +139,6 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 		break;
 
 		case WM_PAINT :{
-			//check to see if the font needs updating
-			checkForFontChange();
-
-
 			PAINTSTRUCT ps;
 			HDC dc = BeginPaint( hwnd_, &ps );
 
@@ -174,6 +170,16 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 
 			wndProcResult = handleNCPaint( wParam, lParam );
 			return true;
+		}
+		break;
+
+		case WM_DESTROY : {
+			if ( NULL != imageListCtrl_ ) {
+				//destroy the old one
+				int err = ImageList_Destroy( imageListCtrl_ );
+				imageListCtrl_ = NULL;
+			}
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
@@ -835,6 +841,8 @@ void Win32Toolbar::resizeToolbarItems( int startAt )
 	}
 }
 
+
+
 void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption )
 {
 	currentlyModifyingItem_ = true;
@@ -852,12 +860,14 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 			caption = System::getCurrentThreadLocale()->translate( caption );
 		}
 
-		VCFChar* tmp = new VCFChar[caption.size()+1];
+		VCFChar* tmp = new VCFChar[caption.size()+2];
 
 		caption.copy( tmp, caption.size() );
 		tmp[caption.size()] = 0;
+		tmp[caption.size()+1] = 0;
+		
+		btn.iString = SendMessage( hwnd_, TB_ADDSTRINGW, (WPARAM) 0, (LPARAM) (LPSTR) tmp);		
 
-		btn.iString = SendMessage( hwnd_, TB_ADDSTRINGW, (WPARAM) 0, (LPARAM) (LPSTR) tmp);
 		buttonCaptionsMap_[caption] = btn.iString;
 
 		if ( buttonCaptionsMap_.size() == 1 ) {
@@ -947,10 +957,11 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 		}
 
 		AnsiString ansiCaption = caption;
-		char* tmp = new char[ansiCaption.size()+1];
+		char* tmp = new char[ansiCaption.size()+2];
 
 		ansiCaption.copy( tmp, ansiCaption.size() );
 		tmp[ansiCaption.size()] = 0;
+		tmp[ansiCaption.size()+1] = 0;
 
 		btn.iString = SendMessage( hwnd_, TB_ADDSTRINGA, (WPARAM) 0, (LPARAM) (LPSTR) tmp);
 		buttonCaptionsMap_[ansiCaption] = btn.iString;
@@ -1423,6 +1434,21 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/18 19:04:56  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.4.2.3  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.4.2.2  2006/02/14 20:19:25  ddiego
+*some minor bugs
+*
+*Revision 1.4.2.1  2006/02/11 04:51:34  ddiego
+*little more browser coding.
+*
 *Revision 1.4  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

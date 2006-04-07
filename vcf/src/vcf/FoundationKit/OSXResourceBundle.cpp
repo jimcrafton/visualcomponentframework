@@ -56,7 +56,7 @@ String OSXResourceBundle::getVFF( const String& resourceName )
 		
 		if ( !ext.empty() ){
 			tmpResName = fp.getBaseName();
-			int pos = ext.find(".");
+			size_t pos = ext.find(".");
 			if ( pos != String::npos ) {
 				ext.erase( pos, 1 );
 			}
@@ -71,7 +71,7 @@ String OSXResourceBundle::getVFF( const String& resourceName )
 		
 		CFURLRef resURL = CFBundleCopyResourceURL( bundle, resName, resType, NULL );
 		
-		fp = OSXUtils::extractStringValueFromCFType( resURL );
+		fp = OSXStringUtils::extractStringValueFromCFType( resURL );
 		String fName = FilePath::transformToNative( fp );
 		
 		FILE* f = fopen( fName.ansi_c_str(), "r" );
@@ -103,7 +103,7 @@ Resource* OSXResourceBundle::getResource( const String& resourceName )
 		String ext = fp.getExtension();
 		if ( !ext.empty() ){
 			tmpResName = fp.getBaseName();
-			int pos = ext.find(".");
+			size_t pos = ext.find(".");
 			if ( pos != String::npos ) {
 				ext.erase( pos, 1 );
 			}
@@ -114,7 +114,7 @@ Resource* OSXResourceBundle::getResource( const String& resourceName )
 		
 		CFURLRef resURL = CFBundleCopyResourceURL( bundle, resName, resType, NULL );
 		
-		fp = OSXUtils::extractStringValueFromCFType( resURL );
+		fp = OSXStringUtils::extractStringValueFromCFType( resURL );
 		String fName = FilePath::transformToNative( fp );
 		
 		FILE* f = fopen( fName.ansi_c_str(), "r" );
@@ -129,6 +129,26 @@ Resource* OSXResourceBundle::getResource( const String& resourceName )
 			
 			delete [] buf;
 		}   
+	}
+	
+	
+	if ( result == NULL ) {
+		//if we got this far then look for files!
+
+		String localeName = System::getCurrentThreadLocale()->getName();
+		
+		String fileName = System::findResourceDirectory() +	resourceName;
+		
+		if ( File::exists( fileName ) ) {
+			FileInputStream fs(fileName);
+			ulong32 size = fs.getSize();
+			char* buf = new char[size];
+			fs.read( (unsigned char*)buf, size );
+			
+			
+			result = new Resource( buf, size, resourceName );
+			delete [] buf;
+		}
 	}
 	
 	return result;
@@ -161,55 +181,57 @@ ProgramInfo* OSXResourceBundle::getProgramInfo( CFBundleRef bundle )
 			String company;
 			String description;
 			String programVersion;
-			String fileVersion;		
+			String fileVersion;
+			String helpDirectory;
+			String helpName;		
 			
-			name = OSXUtils::extractStringValueFromCFType( 
+			name = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleName") ) );
 			
-			programFileName = OSXUtils::extractStringValueFromCFType( 
+			programFileName = OSXStringUtils::extractStringValueFromCFType( 
 											CFBundleCopyExecutableURL( bundle ) );
 											
-			author = OSXUtils::extractStringValueFromCFType( 
+			author = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleName") ) );
 											
-			copyright = OSXUtils::extractStringValueFromCFType( 
+			copyright = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleGetInfoString") ) );
 			
-			company = OSXUtils::extractStringValueFromCFType( 
+			company = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleName") ) );
 											
-			description = OSXUtils::extractStringValueFromCFType( 
+			description = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleGetInfoString") ) );
 			
-			programVersion = OSXUtils::extractStringValueFromCFType( 
+			programVersion = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleShortVersionString") ) );
 			
-			fileVersion = OSXUtils::extractStringValueFromCFType( 
+			fileVersion = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("CFBundleVersion") ) );
 											
 			
 											
 			if ( author.empty() ) {
-				author = OSXUtils::extractStringValueFromCFType( 
+				author = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("Author") ) );
 			}
 			
 			if ( copyright.empty() ) {
-				copyright = OSXUtils::extractStringValueFromCFType( 
+				copyright = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("Copyright") ) );
 			}
 			
 			if ( description.empty() ) {
-				description = OSXUtils::extractStringValueFromCFType( 
+				description = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("Description") ) );
 			}
 			
 			if ( company.empty() ) {
-				company = OSXUtils::extractStringValueFromCFType( 
+				company = OSXStringUtils::extractStringValueFromCFType( 
 											CFDictionaryGetValue( infoDict, CFSTR("Company") ) );
 			}
 																											
-			result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
+			result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion, helpDirectory, helpName );
 		}		
 	}
 	

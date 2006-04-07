@@ -107,6 +107,8 @@ public:
 
 	virtual void mouseUp( MouseEvent* event );
 
+	virtual void mouseClick(  MouseEvent* event );
+
 	virtual void mouseDblClick(  MouseEvent* event );
 
 	virtual void keyDown( KeyboardEvent* e );
@@ -287,6 +289,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

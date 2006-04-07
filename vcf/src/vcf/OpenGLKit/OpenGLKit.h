@@ -22,7 +22,9 @@ Handle the extension based on the compiler
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
-#   if (_MSC_VER >= 1310)
+#   if (_MSC_VER >= 1400)
+#     define _LIB_CPLVERNUM "vc80"
+#   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)
 #     define _LIB_CPLVERNUM "vc70"
@@ -80,10 +82,25 @@ defined to use the DLL or static libraries.
 
 namespace VCF {
 
+/**
+\par
+ The OpenGLKit is used to initialize (and terminate)
+the OpenGL system on the OS the vCF is being run on.
+\par
+At the moment it doesn't need to be called, but this 
+will change in upcoming releases.
+*/
 class  OPENGLKIT_API OpenGLKit {
 public:
+	/**
+	Initializes the OpenGLKit
+	*/
 	static void init( int argc, char** argv ){;}
 
+	/**
+	Terminates the OpenGLKit, and frees any resources that were 
+	allocated by the init() call.
+	*/
 	static void terminate(){;}
 };
 
@@ -93,6 +110,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:48  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/12 22:01:46  ddiego
+*doc updates.
+*
+*Revision 1.4.2.1  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
 *Revision 1.4  2005/07/09 23:15:17  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

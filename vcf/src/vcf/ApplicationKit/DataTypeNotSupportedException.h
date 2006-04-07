@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+\class DataTypeNotSupportedException DataTypeNotSupportedException.h "vcf/ApplicationKit/DataTypeNotSupportedException.h"
+*/
 class APPLICATIONKIT_API DataTypeNotSupportedException : public BasicException {
 public:
     DataTypeNotSupportedException(): BasicException("Data Type is not supported"){}
@@ -29,6 +32,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

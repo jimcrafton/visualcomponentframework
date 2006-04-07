@@ -142,7 +142,7 @@
 #endif
 
 #ifdef MNG_INCLUDE_ZLIB                /* zlib by Mark Adler & Jean-loup Gailly */
-#include "thirdparty/common/FreeImage/Source/ZLib/zlib.h"
+#include "thirdparty/common/ZLib/zlib.h"
 #endif
 
 #ifdef MNG_INCLUDE_LCMS                /* little cms by Marti Maria Saguer */
@@ -168,7 +168,7 @@
 #ifdef FAR
 #undef FAR                             /* possibly defined by zlib or lcms */
 #endif
-#include "thirdparty/common/FreeImage/Source/LibJPEG/jpeglib.h"
+#include "thirdparty/common/LibJPEG/jpeglib.h"
 #endif /* MNG_INCLUDE_IJG6B */
 
 #if defined(MNG_INTERNAL_MEMMNGMT) || defined(MNG_INCLUDE_FILTERS)

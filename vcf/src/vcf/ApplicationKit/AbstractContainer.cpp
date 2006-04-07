@@ -275,8 +275,8 @@ void AbstractContainer::clear()
 }
 
 
-void AbstractContainer::paintChildren( GraphicsContext* context ){
-
+void AbstractContainer::paintChildren( GraphicsContext* context )
+{
 	Enumerator<Control*>* children = controlsContainer_.getEnumerator();
 	if ( NULL == controlContainer_ ){
 		throw InvalidPointerException(MAKE_ERROR_MSG(INVALID_POINTER_ERROR), __LINE__);
@@ -300,19 +300,25 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 	Rect childClipRect;
 	Rect bounds;
 
-
+	Control* heavyWeightParent  = controlContainer_;
+	if ( NULL != heavyWeightParent ) {
+		
+	}
+	
 	while ( true == children->hasMoreElements() ){
 		Control* child = children->nextElement();
 		VCF_ASSERT( NULL != child );
 
 		if ( child->isLightWeight() && child->getVisible() ){
+			
 			bounds = child->getBounds();
+			
 
 			childClipRect.left_ = maxVal<>(bounds.left_,mainBounds.left_);
 			childClipRect.top_ = maxVal<>(bounds.top_,mainBounds.top_);
 			childClipRect.right_ = minVal<>(bounds.right_,mainBounds.right_);
 			childClipRect.bottom_ = minVal<>(bounds.bottom_,mainBounds.bottom_);
-
+								
 			childClipRect.offset( -bounds.left_, -bounds.top_ );
 
 			Point oldOrigin = context->getOrigin();
@@ -326,12 +332,13 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 
 			context->setOrigin( originX, originY );
 
-
+			
 			//do this to prevent matrix changes from
 			//screwing up the state for the child control
 			Matrix2D xfrm;
 			int gcs = context->saveState();
-			context->setCurrentTransform( xfrm );
+			context->setCurrentTransform( xfrm );			
+						
 			context->setClippingRect( &childClipRect );
 
 			child->paintBorder( context );
@@ -342,6 +349,7 @@ void AbstractContainer::paintChildren( GraphicsContext* context ){
 
 
 			context->setOrigin( oldOrigin.x_, oldOrigin.y_ );
+			
 			context->setClippingRect( &oldClipRect );
 		}
 	}
@@ -569,8 +577,17 @@ void AbstractContainer::setContainerControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
 *Revision 1.6  2005/07/30 15:37:10  ddiego
 *rolled back a few conatainer changes.
+
+*Revision 1.5.2.3  2006/01/22 23:52:21  ddiego
+*some minor changed to doc manager.
+*
+*Revision 1.5.2.2  2006/01/09 02:22:30  ddiego
+*more osx code
 *
 *Revision 1.5.2.1  2005/07/29 03:04:25  ddiego
 *rolled back a few conatainer changes.

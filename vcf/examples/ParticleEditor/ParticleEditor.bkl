@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="ParticleEditor" template="vcf_exe_gui" cond="OPTION_OPENGLKIT=='1'">
+        <dirname>.</dirname>
+        <include>.</include>
+        <headers>
+            vrtoad/Math.h
+            ColorPicker.h
+            ParticleEditor.h
+            ParticleRenderer.h
+            ParticleResource.h
+            ParticleResourceManager.h
+            ParticleSystem.h
+            Spinner.h
+            XMLParticleResourceHandler.h
+        </headers>
+        <sources>
+            main.cpp
+            ParticleEditor.cpp
+            ParticleRenderer.cpp
+            ParticleSystem.cpp            
+        </sources>
+        <vcf-use-OpenGLKit/>
+    </exe>
+</makefile>

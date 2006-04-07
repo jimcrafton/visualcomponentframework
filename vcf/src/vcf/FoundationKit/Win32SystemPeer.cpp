@@ -373,7 +373,7 @@ String Win32SystemPeer::getOSVersion()
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
 	
-	result = StringUtils::format( Format("%d.%d %d") % osVersion.dwMajorVersion % osVersion.dwMinorVersion % osVersion.dwBuildNumber );
+	result = Format("%d.%d %d") % osVersion.dwMajorVersion % osVersion.dwMinorVersion % osVersion.dwBuildNumber;
 
 	return result;
 }
@@ -631,9 +631,52 @@ String Win32SystemPeer::getUserName()
 	return result;
 }
 
+String Win32SystemPeer::createTempFileName( const String& directory )
+{
+	String result;
+
+	if ( System::isUnicodeEnabled() ) {
+		VCF::WideChar tmp[MAX_PATH];
+		memset( tmp,0,sizeof(tmp) * sizeof(tmp[0]) );
+		::GetTempFileNameW( directory.c_str(), L"tmp", 0, tmp );
+		result = tmp;
+
+		WIN32_FIND_DATAW fnd;		
+		HANDLE found = ::FindFirstFileW( tmp, &fnd );
+		if ( found != INVALID_HANDLE_VALUE ) {
+			::FindClose(found);
+			::DeleteFileW(tmp);		
+		}
+	}
+	else {
+		char tmp[MAX_PATH];
+		memset( tmp,0,sizeof(tmp) * sizeof(tmp[0]) );
+		::GetTempFileNameA( directory.ansi_c_str(), "tmp", 0, tmp );
+		result = tmp;
+
+		WIN32_FIND_DATAA fnd;		
+		HANDLE found = ::FindFirstFileA( tmp, &fnd );
+		if ( found != INVALID_HANDLE_VALUE ) {
+			::FindClose(found);
+			::DeleteFileA(tmp);		
+		}
+	}
+
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
+*Revision 1.5.2.1  2005/08/01 17:20:46  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

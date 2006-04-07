@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="Controls" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            ControlsAbout.h
+            ControlsApplication.h
+            MainWindow.h
+            Spacers.h
+        </headers>
+        <sources>
+            Controls.cpp
+            ControlsAbout.cpp
+            ControlsApplication.cpp
+            MainWindow.cpp
+        </sources>
+        <win32-res>Controls.rc</win32-res>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

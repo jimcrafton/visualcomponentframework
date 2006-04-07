@@ -127,7 +127,6 @@ class HeavyAndLightWindow : public Window {
 public:
 	HeavyAndLightWindow() {
 		setCaption( "HeavyAndLight" );
-		setVisible( true );
 
 
 		EventHandler* ev = new MouseEventHandler<HeavyAndLightWindow>(this,&HeavyAndLightWindow::onCtrlMouseDown, "onCtrlMouseDown" );
@@ -180,7 +179,8 @@ public:
 
 		Window* mainWindow = new HeavyAndLightWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 400.0, 500.0 );
+		mainWindow->show();
 
 		return result;
 	}
@@ -201,8 +201,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:38  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:28  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/19 21:59:42  ddiego
+*updated various settings in vc80 projects.
+*
+*Revision 1.5.2.2  2006/03/16 18:45:26  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:36  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.4  2005/06/28 00:10:10  marcelloptr
 *improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.

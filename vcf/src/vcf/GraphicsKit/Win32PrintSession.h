@@ -11,20 +11,70 @@ where you installed the VCF.
 namespace VCF {
 
 	struct GRAPHICSKIT_API  Win32PrintInfo {
-		Win32PrintInfo() {
-			memset( &docInfo_, 0, sizeof(docInfo_) );
-			memset( &printDlg_, 0, sizeof(printDlg_) );
+		Win32PrintInfo():docInfoPtr_(NULL),printDlgPtr_(NULL) {
+
+			if ( System::isUnicodeEnabled() ) {
+				docInfoPtr_ = malloc( sizeof(DOCINFOW) );
+				memset( docInfoPtr_, 0, sizeof(DOCINFOW) );
+
+				getDocInfoW().cbSize = sizeof(DOCINFOW);
+
+				printDlgPtr_ = malloc( sizeof(PRINTDLGW) );
+				memset( printDlgPtr_, 0, sizeof(PRINTDLGW) );
+				getPrintDlgW().lStructSize = sizeof(PRINTDLGW);
+			}
+			else{
+				docInfoPtr_ = malloc( sizeof(DOCINFOA) );
+				memset( docInfoPtr_, 0, sizeof(DOCINFOA) );
+				getDocInfoA().cbSize = sizeof(DOCINFOA);
+
+				printDlgPtr_ = malloc( sizeof(PRINTDLGA) );
+				memset( printDlgPtr_, 0, sizeof(PRINTDLGA) );
+				getPrintDlgA().lStructSize = sizeof(PRINTDLGA);
+			}
+			
 			//assume a start page of 1
 			setStartPage(1);
 		}
 
-		Win32PrintInfo( const Win32PrintInfo& rhs ) {
+		Win32PrintInfo( const Win32PrintInfo& rhs ):docInfoPtr_(NULL),printDlgPtr_(NULL) {
+			if ( System::isUnicodeEnabled() ) {
+				docInfoPtr_ = malloc( sizeof(DOCINFOW) );
+				memset( docInfoPtr_, 0, sizeof(DOCINFOW) );
+
+				getDocInfoW().cbSize = sizeof(DOCINFOW);
+
+				printDlgPtr_ = malloc( sizeof(PRINTDLGW) );
+				memset( printDlgPtr_, 0, sizeof(PRINTDLGW) );
+				getPrintDlgW().lStructSize = sizeof(PRINTDLGW);
+			}
+			else{
+				docInfoPtr_ = malloc( sizeof(DOCINFOA) );
+				memset( docInfoPtr_, 0, sizeof(DOCINFOA) );
+				getDocInfoA().cbSize = sizeof(DOCINFOA);
+
+				printDlgPtr_ = malloc( sizeof(PRINTDLGA) );
+				memset( printDlgPtr_, 0, sizeof(PRINTDLGA) );
+				getPrintDlgA().lStructSize = sizeof(PRINTDLGA);
+			}
+
 			*this = rhs;
 		}
 
+		~Win32PrintInfo(){
+			::free(docInfoPtr_);
+			::free(printDlgPtr_);
+		}
+
 		Win32PrintInfo& operator=( const Win32PrintInfo& rhs ) {
-			memcpy( &docInfo_, &rhs.docInfo_, sizeof(docInfo_) );
-			memcpy( &printDlg_, &rhs.printDlg_, sizeof(printDlg_) );
+			if ( System::isUnicodeEnabled() ) {
+				memcpy( docInfoPtr_, rhs.docInfoPtr_, sizeof(DOCINFOW) );
+				memcpy( printDlgPtr_, rhs.printDlgPtr_, sizeof(PRINTDLGW) );
+			}
+			else{
+				memcpy( docInfoPtr_, rhs.docInfoPtr_, sizeof(DOCINFOA) );
+				memcpy( printDlgPtr_, rhs.printDlgPtr_, sizeof(PRINTDLGA) );
+			}
 
 			pageSize_ = rhs.pageSize_;
 			pageDrawingRect_ = rhs.pageDrawingRect_;
@@ -66,11 +116,31 @@ namespace VCF {
 			return pages_.back();
 		}
 
-		DOCINFO docInfo_;
-		PRINTDLG printDlg_;
+
+		DOCINFOW& getDocInfoW() {
+			return *((DOCINFOW*)docInfoPtr_);
+		}
+
+		DOCINFOA& getDocInfoA() {
+			return *((DOCINFOA*)docInfoPtr_);
+		}
+
+		PRINTDLGW& getPrintDlgW() {
+			return *((PRINTDLGW*)printDlgPtr_);
+		}
+
+		PRINTDLGA& getPrintDlgA() {
+			return *((PRINTDLGA*)printDlgPtr_);
+		}
+
+		
 		Size pageSize_;
 		Rect pageDrawingRect_;
 		std::vector<ulong32> pages_;
+
+		protected:
+			void* docInfoPtr_;
+			void* printDlgPtr_;
 	};
 
 	class GRAPHICSKIT_API Win32PrintSession : public Object, public PrintSessionPeer {
@@ -126,6 +196,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
 *Revision 1.3  2005/07/09 23:06:02  ddiego
 *added missing gtk files
 *

@@ -19,7 +19,9 @@ namespace VCF {
 #ifndef M_PI
 	#define M_PI	3.1415926535897932384626433832795
 #endif
-
+/**
+\class Math VCFMath.h "vcf/FoundationKit/VCFMath.h"
+*/
 class FOUNDATIONKIT_API Math {
 
 public:
@@ -54,6 +56,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

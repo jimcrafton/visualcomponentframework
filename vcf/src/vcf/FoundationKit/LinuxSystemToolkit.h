@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXSYSTEMTOOLKIT_H__
-#define _VCF_LINUXSYSTEMTOOLKIT_H__ 
+#define _VCF_LINUXSYSTEMTOOLKIT_H__
 //LinuxSystemToolkit.h
 
 /*
@@ -29,7 +29,12 @@ public:
 	/**
 	*creates a new ThreadPeer instance
 	*/
-	virtual ThreadPeer* internal_createThreadPeer( Thread* thread );
+    virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
+
+    virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+
+    virtual ThreadManagerPeer* internal_createThreadManagerPeer();
+
 
 	/**
 	*creates a new system peer
@@ -56,9 +61,6 @@ public:
 	virtual FileStreamPeer* internal_createFileStreamPeer( File* file );
 
 	virtual LocalePeer* internal_createLocalePeer();
-	
-	virtual ResourceBundlePeer* internal_createResourceBundlePeer();
-};
 
 	virtual ResourceBundlePeer* internal_createResourceBundlePeer();
 };
@@ -68,6 +70,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2005/11/18 16:02:53  obirsoy
+*changes required for gcc under Linux, and some warning clean up.
+*
+*Revision 1.4.2.2  2005/11/11 00:21:00  ddiego
+*comitting mostuffs linux foundationkit patchs [1351922].
+*
+*Revision 1.4.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

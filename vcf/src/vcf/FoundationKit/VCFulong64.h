@@ -17,11 +17,12 @@ where you installed the VCF.
 namespace VCF {
 
 /**
+\class ulong64 VCFulong64.h "vcf/FoundationKit/VCFulong64.h"
 This is wrapper class that provides support for an unsigned 64 bit integer.
 This ensures that we have a real C++ 64 bit type, as opposed to some weird typedef magic.
 For platforms that support a 64bit int we just wrap that. If a platform doesn't support
 this, then we would have to add some specialized routines to deal with this. This class
-is intended to bu used exactly like you would a long or an int, and support the various
+is intended to be used exactly like you would a long or an int, and support the various
 constructors, copy constructors, operator overloads, etc to facilitate this. For example:
 \code
 ulong64 num = 123;
@@ -571,7 +572,9 @@ public:
 
 
 
-
+/**
+\class long64 VCFulong64.h "vcf/FoundationKit/VCFulong64.h"
+*/
 class FOUNDATIONKIT_API long64 {
 public:
 
@@ -1094,6 +1097,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

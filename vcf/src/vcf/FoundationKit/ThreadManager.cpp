@@ -28,7 +28,8 @@ ThreadManager::ThreadManager():
 
 ThreadManager::~ThreadManager()
 {
-
+	delete peer_;
+	peer_ = NULL;
 }
 
 void ThreadManager::create()
@@ -59,7 +60,7 @@ Thread* ThreadManager::getCurrentThread()
 
 	uint32 id = ThreadManager::threadManagerInstance->peer_->getCurrentThreadID();
 
-	std::map<uint32, Thread*>::iterator found = 
+	std::map<uint32, Thread*>::iterator found =
 		ThreadManager::threadManagerInstance->threads_.find( id );
 
 	if ( found != ThreadManager::threadManagerInstance->threads_.end() ) {
@@ -99,7 +100,7 @@ void ThreadManager::internal_addThread( Thread* thread )
 {
 	Lock l(mtx_);
 
-	threads_[thread->getThreadID()] = thread;	
+	threads_[thread->getThreadID()] = thread;
 }
 
 void ThreadManager::internal_removeThread( Thread* thread )

@@ -66,9 +66,38 @@ void OSXDropTargetPeer::setDropTarget( VCF::DropTarget* dropTarget )
 	dropTarget_ = dropTarget;
 }
 
+
+void OSX_ShowDragCursor( DragActionType action ) 
+{
+	switch ( action ) {
+		case daNone : {
+			SetThemeCursor(  kThemeNotAllowedCursor );
+		}
+		break;
+		
+		case daCopy : {
+			SetThemeCursor(  kThemeCopyArrowCursor );
+		}
+		break;
+		
+		case daMove : {
+			SetThemeCursor(  kThemeArrowCursor );
+		}
+		break;
+		
+		case daLink : {
+			SetThemeCursor(  kThemeAliasArrowCursor );
+		}
+		break;
+	}
+}
+
+	
 OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData)
 {
 	OSStatus result = eventNotHandledErr;	
+	
+	StringUtils::trace( "OSXDropTargetPeer::handleDropTargetEvents" );
 	
 	OSXDropTargetPeer* peer = (OSXDropTargetPeer*)inUserData;
 	VCF::DropTarget* target = peer->getDropTarget();
@@ -105,29 +134,48 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 		case kEventClassControl : {
 			switch ( eventKind ) {
 				case kEventControlDragEnter : {					
-					
+					PasteboardRef   pasteboard;
+					DragRef drag = NULL;
+					GetEventParameter( inEvent, kEventParamDragRef, typeDragRef, NULL,
+                                sizeof (drag), NULL, &drag);
 								
-					peer->currentDataObj_ = new VCF::DataObject();
-					
-					VCF::DropTargetEvent event( target, peer->currentDataObj_ );
-					
-					event.setType( DropTarget::DRAG_ENTERED );
-					event.setActionType( action );
-					event.setDropPoint( dragPt );
-					target->handleEvent( &event );
-					
-					if ( event.getAction() == daNone ) {
+					if ( noErr == GetDragPasteboard( drag, &pasteboard ) ) {
+						peer->currentDataObj_ = new VCF::DataObject();
+						OSXClipboard::initDataObjectFromPasteBoard( pasteboard, peer->currentDataObj_ );
 						
-					}
+						VCF::DropTargetEvent event( target, peer->currentDataObj_ );
+						
+						event.setType( DropTarget::DRAG_ENTERED );
+						event.setActionType( action );
+						event.setDropPoint( dragPt );
+						target->handleEvent( &event );
+						
+						if ( event.getAction() == daNone ) {
+							result = eventNotHandledErr;
+						}
+						else {
+							Boolean val = true;
+							SetEventParameter( inEvent, kEventParamControlWouldAcceptDrop, typeBoolean,
+												sizeof(Boolean), &val );
+							result = noErr;
+						}
+						
+						OSX_ShowDragCursor( event.getAction() );
+					}					
 				}
 				break;
 				
 				case kEventControlDragWithin : {					
+					
 					VCF::DropTargetEvent event( target, peer->currentDataObj_ );
 					event.setType( DropTarget::DRAGGING_OVER );
 					event.setDropPoint( dragPt );
 					event.setActionType( action );
 					target->handleEvent( &event );
+					
+					OSX_ShowDragCursor( event.getAction() );
+					
+					result = noErr;
 				}
 				break;
 				
@@ -142,12 +190,15 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 						peer->currentDataObj_->free();
 						peer->currentDataObj_ = NULL;
 					}
+					
+					result = noErr;
 				}
 				break;
 				
 				//clean up the currentDataObj_ instance
 				//recreate a new instance, this time with data
-				case kEventControlDragReceive : {					
+				case kEventControlDragReceive : {	
+								
 					if ( NULL != peer->currentDataObj_ ) {
 						peer->currentDataObj_->free();
 						peer->currentDataObj_ = NULL;
@@ -169,6 +220,8 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 							peer->currentDataObj_->free();
 							peer->currentDataObj_ = NULL;
 						}
+						
+						result = noErr;
 					}
 				}
 				break;
@@ -184,6 +237,18 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.3  2005/12/04 20:58:32  ddiego
+*more osx impl work. foundationkit is mostly complete now.
+*
+*Revision 1.2.2.2  2005/11/30 05:31:35  ddiego
+*further osx drag-drop updates.
+*
+*Revision 1.2.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.2  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

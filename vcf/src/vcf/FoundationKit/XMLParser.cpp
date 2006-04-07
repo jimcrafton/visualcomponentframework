@@ -273,7 +273,7 @@ void XMLParser::parse( const String& xmlString )
 
 void XMLParser::parse( InputStream* stream )
 {
-	int sz = stream->getSize();
+	uint32 sz = stream->getSize();
 
 	if ( sz == 0 ) { //nothing to parse
 		return;
@@ -283,9 +283,37 @@ void XMLParser::parse( InputStream* stream )
 	memset( tmpBuffer, 0, (sz+1)*sizeof(char));
 
 	stream->seek( 0, stSeekFromStart );
-	stream->read( tmpBuffer, sz );
+	stream->read( (unsigned char*)tmpBuffer, sz );
 
-	String xmlText = tmpBuffer;
+	
+	UnicodeString::AnsiChar* strBuf = tmpBuffer;
+
+	int bom = UnicodeString::adjustForBOMMarker( strBuf, sz );
+
+	String xmlText;
+	switch ( bom ) {
+		case UnicodeString::UTF8BOM : {
+			xmlText.assign( strBuf, sz );
+		}
+		break;
+
+		case UnicodeString::UTF16LittleEndianBOM : {
+			xmlText.assign( (UnicodeString::UniChar*)strBuf, sz / sizeof(UnicodeString::UniChar) );
+		}
+		break;
+
+		case UnicodeString::UTF32BigEndianBOM : //case UnicodeString::UTF16BigEndianBOM :
+		case UnicodeString::UTF32LittleEndianBOM :  {
+			//barf!!!
+			throw RuntimeException( MAKE_ERROR_MSG_2("Unable to handle this kind of Unicode BOM marked text!") );
+		}
+		break;
+
+		default : {
+			xmlText.assign( strBuf, sz );
+		}
+		break;
+	}
 
 	delete [] tmpBuffer;
 
@@ -562,7 +590,6 @@ const VCFChar* XMLParser::parseNode( const VCFChar* nodePtrStart, const VCFChar*
 
 	P = skipWhitespace( P, end-P );
 
-
 	P = parseAttrs( P, nodePtrEnd );
 
 	while ( (*P != XMLParser::TagClose) && (*P != 0) ) {
@@ -779,6 +806,22 @@ String XMLParser::decodeText( const String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.4.2.3  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
+*Revision 1.4.2.2  2005/09/08 03:43:06  ddiego
+*fix for BOM marker in input stream handling and xml parser.
+*
+*Revision 1.4.2.1  2005/09/08 03:16:58  ddiego
+*fix for BOM marker in input stream handling and xml parser.
+*
 *Revision 1.4  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

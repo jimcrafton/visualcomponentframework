@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -39,7 +39,8 @@ namespace agg
     class bezier_arc
     {
     public:
-        bezier_arc() : m_vertex(26) {}
+        //--------------------------------------------------------------------
+        bezier_arc() : m_vertex(26), m_num_vertices(0), m_cmd(path_cmd_line_to) {}
         bezier_arc(double x,  double y, 
                    double rx, double ry, 
                    double start_angle, 
@@ -48,6 +49,7 @@ namespace agg
             init(x, y, rx, ry, start_angle, sweep_angle);
         }
 
+        //--------------------------------------------------------------------
         void init(double x,  double y, 
                   double rx, double ry, 
                   double start_angle, 
@@ -66,7 +68,7 @@ namespace agg
             *x = m_vertices[m_vertex];
             *y = m_vertices[m_vertex + 1];
             m_vertex += 2;
-            return (m_vertex == 2) ? path_cmd_move_to : path_cmd_curve4;
+            return (m_vertex == 2) ? path_cmd_move_to : m_cmd;
         }
 
         // Supplemantary functions. num_vertices() actually returns doubled 
@@ -80,6 +82,7 @@ namespace agg
         unsigned m_vertex;
         unsigned m_num_vertices;
         double   m_vertices[26];
+        unsigned m_cmd;
     };
 
 

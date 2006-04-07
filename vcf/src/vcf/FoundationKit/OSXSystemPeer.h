@@ -56,6 +56,8 @@ public:
 	virtual String getUserName();
 	
 	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
+	
+	virtual String createTempFileName( const String& directory ) ;
 protected:
 	struct timezone timeZone_;
 	struct timeval time_;
@@ -67,6 +69,12 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.7  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.6.2.1  2006/02/22 01:26:22  ddiego
+ *mac osx updates.
+ *
  *Revision 1.6  2005/07/10 00:20:40  ddiego
  *updated osx code from merge over of devmain-0-6-7.
  *

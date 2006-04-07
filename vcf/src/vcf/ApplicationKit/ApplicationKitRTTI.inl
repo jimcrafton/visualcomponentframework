@@ -25,6 +25,45 @@ This was created to improved compile times
 
 namespace VCF {
 
+/**
+*A string array for the controls alignement types
+*/
+static String AlignmentTypeNames[] = { "AlignNone",
+                                         "AlignTop",
+										 "AlignLeft",
+										 "AlignRight",
+										 "AlignBottom",
+										 "AlignClient" };
+										 
+										 
+
+/**
+*an array of Anchor type names
+*/
+static String AnchorTypeNames[] = { "AnchorNone",
+                                         "AnchorTop",
+										 "AnchorLeft",
+										 "AnchorBottom",
+										 "AnchorRight" };
+										 
+										 
+										 
+
+static unsigned long AnchorTypeValues[] = { AnchorNone,
+                                         AnchorTop,
+										 AnchorLeft,
+										 AnchorBottom,
+										 AnchorRight };	
+
+
+
+static String TextAlignmentTypeNames[] = { "taTextLeft",
+                                         "taTextCenter",
+										 "taTextRight" };
+										 
+
+
+
 
 _class_rtti_(ImageList, "VCF::Component", IMAGELIST_CLASSID )
 _property_object_( Color, "transparentColor", getTransparentColor, setTransparentColor, "" );
@@ -94,9 +133,13 @@ _event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, I
 _class_rtti_end_
 */
 
-_class_abstract_rtti_(AbstractModel, "VCF::Model", ABSTRACTMODEL_CLASSID)
+_class_abstract_rtti_(Model, "VCF::Component", MODEL_CLASSID)
 _event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelChanged )
 _event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+_class_rtti_end_
+
+_class_abstract_rtti_(AbstractModel, "VCF::Model", ABSTRACTMODEL_CLASSID)
+
 _class_rtti_end_
 
 /*
@@ -121,7 +164,7 @@ _class_abstract_rtti_(Component, "VCF::Object", COMPONENT_CLASSID)
 _property_( long, "tag", getTag, setTag, "" );
 _property_( String, "name", getName, setName, "" );
 _event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentCreated );
-_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentDeleted );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentDestroyed );
 _class_rtti_end_
 
 
@@ -149,7 +192,9 @@ _property_object_( Container, "container", getContainer, setContainer, "" );
 _property_enum_labeled_( AlignmentType, "alignment", getAlignment, setAlignment,
 					   AlignNone, AlignClient, 6, AlignmentTypeNames, "");
 
-_property_enumset_( "anchor", getAnchor, setAnchor, 5, AnchorTypeValues, AnchorTypeNames, ""  );
+_property_enumset_( VCF::AnchorTypes, "anchor", getAnchor, setAnchor, 5, AnchorTypeValues, AnchorTypeNames, ""  );
+
+_property_typedef_( long, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" );
 
 _event_("VCF::ControlEventHandler",  VCF::ControlEvent, ControlSized );
 _event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlPositioned );
@@ -227,10 +272,7 @@ _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
 
-_class_abstract_rtti_(Model, "VCF::Object", MODEL_CLASSID)
-_abstract_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelEmptied )
-_abstract_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
-_class_rtti_end_
+
 
 /* 
 JC - Note that we should change this to RTTI as an interface!!!
@@ -439,10 +481,6 @@ _class_rtti_(Dialog, "VCF::Frame", DIALOG_CLASSID )
 _class_rtti_end_
 
 
-_class_rtti_(HTMLBrowserControl, "VCF::Control", HTMLBROWSERCONTROL_CLASSID)
-_property_( String, "currentURL", getCurrentURL, setCurrentURL, "" );
-_class_rtti_end_
-
 _class_rtti_(HeaderControl, "VCF::CustomControl", HEADERCONTROL_CLASSID)
 	_property_object_( ColumnModel, "columnModel", getColumnModel, setColumnModel, "" );
 	_event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
@@ -490,6 +528,7 @@ _property_enum_labeled_( IconStyleType, "iconStyle", getIconStyle, setIconStyle,
 _property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIconAlignment,
 					   iaNone, iaAutoArrange, 4, IconAlignTypeNames, "");
 _property_object_( ListModel, "listModel", getListModel, setListModel, "" );
+_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
 
 _event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelectionChanged );
 _event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
@@ -728,6 +767,19 @@ _class_rtti_(EnumPropertyEditor, "VCF::AbstractPropertyEditor", ENUMPROPERTYEDIT
 _class_rtti_end_
 
 
+
+#define ENUMSETPROPERTYEDITOR_CLASSID "7503b6d1-fe95-4167-9430-41e2d583bbdb"
+
+_class_rtti_(EnumSetPropertyEditor, "VCF::AbstractPropertyEditor", ENUMSETPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+#define CURSORPROPERTYEDITOR_CLASSID "145181bc-70d6-47cb-9dc4-163540e82cf3"
+
+_class_rtti_(CursorPropertyEditor, "VCF::AbstractPropertyEditor", CURSORPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
 #define COLORPROPERTYEDITOR_CLASSID "5f7c1d05-78da-4e6b-b22b-fc290e5207e4"
 
 _class_rtti_(ColorPropertyEditor, "VCF::AbstractPropertyEditor", COLORPROPERTYEDITOR_CLASSID)
@@ -761,6 +813,30 @@ _class_rtti_end_
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.7  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.2.6  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.4.2.5  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
+*Revision 1.4.2.4  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.4.2.3  2005/09/20 03:24:18  ddiego
+*minor fixes.
+*
+*Revision 1.4.2.2  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.4.2.1  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
 *Revision 1.4  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

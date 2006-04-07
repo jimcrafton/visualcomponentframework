@@ -67,22 +67,22 @@ namespace VCF {
 class Color;
 
 /**
-ColorSpace
-class managing all the color transformations between different color spaces
+\class ColorSpace Color.h "vcf/GraphicsKit/Color.h"
+A class for managing all the color transformations between different color spaces
 
-\par
+
 ColorSpace interface
- \par
+ 
  Hue Luminosity management
-	\par
-	WebPage: <br>
-			http:www.acm.org/jgt/papers/SmithLyons96/  <br>
-			http:www.scottandmichelle.net/scott/code/index2.mv?codenum=045<br>
-			(google search advanced all words: hue saturation source code)<br>
+	
+	WebPages: 
+	\li http://www.acm.org/jgt/papers/SmithLyons96/  
+	\li	http://www.scottandmichelle.net/scott/code/index2.mv?codenum=045
+	\note
+		(google search advanced all words: hue saturation source code)
 
-\par
-Author: <br>
-				Alvy Ray Smith <br>
+
+Author: Alvy Ray Smith <br>
 				Microsoft <br>
 				Redmond, Washington <br>
 				alvys@microsoft.com <br>
@@ -90,7 +90,6 @@ Author: <br>
 				Mill Valley, California <br>
 				lyons@nbn.com <br>
 
-\par
 Abstract:
 	The two most common color selector models, other than RGB (Red-Green-Blue),
 	are the hue-based HSV (Hue-Saturation-Value) and HSL (Hue-Saturation-Lightness) color models.
@@ -100,9 +99,9 @@ Abstract:
 	Choose a hue. Lighten it with white. Darken it with black.
 	We explain that lightening is not the opposite of darkening.
 
-\par
+
 Modified, with some fixes to the algorithms, by Marcello Pietrobon
-\par
+
 Modified, by Jim Crafton, fixed some errors due to inclusion of Win32 types
 */
 class GRAPHICSKIT_API ColorSpace {
@@ -116,7 +115,11 @@ public:
 
 	#define HUECRITICALMAX	( 1.0 - 1.0 / 6.0 )	// max r/g/b value is 255 ?
 
-	static const double HueCriticalMax;	// = ( 1.0 - 1.0 / 6.0 )	- Hue > HueCriticalMax => rgb.R > 1;
+	/**
+	HueCriticalMax is assigned ( 1.0 - 1.0 / 6.0 )
+	Hue > HueCriticalMax => rgb.R > 1;
+	*/
+	static const double HueCriticalMax;	// = ( 1.0 - 1.0 / 6.0 )	
 
 	enum {
 		RGBMax   = 0xFF,      // 255  When the max r/g/b value is 255
@@ -263,16 +266,25 @@ public:
 
 	static double getChanged( const double& initialVal, const double& percent );
 
-	// suggested with colors: 0.0/ 0.0 / 0.71428571428571
-	// suggested with grays:  0.0/ 0.0 / 0.33333333333333
+	/**	
+	It is suggested to call this function with colors: 0.0/ 0.0 / 0.71428571428571
+	
+	It is suggested to call this function with grays:  0.0/ 0.0 / 0.33333333333333
+	*/
 	static void changeHSV ( HSVtype& hsv, const double& percentH, const double& percentS, const double& percentV );
 
-	// suggested with colors: 0.0/ 0.0 / -0.71428571428571
-	// suggested with grays:  0.0/ 0.0 / -0.33333333333333
+	/**	
+	It is suggested to call this function with colors: 0.0/ 0.0 / -0.71428571428571
+	
+	It is suggested to call this function with grays:  0.0/ 0.0 / -0.33333333333333
+	*/
 	static void changeHSL ( HSLtype& hsl, const double& percentH, const double& percentS, const double& percentL );
 
-	// suggested with colors: 0.0/ 0.0 / 0.71428571428571
-	// suggested with grays:  0.0/ 0.0 / 0.33333333333333
+	/**	
+	It is suggested to call this function with colors: 0.0/ 0.0 / 0.71428571428571
+	
+	It is suggested to call this function with grays:  0.0/ 0.0 / 0.33333333333333
+	*/
 	static void changeHWB ( HWBtype& hsl, const double& percentH, const double& percentW, const double& percentB );
 
 	static HSVtype changeHSV ( const HSVtype& hsv, const double& percentH, const double& percentS, const double& percentV );
@@ -311,6 +323,7 @@ public:
 #define COLOR_CLASSID	"AA34A97B-8294-4697-857D-398FB355EB2D"
 
 /**
+\class Color Color.h "vcf/GraphicsKit/Color.h"
 Color class documentation
 */
 class GRAPHICSKIT_API Color : public VCF::Object {
@@ -768,27 +781,22 @@ private:
 
 	Some notes for the future programmer.
 
-	\par
 	Note: The choice of using the const  qualifier for s_ makes difficult to add a new color
 	( it is not a const pointer though ).
-	
-	\par
+		
 	To check if a color has a name you need to use some constructor.
 	
-	\par
 	Example:
 	\code
 	Color( (VCF::uchar)r, (VCF::uchar)g, (VCF::uchar)b) )
 	\endcode
 	
 
-	\par
 	We have some difficulties only if we have to add a new color. And the only way to
 	avoid these difficulties is to declare s_ without the 'const' qualifier,
 	which would cause worse problems though.
 	
-	\par
-	Usage : <br>
+	Usage : 
 	To add a new color, check if the color already exists with a name:
 
 	\code
@@ -1291,6 +1299,7 @@ inline void Color::getInvertedRGB16( uint16& r, uint16& g, uint16& b ) const {
 
 
 /**
+\class ColorNames Color.h "vcf/GraphicsKit/Color.h"
 struct with all color names not included by VCF:
 they are essentially grays
 we need to instantiate it somewhere: unfortunately non-integer constant have no external
@@ -2237,6 +2246,18 @@ inline ulong32 ColorSpace::changeHue( const ulong32& color, const double& deltaH
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.2  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.5.2.1  2006/03/10 21:49:33  ddiego
+*updates to color example and some documentation.
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

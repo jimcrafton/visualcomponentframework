@@ -18,6 +18,7 @@ namespace VCF {
 
 class ProcessWithRedirectedIO;
 /**
+\class ProcessIORedirectionPeer ProcessIORedirectionPeer.h "vcf/FoundationKit/ProcessIORedirectionPeer.h"
 This defines the interface for a redirecting process input/ouput.
 At this time only output redirection is supported. In other words
 the process is created such that the normal output to stdout is captured
@@ -27,19 +28,7 @@ and an event is fired whenever there is output data ready to be consumed,
 class FOUNDATIONKIT_API ProcessIORedirectionPeer : public ProcessPeer {
 public:
 	virtual ~ProcessIORedirectionPeer(){};
-
-	/**
-	Add an event handler. This event handler will be "invoked"
-	when there is a new OutputReady event that needs to be fired
-	@param EventHandler the event handler to add to the process
-	*/
-	virtual void addOutputReadyHandler( EventHandler* eventHandler ) = 0;
-
-	/**
-	Removes an event handler.
-	*/
-	virtual void removeOutputReadyHandler( EventHandler* eventHandler ) = 0;
-
+	
 	/**
 	sets the peer's ProcessWithRedirectedIO process instance. When an
 	OutputReady event occurs, the ProcessWithRedirectedIO instance is what
@@ -54,6 +43,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

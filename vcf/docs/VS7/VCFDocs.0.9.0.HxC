@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE HelpCollection>
+<HelpCollection
+  DTDVersion="1.0"
+  Id=""
+  FileVersion="0.0.0.0"
+  LangId=""
+  Font=""
+  FontSize=""
+  Charset=""
+  Title="Online Help"
+  Copyright="">
+
+  <AttributeDef File="VCFDocs.0.9.0.HxA"/>
+
+  <TOCDef File="VCFDocs.0.9.0.HxT"/>
+
+  <KeywordIndexDef File="VCFDocs.0.9.0_K.HxK"/>
+  <KeywordIndexDef File="VCFDocs.0.9.0_NamedUrlIndex.HxK"/>
+
+  <ItemMoniker Name="!DefaultFullTextSearch" ProgId="HxDs.HxFullTextSearch" InitData="FTS"/>
+  <ItemMoniker Name="!DefaultKeywordIndex" ProgId="HxDs.HxIndex" InitData="K"/>
+  <ItemMoniker Name="!DefaultNamedUrlIndex" ProgId="HxDs.HxIndex" InitData="NamedUrlIndex"/>
+  <ItemMoniker Name="!DefaultTOC" ProgId="HxDs.HxHierarchy" InitData="VCFDocs.0.9.0"/>
+
+  <ToolData Name="MSVHWLogLevel" Value="3"/>
+  <ToolData Name="MSVHWLogFile" Value="VCFDocs.0.9.0.log"/>
+  <ToolData Name="MSVHWNamespace" Value="vcf.VCFDocs.0.9.0"/>
+  <ToolData Name="FAR.NamespaceDesc" Value="Visual Component Framework 0.9.0"/>
+</HelpCollection>

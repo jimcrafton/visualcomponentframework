@@ -207,7 +207,6 @@ bool Thread::isActive()
 	return peer_->isActive();
 }
 
-
 Waitable::WaitResult Thread::wait()
 {
 	return (Waitable::WaitResult) peer_->wait();
@@ -252,6 +251,12 @@ Thread* Thread::getMainThread()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/19 00:04:17  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -28,36 +28,1073 @@ NB: This software will not save the world.
 
 <section><title>Component Authoring </title>
 	<para>
+	The VCF supports components as a way of re-using code, and a way to 
+	manipulate this code from within a design time UI editor. The VCF
+	Builder project aims to provide one type of an editor like this.
+	The rest of this document will explain how to write custom components 
+	such that a tool like the <ulink url="http://vcfbuilder.org">VCF Builder</ulink> 
+	can re-use them and make them available to other developers.
 	</para>
+	<para>
+	Components are edited at design time by editing their properties. 
+	Components also have event's, to which event handler's can be added to. 
+	In addition to properties and events, a component instance can also 
+	be edited as a unit (known as component editing).  
+	</para>
+	
+	<para>
+	A component is persisted in a text based format that's very simple to read
+	and can even be edited by hand if need be. The storage layout is basically a 
+	listing of all the properties exposed by the component in a name/value format.
+	The result of storing the component results in a hierarchical layout - each 
+	child of the component is also stored. To actually store a component the 
+	VFFOutputStream class is used. Please see the source documentation for this
+	class for more information about it and the VFF component file format.
+	</para>
+	<section><title>Writing a Component</title>
+	</section>
+	
 	<section><title>Property Editing </title>
 		<para>
+		Property editing is the primary way of editing a component in a UI designer,
+		like the one in the <ulink url="http://vcfbuilder.org">VCF Builder</ulink>.
+		Each component class can expose various properties by using the VCF's RTTI 
+		system. When selected, these properties are then displayed in a UI that allows
+		the user to editing them individually. 
 		</para>
+		<para>
+		Allowing the user to edit a property is the job of a property editor, which 
+		is defined by the PropertyEditor interface. Property editors are associated
+		with a particular type name (like and "int", "String", or even some class
+		name) which is managed by the PropertyEditorManager class. The property editor
+		can provide a custom UI for the user to use, and can also control how the 
+		property is presented visually to the user. For example this is the default
+		display for properties that are number types (such as an int or a double):
+		
+		<screenshot>
+			<graphic fileref="gfx/default-pe.png"></graphic>
+		</screenshot>
+		The next example shows how the display is customized for a Font property, 
+		showing the actual font settings to give the user a preview of what the
+		property will look like:
+		<screenshot>
+			<graphic fileref="gfx/custom-pe.png"></graphic>
+		</screenshot>
+		</para>
+		
+		<para>
+		A property editor can have attributes that indicate how it is to be used. These
+		can indicate that the property should be displayed as a series of potential values,
+		or that the property is itself an object, and that it has child properties that can 
+		also be edited. The Font property is a good example. The Font itself is an object
+		with properties, and we can see in the screen shot below that the UI shows this:
+		<screenshot>
+			<graphic fileref="gfx/pe-subprops.png"></graphic>
+		</screenshot>		
+		</para>
+		
+		<section><title>Creating a new property editor class</title>
+			<para>
+			When creating a custom property editor, the easiest way to do so is to derive a 
+			new class from VCF::AbstractPropertyEditor. This provides some basic implementations
+			for you, nad just in general makes it easier than starting from scratch implementing 
+			the PropertyEditor interface.
+			<programlisting>
+			<![CDATA[
+class MyPropertyEditor : public AbstractPropertyEditor {
+public:
+	MyPropertyEditor(){}
+
+};			
+			]]>
+			</programlisting>
+			Deriving from VCF::AbstractPropertyEditor simplifies what you need to implement for
+			your property editor. This gives us a basic, bare bones implementation to work from. 
+			It's also possible to derive from some other existing property editors, such as:
+			<table frame="none" pgwide="1">			
+				<tgroup cols="2" align="left" colsep="0" rowsep="0">
+					<thead>
+						<row>
+							<entry>Type(s)</entry>
+							<entry>Property editor class</entry>
+						</row>							
+					</thead>
+					<tbody>
+						<row>
+							<entry>int, long, or short</entry>
+							<entry>VCF::IntegerPropertyEditor</entry>
+						</row>
+						<row>
+							<entry>double, float</entry>
+							<entry>VCF::DoublePropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>bool</entry>
+							<entry>VCF::BoolPropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>String</entry>
+							<entry>VCF::StringPropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>double, float</entry>
+							<entry>VCF::IntegerPropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>enum</entry>
+							<entry>VCF::EnumPropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>VCF::Color</entry>
+							<entry>VCF::ColorPropertyEditor</entry>
+						</row>
+						
+						<row>
+							<entry>VCF::Font</entry>
+							<entry>VCF::FontPropertyEditor</entry>
+						</row>					
+					</tbody>
+				</tgroup>
+			</table>
+			</para>
+			
+			<section><title>Attributes</title>
+			<para>
+			Each property editor has a series of attributes that tell the "host"
+			UI how the editor should be displayed or how it should be handled. For example,
+			if the property editor has the PropertyEditor::paReadOnly attribute, this 
+			indicates that the property is read-only, it cannot be modified by the 
+			editor. If the editor has the PropertyEditor::paNeedsCustomPaint attribute,
+			then this indicates that the editor can paint itself, and the host should call
+			the editor's paintValue() method during the paint cycle. A complete list is diplayed
+			in the table below:
+			<table frame="none" pgwide="1">
+				<tgroup cols="2" align="left" colsep="0" rowsep="0">
+					<thead>
+						<row>
+							<entry>Attribute</entry>
+							<entry>Meaning</entry>
+						</row>							
+					</thead>
+					<tbody>
+						<row>
+							<entry>PropertyEditor::paHasValues</entry>
+							<entry>	Indicates that the property editor can return a vector of 
+							string values that represent possible values for the property. For 
+							example, a color property editor might return a list of color names. 
+							A Font editor might return a list of system fonts.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paSortValues </entry>
+							<entry>Indicates that the values returned by the editor need to be 
+							sorted.	The sort process should call the PropertyEditor::sort() method 
+							while iterating through the list.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paHasSubProperties </entry>
+							<entry>Indicates that the source object's property itself has sub 
+							properties. Things like a font or color property may use this to 
+							indicate separate elements that can be set.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paAllowsMultiSelect </entry>
+							<entry>Indicates whether or not the editor allows multiple selection. 
+							If the editor does have this set, then it needs to implement the 
+							PropertyEditor::setSources() method.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paReadOnly </entry>
+							<entry>Indicates that the editor is read only - the value cannot be 
+							changed and is only for display.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paNeedsCustomPaint </entry>
+							<entry>Indicates that the editor can paint it's representation when 
+							the editor is not active.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paUsesModalDialogForEditing  </entry>
+							<entry>This indicates that the implementor will display a modal dialog 
+							when the PropertyEditor::edit() method is called.</entry>
+						</row>
+						
+						<row>
+							<entry>PropertyEditor::paValueNeedsDuplicating </entry>
+							<entry>This indicates that the property value of the editor needs to 
+							be cloned. This only makes sense if the property type is some sort of 
+							Object instance. The object should be cloned by a call to the original 
+							object's Object::clone() method.</entry>
+						</row>
+					</tbody>	
+				</tgroup>
+			</table>	
+			</para>
+			<para>
+			You can change the attributes your editor supports by modifying the 
+			AbstractPropertyEditor::attributes_ member variable. For example, to make the
+			editor read-only:
+			<programlisting>
+			<![CDATA[
+class MyPropertyEditor : public AbstractPropertyEditor {
+public:
+	MyPropertyEditor(){
+		attributes_ = PropertyEditor::paReadOnly;
+	}
+
+};			
+			]]>
+			</programlisting>
+			If you wanted to make the editor have values, for example, the values "One" and "Two":
+			<programlisting>
+			<![CDATA[
+class MyPropertyEditor : public AbstractPropertyEditor {
+public:
+	MyPropertyEditor(){
+		attributes_ = PropertyEditor::paHasValues;
+	}
+	
+	virtual std::vector<String> getStringValues(){
+		std::vector<String> result(2);
+		result[0] = "One";
+		result[1] = "Two";
+		return result;
+	}
+};			
+			]]>
+			</programlisting>
+			When the host displays your editor, it will use a combo box control, and populate it's
+			list with two elements - "One" and "Two" - after calling the getStringValues() method
+			of your editor instance.
+			</para>
+			</section>
+			<section><title>Storing the property's value</title>
+			<para>
+			The value for a property is set or retreived by using a VariantData class. The 
+			PropertyEditor::setValue() and PropertyEditor::getValue() are the methods
+			that deal with this. Since we're deriving from AbstractPropertyEditor, a member 
+			variable is provided for us, and the default implementation handles getting and 
+			setting these values. 
+			</para>
+			<para>
+			Most of the time the values will be basic types like an int, a bool, or a
+			String. However, sometimes the value is an Object instance, which may need to
+			be copied, as opposed to just copying the pointer value. This is indicated by the 
+			property editor having the PropertyEditor::paValueNeedsDuplicating attribute. 
+			The default implementation in the AbstractPropertyEditor class handles 
+			copying the object if PropertyEditor::paValueNeedsDuplicating is set. 
+			</para>
+			<para>
+			As a rule, if the value your proeprty editor wraps is an Object instance, then
+			you'll probably need to have the PropertyEditor::paValueNeedsDuplicating attribute 
+			set.
+			</para>
+			<para>
+			In addition to setting the value of the property editor by way of a VariantData object,
+			the editor also needs to accept data in the form of a string. This is what the 
+			PropertyEditor::setValueAsText() method is for. Again the AbstractPropertyEditor
+			implements this for us, by simply calling the VariantData's setFromString()
+			method.
+			</para>
+			</section>
+			<section><title>Retreiving the property's value</title>
+			<para>
+			When the host needs to get the data stored by the property editor, it calls either
+			PropertyEditor::getValue() or PropertyEditor::getValueAsText(). The AbstractPropertyEditor			
+			implements both of these for us, so in general we don't need to worry about them.
+			</para>
+			
+			<section><title>Custom property types</title>
+			<para>
+			Sometimes what you way to do is to edit a custom type of existing property type. For 
+			example, if you had a property that was a filename, you would still be dealing with a
+			String, but you'd want your editor associated with a string specific to file names. 
+			You can do this by making a typedef of a String type, and then associating this
+			typedef symbol with both your component's RTTI decalarations, and when you register 
+			your property editor. The ImageControl does just this:
+			<programlisting><filename>ImageControl.h</filename>
+			<![CDATA[
+typedef String ImageFilenameString;			
+			]]>
+			</programlisting>
+			<programlisting><filename>ApplicationKitRTTI.inl</filename>
+			<![CDATA[
+_class_rtti_(ImageControl, "VCF::CustomControl", IMAGECONTROL_CLASSID)
+//rest omitted...
+_property_typedef_( String, "filename", getFilename, setFilename, "VCF::ImageFilenameString", "" );
+_class_rtti_end_
+			]]>
+			</programlisting>
+			The <function>_property_typedef_</function> macro associates the "real" type (a String)
+			with it's typedef-ed name ("VCF::ImageFilenameString") which will allow us to register a 
+			property editor with the typedef-ed name like so:
+			<programlisting><filename>UIToolkit.cpp</filename>
+			<![CDATA[
+PropertyEditorManager::registerPropertyEditor( "VCF::ImageFilenamePropertyEditor", "VCF::ImageFilenameString" );
+			]]>
+			</programlisting>
+			</para>
+			</section>
+			</section>
+			<section><title>Sub Properties</title>
+			<para>
+			Some propert editor's have what are called "sub properties". In other words, the
+			object that the property editor represents is itself made of properties, and 
+			you can edit these properties as well. For example, if we were representing a 
+			Font, the font itself contains properties, thus our property editor would have 
+			"sub properties" and it would have the PropertyEditor::paHasSubProperties
+			set. The host implementation will do the rest in terms of presenting a suitable 
+			UI for the sub proeprties. In the case of the VCF Builder that's why we see the
+			tree view presentation with the disclosure button to display the sub properties.
+			</para>
+			</section>
+			
+			<section><title>Multiple values and sorting</title>
+			<para>
+			As mentioned earlier, some property editors can display one or more default values
+			in list. This is done by making sure the PropertyEditor::paHasValues attribute is
+			set and then implementing the getStringValues() method to return a suitable vector
+			of string values. For example, the Color property editor returns a list of 
+			color names like so:
+			<programlisting>
+			<![CDATA[
+
+std::vector<String> ColorPropertyEditor::getStringValues()
+{
+	int count = ColorNames::uniqueColorLast-ColorNames::uniqueColorFirst;
+	std::vector<String> result(count);
+
+	for ( int i=ColorNames::uniqueColorFirst;i<ColorNames::uniqueColorLast;i++ ) {
+		result[i-ColorNames::uniqueColorFirst] = ColorNames::at( (ColorNames::ColorID)i );
+	}
+
+	return result;
+}			
+			]]>
+			</programlisting>
+			We determine the number of unique color names (count), set a vector of strings
+			to be this size, and then loop through the color names, retreiving each one. The
+			host will call this and fill in a suitable presentation for the user to select one
+			of the values. In the VCF Builder this is accomplished by using an ComboBoxControl 
+			and populating it's ListModel.
+			<screenshot>
+				<graphic fileref="gfx/pe-hasvalues.png"></graphic>
+			</screenshot>			
+			</para>
+			<para>
+			In addition to having a list of values, the property editor can also specify a specific 
+			sort order for these values. By implementing the PropertyEditor::sort() method, you
+			can control how the host will display your values. The PropertyEditor::sort() takes
+			two string values, and returns a boolean value. An example of this can be seen in 
+			the Color property editor, which simply implements this as a simple string compare:
+			<programlisting>
+			<![CDATA[
+bool ColorPropertyEditor::sort( const String& strVal1, const String& strVal2 )
+{
+	return strVal1 > strVal2;
+}			
+			]]>
+			</programlisting>
+			</para>
+			</section>
+			<section><title>Painting the display of a property</title>
+			<para>
+			You can control the way a property editor display's a property by setting the 
+			PropertyEditor::paNeedsCustomPaint attribute, and implementing the 
+			PropertyEditor::paintValue() method. The host will call your paintValue()
+			method and pass in a VariantData pointer for the property value, a GraphicsContext
+			instance for the current GraphicsContext to paint on, a Rect instance that defines
+			the drawable area you can paint in, and finally a DrawUIState that indicates the 
+			current UI state.
+			</para>
+			<para>
+			For an example of this lets look at the ColorPropertyEditor code for this.
+			We can see the result of this here:
+			<screenshot>
+				<graphic fileref="gfx/pe-custom-paint.png"></graphic>
+			</screenshot>
+			<programlisting>
+			<![CDATA[
+void ColorPropertyEditor::paintValue( VariantData* value, GraphicsContext* context, const Rect& bounds, const DrawUIState& state )
+{
+	Color* c = (Color*)(Object*)(*value);
+	Color* oldColor = context->getColor();
+
+	Rect innerBds = bounds;
+
+	innerBds.inflate( -2, -2 );
+	context->setColor( Color::getColor("black") );
+	context->rectangle( &innerBds );
+	context->strokePath();
+
+	innerBds.inflate( -3, -3 );
+	context->setColor( c );
+	context->rectangle( &innerBds );
+	context->fillPath();
+	context->setColor( oldColor );
+}			
+			]]>
+			</programlisting>
+			We retreive the color value from the variant value. We then draw a black rectangle
+			the size of	our bounds. We shrink this rect and then paint a solid filled rectangle 
+			the same color as our value. 
+			</para>
+			<para>
+			It's not very hard to customize the disaplay, just remember that you're drawing must be
+			limited to the bounds argument passed in to your paintValue() method.
+			</para>
+			</section>
+		</section>
+		<section><title>Editing a Property</title>
+		<para>
+		A property can be edited in one of two ways. The property value from the 
+		editor is is transfered for display/editing to a control of some sort. This 
+		value is changed and then written back to the property and the property 
+		editor. The second way is for the host to call the property editor's edit() 
+		method, which may then display a modal dialog where the user can makes 
+		changes. If these changes are accepted, then the propert and the property 
+		editor's values are changed.
+		</para>
+		<para>
+		What method is used depends on the property editor and whether or not the 
+		editor has the PropertyEditor::paUsesModalDialogForEditing attribute set. 
+		If the PropertyEditor::paUsesModalDialogForEditing is set, then the editor 
+		must display a UI in a modal dialog in the edit() method implementation. 
+		Whatever method is used, the host will set the current value of the property
+		by calling the property editor's setValue() method <emphasis>before</emphasis>
+		calling the edit() method. 
+		</para>
+		<para>
+		For an example of this let's look at how the FontPropertyEditor handles this:
+		<programlisting>
+		<![CDATA[
+void FontPropertyEditor::edit()
+{
+	CommonFont fontDlg(NULL);
+	Font* f = (Font*)(Object*)(*(this->getValue()));
+	fontDlg.setSelectedFont( f );
+	if ( true == fontDlg.execute() ){
+		VariantData data;
+		f->copy( fontDlg.getSelectedFont() );
+		data = f;
+		this->setValue( &data );
+	}
+}		
+		]]>
+		</programlisting>
+		All this does is create a CommonFontDialog instance and then call the execute() 
+		method. This will display the dialog modally. If the dialog's execute() method returns
+		true, then the selected font of the dialog is copied into the font stored in the
+		property editor.
+		</para>
+		<para>
+		If the property editor doesn't need to be edited modally, <emphasis>but</emphasis>
+		you want to provide a custom a UI for the editing control, then you need to make
+		sure that the PropertyEditor::paUsesModalDialogForEditing attribute is not set, and 
+		that your implementation of createEditingControl() returns a valid Control instance.
+		The host will take care of embedding this control and manage it's lifetime. When the 
+		host determines that it's time to edit the custom control, the property editor's 
+		edit() method will be called. At this point the imeplementor is responsible for 
+		ensuring that changes made to the control are reflected in the variant data the property
+		editor is responsible for. When the editing control loses focus, the host will
+		get the current value from the property editor, destroy the editing control, and 
+		assign this value back to the appropriate property.
+		</para>
+		</section>
+		<section><title>Registering Property Editors</title>
+		<para>
+		The VCF will create your property editor dynamically by using the class name of
+		the property editor. This means that you need to register your class with the
+		VCF's ClassRegistry. You need to declare RTTI information for your class,
+		and then register it. For example:
+		<programlisting>
+		<![CDATA[
+class MyPropertyEditor : public AbstractPropertyEditor {
+public:
+	//rest omitted
+};	
+
+#define MYPROPERTYEDITOR_CLASSID		"2226cebc-faca-4fc9-beae-ef6d0867d05d"
+
+_class_rtti_(MyPropertyEditor, "VCF::AbstractPropertyEditor", MYPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+		]]>		
+		</programlisting>
+		To register your class you can use the REGISTER_CLASSINFO_EXTERNAL macro somewhere
+		in your startup code:
+		<programlisting>
+		<![CDATA[
+REGISTER_CLASSINFO_EXTERNAL( MyPropertyEditor )
+		]]>		
+		</programlisting>		
+		In order for the VCF to be able to associate a property type with your editor class you
+		need to associate it with the PropertyEditorManager. You can so like this:
+		<programlisting>
+		<![CDATA[
+PropertyEditorManager::registerPropertyEditor( "MyPropertyEditor", CLASS_INTEGER );		
+		]]>		
+		</programlisting>
+		This will register your property editor class, "MyPropertyEditor", as the editor 
+		to use when an integer property is found. When you're ready to actually distribute
+		your property editor, you'll want to see the "Distributing your Components and Editors"
+		section.
+		</para>		
+		</section>		
 	</section>
 	
 	<section><title>Component Editing </title>
 		<para>
+		While a property editor focuses on a single property of a component, a component
+		editor allows you to edit the complete component. A component editor works by
+		exposing 1 or more commands, which the host then displays in some fashion to the 
+		user (typically a context menu). The user then selects one, and the component 
+		editor's command is executed.
 		</para>
+		<section><title>Creating a new component editor class</title>	
+			<para>
+			When creating a custom component editor, the simplest way to start is to derive a new
+			class from AbstractComponentEditor, which provides a basic implementation
+			of the ComponentEditor interface.
+			<programlisting>
+			<![CDATA[
+class MyComponentEditor : public VCF::AbstractComponentEditor {
+public:
+	MyComponentEditor(){}
+};
+			]]>			
+			</programlisting>
+			</para>
+			<section><title>Attributes</title>
+			<para>
+			Component editors may have a set of attributes per 
+			command. The attribute set is accessed by calling the editor's
+			ComponentEditor::getAttributes() method and passing in the 
+			0 based index of the command. 
+			</para>
+			<para>
+			If you need to set attributes, you can do so by calling the 
+			AbstractComponentEditor::setAttributes() method, and pass in 
+			the index of the command you want to set attributes for, and the
+			attribute mask you want to set. For example:
+			<programlisting>
+			<![CDATA[
+class MyComponentEditor : public VCF::AbstractComponentEditor {
+public:
+	MyComponentEditor(){
+		setCommandCount( 3 );
+		setAttributes( 1, ComponentEditor::caSeparator );
+	}
+};
+			]]>			
+			</programlisting>
+			This would tell the host that your editor had 3 commands and that the "comand" at index 1
+			was a separator for commands at index 0 and index 2.
+			</para>
+			<para>
+			The following table lists the current possible component editor
+			attributes:
+			<table frame="none" pgwide="1">
+				<tgroup cols="2" align="left" colsep="0" rowsep="0">
+					<thead>
+						<row>
+							<entry>Attribute</entry>
+							<entry>Meaning</entry>
+						</row>							
+					</thead>
+					<tbody>
+						<row>
+							<entry>ComponentEditor::caSeparator</entry>
+							<entry>Indicates that the index is not a command
+							per se, but rather should be treated as a separator,
+							to break the list of commands into logical groups.
+							The exact display of this is up to the host. The 
+							VCF Builder will intrepret this as an indicator to
+							create a separator menu item.</entry>
+						</row>
+						
+						<row>
+							<entry>ComponentEditor::caHasParentIndex </entry>
+							<entry>Indicates that the command is a child command
+							of some other command. To get the parent command index,
+							the host calls the component editor's ComponentEditor::getCommandParentIndex(),
+							passing in the child commands index, and is returned the parent's index
+							value, or -1 if no index is found. The VCF Builder interprets this
+							to mean that the child will be a child menu item of it's parent.</entry>
+						</row>
+						
+						<row>
+							<entry>ComponentEditor::caUsesModalDialogForEditing </entry>
+							<entry>TODO</entry>
+						</row>
+					</tbody>	
+				</tgroup>
+			</table>
+			</para>
+			</section>
+			
+			<section><title>Accessing the Component Instance</title>
+			<para>
+			You can access the component editor's current component by calling 
+			ComponentEditor::getComponent(). This may be used when creating command 
+			instances to hand this pointer over to the command.
+			</para>
+			</section>
+			
+			<section><title>Providing Commands</title>
+			<para>
+			The main responsibility of the component editor is to provide a list
+			of 1 or more commands that can operate on the component. The component 
+			editor will need to return the number of commands it supports, and an 
+			optional index of the default command to use when editing the component.
+			The default command is the preferred command to use for some user action
+			in the host. For example, double clicking a control/component, will 
+			result in the VCF Builder requesting the default command index from the 
+			current component editor (if one exists), and then invoking that command.
+			</para>
+			<para>
+			If you derive from AbstractComponentEditor, you can easily specify all 
+			of this. You can set the number of commands to use like so:
+			<programlisting>
+			<![CDATA[
+class MyComponentEditor : public VCF::AbstractComponentEditor {
+public:
+	MyComponentEditor(){
+		setCommandCount( 3 );
+	}
+};
+			]]>
+			</programlisting>
+			This sets your command count at 3. As mentioned before, you can 
+			set any attributes for your commands at this point as well.
+			</para>
+			<para>
+			You can specify the default command to use like so:
+			<programlisting>
+			<![CDATA[
+class MyComponentEditor : public VCF::AbstractComponentEditor {
+public:
+	MyComponentEditor(){
+		setCommandCount( 3 );
+		
+		defaultCommandIndex_ = 0;
+	}
+	
+};			
+			]]>
+			</programlisting>
+			This sets our default index to 0, so our first command is our default command.
+			</para>
+			<para>
+			The component editors supplies a count of the commands available. This is implemented
+			for you if you derive from the AbstractComponentEditor. Setting the command count using
+			the AbstractComponentEditor::setCommandCount() will allow the ComponentEditor::getCommandCount
+			method to return the correct value. A host will use this value to loop and retreive each
+			command by calling ComponentEditor::createCommand(), passing a 0 based index 
+			value for the index of the comamnd. Implementing ComponentEditor::createCommand()
+			is up to the component editor implementor. One example might be:
+			<programlisting>
+			<![CDATA[
+class MyCommand : public VCF::AbstractCommand {
+public:
+	MyCommand( VCF::Component* component ) : component_(component) {
+		setName( "My Custom Component command" );
+		isUndoable_ = false; //our comand is NOT undo-able 
+	}
+	
+	virtual void undo() { //no-op }
+	
+	virtual void redo() { //no-op }
+	
+	virtual void execute() {
+		Dialog::showMessage( "Hello from MyCommand!" );
+	}
+	
+	VCF::Component* component_;
+};
+
+class MyComponentEditor : public VCF::AbstractComponentEditor {
+public:
+	MyComponentEditor(){
+		setCommandCount( 1 );
+		
+		defaultCommandIndex_ = 0;
+	}
+	
+	virtual Command* createCommand( const ulong32& index ) {
+		Command* result = NULL;
+		
+		switch ( index ) {
+			case 0 : {
+				result = new MyCommand( getComponent() );
+			}
+			break;
+		}
+		
+		return result;
+	}
+};			
+			]]>
+			</programlisting>
+			Now we've added a new command class, which in this example does nothing other than
+			displaying a simple message box in the command's execute() method.
+			<note>
+			The example command class is set to only be executable, and is <emphasis>not</emphasis>
+			allowed to be reversed or "undoable", hence the reason for setting isUndoable_ to
+			false. This means that the Command::undo() and Command::redo() methods will never be 
+			called. By default any command that derives from AbstractCommand <emphasis>is</emphasis>
+			undoable (isUndoable_ defaults to true).
+			</note>
+			In turn the MyComponentEditor::createCommand() is implemented by verifying the index
+			is 0, and if it is, then a new MyCommand instance is created.
+			</para>
+			
+			<para>
+			Finally, you can control copying your component to the clipboard by overriding the 
+			default implementation of the AbstractComponentEditor::copy() method. All the 
+			copy() method has to do is copy the component, in some format, to the clipboard. If you 
+			don't need to deal with this, then just leave it alone. The default behaviour, handled
+			by the host, is to simply copy the component's VFF format to the clipboard as text.
+			</para>
+			</section>
+		</section>
+		
+		<section><title>Editing a Component</title>		
+		<para>
+		The component editor is invoked by the host based on some user action. Currently the
+		VCF Builder uses the component editor when the user right clicks on a component or
+		double clicks the component. In either case, the host has the component editor create
+		a command, if possible. This new command instance is then placed on the Undo/Redo stack
+		where it is executed and saved for undo/redo (if appropriate).
+		</para>
+		</section>
+		
+		<section><title>Registering Component Editors</title>
+		<para>
+		For a component editor to be made available to the host, you need to register it
+		with the ComponentEditorManager class. This is done by calling the 
+		ComponentEditorManager::registerComponentEditor() method. You can so like this:
+		<programlisting>
+		<![CDATA[
+ComponentEditorManager::registerComponentEditor( new MyComponentEditor(), "SomeComponentClassName" );		
+		]]>
+		</programlisting>
+		You pass in a new instance of your component editor, and the class name of the component type
+		you want to associate it with. 
+		</para>
+		</section>
 	</section>
 	
 	<section><title>Saving and Loading Component State </title>
 		<para>
+		Saving and loading a component is performed by the VFFOutputStream and VFFInputStream classes, 
+		respectively. These take the component (and any of it's children) and write out a 
+		text based graph of the component and it's properties. For more information about the VFF
+		format see the VFFOutputStream class documentation in the source docs.
 		</para>
 	</section>
 	
 	<section><title>Registering Components </title>
 		<para>
+		All component's that you want to be shared need to be registered with the
+		VCF at some point.
 		</para>
+		<section><title>Component Info</title>
+		</section>	
+		<section><title>Component Manager</title>
+		</section>	
 	</section>
 	
-	<section><title></title>
+	<section><title>Distributing your Components and Editors</title>
 		<para>
+		Typically your code for you component, property editor(s) and/or component editor(s)
+		will be distributed in what's referred to as a Visual Package Library. This 
+		is simply a dynamic (or shared) library with an extension of ".vpl". 
 		</para>
+		<para>
+		If you are writing your property editor and distributing it in a VPL or Visual Package 
+		Library, then there are a few extra steps you need to take. 
+		</para>
+		<section><title>VPL Exported Functions</title>
+		<para>
+		First you'll need to create a dynamic or shared library. The exact specifics of
+		how you do this depend on the operating system, so I'll focus on doing this on Win32
+		for simplicities sake. 
+		</para>
+		<para>
+		In your development environment, create a new DLL project. If you're using Visual Studio
+		(6, 7, or 7.1) there are already wizards that can build the skeleton for a VPL for
+		you. If not, then make sure to setup your DLL project with the appropriate compiler
+		and linker options for building a VCF based project.
+		</para>
+		<para>
+		You code will need to export at least two functions, namely _vpl_init()
+		and _vpl_terminate() like so:
+		<programlisting>
+		<![CDATA[
+extern "C" {
+	
+MYEDITORS_API void _vpl_init()
+{
+	
+}
+
+
+
+MYEDITORS_API void _vpl_terminate()
+{
+	
+}
+
+
+}		
+		]]>
+		</programlisting>
+		<note>
+		The use of the <function>extern "C" {}</function> block. This is mandatory
+		becuase it's important that these two function are <emphasis>not</emphasis>
+		name-mangled. 
+		</note>
+		The macro MYEDITORS_API might be defined like so:
+		<programlisting>
+		<![CDATA[
+#ifdef WIN32
+/**
+*this is only here for microsoft VPL implementation
+*/
+	#ifdef MYEDITORS_EXPORTS
+	#define MYEDITORS_API __declspec(dllexport)
+	#else
+	#define MYEDITORS_API __declspec(dllimport)
+	#endif //MYEDITORS_EXPORTS
+#else
+	#define MYEDITORS_API
+#endif //WIN32		
+		]]>
+		</programlisting>
+		Win32 platforms need the explicit "export" or "import" keywords so that the 
+		functions or classes in the module are properly exported in the DLL and automatically 
+		imported by the developer using the DLL at link time. Most other platforms don't
+		need to hassle with this, and the "MYEDITORS_API" macro is just a blank.
+		</para>
+		<para>
+		Typically you would put this in the main header to be distributed with your code, and the
+		rest in a .cpp file that you build, perhaps like so:		
+		<programlisting><filename class='headerfile'>MyEditor.h</filename>
+		<![CDATA[
+//MyEditors.h
+
+#ifndef MYEDITORS_H__
+#define MYEDITORS_H__
+
+#ifdef WIN32
+/**
+*this is only here for microsoft VPL implementation
+*/
+	#ifdef MYEDITORS_EXPORTS
+	#define MYEDITORS_API __declspec(dllexport)
+	#else
+	#define MYEDITORS_API __declspec(dllimport)
+	#endif //MYEDITORS_EXPORTS
+#else
+	#define MYEDITORS_API
+#endif //WIN32
+
+
+extern "C"  {
+	
+MYEDITORS_API void _vpl_init();
+MYEDITORS_API void _vpl_terminate();
+
+}
+
+#endif //MYEDITORS_H__
+		
+		]]>
+		</programlisting>
+		The associated cpp file might look like this: 
+		<programlisting><filename>MyEditor.cpp</filename>
+		<![CDATA[
+//MyEditors.cpp
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/AbstractPropertyEditor.h"
+#include "vcf/ApplicationKit/PropertyEditorManager.h"
+
+#include "vcf/FoundationKit/RTTIMacros.h"
+
+
+#include "MyEditors.h"
+
+using namespace VCF;
+
+
+#define MYEDITORSPACKAGEUUID		"93b97631-78b2-4d61-94ee-c1cd84a12274"
+
+
+class MyEditorsPackage : public PackageInfo {
+public:
+	MyEditorsPackage() : PackageInfo(
+								"MyEditors", 
+								MYEDITORSPACKAGEUUID,
+								"",
+								"MyEditors.vpl",
+								PackageInfo::lfSharedLibLinkage,
+								"Bob",
+								"Bob's World Inc.",
+								"2005",
+								""){
+
+	}
+};
+
+
+
+
+class MyPropertyEditor : public AbstractPropertyEditor {
+public:
+	MyPropertyEditor(){
+		attributes_ = PropertyEditor::paHasValues;
+	}
+
+	virtual std::vector<String> getStringValues(){
+		std::vector<String> result(2);
+		result[0] = "One";
+		result[1] = "Two";
+		return result;
+	}
+};
+
+
+#define MYPROPERTYEDITOR_CLASSID		"2226cebc-faca-4fc9-beae-ef6d0867d05d"
+
+_class_rtti_(MyPropertyEditor, "VCF::AbstractPropertyEditor", MYPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+
+extern "C" {
+	
+MYEDITORS_API void _vpl_init()
+{
+	REGISTER_CLASSINFO_EXTERNAL( MyPropertyEditor );
+	PropertyEditorManager::registerPropertyEditor( "MyPropertyEditor", CLASS_INTEGER );
+}
+
+
+
+MYEDITORS_API void _vpl_terminate()
+{
+	PropertyEditorManager::removePropertyEditor( "MyPropertyEditor", "CLASS_INTEGER" );
+	ClassRegistry::removeClassByID( MYPROPERTYEDITOR_CLASSID );
+}
+
+
+}		
+		]]>
+		</programlisting>
+		</para>
+		<para>
+		The _vpl_init and _vpl_terminate functions are used by the VCF when your library is 
+		loaded and unloaded. You should put you initialization and termination code in these 
+		functions as appropriate.
+		</para>
+		</section>
+		
+		<section><title>VPL Initialization</title>
+		<para>
+		This happens once the the DLL is loaded by the operating system. The VCF will attempt
+		to call your DLL's _vpl_init() function and pass in the new loaded DLL's instance handle. 
+		At this point you can initialize your library, for example, by registering classes 
+		with the VCF's ClassRegistry, or register property or component editor's. In our case 
+		we do:
+		<programlisting>
+		<![CDATA[
+MYEDITORS_API void _vpl_init()
+{
+	REGISTER_CLASSINFO_EXTERNAL( MyPropertyEditor );
+	PropertyEditorManager::registerPropertyEditor( "MyPropertyEditor", CLASS_INTEGER );
+}		
+		]]>
+		</programlisting>
+		We register our property editor class (MyPropertyEditor) and then make sure to register 
+		the class name and property type with the VCF's PropertyEditorManager.
+		</para>
+		</section>
+		
+		<section><title>VPL Termination</title>
+		<para>
+		When a library is unloaded, the VCF will attempt to call the DLL's _vpl_terminate() 
+		function, passing in the instance handle of the library. At this point you should do 
+		any clean up that your library needs. To be absolutely safe, you should un-register 
+		and classes, editors, etc that your register in your _vpl_init() function. You need
+		to do this, because the VCF may unload your DLL and the program may continue to run.
+		Dangling pointers to dynamically allocated memory by your DLL (or any other) that 
+		has been unloaded can cause run time crashes if they are referenced by the VCF.
+		<programlisting>
+		<![CDATA[
+MYEDITORS_API void _vpl_terminate()
+{
+	PropertyEditorManager::removePropertyEditor( "MyPropertyEditor", "CLASS_INTEGER" );
+	ClassRegistry::removeClassByID( MYPROPERTYEDITOR_CLASSID );
+}		
+		]]>
+		</programlisting>
+		In our example, we remove our property editor from the PropertyEditorManager
+		and remove our class from the VCF's ClassRegistry.
+		</para>
+		</section>
 	</section>
 </section>
 
 <!--
 CVS Log info
 $Log$
+Revision 1.3  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.2.12.18  2005/09/05 02:36:52  ddiego
+more docs
+
+Revision 1.2.12.17  2005/09/04 04:05:05  ddiego
+more comp editing docs.
+
+Revision 1.2.12.16  2005/09/04 04:03:03  ddiego
+more comp editing docs.
+
+Revision 1.2.12.13  2005/09/03 14:03:52  ddiego
+added a package manager to support package info instances, and
+fixed feature request 1278069 - Background color of the TableControl cells.
+
+Revision 1.2.12.12  2005/09/02 03:48:16  ddiego
+updates to component authoring.
+
+Revision 1.2.12.9  2005/09/01 21:04:20  ddiego
+updates
+
+Revision 1.2.12.8  2005/09/01 04:00:49  ddiego
+update
+
+Revision 1.2.12.7  2005/09/01 03:56:52  ddiego
+doc updates and some minor mods to the property editor interface.
+
+Revision 1.2.12.6  2005/08/30 21:05:04  ddiego
+comp authoring updates.
+
+Revision 1.2.12.2  2005/08/30 03:39:36  ddiego
+more component authoring info.
+
+Revision 1.2.12.1  2005/08/29 03:26:19  ddiego
+adding compoent editing docs.
+
 Revision 1.2  2003/12/18 05:15:52  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

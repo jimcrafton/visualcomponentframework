@@ -19,20 +19,24 @@ namespace VCF
 
 class TreeItem;
 
-
+/**
+\class TreeModelEvent TreeModelEvent.h "vcf/ApplicationKit/TreeModelEvent.h" 
+*/
 class APPLICATIONKIT_API TreeModelEvent : public Event
 {
 public:
-	TreeModelEvent( Object* source, const ulong32& type );
+	TreeModelEvent( Object* source, const ulong32& type ) : 
+	  Event(source,type){}
 
-	TreeModelEvent( Object* source, TreeItem* item, const ulong32& type );
+	TreeModelEvent( Object* source, TreeItem* item, const ulong32& type ) : 
+	  Event(source,type), item_(item){}
+		
 
 	TreeModelEvent( const TreeModelEvent& rhs ):Event(rhs) {
 		*this = rhs;
 	}
 
-	virtual ~TreeModelEvent();
-
+	virtual ~TreeModelEvent() {}
 
 	TreeModelEvent& operator= ( const TreeModelEvent& rhs ) {
 		Event::operator =( rhs );
@@ -41,10 +45,14 @@ public:
 
 		return *this;
 	}
-
-	TreeItem* getTreeItem();
-
-	void setTreeItem( TreeItem* item );
+	
+	TreeItem* getTreeItem(){
+		return item_;
+	}
+	
+	void setTreeItem( TreeItem* item ){
+		item_ = item;
+	}
 
 	virtual Object* clone( bool deep=false ) {
 		return new TreeModelEvent(*this);
@@ -82,6 +90,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

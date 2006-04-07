@@ -19,9 +19,9 @@ namespace VCF {
 
 
 /**
+\class StringTokenizer StringTokenizer.h "vcf/FoundationKit/StringTokenizer.h"
 Class for breaking a string into a series of one or more tokens
 
-\par
 Usage:
 \code
 
@@ -39,12 +39,12 @@ while ( stk.hasMoreElements(true) ) {
 class StringTokenizer : public Object, public Enumerator<String> {
 public:
 	StringTokenizer( const String& data ) :
-		data_(data), delimiter_(" \n\r\t\f"), start_(NULL), ptr_(NULL), backPtr_(NULL) {
+		backward_(false), dataSize_(0), start_(NULL), ptr_(NULL), backPtr_(NULL), data_(data), delimiter_(" \n\r\t\f") {
 		reset();
 	}
 
 	StringTokenizer( const String& data, const String& delimiter ) :
-		data_(data), delimiter_(delimiter), start_(NULL), ptr_(NULL), backPtr_(NULL) {
+		backward_(false), dataSize_(0), start_(NULL), ptr_(NULL), backPtr_(NULL), data_(data), delimiter_(delimiter) {
 		reset();
 	}
 
@@ -61,7 +61,7 @@ public:
 		String result;
 
 		if ( !backward_ ) {
-			int pos = data_.find_first_of( delimiter_, ptr_-start_ );
+			size_t pos = data_.find_first_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
 				result.append( ptr_,  (start_ + pos)-ptr_ );
 				ptr_ = start_ + pos+1;
@@ -79,7 +79,7 @@ public:
 			}
 		}
 		else {
-			int pos = data_.find_last_of( delimiter_, ptr_-start_ );
+			size_t pos = data_.find_last_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
 				//pos ++;
 				if ( (ptr_-start_) == dataSize_ ) {
@@ -111,7 +111,7 @@ public:
 	virtual String prevElement() {
 		String result;
 		if ( backward_ ) {
-			int pos = data_.find_first_of( delimiter_, backPtr_-start_ );
+			size_t pos = data_.find_first_of( delimiter_, backPtr_-start_ );
 			if ( pos != String::npos ) {
 				result.append( backPtr_,  (start_ + pos)-backPtr_ );
 				backPtr_ = start_ + pos+1;
@@ -129,7 +129,7 @@ public:
 			}
 		}
 		else {
-			int pos = data_.find_last_of( delimiter_, backPtr_-start_ );
+			size_t pos = data_.find_last_of( delimiter_, backPtr_-start_ );
 			if ( pos != String::npos ) {
 				//pos ++;
 				if ( (backPtr_-start_) == dataSize_ ) {
@@ -187,7 +187,7 @@ protected:
 	}
 
 	bool backward_;
-	unsigned long dataSize_;
+	size_t dataSize_;
 	const VCFChar* start_;
 	const VCFChar* ptr_;
 	const VCFChar* backPtr_;
@@ -206,6 +206,18 @@ protected:
 /**
 CVS Log info
 $Log$
+Revision 1.4  2006/04/07 02:35:35  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.3.2.3  2006/03/26 22:37:35  ddiego
+minor update to source docs.
+
+Revision 1.3.2.2  2006/03/12 22:01:41  ddiego
+doc updates.
+
+Revision 1.3.2.1  2005/11/27 23:55:45  ddiego
+more osx updates.
+
 Revision 1.3  2005/07/18 03:54:19  ddiego
 documentation updates.
 

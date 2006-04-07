@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="NETWORKKIT_HDR" hints="files">
+        vcf/NetworkKit/DatagramSocket.h
+        vcf/NetworkKit/NetToolkit.h
+        vcf/NetworkKit/NetworkKit.h
+        vcf/NetworkKit/NetworkKitPrivate.h
+        vcf/NetworkKit/NetworkKitSelectLib.h
+        vcf/NetworkKit/ServerSocketEvent.h
+        vcf/NetworkKit/Socket.h
+        vcf/NetworkKit/SocketEvent.h
+        vcf/NetworkKit/SocketException.h
+        vcf/NetworkKit/SocketListener.h
+        vcf/NetworkKit/SocketListeningLoop.h
+        vcf/NetworkKit/SocketPeer.h
+        vcf/NetworkKit/URL.h
+    </set>
+
+    <set var="NETWORKKIT_SRC" hints="files">
+        vcf/NetworkKit/DatagramSocket.cpp
+        vcf/NetworkKit/NetToolkit.cpp
+        vcf/NetworkKit/ServerSocketEvent.cpp
+        vcf/NetworkKit/Socket.cpp
+        vcf/NetworkKit/SocketEvent.cpp
+        vcf/NetworkKit/SocketListeningLoop.cpp
+        vcf/NetworkKit/URL.cpp
+    </set>
+
+    <set var="NETWORKKIT_WIN_HDR" hints="files">
+        vcf/NetworkKit/Win32DatagramSocketPeer.h
+        vcf/NetworkKit/Win32SocketPeer.h
+    </set>
+
+    <set var="NETWORKKIT_WIN_SRC" hints="files">
+        vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+        vcf/NetworkKit/Win32SocketPeer.cpp
+    </set>
+
+    <set var="NETWORKKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(NETWORKKIT_WIN_HDR)</if>
+    </set>
+
+    <set var="NETWORKKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(NETWORKKIT_WIN_SRC)</if>
+    </set>
+</makefile>

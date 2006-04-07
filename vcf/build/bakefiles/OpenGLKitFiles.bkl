@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="OPENGLKIT_HDR" hints="files">
+        vcf/OpenGLKit/OpenGLControl.h
+        vcf/OpenGLKit/OpenGLControlContext.h
+        vcf/OpenGLKit/OpenGLKit.h
+        vcf/OpenGLKit/OpenGLPeer.h
+        vcf/OpenGLKit/OpenGLToolkit.h
+        vcf/OpenGLKit/VCFOpenGL.h
+    </set>
+
+    <set var="OPENGLKIT_SRC" hints="files">
+        vcf/OpenGLKit/OpenGLControl.cpp
+        vcf/OpenGLKit/OpenGLControlContext.cpp
+        vcf/OpenGLKit/OpenGLToolkit.cpp
+    </set>
+
+    <set var="OPENGLKIT_WIN_HDR" hints="files">
+        vcf/OpenGLKit/Win32OpenGLPeer.h
+    </set>
+
+    <set var="OPENGLKIT_WIN_SRC" hints="files">
+        vcf/OpenGLKit/Win32OpenGLPeer.cpp
+    </set>
+
+    <set var="OPENGLKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(OPENGLKIT_WIN_HDR)</if>
+    </set>
+
+    <set var="OPENGLKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(OPENGLKIT_WIN_SRC)</if>
+    </set>
+</makefile>

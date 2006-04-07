@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="InternetKitFiles.bkl"/>
+
+    <template id="InternetKit_base">
+        <set var="LIBRARY_NAME">$(INTERNETKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)InternetKit$(DIRSEP)InternetKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)InternetKit$(DIRSEP)InternetKit.cpp</set>
+
+        <headers>$(INTERNETKIT_HDR)</headers>
+        <sources>$(INTERNETKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+    </template>
+
+    <lib id="InternetKit_lib" template="InternetKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_INTERNETKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+    </lib>
+
+    <dll id="InternetKit_dll" template="InternetKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_INTERNETKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>INTERNETKIT_DLL</define>
+        <define>INTERNETKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_INTERNETKIT=='1' and OPTION_ALLIN1=='0'">
+        InternetKit=InternetKit_lib+InternetKit_dll
+    </set>
+</makefile>

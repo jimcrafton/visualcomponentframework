@@ -24,6 +24,9 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/Color.h"
 
+#include "vcf/GraphicsKit/Image.h"
+#include "vcf/GraphicsKit/ImageBits.h"
+
 #include "vcf/GraphicsKit/GraphicsToolKit.h"
 #include "vcf/GraphicsKit/NoGraphicsToolkitFoundException.h"
 
@@ -32,8 +35,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Matrix2D.h"
 #include "vcf/GraphicsKit/ContextPeer.h"
 #include "vcf/GraphicsKit/GraphicsContext.h"
-#include "vcf/GraphicsKit/Image.h"
-#include "vcf/GraphicsKit/ImageBits.h"
+
 #include "vcf/GraphicsKit/ImageLoader.h"
 #include "vcf/GraphicsKit/Path.h"
 #include "vcf/GraphicsKit/BezierCurve.h"
@@ -62,6 +64,7 @@ where you installed the VCF.
 
 
 /**
+\class GraphicsKit GraphicsKit.h "vcf/GraphicsKit/GraphicsKit.h"
 *initializes the graphics Kit runtime.
 *This includes registering the basic classes in the runtime system
 *This MUST be called first off, after the initFoundationKit, in the main() function of the app
@@ -88,6 +91,15 @@ namespace VCF
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.5.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.5  2005/07/09 23:05:59  ddiego
 *added missing gtk files
 *

@@ -29,7 +29,7 @@ public:
 	*/
 	virtual void setControl( Control* control ) = 0;
 
-	virtual void popup( Point* pt ) = 0;
+	virtual MenuItem* popup( Point* pt ) = 0;
 };
 
 }; //end of namespace VCF
@@ -38,6 +38,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

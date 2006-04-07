@@ -26,6 +26,7 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
+\class MultilineTextControl MultilineTextControl.h "vcf/ApplicationKit/MultilineTextControl.h"
 *Class MultilineTextControl documentation
 */
 class APPLICATIONKIT_API MultilineTextControl : public TextControl {
@@ -44,6 +45,8 @@ public:
 	virtual bool supportsMultiLinedText() {
 		return true;
 	}
+
+	virtual void gotFocus( FocusEvent* event );
 protected:
 
 private:
@@ -56,6 +59,18 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.2  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

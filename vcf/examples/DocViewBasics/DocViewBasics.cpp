@@ -511,7 +511,7 @@ public:
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 
-		newDefaultDocument();
+		newDefaultDocument("");
 
 		
 		

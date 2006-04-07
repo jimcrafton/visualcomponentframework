@@ -42,7 +42,7 @@ NB: This software will not save the world.
 	library.
 	</para>
 	</section>
-	<section><title>Applications </title>
+	<section id="Applications"><title>Applications </title>
 		<para>
 		<indexterm><primary>UI Applications</primary></indexterm>
 		In the VCF, a user inteface application can have a central class that derives 
@@ -152,7 +152,7 @@ public:
 		</para>
 	</section>
 
-	<section><title>UI Toolkit </title>
+	<section id="UIToolkit"><title>UI Toolkit </title>
 		<section><title>Intro</title>
 	
 			<para>
@@ -183,7 +183,7 @@ public:
 		</section>
 		
 		
-		<section><title>UI Metrics</title>
+		<section id="UIMetrics"><title>UI Metrics</title>
 			<para>
 			UI Metrics are used to indicate a variety of user interface values, 
 			such as the preferred font for controls are, or the preferred vertical 
@@ -244,12 +244,12 @@ void drawSomeText( GraphicsContext* ctx )
 			</para>			
 		</section>
 		
-		<section><title>Event Loops</title>			
+		<section id="EventLoops"><title>Event Loops</title>			
 		Please see the section on <link linkend="AppKit_EventLoops">Event loops</link> for a 
 		more through discussion.
 		</section>
 		
-		<section><title>Timers</title>
+		<section id="Timers"><title>Timers</title>
 			<para>
 			A timer in the VCF is an instance of the EventHandler class that is called 
 			repeatedly until the handler is removed. The duration between calls is 
@@ -373,7 +373,7 @@ class TimerEx2 :public EventHandler, Object
 			</para>			
 		</section>
 
-		<section><title>Carets</title>
+		<section id="Carets"><title>Carets</title>
 			<para>
 			A caret is a little rectangular (usually) graphic that flashs and shows the 
 			current position within a section of text. Typically the caret is used in 
@@ -382,7 +382,7 @@ class TimerEx2 :public EventHandler, Object
 		</section>	
 		
 		
-		<section><title>Posting Events</title>
+		<section id="PostingEvents"><title>Posting Events</title>
 			<para>
 			Calling functions that fire events, or firing an event yourself via a 
 			Delegate is always synchronous behaviour, and you must wait for any callbacks 
@@ -464,7 +464,7 @@ public:
 			</para>
 		</section>
 		
-		<section><title>Default Buttons</title>		
+		<section id="DefaultButtons"><title>Default Buttons</title>		
 			<para>
 			A default button is a button whose click method will get called fired when 
 			the user hits the return key. The button does not have to have the current 
@@ -490,7 +490,7 @@ public:
 			
 		</section>
 		
-		<section><title>Accelerators</title>	
+		<section id="Accelerators"><title>Accelerators</title>	
 			<para>
 			An accelerator is a special action that takes place when a key or key 
 			combination is pressed on the keyboard. For example, with many applications, 
@@ -545,7 +545,7 @@ public:
 		</section>
 		
 		
-		<section><title>Creating Peers</title>		
+		<section id="CreatingPeers"><title>Creating Peers</title>		
 		<para>
 		The toolkit peer creation methods should never have to be called for general VCF 
 		usage. If you are writing a new component/control that requires a peer to manage
@@ -553,7 +553,7 @@ public:
 		</para>
 		</section>
 		
-		<section><title>Miscellaneous</title>
+		<section id="Miscellaneous"><title>Miscellaneous</title>
 
 		</section>				
 		
@@ -594,7 +594,7 @@ public:
 		valid control instance.
 		</para>
 	</section>
-	<section><title>Event Types</title>
+	<section id="EventTypes"><title>Event Types</title>
 		<para>
 		The table below shows each event and the component or object type responisble for the 
 		event being fired.  <TODO>validate all event data. </TODO>
@@ -748,7 +748,7 @@ public:
 		</para>
 	</section>
 	
-	<section><title>Drag and Drop </title>
+	<section id="DragAndDrop"><title>Drag and Drop </title>
 		<para>
 		Drag and Drop, some times referred to as a form direct manipulation, is the process of
 		selecting something (text, a link, a graphic, a chart, a file, etc), dragging it to a 
@@ -835,7 +835,7 @@ public:
 		</para>
 	</section>
 	
-	<section><title>Components </title>
+	<section id="Components"><title>Components</title>
 		<para>
 		Components represent the smallest nonvisual class that can be manipulated at design 
 		time.  This manipulation takes place through property editors, event editors, and 
@@ -858,9 +858,18 @@ public:
 		<para>
 		Components maintain a special state variable called component state, that indicates 
 		the current state of the component. This is useful, for example, in determining if 
-		the component is in design mode, or normal mode. Unless the component is being 
-		edited in a designer, the default state is normal mode. The state is an enumeration 
-		of type ComponentState.
+		the component is in design mode, or normal mode. The state is an enumeration 
+		of type ComponentState. In general the	component's state is csNormal indicating 
+		that it's been created. When a component is in the process of being read in from a 
+		stream, it's state is marked as csLoading, and	when the component is being written 
+		to a stream it's state is marked as csSaving. As a general rule most UI events are 
+		only fired if the component's state is csNormal. The other important state is the 
+		csDesigning state. This is set when the component is being edited through some 
+		visual editing tool (like the VCF Builder's Form Designer). A component in the 
+		csDesigning state can process some event, but ignores most others. This is 
+		particularly true if the component is a control. For example, if the component 
+		is a TextControl, then any keyboard events are ignored if it's state is set to 
+		csDesigning.
 		</para>
 		<para>
 		Components are intended to be reused by other applications. They can be part of a 
@@ -917,23 +926,10 @@ public:
 		Component's ComponentAdded or ComponentRemoved delegate. 
 		</para>
 		<para>
-		Component's also have state. This indicates the state of the component. In general 
-		the	component's state is csNormal indicating that it's been created. When a component 
-		is in the process of being read in from a stream, it's state is marked as csLoading, 
-		and	when the component is being written to a stream it's state is marked as csSaving. 
-		As a general rule most event's are only fired if the component's state is csNormal. 
-		The other important state is the csDesigning state. This is set when the component 
-		is being edited through some visual editing tool (like the VCF Builder's Form Designer). 
-		A component in the csDesigning state can process some event, but ignores most others. 
-		This is particularly true if the component is a control. For example, if the component 
-		is a TextControl, then any keyboard events are ignored if it's state is set to 
-		csDesigning.
-		</para>
-		<para>
 		</para>
 	</section>
 	
-	<section><title>Controls and Containers </title>
+	<section id="ControlsAndContainers"><title>Controls and Containers </title>
 		<para>
 		A Control is a visual component, and is derived directly from VCF::Component. It is 
 		a user visible object that may respond to events generated by the underlying windowing
@@ -963,7 +959,7 @@ public:
 		control	can act as a parent for other child controls. You can dynamically specify 
 		or query the specific type of container by using the Control's setContainer()
 		and/or getContainer() methods. In either case you'll be working with an instance 
-		of the Container class. The following examle shows how to retreive the container 
+		of the Container class. The following example shows how to retreive the container 
 		instance of a control:
 		<programlisting>
 <![CDATA[
@@ -984,7 +980,36 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		</programlisting>		
 		</para>
 
+		<formalpara><title>Heavyweight and Lightweight Controls</title>
+		A control in the VCF may be either a "heavyweight" or "lightweight" control. 
+		This describes how the control is implemented, and you can only specify this
+		at the time the control is created, it's not something that can be changed 
+		later on. Control's that wrap native controls, like the TextControl, or TreeControl
+		are always "heavyweight".
+		</formalpara>
 		<para>
+		A heavy weight control represents a full native windowing system control, and 
+		thus it has it's own set of resources (as specificed by the underlying windowing 
+		system). In Win32 terms, this means that each heavyweight control has it's own
+		HWND and HDC associated with it (just like any control/window that you created
+		through using Win32's CreateWindow() function). On linux systems that use GTK, 
+		this mean that each heavyweight control has it's own GtkWidget (and it's associated 
+		GdkWindow handle). On Mac OS X systems a heavyweight control is associated
+		with either a Carbon ControlRef or possibly with an NSControl instance if
+		we switch to using ObjectiveC for the OS X port.
+		</para>
+		<para>
+		Heavyweight controls receive user interface events directly from the windowing 
+		systems, where they are caught by the VCF peer implementation(s), translated 
+		into VCF events and then dispatched to the VCF control. In contrast, lightweight 
+		controls do <emphasis>not</emphasis> have their own windowing system control 
+		resources. Instead they share these resources with the first heavyweight parent 
+		that contains the lightweight control. The VCF takes care of simulating events 
+		to lightweight controls, so from the perspective of the developer, the difference 
+		is basically non-existant.
+		</para>		
+		
+		<formalpara><title>Containers</title>
 		A Container has methods for adding, inserting, and removing controls. A Container 
 		instance owns all the child controls it has, meaning that the control's addComponent()
 		method is called whenever a control is added to the container. The Container class 
@@ -994,7 +1019,7 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		derive directly from VCF::Container, but instead can derive from VCF::StandardContainer 
 		which does some of the basic grunge work for you. VCF::StandardContainer uses 
 		a vector to maintain it's collection of child controls. 
-		</para>
+		</formalpara>
 		<para>
 		A Containers primary job is to manage a collection of child controls
 		and to respond to certain events, forwarding them along to other child controls. 
@@ -1013,7 +1038,7 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		
 		</para>
 
-		<section><title>Control Listing</title>
+		<section id="ControlListing"><title>Control Listing</title>
 			<para>		
 			</para>
 			<formalpara><title>CustomControl</title>
@@ -1065,16 +1090,135 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		</section>
 	</section>
 	
+	<section id="Borders"><title>Borders</title>
+		<para>
+		Borders are used to decorate the edges or non-client area of a control. 
+		You can change a control's border by calling the control's Control::setBorder().
+		Border's are themselves components and are owned by whatever component 
+		they are attached to.
+		</para>
+		<para>
+		Borders have two main areas of responsibility. The first is to paint themselves
+		on a given GraphicsContext. This is done by calling the Border's paint() funtion.
+		The second area is to provide a way to get the "client" area that results when
+		using the border. This is done by calling the Border's getClientRect() function.
+		</para>
+		<para>
+		A Border may be created without being associated with a control, if you need to
+		draw a border as part of your painting code. For example:
+		<programlisting>
+<![CDATA[
+GraphicsContext* ctx = ...
+Basic3DBorder bdr;
+Rect r(0,0,100,100);
+bdr.paint( &r, ctx );
+]]>
+		</programlisting>
+		This code will paint a border within the specified rectangle, using the passed
+		in GraphicsContext. Note that the Border can be created on the stack in this case.
+		This is one of the few classes derived from Component that can be used like this. 
+		</para>
+		<para>
+		When a Border is used with a Control, the control's client bounds will automatically
+		take into account the border, by calling the border instance's getClientRect(). The
+		Win32 implementation also takes advantage of this by using the border to paint the 
+		non client area for windows that are common controls, like the tree, list, and edit
+		windows. This means that these controls can use and have the same border look that vcf
+		only control's use. To demonstrate this, here are some screenshots featuring a 
+		text control with several different borders:
+		<screenshot>
+			<graphic fileref="gfx/bdr-with-control1.png"></graphic>
+		</screenshot>
+		This shows the TextControl and the use of Spy++ on Windows to show that this is 
+		just a wrapper for a RichEdit control. The next shot shows a text control with 
+		an etched border:
+		<screenshot>
+			<graphic fileref="gfx/bdr-with-control2.png"></graphic>
+		</screenshot>
+		The follow shot shows a text control with a titled border (see the TitledBorder
+		class). Notice how the title is put on the outside of the control - and the client 
+		area is still housing the normal text control:
+		<screenshot>
+			<graphic fileref="gfx/bdr-with-control3.png"></graphic>
+		</screenshot>
+		The next shot confirms this, the total height of the control is 40 pixels, while
+		the client area is only 25:
+		<screenshot>
+			<graphic fileref="gfx/bdr-with-control3a.png"></graphic>
+		</screenshot>
+		The final shot shows the text control with a Basic3DBorder, with inverted set to false.
+		<screenshot>
+			<graphic fileref="gfx/bdr-with-control4.png"></graphic>
+		</screenshot>
+		</para>
+		
+	</section>
+	
 	<section id="Layout"><title>Layout </title>
 		<para>
 		Layout in the VCF is accomplished by the use of the Container class. The container 
-		maintains a list of all the child controls it owns. Using this list of controls the
-		container decides how to layout the controls. The default layout algorithm uses the 
-		alignment value of it's child controls to determine how to lay them out within the 
-		parent control's client bounds. Layout is performed whenever the resizeChildren()
-		method is called.
+		maintains a list of all the child controls it owns. Using this list of controls, the
+		container decides how to layout and position the controls. The default layout algorithm 
+		uses the alignment value or anchor values of it's child controls to determine how to 
+		lay them out within the parent control's client bounds. Layout is performed whenever the 
+		resizeChildren() method is called.
 		</para>
 		<para>
+		Layout will occur whenever the control is resized and it's width or height changes. 
+		The basic implementation of a container, the AbstractContainer class, will 
+		automatically detect resize events, and call resizeChildren(), which simplifies the work
+		you need to do when implementing a custom container. 
+		</para>
+		<para>
+		The control class has methods to determine it's alignment or it's anchor sides. You
+		cannot set both of these, only one or the other with precendence given in the order
+		the set methods are called. If you set the Alignment of your control to AlignTop, 
+		and then set it's anchor value, the anchor value will take precedence over the alignment, 
+		which will be overriden and set to AlignNone. Likewise, if you set the anchor of your
+		control and then set it's alignment, the anchors will be turned off, and the alignment
+		will take precendence. It is important to note that while the standard container makes
+		use of these values, other custom containers may choose to ignore them.
+		</para>
+		<para>
+		Specifying a container for layout is trivial to do. You simply create a new container
+		instance, or use an existing one, and then call the control's setContainer() method.
+		Container's are components, so the same rules that apply to components for object
+		lifetime and ownership apply to containers as well.
+		</para>
+		<section><title>Standard Container layout </title>
+		<para>
+		The standard layout allows for alignment to the left (AlignLeft), right (AlignRight), 
+		top (AlignTop), bottom (AlignBottom) or	client area (AlignClient). It also allows for 
+		absolute positioning if the alignment value is AlignNone. Alternately you can 
+		specify that a control is "anchored" to one or more sides of it's parent's client
+		area by using the AnchorLeft, AnchorRight, AnchorTop, and/or AnchorBottom values.
+		</para>
+		<para>
+		We can see an example of the the various alignment values in this shot:
+		<screenshot>
+			<graphic fileref="gfx/align1.png"></graphic>
+		</screenshot>
+		Here we have a collection of controls aligned to different sides. If the frame is resized
+		then the controls are repositioned accordingly:
+		<screenshot>
+			<graphic fileref="gfx/align1a.png"></graphic>
+		</screenshot>
+		</para>
+		<para>
+		To see the effect of resizing on anchored controls we can look at the following 
+		two shots. The first has a series of controls, a button that is anchored to the 
+		left and right (AnchorLeft | AnchorRight), a text control that is anchored 
+		only to the right, and a panel that is anchored on all sides (AnchorLeft | 
+		AnchorRight | AnchorTop | AnchorBottom). The first shot:
+		<screenshot>
+			<graphic fileref="gfx/align2.png"></graphic>
+		</screenshot>
+		The second shot after it has been resized:
+		<screenshot>
+			<graphic fileref="gfx/align2a.png"></graphic>
+		</screenshot>
+		</para>
+		<formalpara><title>Layout algorithm for Standard containers</title>		
 		The default layout algorithm, as implemented in the VCF::StandardContainer class,
 		does the following:
 		<itemizedlist>
@@ -1127,16 +1271,73 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		  say it is - no adjusting at all is performed.
 		  </listitem>
 		</itemizedlist>
-		</para>
+		</formalpara>
 		<para>
 		More advanced layouts can be achieved by writing a custom Container class and 
 		overriding the resizeChildren method. For examples of this see the 
-		HorizontalLayoutContainer and ColumnLayoutContainer classes.
-		
+		HorizontalLayoutContainer and ColumnLayoutContainer classes.	
 		</para>
+		</section>
+		<section><title>Horizontal layout </title>
+		<para>
+		The HorizontalLayoutContainer class provides a simple way to layout controls 
+		horizontally, using multiple rows as well. The HorizontalLayoutContainer allows 
+		you to set the number of columns (it defaults to 2), set the specific column
+		widths, the spacing between the columns, the maximum row height, and the 
+		vertical spacing between rows. Once these are set (the class already comes
+		with defaults set that make sense), all you need to do is to add controls. As 
+		controls are added to the container, it will automatically calculate new positions
+		for all the controls based on the number of columns it has. So a HorizontalLayoutContainer
+		with 10 controls, and 2 columns, will have 5 rows of controls.
+		<screenshot>
+			<graphic fileref="gfx/horzlayout.png"></graphic>
+		</screenshot>
+		This shot shows a custom dialog with a container instance of HorizontalLayoutContainer
+		with 2 columns. The code to do so looks something like this:
+		<programlisting><![CDATA[
+class MyDialog : public Dialog {
+public:
+	MyDialog() {
+
+		setWidth( 350 );
+		setHeight( 150 );
+
+		Panel* pane1 = new Panel();
+		pane1->setBorder( NULL );
+
+		HorizontalLayoutContainer* container = new HorizontalLayoutContainer();		
+		pane1->setContainer( container );
+
+		
+
+		Label* lable1 = new Label();
+		lable1->setCaption( "Name:" );
+		pane1->add( lable1 );
+
+		TextControl* edit1 = new TextControl();
+		
+		pane1->add( edit1 );
+
+
+		Label* lable2 = new Label();
+		lable2->setCaption( "Are you Mergatroid?:" );
+		pane1->add( lable2 );
+
+		CheckBoxControl* checkBox = new CheckBoxControl();
+		checkBox->setCaption( "Yes I am!" );
+		pane1->add( checkBox );
+
+		add( pane1, AlignClient );
+
+		//rest of code omitted
+	}
+};		
+		]]> </programlisting>
+		</para>
+		</section>
 	</section>
 	
-	<section><title>Frames, Dialogs, and Windows</title>
+	<section id="FramesDialogsWindows"><title>Frames, Dialogs, and Windows</title>
 		<para>
 		In most GUI applications there exist a special set of controls
 		(or widgets) that house the rest of the user interface. In the 
@@ -1167,14 +1368,14 @@ panel->setContainer( new HorizontalLayoutContainer () );
 		visual cues as well that distinguish a dialog from a window, but this
 		depends on the underlying windowing platform.
 		</para>
-		<section><title>Dialog usage in VFC</title>
+		<section id="DialogUsage"><title>Dialog usage in VFC</title>
 		<para>
 		An application often needs to show modal and non modal dialogs.  Modal 
 		dialogs do not allow any other GUI interaction while displayed. VFC 
 		supports modal and non modal dialog types.   
 		</para>
 		
-        <section><title>Standard Dialogs</title>
+        <section id="StandardDialogs"><title>Standard Dialogs</title>
 		<para>
 		There are several standard dialogs already in VCF.
 		</para>
@@ -1305,9 +1506,28 @@ class MyWindow :public Window{
                     ]]>
 		</programlisting>
 		</para>
-		<para>
-		<TODO>Add pictures of dialogs.</TODO>
-		</para>
+		<formalpara><title>File Open and Save Dialogs</title>
+		File Save (Windows):
+		<screenshot>
+			<graphic fileref="gfx/save-win32.png"></graphic>
+		</screenshot>
+		
+		File Open (Windows):
+		<screenshot>
+			<graphic fileref="gfx/open-win32.png"></graphic>
+		</screenshot>
+		
+		File Save (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/save-osx.png"></graphic>
+		</screenshot>		
+		
+		File Open (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/open-osx.png"></graphic>
+		</screenshot>
+		</formalpara>
+		
 		<para>
 		 Other dialogs common to all platforms are the color
 		 picker and font chooser.  The VCF::CommonColor class
@@ -1360,9 +1580,42 @@ class UserPrefsExample: public Window{
 	...
 };
 ]]>
-</programlisting>
-		<TODO>Add pictures of font and color picker</TODO>
+</programlisting>		
 		</para>
+		<formalpara><title>Color and Font Dialogs</title>
+		Color (Windows):
+		<screenshot>
+			<graphic fileref="gfx/color-win32.png"></graphic>
+		</screenshot>
+		
+		Font (Windows):
+		<screenshot>
+			<graphic fileref="gfx/font-win32.png"></graphic>
+		</screenshot>
+		
+		Color Save (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/color-osx.png"></graphic>
+		</screenshot>
+		</formalpara>
+		
+		<formalpara><title>Other Common Dialogs</title>
+		Browse for Folder (Windows):
+		<screenshot>
+			<graphic fileref="gfx/browse-for-folder-win32.png"></graphic>
+		</screenshot>
+		
+		Browse for Folder (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/browse-for-folder-osx.png"></graphic>
+		</screenshot>
+		
+		Printer (Windows):
+		<screenshot>
+			<graphic fileref="gfx/printer-win32.png"></graphic>
+		</screenshot>
+		</formalpara>
+		
 		<para>
 		There is also a common dialog for showing a text
 		message to the user.  This is included in the VCF::Dialog
@@ -1406,12 +1659,50 @@ class UserPrefsExample: public Window{
 			<listitem>msError   - 	error message</listitem>
 			<listitem>msInfo    - 	information message</listitem>
 			<listitem>msWarning - 	warning message</listitem>
-		</itemizedlist>
-		<TODO>show pictures of all message styles</TODO>
+		</itemizedlist>		
 		</para>		
+		
+		<formalpara><title>Dialog Message Styles</title>
+		Dialog::msDefault (Windows):
+		<screenshot>
+			<graphic fileref="gfx/default-win32.png"></graphic>
+		</screenshot>
+		
+		Dialog::msError (Windows):
+		<screenshot>
+			<graphic fileref="gfx/error-win32.png"></graphic>
+		</screenshot>
+		
+		Dialog::msInfo (Windows):
+		<screenshot>
+			<graphic fileref="gfx/info-win32.png"></graphic>
+		</screenshot>
+		
+		Dialog::msWarning (Windows):
+		<screenshot>
+			<graphic fileref="gfx/warning-win32.png"></graphic>
+		</screenshot>
+		
+		Dialog::msError (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/error-osx.png"></graphic>
+		</screenshot>
+		
+		Dialog::msInfo (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/info-osx.png"></graphic>
+		</screenshot>
+		
+		Dialog::msWarning (Mac OS X):
+		<screenshot>
+			<graphic fileref="gfx/warning-osx.png"></graphic>
+		</screenshot>
+		
+		</formalpara>
+		
 	</section>
 
-	<section><title>Custom Dialogs</title>
+	<section id="CustomDialogs"><title>Custom Dialogs</title>
 		<para>
 		Custom dialogs will typically be derived from the VCF::Dialog class
 		and possibly CustomControl.  The VCF::Dialog class has methods for
@@ -1478,12 +1769,21 @@ class MyAbout : public VCF::Dialog {
 		myAbout.showModal();
 	}	
 ]]>
-		</programlisting>
-		
+		</programlisting>		
 		</section>
-
 		</section>
-		<section><title>Frame usage in the VFC</title>
+		<section ide="FrameSizing"><title>Frame Sizing</title>
+		A frame can be resized either programmatically or by the user. You can
+		set the size of the frame by calling the setBounds() function, just like
+		you would for a control. If the user sizes the frame, the frames will
+		resize itself freely (or according to whatever platform specific window
+		manager rules there are for this), \em unless the frame's minimum or maximum
+		values are set. These are set by calling the Control::setMinSize() or 
+		Control::setMaxSize functions. If these values are set then the frames size
+		may be constrained accordingly. You can set both maximum and minimum constraints
+		or none at all.
+		</section>
+		<section id="FrameUsage"><title>Frame usage in the VFC</title>
 		<para>
 		In the VCF you never create a Frame instance directly. Instead you create either a 
 		Window or Dialog instance (or classes that derive from Window or Dialog). However the 
@@ -1525,7 +1825,7 @@ class MyAbout : public VCF::Dialog {
 		</itemizedlist>
 		</para>
 		<para>
-		Frequently a frame has a small image associated with it. For example, on Win32
+		Frequently a frame has a small image or icon associated with it. For example, on Win32
 		systems this is displayed on the border areas far left side. You can set this
 		image by creating a small image, and then calling the Frame's setIconImage() 
 		function. Note that at the moment the image <emphasis>must</emphasis> be 32 
@@ -1591,7 +1891,7 @@ newWindow->show();
 		</section>
 
 	</section>
-	<section><title>Model/View/Controller</title>
+	<section id="ModelViewController"><title>Model/View/Controller</title>
                 <para>
 		MVC, also known as Model/View/Controller, is a common pattern
 		for implementing UI interaction between the User, the presentation,
@@ -1653,7 +1953,7 @@ newWindow->show();
 		</para>
 		
 		
-		<section><title>Models </title>
+		<section id="Model"><title>Models </title>
 		<para>
 		In the VCF a Model has 3 main duties:
 		<itemizedlist>
@@ -1712,7 +2012,7 @@ changed( &event );
 		</para>
 	</section>
 	
-	<section><title>Items </title>
+	<section id="Items"><title>Items </title>
 		<para>
 		Some models may have a collection of items. To make this easier to use and to 
 		display, a custom collection model implementor may choose to use the Item class 
@@ -1720,7 +2020,7 @@ changed( &event );
 		</para>
 	</section>
 	
-	<section><title>Views </title>
+	<section id="Views"><title>Views </title>
 		<para>
 		In the VCF each view one and only one model instance that it is attached to at 
 		a given point in time. Each view has one control associated with it. This control 
@@ -1731,7 +2031,7 @@ changed( &event );
 		</para>
 	</section>
 	
-	<section><title>Controls</title>
+	<section id="Controls"><title>Controls</title>
 		<para>
 		A Control is derived from the View class, therefore it <emphasis>is</emphasis>
 		a View. In addition, a Control has a View, which is accessed or set by the Control's
@@ -1764,19 +2064,121 @@ control->setView( view );
 	a programs data. The Model stores and manipulates the data, the View renders or paints
 	the display of the Model, and the Control handles user interaction with the model.
 	</para>
-	<section><title>Document/View Architecture</title>
+	<section id="DocViewArch"><title>Document/View Architecture</title>
 		
 	</section>
 	
 	</section>
 	
 	
-	<section><title>Undo/Redo and Commands </title>
+	<section id="UndoRedo"><title>Undo/Redo and Commands </title>
 		<para>
 		</para>
 	</section>
 	
-	<section><title>Control Focus and Activation </title>
+	<section id="Help"><title>Help</title>
+		<para>
+		The VCF tries to integrate with the standard Help system of the windowing system. For the
+		Win32 platform this means using HTMLHelp, on Mac OSX this means using Apple Help.
+		Help is displayed by either opening a new window that displays the help contents, or by 
+		displaying little popup windows that show some context specific piece of help text (think
+		of the "What's This?" popups in Win32 dialogs). 
+		</para>
+		<para>
+		Help that is displayed in a new window can show either the index page, the contents page 
+		or a specific page, based on the context. Creating these pages is platform specific and 
+		we'll cover that later, at least for Win32.
+		</para>
+		<para>
+		The "What's This?" help popups can display some helpful text to a user to inform them
+		of how to use a certain piece of functionality. For example, you might have a dialog with
+		multiple edit controls for entering different bits of data. If the user clicked for help on one of
+		these control's they might get a popup describing what the control did.
+		</para>
+		
+		<section id="ImplementingWin32Help"><title>Implementing Help for Win32 systems</title>
+		<para>
+		For Win32 you'll need to implement HTML Help. This will guide you through the 
+		bare bones fo doing this for a given project.
+		<note>
+		These instructions are, for the most part, not specific to the VCF - any Win32
+		project that want to add user help using HTML Help can do this.
+		</note>
+		</para>
+		
+		<section id="CreatingHTMLHelp"><title>Creating the HTML Help project file</title>
+		<para>		
+		First you need to create the HTML Help project file. There are a variety of 
+		software packages out there that can help with this, and there's a free tool from
+		Microsoft, that while not very good as software, does the job, and it's free. 
+		You can download it here: <ulink url="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp">
+		Microsoft HTML Help Workshop</ulink> or here <ulink url="http://go.microsoft.com/fwlink/?LinkId=14188">
+		Microsoft HTML Help Installer</ulink>. 
+		</para>
+		<para>
+		The project file is simply a plain text file that contains the instructions to build your 
+		compiled HTML help project. It ends in the extension ".hhp". 
+		</para>
+		</section>
+		
+		<section id="AddingHTMLHelpContent"><title>Adding HTML content</title>
+		<para>
+		Add content to your project. The actual pages can reside anywhere you want - you'll
+		just need to specify their location in the project when you add them. As a rule of thumb 
+		keep your HTML relatively simple. That said, you can use CSS, DHTML, etc. Just make
+		sure to add any of these resource files (like the .css stylesheets) to the project.
+		</para>
+		</section>
+		
+		<section id="AddingIndexSearch"><title>Adding Index/Search support</title>
+		<para>
+		Make sure to add an index page through your authoring tool. When this is done, you
+		should end up with a file that ends in the .hhk extension. This is also a plain text file
+		that just contains a series of index entries and uses HTML syntax. How you
+		add index entries is up to you as an author.
+		</para>		
+		</section>
+		
+		<section id="AddingTOC"><title>Adding a Table of Contents</title>
+		<para>
+		Make sure to add an TOC page through your authoring tool. When this is done, you
+		should end up with a file that ends in the .hhc extension, and generally called "TOC.hhc". 
+		This is also a plain text file that just contains a series of index entries and uses HTML 
+		syntax. How you add index entries is up to you as an author, though some tools will 
+		do this automatically. Tools like doxygen and docbook can generate these entries for
+		you.
+		</para>		
+		</section>
+		
+		<section id="AddingContextSensitiveHelp"><title>Adding Context Sensitive entries</title>
+		<para>
+		
+		</para>
+		</section>
+		
+		<section><title>Adding "What's This" entries</title>
+		</section>
+		
+		<section id="CompilingHTMLHelp"><title>Compiling the help with the HTML Help Compiler</title>
+		<para>
+		Once you've got your content ready to go, you can "compile" the project. If you're using 
+		a third party tool they probably do this for you in the application. If you're using 
+		HTML Help Workshop, then it has a gui for compiling the project. However you can
+		also build the project from the command line using the HTML Help Compiler. If
+		you've installed the HTML Help workshop, you should see it in the same directory 
+		as the Workshop program. Look for the "hhc.exe", and then invoke it at a commandline
+		by passing in the name of the project file. Based on the settings in your project file,
+		this will create a .chm file (and possibly a .chi file if you're using binary TOC) in your 
+		output directory.
+		</para>
+		</section>
+		
+		</section>
+		
+		
+	</section>
+	
+	<section id="ControlFocusActivation"><title>Control Focus and Activation </title>
 	<para>
 		A control with focus is able to receive
 		keyboard events. Without focus, <emphasis>no</emphasis> keyboard events will be 
@@ -1815,6 +2217,18 @@ control->setView( view );
 <!--
 CVS Log info
 $Log$
+Revision 1.7  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.6.2.5  2006/03/05 03:39:35  ddiego
+more docs updates.
+
+Revision 1.6.2.2  2006/03/02 22:13:01  ddiego
+docs update.
+
+Revision 1.6.2.1  2005/09/06 21:09:19  ddiego
+help authoring
+
 Revision 1.6  2005/07/13 04:04:32  ddiego
 updated more doc stuff.
 

@@ -31,6 +31,7 @@ class DateTimeSpan;
 // DateTime exception classes
 
 /**
+\class BadDateFormat DateTime.h "vcf/FoundationKit/DateTime.h"
 This exception is thrown when a bad date format is used. An example
 of an invalid date might be Jan 32, 2003.
 */
@@ -52,6 +53,7 @@ protected:
 
 
 /**
+\class BadTimeFormat DateTime.h "vcf/FoundationKit/DateTime.h"
 This exception is thrown when a bad time format is used. An example
 of an invalid time might be 26:65:03.
 */
@@ -77,14 +79,14 @@ protected:
 // DateTime class declaration
 
 /**
-\par
+\class DateTime DateTime.h "vcf/FoundationKit/DateTime.h"
 This class is used to represent a point in time. The internal structure is a
 64bit unsigned long that counts the number of milliseconds from ~ 4700BC. The
 calendar used is the Gregorian calendar. There is logic to support switching
 to the Julian calendar for days before the Gregorian switch. At the moment
 there is no time zone support. This will be coming next.
 
-\par
+
 There are a wide number of functions for retrieving all sorts of handy date/time
 info, such as :
 
@@ -111,12 +113,12 @@ templatized iterator logic and lets you:
 Since the iterator template type is customizable, you can create your own iteration logic classes
 to perform custom iteration logic.
 
-\par
+
 You can modify the date time object in a variety of ways, by specifying the year, month, day, or
 set the time specifying hour, minute, second, or have more control by setting all fields
 (year, month, day, hour, minute, second, millisecond).
 
-\par
+
 Most of the algorithms that this class uses come from: 
 http://www.tondering.dk/claus/cal/
 
@@ -604,7 +606,7 @@ public:
 	*/
 	template <typename DateLogic>
 	class Iterator 
-	#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW)
+	#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)
 	;
 	#else
 	{
@@ -692,7 +694,7 @@ protected:
 };
 
 
-#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW)
+#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)  
 	template <typename DateLogic>
 	class DateTime::Iterator {
 	public:
@@ -727,7 +729,7 @@ protected:
 			return *this;
 		}
 
-		Iterator& operator++(int) { // postfix
+		Iterator operator++(int) { // postfix
 			Iterator before = (*this);
 			DateLogic::incr( dt_, 1 );
 			return before;
@@ -744,7 +746,7 @@ protected:
 			return *this;
 		}
 
-		Iterator& operator--(int) { // postfix
+		Iterator operator--(int) { // postfix
 			Iterator before = (*this);
 			DateLogic::decr( dt_, 1 );
 			return before;
@@ -760,43 +762,63 @@ protected:
 	};
 #endif
 
-
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByMillisecond {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API BySecond {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByMinute {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByHour {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByDay {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByMonth {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
 	static void decr( DateTime& dt, unsigned long offset );
 };
 
+/**
+\class ByMillisecond DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
 class FOUNDATIONKIT_API ByYear {
 public :
 	static void incr( DateTime& dt, unsigned long offset );
@@ -805,10 +827,8 @@ public :
 
 
 
-///////////////////////////////////////////////////////////////////////////////
-// DateTimeSpan class declaration
-
 /**
+\class DateTimeSpan DateTime.h "vcf/FoundationKit/DateTime.h"
 The DateTimeSpan represents an absolute delta value between two date time
 values. You can get the individual components of the span by calling the various
 getYears(), getMonths(), etc methods, or you can get the total amount of time
@@ -972,6 +992,24 @@ inline void DateTime::get( unsigned long* year, unsigned long* month, unsigned l
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.5  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.6.2.4  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.6.2.3  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.6.2.2  2005/11/10 00:03:48  obirsoy
+*changes required for gcc under Linux.
+*
+*Revision 1.6.2.1  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
 *Revision 1.6  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

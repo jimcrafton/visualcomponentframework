@@ -21,8 +21,9 @@ namespace VCF  {
 
 
 /**
-*Class Lock
-*@author Tiziano Franzoi, Nov 15, 2001
+\class Semaphore Semaphore.h "vcf/FoundationKit/Semaphore.h"
+Class Semaphore
+@author Tiziano Franzoi, Nov 15, 2001
 */
 class FOUNDATIONKIT_API Semaphore : public Object, public VCF::SynchObject
 {
@@ -50,6 +51,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

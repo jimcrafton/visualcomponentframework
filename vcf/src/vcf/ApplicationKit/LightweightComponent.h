@@ -17,6 +17,9 @@ where you installed the VCF.
 namespace VCF
 {
 
+/**
+\class LightweightComponent LightweightComponent.h "vcf/ApplicationKit/LightweightComponent.h"
+*/
 class APPLICATIONKIT_API LightweightComponent : public Object, public ControlPeer {
 public:
 	LightweightComponent( Control* component );
@@ -59,7 +62,7 @@ public:
 
 	virtual void setFont( Font* font );
 
-	void repaint( Rect* repaintRect=NULL );
+	void repaint( Rect* repaintRect, const bool& immediately );
 
 	virtual void keepMouseEvents();
 
@@ -102,6 +105,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.1  2005/08/05 01:11:38  ddiego
+*splitter fixes finished.
+*
 *Revision 1.5  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

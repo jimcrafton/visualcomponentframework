@@ -23,7 +23,7 @@ namespace VCF{
 
 
 /**
-\par
+\class Event Event.h "vcf/FoundationKit/Event.h"
 The Event class is root object for events in the Framework. 
 Events are defined as any action that is generated
 in response to some change in the system. Moving the mouse, 
@@ -125,6 +125,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

@@ -25,7 +25,7 @@ class TableCellItem;
 #define TABLEITEMEDITOR_CLASSID		"53EA0BA4-7068-11d4-8F12-00207811CFAB"
 
 /**
-\par
+\class TableItemEditor TableItemEditor.h "vcf/ApplicationKit/TableItemEditor.h"
 The TableItemEditor class is used to provide editing capabilities
 for individual cell items in a TableControl. When the TableControl
 detects that an event has occurred to start an edit, it calls the 
@@ -33,7 +33,7 @@ respective TableCellItem's createItemEditor() method. This will
 create a new instance of a TableItemEditor, as appropriate
 for that cell. A simple implementation of this interface can
 be found in the BasicTableItemEditor class. 
-\par
+
 The editor allows you to retrieve the item that is currently being edited.
 It also allows access to the control that is used to edit the item. This
 control is managed by the underlying TableControl, all you need to do is create
@@ -93,6 +93,16 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="TeXLabel" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            TeXLabel.hpp
+            TeXLabel.tab.hpp
+            TeXTypes.hpp
+        </headers>
+        <sources>
+            TeXLabel.cpp
+            TeXLabel.scan.cpp
+            TeXLabel.tab.cpp
+            TeXTypes.cpp        
+        </sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

@@ -79,7 +79,6 @@ class DragAndDropWindow : public Window {
 public:
 	DragAndDropWindow() {
 		setCaption( "DragAndDrop" );
-		setVisible( true );
 
 		/**
 		Add a label
@@ -349,7 +348,8 @@ public:
 
 		Window* mainWindow = new DragAndDropWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( &Rect( 100.0, 100.0, 436.0, 580.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -370,6 +370,15 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:34:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.6.2  2006/03/23 01:07:10  dougtinkham
+*update window height
+*
+*Revision 1.4.6.1  2006/03/16 18:45:23  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
 *Revision 1.4  2004/08/07 02:47:00  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

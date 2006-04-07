@@ -34,6 +34,8 @@ ListBoxControl::ListBoxControl():
 {
 	setListModel( new DefaultListModel() );
 
+	addComponent( getViewModel() );
+
 	init();
 }
 
@@ -64,10 +66,8 @@ void ListBoxControl::init()
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
 	GraphicsContext* context = getContext();
-	Font* font = context->getCurrentFont();
-	UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
-	defaultItemHeight_ = mgr->getDefaultHeightFor( UIMetricsManager::htListItemHeight );//context->getTextHeight("EM") ); //font->getPixelSize() );
-	//defaultItemHeight_ = getContext()->getTextHeight( "EM" ) + 4;
+	
+	defaultItemHeight_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtListItemHeight );
 
 	EventHandler* lmh =
 		new ListModelEventHandler<ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
@@ -93,6 +93,11 @@ void ListBoxControl::init()
 
 ListBoxControl::~ListBoxControl()
 {
+	
+}
+
+void ListBoxControl::destroy()
+{
 	if ( NULL != listModel_ ) {
 		EventHandler* ev = getEventHandler( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
@@ -110,6 +115,8 @@ ListBoxControl::~ListBoxControl()
 		}
 		//listModel_->release();
 	}
+
+	CustomControl::destroy();
 }
 
 ListModel* ListBoxControl::getListModel()
@@ -119,6 +126,10 @@ ListModel* ListBoxControl::getListModel()
 
 void ListBoxControl::setListModel( ListModel * model )
 {
+	if ( model == listModel_ ) {
+		return;
+	}
+
 	if ( NULL != listModel_ ) {
 		EventHandler* ev = getEventHandler( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
@@ -181,7 +192,6 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 	//listBoxPeer_->addItem( event->getListItem() );
 	Scrollable* scrollable = getScrollable();
-	ListModel* lm = getListModel();
 
 
 	double width = getWidth();
@@ -889,6 +899,21 @@ void ListBoxControl::setStateImageList( ImageList* stateImageList )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.4  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.6.2.3  2006/01/09 02:22:30  ddiego
+*more osx code
+*
+*Revision 1.6.2.2  2005/10/05 03:37:11  ddiego
+*minor fix to typed object property class.
+*
+*Revision 1.6.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.6  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

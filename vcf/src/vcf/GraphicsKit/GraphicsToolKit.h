@@ -30,6 +30,7 @@ class GraphicsResourceBundlePeer;
 
 
 /**
+\class FontInfo GraphicsToolKit.h "vcf/GraphicsKit/GraphicsToolKit.h"
 Use this class to retreive information about a loaded system
 font. This class is intended for read only purposes
 */
@@ -95,6 +96,7 @@ protected:
 
 
 /**
+\class GraphicsToolkit GraphicsToolKit.h "vcf/GraphicsKit/GraphicsToolKit.h"
 The GraphicsToolkit serves as a way to retreive basic system information
 and as a factory for creating various graphics peers, like the ContextPeer,
 FontPeer, and the system implementation the Image class
@@ -119,9 +121,9 @@ public:
 
 	static FontPeer* createFontPeer( const String& fontName, const double& pointSize );
 
-	static Image* createImage( const unsigned long& width, const unsigned long& height );
+	static Image* createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType = Image::itColor );
 
-	static Image* createImage( GraphicsContext* context, Rect* rect );
+	static Image* createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType = Image::itColor );
 
 	static PrintSessionPeer* createPrintSessionPeer();
 
@@ -184,6 +186,12 @@ public:
 
 	static GraphicsToolkit* internal_getDefaultGraphicsToolkit();
 
+	/**
+	Call this function if you need to reload various toolkit 
+	resoruces due to a systems settings changes, for example
+	teh user enabling or disabling themes.
+	*/
+	static void systemSettingsChanged();
 protected:
 	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height ) = 0;
 
@@ -193,9 +201,9 @@ protected:
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize )  = 0;
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height ) = 0;
+	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType ) = 0;
 
-	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect ) = 0;
+	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType ) = 0;
 
 	virtual PrintSessionPeer* internal_createPrintSessionPeer() = 0;
 
@@ -203,6 +211,8 @@ protected:
 
 	virtual double internal_getDPI( GraphicsContext* context ) = 0;
 
+
+	virtual void internal_systemSettingsChanged() = 0;
 
 	/**
 	*Create a image from a filename. The file is loaded into a Bitmap instance.
@@ -303,6 +313,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.3  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.6.2.2  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.6.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.6  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

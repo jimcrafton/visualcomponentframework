@@ -46,6 +46,7 @@ namespace VCF {
 		virtual void removeTimer( uint32 timerID );
 	protected:
 		RunLoop* runLoop_;
+		CFRunLoopSourceRef runLoopSrc_;
 
 		class TimerInfo {
 		public:
@@ -56,10 +57,16 @@ namespace VCF {
 		};
 
 		void removeAll();
+
+		static void SrcScheduleCallBack ( void *info,  CFRunLoopRef rl, CFStringRef mode );
+		static void SrcCancelCallBack ( void *info,  CFRunLoopRef rl, CFStringRef mode );
+		static void SrcPerformCallBack ( void *info );
+		static void TimerCallBack ( CFRunLoopTimerRef timer,  void *info );
 	};
 
 };
 
 
 #endif //_VCF_OSXRUNLOOPPEER_H__
+
 

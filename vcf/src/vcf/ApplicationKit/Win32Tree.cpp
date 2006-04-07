@@ -185,14 +185,14 @@ void Win32Tree::create( Control* owningControl )
 
 
 	if ( NULL != hwnd_ ){
-		Win32Object::registerWin32Object( this );
-
-		subclassWindow();
-
-		setFont( owningControl->getFont() );
-
 		treeControl_ = (TreeControl*)owningControl;
 		peerControl_ = owningControl;
+
+		Win32Object::registerWin32Object( this );
+
+		subclassWindow();		
+
+		registerForFontChanges();
 
 		peerControl_->ControlModelChanged +=
 			new GenericEventHandler<Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
@@ -360,9 +360,6 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 	switch ( message ) {
 		case WM_PAINT:{
-			//check to see if the font needs updating
-			checkForFontChange();
-
 			PAINTSTRUCT ps;
 
 			HDC dc = BeginPaint( hwnd_, &ps );
@@ -410,7 +407,12 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			int gcs = ctx->saveState();
 
 			//paint the control here - double buffered
+			
+			peerControl_->internal_beforePaint( ctx );
+
 			peerControl_->paint( ctx );
+
+			peerControl_->internal_afterPaint( ctx );
 
 
 			ctx->restoreState( gcs );
@@ -487,8 +489,8 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			TVHITTESTINFO hitTestInfo;
 			memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
 
-			hitTestInfo.pt.x = Win32Utils::getXFromLParam( lParam );
-			hitTestInfo.pt.y = Win32Utils::getYFromLParam( lParam );
+			hitTestInfo.pt.x = Win32UIUtils::getXFromLParam( lParam );
+			hitTestInfo.pt.y = Win32UIUtils::getYFromLParam( lParam );
 			HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
 			if ( NULL != hItem ) {
 				if( hitTestInfo.flags & TVHT_ONITEMSTATEICON ) {
@@ -894,16 +896,7 @@ Do we need these? What advantage does processing these events have for us???
 					}
 					break;
 
-					case CDDS_ITEMPREPAINT : {
-						RECT r;
-						TreeView_GetItemRect( hwnd_,
-											(HTREEITEM) treeViewDraw->nmcd.dwItemSpec,
-											&r, TRUE );
-
-						itemRect.left_ = r.left;
-						itemRect.top_ = r.top;
-						itemRect.right_ = r.right;
-						itemRect.bottom_ = r.bottom;
+					case CDDS_ITEMPREPAINT : {						
 
 						wndProcResult = CDRF_NOTIFYPOSTPAINT;
 					}
@@ -918,6 +911,11 @@ Do we need these? What advantage does processing these events have for us???
 							TreeItem* item = (TreeItem*)treeViewDraw->nmcd.lItemlParam;
 
 							if ( item->canPaint() ) {
+								itemRect.left_ = treeViewDraw->nmcd.rc.left;
+								itemRect.top_ = treeViewDraw->nmcd.rc.top;
+								itemRect.right_ = treeViewDraw->nmcd.rc.right;
+								itemRect.bottom_ = treeViewDraw->nmcd.rc.bottom;
+
 								item->paint( peerControl_->getContext(), &itemRect );
 							}
 						}
@@ -1076,7 +1074,7 @@ void Win32Tree::addItem( TreeItem* item )
 void Win32Tree::clear()
 {
 	treeItems_.clear();
-	StringUtils::trace( "tree items cleared\n" );
+	
 	TreeView_DeleteAllItems( hwnd_ );
 }
 
@@ -1262,6 +1260,30 @@ Rect Win32Tree::getItemImageRect( TreeItem* item )
 {
 	Rect result;
 
+	
+	return result;
+}
+
+Rect Win32Tree::getItemRect( TreeItem* item )
+{
+	Rect result;
+
+	
+	if ( NULL != item ){
+		std::map<TreeItem*,HTREEITEM>::iterator it = treeItems_.find( item );
+		if ( it != treeItems_.end() ){
+			if ( item->isSelected() ) {
+				RECT r = {0};
+				TreeView_GetItemRect( hwnd_, it->second, &r, TRUE );				
+
+				result.left_ = r.left;
+				result.top_ = r.top;
+				result.right_ = r.right;
+				result.bottom_ = r.bottom;
+			}
+		}
+	}
+
 	return result;
 }
 
@@ -1381,6 +1403,25 @@ void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/18 19:19:37  ddiego
+*fixed a paint bug in the win32tree ctrl becuase I was passing in
+*the wrong rect value. also got rid of various debugging trace statements.
+*
+*Revision 1.5.2.4  2006/03/18 19:04:56  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.5.2.3  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.2  2005/11/21 21:28:05  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.5.2.1  2005/09/05 14:38:31  ddiego
+*added pre and post paint delegates to the control class.
+*
 *Revision 1.5  2005/07/09 23:14:59  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

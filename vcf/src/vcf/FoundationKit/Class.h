@@ -27,6 +27,8 @@ class Field;
 *common class names for native types, like int, long, char, bool, etc.
 */
 #define CLASS_INTEGER		"integer"
+#define CLASS_INT			"integer"
+#define CLASS_UINT			"uint"
 #define CLASS_LONG			"long"
 #define CLASS_ULONG			"ulong"
 #define CLASS_FLOAT			"float"
@@ -34,16 +36,17 @@ class Field;
 #define CLASS_CHAR			"char"
 #define CLASS_BOOL			"bool"
 #define CLASS_SHORT			"short"
+#define CLASS_USHORT		"ushort"
 #define CLASS_ENUM			"enum"
 #define CLASS_STRING		"string"
 
 /**
-\par
+\class Class Class.h "vcf/FoundationKit/Class.h"
 Class is the base class for all RTTI in the Framework. Class was written
 because C++ RTTI is shockingly primitive, and many of these features are
 found in other OO languages (i.e. ObjectPascal, ObjectiveC, SmallTalk, 
 Java, et. al) and are immensely useful and powerful.
-\par
+
 Class is an abstract base class that template class's derive from. Classes 
 provide the following information:
 	\li
@@ -74,12 +77,12 @@ provide the following information:
 	the ability to create a new instance of the class the Class object represents.
 	This of course assumes a default constructor is available.
 	
-\par
+
 In order for the RTTI to work in the Framework developers of derived classes 
 must do three things for their classes to participate in the Framework. Failure 
 to implement these steps will mean their classes will not have correct RTTI. A 
 series of macros (defined in ClassInfo.h) have been written to make this easier.
-\par
+
 The first step is (obviously) making sure that your class is derived from a Framework object.
 For example:
 \code
@@ -92,7 +95,7 @@ For example:
 	};
 \endcode
 
-\par
+
 Next you should define a class id (as a string) for your class. If you are on winblows use
 guidgen.exe to create UUID's for you. The define should look something like this:
 \code
@@ -103,8 +106,8 @@ for the basic RTTI info (class-super class relation ships) and to make sure you'
 any properties of your super class. For example:
 \code
 	class Foo : public VCF::Object {
-		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-		END_CLASSINFO(Foo)
+		_class_rtti_(Foo, "VCF::Object", FOO_CLASSID)
+		_class_rtti_end_
 	...
 	};
 \endcode
@@ -112,17 +115,19 @@ The macros create a public nested class used to register your class that you're 
 The above macros generate the following inline code for the developer of the Foo class.
 \code
 	class Foo : public VCF::Object {
-		class FooInfo : public ClassInfo&ltFoo&gt {
-		public:
-			FooInfo( Foo* source ):
- 				ClassInfo&ltFoo&gt( source, "Foo", "VCF::Object", "1E8CBE21-2915-11d4-8E88-00207811CFAB" ){
-				if ( true == isClassRegistered()  ){
+		class Foo_rtti_ClassInfo : public VCF::ClassInfo<Foo> { 
+		public: 
+			typedef Foo RttiClassType;
+			Foo_rtti_ClassInfo (): 
+			VCF::ClassInfo<RttiClassType>( VCF::StringUtils::getClassNameFromTypeInfo(typeid(Foo)), 
+											"VCF::Object", 
+											"1E8CBE21-2915-11d4-8E88-00207811CFAB" ){ 
 
+				VCF::String tmpClassName = VCF::StringUtils::getClassNameFromTypeInfo(typeid(Foo)); 
+				if ( isClassRegistered()  ){ 
+				
 				}
-			};
-
-			virtual ~FooInfo(){};
-
+			}
 		};//end of FooInfo
 		...
 	};
@@ -133,9 +138,9 @@ the you want to expose the properties of the class you're writing. Adding proper
 done through macros and looks like this:
 \code
 	class Foo : public VCF::Object {
-		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-		PROPERTY( double, "fooVal", Foo::getFooVal, Foo::setFooVal, PROP_DOUBLE )
-		END_CLASSINFO(Foo)
+		_class_rtti_(Foo, "VCF::Object", FOO_CLASSID)
+		_property_( double, "fooVal", getFooVal, setFooVal, "The foo value property" )
+		_class_rtti_end_
 	...
 	double getFooVal();
 	void setFooVal( const double& val );
@@ -145,9 +150,9 @@ done through macros and looks like this:
 If the properties are Object derived properties then the following can be done:
 \code
 	class Foo : public VCF::Object {
-		BEGIN_CLASSINFO(Foo, "Foo", "VCF::Object", FOO_CLASSID)
-		OBJECT_PROPERTY( Foo, "fooObj", Foo::getFoo, Foo::setFoo )
-		END_CLASSINFO(Foo)
+		_class_rtti_(Foo, "VCF::Object", FOO_CLASSID)
+		_property_object_( Foo, "fooObj", getFoo, setFoo, "The Foo object property" )
+		_class_rtti_end_(Foo)
 	...
 	Foo* getFoo();
 	void setFoo( Foo* val );
@@ -408,6 +413,21 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.4  2006/04/05 03:35:59  ddiego
+*post cvs crash updates.
+*
+*Revision 1.3.2.3  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.2.1  2006/02/23 01:41:57  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
 *Revision 1.3  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

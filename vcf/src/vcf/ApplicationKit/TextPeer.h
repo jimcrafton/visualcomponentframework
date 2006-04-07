@@ -126,6 +126,7 @@ API to deal with this.
 
 
 /**
+\class TextPeer TextPeer.h "vcf/ApplicationKit/TextPeer.h"
 This is the basic text peer interface for storing and displaying text on the screen.
 Printing and editing are left to the TextEditPeer interface. You can insert and remove
 text with this class, as well as set the various styles of the text. You can use
@@ -217,6 +218,7 @@ public:
 
 
 /**
+\class TextEditPeer TextPeer.h "vcf/ApplicationKit/TextPeer.h"
 *A interface for supporting text controls
 *This results in a native text control widget being
 *created, with all painting responsibilities being
@@ -323,7 +325,7 @@ public:
 	/**
 	This attempts to print a single page and render in to the 
 	printer context that's passed in.
-	\par 
+	 
 	Note that some platforms may not support this, as printing 
 	support varies widely. It will work on Win32, and should work on
 	Mac OS X as well.
@@ -331,6 +333,8 @@ public:
 	virtual void print( PrintContext* context, const long& page ) = 0;
 
 	virtual void finishPrinting() = 0;	
+
+	virtual void setTextWrapping( const bool& val ) = 0; 
 };
 
 }; // namespace VCF
@@ -339,6 +343,19 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.1  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

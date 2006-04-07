@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="libAGGFiles.bkl"/>
+
+    <template id="libAGG_base">
+        <set var="LIBRARY_NAME">$(LIBAGG_NAME)</set>
+
+        <headers>$(LIBAGG_HDR)</headers>
+        <sources>$(LIBAGG_SRC)</sources>
+
+        <vcf-include-libAGG/>
+    </template>
+
+    <lib id="libAGG_lib" template="libAGG_base,vcf_lib"
+            cond="OPTION_LIBAGG=='1'">
+    </lib>
+</makefile>

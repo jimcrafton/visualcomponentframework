@@ -131,8 +131,7 @@ String formatDirectoryInfos( File* file, const Directory::Finder* finder )
 	String st = StringUtils::format( dt, L"%d/%m/%Y %H:%M:%S" );
 
 	String text = Format(L"[%d] %s %10s %5s [%s]\n") 
-					% finder->getRecursionLevel() % st.c_str() 
-					% L"" % L"" % filename.c_str();
+					% finder->getRecursionLevel() % st % L"" % L"" % filename;
 
 	return text;
 }
@@ -149,8 +148,7 @@ String formatFileInfos( File* file, const Directory::Finder* finder )
                 % (file->isSystem()?'s':' ') % (file->isExecutable()?'x':' ') ;
 
 	String text = Format(L"[%d] %s %10s %s  %s\n") 
-					% finder->getRecursionLevel() % st.c_str() % sz.c_str()
-					% sa.c_str() % filename.c_str();
+					% finder->getRecursionLevel() % st % sz % sa % filename;
 
 	return text;
 }
@@ -254,7 +252,7 @@ public:
 
 void test( FinderTest& finderTest, const String& name, const bool& recurse = false )
 {
-	printf( String( "\nTesting: " + name + "\n" ).ansi_c_str() );
+	System::println( "\nTesting: " + name );
 
 	String vcfIncludes = System::getEnvironmentVariable( "VCF_INCLUDE" );
 

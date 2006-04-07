@@ -31,32 +31,169 @@ class Model;
 class AcceleratorKey;
 class Container;
 class Frame;
+class ControlEvent;
+
+typedef unsigned long AnchorTypes;
 
 #define CONTROL_CLASSID		"B91B1828-3639-4bcf-9882-342F16C90E21"
 
 
 /**
- The base class for all visual components in the Visual Component Framework.
- In addition it implements the View interface. This means that the
- Control is itself a specialized form of a View, though it may not have
- have a model, and can hold an external view, separate from itself.
- In addition a control receives a wide variety of events from the user
- such as paint events, mouse events, keyboard events, help events, etc.
- Controls can have parents, thus form a hierarchy of parent-child relationships.
- Controls can also have children if they implement the Container interface.
- Controls can also be aligned or anchored, which can aid in laying out the
- presentation of a UI.
- Finally a Control may also be lightweight or heavyweight, which determines
- how many  window system resources the control consumes. A heavyweight control
- has a native window/widget and takes up resources accordingly. In addition a
- heavyweight control also has a native graphics context associated with it that
- also takes up resources. In contrast, a lightweight control shares the underlying
- native window and graphics context resources with it's parent, and greatly
- reduces the number of resources the application will consume. This is especially
- useful when making complex custom controls that have many moving parts like a tree-list
- control, complete with a header and movable icons, etc.
- To aid in the drawing of a control, all controls are double buffered by default
- to prevent flicker, though this can be turned off and on at will.
+The various enumerations of standard alignment types used by 
+the default containers for control alignment. Note that
+other custom control's may have their own types.
+*/
+enum AlignmentType{
+	/**
+	The default value for a control's alignment. The control's top, left, 
+	width, and height are what determine it's position, regardless of 
+	surrounding controls.
+	*/
+    AlignNone=0,
+	
+	/**
+	The control moves to the top of the parent container and resizes to 
+	fill in the width of the parent control. The height of the control 
+	is not altered during parent dimension changes.
+	*/
+    AlignTop,
+	
+	/**
+	The control moves to the bottom of the parent container and resizes 
+	to fill in the width of the parent control. The height of the control 
+	is not altered during parent dimension changes.
+	*/
+    AlignLeft,
+	
+	/**
+	The control moves to the left side of the parent container and resizes 
+	to fill in the height of the parent control. The width of the control 
+	is not altered during parent dimension changes.
+	*/
+    AlignRight,
+	
+	/**
+	The control moves to the right side of the parent container and resizes 
+	to fill in the height of the parent control. The width of the control is 
+	not altered during parent dimension changes.
+	*/
+    AlignBottom,
+	
+	/**
+	The control resizes to fill in the remaining client area of a form (after 
+	all other alignment positions of other controls are calculated).
+	*/
+    AlignClient
+};
+
+
+
+
+
+
+
+
+
+/**
+An enum of anchor types for a control's anchor value.
+These may be masked together.
+*/
+enum AnchorType {
+	/**
+	This is the default value for a control's anchor property. 
+	No layout adjustments are performed on the control.
+	*/
+	AnchorNone = 0,
+	
+	/**
+	The Control is anchored to the top edge of the parent control 
+	it belongs to. Whatever the distance between the top edge and 
+	the top coordinate of the control when this is set, is maintained 
+	whenever the parent control's dimensions change. 
+	*/
+	AnchorTop = 1,
+	
+	/**
+	The Control is anchored to the left edge of the parent 
+	control it belongs to. Whatever the distance between the 
+	left edge and the left coordinate of the control when this 
+	is set, is maintained whenever the parent control's dimensions 
+	change.
+	*/
+	AnchorLeft = 2,
+	
+	/**
+	The Control is anchored to the bottom edge of the parent 
+	control it belongs to. Whatever the distance between the 
+	bottom edge and the bottom coordinate of the control when 
+	this is set, is maintained whenever the parent control's 
+	dimensions change. 
+	*/
+	AnchorBottom = 4,
+	
+	/**
+	The Control is anchored to the right edge of the parent 
+	control it belongs to. Whatever the distance between the 
+	right edge and the right coordinate of the control when 
+	this is set, is maintained whenever the parent control's 
+	dimensions change.
+	*/
+	AnchorRight = 8
+};
+
+
+									 
+
+
+
+
+
+
+enum TextAlignmentType {
+	taTextLeft = 0,
+	taTextCenter,
+	taTextRight
+};
+
+
+
+
+
+
+
+
+
+
+
+/**
+\class Control Control.h "vcf/ApplicationKit/Control.h"
+The base class for all visual components in the Visual Component Framework.
+In addition it implements the View interface. This means that the
+Control is itself a specialized form of a View, though it may not have
+have a model, and can hold an external view, separate from itself.
+
+A control receives a wide variety of events from the user such as paint 
+events, mouse events, keyboard events, help events, etc.
+
+Controls can have parents, and can form a hierarchy of parent-child 
+controls. Controls can have children if they have a valid Container 
+instance set.
+
+Controls can also be aligned or anchored, which can aid in laying out the
+presentation of a UI.
+
+Finally a Control may also be lightweight or heavyweight, which determines
+how many  window system resources the control consumes. A heavyweight control
+has a native window/widget and takes up resources accordingly. In addition a
+heavyweight control also has a native graphics context associated with it that
+also takes up resources. In contrast, a lightweight control shares the underlying
+native window and graphics context resources with it's parent, and greatly
+reduces the number of resources the application will consume. This is especially
+useful when making complex custom controls that have many moving parts like 
+a tree-list control, complete with a header and movable icons, etc.
+
+To aid in the drawing of a control, all controls are double buffered by default
+to prevent flicker, though this can be turned off and on at will.
  @delegates
 	@del Control::ControlSized
 	@del Control::ControlPositioned
@@ -78,6 +215,8 @@ class Frame;
 	@del Control::ToolTipRequested
 	@del Control::ToolTip
 	@del Control::ControlModelChanged
+	@del Control::BeforeControlPainted
+	@del Control::AfterControlPainted
  */
 class APPLICATIONKIT_API Control : public Component, public AbstractView {
 public:
@@ -87,6 +226,28 @@ public:
 		ANCHOR_DLEFT,
 		ANCHOR_DBOTTOM,
 		ANCHOR_DRIGHT
+	};
+
+	enum ControlState {
+		csVisible					= 0x00000001,
+		csEnabled					= 0x00000002,
+		csUseParentFont				= 0x00000004,
+		csDoubleBuffered			= 0x00000008,
+		csAutoStartDragDrop			= 0x00000010,
+		csTabStop					= 0x00000020,
+		csIgnoreForLayout			= 0x00000040,
+		csIgnoreForParentScrolling  = 0x00000080,
+		csAllowPaintNotification	= 0x00000100,
+		csHasMouseCapture			= 0x00000200,
+		csUseRenderBuffer			= 0x00000400,
+		csDefaultControlState = csEnabled | csTabStop | csDoubleBuffered
+	};
+
+	enum MinMaxSizeDefaults{
+		mmIgnoreMinWidth = -1,
+		mmIgnoreMinHeight = -1,
+		mmIgnoreMaxWidth = -1,
+		mmIgnoreMaxHeight = -1
 	};
 
 	enum ControlEvents {
@@ -110,6 +271,9 @@ public:
 		MOUSE_DBLCLICK,
 		MOUSE_ENTERED,
 		MOUSE_LEAVE,
+		BEFORE_CONTROL_PAINTED,
+		AFTER_CONTROL_PAINTED,
+		BEFORE_POPUP_MENU,
 		CONTROL_EVENTS_LAST
 	};
 
@@ -300,6 +464,41 @@ public:
 	*/
 	DELEGATE(ControlModelChanged);
 
+	/**
+	@delegate BeforeControlPainted fires an ControlEvent.
+	Fired by the control just before the control's
+	paint() method is called. This will only happen if the
+	control's getAllowPaintNotification() returns true.	The
+	ControlEvent's getPaintGraphicsContext() method will
+	return the same GraphicsContext that passed to the
+	control's paint() method.
+	@event ControlEvent
+	@eventtype Control::BEFORE_CONTROL_PAINTED
+	*/
+	DELEGATE(BeforeControlPainted);
+
+	/**
+	@delegate AfterControlPainted fires an ControlEvent.
+	Fired by the control after the control's
+	paint() method is called. This will only happen if the
+	control's getAllowPaintNotification() returns true. The
+	ControlEvent's getPaintGraphicsContext() method will
+	return the same GraphicsContext that passed to the
+	control's paint() method.
+	@event ControlEvent
+	@eventtype Control::AFTER_CONTROL_PAINTED
+	*/
+	DELEGATE(AfterControlPainted);
+
+	/**
+	@delegate AfterControlPainted fires an ControlPopupMenuMenuEvent
+	before the popup menu is displayed, allowing for customization
+	of the popup menu.
+	@event ControlPopupMenuMenuEvent
+	@eventtype Control::BEFORE_POPUP_MENU
+	*/
+	DELEGATE(BeforePopupMenu);
+	
 	
 
 	/**
@@ -575,18 +774,29 @@ public:
 	void setEnabled( const bool& enabled );
 
 	/**
-	*paints the control. Called by the underlying windowing system whenever
-	*the control needs to be painted. Note that in some cases the GraphicsContext
-	*passed in to this method may not be the same pointer as the GraphicsContext
-	*that the control holds itself. During the paint() mehtod you should only
-	*use the context value for all your drawing and not the one returned in
-	*getContext(). The value returned by getContext() should be used for drawing
-	*that takes place outside of the paint() method.
-	*<p>Note: This should <b><i>NEVER</i></b> be called
-	*by programmers using the VCF, it will be called for during the course of your
-	*applications native event loop, and is only here for providing custom drawing
-	*routines for controls. In other words: you implement it, you never call it
-	*yourself.
+	
+	Paints the control. Called by the underlying windowing system whenever
+	the control needs to be painted. Note that in some cases the GraphicsContext
+	passed in to this method may not be the same pointer as the GraphicsContext
+	that the control holds itself. During the paint() method you should only
+	use the context value for all your drawing and not the one returned in
+	getContext(). The value returned by getContext() should be used for drawing
+	that takes place outside of the paint() method.
+	
+	If the control allows paint notification, then the framework will fire an 
+	event to the BeforeControlPainted delegate \em prior to calling the 
+	control's paint() method. After the paint() method has returned, if
+	the control allows paint notification, the framework will fire an event to
+	the AfterControlPainted delegate. This allows outside observers to take 
+	part in the paint cycle, \em but beware that this does come at a bit of a 
+	cost, so use this feature sparingly.
+	
+	\em Note: This should \em NEVER be called
+	by programmers using the VCF, it will be called for you during the course 
+	of your applications native event loop, and is only here for providing 
+	custom drawing routines for controls. In other words: you implement it, 
+	you never call it yourself.
+	@see getAllowPaintNotification
 	*/
 	virtual void paint( GraphicsContext * context )=0;
 
@@ -669,6 +879,36 @@ public:
 	*called when the user releases the key
 	*/
 	virtual void keyUp( KeyboardEvent* event );
+
+	/**
+	called when the control's bounds change. Override this
+	for your own custom behaviour if you need to.
+	*/
+	virtual void sizeChange( ControlEvent* event );
+
+	/**
+	called when the control's coordinates change. Override this
+	for your own custom behaviour if you need to.
+	*/
+	virtual void positionChange( ControlEvent* event );
+
+	/**
+	Called when the parent of the control is changed. Override this
+	for your own custom behaviour if you need to.
+	*/
+	virtual void parentChange( ControlEvent* event );
+
+	/**
+	Called when the control gains keyboard focus. Override this
+	for your own custom behaviour if you need to.
+	*/
+	virtual void gotFocus( FocusEvent* event );
+
+	/**
+	Called when the control loses keyboard focus. Override this
+	for your own custom behaviour if you need to.
+	*/
+	virtual void lostFocus( FocusEvent* event );
 
 	/**
 	*translate the point from this controls coordinate system to
@@ -797,6 +1037,8 @@ public:
 	*/
 	void repaint( Rect* repaintRect=NULL );
 
+	void repaintNow( Rect* repaintRect=NULL );
+
 	/**
 	*is this component double buffered.
 	*@return bool true if the component is double buffered, otherwise
@@ -826,7 +1068,7 @@ public:
 	render buffer for anti-aliased vector graphics (based on the AGG library).
 	*/
 	bool isUsingRenderBuffer() {
-		return useRenderBuffer_;
+		return (controlState_ & Control::csUseRenderBuffer) ? true : false;
 	};
 
 	/**
@@ -839,7 +1081,12 @@ public:
 	control is resized the image is resized as well
 	*/
 	void setUsingRenderBuffer( const bool& useRenderBuffer ) {
-		useRenderBuffer_ = useRenderBuffer;
+		if ( useRenderBuffer ) {
+			controlState_  |= Control::csUseRenderBuffer;
+		}
+		else {
+			controlState_  &= ~Control::csUseRenderBuffer;
+		}
 	}
 	/**
 	*this keeps the mouse events being sent to this control, even if the
@@ -911,6 +1158,103 @@ public:
 	*/
 	virtual void setPreferredHeight( const double& height ){};
 
+
+	/**
+	Returns the minimum size for this control. At the moment this is only
+	used for Frames, to control the minimum size a user can resize the
+	Frame to.
+	@return Size the minimum size. If the width_ field is set equal to 
+	Control::mmIgnoreMinWidth then the minimum width is ignored. If the 
+	height_ field is set equal to Control::mmIgnoreMinHeight then the 
+	minimum height is ignored. 
+	*/
+	Size getMinSize() {
+		return minSize_;
+	}
+
+	/**
+	Sets the minimum size of the control.
+	@param Size the minimum size. If the width_ field is set equal to 
+	Control::mmIgnoreMinWidth then the minimum width is ignored. If the 
+	height_ field is set equal to Control::mmIgnoreMinHeight then the 
+	minimum height is ignored.
+	*/
+	void setMinSize( const Size& val ) {
+		minSize_ = val;
+	}
+
+	/**
+	Returns the minimum width of the control.
+	@see getMinSize
+	*/
+	double getMinWidth() {
+		return minSize_.width_;
+	}
+
+	/**
+	Sets the minimum width of the control.
+	@see setMinSize
+	*/
+	void setMinWidth( const double& val ) {
+		minSize_.width_ = val;
+	}
+
+	/**
+	Returns the minimum height of the control.
+	@see getMinSize
+	*/
+	double getMinHeight() {
+		return minSize_.height_;
+	}
+
+	/**
+	Sets the minimum height of the control.
+	@see setMinSize
+	*/
+	void setMinHeight( const double& val ) {
+		minSize_.height_ = val;
+	}
+
+	/**
+	Returns the maximum size for this control. At the moment this is only
+	used for Frames, to control the maximum size a user can resize the
+	Frame to.
+	@return Size the maximum size. If the width_ field is set equal to 
+	Control::mmIgnoreMaxWidth then the maximum width is ignored. If the 
+	height_ field is set equal to Control::mmIgnoreMaxHeight then the 
+	maximum height is ignored. 
+	*/
+	Size getMaxSize() {
+		return maxSize_;
+	}
+
+	/**
+	Sets the maximum size of the control.
+	@param Size the maximum size. If the width_ field is set equal to 
+	Control::mmIgnoreMaxWidth then the maximum width is ignored. If the 
+	height_ field is set equal to Control::mmIgnoreMaxHeight then the 
+	maximum height is ignored.
+	*/
+	void setMaxSize( const Size& val ) {
+		maxSize_ = val;
+	}
+
+	double getMaxWidth() {
+		return maxSize_.width_;
+	}
+
+	void setMaxWidth( const double& val ) {
+		maxSize_.width_ = val;
+	}
+
+	double getMaxHeight() {
+		return maxSize_.height_;
+	}
+
+	void setMaxHeight( const double& val ) {
+		maxSize_.height_ = val;
+	}
+
 	/**
 	*returns an object implementing the Scrollable interface
 	*The default value is NULL, indicating the control does not support
@@ -951,11 +1295,6 @@ public:
 	void setWhatThisHelpString( const String& whatThisHelpString ) {
 		whatThisHelpString_ = whatThisHelpString;
 	}
-
-	/**
-	*
-	*/
-	void processWhatsThisHelpEvent();
 
 	/**
 	*returns a string that is used to display in the tooltip
@@ -1055,7 +1394,7 @@ public:
 	*</tr>
 	*</table>
 	*/
-	unsigned long getAnchor() {
+	AnchorTypes getAnchor() {
 		return anchor_;
 	}
 
@@ -1065,7 +1404,7 @@ public:
 	*and what they mean for the control's alignment.
 	*@see getAnchor()
 	*/
-	void setAnchor( const unsigned long& anchor );
+	void setAnchor( const AnchorTypes& anchor );
 
 	/**
 	*returns the current delta for each of the anchors.
@@ -1137,7 +1476,7 @@ public:
 	*to the tab key and will not become focused.
 	*/
 	bool getTabStop() {
-		return tabStop_;
+		return (controlState_ & Control::csTabStop) ? true : false;
 	}
 
 	/**
@@ -1256,29 +1595,81 @@ public:
 	*/
 	void setContainer( Container* container );
 
+	/**
+	This returns whether or not the control has 
+	any child controls associated with it. 
+
+	@return bool returns true if the control has children. 
+	A control with children, by definition, \em must 
+	have a Container instance. Returns false if the
+	control has no children. Note that a false
+	return value doesn't neccessarily mean that the 
+	control has no container (just that the container
+	has no child controls yet).
+
+	@see getContainer()
+	*/
+	bool hasChildren();
+
+	/**
+	Returns whether or not this control is a 
+	child of some other control. Equivalent 
+	to checking the return value of getParent()
+	for a non-null value.
+	@return bool returns true if the control has a 
+	parent. Otherwise it returns false.
+
+	@see getParent()
+	*/
+	bool isChild();
+
+	/**
+	Returns whether or not the control will
+	allow paint notification. 
+	@see paint()
+	@see BeforeControlPainted
+	@see AfterControlPainted
+	*/
+	bool getAllowPaintNotification() {
+		return (controlState_ & Control::csAllowPaintNotification) ? true : false;
+	}
+
+	/**
+	Sets whether or not the control will allow 
+	paint notification.
+	@see paint()
+	@see BeforeControlPainted
+	@see AfterControlPainted
+	*/
+	void setAllowPaintNotification( const bool& val ) {
+		if ( val ) {
+			controlState_  |= Control::csAllowPaintNotification;
+		}
+		else {
+			controlState_  &= ~Control::csAllowPaintNotification;
+		}
+	}
+
+
+	bool ignoreForParentScrolling() {
+		return (controlState_ & Control::csIgnoreForParentScrolling) ? true : false;		
+	}
+
+	void setIgnoreForParentScrolling( const bool& val ) {
+		if ( val ) {
+			controlState_  |= Control::csIgnoreForParentScrolling;
+		}
+		else {
+			controlState_  &= ~Control::csIgnoreForParentScrolling;
+		}
+	}
 
 	/**
 	sets a new model for the view
 	Once set, the control fires a ControlModelChanged event.
 	*/
 	virtual void setViewModel( Model* viewModel );
-
-	/**
-	tells if the control is currently sending a repaint message
-	when resizing, or not.
-	*/
-	bool getRepaintOnSize() {
-		return repaintOnSize_;
-	}
-
-	/**
-	let the user to control if the control will send a repaint message
-	when is resized, or not.
-	*/
-	void setRepaintOnSize( const bool& repaint ) {
-		repaintOnSize_ = repaint;
-	}
-
+	
 	/**
 	*returns the current control that has captured the mouse input.
 	*This may return NULL if no control has expressly captured the
@@ -1306,6 +1697,15 @@ public:
 
 	static void buildTabList( Control* control, std::vector<Control*>& tabList );
 
+	/**
+	called by the internals of the framework - DO NOT CALL!
+	*/
+	void internal_beforePaint( GraphicsContext* context );
+
+	/**
+	called by the internals of the framework - DO NOT CALL!
+	*/
+	void internal_afterPaint( GraphicsContext* context );
 protected:
 	void updateAnchorDeltas();
 
@@ -1327,10 +1727,10 @@ protected:
 	Color* color_;
 	Font* font_;
 	View* view_;
-	bool useParentFont_;
-	bool doubleBuffered_;
-	bool hasMouseCapture_;
-	bool autoStartDragDrop_;
+	//bool useParentFont_;
+	//bool doubleBuffered_;
+	//bool hasMouseCapture_;
+	//bool autoStartDragDrop_;
 	PopupMenu* popupMenu_;
 	Scrollable* scrollable_;
 	String whatThisHelpString_;
@@ -1338,13 +1738,21 @@ protected:
 	long cursorID_;
 	Cursor* cursor_;
 	float anchorDeltas_[4];
-	bool tabStop_;
+	//bool tabStop_;
 	long tabOrder_;
 	Point clickPt_;
-	bool useRenderBuffer_;
+	//bool useRenderBuffer_;
 	Container* container_;
+	Size minSize_;
+	Size maxSize_;
+
+	/*
 	bool ignoredForLayout_;
-	bool repaintOnSize_;
+	bool allowPaintNotification_;
+	bool enabled_;
+	bool visible_;
+	*/
+	uint32 controlState_;
 
 };
 
@@ -1355,6 +1763,63 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.17  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.2.16  2006/03/18 23:03:11  ddiego
+*added several new virtual methods to control class to make it
+*easier to write custom controls and respond to events.
+*
+*Revision 1.4.2.15  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.14  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.13  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.12  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.4.2.11  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.4.2.10  2006/02/14 05:13:09  ddiego
+*more browser updates.
+*
+*Revision 1.4.2.9  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
+*Revision 1.4.2.8  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.4.2.7  2005/10/07 04:06:24  ddiego
+*minor adjustment to control state variables
+*
+*Revision 1.4.2.6  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.4.2.5  2005/09/14 01:50:07  ddiego
+*minor adjustment to control for enable setting. and registered
+*more proeprty editors.
+*
+*Revision 1.4.2.4  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.4.2.3  2005/09/05 14:38:31  ddiego
+*added pre and post paint delegates to the control class.
+*
+*Revision 1.4.2.2  2005/08/08 03:18:40  ddiego
+*minor updates
+*
+*Revision 1.4.2.1  2005/08/05 01:11:37  ddiego
+*splitter fixes finished.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

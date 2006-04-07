@@ -121,7 +121,7 @@ void Win32ProcessIORedirector::readPipe()
 		//notify folks of an OutputReady event
 		String outputData = readBuffer;
 		OutputReadyEvent event( process_, outputData );
-		outputReady_.fireEvent( &event );
+		process_->OutputReady.fireEvent( &event );
 
 		Sleep(100);
 		int err = PeekNamedPipe( childStdoutRdHandle_, NULL, 0, NULL, &bytesLeftToRead, NULL);
@@ -152,7 +152,7 @@ void Win32ProcessIORedirector::readPipe()
 		//notify folks of an OutputReady event
 		String outputData = readBuffer;
 		OutputReadyEvent event( process_, outputData );
-		outputReady_.fireEvent( &event );
+		process_->OutputReady.fireEvent( &event );
 	}
 
 	if ( !CloseHandle(childStdinRdHandle_) ) {
@@ -229,7 +229,7 @@ bool Win32ProcessIORedirector::createProcess( const String& processName, const S
 	//		close the inheritable read handle.
 
 	// Save the handle to the current STDOUT.
-	HANDLE hSaveStdout = ::GetStdHandle(STD_OUTPUT_HANDLE);
+	savedStdoutHandle_ = ::GetStdHandle(STD_OUTPUT_HANDLE);
 
 	// Create a pipe for the child process's STDOUT.
 	if (!::CreatePipe(&hChildStdoutRdTmp, &childStdoutWrHandle_, &saAttr, 0))	{
@@ -429,10 +429,51 @@ ulong32 Win32ProcessIORedirector::terminate()
 	return -1;
 }
 
+Waitable::WaitResult Win32ProcessIORedirector::wait( uint32 milliseconds )
+{
+	Waitable::WaitResult result(Waitable::wrWaitFailed);
+
+	DWORD  res = WaitForSingleObject( processInfo_.hProcess, milliseconds );
+	if ( WAIT_TIMEOUT == res ) {
+		result = Waitable::wrTimedOut;
+	}
+	else if ( WAIT_OBJECT_0 == res ) {
+		result = Waitable::wrWaitFinished;
+	}
+
+	return result;
+}
+
+Waitable::WaitResult Win32ProcessIORedirector::wait()
+{
+	Waitable::WaitResult result(Waitable::wrWaitFailed);
+
+	DWORD  res = WaitForSingleObject( processInfo_.hProcess, INFINITE );
+	if ( WAIT_TIMEOUT == res ) {
+		result = Waitable::wrTimedOut;
+	}
+	else if ( WAIT_OBJECT_0 == res ) {
+		result = Waitable::wrWaitFinished;
+	}
+
+	return result;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
+*Revision 1.3.2.2  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.3.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.3  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

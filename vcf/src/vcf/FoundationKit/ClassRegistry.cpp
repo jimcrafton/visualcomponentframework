@@ -593,7 +593,7 @@ void ClassRegistry::internal_addInterface( const String& interfaceName, Interfac
 			Enumerator<Method*>* methods = superInterfaceClass->getMethods();
 			while ( true == methods->hasMoreElements() ) {
 				Method* method = methods->nextElement();
-				Method* inheritedMethod = method->clone();
+				//Method* inheritedMethod = method->clone();  //not used....
 				interfaceToRegister->addMethod( method );
 			}
 
@@ -701,7 +701,7 @@ void* ClassRegistry::internal_createNewInterfaceInstanceFromInterfaceName( const
 		ImplementedInterfaceClass* implInterface = it->second;
 		if ( implInterface->getInterfaceName() == interfaceName ) {
 			String key = it->first;
-			int pos = key.find("::");
+			size_t pos = key.find("::");
 			if ( pos != String::npos ) {
 
 				std::map<String,Class*>::iterator found = classIDMap_.find( key.substr(pos+2, key.size()-(pos+2)) );
@@ -792,6 +792,13 @@ void ClassRegistry::removeInterface( InterfaceClass* interfaceClass )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.3  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

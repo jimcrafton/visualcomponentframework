@@ -21,7 +21,7 @@ OSXMenuManagerPeer::~OSXMenuManagerPeer()
 MenuItemPeer* OSXMenuManagerPeer::getMenuItemPeer( MenuItem* item )
 {
 	MenuItemPeer* result = NULL;
-/*
+
 	MenuItemMap::iterator found = menuItemsMap_.find( item );
 	if ( found != menuItemsMap_.end() ) {
 		result = found->second; 
@@ -29,10 +29,15 @@ MenuItemPeer* OSXMenuManagerPeer::getMenuItemPeer( MenuItem* item )
 	else {
 		result = UIToolkit::createMenuItemPeer( item );
 		result->setMenuItem( item );
-		menuItemsMap_.insert( MenuItemMap::value_type(item,(Win32MenuItem*)result) );
+		menuItemsMap_.insert( MenuItemMap::value_type(item,(OSXMenuItem*)result) );
 	}
-*/
+
 	return result;
+}
+
+void OSXMenuManagerPeer::destroyMenuItemPeer( MenuItem* item )
+{
+
 }
 
 void OSXMenuManagerPeer::windowActivated( Window* window )

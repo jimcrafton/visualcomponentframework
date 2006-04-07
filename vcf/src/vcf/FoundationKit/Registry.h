@@ -29,8 +29,25 @@ enum RegistryDataType{
 	RDT_BINARY
 };
 
+/**
+\class RegistryValueInfo Registry.h "vcf/FoundationKit/Registry.h"
+*/
+class FOUNDATIONKIT_API RegistryException : public RuntimeException {
+public:
+	RegistryException( const VCF::String & message ):
+		RuntimeException( message ){
+
+	};
+		
+	RegistryException( const VCF::String & message, const int lineNumber ):
+		VCF::RuntimeException(message, lineNumber){};
+
+	virtual ~RegistryException() throw() {};
+
+};
 
 /**
+\class RegistryValueInfo Registry.h "vcf/FoundationKit/Registry.h"
 *a class that wraps up a specific registry value that may
 *be a string, integer, bool, or stream of binary data
 */
@@ -96,6 +113,7 @@ public:
 class RegistryPeer;
 
 /**
+\class Registry Registry.h "vcf/FoundationKit/Registry.h"
 *The registry represents an external data source that applications
 *may store application data in. This may be things like special file names,
 *UI positions, application state data etc. The external data may be anything
@@ -123,12 +141,68 @@ public:
 
 	bool setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename );
 
+	/**
+	Returns a named string value from the registry and the
+	current open key. If no such value name exists, or there 
+	is some other problem reading the value, the function throws 
+	a RegistryException exception.
+	@param String the name of the value under the current open key
+	@return String the value returned
+	*/
 	String getStringValue( const String& valuename );
 
+	/**
+	Returns a named int value from the registry and the
+	current open key. If no such value name exists, or there 
+	is some other problem reading the value, the function throws 
+	a RegistryException exception.
+	@param String the name of the value under the current open key
+	@return uint32 the value returned
+	*/
 	uint32 getIntValue( const String& valuename );
 
+	/**
+	Returns a named bool value from the registry and the
+	current open key. If no such value name exists, or there 
+	is some other problem reading the value, the function throws 
+	a RegistryException exception.
+	@param String the name of the value under the current open key
+	@return bool the value returned
+	*/
 	bool getBoolValue( const String& valuename );
 
+	/**
+	Returns a named data buffer from the registry and the
+	current open key. If no such value name exists, or there 
+	is some other problem reading the value, the function throws 
+	a RegistryException exception.
+	
+	Note that the function allocates a data buffer for the caller,
+	however it is the caller's responsibility to delete the 
+	data buffer when the caller is finished with it.
+	Example usage
+	\code
+	Registry reg; 
+	//reg already opened to some key...
+
+	void* buf = NULL;
+	uint32 dataBufferSize = 0;
+	try {
+		reg.getDataBufValue( "MyData", dataBufferSize, &buf );
+	}
+	catch ( RegistryException& ) {
+		System::println( "Oops - an error occured!" );
+	}
+
+	//do stuff with buffer ...
+
+	//clean up buffer - delete it!
+	delete buf; 
+	\endcode
+	@param String the name of the value under the current open key
+	@param uint32 the size of the newly allocated  data buffer in bytes
+	@param void** a pointer to a data buffer pointer.
+	*/
 	void getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
 
 	Enumerator<String>* getKeyNames();
@@ -146,6 +220,23 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.4.2.3  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.4.2.2  2005/09/05 18:26:59  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
+*Revision 1.4.2.1  2005/09/05 18:17:17  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

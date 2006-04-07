@@ -1,6 +1,15 @@
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:51  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/02/22 04:21:02  dougtinkham
+*added __MINGW32__ check
+*
+*Revision 1.2.6.1  2005/11/18 16:03:05  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.2  2004/08/07 02:49:20  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *
@@ -56,10 +65,10 @@
 *	notice, this list of conditions and the following disclaimer.
 *
 *	Redistributions in binary form must reproduce the above copyright
-*	notice, this list of conditions and the following disclaimer in 
+*	notice, this list of conditions and the following disclaimer in
 *	the documentation and/or other materials provided with the distribution.
 *
-*THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+*THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 *AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 *A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS
@@ -68,7 +77,7 @@
 *PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
 *PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 *LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-*NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+*NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 *NB: This software will not save the world.
@@ -90,20 +99,23 @@
 namespace xmake {
 
 /**
- * This is a template class that provides an interface for 
- * iterating through a collection, and provides a standard set of methods. 
+ * This is a template class that provides an interface for
+ * iterating through a collection, and provides a standard set of methods.
  * Either multiply inherited by classes that want to public expose a single set of children,
  *or as  a returned object for safe enumeration of data collections.
  */
 
 template <class COLLECTION_TYPE> class  Enumerator{
+protected:
+    bool supportsEditing_;
+
 public:
 	Enumerator(){
 		supportsEditing_ = false;
 	};
 
 	virtual ~Enumerator(){};
-	
+
 	/**
 	*indicates whether there are any more children to enumerate
 	*through
@@ -113,7 +125,7 @@ public:
 	*otherwise returns false.
 	*/
 	virtual bool hasMoreElements(const bool& backward=false)=0;
-	
+
 	/**
 	*returns the next element in the enumeration. Moves the internal
 	*iterator forward
@@ -121,7 +133,7 @@ public:
 	*was specified in the template argument to the Enumerator
 	*/
 	virtual COLLECTION_TYPE nextElement()=0;
-	
+
 	/**
 	*returns the previous element in the enumeration. Moves the internal
 	*iterator backward
@@ -129,16 +141,16 @@ public:
 	*was specified in the template argument to the Enumerator
 	*/
 	virtual COLLECTION_TYPE prevElement()=0;
-	
+
 	/**
-	*Resets the Enumerator's internal iterator back to the beginning (or end, 
+	*Resets the Enumerator's internal iterator back to the beginning (or end,
 	*if backward is true).
 	*@param bool specifies which direction to reset to
 	*/
-	virtual void reset(const bool& backward=false)=0;	
+	virtual void reset(const bool& backward=false)=0;
 
 	/**
-	*Currently not used. Will allow editing of the Enumerator in the 
+	*Currently not used. Will allow editing of the Enumerator in the
 	*future, in which case this will return whether or not this instance
 	*of the enumerator allows adding or removing of elements
 	*@return bool true if the enumerator allows editing, otherwise false.
@@ -146,8 +158,6 @@ public:
 	bool supportsEditing(){
 		return supportsEditing_;
 	};
-protected:
-	bool supportsEditing_;
 };
 
 
@@ -155,23 +165,27 @@ protected:
 /**
 *EnumeratorContainer is based on some COLLECTION class that represents a collection
 *class of some sort, i.e. std::vector<>, std::list, et al.
-*The internal implementation counts on the collection having a common interface to 
+*The internal implementation counts on the collection having a common interface to
 *STL's collection classes.
 *The collection must support forward and reverse iterators
-*The COLLECTION type specifies the full collection associated with 
-*the enumerator. FOr example, an enumerator container of Object* using 
+*The COLLECTION type specifies the full collection associated with
+*the enumerator. FOr example, an enumerator container of Object* using
 *a std::vector as it's collection would like this:
 *<pre>
 *	EnumeratorContainer<std::vector<Object*>,Object*> objectVecEnumerator;
 *</pre>
 *The COLLECTION_TYPE represents the type of an individual element in the enumerator.
-*Passing in a reference to the collection variable in the contstructor will automatically 
+*Passing in a reference to the collection variable in the contstructor will automatically
 *set up the internal iterator, nothing further need be done. Alternatively, you may
 *call the initContainer() method with a reference to the collection
 */
 template <class COLLECTION, class COLLECTION_TYPE> class  EnumeratorContainer : public Enumerator<COLLECTION_TYPE>{
 public:
-	
+
+    #if defined(GCC) || defined(__MINGW32__)
+    using Enumerator<COLLECTION_TYPE>::supportsEditing_; /* gcc follows the standart */
+    #endif
+
 	EnumeratorContainer( COLLECTION &container ){
 		container_ = &container;
 		this->reset();
@@ -190,7 +204,7 @@ public:
 	*/
 	virtual void initContainer( COLLECTION &container ){
 		container_ = &container;
-		this->reset();	
+		this->reset();
 	};
 
 	virtual bool hasMoreElements(const bool& backward=false){
@@ -205,7 +219,7 @@ public:
 	};
 
 	virtual COLLECTION_TYPE nextElement(){
-		if (containerIterator_ != container_->end() ){			
+		if (containerIterator_ != container_->end() ){
 			return *containerIterator_++;
 		}
 		else {
@@ -214,9 +228,9 @@ public:
 	};
 
 	virtual COLLECTION_TYPE prevElement(){
-		if (containerIterator_ != container_->begin() ){			
+		if (containerIterator_ != container_->begin() ){
 			return *--containerIterator_;
-		}		
+		}
 		else {
 			return *container_->end();
 		}
@@ -227,15 +241,15 @@ public:
 			containerIterator_ = container_->begin();
 		}
 		else {
-			containerIterator_ = container_->end();			
+			containerIterator_ = container_->end();
 		}
 	};
 
 	/**
 	*returns a pointer to the Enumerator interface of this
-	*container. Automatically resets the collection before 
+	*container. Automatically resets the collection before
 	*returning the pointer.
-	*@return Enumerator<COLLECTION_TYPE> a pointer to the 
+	*@return Enumerator<COLLECTION_TYPE> a pointer to the
 	*collection as an Enumerator interface.
 	*/
 	virtual Enumerator<COLLECTION_TYPE>* getEnumerator(){
@@ -243,18 +257,18 @@ public:
 		return (Enumerator<COLLECTION_TYPE>*)this;
 	};
 private:
-	typename COLLECTION::iterator containerIterator_;	
+	typename COLLECTION::iterator containerIterator_;
 	COLLECTION* container_;
 };
 
 /**
-*EnumeratorMapContainer is based on some COLLECTION class that represents 
+*EnumeratorMapContainer is based on some COLLECTION class that represents
 *an  associative collection of some sort, i.e. std::map<>
-*The internal implementation counts on the collection having a common interface to 
+*The internal implementation counts on the collection having a common interface to
 *STL's collection classes.
 *The collection must support forward and reverse iterators
-*The COLLECTION type specifies the full collection associated with 
-*the enumerator. FOr example, an enumerator container of Object* using 
+*The COLLECTION type specifies the full collection associated with
+*the enumerator. FOr example, an enumerator container of Object* using
 *a std::map as it's collection would like this:
 *<pre>
 *	EnumeratorMapContainer<std::map<String,Object*>,Object*> objectMapEnumerator;
@@ -276,7 +290,7 @@ public:
 
 	virtual void initContainer( COLLECTION &container ){
 		container_ = &container;
-		this->reset();	
+		this->reset();
 	};
 
 	virtual Enumerator<COLLECTION_TYPE>* getEnumerator(){
@@ -322,12 +336,12 @@ public:
 			containerIterator_ = container_->begin();
 		}
 		else {
-			containerIterator_ = (container_->end());			
+			containerIterator_ = (container_->end());
 		}
 	};
 
 private:
-	typename COLLECTION::iterator containerIterator_;	
+	typename COLLECTION::iterator containerIterator_;
 	COLLECTION* container_;
 };
 

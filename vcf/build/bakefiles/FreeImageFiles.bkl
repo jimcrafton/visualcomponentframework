@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="FREEIMAGE_HDR" hints="files">
+        thirdparty/common/FreeImage/Source/FreeImage.h
+        thirdparty/common/FreeImage/Source/FreeImageIO.h
+        thirdparty/common/FreeImage/Source/FreeImageSelectLib.h
+        thirdparty/common/FreeImage/Source/Plugin.h
+        thirdparty/common/FreeImage/Source/Quantizers.h
+        thirdparty/common/FreeImage/Source/Utilities.h
+    </set>
+
+    <set var="FREEIMAGE_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/FreeImage/BitmapAccess.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion16_555.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion16_565.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion24.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion32.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Conversion8.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/FreeImage.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/FreeImageIO.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/GetType.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/LoadFunctions.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/NNQuantizer.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/Plugin.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginBMP.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginICO.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginIFF.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginKOALA.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginMNG.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginPCD.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginPCX.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginPNM.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginPSD.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginRAS.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginTARGA.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginTIFF.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/PluginWBMP.cpp
+        thirdparty/common/FreeImage/Source/FreeImage/WuQuantizer.cpp        
+    </set>
+
+</makefile>

@@ -13,10 +13,15 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#ifndef _VCF_WAITABLE_H__
+#include "vcf/FoundationKit/Waitable.h"
+#endif
+
 
 namespace VCF {
 
 /**
+\class ProcessPeer ProcessPeer.h "vcf/FoundationKit/ProcessPeer.h"
 *a peer class that wraps working with processes
 *on OS's
 */
@@ -57,6 +62,10 @@ public:
 	virtual OSHandleID getHandleID() = 0;
 
 	virtual ulong32 terminate() = 0;
+
+	virtual Waitable::WaitResult wait( uint32 milliseconds ) = 0;
+
+	virtual Waitable::WaitResult wait() = 0;
 };
 
 }; //end of namespace VCF
@@ -65,6 +74,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.4.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -21,6 +21,7 @@ namespace VCF
 {
 
 /**
+\class SynchObject SynchObject.h "vcf/FoundationKit/SynchObject.h"
 *Class SynchObject documentation
 Defines an abstract base class for synchronisation classes
 like mutexes and semaphores, to be used with the lock class
@@ -51,6 +52,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

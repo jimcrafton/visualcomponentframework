@@ -17,6 +17,10 @@ where you installed the VCF.
 
 namespace VCF  {
 
+
+	/**
+	\class ApplicationResourceBundle ApplicationResourceBundle.h "vcf/ApplicationKit/ApplicationResourceBundle.h"
+	*/
 	class ApplicationResourceBundle : public GraphicsResourceBundle  {
 	public:
 		ApplicationResourceBundle( AbstractApplication* app );

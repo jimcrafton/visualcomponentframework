@@ -37,13 +37,13 @@ public:
 
 	virtual bool setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename );
 
-	virtual String getStringValue( const String& valuename );
+	virtual bool getStringValue( const String& valuename, String& value );
 
-	virtual uint32 getIntValue( const String& valuename );
+	virtual bool getIntValue( const String& valuename, uint32& value );
 
-	virtual bool getBoolValue( const String& valuename );
+	virtual bool getBoolValue( const String& valuename, bool& value );
 
-	virtual void getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
+	virtual bool getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
 
 	virtual Enumerator<String>* getKeyNames();
 
@@ -68,6 +68,13 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/05 18:17:17  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

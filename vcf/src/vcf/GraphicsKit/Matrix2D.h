@@ -22,8 +22,9 @@ namespace VCF{
 
 
 /**
+\class Matrix2D Matrix2D.h "vcf/GraphicsKit/Matrix2D.h"
 The Matrix2D is used for transforming 2D shapes or images. This class is 
-intended to represent an affine matrix made up of a 3X3 array or doubles.
+intended to represent an affine matrix made up of a 3X3 array of doubles.
 @see GraphicsContext
 @see Path
 */
@@ -202,6 +203,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.4.2  2006/04/05 03:35:59  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.4.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.4  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

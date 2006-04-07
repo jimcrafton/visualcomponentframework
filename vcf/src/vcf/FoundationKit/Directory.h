@@ -19,18 +19,18 @@ class FileSearchFilter;
 
 
 /**
-\par
-  A Directory represents a directory in a filesystem.
+\class Directory Directory.h "vcf/FoundationKit/Directory.h"
+A Directory represents a directory in a filesystem.
   and therefore it is a File object with all its features.
-\par
-  In addition they can instantiate a Directory::Finder object
-  in the moment the user wants them to perform a search into
-  its files and subdirectories based on a search filter.
-\par
-  The Directory::Finder class has been written to be very performant
-  even when recursing.
-\par
-  The way to use this class is:
+
+In addition they can instantiate a Directory::Finder object
+in the moment the user wants them to perform a search into
+its files and subdirectories based on a search filter.
+
+The Directory::Finder class has been written to be very performant
+even when recursing.
+
+The way to use this class is:
   \code
       String filepath = L"./";
 
@@ -53,69 +53,67 @@ class FileSearchFilter;
       }
       finder->free();
   \endcode
-\par
-  The user is also able to create more than one finder
-  from the same directory instance. But in order to achieve
-  that we made the user responsible of freeing the finder.
-\par
-  The statements:
-  \code
-      finder->setMaskFilterFileAttribs( File::faArchive );
-      finder->ignoreStat( File::smMaskDateAll );
-  \endcode
-    can be used to speed up the search.
 
-\par
-  It is possible to easily recurse into subdirectories.
-\par
-  The following code will let you to recurse up to 10 levels
-  while applying a personalized filter.
-  The filter can be as flexible as desired.
+The user is also able to create more than one finder
+from the same directory instance. But in order to achieve
+that we made the user responsible of freeing the finder.
 
-  \code
-      FilSearchFilterStandard filterFilesObj( L"*.h", L"src/vcf" );
+The statements:
+\code
+  finder->setMaskFilterFileAttribs( File::faArchive );
+  finder->ignoreStat( File::smMaskDateAll );
+\endcode
+can be used to speed up the search.
 
-      String filepath = L"./";
 
-      String filename;
-      File* file = NULL;
+It is possible to easily recurse into subdirectories.
+The following code will let you to recurse up to 10 levels
+while applying a personalized filter.
+The filter can be as flexible as desired.
+\code
+  FilSearchFilterStandard filterFilesObj( L"*.h", L"src/vcf" );
 
-      Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
-      Directory::Finder* finder = dir.findFiles( filterFilesObj, filterDirsObj );
-      finder->setDisplayMode( Directory::Finder::dmAny );
-      finder->setRecursion( true, 10 );
-      while ( finder->nextElement() ) {
-        file = finder->getCurrentElement();
-        filename = file->getName();
+  String filepath = L"./";
 
-        if ( file->isDirectory() ) {
-          String st = StringUtils::format( convertUtcToLocal( file->getDateModified() ), L"%d/%m/%Y %H:%M:%S" );
-          printf ( "[%d] %s %10s %5s [%s]\n", finder->getRecursionLevel(), st.ansi_c_str(), "", "", filename.ansi_c_str() );
-        } else {
-          String sz = StringUtils::toString( file->getSize() );
-          String st = StringUtils::format( file->getDateModified(), L"%d/%m/%Y %H:%M:%S" );
-          String sa = StringUtils::format( "%c%c%c%c%c", file->isArchive()?'a':' ', file->isReadOnly()?'r':' ', 
-                                           file->isHidden()?'h':' ', file->isSystem()?'s':' ', file->isExecutable()?'x':' ' );
-          printf ( "[%d] %s %10s %s  %s\n", finder->getRecursionLevel(), st.ansi_c_str(), sz.ansi_c_str(), sa.ansi_c_str(), filename.ansi_c_str() );
-        }
-      }
-      finder->free();
-  \endcode
+  String filename;
+  File* file = NULL;
 
-  The statements:
-  \code
-      finder->setDisplayMode( Directory::Finder::dmAny );
-      finder->setDisplayOrder( Directory::Finder::dmFiles );
-  \endcode
-    can be used to control how the found files are displayed
-    and their order.
+  Directory dir( FilePath::getExpandedRelativePathName( filepath ) );
+  Directory::Finder* finder = dir.findFiles( filterFilesObj, filterDirsObj );
+  finder->setDisplayMode( Directory::Finder::dmAny );
+  finder->setRecursion( true, 10 );
+  while ( finder->nextElement() ) {
+    file = finder->getCurrentElement();
+    filename = file->getName();
 
-  Normally the filenames are displayed in the native format,
-  but the statement:
-  \code
-      finder->setKeepOSSpecificFormat( true );
-  \endcode
-  will let the user to mantain the format specific for the OS.
+    if ( file->isDirectory() ) {
+      String st = StringUtils::format( convertUtcToLocal( file->getDateModified() ), L"%d/%m/%Y %H:%M:%S" );
+      printf ( "[%d] %s %10s %5s [%s]\n", finder->getRecursionLevel(), st.ansi_c_str(), "", "", filename.ansi_c_str() );
+    } else {
+      String sz = StringUtils::toString( file->getSize() );
+      String st = StringUtils::format( file->getDateModified(), L"%d/%m/%Y %H:%M:%S" );
+      String sa = StringUtils::format( "%c%c%c%c%c", file->isArchive()?'a':' ', file->isReadOnly()?'r':' ', 
+                                       file->isHidden()?'h':' ', file->isSystem()?'s':' ', file->isExecutable()?'x':' ' );
+      printf ( "[%d] %s %10s %s  %s\n", finder->getRecursionLevel(), st.ansi_c_str(), sz.ansi_c_str(), sa.ansi_c_str(), filename.ansi_c_str() );
+    }
+  }
+  finder->free();
+\endcode
+
+The statements:
+\code
+  finder->setDisplayMode( Directory::Finder::dmAny );
+  finder->setDisplayOrder( Directory::Finder::dmFiles );
+\endcode
+can be used to control how the found files are displayed
+and their order.
+
+Normally the filenames are displayed in the native format,
+but the statement:
+\code
+  finder->setKeepOSSpecificFormat( true );
+\endcode
+will let the user to mantain the format specific for the OS.
 
 */
 
@@ -123,13 +121,12 @@ class FOUNDATIONKIT_API Directory : public File {
 public:
 
 
-	/**
-	\par
+	/**	
 	A Finder object is used to iterate a
 	set of files contained in a Directory object
 	that represents the directory.
 	Only Directory objects may create a Finder object.
-	\par
+	
 	A Finder is similar to an Enumerator but it doesn't 
 	follow the exact same pattern. Specifically it doesn't 
 	allow you to go "backwards" - you can only reset the
@@ -138,7 +135,7 @@ public:
 	a Finder isntance is the nextElement() function which 
 	returns a pointer to an internal File object which is updated
 	for each file element.
-	\par
+	
 	All the other methods are used to narrow or speed up the search.
 	Custom filtering can be done the simple way by specifying
 	filter strings, or in a fully flexible way through any
@@ -336,10 +333,11 @@ public:
 		@param StatMask the mask
 		*/
 		inline void setStatMask( ulong32 statMask ) {
-			statMask_ = (StatMask)statMask;
+			statMask_ = statMask;
 			if ( recurse_ ) {
 				// we make sure we have directory informations
-				if ( (ulong32&)statMask_ |= File::smAttributes ) {
+				//if ( (ulong32&)statMask_ |= File::smAttributes ) {
+				if ( statMask_ |= File::smAttributes ) {
 				}
 			}
 		}
@@ -348,7 +346,7 @@ public:
 		Gets the mask for the informations we want to extract from a file
 		*@return the mask
 		*/
-		inline StatMask getStatMask() const {
+		inline uint32 getStatMask() const {
 			return statMask_;
 		}
 
@@ -359,7 +357,7 @@ public:
 		*/
 		inline void ignoreStat( ulong32 ignoreMask ) {
 			ulong32 statMask = File::smMaskAll & ~ignoreMask;
-			setStatMask( (File::StatMask&) statMask );
+			setStatMask( statMask );
 		}
 
 		/**
@@ -471,7 +469,7 @@ public:
 		FileSearchFilter* searchFilterFileObject_;
 		bool ownFilterFileObject_;
 		File::FileAttributes maskFilterFileAttribs_;
-		StatMask statMask_;
+		uint32 statMask_;
 		/**
 		The current element retrieved by the search
 		*/
@@ -619,8 +617,9 @@ public:
 // FileSearchFilter 
 
 /**
-   FileSearchFilter is an abstract class for any user defined Filter object
-   working with the Directory::Finder
+\class FileSearchFilter Directory.h "vcf/FoundationKit/Directory.h"
+FileSearchFilter is an abstract class for any user defined Filter object
+working with the Directory::Finder
 */
 
 class FOUNDATIONKIT_API FileSearchFilter {
@@ -644,8 +643,9 @@ public:
 };
 
 /**
-   FileSearchFilterStandard is the predefined Filter object
-   used for simple searches.
+\class FileSearchFilterStandard Directory.h "vcf/FoundationKit/Directory.h"
+FileSearchFilterStandard is the predefined Filter object
+used for simple searches.
 */
 
 class FOUNDATIONKIT_API FileSearchFilterStandard : public FileSearchFilter {
@@ -709,6 +709,18 @@ inline void Directory::setName( const String& fileName ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.6.2.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.6.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.6  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

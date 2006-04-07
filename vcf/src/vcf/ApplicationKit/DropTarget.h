@@ -33,7 +33,7 @@ something is "dropped" ( or just "dragged over" ) as a result of
 a drag-drop operation.
 In this way, for example, the mouse cursor can be modified according to
 the control is over.
-\par
+
 A drop target works by being registered with a control. This registration is
 accomplished by calling the addTargetControl() on the drop target and passing
 in a control instance. For example:
@@ -147,6 +147,13 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
 *Revision 1.4  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

@@ -158,10 +158,10 @@ OSStatus OSXListview::DBItemDataCallback( ControlRef browser, DataBrowserItemID 
 }
 
 
-OSStatus OSXListview::DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
+void OSXListview::DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
 															DataBrowserItemNotification message)
 {
-	OSStatus status = noErr;
+	
     switch (message)
     {
         case kDataBrowserContainerOpened:  {		
@@ -180,13 +180,13 @@ OSStatus OSXListview::DBItemNotificationCallback( ControlRef browser, DataBrowse
 		break;
 		
     }
-    return status;
+
 }
 
 
 void OSXListview::addItem( ListItem * item )
 {
-	unsigned int index = item->getIndex();
+	//unsigned int index = item->getIndex();
 	
 	DataBrowserItemID dbItem = (DataBrowserItemID)item;
 	AddDataBrowserItems( hiView_, kDataBrowserNoItem, 1, &dbItem, kDataBrowserItemNoProperty );
@@ -204,7 +204,7 @@ void OSXListview::clear()
 
 void OSXListview::deleteItem( ListItem* item )
 {
-	unsigned int index = item->getIndex();
+	//unsigned int index = item->getIndex();
 	DataBrowserItemID dbItem = (DataBrowserItemID)item;
 	
 	RemoveDataBrowserItems( hiView_, kDataBrowserNoItem, 1, &dbItem, kDataBrowserItemNoProperty );
@@ -262,7 +262,7 @@ bool OSXListview::isItemSelected(ListItem* item)
 
 void OSXListview::findPtForEachItem ( DataBrowserItemID item, DataBrowserItemState state, void *clientData )
 {
-	FindPtForItemData* data = (FindPtForItemData*)clientData;
+	//FindPtForItemData* data = (FindPtForItemData*)clientData;
 	
 	::Rect itemBounds;
 	//DataBrowserTableViewColumnID colID = 0;
@@ -326,7 +326,7 @@ void OSXListview::rangeSelect( Rect* selectionRect )
 
 void OSXListview::addHeaderColumn( const String& columnName, const double& width )
 {
-	unsigned int columnCount = 0;
+	UInt32 columnCount = 0;
 	GetDataBrowserTableViewColumnCount( hiView_, &columnCount );
 	
 	insertHeaderColumn( columnCount, columnName, width );
@@ -345,7 +345,7 @@ void OSXListview::insertHeaderColumn( const unsigned long& index, const String& 
 		
 		col.headerBtnDesc.version = kDataBrowserListViewLatestHeaderDesc;
 		col.headerBtnDesc.minimumWidth = 10;
-		col.headerBtnDesc.maximumWidth = width;
+		col.headerBtnDesc.maximumWidth = (UInt16)width;
 		col.headerBtnDesc.titleOffset = 0;
 		
 		CFTextString tmp(columnName);
@@ -367,15 +367,15 @@ void OSXListview::insertHeaderColumn( const unsigned long& index, const String& 
 
 void OSXListview::deleteHeaderColumn( const unsigned long& index )
 {
-	ListModel* listModel = listviewControl_->getListModel();
-	ListItem* item = listModel->getItemFromIndex( index );
+	//ListModel* listModel = listviewControl_->getListModel();
+	//ListItem* item = listModel->getItemFromIndex( index );
 	DataBrowserTableViewColumnID columnId = OSX_LISTVIEW_CTRL_PRIMARY_COL + index;
 	RemoveDataBrowserTableViewColumn( hiView_, columnId );
 }
 
 IconStyleType OSXListview::getIconStyle()
 {
-	return 0;
+	return IconStyleType(0);
 }
 
 void OSXListview::setIconStyle( const IconStyleType& iconStyle )
@@ -409,7 +409,7 @@ void OSXListview::setAllowsMultiSelect( const bool& allowsMultiSelect )
 
 IconAlignType OSXListview::getIconAlignment()
 {
-	return 0;
+	return IconAlignType(0);
 }
 
 void OSXListview::setIconAlignment( const IconAlignType& iconAlignType )
@@ -434,7 +434,7 @@ void OSXListview::setAllowLabelEditing( const bool& allowLabelEditing )
 void OSXListview::setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type )
 {
 	DataBrowserTableViewColumnID columnId = OSX_LISTVIEW_CTRL_PRIMARY_COL + index;
-	SetDataBrowserTableViewNamedColumnWidth( hiView_, columnId, width );
+	SetDataBrowserTableViewNamedColumnWidth( hiView_, columnId, (UInt16)width );
 }
 
 double OSXListview::getColumnWidth( const unsigned long& index )
@@ -630,6 +630,12 @@ void OSXListview::onListModelItemDeleted( Event* e )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.2  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

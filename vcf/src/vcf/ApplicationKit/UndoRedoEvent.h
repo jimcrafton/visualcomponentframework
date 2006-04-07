@@ -25,6 +25,7 @@ namespace VCF  {
 class Command;
 
 /**
+\class UndoRedoEvent UndoRedoEvent.h "vcf/ApplicationKit/UndoRedoEvent.h"  
 * the event for the UndoRedoStack operations.
 * this event is mainly used to bypass the default behaviour
 * performed by the UndoUndoStack instance involved.
@@ -39,13 +40,17 @@ public:
 	/**
 	* constructors
 	*/
-	UndoRedoEvent( Object* source, const unsigned long& eventType, Command* command=NULL );
+	UndoRedoEvent( Object* source, const unsigned long& eventType, Command* command=NULL ):
+		Event(source,eventType), command_(command),allowUndo_(true),allowRedo_(true),allowExecute_(true){
 
-	UndoRedoEvent( const UndoRedoEvent& rhs ):Event(rhs) {
+	}
+
+	UndoRedoEvent( const UndoRedoEvent& rhs ):Event(rhs),
+		command_(NULL),allowUndo_(true),allowRedo_(true),allowExecute_(true)	{
 		*this = rhs;
 	}
 
-	virtual ~UndoRedoEvent();
+	virtual ~UndoRedoEvent() {}
 
 	/**
 	* copy operator
@@ -91,7 +96,12 @@ public:
 	*@param const bool& allowsUndo, true to let the default undo
 	*action from the UndoRedoStack to be performed.
 	*/
-	void setAllowsUndo( const bool& allowsUndo );
+	void setAllowsUndo( const bool& allowsUndo ){
+		allowUndo_ = allowsUndo;
+		if ( false == allowUndo_ ) {
+			this->setConsumed( true );//stop processing the events
+		}
+	}
 
 	/**
 	*@return bool, false if the user managing this event
@@ -109,7 +119,12 @@ public:
 	*@param const bool& allowsRedo, true to let the default redo 
 	*action from the UndoRedoStack to be performed.
 	*/
-	void setAllowsRedo( const bool& allowsRedo );
+	void setAllowsRedo( const bool& allowsRedo ){
+		allowRedo_ = allowsRedo;
+		if ( false == allowRedo_ ) {
+			this->setConsumed( true );//stop processing the events
+		}
+	}
 
 	/**
 	* creates a new copy of this instance.
@@ -175,6 +190,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.4.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

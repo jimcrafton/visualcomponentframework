@@ -109,7 +109,9 @@ void AbstractScrollable::setHorizontalRightScrollSpace( const double& rightScrol
 
 void AbstractScrollable::onControlResized( ControlEvent* event )
 {
-		scrollPeer_->recalcScrollPositions( this );
+	recalcScrollPositions();
+	//	scrollPeer_->recalcScrollPositions( this );
+	//	scrollPeer_->getAdjustedPositions( horzPosition_, vertPosition_ );
 }
 
 void AbstractScrollable::setVirtualViewSize( const double& width, const double& height )
@@ -117,7 +119,9 @@ void AbstractScrollable::setVirtualViewSize( const double& width, const double& 
 	virtualViewWidth_ = width;
 	virtualViewHeight_ = height;
 
-	scrollPeer_->recalcScrollPositions( this );
+	recalcScrollPositions();
+	//scrollPeer_->recalcScrollPositions( this );
+	//scrollPeer_->getAdjustedPositions( horzPosition_, vertPosition_ );
 }
 
 bool AbstractScrollable::isVerticalScrollbarVisible() {
@@ -132,6 +136,7 @@ void AbstractScrollable::recalcScrollPositions()
 {
 	if ( NULL != this->scrollableControl_ ) {
 		scrollPeer_->recalcScrollPositions( this );
+		scrollPeer_->getAdjustedPositions( horzPosition_, vertPosition_ );
 	}
 }
 
@@ -144,7 +149,7 @@ void AbstractScrollable::setVerticalPosition( const double& vertPosition )
 		scrollableControl_->repaint();
 
 		//notify delegate
-		if ( NULL != horzDelegate_ ) {
+		if ( NULL != vertDelegate_ ) {
 			ScrollEvent e(scrollableControl_,0);
 			e.setScrollPoint( Point(horzPosition_,vertPosition_) );
 			vertDelegate_->fireEvent( &e );
@@ -227,6 +232,12 @@ bool AbstractScrollable::getDiscreteVertScroll()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/22 03:18:20  ddiego
+*fixed a glitch in scroll vert and horz position values.
+*
 *Revision 1.4  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

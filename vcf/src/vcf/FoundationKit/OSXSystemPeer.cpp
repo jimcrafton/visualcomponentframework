@@ -12,8 +12,12 @@ where you installed the VCF.
 #include "vcf/FoundationKit/DateTime.h"
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/FoundationKit/OSXResourceBundle.h"
-#include <unistd.h>
+#include "vcf/FoundationKit/ThreadManager.h"
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 using namespace VCF;
 
@@ -64,12 +68,16 @@ void OSXSystemPeer::sleep( const uint32& milliseconds )
 
 bool OSXSystemPeer::doesFileExist( const String& fileName )
 {
-	bool result = false;
-	FILE* f = fopen( fileName.ansi_c_str(), "r" );
-    result = (NULL != f ) ? true : false;
-    if ( NULL != f ) {
-        fclose( f );
-    }
+	bool result = true;
+	
+	struct stat sb;
+	int staterr  = stat( fileName.ansi_c_str(), &sb );
+	if ( -1 == staterr ) {
+		if ( errno == ENOENT ) {
+			result  = false;
+		}
+	}
+	
 	return result;
 }
 
@@ -119,18 +127,79 @@ void OSXSystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 String OSXSystemPeer::getCommonDirectory( System::CommonDirectory directory )
 {
 	String result;
+
+	const char* homeDir = getenv( "HOME" );
+
+	//based on
+	//http://developer.apple.com/documentation/MacOSX/Conceptual/BPFileSystem/Articles/LibraryDirectory.html
+	switch ( directory ) {
+		case System::cdUserHome : {
+			result = homeDir;
+		}
+		break;
+
+		case System::cdUserProgramData : {
+			result = homeDir;
+			result += "/Library/Application Support";
+		}
+		break;
+
+		case System::cdUserDesktop : {
+			result = homeDir;
+			result += "/Desktop";
+		}
+		break;
+
+		case System::cdUserFavorites : {
+			result = homeDir;
+			result += "/Library/Favorites";
+		}
+		break;
+
+		case System::cdUserDocuments : {
+			result = homeDir;
+			result += "/Documents";
+		}
+		break;
+
+		case System::cdUserTemp : {
+			result = homeDir;
+			result += "/tmp";
+		}
+		break;
+
+		case System::cdSystemPrograms : {
+			result = "/Applications";
+		}
+		break;
+
+		case System::cdSystemTemp : {
+			result = "/tmp";
+		}
+		break;
+
+		case System::cdSystemRoot : {
+			result = "/";
+		}
+		break;
+	}
+
 	return result;
 }
 
 String OSXSystemPeer::getComputerName()
 {
-	String result;
+	CFTextString result;
+	result = CSCopyMachineName();
+
 	return result;
 }
 
 String OSXSystemPeer::getUserName()
 {
-	String result;
+	CFTextString result;
+	result = CSCopyUserName(true);
+
 	return result;
 }
 	
@@ -140,12 +209,12 @@ void OSXSystemPeer::setDateToSystemTime( DateTime* date )
 	CFGregorianDate current = CFAbsoluteTimeGetGregorianDate( timeNow, NULL );
 	
 	double dsecs = floor(current.second);
-	int second = dsecs;
+	unsigned int second = (unsigned int)dsecs;
 	
 	double milliseconds = (current.second - dsecs) * 1000.0;
 	
 	date->set( current.year, current.month, current.day, 
-				current.hour, current.minute, second, milliseconds );
+				current.hour, current.minute, second, (unsigned int)milliseconds );
 }
 
 void OSXSystemPeer::setDateToLocalTime( DateTime* date )
@@ -156,19 +225,28 @@ void OSXSystemPeer::setDateToLocalTime( DateTime* date )
 	CFGregorianDate current = CFAbsoluteTimeGetGregorianDate( timeNow, tz );
 	
 	double dsecs = floor(current.second);
-	int second = dsecs;
+	unsigned int second = (int)dsecs;
 	
 	double milliseconds = (current.second - dsecs) * 1000.0;
 	
 	
 	
 	date->set( current.year, current.month, current.day, 
-				current.hour, current.minute, second, milliseconds );
+				current.hour, current.minute, second, (unsigned int)milliseconds );
 }
 
 void OSXSystemPeer::setCurrentThreadLocale( Locale* locale )
 {
+	//OSX doesn't really support this, so we fake it
+	//anyways
+	
 
+	Thread* currentThread = ThreadManager::getCurrentThread();
+	if ( NULL != currentThread ) {
+		OSXThread* osxThread = (OSXThread*) currentThread->getPeer();
+
+		osxThread->setCurrentLocale( locale );
+	}
 }
 
 DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
@@ -192,7 +270,10 @@ DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	cfDate.day = day;
 	cfDate.hour = hour;
 	cfDate.minute = minute;
-	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
+	cfDate.second = second;
+	if ( millisecond > 0 ) {
+		cfDate.second += (1000.0/(double)millisecond);
+	}
 	
 	//GMT/UTC time
 	CFAbsoluteTime utcTime = CFGregorianDateGetAbsoluteTime( cfDate, NULL );
@@ -200,14 +281,14 @@ DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	cfDate = CFAbsoluteTimeGetGregorianDate( utcTime, tz );
 	
 	double dsecs = floor(cfDate.second);
-	second = dsecs;
+	second = (unsigned long) dsecs;
 	
 	double milliseconds = (cfDate.second - dsecs) * 1000.0;
 	
 	
 	
 	result.set( cfDate.year, cfDate.month, cfDate.day, 
-				cfDate.hour, cfDate.minute, second, milliseconds );
+				cfDate.hour, cfDate.minute, second, (unsigned int)milliseconds );
 				
 	
 	return result;
@@ -234,22 +315,24 @@ DateTime OSXSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	cfDate.day = day;
 	cfDate.hour = hour;
 	cfDate.minute = minute;
-	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
-	
+	cfDate.second = second;
+	if ( millisecond > 0 ) {
+		cfDate.second += (1000.0/(double)millisecond);
+	}
 	//GMT/UTC time
 	CFAbsoluteTime localTime = CFGregorianDateGetAbsoluteTime( cfDate, tz );
 	
 	cfDate = CFAbsoluteTimeGetGregorianDate( localTime, NULL );
 	
 	double dsecs = floor(cfDate.second);
-	second = dsecs;
+	second = (unsigned int)dsecs;
 	
 	double milliseconds = (cfDate.second - dsecs) * 1000.0;
 	
 	
 	
 	result.set( cfDate.year, cfDate.month, cfDate.day, 
-				cfDate.hour, cfDate.minute, second, milliseconds );
+				cfDate.hour, cfDate.minute, second, (unsigned int)milliseconds );
 				
 	
 	return result;
@@ -268,17 +351,43 @@ String OSXSystemPeer::getOSVersion()
 	int minor = ((0x000000F0) & response) >> 4;
 	int major = ((0x0000FFFF) & response) >> 8;	
 	
-	return StringUtils::format( Format("%x.%x.%x") % major % minor % bug );
+	return Format("%x.%x.%x") % major % minor % bug ;
 }
 
 ProgramInfo* OSXSystemPeer::getProgramInfoFromFileName( const String& fileName )
 {
 	return OSXResourceBundle::getProgramInfo( fileName );
 }
+
+String OSXSystemPeer::createTempFileName( const String& directory )
+{
+	String result;
+	throw RuntimeException( MAKE_ERROR_MSG_2("OSXSystemPeer::createTempFileName() not implemented!") );
+	return result;
+}
 	
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.5.2.4  2005/12/04 20:58:32  ddiego
+*more osx impl work. foundationkit is mostly complete now.
+*
+*Revision 1.5.2.3  2005/11/13 16:02:46  ddiego
+*more sox updates.
+*
+*Revision 1.5.2.2  2005/11/11 22:07:40  ddiego
+*small osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -19,6 +19,7 @@ namespace VCF  {
 class Cursor;
 
 /**
+\class CursorPeer CursorPeer.h "vcf/ApplicationKit/CursorPeer.h"
 *Class CursorPeer documentation
 */
 class APPLICATIONKIT_API CursorPeer {
@@ -49,6 +50,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

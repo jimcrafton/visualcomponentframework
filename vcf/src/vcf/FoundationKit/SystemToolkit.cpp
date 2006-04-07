@@ -18,13 +18,13 @@ SystemToolkit* SystemToolkit::create()
 {
 
 	if ( NULL == SystemToolkit::systemToolkitInstance ) {
-#if defined(WIN32) && !defined(VCF_DOTNET)
+#if defined(VCF_WIN32) && !defined(VCF_DOTNET)
 		SystemToolkit::systemToolkitInstance = new Win32SystemToolkit();
 #elif defined(VCF_DOTNET)
 		SystemToolkit::systemToolkitInstance = new DotNetSystemToolkit();
-#elif VCF_POSIX
+#elif defined(VCF_POSIX)
 		SystemToolkit::systemToolkitInstance = new LinuxSystemToolkit();
-#elif VCF_OSX
+#elif defined(VCF_OSX)
 		SystemToolkit::systemToolkitInstance = new OSXSystemToolkit();
 #endif
 		if ( NULL == SystemToolkit::systemToolkitInstance ) {
@@ -137,6 +137,12 @@ ResourceBundlePeer* SystemToolkit::createResourceBundlePeer()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/19 00:04:17  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

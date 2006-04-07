@@ -80,6 +80,7 @@ static String FrameStyleTypeNames[] = { "fstSizeable",
 										"fstToolbarBorderFixed"		 };
 
 /**
+\class Frame Frame.h "vcf/ApplicationKit/Frame.h"
 A frame is a component that houses other components,
 plus has special adornments used for interacting with it.
 These can include minimize, maximize, restore, system, and help buttons on the caption bar,
@@ -231,16 +232,19 @@ public:
 	virtual void setFrameStyle( const FrameStyleType& frameStyle ) = 0;
 
 	/**
-	override this function to changes the frame's default
-	parenting behaviour. By default a frame may have it's
-	parent set to another control without becoming a child
-	control itself.
+	By default a frame may have it's parent set to another control 
+	without becoming a child control itself.
 	@return bool returns true if the frame is to be allowed to
 	act as a child control when it's setParent() method is called.
 	*/
-	virtual bool allowFrameAsChildControl() {
-		return false;
+	bool allowFrameAsChildControl() {
+		return allowFrameAsChildControl_;
 	}
+
+	void setAllowFrameAsChildControl( const bool& val ) {
+		allowFrameAsChildControl_ = val;
+	}
+
 
 	/**
 	Indicates whether or not this frame is active.
@@ -326,12 +330,20 @@ public:
 	*/
 	static void internal_setActiveFrame( Frame* activeFrame );
 
+	/**
+	*/
+	static Dialog* createDialog( Class* dialogClazz, ResourceBundle* resBundle=NULL );
+
+	/**
+	*/
+	static Window* createWindow( Class* windowClazz, ResourceBundle* resBundle=NULL );
 protected:
 	static Frame* currentActiveFrame;
 	String caption_;
 	FrameStyleType frameStyle_;
 	bool isTopmostFrame_;
 	bool useColorForBackground_;
+	bool allowFrameAsChildControl_;
 
 
 	virtual void destroy();
@@ -344,6 +356,21 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.3  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.4.2.2  2005/09/18 22:54:47  ddiego
+*fixed some minor bugs in vffinput stream and parser class.
+*
+*Revision 1.4.2.1  2005/08/24 05:03:21  ddiego
+*better component loading and creation functions.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

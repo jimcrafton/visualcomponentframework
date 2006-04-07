@@ -30,14 +30,14 @@ public:
 
 extern "C" {
 	
-$$ROOT_$$_API void _vpl_init()
+$$ROOT_$$_API void _vpl_init( OSHandleID handle )
 {
 	
 }
 
 
 
-$$ROOT_$$_API void _vpl_terminate()
+$$ROOT_$$_API void _vpl_terminate( OSHandleID handle )
 {
 	
 }

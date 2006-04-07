@@ -15,7 +15,9 @@ where you installed the VCF.
 
 
 namespace VCF {
-
+	/**
+	\class ThreadManagerPeer ThreadManagerPeer.h "vcf/FoundationKit/ThreadManagerPeer.h"
+	*/
 	class FOUNDATIONKIT_API ThreadManagerPeer {
 	public:
 		virtual ~ThreadManagerPeer(){}

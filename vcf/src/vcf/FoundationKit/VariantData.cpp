@@ -30,7 +30,6 @@ String VariantData::toString() const
 			char tmp[VariantData::DefaultPropertyValLength];
 			memset(tmp, 0, sizeof(tmp));
 			sprintf( tmp, "%ld", i );
-
 			result += tmp;
 		}
 		break;
@@ -44,12 +43,20 @@ String VariantData::toString() const
 		}
 		break;
 
+		case pdUShort:{
+			ushort i = *this;
+			char tmp[VariantData::DefaultPropertyValLength];
+			memset(tmp, 0, sizeof(tmp));
+			sprintf( tmp, "%u", i );
+			result += tmp;
+		}
+		break;
+
 		case pdUInt:{
 			unsigned int i = *this;
 			char tmp[VariantData::DefaultPropertyValLength];
 			memset(tmp, 0, sizeof(tmp));
 			sprintf( tmp, "%u", i );
-
 			result += tmp;
 		}
 		break;
@@ -59,7 +66,6 @@ String VariantData::toString() const
 			char tmp[VariantData::DefaultPropertyValLength];
 			memset(tmp, 0, sizeof(tmp));
 			sprintf( tmp, "%lu", i );
-
 			result += tmp;
 		}
 		break;
@@ -219,8 +225,18 @@ void VariantData::setFromString( const String& value )
 		}
 		break;
 
+		case pdUShort:{
+			UShortVal = (ushort) StringUtils::fromStringAsShort( value );
+		}
+		break;
+
 		case pdUInt:{
 			UIntVal = StringUtils::fromStringAsUInt( value );
+		}
+		break;
+
+		case pdEnumMask:{
+			ULongVal = StringUtils::fromStringAsULong( value );
 		}
 		break;
 
@@ -257,7 +273,6 @@ void VariantData::setFromString( const String& value )
 				throw BasicException( L"Unable to convert: " + value );
 			}
 			Long64Val = result;
-
 		}
 		break;
 
@@ -373,8 +388,17 @@ void VariantData::setValue( const VariantData& value )
 		}
 		break;
 
+		case pdEnumMask:{
+			ULongVal = value.ULongVal;
+		}
+		break;
+
 		case pdShort : {
 			ShortVal = value.ShortVal;
+		}
+
+		case pdUShort : {
+			UShortVal = value.UShortVal;
 		}
 
 		case pdUInt : {
@@ -441,6 +465,18 @@ void VariantData::setValue( const VariantData& value )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/02/23 01:41:58  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.5.2.2  2005/09/17 21:37:44  ddiego
+*minor update
+*
+*Revision 1.5.2.1  2005/08/01 18:52:23  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/09 23:15:06  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

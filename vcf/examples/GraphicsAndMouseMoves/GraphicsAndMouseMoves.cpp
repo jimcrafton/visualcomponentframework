@@ -177,7 +177,7 @@ public:
 
 		Window* mainWindow = new GraphicsAndMouseMovesWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 550.0, 500.0);
 		mainWindow->show();
 
 		return result;
@@ -199,6 +199,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:34:27  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.6.1  2006/03/19 18:39:20  ddiego
+*fixed size for graphics mouse move example, per fraggles req.
+*
 *Revision 1.5  2004/08/07 02:47:03  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

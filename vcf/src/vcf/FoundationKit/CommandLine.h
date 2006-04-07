@@ -52,14 +52,14 @@ struct CmdParam {
 };
 
 /**
-\par
+\class CommandLine CommandLine.h "vcf/FoundationKit/CommandLine.h"
 A utility for parsing command lines.
-\par
+
 This was originally written by Chris Losinger, changes were simply
 removing the inheritance from std::map<>, and adding a map as a member
 variable instead. Also made some cosmetic name changes to conform better with
 VCF naming standards.
-\par
+
 Example :
 
    Our example application uses a command line that has two
@@ -165,13 +165,13 @@ parse the command line into switches and arguments.
 	  \endcode
 	  @return bool true if it has the swith, otherwise false
 	*/
-	bool hasSwitch( const String& aSwitch );
+	bool hasSwitch( const String& aSwitch ) const ;
 
 	/**
 	fetch an argument associated with a switch . if the parameter at
 	index iIdx is not found, this will return the default that you
     provide.
-	\par
+	
 	example :
 	\code
 	command line is : app.exe -a p1 p2 p3 -b p4 -c -d p5
@@ -185,12 +185,12 @@ parse the command line into switches and arguments.
 	  \endcode
 	*/
 
-	String getSafeArgument(const String& aSwitch, int iIdx, const String& aDefault);
+	String getSafeArgument(const String& aSwitch, size_t iIdx, const String& aDefault) const;
 
 	/**
 	fetch a argument associated with a switch. throws an exception
 	of (int)0, if the parameter at index iIdx is not found.
-	\par
+	
 	example :
 	\code
 	command line is : app.exe -a p1 p2 p3 -b p4 -c -d p5
@@ -201,15 +201,15 @@ parse the command line into switches and arguments.
       cmdLine.getArgument("-b", 1)     throws (int)0, returns an empty string
 	  \endcode
 	*/
-	String getArgument( const String& aSwitch, int iIdx );
+	String getArgument( const String& aSwitch, size_t iIdx ) const;
 
-	String getArgument( int index );
+	String getArgument( size_t index ) const;
 
 	/**
 	@return the number of arguments found for a given switch. -1 if the
 	switch was not found
 	*/
-	int getArgumentCount(const String& aSwitch);
+	int getArgumentCount(const String& aSwitch) const;
 
 	Enumerator<String>* getOriginalCommands() {
 		return commandLineContainer_.getEnumerator();
@@ -217,7 +217,7 @@ parse the command line into switches and arguments.
 
 
 
-	unsigned long getArgCount() {
+	size_t getArgCount() const {
 		return originalCommandLine_.size();
 	}
 	
@@ -233,7 +233,7 @@ switches are of the form : -x
 where 'x' is one or more characters.
 the first character of a switch must be non-numeric!
 	*/
-	bool isSwitch(const String& param);
+	bool isSwitch(const String& param) const;
 	typedef std::map<String, CmdParam> CommandLineMap;
 	CommandLineMap commandLine_;
 	std::vector<String> originalCommandLine_;
@@ -248,6 +248,25 @@ the first character of a switch must be non-numeric!
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.4  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.5.2.3  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.5.2.2  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

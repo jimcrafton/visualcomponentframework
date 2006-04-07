@@ -8,3 +8,10 @@ stop			BITMAP		"stop.bmp"
 warning			BITMAP		"warning.bmp"
 inform			BITMAP		"inform.bmp"
 question			BITMAP		"question.bmp"
+
+
+//manifest support
+//this doesn't work at the moment so I'm commenting it
+//out, but I am going to commit the manifest file, just in 
+//case we figure out how to get it to work later on
+//1                       24      DISCARDABLE     "manifest.xml"

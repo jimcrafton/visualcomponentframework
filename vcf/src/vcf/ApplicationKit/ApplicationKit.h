@@ -108,7 +108,6 @@ Action classes
 #include "vcf/ApplicationKit/ToolTipEvent.h"
 #include "vcf/ApplicationKit/WhatsThisHelpEvent.h"
 #include "vcf/ApplicationKit/HelpEvent.h"
-#include "vcf/ApplicationKit/ControlEvent.h"
 
 #include "vcf/ApplicationKit/ControlGraphicsContext.h"
 
@@ -134,6 +133,9 @@ Action classes
 
 
 #include "vcf/ApplicationKit/Control.h"
+#include "vcf/ApplicationKit/ControlEvent.h"
+
+
 #include "vcf/ApplicationKit/CustomControl.h"
 #include "vcf/ApplicationKit/Container.h"
 #include "vcf/ApplicationKit/ControlContainer.h"
@@ -152,12 +154,12 @@ Action classes
 #include "vcf/ApplicationKit/CommonDialog.h"
 
 #include "vcf/ApplicationKit/CommonFileDialog.h"
-#include "vcf/ApplicationKit/CommonFileOpen.h"
-#include "vcf/ApplicationKit/CommonFileSave.h"
-#include "vcf/ApplicationKit/CommonFont.h"
-#include "vcf/ApplicationKit/CommonPrint.h"
-#include "vcf/ApplicationKit/CommonColor.h"
-#include "vcf/ApplicationKit/CommonFileBrowse.h"
+#include "vcf/ApplicationKit/CommonFileOpenDialog.h"
+#include "vcf/ApplicationKit/CommonFileSaveDialog.h"
+#include "vcf/ApplicationKit/CommonFontDialog.h"
+#include "vcf/ApplicationKit/CommonPrintDialog.h"
+#include "vcf/ApplicationKit/CommonColorDialog.h"
+#include "vcf/ApplicationKit/CommonFileBrowseDialog.h"
 
 /**
 *Button classes
@@ -176,24 +178,6 @@ Action classes
 #include "vcf/ApplicationKit/ImageList.h"
 
 
-// newly added by tiziano:
-
-/**
-*for dealing with property editors
-*/
-#include "vcf/ApplicationKit/PropertyEditor.h"
-#include "vcf/ApplicationKit/PropertyEditorManager.h"
-#include "vcf/ApplicationKit/AbstractPropertyEditor.h"
-/**
-*
-*You don't need this file unless you are directly working with property
-editors
-#include "vcf/ApplicationKit/DefaultPropertyEditors.h"
-*/
-
-
-
-
 /**
 *Borders
 */
@@ -206,24 +190,6 @@ editors
 */
 #include "vcf/ApplicationKit/Desktop.h"
 
-/**
-*Component editor support
-*/
-#include "vcf/ApplicationKit/ComponentEditorManager.h"
-#include "vcf/ApplicationKit/ComponentEditor.h"
-#include "vcf/ApplicationKit/AbstractComponentEditor.h"
-
-
-
-/**
-*Visual Form File streams
-*/
-/**
-*
-*You only need this stuff if you are directly working with VFF files
-#include "vcf/ApplicationKit/VFFInputStream.h"
-#include "vcf/ApplicationKit/VFFOutputStream.h"
-*/
 
 
 /**
@@ -265,27 +231,10 @@ editors
 #include "vcf/ApplicationKit/CommonDialogPeer.h"
 #include "vcf/ApplicationKit/ControlPeer.h"
 
-/*
-You only need these if you are going to be directly working with a peer -
-which is not very often
-#include "vcf/ApplicationKit/LightweightComponent.h"
-#include "vcf/ApplicationKit/TextPeer.h"
-#include "vcf/ApplicationKit/TreePeer.h"
-#include "vcf/ApplicationKit/ListviewPeer.h"
-#include "vcf/ApplicationKit/WindowPeer.h"
-#include "vcf/ApplicationKit/DialogPeer.h"
-#include "vcf/ApplicationKit/HTMLBrowserPeer.h"
-#include "vcf/ApplicationKit/ButtonPeer.h"
-#include "vcf/ApplicationKit/MenuBarPeer.h"
-#include "vcf/ApplicationKit/PrintPeer.h"
-#include "vcf/ApplicationKit/PrintContextPeer.h"
-#include "vcf/ApplicationKit/DesktopPeer.h"
-#include "vcf/ApplicationKit/PopupMenuPeer.h"
 
-#include "vcf/ApplicationKit/ScrollPeer.h"
-#include "vcf/ApplicationKit/MenuItemPeer.h"
+/**
+\class ApplicationKit ApplicationKit.h "vcf/ApplicationKit/ApplicationKit.h"
 */
-
 namespace VCF {
 	class APPLICATIONKIT_API ApplicationKit {
 	public:
@@ -308,6 +257,21 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.4  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.4.3  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.3.4.2  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.3.4.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

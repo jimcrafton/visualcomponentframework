@@ -21,7 +21,6 @@ class CopyAndPasteWindow : public Window {
 public:
 	CopyAndPasteWindow() {
 		setCaption( "CopyAndPaste" );
-		setVisible( true );
 
 		//add a label
 		Label* label = new Label();
@@ -169,6 +168,7 @@ public:
 		Window* mainWindow = new CopyAndPasteWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -189,6 +189,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:34:20  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.6.1  2006/03/16 18:45:25  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
 *Revision 1.4  2004/08/07 02:46:57  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -25,6 +25,12 @@ namespace VCF {
 class CommonFileDialogPeer;
 
 
+/**
+\class CommonFileDialog CommonFileDialog.h "vcf/ApplicationKit/CommonFileDialog.h"
+Base class for open and save common dialogs. Provides a way for you to 
+specify the types of files to display, as well as the selected 
+file and directory.
+*/
 class APPLICATIONKIT_API CommonFileDialog : public CommonDialog {
 
 public:
@@ -33,14 +39,14 @@ public:
 	virtual ~CommonFileDialog();
 
 	/**
-	* adds a filter to the File dialog.
-	* This is composed of the filter name or description
-	* and its associated extension(s).
-	*@param const String& description, the description or name of the filter.
-	*@param const String& extension, the extension associated to the filter.
-	* This may be a list of extensions separated by a semicolon ( under windows )
-	* or any other separator depending on the OS. The dialog will display only
-	* the files with any extension existing in this string list.
+	Adds a filter to the File dialog.
+	This is composed of the filter name or description
+	and its associated extension(s).
+	@param const String& description, the description or name of the filter.
+	@param const String& extension, the extension associated to the filter.
+	This may be a list of extensions separated by a semicolon ( under windows )
+	or any other separator depending on the OS. The dialog will display only
+	the files with any extension existing in this string list.
 	*/
 	virtual void addFilter( const String & description, const String & extension );
 
@@ -119,6 +125,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

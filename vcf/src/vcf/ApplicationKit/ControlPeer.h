@@ -26,15 +26,18 @@ class Cursor;
 
 class Border;
 
-/** The base Peer interface.
- *   In the Visual Control Framework Peers are the equivalent of Peers in Java.
- *   Peers can be either light weight or heavyweight.
- *  Heavyweight Peers are based on native widgets are consume a certain amount of resources.
- *   On Win32 heavweight Peers have their own window handle and graphics context.
- *
- * Lightweight Peers use the window handle and graphics context of the parents.
- * Frame Peers, such as WindowPeer and DialogPeer MUST be based on heavyweight controls.
- * @interface */
+class GraphicsContext;
+
+/** 
+\class ControlPeer ControlPeer.h "vcf/ApplicationKit/ControlPeer.h"
+The base Peer interface. In the Visual Control Framework Peers are the equivalent 
+of Peers in Java. Peers can be either light weight or heavyweight. Heavyweight 
+Peers are based on native widgets are consume a certain amount of resources. On 
+Win32 heavweight Peers have their own window handle and graphics context. Lightweight 
+Peers use the window handle and graphics context of the parents.  Frame Peers, 
+such as WindowPeer and DialogPeer \em must be based on heavyweight controls.
+
+*/
 
 class APPLICATIONKIT_API ControlPeer : public VCF::Interface {
 public:
@@ -126,7 +129,7 @@ public:
 
 	virtual void setFont( Font* font ) = 0;
 
-	virtual void repaint( Rect* repaintRect=NULL ) = 0;
+	virtual void repaint( Rect* repaintRect, const bool& immediately ) = 0;
 
 	/**
 	*this keeps the mouse events being sent to this control, even is the
@@ -171,6 +174,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.2  2006/01/09 02:22:30  ddiego
+*more osx code
+*
+*Revision 1.4.2.1  2005/08/05 01:11:38  ddiego
+*splitter fixes finished.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+\class ModelEvent ModelEvent.h "vcf/ApplicationKit/ModelEvent.h"
+*/
 class APPLICATIONKIT_API ModelEvent : public Event {
 public:
 	ModelEvent( Object* source, const ulong32& type ) :
@@ -55,6 +58,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

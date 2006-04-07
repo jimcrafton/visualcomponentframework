@@ -66,74 +66,74 @@ SYSDEFINES=STRICT;WIN32;_MBCS;NO_MFC;BUILD_FRAMEWORK_LIB;$(SYSDEFINES)
 ################################
 PROJECT1=$(BIN)\$(LIBNAME)
 PROJECT2=$(BIN)\$(DLLNAME)
-CPPFILES=FoundationKit.cpp \
-	Win32Condition.cpp \
-	Win32FilePeer.cpp \
-	Win32FileStream.cpp \
-	Win32LibraryPeer.cpp \
-	Win32LocalePeer.cpp \
-	Win32Mutex.cpp \
-	Win32Peer.cpp \
-	Win32ProcessIORedirector.cpp \
-	Win32ProcessPeer.cpp \
-	Win32Registry.cpp \
-	Win32ResourceBundle.cpp \
-	Win32SemaphorePeer.cpp \
-	Win32SystemPeer.cpp \
-	Win32SystemToolkit.cpp \
-	Win32Thread.cpp \
-	Win32ThreadManagerPeer.cpp \
-	Win32RunLoopPeer.cpp \
-	ThreadManager.cpp \
-	RunLoop.cpp \
-	BasicException.cpp \
-	Event.cpp \
-	EventHandler.cpp \
-	PropertyChangeEvent.cpp \
-	ThreadEvent.cpp \
-	BasicInputStream.cpp \
-	BasicOutputStream.cpp \
-	Directory.cpp \
-	File.cpp \
-	FilePath.cpp \
-	FileStream.cpp \
-	MemoryStream.cpp \
-	Stream.cpp \
-	TextInputStream.cpp \
-	TextOutputStream.cpp \
-	CommandLine.cpp \
-	Condition.cpp \
-	DateTime.cpp \
-	Dictionary.cpp \
-	ErrorLog.cpp \
-	Library.cpp \
-	MessageLoader.cpp \
-	MIMEType.cpp \
-	Mutex.cpp \
-	PackageInfo.cpp \
-	Parser.cpp \
-	ProcessWithRedirectedIO.cpp \
-	Registry.cpp \
-	Semaphore.cpp \
-	StringsMessageLoader.cpp \
-	StringUtils.cpp \
-	System.cpp \
-	SystemToolkit.cpp \
-	TextCodec.cpp \
-	Thread.cpp \
-	VCFMath.cpp \
-	VCFProcess.cpp \
-	VCFString.cpp \
-	XMLParser.cpp \
-	Locales.cpp \
-	Object.cpp \
-	ObjectWithEvents.cpp \
-	Resource.cpp \
-	ResourceBundle.cpp \
-	Class.cpp \
-	ClassRegistry.cpp \
-	InterfaceClass.cpp \
-	VariantData.cpp
+CPPFILES= FoundationKit.cpp \
+          Win32Condition.cpp \
+          Win32FilePeer.cpp \
+          Win32FileStream.cpp \
+          Win32LibraryPeer.cpp \
+          Win32LocalePeer.cpp \
+          Win32Mutex.cpp \
+          Win32Peer.cpp \
+          Win32ProcessIORedirector.cpp \
+          Win32ProcessPeer.cpp \
+          Win32Registry.cpp \
+          Win32ResourceBundle.cpp \
+          Win32RunLoopPeer.cpp \
+          Win32SemaphorePeer.cpp \
+          Win32SystemPeer.cpp \
+          Win32SystemToolkit.cpp \
+          Win32Thread.cpp \
+          Win32ThreadManagerPeer.cpp \
+          BasicException.cpp \
+          Event.cpp \
+          EventHandler.cpp \
+          PropertyChangeEvent.cpp \
+          ThreadEvent.cpp \
+          BasicInputStream.cpp \
+          BasicOutputStream.cpp \
+          Directory.cpp \
+          File.cpp \
+          FilePath.cpp \
+          FileStream.cpp \
+          MemoryStream.cpp \
+          Stream.cpp \
+          TextInputStream.cpp \
+          TextOutputStream.cpp \
+          CommandLine.cpp \
+          DateTime.cpp \
+          ErrorLog.cpp \
+          Library.cpp \
+          MessageLoader.cpp \
+          MIMEType.cpp \
+          Parser.cpp \
+          ProcessWithRedirectedIO.cpp \
+          Registry.cpp \
+          StringsMessageLoader.cpp \
+          StringUtils.cpp \
+          TextCodec.cpp \
+          VCFProcess.cpp \
+          XMLParser.cpp \
+          Dictionary.cpp \
+          Locales.cpp \
+          Object.cpp \
+          ObjectWithEvents.cpp \
+          PackageInfo.cpp \
+          Resource.cpp \
+          ResourceBundle.cpp \
+          System.cpp \
+          SystemToolkit.cpp \
+          VCFMath.cpp \
+          VCFString.cpp \
+          Class.cpp \
+          ClassRegistry.cpp \
+          InterfaceClass.cpp \
+          VariantData.cpp \
+          Condition.cpp \
+          Mutex.cpp \
+          RunLoop.cpp \
+          Semaphore.cpp \
+          Thread.cpp \
+          ThreadManager.cpp
 	
 OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=ODBC32.LIB UUID.LIB
@@ -173,8 +173,7 @@ dirs::
 ##################################
 $(PROJECT1): $(OBJFILES)
    @echo Linking $(<F) static library
-   @$(LB) @&&|
-   $< $(LPARAM) &
+   @$(LB) $< $(LPARAM) @&&|
    -+$(?: = &^
    -+)
    

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="vcfAllDynamicLibs">
+		<Project filename="FoundationKit\FoundationKitDLL.cbp" active="1" />
+		<Project filename="GraphicsKit\libAGG.cbp" />
+		<Project filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		<Project filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		</Project>
+		<Project filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		</Project>
+		<Project filename="GraphicsKit\GraphicsKitDLL.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+			<Depends filename="GraphicsKit\libAGG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+		</Project>
+		<Project filename="ApplicationKit\ApplicationKitDLL.cbp">
+			<Depends filename="GraphicsKit\GraphicsKitDLL.cbp" />
+		</Project>
+		<Project filename="OpenGLKit\OpenGLKitDLL.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="NetworkKit\NetworkKitDLL.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="RemoteObjectKit\RemoteObjectKit.cbp">
+			<Depends filename="NetworkKit\NetworkKitDLL.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

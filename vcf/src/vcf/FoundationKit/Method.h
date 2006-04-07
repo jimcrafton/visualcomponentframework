@@ -18,6 +18,7 @@ namespace VCF {
 
 
 /**
+\class Method Method.h "vcf/FoundationKit/Method.h"
 Base class for dynamic method invocation
 Methods are dynamically invokable and can support
 querying for argument types
@@ -26,7 +27,7 @@ and will only work if the argTypes_ string has bee set appropriately.
 This string consists of a series of characters each of which
 are interpreted as a special code for the primitive type.
 The code table is as follows:
-\par
+
 \code
 	  code	|	primitive type
 	----------------------------
@@ -43,7 +44,7 @@ The code table is as follows:
 	  "e"	|		Enum*
 
 \endcode
-\par
+
 To create an instance of a Method object use one of the template
 based classes described below.
 */
@@ -151,6 +152,12 @@ public:
 				if ( 'l' == next ){
 					result = pdULong;
 				}
+				else if ( 'i' == next ){
+					result = pdUInt;
+				}
+				else if ( 'h' == next ){
+					result = pdUShort;
+				}
 			}
 			break;
 
@@ -209,6 +216,18 @@ protected:
 /**
 CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.2.1  2006/02/23 01:41:57  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
 *Revision 1.3  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

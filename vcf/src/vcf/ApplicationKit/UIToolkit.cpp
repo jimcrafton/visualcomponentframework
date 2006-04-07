@@ -14,10 +14,15 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
 #include "vcf/ApplicationKit/ImageControl.h"
 #include "vcf/ApplicationKit/MenuManager.h"
+#include "vcf/ApplicationKit/PropertyEditorManager.h"
 
 //Peers
 
 using namespace VCF;
+
+
+
+
 
 UIToolkit* UIToolkit::toolKitInstance = NULL;
 
@@ -80,6 +85,8 @@ UIToolkit::~UIToolkit()
 	defaultButtonHandler_ = NULL;
 
 	metricsMgr_->free();
+
+	delete policyMgr_;	
 }
 
 void UIToolkit::init()
@@ -101,6 +108,11 @@ void UIToolkit::init()
 	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::IconAlignType" );
 	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::TextAlignmentType" );
 	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::TextVerticalAlignment" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::FrameStyleType" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumPropertyEditor", "VCF::ButtonCommandType" );
+
+	PropertyEditorManager::registerPropertyEditor( "VCF::EnumSetPropertyEditor", "VCF::AnchorTypes" );
+	PropertyEditorManager::registerPropertyEditor( "VCF::CursorPropertyEditor", "VCF::Cursor::SystemCursorType" );
 
 	PropertyEditorManager::registerPropertyEditor( "VCF::ColorPropertyEditor", "VCF::Color" );
 	PropertyEditorManager::registerPropertyEditor( "VCF::FontPropertyEditor", "VCF::Font" );
@@ -139,7 +151,7 @@ void UIToolkit::init()
 	Component::registerComponent( "VCF::PushButton", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::OpenGLControl", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::ImageControl", ADDITIONAL_CATEGORY );
-	Component::registerComponent( "VCF::HTMLBrowserControl", ADDITIONAL_CATEGORY );
+
 	Component::registerComponent( "VCF::TableControl", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::Splitter", ADDITIONAL_CATEGORY );
 	Component::registerComponent( "VCF::TreeListControl", ADDITIONAL_CATEGORY );
@@ -157,7 +169,7 @@ void UIToolkit::init()
 	Component::registerComponent( "VCF::HorizontalLayoutContainer", CONTAINER_CATEGORY );
 
 
-	internal_setUpdateTimerSpeed( UIToolkit::defaultUpdateSpeed );
+	//internal_setUpdateTimerSpeed( UIToolkit::defaultUpdateSpeed );
 
 	MenuManager::create();
 	//Desktop::getDesktop()->init();
@@ -248,10 +260,6 @@ TextEditPeer* UIToolkit::createTextEditPeer( TextControl* component, const bool&
 	return UIToolkit::toolKitInstance->internal_createTextEditPeer( component, isMultiLineControl );
 }
 
-HTMLBrowserPeer* UIToolkit::createHTMLBrowserPeer( Control* control )
-{
-	return UIToolkit::toolKitInstance->internal_createHTMLBrowserPeer( control );
-}
 
 ButtonPeer* UIToolkit::createButtonPeer( CommandButton* component)
 {
@@ -550,12 +558,170 @@ UIMetricsManager* UIToolkit::getUIMetricsManager()
 	return UIToolkit::toolKitInstance->internal_getUIMetricsManager();
 }
 
+double UIToolkit::getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text )
+{
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getValue( type, text );
+}
+
+VCF::Size UIToolkit::getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text )
+{
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getSize( type, text );
+}
+
+VCF::Rect UIToolkit::getUIMetricRect( const UIMetricsManager::MetricType& type, VCF::Rect* rect )
+{
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getRect( type, rect );
+}
+
 UIPolicyManager* UIToolkit::getUIPolicyManager()
 {
 	return UIToolkit::toolKitInstance->internal_getUIPolicyManager();
 }
 
+void UIToolkit::systemSettingsChanged()
+{
+	GraphicsToolkit::systemSettingsChanged();
 
+	UIToolkit::toolKitInstance->internal_systemSettingsChanged();
+}
+
+
+void getHelpInfo( String& helpBookName, String& helpDirectory )
+{
+	Application* app = Application::getRunningInstance();
+
+	if ( NULL != app ) {		
+		app->getHelpInfo( helpBookName, helpDirectory );		
+	}	
+
+	if ( helpBookName.empty() || helpDirectory.empty() ) {
+		ProgramInfo* info = System::getResourceBundle()->getProgramInfo();
+		if ( NULL != info ) {
+			if ( helpDirectory.empty() ) {
+				helpDirectory = info->getHelpDirectory();
+			}
+			if ( helpBookName.empty() ) {
+				helpBookName = info->getHelpName();
+			}
+			delete info;
+		}
+	}
+
+	if ( helpBookName.empty() || helpDirectory.empty() ) {
+		//damn, we're STILL not finished - now try 
+		//and assume the stuff is in the res directory
+		//and the help name is the app name
+
+		if ( helpBookName.empty() ) {
+			if ( NULL != app ) {
+				helpBookName = app->getName();
+			}
+			else {
+				FilePath fp = FoundationKit::getCommandLine().getArgument(0);
+				helpBookName = fp.getBaseName();
+			}
+		}
+
+		if ( helpDirectory.empty() ) {
+			helpDirectory = "Help";
+		}
+	}	
+}
+
+void UIToolkit::displayHelpContents()
+{
+	Application* app = Application::getRunningInstance();
+	bool helpDisplayed = false;
+	if ( NULL != app ) {
+		helpDisplayed = app->displayHelpContents();
+	}
+
+	if ( !helpDisplayed ) {
+		String helpBookName;
+		String helpDirectory;
+		getHelpInfo( helpBookName, helpDirectory );
+		UIToolkit::toolKitInstance->internal_displayHelpContents(helpBookName,helpDirectory);
+	}	
+}
+
+void UIToolkit::displayHelpIndex()
+{
+	Application* app = Application::getRunningInstance();
+	bool helpDisplayed = false;
+	
+	if ( NULL != app ) {
+		helpDisplayed = app->displayHelpIndex();
+	}
+
+	if ( !helpDisplayed ) {
+		String helpBookName;
+		String helpDirectory;
+		getHelpInfo( helpBookName, helpDirectory );
+		UIToolkit::toolKitInstance->internal_displayHelpIndex(helpBookName, helpDirectory);
+	}
+}
+
+void UIToolkit::displayHelpSection( const String& helpSection, const String& helpBookName, const String& helpDirectory )
+{	
+	String helpBookNameTmp;
+	String helpDirectoryTmp;
+	getHelpInfo( helpBookNameTmp, helpDirectoryTmp );
+	if ( !helpBookName.empty() ) {
+		helpBookNameTmp = helpBookName;
+	}
+
+	if ( !helpDirectory.empty() ) {
+		helpDirectoryTmp = helpDirectory;
+	}
+
+	UIToolkit::toolKitInstance->internal_displayHelpSection(helpBookNameTmp, helpDirectoryTmp,helpSection);
+}
+
+void UIToolkit::displayContextHelpForControl( Control* control )
+{
+	String helpBookName;
+	String helpDirectory;
+	getHelpInfo( helpBookName, helpDirectory );
+
+	String whatsThis = control->getWhatThisHelpString();
+
+
+	if ( !UIToolkit::toolKitInstance->internal_displayContextHelpForControl( control, helpBookName, helpDirectory ) ) {
+		//oops - this control didn't have any immediate what's up help. Lets start walking the parent chain
+		//and notifying delegates that a context help event is happening and see if we can get
+		//some help there
+
+		HelpEvent event(control);
+		
+		control->HelpRequested.fireEvent( &event );
+
+		String helpSection = event.helpSection;
+		String helpBook = event.helpBook;
+		String helpDir = event.helpDirectory;
+		if ( helpSection.empty() ) {
+			//start searching the up the parent chain...
+			Control* parent = control->getParent();
+			while ( NULL != parent ) {
+				HelpEvent event2(parent);
+				parent->HelpRequested.fireEvent( &event2 );
+				
+				helpSection = event.helpSection;
+				helpBook = event.helpBook;
+				helpDir = event.helpDirectory;
+
+				if ( !helpSection.empty() ) {
+					break;
+				}
+
+				parent = parent->getParent();
+			}
+		}
+
+		if ( !helpSection.empty() ) {
+			UIToolkit::displayHelpSection( helpSection, helpBook, helpDir );
+		}
+	}
+}
 
 
 
@@ -1047,7 +1213,7 @@ void UIToolkit::internal_setDefaultButton( Button* defaultButton )
 
 void UIToolkit::onDefaultButton( KeyboardEvent* event )
 {
-	Control* control = (Control*)event->getSource();
+	//Control* control = (Control*)event->getSource();
 	/*
 	Control* buttonControl = dynamic_cast<Control*>(control);
 	if ( (buttonControl == Control::getCurrentFocusedControl()) && (NULL != temporaryDefaultButton_) ) {
@@ -1174,14 +1340,14 @@ void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
 }
 
 
-void UIToolkit::addToUpdateTimer( Component* component )
+void UIToolkit::addToUpdateList( Component* component )
 {
-	UIToolkit::toolKitInstance->internal_addToUpdateTimer( component );
+	UIToolkit::toolKitInstance->internal_addToUpdateList( component );
 }
 
-void UIToolkit::removeFromUpdateTimer( Component* component )
+void UIToolkit::removeFromUpdateList( Component* component )
 {
-	UIToolkit::toolKitInstance->internal_removeFromUpdateTimer( component );
+	UIToolkit::toolKitInstance->internal_removeFromUpdateList( component );
 }
 
 void UIToolkit::setUpdateTimerSpeed( const unsigned long& milliseconds )
@@ -1189,7 +1355,7 @@ void UIToolkit::setUpdateTimerSpeed( const unsigned long& milliseconds )
 	UIToolkit::toolKitInstance->internal_setUpdateTimerSpeed( milliseconds );
 }
 
-void UIToolkit::internal_addToUpdateTimer( Component* component )
+void UIToolkit::internal_addToUpdateList( Component* component )
 {
 	std::vector<Component*>::iterator found = std::find( componentsToUpdate_.begin(), componentsToUpdate_.end(), component );
 	if ( found == componentsToUpdate_.end() ) {
@@ -1197,7 +1363,7 @@ void UIToolkit::internal_addToUpdateTimer( Component* component )
 	}
 }
 
-void UIToolkit::internal_removeFromUpdateTimer( Component* component )
+void UIToolkit::internal_removeFromUpdateList( Component* component )
 {
 	std::vector<Component*>::iterator found = std::find( componentsToUpdate_.begin(), componentsToUpdate_.end(), component );
 	if ( found != componentsToUpdate_.end() ) {
@@ -1230,10 +1396,79 @@ void UIToolkit::onUpdateComponentsTimer( TimerEvent* e )
 	}
 }
 
+void UIToolkit::internal_idleTime()
+{
+	Frame* frm = Frame::getActiveFrame();
+	if ( NULL != frm ) {
+		if ( frm->getVisible() ) {
+			std::vector<Component*>::iterator it = componentsToUpdate_.begin();
+			while ( it != componentsToUpdate_.end() ) {
+				Component* component = *it;
+				Event updateEvent( this, Component::COMPONENT_NEEDS_UPDATING );
+				component->handleEvent( &updateEvent );
+				it ++;
+			}
+		}
+	}
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.16  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.5.2.15  2006/03/28 04:10:17  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.5.2.14  2006/03/28 04:04:36  ddiego
+*added a slight adjustment to idle message handling. Component
+*updating is now handled there instead of a timer.
+*
+*Revision 1.5.2.13  2006/03/17 03:08:11  ddiego
+*updated osx code to latest changes.
+*
+*Revision 1.5.2.12  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.5.2.11  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.5.2.10  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.5.2.9  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.8  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.5.2.7  2005/11/07 00:10:14  ddiego
+*fixed two memory leaks that fraggle found.
+*
+*Revision 1.5.2.6  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.5.2.5  2005/09/14 01:50:07  ddiego
+*minor adjustment to control for enable setting. and registered
+*more proeprty editors.
+*
+*Revision 1.5.2.4  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.5.2.3  2005/09/07 20:24:48  ddiego
+*added some more help support.
+*
+*Revision 1.5.2.2  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.5.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.5  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

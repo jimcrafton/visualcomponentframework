@@ -33,16 +33,16 @@ class RunLoopPeer;
 class ThreadManagerPeer;
 
 /**
-\par
+\class SystemToolkit SystemToolkit.h "vcf/FoundationKit/SystemToolkit.h"
 The SystemToolkit is and abstract class used to create or 
 get access to basic system peer instances, like threads, processes, etc. 
 It is a singleton factory for the various platform specific 
 peers that are required for the FoundationKit. 
-\par
+
 The SystemToolkit is a singleton and is not intended to be created
 or deleted directly. It is created as part of the FoundationKit::init()
 and deleted as part of the FoundationKit::terminate() call. 
-\par
+
 If you are porting to a new platform you will need to derive a new 
 class from this one and provide implementations of the various
 internal_createXXXPeer methods. 
@@ -208,6 +208,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.1  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
 *Revision 1.5  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

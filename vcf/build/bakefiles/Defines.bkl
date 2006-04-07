@@ -1,0 +1,232 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <!--
+    The <header> tag can be used to define header files in ms projects.
+    -->
+    <define-tag name="headers" rules="dll,lib,exe,module">
+        <if cond="FORMAT in ['msvc6prj','msevc4prj']">
+            <msvc-project-files>$(value)</msvc-project-files>
+        </if>
+    </define-tag>
+
+
+    <!--
+    Inclusions.
+    -->
+    <define-tag name="vcf-include-thirdparty" rules="dll,lib,exe,module">
+        <include cond="PLATFORM_WIN32=='1'">
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/win32' ))
+        </include>
+        <include cond="PLATFORM_MAC=='1'">
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/macOSX/HIView' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-boost" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/boost' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-libAGG" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/agg/include' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-ZLib" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/ZLib' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-LibJPEG" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/LibJPEG' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-LibPNG" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/LibPNG' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-LibMNG" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source/LibMNG' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-LibTIFF" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source/LibTIFF' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-FreeImage" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source' ))
+        </include>
+    </define-tag>
+
+
+    <!--
+    Using libraries.
+    -->
+    <define-tag name="vcf-use-libAGG" rules="dll,lib,exe,module">
+        <vcf-include-libAGG/>
+        <sys-lib>$(LIBAGG_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-ZLib" rules="dll,lib,exe,module">
+        <vcf-include-ZLib/>
+        <sys-lib>$(ZLIB_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-LibJPEG" rules="dll,lib,exe,module">
+        <vcf-include-LibJPEG/>
+        <sys-lib>$(LIBJPEG_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-LibPNG" rules="dll,lib,exe,module">
+        <vcf-include-LibPNG/>
+        <sys-lib>$(LIBPNG_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-LibMNG" rules="dll,lib,exe,module">
+        <vcf-include-LibMNG/>
+        <sys-lib>$(LIBMNG_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-LibTIFF" rules="dll,lib,exe,module">
+        <vcf-include-LibTIFF/>
+        <sys-lib>$(LIBTIFF_FILENAME)</sys-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-FreeImage" rules="dll,lib,exe,module">
+        <vcf-include-FreeImage/>
+        <define>FREEIMAGE_LIB</define>
+        <sys-lib>$(FREEIMAGE_FILENAME)</sys-lib>
+    </define-tag>
+
+
+    <!--
+    Using kits.
+    -->
+    <set var="FOUNDATIONKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">FOUNDATIONKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-FoundationKit" rules="dll,lib,exe,module">
+        <set var="FOUNDATIONKIT">
+            <if cond="OPTION_ALLIN1=='1'">$(ALLIN1_FILENAME)</if>
+            <if cond="OPTION_ALLIN1=='0'">$(FOUNDATIONKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(FOUNDATIONKIT)</sys-lib>
+        <define>$(FOUNDATIONKIT_DLL)</define>
+    </define-tag>
+
+    <set var="GRAPHICSKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">GRAPHICSKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-GraphicsKit" rules="dll,lib,exe,module">
+        <vcf-use-FoundationKit/>
+        <vcf-use-libAGG/>
+        <vcf-use-ZLib/>
+        <vcf-use-LibJPEG/>
+        <vcf-use-LibPNG/>
+
+        <set var="GRAPHICSKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(GRAPHICSKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(GRAPHICSKIT)</sys-lib>
+        <define>$(GRAPHICSKIT_DLL)</define>
+    </define-tag>
+
+    <set var="APPLICATIONKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">APPLICATIONKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-ApplicationKit" rules="dll,lib,exe,module">
+        <vcf-use-GraphicsKit/>
+        <set var="APPLICATIONKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(APPLICATIONKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(APPLICATIONKIT)</sys-lib>
+        <define>$(APPLICATIONKIT_DLL)</define>
+    </define-tag>
+
+    <set var="HTMLKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">HTMLKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-HTMLKit" rules="dll,lib,exe,module">
+        <vcf-use-ApplicationKit/>
+        <set var="HTMLKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(HTMLKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(HTMLKIT)</sys-lib>
+        <define>$(HTMLKIT_DLL)</define>
+    </define-tag>
+
+    <set var="OPENGLKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">OPENGLKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-OpenGLKit" rules="dll,lib,exe,module">
+        <vcf-use-ApplicationKit/>
+        <set var="OPENGLKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(OPENGLKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(OPENGLKIT)</sys-lib>
+        <define>$(OPENGLKIT_DLL)</define>
+    </define-tag>
+
+    <set var="NETWORKKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">NETWORKKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-NetworkKit" rules="dll,lib,exe,module">
+        <vcf-use-FoundationKit/>
+        <set var="NETWORKKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(NETWORKKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(NETWORKKIT)</sys-lib>
+        <define>$(NETWORKKIT_DLL)</define>
+    </define-tag>
+
+    <set var="REMOTEOBJECTKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">REMOTEOBJECTKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-RemoteObjectKit" rules="dll,lib,exe,module">
+        <vcf-use-NetworkKit/>
+        <set var="REMOTEOBJECTKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(REMOTEOBJECTKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(REMOTEOBJECTKIT)</sys-lib>
+        <define>$(REMOTEOBJECTKIT_DLL)</define>
+    </define-tag>
+
+    <set var="INTERNETKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">INTERNETKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-InternetKit" rules="dll,lib,exe,module">
+        <vcf-use-FoundationKit/>
+        <set var="INTERNETKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(INTERNETKIT_FILENAME)</if>
+        </set>
+        <sys-lib>$(INTERNETKIT)</sys-lib>
+        <define>$(INTERNETKIT_DLL)</define>
+    </define-tag>
+
+    <set var="IMAGEFORMATS_DLL">
+        <if cond="OPTION_SHARED=='1'">IMAGEFORMATS_DLL</if>
+    </set>
+    <define-tag name="vcf-use-ImageFormats" rules="dll,lib,exe,module">
+        <vcf-use-ApplicationKit/>
+        <set var="IMAGEFORMATS">
+            <if cond="OPTION_ALLIN1=='0'">$(IMAGEFORMATS_FILENAME)</if>
+        </set>
+        <sys-lib>$(IMAGEFORMATS)</sys-lib>
+        <define>$(IMAGEFORMATS_DLL)</define>
+    </define-tag>
+
+</makefile>

@@ -140,7 +140,7 @@ VCF::VariantData* ClassServerInstance::invoke( VCF::OutputStream* marshalledData
 
 		int msgType = CLASS_SVR_MSG_PROXY_INVOKE;
 		stream << msgType;
-		stream.write( marshalledData->getBuffer(), marshalledData->getSize() );
+		stream.write( (unsigned char*)marshalledData->getBuffer(), marshalledData->getSize() );
 		sock.send( stream.getBuffer(), stream.getSize() );
 		sock.checkForPendingData( VCFNET_INFINITEWAIT );
 
@@ -156,6 +156,12 @@ VCF::VariantData* ClassServerInstance::invoke( VCF::OutputStream* marshalledData
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:51  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/23 05:30:33  kdmix
+*The first parameter of the OutputStream.write() method is const unsigned char* now.
+*
 *Revision 1.2  2004/08/07 02:49:20  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

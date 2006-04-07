@@ -22,6 +22,33 @@ where you installed the VCF.
 
 using namespace VCF;
 
+
+
+class TabSheet : public Panel {
+public:
+	TabSheet() {
+		setBorder( NULL );
+	}
+
+	virtual void paint( GraphicsContext* ctx ) {
+		CustomControl::paint( ctx );
+
+		Rect bounds = getClientBounds();
+
+		DrawUIState state;
+		state.setEnabled( isEnabled() );
+		state.setActive( isActive() );
+
+		ctx->drawThemeTabContent( &bounds, state );
+
+		paintChildren( ctx );
+	}
+};
+
+
+
+
+
 TabbedPages::TabbedPages():
 	CustomControl( true ),
 	model_( NULL )
@@ -38,49 +65,28 @@ void TabbedPages::init()
 
 	setTabModel( new DefaultTabModel() );
 
+	addComponent( getViewModel() );
 
-	borderWidth_ = 8.0;
-	tabHeight_ = 21.0;
+	borderWidth_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta );;
+	Size sz = UIToolkit::getUIMetricSize( UIMetricsManager::mtTabSize );
+	tabHeight_ =  sz.height_; // 21.0;
 
 	tabViewOffset_ = 0.0;
 
 
 	EventHandler* ev = new ButtonEventHandler<TabbedPages>( this, &TabbedPages::onScrollButtonClicked, "onScrollButtonClicked" );
-	/*
-	scrollForward_ = new ScrollButton();
-	scrollForward_->setHeight( tabHeight_ );
-	scrollForward_->setWidth(  tabHeight_ );
-
-	scrollBackward_ = new ScrollButton();
-	scrollBackward_->setHeight( tabHeight_ );
-	scrollBackward_->setWidth(  tabHeight_ );
-
-	scrollBackward_->setTag( SCROLL_BKWD_TAG );
-	scrollForward_->setTag( SCROLL_FWD_TAG );
-
-
-	scrollForward_->addButtonClickHandler( ev );
-	scrollBackward_->addButtonClickHandler( ev );
-
-	add( scrollBackward_ );
-	add( scrollForward_ );
-
-	scrollForward_->setVisible( false );
-	scrollBackward_->setVisible( false );
-	*/
-
+	
 }
 
 TabbedPages::~TabbedPages()
 {
-	if ( NULL != model_ ){
-		//model_->release();
-	}
+	
 }
 
+/*
 void TabbedPages::recalcScrollerButtonsPos()
 {
-	/*
+	
 
 	TabModel* model = getModel();
 	double width = 0.0;
@@ -119,9 +125,9 @@ void TabbedPages::recalcScrollerButtonsPos()
 		scrollForward_->setVisible( false );
 		scrollBackward_->setVisible( false );
 	}
-	*/
+	
 }
-
+*/
 double TabbedPages::getTabPageWidth( TabPage* page, GraphicsContext* ctx )
 {
 	double result;
@@ -152,6 +158,7 @@ void TabbedPages::paint( GraphicsContext* context )
 	else {
 		bounds.setRect( 0, 0, getWidth(), getHeight() );
 	}
+
 	
 	BackgroundState bkg;
 	bkg.setEnabled( isEnabled() );
@@ -161,20 +168,29 @@ void TabbedPages::paint( GraphicsContext* context )
 	context->drawThemeBackground( &bounds, bkg );
 	
 
+	DrawUIState pageState;
+	pageState.setEnabled( isEnabled() );
+	pageState.setActive( isActive() );
+	
+	bounds.inflate( -borderWidth_,-borderWidth_ );
+	
+	Size sz = UIToolkit::getUIMetricSize( UIMetricsManager::mtTabSize );
+
+	
+	bounds.top_ += sz.height_;
+	
+	context->drawThemeTabPage( &bounds, pageState );
+
+	
+
 	if ( NULL != model_ ){
 		Enumerator<TabPage*>* pages = model_->getPages();
-		
-
-		//Rect oldClipRect = context->getClippingRect();
-		//Rect tabClipRect( tabAreaBounds_.left_ - 2, 3, tabAreaBounds_.right_, tabAreaBounds_.top_ - 2 );
-
-		//context->setClippingRect( &tabClipRect );
 
 		Rect tabsRect(0,0,0,0);
 
 		TabPage* selectedPage = NULL;
 
-		double currentLeft = tabAreaBounds_.left_;
+		double currentLeft = bounds.left_;
 		Rect selectedRect;
 
 
@@ -187,25 +203,25 @@ void TabbedPages::paint( GraphicsContext* context )
 		while ( true == pages->hasMoreElements() ){
 			TabPage* page = pages->nextElement();
 			VCF_ASSERT( NULL != page );
-				width = minVal<>( tabWidth, getTabPageWidth( page, context ) );
-				tabsRect.setRect( currentLeft, tabAreaBounds_.top_ - tabHeight_ + 1,
-						          currentLeft+ width, tabAreaBounds_.top_ -2  );
-
-				tabsRect.offset( tabViewOffset_, 0 );
-
-
-
-				if ( true == page->isSelected() ) {
-					selectedPage = page;
-					selectedRect = tabsRect;
-				}
-				else {
-					page->paint( context, &tabsRect );
-				}
+			width = minVal<>( tabWidth, getTabPageWidth( page, context ) );
+			tabsRect.setRect( currentLeft, bounds.top_ - tabHeight_,
+						          currentLeft+ width, bounds.top_  );
+			
+			tabsRect.offset( tabViewOffset_, 0 );
+			
+			
+			
+			if ( true == page->isSelected() ) {
+				selectedPage = page;
+				selectedRect = tabsRect;
+			}
+			else {
+				page->paint( context, &tabsRect );
+			}
 			
 			currentLeft += width;
 		}
-
+/*
 		//if ( oldClipRect.isEmpty() ) {
 			//oldClipRect.setRect( 0, 0, getWidth(), getHeight() );
 		//}
@@ -228,6 +244,12 @@ void TabbedPages::paint( GraphicsContext* context )
 			context->fillPath();
 			selectedPage->paint( context, &selectedRect );
 		}
+		*/
+		if ( NULL != selectedPage ) {
+			selectedRect.inflate( 0, 2, 2, 1 );
+			selectedPage->paint( context, &selectedRect );
+		}
+
 	}
 	paintChildren( context );
 }
@@ -256,22 +278,22 @@ void TabbedPages::setTabModel( TabModel* model )
 		}
 
 
-		EventHandler* ev = getEventHandler( "TabbedPages::tabTabPageAddedHandler" );
+		EventHandler* ev = getEventHandler( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::tabTabPageAddedHandler" );
+			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
 		model_->addTabPageAddedHandler( ev );
 
-		ev = getEventHandler( "TabbedPages::tabPageRemovedHandler" );
+		ev = getEventHandler( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::tabPageRemovedHandler" );
+			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
 		model_->addTabPageRemovedHandler( ev );
 
 
-		ev = getEventHandler( "TabbedPages::tabPageSelectedHandler" );
+		ev = getEventHandler( "TabbedPages::onTabPageSelected" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::tabPageSelectedHandler" );
+			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
 		}
 		model_->addTabPageSelectedHandler( ev );		
 	}
@@ -290,9 +312,17 @@ void TabbedPages::onTabPageAdded( TabModelEvent* event )
 	//visible
 	//repaint();
 
+	TabPage* page = event->getTabPage();
+
+	TabSheet* sheet = new TabSheet();
+	page->setPageComponent( sheet );
+	add( sheet, AlignClient );
+	//sheet->setVisible( true );
+
+
 	resizeChildren(NULL);
 
-	recalcScrollerButtonsPos();
+	//recalcScrollerButtonsPos();
 }
 
 void TabbedPages::onTabPageRemoved( TabModelEvent* event )
@@ -339,7 +369,7 @@ void TabbedPages::onTabPageRemoved( TabModelEvent* event )
 	}
 	resizeChildren(NULL);
 
-	recalcScrollerButtonsPos();
+	//recalcScrollerButtonsPos();
 }
 
 void TabbedPages::onTabPageSelected( TabModelEvent* event )
@@ -380,11 +410,6 @@ TabPage* TabbedPages::addNewPage( const String& caption )
 	DefaultTabPage* page = new DefaultTabPage();
 	page->setModel( getViewModel() );
 	page->setPageName( caption );
-	Panel* sheet = new Panel();
-	sheet->setBorder( NULL );
-	page->setPageComponent( sheet );
-	add( sheet, AlignClient );
-	//sheet->setVisible( true );
 
 	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
 
@@ -413,11 +438,17 @@ Rect TabbedPages::getClientBounds( const bool& includeBorder )
 	}
 
 
+	
 	tabAreaBounds_.setRect( 0, 0, bounds.getWidth(), bounds.getHeight() );
 	tabAreaBounds_.inflate( -borderWidth_, -borderWidth_ );
-	tabAreaBounds_.top_ = tabAreaBounds_.top_ + tabHeight_;
 
-	recalcScrollerButtonsPos();
+	tabAreaBounds_ = UIToolkit::getUIMetricRect( UIMetricsManager::mtTabPaneContentRect, &tabAreaBounds_ );
+
+	
+	//tabAreaBounds_.bottom_ = tabAreaBounds_.top_;
+	//tabAreaBounds_.top_ = tabAreaBounds_.top_ + tabHeight_;
+
+//	recalcScrollerButtonsPos();
 
 	return tabAreaBounds_;
 }
@@ -560,6 +591,18 @@ void TabbedPages::ScrollButton::paint( GraphicsContext* ctx )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/02 01:04:00  ddiego
+*fixed a mistake in tab sheet.
+*
+*Revision 1.4.2.2  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

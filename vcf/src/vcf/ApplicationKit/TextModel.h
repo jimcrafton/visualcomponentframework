@@ -19,8 +19,8 @@ namespace VCF{
 
 
 /**
-\par
-TextModel is a model interface for working with text data.
+\class TextModel TextModel.h "vcf/ApplicationKit/TextModel.h"
+The TextModel is a model interface for working with text data.
 It does not \emnot inherit from the Model class
 directly. This is to allow different implementations different base classes.
 For example, you might have a simple list model that inherits/implements the 
@@ -114,6 +114,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

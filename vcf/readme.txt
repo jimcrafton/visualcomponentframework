@@ -1,3 +1,74 @@
+Visual Component Framework 0.9.0
+
+Readme
+Bugs fixed include:
+- 1458095 TextControl not operational
+- 1449840 Undesirable repeatable desktop update
+- 1276040 DefaultMenuItem::clearChildren doesn't call the peer
+- 1251431 Drag and Drop example doesn't work with images
+- 1249777 Win32ProcessIORedirector
+- 1228429 ComboBox drop down list font is unchangable
+- 1227570 Win32PrintSession::setDefaultPageSettings pointer...
+- 1184442 Components move through each other when shrinking window
+- 1171985 printInfo_.docInfo_.lpszDocName pointing to orphan pointer
+- 1121899 ApplicationKitRTTI.inl error
+- 1102590 Difficulty changing Windows themes
+- 1090689 problem loading png image
+
+- Added proper repainting when windows system settings changes
+- Fixed bugs in Scrollbars that caused them to not move
+as fluidly as they should
+- Fixed bug in TreeListControl for incorrect calculation of virtual height
+- Fixed bug in TreeListControl that caused the header control to be
+misplaced.
+- Fixed a number of appearance glitches in various examples
+- Fixed a bug in the Win32Locales code that caused currency string
+formatting to not show up correctly.
+-fixed bug in document manager that left hanging document instances
+in SDI policy mode.
+
+
+
+
+New features include:
+- Added basic XP theming for most controls.
+- Added HTML Help integration
+- Added better tooltip integration and support for fancier customization
+of the tooltip
+- Further OS X support, still ongoing.
+- Consolidated some of the Item classes
+- Added more documentation to both the source files and to the core
+reference manual documentation.
+- Added new compiler support in the form of mingw and CodeBlocks
+support.
+-Added new compiler support for Visual C++ 2005, including the Express
+Edition.
+- Added JPEG and PNG builtin support to the GraphicsKit
+- Added HTMLKit and added new features to HTMLBrowserControl allowing
+fairly advanced customization of the browser and navigation of the
+HTML DOM.
+- Added InternetKit
+- Added several new examples
+- updated AGG to the newest version (2.4)
+- added Boost smart pointer integration
+- added min/max constraints for windows
+- revamped PropertyEditor interface and implementations
+- revamped ComponentEditor interface and implementations
+- added better support for reading in the Visual Form File format
+- Proper support for inheritance in reading VFF files. This means that
+one file can be specified for a base class, and another class which
+derives from the base, will inherit and process the values from the original
+base class's VFF before processing it's own.
+
+
+Side note: A lot of time was spent on the VCF Builder (http://vcfbuilder.org) and 
+getting that to work better, especially the Form Designer part.
+
+Issues:
+Some of the examples will not compile or work right with the Borland Free compiler,
+specifically TeXLabel, and SharedLibraries.
+
+
 Visual Component Framework 0.6.8
 
 Readme
@@ -51,7 +122,7 @@ performance issues, miscellaneous bugs in the TableControl and
 TreeListControl.
 
 
-New features include:
+New features included:
 
 RunLoops, which allow for repitive loop behaviour, and the ability to 
 now post an event from any RunLoop to another RunLoop. Each RunLoop

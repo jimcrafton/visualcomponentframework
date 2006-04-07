@@ -303,6 +303,8 @@ _field_obj_( MenuItem*, editStuffMenu57 )
 _class_rtti_end_
 
 
+
+
 class VisualFormFilesApplication : public Application {
 public:
 
@@ -315,20 +317,11 @@ public:
 
 		REGISTER_CLASSINFO_EXTERNAL(VisualFormFilesWindow);
 
-		FilePath fp = getFileName();
+		VisualFormFilesWindow* w = (VisualFormFilesWindow*) Frame::createWindow( classid(VisualFormFilesWindow) );
 
-		FileInputStream fs( fp.getPathName(true) + "Form1.vff");
-		String vff;
-		fs >> vff;
+		setMainWindow(w);
 
-		Window* window;
-		BasicInputStream bis( vff );
-		VFFInputStream vis( &bis );
-		vis.readComponent( (Component**)&window );
-
-		VisualFormFilesWindow* w = (VisualFormFilesWindow*)window;
-
-		setMainWindow(window);
+		w->show();
 
 		return result;
 	}
@@ -349,8 +342,14 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:46  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:55  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2005/08/24 05:03:20  ddiego
+*better component loading and creation functions.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:45  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.2  2005/06/06 02:34:05  ddiego
 *menu changes to better support win32 and osx.

@@ -20,6 +20,7 @@ where you installed the VCF.
 namespace VCF{
 
 /**
+\class Point Point.h "vcf/GraphicsKit/Point.h"
 *represents a 2 dimensional coordinate (x and y)
 and stores the data as doubles, for maximum precision.
 */
@@ -375,6 +376,12 @@ inline Point Point::operator/(const double d) const {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.3  2004/12/01 04:31:44  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

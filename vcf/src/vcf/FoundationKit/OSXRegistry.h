@@ -10,10 +10,63 @@ where you installed the VCF.
 
 
 
+namespace VCF {
+
+class OSXRegistry : public Object, public RegistryPeer {
+public:
+	OSXRegistry();
+
+	virtual ~OSXRegistry();
+
+	virtual void setRoot( const RegistryKeyType& rootKey );
+
+	virtual RegistryKeyType getRoot();
+
+	virtual bool openKey( const String& keyname, const bool& createIfNonExistant );
+
+	virtual bool setValue( const String& value, const String& valuename );
+
+	virtual bool setValue( const uint32& value, const String& valuename );
+
+	virtual bool setValue( const bool& value, const String& valuename );
+
+	virtual bool setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename );
+
+	virtual bool getStringValue( const String& valuename, String& value );
+
+	virtual bool getIntValue( const String& valuename, uint32& value );
+
+	virtual bool getBoolValue( const String& valuename, bool& value );
+
+	virtual bool getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
+
+	virtual Enumerator<String>* getKeyNames();
+
+	virtual Enumerator<RegistryValueInfo*>* getValues();
+
+	virtual String getCurrentKey();
+protected:
+	std::vector<RegistryValueInfo*> values_;
+	std::vector<String> keys_;
+	EnumeratorContainer<std::vector<RegistryValueInfo*>,RegistryValueInfo*> valuesContainer_;
+	EnumeratorContainer<std::vector<String>,String> keysContainer_;
+	RegistryKeyType rootKeyType_;
+	String currentRegKey_;	
+};
+
+}; //end of namespace VCF
+
+
 
  /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.2.6.1  2005/11/14 22:05:42  ddiego
+ *osx update.
+ *
  *Revision 1.2  2004/08/07 02:49:14  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *

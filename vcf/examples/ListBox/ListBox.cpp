@@ -28,7 +28,6 @@ class ListBoxWindow : public Window {
 public:
 	ListBoxWindow() {
 		setCaption( "ListBox" );
-		setVisible( true );
 
 		this->setUseColorForBackground( true );
 	
@@ -354,6 +353,7 @@ public:
 		Window* mainWindow = new ListBoxWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 50.0, 50.0, 650.0, 500.0 ) );
+		mainWindow->show();
 		
 		return result;
 	}

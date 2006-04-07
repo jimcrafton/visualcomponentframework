@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../build/bakefiles/Options.bkl"/>
+
+    <template id="example">
+        <dir>$(id)</dir>
+        <dependency-of>all</dependency-of>
+    </template>
+
+    <subproject id="Accelerators" template="example"/>
+    <subproject id="Actions" template="example"/>
+    <subproject id="AdvancedAlignment" template="example"/>
+    <subproject id="AdvancedUI" template="example"/>
+    <subproject id="Alignment" template="example"/>
+    <subproject id="Anchors" template="example"/>
+    <subproject id="ApplicationIcons" template="example"/>
+    <subproject id="AppResources" template="example"/>
+    <subproject id="Browser" template="example"/>
+    <subproject id="Cards" template="example"/>
+    <subproject id="Colors" template="example"/>
+    <subproject id="Combos" template="example"/>
+    <subproject id="CommonDirectories" template="example"/>
+    <subproject id="Conditions" template="example"/>
+    <subproject id="Controls" template="example"/>
+    <subproject id="CopyAndPaste" template="example"/>
+    <subproject id="DatesAndTime" template="example"/>
+    <subproject id="DateTimeUI" template="example"/>
+    <subproject id="Dialogs" template="example"/>
+    <subproject id="Dictionaries" template="example"/>
+    <subproject id="Directories" template="example"/>
+    <subproject id="DocViewAdvanced" template="example"/>
+    <subproject id="DocViewBasics" template="example"/>
+    <subproject id="DragAndDrop" template="example"/>
+    <subproject id="EventBasics" template="example"/>
+    <subproject id="FilesAndDirectories" template="example"/>
+    <subproject id="FrameStyles" template="example"/>
+    <subproject id="GraphicsAndMouseMoves" template="example"/>
+    <subproject id="GraphicsBasics" template="example"/>
+    <subproject id="HeavyAndLight" template="example"/>
+    <subproject id="HelloWorld" template="example"/>
+    <subproject id="HelloWorld2" template="example"/>
+    <subproject id="HelloWorld3" template="example"/>
+    <subproject id="Help" template="example"/>
+    <subproject id="ImageBasics" template="example"/>
+    <subproject id="ImageViewer" template="example"/>
+    <subproject id="InetKit" template="example"/>
+    <subproject id="Labels" template="example"/>
+    <subproject id="ListBox" template="example"/>
+    <subproject id="LocaleUI" template="example"/>
+    <subproject id="Localization" template="example"/>
+    <subproject id="MinMax" template="example"/>
+    <subproject id="MVCBasics" template="example"/>
+    <subproject id="OpenGLShapes" template="example"/>
+    <subproject id="ParticleEditor" template="example"/>
+    <subproject id="Printing" template="example"/>
+    <subproject id="Processes" template="example"/>
+    <subproject id="ProgressBars" template="example"/>
+    <subproject id="Reflection" template="example"/>
+    <subproject id="Resources" template="example"/>
+    <subproject id="RunLoops" template="example"/>
+    <subproject id="Scrolling" template="example"/>
+    <subproject id="Scrolling2" template="example"/>
+    <subproject id="SharedLibraries" template="example"/>
+    <subproject id="SketchIt" template="example"/>
+    <subproject id="Sliders" template="example"/>
+    <subproject id="Splitters" template="example"/>
+    <subproject id="Strings" template="example"/>
+    <subproject id="StrokesAndFills" template="example"/>
+    <subproject id="SysTray" template="example"/>
+    <subproject id="Tables" template="example"/>
+    <subproject id="TeXLabel" template="example"/>
+    <subproject id="TextEdit" template="example"/>
+    <subproject id="TextLayout" template="example"/>
+    <subproject id="Themes" template="example"/>
+    <subproject id="ThreadBasics" template="example"/>
+    <subproject id="ThreadsInGUI" template="example"/>
+    <subproject id="Toolbars" template="example"/>
+    <subproject id="Tooltips" template="example"/>
+    <subproject id="Transformations" template="example"/>
+    <subproject id="TreeListControls" template="example"/>
+    <subproject id="Variants" template="example"/>
+    <subproject id="VisualFormFiles" template="example"/>
+    <subproject id="WorkingWithEnumerators" template="example"/>
+
+    <!--
+    Please note, the following examples will compile successfully
+    only if you have MFC or QuickTime SDK.
+    If you have some of them you need to compile these examples manually.
+
+    <subproject id="MFCIntegration1" template="example"/>
+    <subproject id="MFCIntegration2" template="example"/>
+    <subproject id="QTPlayer" template="example"/>
+    -->
+
+</makefile>

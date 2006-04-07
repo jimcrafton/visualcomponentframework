@@ -55,7 +55,7 @@ class ListviewPeer;
 class ImageList;
 
 
-#define LISTVIEWCONTROL_CLASSID			"ED88C09D-26AB-11d4-B539-00C04F0196DA"
+
 
 enum ListViewDisplayOptions {
 	lvdoDefault = 0,
@@ -64,6 +64,50 @@ enum ListViewDisplayOptions {
 	lvdoGridLines = 4
 };
 
+
+
+
+/**
+*An enum of icon styles for list views
+*/
+enum IconStyleType {
+	isLargeIcon=0,
+	isSmallIcon,
+	isList,
+	isDetails
+};
+
+/**
+*An enum of icon alignment types for list views
+*/
+enum IconAlignType {
+	iaNone=0,
+	iaTop,
+	iaLeft,
+	iaAutoArrange
+};
+
+static String IconStyleTypeNames[] = { "isLargeIcon",
+                                         "isSmallIcon",
+										 "isList",
+										 "isDetails" };
+
+static String IconAlignTypeNames[] = { "iaNone",
+                                         "iaTop",
+										 "iaLeft",
+										 "iaAutoArrange" };
+										 
+										 
+
+
+										 
+
+#define LISTVIEWCONTROL_CLASSID			"ED88C09D-26AB-11d4-B539-00C04F0196DA"
+
+
+/**
+\class ListViewControl ListViewControl.h "vcf/ApplicationKit/ListViewControl.h"
+*/
 class APPLICATIONKIT_API ListViewControl : public VCF::Control {
 public:
 
@@ -185,6 +229,8 @@ public:
 
 	void setDisplayOptions( const long& displayOptions );
 
+	Rect getItemRect( ListItem* item );
+
 	virtual void handleEvent( Event* event );
 protected:
 	//Events
@@ -225,6 +271,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

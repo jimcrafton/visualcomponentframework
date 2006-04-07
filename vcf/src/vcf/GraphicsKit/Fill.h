@@ -26,7 +26,7 @@ class GraphicsContext;
 class Path;
 
 /**
-\par
+\class Fill Fill.h "vcf/GraphicsKit/Fill.h"
 The Fill class is a high level class used to fill in a Path. A fill is
 set on the current graphics context, and then a path is drawn.
 \code
@@ -49,7 +49,7 @@ delete path;
 See the StrokesAndFills example (in vcf/examples/StrokesAndFills ) for a more
 complete example of this.
 
-\par
+
 The interface is quite simple, and more concrete details are completely up to the 
 implement of the interface.
 @see BasicFill
@@ -81,6 +81,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.2  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.4.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.3  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

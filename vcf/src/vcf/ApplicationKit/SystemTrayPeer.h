@@ -17,6 +17,9 @@ namespace VCF {
 class Image;
 class PopupMenu;
 
+	/**
+	\class SystemTrayPeer SystemTrayPeer.h "vcf/ApplicationKit/SystemTrayPeer.h"
+	*/
 	class SystemTrayPeer : public VCF::Interface {
 	public:
 

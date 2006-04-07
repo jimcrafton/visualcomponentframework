@@ -59,27 +59,28 @@ bool LinuxRegistry::setValue( void* dataBuffer,
 	return false;
 }
 
-String LinuxRegistry::getStringValue( const String& valuename )
+bool LinuxRegistry::getStringValue( const String& valuename, String& value )
 {
-	String result;
-	return result;
+    return false;
 }
 
-uint32 LinuxRegistry::getIntValue( const String& valuename )
+bool LinuxRegistry::getIntValue( const String& valuename, uint32& value )
 {
-	return 0;
+	return false;
 }
 
-bool LinuxRegistry::getBoolValue( const String& valuename )
+bool LinuxRegistry::getBoolValue( const String& valuename, bool& value )
 {
-	bool result = false;
-	return result;
+    return false;
 }
 
-void LinuxRegistry::getDataBufValue( const String& valuename,
+bool LinuxRegistry::getDataBufValue( const String& valuename,
                                      uint32& dataBufferSize,
                                      void** dataBuffer )
-{}
+{
+    bool result = false;
+    return result;
+}
 
 Enumerator<String>* LinuxRegistry::getKeyNames()
 {
@@ -104,6 +105,12 @@ String LinuxRegistry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
 *

@@ -21,6 +21,7 @@ namespace VCF
 #define BASIC3DBORDER_CLASSID			"3126B222-2819-11d4-B53A-00C04F0196DA"
 
 /**
+\class Basic3DBorder Basic3DBorder.h "vcf/ApplicationKit/Basic3DBorder.h"
 *Draws a basic 3D border around a component. The border is 2 pixels thick
 *
 *@version 1.0
@@ -66,6 +67,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

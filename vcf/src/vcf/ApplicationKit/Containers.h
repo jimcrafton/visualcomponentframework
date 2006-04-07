@@ -26,8 +26,9 @@ namespace VCF {
 #define STANDARDCONTAINER_CLASSID		"a1236d3c-6c40-4f25-b0a1-39065a9d8f0a"
 
 /**
-*Basic implementation of a container
-*handles basic alignment,layout of child components.
+\class StandardContainer Containers.h "vcf/ApplicationKit/Containers.h"
+Basic implementation of a container
+handles basic alignment,layout of child components.
 */
 
 class APPLICATIONKIT_API StandardContainer : public AbstractContainer {
@@ -89,6 +90,9 @@ protected:
 
 
 
+/**
+\class DesignTimeContainer Containers.h "vcf/ApplicationKit/Containers.h"
+*/
 class APPLICATIONKIT_API DesignTimeContainer : public  StandardContainer  {
 public:
 	DesignTimeContainer(){};
@@ -108,6 +112,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

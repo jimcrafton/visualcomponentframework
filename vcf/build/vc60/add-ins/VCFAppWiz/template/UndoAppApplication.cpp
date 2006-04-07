@@ -32,10 +32,10 @@ $$ENDIF
 	$$MainWindow$$* mainWindow = new $$MainWindow$$();
 	
 	setMainWindow(mainWindow);
-	mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-	mainWindow->setVisible( true );
+	mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );	
 	mainWindow->setCaption( "$$Root$$" );
-	
+	mainWindow->show();
+
 	return result;
 }
 

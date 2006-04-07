@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+
+<bakefile-gen>
+
+    <input>
+        VCF.bkl
+        ../../examples/*.bkl
+        ../../examples/*/*.bkl
+        ../../src/BlackBox/*.bkl
+        ../../src/createbundle/*.bkl
+        ../../src/createinfo/*.bkl
+        ../../src/xmake/*.bkl
+    </input>
+    
+
+    <add-formats>
+        <!--
+        autoconf,borland,dmars_smake,dmars,mingw,msvc,msvc6prj,msevc4prj,watcom,cbuilderx,cbx_unix,gnu,xcode2
+        -->
+        borland,mingw,msvc,msvc6prj,gnu
+    </add-formats>
+
+    <disable-formats>cbuilderx,cbx_unix</disable-formats>
+
+
+    <del-formats files="../../examples/*.bkl">
+        autoconf,msvc6prj,msevc4prj,cbuilderx,cbx_unix
+    </del-formats>
+
+    <!--
+    Do not generate dsw/dsp files for the following bkls, since they will overwrite existed ones.
+    -->
+    <del-formats files="../../examples/*/*.bkl">
+        msvc6prj
+    </del-formats>
+    <del-formats files="../../src/BlackBox/*.bkl">
+        msvc6prj
+    </del-formats>
+    <del-formats files="../../src/createbundle/*.bkl">
+        msvc6prj
+    </del-formats>
+    <del-formats files="../../src/createinfo/*.bkl">
+        msvc6prj
+    </del-formats>
+    <del-formats files="../../src/xmake/*.bkl">
+        msvc6prj
+    </del-formats>
+
+
+    <add-flags>-Iformats</add-flags>
+
+
+    <add-flags files="VCF.bkl" formats="autoconf">
+        -o../../Makefile.in
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="borland">
+        -o../bakefiles.gen/makefile.bcc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="dmars_smake">
+        -o../bakefiles.gen/makefile.dms
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="dmars">
+        -o../bakefiles.gen/makefile.dmc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="mingw">
+        -o../bakefiles.gen/makefile.gcc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="msvc">
+        -o../bakefiles.gen/makefile.vc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="msvc6prj">
+        -o../bakefiles.gen/VCF.dsw
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="msevc4prj">
+        -o../bakefiles.gen/VCF.vcw
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="watcom">
+        -o../bakefiles.gen/makefile.wat
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="cbuilderx">
+        -o../../VCF.cbx
+    </add-flags>    
+    <add-flags files="VCF.bkl" formats="gnu">
+        -o../bakefiles.gen/GNUmakefile
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="xcode2">
+        -o../bakefiles.gen/VCF.xcode
+    </add-flags>    
+
+
+    <add-flags formats="autoconf">
+        -DAUTOCONF_MACROS_FILE=../../autoconf_inc.m4
+    </add-flags>
+
+
+    <add-flags formats="borland,dmars_smake,dmars,mingw,msvc,watcom,gnu">
+        -DWRITE_OPTIONS_FILE=0
+    </add-flags>
+    <del-flags files="VCF.bkl">
+        -DWRITE_OPTIONS_FILE=0
+    </del-flags>
+
+
+    <add-flags files="*">-DVCFDIR=../..</add-flags>
+    <add-flags files="../../*/*">-DVCFDIR=..</add-flags>
+    <add-flags files="../../*/*/*">-DVCFDIR=../..</add-flags>
+
+
+    <add-flags files="VCF.bkl" formats="borland">
+        -DOPTIONS_FILE=config.bcc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="dmars_smake">
+        -DOPTIONS_FILE=config.dms
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="dmars">
+        -DOPTIONS_FILE=config.dmc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="mingw">
+        -DOPTIONS_FILE=config.gcc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="msvc">
+        -DOPTIONS_FILE=config.vc
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="watcom">
+        -DOPTIONS_FILE=config.wat
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="gnu">
+        -DOPTIONS_FILE=config.gnu
+    </add-flags>
+
+
+    <add-flags files="../../*/*" formats="borland">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.bcc
+    </add-flags>
+    <add-flags files="../../*/*" formats="dmars_smake">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.dms
+    </add-flags>
+    <add-flags files="../../*/*" formats="dmars">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.dmc
+    </add-flags>
+    <add-flags files="../../*/*" formats="mingw">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.gcc
+    </add-flags>
+    <add-flags files="../../*/*" formats="msvc">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.vc
+    </add-flags>
+    <add-flags files="../../*/*" formats="watcom">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.wat
+    </add-flags>
+    <add-flags files="../../*/*" formats="gnu">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.gnu
+    </add-flags>
+
+
+    <add-flags files="../../*/*/*" formats="borland">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.bcc
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="dmars_smake">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.dms
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="dmars">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.dmc
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="mingw">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.gcc
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="msvc">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.vc
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="watcom">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.wat
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="gnu">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.gnu
+    </add-flags>
+
+
+    <include file="Bakefiles.local.bkgen" ignore_missing="1"/>
+    
+</bakefile-gen>

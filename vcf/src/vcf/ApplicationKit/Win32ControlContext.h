@@ -25,16 +25,16 @@ class Control;
 
 /**
 * implementation of the peer for Win32 of the GraphicsContext
-* \par
+* 
 * To paint inside a mouse move event it is necessary to use the HDC (device 
 * context handle) given by ::getDC( hwnd ) where hwnd is the HWND of the control.
-* \par
+* 
 * To paint inside a WM_PAINT message it is necessary to use the HDC 
 * given by the system with the message itself.
-* \par
+* 
 * We CANNOT count on the HDC that we get from WM_PAINT being the same 
 * as the HDC we get from GetDC.
-* \par
+* 
 * All of this is done automatically by checkHandle()/releaseHandle() members 
 * of this class, that by doing:
 * \code
@@ -107,6 +107,13 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
 *Revision 1.3  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

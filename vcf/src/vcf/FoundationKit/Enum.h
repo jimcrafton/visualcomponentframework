@@ -22,11 +22,12 @@ namespace VCF
 {
 
 /**
-*the Enum class is used to wrap C++ enum types,
-*allowing the user to iterate forward and backward
-*through the enum type. This works best with enums
-*that have members whose value changes in intervals
-*of 1.
+\class Enum Enum.h "vcf/FoundationKit/Enum.h"
+The Enum class is used to wrap C++ enum types,
+allowing the user to iterate forward and backward
+through the enum type. This works best with enums
+that have members whose value changes in intervals
+of 1.
 */
 class FOUNDATIONKIT_API Enum : public Object{
 public:
@@ -83,7 +84,9 @@ public:
 
 
 
-
+/**
+\class EnumValue Enum.h "vcf/FoundationKit/Enum.h"
+*/
 class FOUNDATIONKIT_API EnumValue {
 public:
 	Enum* getEnum() const {
@@ -138,6 +141,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2004/12/01 04:31:40  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

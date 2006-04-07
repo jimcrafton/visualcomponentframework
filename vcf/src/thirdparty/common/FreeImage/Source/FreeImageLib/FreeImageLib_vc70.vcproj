@@ -154,9 +154,6 @@
 					RelativePath="..\FreeImage\PluginIFF.cpp">
 				</File>
 				<File
-					RelativePath="..\FreeImage\PluginJPEG.cpp">
-				</File>
-				<File
 					RelativePath="..\FreeImage\PluginKOALA.cpp">
 				</File>
 				<File
@@ -167,9 +164,6 @@
 				</File>
 				<File
 					RelativePath="..\FreeImage\PluginPCX.cpp">
-				</File>
-				<File
-					RelativePath="..\FreeImage\PluginPNG.cpp">
 				</File>
 				<File
 					RelativePath="..\FreeImage\PluginPNM.cpp">

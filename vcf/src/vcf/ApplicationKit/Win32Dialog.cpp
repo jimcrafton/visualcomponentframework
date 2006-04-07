@@ -99,7 +99,7 @@ void Win32Dialog::create( Control* owningControl )
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
 
-		setFont( owningControl->getFont() );
+		registerForFontChanges();
 
 		
 /*
@@ -413,10 +413,39 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 	return result;
 }
 
+DWORD Win32Dialog::generateStyleForSetParent(VCF::Control* parent)
+{
+	DWORD result = ::GetWindowLong( hwnd_, GWL_STYLE );
 
+	if ( NULL == parent ) {
+		if ( !peerControl_->isDesigning() ) {
+			result &= ~WS_CHILD;
+			result |= WS_POPUP;
+		}
+	}
+	else {
+		Frame* frame = (Frame*)peerControl_;
+		if ( frame->allowFrameAsChildControl() ) {
+			result &= ~WS_POPUP;
+			result |= WS_CHILD;
+			result |= DS_MODALFRAME | DS_3DLOOK;
+		}		
+	}
+
+	return result;
+}
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.2  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.6.2.1  2005/09/18 22:54:47  ddiego
+*fixed some minor bugs in vffinput stream and parser class.
+*
 *Revision 1.6  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

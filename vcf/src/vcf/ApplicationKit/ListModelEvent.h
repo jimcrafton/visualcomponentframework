@@ -27,22 +27,27 @@ class ListItem;
 #define LIST_MODEL_ITEM_DELETED			CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 4
 
 
-class ListModelEvent : public Event
+/**
+\class ListModelEvent ListModelEvent.h "vcf/ApplicationKit/ListModelEvent.h"
+*/
+class APPLICATIONKIT_API ListModelEvent : public Event
 {
 public:
-	ListModelEvent( Object* source );
+	ListModelEvent( Object* source ):Event(source),listItem_(NULL){}
 
-	ListModelEvent( Object* source, const unsigned long& eventType );
+	ListModelEvent( Object* source, const unsigned long& eventType ):Event(source,eventType),
+		listItem_(NULL){}
 
-	ListModelEvent( Object* source, ListItem* item );
+	ListModelEvent( Object* source, ListItem* item ):Event(source),listItem_(item){}
 
-	ListModelEvent( Object* source, const unsigned long& eventType, ListItem* item );
+	ListModelEvent( Object* source, const unsigned long& eventType, ListItem* item ):Event(source,eventType),
+		listItem_(item){}
 
-	ListModelEvent( const ListModelEvent& rhs ):Event(rhs) {
+	ListModelEvent( const ListModelEvent& rhs ):Event(rhs),listItem_(NULL) {
 		*this = rhs;
 	}
 
-	virtual ~ListModelEvent();
+	virtual ~ListModelEvent(){}
 
 
 	ListModelEvent& operator=( const ListModelEvent& rhs ) {
@@ -51,9 +56,13 @@ public:
 		return *this;
 	}
 
-	ListItem* getListItem();
+	ListItem* getListItem(){
+		return this->listItem_;
+	}
 
-	void setListItem( ListItem* item );
+	void setListItem( ListItem* item ){
+		this->listItem_ = item;
+	}
 
 	virtual Object* clone( bool deep=false ) {
 		return new ListModelEvent(*this);
@@ -94,6 +103,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.2  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.2.6.1  2005/10/03 19:16:02  scottpearson
+*Minor export bug overcome.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

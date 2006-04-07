@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="vcfAllProjects workspace">
+		<Project filename="FoundationKit\FoundationKitDLL.cbp" active="1" />
+		<Project filename="GraphicsKit\GraphicsKitDLL.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+			<Depends filename="GraphicsKit\libAGG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+		</Project>
+		<Project filename="ApplicationKit\ApplicationKitDLL.cbp">
+			<Depends filename="GraphicsKit\GraphicsKitDLL.cbp" />
+		</Project>
+		<Project filename="OpenGLKit\OpenGLKitDLL.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="NetworkKit\NetworkKitDLL.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="RemoteObjectKit\RemoteObjectKit.cbp">
+			<Depends filename="NetworkKit\NetworkKitDLL.cbp" />
+		</Project>
+		<Project filename="FoundationKit\FoundationKit.cbp" />
+		<Project filename="GraphicsKit\GraphicsKit.cbp">
+			<Depends filename="FoundationKit\FoundationKit.cbp" />
+			<Depends filename="GraphicsKit\libAGG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+		</Project>
+		<Project filename="ApplicationKit\ApplicationKit.cbp">
+			<Depends filename="GraphicsKit\GraphicsKit.cbp" />
+		</Project>
+		<Project filename="OpenGLKit\OpenGLKit.cbp">
+			<Depends filename="ApplicationKit\ApplicationKit.cbp" />
+		</Project>
+		<Project filename="NetworkKit\NetworkKit.cbp">
+			<Depends filename="FoundationKit\FoundationKit.cbp" />
+		</Project>
+		<Project filename="RemoteObjectKit\RemoteObjectKitStatic.cbp">
+			<Depends filename="NetworkKit\NetworkKit.cbp" />
+		</Project>
+		<Project filename="GraphicsKit\libAGG.cbp" />
+		<Project filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		<Project filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		</Project>
+		<Project filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+		</Project>
+		<Project filename="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.cbp" />
+		<Project filename="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.cbp" />
+		<Project filename="..\..\examples\Accelerators\Accelerators_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Actions\Actions_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\AdvancedAlignment\AdvancedAlignment_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\AdvancedUI\AdvancedUI_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Alignment\Alignment_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Anchors\Anchors_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ApplicationIcons\ApplicationIcons_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\AppResources\AppResources_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Cards\Cards_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Colors\Colors_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Combos\Combos_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\CommonDirectories\CommonDirectories_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Conditions\Conditions_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Controls\Controls.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\CopyAndPaste\CopyAndPaste_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\DatesAndTime\DatesAndTime_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\DateTimeUI\DateTimeUI_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Dialogs\Dialogs_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Dictionaries\Dictionaries_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Directories\Directories_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\DocViewAdvanced\DocViewAdvanced_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\DocViewBasics\DocViewBasics_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\DragAndDrop\DragAndDrop_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\EventBasics\EventBasics_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\FilesAndDirectories\FilesAndDirectories_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\FrameStyles\FrameStyles_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\GraphicsBasics\GraphicsBasics_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\HeavyAndLight\HeavyAndLight_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\HelloWorld\HelloWorld_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\HelloWorld2\HelloWorld2_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\HelloWorld3\HelloWorld3_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Help\Help_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ImageBasics\ImageBasics_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ImageViewer\ImageViewer_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Labels\Labels_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ListBox\ListBox_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\LocaleUI\LocaleUI_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Localization\Localization_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\MinMax\MinMax_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\MVCBasics\MVCBasics_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\OpenGLShapes\OpenGLShapes_cb.cbp">
+			<Depends filename="OpenGLKit\OpenGLKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ParticleEditor\ParticleEditor_cb.cbp">
+			<Depends filename="OpenGLKit\OpenGLKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Printing\Printing_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Processes\Processes_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ProgressBars\ProgressBars_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Reflection\Reflection_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Resources\Resources_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\RunLoops\RunLoops_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Scrolling\Scrolling_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Scrolling2\Scrolling2_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\SharedLibraries\SharedLibraries_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\SketchIt\SketchIt_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Sliders\Sliders_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Splitters\Splitters_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Strings\Strings_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\StrokesAndFills\StrokesAndFills_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\SysTray\SysTray_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Tables\Tables_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\TeXLabel\TeXLabel_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\TextEdit\TextEdit_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\TextLayout\TextLayout_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Themes\Themes_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ThreadBasics\ThreadBasics_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\ThreadsInGUI\ThreadsInGUI_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Toolbars\Toolbars_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Tooltips\Tooltips_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Transformations\Transformations_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\TreeListControls\TreeListControls_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\Variants\Variants_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\VisualFormFiles\VisualFormFiles_cb.cbp">
+			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_cb.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
+		<Project filename="..\..\src\createbundle\CreateBundle_cb.cbp" />
+		<Project filename="..\..\src\createinfo\createinfo_cb.cbp" />
+		<Project filename="..\..\src\xmake\libXmake_cb.cbp" />
+		<Project filename="..\..\src\xmake\xmake_cb.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

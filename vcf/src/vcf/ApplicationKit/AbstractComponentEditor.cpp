@@ -9,16 +9,16 @@ where you installed the VCF.
 
 //AbstractComponentEditor.h
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "vcf/ApplicationKit/VFFOutputStream.h"
+#include "vcf/ApplicationKit/AbstractComponentEditor.h"
 
 using namespace VCF;
 
 
-AbstractComponentEditor::AbstractComponentEditor()
+AbstractComponentEditor::AbstractComponentEditor():
+	defaultCommandIndex_(-1),
+	component_(NULL)
 {
-	commandCount_ = 0;
-	defaultCommandIndex_ = 0;
-	component_ = NULL;
+	
 }
 
 AbstractComponentEditor::~AbstractComponentEditor()
@@ -34,7 +34,7 @@ void AbstractComponentEditor::initialize()
 }
 
 
-Command* AbstractComponentEditor::getCommand( const ulong32& index )
+Command* AbstractComponentEditor::createCommand( const ulong32& index )
 {
 	return NULL;
 }
@@ -44,22 +44,43 @@ void AbstractComponentEditor::setComponent( Component* component )
 	component_ = component;
 }
 
-String AbstractComponentEditor::getComponentVFFFragment()
+void AbstractComponentEditor::copy()
 {
-	String result;
+	
+}
 
-	if ( NULL != component_ ) {
-		TextOutputStream tos;
-		VFFOutputStream vos(&tos);
+ulong32 AbstractComponentEditor::getCommandCount()
+{
+	return attributes_.size();
+}
 
-		vos.writeComponent( component_ );
-		result = tos.getTextBuffer();
-	}
-	else {
-		//throw exception here
-	}
+void AbstractComponentEditor::setCommandCount( ulong32 val )
+{
+	attributes_.clear();
+	attributes_.resize( val, ComponentEditor::caUsesModalDialogForEditing );
 
-	return result;
+	parentIndices_.clear();
+	parentIndices_.resize( val, -1 );	
+}
+
+int AbstractComponentEditor::getCommandParentIndex( const ulong32& index )
+{
+	return parentIndices_[index];
+}
+
+void AbstractComponentEditor::setParentIndex( const ulong32& index, const int& parentIndex )
+{
+	parentIndices_[index] = parentIndex;
+}
+
+int AbstractComponentEditor::getAttributes( const ulong32& index )
+{
+	return attributes_[index];
+}
+
+void AbstractComponentEditor::setAttributes( const ulong32& index, const int& attribute )
+{
+	attributes_[index] = attribute;
 }
 
 
@@ -107,10 +128,21 @@ void AbstractControlEditor::mouseUp( MouseEvent* event )
 
 }
 
+void AbstractControlEditor::mouseDblClick( MouseEvent* event )
+{
+
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

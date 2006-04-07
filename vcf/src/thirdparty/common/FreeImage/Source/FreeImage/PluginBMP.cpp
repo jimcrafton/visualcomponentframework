@@ -30,10 +30,10 @@
 //   Constants + headers
 // ----------------------------------------------------------
 
-const RLE_COMMAND     = 0;
-const RLE_ENDOFLINE   = 0;
-const RLE_ENDOFBITMAP = 1;
-const RLE_DELTA       = 2;
+const int RLE_COMMAND     = 0;
+const int RLE_ENDOFLINE   = 0;
+const int RLE_ENDOFBITMAP = 1;
+const int RLE_DELTA       = 2;
 
 #define BI_RGB        0L
 #define BI_RLE8       1L

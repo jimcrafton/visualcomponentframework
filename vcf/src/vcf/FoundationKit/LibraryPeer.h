@@ -17,9 +17,10 @@ where you installed the VCF.
 namespace VCF {
 
 /**
-*The LibraryPeer represents a generic wrapper
-*around using DLL/SOs on systems. Implemented
-*by a specific LibraryPeer derived OS class.
+\class LibraryPeer LibraryPeer.h "vcf/FoundationKit/LibraryPeer.h"
+The LibraryPeer represents a generic wrapper
+around using DLL/SOs on systems. Implemented
+by a specific LibraryPeer derived OS class.
 */
 class FOUNDATIONKIT_API LibraryPeer {
 public:
@@ -42,6 +43,11 @@ public:
 
 	virtual void unload() = 0;
 
+	/**
+	Returns an OS handle to the loaded library.
+	*/
+	virtual OSHandleID getHandleID() = 0;
+
 };
 
 }; //end of namespace VCF
@@ -50,6 +56,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.2.6.1  2005/09/03 17:13:23  ddiego
+*added a new argument to _vpl_init and _vpl_terminate functions.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

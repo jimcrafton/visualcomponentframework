@@ -204,7 +204,7 @@ VCF::Control* LightweightComponent::getHeavyWeightParent()
 	return result;
 }
 
-void LightweightComponent::repaint( Rect* repaintRect )
+void LightweightComponent::repaint( Rect* repaintRect, const bool& immediately )
 {
 	VCF::Control* tmp = NULL;
 	VCF::Control* parent = getHeavyWeightParent();
@@ -215,7 +215,12 @@ void LightweightComponent::repaint( Rect* repaintRect )
 			tmpRect.inflate( 2, 2 );
 			repaintRect = &tmpRect;
 		}
-		parent->repaint( repaintRect );
+		if ( immediately ) {
+			parent->repaintNow( repaintRect );
+		}
+		else {
+			parent->repaint( repaintRect );
+		}
 	}
 }
 
@@ -341,6 +346,12 @@ void LightweightComponent::translateFromScreenCoords( Point* pt )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/08/05 01:11:38  ddiego
+*splitter fixes finished.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

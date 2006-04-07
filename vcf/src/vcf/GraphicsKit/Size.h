@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+\class Size Size.h "vcf/GraphicsKit/Size.h"
+*/
 class GRAPHICSKIT_API Size : public Object {
 public:
 
@@ -27,23 +30,23 @@ public:
 
 	Size(){
 		this->init();
-	};
+	}
 
-	virtual ~Size(){};
+	virtual ~Size(){}
 
-	void init(){
+	virtual void init(){
 		width_ = 0.0;
 		height_ = 0.0;
-	};
+	}
 
 	void set( const double& width, const double& height ){
 		width_ = width;
 		height_ = height;
-	};
+	}
 
 	virtual String toString(){
 		return Object::toString();
-	};
+	}
 
 	Size& operator= ( const Size& sz ) {
 		width_ = sz.width_;
@@ -58,19 +61,28 @@ public:
 			     (this->height_ == sizeToCompare.height_);
 
 		return result;
-	};
+	}
 
 public:
 	double width_;
     double height_;
 };
 
-};
+}
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.2.6.1  2005/07/30 16:55:10  iamfraggle
+*Made init explicitly virtual
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

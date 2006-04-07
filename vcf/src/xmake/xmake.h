@@ -36,7 +36,9 @@ Altered by Jim Crafton, Feb,8,2002
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
-#   if (_MSC_VER >= 1310)
+#	if (_MSC_VER > 1310)
+#     define _LIB_CPLVERNUM "vc80"
+#   elif (_MSC_VER >= 1300)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)
 #     define _LIB_CPLVERNUM "vc70"
@@ -452,6 +454,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:52  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2006/03/01 04:34:57  ddiego
+*fixed tab display to use themes api.
+*
 *Revision 1.5  2005/07/09 23:15:18  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

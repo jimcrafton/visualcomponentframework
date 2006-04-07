@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="createinfo" template="vcf_exe_console">
+        <exename>createinfo</exename>
+        <dirname>../../bin</dirname>
+        <sources>createinfo.cpp</sources>
+        <vcf-use-FoundationKit/>
+    </exe>
+</makefile>

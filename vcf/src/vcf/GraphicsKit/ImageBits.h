@@ -142,7 +142,7 @@ floating point specialization
 */
 template <>
 struct BGRAPixel<float, true > {
-#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
+#if defined(VCF_VC71) || defined(VCF_VC80) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -195,7 +195,7 @@ floating point specialization
 template <>
 struct RGBAPixel<float, true > {
 
-#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
+#if defined(VCF_VC71) || defined(VCF_VC80) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -243,7 +243,7 @@ floating point specialization
 template <  >
 struct ARGBPixel<float, true > {
 
-#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
+#if defined(VCF_VC71) || defined(VCF_VC80) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -294,7 +294,7 @@ floating point specialization
 template <  >
 struct ABGRPixel<float,true> {
 
-#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
+#if defined(VCF_VC71) || defined(VCF_VC80) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -344,7 +344,7 @@ floating point specialization
 template < >
 struct GrayscalePixel<float,true> {
 
-#if defined(VCF_VC71) || defined(VCF_BCC) || defined(VCF_CW)
+#if defined(VCF_VC71) || defined(VCF_VC80) || defined(VCF_BCC) || defined(VCF_CW)
 	typedef PixelTraits<float, true> Traits;
 	typedef PixelAllocater<Traits> Allocater;
 #else
@@ -414,6 +414,11 @@ namespace VCF {
 
 #define IMAGEBITS_CLASSID		"ED88C098-26AB-11d4-B539-00C04F0196DA"
 
+/**
+\class ImageBits ImageBits.h "vcf/GraphicsKit/ImageBits.h"
+@deprecated - Don't use this class anymore - it will be removed 
+after the 0-7-0 release.
+*/
 class GRAPHICSKIT_API ImageBits : public Object {
 //	typedef SysPixelType::Traits Traits;
 public :
@@ -469,6 +474,18 @@ public :
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.4.2.2  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.4.2.1  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
 *Revision 1.4  2005/07/09 23:06:00  ddiego
 *added missing gtk files
 *

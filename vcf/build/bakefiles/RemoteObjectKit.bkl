@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="RemoteObjectKitFiles.bkl"/>
+
+    <template id="RemoteObjectKit_base">
+        <set var="LIBRARY_NAME">$(REMOTEOBJECTKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)RemoteObjectKit$(DIRSEP)RemoteObjectKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)RemoteObjectKit$(DIRSEP)RemoteObjectKit.cpp</set>
+
+        <headers>$(REMOTEOBJECTKIT_HDR)</headers>
+        <sources>$(REMOTEOBJECTKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+        <vcf-use-NetworkKit/>
+    </template>
+
+    <lib id="RemoteObjectKit_lib" template="RemoteObjectKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_REMOTEOBJECTKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+        <depends>NetworkKit_lib</depends>
+    </lib>
+
+    <dll id="RemoteObjectKit_dll" template="RemoteObjectKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_REMOTEOBJECTKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>REMOTEKIT_DLL</define>
+        <define>REMOTEKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+        <depends>NetworkKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_REMOTEOBJECTKIT=='1' and OPTION_ALLIN1=='0'">
+        RemoteObjectKit=RemoteObjectKit_lib+RemoteObjectKit_dll
+    </set>
+</makefile>

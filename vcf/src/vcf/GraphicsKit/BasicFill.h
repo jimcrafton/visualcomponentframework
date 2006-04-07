@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF{
 
 /**
+\class BasicFill BasicFill.h "vcf/GraphicsKit/BasicFill.h"
 This class is a basic implementation of the Fill interface. It is suitable for 
 rendering a solid color fill with optional alpha and anti-aliasing support.
 If anti-aliasing is turned on then an attempt will be made to render the
@@ -97,6 +98,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.3  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

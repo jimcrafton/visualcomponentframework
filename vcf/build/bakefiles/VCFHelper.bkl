@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="PREFIX_VAR">
+        <if cond="FORMAT=='watcom'">%</if>
+        <if cond="FORMAT!='watcom'"></if>
+    </set>
+    
+    <!-- This is a workaround of the path vars usage in msvc and msvc6prj  -->
+    <set var="Q">
+        <if cond="FORMAT=='msvc6prj'"></if>
+        <if cond="FORMAT!='msvc6prj'">"</if>
+    </set>
+
+    <set var="VCF_DIR">
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(Q)
+    </set>
+
+    <set var="VCF_BIN">
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)bin$(Q)
+    </set>
+
+    <set var="VCF_INCLUDE">
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)src$(Q)
+    </set>
+
+    <set var="VCF_LIB">
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)lib$(Q)
+    </set>
+
+    <set var="VCF_LIB_BCC">
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)build$(DIRSEP)bcc$(DIRSEP)missing_libs$(Q)
+    </set>
+
+    <set var="VCF_INTERNAL">0</set>
+
+    <include file="Templates.bkl"/>
+
+    
+</makefile>

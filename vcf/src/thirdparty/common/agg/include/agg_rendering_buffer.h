@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -29,6 +29,16 @@ namespace agg
     template<class T> class row_ptr_cache
     {
     public:
+        //--------------------------------------------------------------------
+        struct row_data
+        {
+            int x1, x2;
+            const int8u* ptr;
+            row_data() {}
+            row_data(int x1_, int x2_, const int8u* ptr_) : 
+                x1(x1_), x2(x2_), ptr(ptr_) {}
+        };
+
         //-------------------------------------------------------------------
         ~row_ptr_cache()
         {
@@ -75,7 +85,7 @@ namespace agg
 
             if(stride < 0)
             {
-                row_ptr = m_buf - int(height - 1) * stride;
+                row_ptr = m_buf - (height - 1) * stride;
             }
 
             T** rows = m_rows;
@@ -88,39 +98,62 @@ namespace agg
         }
 
         //--------------------------------------------------------------------
+              T* buf()          { return m_buf;    }
         const T* buf()    const { return m_buf;    }
         unsigned width()  const { return m_width;  }
         unsigned height() const { return m_height; }
         int      stride() const { return m_stride; }
         unsigned stride_abs() const 
         {
-            return (m_stride < 0) ? 
-                unsigned(-m_stride) : 
-                unsigned(m_stride); 
+            return (m_stride < 0) ? unsigned(-m_stride) : unsigned(m_stride); 
         }
 
         //--------------------------------------------------------------------
-        T* row(unsigned y) { return m_rows[y]; }
-        const T* row(unsigned y) const { return m_rows[y]; }
+              T* row_ptr(int, int y, unsigned) { return m_rows[y]; }
+              T* row_ptr(int y)                { return m_rows[y]; }
+        const T* row_ptr(int y) const          { return m_rows[y]; }
+        row_data row    (int y) const { return row_data(0, m_width-1, m_rows[y]); }
+
+        //--------------------------------------------------------------------
         T const* const* rows() const { return m_rows; }
 
         //--------------------------------------------------------------------
-        void copy_from(const row_ptr_cache<T>& mtx)
+        template<class RenBuf>
+        void copy_from(const RenBuf& src)
         {
             unsigned h = height();
-            if(mtx.height() < h) h = mtx.height();
+            if(src.height() < h) h = src.height();
         
             unsigned l = stride_abs();
-            if(mtx.stride_abs() < l) l = mtx.stride_abs();
+            if(src.stride_abs() < l) l = src.stride_abs();
         
             l *= sizeof(T);
 
             unsigned y;
+            unsigned w = width();
             for (y = 0; y < h; y++)
             {
-                memcpy(row(y), mtx.row(y), l);
+                memcpy(row_ptr(0, y, w), src.row_ptr(y), l);
             }
         }
+
+        //--------------------------------------------------------------------
+        void clear(T value)
+        {
+            unsigned y;
+            unsigned w = width();
+            unsigned stride = stride_abs();
+            for(y = 0; y < height(); y++)
+            {
+                T* p = row_ptr(0, y, w);
+                unsigned x;
+                for(x = 0; x < stride; x++)
+                {
+                    *p++ = value;
+                }
+            }
+        }
+
 
     private:
         //--------------------------------------------------------------------

@@ -45,8 +45,11 @@ bool ControlsApplication::initRunningApplication(){
 /**
 *CVS Log info
 *$Log$
-*Revision 1.3  2005/07/09 23:14:34  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.4  2006/04/07 02:34:19  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/07/23 21:45:34  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.2.2.2  2005/06/27 23:58:03  marcelloptr
 *added images to a PushButton

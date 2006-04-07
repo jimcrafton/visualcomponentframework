@@ -18,11 +18,14 @@ class OSXLocalePeer : public LocalePeer {
 public:
 	OSXLocalePeer();
 
+	virtual ~OSXLocalePeer();
 
 	virtual void setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant );
 
 	virtual ulong32 getLanguageCode();
 	virtual ulong32 getCountryCode();
+
+	virtual String getLanguage();
 
 	virtual int collate( const UnicodeString& s1, const UnicodeString& s2 );
 	virtual int collateCaseInsensitive( const UnicodeString& s1, const UnicodeString& s2 );
@@ -71,7 +74,9 @@ protected:
     static std::map<String,AppleLocalePair> localeMaping;
 	CFLocaleRef localeRef_;	
 	LocaleRef collateLocaleRef_;
-	CFNumberFormatterRef numberFormatterRef_;
+	CFNumberFormatterRef integerNumFormatterRef_;
+	CFNumberFormatterRef realNumFormatterRef_;
+	CFNumberFormatterRef currencyNumFormatterRef_;
 	UnicodeString crtLocaleStr_;
 	
 
@@ -86,6 +91,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/23 05:23:14  ddiego
+*added missing stub for OSX to locale peer.
+*
+*Revision 1.4.2.1  2005/11/13 16:02:46  ddiego
+*more sox updates.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

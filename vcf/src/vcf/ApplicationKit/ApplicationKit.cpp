@@ -18,6 +18,12 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 #include "vcf/ApplicationKit/ColumnLayoutContainer.h"
 
+#include "vcf/ApplicationKit/AbstractPropertyEditor.h"
+#include "vcf/ApplicationKit/PropertyEditorManager.h"
+
+#include "vcf/ApplicationKit/ComponentEditorManager.h"
+
+
 using namespace VCF;
 
 static bool ApplicationKitIsInitialized = false;
@@ -68,6 +74,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( BoolPropertyEditor );
 		REGISTER_CLASSINFO_EXTERNAL( DoublePropertyEditor );
 		REGISTER_CLASSINFO_EXTERNAL( IntegerPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( EnumSetPropertyEditor );
+		REGISTER_CLASSINFO_EXTERNAL( CursorPropertyEditor );
 
 
 		REGISTER_CLASSINFO_EXTERNAL( Item );
@@ -135,7 +143,6 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( ComboBoxControl );
 		REGISTER_CLASSINFO_EXTERNAL( ImageControl );
 //		REGISTER_CLASSINFO_EXTERNAL( ImageFilenameString );
-		REGISTER_CLASSINFO_EXTERNAL( HTMLBrowserControl );
 		REGISTER_CLASSINFO_EXTERNAL( TimerComponent );
 		REGISTER_CLASSINFO_EXTERNAL( ScrollbarManager );
 		REGISTER_CLASSINFO_EXTERNAL( SystemTray );
@@ -206,6 +213,21 @@ void ApplicationKit::terminate()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.4.2.3  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.4.2.2  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.4.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.4  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

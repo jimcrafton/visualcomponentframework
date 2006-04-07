@@ -17,12 +17,8 @@ where you installed the VCF.
 // Win32Context.h: interface for the Win32Context class.
 
 
-
 #include <deque>
 
-#ifdef WINTHEMES
-#include "Win32ThemeDLLWrapper.h"
-#endif
 
 namespace VCF
 {
@@ -353,6 +349,10 @@ public:
 	*/
 	virtual void drawThemeTabPage( Rect* rect, DrawUIState& state );
 
+	virtual void drawThemeTabContent( Rect* rect, DrawUIState& state );
+
+	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
+
 	/**
 	* Draws a tick mark, like that used for a slider control, that is compliant
 	* with the native windowing systems default look and feel
@@ -421,6 +421,9 @@ public:
 
 protected:
 
+	void drawImageAGG(  const double& x, const double& y, Rect* imageBounds, Image* image );
+
+	void drawGrayScaleImage( const double& x, const double& y, Rect* imageBounds, Image* image );
 	/**
 	*
 	*
@@ -439,26 +442,10 @@ protected:
 	static void drawTransparentBitmap( HDC hdc, HBITMAP hBitmap, long xStart,
 	                                   long yStart, COLORREF cTransparentColor );
 
-#ifdef WINTHEMES
-	/**
-	* AutoPointer to a wrapper for the UxTheme.dll
-	*/
-	static std::auto_ptr<Win32ThemeDLLWrapper> pThemeDLL_;
-#endif
+	
 
 
 private:
-#ifdef WINTHEMES
-	/**
-	* Draw a themed button using the UxTheme.dll.
-	* Remarks: In case of an error parts of the button may have been
-	*          already drawn.
-	*          This will only happen if the DLL is present but not
-	*          fully implemented.
-	*@return bool, false if themed drawing was not possible.
-	*/
-	bool drawThemeButtonRectDLL( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
-#endif
 
 protected:
 	HRGN clipRGN_;
@@ -492,6 +479,24 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/01 04:34:57  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.5.2.4  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.3  2006/02/19 22:59:44  ddiego
+*more vc80 project updates, plus some new theme aware code for xp. this is still in development.
+*
+*Revision 1.5.2.2  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.5.2.1  2005/10/11 00:54:52  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
 *Revision 1.5  2005/07/09 23:06:01  ddiego
 *added missing gtk files
 *

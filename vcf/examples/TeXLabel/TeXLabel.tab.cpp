@@ -78,7 +78,7 @@
 int yylex();
 void yyerror(const char *);
 
- 
+
 
 
 /* Enabling traces.  */
@@ -296,8 +296,8 @@ static const unsigned char yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals. */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TEXCHAR", "FACE_MODIFIER", "ACCENT", 
-  "'{'", "'}'", "'^'", "'_'", "$accept", "complete_markup", "group", 
+  "$end", "error", "$undefined", "TEXCHAR", "FACE_MODIFIER", "ACCENT",
+  "'{'", "'}'", "'^'", "'_'", "$accept", "complete_markup", "group",
   "string", "tex", "tex_markup", "face_modifier", 0
 };
 #endif
@@ -751,7 +751,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   register int yystate;
   register int yyn;
   int yyresult;
@@ -1233,9 +1233,9 @@ yyerrlab1:
 
   /* Suppress GCC warning that yyerrlab1 is unused when no action
      invokes YYERROR.  */
-#if defined (__GNUC_MINOR__) && 2093 <= (__GNUC__ * 1000 + __GNUC_MINOR__)
+/*#if defined (__GNUC_MINOR__) && 2093 <= (__GNUC__ * 1000 + __GNUC_MINOR__)
   __attribute__ ((__unused__))
-#endif
+#endif*/
 
 
   goto yyerrlab2;
@@ -1330,5 +1330,5 @@ void DisplayTex(VCF::Rect& bounds, VCF::GraphicsContext *ctx, Tex *markup, VCF::
 {
 	markup->paint(ctx, bounds, f);
 }
-	
+
 

@@ -19,7 +19,7 @@ namespace VCF  {
 class Control;
 
 /**
-\p
+\class AcceleratorKey AcceleratorKey.h "vcf/ApplicationKit/AcceleratorKey.h"
 An AcceleratorKey represents a link between a specific
 keyboard keystroke combination and an event handler to
 be invoked when the combination takes place. There
@@ -27,23 +27,23 @@ may be more than one intance of a AcceleratorKey that
 is linked to the same keystroke combination. AcceleratorKey 
 objects may associated with a control, a menu item or 
 a some other generic Object instance. 
-\p
+
 AcceleratorKey objects may also be linked to Action objects
 which allows the action and accelerator to be linked together
 and reused among more than one target, such as a button, and 
 menu item. 
-\p
+
 Certain classes may have multiple accelerators associated with
 them, while others may have only one. A Control may 0 or more
 accelerators associated with it. A MenuItem or Action may have
 only one accelerator associated with it at any given moment.
-\p
+
 The UIToolkit is used to store all the various accelerators,
 as well as implemententing the exact logic for how accelerators
 get called. The toolkit will release any accelerators, so once
 assigned, you no longer have to worry about cleaning up the memory
 for the object. 
-\p
+
 When toolkit receives notification from the underlying window system
 that a keystroke has taken place, it attempts to see if the keystroke
 maps to any registered accelerators, and if it finds one, then the 
@@ -63,14 +63,14 @@ a non NULL menu associated with it (see Accelerator::getAssociatedMenuItem() )
 is then used. 
 \li If no match is found then a similar search is made for any accelerators
 that match the keystroke and have a non NULL object associated with it.
-\p
+
 An example of how you might use an accelerator is this:
 Let's say you have a text editor and you want the "Ctrl" and "V" key 
 combination to call an event handler whenever it is pressed to paste 
 in some text from the clipboard. You can register an AcceleratorKey with 
 the keyboard combination and you event handler, and <i>voila!</i> the VCF
 will take care of the rest.
-\p
+
 In addition to this, menu items also work with accelerators to enable 
 the accelerator information to be displayed in the menu item caption/text.
 This will work for any menu item that has an accelerator set "directly",
@@ -104,11 +104,11 @@ class APPLICATIONKIT_API AcceleratorKey : public VCF::Object {
 public:
 
 	/**
-	\p
+	\class Value AcceleratorKey.h "vcf/ApplicationKit/AcceleratorKey.h"
 	This class is used to hold the values of both the 
 	keyboard modifier(s), such as Ctrl, Shift, or Alt,
 	and the virtual key value, such as vkLetterV.	
-	\p
+	
 	The actual data is stored as 2 unsigned 16 bit values,
 	within one unsigned 32 bit member variable. The 
 	virtual key code is stored in the upper 16 bits,
@@ -340,6 +340,16 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

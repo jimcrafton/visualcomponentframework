@@ -30,6 +30,7 @@ namespace VCF   {
 #ifdef VCF_RTTI
 
 /**
+\class EnumSetProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 This is a special class for handing a enum mask value that is the combination
 of one or more other values.
 */
@@ -39,9 +40,10 @@ public:
 	typedef unsigned long (Object::*GetFunction)(void);
 	typedef void (Object::*SetFunction)(const unsigned long& );
 
-	EnumSetProperty( GetFunction propGetFunction, int count, unsigned long* setArray, String* names ){
+	EnumSetProperty( const String& typeName, GetFunction propGetFunction, int count, unsigned long* setArray, String* names ){
 		init();
 
+		typeName_ = typeName;
 		getFunction_ = propGetFunction;
 		setType( pdEnumMask );
 		isReadOnly_ = true;
@@ -51,10 +53,11 @@ public:
 		}
 	};
 
-	EnumSetProperty( GetFunction propGetFunction, SetFunction propSetFunction,
+	EnumSetProperty( const String& typeName, GetFunction propGetFunction, SetFunction propSetFunction,
 					int count, unsigned long* setArray, String* names ){
 		init();
 
+		typeName_ = typeName;
 		getFunction_ = propGetFunction;
 		setFunction_ = propSetFunction;
 		setType( pdEnumMask );
@@ -68,12 +71,17 @@ public:
 		Property( prop ){
 
 		init();
+		typeName_ = prop.typeName_;
 		getFunction_ = prop.getFunction_;
 		setFunction_ = prop.setFunction_;
 		nameVals_ = prop.nameVals_;
 	};
 
 	virtual ~EnumSetProperty(){};
+
+	virtual String getTypeClassName() {
+		return typeName_;
+	}
 
 
 	void addAsString( const String& val ) {
@@ -108,11 +116,7 @@ public:
 
 	bool hasNames()  {
 		return !nameVals_.empty();
-	}
-
-	virtual String getTypeClassName() {
-		return StringUtils::getClassNameFromTypeInfo( typeid(unsigned long) );
-	}
+	}	
 
 	virtual Property* clone(){
 		return new EnumSetProperty(*this);
@@ -124,9 +128,9 @@ public:
 	};
 
 	virtual VariantData* get( Object* source ){
-		if ( (NULL != getFunction_) && (NULL != source) ){
-			value_.type = getType();
+		if ( (NULL != getFunction_) && (NULL != source) ){			
 			value_ = (source->*getFunction_)();
+			value_.type = getType();
 			return &value_;
 		}
 		else {
@@ -159,7 +163,7 @@ public:
 	virtual void set( Object* source, const String& value ){
 
 		String tmp = value;
-		ulong32 pos = tmp.find( "," );
+		size_t pos = tmp.find( "," );
 
 		while ( pos != VCF::String::npos ) {
 			addAsString( tmp.substr( 0, pos ) );
@@ -193,7 +197,20 @@ public:
 
 		return result;
 	}
+
+	bool getNameValuesAsSet( std::vector<String>& names, std::vector<unsigned long>& values ) {
+		std::map<String,unsigned long>::iterator it = nameVals_.begin();
+		while ( it != nameVals_.end() ) {
+			names.push_back( it->first );			
+			values.push_back( it->second );
+			it ++;
+		}
+
+		return (!names.empty()) && (!values.empty());
+	}
+
 protected:
+	String typeName_;
 	GetFunction getFunction_;
 	SetFunction setFunction_;
 	std::map<String,unsigned long> nameVals_;
@@ -338,6 +355,7 @@ private:
 
 
 /**
+\class TypedEventProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 Concrete template class for supporting event RTTI.
 */
 template <typename SourceType, typename EventType>
@@ -374,6 +392,7 @@ public:
 
 
 /**
+\class TypedProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Typed properties are designed to only work with Object derived classes.
 *Many thanks go to Mario Motta (author VDK, mmotta@guest.net) for inspiring this from his
 *VDKReadWriteValueProp class.
@@ -424,6 +443,11 @@ public:
 				}
 				break;
 
+				case pdUInt: {
+					result = CLASS_UINT;
+				}
+				break;
+
 				case pdLong: {
 					result = CLASS_LONG;
 				}
@@ -431,6 +455,11 @@ public:
 
 				case pdShort: {
 					result = CLASS_SHORT;
+				}
+				break;
+
+				case pdUShort: {
+					result = CLASS_USHORT;
 				}
 				break;
 
@@ -489,9 +518,9 @@ public:
 	};
 
 	virtual VariantData* get( Object* source ){
-		if ( (NULL != getFunction_) && (NULL != source) ){
-			value_.type = getType();
+		if ( (NULL != getFunction_) && (NULL != source) ){			
 			value_ = (source->*getFunction_)();
+			value_.type = getType();
 			return &value_;
 		}
 		else {
@@ -526,6 +555,10 @@ protected:
 	SetFunction setFunction_;
 };
 
+
+/**
+\class TypeDefProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*/
 template <class PROPERTY>
 class TypeDefProperty : public TypedProperty<PROPERTY> {
 public:
@@ -610,8 +643,14 @@ public:
 
 	virtual VariantData* get( Object* source ){
 		if ( (NULL != getFunction_) && (NULL != source) ){
+			PROPERTY* propVal = (source->*getFunction_)();
+			if ( NULL != propVal ) {
+				value_ = dynamic_cast<Object*>( propVal );
+			}
+			else {
+				value_ = NULL;
+			}
 			value_.type = getType();
-			value_ = (Object*)(source->*getFunction_)();
 			return &value_;
 		}
 		else {
@@ -622,12 +661,17 @@ public:
 	void set( Object* source, VariantData* value ){
 		if ( (NULL != setFunction_) && (NULL != source) ){
 			Object* object = *value;
+
+			PROPERTY* propVal = NULL;
+			if ( NULL != object ) {
+				propVal = dynamic_cast<PROPERTY*>(object);
+			}
 			if ( true == isBound() ){
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
 					PropertyChanged.fireEvent( &changeEvent );
-					(source->*setFunction_)( (PROPERTY*)(object) );
+					(source->*setFunction_)( propVal );
 				}
 				catch ( PropertyChangeException ){
 					//do not call the set method
@@ -635,7 +679,7 @@ public:
 				}
 			}
 			else {
-				(source->*setFunction_)( (PROPERTY*)(object) );
+				(source->*setFunction_)( propVal );
 			}
 		}
 	};
@@ -645,6 +689,9 @@ protected:
 	SetFunction setFunction_;
 };
 
+/**
+\class TypedObjectRefProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*/
 template <class PROPERTY>
 class TypedObjectRefProperty : public Property {
 public:
@@ -692,9 +739,9 @@ public:
 
 	virtual VariantData* get( Object* source ){
 		if ( (NULL != getFunction_) && (NULL != source) ){
-			value_.type = getType();
-			//value_ = (Object&)(source->*getFunction_)();
+			
 			value_ = (source->*getFunction_)();
+			value_.type = getType();
 			return &value_;
 		}
 		else {
@@ -728,6 +775,9 @@ protected:
 	SetFunction setFunction_;
 };
 
+/**
+\class TypedEnumProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*/
 template <class ENUM_PROPERTY>
 class TypedEnumProperty : public Property {
 public:
@@ -811,10 +861,10 @@ public:
 	};
 
 	virtual VariantData* get( Object* source ){
-		if ( (NULL != getFunction_) && (NULL != source) ){
-			value_.type = getType();
+		if ( (NULL != getFunction_) && (NULL != source) ){			
 			enum_->set( (source->*getFunction_)() );
 			value_ = enum_;
+			value_.type = getType();
 			return &value_;
 		}
 		else {
@@ -856,6 +906,7 @@ protected:
 };
 
 /**
+\class TypedCollectionProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedCollectionProperty represents a type safe wrapper around properties that
 *are enumerations of items.
 */
@@ -995,6 +1046,7 @@ private:
 };
 
 /**
+\class TypedObjectCollectionProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedCollectionProperty represents a type safe wrapper around properties that
 *are enumerations of Object* derived items.
 */
@@ -1166,6 +1218,7 @@ private:
 
 
 /**
+\class TypedMethod VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Base template class for methods that do NOT return values
 */
 template <typename SOURCE_TYPE>
@@ -1181,7 +1234,7 @@ public:
 	}
 
 
-	TypedMethod( const TypedMethod<SOURCE_TYPE>& method ) {
+	TypedMethod( const TypedMethod<SOURCE_TYPE>& method ) : Method() {
 		*this = method;
 	}
 
@@ -1218,11 +1271,21 @@ protected:
 
 
 /**
+\class TypedMethodReturn VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Base template class for methodsthat DO return values
 */
+
 template <typename SOURCE_TYPE, typename RETURN_TYPE>
 class TypedMethodReturn : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC) 
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
+
 	typedef RETURN_TYPE ReturnType;
 
 	TypedMethodReturn( const String& argTypes="", SOURCE_TYPE* source=NULL ):
@@ -1249,11 +1312,20 @@ protected:
 
 
 /**
+\class TypedMethodArg0 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template class for methods have 0 arguments
 */
 template <class SOURCE_TYPE>
 class TypedMethodArg0 : public TypedMethod<SOURCE_TYPE> {
 public:
+	
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
+
 	typedef void (SOURCE_TYPE::*MemberFunc)();
 
 	TypedMethodArg0( MemberFunc methodPtr=NULL, const String& argTypes="", SOURCE_TYPE* source=NULL ):
@@ -1262,7 +1334,7 @@ public:
 		methodPtr_=methodPtr;
 	}
 
-	TypedMethodArg0( const TypedMethodArg0<SOURCE_TYPE>& method )  {
+	TypedMethodArg0( const TypedMethodArg0<SOURCE_TYPE>& method ) : TypedMethod<SOURCE_TYPE>( method )  {
 		*this = method;
 	}
 
@@ -1300,11 +1372,20 @@ protected:
 };
 
 /**
+\class TypedMethodArg1 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template class for methods have 1 argument
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE>
 class TypedMethodArg1 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
+
 	typedef ARG1_TYPE Argument1;
 
 	typedef void (SOURCE_TYPE::*MemberFunc)(ARG1_TYPE arg1);
@@ -1354,11 +1435,19 @@ protected:
 
 
 /**
+\class TypedMethodArg2 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Accepts methds with 2 arguments - no return value
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE, typename ARG2_TYPE >
 class TypedMethodArg2 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -1372,7 +1461,7 @@ public:
 
 	}
 
-	TypedMethodArg2( const TypedMethodArg2<SOURCE_TYPE,ARG1_TYPE,ARG2_TYPE>& method )  {
+	TypedMethodArg2( const TypedMethodArg2<SOURCE_TYPE,ARG1_TYPE,ARG2_TYPE>& method ) : TypedMethod<SOURCE_TYPE>( method )  {
 		*this = method;
 	}
 
@@ -1411,11 +1500,20 @@ protected:
 
 
 /**
+\class TypedMethodArg3 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Accepts methds with 3 arguments - no return value
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE, typename ARG2_TYPE, typename ARG3_TYPE>
 class TypedMethodArg3 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
+
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
 	typedef ARG3_TYPE Argument3;
@@ -1471,11 +1569,20 @@ protected:
 
 
 /**
+\class TypedMethodArg4 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Accepts methds with 4 arguments - no return value
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE, typename ARG2_TYPE, typename ARG3_TYPE, typename ARG4_TYPE>
 class TypedMethodArg4 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
+
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
 	typedef ARG3_TYPE Argument3;
@@ -1536,12 +1643,20 @@ protected:
 
 
 /**
+\class TypedMethodArg5 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Accepts methds with 5 arguments - no return value
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE, typename ARG2_TYPE,
 			typename ARG3_TYPE, typename ARG4_TYPE, typename ARG5_TYPE>
 class TypedMethodArg5 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -1604,12 +1719,20 @@ protected:
 
 
 /**
+\class TypedMethodArg6 VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Accepts methds with 6 arguments - no return value
 */
 template <typename SOURCE_TYPE, typename ARG1_TYPE, typename ARG2_TYPE,
 			typename ARG3_TYPE, typename ARG4_TYPE, typename ARG5_TYPE, typename ARG6_TYPE>
 class TypedMethodArg6 : public TypedMethod<SOURCE_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -1630,9 +1753,9 @@ public:
 	}
 
 	TypedMethodArg6( const TypedMethodArg6Type& method )  {
-		TypedMethod<SOURCE_TYPE>::operator =( rhs );
+		TypedMethod<SOURCE_TYPE>::operator =( method ); /* was rhs instead of method (why??) */
 
-		methodPtr_ = rhs.methodPtr_;
+		methodPtr_ = method.methodPtr_; /* was rhs instead of method (why??) */
 		*this = method;
 	}
 
@@ -1673,11 +1796,20 @@ protected:
 
 
 /**
+\class TypedMethodArg0Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 0 argument and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE>
 class TypedMethodArg0Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
 
 	typedef RETURN_TYPE (SOURCE_TYPE::*MemberFunc)();
 
@@ -1727,11 +1859,21 @@ protected:
 
 
 /**
+\class TypedMethodArg1Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 1 argument and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE>
 class TypedMethodArg1Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
+
 	typedef ARG1_TYPE Argument1;
 
 	typedef RETURN_TYPE (SOURCE_TYPE::*MemberFunc)(ARG1_TYPE arg1);
@@ -1784,11 +1926,21 @@ protected:
 
 
 /**
+\class TypedMethodArg2Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 2 arguments and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE, typename ARG2_TYPE>
 class TypedMethodArg2Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
+
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
 
@@ -1843,11 +1995,20 @@ protected:
 
 
 /**
+\class TypedMethodArg3Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 3 arguments and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE, typename ARG2_TYPE, typename ARG3_TYPE>
 class TypedMethodArg3Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -1904,12 +2065,21 @@ protected:
 
 
 /**
+\class TypedMethodArg4Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 4 arguments and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE, typename ARG2_TYPE,
 			typename ARG3_TYPE, typename ARG4_TYPE>
 class TypedMethodArg4Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -1969,12 +2139,21 @@ protected:
 
 
 /**
+\class TypedMethodArg5Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 5 arguments and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE, typename ARG2_TYPE,
 			typename ARG3_TYPE, typename ARG4_TYPE, typename ARG5_TYPE>
 class TypedMethodArg5Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -2038,12 +2217,21 @@ protected:
 
 
 /**
+\class TypedMethodArg6Return VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *Method template for methods with 6 arguments and a return value
 */
 template <typename SOURCE_TYPE, typename RETURN_TYPE, typename ARG1_TYPE, typename ARG2_TYPE,
 			typename ARG3_TYPE, typename ARG4_TYPE, typename ARG5_TYPE, typename ARG6_TYPE>
 class TypedMethodArg6Return : public TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE> {
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using  TypedMethod<SOURCE_TYPE>::hasReturnValue_;
+	using  TypedMethod<SOURCE_TYPE>::argCount_;
+	using  TypedMethod<SOURCE_TYPE>::objSource_;
+	using  TypedMethod<SOURCE_TYPE>::source_;
+	using  TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::returnVal_;
+	#endif
 
 	typedef ARG1_TYPE Argument1;
 	typedef ARG2_TYPE Argument2;
@@ -2170,7 +2358,9 @@ public:
 };
 
 
-
+/**
+\class TypedObjectField VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*/
 template <typename FieldType>
 class TypedObjectField : public Field {
 public:
@@ -2235,6 +2425,7 @@ public:
 
 
 /**
+\class TypedInterfaceClass VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedInterfaceClass documentation
 */
 template<class INTERFACE_TYPE>
@@ -2263,6 +2454,7 @@ public:
 
 
 /**
+\class TypedImplementedInterfaceClass VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedImplementedInterfaceClass documentation
 */
 template<class INTERFACE_TYPE, class IMPLEMENTER_TYPE>
@@ -2316,6 +2508,7 @@ public:
 
 
 /**
+\class TypedClass VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedClass represents a specific instance of a Class. The CLASS_TYPE
 is used to specify the Object the Class represents. So TypedClass<Rect> is
 *used to represent the Class for a Rect instance.
@@ -2367,6 +2560,7 @@ public:
 };
 
 /**
+\class TypedAbstractClass VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedAbstractClass is used to represent abstract classes that cannot be instantiated
 *due to virtual pure methods, but must be represented in the class hierarchy because
 *they are derived from by other child classes.
@@ -2426,8 +2620,8 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 {
 	PropertyDescriptorType result = pdUndefined;
 
-	String typeName = typeInfo.name();
-
+	String typeName = StringUtils::toString(typeInfo);
+/*
 #ifdef WIN32 //don't know if we really need this here		
 		//strip out the preceding "class" or "enum" or whatever
 		std::string::size_type idx = typeName.find( " " );
@@ -2435,7 +2629,7 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 			typeName = typeName.substr( idx+1 );
 		}
 #endif
-
+*/
 
 	if ( typeName.find( "basic_string" ) != String::npos ) {
 		result = pdString;
@@ -2455,10 +2649,10 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 			result = pdULong;
 		}
 		else if ( typeName.find( "int" ) != String::npos ) {
-			result = pdULong;
+			result = pdUInt;
 		}
 		else if ( typeName.find( "short" ) != String::npos ) {
-			result = pdShort;
+			result = pdUShort;
 		}
 		else if ( typeName.find( "char" ) != String::npos ) {
 			result = pdChar;
@@ -2735,7 +2929,7 @@ void registerEnumReadOnlyPropertyWithLabels( const String& className, const Stri
 
 
 
-static void registerEnumSetReadOnlyPropertyWithLabels( const String& className, const String& propertyName,
+static void registerEnumSetReadOnlyPropertyWithLabels( const String& typeName, const String& className, const String& propertyName,
 												         EnumSetProperty::GetFunction propertyGetFunction,												         
 												         const unsigned long& enumNameCount, 
 														 unsigned long* enumMaskValues, 
@@ -2748,7 +2942,8 @@ static void registerEnumSetReadOnlyPropertyWithLabels( const String& className, 
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
 			EnumSetProperty* newProperty = 
-							new EnumSetProperty( propertyGetFunction,
+							new EnumSetProperty( typeName, 
+												propertyGetFunction,
 												enumNameCount,
 												enumMaskValues,
 												enumNames );
@@ -2759,7 +2954,7 @@ static void registerEnumSetReadOnlyPropertyWithLabels( const String& className, 
 	}
 };
 
-static void registerEnumSetPropertyWithLabels( const String& className, const String& propertyName,
+static void registerEnumSetPropertyWithLabels( const String& typeName, const String& className, const String& propertyName,
 								         EnumSetProperty::GetFunction propertyGetFunction,
 										 EnumSetProperty::SetFunction propertySetFunction,
 								         const unsigned long& enumNameCount, 
@@ -2773,7 +2968,8 @@ static void registerEnumSetPropertyWithLabels( const String& className, const St
 	if ( NULL != clazz ){
 		if ( false == clazz->hasProperty( propertyName ) ){
 			EnumSetProperty* newProperty = 
-							new EnumSetProperty( propertyGetFunction,
+							new EnumSetProperty( typeName,
+												propertyGetFunction,
 												propertySetFunction,	
 												enumNameCount,
 												enumMaskValues,
@@ -3447,6 +3643,42 @@ void registerVoidMethodArg6( SOURCE_TYPE* fakeParam,
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.11  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
+*Revision 1.4.2.10  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.4.2.9  2006/02/23 01:41:57  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.4.2.8  2006/02/02 03:45:29  dougtinkham
+*added base class constructor calls in 3 copy constructors; makes mingw-gcc happier
+*
+*Revision 1.4.2.7  2006/01/22 17:19:38  ddiego
+*fixed some bugs in type_info handling for gcc.
+*
+*Revision 1.4.2.6  2005/11/10 00:04:23  obirsoy
+*changes required for gcc under Linux.
+*
+*Revision 1.4.2.5  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
+*Revision 1.4.2.4  2005/10/05 03:37:12  ddiego
+*minor fix to typed object property class.
+*
+*Revision 1.4.2.3  2005/10/04 03:09:03  ddiego
+*fixed typed object property getter.
+*
+*Revision 1.4.2.2  2005/09/17 21:37:44  ddiego
+*minor update
+*
+*Revision 1.4.2.1  2005/09/12 03:47:05  ddiego
+*more prop editor updates.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -11,10 +11,10 @@ where you installed the VCF.
 using namespace VCF;
 
 
-FileStreamBase::FileStreamBase():
-	currentSeekPos_(0),
+FileStreamBase::FileStreamBase():	
 	fsPeer_(NULL),
-	access_(fsDontCare)
+	access_(fsDontCare),
+	currentSeekPos_(0)
 {
 
 }
@@ -125,11 +125,13 @@ char* FileInputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-void FileInputStream::read( char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long FileInputStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
-	fsPeer_->read( bytesToRead, sizeOfBytes );
+	unsigned long result = fsPeer_->read( bytesToRead, sizeOfBytes );
 
-	currentSeekPos_ += sizeOfBytes;
+	currentSeekPos_ += result;
+
+	return result;
 }
 
 
@@ -232,11 +234,13 @@ char* FileOutputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-void FileOutputStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
+unsigned long FileOutputStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
 {
-	fsPeer_->write( bytesToWrite, sizeOfBytes );
+	unsigned long result = fsPeer_->write( bytesToWrite, sizeOfBytes );
 
-	currentSeekPos_ += sizeOfBytes;
+	currentSeekPos_ += result;
+
+	return result;
 }
 
 
@@ -249,6 +253,15 @@ ulong32 FileOutputStream::getCurrentSeekPos()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

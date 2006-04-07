@@ -36,6 +36,7 @@ class BackgroundState;
 class TextState;
 
 /**
+\class ContextPeer ContextPeer.h "vcf/GraphicsKit/ContextPeer.h"
 *The ContextPeer serves as a platform neutral interface
 *for a set of standard drawing methods that should provide
 *the following functionality:
@@ -234,6 +235,10 @@ public:
 	*/
 	virtual void drawThemeTabPage( Rect* rect, DrawUIState& state ) = 0;
 
+	virtual void drawThemeTabContent( Rect* rect, DrawUIState& state ) = 0;
+
+	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex ) = 0;
+
 	/**
 	Draws a tick mark, like that used for a slider control, that is compliant
 	with the native windowing systems default look and feel
@@ -299,6 +304,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.3  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.6.2.2  2006/03/01 04:34:57  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.6.2.1  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
 *Revision 1.6  2005/07/09 23:05:58  ddiego
 *added missing gtk files
 *

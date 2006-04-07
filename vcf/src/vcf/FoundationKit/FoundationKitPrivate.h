@@ -40,6 +40,9 @@ where you installed the VCF.
 #	include "vcf/FoundationKit/DotNetMutex.h"
 #elif defined (VCF_POSIX)
 	//pull in the linux headers here
+	#include <sys/stat.h>
+	#include <signal.h>
+	#include <semaphore.h>
 #	include "vcf/FoundationKit/LinuxSystemToolkit.h"
 #	include "vcf/FoundationKit/LinuxPeer.h"
 #	include "vcf/FoundationKit/LinuxFilePeer.h"
@@ -73,6 +76,12 @@ where you installed the VCF.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

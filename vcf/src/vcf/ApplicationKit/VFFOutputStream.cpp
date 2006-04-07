@@ -107,54 +107,99 @@ void VFFOutputStream::writeObject( Object* object, const String& objectPropertyN
 	}
 }
 
+void VFFOutputStream::getComponentHeader( Component* component, String& className, String& classID, String& fallBackClassName )
+{
+	Class* clazz = component->getClass();
+	className = clazz->getClassName();
+	classID = clazz->getID();
+	fallBackClassName = "";
+}
+
+void VFFOutputStream::writeProperty( Property* property )
+{
+	String tabString = getTabString();
+	String s;
+
+
+	VariantData* value = property->get();
+	switch ( value->type ) {
+		case pdObject : {
+			Object* obj = (Object*)(*value);
+			if ( NULL != obj ) {
+				Component* subComponent = dynamic_cast<Component*>(obj);
+				if ( NULL != subComponent ) {
+					//this is a reference to a component -
+					//we don't want to write it out here otherwise
+					//it will be written out twice
+					if ( subComponent->getName().empty() ) {
+						StringUtils::trace( Format("Warning - property '%s' references an un-named component of type '%s'\n")
+							% property->getName() % subComponent->getClassName() );
+					}
+					else {
+						s  = tabString + property->getName() + " = @" + subComponent->getName() + "\n";
+						stream_->write( s );
+					}
+				}
+				else {
+					writeObject( obj, property->getName() );
+				}
+			}
+			else {
+				s = tabString + property->getName() + " = null\n";
+				stream_->write( s );
+			}
+		}
+		break;
+
+		case pdString : {
+			s = tabString + property->getName() + " = '" + value->toString() + "'\n";
+			stream_->write( s );
+		}
+		break;
+
+		case pdEnumMask : {
+			s = tabString + property->getName() + " = [" + property->toString() + "]\n";
+			stream_->write( s );
+		}
+		break;
+
+		default : {
+			s = tabString + property->getName() + " = " + value->toString() + "\n";
+			stream_->write( s );
+		}
+		break;
+	}
+}
+
 void VFFOutputStream::writeComponent( Component* component )
 {
+	if ( !saveUnNamedComponents_ && (component->getName().empty()) ) {
+		return;
+	}
+
 	Class* clazz = component->getClass();
 	String tabString = getTabString();
 	if ( NULL != clazz ) {
-		String className = clazz->getClassName();
-		String s = tabString + "object " + component->getName() + " : " + className + ", \'" + clazz->getID() + "\'\n";
+		String className;// = clazz->getClassName();
+		String classID;
+		String fallBackClassName;
+
+		getComponentHeader( component, className, classID, fallBackClassName );
+
+		String s = tabString + "object " + component->getName() + " : " + className + ", \'" + classID + "\'";
+		if ( !fallBackClassName.empty() ) {
+			s += ", " + fallBackClassName;
+		}
+		s += "\n";
+
 		stream_->write( s );
 		Enumerator<Property*>* props = clazz->getProperties();
 		if ( NULL != props ) {
 			tabLevel_ ++;
-			tabString = getTabString();
 			while ( true == props->hasMoreElements() ) {
 				Property* prop = props->nextElement();
 				if ( NULL != prop ) {
-					VariantData* value = prop->get();
-					if ( pdObject == prop->getType() ) {
-						Object* obj = (Object*)(*value);
-						if ( NULL != obj ) {
-							Component* subComponent = dynamic_cast<Component*>(obj);
-							if ( NULL != subComponent ) {
-								//this is a reference to a component -
-								//we don't want to write it out here other wise
-								//it will be written out twice
-								s  = tabString + prop->getName() + " = @" + subComponent->getName() + "\n";
-								stream_->write( s );
-							}
-							else {
-								writeObject( obj, prop->getName() );
-							}
-						}
-						else {
-							s = tabString + prop->getName() + " = null\n";
-							stream_->write( s );
-						}
-					}
-					else if ( pdString == value->type ) {
-						s = tabString + prop->getName() + " = '" + value->toString() + "'\n";
-						stream_->write( s );
-					}
-					else if ( pdEnumMask == value->type ) {
-						s = tabString + prop->getName() + " = [" + prop->toString() + "]\n";
-						stream_->write( s );
-					}
-					else {
-						s = tabString + prop->getName() + " = " + value->toString() + "\n";
-						stream_->write( s );
-					}
+					writeProperty( prop );
 				}
 			}
 			tabLevel_ --;
@@ -165,6 +210,9 @@ void VFFOutputStream::writeComponent( Component* component )
 			container = control->getContainer();
 		}
 
+		std::vector<Component*> componentsAlreadyWritten;
+		std::vector<Component*>::iterator found;
+
 		if ( NULL != container ) {
 			Enumerator<Control*>* children = container->getChildren();
 			if ( NULL != children ) {
@@ -172,6 +220,7 @@ void VFFOutputStream::writeComponent( Component* component )
 				while ( true == children->hasMoreElements() ) {
 					Control* child = children->nextElement();
 					writeComponent( child );
+					componentsAlreadyWritten.push_back( child );
 				}
 				tabLevel_ --;
 			}
@@ -182,21 +231,151 @@ void VFFOutputStream::writeComponent( Component* component )
 			tabLevel_ ++;
 			while ( true == components->hasMoreElements() ) {
 				Component* childComponent = components->nextElement();
-				writeComponent( childComponent );
+				found = std::find( componentsAlreadyWritten.begin(), componentsAlreadyWritten.end(), childComponent );
+				if ( found == componentsAlreadyWritten.end() ) {
+					writeComponent( childComponent );
+				}
 			}
 			tabLevel_ --;
 		}
 
+
+		//write out the events for the components
+		writeEvents( component );
+
+
 		tabString = getTabString();
 		s = tabString + "end\n";
 		stream_->write( s );
+	}	
+}
+
+/**
+This is used to generate a string that has the 
+event handler source name, if possible, followed by an "@"
+character, followed by the name of the event handler.
+If the name of the source can't be determined, then a 
+empty string is returned.
+*/
+String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty, EventHandler* handler )
+{
+	String result;
+
+	Object* source = handler->getSource();
+	if ( NULL != source ) {
+		//check if it's a component??
+		Component* componentSrc = dynamic_cast<Component*>( source );
+		if ( NULL != componentSrc ) {
+			String srcName = componentSrc->getName();
+			String handlerName = handler->getHandlerName();
+			if ( !srcName.empty() && !handlerName.empty() ) {
+				result = srcName + "@" + handlerName;
+			}
+		}
+	}	
+
+	return result;
+}
+
+void VFFOutputStream::writeEvents( Component* component )
+{
+	Class* clazz = component->getClass();
+	tabLevel_ ++;
+	String tabString = getTabString();
+	if ( NULL != clazz ) {
+		String s;
+
+		Enumerator<EventProperty*>* events = clazz->getEvents();
+		
+
+		bool needsDelegateSection = events->hasMoreElements();
+
+		if ( needsDelegateSection ) {
+			s = tabString + "delegates \n";
+			stream_->write( s );
+		}
+
+		tabLevel_ ++;
+		tabString = getTabString();
+
+		tabLevel_ ++;
+		String tabString2 = getTabString();
+
+		while ( events->hasMoreElements() ) {
+			EventProperty* eventProp = events->nextElement();
+			Delegate* eventDelegate = eventProp->getEventDelegate(component);
+
+			if ( NULL != eventDelegate ) {
+				EventHandler::Vector handlers;
+				String delegateStr;
+
+				if ( eventDelegate->getEventHandlers( handlers ) ) {
+					
+					EventHandler::Vector::iterator it = handlers.begin();
+					
+					while ( it != handlers.end() ) {
+						EventHandler* ev = *it;
+						String evStr = generateEventHandlerString( eventProp, ev );
+
+						if ( !evStr.empty() ) {
+							if ( it > handlers.begin() ) {
+								delegateStr += ", ";
+							}
+							delegateStr += evStr;
+						}
+						
+						it ++;
+					}
+
+					//make sure we don't end up with "[]" an empty set
+					if ( !delegateStr.empty() ) {
+						s = tabString + eventProp->getDelegateName() + " = [\n";
+						s += tabString2 + delegateStr +  "]\n";
+						stream_->write( s );
+					}
+					
+					
+				}
+			}
+		}
+
+		tabLevel_ --;
+
+		tabLevel_ --;
+		tabString = getTabString();
+
+		if ( needsDelegateSection ) {
+			s = tabString + "end\n";
+			stream_->write( s );
+		}
+		
 	}
+
+	tabLevel_ --;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.5  2005/10/09 04:32:44  ddiego
+*added some minor fixes in component persistence for vcf builder.
+*
+*Revision 1.3.2.4  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.3.2.3  2005/08/15 03:10:51  ddiego
+*minor updates to vff in out streaming.
+*
+*Revision 1.3.2.2  2005/08/09 04:30:35  ddiego
+*minor vff output stream change.
+*
+*Revision 1.3.2.1  2005/08/08 03:18:40  ddiego
+*minor updates
+*
 *Revision 1.3  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

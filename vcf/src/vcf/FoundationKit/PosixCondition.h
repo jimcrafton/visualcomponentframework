@@ -41,8 +41,8 @@ public:
 
 protected:
 
-    pthread_cond_t     cond_;
-    pthread_mutex_t*   mutex_;
+    pthread_cond_t   cond_;
+    pthread_mutex_t* mutex_;
 
 };
 
@@ -52,6 +52,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

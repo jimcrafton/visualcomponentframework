@@ -32,6 +32,9 @@ namespace VCF{
 
 #define DEFAULTLISTMODEL_CLASSID			"ED88C0A9-26AB-11d4-B539-00C04F0196DA"
 
+/**
+\class DefaultListModel DefaultListModel.h "vcf/ApplicationKit/DefaultListModel.h"
+*/
 class APPLICATIONKIT_API DefaultListModel : public AbstractModel, public AbstractListModel {
 public:
 
@@ -60,6 +63,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -19,6 +19,8 @@ using namespace VCF;
 
 bool System::unicodeEnabled = false;
 
+static std::map<String,String> cachedResourceDirMap;
+
 
 System* System::create()
 {
@@ -68,7 +70,7 @@ String System::findResourceDirectory()
 {
 	String result;
 	
-	CommandLine cmdLine = FoundationKit::getCommandLine();
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
 
 	return System::findResourceDirectoryForExecutable( cmdLine.getArgument(0) );
 }
@@ -77,7 +79,7 @@ String System::findResourceDirectory( Locale* locale )
 {
 	VCF_ASSERT( NULL != locale );
 	
-	CommandLine cmdLine = FoundationKit::getCommandLine();
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
 
 	return System::findResourceDirectory( cmdLine.getArgument(0), locale );
 }
@@ -88,52 +90,72 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 	VCF_ASSERT( !fileName.empty() );
 
 	String result;	
+	bool foundDir = false;
 
-	FilePath appPath = fileName;
-
-	UnicodeString appDir = appPath.getPathName(true);
-
-	//case A: or case B:
-	String tmp = appDir + "Resources";
-	if ( File::exists( tmp ) ) {
-		result = tmp;
-	}
-	else {		
-		std::vector<String> pathComponents = appPath.getPathComponents();
-		std::vector<String>::reverse_iterator it = pathComponents.rbegin();
-		int depth = 1;
-		while ( it != pathComponents.rend() && (depth < 3) ) {
-			int length = (*it).length();// + FilePath::getDirectorySeparator().length();
-
-			//if depth == 1 then case C:
-			//if depth == 2 then case D:
-			appDir.erase( appDir.length()-length, length );
-
-			tmp = appDir + "Resources";
-			if ( File::exists( tmp ) ) {
-				result = tmp;
-				break;
-			}
-
-			
-			depth ++;
-			it ++;
-		}
-	}
-	
-
-	if ( !result.empty() ) {
-		//found the top level res dir
-		//now attempt to see if we can use a more locale specific dir
-		//if not, fall back on the default Resources dir
+	std::map<String,String>::iterator found = cachedResourceDirMap.find( fileName );
+	if ( found != cachedResourceDirMap.end() ) {
+		result = found->second;
 		String localeName = locale->getName();
-		tmp = result + FilePath::getDirectorySeparator() + localeName;
+		foundDir = result.find( localeName ) != String::npos;
+	}
+
+	if ( !foundDir ) {
+		FilePath appPath = fileName;
+
+		UnicodeString appDir = appPath.getPathName(true);
+
+		//case A: or case B:
+		String tmp = appDir + "Resources";
 		if ( File::exists( tmp ) ) {
 			result = tmp;
 		}
+		else {		
+			std::vector<String> pathComponents = appPath.getPathComponents();
+			std::vector<String>::reverse_iterator it = pathComponents.rbegin();
+			int depth = 1;
+			while ( it != pathComponents.rend() && (depth < 3) ) {
+				int length = (*it).length();// + FilePath::getDirectorySeparator().length();
 
-		//add the dir sep at the end to be proper
-		result += FilePath::getDirectorySeparator();
+				//if depth == 1 then case C:
+				//if depth == 2 then case D:
+				appDir.erase( appDir.length()-length, length );
+
+				tmp = appDir + "Resources";
+				if ( File::exists( tmp ) ) {
+					result = tmp;
+					break;
+				}
+
+
+				depth ++;
+				it ++;
+			}
+		}
+
+
+		if ( !result.empty() ) {
+			//found the top level res dir
+			//now attempt to see if we can use a more locale specific dir
+			//if not, fall back on the default Resources dir		
+			if ( File::exists( result ) ) {
+				String localeName = locale->getName();
+				tmp = result + FilePath::getDirectorySeparator() + localeName;
+				if ( File::exists( tmp ) ) {
+					result = tmp;
+				}
+				//add the dir sep at the end to be proper
+				result += FilePath::getDirectorySeparator();
+			}
+			else {
+				//if we still don't have anything, then
+				//assume the path where the application lives.
+				//this works for app's that aren't using the 
+				//bundle dir layout.
+				result = appPath.getPathName(true);
+			}
+		}
+
+		cachedResourceDirMap[fileName] = result;
 	}
 
 	return result;
@@ -162,140 +184,56 @@ void System::setErrorLog( ErrorLog* errorLog )
 	System::systemInstance->errorLogInstance_ = errorLog;
 }
 
-void System::print( String text, ... )
-{
-	text = StringUtils::convertFormatString( text );
-
-	va_list args;
-	va_start( args, text );
-	int charRequired = 1024;
-	VCFChar* tmpChar = new VCFChar[charRequired];
-	memset( tmpChar, 0, charRequired*sizeof(VCFChar) );
-
-#if defined(VCF_GCC) || defined(VCF_CW)
-	#ifdef VCF_OSX
-
-		CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
-
-		CFStringAppendCharacters( fmt, text.c_str(), text.size() );
-
-		CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
-
-		int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
-
-		CFRange range = {0, length };
-		CFStringGetCharacters( res, range, tmpChar );
-
-		CFShow( CFSTR("WARNING: Using deprecated function!!!\n") );
-		CFShow( res );
-
-		CFRelease( res );
-		CFRelease( fmt );
-
-	#else
-		vswprintf( tmpChar, charRequired, text.c_str(), args );
-	#endif
+void System::print( const String& text )
+{	
+#ifdef VCF_OSX
+	//JC - I got rid of CFShow as it doesn't 
+	//seem to work well in a multi-threaded context, and also seems a 
+	//bit slow
+	printf( text.ansi_c_str() );
+#elif defined(VCF_CW_W32)
+	printf( text.ansi_c_str() );
 #else
-	_vsnwprintf( tmpChar, charRequired, text.c_str(), args );
+	wprintf( text.c_str() );
 #endif
 
-	va_end( args );
-
-	#ifndef VCF_OSX
-		wprintf( L"WARNING: Using deprecated function!!!\n" );
-		wprintf( tmpChar );
-	#endif
-
 	if ( NULL != System::systemInstance ) {
-		if ( (NULL != System::systemInstance->errorLogInstance_) && (charRequired>0) ) {
-			String tmp(tmpChar);
-			System::systemInstance->errorLogInstance_->toLog( tmp );
+		if ( NULL != System::systemInstance->errorLogInstance_ ) {			
+			System::systemInstance->errorLogInstance_->toLog( text );
 		}
 	}
-
-	delete [] tmpChar;
 }
 
-void System::print( const Format& formatter )
+
+void System::println( const String& text )
 {
-	String output = formatter;
+	String output = text;
 
 	if ( output.empty() ) {
 		return;
 	}
 
-#ifdef VCF_OSX
-	CFMutableStringRef tmp = CFStringCreateMutable( NULL, 0 );
+	output += "\n";
 
-	CFStringAppendCharacters( tmp, output.c_str(), output.size() );
-	CFShow( tmp );
-	CFRelease( tmp );
+#ifdef VCF_OSX
+	//JC - I got rid of CFShow as it doesn't 
+	//seem to work well in a multi-threaded context, and also seems a 
+	//bit slow
+	printf( output.ansi_c_str() );
+#elif defined(VCF_CW_W32)
+	printf( output.ansi_c_str() );
 #else
 	wprintf( output.c_str() );
 #endif
 
 	if ( NULL != System::systemInstance ) {
-		if ( NULL != System::systemInstance->errorLogInstance_ ) {			
+		if ( NULL != System::systemInstance->errorLogInstance_ ) { 
 			System::systemInstance->errorLogInstance_->toLog( output );
 		}
 	}
 }
 
-void System::println(String text, ...)
-{
-	text = StringUtils::convertFormatString( text );
-
-	va_list args;
-	va_start( args, text );
-	int charRequired = 1024;
-	VCFChar* tmpChar = new VCFChar[charRequired];
-	memset( tmpChar, 0, charRequired*sizeof(VCFChar) );
-
-#if defined(VCF_GCC) || defined(VCF_CW)
-	#ifdef VCF_OSX
-
-		CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
-
-		CFStringAppendCharacters( fmt, text.c_str(), text.size() );
-
-		CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, args );
-
-		int length = minVal<uint32>( charRequired-1, CFStringGetLength( res ) );
-
-		CFRange range = {0, length };
-		CFStringGetCharacters( res, range, tmpChar );
-
-		CFShow( CFSTR("WARNING: Using deprecated function!!!\n") );
-		CFShow( res );
-		CFShow( CFSTR( "\n" ) );
-
-		CFRelease( res );
-		CFRelease( fmt );
-	#else
-		vswprintf( tmpChar, charRequired, text.c_str(), args );
-	#endif
-#else
-	_vsnwprintf( tmpChar, charRequired, text.c_str(), args );
-#endif
-
-	va_end( args );
-
-	#ifndef VCF_OSX
-		wprintf( L"WARNING: Using deprecated function!!!\n" );
-		wprintf( tmpChar );
-		wprintf( L"\n" );
-	#endif
-
-	if ( NULL != System::systemInstance ) {
-		if ( (NULL != System::systemInstance->errorLogInstance_) && (charRequired>0) ) {
-			String tmp(tmpChar);
-			System::systemInstance->errorLogInstance_->toLog( tmp );
-		}
-	}
-
-	delete [] tmpChar;
-}
-
+/*
 void System::println( const Format& formatter )
 {
 	String output = formatter;
@@ -322,10 +260,11 @@ void System::println( const Format& formatter )
 		}
 	}
 }
+*/
 
 void System::errorPrint( BasicException* exception )
 {
-	System::print( L"Exception occured ! Error string: %s\n", exception->getMessage().c_str() );
+	System::print( Format("Exception occured ! Error string: %s\n") % exception->getMessage() );
 }
 
 bool System::doesFileExist( const String& fileName )
@@ -363,6 +302,16 @@ String System::getCommonDirectory( System::CommonDirectory directory )
 	return System::systemInstance->systemPeer_->getCommonDirectory( directory );
 }
 
+String System::createTempFileName( System::CommonDirectory directory )
+{
+	return System::createTempFileName( System::getCommonDirectory( directory ) );
+}
+
+String System::createTempFileName( const String& directory )
+{
+	return System::systemInstance->systemPeer_->createTempFileName( directory );
+}
+
 void System::setDateToSystemTime( DateTime* date )
 {
 	System::systemInstance->systemPeer_->setDateToSystemTime( date );
@@ -375,7 +324,7 @@ void System::setDateToLocalTime( DateTime* date )
 
 void System::setCurrentThreadLocale( Locale* locale )
 {
-	System::systemInstance->locale_->getPeer()->setLocale( locale->getLanguageCodeString(), locale->getCountryCodeString(), L"" );
+	System::systemInstance->locale_->getPeer()->setLocale( locale->getLanguageCodeString(), locale->getCountryCodeString(), "" );
 
 	System::systemInstance->systemPeer_->setCurrentThreadLocale( locale );
 }
@@ -514,116 +463,147 @@ ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
 		System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
 
 	if ( NULL == result ) {
-		bool found = false;
 			
 		String infoFilename = System::getInfoFileFromFileName( fileName );
 		
-		if ( !infoFilename.empty() ) {
-			String name;
-			String programFileName;
-			String author;
-			String copyright;
-			String company;
-			String description;
-			String programVersion;
-			String fileVersion;				
-			
-			XMLParser xmlParser;
-			FileInputStream fs(infoFilename);
-			xmlParser.parse( &fs );				
-			fs.close();
-			
-			XMLNode* dictNode = NULL;
-			Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
-			while ( nodes->hasMoreElements() ) {
-				XMLNode* node = nodes->nextElement();
-				if ( node->getName() == L"plist" ) {
-					dictNode = node->getNodeByName( L"dict" );
-					break;
-				}
-			}
-			
-			if ( NULL != dictNode ) {
-				nodes = dictNode->getChildNodes();
-				while ( nodes->hasMoreElements() ) {
-					XMLNode* node = nodes->nextElement();
-					XMLNode* val = NULL;
-					
-					if ( nodes->hasMoreElements() ) {
-						val = nodes->nextElement();
-					}
-					
-					if ( (NULL != val) && (node->getName() == "key") ) {
-						String cdata = node->getCDATA();
-						StringUtils::trimWhiteSpaces( cdata );
-
-						if ( cdata == "CFBundleName" ) {
-							name = val->getCDATA();
-							StringUtils::trimWhiteSpaces( name );
-						}
-						else if ( cdata == "CFBundleDisplayName" ) {
-							name = val->getCDATA();
-							StringUtils::trimWhiteSpaces( name );
-						}
-						else if ( cdata == "CFBundleVersion" ) {
-							fileVersion = programVersion = val->getCDATA();
-							StringUtils::trimWhiteSpaces( fileVersion );
-						}
-						else if ( cdata == "CFBundleGetInfoString" ) {
-							copyright = programVersion = val->getCDATA();
-							StringUtils::trimWhiteSpaces( copyright );
-						}
-						else if ( cdata == "NSHumanReadableCopyright" ) {
-							copyright = programVersion = val->getCDATA();	
-							StringUtils::trimWhiteSpaces( copyright );
-						}
-						else if ( cdata == "CFBundleExecutable" ) {
-							programFileName = programVersion = val->getCDATA();
-							StringUtils::trimWhiteSpaces( programFileName );
-						}
-						
-						
-						//VCF cross platform keys
-						else if ( cdata == "ProgramVersion" ) {
-							programVersion = val->getCDATA();
-							StringUtils::trimWhiteSpaces( programVersion );
-						}
-						else if ( cdata == "FileVersion" ) {
-							programVersion = val->getCDATA();
-							StringUtils::trimWhiteSpaces( programVersion );
-						}
-						else if ( cdata == "ProductName" ) {
-							name = val->getCDATA();
-							StringUtils::trimWhiteSpaces( name );
-						}
-						else if ( cdata == "Copyright" ) {
-							copyright = val->getCDATA();
-							StringUtils::trimWhiteSpaces( copyright );
-						}
-						else if ( cdata == "Author" ) {
-							author = val->getCDATA();
-							StringUtils::trimWhiteSpaces( author );
-						}
-						else if ( cdata == "Company" ) {
-							author = val->getCDATA();
-							StringUtils::trimWhiteSpaces( author );
-						}
-						else if ( cdata == "Description" ) {
-							description = val->getCDATA();
-							StringUtils::trimWhiteSpaces( description );
-						}
-						else if ( cdata == "Executable" ) {
-							programFileName = val->getCDATA();
-							StringUtils::trimWhiteSpaces( programFileName );
-						}
-					}
-				}
-				
-				result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
-			}
-		}		
+		result = System::getProgramInfoFromInfoFile( infoFilename );
 	}
 	return result;
+}
+
+ProgramInfo* System::getProgramInfoFromInfoFile( const String& infoFileName, const String& programFileName )
+{
+	ProgramInfo* result = NULL;
+
+	if ( !infoFileName.empty() ) {
+		String name;
+		String programFileName2 = programFileName;
+		String author;
+		String copyright;
+		String company;
+		String description;
+		String programVersion;
+		String fileVersion;		
+		String helpDirectory;
+		String helpName;
+
+		
+		XMLParser xmlParser;
+		FileInputStream fs(infoFileName);
+		xmlParser.parse( &fs );				
+		fs.close();
+		
+		XMLNode* dictNode = NULL;
+		Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
+		while ( nodes->hasMoreElements() ) {
+			XMLNode* node = nodes->nextElement();
+			if ( node->getName() == L"plist" ) {
+				dictNode = node->getNodeByName( L"dict" );
+				break;
+			}
+		}
+		
+		if ( NULL != dictNode ) {
+			nodes = dictNode->getChildNodes();
+			while ( nodes->hasMoreElements() ) {
+				XMLNode* node = nodes->nextElement();
+				XMLNode* val = NULL;
+				
+				if ( nodes->hasMoreElements() ) {
+					val = nodes->nextElement();
+				}
+				
+				if ( (NULL != val) && (node->getName() == "key") ) {
+					String cdata = node->getCDATA();
+					StringUtils::trimWhiteSpaces( cdata );
+
+					if ( cdata == "CFBundleName" ) {
+						name = val->getCDATA();
+						StringUtils::trimWhiteSpaces( name );
+					}
+					else if ( cdata == "CFBundleDisplayName" ) {
+						name = val->getCDATA();
+						StringUtils::trimWhiteSpaces( name );
+					}
+					else if ( cdata == "CFBundleVersion" ) {
+						fileVersion = programVersion = val->getCDATA();
+						StringUtils::trimWhiteSpaces( fileVersion );
+					}
+					else if ( cdata == "CFBundleGetInfoString" ) {
+						copyright = programVersion = val->getCDATA();
+						StringUtils::trimWhiteSpaces( copyright );
+					}
+					else if ( cdata == "NSHumanReadableCopyright" ) {
+						copyright = programVersion = val->getCDATA();	
+						StringUtils::trimWhiteSpaces( copyright );
+					}
+					else if ( cdata == "CFBundleExecutable" ) {
+						programFileName2 = programVersion = val->getCDATA();
+						StringUtils::trimWhiteSpaces( programFileName2 );
+					}
+					else if ( cdata == "CFBundleHelpBookName" ) {
+						helpName = val->getCDATA();	
+						StringUtils::trimWhiteSpaces( helpName );
+					}
+					else if ( cdata == "CFBundleHelpBookFolder" ) {
+						helpDirectory = val->getCDATA();
+						StringUtils::trimWhiteSpaces( helpDirectory );
+					}
+					
+					//VCF cross platform keys
+					else if ( cdata == "ProgramVersion" ) {
+						programVersion = val->getCDATA();
+						StringUtils::trimWhiteSpaces( programVersion );
+					}
+					else if ( cdata == "FileVersion" ) {
+						programVersion = val->getCDATA();
+						StringUtils::trimWhiteSpaces( programVersion );
+					}
+					else if ( cdata == "ProductName" ) {
+						name = val->getCDATA();
+						StringUtils::trimWhiteSpaces( name );
+					}
+					else if ( cdata == "Copyright" ) {
+						copyright = val->getCDATA();
+						StringUtils::trimWhiteSpaces( copyright );
+					}
+					else if ( cdata == "Author" ) {
+						author = val->getCDATA();
+						StringUtils::trimWhiteSpaces( author );
+					}
+					else if ( cdata == "Company" ) {
+						author = val->getCDATA();
+						StringUtils::trimWhiteSpaces( author );
+					}
+					else if ( cdata == "Description" ) {
+						description = val->getCDATA();
+						StringUtils::trimWhiteSpaces( description );
+					}
+					else if ( cdata == "Executable" ) {
+						programFileName2 = val->getCDATA();
+						StringUtils::trimWhiteSpaces( programFileName2 );
+					}
+					else if ( cdata == "HelpName" ) {
+						helpName = val->getCDATA();	
+						StringUtils::trimWhiteSpaces( helpName );
+					}
+					else if ( cdata == "HelpDirectory" ) {
+						helpDirectory = val->getCDATA();
+						StringUtils::trimWhiteSpaces( helpDirectory );
+					}
+				}
+			}
+			
+			result = new ProgramInfo( name, programFileName2, author, copyright, company, description, programVersion, fileVersion, helpDirectory, helpName );
+		}
+	}
+
+	return result;
+}
+
+ProgramInfo* System::getProgramInfoFromInfoFile( const String& infoFileName )
+{
+	return System::getProgramInfoFromInfoFile( infoFileName, "" );
 }
 
 void System::internal_replaceResourceBundleInstance( ResourceBundle* newInstance )
@@ -771,6 +751,42 @@ String System::getExecutableNameFromBundlePath( const String& fileName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.11  2006/03/23 00:56:09  ddiego
+*added a fix to algo for determing resource directory name.
+*
+*Revision 1.6.2.10  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.6.2.9  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
+*Revision 1.6.2.8  2005/12/04 20:58:32  ddiego
+*more osx impl work. foundationkit is mostly complete now.
+*
+*Revision 1.6.2.7  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.6  2005/11/11 22:07:40  ddiego
+*small osx updates.
+*
+*Revision 1.6.2.5  2005/09/08 03:39:57  ddiego
+*resource dir fix
+*
+*Revision 1.6.2.4  2005/09/07 20:24:49  ddiego
+*added some more help support.
+*
+*Revision 1.6.2.3  2005/09/07 04:19:55  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.6.2.2  2005/07/30 16:54:17  iamfraggle
+*CW workarounds for console output
+*
+*Revision 1.6.2.1  2005/07/24 02:30:27  ddiego
+*fixed bug in retreiving program info.
+*
 *Revision 1.6  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

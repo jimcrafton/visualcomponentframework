@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="ApplicationIcons" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <sources>ApplicationIcons.cpp</sources>
+        <win32-res>ApplicationIcons.rc</win32-res>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

@@ -15,6 +15,9 @@ where you installed the VCF.
 
 
 namespace VCF {
+	/**
+	\class FrameEvent FrameEvent.h "vcf/ApplicationKit/FrameEvent.h"
+	*/
 	class APPLICATIONKIT_API FrameEvent : public Event {
 	public:
 		FrameEvent( Object* source ) : Event(source),okToClose_(true) {};
@@ -83,6 +86,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

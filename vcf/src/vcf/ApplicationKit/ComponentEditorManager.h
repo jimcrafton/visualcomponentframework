@@ -22,6 +22,7 @@ class ComponentEditor;
 #define REGISTER_FOR_ALL_COMPONENTS		"*"
 
 /**
+\class ComponentEditorManager ComponentEditorManager.h "vcf/ApplicationKit/ComponentEditorManager.h"
 *The ComponentEditorManager is used
 *to regulate the different component editors that are available
 */
@@ -38,6 +39,12 @@ public:
 	static ComponentEditor* findComponentEditor( const String& className );
 
 	static void registerComponentEditor( ComponentEditor* componentEditor, const String& className );
+
+	/**
+	Removes a ComponentEditor with a given class/type name from the
+	list of registered component editors.
+	*/
+	static void removeComponentEditor( const String& className );
 
 	/**
 	*initializes the Component editor manager for use - must be called at start up
@@ -62,6 +69,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2005/08/25 02:38:06  ddiego
+*minor update to component editor manager.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

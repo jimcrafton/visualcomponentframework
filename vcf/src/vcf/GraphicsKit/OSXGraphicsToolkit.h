@@ -116,34 +116,34 @@ public:
 	}
 	
 	OSXRect& operator=( const VCF::Rect& rhs ) {
-		rect_.left = rhs.left_;
-		rect_.top = rhs.top_;
-		rect_.right = rhs.right_;
-		rect_.bottom = rhs.bottom_;
+		rect_.left = (int)rhs.left_;
+		rect_.top = (int)rhs.top_;
+		rect_.right = (int)rhs.right_;
+		rect_.bottom = (int)rhs.bottom_;
 		return *this;
 	}
 	
 	OSXRect& operator=( VCF::Rect* rhs ) {
-		rect_.left = rhs->left_;
-		rect_.top = rhs->top_;
-		rect_.right = rhs->right_;
-		rect_.bottom = rhs->bottom_;
+		rect_.left = (int)rhs->left_;
+		rect_.top = (int)rhs->top_;
+		rect_.right = (int)rhs->right_;
+		rect_.bottom = (int)rhs->bottom_;
 		return *this;
 	}
 	
 	OSXRect& operator=( const HIRect& rhs ) {
-		rect_.left = rhs.origin.x;
-		rect_.top = rhs.origin.y;
-		rect_.right = rhs.origin.x + rhs.size.width;
-		rect_.bottom = rhs.origin.y + rhs.size.height;
+		rect_.left = (int)rhs.origin.x;
+		rect_.top = (int)rhs.origin.y;
+		rect_.right = (int)(rhs.origin.x + rhs.size.width);
+		rect_.bottom = (int)(rhs.origin.y + rhs.size.height);
 		return *this;
 	}
 	
 	OSXRect& operator=( HIRect* rhs ) {
-		rect_.left = rhs->origin.x;
-		rect_.top = rhs->origin.y;
-		rect_.right = rhs->origin.x + rhs->size.width;
-		rect_.bottom = rhs->origin.y + rhs->size.height;
+		rect_.left = (int)rhs->origin.x;
+		rect_.top = (int)rhs->origin.y;
+		rect_.right = (int)(rhs->origin.x + rhs->size.width);
+		rect_.bottom = (int)(rhs->origin.y + rhs->size.height);
 		return *this;
 	}
 	
@@ -171,9 +171,9 @@ public:
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize );
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height );
+	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType );
 
-	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect );
+	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType );
 
 	virtual Font* getDefaultSystemFont() {
 		return systemFont_;
@@ -184,6 +184,8 @@ public:
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer();
 
 	virtual double internal_getDPI( GraphicsContext* context );
+	
+	virtual void internal_systemSettingsChanged();
 protected:
 	void initSystemFont();
 	void loadSystemColors();
@@ -198,6 +200,16 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:06:01  ddiego
 *added missing gtk files
 *

@@ -228,6 +228,10 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
 # End Source File
 # Begin Source File
@@ -252,6 +256,14 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\JPEGLoader.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp
 # End Source File
 # Begin Source File
@@ -269,6 +281,18 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Path.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\PixelFormats.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\Pixels.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\PNGLoader.h
 # End Source File
 # Begin Source File
 
@@ -377,6 +401,10 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Win32PrintSession.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Win32PrintSession.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\Win32ThemeDLLWrapper.h
 # End Source File
 # End Group
 # End Target

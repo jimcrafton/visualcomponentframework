@@ -47,6 +47,7 @@ static String ButtonCaptionAlignmentNames [] = { "bcaRight",
 
 
 /**
+\class PushButton PushButton.h "vcf/ApplicationKit/PushButton.h"
 *Class PushButton documentation
 */
 class APPLICATIONKIT_API PushButton : public CustomControl, public Button {
@@ -252,7 +253,7 @@ public:
 	}
 
 	/**
-	set the initial state as pressed for a toggled button.
+	set the state as pressed for a toggled button.
 	This function establish an association between a user's variable and 
 	the pressed/unpressed state of the button. For example, if the variable
 	is onlyToday_, then toggleButton_->setInitialStatePressed( !onlyToday_ )
@@ -261,7 +262,7 @@ public:
 	the click() member function or through mouseClick() or keyUp() handlers,
 	so it is suggested to use this function only to set the initial state.
 	*/
-	void setInitialStatePressed( const bool& pressed );
+	void setStatePressed( const bool& pressed );
 
 	/**
 	tells if the buttons is currently highlighted, i.e. the mouse is over it.
@@ -391,6 +392,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

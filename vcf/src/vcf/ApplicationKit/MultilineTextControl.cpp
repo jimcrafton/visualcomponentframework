@@ -99,10 +99,22 @@ void MultilineTextControl::scrollToSelection( const bool& _showEndSel/*=false*/ 
 	textPeer_->scrollToSelection( _showEndSel );
 }
 
-
+void MultilineTextControl::gotFocus( FocusEvent* event )
+{
+	//no-op on purpose!
+}
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

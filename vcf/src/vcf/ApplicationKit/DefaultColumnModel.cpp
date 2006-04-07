@@ -166,10 +166,7 @@ void DefaultColumnModel::loadFromStream( InputStream * stream )
 	stream->read( count );
 	for (int i=0;i<count;i++){
 		bool isPersistentItem = false;
-		stream->read( isPersistentItem );
-
-		String s = "";
-		//stream->read( s );
+		stream->read( isPersistentItem );		
 	}
 }
 
@@ -177,6 +174,12 @@ void DefaultColumnModel::loadFromStream( InputStream * stream )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

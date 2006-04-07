@@ -15,7 +15,8 @@ where you installed the VCF.
 
 using namespace VCF;
 
-OSXProcessPeer::OSXProcessPeer()
+OSXProcessPeer::OSXProcessPeer():
+	processTerminated_(false)
 {
 	memset( &processHandle_, 0, sizeof(processHandle_) );
 	memset( &processHandle_.launchBlock, 0, sizeof(processHandle_.launchBlock) );
@@ -35,6 +36,7 @@ int OSXProcessPeer::getProcessThreadID()
 bool OSXProcessPeer::createProcess( const String& processName, const String& arguments )
 {
 	bool result = false;
+	processTerminated_ = false;
 
 	memset( &processHandle_, 0, sizeof(processHandle_) );
 	memset( &processHandle_.launchBlock, 0, sizeof(processHandle_.launchBlock) );
@@ -94,10 +96,9 @@ bool OSXProcessPeer::createProcess( const String& processName, const String& arg
 											
 
 				//install event handler for appl close!
-				
-				//EventHandlerUPP myUPP = NewEventHandlerUPP(handleAppEvent);
-				//InstallApplicationEventHandler(myUPP, sizeof(events) / sizeof(EventTypeSpec), 
-				//								&events, NULL, NULL);
+				InstallApplicationEventHandler(OSXProcessPeer::osxProcessTerminated, 
+												sizeof(events) / sizeof(EventTypeSpec), 
+												events, this, NULL);
 
 				
 				
@@ -218,10 +219,9 @@ bool OSXProcessPeer::createProcess( const String& processName, const String& arg
 	else {
 		//use unix style
 		int pid = 0;
-		int waitStatus = 0;
 		
 		char** unixArgs = new char*[args.size()];
-		for (int i=0;i<args.size();i++ ) {
+		for (size_t i=0;i<args.size();i++ ) {
 			AnsiString s = args[i];
 			char* arg = new char[s.size()+1];
 			s.copy( arg, s.size() );
@@ -245,7 +245,7 @@ bool OSXProcessPeer::createProcess( const String& processName, const String& arg
 		processHandle_.pid = pid;
 		
 		//clean up args
-		for (int i=0;i<args.size();i++ ) {			
+		for (size_t i=0;i<args.size();i++ ) {			
 			delete [] unixArgs[i];
 		}
 		delete [] unixArgs;
@@ -294,9 +294,76 @@ ulong32 OSXProcessPeer::terminate()
 }
 
 
+Waitable::WaitResult OSXProcessPeer::wait( uint32 milliseconds )
+{
+	Waitable::WaitResult result = Waitable::wrWaitFinished;
+	
+	return result;
+}
+
+Waitable::WaitResult OSXProcessPeer::wait()
+{
+	Waitable::WaitResult result = Waitable::wrWaitFinished;
+	
+	//the following is probably wrong, we need another solution???
+	if ( processHandle_.isUnixProcess ) {
+	}
+	else {		
+		EventRef theRecvdEvent;				
+		while  (ReceiveNextEvent(0, NULL,kEventDurationForever,true,
+								 
+								 &theRecvdEvent)== noErr)
+			
+		{	
+			
+			SendEventToEventTarget (theRecvdEvent, GetEventDispatcherTarget());
+			
+			ProcessSerialNumber psn = {0};
+			OSStatus err = GetEventParameter( theRecvdEvent,
+                                        kEventParamProcessID,
+                                        typeProcessSerialNumber,
+                                        NULL,
+                                        sizeof(psn),
+                                        NULL,
+                                        &psn );
+			
+			ReleaseEvent(theRecvdEvent);
+			if ( processTerminated_ && (psn.highLongOfPSN == processHandle_.launchBlock.launchProcessSN.highLongOfPSN) &&
+					(psn.lowLongOfPSN == processHandle_.launchBlock.launchProcessSN.lowLongOfPSN) ) {
+				printf( "Process quit!\n" );
+				break;
+			}
+		}
+	}
+	
+	return result;
+}
+
+OSStatus OSXProcessPeer::osxProcessTerminated( EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void * inUserData )
+{
+	OSXProcessPeer* thisPtr = (OSXProcessPeer*)inUserData;
+	thisPtr->processTerminated_ = true;
+	
+	return noErr;
+}
+
+
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.4  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.3.4.3  2006/01/14 21:49:21  ddiego
+ *general osx checkin
+ *
+ *Revision 1.3.4.2  2005/11/27 23:55:45  ddiego
+ *more osx updates.
+ *
+ *Revision 1.3.4.1  2005/11/10 02:02:38  ddiego
+ *updated the osx build so that it
+ *compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+ *
  *Revision 1.3  2004/12/01 04:31:41  ddiego
  *merged over devmain-0-6-6 code. Marcello did a kick ass job
  *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

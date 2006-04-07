@@ -16,11 +16,13 @@ where you installed the VCF.
 using namespace VCF;
 
 
+
+
+
 class ScrollingWindow : public Window {
 public:
-	ScrollingWindow(): currentImage_(NULL), listBox_(NULL) {
+	ScrollingWindow(): currentImage_(NULL) {
 		setCaption( "Scrolling" );
-		setVisible( true );
 
 		//lets create a menu
 
@@ -40,34 +42,11 @@ public:
 		*/
 		MenuItem* fileMenu = new DefaultMenuItem( "File", menuBar->getRootMenuItem(), menuBar );
 		MenuItem* fileOpenImageMenu = new DefaultMenuItem( "Open Image...", fileMenu, menuBar );
-		MenuItem* fileOpenListboxMenu = new DefaultMenuItem( "Open ListBox", fileMenu, menuBar );
 
 		//add our event handler to the menu item
 		fileOpenImageMenu->MenuItemClicked +=
 			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" );
-		fileOpenListboxMenu->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openListboxMenu, "ScrollingWindow::openListboxMenu" );
-
-		// Scrollbar menu
-		MenuItem* scrollMenu = new DefaultMenuItem( "FrameScrollbars", menuBar->getRootMenuItem(), menuBar );
-		hasHorzScrollbarMenu_ = new DefaultMenuItem( "Horizontal", scrollMenu, menuBar );
-		hasVertScrollbarMenu_ = new DefaultMenuItem( "Vertical", scrollMenu, menuBar );
-		MenuItem* separator = new DefaultMenuItem( "", scrollMenu, menuBar );
-		separator->setSeparator(true);
-		separator->setEnabled( true );
-		keepHorzScrollbarVisibleMenu_   = new DefaultMenuItem( "Keep horizontal visible", scrollMenu, menuBar );
-		keepVertScrollbarVisibleMenu_   = new DefaultMenuItem( "Keep vertical visible", scrollMenu, menuBar );
-
-		//add our event handler to the scrollbar menu
-		hasHorzScrollbarMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasHorzScrollbar, "ScrollingWindow::hasHorzScrollbar" );
-		hasVertScrollbarMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::hasVertScrollbar, "ScrollingWindow::hasVertScrollbar" );
-		keepHorzScrollbarVisibleMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepHorzScrollbarVisible, "ScrollingWindow::keepHorzScrollbarVisible" );
-		keepVertScrollbarVisibleMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this, &ScrollingWindow::keepVertScrollbarVisible, "ScrollingWindow::keepVertScrollbarVisible" );
-
+		
 
 		//set the border of the window, this will give us a nice etched border
 		EtchedBorder* bdr = new EtchedBorder();
@@ -83,11 +62,7 @@ public:
 		scrollBarMgr_->setHasHorizontalScrollbar( true );
 		scrollBarMgr_->setHasVerticalScrollbar( true );
 		scrollBarMgr_->setKeepScrollbarsVisible( true, true );
-		updateMenuHasHorzScrollbar();
-		updateMenuHasVertScrollbar();
-		updateMenuKeepHorzScrollbarVisible();
-		updateMenuKeepVertScrollbarVisible();
-
+		
 		scrollBarMgr_->setHorizontalLeftScrollSpace( 200 );
 
 		panel_ = new Panel();
@@ -100,6 +75,7 @@ public:
 		Scrollable* scrollable = getScrollable();
 		scrollable->getHorizontalScrollRects( NULL, &r );
 		panel_->setBounds( &r );
+		panel_->setIgnoreForParentScrolling( true );
 	}
 
 	virtual ~ScrollingWindow(){
@@ -158,52 +134,9 @@ public:
 		}
 	}
 
-	void openListboxMenu( MenuItemEvent* e ) {
-		if ( NULL != currentImage_ ) {
-			delete currentImage_;
-			currentImage_ = NULL;
-		}
-
-		/* hide the scrollbars of the main window 
-		as the scrollbars of the listbox will be use */
-		scrollBarMgr_->setHasHorizontalScrollbar( false );
-		scrollBarMgr_->setHasVerticalScrollbar( false );
-		updateMenuHasHorzScrollbar();
-		updateMenuHasVertScrollbar();
-
-		//add a ListBoxControl
-		listBox_ = new ListBoxControl();		
-		listBox_->setBorder( new Basic3DBorder( true ) );
-		listBox_->setAllowsMultiSelect( false );
-		//add scrollbar to listBox_
-		ScrollbarManager* scrollbarManagerSingle = new ScrollbarManager();
-		addComponent( scrollbarManagerSingle );
-		scrollbarManagerSingle->setHasVerticalScrollbar( true );
-		scrollbarManagerSingle->setHasHorizontalScrollbar( true );		
-		scrollbarManagerSingle->setTarget( listBox_ );
-		scrollbarManagerSingle->setKeepScrollbarsVisible( true, true );
-		
-		this->add( listBox_, AlignClient );
-		
-		//add some items to listBox_
-		ListModel* listBoxModel = listBox_->getListModel();	
-		for(int j=0; j<20; j++){
-			String indx = StringUtils::toString(j);
-			String capt = L"Very Ultra Hyper Extra Long ListItem " + indx;		
-			listBoxModel->addItem( new DefaultListItem( listBoxModel, capt ) );			
-		}
-	}
 
 	void openImage( MenuItemEvent* e ) {
-		if ( NULL != listBox_ ) {
-			 // try to comment out this !
-			this->remove( listBox_ );
-			listBox_->getOwner()->removeComponent( listBox_ );
-			listBox_->free();
-			listBox_ = NULL;
-		}
-
-		CommonFileOpen dlg( this );
+		CommonFileOpenDialog dlg( this );
 
 		//get the available image loader extensions
 		std::vector< std::pair<String,String> > contentTypes;
@@ -250,65 +183,14 @@ public:
 		}
 	}
 
-	void hasHorzScrollbar( MenuItemEvent* e ) {
-		scrollBarMgr_->setHasHorizontalScrollbar( !scrollBarMgr_->hasHorizontalScrollBar() );
-		updateMenuHasHorzScrollbar();
-		repaint();
-	}
 
-	void hasVertScrollbar( MenuItemEvent* e ) {
-		scrollBarMgr_->setHasVerticalScrollbar( !scrollBarMgr_->hasVerticalScrollBar() );
-		updateMenuHasVertScrollbar();
-		repaint();
-	}
-
-	void keepHorzScrollbarVisible( MenuItemEvent* e ) {
-		scrollBarMgr_->setKeepScrollbarsVisible( !scrollBarMgr_->getKeepHorzScrollbarVisible(), scrollBarMgr_->getKeepVertScrollbarVisible() );
-		updateMenuKeepHorzScrollbarVisible();
-		repaint();
-	}
-
-	void keepVertScrollbarVisible( MenuItemEvent* e ) {
-		scrollBarMgr_->setKeepScrollbarsVisible( scrollBarMgr_->getKeepHorzScrollbarVisible(), !scrollBarMgr_->getKeepVertScrollbarVisible() );
-		updateMenuKeepVertScrollbarVisible();
-		repaint();
-	}
-
-	void updateMenuHasHorzScrollbar() {
-		bool has = scrollBarMgr_->hasHorizontalScrollBar();
-		hasHorzScrollbarMenu_->setChecked( has );
-		keepHorzScrollbarVisibleMenu_->setEnabled( has );
-	}
-
-	void updateMenuHasVertScrollbar() {
-		bool has = scrollBarMgr_->hasVerticalScrollBar();
-		hasVertScrollbarMenu_->setChecked( has );
-		keepVertScrollbarVisibleMenu_->setEnabled( has );
-	}
-
-	void updateMenuKeepHorzScrollbarVisible() {
-		bool visible = scrollBarMgr_->getKeepHorzScrollbarVisible();
-		keepHorzScrollbarVisibleMenu_->setChecked( visible );
-	}
-
-	void updateMenuKeepVertScrollbarVisible() {
-		bool visible = scrollBarMgr_->getKeepVertScrollbarVisible();
-		keepVertScrollbarVisibleMenu_->setChecked( visible );
-	}
 
 public:
 	Image* currentImage_;
 	Panel* panel_;
 
 	Label* infoLabel_;
-	ScrollbarManager* scrollBarMgr_;
-
-	MenuItem* hasHorzScrollbarMenu_;
-	MenuItem* hasVertScrollbarMenu_;
-	MenuItem* keepHorzScrollbarVisibleMenu_;
-	MenuItem* keepVertScrollbarVisibleMenu_;
-
-	VCF::ListBoxControl* listBox_;
+	ScrollbarManager* scrollBarMgr_;	
 };
 
 
@@ -327,6 +209,7 @@ public:
 		Window* mainWindow = new ScrollingWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -348,8 +231,25 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.6  2005/07/09 23:14:43  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.7  2006/04/07 02:34:40  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.5  2006/03/19 20:50:14  ddiego
+*adjusted the scrolling example to be rid of various extraneous
+*code that only confused the point of the example. The extra code will
+*be moved to another example.
+*
+*Revision 1.6.2.4  2006/03/16 18:45:23  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.6.2.3  2005/10/07 04:06:44  ddiego
+*added new internet kit.
+*
+*Revision 1.6.2.2  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.6.2.1  2005/07/23 21:45:40  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.5.2.6  2005/06/06 02:34:04  ddiego
 *menu changes to better support win32 and osx.

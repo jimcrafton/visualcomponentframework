@@ -22,15 +22,13 @@ using namespace VCF;
 //******************************************************************************
 
 ToolbarItem::ToolbarItem():
-	control_(NULL),
-	state_(tisEnabled),
-	model_(NULL),
 	data_(NULL),
 	imageIndex_(0),
 	imageStateIndex_(0),
 	itemControl_(NULL)
 {
 	tag_ = -1;
+	itemState_ = tisEnabled;
 }
 
 void ToolbarItem::click()
@@ -68,7 +66,7 @@ void ToolbarItem::handleEvent( Event* event )
 
 			setEnabled( actionEvent->isEnabled() );
 
-			Toolbar* toolbar = (Toolbar*)control_;
+			Toolbar* toolbar = (Toolbar*)getControl();
 
 			if ( NULL != toolbar ) {
 				if ( toolbar->getShowButtonCaptions() ) {
@@ -113,11 +111,11 @@ void ToolbarItem::setAsSeparator()
 
 void ToolbarItem::setPressed( bool val )
 {
-	if ( ( (state_ & ToolbarItem::tisPressed) != 0 ) == val ) {
+	if ( ( (itemState_ & ToolbarItem::tisPressed) != 0 ) == val ) {
 		return;
 	}
 
-	long state = state_;
+	long state = itemState_;
 	if ( val ) {
 		state |= tisPressed;
 	}
@@ -129,7 +127,7 @@ void ToolbarItem::setPressed( bool val )
 
 bool ToolbarItem::isEnabled()
 {
-	return (state_ & ToolbarItem::tisEnabled) ? true : false;
+	return (itemState_ & ToolbarItem::tisEnabled) ? true : false;
 }
 
 void ToolbarItem::setEnabled( const bool& val )
@@ -138,7 +136,7 @@ void ToolbarItem::setEnabled( const bool& val )
 		return;
 	}
 
-	long state = state_;
+	long state = itemState_;
 	if ( val ) {
 		state |= ToolbarItem::tisEnabled;
 	}
@@ -151,11 +149,11 @@ void ToolbarItem::setEnabled( const bool& val )
 
 void ToolbarItem::setState( const long& state )
 {
-	if ( state_ == state ) {
+	if ( itemState_ == state ) {
 		return ;
 	}
 
-	state_ = state;
+	itemState_ = state;
 
 	if ( NULL != model_ ) {
 		((ToolbarModel*)model_)->itemChanged( ToolbarItem::tbStateChanged, this );
@@ -190,7 +188,7 @@ void ToolbarItem::setIndex( const unsigned long& index )
 
 bool ToolbarItem::isSelected()
 {
-	return (state_ & tisSelected) ? true : false;
+	return (itemState_ & tisSelected) ? true : false;
 }
 
 void ToolbarItem::setSelected( const bool& selected )
@@ -200,10 +198,10 @@ void ToolbarItem::setSelected( const bool& selected )
 	}
 
 	if ( selected ) {
-		state_ |= tisSelected;
+		itemState_ |= tisSelected;
 	}
 	else {
-		state_ &= ~tisSelected;
+		itemState_ &= ~tisSelected;
 	}
 
 	if ( NULL != model_ ) {
@@ -270,10 +268,10 @@ void ToolbarItem::setGrouped( const bool& val )
 	}
 
 	if ( val ) {
-		state_ |= tisGrouped;
+		itemState_ |= tisGrouped;
 	}
 	else {
-		state_ &= ~tisGrouped;
+		itemState_ &= ~tisGrouped;
 	}
 
 	if ( NULL != model_ ) {
@@ -283,7 +281,7 @@ void ToolbarItem::setGrouped( const bool& val )
 
 bool ToolbarItem::isGrouped()
 {
-	return (state_ & tisGrouped) ? true : false;
+	return (itemState_ & tisGrouped) ? true : false;
 }
 
 void ToolbarItem::setChecked( const bool& val )
@@ -293,10 +291,10 @@ void ToolbarItem::setChecked( const bool& val )
 	}
 
 	if ( val ) {
-		state_ |= tisChecked;
+		itemState_ |= tisChecked;
 	}
 	else {
-		state_ &= ~tisChecked;
+		itemState_ &= ~tisChecked;
 	}
 
 	if ( NULL != model_ ) {
@@ -306,7 +304,7 @@ void ToolbarItem::setChecked( const bool& val )
 
 bool ToolbarItem::isChecked()
 {
-	return (state_ & tisChecked) ? true : false;
+	return (itemState_ & tisChecked) ? true : false;
 }
 
 //******************************************************************************
@@ -405,6 +403,8 @@ Toolbar::Toolbar():
 
 	setViewModel( new ToolbarModel() );
 
+	addComponent( getViewModel() );
+
 	peer_->create( this );
 
 	setVisible( true );
@@ -415,7 +415,7 @@ Toolbar::Toolbar():
 
 Toolbar::~Toolbar()
 {
-	this->removeFromUpdateTimer();
+	this->removeFromUpdateList();
 }
 
 
@@ -533,6 +533,18 @@ Toolbar::FloatingToolbar::~FloatingToolbar()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/28 04:12:48  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.4.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -82,9 +82,10 @@ void Library::load( const String& libraryFilename )
 
 
 	libPeer_->load( fullLibraryName );
+	
 	currentLibName_ = fullLibraryName;
 
-	typedef void (*initFunc)(void);
+	typedef void (*initFunc)(OSHandleID);
 
 	initFunc _init = NULL;
 	try {
@@ -94,7 +95,7 @@ void Library::load( const String& libraryFilename )
 		System::errorPrint( &e );
 	}
 	if ( NULL != _init ) {
-		_init();
+		_init( libPeer_->getHandleID() );
 	}
 	else {
 		//don't throw the exception - this is *not* a fatal error
@@ -107,7 +108,7 @@ void Library::load( const String& libraryFilename )
 
 void Library::unload()
 {
-	typedef void (*terminateFunc)(void);
+	typedef void (*terminateFunc)(OSHandleID);
 
 	terminateFunc _terminate = NULL;
 
@@ -120,7 +121,7 @@ void Library::unload()
 
 	if ( NULL != _terminate ) {
 
-		_terminate();
+		_terminate( libPeer_->getHandleID() );
 	}
 	else {
 		//don't throw the exception - this is *not* a fatal error
@@ -141,6 +142,12 @@ void* Library::getFunction( const String& functionName )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2005/09/03 17:13:23  ddiego
+*added a new argument to _vpl_init and _vpl_terminate functions.
+*
 *Revision 1.5  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -20,10 +20,12 @@ where you installed the VCF.
 
 
 
-#ifdef __GNUWIN32__
+#if defined(__GNUWIN32__) || defined(VCF_MINGW)
 
 //add some stupid defines here since they seem to be missing from the mingw Win32 API headers
 #if (_WIN32_IE >= 0x0400)
+
+#if !defined(VCF_MINGW)
 typedef struct tagNMLVGETINFOTIPA
 {
     NMHDR hdr;
@@ -45,6 +47,7 @@ typedef struct tagNMLVGETINFOTIPW
     int iSubItem;
     LPARAM lParam;
 } NMLVGETINFOTIPW, *LPNMLVGETINFOTIPW;
+#endif
 
 // NMLVGETINFOTIPA.dwFlag values
 
@@ -198,7 +201,8 @@ Win32Listview::Win32Listview( ListViewControl* listviewControl ):
 	listviewControl_( listviewControl ),
 	oldHeaderWndProc_(NULL),
 	largeImageListCtrl_(NULL),
-	smallImageListCtrl_(NULL)
+	smallImageListCtrl_(NULL),
+	internalMessage_(false)
 {
 
 }
@@ -293,7 +297,7 @@ void Win32Listview::create( Control* owningControl )
 		Win32Object::registerWin32Object( this );
 
 		subclassWindow();
-		setFont( owningControl->getFont() );
+		registerForFontChanges();
 
 		COLORREF backColor = backColor_.getColorRef32();
 		ListView_SetBkColor( hwnd_, backColor );
@@ -436,8 +440,7 @@ LRESULT CALLBACK Win32Listview::Header_WndProc(HWND hWnd, UINT message, WPARAM w
 		}
 		break;
 
-		case WM_DRAWITEM : {
-			StringUtils::trace( "Draw item for header\n" );
+		case WM_DRAWITEM : {			
 			if ( System::isUnicodeEnabled() ) {
 				result = CallWindowProcW( win32ListView->oldHeaderWndProc_, hWnd, message, wParam, lParam );
 			}
@@ -478,7 +481,8 @@ LRESULT CALLBACK Win32Listview::Header_WndProc(HWND hWnd, UINT message, WPARAM w
 void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 {
 	ListModel* model = listviewControl_->getListModel();
-	ListItem* item = model->getItemFromIndex( (ulong32 )drawItem->nmcd.dwItemSpec );
+	ListItem* item = (ListItem*)drawItem->nmcd.lItemlParam;
+	
 
 	if ( NULL != item ) {
 
@@ -653,10 +657,6 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case WM_PAINT:{
-			//result = CallWindowProc( oldListviewWndProc_, hwnd_, message, wParam, lParam );
-
-			//check to see if the font needs updating
-			checkForFontChange();
 
 			PAINTSTRUCT ps;
 			HDC dc = BeginPaint( hwnd_, &ps );
@@ -789,8 +789,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				::ScreenToClient( hwnd_, &pt );
 
 				MouseEvent event( item, ListViewControl::COLUMN_MOUSE_EVENT_CLICK,
-									Win32Utils::translateButtonMask( MK_LBUTTON ),
-									Win32Utils::translateKeyMask( 0 ),
+									Win32UIUtils::translateButtonMask( MK_LBUTTON ),
+									Win32UIUtils::translateKeyMask( 0 ),
 									&Point(pt.x, pt.y) );
 
 				listviewControl_->handleEvent( &event );
@@ -927,6 +927,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case LVN_GETDISPINFOW:{
+
 			NMLVDISPINFOW* displayInfo = (NMLVDISPINFOW*)lParam;
 			if ( displayInfo->hdr.hwndFrom == hwnd_ ) {
 
@@ -935,7 +936,9 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 					String caption;
 					if ( displayInfo->item.iSubItem > 0 ) {
 						ListItem::SubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
-						caption = subItem->getCaption();
+						if ( NULL != subItem ) {
+							caption = subItem->getCaption();
+						}
 					}
 					else{
 						caption = item->getCaption();
@@ -960,7 +963,9 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 					AnsiString caption;
 					if ( displayInfo->item.iSubItem > 0 ) {
 						ListItem::SubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
-						caption = subItem->getCaption();
+						if ( NULL != subItem ) {
+							caption = subItem->getCaption();
+						}
 					}
 					else{
 						caption = item->getCaption();
@@ -1031,6 +1036,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				ListItem* item = (ListItem*)lvNotificationHdr->lParam;
 				if ( NULL != item ){
 					if ( (lvNotificationHdr->uChanged & LVIF_STATE) != 0 ) {
+						internalMessage_ = true;
+
 						if ( (lvNotificationHdr->uNewState & LVIS_SELECTED) != 0 ){
 							item->setSelected( true );
 
@@ -1046,6 +1053,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 						else {
 							item->setSelected( false );
 						}
+
+						internalMessage_ = false;
 					}
 				}
 			}
@@ -1317,6 +1326,8 @@ void Win32Listview::selectItem(ListItem * item)
 {
 	if ( NULL != item ){
 
+		internalMessage_ = true;
+
 		if ( System::isUnicodeEnabled() ) {
 			LVFINDINFOW findInfo;
 			memset( &findInfo, 0, sizeof(LVFINDINFOW) );
@@ -1351,6 +1362,8 @@ void Win32Listview::selectItem(ListItem * item)
 				SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
 			}
 		}
+
+		internalMessage_ = false;
 	}
 }
 
@@ -1942,16 +1955,18 @@ void Win32Listview::onItemChanged( ItemEvent* event )
 
 void Win32Listview::onItemSelected( ItemEvent* event )
 {
-/*
-	Item* item = (Item*)event->getSource();
-	if ( true == item->isSelected() ) {
-		ListView_SetItemState( hwnd_, item->getIndex(),
-			                   LVIS_SELECTED, LVIS_SELECTED );
+
+	if ( !internalMessage_ ) {
+		Item* item = (Item*)event->getSource();
+		if ( true == item->isSelected() ) {
+			ListView_SetItemState( hwnd_, item->getIndex(),
+				LVIS_SELECTED, LVIS_SELECTED );
+		}
+		else {
+			ListView_SetItemState( hwnd_, item->getIndex(), 0, LVIS_SELECTED );
+		}
 	}
-	else {
-		ListView_SetItemState( hwnd_, item->getIndex(), 0, LVIS_SELECTED );
-	}
-*/
+
 }
 
 void Win32Listview::onItemAdded( ItemEvent* event )
@@ -2408,6 +2423,34 @@ void Win32Listview::setDisplayOptions( const long& displayOptions )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.8  2006/03/18 19:19:37  ddiego
+*fixed a paint bug in the win32tree ctrl becuase I was passing in
+*the wrong rect value. also got rid of various debugging trace statements.
+*
+*Revision 1.5.2.7  2006/03/18 19:04:56  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.5.2.6  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.5  2006/02/08 02:06:31  ddiego
+*updated more vc80 projects.
+*
+*Revision 1.5.2.4  2006/01/22 23:52:21  ddiego
+*some minor changed to doc manager.
+*
+*Revision 1.5.2.3  2005/11/21 21:28:03  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.5.2.2  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
+*Revision 1.5.2.1  2005/09/20 03:24:18  ddiego
+*minor fixes.
+*
 *Revision 1.5  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

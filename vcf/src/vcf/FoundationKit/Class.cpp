@@ -265,6 +265,11 @@ String Class::getClassNameForProperty( Property* property )
 				}
 				break;
 
+				case pdUInt: {
+					result = CLASS_UINT;
+				}
+				break;
+
 				case pdLong: {
 					result = CLASS_LONG;
 				}
@@ -272,6 +277,11 @@ String Class::getClassNameForProperty( Property* property )
 
 				case pdShort: {
 					result = CLASS_SHORT;
+				}
+				break;
+
+				case pdUShort: {
+					result = CLASS_USHORT;
 				}
 				break;
 
@@ -324,6 +334,11 @@ String Class::getClassNameForProperty( Property* property )
 					//no-op
 				}
 				break;
+
+                default: {
+                    //no-op
+                }
+                break;
 			}
 		}
 	}
@@ -410,6 +425,15 @@ void Class::addInterface( InterfaceClass* newInterface )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.2.6.1  2006/02/23 01:41:57  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

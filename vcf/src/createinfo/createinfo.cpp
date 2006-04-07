@@ -26,7 +26,8 @@ If no output directory is specified, then the program outputs to stdout.
 				"\t-version <version number>\n"\
 				"\t-author <author name, in double quotes!>\n"\
 				"\t[-out <output directory - if one is not specified, then output is to stdout>]\n"\
-				"\t-name <bundle name for the info file>"
+				"\t-name <bundle name for the info file>\n"\
+				"\t-exe <executable name - NOT the path, just the name and extension."
 
 
 
@@ -53,12 +54,18 @@ int main( int argc, char** argv ){
 		return 1;	
 	}
 
-	
+	if ( !cmdLine.hasSwitch( "-exe" ) ) {
+		System::println( "Please supply an executable name!" );
+		System::println( USAGE );
+		return 1;	
+	}
 
 	String version = cmdLine.getArgument( "-version", 0 );
 	String author = cmdLine.getArgument( "-author", 0 );
 	
 	String bundleName = cmdLine.getArgument( "-name", 0 );
+
+	String exeName = cmdLine.getArgument( "-exe", 0 );
 
 	String outDir;
 
@@ -105,6 +112,13 @@ int main( int argc, char** argv ){
 
 		if ( NULL != dictNode ) {
 			nodes = dictNode->getChildNodes();
+			bool needsProgramVersion = true;
+			bool needsExecutable = true;
+			bool needsFileVersion = true;
+			bool needsProductName = true;
+			bool needsCopyright = true;
+			bool needsAuthor = true;
+
 			while ( nodes->hasMoreElements() ) {
 				XMLNode* key = nodes->nextElement();
 				XMLNode* val = NULL;
@@ -120,18 +134,27 @@ int main( int argc, char** argv ){
 
 					if ( cdata == "ProgramVersion" ) {
 						val->setCDATA( version );
+						needsProgramVersion = false;
+					}
+					else if ( cdata == "Executable" ) {
+						val->setCDATA( exeName );
+						needsExecutable = false;
 					}
 					else if ( cdata == "FileVersion" ) {
 						val->setCDATA( version );
+						needsFileVersion = false;
 					}
 					else if ( cdata == "ProductName" ) {
 						val->setCDATA( bundleName );
+						needsProductName = false;
 					}
 					else if ( cdata == "Copyright" ) {
 						val->setCDATA( copyright );
+						needsCopyright = false;
 					}
 					else if ( cdata == "Author" ) {
 						val->setCDATA( author );
+						needsAuthor = false;
 					}
 					else { //strip out trailing white space
 						cdata = val->getCDATA();
@@ -139,6 +162,56 @@ int main( int argc, char** argv ){
 						val->setCDATA( cdata );
 					}
 				}
+			}
+			
+			XMLNode* key = NULL;
+			XMLNode* value = NULL;
+			if ( needsProgramVersion ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "ProgramVersion" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( version );
+			}
+
+			if ( needsExecutable ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "Executable" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( exeName );
+			}
+
+			if ( needsFileVersion ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "FileVersion" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( version );
+			}
+
+			if ( needsProductName ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "ProductName" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( bundleName );
+			}
+
+			if ( needsCopyright ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "Copyright" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( copyright );
+			}
+
+			if ( needsAuthor ) {
+				key = dictNode->addChildNode( "key" );
+				key->setCDATA( "Author" );
+
+				value = dictNode->addChildNode( "string" );
+				value->setCDATA( author );
 			}
 
 			String createinfoComments = "Info.xml file updated by createinfo on " + StringUtils::format( date, "%a %B %d, %Y %H:%M:%S" );
@@ -174,6 +247,13 @@ int main( int argc, char** argv ){
 		XMLNode* value = dict->addChildNode( "string" );
 		value->setCDATA( version );
 		
+		key = dict->addChildNode( "key" );
+		key->setCDATA( "Executable" );
+		
+		value = dict->addChildNode( "string" );
+		value->setCDATA( exeName );
+
+
 		key = dict->addChildNode( "key" );
 		key->setCDATA( "FileVersion" );
 		
@@ -237,6 +317,12 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:34:58  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.1  2005/11/02 16:07:16  ddiego
+*updates to createinfo program.
+*
 *Revision 1.2  2005/07/09 23:14:49  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -188,6 +188,7 @@ void Win32SystemTrayPeer::setTooltipText( const String& tooltipText )
 		int len = sizeof(notifyIconData->szTip);
 
 		tooltipText.copy( notifyIconData->szTip, len );
+		notifyIconData->szTip[minVal<unsigned int>(len-1,tooltipText.length())]=NULL;
 		notifyIconData->uFlags = NIF_TIP;
 
 		if ( !hidden_ ) {
@@ -200,7 +201,7 @@ void Win32SystemTrayPeer::setTooltipText( const String& tooltipText )
 		int len = sizeof(notifyIconData->szTip);
 
 		tmp.copy( notifyIconData->szTip, len );
-
+		notifyIconData->szTip[minVal<unsigned int>(len-1,tmp.length())]=NULL;
 		notifyIconData->uFlags = NIF_TIP;
 
 		if ( !hidden_ ) {
@@ -401,6 +402,12 @@ LRESULT CALLBACK Win32SystemTrayPeer::wndProc(HWND hWnd, UINT message, WPARAM wP
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.4.1  2005/11/14 17:11:21  pallindo
+*Fixed a crash that came from not nulling out the end of szTip in setTooltipText.
+*
 *Revision 1.2  2004/12/01 04:31:39  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

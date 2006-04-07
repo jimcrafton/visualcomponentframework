@@ -39,7 +39,7 @@ public:
 
 	virtual char* getBuffer();
 
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes );
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
 
 	/**
 	*all numbers are written out as the number converted to text, followed by a
@@ -91,6 +91,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

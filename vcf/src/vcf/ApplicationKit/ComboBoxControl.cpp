@@ -37,6 +37,8 @@ public:
 		scrollBarMgr->setDiscreteScroll( false, comboBoxControl->getDiscreteScroll() );
 
 		setUseColorForBackground( true );
+
+		setFont( comboBoxControl->getFont() );
 	}
 
 	virtual ~DropDownListBox(){
@@ -199,7 +201,7 @@ public:
 	virtual ~ComboBoxDropDown() {
 
 
-		//StringUtils::traceWithArgs( "ComboBoxDropDown::~ComboBoxDropDown() @ %p\n", this );
+		//StringUtils::trace( Format( "ComboBoxDropDown::~ComboBoxDropDown() @ %p\n" ) % this );
 
 	}
 
@@ -307,6 +309,8 @@ void ComboBoxControl::init()
 	autoLookupIgnoreCase_ = true;
 
 	setListModel( new DefaultListModel() );
+
+	addComponent( getViewModel() );
 
 	setContainer( new ComboBoxContainer() );
 
@@ -785,9 +789,13 @@ Rect ComboBoxControl::getEditBounds()
 	Rect result;
 	result = getClientBounds();
 
-	Size sz = UIToolkit::getUIMetricsManager()->getDefaultVerticalScrollButtonDimensions();
+	//Size sz = 
+		//getUIMetricsManager()->getDefaultVerticalScrollButtonDimensions();
 
-	result.right_ -= sz.width_;	
+	result.right_ -= UIToolkit::getUIMetricValue( UIMetricsManager::mtVerticalScrollbarThumbWidth );	
+
+	result.right_ -= 3;
+	result.inflate( -2, -1 );
 
 	return result;
 }
@@ -813,7 +821,7 @@ void ComboBoxControl::onEditKeyPressed( KeyboardEvent* event )
 			new KeyboardEventHandler<ComboBoxControl>( this, &ComboBoxControl::onEditReturnKeyPressed ), postedEvent );
 	//}
 	//VirtualKeyCode key = event->getVirtualCode();
-	//StringUtils::traceWithArgs( "Key: %d\r\n", key );
+	//StringUtils::trace( Format( "Key: %d\r\n" ) % key );
 }
 
 void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
@@ -1026,7 +1034,7 @@ void ComboBoxControl::setCurrentText( const String& text )
 
 double ComboBoxControl::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htComboBoxHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtComboBoxHeight );
 }
 
 void ComboBoxControl::selectItems( const bool& select )
@@ -1046,6 +1054,24 @@ void ComboBoxControl::selectItems( const bool& select )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.4  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.5.2.3  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.5.2.2  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.5.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

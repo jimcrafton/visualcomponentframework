@@ -22,6 +22,7 @@ namespace VCF {
 #define ABSTRACTMODEL_CLASSID	"b4ce8bb3-0e9f-4b4a-a246-b8faef0abf1a"
 
 /**
+\class AbstractModel AbstractModel.h "vcf/ApplicationKit/AbstractModel.h"
 The AbstractModel is a base class for creating your own custom model
 classes. It provides a basic implementation of some of the
 Model class's methods.
@@ -69,6 +70,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

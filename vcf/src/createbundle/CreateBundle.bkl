@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="CreateBundle" template="vcf_exe_console">
+        <exename>CreateBundle</exename>
+        <dirname>../../bin</dirname>
+        <sources>CreateBundle.cpp</sources>
+        <vcf-use-FoundationKit/>
+    </exe>
+</makefile>

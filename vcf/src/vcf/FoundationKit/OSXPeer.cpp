@@ -14,81 +14,109 @@ where you installed the VCF.
 using namespace VCF;
 
 
-
-
-String OSXUtils::getErrorString( int errorCode )
+String OSXStringUtils::getErrnoString( int errCode )
 {
 	String result;
-
-	return result;
-}
-
-
-String OSXUtils::extractStringValueFromCFType( CFTypeRef ref )
-{
-	String result;
-	
-	if ( NULL != ref ) {
-		CFStringRef resultString = CFStringCreateWithFormat( NULL, NULL, CFSTR("%@"), ref );
-		
-		if ( NULL != resultString ) {
-			
-			CFDataRef data = CFStringCreateExternalRepresentation(NULL, 
-																  resultString, 
-																  CFStringGetSystemEncoding(), 
-																  '?');
-			
-			if (data != NULL) {			
-				result.assign( (char*)CFDataGetBytePtr(data), CFDataGetLength(data) );
-				
-				CFRelease(data);
+	switch ( errCode ) {
+		case EFAULT: {
+				result = "Bad address.";
 			}
+			break;
+
+		case EACCES: {
+				result = "Permission denied.";
+			}
+			break;
+
+		case EPERM: {
+				result = "Operation not permitted";
+
+			}
+			break;
+
+
+		case ENAMETOOLONG: {
+				result = "File name too long.";
+			}
+			break;
+
+		case ENOENT: {
+				result = "No such file or directory.";
+			}
+			break;
+
+		case ENOTDIR: {
+				result = "Not a directory.";
+			}
+			break;
+
+		case ENOMEM: {
+				result = "Cannot allocate memory.";
+			}
+			break;
+
+		case EROFS: {
+				result = "Read-only file system.";
+			}
+			break;
+
+		case EEXIST: {
+				result = "File exists.";
+			}
+			break;
+
+		case EISDIR: {
+				result = "Is a directory.";
+			}
+			break;
+
+		case ENXIO: {
+				result = "Device not configured.";
+			}
+			break;
+
+		case ENODEV: {
+				result = "Operation not supported by device.";
+			}
+			break;
+
+		case ELOOP: {
+				result = "Too many levels of symbolic links.";
+			}
+			break;
+
+		case ENFILE: {
+				result = "Too many open files in system.";
+			}
+			break;
+
+		case EMFILE: {
+				result = "Too many open files.";
+			}
+			break;
 			
-			CFRelease( resultString );
-		}	
+		case EINVAL: {
+			result = "Invalid argument.";
+		}
+		break;
 	}
-	
 	return result;
 }
 
-VCF::ulong32 OSXUtils::translateButtonMask( EventMouseButton button )
-{
-    VCF::ulong32 result = 0;
 
-    if ( button == kEventMouseButtonPrimary ) {
-        result = VCF::mbmLeftButton;
-    }
-    else if ( button == kEventMouseButtonSecondary ) {
-        result = VCF::mbmRightButton;
-    }
-    else if ( button == kEventMouseButtonTertiary ) {
-        result = VCF::mbmMiddleButton;
-    }
-
-    return result;
-}
-
-VCF::ulong32 OSXUtils::translateKeyMask( UInt32 keyMod )
-{
-    VCF::ulong32 result = 0;
-
-    if ( keyMod & shiftKey ) {
-        result |= VCF::kmShift;
-    }
-
-    if ( keyMod & cmdKey ) {
-        result |= VCF::kmAlt;
-    }
-
-    if ( keyMod & controlKey ) {
-        result |= VCF::kmCtrl;
-    }
-    return result;
-}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2005/12/04 20:58:32  ddiego
+*more osx impl work. foundationkit is mostly complete now.
+*
+*Revision 1.4.2.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

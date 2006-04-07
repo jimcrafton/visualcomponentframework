@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="MFCIntegration2" template="vcf_exe" cond="PLATFORM_WIN32=='1' and OPTION_GRAPHICSKIT=='1'">
+        <app-type>gui</app-type>
+        <dirname>.</dirname>
+        <headers>
+            ChildView.h
+            MainFrm.h
+            MFCIntegration2.h
+            Resource.h
+            StdAfx.h
+        </headers>
+        <sources>
+            ChildView.cpp
+            MainFrm.cpp
+            MFCIntegration2.cpp
+            StdAfx.cpp
+        </sources>
+        <win32-res>MFCIntegration2.rc</win32-res>
+        <vcf-use-GraphicsKit/>
+        <define>_AFXDLL</define>
+
+        <precomp-headers>on</precomp-headers>
+        <precomp-headers-header>StdAfx.h</precomp-headers-header>
+        <precomp-headers-file>$(EXE_FILENAME)</precomp-headers-file>
+    </exe>
+</makefile>

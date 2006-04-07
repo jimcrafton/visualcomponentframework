@@ -62,22 +62,36 @@ bool Registry::setValue( void* dataBuffer, const uint32& dataBufferSize, const S
 
 String Registry::getStringValue( const String& valuename )
 {
-	return peer_->getStringValue( valuename );
+	String result;
+	if ( !peer_->getStringValue( valuename, result ) ) {
+		throw RegistryException( "Unable to read value named \"" + valuename + "\" from registry." );
+	}
+	return result;
 }
 
 uint32 Registry::getIntValue( const String& valuename )
 {
-	return peer_->getIntValue( valuename );
+	uint32 result = 0;
+	if ( !peer_->getIntValue( valuename, result ) ) {
+		throw RegistryException( "Unable to read value named \"" + valuename + "\" from registry." );
+	}
+	return result;
 }
 
 bool Registry::getBoolValue( const String& valuename )
 {
-	return peer_->getBoolValue( valuename );
+	bool result = false;
+	if ( !peer_->getBoolValue( valuename, result ) ) {
+		throw RegistryException( "Unable to read value named \"" + valuename + "\" from registry." );
+	}
+	return result;
 }
 
 void Registry::getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer )
 {
-	peer_->getDataBufValue( valuename, dataBufferSize, dataBuffer );
+	if ( !peer_->getDataBufValue( valuename, dataBufferSize, dataBuffer ) ) {
+		throw RegistryException( "Unable to read value named \"" + valuename + "\" from registry." );
+	}
 }
 
 Enumerator<String>* Registry::getKeyNames()
@@ -99,6 +113,13 @@ String Registry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/05 18:17:17  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

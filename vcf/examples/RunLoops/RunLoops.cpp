@@ -8,7 +8,7 @@ using namespace VCF;
 
 void Timer1( Event* e )
 {
-	printf( "Timer1 called!\n" );
+	System::println( "Timer1 called!" );
 	static int c = 0;
 	c++;
 
@@ -27,7 +27,7 @@ void Timer1( Event* e )
 
 void Timer2( Event* e )
 {
-	printf( "Timer2 called!\n" );
+	System::println( "Timer2 called!" );
 	static int c = 0;
 	c++;
 

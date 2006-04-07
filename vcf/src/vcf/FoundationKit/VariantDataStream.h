@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF {
 
 /**
+\class VariantDataInputStream VariantDataStream.h "vcf/FoundationKit/VariantDataStream.h"
 *The VariantDataInputStream is used to read
 *a VariantData object from an InputStream source.
 */
@@ -57,11 +58,11 @@ public:
 		return inStream_->getCurrentSeekPos();
 	}
 
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes ) {
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
-		inStream_->read( bytesToRead, sizeOfBytes );
+		return inStream_->read( bytesToRead, sizeOfBytes );		
 	}
 
 	virtual bool isEOS() {
@@ -158,6 +159,7 @@ private:
 };
 
 /**
+\class VariantDataOutputStream VariantDataStream.h "vcf/FoundationKit/VariantDataStream.h"
 *The VariantDataOutputStream is used to write a
 *VariantData object to an OutputStream source.
 */
@@ -198,11 +200,11 @@ public:
 		return outStream_->getCurrentSeekPos();
 	}
 
-	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes ) {
+	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes ) {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
-		outStream_->write( bytesToWrite, sizeOfBytes );
+		return outStream_->write( bytesToWrite, sizeOfBytes );
 	}
 
 	void writeVariantData( const VariantData* data ) {
@@ -210,6 +212,13 @@ public:
 			case pdInt : {
 				outStream_->write( String("i") );
 				outStream_->write( (int)(*data) );
+			}
+			break;
+
+			case pdUInt : {
+				outStream_->write( String("+i") );
+				uint32 tmp = (*data);
+				outStream_->write( (int)tmp );
 			}
 			break;
 
@@ -228,6 +237,12 @@ public:
 			case pdShort : {
 				outStream_->write( String("h") );
 				outStream_->write( (short)(*data) );
+			}
+			break;
+
+			case pdUShort : {
+				outStream_->write( String("+h") );
+				outStream_->write( (ushort)(*data) );
 			}
 			break;
 
@@ -279,6 +294,10 @@ public:
 				}
 			}
 			break;
+
+            default: {
+            }
+            break;
 		}
 	}
 private:
@@ -291,6 +310,21 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.4  2006/03/19 00:04:17  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.3.2.3  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
+*Revision 1.3.2.2  2006/02/23 01:41:58  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.3.2.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

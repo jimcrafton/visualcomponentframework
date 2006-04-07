@@ -42,56 +42,34 @@ String AbstractApplication::getFileName()
 	return applicationPeer_->getFileName();
 }
 
-Frame* AbstractApplication::createFrame( const String& frameClassName )
+Window* AbstractApplication::createWindow( Class* windowClass )
 {
-	Frame* result = NULL;
+	Window* result = NULL;
 
-	ResourceBundle* resBundle = getResourceBundle();
-	if ( NULL != resBundle ){
-		String vffString = resBundle->getVFF( frameClassName );
-
-		if ( false == vffString.empty() ){
-			BasicInputStream bis( vffString );
-			VFFInputStream vis( &bis );
-			vis.readComponent( (Component**)&result );
-		}
-		else{
-			String errMsg = "VFF Resource \"" + frameClassName + "\" has no data.";
-			throw InvalidPointerException( MAKE_ERROR_MSG( errMsg ) );
-		}
-	}
-	else{
-		String errMsg = "Resource \"" + frameClassName + "\" not found.";
-		throw InvalidPointerException( MAKE_ERROR_MSG( errMsg ) );
-	}
+	result = Frame::createWindow( windowClass, getResourceBundle() );
 
 	return result;
 }
 
-void AbstractApplication::loadFrame( Frame** frame )
+Dialog* AbstractApplication::createDialog( Class* dialogClass )
 {
+	Dialog* result = NULL;
 
-	String frameClassName = (*frame)->getClassName();
+	result = Frame::createDialog( dialogClass, getResourceBundle() );
 
-	ResourceBundle* resBundle = getResourceBundle();
-	if ( NULL != resBundle ){
-		String vffString = resBundle->getVFF( frameClassName );
-
-		if ( false == vffString.empty() ){
-			BasicInputStream bis( vffString );
-			VFFInputStream vis( &bis );
-			vis.readComponentInstance( *frame );
-		}
-		else{
-			String errMsg = "VFF Resource \"" + frameClassName + "\" has no data.";
-			throw InvalidPointerException( MAKE_ERROR_MSG( errMsg ) );
-		}
-	}
-	else{
-		String errMsg = "Resource \"" + frameClassName + "\" not found.";
-		throw InvalidPointerException( MAKE_ERROR_MSG( errMsg ) );
-	}
+	return result;
 }
+
+void AbstractApplication::loadWindow( Window* window )
+{
+	Component::initComponent( window, window->getClass(), classid(VCF::Window), getResourceBundle() );
+}
+
+void AbstractApplication::loadDialog( Dialog* dialog )
+{
+	Component::initComponent( dialog, dialog->getClass(), classid(VCF::Dialog), getResourceBundle() );
+}
+
 
 void AbstractApplication::idleTime()
 {
@@ -132,6 +110,18 @@ void AbstractApplication::setName( const String& name )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:20  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.4.2.2  2005/10/09 04:32:44  ddiego
+*added some minor fixes in component persistence for vcf builder.
+*
+*Revision 1.4.2.1  2005/08/15 03:10:51  ddiego
+*minor updates to vff in out streaming.
+*
 *Revision 1.4  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

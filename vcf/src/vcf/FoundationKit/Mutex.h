@@ -19,7 +19,8 @@ namespace VCF  {
 class MutexPeer;
 
 /**
-*Class Mutex documentation
+\class Mutex Mutex.h "vcf/FoundationKit/Mutex.h"
+Class Mutex documentation
 */
 class FOUNDATIONKIT_API Mutex : public Object, public SynchObject
 {
@@ -52,6 +53,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

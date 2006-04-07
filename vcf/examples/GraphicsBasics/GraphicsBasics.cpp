@@ -122,7 +122,7 @@ public:
 		current font
 		*/
 
-		Font myFont( "Arial", 46 );
+		Font myFont( "Arial", 40 );
 		myFont.setItalic( true );
 
 		/**
@@ -161,7 +161,7 @@ public:
 
 		Window* mainWindow = new GraphicsBasicsWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
+		mainWindow->setBounds( 5.0, 100.0, 800.0, 375.0 );
 		mainWindow->show();
 
 		return result;
@@ -183,6 +183,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:34:28  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.4.1  2006/03/19 18:42:10  ddiego
+*fixed window size for graphics basics example per fraggles req.
+*
 *Revision 1.6  2004/12/01 04:15:04  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

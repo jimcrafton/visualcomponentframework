@@ -21,11 +21,14 @@ where you installed the VCF.
 
 namespace VCF{
 
-/** @interface */
+/**
+\class Printable Printable.h "vcf/GraphicsKit/Printable.h"
+*/
 
 class GRAPHICSKIT_API Printable {
 public:
-
+	virtual ~Printable(){};
+	
     virtual PrintContext* getPrintContext() = 0;
 };
 
@@ -35,6 +38,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.2.6.1  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

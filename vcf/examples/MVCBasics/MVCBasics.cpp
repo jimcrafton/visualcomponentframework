@@ -130,6 +130,7 @@ public:
 		setVisible( true );
 
 		CircleModel* model = new CircleModel();
+		addComponent( model );
 
 		model->addCircle( Point(100,200), 100 );
 		model->addCircle( Point(234,550), 300 );
@@ -198,6 +199,7 @@ public:
 		setVisible( true );
 
 		CircleModel* model = new CircleModel();
+		addComponent( model );
 
 		model->addCircle( Point(100,200), 100 );
 		model->addCircle( Point(234,550), 300 );
@@ -219,6 +221,7 @@ public:
 		setVisible( true );
 
 		CircleModel* model = new CircleModel();
+		addComponent( model );
 
 		model->addCircle( Point(100,200), 100 );
 		model->addCircle( Point(234,550), 300 );
@@ -467,8 +470,6 @@ public:
 		btn5->setHeight( btn5->getPreferredHeight() );
 		btn5->setCaption( "MVC Basics Part 5" );
 		add( btn5, AlignTop );
-
-		show();
 	}
 
 	void example1( VCF::Event* ) {
@@ -493,6 +494,7 @@ public:
 		wnd->setCaption( "MVCBasics Part 4" );
 
 		CircleModel* model = new CircleModel();
+		wnd->addComponent( model );
 
 		model->addCircle( Point(100,200), 100 );
 		model->addCircle( Point(234,550), 300 );
@@ -522,6 +524,7 @@ public:
 		wnd->setCaption( "MVCBasics Part 5" );
 
 		CircleModel* model = new CircleModel();
+		wnd->addComponent( model );
 
 		model->addCircle( Point(100,200), 100 );
 		model->addCircle( Point(234,550), 300 );
@@ -573,6 +576,7 @@ public:
 		Window* mainWindow = new MVCBasicsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -593,8 +597,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.4  2005/07/09 23:14:40  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.5  2006/04/07 02:34:38  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/16 18:45:24  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.4.2.2  2005/10/04 01:57:02  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.4.2.1  2005/07/23 21:45:38  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.3.2.2  2005/04/17 15:11:45  iamfraggle
 *Replaced old-style var arg calls with new Format calls.

@@ -15,7 +15,7 @@ class LinuxLocalePeer : public LocalePeer
 {
 public:
 	LinuxLocalePeer();
-
+    ~LinuxLocalePeer();
 
 	virtual void setLocale( const UnicodeString& language,
 	                        const UnicodeString& country,
@@ -23,6 +23,9 @@ public:
 
 	virtual ulong32 getLanguageCode();
 	virtual ulong32 getCountryCode();
+
+	virtual String getLanguage();
+
 
 	virtual int collate( const UnicodeString& s1, const UnicodeString& s2 );
 	virtual int collateCaseInsensitive( const UnicodeString& s1,
@@ -68,10 +71,10 @@ public:
 	virtual UnicodeString translate( const UnicodeString& id );
 
 	virtual OSHandleID getHandleID() {
-		return (OSHandleID)0;
+		return (OSHandleID)locale_;
 	}
 protected:
-	UnicodeString crtLocaleStr_;
+    locale_t locale_;
 };
 
 }
@@ -80,6 +83,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/23 05:20:23  ddiego
+*added missing stub for linux to locale peer.
+*
+*Revision 1.4.2.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

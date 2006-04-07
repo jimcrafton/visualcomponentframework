@@ -15,7 +15,6 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32Tree.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/Win32Listview.h"
-#include "vcf/ApplicationKit/HTMLBrowserPeer.h"
 #include "vcf/ApplicationKit/Win32Dialog.h"
 #include "vcf/ApplicationKit/Win32MenuItem.h"
 #include "vcf/ApplicationKit/Win32MenuBar.h"
@@ -36,7 +35,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32Component.h"
 #include "vcf/ApplicationKit/Win32Window.h"
 #include "vcf/ApplicationKit/Win32DragDropPeer.h"
-#include "vcf/ApplicationKit/COMUtils.h"
+#include "vcf/ApplicationKit/Win32COMUtils.h"
 #include "vcf/ApplicationKit/Win32Toolbar.h"
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/SystemTrayPeer.h"
@@ -62,25 +61,25 @@ where you installed the VCF.
 
 
 
-#ifdef _LIB
-    /* a user not defining USE_WIN32HTMLBROWSER_LIB will not be able to
-       link the Win32HTMLBrowser_StaticLib, but also he will not have to
-       link to it either if is not using it in any of his projects */
-#   ifdef USE_WIN32HTMLBROWSER_LIB
-//     ApplicationKit statically linked in
-#      include "vcf/ApplicationKit/Win32HTMLBrowserApplication.h"
-#      pragma message ( "Win32HTMLBrowser is linked in statically" )
-#   endif
-#else
-    /* Win32HTMLBrowser will be loaded at runtime */
-#   define RUNTIME_LOADLIBRARY
-#   pragma message ( "Win32HTMLBrowser is linked dynamically" )
-#endif
+
+
+#include "thirdparty/win32/Microsoft/htmlhelp.h"
+
+#include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+
+
+typedef HWND  (WINAPI *HtmlHelpW_Func)(HWND hwndCaller, LPCWSTR pszFile, UINT uCommand, DWORD_PTR dwData );
+typedef HWND (WINAPI *HtmlHelpA_Func)(HWND hwndCaller, LPCSTR pszFile, UINT uCommand, DWORD_PTR dwData );
 
 
 
-#include "vcf/ApplicationKit/Win32HTMLBrowserSelectLib.h"
+static HtmlHelpW_Func HtmlHelp_W = NULL;
+static HtmlHelpA_Func HtmlHelp_A = NULL;
+static HMODULE HtmlHelpLibHandle = NULL;
 
+
+
+static HWND LastHTMLHelpWnd = NULL;
 
 using namespace VCF;
 using namespace VCFWin32;
@@ -95,10 +94,12 @@ static UINT ToolTipTimoutTimerID = 0;
 static UINT VCF_POST_EVENT = 0;
 
 HINSTANCE Win32ToolKit_toolkitHInstance = NULL;
+static HHOOK Win32ToolKit_mouseHook = NULL;
+static HHOOK Win32ToolKit_kbHook = NULL;
 
 #ifndef _LIB //DLL Linkage...
 
-BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
+extern "C" BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
 {
     switch ( ul_reason_for_call ) {
 		case DLL_PROCESS_ATTACH:  {
@@ -130,6 +131,896 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+using namespace VCFWin32;
+
+
+
+unsigned long Win32UIUtils::translateKeyMask( UINT win32KeyMask )
+{
+	unsigned long result = VCF::kmUndefined;
+
+	if ( (win32KeyMask & MK_CONTROL) != 0 ){
+		result |= VCF::kmCtrl;
+	}
+
+	if ( (win32KeyMask & MK_SHIFT) != 0 ){
+		result |= VCF::kmShift;
+	}
+
+	if ( ::GetAsyncKeyState( VK_MENU ) < 0 ) {
+		result |= VCF::kmAlt;
+	}
+
+	return result;
+}
+
+unsigned long Win32UIUtils::translateButtonMask( UINT win32ButtonMask )
+{
+	unsigned long result = VCF::mbmUndefined;
+
+	if ( (win32ButtonMask & MK_LBUTTON) != 0 ){
+		result |= VCF::mbmLeftButton;
+	}
+
+	if ( (win32ButtonMask & MK_MBUTTON) != 0 ){
+		result |= VCF::mbmMiddleButton;
+	}
+
+	if ( (win32ButtonMask & MK_RBUTTON) != 0 ){
+		result |= VCF::mbmRightButton;
+	}
+
+	return result;
+}
+
+DWORD Win32UIUtils::translateStyle( unsigned long style )
+{
+	DWORD result = 0;
+	//if ( (style & ) > 0 ){
+
+	//};
+	return result;
+}
+
+DWORD Win32UIUtils::translateExStyle( unsigned long style )
+{
+	DWORD result = 0;
+
+	return result;
+}
+
+/**
+*translates the Win32 key code into an actually usable
+*structure.
+*Specifies the repeat count, scan code, extended-key flag, context code, previous key-state flag,
+*and transition-state flag, as shown in the following table.
+*Value Description
+*	0–15 Specifies the repeat count for the current message.
+*	     The value is the number of times the keystroke is autorepeated
+*		 as a result of the user holding down the key. If the keystroke is held
+*		 long enough, multiple messages are sent. However, the repeat count is not cumulative.
+*
+*	16–23 Specifies the scan code. The value depends on the original equipment manufacturer (OEM).
+*
+*	24   Specifies whether the key is an extended key, such as the right-hand ALT and CTRL keys that
+*	     appear on an enhanced 101- or 102-key keyboard. The value is 1 if it is an extended key;
+*		 otherwise, it is 0.
+*
+*	25–28 Reserved; do not use.
+*
+*	29   Specifies the context code. The value is 1 if the ALT key is held down while the
+*        key is pressed; otherwise, the value is 0.
+*
+*	30   Specifies the previous key state. The value is 1 if the key is down before
+*        the message is sent, or it is 0 if the key is up.
+*	31   Specifies the transition state. The value is 1 if the key is being released, or it
+*	     is 0 if the key is being pressed.
+*/
+KeyboardData Win32UIUtils::translateKeyData( HWND wndHandle, LPARAM keyData )
+{
+	KeyboardData result;
+	memset( &result, 0, sizeof(KeyboardData) );
+	int sum = 0;
+
+	sum = ((BYTE*)&keyData)[2]; //gets bits 16-23
+
+	BYTE keyState[256];
+	if ( GetKeyboardState( &keyState[0] ) ){
+		result.scanCode = sum;
+		result.repeatCount = keyData & 0xFFFF; //mask out the upper 16 bits
+		result.altKeyDown = ( keyData & KB_CONTEXT_CODE ) != 0;//replace with #define
+		result.isExtendedKey = ( keyData & KB_IS_EXTENDED_KEY ) != 0;
+		result.character = 0;
+
+		result.VKeyCode = MapVirtualKey( result.scanCode, 1);
+
+
+
+		HKL keyboardLayout = GetKeyboardLayout( GetWindowThreadProcessId( wndHandle, NULL ) );
+
+		ToAsciiEx( result.VKeyCode, result.scanCode, &keyState[0], &result.character, 1, keyboardLayout );
+
+		std::bitset<16> keyBits;
+		keyBits = GetAsyncKeyState( VK_SHIFT );
+		if ( keyBits[15] == 1 ){
+			result.keyMask |= MK_SHIFT;
+		}
+
+		keyBits = GetAsyncKeyState( VK_CONTROL );
+		if ( keyBits[15] == 1 ){
+			result.keyMask |= MK_CONTROL;
+		}
+
+		keyBits = GetAsyncKeyState( VK_MENU );
+		if ( keyBits[15] == 1 ){
+			result.altKeyDown = true;
+		}
+
+	}
+	return result;
+}
+
+
+
+int Win32UIUtils::getXFromLParam( LPARAM lParam )
+{
+	return (int)(short) LOWORD(lParam);
+}
+
+int Win32UIUtils::getYFromLParam( LPARAM lParam )
+{
+	return (int)(short) HIWORD(lParam);
+}
+
+VCF::ulong32 Win32UIUtils::translateVKCode( UINT vkCode )
+{
+	VCF::ulong32 result = 0;
+
+	switch ( vkCode ){
+		case VK_F1 :{
+			result = VCF::vkF1;
+		}
+		break;
+
+		case VK_F2 :{
+			result = VCF::vkF2;
+		}
+		break;
+
+		case VK_F3 :{
+			result = VCF::vkF3;
+		}
+		break;
+
+		case VK_F4 :{
+			result = VCF::vkF4;
+		}
+		break;
+
+		case VK_F5 :{
+			result = VCF::vkF5;
+		}
+		break;
+
+		case VK_F6 :{
+			result = VCF::vkF6;
+		}
+		break;
+
+		case VK_F7 :{
+			result = VCF::vkF7;
+		}
+		break;
+
+		case VK_F8 :{
+			result = VCF::vkF8;
+		}
+		break;
+
+		case VK_F9 :{
+			result = VCF::vkF9;
+		}
+		break;
+
+		case VK_F10 :{
+			result = VCF::vkF10;
+		}
+		break;
+
+		case VK_F11 :{
+			result = VCF::vkF11;
+		}
+		break;
+
+		case VK_F12 :{
+			result = VCF::vkF12;
+		}
+		break;
+
+		case VK_UP :{
+			result = VCF::vkUpArrow;
+		}
+		break;
+
+		case VK_DOWN :{
+			result = VCF::vkDownArrow;
+		}
+		break;
+
+		case VK_LEFT :{
+			result = VCF::vkLeftArrow;
+		}
+		break;
+
+		case VK_RIGHT :{
+			result = VCF::vkRightArrow;
+		}
+		break;
+
+		case VK_DELETE :{
+			result = VCF::vkDelete;
+		}
+		break;
+
+		case VK_RETURN :{
+			result = VCF::vkReturn;
+		}
+		break;
+
+		case VK_BACK :{
+			result = VCF::vkBackSpace;
+		}
+		break;
+
+		case VK_SPACE :{
+			result = VCF::vkSpaceBar;
+		}
+		break;
+
+		case VK_ESCAPE :{
+			result = VCF::vkEscape;
+		}
+		break;
+
+		case VK_NEXT :{
+			result = VCF::vkPgDown;
+		}
+		break;
+
+		case VK_PRIOR :{
+			result = VCF::vkPgUp;
+		}
+		break;
+
+		case VK_HOME :{
+			result = VCF::vkHome;
+		}
+		break;
+
+		case VK_END :{
+			result = VCF::vkEnd;
+		}
+		break;
+
+		case VK_CONTROL :{
+			result = VCF::vkCtrl;
+		}
+		break;
+
+		case VK_MENU :{
+			result = VCF::vkAlt;
+		}
+		break;
+
+		case VK_SHIFT :{
+			result = VCF::vkShift;
+		}
+		break;
+
+		case VK_TAB :{
+			result = VCF::vkTab;
+		}
+		break;
+		//from WINUSER.h
+		/* VK_0 thru VK_9 are the same as ASCII '0' thru '9' (0x30 - 0x39) */
+		case VK_NUMPAD0: case 0x30 :{
+			result = VCF::vkNumber0;
+		}
+		break;
+
+		case VK_NUMPAD1: case 0x31 :{
+			result = VCF::vkNumber1;
+		}
+		break;
+
+		case VK_NUMPAD2: case 0x32 :{
+			result = VCF::vkNumber2;
+		}
+		break;
+
+		case VK_NUMPAD3: case 0x33 :{
+			result = VCF::vkNumber3;
+		}
+		break;
+
+		case VK_NUMPAD4: case 0x34 :{
+			result = VCF::vkNumber4;
+		}
+		break;
+
+		case VK_NUMPAD5: case 0x35 :{
+			result = VCF::vkNumber5;
+		}
+		break;
+
+		case VK_NUMPAD6: case 0x36 :{
+			result = VCF::vkNumber6;
+		}
+		break;
+
+		case VK_NUMPAD7: case 0x37 :{
+			result = VCF::vkNumber7;
+		}
+		break;
+
+		case VK_NUMPAD8: case 0x38 :{
+			result = VCF::vkNumber8;
+		}
+		break;
+
+		case VK_NUMPAD9: case 0x39 :{
+			result = VCF::vkNumber9;
+		}
+		break;
+
+		//from WINUSER.h
+		/* VK_A thru VK_Z are the same as ASCII 'A' thru 'Z' (0x41 - 0x5A) */
+		case 'A' :{
+			result = VCF::vkLetterA;
+		}
+		break;
+
+		case 'B' :{
+			result = VCF::vkLetterB;
+		}
+		break;
+
+		case 'C' :{
+			result = VCF::vkLetterC;
+		}
+		break;
+
+		case 'D' :{
+			result = VCF::vkLetterD;
+		}
+		break;
+
+		case 'E' :{
+			result = VCF::vkLetterE;
+		}
+		break;
+
+		case 'F' :{
+			result = VCF::vkLetterF;
+		}
+		break;
+
+		case 'G' :{
+			result = VCF::vkLetterG;
+		}
+		break;
+
+		case 'H' :{
+			result = VCF::vkLetterH;
+		}
+		break;
+
+		case 'I' :{
+			result = VCF::vkLetterI;
+		}
+		break;
+
+		case 'J' :{
+			result = VCF::vkLetterJ;
+		}
+		break;
+
+		case 'K' :{
+			result = VCF::vkLetterK;
+		}
+		break;
+
+		case 'L' :{
+			result = VCF::vkLetterL;
+		}
+		break;
+
+		case 'M' :{
+			result = VCF::vkLetterM;
+		}
+		break;
+
+		case 'N' :{
+			result = VCF::vkLetterN;
+		}
+		break;
+
+		case 'O' :{
+			result = VCF::vkLetterO;
+		}
+		break;
+
+		case 'P' :{
+			result = VCF::vkLetterP;
+		}
+		break;
+
+		case 'Q' :{
+			result = VCF::vkLetterQ;
+		}
+		break;
+		case 'R' :{
+			result = VCF::vkLetterR;
+		}
+		break;
+
+		case 'S' :{
+			result = VCF::vkLetterS;
+		}
+		break;
+
+		case 'T' :{
+			result = VCF::vkLetterT;
+		}
+		break;
+
+		case 'U' :{
+			result = VCF::vkLetterU;
+		}
+		break;
+
+		case 'V' :{
+			result = VCF::vkLetterV;
+		}
+		break;
+
+		case 'W' :{
+			result = VCF::vkLetterW;
+		}
+		break;
+
+		case 'X' :{
+			result = VCF::vkLetterX;
+		}
+		break;
+
+		case 'Y' :{
+			result = VCF::vkLetterY;
+		}
+		break;
+
+		case 'Z' :{
+			result = VCF::vkLetterZ;
+		}
+		break;
+
+		case VK_SNAPSHOT :{
+			result = VCF::vkPrintScreen;
+		}
+		break;
+
+		case VK_PAUSE :{
+			result = VCF::vkPause;
+		}
+		break;
+
+		case VK_SCROLL :{
+			result = VCF::vkScrollLock;
+		}
+		break;
+
+		case VK_MULTIPLY :{
+			result = VCF::vkMultiplySign;
+		}
+		break;
+
+		case VK_ADD :{
+			result = VCF::vkPlusSign;
+		}
+		break;
+
+		/*
+		case VK_SEPARATOR :{
+			result = VCF::vkScrollLock;
+		}
+		break;
+		*/
+
+		case VK_SUBTRACT :{
+			result = VCF::vkMinusSign;
+		}
+		break;
+
+		case VK_DECIMAL :{
+			result = VCF::vkPeriod;
+		}
+		break;
+
+		case VK_DIVIDE :{
+			result = VCF::vkDivideSign;
+		}
+		break;		
+	}
+
+	return result;
+}
+
+
+VCF::uint32 Win32UIUtils::convertCharToVKCode( VCF::VCFChar ch )
+{
+	VCF::uint32 result = 0;
+
+	ch = tolower( ch );
+	switch ( ch ) {
+		case 'a' : {
+			result = VCF::vkLetterA;
+		}
+		break;
+
+		case 'b' : {
+			result = VCF::vkLetterB;
+		}
+		break;
+
+		case 'c' : {
+			result = VCF::vkLetterC;
+		}
+		break;
+
+		case 'd' : {
+			result = VCF::vkLetterD;
+		}
+		break;
+
+		case 'e' : {
+			result = VCF::vkLetterE;
+		}
+		break;
+
+		case 'f' : {
+			result = VCF::vkLetterF;
+		}
+		break;
+
+		case 'g' : {
+			result = VCF::vkLetterG;
+		}
+		break;
+
+		case 'h' : {
+			result = VCF::vkLetterH;
+		}
+		break;
+
+		case 'i' : {
+			result = VCF::vkLetterI;
+		}
+		break;
+
+		case 'j' : {
+			result = VCF::vkLetterJ;
+		}
+		break;
+
+		case 'k' : {
+			result = VCF::vkLetterK;
+		}
+		break;
+
+		case 'l' : {
+			result = VCF::vkLetterL;
+		}
+		break;
+
+		case 'm' : {
+			result = VCF::vkLetterM;
+		}
+		break;
+
+		case 'n' : {
+			result = VCF::vkLetterN;
+		}
+		break;
+
+		case 'o' : {
+			result = VCF::vkLetterO;
+		}
+		break;
+
+		case 'p' : {
+			result = VCF::vkLetterP;
+		}
+		break;
+
+		case 'q' : {
+			result = VCF::vkLetterQ;
+		}
+		break;
+
+		case 'r' : {
+			result = VCF::vkLetterR;
+		}
+		break;
+
+		case 's' : {
+			result = VCF::vkLetterS;
+		}
+		break;
+
+		case 't' : {
+			result = VCF::vkLetterT;
+		}
+		break;
+
+		case 'u' : {
+			result = VCF::vkLetterU;
+		}
+		break;
+
+		case 'v' : {
+			result = VCF::vkLetterV;
+		}
+		break;
+
+		case 'w' : {
+			result = VCF::vkLetterW;
+		}
+		break;
+
+		case 'x' : {
+			result = VCF::vkLetterX;
+		}
+		break;
+
+		case 'y' : {
+			result = VCF::vkLetterY;
+		}
+		break;
+
+		case 'z' : {
+			result = VCF::vkLetterZ;
+		}
+		break;
+
+		case '0' : {
+			result = VCF::vkNumber0;
+		}
+		break;
+
+		case '1' : {
+			result = VCF::vkNumber1;
+		}
+		break;
+
+		case '2' : {
+			result = VCF::vkNumber2;
+		}
+		break;
+
+		case '3' : {
+			result = VCF::vkNumber3;
+		}
+		break;
+
+		case '4' : {
+			result = VCF::vkNumber4;
+		}
+		break;
+
+		case '5' : {
+			result = VCF::vkNumber5;
+		}
+		break;
+
+		case '6' : {
+			result = VCF::vkNumber6;
+		}
+		break;
+
+		case '7' : {
+			result = VCF::vkNumber7;
+		}
+		break;
+
+		case '8' : {
+			result = VCF::vkNumber8;
+		}
+		break;
+
+		case '9' : {
+			result = VCF::vkNumber9;
+		}
+		break;
+
+		case '/' : {
+			result = VCF::vkDivideSign;
+		}
+		break;
+
+		case '+' : {
+			result = VCF::vkPlusSign;
+		}
+		break;
+
+		case '-' : {
+			result = VCF::vkMinusSign;
+		}
+		break;
+
+		case '=' : {
+			result = VCF::vkEqualsSign;
+		}
+		break;
+
+		case '_' : {
+			result = VCF::vkUnderbar;
+		}
+		break;
+
+		case '|' : {
+			result = VCF::vkUprightBar;
+		}
+		break;
+
+		case '{' : {
+			result = VCF::vkOpenBrace;
+		}
+		break;
+
+		case '}' : {
+			result = VCF::vkCloseBrace;
+		}
+		break;
+
+		case '[' : {
+			result = VCF::vkOpenBracket;
+		}
+		break;
+
+		case ']' : {
+			result = VCF::vkCloseBracket;
+		}
+		break;
+
+		case '<' : {
+			result = VCF::vkLessThan;
+		}
+		break;
+
+		case '>' : {
+			result = VCF::vkGreaterThan;
+		}
+		break;
+
+		case '.' : {
+			result = VCF::vkPeriod;
+		}
+		break;
+
+		case ',' : {
+			result = VCF::vkComma;
+		}
+		break;
+
+		case '!' : {
+			result = VCF::vkExclamation;
+		}
+		break;
+
+		case '~' : {
+			result = VCF::vkTilde;
+		}
+		break;
+
+		case '`' : {
+			result = VCF::vkLeftApostrophe;
+		}
+		break;
+
+		case '@' : {
+			result = VCF::vkCommercialAt;
+		}
+		break;
+
+		case '#' : {
+			result = VCF::vkNumberSign;
+		}
+		break;
+
+		case '$' : {
+			result = VCF::vkDollarSign;
+		}
+		break;
+
+		case '%' : {
+			result = VCF::vkPercent;
+		}
+		break;
+
+		case '^' : {
+			result = VCF::vkCircumflex;
+		}
+		break;
+
+		case '&' : {
+			result = VCF::vkAmpersand;
+		}
+		break;
+
+		case '*' : {
+			result = VCF::vkAsterix;
+		}
+		break;
+
+		case '(' : {
+			result = VCF::vkOpenParen;
+		}
+		break;
+
+		case ')' : {
+			result = VCF::vkCloseParen;
+		}
+		break;
+
+		case ':' : {
+			result = VCF::vkColon;
+		}
+		break;
+
+		case ';' : {
+			result = VCF::vkSemiColon;
+		}
+		break;
+
+		case '"' : {
+			result = VCF::vkDoubleQuote;
+		}
+		break;
+
+		case '\'' : {
+			result = VCF::vkSingleQuote;
+		}
+		break;
+
+		case '\\' : {
+			result = VCF::vkBackSlash;
+		}
+		break;
+
+		case '?' : {
+			result = VCF::vkQuestionMark;
+		}
+		break;
+	}
+	return result;
+}
+
+
+
+
 //UIPolicyManager implementation
 
 class Win32UIPolicyManager : public UIPolicyManager {
@@ -151,9 +1042,35 @@ public:
 			result.right_ = result.left_ + dialog->getWidth();
 			result.bottom_ = result.top_ + dialog->getHeight();
 			if ( NULL != owner->getParent() ) {
-				owner->translateToScreenCoords( &result );
+				owner->translateToScreenCoords( &result );				
+			}
+
+			double w = result.getWidth();
+			double h = result.getHeight();
+			RECT r;
+			SystemParametersInfo( SPI_GETWORKAREA, 0, &r, 0 );
+			if ( r.left > result.left_ ) {
+				result.left_ = r.left;
+				result.right_ = result.left_ + w;
+			}
+
+			if ( r.top > result.top_ ) {
+				result.top_ = r.top;
+				result.bottom_ = result.top_ + h;
+			}
+
+			if ( r.right < result.right_ ) {
+				result.right_ = r.right;
+				result.left_ = result.right_ - w;
+			}
+
+			if ( r.bottom < result.bottom_ ) {
+				result.bottom_ = r.bottom;
+				result.top_ = result.bottom_ - h;
 			}
 		}
+
+		
 
 		return result;
 	}
@@ -537,7 +1454,6 @@ public:
 				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 				Point pt = DLUToPixel( Point(0,12), f );
 				result = pt.y_;
-
 			}
 			break;
 
@@ -677,7 +1593,7 @@ public:
 			SelectObject( dc, oldFont );
 
 			// height of item is just height of a standard menu item
-			result.height_ = __max( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
+			result.height_ = maxVal<double>( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
 
 			const int CXGAP = 1;		// num pixels between button and text
 			const int CXTEXTMARGIN = 2;		// num pixels after hilite to start text
@@ -736,6 +1652,717 @@ public:
 
 	virtual Size getDefaultTabDimensions( const String& caption )  {
 		Size result;
+
+		return result;
+	}
+
+	virtual double getValue( const MetricType& type, const String& text ) {		
+		double result = 0;
+
+		switch ( type ) {
+			case mtLabelHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,8), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtComboBoxHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,14), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtListItemHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtButtonHeight : {			
+				
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					RECT r = {0};
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, BP_PUSHBUTTON, PBS_NORMAL, 
+																&r, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result = sz.cy;
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					Point pt = DLUToPixel( Point(0,14), f );
+					result = pt.y_;
+				}
+			}
+			break;
+
+			case mtRadioBoxHeight : {			
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;				
+			}
+			break;
+
+			case mtCheckBoxHeight : {				
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;				
+			}
+			break;
+
+			case mtToolTipHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtSeparatorHeight : {
+				result = 2.0;
+			}
+			break;
+
+			case mtHeaderHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtTreeItemHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,9), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtTextControlHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,12), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtVerticalProgressWidth : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(14,14), f );
+				result = pt.x_;
+			}
+			break;
+
+			case mtHorizontalProgressHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,14), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtInformationalControlHeight : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,10), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtVerticalScrollbarThumbWidth : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"SCROLLBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SBP_THUMBBTNVERT, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+					
+					result = sz.cx;
+				}
+				else {
+					NONCLIENTMETRICS ncm;
+					memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+					ncm.cbSize = sizeof(NONCLIENTMETRICS);
+					
+					SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+					
+					result = ncm.iScrollWidth;
+				}
+			}
+			break;
+
+			case mtHorizontalScrollbarThumbHeight : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"SCROLLBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SBP_THUMBBTNHORZ, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+					
+					result = sz.cy;
+				}
+				else {
+					NONCLIENTMETRICS ncm;
+					memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+					ncm.cbSize = sizeof(NONCLIENTMETRICS);
+					
+					SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+					
+					result = ncm.iScrollHeight;
+				}
+			}
+			break;
+
+			case mtVerticalScrollbarWidth : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"SCROLLBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SBP_LOWERTRACKVERT, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+					
+					result = sz.cx;
+				}
+				else {
+					NONCLIENTMETRICS ncm;
+					memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+					ncm.cbSize = sizeof(NONCLIENTMETRICS);
+					
+					SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+					
+					result = ncm.iScrollWidth;
+				}
+			}
+			break;
+
+			case mtHorizontalScrollbarHeight : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"SCROLLBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SBP_LOWERTRACKHORZ, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+					
+					result = sz.cy;
+				}
+				else {
+					NONCLIENTMETRICS ncm;
+					memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+					ncm.cbSize = sizeof(NONCLIENTMETRICS);
+					
+					SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+					
+					result = ncm.iScrollHeight;
+				}
+			}
+			break;
+
+			case mtMenuIndent : {
+
+			}
+			break;
+
+			case mtWindowBorderDelta : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,7), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtContainerBorderDelta : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,7), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtControlVerticalSpacing : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,4), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtControlHorizontalSpacing : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(4,4), f );
+				result = pt.x_;
+			}
+			break;
+
+			case mtInformationControlTopSpacer : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,4), f );
+				result = pt.y_;
+			}
+			break;
+
+			case mtInformationControlBottomSpacer : {
+				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+				Point pt = DLUToPixel( Point(0,4), f );
+				result = pt.y_;
+			}
+			break;
+
+			default : {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
+			}
+			break;
+		}
+
+		return result;
+	}
+
+	virtual Size getSize( const MetricType& type, const String& text ) {
+		Size result;
+		
+		switch ( type ) {
+			case mtMenuSize : {
+				NONCLIENTMETRICSA ncInfo;
+				ncInfo.cbSize = sizeof(ncInfo);
+				::SystemParametersInfoA (SPI_GETNONCLIENTMETRICS, sizeof(ncInfo), &ncInfo, 0);
+				HFONT menuHFont = CreateFontIndirectA( &ncInfo.lfMenuFont );
+				if ( NULL != menuHFont ) {
+					HDC dc = ::CreateCompatibleDC( NULL );// screen DC--I won't actually draw on it
+					HFONT oldFont = (HFONT)SelectObject( dc, menuHFont );
+					RECT rcText = {0,0,0,0};
+					if ( System::isUnicodeEnabled() ) {
+						::DrawTextW( dc, text.c_str(), text.size(), &rcText, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_CALCRECT);
+					}
+					else {
+						AnsiString tmp = text;
+						::DrawTextA( dc, tmp.c_str(), tmp.size(), &rcText, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_CALCRECT);
+					}
+					
+					
+					SelectObject( dc, oldFont );
+					
+					// height of item is just height of a standard menu item
+					result.height_ = maxVal<double>( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
+					
+					const int CXGAP = 1;		// num pixels between button and text
+					const int CXTEXTMARGIN = 2;		// num pixels after hilite to start text
+					const int CXBUTTONMARGIN = 2;		// num pixels wider button is than bitmap
+					const int CYBUTTONMARGIN = 2;		// ditto for height
+					
+					// width is width of text plus a bunch of stuff
+					int cx = rcText.right - rcText.left;	// text width
+					cx += CXTEXTMARGIN << 1;		// L/R margin for readability
+					cx += CXGAP;					// space between button and menu text
+					
+					//cx += szButton_.cx<<1;		// button width (L=button; R=empty margin)
+					
+					// whatever value I return in lpms->itemWidth, Windows will add the
+					// width of a menu checkmark, so I must subtract to defeat Windows. Argh.
+					//
+					cx += GetSystemMetrics(SM_CXMENUCHECK)-1;
+					result.width_ = cx;		// done deal
+					
+					::DeleteObject( menuHFont );
+					::DeleteDC( dc );
+				}
+			}
+			break;
+
+			case mtVerticalSliderThumbSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TRACKBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TKP_THUMBVERT, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					Point pt = DLUToPixel( Point(15,15), f );
+					
+					result.height_ = 11;
+					result.width_ = pt.x_;
+				}
+			}
+			break;
+
+			case mtHorizontalSliderThumbSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TRACKBAR" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TKP_THUMB, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					Point pt = DLUToPixel( Point(0,15), f );
+					
+					result.height_ = pt.y_;
+					result.width_ = 11;
+				}
+			}
+			break;
+
+			case mtTabSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					int dcs = SaveDC(dc);
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					HFONT font = NULL;	
+					SIZE textSz = {0};
+
+					if ( System::isUnicodeEnabled() ) {
+						LOGFONTW* lf = (LOGFONTW*) f.getFontPeer()->getFontHandleID();
+						font = ::CreateFontIndirectW( lf );
+						::SelectObject( dc, font );
+						
+						if ( text.empty() ) {
+							::GetTextExtentPoint32W( dc, L"EM", 2, &textSz );
+						}
+						else {
+							::GetTextExtentPoint32W( dc, text.c_str(), text.size(), &textSz );
+						}
+					}
+					else {
+						LOGFONTA* lf = (LOGFONTA*) f.getFontPeer()->getFontHandleID();
+						AnsiString s = text;
+						font = ::CreateFontIndirectA( lf );
+						::SelectObject( dc, font );
+						
+						if ( s.empty() ) {
+							::GetTextExtentPoint32A( dc, "EM", 2, &textSz );
+						}
+						else {
+							::GetTextExtentPoint32A( dc, s.c_str(), s.size(), &textSz );
+						}
+					}
+
+					RestoreDC(dc, dcs);
+					DeleteObject( font );
+
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TABP_TABITEM, 0, 
+																NULL, TS_TRUE, &sz);					
+
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx + textSz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					HDC dc = ::GetDC( ::GetDesktopWindow() );
+					int dcs = SaveDC(dc);
+					SIZE textSz = {0};
+					SIZE textSz2 = {0};
+					
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					HFONT font = NULL;			
+					if ( System::isUnicodeEnabled() ) {
+						LOGFONTW* lf = (LOGFONTW*) f.getFontPeer()->getFontHandleID();
+						font = ::CreateFontIndirectW( lf );
+						::SelectObject( dc, font );
+						::GetTextExtentPoint32W( dc, L"EM", 2, &textSz );
+						if ( text.empty() ) {
+							textSz2 = textSz;
+						}
+						else {
+							::GetTextExtentPoint32W( dc, text.c_str(), text.size(), &textSz2 );
+						}
+					}
+					else {
+						LOGFONTA* lf = (LOGFONTA*) f.getFontPeer()->getFontHandleID();
+						AnsiString s = text;
+						font = ::CreateFontIndirectA( lf );
+						::SelectObject( dc, font );
+						::GetTextExtentPoint32A( dc, "EM", 2, &textSz );
+						if ( s.empty() ) {
+							textSz2 = textSz;
+						}
+						else {
+							::GetTextExtentPoint32A( dc, s.c_str(), s.size(), &textSz2 );
+						}
+					}
+					
+					result.height_ = maxVal<int>( textSz.cy, 21 );
+					result.width_ = textSz2.cx + result.height_ + 5.0;
+					
+					
+					
+					RestoreDC(dc, dcs);
+					DeleteObject( font );
+					::ReleaseDC( ::GetDesktopWindow(), dc );
+				}
+			}
+			break;
+
+			case mtRadioBoxBtnSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, BP_RADIOBUTTON, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					result.width_ = 13;
+					result.height_ = 13;
+				}
+			}
+			break;
+
+			case mtCheckBoxBtnSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, BP_CHECKBOX, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					result.width_ = 13;
+					result.height_ = 13;
+				}
+			}
+			break;
+
+			case mtComboBoxDropBtnSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"COMBOBOX" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, CP_DROPDOWNBUTTON, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+					NONCLIENTMETRICS ncm;
+					memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+					ncm.cbSize = sizeof(NONCLIENTMETRICS);
+					
+					SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+					result.width_ = ncm.iScrollWidth;
+					result.height_ = ncm.iScrollHeight;
+				}
+			}
+			break;
+
+			case mtDisclosureButtonSize : {
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TREEVIEW" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TVP_GLYPH, 0, 
+																NULL, TS_TRUE, &sz);
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.width_ = sz.cx;
+					result.height_ = sz.cy;
+				}
+				else {
+
+				}
+			}
+			break;
+
+			default : {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
+			}
+			break;
+		}
+
+		return result;
+	}
+
+	virtual Rect getRect( const MetricType& type, Rect* rect ) {
+		Rect result;
+
+		switch ( type ) {
+			case mtTabPaneContentRect : {
+				if ( NULL == rect ) {					
+					throw RuntimeException( MAKE_ERROR_MSG_2("mtTabPaneContentRect needs a valid rect instance - you passed in a NULL one!") );
+				}
+
+
+				HTHEME theme = NULL;
+				
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
+				}
+				
+				if ( theme ) {					
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					
+					
+					result = *rect;
+					
+					RECT r;
+					r.left = result.left_;
+					r.top = result.top_;
+					r.right = result.right_;
+					r.bottom = result.bottom_;
+					RECT paneContent = r;
+					RECT bodyContent = r;
+					
+					
+					Win32VisualStylesWrapper::GetThemeBackgroundContentRect(theme, dc, 
+						TABP_PANE, 1, &r, &paneContent );
+					
+					Win32VisualStylesWrapper::GetThemeBackgroundContentRect(theme, dc, 
+						TABP_BODY, 1, &r, &bodyContent );
+
+					int dy = abs(bodyContent.top - paneContent.top);
+					
+					SIZE tabSz = {0};
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TABP_TABITEM, TIS_NORMAL, 
+																&r, TS_TRUE, &tabSz);
+
+										
+					paneContent.top += tabSz.cy + dy;
+					
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					result.left_ = paneContent.left;
+					result.top_ = paneContent.top;
+					result.right_ = paneContent.right;
+					result.bottom_ = paneContent.bottom;
+				}
+				else {
+					result = *rect;
+
+					result.inflate( -5, -5 );
+
+					Size sz = getSize(mtTabSize,"");
+					result.top_ += sz.height_;
+				}
+
+			}
+			break;
+
+			default : {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
+			}
+			break;
+		}
 
 		return result;
 	}
@@ -826,6 +2453,9 @@ class ToolTipWatcher : public ObjectWithEvents {
 public:
 	ToolTipWatcher() {
 		currentControlWithTooltip_ = NULL;
+		
+		autoDestroyEmbeddedTooltipControl_ = false;
+		embeddedTooltipControl_ = NULL;
 
 		toolTip_ = NULL;
 
@@ -883,9 +2513,29 @@ public:
 
 	void showTooltip( Control* control, Point* pt ) {
 
+		if ( toolTip_->getVisible() ) {
+			return;
+		}
+		
+		if ( NULL != embeddedTooltipControl_ ) {
+			toolTip_->remove(embeddedTooltipControl_) ;
+			if ( autoDestroyEmbeddedTooltipControl_ ) {
+				Component* owner = embeddedTooltipControl_->getOwner();
+				owner->removeComponent( embeddedTooltipControl_ );
+				embeddedTooltipControl_->free();
+			}
+		}
+
+
+		toolTip_->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_TOOLTIP ) );
+		autoDestroyEmbeddedTooltipControl_ = false;
+		embeddedTooltipControl_ = NULL;
 
 		//pt is in screen coordinates
 		Point tmpPt = *pt;
+		Point adjustedPtForCursor = *pt;
+		
+
 		control->translateFromScreenCoords( &tmpPt );
 
 		Control* actualToolTipControl = getActualToolTipControl( control, &tmpPt );
@@ -893,16 +2543,20 @@ public:
 			return;// nothing to do
 		}
 
+		
 
 		String tooltip = actualToolTipControl->getToolTipText();
 
 		ToolTipEvent tooltipEvent( actualToolTipControl, 0 );
-		tooltipEvent.setToolTipLocation( pt );
+		
+		tooltipEvent.setBackgroundColor( toolTip_->getColor() );
+
+		tooltipEvent.setToolTipLocation( &adjustedPtForCursor );
 		tooltipEvent.setCustomTooltipContext( toolTip_->getContext() );
 		Size sz;
 		tooltipEvent.setToolTipSize( &sz );
 
-		if ( true == tooltip.empty() ) {
+		if ( tooltip.empty() ) {
 			//fire a tooltip requested
 			tooltipEvent.setType( TOOLTIP_EVENT_TIP_REQESTED );
 
@@ -910,15 +2564,18 @@ public:
 
 			tooltip = tooltipEvent.getToolTipString();
 
-			tooltipEvent.setType( 0 );
+			tooltipEvent.setType( 0 );			
 		}
 
-		if ( false == tooltip.empty() ) {
+		tooltipEvent.getToolTipLocation()->y_ += (::GetSystemMetrics( SM_CYCURSOR )*0.66);
+
+		if ( !tooltip.empty() ) {
 
 			actualToolTipControl->ToolTip.fireEvent( &tooltipEvent );
-			Point tmpPt = *tooltipEvent.getToolTipLocation();
+			tmpPt = *tooltipEvent.getToolTipLocation();
 
 
+			toolTip_->setColor( tooltipEvent.getBackgroundColor() );
 
 			toolTip_->setLeft( tmpPt.x_ );
 			toolTip_->setTop( tmpPt.y_ );
@@ -942,24 +2599,59 @@ public:
 				//toolTip_->setParent(  );
 			}
 
+			//embed control?
+			
+			if ( NULL != tooltipEvent.getEmbeddedControl() ) {
+				embeddedTooltipControl_ = tooltipEvent.getEmbeddedControl();
+				autoDestroyEmbeddedTooltipControl_ = tooltipEvent.getAutoDestroyEmbeddedControl();			
+				
+				toolTip_->add( embeddedTooltipControl_, AlignClient );
+			}
+			
+
 			toolTip_->setCaption( tooltip );
+			
 			toolTip_->show();
 			//toolTip_->setFrameTopmost( true );
 			currentControlWithTooltip_ = actualToolTipControl;
 		}
 	}
 
-	void onToolTipLostFocus( WindowEvent* e ) {
-		Window* w = (Window*)e->getSource();
+	void hideToolTip() {
+		
+		toolTip_->hide();
 
-		if ( false == w->isActive() ) {
-			w->hide();
+		if ( NULL != embeddedTooltipControl_ ) {
+			toolTip_->remove(embeddedTooltipControl_) ;
+			if ( autoDestroyEmbeddedTooltipControl_ ) {
+				Component* owner = embeddedTooltipControl_->getOwner();
+				owner->removeComponent( embeddedTooltipControl_ );
+				embeddedTooltipControl_->free();
+			}
+		}
+
+		embeddedTooltipControl_ = NULL;
+		autoDestroyEmbeddedTooltipControl_ = false;
+	}
+
+	void onToolTipLostFocus( WindowEvent* e ) {
+		
+		Window* w = (Window*)e->getSource();		
+		if ( w == toolTip_ ) {
+			hideToolTip();
+		}
+		else {			
+			if ( !w->isActive() ) {				
+				w->hide();
+			}
 		}
 	};
-
+	
+	bool autoDestroyEmbeddedTooltipControl_;
 	Win32ToolTip* toolTip_;
 	Point checkPt_;
 	Control* currentControlWithTooltip_;
+	Control* embeddedTooltipControl_;
 };
 
 static ToolTipWatcher* toolTipWatcher = NULL;
@@ -1001,6 +2693,12 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 		}
 		break;
 
+		case WM_SETTINGCHANGE : {
+			//settings change!			
+			UIToolkit::systemSettingsChanged();
+		}
+		break;
+
 		case WM_ACTIVATEAPP: {
 
 			BOOL fActive = (BOOL) wParam;
@@ -1033,9 +2731,9 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 				ToolTipTimerID = ::SetTimer( hWnd, TOOLTIP_TIMERID, 500, NULL );
 				Frame* activeFrame = Frame::getActiveFrame();
-
+				
 				if ( NULL != activeFrame ) {
-					/** - MP -
+					/**
 					REMARK: if we break here with a crash of the application, we probably had the
 					crash before the main frame window for the application has been fully initialized.
 					In order to see what the cause was, please put a break on the Dialog::showMessage
@@ -1047,7 +2745,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			}
 			else {
 				::KillTimer( hWnd, TOOLTIP_TIMERID );
-
+				ToolTipTimerID = 0;
 			}
 		}
 		break;
@@ -1069,7 +2767,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 					Point tmpPt( pt.x, pt.y );
 					HWND hwndCursorIsOver = WindowFromPoint( pt );
 					if ( NULL != hwndCursorIsOver ) {
-						ScreenToClient( hwndCursorIsOver, &pt );
+						ScreenToClient( hwndCursorIsOver, &pt );						 
 						HWND childWnd = ChildWindowFromPointEx( hwndCursorIsOver, pt, CWP_SKIPINVISIBLE );
 						if ( childWnd != NULL ) {
 							ClientToScreen( hwndCursorIsOver, &pt );
@@ -1079,7 +2777,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 							ScreenToClient( hwndCursorIsOver, &pt );
 						}
 
-						if ( FALSE != IsWindow( hwndCursorIsOver ) ) {
+						if ( IsWindow( hwndCursorIsOver ) ) {
 							Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCursorIsOver );
 
 							if ( NULL != win32Obj ) {
@@ -1089,9 +2787,10 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 										break;
 									}
 								}
-								tmpPt.y_ += (::GetSystemMetrics( SM_CYCURSOR )*0.66);
+								
 
 								if ( (toolTipWatcher->checkPt_.x_ == tmpPt.x_) && (toolTipWatcher->checkPt_.y_ == tmpPt.y_) ) {
+									
 									toolTipWatcher->showTooltip( win32Obj->getPeerControl(), &tmpPt );
 									ToolTipTimoutTimerID = ::SetTimer( hWnd, TOOLTIP_TIMEOUT_TIMERID, 5000, NULL );
 								}
@@ -1107,11 +2806,15 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				}
 			}
 
-			else if ( ToolTipTimoutTimerID == wTimerID ) {
+			else if ( ToolTipTimoutTimerID == wTimerID ) {				
 				::KillTimer( hWnd, TOOLTIP_TIMEOUT_TIMERID );
+				::KillTimer( hWnd, TOOLTIP_TIMERID );
+				ToolTipTimerID = 0;
 
 				if ( NULL != toolTipWatcher->toolTip_ ) {
-					toolTipWatcher->toolTip_->hide();
+					toolTipWatcher->checkPt_.x_ = -1;
+					toolTipWatcher->checkPt_.y_ = -1;
+					toolTipWatcher->hideToolTip();
 				}
 
 			}
@@ -1131,6 +2834,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 		case WM_DESTROY:	{
 			::KillTimer( hWnd, TOOLTIP_TIMERID );
+			ToolTipTimerID = 0;
 			delete toolTipWatcher;
 			if ( System::isUnicodeEnabled() ) {
 				result =  DefWindowProcW( hWnd, message, wParam, lParam );
@@ -1245,6 +2949,35 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 	return result;
 }
 
+LRESULT CALLBACK Win32ToolKit::mouseHookProc( int nCode, WPARAM wParam, LPARAM lParam )
+{
+	if ( NULL != toolTipWatcher ) {
+		if ( WM_MOUSEMOVE == wParam ) {
+			if ( 0 == ToolTipTimerID ) {
+				Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
+				
+				ToolTipTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMERID, 500, NULL );
+			}
+		}
+		else {
+			Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
+			
+			ToolTipTimoutTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMEOUT_TIMERID, 1, NULL );
+		}
+	}
+
+	return CallNextHookEx( Win32ToolKit_mouseHook, nCode, wParam, lParam );
+}
+
+LRESULT CALLBACK Win32ToolKit::keyboardHookProc( int nCode, WPARAM wParam, LPARAM lParam )
+{
+	if ( NULL != toolTipWatcher ) {
+		Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
+		ToolTipTimoutTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMEOUT_TIMERID, 1, NULL );
+	}
+	return CallNextHookEx( Win32ToolKit_kbHook, nCode, wParam, lParam );	
+}
+
 ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 {
 	if ( System::isUnicodeEnabled() ) {
@@ -1252,14 +2985,14 @@ ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 
 		wcex.cbSize = sizeof(wcex);
 
-		wcex.style			= CS_HREDRAW | CS_VREDRAW;
+		wcex.style			= 0;
 		wcex.lpfnWndProc	= (WNDPROC)Win32ToolKit::wndProc;
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= hInstance;
 		wcex.hIcon			= NULL;
 		wcex.hCursor		= NULL;
-		wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+		wcex.hbrBackground	= 0;
 		wcex.lpszMenuName	= NULL;
 		wcex.lpszClassName	= L"Win32ToolKit";
 		wcex.hIconSm		= NULL;
@@ -1271,14 +3004,14 @@ ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 
 		wcex.cbSize = sizeof(wcex);
 
-		wcex.style			= CS_HREDRAW | CS_VREDRAW;
+		wcex.style			= 0;
 		wcex.lpfnWndProc	= (WNDPROC)Win32ToolKit::wndProc;
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= hInstance;
 		wcex.hIcon			= NULL;
 		wcex.hCursor		= NULL;
-		wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+		wcex.hbrBackground	= 0;
 		wcex.lpszMenuName	= NULL;
 		wcex.lpszClassName	= "Win32ToolKit";
 		wcex.hIconSm		= NULL;
@@ -1291,62 +3024,74 @@ ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 
 
 Win32ToolKit::Win32ToolKit():
-	UIToolkit()
+	UIToolkit(),
+	dummyParentWnd_(NULL),
+	runEventCount_(0)
+
 {
-	runEventCount_ = 0;
-	dummyParentWnd_ = NULL;
-#if defined( _LIB ) && defined ( USE_WIN32HTMLBROWSER_LIB ) //statically linked in
-	browserLibAvailable_ = true;
-	Win32ToolKit_toolkitHInstance = ::GetModuleHandle( NULL );
-	initWin32HTMLBrowserLib( Win32ToolKit_toolkitHInstance );
+	if ( System::isUnicodeEnabled() ) {
+		VCF_POST_EVENT = RegisterWindowMessageW( L"VCF_POST_EVENT" );
+	}
+	else {
+		VCF_POST_EVENT = RegisterWindowMessageA( "VCF_POST_EVENT" );
+	}
 
-#else
-	browserLibAvailable_ = false;
-#endif
-
-#if defined(VCF_CW) && defined(UNICODE)
-	VCF_POST_EVENT = RegisterWindowMessage( L"VCF_POST_EVENT" );
-#else
-	VCF_POST_EVENT = RegisterWindowMessage( "VCF_POST_EVENT" );
-#endif
 	if ( 0 == VCF_POST_EVENT ) {
 		//oops it failed - do it the stupid way
 		VCF_POST_EVENT = WM_USER + 2000;
 	}
-#if defined(VCF_CW) && defined(UNICODE)
-	HBITMAP bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#else
-	HBITMAP bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#endif
-	if ( NULL != bmp ) {
-		stopImage_ = new Win32Image( bmp );
+
+	
+
+	if ( System::isUnicodeEnabled() ) {
+		HBITMAP bmp = (HBITMAP)::LoadImageW( Win32ToolKit_toolkitHInstance, L"stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			stopImage_ = new Win32Image( bmp );
+		}
+
+		bmp = (HBITMAP)::LoadImageW( Win32ToolKit_toolkitHInstance, L"warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			warningImage_ = new Win32Image( bmp );
+		}
+
+		bmp = (HBITMAP)::LoadImageW( Win32ToolKit_toolkitHInstance, L"inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			informationImage_ = new Win32Image( bmp );
+			informationImage_->setTransparencyColor( &Color(0.0,1.0,0.0) );
+			informationImage_->setIsTransparent( true );
+		}
+
+		bmp = (HBITMAP)::LoadImageW( Win32ToolKit_toolkitHInstance, L"question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			questionImage_ = new Win32Image( bmp );
+		}
 	}
-#if defined(VCF_CW) && defined(UNICODE)
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#else
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#endif
-	if ( NULL != bmp ) {
-		warningImage_ = new Win32Image( bmp );
+	else {
+		HBITMAP bmp = (HBITMAP)::LoadImageA( Win32ToolKit_toolkitHInstance, "stop", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			stopImage_ = new Win32Image( bmp );
+		}
+
+		bmp = (HBITMAP)::LoadImageA( Win32ToolKit_toolkitHInstance, "warning", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			warningImage_ = new Win32Image( bmp );
+		}
+
+		bmp = (HBITMAP)::LoadImageA( Win32ToolKit_toolkitHInstance, "inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			informationImage_ = new Win32Image( bmp );
+			informationImage_->setTransparencyColor( &Color(0.0,1.0,0.0) );
+			informationImage_->setIsTransparent( true );
+		}
+
+		bmp = (HBITMAP)::LoadImageA( Win32ToolKit_toolkitHInstance, "question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		if ( NULL != bmp ) {
+			questionImage_ = new Win32Image( bmp );
+		}
 	}
-#if defined(VCF_CW) && defined(UNICODE)
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#else
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "inform", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#endif
-	if ( NULL != bmp ) {
-		informationImage_ = new Win32Image( bmp );
-		informationImage_->setTransparencyColor( &Color(0.0,1.0,0.0) );
-		informationImage_->setIsTransparent( true );
-	}
-#if defined(VCF_CW) && defined(UNICODE)
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, L"question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#else
-	bmp = (HBITMAP)::LoadImage( Win32ToolKit_toolkitHInstance, "question", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-#endif
-	if ( NULL != bmp ) {
-		questionImage_ = new Win32Image( bmp );
-	}
+
+	Win32ToolKit_mouseHook = SetWindowsHookEx( WH_MOUSE, Win32ToolKit::mouseHookProc, NULL, GetCurrentThreadId() );
+	Win32ToolKit_kbHook = SetWindowsHookEx( WH_KEYBOARD, Win32ToolKit::keyboardHookProc, NULL, GetCurrentThreadId() );
 
 	createDummyParentWindow();
 
@@ -1355,14 +3100,42 @@ Win32ToolKit::Win32ToolKit():
 
 
 	VCFCOM::COMUtils::registerDataTypes();
+
+	//Load HTML Help module
+
+	HtmlHelpLibHandle = LoadLibrary( "hhctrl.ocx" );
+
+	if ( NULL != HtmlHelpLibHandle ) {
+		HtmlHelp_W = (HtmlHelpW_Func)::GetProcAddress(HtmlHelpLibHandle,"HtmlHelpW");
+		HtmlHelp_A = (HtmlHelpA_Func)::GetProcAddress(HtmlHelpLibHandle,"HtmlHelpA");
+	}
+	else {
+		StringUtils::trace( "Oops - looks like your system doesn't support HTML Help, as you don't have the hhctrl.ocx in your path." );
+	}
 }
 
 
 Win32ToolKit::~Win32ToolKit()
 {
-#if defined( _LIB ) && defined ( USE_WIN32HTMLBROWSER_LIB )
-	terminateWin32HTMLBrowserLib();
-#endif
+
+	if ( NULL != HtmlHelpLibHandle ) {
+		/*
+		if ( System::isUnicodeEnabled() ) {
+			//HtmlHelp_W( NULL, NULL, HH_CLOSE_ALL, 0 );
+		}
+		else {
+			//HtmlHelp_A( NULL, NULL, HH_CLOSE_ALL, 0 );
+		}
+		*/
+
+		if ( NULL != LastHTMLHelpWnd ) {
+			::SendMessage( LastHTMLHelpWnd, WM_CLOSE, 0, 0 );
+		}
+
+		Sleep( 5 );
+		FreeLibrary( HtmlHelpLibHandle );
+	}
+
 
 	std::map<UINT,TimerRec*>::iterator it = timerMap_.begin();
 	while ( it != timerMap_.end() ) {
@@ -1374,12 +3147,15 @@ Win32ToolKit::~Win32ToolKit()
 
 	if ( !::DestroyWindow( dummyParentWnd_ ) ) {
 		int err = GetLastError();
-		StringUtils::traceWithArgs( Format("::DestroyWindow( dummyParentWnd_[=%p] ) failed!, err: %d\n") % dummyParentWnd_ % err );
+		StringUtils::trace( Format("::DestroyWindow( dummyParentWnd_[=%p] ) failed!, err: %d\n") % dummyParentWnd_ % err );
 
 		if ( NULL != toolTipWatcher ) {
 			toolTipWatcher->free();
 		}
 	}
+
+	UnhookWindowsHookEx( Win32ToolKit_mouseHook );
+	UnhookWindowsHookEx( Win32ToolKit_kbHook );
 }
 
 ApplicationPeer* Win32ToolKit::internal_createApplicationPeer()
@@ -1407,38 +3183,6 @@ ListviewPeer* Win32ToolKit::internal_createListViewPeer( ListViewControl* compon
 	return new Win32Listview( component );
 }
 
-HTMLBrowserPeer* Win32ToolKit::internal_createHTMLBrowserPeer( Control* control )
-{
-	HTMLBrowserPeer* result = NULL;
-	if ( false == browserLibAvailable_ ) {
-		try {
-			browserLib_.load( WIN32HTMLBROWSER_DYNLIB );
-			browserLibAvailable_ = true;
-		}
-		catch ( BasicException&  ) {
-			browserLibAvailable_ = false;
-		}
-	}
-	if ( true == browserLibAvailable_ ) {
-		Object* win32HTMLBrowser = ClassRegistry::createNewInstance( "VCF::Win32HTMLBrowser" );
-		if ( NULL != win32HTMLBrowser ) {
-			result = dynamic_cast<HTMLBrowserPeer*>( win32HTMLBrowser );
-			if ( NULL == result ) {
-				delete win32HTMLBrowser;
-			}
-			else {
-				ControlPeer* controlPeer = dynamic_cast<ControlPeer*>( win32HTMLBrowser );
-				if ( NULL != controlPeer ) {
-					controlPeer->setControl( control );
-				}
-			}
-		}
-		else {
-			throw RuntimeException( "initWin32HTMLBrowserLib was not called correctly, and/or the Win32HTMLBroswer Lib was not linked with" );
-		}
-	}
-	return result;
-}
 
 DialogPeer* Win32ToolKit::internal_createDialogPeer( Control* owner, Dialog* component )
 {
@@ -1602,7 +3346,6 @@ SystemTrayPeer* Win32ToolKit::internal_createSystemTrayPeer()
 	return new Win32SystemTrayPeer();
 }
 
-
 MenuManagerPeer* Win32ToolKit::internal_createMenuManagerPeer()
 {
 	return new Win32MenuManagerPeer();
@@ -1638,7 +3381,7 @@ void Win32ToolKit::internal_postEvent( EventHandler* eventHandler, Event* event,
 	Win32PostEventRecord* postEventRecord = new Win32PostEventRecord( eventHandler, event, deleteHandler );
 	if ( ! ::PostMessage( dummyParentWnd_, VCF_POST_EVENT, 0, (LPARAM)postEventRecord ) ) {
 		int err = ::GetLastError();
-		StringUtils::traceWithArgs( Format("!!!!!!! WARNING ::PostMessage Failed (GetLastError(): %d !!!!!!\n") %
+		StringUtils::trace( Format("!!!!!!! WARNING ::PostMessage Failed (GetLastError(): %d !!!!!!\n") %
 									err );
 
 	}
@@ -1716,8 +3459,8 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 		break;
 
 		case WM_LBUTTONDOWN: case WM_MBUTTONDOWN: case WM_RBUTTONDOWN:{
-			VCF::Point pt( Win32Utils::getXFromLParam( msg->msg_.lParam ),
-							Win32Utils::getYFromLParam( msg->msg_.lParam ) );
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ),
+							Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
 
 			Scrollable* scrollable = msg->control_->getScrollable();
 			if ( NULL != scrollable ) {
@@ -1726,14 +3469,14 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 			result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_DOWN,
-											Win32Utils::translateButtonMask( msg->msg_.wParam ),
-											Win32Utils::translateKeyMask( msg->msg_.wParam ), &pt );
+											Win32UIUtils::translateButtonMask( msg->msg_.wParam ),
+											Win32UIUtils::translateKeyMask( msg->msg_.wParam ), &pt );
 		}
 		break;
 
 		case WM_LBUTTONUP: case WM_MBUTTONUP: case WM_RBUTTONUP:{
-			VCF::Point pt( Win32Utils::getXFromLParam( msg->msg_.lParam ) ,
-						   Win32Utils::getYFromLParam( msg->msg_.lParam ) );
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ) ,
+						   Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
 
 
 			Scrollable* scrollable = msg->control_->getScrollable();
@@ -1760,8 +3503,8 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 			result = new VCF::MouseEvent( msg->control_, Control::MOUSE_UP,
-											Win32Utils::translateButtonMask( tmpWParam ),
-											Win32Utils::translateKeyMask( tmpWParam ), &pt );
+											Win32UIUtils::translateButtonMask( tmpWParam ),
+											Win32UIUtils::translateKeyMask( tmpWParam ), &pt );
 
 		}
 		break;
@@ -1794,14 +3537,14 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 		break;
 
 		case WM_DESTROY: {
-			result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DELETED );
+			result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DESTROYED );
 		}
 		break;
 
 		case WM_LBUTTONDBLCLK: case WM_MBUTTONDBLCLK: case WM_RBUTTONDBLCLK:{
 
-			VCF::Point pt( Win32Utils::getXFromLParam( msg->msg_.lParam ) ,
-							Win32Utils::getYFromLParam( msg->msg_.lParam ) );
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ) ,
+							Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
 
 			Scrollable* scrollable = msg->control_->getScrollable();
 			if ( NULL != scrollable ) {
@@ -1810,16 +3553,16 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 			result = new VCF::MouseEvent( msg->control_, Control::MOUSE_DBLCLICK,
-											Win32Utils::translateButtonMask( msg->msg_.wParam ),
-											Win32Utils::translateKeyMask( msg->msg_.wParam ), &pt );
+											Win32UIUtils::translateButtonMask( msg->msg_.wParam ),
+											Win32UIUtils::translateKeyMask( msg->msg_.wParam ), &pt );
 
 
 		}
 		break;
 
 		case WM_MOVE: {
-			VCF::Point pt( Win32Utils::getXFromLParam( msg->msg_.lParam ) ,
-							Win32Utils::getYFromLParam( msg->msg_.lParam ) );
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ) ,
+							Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
 
 			result = new VCF::ControlEvent( msg->control_, pt );
 
@@ -1827,8 +3570,8 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 		break;
 
 		case WM_MOUSEMOVE: {
-			VCF::Point pt( Win32Utils::getXFromLParam( msg->msg_.lParam ) ,
-							Win32Utils::getYFromLParam( msg->msg_.lParam ) );
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ) ,
+							Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
 
 			Scrollable* scrollable = msg->control_->getScrollable();
 			if ( NULL != scrollable ) {
@@ -1838,8 +3581,8 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 
 
 			result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
-											Win32Utils::translateButtonMask( msg->msg_.wParam ),
-											Win32Utils::translateKeyMask( msg->msg_.wParam ),
+											Win32UIUtils::translateButtonMask( msg->msg_.wParam ),
+											Win32UIUtils::translateKeyMask( msg->msg_.wParam ),
 											&pt );
 		}
 		break;
@@ -1858,29 +3601,32 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 			result = new VCF::MouseEvent( msg->control_, Control::MOUSE_LEAVE,
-											Win32Utils::translateButtonMask( 0 ),
-											Win32Utils::translateKeyMask( 0 ), &pt2 );
+											Win32UIUtils::translateButtonMask( 0 ),
+											Win32UIUtils::translateKeyMask( 0 ), &pt2 );
 		}
 		break;
 
-		case WM_CHAR: case WM_KEYDOWN: case WM_KEYUP: {
-			KeyboardData keyData = Win32Utils::translateKeyData( msg->msg_.hwnd, msg->msg_.lParam );
+		case WM_CHAR: case WM_KEYDOWN: case WM_KEYUP: {		
+
+			KeyboardData keyData = Win32UIUtils::translateKeyData( msg->msg_.hwnd, msg->msg_.lParam );
 			
+
 			unsigned long eventType = 0;
 			unsigned long repeatCount = keyData.repeatCount;
 
-			unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
+			unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
 			VCFChar keyVal = 0;
 			
-			VirtualKeyCode virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( keyData.VKeyCode );
+			VirtualKeyCode virtualKeyCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( keyData.VKeyCode );
+
 
 			switch ( msg->msg_.message ){
 				case WM_CHAR: {
 					eventType = Control::KEYBOARD_PRESSED;
 					keyVal = (VCFChar)msg->msg_.wParam;
 					if ( isgraph( keyVal ) ) {
-						virtualKeyCode = (VirtualKeyCode)Win32Utils::convertCharToVKCode( keyVal );
+						virtualKeyCode = (VirtualKeyCode)Win32UIUtils::convertCharToVKCode( keyVal );
 					}
 				}
 				break;
@@ -1888,14 +3634,15 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 				case WM_KEYDOWN: {
 					keyVal = keyData.character;
 					eventType = Control::KEYBOARD_DOWN;//KEYBOARD_EVENT_DOWN;
-					virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( msg->msg_.wParam );
+
+					virtualKeyCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( msg->msg_.wParam );
 				}
 				break;
 
 				case WM_KEYUP: {
 					eventType = Control::KEYBOARD_UP;
 					keyVal = keyData.character;
-					virtualKeyCode = (VirtualKeyCode)Win32Utils::translateVKCode( msg->msg_.wParam );
+					virtualKeyCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( msg->msg_.wParam );
 				}
 				break;
 			}
@@ -1934,9 +3681,12 @@ void Win32ToolKit::internal_runEventLoop()
 	bool isIdle = true;
 	while (true) {
 		// phase1: check to see if we can do idle work
-		while ((true == isIdle) && (!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE)) ) {
+		while ( isIdle && (!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE)) ) {
+
+			internal_idleTime();
 
 			if ( NULL != runningApp ) {
+				//StringUtils::trace( "runningApp->idleTime()\n" );
 				runningApp->idleTime();
 			}
 
@@ -1989,10 +3739,10 @@ void Win32ToolKit::internal_runEventLoop()
 
 					case WM_KEYDOWN :  case WM_SYSKEYDOWN : {
 
-						KeyboardData keyData = Win32Utils::translateKeyData( msg.hwnd, msg.lParam );
+						KeyboardData keyData = Win32UIUtils::translateKeyData( msg.hwnd, msg.lParam );
 
-						KeyboardMasks modifierKey = (KeyboardMasks)Win32Utils::translateKeyMask( keyData.keyMask );
-						VirtualKeyCode vkCode = (VirtualKeyCode)Win32Utils::translateVKCode( keyData.VKeyCode );
+						KeyboardMasks modifierKey = (KeyboardMasks)Win32UIUtils::translateKeyMask( keyData.keyMask );
+						VirtualKeyCode vkCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
 						if ( vkUndefined == vkCode ) { //tranlsate by ascii value
 
@@ -2096,13 +3846,13 @@ void Win32ToolKit::internal_runEventLoop()
 
 			// WM_PAINT and WM_SYSTIMER (caret blink)
 			bool isIdleMessage = ( (msg.message != WM_PAINT) && (msg.message != 0x0118) );
-			if ( true == isIdleMessage ) {
+			if ( isIdleMessage ) {
 				if ( (msg.message == WM_MOUSEMOVE) || (msg.message == WM_NCMOUSEMOVE) ) {
 					//check the prev mouse pt;
 				}
 			}
 
-			if ( true == isIdleMessage ) {
+			if ( isIdleMessage ) {
 				isIdle = true;
 			}
 
@@ -2149,10 +3899,10 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 					switch( msg.message ) {
 
 						case WM_KEYDOWN :  case WM_SYSKEYDOWN : {
-							KeyboardData keyData = Win32Utils::translateKeyData( msg.hwnd, msg.lParam );
+							KeyboardData keyData = Win32UIUtils::translateKeyData( msg.hwnd, msg.lParam );
 
-							KeyboardMasks modifierKey = (KeyboardMasks)Win32Utils::translateKeyMask( keyData.keyMask );
-							VirtualKeyCode vkCode = (VirtualKeyCode)Win32Utils::translateVKCode( keyData.VKeyCode );
+							KeyboardMasks modifierKey = (KeyboardMasks)Win32UIUtils::translateKeyMask( keyData.keyMask );
+							VirtualKeyCode vkCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
 							ESCkeyPressed = (vkCode == vkEscape);
 
@@ -2249,10 +3999,10 @@ void Win32ToolKit::internal_quitCurrentEventLoop()
 {
 	PostQuitMessage(0);
 	//if (!PostMessage( dummyParentWnd_, WM_QUIT, 0, 0 )) {
-	//	StringUtils::traceWithArgs( "GetLastError(): %d\n", GetLastError() );
+	//	StringUtils::trace( Format( "GetLastError(): %d\n" ) % GetLastError() );
 	//}
 	//else {
-	//	StringUtils::traceWithArgs( "internal_quitCurrentEventLoop called, PostMessage(WM_QUIT) sent\n" );
+	//	StringUtils::trace( "internal_quitCurrentEventLoop called, PostMessage(WM_QUIT) sent\n" );
 	//}
 }
 
@@ -2266,13 +4016,337 @@ Size Win32ToolKit::internal_getDragDropDelta()
 	return result;
 }
 
+void Win32ToolKit::internal_displayHelpContents( const String& helpBookName, const String& helpDirectory )
+{	
+	if ( NULL == HtmlHelpLibHandle ) {
+		StringUtils::trace( "HTML Help features are not available on your system. Please install HTML Help to rectify this." );
+		return;
+	}
+	FilePath helpPath = FilePath::makeDirectoryName(helpDirectory)  + helpBookName;
+
+	//check to see if need to add the .chm extension
+	if ( helpBookName.find( ".chm" ) == String::npos ) {
+		helpPath += ".chm";
+	}
+
+	//check to see if the file exists
+	if ( !File::exists( helpPath ) ) {
+		//oops it doesn't try a fill path, and assume that 
+		//the current value in helpPath is not complete 
+		String path = System::findResourceDirectory();
+		helpPath = path + helpPath;
+	}
+
+
+	if ( File::exists( helpPath ) ) {
+		if ( System::isUnicodeEnabled() ) {
+			LastHTMLHelpWnd = HtmlHelp_W( 0, helpPath.getFileName().c_str(), HH_DISPLAY_TOC, NULL );	
+		}
+		else {
+			LastHTMLHelpWnd = HtmlHelp_A( 0, helpPath.getFileName().ansi_c_str(), HH_DISPLAY_TOC, NULL );	
+		}
+	}
+}
+
+void Win32ToolKit::internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory )
+{
+	if ( NULL == HtmlHelpLibHandle ) {
+		StringUtils::trace( "HTML Help features are not available on your system. Please install HTML Help to rectify this." );
+		return;
+	}
+
+	FilePath helpPath = FilePath::makeDirectoryName(helpDirectory)  + helpBookName;
+
+	//check to see if need to add the .chm extension
+	if ( helpBookName.find( ".chm" ) == String::npos ) {
+		helpPath += ".chm";
+	}
+
+	//check to see if the file exists
+	if ( !File::exists( helpPath ) ) {
+		//oops it doesn't try a fill path, and assume that 
+		//the current value in helpPath is not complete 
+		String path = System::findResourceDirectory();
+		helpPath = path + helpPath;
+	}
+
+
+	if ( File::exists( helpPath ) ) {
+		if ( System::isUnicodeEnabled() ) {
+			LastHTMLHelpWnd = HtmlHelp_W( 0, helpPath.getFileName().c_str(), HH_DISPLAY_INDEX, NULL );	
+		}
+		else {
+			LastHTMLHelpWnd = HtmlHelp_A( 0, helpPath.getFileName().ansi_c_str(), HH_DISPLAY_INDEX, NULL );	
+		}
+	}
+}
+
+bool Win32ToolKit::internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory )
+{
+	if ( NULL == HtmlHelpLibHandle ) {
+		StringUtils::trace( "HTML Help features are not available on your system. Please install HTML Help to rectify this." );
+		return false;
+	}
+
+	bool result = false;
+	String whatsThis = control->getWhatThisHelpString();
+
+	WhatsThisHelpEvent event(control);
+
+	control->ControlHelpRequested.fireEvent( &event );
+
+	if ( !event.helpString.empty() ) {
+		whatsThis = event.helpString;
+	}
+
+	if ( !whatsThis.empty() ) {
+		HH_POPUP popup;
+		memset( &popup, 0, sizeof(popup));
+		popup.cbStruct = sizeof(popup);
+
+		::GetCursorPos(	&popup.pt );
+
+		popup.pszText = whatsThis.ansi_c_str();
+		popup.clrForeground = -1;
+		popup.clrBackground = -1;
+		memset( &popup.rcMargins, -1, sizeof(popup.rcMargins) );
+
+		LastHTMLHelpWnd = HtmlHelp_A( (HWND)control->getPeer()->getHandleID(), NULL, HH_DISPLAY_TEXT_POPUP, (DWORD) &popup );
+		result =true;
+	}
+
+	return result;
+}
+
+void Win32ToolKit::internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection )
+{
+	if ( NULL == HtmlHelpLibHandle ) {
+		StringUtils::trace( "HTML Help features are not available on your system. Please install HTML Help to rectify this." );
+		return;
+	}
+
+	FilePath helpPath = FilePath::makeDirectoryName(helpDirectory)  + helpBookName;
+
+	//check to see if need to add the .chm extension
+	if ( helpBookName.find( ".chm" ) == String::npos ) {
+		helpPath += ".chm";
+	}
+
+	//check to see if the file exists
+	if ( !File::exists( helpPath ) ) {
+		//oops it doesn't try a fill path, and assume that 
+		//the current value in helpPath is not complete 
+		String path = System::findResourceDirectory();
+		helpPath = path + helpPath;
+	}
+
+
+	if ( File::exists( helpPath ) ) {
+
+		//add the section:
+
+		if ( !helpSection.empty() ) {
+			helpPath += "::/" + helpSection;
+		}
+
+		if ( System::isUnicodeEnabled() ) {
+			LastHTMLHelpWnd = HtmlHelp_W( 0, helpPath.getFileName().c_str(), HH_DISPLAY_TOPIC, NULL );	
+		}
+		else {
+			LastHTMLHelpWnd = HtmlHelp_A( 0, helpPath.getFileName().ansi_c_str(), HH_DISPLAY_TOPIC, NULL );	
+		}
+	}
+}
+
+void Win32ToolKit::internal_systemSettingsChanged()
+{
+	
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
 *Revision 1.7  2005/09/30 02:23:43  ddiego
 *fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
 *
+*Revision 1.6.2.28  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.6.2.27  2006/03/28 04:04:36  ddiego
+*added a slight adjustment to idle message handling. Component
+*updating is now handled there instead of a timer.
+*
+*Revision 1.6.2.26  2006/03/16 04:41:29  ddiego
+*fixed some tooltip issues.
+*
+*Revision 1.6.2.25  2006/03/16 01:30:43  ddiego
+*fixed a bug in the way dialog bounds were adjusted in the
+*win32 policy manager class.
+*
+*Revision 1.6.2.24  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.6.2.23  2006/03/14 22:14:53  ddiego
+*Win32ToolKit.cpp
+*
+*Revision 1.6.2.22  2006/03/10 21:49:32  ddiego
+*updates to color example and some documentation.
+*
+*Revision 1.6.2.21  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.6.2.20  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.6.2.19  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.6.2.18  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.6.2.17  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.6.2.16  2006/02/19 19:38:13  ddiego
+*adjusted some comet code to make it compile again. renamed some of the COM utility files to have a Win32 prefix.
+*
+*Revision 1.6.2.15  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.6.2.14  2006/01/29 16:41:56  dougtinkham
+*added extern C linkage to DllMain
+*
+*Revision 1.6.2.13  2005/11/21 21:28:04  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.6.2.12  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
+*Revision 1.6.2.11  2005/10/20 18:48:41  ddiego
+*minor change to fix html help loader bug.
+*
+*Revision 1.6.2.10  2005/10/17 01:36:33  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.6.2.9  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.6.2.8  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.6.2.7  2005/09/10 00:12:44  ddiego
+*fixed the html help calls so that the library is now loaded on the fly. if its not present the calls revert to no-ops.
+*
+*Revision 1.6.2.6  2005/09/07 20:24:48  ddiego
+*added some more help support.
+*
+*Revision 1.6.2.5  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.6.2.4  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
+*Revision 1.6.2.3  2005/08/16 19:04:37  ddiego
+*fixed little vc71 compile bug with maxval usage.
+*
+*Revision 1.6.2.2  2005/08/11 02:11:37  ddiego
+*fixed __max problem by replacing with maxVal.
+*
+*Revision 1.6.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
+
+=======
+*Revision 1.6.2.28  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.6.2.27  2006/03/28 04:04:36  ddiego
+*added a slight adjustment to idle message handling. Component
+*updating is now handled there instead of a timer.
+*
+*Revision 1.6.2.26  2006/03/16 04:41:29  ddiego
+*fixed some tooltip issues.
+*
+*Revision 1.6.2.25  2006/03/16 01:30:43  ddiego
+*fixed a bug in the way dialog bounds were adjusted in the
+*win32 policy manager class.
+*
+*Revision 1.6.2.24  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.6.2.23  2006/03/14 22:14:53  ddiego
+*Win32ToolKit.cpp
+*
+*Revision 1.6.2.22  2006/03/10 21:49:32  ddiego
+*updates to color example and some documentation.
+*
+*Revision 1.6.2.21  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.6.2.20  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.6.2.19  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.6.2.18  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.6.2.17  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.6.2.16  2006/02/19 19:38:13  ddiego
+*adjusted some comet code to make it compile again. renamed some of the COM utility files to have a Win32 prefix.
+*
+*Revision 1.6.2.15  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.6.2.14  2006/01/29 16:41:56  dougtinkham
+*added extern C linkage to DllMain
+*
+*Revision 1.6.2.13  2005/11/21 21:28:04  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.6.2.12  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
+*Revision 1.6.2.11  2005/10/20 18:48:41  ddiego
+*minor change to fix html help loader bug.
+*
+*Revision 1.6.2.10  2005/10/17 01:36:33  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.6.2.9  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.6.2.8  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.6.2.7  2005/09/10 00:12:44  ddiego
+*fixed the html help calls so that the library is now loaded on the fly. if its not present the calls revert to no-ops.
+*
+*Revision 1.6.2.6  2005/09/07 20:24:48  ddiego
+*added some more help support.
+*
+*Revision 1.6.2.5  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.6.2.4  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
+*Revision 1.6.2.3  2005/08/16 19:04:37  ddiego
+*fixed little vc71 compile bug with maxval usage.
+*
+*Revision 1.6.2.2  2005/08/11 02:11:37  ddiego
+*fixed __max problem by replacing with maxVal.
+*
+*Revision 1.6.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
+>>>>>>> 1.6.2.28
 *Revision 1.6  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -23,17 +23,40 @@ namespace VCF{
 
 
 
+
+/**
+Mouse button masks
+*/
+enum MouseButtomMasks{
+	mbmUndefined = 0,
+	mbmLeftButton = 1,
+	mbmMiddleButton = 2,
+	mbmRightButton = 4,
+	mbmPrimaryButton = mbmLeftButton,
+	mbmSecondaryButton = mbmRightButton,
+	mbmTertiaryButton = mbmMiddleButton
+};
+
+
+
+
+/**
+\class MouseEvent MouseEvent.h "vcf/ApplicationKit/MouseEvent.h"
+*/
 class APPLICATIONKIT_API MouseEvent : public Event {
 public:
-	MouseEvent( Object* source );
+	MouseEvent( Object* source ) : Event(source),
+		keyMask_(0),buttonMask_(0){}
 
-	MouseEvent( Object* source, const unsigned long& eventType );
+	MouseEvent( Object* source, const unsigned long& eventType ): Event(source,eventType),
+		keyMask_(0),buttonMask_(0){}
 
 	MouseEvent( Object* source, const unsigned long& eventType, const unsigned long& buttonMask,
-		        const unsigned long& keyMask, Point* point );
+		        const unsigned long& keyMask, Point* point ): Event(source,eventType),
+		keyMask_(keyMask),buttonMask_(buttonMask),point_(*point){}
 
-	MouseEvent( const MouseEvent& rhs ):Event(rhs) {
-		init();
+	MouseEvent( const MouseEvent& rhs ):Event(rhs),
+		keyMask_(0),buttonMask_(0) {
 		*this = rhs;
 	}
 
@@ -48,8 +71,6 @@ public:
 		return *this;
 	}
 
-	void init();
-
 	virtual Object* clone( bool deep=false ) {
 		return new MouseEvent(*this);
 	}
@@ -57,21 +78,108 @@ public:
 	/**
 	*returns the point for this mouse event
 	*/
-    Point* getPoint();
+    Point* getPoint(){
+		return &point_;
+	}
 
-	void setPoint( Point* point );
+	void setPoint( Point* point ){
+		point_.x_ = point->x_;
+		point_.y_ = point->y_;
+	}
 
-    unsigned long getKeyMask();
+    unsigned long getKeyMask(){
+		return keyMask_;
+	}
 
-    unsigned long getButtonMask();
+    unsigned long getButtonMask(){
+		return buttonMask_;
+	}
+	
+	/**
+	indicates whether the mouse event has occurred while the 
+	user has the left button down. 
+	@see hasPrimaryButton()
+	*/
+	bool hasLeftButton(){
+		return ( mbmLeftButton & buttonMask_ ) != 0;
+	}
 
-	bool hasLeftButton();
-	bool hasMiddleButton();
-	bool hasRightButton();
+	/**
+	indicates whether the mouse event has occurred while the 
+	user has the middle button down. 
+	@see hasTertiaryButton()
+	*/
+	bool hasMiddleButton(){
+		return ( mbmMiddleButton & buttonMask_ ) != 0;
+	}
 
-	bool hasShiftKey();
-	bool hasAltKey();
-	bool hasControlKey();
+	/**
+	indicates whether the mouse event has occurred while the 
+	user has the right button down. 
+	@see hasSecondaryButton()
+	*/
+	bool hasRightButton(){
+		return ( mbmRightButton & buttonMask_ ) != 0;
+	}
+
+	/**
+	A more general call to determine which button is pressed
+	down. This is the preferred call to make as it does
+	not indicate a preference for a right-hand configured
+	mouse.
+
+	Indicates whether the mouse event has occurred while the 
+	user has the primary button down. The primary button,
+	on a mouse configured for right-handed users, is the 
+	left button. For a mouse configured for left-handed 
+	users it would be the right button.
+	*/	
+	bool hasPrimaryButton(){
+		return ( mbmPrimaryButton & buttonMask_ ) != 0;
+	}
+
+	/**
+	A more general call to determine which button is pressed
+	down. This is the preferred call to make as it does
+	not indicate a preference for a right-hand configured
+	mouse.
+
+	Indicates whether the mouse event has occurred while the 
+	user has the secondary button down. The secondary button,
+	on a mouse configured for right-handed users, is the 
+	right button. For a mouse configured for left-handed 
+	users it would be the left button.
+	*/	
+	bool hasSecondaryButton(){
+		return ( mbmSecondaryButton & buttonMask_ ) != 0;
+	}
+
+	/**
+	A more general call to determine which button is pressed
+	down. This is the preferred call to make as it does
+	not indicate a preference for a right-hand configured
+	mouse.
+
+	Indicates whether the mouse event has occurred while the 
+	user has the tertiary button down. The tertiary button,
+	on a mouse configured for right-handed or left-handed
+	users, is the middle button.
+	*/	
+	bool hasTertiaryButton(){
+		return ( mbmTertiaryButton & buttonMask_ ) != 0;
+	}
+
+	bool hasShiftKey(){
+		return ( kmShift & keyMask_ ) != 0;
+	}
+	
+	bool hasAltKey(){
+		return ( kmAlt & keyMask_ ) != 0;
+	}
+	
+	bool hasControlKey(){
+		return ( kmCtrl & keyMask_ ) != 0;
+	}
 
 private:
     unsigned long buttonMask_;
@@ -86,6 +194,7 @@ private:
 
 
 /**
+\class MouseEventHandler MouseEvent.h "vcf/ApplicationKit/MouseEvent.h"
 *MouseEventHandler
 *handles the following
 *onMouseDoubleClicked
@@ -113,6 +222,21 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.4  2006/03/26 15:30:55  ddiego
+*added more general fucntions to mouse event to determine which button is pressed.
+*
+*Revision 1.2.6.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.2  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.2.6.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

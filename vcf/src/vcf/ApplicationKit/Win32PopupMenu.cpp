@@ -54,8 +54,10 @@ void initPopupMenu( HWND hwnd, HMENU menu )
 }
 
 
-void Win32PopupMenu::popup( Point* pt )
+MenuItem* Win32PopupMenu::popup( Point* pt )
 {
+	MenuItem* result = NULL;
+
 	if ( (NULL != control_) && (NULL != pt) ){
 		MenuItem* rooItem = popupMenu_->getRootMenuItem();
 		if  ( NULL != rooItem )  {
@@ -83,20 +85,25 @@ void Win32PopupMenu::popup( Point* pt )
 				MenuItem* item = Win32MenuItem::getMenuItemFromID( retVal );
 				if ( NULL != item ){
 					item->click();
+					result = item;
 				}
 			}
-			else {
-				StringUtils::traceWithArgs( Format("TrackPopupMenu failed, err: %d\n") % GetLastError() );
-			}	
-
 		}
 	}
+
+	return result;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.3  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

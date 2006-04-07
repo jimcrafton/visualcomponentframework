@@ -22,14 +22,16 @@ namespace VCF
 
 
 /**
+\class ClipboardEvent ClipboardEvent.h "vcf/ApplicationKit/ClipboardEvent.h"
 *A ClipboardEvent is fired during changes ot the system clipboard.
 *These chnages may include copying or pasting data to the clipboard.
 */
 class APPLICATIONKIT_API ClipboardEvent : public Event{
 public:
 
-	ClipboardEvent( Object * source);
-	virtual ~ClipboardEvent();
+	ClipboardEvent( Object * source): Event(source){}
+
+	virtual ~ClipboardEvent() {}
 
 	virtual Object* clone( bool deep=false ) {
 		return new ClipboardEvent(*this);
@@ -43,6 +45,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

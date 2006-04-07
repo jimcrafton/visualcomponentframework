@@ -20,6 +20,7 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
+\class Light3DBorder Light3DBorder.h "vcf/ApplicationKit/Light3DBorder.h"
 *Class Light3DBorder documentation
 */
 class APPLICATIONKIT_API Light3DBorder : public Border {
@@ -57,6 +58,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

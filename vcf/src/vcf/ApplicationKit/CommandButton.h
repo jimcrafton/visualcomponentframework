@@ -30,6 +30,7 @@ class ButtonPeer;
 #define COMMANDBUTTON_CLASSID		"8B2CDC30-3CAD-11d4-B553-00C04F0196DA"
 
 /**
+\class CommandButton CommandButton.h "vcf/ApplicationKit/CommandButton.h"
 The CommandButton is a native push button that fires an event
 when pressed, or "clicked".
 @delegates
@@ -119,6 +120,8 @@ public:
 	virtual void mnemonicActivate();
 
 	virtual double getPreferredHeight();
+
+	virtual double getPreferredWidth();
 protected:
     bool isPressed_;
     ButtonPeer * buttonPeer_;
@@ -137,6 +140,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

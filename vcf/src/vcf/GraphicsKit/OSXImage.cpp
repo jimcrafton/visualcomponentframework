@@ -35,7 +35,7 @@ OSXImage::OSXImage( GraphicsContext* context, Rect* rect ):
     imageRef_(0)
 {
     init();
-    setSize( rect->getWidth(), rect->getHeight() );
+    setSize( (ulong32)rect->getWidth(), (ulong32)rect->getHeight() );
     context_->copyContext( Rect(0,0,getWidth(),getHeight()), *rect, context );
 }
 
@@ -74,7 +74,7 @@ void OSXImage::init()
 
 void OSXImage::setAlpha( float val )
 {
-	uchar alphaVal = (uchar) val * 255.0;
+	uchar alphaVal = (uchar) (val * 255.0);
 	
 	SysPixelType* bits = imageBits_->pixels_;
 	
@@ -231,6 +231,13 @@ void OSXImage::loadFromURL( CFURLRef url, const String& ext )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.3  2005/07/09 23:06:01  ddiego
 *added missing gtk files
 *

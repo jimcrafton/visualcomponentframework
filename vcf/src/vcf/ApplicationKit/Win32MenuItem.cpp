@@ -85,27 +85,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 
 	MenuItemPeer* itemImpl = child->getPeer();
 	Win32MenuItem* win32ChildImpl = (Win32MenuItem*)itemImpl;
-	MENUITEMINFO info = {0};
-	info.cbSize = sizeof(MENUITEMINFO);
-	info.fMask = MIIM_ID  | MIIM_STATE | MIIM_TYPE;
-	info.fState = MFS_ENABLED;
-	if ( true == child->isSeparator() ){
-		info.fType |= MFT_SEPARATOR;
-	}
-	else {
-		info.fType = MFT_STRING;
-	}
-
-	//put this back in later
-	if ( true == child->canPaint() ) {
-		info.fType |= MFT_OWNERDRAW;
-	}
-	info.wID = win32ChildImpl->itemId_;
-
-	if ( child->hasChildren() ){
-		info.fMask |= MIIM_SUBMENU;
-		info.hSubMenu = (HMENU) itemImpl->getMenuID();
-	}
+	
 	String itemName = child->getCaption();
 	if ( child->getUseLocaleStrings() ) {
 		itemName = System::getCurrentThreadLocale()->translate( itemName );
@@ -114,54 +94,133 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 	itemName = generateCaption( child, itemName );
 
 
-	info.cch = itemName.size();
-#if defined(VCF_CW) && defined(UNICODE)
-	wchar_t* tmpName = new wchar_t[info.cch+1];
-	memset( tmpName, 0, (info.cch+1)*sizeof(wchar_t) );
-	itemName.copy( tmpName, info.cch );
-#else
-	char* tmpName = new char[info.cch+1];
-	memset( tmpName, 0, (info.cch+1)*sizeof(char) );
-	itemName.copy( tmpName, info.cch );
-#endif
-	info.dwTypeData = tmpName;
+	DWORD mask = MIIM_ID  | MIIM_STATE | MIIM_TYPE;
+	DWORD type = 0;
+	DWORD state = MFS_ENABLED;
+	HMENU subMenu = NULL;
+	DWORD id = win32ChildImpl->itemId_;
 
-	if ( InsertMenuItem( menu, child->getIndex()/*info.wID*/, TRUE, &info ) ) {
-		win32ChildImpl->itemAdded_ = true;
+	if ( true == child->isSeparator() ){
+		type |= MFT_SEPARATOR;
+	}
+	else {
+		type = MFT_STRING;
+	}
+	//put this back in later
+	if ( true == child->canPaint() ) {
+		type |= MFT_OWNERDRAW;
 	}
 
+	if ( child->hasChildren() ){
+		mask |= MIIM_SUBMENU;
+		subMenu = (HMENU) itemImpl->getMenuID();
+	}
 
-	MenuItem* parentItem = menuItem_->getParent();
+	
 
-	if ( NULL != parentItem ) {
-		int index = menuItem_->getIndex();
-		MENUITEMINFO thisInfo = {0};
+	if ( System::isUnicodeEnabled() ) {
+		MENUITEMINFOW info = {0};
+		info.cbSize = sizeof(info);
+		info.fMask = mask;
+		info.fState = state;
+		info.fType = type;		
+		info.wID = id;
+		info.hSubMenu = subMenu;
 
 
-		thisInfo.cbSize = sizeof(MENUITEMINFO);
-		thisInfo.fMask = MIIM_SUBMENU;
-		Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
-		HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
+		info.cch = itemName.size();
+		wchar_t* tmpName = new wchar_t[info.cch+1];
+		memset( tmpName, 0, (info.cch+1)*sizeof(wchar_t) );
+		itemName.copy( tmpName, info.cch );
 
-		if ( NULL != parentMenuHandle ){
-			if ( GetMenuItemInfo( parentMenuHandle, itemId_, FALSE, &thisInfo ) ){
-				thisInfo.fMask |= MIIM_SUBMENU;
-				thisInfo.hSubMenu = (HMENU)getMenuID();
-				::SetMenuItemInfo( parentMenuHandle, itemId_, FALSE, &thisInfo );
-			}
-			else {
-				//throw exception
-			}
+		info.dwTypeData = tmpName;
+
+		if ( InsertMenuItemW( menu, child->getIndex()/*info.wID*/, TRUE, &info ) ) {
+			win32ChildImpl->itemAdded_ = true;
 		}
 
+		delete [] tmpName;
+
+		MenuItem* parentItem = menuItem_->getParent();
+		
+
+		if ( NULL != parentItem ) {
+			int index = menuItem_->getIndex();
+
+			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
+			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
+			
+			MENUITEMINFOW thisInfo = {0};			
+			
+			thisInfo.cbSize = sizeof(thisInfo);
+			thisInfo.fMask = MIIM_SUBMENU;			
+			
+			if ( NULL != parentMenuHandle ){
+				if ( ::GetMenuItemInfoW( parentMenuHandle, itemId_, FALSE, &thisInfo ) ){
+					thisInfo.fMask |= MIIM_SUBMENU;
+					thisInfo.hSubMenu = (HMENU)getMenuID();
+					::SetMenuItemInfoW( parentMenuHandle, itemId_, FALSE, &thisInfo );
+				}
+				else {
+					//throw exception
+				}
+			}
+		}
 	}
+	else{
+		MENUITEMINFOA info = {0};
+		info.cbSize = sizeof(info);
+		info.fMask = mask;
+		info.fState = state;
+		info.fType = type;		
+		info.wID = id;
+		info.hSubMenu = subMenu;
+
+		AnsiString s = itemName;
+		info.cch = s.size();
+		char* tmpName = new char[info.cch+1];
+		memset( tmpName, 0, (info.cch+1) );
+		s.copy( tmpName, info.cch );
+
+		info.dwTypeData = tmpName;
+
+		if ( InsertMenuItemA( menu, child->getIndex()/*info.wID*/, TRUE, &info ) ) {
+			win32ChildImpl->itemAdded_ = true;
+		}
+
+		delete [] tmpName;
+
+		MenuItem* parentItem = menuItem_->getParent();
+		
+
+		if ( NULL != parentItem ) {
+			int index = menuItem_->getIndex();
+
+			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
+			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
+
+			MENUITEMINFOA thisInfo = {0};			
+			
+			thisInfo.cbSize = sizeof(thisInfo);
+			thisInfo.fMask = MIIM_SUBMENU;			
+			
+			if ( NULL != parentMenuHandle ){
+				if ( ::GetMenuItemInfoA( parentMenuHandle, itemId_, FALSE, &thisInfo ) ){
+					thisInfo.fMask |= MIIM_SUBMENU;
+					thisInfo.hSubMenu = (HMENU)getMenuID();
+					::SetMenuItemInfoA( parentMenuHandle, itemId_, FALSE, &thisInfo );
+				}
+				else {
+					//throw exception
+				}
+			}
+		}
+	}	
 
 	/**
 	check to see if we have children that have not yet been added
 	*/
-	fixChildren( child );
-
-	delete [] tmpName;
+	fixChildren( child );	
 }
 
 void Win32MenuItem::fixChildren( MenuItem* child )
@@ -697,7 +756,7 @@ void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 						SelectObject( dc, oldFont );
 
 						// height of item is just height of a standard menu item
-						measureItemInfo.itemHeight = __max( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
+						measureItemInfo.itemHeight = maxVal<int>( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
 
 						// width is width of text plus a bunch of stuff
 						int cx = rcText.right - rcText.left;	// text width
@@ -886,6 +945,18 @@ void Win32MenuItem::drawMenuItemText( HDC dc, RECT rc, COLORREF color )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
+*Revision 1.4.2.2  2005/08/16 19:04:37  ddiego
+*fixed little vc71 compile bug with maxval usage.
+*
+*Revision 1.4.2.1  2005/08/11 02:11:37  ddiego
+*fixed __max problem by replacing with maxVal.
+*
 *Revision 1.4  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

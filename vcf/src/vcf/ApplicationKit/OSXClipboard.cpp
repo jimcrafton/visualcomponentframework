@@ -32,6 +32,9 @@ String UTItoMimeType( CFStringRef uti )
 	if ( UTTypeEqual( uti, kUTTypePlainText ) ) {
 		result = "text/plain";
 	}
+	else if ( UTTypeEqual( uti, kUTTypeFileURL ) ) {
+		result = FILE_DATA_TYPE;
+	}
 
 	return result;
 }
@@ -41,7 +44,6 @@ String UTItoMimeType( CFStringRef uti )
 
 OSXClipboard::OSXClipboard()
 {
-	PasteboardRef tmp;
 	if ( noErr == PasteboardCreate( kPasteboardClipboard, &globalPasteBoard_ ) ) {
 		//globalPasteBoard_ = tmp;
 	}
@@ -189,10 +191,71 @@ bool OSXClipboard::hasDataType( const String& dataType )
 	return result;
 }
 
+void OSXClipboard::initDataObjectFromPasteBoard( PasteboardRef pasteBoard, DataObject* dataObject )
+{	
+	//sync the paste board
+	PasteboardSynchronize( pasteBoard );
+	
+	ItemCount itemCount = 0;
+	if ( noErr == PasteboardGetItemCount( pasteBoard, &itemCount ) ) {
+		PasteboardItemID itemID = 0;
+		for ( UInt32 index = 0;index<itemCount;index++ ) {
+			//index is 1 based!
+			PasteboardGetItemIdentifier( pasteBoard, index+1, &itemID );
+			
+			
+			CFRefObject<CFArrayRef> flavArray;
+			if ( noErr == PasteboardCopyItemFlavors(  pasteBoard, itemID, &flavArray ) ) {
+				int count = CFArrayGetCount(flavArray);
+				for ( int flavIndex = 0;flavIndex<count;flavIndex++ ) {
+					CFStringRef flavorType;
+					flavorType = (CFStringRef)CFArrayGetValueAtIndex( flavArray, flavIndex );
+					
+					PasteboardFlavorFlags flags = 0;
+					PasteboardGetItemFlavorFlags( pasteBoard, itemID, flavorType, &flags );
+					
+					String dataType = UTItoMimeType( flavorType );
+					if ( !dataType.empty() ) {
+						dataObject->addSupportedDataType( dataType, NULL );
+					}
+				}
+			}
+		}
+	}	
+}
+
+
+VCF::Persistable* OSX_getPersistableFromDataRef( const VCF::String dataType, CFStringRef flavorType, CFDataRef dataRef )
+{
+	VCF::Persistable* result = NULL;
+	if ( UTTypeEqual( flavorType, kUTTypePlainText ) ) {
+		const UInt8 * buf = CFDataGetBytePtr(dataRef);
+		CFIndex length = CFDataGetLength(dataRef);
+		result = new BinaryPersistable( buf, length );
+	}
+	else if ( UTTypeEqual( flavorType, kUTTypeFileURL ) ) {
+				
+		CFRefObject<CFURLRef>  fileURL;
+		fileURL = CFURLCreateWithBytes( kCFAllocatorDefault, 
+										CFDataGetBytePtr( dataRef ), 
+										CFDataGetLength( dataRef ),
+										kCFStringEncodingMacRoman, NULL );
+		UInt8 path[PATH_MAX];
+		memset(path, 0, PATH_MAX );
+		CFURLGetFileSystemRepresentation(fileURL, TRUE, path, PATH_MAX-1);
+										
+		String data = (const char*)path;
+		result = new BinaryPersistable( (const unsigned char*)data.c_str(), data.size_in_bytes() );
+	}
+	
+	return result;
+}
+
 DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoard )
 {
 	DataObject* result = new DataObject();
 	
+	StringUtils::trace("OSXClipboard::createDataObjectFromPasteBoard" );
 	//sync the paste board
 	PasteboardSynchronize( pasteBoard );
 	
@@ -211,16 +274,22 @@ DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoa
 					CFStringRef flavorType;
 					flavorType = (CFStringRef)CFArrayGetValueAtIndex( flavArray, flavIndex );
 
+					CFShow( CFSTR("Flavor type: ") ); 
+					CFShow( flavorType ); 
+					
 					PasteboardFlavorFlags flags = 0;
 					PasteboardGetItemFlavorFlags( pasteBoard, itemID, flavorType, &flags );
 					
 					String dataType = UTItoMimeType( flavorType );
-					
-					CFRefObject<CFDataRef> dataRef;
-					if ( noErr == PasteboardCopyItemFlavorData( pasteBoard, itemID, flavorType, &dataRef ) ) {
-						const UInt8 * buf = CFDataGetBytePtr(dataRef);
-						CFIndex length = CFDataGetLength(dataRef);
-						result->addSupportedDataType( dataType, new BinaryPersistable( buf, length ) );
+					if ( !dataType.empty() ) {
+						StringUtils::trace( Format("UTItoMimeType returned %s\n") % dataType );
+						CFRefObject<CFDataRef> dataRef;
+						if ( noErr == PasteboardCopyItemFlavorData( pasteBoard, itemID, flavorType, &dataRef ) ) {
+						
+							VCF::Persistable* persistable = OSX_getPersistableFromDataRef( dataType, flavorType, dataRef );
+						
+							result->addSupportedDataType( dataType, persistable );
+						}
 					}
 				}
 			}
@@ -233,6 +302,15 @@ DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoa
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.2  2005/11/30 05:31:35  ddiego
+*further osx drag-drop updates.
+*
+*Revision 1.2.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.2  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

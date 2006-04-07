@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <set var="LIBRARY_NAME">libXmake</set>
+
+    <lib id="xmake_lib" template="vcf_lib">
+        <if cond="FORMAT=='gnu'">
+            <define>GCC</define>
+        </if>
+        <headers>
+            CmdLine.h
+            DependencyNodes.h
+            Enumerator.h
+            FilePath.h
+            xmake.h
+            xmakeUtils.h
+            XMLParser.h
+        </headers>
+        <sources>
+            CmdLine.cpp
+            FilePath.cpp
+            xmake.cpp
+            xmakeUtils.cpp
+            XMLParser.cpp
+        </sources>
+    </lib>
+
+    <exe id="xmake" template="vcf_exe_console">
+        <exename>xmake</exename>
+        <dirname>../../bin</dirname>
+        <headers>
+            xmake.h
+            xmake_warnings_off.h
+        </headers>
+        <sources>
+            main.cpp
+        </sources>
+        <if cond="FORMAT=='gnu'">
+            <define>GCC</define>
+        </if>
+        <vcf-use-FoundationKit/>
+        <library>xmake_lib</library>
+    </exe>
+</makefile>

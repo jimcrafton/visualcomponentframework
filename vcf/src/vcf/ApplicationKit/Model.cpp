@@ -28,7 +28,10 @@ Model::~Model()
 void Model::addView( View* view )
 {
 	view->setViewModel( this );
-	views_.push_back( view );
+	std::vector<View*>::iterator found = std::find( views_.begin(), views_.end(), view );
+	if ( found == views_.end() ) {
+		views_.push_back( view );
+	}
 }
 
 void Model::removeView( View* view )
@@ -54,6 +57,12 @@ void Model::updateAllViews()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

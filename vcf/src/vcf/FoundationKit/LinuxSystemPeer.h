@@ -1,5 +1,5 @@
 #ifndef _VCF_LINUXSYSTEMPEER_H__
-#define _VCF_LINUXSYSTEMPEER_H__ 
+#define _VCF_LINUXSYSTEMPEER_H__
 //LinuxSystemPeer.h
 
 /*
@@ -27,27 +27,21 @@ public:
 
 	virtual bool doesFileExist( const String& fileName );
 
-	virtual void setEnvironmentVariable( const String& variableName,
-	                                     const String& newValue );
-
 	virtual void addPathDirectory( const String& directory );
-
-	virtual String getOSName();
-	virtual String getOSVersion();
 
 	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
 
 	virtual String getCurrentWorkingDirectory();
 
 	virtual String getEnvironmentVariable( const String& variableName );
-	
-	virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
-	
-	virtual void addPathDirectory( const String& directory );
+
+    virtual void setEnvironmentVariable( const String& variableName, const String& newValue );
 
 	virtual void setCurrentWorkingDirectory( const String& currentDirectory );
-	
+
 	virtual String getCommonDirectory( System::CommonDirectory directory );
+
+    virtual String createTempFileName( const String& directory );
 
 	virtual void setDateToSystemTime( DateTime* date );
 
@@ -63,20 +57,16 @@ public:
 	virtual DateTime convertUTCTimeToLocalTime( const DateTime& date );
 
 	virtual DateTime convertLocalTimeToUTCTime( const DateTime& date );
-	
-	virtual String getOSName();
-	virtual String getOSVersion();
+
+    virtual String getOSName();
+    virtual String getOSVersion();
 
 	virtual String getComputerName();
 	virtual String getUserName();
 
-	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
-
 protected:
-	//WEIRDNESS! These member variables need to be
-	//declared as static to work right...sigh...
-	static struct timezone timeZone;
-	static struct timeval time;
+	struct timezone timeZone_;
+	struct timeval time_;
 };
 
 };
@@ -85,6 +75,21 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.4.2.3  2005/11/18 16:02:53  obirsoy
+*changes required for gcc under Linux, and some warning clean up.
+*
+*Revision 1.4.2.2  2005/11/11 00:21:00  ddiego
+*comitting mostuffs linux foundationkit patchs [1351922].
+*
+*Revision 1.4.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

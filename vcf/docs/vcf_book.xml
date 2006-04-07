@@ -28,12 +28,12 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book 0.6.8</title>
-	<titleabbrev>VCF Documentation 0.6.8</titleabbrev>
+<title>The VCF Book devmain-0.9.0</title>
+	<titleabbrev>VCF Documentation devmain-0.9.0</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
-			Copyright (c) 2000-2005, Jim Crafton
+			Copyright (c) 2000-2006, Jim Crafton
 			</para>
 			<para>
 			All rights reserved.
@@ -143,6 +143,13 @@ NB: This software will not save the world.
 			  <authorinitials>JC</authorinitials>
 			  <revremark>Added further documentation</revremark>
 			</revision>
+
+			<revision>
+			  <revnumber>0.9.0</revnumber>
+			  <date>March 4 2006</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Added further documentation, plus new sections for the HTMLKit, InternetKit and OpenGLKit</revremark>
+			</revision>
 			
 		</revhistory>
 	</bookinfo>
@@ -162,17 +169,18 @@ NB: This software will not save the world.
 		
 		&componentAuthoring;
 		
+		&coreLibHTMLKit;
+		
+		&coreLibInternetKit;
+		
+		&coreLibOpenGLKit;
+		
 		&coreLibNetworkKit;
 
 		&coreLibRemoteObjectKit;
 	</chapter>
 
 	<chapter><title>Additional Libraries (usage is optional) </title>
-		<section><title>HTML Browser</title>
-			<para>
-			</para>
-		</section>
-
 		<section><title>ImageFormats</title>
 			<para>
 			</para>
@@ -206,6 +214,8 @@ NB: This software will not save the world.
 			<simplelist>
 				<member>Marcello Pietrobon</member>
 				<member>Doug Tinkham</member>
+				<member>Orhun Birsoy</member>
+				<member>Dmitry Kononov</member>
 				<member>Scott Pearson</member>	
 				<member>Ian Wallis</member>	
 				<member>Fraggle</member>	
@@ -292,6 +302,24 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.8  2006/04/07 02:34:02  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.7.2.5  2006/03/29 03:06:54  ddiego
+updated vc projects with marcellos script.
+
+Revision 1.7.2.4  2006/03/28 02:25:48  ddiego
+updated credits.
+
+Revision 1.7.2.3  2006/03/10 21:49:27  ddiego
+updates to color example and some documentation.
+
+Revision 1.7.2.2  2006/03/06 04:38:41  ddiego
+added new docs sections for the HTMLKit, OpenGLKit, and INternetKit.
+
+Revision 1.7.2.1  2006/03/05 02:28:04  ddiego
+updated the Item interface and adjusted the other classes accordingly.
+
 Revision 1.7  2005/07/09 23:14:10  ddiego
 merging in changes from devmain-0-6-7 branch.
 
@@ -309,7 +337,6 @@ merged over devmain-0-6-6 code. Marcello did a kick ass job
 of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
 that he found. Many, many thanks for this Marcello.
 
-<<<<<<< vcf_book.xml
 Revision 1.4  2004/08/19 02:24:52  ddiego
 fixed bug [ 1007039 ] lightweight controls do not paint correctly.
 

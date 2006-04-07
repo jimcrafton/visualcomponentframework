@@ -32,9 +32,30 @@ void EventHandler::addHandlerToSource( Object* source, const String& handlerName
 }
 
 
+String EventHandler::getHandlerName()
+{
+	return getHandlerNameFromSource( getSource() );
+}
+
+String EventHandler::getHandlerNameFromSource( Object* source )
+{
+	String result;
+
+	ObjectWithEvents* objEventOwner = dynamic_cast<ObjectWithEvents*>(source);
+	result = objEventOwner->getEventHandlerName( this );
+
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.1  2005/08/08 03:19:17  ddiego
+*minor updates
+*
 *Revision 1.6  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

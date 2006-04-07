@@ -22,7 +22,6 @@ public:
 
 	PrintingWindow() {
 		setCaption( "Printing" );
-		setVisible( true );
 
 		MenuBar* menuBar = new MenuBar();
 		setMenuBar( menuBar );
@@ -34,12 +33,12 @@ public:
 
 		DefaultMenuItem* printingPrintHard = new DefaultMenuItem( "Print the &Hard way...", printing, menuBar );
 		printingPrintHard->setTag( printHardWay );
-	
+
 		printingPrintHard->MenuItemClicked += new GenericEventHandler<PrintingWindow>(this,&PrintingWindow::onPrint,"PrintingWindow::onPrint");
 
 		DefaultMenuItem* printingPrintEasy = new DefaultMenuItem( "Print the &Easy Way...", printing, menuBar );
 		printingPrintEasy->setTag( printEasyWay );
-	
+
 		printingPrintEasy->MenuItemClicked += getEventHandler("PrintingWindow::onPrint");
 	}
 
@@ -58,20 +57,14 @@ public:
 
 		Rect page8dot5X11dot0;
 		page8dot5X11dot0.right_ = 8.5 * dpi;
-		page8dot5X11dot0.bottom_ = 11.0 * dpi;		
+		page8dot5X11dot0.bottom_ = 11.0 * dpi;
+		double ar = page8dot5X11dot0.getWidth() / page8dot5X11dot0.getHeight();
 
-		if ( r.getWidth() > r.getHeight() ) {
-			double ar = page8dot5X11dot0.getWidth() / page8dot5X11dot0.getHeight();
-
-			page8dot5X11dot0.bottom_ = r.getHeight();
-			page8dot5X11dot0.right_ = r.getHeight() * ar;
-
-		}
-		else{
-			double ar = page8dot5X11dot0.getHeight() / page8dot5X11dot0.getWidth();
-
+		page8dot5X11dot0.bottom_ = r.getHeight();
+		page8dot5X11dot0.right_ = page8dot5X11dot0.getHeight() * ar;
+		if ( page8dot5X11dot0.getWidth() > r.getWidth() ) {
 			page8dot5X11dot0.right_ = r.getWidth();
-			page8dot5X11dot0.bottom_ = r.getWidth() * ar;
+			page8dot5X11dot0.bottom_ = r.getWidth() / ar;
 		}
 
 
@@ -79,7 +72,7 @@ public:
 
 		page8dot5X11dot0.offset( r.left_ + (r.getWidth()/2.0 - page8dot5X11dot0.getWidth()/2.0),
 									r.top_ + (r.getHeight()/2.0 - page8dot5X11dot0.getHeight()/2.0) );
-		
+
 
 		context->setColor( Color::getColor("white") );
 		context->rectangle( &page8dot5X11dot0 );
@@ -95,25 +88,25 @@ public:
 	virtual ~PrintingWindow(){};
 
 	void onPrint( Event* e ) {
-		CommonPrint dlg(this);
+		CommonPrintDialog dlg(this);
 
 		dlg.setTitle( "Print Dialog from Printing Example" );
-		
+
 
 		if ( dlg.execute() ) {
-			
-			PrintSession printSession;			
+
+			PrintSession printSession;
 
 			printSession.setPrintInfoHandle( dlg.getPrintInfo() );
 
 			printSession.setTitle( "My Print Session!" );
 
-			
+
 			Component* source = (Component*)e->getSource();
 
 			switch ( source->getTag() ) {
 				case PrintingWindow::printEasyWay : {
-					printSession.PageBegun += 
+					printSession.PageBegun +=
 						new EventHandlerInstance<PrintingWindow,PrintEvent>( this, &PrintingWindow::onPrintPage, "PrintingWindow::onPrintPage" );
 
 					printSession.runDefaultPrintLoop();
@@ -152,8 +145,8 @@ public:
 	}
 
 
-	void doDrawing( GraphicsContext* context, Rect& bounds ) {
-		
+	void doDrawing( GraphicsContext* context, const Rect& bounds ) {
+
 		long drawingOptions = GraphicsContext::tdoCenterHorzAlign;
 
 		double y = bounds.top_;
@@ -169,7 +162,7 @@ public:
 
 		y += context->getCurrentFont()->getHeight();
 	}
-	
+
 };
 
 
@@ -184,11 +177,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new PrintingWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
-		
+		mainWindow->show();
+
 		return result;
 	}
 
@@ -200,7 +194,7 @@ int main(int argc, char *argv[])
 	Application* app = new PrintingApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
 

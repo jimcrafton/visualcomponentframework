@@ -70,7 +70,7 @@ void Win32Button::create( Control* owningControl )
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
 		subclassWindow();
-		setFont( owningControl->getFont() );
+		registerForFontChanges();
 	}
 	else {
 		//throw exception
@@ -110,12 +110,9 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 	bool result = false;
 
 	switch ( message ) {
+		
 		case WM_PAINT:{
 			//check to see if the font needs updating
-			checkForFontChange();
-
-			//result = CallWindowProc( oldButtonWndProc_, hwnd_, message, wParam, lParam );
-			
 		}
 		break;
 
@@ -131,6 +128,9 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			state_.setFocused( (drawItem->itemState & ODS_FOCUS) || peerControl_->isFocused() );
 			state_.setEnabled( !(drawItem->itemState & ODS_DISABLED) );
 			state_.setPressed( drawItem->itemState & ODS_SELECTED );
+
+			CommandButton* button = (CommandButton*)peerControl_;
+			button->setIsPressed( drawItem->itemState & ODS_SELECTED ? true : false );
 
 			if ( peerControl_->isDoubleBuffered() ){
 
@@ -153,20 +153,34 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 				HBITMAP oldBMP = (HBITMAP)::SelectObject( memDC_, memBitmap );
 
+				//clear the memdc
+				Control* parent = peerControl_->getParent();
+				Color* bkColor = parent->getColor();
+				HBRUSH bkBr = CreateSolidBrush( RGB( bkColor->getRed()*255.0, bkColor->getGreen()*255.0, bkColor->getBlue()*255.0 ) );
+				FillRect( memDC_, &drawItem->rcItem, bkBr );
+				DeleteObject( bkBr );
+
+
 				::SetViewportOrgEx( memDC_, -drawItem->rcItem.left, -drawItem->rcItem.top, NULL );
 
-				//VCF::GraphicsContext memCtx( tmp.getWidth(), tmp.getHeight() );
+				//::BitBlt( memDC_, 0, 0,
+				//					drawItem->rcItem.right - drawItem->rcItem.left,
+				//					drawItem->rcItem.bottom - drawItem->rcItem.top,
+				//					drawItem->hDC, drawItem->rcItem.left, drawItem->rcItem.top, SRCCOPY );
 
-				//memCtx.setOrigin( -tmp.left_, -tmp.top_ );
-
-				//HDC memDC = (HDC)memCtx.getPeer()->getContextID();
+				
 
 
 				ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
 
 				((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
 
+				peerControl_->internal_beforePaint( ctx );
+
 				peerControl_->paint( ctx );
+
+				peerControl_->internal_afterPaint( ctx );
+
 
 				((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
 
@@ -194,7 +208,11 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 				ctx->getPeer()->setContextID( (OSHandleID)drawItem->hDC );
 
+				peerControl_->internal_beforePaint( ctx );
+
 				peerControl_->paint( ctx );
+
+				peerControl_->internal_afterPaint( ctx );
 			}
 			wndProcResult = TRUE;
 			result = true;
@@ -216,47 +234,18 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 		case BN_CLICKED :{
 
-			commandButton_->click();
-/*
-			HWND wnd = (HWND)peerControl_->getParent()->getPeer()->getHandleID();
-			WPARAM msgWParam = 0;
-			switch ( commandButton_->getCommandType() ){
-				case BC_NONE : {
-
-				}
-				break;
-
-				case BC_OK : {
-					msgWParam = MAKEWPARAM(0,IDOK);
-				}
-				break;
-
-				case BC_CANCEL : {
-					msgWParam = MAKEWPARAM(0,IDCANCEL);
-				}
-				break;
-
-				case BC_YES : {
-					msgWParam = MAKEWPARAM(0,IDYES);
-				}
-				break;
-
-				case BC_NO : {
-					msgWParam = MAKEWPARAM(0,IDNO);
-				}
-				break;
-
-				case BC_MAYBE : {
-
-				}
-				break;
+			if ( peerControl_->isDesigning() ) {
+				wndProcResult = 0;
+				result = true;
 			}
-			PostMessage( wnd, WM_COMMAND, msgWParam, NULL );
-			*/
+			else {
+				commandButton_->click();
+			}
 		}
 		break;
+		
 
-		case WM_COMMAND: {
+		case WM_COMMAND: {			
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );			
 		}
 
@@ -272,6 +261,27 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.6  2006/03/18 19:04:56  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.5.2.5  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.4  2006/03/10 05:35:57  ddiego
+*fixed repaint for win32window when first made visible.
+*
+*Revision 1.5.2.3  2006/02/20 20:42:08  ddiego
+*comitting current state of theme code.
+*
+*Revision 1.5.2.2  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.5.2.1  2005/09/05 14:38:31  ddiego
+*added pre and post paint delegates to the control class.
+*
 *Revision 1.5  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -450,10 +450,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FileStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\FileStreamPeer.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.cpp
 # End Source File
 # Begin Source File
@@ -547,14 +543,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
 # End Source File
 # Begin Source File
 
@@ -674,6 +662,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\ProgramInfo.h
 # End Source File
 # Begin Source File
@@ -751,6 +747,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\WarningsOffVc.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\ConditionPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStreamPeer.h
 # End Source File
 # Begin Source File
 

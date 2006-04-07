@@ -8,7 +8,7 @@ namespace VCF {
 class PrintContext;
 
 /**
-
+\class PrintSessionPeer PrintSessionPeer.h "vcf/GraphicsKit/PrintSessionPeer.h"
 */
 class GRAPHICSKIT_API PrintSessionPeer {
 public: 	

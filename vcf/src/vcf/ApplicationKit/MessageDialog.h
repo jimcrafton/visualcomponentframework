@@ -22,7 +22,9 @@ class Label;
 class CommandButton;
 class PushButton;
 class Panel;
-
+/**
+\class InvalidMessageDialogException MessageDialog.h "vcf/ApplicationKit/MessageDialog.h"
+*/
 class APPLICATIONKIT_API InvalidMessageDialogException : public BasicException {
 public:
 	InvalidMessageDialogException (const String& message ): BasicException(	message ){};
@@ -30,6 +32,7 @@ public:
 
 
 /**
+\class MessageDialog MessageDialog.h "vcf/ApplicationKit/MessageDialog.h"
 the MessageDialog class let the user to create at run time 
 a dialog with many options for customization. Like captions
 and images for the buttons.
@@ -124,6 +127,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

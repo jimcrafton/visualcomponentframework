@@ -16,8 +16,8 @@ using namespace VCF;
 
 Win32PrintDialog::Win32PrintDialog( Control* owner ):
 	owner_(owner)
-{		
-	printInfo_.printDlg_.lStructSize = sizeof(printInfo_.printDlg_);
+{	
+	
 }
 
 Win32PrintDialog::~Win32PrintDialog()
@@ -33,11 +33,12 @@ UINT CALLBACK Win32PrintDialog::PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wPa
 			Win32PrintDialog* thisPtr = (Win32PrintDialog*)printInfo->lCustData;
 			
 			if ( !thisPtr->title_.empty() ) {
-#if defined(VCF_CW) && defined(UNICODE)
-				SetWindowText( hdlg, thisPtr->title_.c_str() );
-#else
-				SetWindowText( hdlg, thisPtr->title_.ansi_c_str() );
-#endif
+				if ( System::isUnicodeEnabled() ) {
+					SetWindowTextW( hdlg, thisPtr->title_.c_str() );
+				}
+				else {
+					SetWindowTextA( hdlg, thisPtr->title_.ansi_c_str() );
+				}
 			}
 
 			return TRUE;
@@ -57,51 +58,99 @@ bool Win32PrintDialog::execute()
 {
 	bool result = false;
 
-	printInfo_.printDlg_.Flags |= PD_ENABLEPRINTHOOK | PD_RETURNDC;
+	HDC printDC = NULL;
 
-	printInfo_.printDlg_.hDC = NULL;
-	printInfo_.printDlg_.lCustData = (DWORD) this;
-	if ( NULL != owner_ ) {
-		printInfo_.printDlg_.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
+	if ( System::isUnicodeEnabled() ) {
+		PRINTDLGW& printDlg =  printInfo_.getPrintDlgW();
+
+		printDlg.Flags |= PD_ENABLEPRINTHOOK | PD_RETURNDC;
+		
+		printDlg.hDC = NULL;
+		printDlg.lCustData = (DWORD) this;
+		if ( NULL != owner_ ) {
+			printDlg.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
+		}
+		else {
+			printDlg.hwndOwner = NULL;
+		}
+		
+		printDlg.nFromPage = printInfo_.getStartPage();
+		printDlg.nToPage = printInfo_.getEndPage();
+		
+		printDlg.lpfnPrintHook = Win32PrintDialog::PrintHookProc;
+		printDlg.nMinPage = printDlg.nFromPage;
+		printDlg.nMaxPage = printDlg.nToPage;
+		
+		if ( PrintDlgW( &printDlg ) ) {
+			result = true;
+			
+			
+			if ( NULL != printDlg.hDevMode ) {
+				LPDEVMODE  devModePtr = NULL;
+				devModePtr = (LPDEVMODE)::GlobalLock(printDlg.hDevMode);
+				
+				printDlg.nCopies = devModePtr->dmCopies;
+				
+				::GlobalUnlock(printDlg.hDevMode);
+			}
+
+			printDC = printDlg.hDC;
+			printInfo_.setStartPage( printDlg.nFromPage );
+			printInfo_.setEndPage( printDlg.nToPage );
+		}
 	}
 	else {
-		printInfo_.printDlg_.hwndOwner = NULL;
-	}
+		PRINTDLGA& printDlg =  printInfo_.getPrintDlgA();
 
-	printInfo_.printDlg_.nFromPage = printInfo_.getStartPage();
-	printInfo_.printDlg_.nToPage = printInfo_.getEndPage();
-	
-	printInfo_.printDlg_.lpfnPrintHook = Win32PrintDialog::PrintHookProc;
-	printInfo_.printDlg_.nMinPage = printInfo_.printDlg_.nFromPage;
-	printInfo_.printDlg_.nMaxPage = printInfo_.printDlg_.nToPage;
-
-	if ( PrintDlg( &printInfo_.printDlg_ ) ) {
-		result = true;
+		printDlg.Flags |= PD_ENABLEPRINTHOOK | PD_RETURNDC;
 		
-		
-		if ( NULL != printInfo_.printDlg_.hDevMode ) {
-			LPDEVMODE  devModePtr = NULL;
-			devModePtr = (LPDEVMODE)::GlobalLock(printInfo_.printDlg_.hDevMode);
-
-			printInfo_.printDlg_.nCopies = devModePtr->dmCopies;
-
-			::GlobalUnlock(printInfo_.printDlg_.hDevMode);
+		printDlg.hDC = NULL;
+		printDlg.lCustData = (DWORD) this;
+		if ( NULL != owner_ ) {
+			printDlg.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
 		}
+		else {
+			printDlg.hwndOwner = NULL;
+		}
+		
+		printDlg.nFromPage = printInfo_.getStartPage();
+		printDlg.nToPage = printInfo_.getEndPage();
+		
+		printDlg.lpfnPrintHook = Win32PrintDialog::PrintHookProc;
+		printDlg.nMinPage = printDlg.nFromPage;
+		printDlg.nMaxPage = printDlg.nToPage;
+		
+		if ( PrintDlgA( &printDlg ) ) {
+			result = true;
+			
+			
+			if ( NULL != printDlg.hDevMode ) {
+				LPDEVMODE  devModePtr = NULL;
+				devModePtr = (LPDEVMODE)::GlobalLock(printDlg.hDevMode);
+				
+				printDlg.nCopies = devModePtr->dmCopies;
+				
+				::GlobalUnlock(printDlg.hDevMode);
+			}
 
+			printDC = printDlg.hDC;
+			printInfo_.setStartPage( printDlg.nFromPage );
+			printInfo_.setEndPage( printDlg.nToPage );
+		}
+	}
+	
+
+	if ( result == true ) {
 		RECT r;
 		r.left = 0;
 		r.top = 0;
-		r.right = ::GetDeviceCaps( printInfo_.printDlg_.hDC, HORZRES );
-		r.bottom = ::GetDeviceCaps( printInfo_.printDlg_.hDC, VERTRES );
+		r.right = ::GetDeviceCaps( printDC, HORZRES );
+		r.bottom = ::GetDeviceCaps( printDC, VERTRES );
 		
-		DPtoLP( printInfo_.printDlg_.hDC, (LPPOINT)&r, 2 );
+		DPtoLP( printDC, (LPPOINT)&r, 2 );
 		
 		printInfo_.pageSize_.width_ = r.right - r.left;
 		printInfo_.pageSize_.height_ = r.bottom - r.top;
-		
-		printInfo_.setStartPage( printInfo_.printDlg_.nFromPage );
-		printInfo_.setEndPage( printInfo_.printDlg_.nToPage );
-		
 		
 		printInfo_.pageDrawingRect_.setRect( 0, 0, printInfo_.pageSize_.width_, printInfo_.pageSize_.height_ );
 	}
@@ -125,73 +174,137 @@ PrintInfoHandle Win32PrintDialog::getPrintInfo()
 
 void Win32PrintDialog::setNumberOfCopies( const ulong32& val )
 {
-	printInfo_.printDlg_.nCopies = val;
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getPrintDlgW().nCopies = val;
+	}
+	else {
+		printInfo_.getPrintDlgA().nCopies = val;
+	}	
 }
 
 ulong32 Win32PrintDialog::getNumberOfCopies()
 {
-	return printInfo_.printDlg_.nCopies;
+	if ( System::isUnicodeEnabled() ) {
+		return printInfo_.getPrintDlgW().nCopies;
+	}
+	else {
+		return printInfo_.getPrintDlgA().nCopies;
+	}	
+
+	return 0;
 }
 
 void Win32PrintDialog::setStartPage( const ulong32& val )
 {
-	printInfo_.printDlg_.nFromPage = val;
-	printInfo_.setStartPage( printInfo_.printDlg_.nFromPage );
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getPrintDlgW().nFromPage = val;
+	}
+	else {
+		printInfo_.getPrintDlgA().nFromPage = val;
+	}	
+
+	printInfo_.setStartPage( val );
 }
 
 ulong32 Win32PrintDialog::getStartPage()
 {
-	return printInfo_.printDlg_.nFromPage;
+	if ( System::isUnicodeEnabled() ) {
+		return printInfo_.getPrintDlgW().nFromPage;
+	}
+	else {
+		return printInfo_.getPrintDlgA().nFromPage;
+	}	
+
+	return 0;
 }
 
 void Win32PrintDialog::setEndPage( const ulong32& val )
 {
-	printInfo_.printDlg_.nToPage = val;
-	printInfo_.setEndPage( printInfo_.printDlg_.nToPage );
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getPrintDlgW().nToPage = val;
+	}
+	else {
+		printInfo_.getPrintDlgA().nToPage = val;
+	}	
+
+	printInfo_.setEndPage( val );
 }
 
 ulong32 Win32PrintDialog::getEndPage()
 {
-	return printInfo_.printDlg_.nToPage;
+	if ( System::isUnicodeEnabled() ) {
+		return printInfo_.getPrintDlgW().nToPage;
+	}
+	else {
+		return printInfo_.getPrintDlgA().nToPage;
+	}	
+
+	return 0;
 }
 
 void Win32PrintDialog::setPrintJobType( PrintSession::PrintJob val )
 {
+	DWORD flags = 0;
+
+	if ( System::isUnicodeEnabled() ) {
+		flags = printInfo_.getPrintDlgW().Flags;
+	}
+	else {
+		flags = printInfo_.getPrintDlgA().Flags;
+	}
+
+
 	switch ( val ) {
 		case PrintSession::pjPrintAll :  {
-			printInfo_.printDlg_.Flags &= ~PD_SELECTION;
-			printInfo_.printDlg_.Flags &= ~PD_PAGENUMS;
-			printInfo_.printDlg_.Flags |= PD_ALLPAGES;			
+			flags &= ~PD_SELECTION;
+			flags &= ~PD_PAGENUMS;
+			flags |= PD_ALLPAGES;			
 		}
 		break;
 
 		case PrintSession::pjPrintSelectedPage : {
-			printInfo_.printDlg_.Flags &= ~PD_PAGENUMS;
-			printInfo_.printDlg_.Flags &= ~PD_ALLPAGES;
-			printInfo_.printDlg_.Flags |= PD_SELECTION;
+			flags &= ~PD_PAGENUMS;
+			flags &= ~PD_ALLPAGES;
+			flags |= PD_SELECTION;
 		}
 		break;
 
 		case PrintSession::pjPrintRange : {
-			printInfo_.printDlg_.Flags &= ~PD_ALLPAGES;
-			printInfo_.printDlg_.Flags &= ~PD_SELECTION;
-			printInfo_.printDlg_.Flags |= PD_PAGENUMS;			
+			flags &= ~PD_ALLPAGES;
+			flags &= ~PD_SELECTION;
+			flags |= PD_PAGENUMS;			
 
 		}
 		break;
+	}
+
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getPrintDlgW().Flags = flags;
+	}
+	else {
+		printInfo_.getPrintDlgA().Flags = flags;
 	}
 }
 
 PrintSession::PrintJob Win32PrintDialog::getPrintJobType()
 {
+	DWORD flags = 0;
+
+	if ( System::isUnicodeEnabled() ) {
+		flags = printInfo_.getPrintDlgW().Flags;
+	}
+	else {
+		flags = printInfo_.getPrintDlgA().Flags;
+	}
+
 	PrintSession::PrintJob result;
-	if ( printInfo_.printDlg_.Flags & PD_ALLPAGES ) {
+	if ( flags & PD_ALLPAGES ) {
 		result = PrintSession::pjPrintAll;
 	}
-	else if ( printInfo_.printDlg_.Flags & PD_SELECTION ) {
+	else if ( flags & PD_SELECTION ) {
 		result = PrintSession::pjPrintSelectedPage;
 	}
-	else if ( printInfo_.printDlg_.Flags & PD_PAGENUMS ) {
+	else if ( flags & PD_PAGENUMS ) {
 		result = PrintSession::pjPrintRange;
 	}
 	return result;
@@ -210,6 +323,12 @@ PrintSession::PrintJob Win32PrintDialog::getPrintJobType()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
 *Revision 1.3  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

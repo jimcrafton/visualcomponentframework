@@ -9,6 +9,9 @@ compiler:
 1a. To add new info on this: library has been tested with BCB 6, BCB 5 with and 
     without SP and it works.
 
+1b. Added new support for Free command line compiler with which complete library can be built
+    Excluding WebBrowser control.
+
 2. Since Borland did not ship glaux.lib and comsupp.lib with their compiler I 
    had to supply these lib's. Fortunately I did that quite some time ago.
    Interested people can take a look at http://makefiles.lebeausoftware.org/
@@ -19,14 +22,34 @@ compiler:
 3. Locate file bcc32.cfg in <PATH_TO_BCB_INST>\bin and make sure it looks like 
    this:
 -I"C:\bcb6\Include";"C:\bcb6\Include\vcl";"C:\bcb6\Include\Atl"
--L"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release";"C:\bcb6\lib\PSDK"
-  Of course replace C:\bcb6\ part with appropriate path where you installed bcb.
+-L"C:\bcb6\lib\PSDK";"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release"
+  The order of the folders is important. Especially for linker folders. So copy them as 
+  shown here.
 
+NOTE: For Borland Free compiler
+   bcc32.cfg should look like this:
+-I"C:\Borland\BCC55\Include"
+-L"C:\Borland\BCC55\lib\PSDK";"C:\Borland\BCC55\lib"
+
+  Of course replace C:\bcb6\ or C:\Borland\BCC55 part with appropriate path where you installed bcb/free compiler.
+     
 4. Locate file ilink32.cfg in <PATH_TO_BCB_INST>\bin and make sure it looks like 
    this:
--L"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release";"C:\bcb6\lib\PSDK"
-  Of course replace C:\bcb6\ part with appropriate path where you installed bcb.
+-L"C:\bcb6\lib\PSDK";"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release"
 
+NOTE: For Borland Free compiler
+   ilink32.cfg should look like this:
+-L"C:\Borland\BCC55\lib\PSDK";"C:\Borland\BCC55\lib"
+
+  Of course replace C:\bcb6\ or C:\Borland\BCC55 part with appropriate path where you installed bcb/free compiler.
+
+4a. You have supplied samples of config files located at sample_config_files folder. Take a look into readme.txt located there for more info.
+
+4b. Make sure you setup environment variables VCF_BIN, VCF_INCLUDE and VCF_LIB. Without that you can not build and use them. 
+    VCF_BIN should have this path: <PATH_TO_VCF>\bin
+    VCF_INCLUDE : <PATH_TO_VCF>\src
+    VCF_LIB: <PATH_TO_VCF>\lib
+    
 5. After you do all this preparations build libraries by issuing this command 
    from <PATH_TO_VCF>\build\bcc :
    make -fvcfAllLibs.mak
@@ -35,6 +58,54 @@ compiler:
    If for some reason name of your make util is not make.exe open vcfAllLibs.mak
    and change MK variable to the name of your make util. Do the same thing in 
    vcfAllDynStatLibs.mak.
+   
+   To build more specific library or set of library you have this options:
+   - All static libraries (both debug and release)
+     make -fvcfAllLibs.mak static_libs
+     
+   - All dynamic libraries (both debug and release)
+     make -fvcfAllLibs.mak dynamic_libs
+     
+   - All static release libraries
+     make -fvcfAllLibs.mak static_libs_rel
+
+   - All static debug libraries
+     make -fvcfAllLibs.mak static_libs_dbg
+
+   - All dynamic debug libraries
+     make -fvcfAllLibs.mak dynamic_libs_dbg
+
+   - All dynamic release libraries
+     make -fvcfAllLibs.mak dynamic_libs_rel
+     
+To delete built libraries and object files you have these options:
+   - All libraries (both debug and release and both static and dynamic)
+     make -fvcfAllLibs.mak clean
+
+   - All static libraries (both debug and release)
+     make -fvcfAllLibs.mak static_libs_clean
+     
+   - All dynamic libraries (both debug and release)
+     make -fvcfAllLibs.mak dynamic_libs_clean
+     
+   - All static release libraries
+     make -fvcfAllLibs.mak static_libs_rel_clean
+
+   - All static debug libraries
+     make -fvcfAllLibs.mak static_libs_dbg_clean
+
+   - All dynamic debug libraries
+     make -fvcfAllLibs.mak dynamic_libs_dbg_clean
+
+   - All dynamic release libraries
+     make -fvcfAllLibs.mak dynamic_libs_rel_clean
+
+6. Additional notes for Borland free compiler and BCB 6. Because of compiler limitations 
+   I had to exclude  HTML Browser control from default build. The only Borland compiler 
+   that can handle this is BDS 2006. If you have BDS and have desire to test HTML browser
+   control execute make -fvcfAllLibs.mak -DFREECOMP=FALSE <build target name> as explained above.
+   In general BDS can still be considered unsupported because currently it is possible to build
+   only static libs, not the dynamic ones. I'm investigating this issue.
 
 Building examples:
 

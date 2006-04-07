@@ -30,7 +30,7 @@ extern "C" {
 #define XMD_H
 #undef FAR
 #include <setjmp.h>
-#include "thirdparty/common/FreeImage/Source/LibJPEG/jpeglib.h"
+#include "thirdparty/common/LibJPEG/jpeglib.h"
 }
 
 // ----------------------------------------------------------
@@ -79,9 +79,9 @@ jpeg_output_message (j_common_ptr cinfo) {
  * than 8 bits on your machine, you may need to do some tweaking.
  */
 
-#include "thirdparty/common/FreeImage/Source/LibJPEG/jinclude.h"
-#include "thirdparty/common/FreeImage/Source/LibJPEG/jpeglib.h"
-#include "thirdparty/common/FreeImage/Source/LibJPEG/jerror.h"
+#include "thirdparty/common/LibJPEG/jinclude.h"
+#include "thirdparty/common/LibJPEG/jpeglib.h"
+#include "thirdparty/common/LibJPEG/jerror.h"
 
 // Expanded data source object for stdio input --------------
 

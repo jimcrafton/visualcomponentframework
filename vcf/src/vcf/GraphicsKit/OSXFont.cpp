@@ -12,10 +12,6 @@ where you installed the VCF.
 
 
 
-#define IntToFixed(a)	   ((Fixed)(a) << 16)
-#define FixedToInt(a)	   ((int)(a) >> 16)
-
-
 using namespace VCF;
 
 
@@ -180,19 +176,19 @@ bool OSXFont::isTrueType()
 
 double OSXFont::getPointSize()
 {
-	return (double) FixedToInt(attrSize_);
+	return (double) VCF_FIXEDTOINT(attrSize_);
 }
 
 void OSXFont::setPointSize( const double pointSize )
 {
-	attrSize_ = IntToFixed((int)pointSize);
+	attrSize_ = VCF_INTTOFIXED((int)pointSize);
 
 	updateStyleWithAttrs();
 }
 
 double OSXFont::getPixelSize()
 {
-	return (double) FixedToInt(attrSize_);
+	return (double) VCF_FIXEDTOINT(attrSize_);
 }
 
 void OSXFont::setPixelSize( const double pixelSize )
@@ -325,6 +321,12 @@ bool OSXFont::isEqual( Object* object )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
 *Revision 1.5  2005/07/09 23:06:00  ddiego
 *added missing gtk files
 *

@@ -44,13 +44,10 @@ enum FileStreamAccessType{
 */
 class Persistable;
 
-/**
-*forward declared, see FileStream.h
-*/
-//class FileStream;
 
 
 /**
+\class Stream Stream.h "vcf/FoundationKit/Stream.h"
 Stream interface defines a core set of funcationality for streams
 in the Visual Component Framework derived Streams should support "stream chaining",
 the ability of the stream constructor to support an incoming stream from
@@ -93,6 +90,7 @@ public:
 };
 
 /**
+\class InputStream Stream.h "vcf/FoundationKit/Stream.h"
 InputStream, basic interface describing the requirements to
 support streaming data into a stream. Support for the basic
 primitive types is done through the extraction operator( >> ),
@@ -107,7 +105,7 @@ public:
 	// new introduced by tiziano
 	virtual bool isEOS() = 0;
 
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes ) = 0;
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) = 0;
 
 	virtual void read( Persistable* persistableObject ) ;
 
@@ -147,6 +145,7 @@ public:
 };
 
 /**
+\class OutputStream Stream.h "vcf/FoundationKit/Stream.h"
 OutputStream, basic interface describing the requirements to
 support streaming data into a stream. Support for the basic
 primitive types is done through the insertion operator( << ),
@@ -157,7 +156,7 @@ class FOUNDATIONKIT_API OutputStream : public Stream {
 public:
 	virtual ~OutputStream(){};
 
-	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes )=0;
+	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )=0;
 
 	virtual void write( Persistable* persistableObject );
 
@@ -204,6 +203,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.2.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.3  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

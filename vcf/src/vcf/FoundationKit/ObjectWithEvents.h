@@ -22,14 +22,14 @@ namespace VCF  {
 class NotifyEvent;
 
 /**
-\par
+\class ObjectWithEvents ObjectWithEvents.h "vcf/FoundationKit/ObjectWithEvents.h"
 ObjectWithEvents is an object that may
 have 0 or more EventHandlers associated with it,
 and will automatically clean up these EventHandlers
 when it is destroyed. This simplifies handling
 who has to clean up EventHandlers that have been
 allocated on the heap (which they always will be).
-\par
+
 Because the collection is a map, an event handler may be
 retreived for future use - that is it may be reused by 
 another delegate. For example:
@@ -68,7 +68,7 @@ void someFunction( Stuff* stuff )
 }
 \endcode
 
-\par
+
 Note that the ObjectWithEvents should not be created directly. Instead derive a 
 new custom class using this as a base class.
 
@@ -83,28 +83,23 @@ public:
 	virtual ~ObjectWithEvents();
 
 	/**
-	*This is a utility method for adding event handlers to an object.
-	*Adding a handler provides a convenient way to store the various events
-	*an object may wish to listen to. Handlers still need to have their method
-	*callbacks set, otherwise nothing will happen. When the object is destroyed
-	*all the event handlers in this list are also destroyed.
+	This is a utility method for adding event handlers to an object.
+	Adding a handler provides a convenient way to store the various events
+	an object may wish to listen to. Handlers still need to have their method
+	callbacks set, otherwise nothing will happen. When the object is destroyed
+	all the event handlers in this list are also destroyed.
 	*/
 	void addEventHandler( const String& handlerName, EventHandler* handler );
 
 	/**
-	*Finds a EventHandler handler for a given name. If the object has that
-	*handler then a pointer to the is returned otherwise null
-	*is returned
+	Finds a EventHandler handler for a given name. If the object has that
+	handler then a pointer to the is returned otherwise null
+	is returned
 	*/
 	EventHandler* getEventHandler( const String& handlerName );
 
-	/**
-	*Adds the vector of handlers to the master list. This list will be
-	*destroyed when the destructor is called. This is used internally by the
-	framework, and you shouldn't have to call it.
-	*/
-	void addEventHandlerList( EventHandler::Vector* eventHandlerList );
-
+	String getEventHandlerName( EventHandler* handler );
+	
 	/**	
 	@delegate Notifier events are used as a generic signal mechanism and can signify 
 	anything that takes place to the ObjectWithEvents instance.
@@ -114,21 +109,10 @@ public:
 
 protected:
 	/**
-	*This map holds a list of EventHandlers that have been
-	*added to the object
+	This map holds a list of EventHandlers that have been
+	added to the object
 	*/
 	std::map<String,EventHandler*> eventHandlers_;
-
-	/**
-	*this vector holds a list of vector that in turn hold a series
-	*of 0 or more handlers. The idea is to conserve memory, as each
-	*vector defined as a member on the stace in a class adds 16 bytes to
-	*the class size, which begins to add up, since there will now
-	*be a vector for each type of event method fired, as opposed to a
-	*listener for the set
-	*/
-	std::vector<EventHandler::Vector*> masterHandlerList_;
-private:
 };
 
 
@@ -138,6 +122,18 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.6.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.6.1  2005/08/08 03:19:17  ddiego
+*minor updates
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

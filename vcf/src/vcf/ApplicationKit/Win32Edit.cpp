@@ -13,11 +13,18 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TextControl.h"
 #include "vcf/FoundationKit/Dictionary.h"
 
+#if defined(VCF_MINGW)  /* mingw misses some richedit defines */
+#include "imm.h"
+
+#define RICHEDIT_CLASSA		"RichEdit20A"
+#define RICHEDIT_CLASSW		L"RichEdit20W"
+
+#endif
+
 #include <richedit.h>
 #include "thirdparty/win32/Microsoft/TOM.h"
 #include "thirdparty/win32/Microsoft/textserv.h"
 #include <Richole.h>
-
 
 using namespace VCFWin32;
 using namespace VCF;
@@ -119,8 +126,6 @@ Win32Edit::Win32Edit( TextControl* component, const bool& isMultiLineControl ):
 	AbstractWin32Component( component ),
 	Win32TextPeer(),
 	textControl_(component),
-	//enabledSetTextOnControl_(true),
-	//updateTextModelNeeded_(false),
 	backgroundBrush_(NULL),
 	editState_(0),
 	currentSelLength_(0),
@@ -189,7 +194,7 @@ void Win32Edit::create( Control* owningControl )
 									 0,
 									 0,
 									 1,
-									 CW_USEDEFAULT,
+									 1,
 									 parent,
 									 NULL,
 									 ::GetModuleHandleW(NULL),
@@ -203,7 +208,7 @@ void Win32Edit::create( Control* owningControl )
 									 0,
 									 0,
 									 1,
-									 CW_USEDEFAULT,
+									 1,
 									 parent,
 									 NULL,
 									 ::GetModuleHandleA(NULL),
@@ -219,19 +224,16 @@ void Win32Edit::create( Control* owningControl )
 
 		subclassWindow();
 
+		registerForFontChanges();
+
 		//make sure that we get ALL richedit change notfications!
 		::SendMessage( hwnd_, EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE );
-
-
-		setFont( textControl_->getFont() );
+		
 
 		textControl_->ControlModelChanged +=
 			new GenericEventHandler<Win32Edit>( this, &Win32Edit::onControlModelChanged, "Win32Edit::onControlModelChanged" );
 
-		initFromRichEdit( hwnd_ );		
-
-		textControl_->getFont()->FontChanged += 
-			new GenericEventHandler<Win32Edit>( this, &Win32Edit::onTextControlFontChanged, "Win32Edit::onTextControlFontChanged" );
+		initFromRichEdit( hwnd_ );
 
 	}
 	else {
@@ -247,7 +249,7 @@ Win32Object::CreateParams Win32Edit::createParams()
 	Win32Object::CreateParams result;
 
 
-	result.first = SIMPLE_VIEW;
+	result.first = WS_CHILD;// SIMPLE_VIEW;
 	result.first &= ~WS_BORDER;
 
 
@@ -255,12 +257,11 @@ Win32Object::CreateParams Win32Edit::createParams()
 	// this is a temporary solution: it would be better to implement
 	// a method giving the option to the user, and painting the selection
 	// in an unfocused control with a light gray on the background - MP.
+
 	result.first |= ES_AUTOHSCROLL | ES_SAVESEL /*| ES_NOHIDESEL*/;
 	if ( editState_ & esMultiLined ) {
-		result.first |= ES_MULTILINE | WS_HSCROLL | WS_VSCROLL;// | ES_WANTRETURN;
+		result.first |= ES_SAVESEL | ES_MULTILINE | WS_HSCROLL | WS_VSCROLL;// | ES_WANTRETURN;
 	}
-
-	result.second = 0;
 
 	return result;
 }
@@ -356,7 +357,7 @@ String Win32Edit::getText( unsigned int start, unsigned int length )
 }
 
 String Win32Edit::getText()
-{
+{	
 	String result;
 	ITextRange* range;
 	textDocument_->Range( 0, 0, &range );
@@ -479,6 +480,13 @@ void Win32Edit::setCaretPosition( const unsigned long& caretPos )
 
 }
 
+//Ugly hack for bcb6 w. Stlport w. fixed ctype.h header
+#if defined(__BORLANDC__) && defined(__SGI_STL_PORT) && ((__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570))
+#define toupper std::_ltoupper
+#define tolower std::_ltolower
+#endif
+
+
 
 bool Win32Edit::stateAllowsModelChange()
 {
@@ -498,7 +506,7 @@ bool Win32Edit::stateAllowsModelChange()
 bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	bool result = false;
-	wndProcResult = 0;
+	wndProcResult = 0;	
 
 	switch ( message ) {
 
@@ -540,10 +548,30 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			}
 		}
 		break;
+/*
+		case WM_TIMER : {
+			StringUtils::trace( "WM_TIMER\n" );
+						}
+			break;
 
+			case EM_SETSEL : {
+			StringUtils::trace( "EM_SETSEL\n" );
+						}
+			break;
+
+			case EM_EXSETSEL : {
+				StringUtils::trace( "EM_EXSETSEL\n" );
+
+							   }
+				break;
+*/
 		case WM_RBUTTONUP : case WM_LBUTTONUP : {
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			result = true;
+			wndProcResult = defaultWndProcedure( message, wParam, lParam ); //this causes weird double selection
+
+
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 			ulong32 start = 0;
 			ulong32 end = 0;
@@ -559,7 +587,6 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 			currentSelLength_ = end - start;
 			currentSelStart_ = start;
-
 		}
 		break;
 
@@ -573,7 +600,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				editState_ |= esKeyEvent;
 
-				ulong32 virtKeyCode = Win32Utils::translateVKCode( wParam );
+				ulong32 virtKeyCode = Win32UIUtils::translateVKCode( wParam );
 
 				switch ( virtKeyCode ) {
 					case vkLeftArrow : 
@@ -597,13 +624,13 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				if ( (peerControl_->getComponentState() != Component::csDestroying) ) {
 
-					KeyboardData keyData = Win32Utils::translateKeyData( hwnd_, lParam );
+					KeyboardData keyData = Win32UIUtils::translateKeyData( hwnd_, lParam );
 					unsigned long eventType = Control::KEYBOARD_DOWN;
 
 
-					unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
+					unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
-					//virtKeyCode = Win32Utils::translateVKCode( keyData.VKeyCode );
+					//virtKeyCode = Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
 					VCF::KeyboardEvent event( peerControl_, eventType, keyData.repeatCount,
 						keyMask, (VCF::VCFChar)keyData.character, (VirtualKeyCode)virtKeyCode );
@@ -674,8 +701,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				*/
 				if ( !peerControl_->isDestroying() && !peerControl_->isDesigning() ) {
 
-					KeyboardData keyData = Win32Utils::translateKeyData( hwnd_, lParam );
-					ulong32 virtKeyCode = Win32Utils::translateVKCode( keyData.VKeyCode );
+					KeyboardData keyData = Win32UIUtils::translateKeyData( hwnd_, lParam );
+					ulong32 virtKeyCode = Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
 					unsigned long eventType = 0;
 					switch ( message ){
@@ -698,7 +725,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 							us the right character, but a bogus virtual key
 							*/
 							if ( isgraph( keyData.character ) ) {
-								virtKeyCode = Win32Utils::convertCharToVKCode( keyData.character );
+
+								virtKeyCode = Win32UIUtils::convertCharToVKCode( keyData.character );
 							}
 						}
 						break;
@@ -709,7 +737,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						break;
 					}
 
-					unsigned long keyMask = Win32Utils::translateKeyMask( keyData.keyMask );
+					unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
 					VCF::KeyboardEvent event( peerControl_, eventType, keyData.repeatCount,
 						keyMask, (VCF::VCFChar)keyData.character, (VirtualKeyCode)virtKeyCode );
@@ -762,14 +790,21 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
+		
 		case EN_SELCHANGE : {
 			wndProcResult = 0;
 			result = true;
 
+			
+
 			SELCHANGE* selChange = (SELCHANGE*)lParam;
+
+			//StringUtils::trace( Format("EN_SELCHANGE selChange->seltyp:%d cpMax: %d,  cpMin: %d\n") %
+			//					 selChange->seltyp % selChange->chrg.cpMax % selChange->chrg.cpMin	);
 			if ( selChange->chrg.cpMax != selChange->chrg.cpMin ) {
 				//selection changed
 
+				//StringUtils::trace( "Changing sel start and sel leng\n" );
 				currentSelLength_ = selChange->chrg.cpMax - selChange->chrg.cpMin;
 				currentSelStart_ = selChange->chrg.cpMin;
 
@@ -777,6 +812,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				textControl_->SelectionChanged.fireEvent( &event );
 			}
+
+			
 		}
 		break;
 
@@ -887,8 +924,42 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		//	result = DLGC_WANTALLKEYS;
 		//}
 		//break;
+/*
+		case WM_SETFOCUS: {
+			AbstractWin32Component::defaultWndProcedure( message, wParam, lParam );
 
-		default: {
+			DWORD s, e;
+			SendMessage( hwnd_, EM_GETSEL, (WPARAM)&s, (LPARAM)&e );
+
+			StringUtils::trace( Format("WM_SETFOCUS s: %d, e: %d \n") %
+									s % e );
+
+			currentSelLength_ = e - s;
+			currentSelStart_ = s;
+
+			editState_ |= esGotFocus;
+			
+			result = true;
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
+		case WM_CAPTURECHANGED : {
+			HWND hwndNewCapture = (HWND) lParam;
+
+			editState_ |= esCaptureChanged;
+			DWORD s2, e2;
+			SendMessage( hwnd_, EM_GETSEL, (WPARAM)&s2, (LPARAM)&e2 );
+
+
+			StringUtils::trace( Format("WM_CAPTURECHANGED s2: %d, e2: %d hwnd_: 0x%08X hwndNewCapture: 0x%08X\n") %
+									s2 % e2 % hwnd_ % hwndNewCapture );
+
+								 }
+			break;
+*/
+
+		default: {	
 
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
@@ -1081,7 +1152,7 @@ void Win32Edit::clearSelection()
 void Win32Edit::setSelectionMark( const unsigned long& start, const unsigned long& count )
 {
 	unsigned long end = start + count;
-
+	
 	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)start, (LPARAM)end );	
 }
 
@@ -1337,18 +1408,61 @@ void Win32Edit::redo()
 	}
 }
 
-void Win32Edit::onTextControlFontChanged( Event* event )
+void Win32Edit::setTextWrapping( const bool& val )
 {
-	Font* font = (Font*) event->getSource();	
-
-	setFont( font );
+	if ( val ) {
+		SendMessage(hwnd_, EM_SETTARGETDEVICE, 0, 1);
+	}
+	else {
+		SendMessage(hwnd_, EM_SETTARGETDEVICE, 0, 0);
+	}
 }
+
 
 /**
 *CVS Log info
 *$Log$
-*Revision 1.6  2005/09/30 02:23:42  ddiego
-*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*Revision 1.7  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.13  2006/03/25 03:01:15  ddiego
+*attempt to fix small glitch in win32 text edit for numpad handling.
+*
+*Revision 1.5.2.12  2006/03/25 02:25:41  ddiego
+*attempt to fix small glitch in win32 text edit for numpad handling.
+*
+*Revision 1.5.2.11  2006/03/21 01:29:22  ddiego
+*fixed table control double click bug.
+*
+*Revision 1.5.2.10  2006/03/19 18:21:17  ddiego
+*diagnostic code commented out in win32edit - still have a selection bug not quite resolved.
+*
+*Revision 1.5.2.9  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.8  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.5.2.7  2006/03/14 22:14:53  ddiego
+*Win32ToolKit.cpp
+*
+*Revision 1.5.2.6  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.5.2.5  2005/11/21 21:28:03  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.5.2.4  2005/10/22 17:04:19  ddiego
+*added 2 more patches from kitovyj for mingw.
+*
+*Revision 1.5.2.3  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
+*Revision 1.5.2.2  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.5.2.1  2005/08/31 20:29:23  kiklop74
+*Added fix for bcb6 rtl
 *
 *Revision 1.5  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.

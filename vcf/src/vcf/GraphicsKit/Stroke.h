@@ -22,8 +22,9 @@ namespace VCF{
 
 class GRAPHICSKIT_API Path;
 class GRAPHICSKIT_API GraphicsContext;
-/** @interface */
-
+/**
+\class Stroke Stroke.h "vcf/GraphicsKit/Stroke.h"
+*/
 class GRAPHICSKIT_API Stroke : public Interface{
 public:
 
@@ -40,6 +41,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:18  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

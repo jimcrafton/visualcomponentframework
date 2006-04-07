@@ -63,13 +63,17 @@ char* TextOutputStream::getBuffer()
 	return buffer;
 }
 
-void TextOutputStream::write( const char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long TextOutputStream::write( const unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
-	textBuffer_.append( bytesToRead, sizeOfBytes );
+	unsigned long result = 0;
+
+	textBuffer_.append( (const char*)bytesToRead, sizeOfBytes );
 
 	if ( NULL != this->outStream_ ){
-		outStream_->write( bytesToRead, sizeOfBytes );
+		result = outStream_->write( bytesToRead, sizeOfBytes );
 	}
+
+	return result;
 }
 
 void TextOutputStream::write( const short& val )
@@ -77,7 +81,7 @@ void TextOutputStream::write( const short& val )
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
 	sprintf( tmpText, SHORT_STR_CONVERSION, val );
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const long& val )
@@ -85,7 +89,7 @@ void TextOutputStream::write( const long& val )
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
 	sprintf( tmpText, LONG_STR_CONVERSION, (int)val );
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const int& val )
@@ -93,13 +97,13 @@ void TextOutputStream::write( const int& val )
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
 	sprintf( tmpText, INT_STR_CONVERSION, val );
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const bool& val )
 {
 	char* tmpText = (char*)(val ? BOOL_STR_CONVERSION_TRUE : BOOL_STR_CONVERSION_FALSE);
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const float& val )
@@ -107,7 +111,7 @@ void TextOutputStream::write( const float& val )
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
 	sprintf( tmpText, FLOAT_STR_CONVERSION, val );
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const double& val )
@@ -115,7 +119,7 @@ void TextOutputStream::write( const double& val )
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
 	sprintf( tmpText, DOUBLE_STR_CONVERSION, val );
-	this->write( tmpText, strlen(tmpText) );
+	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 
 void TextOutputStream::write( const String& val )
@@ -131,7 +135,7 @@ void TextOutputStream::write( const String& val )
 	*/
 
 	AnsiString tmp2 = tmp;
-	write( tmp2.c_str(), tmp2.size() );
+	write( (const unsigned char*)tmp2.c_str(), tmp2.size() );
 
 	//delete [] buf;
 }
@@ -165,6 +169,12 @@ ulong32 TextOutputStream::getCurrentSeekPos()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.3  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="CommonDirectories" template="vcf_exe_console"
+            cond="OPTION_FOUNDATIONKIT=='1'">
+        <dirname>.</dirname>
+        <sources>CommonDirectories.cpp</sources>
+        <vcf-use-FoundationKit/>
+    </exe>
+</makefile>

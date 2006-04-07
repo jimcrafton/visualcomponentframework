@@ -12,15 +12,19 @@ where you installed the VCF.
 namespace VCF {
 
 class OSXFilePeer : public Object, public FilePeer{
-
 public:
 
-	class FileSearchData {
+	enum {
+		MaxRequestCountPerIteration = ((4096 * 4) / sizeof(FSCatalogInfo))
+	};
+			
+
+	struct FileSearchData {
 	public:
-
-		FileSearchData() {
-
-		}
+		std::vector<FSRef> searchFileRefs; 
+		std::vector<FSCatalogInfo> searchCatalogInfos;
+		size_t currentSearchIndex;
+		size_t searchCount;
 	};
 
 	OSXFilePeer( File* file, const String& fileName="" );
@@ -128,6 +132,8 @@ private:
 	std::vector<String> searchFilters_;
 	std::vector<String>::iterator searchFilterIterator_;
 
+	FSIterator searchIterator_;
+	FileSearchData* searchData_; 
 
 	std::map<Directory::Finder*,FileSearchData> searchMap_;
 
@@ -140,6 +146,12 @@ private:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.4  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.3.4.1  2005/12/04 20:58:32  ddiego
+ *more osx impl work. foundationkit is mostly complete now.
+ *
  *Revision 1.3  2004/12/01 04:31:41  ddiego
  *merged over devmain-0-6-6 code. Marcello did a kick ass job
  *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

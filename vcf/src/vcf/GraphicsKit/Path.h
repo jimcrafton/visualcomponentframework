@@ -24,6 +24,7 @@ namespace VCF{
 class Matrix2D;
 
 /**
+\class PathPoint Path.h "vcf/GraphicsKit/Path.h"
 *utility to make working with path points easier
 */
 class GRAPHICSKIT_API PathPoint {
@@ -100,6 +101,7 @@ public:
 
 
 /**
+\class Path Path.h "vcf/GraphicsKit/Path.h"
 A Path is an abstract class that represents a series of points used to 
 draw one or more shapes. The path instance is used in conjuntion with a 
 fill and/or a stroke instance to actually render the shape on the 
@@ -205,6 +207,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.4.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.4  2004/12/02 04:11:10  ddiego
 *removed some old, extraneous files from graphics kit dir.
 *

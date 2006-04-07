@@ -496,11 +496,11 @@ void FileSearchFilterStandard::buildSearchFilters( const String& basenameFilterL
 	searchFiltersBasename_.clear();
 
 	if ( !basenameFilterList.empty() ) {
-		int pos = 0, lastpos = 0;
+		size_t pos = 0, lastpos = 0;
 		while ( String::npos != pos ) {
 			pos = basenameFilterList.find( separator_, lastpos );
 			if ( String::npos != pos ) {
-				searchFiltersBasename_.push_back( basenameFilterList.substr( lastpos, pos ) );
+				searchFiltersBasename_.push_back( basenameFilterList.substr( lastpos, pos-lastpos ) );
 				lastpos = pos + 1;
 			}
 		};
@@ -512,7 +512,7 @@ void FileSearchFilterStandard::buildSearchFilters( const String& basenameFilterL
 
 	if ( !pathnameFilterList.empty() ) {
 		String sdir;
-		int pos = 0, lastpos = 0;
+		size_t pos = 0, lastpos = 0;
 		while ( String::npos != pos ) {
 			pos = pathnameFilterList.find( separator_, lastpos );
 			if ( String::npos != pos ) {
@@ -583,7 +583,7 @@ File* FileSearchFilterStandard::passSearchFilter( const File* file, const Direct
 				while ( searchFilterIterator_ != searchFiltersPathname_.end() ) {
 					sf = *searchFilterIterator_ ++;
 					
-					int pos = subdir->getName().find( sf );
+					size_t pos = subdir->getName().find( sf );
 					if ( String::npos != pos ) {
 						pass = true;
 						break;
@@ -607,6 +607,16 @@ File* FileSearchFilterStandard::passSearchFilter( const File* file, const Direct
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/01/22 14:24:12  ddiego
+*updated to add case insens str compare.
+*
+*Revision 1.4.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.4  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

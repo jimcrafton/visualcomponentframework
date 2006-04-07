@@ -28,8 +28,9 @@ class InputStream;
 
 
 /**
-*A parsing utility class, at this moment (8/25/2001) meant
-*for internal use only
+\class Parser Parser.h "vcf/FoundationKit/Parser.h"
+A parsing utility class, at this moment (8/25/2001) meant
+for internal use only
 */
 class FOUNDATIONKIT_API Parser : public Object {
 public:
@@ -96,6 +97,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

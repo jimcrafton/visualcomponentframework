@@ -44,7 +44,6 @@ Image* GraphicsResourceBundle::getImage( const String& resourceName )
 	Image* result = graphicsResPeer_->getImage( resourceName );
 
 	if ( NULL == result ) {
-		bool fileExists = false;
 		String fileName = getResourcesDirectory() + resourceName;
 		
 		if ( File::exists( fileName ) ) {
@@ -64,6 +63,12 @@ Image* GraphicsResourceBundle::getImage( const ulong32& resourceID )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
 *Revision 1.3  2005/01/02 03:04:25  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

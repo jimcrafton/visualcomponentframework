@@ -84,11 +84,10 @@ OSStatus OSXTree::DBItemDataCallback( ControlRef browser, DataBrowserItemID item
 }
 
 
-OSStatus OSXTree::DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
+void OSXTree::DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
 															DataBrowserItemNotification message)
 {
-	OSStatus status = noErr;
-    switch (message)
+   switch (message)
     {
         case kDataBrowserContainerOpened: 
 // 1
@@ -127,7 +126,6 @@ OSStatus OSXTree::DBItemNotificationCallback( ControlRef browser, DataBrowserIte
 		break;
 		
     }
-    return status;
 }
 
 void OSXTree::create( Control* owningControl )
@@ -267,6 +265,13 @@ VCF::Rect OSXTree::getItemImageRect( TreeItem* item )
 	return result;
 }
 
+VCF::Rect OSXTree::getItemRect( TreeItem* item )
+{
+	VCF::Rect result;
+
+	return result;
+}
+
 void OSXTree::onStateImageListImageChanged( ImageListEvent* event )
 {
 	ImageList* imageList = (ImageList*)event->getSource();
@@ -395,6 +400,15 @@ OSStatus OSXTree::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theE
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.2  2006/03/17 03:08:11  ddiego
+*updated osx code to latest changes.
+*
+*Revision 1.2.2.1  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
 *Revision 1.2  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

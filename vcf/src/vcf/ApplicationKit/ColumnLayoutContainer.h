@@ -19,6 +19,9 @@ namespace VCF {
 
 #define COLUMNLAYOUTCONTAINER_CLASSID		"3df1d3a5-d362-4d33-8b49-2ce693c72006"
 
+/**
+\class ColumnLayoutContainer ColumnLayoutContainer.h "vcf/ApplicationKit/ColumnLayoutContainer.h"
+*/
 class ColumnLayoutContainer : public StandardContainer {
 public:
 	ColumnLayoutContainer(): columnCount_(0) {
@@ -151,6 +154,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

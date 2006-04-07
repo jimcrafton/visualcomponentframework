@@ -58,7 +58,7 @@ String OSXDesktopPeer::desktopGetDirectory()
     FSRef desktopFolder;
     if ( noErr == FSFindFolder( kUserDomain, kDesktopFolderType, kDontCreateFolder, &desktopFolder ) ) {
         char tmp[256];
-        FSRefMakePath( &desktopFolder, tmp, sizeof(tmp)-1 );
+        FSRefMakePath( &desktopFolder, (UInt8*)tmp, sizeof(tmp)-1 );
         result = tmp;
     }
     else {
@@ -112,10 +112,28 @@ VCF::Rect OSXDesktopPeer::desktopGetUsableBounds()
 	return result;
 }
 
+VCF::Point OSXDesktopPeer::getCurrentMousePosition()
+{
+	VCF::Point result;
+	::Point pt;
+	GetMouse( &pt );
+	result.x_ = pt.h;
+	result.y_ = pt.v;
+	return result;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/02/19 02:07:46  ddiego
+*mac osx update.
+*
+*Revision 1.4.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.4  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

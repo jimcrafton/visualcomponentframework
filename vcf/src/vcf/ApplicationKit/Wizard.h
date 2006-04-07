@@ -17,10 +17,9 @@ where you installed the VCF.
 namespace VCF {
 
 	/**
-	*Wizard documentation
-	this interface is used to disaplay a UI
-	in the wizard dialog
-	the layout of the dialog is like so
+	\class Wizard Wizard.h "vcf/ApplicationKit/Wizard.h"  
+	A Wizard is used to disaplay a UI in a wizard dialog.
+	The layout of the dialog looks like this:
 	<pre>
 	+-------------------------------------------------+
 	|	TITLE                                  +----+ |
@@ -90,6 +89,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:27  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

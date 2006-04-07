@@ -19,92 +19,189 @@ void InputStream::read( Persistable* persistableObject ){
 
 void InputStream::read( short& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( long& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( int& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( bool& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( char& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( float& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( double& val )
 {
-	read( (char*)&val, sizeof(val) );
+	read( (unsigned char*)&val, sizeof(val) );
 }
 
 void InputStream::read( String& val )
 {
-	const unsigned long BUFFER_SIZE = 4096;
+	const ulong32 BUFFER_SIZE = 4096;
 	AnsiString tmpStr;
 
 	val = "";
-	unsigned long size = getSize();
+	ulong32 size = getSize();
 
 	ulong32 seekPos = getCurrentSeekPos();
 
+	ulong32 totalBytesRead = 0;
 	/*
 	JC
 	WARNING!!!
 	We are treating the stream as if it just had ASCII bytes - this may not be right
 	*/
 
+	/*
+	Current STATUS:
+	We are now picking up the BOM marker.
+	We *only* handle the case where it's UTF16 little endian - 
+	the others we punt!
+	If this get's called repeatedly, we will no longer be treating the
+	string as a unicode string which will cause a problem
+	because we will intepret the 2 byte code points incorrectly.
+	We need a way to know if the stream we are reading is actually 
+	a UTF16 stream
+	*/
+
 	char buffer[BUFFER_SIZE];
 	unsigned long bufferRead = minVal<ulong32>( BUFFER_SIZE * sizeof(char), size-seekPos );
 
-	read( (char*) buffer, bufferRead );
+	read( (unsigned char*) buffer, bufferRead );
+
+	totalBytesRead += bufferRead;
+
+	bool BOM16Str = false;
+
 
 	char* tmp = buffer;
 	char* start = tmp;
 	size -= bufferRead;
 	bool done = false;
-	while ( false == done ){
+	while ( !done ){
+
 		while ( bufferRead > 0 ) {
-			if ( *tmp == '\0' ) {
-				done = true;
-				break;
+			if ( BOM16Str ) {
+				if ( (tmp[0] == '\0') && (tmp[1] == '\0') ) {
+					done = true;
+					break;
+				}
+				tmp += sizeof(UnicodeString::UniChar);
+				bufferRead --;
+				if ( bufferRead != 0 ) {
+					bufferRead --;
+				}
 			}
-			tmp ++;
-			bufferRead --;
+			else {
+				if ( *tmp == '\0' ) {
+					done = true;
+					break;
+				}
+				tmp ++;
+				bufferRead --;
+			}
 		}
 
 		done = (done || (size == 0));
 
-		tmpStr.append( start, tmp - start );
+		if ( 0 == seekPos ) {		
+			uint32 sz = tmp - start;
 
-		if ( false == done ) {
+			//JC Nov 10, 2005
+			//I removed the old ifdef here because I simply got rid of 
+			//teh weird const char*& syntax, and made it simply
+			//char*& this should fine now.
+			int bom = UnicodeString::adjustForBOMMarker( start, sz );			
+			
+			switch ( bom ) {
+				case UnicodeString::UTF8BOM : {
+					tmpStr.append( start, sz );
+				}
+				break;
+
+				case UnicodeString::UTF16LittleEndianBOM : {
+					
+					BOM16Str = true;
+					if ( done && (sz < bufferRead) ) {
+						done = false;
+						while ( bufferRead > 0 ) {
+							if ( (tmp[0] == '\0') && (tmp[1] == '\0') ) {
+								done = true;
+								break;
+							}
+							tmp += sizeof(UnicodeString::UniChar);
+							bufferRead --;
+							if ( bufferRead != 0 ) {
+								bufferRead --;
+							}
+						}
+						done = (done || (size == 0));
+					}
+
+					val.append( (UnicodeString::UniChar*)start, (tmp - start) / sizeof(UnicodeString::UniChar) );
+
+				}
+				break;
+
+				case UnicodeString::UTF32BigEndianBOM : //case UnicodeString::UTF16BigEndianBOM :
+				case UnicodeString::UTF32LittleEndianBOM :  {
+					//barf!!!
+					throw RuntimeException( MAKE_ERROR_MSG_2("Unable to handle this kind of Unicode BOM marked text!") );
+				}
+				break;
+
+				default : {
+					tmpStr.append( start, sz );
+				}
+				break;
+			}
+		}
+		else {
+
+			if ( BOM16Str ) {				
+				val.append( (UnicodeString::UniChar*)start, tmp - start );
+			}
+			else {
+				tmpStr.append( start, tmp - start );
+			}
+		}
+
+		if ( !done ) {
 			bufferRead = VCF::minVal<ulong32>( BUFFER_SIZE * sizeof(char), size );
-			read( buffer, bufferRead );
+			read( (unsigned char*)buffer, bufferRead );
 			tmp = buffer;
 			start = tmp;
 			size -= bufferRead;
+			totalBytesRead += bufferRead;
 		}
 	}
 
 
-	val = tmpStr;
-
-	//the +1 is to take the null char (0) into account
-	seek( seekPos + val.size() + 1, stSeekFromStart );
+	if ( !BOM16Str ) {
+		val = tmpStr;
+		seek( val.size() + 1, stSeekFromStart );	
+	}
+	else {
+		//the +1 is to take the null char (0) into account
+		seek( totalBytesRead + 1, stSeekFromStart );	
+	}	
 }
 
 
@@ -209,48 +306,48 @@ OutputStream& OutputStream::operator<<( Persistable* val ){
 
 void OutputStream::write( const short& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const long& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const int& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const bool& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const char& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const float& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const double& val )
 {
-	write( (char*)&val, sizeof(val) );
+	write( (const unsigned char*)&val, sizeof(val) );
 }
 
 void OutputStream::write( const String& val )
 {
-	write( val.ansi_c_str(), val.size() );
+	write( (const unsigned char*)val.ansi_c_str(), val.size() );
 	/**
 	JC
 	WARNING - we are treating writes to the stream as if it were Ascii - this
 	will lose precision!!!
 	*/
-	char c = 0;
+	unsigned char c = 0;
 	write( &c, sizeof(c) );
 }
 
@@ -258,6 +355,28 @@ void OutputStream::write( const String& val )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.6  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.2.6.5  2005/11/10 00:04:23  obirsoy
+*changes required for gcc under Linux.
+*
+*Revision 1.2.6.4  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.2.6.3  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
+*Revision 1.2.6.2  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
+*Revision 1.2.6.1  2005/09/08 03:16:58  ddiego
+*fix for BOM marker in input stream handling and xml parser.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

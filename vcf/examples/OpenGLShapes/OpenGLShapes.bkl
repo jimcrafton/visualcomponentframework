@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="OpenGLShapes" template="vcf_exe_gui" cond="OPTION_OPENGLKIT=='1'">
+        <dirname>.</dirname>
+        <sources>OpenGLShapes.cpp</sources>
+        <vcf-use-OpenGLKit/>
+    </exe>
+</makefile>

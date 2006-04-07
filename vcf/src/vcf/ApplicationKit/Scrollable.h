@@ -17,9 +17,11 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
-*Class Scrollable documentation
+\class Scrollable Scrollable.h "vcf/ApplicationKit/Scrollable.h"
+This class is used to add scrolling support to a control.
+@see ScrollbarManager
 */
-class Scrollable : public Interface {
+class APPLICATIONKIT_API Scrollable : public Interface {
 public:
 	Scrollable(){
 	};
@@ -306,6 +308,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/24 14:40:03  obirsoy
+*needs to be exported.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

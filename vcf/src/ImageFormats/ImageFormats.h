@@ -7,41 +7,6 @@
 #include "ImageFormats/ImageFormatsSelectLib.h"
 
 
-class PNGLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	PNGLoader();
-	
-	virtual ~PNGLoader();
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return true;
-	}
-
-	private:
-	
-};
-
-class JPEGLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	JPEGLoader() {} ;
-	
-	virtual ~JPEGLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return true;
-	}
-	
-};
 
 class TIFFLoader : public VCF::Object, public VCF::ImageLoader {
 public:

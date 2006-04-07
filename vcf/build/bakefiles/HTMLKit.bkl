@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="HTMLKitFiles.bkl"/>
+
+    <template id="HTMLKit_base">
+        <set var="LIBRARY_NAME">$(HTMLKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)HTMLKit$(DIRSEP)HTMLKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)HTMLKit$(DIRSEP)HTMLToolkit.cpp</set>
+
+        <headers>$(HTMLKIT_HDR)</headers>
+        <sources>$(HTMLKIT_SRC)</sources>
+
+        <vcf-include-thirdparty/>
+        <vcf-use-ApplicationKit/>
+    </template>
+
+    <lib id="HTMLKit_lib" template="HTMLKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_HTMLKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>ApplicationKit_lib</depends>
+    </lib>
+
+    <dll id="HTMLKit_dll" template="HTMLKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_HTMLKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>HTMLKIT_DLL</define>
+        <define>HTMLKIT_EXPORTS</define>
+        <depends>ApplicationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_HTMLKIT=='1' and OPTION_ALLIN1=='0'">
+        HTMLKit=HTMLKit_lib+HTMLKit_dll
+    </set>
+</makefile>

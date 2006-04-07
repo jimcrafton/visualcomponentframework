@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="HTMLKIT_HDR" hints="files">
+        vcf/HTMLKit/HTMLBrowserControl.h
+        vcf/HTMLKit/HTMLBrowserPeer.h
+        vcf/HTMLKit/HTMLDOMElements.h
+        vcf/HTMLKit/HTMLKit.h
+        vcf/HTMLKit/HTMLToolkit.h
+    </set>
+
+    <set var="HTMLKIT_SRC" hints="files">
+        vcf/HTMLKit/HTMLBrowserControl.cpp
+        vcf/HTMLKit/HTMLKit.cpp
+        vcf/HTMLKit/HTMLToolkit.cpp
+    </set>
+
+    <set var="HTMLKIT_WIN_HDR" hints="files">
+        vcf/HTMLKit/Win32HTMLBrowser.h
+        vcf/HTMLKit/Win32HTMLDOMElements.h
+        vcf/HTMLKit/Win32HTMLToolkit.h
+        vcf/HTMLKit/Win32WebBrowserHost.h
+    </set>
+
+    <set var="HTMLKIT_WIN_SRC" hints="files">
+        vcf/HTMLKit/Win32HTMLBrowser.cpp
+        vcf/HTMLKit/Win32HTMLDOMElements.cpp
+        vcf/HTMLKit/Win32HTMLToolkit.cpp
+    </set>
+
+    <set var="HTMLKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(HTMLKIT_WIN_HDR)</if>
+    </set>
+
+    <set var="HTMLKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(HTMLKIT_WIN_SRC)</if>
+    </set>
+</makefile>

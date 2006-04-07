@@ -110,3 +110,6 @@ uint32 Win32ThreadManagerPeer::getCurrentThreadID()
 {
 	return GetCurrentThreadId();
 }
+
+
+

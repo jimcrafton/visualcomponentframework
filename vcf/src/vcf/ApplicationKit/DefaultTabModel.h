@@ -33,6 +33,7 @@ namespace VCF {
 #define DEFAULTTABMODEL_CLASSID		"86F02174-3E7F-11d4-8EA7-00207811CFAB"
 
 /**
+\class DefaultTabModel DefaultTabModel.h "vcf/ApplicationKit/DefaultTabModel.h"
 This class represents a default, basic implementation of
 the TabModel class.
 @delegates
@@ -191,6 +192,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/01/02 03:04:20  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

@@ -20,6 +20,7 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
+\class ScrollbarManager ScrollbarManager.h "vcf/ApplicationKit/ScrollbarManager.h"
 *The ScrollbarManager represents a component used for managing
 *scrolbars for a target control.
 *The target control is specified and then a Scrollable instance is associated
@@ -293,6 +294,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

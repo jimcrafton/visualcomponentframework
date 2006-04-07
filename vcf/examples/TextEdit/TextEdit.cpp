@@ -42,7 +42,7 @@ void TextEdit::onPrint( VCF::Event* e )
 
 	TextEditDocument* currentDoc = (TextEditDocument*)getCurrentDocument();
 
-	CommonPrint dlg( currentDoc->getWindow() );
+	CommonPrintDialog dlg( currentDoc->getWindow() );
 
 	
 
@@ -235,7 +235,7 @@ bool TextEdit::initRunningApplication()
 
 		
 
-		newDefaultDocument();
+		newDefaultDocument("");
 		
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
 		docMgr->DocumentInitialized += 
@@ -274,8 +274,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.3  2005/07/09 23:14:45  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.4  2006/04/07 02:34:47  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.3.2.2  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.3.2.1  2005/07/23 21:45:43  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.2.2.3  2005/06/06 02:34:05  ddiego
 *menu changes to better support win32 and osx.
@@ -290,5 +299,4 @@ int main(int argc, char *argv[])
 *standard file formatting and cvs log section added
 *
 */
-
 

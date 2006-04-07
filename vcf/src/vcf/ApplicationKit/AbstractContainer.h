@@ -32,18 +32,19 @@ class Rect;
 #define ABSTRACTCONTAINER_CLASSID		"80cafd13-cd05-4b48-a1c3-6c4d9811361c"
 
 /**
+\class AbstractContainer AbstractContainer.h "vcf/ApplicationKit/AbstractContainer.h"
 AbstractContainer implements the basics of a
 container with the exception of actual layout rules,
 therefore resizeChildren is not implemented. It
 is left to implementers to decide on their own
 what the layout rules for resizeChildren() are.
-\par
+
 It responds to all mouse and paint events
 of the Control to which is attached to, and forwards
 them correctly to the child controls. This event
 forwarding only takes place if the child control
 is a lighweight control.
-\par
+
 When the attached control is resized, the AbstractContainer
 will detect this as well and call resizeChildren() where
 appropriate.
@@ -114,6 +115,16 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

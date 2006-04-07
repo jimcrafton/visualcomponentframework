@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -18,8 +18,8 @@
 //----------------------------------------------------------------------------
 
 #include <math.h>
-#include "../include/agg_vcgen_dash.h"
-#include "../include/agg_shorten_path.h"
+#include "agg_vcgen_dash.h"
+#include "agg_shorten_path.h"
 
 namespace agg
 {

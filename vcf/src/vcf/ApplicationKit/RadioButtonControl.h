@@ -28,6 +28,7 @@ namespace VCF {
 #define RADIOBUTTONCONTROL_CLASSID		"DC2FDA9C-5D3E-4949-B4BE-160B409BA7AF"
 
 /**
+\class RadioButtonControl RadioButtonControl.h "vcf/ApplicationKit/RadioButtonControl.h"
 class RadioButtonControl documentation.
 */
 class APPLICATIONKIT_API RadioButtonControl : public ToggledButton {
@@ -87,6 +88,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

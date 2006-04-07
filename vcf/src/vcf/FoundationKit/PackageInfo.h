@@ -15,7 +15,11 @@ where you installed the VCF.
 
 
 namespace VCF {
-
+/**
+\class PackageInfo PackageInfo.h "vcf/FoundationKit/PackageInfo.h"
+This class provides extra information specifically for 
+shared or static libraries.
+*/
 class FOUNDATIONKIT_API PackageInfo : public ProgramInfo {
 public:
 
@@ -115,12 +119,49 @@ protected:
 	EnumeratorContainer<std::vector<String>,String> supportedPlatformsContainer_;
 };
 
+
+
+
+class FOUNDATIONKIT_API PackageManager {
+public:
+	static void init();
+	static void terminate();
+
+	static Enumerator<PackageInfo*>* getPackages();
+
+	static void registerPackage( PackageInfo* package );
+
+	static void removePackage( PackageInfo* package );
+
+	static PackageManager* getPackageManager();
+private:
+	PackageManager();
+	~PackageManager();
+
+	static PackageManager* pkgMgrInstance;
+
+	std::vector<VCF::PackageInfo*> packages_;
+	VCF::EnumeratorContainer<std::vector<VCF::PackageInfo*>,VCF::PackageInfo*> packagesContainer_;
+
+};
+
+
 };
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.4.1  2005/09/03 14:03:53  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

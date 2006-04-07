@@ -45,19 +45,6 @@ void terminateLoadedLibraryApplications()
 }
 
 
-/*
-class AppTerm {
-public:
-	AppTerm(){}
-
-	~AppTerm() {
-
-	}
-};
-
-static AppTerm appTerm;
-*/
-
 
 Application::Application( int argc, char** argv ):
 	mainWindow_(NULL),
@@ -114,7 +101,10 @@ void Application::init()
 	}
 
 	applicationPeer_->setApplication( this );
-
+/*
+I am turning this off completely. There is an MS DLL called blackbox, and 
+I'd like to revisit this later.
+JC
 #if defined( WIN32 ) && defined ( _MSC_VER )
 	//load the BlacBox error trapper
 	try {
@@ -125,6 +115,7 @@ void Application::init()
 		StringUtils::trace( "Unable to load the BlackBox error detection library\n" );
 	}
 #endif
+	*/
 }
 
 void Application::main()
@@ -231,7 +222,7 @@ void Application::main()
 	catch ( BasicException& e  ){
 		String errString = e.getMessage().c_str();
 
-		StringUtils::trace( "Framework Exception: " + errString + "\n" );
+		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
 		if ( NULL != mainWindow ) {
 			Dialog::showMessage( errString, "Framework Exception", Dialog::mbOK, Dialog::msError  );
 		}
@@ -245,7 +236,7 @@ void Application::main()
 		errString += e.what();
 		errString += "\".\nApplication exiting abnormally.";
 
-		StringUtils::trace( "Framework Exception: " + errString + "\n" );
+		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
 		if ( NULL != mainWindow ) {
 			Dialog::showMessage( errString, "Framework Assertion Exception", Dialog::mbOK, Dialog::msError  );
 		}
@@ -274,10 +265,10 @@ void Application::main()
 #endif
 	}
 	catch (...){
-		if ( NULL != mainWindow ) {
+		//if ( NULL != mainWindow ) {
 			Dialog::showMessage( "Unknown exception occurred. Application exiting abnormally.",
 									"Framework Exception", Dialog::mbOK, Dialog::msError  );
-		}
+		//}
 //#ifdef _DEBUG
 		throw ;
 //#endif
@@ -462,10 +453,41 @@ void Application::setAutoLoadSaveAppState( const bool& autoLoadSaveState )
 	autoLoadSaveAppState_ = autoLoadSaveState;
 }
 
+bool Application::displayHelpContents()
+{
+	return false;
+}
+
+bool Application::displayHelpIndex()
+{
+	return false;
+}
+
+void Application::getHelpInfo( String& helpBookName, String& helpDirectory )
+{
+	helpBookName = "";
+	helpDirectory = "";
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.4  2006/02/19 19:38:12  ddiego
+*adjusted some comet code to make it compile again. renamed some of the COM utility files to have a Win32 prefix.
+*
+*Revision 1.5.2.3  2006/02/14 20:19:25  ddiego
+*some minor bugs
+*
+*Revision 1.5.2.2  2005/09/14 18:55:17  ddiego
+*update to win32window. initial code for new pixels
+*type to replace imagebits class.
+*
+*Revision 1.5.2.1  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
 *Revision 1.5  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

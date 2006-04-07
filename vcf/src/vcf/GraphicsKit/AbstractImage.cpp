@@ -14,13 +14,16 @@ where you installed the VCF.
 using namespace VCF;
 
 
-AbstractImage::AbstractImage( const bool& needsMemAlloc )
+AbstractImage::AbstractImage( const bool& needsMemAlloc ):	
+	imageBits_(NULL),
+	dataBuffer_(NULL),
+	height_(0),
+	width_(0),	
+	context_(NULL),
+	isTransparent_(false),
+	needsMemAlloc_(needsMemAlloc)
 {
-	imageBits_ = new ImageBits(0,0,needsMemAlloc);
-	context_ = NULL;
-	isTransparent_ = false;
-	width_ = 0;
-	height_ = 0;
+	imageBits_ = new ImageBits(0,0,needsMemAlloc);	
 }
 
 AbstractImage::~AbstractImage()
@@ -79,7 +82,7 @@ void AbstractImage::saveToStream( OutputStream * stream )
 	stream->write( (long)height_ );
 	stream->write( (long)width_ );
 
-	char* buffer = (char*)imageBits_->pixels_;
+	const unsigned char* buffer = (const unsigned char*)imageBits_->pixels_;
 	stream->write( buffer, height_ * width_ * getType() );
 
 }
@@ -95,7 +98,7 @@ void AbstractImage::loadFromStream( InputStream * stream )
 	stream->read( height );
 	stream->read( width );
 	setSize( width, height );
-	char* buffer = (char*)imageBits_->pixels_;
+	unsigned char* buffer = (unsigned char*)imageBits_->pixels_;
 	stream->read( buffer, height_ * width_ * getType() );
 }
 
@@ -120,10 +123,31 @@ Image::PixelLayoutOrder AbstractImage::getPixelLayoutOrder() const
 	return IMTRAITS::getPixelLayoutOrder( flags_ );
 }
 
+void* AbstractImage::getData()
+{
+	dataBuffer_ = (unsigned char*)imageBits_->pixels_;
+	return dataBuffer_;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.4  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.2.6.3  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.2.6.2  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

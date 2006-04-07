@@ -31,6 +31,7 @@ class Document;
 
 
 /**
+\class SDIPolicy DocManagerPolicy.h "vcf/ApplicationKit/DocManagerPolicy.h"
 * class SDIPolicy
 * policy class for Single Document Interface
 * This is the implementation of the regular SDI architecture,
@@ -61,6 +62,16 @@ public:
 	* has been created
 	*/
 	void afterNewDocument( Document* newDocument ) {
+
+		//destroy the old document if neccessary
+		if ( NULL != currentDocument_ ) {
+			Component* owner = currentDocument_->getOwner();
+			if ( NULL != owner ) {
+				owner->removeComponent( currentDocument_ );
+				currentDocument_->free();
+			}
+		}
+
 		currentDocument_ = newDocument;
 
 		newDocument->getWindow()->setCaption( getDocumentWindowCaption(newDocument) );
@@ -186,6 +197,7 @@ public:
 
 
 /**
+\class MDIPolicy DocManagerPolicy.h "vcf/ApplicationKit/DocManagerPolicy.h"
 * class MDIPolicy
 * policy class for a Multiple Document Interface (MDI).
 * This is the implementation of the regular MDI architecture,
@@ -437,6 +449,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

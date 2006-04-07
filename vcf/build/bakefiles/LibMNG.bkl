@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="LibMNGFiles.bkl"/>
+
+    <template id="LibMNG_base">
+        <set var="LIBRARY_NAME">$(LIBMNG_NAME)</set>
+
+        <headers>$(LIBMNG_HDR)</headers>
+        <sources>$(LIBMNG_SRC)</sources>
+    </template>
+
+    <lib id="LibMNG_lib" template="LibMNG_base,vcf_lib"
+            cond="OPTION_LIBMNG=='1'">
+    </lib>
+</makefile>

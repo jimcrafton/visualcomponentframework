@@ -15,7 +15,6 @@ class FrameStylesWindow : public Window {
 public:
 	FrameStylesWindow() {
 		setCaption( "FrameStyles" );
-		setVisible( true );
 
 
 		/**
@@ -116,6 +115,7 @@ public:
 		Window* mainWindow = new FrameStylesWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 		
 		return result;
 	}

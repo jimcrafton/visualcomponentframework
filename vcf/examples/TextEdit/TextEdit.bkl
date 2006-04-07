@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="TextEdit" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            DataExchange.h
+            FindDialog.h
+            ReplaceDialog.h
+            TextEdit.h
+            TextEditDocument.h
+            TextEditWindow.h
+        </headers>
+        <sources>
+            FindDialog.cpp
+            ReplaceDialog.cpp
+            TextEdit.cpp
+            TextEditDocument.cpp
+            TextEditWindow.cpp
+        </sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

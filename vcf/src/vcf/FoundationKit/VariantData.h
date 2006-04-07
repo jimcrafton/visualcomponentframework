@@ -13,18 +13,13 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-/*
- Uncomment this to have a variant of 64 bits at least
- This enables the automatic conversion of DateTime objects too
- Please the 15th of July whne the DateTime class will be fully implemented.
-*/
-// #define VCF_VARIANT64
 
 
 namespace VCF {
 
 
 /**
+\class VariantData VariantData.h "vcf/FoundationKit/VariantData.h"
 VariantData represents an unknown type of variable - similiar to
 Visual Basic's Variant object.
 VariantData objects can store int, long, double, bool String, or Object*.
@@ -142,9 +137,28 @@ public:
 	};
 
 	/**
+	creates a VariantData initialized by a short value
+	*/
+	VariantData( const ushort& val ) {
+		UShortVal = val;
+		type = pdUShort;
+	};
+
+
+	/**
 	creates a VariantData initialized by a String value
 	*/
 	VariantData( const String& val ) {
+		StringVal = val;
+		type = pdString;
+	};
+
+	VariantData( const char* val ) {
+		StringVal = val;
+		type = pdString;
+	};
+
+	VariantData( const WideChar* val ) {
 		StringVal = val;
 		type = pdString;
 	};
@@ -265,9 +279,6 @@ public:
 
 
 	/**
-	defines the data type of the VariantData, where type can represent
-	* an int, unsigned int, long, unsigned long, short, char, 
-	* double, float, bool, string, Enum pointer, or Object pointer.
 	comparison operator
 	*/
 	bool operator == ( const VariantData& v ) const {
@@ -311,6 +322,13 @@ public:
 	*/
 	operator short () const {
 		return ShortVal;
+	};
+
+	/**
+	converts the VariantData to an unsigned short
+	*/
+	operator ushort () const {
+		return UShortVal;
 	};
 
 	/**
@@ -477,6 +495,15 @@ public:
 	VariantData& operator=( const short& newValue ){
 		ShortVal = newValue;
 		type = pdShort;
+		return *this;
+	};
+
+	/**
+	Assigns an unsigned short value to the VariantData
+	*/
+	VariantData& operator=( const ushort& newValue ){
+		UShortVal = newValue;
+		type = pdUShort;
 		return *this;
 	};
 
@@ -664,6 +691,7 @@ public:
 			int IntVal;
 			long LongVal;
 			short ShortVal;
+			ushort UShortVal;
 			unsigned int UIntVal;
 			unsigned long ULongVal;
 			float FloatVal;
@@ -701,6 +729,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
+*Revision 1.5.2.2  2006/02/23 01:41:58  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.5.2.1  2005/08/01 17:20:46  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

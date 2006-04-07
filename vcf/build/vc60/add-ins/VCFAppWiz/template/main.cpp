@@ -10,8 +10,7 @@ using namespace VCF;
 class $$Root$$Window : public Window {
 public:
 	$$Root$$Window() {
-		setCaption( "$$Root$$" );
-		setVisible( true );
+		setCaption( "$$Root$$" );		
 	}
 
 	virtual ~$$Root$$Window(){};
@@ -33,7 +32,8 @@ public:
 		
 		Window* mainWindow = new $$Root$$Window();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
+		mainWindow->show();
 		
 		return result;
 	}

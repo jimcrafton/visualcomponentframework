@@ -9,6 +9,8 @@ where you installed the VCF.
 
 //ComponentEditorManager.h
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ComponentEditor.h"
+#include "vcf/ApplicationKit/ComponentEditorManager.h"
 
 using namespace VCF;
 
@@ -49,6 +51,16 @@ void ComponentEditorManager::registerComponentEditor( ComponentEditor* component
 	ComponentEditorManager::componentEditorMgr->componentEditorMap_[className] = componentEditor;
 }
 
+void ComponentEditorManager::removeComponentEditor( const String& className )
+{
+	ComponentEditor* result = NULL;
+	std::map<String,ComponentEditor*>::iterator found =
+		ComponentEditorManager::componentEditorMgr->componentEditorMap_.find( className );
+	if ( found != ComponentEditorManager::componentEditorMgr->componentEditorMap_.end() ) {
+		delete found->second;
+		ComponentEditorManager::componentEditorMgr->componentEditorMap_.erase( found );
+	}
+}
 
 void ComponentEditorManager::initComponentEditorManager()
 {
@@ -70,6 +82,15 @@ void ComponentEditorManager::closeComponentEditorManager()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
+*Revision 1.2.6.1  2005/08/25 02:38:06  ddiego
+*minor update to component editor manager.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="xmake workspace">
+		<Project filename="libXmake_cb.cbp" active="1" />
+		<Project filename="xmake_cb.cbp">
+			<Depends filename="libXmake_cb.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

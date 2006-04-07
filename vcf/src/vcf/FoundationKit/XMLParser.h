@@ -20,6 +20,7 @@ class XMLNode;
 
 
 /**
+\class XMLAttr XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *Class XMLAttr documentation
 */
 class FOUNDATIONKIT_API XMLAttr : public Object {
@@ -79,6 +80,7 @@ protected:
 
 
 /**
+\class XMLNode XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *Class XMLNode represents a single node in a
 *parsed XML document.
 *Nodes have a name, parent node, and 0 or more
@@ -220,6 +222,7 @@ protected:
 
 
 /**
+\class XMLParserEvent XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *Class XMLParserEvent documentation
 */
 class FOUNDATIONKIT_API XMLParserEvent : public Event {
@@ -245,6 +248,7 @@ protected:
 };
 
 /**
+\class XMLParserHandler XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *Class XMLParserHandler documentation
 */
 template <class SOURCE_TYPE> class XMLParserHandler : public EventHandlerInstance<SOURCE_TYPE,XMLParserEvent> {
@@ -261,6 +265,7 @@ public:
 };
 
 /**
+\class XMLNode XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *XMLParser is a very simple non-validating XML parser. Currently
 *only really handles basic XML documents. Does <I><B>not</B></I>
 *handle parsing DTDs yet. Allows outside objects to be notified of
@@ -382,6 +387,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

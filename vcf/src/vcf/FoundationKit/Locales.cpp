@@ -66,956 +66,957 @@ Locale::CountryCodes Locale::getCountryCode()
 
 UnicodeString Locale::getLanguageName()
 {
-	UnicodeString result ;
-
-	switch ( getLanguageCode() ) {
-		case Locale::lcAfar  : {
-			result="Afar";
+	UnicodeString result = peer_->getLanguage();
+
+	if ( result.empty() ) {	
+
+		switch ( getLanguageCode() ) {
+			case Locale::lcAfar  : {
+				result="Afar";
+			}
+			break;
+
+			case Locale::lcAbkhazian  : {
+				result="Abkhazian";
+			}
+			break;
+
+			case Locale::lcAfrikaans  : {
+				result="Afrikaans";
+			}
+			break;
+
+			case Locale::lcAkan  : {
+				result="Akan";
+			}
+			break;
+
+			case Locale::lcAlbanian  : {
+				result="Albanian";
+			}
+			break;
+
+			case Locale::lcAmharic  : {
+				result="Amharic";
+			}
+			break;
+
+			case Locale::lcArabic  : {
+				result="Arabic";
+			}
+			break;
+
+			case Locale::lcAragonese  : {
+				result="Aragonese";
+			}
+			break;
+
+			case Locale::lcArmenian  : {
+				result="Armenian";
+			}
+			break;
+
+			case Locale::lcAssamese  : {
+				result="Assamese";
+			}
+			break;
+
+			case Locale::lcAvaric  : {
+				result="Avaric";
+			}
+			break;
+
+			case Locale::lcAvestan  : {
+				result="Avestan";
+			}
+			break;
+
+			case Locale::lcAymara  : {
+				result="Aymara";
+			}
+			break;
+
+			case Locale::lcAzerbaijani  : {
+				result="Azerbaijani";
+			}
+			break;
+
+			case Locale::lcBashkir  : {
+				result="Bashkir";
+			}
+			break;
+
+			case Locale::lcBambara  : {
+				result="Bambara";
+			}
+			break;
+
+			case Locale::lcBasque  : {
+				result="Basque";
+			}
+			break;
+
+			case Locale::lcBelarusian  : {
+				result="Belarusian";
+			}
+			break;
+
+			case Locale::lcBengali  : {
+				result="Bengali";
+			}
+			break;
+
+			case Locale::lcBihari  : {
+				result="Bihari";
+			}
+			break;
+
+			case Locale::lcBislama  : {
+				result="Bislama";
+			}
+			break;
+
+			case Locale::lcTibetan  : {
+				result="Tibetan";
+			}
+			break;
+
+			case Locale::lcBosnian  : {
+				result="Bosnian";
+			}
+			break;
+
+			case Locale::lcBreton  : {
+				result="Breton";
+			}
+			break;
+
+			case Locale::lcBulgarian  : {
+				result="Bulgarian";
+			}
+			break;
+
+			case Locale::lcBurmese  : {
+				result="Burmese";
+			}
+			break;
+
+			case Locale::lcCatalan  : {
+				result="Catalan";
+			}
+			break;
+
+			case Locale::lcCzech  : {
+				result="Czech";
+			}
+			break;
+
+			case Locale::lcChamorro  : {
+				result="Chamorro";
+			}
+			break;
+
+			case Locale::lcChechen  : {
+				result="Chechen";
+			}
+			break;
+
+			case Locale::lcChinese  : {
+				result="Chinese";
+			}
+			break;
+
+			case Locale::lcChurchSlavic  : {
+				result="ChurchSlavic";
+			}
+			break;
+
+
+
+
+
+
+			case Locale::lcChuvash  : {
+				result="Chuvash";
+			}
+			break;
+
+			case Locale::lcCornish  : {
+				result="Cornish";
+			}
+			break;
+
+			case Locale::lcCorsican  : {
+				result="Corsican";
+			}
+			break;
+
+			case Locale::lcCree  : {
+				result="Cree";
+			}
+			break;
+
+			case Locale::lcWelsh  : {
+				result="Welsh";
+			}
+			break;
+
+			case Locale::lcDanish  : {
+				result="Danish";
+			}
+			break;
+
+			case Locale::lcGerman  : {
+				result="German";
+			}
+			break;
+
+			case Locale::lcDivehi  : {
+				result="Divehi";
+			}
+			break;
+
+			case Locale::lcFlemish  : {
+				result="Flemish";
+			}
+			break;
+
+
+			case Locale::lcDzongkha  : {
+				result="Dzongkha";
+			}
+			break;
+
+			case Locale::lcGreek  : {
+				result="Greek";
+			}
+			break;
+
+			case Locale::lcEnglish  : {
+				result="English";
+			}
+			break;
+
+			case Locale::lcEsperanto  : {
+				result="Esperanto";
+			}
+			break;
+
+			case Locale::lcEstonian  : {
+				result="Estonian";
+			}
+			break;
+
+			case Locale::lcEwe  : {
+				result="Ewe";
+			}
+			break;
+
+			case Locale::lcFaroese  : {
+				result="Faroese";
+			}
+			break;
+
+			case Locale::lcPersian  : {
+				result="Persian";
+			}
+			break;
+
+			case Locale::lcFijian  : {
+				result="Fijian";
+			}
+			break;
+
+			case Locale::lcFinnish  : {
+				result="Finnish";
+			}
+			break;
+
+			case Locale::lcFrench  : {
+				result="French";
+			}
+			break;
+
+			case Locale::lcFrisian  : {
+				result="Frisian";
+			}
+			break;
+
+			case Locale::lcFulah  : {
+				result="Fulah";
+			}
+			break;
+
+			case Locale::lcGeorgian  : {
+				result="Georgian";
+			}
+			break;
+
+			case Locale::lcGaelic  : {
+				result="Gaelic";
+			}
+			break;
+
+
+			case Locale::lcIrish  : {
+				result="Irish";
+			}
+			break;
+
+			case Locale::lcGallegan  : {
+				result="Gallegan";
+			}
+			break;
+
+			case Locale::lcManx  : {
+				result="Manx";
+			}
+			break;
+
+			case Locale::lcGuarani  : {
+				result="Guarani";
+			}
+			break;
+
+			case Locale::lcGujarati  : {
+				result="Gujarati";
+			}
+			break;
+
+			case Locale::lcHaitian  : {
+				result="Haitian";
+			}
+			break;
+
+
+			case Locale::lcHausa  : {
+				result="Hausa";
+			}
+			break;
+
+			case Locale::lcHebrew  : {
+				result="Hebrew";
+			}
+			break;
+
+			case Locale::lcHerero  : {
+				result="Herero";
+			}
+			break;
+
+			case Locale::lcHindi  : {
+				result="Hindi";
+			}
+			break;
+
+			case Locale::lcHiriMotu  : {
+				result="HiriMotu";
+			}
+			break;
+
+			case Locale::lcCroatian  : {
+				result="Croatian";
+			}
+			break;
+
+			case Locale::lcHungarian  : {
+				result="Hungarian";
+			}
+			break;
+
+			case Locale::lcIgbo  : {
+				result="Igbo";
+			}
+			break;
+
+			case Locale::lcIcelandic  : {
+				result="Icelandic";
+			}
+			break;
+
+			case Locale::lcIdo  : {
+				result="Ido";
+			}
+			break;
+
+			case Locale::lcSichuanYi  : {
+				result="SichuanYi";
+			}
+			break;
+
+			case Locale::lcInuktitut  : {
+				result="Inuktitut";
+			}
+			break;
+
+			case Locale::lcInterlingue  : {
+				result="Interlingue";
+			}
+			break;
+
+			case Locale::lcInterlingua  : {
+				result="Interlingua";
+			}
+			break;
+
+			case Locale::lcIndonesian  : {
+				result="Indonesian";
+			}
+			break;
+
+			case Locale::lcInupiaq  : {
+				result="Inupiaq";
+			}
+			break;
+
+			case Locale::lcItalian  : {
+				result="Italian";
+			}
+			break;
+
+			case Locale::lcJavanese  : {
+				result="Javanese";
+			}
+			break;
+
+			case Locale::lcJapanese  : {
+				result="Japanese";
+			}
+			break;
+
+			case Locale::lcKalaallisut  : {
+				result="Kalaallisut";
+			}
+			break;
+
+
+			case Locale::lcKannada  : {
+				result="Kannada";
+			}
+			break;
+
+			case Locale::lcKashmiri  : {
+				result="Kashmiri";
+			}
+			break;
+
+			case Locale::lcKanuri  : {
+				result="Kanuri";
+			}
+			break;
+
+			case Locale::lcKazakh  : {
+				result="Kazakh";
+			}
+			break;
+
+			case Locale::lcKhmer  : {
+				result="Khmer";
+			}
+			break;
+
+			case Locale::lcKikuyu  : {
+				result="Kikuyu";
+			}
+			break;
+
+
+
+			case Locale::lcKinyarwanda  : {
+				result="Kinyarwanda";
+			}
+			break;
+
+			case Locale::lcKirghiz  : {
+				result="Kirghiz";
+			}
+			break;
+
+			case Locale::lcKomi  : {
+				result="Komi";
+			}
+			break;
+
+			case Locale::lcKongo  : {
+				result="Kongo";
+			}
+			break;
+
+			case Locale::lcKorean  : {
+				result="Korean";
+			}
+			break;
+
+			case Locale::lcKuanyama  : {
+				result="Kuanyama";
+			}
+			break;
+
+			case Locale::lcKurdish  : {
+				result="Kurdish";
+			}
+			break;
+
+			case Locale::lcLao  : {
+				result="Lao";
+			}
+			break;
+
+			case Locale::lcLatin  : {
+				result="Latin";
+			}
+			break;
+
+			case Locale::lcLatvian  : {
+				result="Latvian";
+			}
+			break;
+
+			case Locale::lcLimburgan  : {
+				result="Limburgan";
+			}
+			break;
+
+
+
+
+			case Locale::lcLingala  : {
+				result="Lingala";
+			}
+			break;
+
+			case Locale::lcLithuanian  : {
+				result="Lithuanian";
+			}
+			break;
+
+			case Locale::lcLuxembourgish  : {
+				result="Luxembourgish";
+			}
+			break;
+
+
+
+			case Locale::lcLubaKatanga  : {
+				result="LubaKatanga";
+			}
+			break;
+
+			case Locale::lcGanda  : {
+				result="Ganda";
+			}
+			break;
+
+			case Locale::lcMacedonian  : {
+				result="Macedonian";
+			}
+			break;
+
+			case Locale::lcMarshallese  : {
+				result="Marshallese";
+			}
+			break;
+
+			case Locale::lcMalayalam  : {
+				result="Malayalam";
+			}
+			break;
+
+			case Locale::lcMaori  : {
+				result="Maori";
+			}
+			break;
+
+			case Locale::lcMarathi  : {
+				result="Marathi";
+			}
+			break;
+
+			case Locale::lcMalay  : {
+				result="Malay";
+			}
+			break;
+
+			case Locale::lcMalagasy  : {
+				result="Malagasy";
+			}
+			break;
+
+			case Locale::lcMaltese  : {
+				result="Maltese";
+			}
+			break;
+
+			case Locale::lcMoldavian  : {
+				result="Moldavian";
+			}
+			break;
+
+			case Locale::lcMongolian  : {
+				result="Mongolian";
+			}
+			break;
+
+			case Locale::lcNauru  : {
+				result="Nauru";
+			}
+			break;
+
+			case Locale::lcNavajo  : {
+				result="Navajo";
+			}
+			break;
+
+
+			case Locale::lcSouthNdebele  : {
+				result="SouthNdebele";
+			}
+			break;
+
+			case Locale::lcNorthNdebele  : {
+				result="NorthNdebele";
+			}
+			break;
+
+			case Locale::lcNdonga  : {
+				result="Ndonga";
+			}
+			break;
+
+			case Locale::lcNepali  : {
+				result="Nepali";
+			}
+			break;
+
+			case Locale::lcNorwegianNynorsk  : {
+				result="NorwegianNynorsk";
+			}
+			break;
+
+			case Locale::lcNorwegianBokmal  : {
+				result="NorwegianBokmal";
+			}
+			break;
+
+			case Locale::lcNorwegian  : {
+				result="Norwegian";
+			}
+			break;
+
+			case Locale::lcChichewa  : {
+				result="Chichewa";
+			}
+			break;
+
+
+
+			case Locale::lcOccitan  : {
+				result="Occitan";
+			}
+			break;
+
+
+			case Locale::lcOjibwa  : {
+				result="Ojibwa";
+			}
+			break;
+
+			case Locale::lcOriya  : {
+				result="Oriya";
+			}
+			break;
+
+			case Locale::lcOromo  : {
+				result="Oromo";
+			}
+			break;
+
+			case Locale::lcOssetian  : {
+				result="Ossetian";
+			}
+			break;
+
+
+			case Locale::lcPunjabi  : {
+				result="Punjabi";
+			}
+			break;
+
+			case Locale::lcPali  : {
+				result="Pali";
+			}
+			break;
+
+			case Locale::lcPolish  : {
+				result="Polish";
+			}
+			break;
+
+			case Locale::lcPortuguese  : {
+				result="Portuguese";
+			}
+			break;
+
+			case Locale::lcPushto  : {
+				result="Pushto";
+			}
+			break;
+
+			case Locale::lcQuechua  : {
+				result="Quechua";
+			}
+			break;
+
+			case Locale::lcRaetoRomance  : {
+				result="RaetoRomance";
+			}
+			break;
+
+			case Locale::lcRomanian  : {
+				result="Romanian";
+			}
+			break;
+
+			case Locale::lcRundi  : {
+				result="Rundi";
+			}
+			break;
+
+			case Locale::lcRussian  : {
+				result="Russian";
+			}
+			break;
+
+			case Locale::lcSango  : {
+				result="Sango";
+			}
+			break;
+
+			case Locale::lcSanskrit  : {
+				result="Sanskrit";
+			}
+			break;
+
+			case Locale::lcSerbian  : {
+				result="Serbian";
+			}
+			break;
+
+			case Locale::lcSinhalese  : {
+				result="Sinhalese";
+			}
+			break;
+
+			case Locale::lcSlovak  : {
+				result="Slovak";
+			}
+			break;
+
+			case Locale::lcSlovenian  : {
+				result="Slovenian";
+			}
+			break;
+
+			case Locale::lcNorthernSami  : {
+				result="NorthernSami";
+			}
+			break;
+
+			case Locale::lcSamoan  : {
+				result="Samoan";
+			}
+			break;
+
+			case Locale::lcShona  : {
+				result="Shona";
+			}
+			break;
+
+			case Locale::lcSindhi  : {
+				result="Sindhi";
+			}
+			break;
+
+			case Locale::lcSomali  : {
+				result="Somali";
+			}
+			break;
+
+			case Locale::lcSotho  : {
+				result="Sotho";
+			}
+			break;
+
+			case Locale::lcSpanish  : {
+				result="Spanish";
+			}
+			break;
+
+			case Locale::lcSardinian  : {
+				result="Sardinian";
+			}
+			break;
+
+			case Locale::lcSwati  : {
+				result="Swati";
+			}
+			break;
+
+			case Locale::lcSundanese  : {
+				result="Sundanese";
+			}
+			break;
+
+			case Locale::lcSwahili  : {
+				result="Swahili";
+			}
+			break;
+
+			case Locale::lcSwedish  : {
+				result="Swedish";
+			}
+			break;
+
+			case Locale::lcTahitian  : {
+				result="Tahitian";
+			}
+			break;
+
+			case Locale::lcTamil  : {
+				result="Tamil";
+			}
+			break;
+
+			case Locale::lcTatar  : {
+				result="Tatar";
+			}
+			break;
+
+			case Locale::lcTelugu  : {
+				result="Telugu";
+			}
+			break;
+
+			case Locale::lcTajik  : {
+				result="Tajik";
+			}
+			break;
+
+			case Locale::lcTagalog  : {
+				result="Tagalog";
+			}
+			break;
+
+			case Locale::lcThai  : {
+				result="Thai";
+			}
+			break;
+
+			case Locale::lcTigrinya  : {
+				result="Tigrinya";
+			}
+			break;
+
+			case Locale::lcTonga  : {
+				result="Tonga";
+			}
+			break;
+
+			case Locale::lcTswana  : {
+				result="Tswana";
+			}
+			break;
+
+			case Locale::lcTsonga  : {
+				result="Tsonga";
+			}
+			break;
+
+			case Locale::lcTurkmen  : {
+				result="Turkmen";
+			}
+			break;
+
+			case Locale::lcTurkish  : {
+				result="Turkish";
+			}
+			break;
+
+			case Locale::lcTwi  : {
+				result="Twi";
+			}
+			break;
+
+			case Locale::lcUighur  : {
+				result="Uighur";
+			}
+			break;
+
+			case Locale::lcUkrainian  : {
+				result="Ukrainian";
+			}
+			break;
+
+			case Locale::lcUrdu  : {
+				result="Urdu";
+			}
+			break;
+
+			case Locale::lcUzbek  : {
+				result="Uzbek";
+			}
+			break;
+
+			case Locale::lcVenda  : {
+				result="Venda";
+			}
+			break;
+
+			case Locale::lcVietnamese  : {
+				result="Vietnamese";
+			}
+			break;
+
+			case Locale::lcVolapuk  : {
+				result="Volapuk";
+			}
+			break;
+
+			case Locale::lcWalloon  : {
+				result="Walloon";
+			}
+			break;
+
+			case Locale::lcWolof  : {
+				result="Wolof";
+			}
+			break;
+
+			case Locale::lcXhosa  : {
+				result="Xhosa";
+			}
+			break;
+
+			case Locale::lcYiddish  : {
+				result="Yiddish";
+			}
+			break;
+
+			case Locale::lcYoruba  : {
+				result="Yoruba";
+			}
+			break;
+
+			case Locale::lcZhuang  : {
+				result="Zhuang";
+			}
+			break;
+
+			case Locale::lcZulu  : {
+				result="Zulu";
+			}
+			break;
 		}
-		break;
-
-		case Locale::lcAbkhazian  : {
-			result="Abkhazian";
-		}
-		break;
-
-		case Locale::lcAfrikaans  : {
-			result="Afrikaans";
-		}
-		break;
-
-		case Locale::lcAkan  : {
-			result="Akan";
-		}
-		break;
-
-		case Locale::lcAlbanian  : {
-			result="Albanian";
-		}
-		break;
-
-		case Locale::lcAmharic  : {
-			result="Amharic";
-		}
-		break;
-
-		case Locale::lcArabic  : {
-			result="Arabic";
-		}
-		break;
-
-		case Locale::lcAragonese  : {
-			result="Aragonese";
-		}
-		break;
-
-		case Locale::lcArmenian  : {
-			result="Armenian";
-		}
-		break;
-
-		case Locale::lcAssamese  : {
-			result="Assamese";
-		}
-		break;
-
-		case Locale::lcAvaric  : {
-			result="Avaric";
-		}
-		break;
-
-		case Locale::lcAvestan  : {
-			result="Avestan";
-		}
-		break;
-
-		case Locale::lcAymara  : {
-			result="Aymara";
-		}
-		break;
-
-		case Locale::lcAzerbaijani  : {
-			result="Azerbaijani";
-		}
-		break;
-
-		case Locale::lcBashkir  : {
-			result="Bashkir";
-		}
-		break;
-
-		case Locale::lcBambara  : {
-			result="Bambara";
-		}
-		break;
-
-		case Locale::lcBasque  : {
-			result="Basque";
-		}
-		break;
-
-		case Locale::lcBelarusian  : {
-			result="Belarusian";
-		}
-		break;
-
-		case Locale::lcBengali  : {
-			result="Bengali";
-		}
-		break;
-
-		case Locale::lcBihari  : {
-			result="Bihari";
-		}
-		break;
-
-		case Locale::lcBislama  : {
-			result="Bislama";
-		}
-		break;
-
-		case Locale::lcTibetan  : {
-			result="Tibetan";
-		}
-		break;
-
-		case Locale::lcBosnian  : {
-			result="Bosnian";
-		}
-		break;
-
-		case Locale::lcBreton  : {
-			result="Breton";
-		}
-		break;
-
-		case Locale::lcBulgarian  : {
-			result="Bulgarian";
-		}
-		break;
-
-		case Locale::lcBurmese  : {
-			result="Burmese";
-		}
-		break;
-
-		case Locale::lcCatalan  : {
-			result="Catalan";
-		}
-		break;
-
-		case Locale::lcCzech  : {
-			result="Czech";
-		}
-		break;
-
-		case Locale::lcChamorro  : {
-			result="Chamorro";
-		}
-		break;
-
-		case Locale::lcChechen  : {
-			result="Chechen";
-		}
-		break;
-
-		case Locale::lcChinese  : {
-			result="Chinese";
-		}
-		break;
-
-		case Locale::lcChurchSlavic  : {
-			result="ChurchSlavic";
-		}
-		break;
-
-
-
-
-
-
-		case Locale::lcChuvash  : {
-			result="Chuvash";
-		}
-		break;
-
-		case Locale::lcCornish  : {
-			result="Cornish";
-		}
-		break;
-
-		case Locale::lcCorsican  : {
-			result="Corsican";
-		}
-		break;
-
-		case Locale::lcCree  : {
-			result="Cree";
-		}
-		break;
-
-		case Locale::lcWelsh  : {
-			result="Welsh";
-		}
-		break;
-
-		case Locale::lcDanish  : {
-			result="Danish";
-		}
-		break;
-
-		case Locale::lcGerman  : {
-			result="German";
-		}
-		break;
-
-		case Locale::lcDivehi  : {
-			result="Divehi";
-		}
-		break;
-
-		case Locale::lcFlemish  : {
-			result="Flemish";
-		}
-		break;
-
-
-		case Locale::lcDzongkha  : {
-			result="Dzongkha";
-		}
-		break;
-
-		case Locale::lcGreek  : {
-			result="Greek";
-		}
-		break;
-
-		case Locale::lcEnglish  : {
-			result="English";
-		}
-		break;
-
-		case Locale::lcEsperanto  : {
-			result="Esperanto";
-		}
-		break;
-
-		case Locale::lcEstonian  : {
-			result="Estonian";
-		}
-		break;
-
-		case Locale::lcEwe  : {
-			result="Ewe";
-		}
-		break;
-
-		case Locale::lcFaroese  : {
-			result="Faroese";
-		}
-		break;
-
-		case Locale::lcPersian  : {
-			result="Persian";
-		}
-		break;
-
-		case Locale::lcFijian  : {
-			result="Fijian";
-		}
-		break;
-
-		case Locale::lcFinnish  : {
-			result="Finnish";
-		}
-		break;
-
-		case Locale::lcFrench  : {
-			result="French";
-		}
-		break;
-
-		case Locale::lcFrisian  : {
-			result="Frisian";
-		}
-		break;
-
-		case Locale::lcFulah  : {
-			result="Fulah";
-		}
-		break;
-
-		case Locale::lcGeorgian  : {
-			result="Georgian";
-		}
-		break;
-
-		case Locale::lcGaelic  : {
-			result="Gaelic";
-		}
-		break;
-
-
-		case Locale::lcIrish  : {
-			result="Irish";
-		}
-		break;
-
-		case Locale::lcGallegan  : {
-			result="Gallegan";
-		}
-		break;
-
-		case Locale::lcManx  : {
-			result="Manx";
-		}
-		break;
-
-		case Locale::lcGuarani  : {
-			result="Guarani";
-		}
-		break;
-
-		case Locale::lcGujarati  : {
-			result="Gujarati";
-		}
-		break;
-
-		case Locale::lcHaitian  : {
-			result="Haitian";
-		}
-		break;
-
-
-		case Locale::lcHausa  : {
-			result="Hausa";
-		}
-		break;
-
-		case Locale::lcHebrew  : {
-			result="Hebrew";
-		}
-		break;
-
-		case Locale::lcHerero  : {
-			result="Herero";
-		}
-		break;
-
-		case Locale::lcHindi  : {
-			result="Hindi";
-		}
-		break;
-
-		case Locale::lcHiriMotu  : {
-			result="HiriMotu";
-		}
-		break;
-
-		case Locale::lcCroatian  : {
-			result="Croatian";
-		}
-		break;
-
-		case Locale::lcHungarian  : {
-			result="Hungarian";
-		}
-		break;
-
-		case Locale::lcIgbo  : {
-			result="Igbo";
-		}
-		break;
-
-		case Locale::lcIcelandic  : {
-			result="Icelandic";
-		}
-		break;
-
-		case Locale::lcIdo  : {
-			result="Ido";
-		}
-		break;
-
-		case Locale::lcSichuanYi  : {
-			result="SichuanYi";
-		}
-		break;
-
-		case Locale::lcInuktitut  : {
-			result="Inuktitut";
-		}
-		break;
-
-		case Locale::lcInterlingue  : {
-			result="Interlingue";
-		}
-		break;
-
-		case Locale::lcInterlingua  : {
-			result="Interlingua";
-		}
-		break;
-
-		case Locale::lcIndonesian  : {
-			result="Indonesian";
-		}
-		break;
-
-		case Locale::lcInupiaq  : {
-			result="Inupiaq";
-		}
-		break;
-
-		case Locale::lcItalian  : {
-			result="Italian";
-		}
-		break;
-
-		case Locale::lcJavanese  : {
-			result="Javanese";
-		}
-		break;
-
-		case Locale::lcJapanese  : {
-			result="Japanese";
-		}
-		break;
-
-		case Locale::lcKalaallisut  : {
-			result="Kalaallisut";
-		}
-		break;
-
-
-		case Locale::lcKannada  : {
-			result="Kannada";
-		}
-		break;
-
-		case Locale::lcKashmiri  : {
-			result="Kashmiri";
-		}
-		break;
-
-		case Locale::lcKanuri  : {
-			result="Kanuri";
-		}
-		break;
-
-		case Locale::lcKazakh  : {
-			result="Kazakh";
-		}
-		break;
-
-		case Locale::lcKhmer  : {
-			result="Khmer";
-		}
-		break;
-
-		case Locale::lcKikuyu  : {
-			result="Kikuyu";
-		}
-		break;
-
-
-
-		case Locale::lcKinyarwanda  : {
-			result="Kinyarwanda";
-		}
-		break;
-
-		case Locale::lcKirghiz  : {
-			result="Kirghiz";
-		}
-		break;
-
-		case Locale::lcKomi  : {
-			result="Komi";
-		}
-		break;
-
-		case Locale::lcKongo  : {
-			result="Kongo";
-		}
-		break;
-
-		case Locale::lcKorean  : {
-			result="Korean";
-		}
-		break;
-
-		case Locale::lcKuanyama  : {
-			result="Kuanyama";
-		}
-		break;
-
-		case Locale::lcKurdish  : {
-			result="Kurdish";
-		}
-		break;
-
-		case Locale::lcLao  : {
-			result="Lao";
-		}
-		break;
-
-		case Locale::lcLatin  : {
-			result="Latin";
-		}
-		break;
-
-		case Locale::lcLatvian  : {
-			result="Latvian";
-		}
-		break;
-
-		case Locale::lcLimburgan  : {
-			result="Limburgan";
-		}
-		break;
-
-
-
-
-		case Locale::lcLingala  : {
-			result="Lingala";
-		}
-		break;
-
-		case Locale::lcLithuanian  : {
-			result="Lithuanian";
-		}
-		break;
-
-		case Locale::lcLuxembourgish  : {
-			result="Luxembourgish";
-		}
-		break;
-
-
-
-		case Locale::lcLubaKatanga  : {
-			result="LubaKatanga";
-		}
-		break;
-
-		case Locale::lcGanda  : {
-			result="Ganda";
-		}
-		break;
-
-		case Locale::lcMacedonian  : {
-			result="Macedonian";
-		}
-		break;
-
-		case Locale::lcMarshallese  : {
-			result="Marshallese";
-		}
-		break;
-
-		case Locale::lcMalayalam  : {
-			result="Malayalam";
-		}
-		break;
-
-		case Locale::lcMaori  : {
-			result="Maori";
-		}
-		break;
-
-		case Locale::lcMarathi  : {
-			result="Marathi";
-		}
-		break;
-
-		case Locale::lcMalay  : {
-			result="Malay";
-		}
-		break;
-
-		case Locale::lcMalagasy  : {
-			result="Malagasy";
-		}
-		break;
-
-		case Locale::lcMaltese  : {
-			result="Maltese";
-		}
-		break;
-
-		case Locale::lcMoldavian  : {
-			result="Moldavian";
-		}
-		break;
-
-		case Locale::lcMongolian  : {
-			result="Mongolian";
-		}
-		break;
-
-		case Locale::lcNauru  : {
-			result="Nauru";
-		}
-		break;
-
-		case Locale::lcNavajo  : {
-			result="Navajo";
-		}
-		break;
-
-
-		case Locale::lcSouthNdebele  : {
-			result="SouthNdebele";
-		}
-		break;
-
-		case Locale::lcNorthNdebele  : {
-			result="NorthNdebele";
-		}
-		break;
-
-		case Locale::lcNdonga  : {
-			result="Ndonga";
-		}
-		break;
-
-		case Locale::lcNepali  : {
-			result="Nepali";
-		}
-		break;
-
-		case Locale::lcNorwegianNynorsk  : {
-			result="NorwegianNynorsk";
-		}
-		break;
-
-		case Locale::lcNorwegianBokmal  : {
-			result="NorwegianBokmal";
-		}
-		break;
-
-		case Locale::lcNorwegian  : {
-			result="Norwegian";
-		}
-		break;
-
-		case Locale::lcChichewa  : {
-			result="Chichewa";
-		}
-		break;
-
-
-
-		case Locale::lcOccitan  : {
-			result="Occitan";
-		}
-		break;
-
-
-		case Locale::lcOjibwa  : {
-			result="Ojibwa";
-		}
-		break;
-
-		case Locale::lcOriya  : {
-			result="Oriya";
-		}
-		break;
-
-		case Locale::lcOromo  : {
-			result="Oromo";
-		}
-		break;
-
-		case Locale::lcOssetian  : {
-			result="Ossetian";
-		}
-		break;
-
-
-		case Locale::lcPunjabi  : {
-			result="Punjabi";
-		}
-		break;
-
-		case Locale::lcPali  : {
-			result="Pali";
-		}
-		break;
-
-		case Locale::lcPolish  : {
-			result="Polish";
-		}
-		break;
-
-		case Locale::lcPortuguese  : {
-			result="Portuguese";
-		}
-		break;
-
-		case Locale::lcPushto  : {
-			result="Pushto";
-		}
-		break;
-
-		case Locale::lcQuechua  : {
-			result="Quechua";
-		}
-		break;
-
-		case Locale::lcRaetoRomance  : {
-			result="RaetoRomance";
-		}
-		break;
-
-		case Locale::lcRomanian  : {
-			result="Romanian";
-		}
-		break;
-
-		case Locale::lcRundi  : {
-			result="Rundi";
-		}
-		break;
-
-		case Locale::lcRussian  : {
-			result="Russian";
-		}
-		break;
-
-		case Locale::lcSango  : {
-			result="Sango";
-		}
-		break;
-
-		case Locale::lcSanskrit  : {
-			result="Sanskrit";
-		}
-		break;
-
-		case Locale::lcSerbian  : {
-			result="Serbian";
-		}
-		break;
-
-		case Locale::lcSinhalese  : {
-			result="Sinhalese";
-		}
-		break;
-
-		case Locale::lcSlovak  : {
-			result="Slovak";
-		}
-		break;
-
-		case Locale::lcSlovenian  : {
-			result="Slovenian";
-		}
-		break;
-
-		case Locale::lcNorthernSami  : {
-			result="NorthernSami";
-		}
-		break;
-
-		case Locale::lcSamoan  : {
-			result="Samoan";
-		}
-		break;
-
-		case Locale::lcShona  : {
-			result="Shona";
-		}
-		break;
-
-		case Locale::lcSindhi  : {
-			result="Sindhi";
-		}
-		break;
-
-		case Locale::lcSomali  : {
-			result="Somali";
-		}
-		break;
-
-		case Locale::lcSotho  : {
-			result="Sotho";
-		}
-		break;
-
-		case Locale::lcSpanish  : {
-			result="Spanish";
-		}
-		break;
-
-		case Locale::lcSardinian  : {
-			result="Sardinian";
-		}
-		break;
-
-		case Locale::lcSwati  : {
-			result="Swati";
-		}
-		break;
-
-		case Locale::lcSundanese  : {
-			result="Sundanese";
-		}
-		break;
-
-		case Locale::lcSwahili  : {
-			result="Swahili";
-		}
-		break;
-
-		case Locale::lcSwedish  : {
-			result="Swedish";
-		}
-		break;
-
-		case Locale::lcTahitian  : {
-			result="Tahitian";
-		}
-		break;
-
-		case Locale::lcTamil  : {
-			result="Tamil";
-		}
-		break;
-
-		case Locale::lcTatar  : {
-			result="Tatar";
-		}
-		break;
-
-		case Locale::lcTelugu  : {
-			result="Telugu";
-		}
-		break;
-
-		case Locale::lcTajik  : {
-			result="Tajik";
-		}
-		break;
-
-		case Locale::lcTagalog  : {
-			result="Tagalog";
-		}
-		break;
-
-		case Locale::lcThai  : {
-			result="Thai";
-		}
-		break;
-
-		case Locale::lcTigrinya  : {
-			result="Tigrinya";
-		}
-		break;
-
-		case Locale::lcTonga  : {
-			result="Tonga";
-		}
-		break;
-
-		case Locale::lcTswana  : {
-			result="Tswana";
-		}
-		break;
-
-		case Locale::lcTsonga  : {
-			result="Tsonga";
-		}
-		break;
-
-		case Locale::lcTurkmen  : {
-			result="Turkmen";
-		}
-		break;
-
-		case Locale::lcTurkish  : {
-			result="Turkish";
-		}
-		break;
-
-		case Locale::lcTwi  : {
-			result="Twi";
-		}
-		break;
-
-		case Locale::lcUighur  : {
-			result="Uighur";
-		}
-		break;
-
-		case Locale::lcUkrainian  : {
-			result="Ukrainian";
-		}
-		break;
-
-		case Locale::lcUrdu  : {
-			result="Urdu";
-		}
-		break;
-
-		case Locale::lcUzbek  : {
-			result="Uzbek";
-		}
-		break;
-
-		case Locale::lcVenda  : {
-			result="Venda";
-		}
-		break;
-
-		case Locale::lcVietnamese  : {
-			result="Vietnamese";
-		}
-		break;
-
-		case Locale::lcVolapuk  : {
-			result="Volapuk";
-		}
-		break;
-
-		case Locale::lcWalloon  : {
-			result="Walloon";
-		}
-		break;
-
-		case Locale::lcWolof  : {
-			result="Wolof";
-		}
-		break;
-
-		case Locale::lcXhosa  : {
-			result="Xhosa";
-		}
-		break;
-
-		case Locale::lcYiddish  : {
-			result="Yiddish";
-		}
-		break;
-
-		case Locale::lcYoruba  : {
-			result="Yoruba";
-		}
-		break;
-
-		case Locale::lcZhuang  : {
-			result="Zhuang";
-		}
-		break;
-
-		case Locale::lcZulu  : {
-			result="Zulu";
-		}
-		break;
-
-
 	}
 
 	return result;
@@ -1063,7 +1064,7 @@ UnicodeString Locale::toString( const float& val )
 
 UnicodeString Locale::toStringFromCurrency( const double& val )
 {
-	return peer_->toString( val );
+	return peer_->toStringFromCurrency( val );
 }
 
 UnicodeString Locale::toStringFromDate( const DateTime& val, const UnicodeString& format )
@@ -1198,7 +1199,7 @@ UnicodeString Locale::translate( const UnicodeString& id )
 
 	UnicodeString result;
 
-	CommandLine cmdLine = FoundationKit::getCommandLine();
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
 
 	FilePath app = cmdLine.getArgument(0);
 
@@ -1213,12 +1214,6 @@ UnicodeString Locale::translate( const UnicodeString& id )
 
 		result = loader->getMessageFromID( id );
 	}
-
-
-
-	//MessageLoader::loadMessageFile
-
-
 
 	return result.empty() ? id : result;
 }
@@ -1263,9 +1258,25 @@ Locale::CountryCodes Locale::stringToCountryCode( const UnicodeString& code )
 }
 
 
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/23 05:15:39  ddiego
+*fix to localize the locale language name.
+*
+*Revision 1.4.2.3  2006/03/23 00:58:04  ddiego
+*added a fix to algo for determing resource directory name.
+*
+*Revision 1.4.2.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.4.2.1  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

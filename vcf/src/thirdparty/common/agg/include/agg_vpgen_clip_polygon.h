@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -53,6 +53,9 @@ namespace agg
         double y1() const { return m_clip_box.y1; }
         double x2() const { return m_clip_box.x2; }
         double y2() const { return m_clip_box.y2; }
+
+        static bool auto_close()   { return true;  }
+        static bool auto_unclose() { return false; }
 
         void     reset();
         void     move_to(double x, double y);

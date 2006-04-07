@@ -23,6 +23,9 @@ namespace VCF
 #define MENU_ITEM_EVENT_UPDATED				CUSTOM_EVENT_TYPES + MENU_ITEM_CONST + 2
 
 
+/**
+\class MenuItemEvent MenuItemEvent.h "vcf/ApplicationKit/MenuItemEvent.h"
+*/
 class APPLICATIONKIT_API MenuItemEvent : public Event {
 public:
 	MenuItemEvent( Object * source): Event( source ){}
@@ -66,6 +69,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

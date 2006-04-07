@@ -22,12 +22,16 @@ where you installed the VCF.
 namespace VCF{
 
 /**
+\class ButtonEvent ButtonEvent.h "vcf/ApplicationKit/ButtonEvent.h"
 *A ButtonEvent is fired whenever a button is pressed
 *or clicked.
 */
 class APPLICATIONKIT_API ButtonEvent : public Event {
 public:
-	ButtonEvent( Object * source, const unsigned long& stateMask );
+	ButtonEvent( Object * source, const unsigned long& stateMask ):
+	  Event( source )  {
+		  stateMask_ = stateMask;
+	}
 
 	ButtonEvent( const ButtonEvent& rhs ):Event(rhs) {
 		*this = rhs;
@@ -41,7 +45,9 @@ public:
 
 	virtual ~ButtonEvent(){};
 
-    unsigned long getStateMask();
+    unsigned long getStateMask() {
+		return stateMask_;
+	}
 
 
 	virtual Object* clone( bool deep=false ) {
@@ -74,6 +80,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -40,8 +40,13 @@ class Control;
 
 class Item;
 
+/**
+\class ItemSort ItemSort.h "vcf/ApplicationKit/ItemSort.h"
+*/
 class ItemSort {
 public:
+	virtual ~ItemSort(){};
+	
 	virtual bool compare( const Item* x, const Item* y) = 0;
 };
 
@@ -49,13 +54,25 @@ public:
 #define ITEM_CLASSID		"ED88C0AA-26AB-11d4-B539-00C04F0196DA"
 
 /**
-*Item
+\class Item Item.h "vcf/ApplicationKit/Item.h"
+The Item class can be used represent a single element in a model.
+It's useful because as a component it gets all the automatic 
+persistance abilities of a component and the ability
+to easily edit it at design time through a visual form
+editor (like the VCF Builder). 
+
+The Item class has a number of virtual methods that must be implemented,
+but the exact methods of implementation may vary widely. For example
+it possible that in order to calculate the item's index hte item
+may simply carry around a member variable that stores the index. 
+An alternate approach would be to query the model the item
+is attached to and ask the model for the item's index position.
 */
 class APPLICATIONKIT_API Item : public Component {
 public:
 	/**
 	*these are a general set of enumeration masks that can be used
-	*to descirbe the items state above and beyond whether the item
+	*to describe the items state above and beyond whether the item
 	*is selected
 	*/
 	enum ItemDisplayState{
@@ -67,63 +84,127 @@ public:
 	};
 
 
-	Item(){
+	DELEGATE(ItemPaint);
+	DELEGATE(ItemChanged);
+	DELEGATE(ItemSelected);
+	DELEGATE(ItemAdded);
+	DELEGATE(ItemDeleted);
 
-	};
+	Item():itemState_(0),model_(NULL),owningControl_(NULL) {};
 
 	virtual ~Item(){};
 
-	virtual void addItemPaintHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void addItemPaintHandler( EventHandler* handler ){
+		ItemPaint += handler;
+	}
 
-	virtual void addItemChangedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void addItemChangedHandler( EventHandler* handler ){
+		ItemChanged += handler;
+	}
 
-	virtual void addItemSelectedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void addItemSelectedHandler( EventHandler* handler ){
+		ItemSelected += handler;
+	}
 
-	virtual void addItemAddedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void addItemAddedHandler( EventHandler* handler ){
+		ItemAdded += handler;
+	}
 
-	virtual void addItemDeletedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void addItemDeletedHandler( EventHandler* handler ){
+		ItemDeleted += handler;
+	}
 
-	virtual void removeItemPaintHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void removeItemPaintHandler( EventHandler* handler ){
+		ItemPaint -= handler;
+	}
 
-	virtual void removeItemChangedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void removeItemChangedHandler( EventHandler* handler ){
+		ItemChanged -= handler;
+	}
 
-	virtual void removeItemSelectedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void removeItemSelectedHandler( EventHandler* handler ){
+		ItemSelected -= handler;
+	}
 
-	virtual void removeItemAddedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void removeItemAddedHandler( EventHandler* handler ){
+		ItemAdded -= handler;
+	}
 
-	virtual void removeItemDeletedHandler( EventHandler* handler ) = 0;
+	/**
+	@deprecated - these are here for backwards compatibility
+	purposes only - they'll be going away in the next release.
+	*/
+	void removeItemDeletedHandler( EventHandler* handler ){
+		ItemDeleted -= handler;
+	}
 
+	/**
+	This is called to determine if a given point is within the
+	bounds of the item. The bounds may be slightly different
+	than what is returned by getBounds(). For example, an item
+	may not support getBounds(), but may have a non-rectangular
+	region and may implement containsPoint() accordingly.
+	*/
     virtual bool containsPoint( Point * pt ) = 0;
 
 	/**
-	*returns the Bounds for the Item or NULL if not
-	*applicable
+	returns the Bounds for the Item or NULL if not
+	applicable.
 	*/
 	virtual Rect* getBounds() = 0;
 
 	virtual void setBounds( Rect* bounds ) = 0;
 
 	/**
-	*represents the current state of the item
-	*as a long that is entirely item specific as well
-	*as specific to the control that is hosting the item(s).
-	*some controls will completely ignore this value
-	*/
-	virtual long getState() = 0;
-
-	virtual void setState( const long& state ) = 0;
-
-	/**
-	*This image index represents the state of an particular item
-	*separate from wether or not it is selected or not. typically it
-	*is offset horizontally from the regular image that getImageIndex()
-	*represents. This image is frequently used to represent check marks
-	*for things like tree or list controls
+	This image index represents the state of an particular item
+	separate from whether or not it is selected. Typically it
+	is offset horizontally from the regular image that getImageIndex()
+	represents. This image is frequently used to represent check marks
+	for things like tree or list controls.
 	*/
 	virtual long getStateImageIndex() = 0;
 
 	virtual void setStateImageIndex( const long& index ) = 0;
 
+	/**
+	Returns the index of the item within it's model.
+	*/
     virtual ulong32 getIndex() = 0;
 
 	virtual long getImageIndex() = 0;
@@ -132,13 +213,16 @@ public:
 
 	virtual void setIndex( const unsigned long& index ) = 0;
 
+	/**
+	Returns some application defined data. This can be anything 
+	you want, hence the void* storage.
+	*/
     virtual void* getData() = 0;
 
+	/**
+	Sets the application defined data.
+	*/
 	virtual void setData( void* data ) = 0;
-
-	virtual Model* getModel() = 0;
-
-	virtual void setModel( Model* model ) = 0;
 
 	/**
 	*indicates whether the item can paint itself.
@@ -156,14 +240,62 @@ public:
 	virtual void setSelected( const bool& selected ) = 0;
 
 	/**
-	*all items may have a control that "owns" them.
-	*so in a ListControl, the ListItem::getControl() would
-	*return the ListControl that contained the model that
-	*held the ListItem's
+	Represents the current state of the item
+	that is entirely item specific as well as 
+	specific to the control that is hosting 
+	the item(s). Some controls will completely 
+	ignore this value.
 	*/
-	virtual Control* getControl() = 0;
+	long getState(){
+		return itemState_;
+	}
 
-	virtual void setControl( Control* control ) = 0;	
+	/**
+	Sets the state for the item. This is made virtual to
+	allow subclasses to customize the behaviour. 
+	*/
+	virtual void setState( const long& state ){
+		itemState_ = state;
+	}
+
+	/**
+	Returns the model that this item belongs to.
+	*/
+	Model* getModel() {
+		return model_;
+	}
+
+	/**
+	Sets the model that this item is a part of. 
+	Subclasses may need or want to customize this.
+	*/
+	virtual void setModel( Model* model ) {
+		model_ = model;
+	}
+
+	/**
+	All items may have a control that "owns" them.
+	so in a ListControl, the ListItem::getControl() would
+	return the ListControl the items were part of. 
+	The control for item \em must match with the
+	view control of the item's model.
+	*/
+	Control* getControl() {
+		return owningControl_;
+	}
+
+	/**
+	Sets the owning control for this item. It's made
+	virtual so that subclasses can override the behaviour
+	if they need to.
+	*/
+	virtual void setControl( Control* control ) {
+		owningControl_ = control;
+	}
+protected:
+	long itemState_;
+	Model* model_;
+	Control* owningControl_;
 };
 
 };
@@ -172,6 +304,22 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

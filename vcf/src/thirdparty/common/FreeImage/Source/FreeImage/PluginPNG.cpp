@@ -33,7 +33,7 @@
 
 // ----------------------------------------------------------
 
-#include "thirdparty/common/FreeImage/Source/LibPNG/png.h"
+#include "thirdparty/common/LibPNG/png.h"
 
 // ----------------------------------------------------------
 

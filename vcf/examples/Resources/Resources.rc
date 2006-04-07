@@ -47,12 +47,18 @@ END
 #endif    // APSTUDIO_INVOKED
 
 
+TEST RCDATA
+BEGIN
+"Hi there, how are you?"
+END
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // 2110
 //
 
-logo.png                2110    DISCARDABLE     "logo.png"
+logo_png                2110    DISCARDABLE     "logo.png"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -61,7 +67,7 @@ logo.png                2110    DISCARDABLE     "logo.png"
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_STRING1             "Hola my friend!"
+    1             "Hola my friend!"
 END
 
 #endif    // English (U.S.) resources

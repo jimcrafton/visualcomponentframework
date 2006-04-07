@@ -27,6 +27,7 @@ class TabPage;
 
 
 /**
+\class TabModelEvent TabModelEvent.h "vcf/ApplicationKit/TabModelEvent.h"
 * the event class for events specific of tabbed pages
 * It containes the pointer to the specific tab page 
 * associated to this event.
@@ -34,15 +35,16 @@ class TabPage;
 */
 class APPLICATIONKIT_API TabModelEvent : public Event{
 public:
-	TabModelEvent( Object * source, TabPage* page );
+	TabModelEvent( Object * source, TabPage* page ): Event(source), page_(page) {}
 
-	TabModelEvent( Object* source, const unsigned long& eventType, TabPage* page );
+	TabModelEvent( Object* source, const unsigned long& eventType, TabPage* page )
+		: Event(source,eventType), page_(page) {}
 
 	TabModelEvent( const TabModelEvent& rhs ):Event(rhs) {
 		*this = rhs;
 	}
 
-	virtual ~TabModelEvent();
+	virtual ~TabModelEvent(){}
 
 
 	TabModelEvent& operator= ( const TabModelEvent& rhs ) {
@@ -53,7 +55,9 @@ public:
 		return *this;
 	}
 
-	TabPage* getTabPage();
+	TabPage* getTabPage(){
+		return page_;
+	}
 
 	virtual Object* clone( bool deep=false ) {
 		return new TabModelEvent(*this);
@@ -71,14 +75,13 @@ private:
 
 
 /**
-* The handler class for a TabModelEvent.
-* \par
-* handles the following:
-* <ul>
-* 	<li>onTabPageAdded
-* 	<li>onTabPageRemoved
-* 	<li>onTabPageSelected
-* </ul>
+The handler class for a TabModelEvent.
+ 
+handles the following:
+
+	\li onTabPageAdded
+	\li onTabPageRemoved
+	\li onTabPageSelected
 */
 template <class SOURCE_TYPE>
 class TabModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TabModelEvent> {
@@ -100,6 +103,19 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.4.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.4.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

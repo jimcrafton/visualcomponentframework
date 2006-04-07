@@ -31,6 +31,7 @@ class Action;
 
 
 /**
+\class Component Component.h "vcf/ApplicationKit/Component.h"
 The base class for all objects within the Visual Component Framework
 that wish to manipulated dynamically within the an IDE. All UI controls
 are descended from this class.
@@ -82,7 +83,7 @@ public:
 
 	enum ComponentEvents{
 		COMPONENT_CREATED = 0,
-		COMPONENT_DELETED,
+		COMPONENT_DESTROYED,
 		COMPONENT_NEEDS_UPDATING,
 		COMPONENT_ADDED,
 		COMPONENT_REMOVED,
@@ -144,9 +145,9 @@ public:
 	Handlers attached to this delegate may safely call virtual methods of the component
 	as the component's destructor has not yet been called.
 	@event ComponentEvent
-	@eventtype Component::COMPONENT_CREATED
+	@eventtype Component::COMPONENT_DESTROYED
 	*/
-	DELEGATE(ComponentDeleted)
+	DELEGATE(ComponentDestroyed)
 
 	/**
 	@delegate ComponentAdded this is fired when a new child component is added
@@ -420,17 +421,18 @@ public:
 	virtual bool updateAction();
 
 	/**
-	Adds the component to the framework's update time. This timer
-	will be fired off periodically and will create a COMPONENT_NEEDS_UPDATING
+	Adds the component to the framework's update list. This list
+	will be traversed periodically, during idle time, and the 
+	framework will create a COMPONENT_NEEDS_UPDATING
 	event and pass it to the component. The component can specialize this
 	functionality by customizing the behaviour of the handleEvent() method.
 	*/
-	void addToUpdateTimer();
+	void addToUpdateList();
 
 	/**
-	Removes the component from the framework update timer.
+	Removes the component from the framework's update list.
 	*/
-	void removeFromUpdateTimer();
+	void removeFromUpdateList();
 
 	/**
 	Allows the user to control whether or not the component should 
@@ -498,6 +500,15 @@ public:
 	*/
 	static void clearRegistedComponents();
 
+
+	/**
+	Takes a valid component instance and initializes it from a VFF file that
+	is assumed to be present in the programs resource bundle.
+	*/
+	static void initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
+
+	static Component* createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
+
 protected:
 	/**
 	*
@@ -544,6 +555,21 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/28 04:10:17  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.4.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.2  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
+*Revision 1.4.2.1  2005/08/24 05:03:21  ddiego
+*better component loading and creation functions.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

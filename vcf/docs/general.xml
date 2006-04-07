@@ -210,11 +210,17 @@ NB: This software will not save the world.
 							Microsoft Visual C++ 7.1.
 						</listitem>
 						<listitem>
+							Microsoft Visual C++ 8.0 (Including the Express edition).
+						</listitem>
+						<listitem>
 							Intels C/C++ compiler version 7 (using Visual Studio 6).
 						</listitem>
 						<listitem>
 							Borland C++ 6
 						</listitem>
+						<listitem>
+							MinGW-GCC compiler with the Code::Blocks IDE
+						</listitem>						
 					</itemizedlist>
 				</para>
 			</listitem>
@@ -222,14 +228,17 @@ NB: This software will not save the world.
 				<para>MacOSX</para>
 				<para>The MacOSX port currently uses the Apple Developer Tools that 
 				come with OSX. The supported OS versions are:
-				<itemizedlist>
-						<listitem>
-							Mac OSX 10.2, using Project Builder.
-						</listitem>
-						<listitem>
-							Mac OSX 10.3, using XCode.
-						</listitem>
-					</itemizedlist>
+				<itemizedlist>						
+					<listitem>
+						Mac OSX 10.3, using XCode 1.x.
+					</listitem>
+					<listitem>
+						Mac OSX 10.4, using XCode 2.x.
+					</listitem>
+				</itemizedlist>
+				Mac OSX 10.2 is currently not supported at the moment, and the Project
+				Builder files should be ignored, since Project Builder support has 
+				been dropped by Apple in favor of XCode.
 				</para>
 					
 			</listitem>
@@ -321,6 +330,170 @@ NB: This software will not save the world.
 		<section><title>For Linux systems</title>
 		Pull down the latest tar.gz source file and unzip in the directory of you choice.
 		</section>
+		
+		<section><title>Third Party Libraries</title>
+		<para>
+		In general you don't need to worry about installing any third party libraries,
+		as the VCF comes with all the code you need, including third party libraries 
+		that it makes use of. However, this section will discuss those third party libraries
+		that, due perhaps to the size of the library, are not included in the main VCF
+		code base.
+		</para>
+		<section><title>Open SSL on Win32</title>
+		  <para>
+		  Currently this is NOT needed! Please ignore these instructions for now.
+		  </para>
+		  <para>
+		  You can get the latest version of SSL from 
+		  http://www.openssl.org/source/, and the most recent version is currently 
+		  openssl-0.9.7b, but this will obviously change over time.
+		  </para>
+		  <para>
+		  OpenSSL does not use VC workspaces or project files, and unless you want to
+		  find some existing binary installer, you'll need to install it from source.
+		  To do this you'll need perl installed on your system, as the OpenSSL build scripts
+		  make use of perl to do their work. If you have a version of perl as a result 
+		  of an existing cygwin installation, do <emphasis>not</emphasis> use this version
+		  unless you plan to completely build from the cygwin prompt and create a GCC
+		  based version of the library. These instructions are for building a version of 
+		  the library using Microsoft's VC++.
+		  </para>
+		  <para>
+		  With that in mind, get the latest perl from ActiveState at 
+		  http://www.activestate.com/Products/ActivePerl/. They have an excellent
+		  installer that will install Perl in a jiffy with no hassle.
+		  </para>
+		  <para>
+		  OpenSSL has some parts of the library that are coded using optimized assembler,
+		  but to make use of this, you'll need Microsoft's MASM tool installed. This may 
+		  or may not already be on your machine, look for an executable called "ml.exe"
+		  in the "bin" directory of the main VC++ directory. If this is not there, you can
+		  download it here:
+		  http://msdn.microsoft.com/vstudio/downloads/tools/ppack/default.aspx
+		  for free. If that link is not working, you may be able to find more information 
+		  here http://users.easystreet.com/jkirwan/new/pctools.html that provides links
+		  to versions of MASM. Please note that you do <emphasis>not</emphasis> have to
+		  get MASM, you can build OpenSLL just without it, but the performance may be slightly
+		  slower than if you used the assembly version of the some of the routines.
+		  </para>
+		  <para>
+		  Once you have your tools installed, open a command prompt, and navigate to the 
+		  bin directory fo your version of VC++. For example, if you installed to the default
+		  location and you're using VC6, then this would be 
+		  "C:\Program Files\Visual Studio\VC98\Bin". For Visual C++ 7.1, it might be
+		  "C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin" and so forth. Once 
+		  there run the the vcvars32.bat file to initialize your path to point to the
+		  right place for the compiler, linker, etc tools.
+		  </para>
+		  <para>
+		  In the same shell, cd to the directory that you installed OpenSSL to, for example
+		  "c:\openssl-0.9.8a\". Now configure it for VC++ by typing:
+		  <programlisting>
+		  <![CDATA[
+perl Configure VC-WIN32
+		  ]]>
+		  </programlisting>
+		  You should see something like this when its done:
+		  <programlisting>
+		  <![CDATA[
+Configuring for VC-WIN32
+    no-gmp          [default]  OPENSSL_NO_GMP (skip dir)
+    no-krb5         [krb5-flavor not specified] OPENSSL_NO_KRB5
+    no-mdc2         [default]  OPENSSL_NO_MDC2 (skip dir)
+    no-rc5          [default]  OPENSSL_NO_RC5 (skip dir)
+    no-shared       [default]
+    no-zlib         [default]
+    no-zlib-dynamic [default]
+IsMK1MF=1
+CC            =cl
+CFLAG         =-DOPENSSL_THREADS  -DDSO_WIN32
+EX_LIBS       =
+CPUID_OBJ     =
+BN_ASM        =bn_asm.o
+DES_ENC       =des_enc.o fcrypt_b.o
+AES_ASM_OBJ   =aes_core.o aes_cbc.o
+BF_ENC        =bf_enc.o
+CAST_ENC      =c_enc.o
+RC4_ENC       =rc4_enc.o
+RC5_ENC       =rc5_enc.o
+MD5_OBJ_ASM   =
+SHA1_OBJ_ASM  =
+RMD160_OBJ_ASM=
+PROCESSOR     =
+RANLIB        =true
+ARFLAGS       =
+PERL          =perl
+THIRTY_TWO_BIT mode
+BN_LLONG mode
+RC4_INDEX mode
+RC4_CHUNK is undefined
+
+Configured for VC-WIN32.
+			]]>
+		  </programlisting>
+		  At this point you can choose to either build the ASM files or not. If you have MASM, then 
+		  type:
+		  <programlisting>
+ms\do_masm
+		  </programlisting>
+		  If you don't have MASM, then simply type:
+		  <programlisting>
+ms\do_ms
+		  </programlisting>
+		  The MASM version should generate something like this:
+		  <programlisting>
+		  <![CDATA[
+Generating x86 for MASM assember
+Bignum
+DES
+"crypt(3)"
+Blowfish
+CAST5
+RC4
+MD5
+SHA1
+RIPEMD160
+RC5\32
+
+C:\openssl-0.9.8a>perl util\mkfiles.pl  1>MINFO
+
+C:\openssl-0.9.8a>perl util\mk1mf.pl VC-WIN32  1>ms\nt.mak
+
+C:\openssl-0.9.8a>perl util\mk1mf.pl dll VC-WIN32  1>ms\ntdll.mak
+
+C:\openssl-0.9.8a>perl util\mkdef.pl 32 libeay  1>ms\libeay32.def
+
+C:\openssl-0.9.8a>perl util\mkdef.pl 32 ssleay  1>ms\ssleay32.def		  
+]]>
+		  </programlisting>
+		  You're now ready to start the actual makefile based build process. You 
+		  can choose to build a static or DLL version of the libraries. For a 
+		  static build (i.e. a build that you'll statically link to) you'll
+		  use the ms\nt.mak file, and for a DLL build you'll use the ms\ntdll.mak
+		  file.
+		  </para>
+		  <para>
+		  To begin a static lib build, type:
+		  <programlisting>
+nmake -f ms\nt.mak
+		  </programlisting>
+		  You should see a whole bunch of output stream by. You'll find the final 
+		  binaries in .\out32\. Repeat the above step with the DLL Makefile for 
+		  building the DLL version of the library. If you do this, the DLL
+		  binaries will be in .\out32dll\.
+		  </para>
+		  <para>
+		  To make use of the library you'll need to link to it. The libraries
+		  are obviously in the out32 directory, and the include files are in 
+		  the .\inc32\ directory.
+		  </para>
+		  <para>
+		  If you want to build for a different version of VC++ make
+		  <emphasis>sure</emphasis> to clean the old object code/binaries out
+		  first! Otherwise you'll get all sorts of compiler errors
+		  </para>
+		</section>
+		</section>
 	</section>
 
 	<section><title>Building the VCF</title>
@@ -365,6 +538,95 @@ NB: This software will not save the world.
 				The red circle indicates the various new Application Wizards that you should see.
 				</para>
 			</section>
+			
+			<section><title>Microsoft Visual C++ 2005 8.0 (including Express edition)</title>				
+				<para>
+				Till Novemeber of 2006 Microsoft is giving away it's Express edition of 
+				Visual C++ 2005. This is a superb IDE for the Windows environment, and I'd 
+				urge anyone on a budget to look into it. While it does not come with either
+				ATL or MFC support this is OK, because the VCF gives you everything you'll
+				need for GUI development on Windows, and VC 2005 gives you a great IDE! 
+				The following section will address how to get it, and how to set it up
+				for Windows GUI development, as there are a few special files you need 
+				to adjust by hand.
+				</para>
+				<para>
+					You can currently download the Visual C++ Express edition from the 
+					<ulink url="http://msdn.microsoft.com/vstudio/express/visualc/download/">
+						Visual C++ Express Edition Download site
+					</ulink>.
+					Follow the instructions there to install the software. Once VC 2005 is 
+					installed you will need to install a recent version of the <ulink 
+						url="http://www.microsoft.com/downloads/details.aspx?FamilyId=A55B6B43-E24F-4EA3-A93E-40C0EC4F68E5&amp;displaylang=en"> 
+					Win32 Platform SDK</ulink>. Older versions as far back as the November 2001
+					SDK work just fine if you have an older copy and don't want or need the 
+					absolute latest and greatest from Microsoft.					
+				</para>
+				<para>
+					Once you've installed the SDK, you need to adjust your settings in VC 2005
+					to reflect this, so it knows to use the SDK files. You <emphasis>must</emphasis>
+					follow these instructions, or things will not work correctly. You can read them at
+					<ulink url="http://msdn.microsoft.com/vstudio/express/visualc/usingpsdk/">Using 
+					Visual C++ 2005 Express Edition with the Microsoft Platform SDK</ulink>. In case
+					this link ever goes away or changes I'll summarize below:
+					<itemizedlist>
+						<listitem>
+							Go to Tools > Options. Select the "VC++ Directories" section under
+							"Projects and Solutions". In the "Show Directories for" drop down,
+							select the following:
+							<itemizedlist>
+								<listitem>
+									For "Executable files", add the [Path to SDK]\Bin directory.
+								</listitem>
+								<listitem>
+									For "Include files", add the [Path to SDK]\Include directory.
+								</listitem>
+								<listitem>
+									For "Library files", add the [Path to SDK]\Lib directory.
+								</listitem>
+							</itemizedlist>	
+							These probably need to be the first items, but it seems to work OK if 
+							they are not. Older version of VC++ required the SDK files to be included
+							first, but VC2005 doesn't seem as picky.
+						</listitem>
+						<listitem>
+							Find the file "corewin_express.vsprops". This should be in a directory
+							like "C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults",
+							or wherever you installed VC 2005 to. Edit this file so that
+							<programlisting>
+AdditionalDependencies="kernel32.lib"
+							</programlisting>
+							becomes 
+							<programlisting>
+AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib 
+comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib"
+							</programlisting>
+						</listitem>
+						<listitem>
+							Edit the "AppSettings.htm" file. You should be able to find this
+							in a directory like this "C:\Program Files\Microsoft Visual Studio 8\
+							VC\VCWizards\AppWiz\Generic\Application\html\1033\". Comment out lines 
+							441-444. 
+						</listitem>	
+					</itemizedlist>
+					I'd like to thank Brian Johnson for writing the original instructions explaining
+					how to do this.
+				</para>
+				<para>
+				Once Yo uhave VC 2005, the first thing you'll want to do is install the various 
+				wizards for it. To install them, navigate to the directory	vcf/build/vc80/add-ins 
+				and run (double click) Setup-vcexpress.js.  This will install the	various wizards 
+				for use in the Express IDE. To verify that these were installed correctly,	go to 
+				"File | New | Projects" and click on the "Visual C++ Projects" directory icon and 
+				you should see something like the following:
+				<screenshot>
+					<graphic fileref="gfx/addins_vc80_verify.png"></graphic>
+				</screenshot>
+				</para>
+			</section>
+			
+			
+			
 			<section><title>Apple XCode 1.x</title>
 				<para>
 				This will explain how to install the project templates that come 
@@ -378,65 +640,80 @@ NB: This software will not save the world.
 				vcf/build/xcode/Project Templates/ directory to the new VCF directory 
 				you created. Yous should end up with something like this:
 				<graphic fileref="gfx/vcf-xcode-templates.png"></graphic>
-				</para>
+				
 				Now when you select the "File > New Project..." menu item in XCode, 
 				you should see the new project templates in the New Project dialog:
 				<graphic fileref="gfx/vcf-xcode-proj-templates.png"></graphic>
+				</para>
+			</section>
+			<section>
+				<title>Apple XCode 2.x</title>
+				<para>
+					Use the same instructions for XCode 1.x.
+				</para>				
 			</section>
 		</section>		
 		<section><title>Building the VCF Libraries</title>
 			<section><title>Win32</title>
-				<formalpara><title>Microsoft Visual C++ 6</title>
-				The following section deals with building the VCF libraries using the Microsoft 
-				Visual C++ 6 IDE.
-				</formalpara>
-				<para>
-				To build the VCF open the vcf/build/vc60/vcfAllProjects.dsw workspace. 
-				This workspace has all the various framework projects, both as 
-				static .lib files and DLL projects. To build all the VCF libraries select 
-				the "vcfAllLibs" project and make it the active project. Building this 
-				project will automatically build the FoundationKit, GraphicsKit, 
-				ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
-				will be built as both static <emphasis>and</emphasis> DLL binaries. To build
-				just the static libraries, build the "vcfAllStaticLibs" project. To
-				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
-				</para>
-				<para>
-				There are several additional projects you can build as well for additional 
-				features.
-				</para>
-				<itemizedlist>
-					<listitem><para>
+				<section><title>Microsoft Visual C++ 6</title>
 					<para>
-					The ImageFormats project, which adds support for a wide variety of 
-					image formats by using the <ulink url="http://freeimage.sourceforge.net/">FreeImage 
-					library</ulink>. Build this if you would like to add this support to your 
-					project.
+						The following section deals with building the VCF libraries using the Microsoft
+						Visual C++ 6 IDE.
 					</para>
-					</para></listitem>
-					<listitem><para>
 					<para>
-					The Win32HTMLBrowser (and Win32HTMLBrowser_StaticLib) project, for an 
-					HTML browser peer (currently implemented using the Internet Explorer 
-					IWebBrowser COM interface, though experiments have been done 
-					using the Gecko component from mozilla).  
+						To build the VCF open the vcf/build/vc60/vcfAllProjects.dsw workspace.
+						This workspace has all the various framework projects, both as
+						static .lib files and DLL projects. To build all the VCF libraries select
+						the "vcfAllLibs" project and make it the active project. Building this
+						project will automatically build the FoundationKit, GraphicsKit,
+						ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+						will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+						just the static libraries, build the "vcfAllStaticLibs" project. To
+						build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
 					</para>
-					</para></listitem>
-				</itemizedlist>
-				<para>
-				The build will take a bit, so now would be a good time for coffee, tea, or 
-				perhaps reading some Dostoevsky...
-				</para>
-				<para>
-				Once the build is finished you are ready to go ! All binaries will be put 
-				in the vcf/bin directory when built.
-				</para>
-	
-				<formalpara><title>Microsoft Visual C++ 7.0</title>
-				The following section deals with building the VCF libraries using the Microsoft 
-				Visual C++ 7.0 IDE.
-				</formalpara>
-				<para>
+					<para>
+						There are several additional projects you can build as well for additional
+						features.
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<para>
+									The ImageFormats project, which adds support for a wide variety of
+									image formats by using the <ulink url="http://freeimage.sourceforge.net/">
+										FreeImage
+										library
+									</ulink>. Build this if you would like to add this support to your
+									project.
+								</para>
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<para>
+									The Win32HTMLBrowser (and Win32HTMLBrowser_StaticLib) project, for an
+									HTML browser peer (currently implemented using the Internet Explorer
+									IWebBrowser COM interface, though experiments have been done
+									using the Gecko component from mozilla).
+								</para>
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						The build will take a bit, so now would be a good time for coffee, tea, or
+						perhaps reading some Dostoevsky...
+					</para>
+					<para>
+						Once the build is finished you are ready to go ! All binaries will be put
+						in the vcf/bin directory when built.
+					</para>
+				</section>
+				<section><title>Microsoft Visual C++ 7.0</title>
+					<para>
+						The following section deals with building the VCF libraries using the Microsoft
+						Visual C++ 7.0 IDE.
+					</para>
+					<para>
 				To build the VCF open the vcf/build/vc70/vcfAllProjects_vc70.dsw workspace. 
 				This workspace has all the various framework projects, both as 
 				static .lib files and DLL projects. Visual Studio should prompt
@@ -449,14 +726,15 @@ NB: This software will not save the world.
 				will be built as both static <emphasis>and</emphasis> DLL binaries. 
 				To build just the static libraries, build the "vcfAllStaticLibs" 
 				project. To build all the libraries as DLL's, build the 
-				"vcfAllDynamicLibs" project.
-				
+				"vcfAllDynamicLibs" project.				
 				</para>
-				
-				<formalpara><title>Microsoft Visual C++ 7.1</title>
-				The following section deals with building the VCF libraries using the Microsoft 
-				Visual C++ 7.1 IDE.
-				</formalpara>
+				</section>
+
+				<section><title>Microsoft Visual C++ 7.1</title>
+					<para>
+						The following section deals with building the VCF libraries using the Microsoft
+						Visual C++ 7.1 IDE.
+					</para>			
 				<para>
 				To build the VCF open the vcf/build/vc71/vcfAllProjects_vc71.dsw workspace. 
 				This workspace has all the various framework projects, both as 
@@ -480,12 +758,40 @@ NB: This software will not save the world.
 				typically open the vcf/build/vc71/vcfAllProjects_vc71.sln solution file 
 				instead of the workspace file should you decide to rebuild any of the projects at 
 				a later time.			
-				</para>				
-				
-				<formalpara><title>Microsoft Visual C++ 6 using the Intel C/C++ compiler</title>
-				The following section deals with building the VCF libraries using the Microsoft 
-				Visual C++ 7.0 IDE with the Intel C/C++ compiler installed.
-				</formalpara>
+				</para>
+				</section>
+
+				<section><title>Microsoft Visual C++ 2005 8.0</title>
+					<para>
+						The following section deals with building the VCF libraries using the Microsoft
+						Visual C++ 2005 (including the Express Edition) IDE.
+					</para>				
+				<para>
+					To build the VCF open the vcf/build/vc80/vcfAllProjects_vc80.sln workspace.
+					This workspace has all the various framework projects, both as
+					static .lib files and DLL projects. Visual Studio should prompt
+					you to convert the Visual C++ 6 projects into the new Visual Studio 7.1
+					format. Click the "Yes to All" option, and all the projects should then
+					get converted.
+					<graphic fileref="gfx/vc80-open.png"></graphic>
+				</para>
+
+				<para>
+					To build all the VCF libraries open the vcf/build/vc80/vcfAllLibs.sln
+					solution file, select the "vcfAllLibs" project, and make it the active project.
+					<graphic fileref="gfx/vc80-build-all.png"></graphic>
+					Building this project will automatically build the FoundationKit, GraphicsKit,
+					ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries
+					will be built as both static <emphasis>and</emphasis> DLL binaries. To build
+					just the static libraries, build the "vcfAllStaticLibs" project. To
+					build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.				
+				</para>
+				</section>
+				<section><title>Microsoft Visual C++ 6 using the Intel C/C++ compiler</title>
+					<para>
+						The following section deals with building the VCF libraries using the Microsoft
+						Visual C++ 7.0 IDE with the Intel C/C++ compiler installed.
+					</para>				
 				<para>
 				To build the VCF open the vcf/build/icl7/vcfAllProjects_icl7.dsw workspace. 
 				This workspace has all the various framework projects, both as 
@@ -497,14 +803,1097 @@ NB: This software will not save the world.
 				just the static libraries, build the "vcfAllStaticLibs" project. To
 				build all the libraries as DLL's, build the "vcfAllDynamicLibs" project.
 				</para>
+				</section>
+
+				<section>
+					<title>Borland C++ Compiler</title>
+					<para>
+						The following section deals with building the VCF libraries using Borland's
+						C++ compiler/linker. This includes the free commandline version.
+						<note>
+							Due to restrictions on the free commandline compiler, there is no support
+							for the HTMLBrowser control due to dependencies on Microsoft's ATL
+							library. This is being addressed so that in the near future this will
+							no longer be an issue.
+						</note>
+						For more information regarding the build instructions for Borland compilers,
+						see the notes in the readme.txt file in vcf/build/bcc/readme.txt.
+					</para>				
+				<para>
+				There are some missing libs that did not get distributed with the Borland 
+				compiler install. These are found in the vcf/build/bcc/missing_libs directory.
+				Copy them either to your &lt;PATH_TO_BCB_INST&gt;\Lib directory  or the vcf/lib 
+				directory.
+				</para>
+				<para>
+				Make sure that the bcc32.cfg file is correctly set up. You should have some 
+				thing like this (assuming you have installed you compiler in "c:\bcb6", if 
+				not replace as neccessary):
+				<programlisting>
+				<![CDATA[
+-I"C:\bcb6\Include";"C:\bcb6\Include\vcl";"C:\bcb6\Include\Atl"
+-L"C:\bcb6\lib\PSDK";"C:\bcb6\lib";"C:\bcb6\lib\obj";"C:\bcb6\lib\release"
+]]>
+				</programlisting>
+				The order of the folders is important. Especially for linker folders. So 
+				copy them as shown here.
+				</para>
+				For the Borland Free compiler the bcc32.cfg file should look like this:
+				<programlisting>
+				<![CDATA[
+-I"C:\Borland\BCC55\Include"
+-L"C:\Borland\BCC55\lib\PSDK";"C:\Borland\BCC55\lib"
+]]>
+				</programlisting>
+				Of course replace the "C:\bcb6\" or "C:\Borland\BCC55" part with the 
+				appropriate path where you installed the Borland Free compiler.
+				<para>
+				Make sure you setup environment variables for VCF_BIN, VCF_INCLUDE 
+				and VCF_LIB. Without that you can not build and use them. See "Installing 
+				the VCF" for more information about how to do this.
+				</para>
+				<para>
+				Once this is done, you're ready to start issuing make commands. Open 
+				up a command prompt and and issue a make command like so:
+				<programlisting>
+<![CDATA[
+cd <PATH_TO_VCF>\build\bcc
+make -fvcfAllLibs.mak
+]]>
+				</programlisting>
+				This will build all dynamic and static libs. If for some reason name of your 
+				make util is not make.exe open vcfAllLibs.mak and change MK variable to 
+				the name of your make util. Do the same thing in vcfAllDynStatLibs.mak.
+				</para>
+				<para>
+				It's possible to build specific libraries if you don't want (or need) to build everything. 
+				To build more specific library or set of libraries you have these options:
+				<itemizedlist>
+					<listitem><para>		
+					All static libraries (both debug and release)
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs
+]]>
+					</screen>
+					</para></listitem>
+					
+					
+					
+					<listitem><para>
+					All dynamic libraries (both debug and release)	
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs
+]]>
+					</screen>					
+					</para></listitem>
+					
+					<listitem><para>
+					All static release libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs_rel
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All static debug libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs_dbg
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All dynamic debug libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs_dbg
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All dynamic release libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs_rel
+]]>
+					</screen>
+					</para></listitem>
+				</itemizedlist>
+				To delete the binaries created during the build process you can use the following commands:
+				<itemizedlist>
+					<listitem><para>	
+					All libraries (both debug and release and both static and dynamic)
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All static libraries (both debug and release)
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs_clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All dynamic libraries (both debug and release)
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs_clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All static release libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs_rel_clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All static debug libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak static_libs_dbg_clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All dynamic debug libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs_dbg_clean
+]]>
+					</screen>
+					</para></listitem>
+					
+					<listitem><para>
+					All dynamic release libraries
+					<screen>
+<![CDATA[
+make -fvcfAllLibs.mak dynamic_libs_rel_clean
+]]>
+					</screen>
+					</para></listitem>
+				</itemizedlist>
+				
+				<note>
+				If you are building with the Borland Free compiler issue the same commands 
+				stated above but add this : -DFREECOMP=TRUE. For example:
+				<screen>
+<![CDATA[
+make -fvcfAllLibs.mak -DFREECOMP=TRUE make -fvcfAllLibs.mak static_libs 
+-DFREECOMP=TRUE
+]]>
+				</screen>
+				This way we avoid dependency on ATL and make complete library 
+				available to user except WebBrowser control. If you just wan't to build 
+				everything there is a batch file free_compiler.cmd. Execute it and wait a bit :).
+				</note>
+				
+				</para>				
+				
+				<para>
+				Most of the examples can be compiled with Borland compiler. All that fall
+				in this category have 2 options for building.
+				<itemizedlist>
+					<listitem>
+					build_bcc.bat . With this batch file you can quickly build any sample. 
+					It expects that you have already built the release dll version of the VCF libs.
+					</listitem>
+					<listitem>					
+					You have allso 2 project files for BCB 5 IDE. One is for release dll VCF and 
+					another is for debug dll VCF. 
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				To use the Borland IDE project files you need to create a subfolder lib_patch
+				in your CBuilder root folder. In there copy c0x32.obj from &lt;CBuilder root&gt;\Lib 
+				folder and rename it to c0w32.obj. Here is a more detailed explanation why this 
+				was needed (from the VCF forum):
+				<blockquote>				
+					<para>
+					After quite some time I managed to create set of IDE project files for building 
+					VCF examples in BCB 5. Examples excluded in this release are:
+					<itemizedlist>
+					<listitem>
+					QTPlayer - This example uses QuickTime SDK that only works with visual C++.
+					All lib files and headers are only MSVC compatibile. If somebody 
+					makes a port of this to BCB than this sample could be ported.
+					</listitem>				
+					
+					<listitem>
+					TexLabel - Can not be compiled with BCB 5. Works only with BCB 6.
+					</listitem>
+					</itemizedlist>
+					</para>
+					<para>
+					Here is one important note about building these samples.
+					</para>
+					<para>
+					Unfortunately in BCB project file it is not possible to specify custom startup object file. 
+					That is necessary with VCF because every example has main procedure. Unfortunately 
+					BCB project with windows application forces linkage of c0w32.obj that is startup file 
+					that requires winmain procedure. What we need instead is c0x32.obj - startup file that 
+					uses main procedure.
+					</para>
+					<para>
+					The only way I found to trick BCB to use different object file than standard was to 
+					create new folder in BCB root folder and copy there c0x32.obj and rename it to 
+					c0w32.obj. After that every IDE project file must have this folder placed first in a 
+					list of folders with lib files (Project\Options\Directories/Conditionals - line "Library 
+					path").
+					</para>
+					<para>
+					All example project files assume that path of this folder is $(BCB)\lib_patch.
+					</para>
+				</blockquote>
+				</para>
+				<para>
+				So create folder lib_patch in the root of BCB installation and copy/rename mentioned 
+				startup object file. This trick is needed only for windows applications. For console 
+				applications it is enough to create standard console project in BCB.
+				</para>
+				<para>
+				In every folder for an example there are two project files - &lt;projectname&gt;_bcb5.bpr 
+				and &lt;projectname&gt;_bcb5_d.bpr . The first one is for a release build and 
+				the other is for a debug build. In the &lt;VCFROOT&gt;\Examples folder there are 
+				project group files Examples_bcb5.bpg (release projects) and Examples_bcb5_debug.bpg 
+				(debug projects).
+				</para>
+				</section>
+				
+				<section><title>MinGW-GCC compiler with the Code::Blocks IDE</title>
+					<para>
+						This section describes building the VCF + examples in the Code::Blocks IDE (
+						<ulink url="http://www.codeblocks.org/">codeblocks.org</ulink>). The VCF has 
+						only been tested with the more recent "Nightly Build" versions of the C::B IDE 
+						(download info at their forum page at 
+						<ulink url="http://forums.codeblocks.org/index.php">forums.codeblocks.org</ulink>). 
+						While version 1.0 RC2 might work, we have had troubles with precompiled header 
+						support, and strongly recommend the current	Nightly Builds or newer.  See instruction 
+						at the C::B site for using their IDE. The VCF codeblocks projects are known to work 
+						versions 3.4.4 and 3.4.5 of the MinGW-GCC compiler. The VCF projects will not work with 3.4.2 or older.
+					</para>				
+				<para>There are several different Code::Blocks (C::B) workspaces you can use to build the 
+				VCF, depending on whether you want to build dynamic libraries, static libraries, or both. 
+				Building example VCF apps is also covered. These workspaces are found in the 
+				vcf\build\codeblocks directory.
+				<itemizedlist>
+					<listitem><para>
+					Dynamic and static libraries + example VCF applications: open vcfAllProjects.workspace 
+					</para></listitem>
+					<listitem><para>
+					Dynamic libraries only: open vcfAllDynamicLibs.workspace
+					</para></listitem>
+					<listitem><para>
+					Static libraries only: open vcfAllStaticLibs.workspace
+					</para></listitem>
+					<listitem><para>
+					Dynamic and static libraries only: open vcfAllLibs.workspace
+					</para></listitem>
+					<listitem><para>
+					Example VCF applications only: open vcfAllExamples.workspace . Note that you need to 
+					build the dynamic libraries before building these examples.
+					</para></listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				Open the workspace of your choice in the C::B IDE. Available targets include "mingw_Release", 
+				"mingw_Debug", or "All" for both Release and Debug versions. Select the targer of your choice 
+				(or use the default target of All), make sure that the IDE is set to use the "GCC Compiler" 
+				compiler, and choose "Build->Build workspace" to build the libraries (+/- examples). The dynamic 
+				libraries (dll's) are placed in vcf\bin, and the dll import libraries and static libraries are placed in 
+				vcf\lib. All library names will have the suffix "_mgcc" added to their names to indicate they were built with 
+				the MinGW-GCC toolchain. 
+				</para>	
+				<para>
+				Building your own apps: The C::B IDE does not provide a great mechanism/wizard for creating an app skeleton, 
+				though it does provide a nice generic template mechanism. To start building your own VCF apps, we recommend 
+				opening one of the VCF example projects (such as HellowWorld), and saving it as a new project. This will give 
+				you an application outline with compiler options set up correctly, and you can add and remove your source files 
+				to the project as desired. You can also save an example project using "Project->Save project as user-template" 
+				and then create new projects from that template. This works well, but in both of these cases you have to change 
+				the name of the output binary through Project->Properties to your application output name.
+				</para>
+				</section>
+			</section>
+			
+			<section><title>Building with Bakefiles</title>
+				<section><title>The Bakefile utility</title>
+				<para>
+				Bakefile is a command line tool, so you should feel comfortable
+				using a command line to use this tool. Please download and install 
+				the latest version of the Bakefile from its site 
+				<ulink url="http://bakefile.sf.net">bakefile.sf.net</ulink>.
+				</para>
+				</section>
+				<section><title>Patching of the Bakefile utility</title>
+				<para>
+				There are some issues with Bakefiles that were not resolved
+				by authors of Bakefile till now for some reason. So you may
+				need to fix your local Bakefile executable yourself with a patch 
+				that can be downloaded separately.
+				</para>
+				</section>
+				<section><title>Environment Variables</title>
+				<para>
+				What you need to do at the beginning is to set up the VCF_DIR 
+				environment variable. It should point to the root of VCF.
+				</para>
+				<para>
+				If you are going to use MS VS IDE and prefer to generate VS6
+				projects then you need to update the IDE's LIB, INCLUDE and PATH
+				variables (executable directories) with directories appropriate to 
+				the VCF.
+				</para>
+
+				<para>
+				We will use a Windows specific syntax of the command line in
+				examples below. This does not prevent you from using a Unix
+				specific syntax. For example, we will use %VCF_DIR%, but you can
+				use $VCF_DIR instead, if you're attempting this from a unix like
+				command line.
+				</para>
+				</section>
+				<section><title>Baked Make Files</title>
+				<para>
+				The ready-to-use make files are located at the %VCF_DIR%\build\bakefiles.gen 
+				directory. The directory contains several make files for different compilers 
+				that can be used from a command line.
+				</para>
+				<para>
+				To build the whole VCF you need exactly one of the following make files:
+				<itemizedlist>
+					<listitem>
+					GNUmakefile - GNU make + GCC
+					</listitem>
+					<listitem>
+					makefile.bcc - Borland make + BCC
+					</listitem>					
+					<listitem>
+					makefile.gcc - MinGW mingw32-make + GCC
+					</listitem>
+					<listitem>
+					makefile.vc - MS nmake + MSVC
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				So, to compile VCF you just need to make the %VCF_DIR%\build\bakefiles.gen 
+				directory current and run one of the following commands:
+				<itemizedlist>
+					<listitem>
+					GNU make
+					<screen>
+make -f GNUmakefile
+					</screen>
+					</listitem>
+					
+					<listitem>
+					Borland make
+					<screen>
+make -f makefile.bcc
+					</screen>
+					</listitem>
+					
+					<listitem>
+					MinGW make
+					<screen>
+mingw32-make -f makefile.gcc
+					</screen>
+					</listitem>
+					
+					<listitem>
+					MS nmake
+					<screen>
+nmake -f makefile.vc
+					</screen>
+
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				Each make file has its own config file with the same extension. There 
+				is an exception: GNUmakefile's config file is config.gnu. The config 
+				files are located in the same directory.
+				</para>
+				<para>
+				You can tune your build by modifying options in an appropriate config 
+				file. There dependencies between some options are mentioned in a config 
+				file. Here are brief descriptions of the options. The most option 
+				values may be equal to 1 or 0 only that means on/yes/true or 
+				off/no/false.
+				<itemizedlist>
+					<listitem>
+					OPTION_SHARED - The result libraries will be static or dynamic. 
+					Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_DEBUG - The libraries will include debug info or will be 
+					optimized for speed. Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_PRECOMPILED - Precompiled header files will be created 
+					and used where it is possible.
+					</listitem>
+					
+					<listitem>
+					OPTION_ALLIN1 - All VCF as a single library, static or dynamic 
+					depends on OPTION_SHARED. Default: 0.
+					</listitem>					
+				</itemizedlist>
+				</para>
+				<para>
+				The following options show should the appropriate static or dynamic 
+				libraries be built. Note, if OPTION_ALLIN1 is 1, that is, all the 
+				enabled kits will be linked as a single library, and all the following 
+				options that are equal to 0 will not be included into the result 
+				library.
+				</para>
+				<para>
+				The following options are assigned to libraries that can be built 
+				as static ones only.
+				<itemizedlist>
+					<listitem>	
+					OPTION_ZLIB - Compile the zip? Default: 1.					
+					</listitem>
+					
+					<listitem>
+					OPTION_LIBAGG - Compile AGG? Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_LIBJPEG - Compile AGG? Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_LIBPNG - Compile PNG? Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_LIBMNG - Compile MNG? Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_LIBTIFF - Compile TIFF? Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_FREEIMAGE - Compile FreeImage? Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_REGEXX - Compile PCRE? Default: 0.
+					</listitem>
+				</itemizedlist>	
+				</para>
+				<para>
+				The following options are assigned to libraries that can be 
+				built as both static and dynamic ones.
+				<itemizedlist>	
+					<listitem>
+					OPTION_FOUNDATIONKIT - Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_GRAPHICSKIT - Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_APPLICATIONKIT - Default: 1.
+					</listitem>
+					
+					<listitem>
+					OPTION_HTMLKIT - Default: 1 if the compiler is MSVC. Otherwise 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_OPENGLKIT - Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_NETWORKKIT - Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_REMOTEOBJECTKIT - Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_INTERNETKIT - Default: 0.
+					</listitem>
+					
+					<listitem>
+					OPTION_IMAGEFORMATS - Default: 0.
+					</listitem>
+					
+					<listitem>
+					</listitem>
+					
+					<listitem>
+					</listitem>
+				</itemizedlist>	
+				</para>
+				
+				<para>
+				The following option allows us to define a string that will be a 
+				part of the result libraries names.
+				<itemizedlist>	
+					<listitem>
+					OPTION_SELECTLIB
+					</listitem>
+				</itemizedlist>	
+				The value of this option might be some meaningful string that, 
+				once set, will be added to the names of the target files. Any 
+				string is possible. For example, if the value is _vc6, then 
+				the name of, say, the foundation kit debug DLL will be 
+				FoundationKit_vc6_d.dll.
+				</para>
+				<para>
+				You may use the following values to be compatible with the 
+				default MSVS projects, that are based on the in-code linking 
+				using the preprocessor pragma "comment":   _icl6, _icl7, _vc6, 
+				_vc70, _vc71, _vc80.
+				<note>
+				The default value is an empty string.
+				</note>
+				</para>
+				<para>
+				The other way to build VCF is to pass the option values in a 
+				command line like this:
+				<screen>
+nmake -f makefile.vc OPTION_SELECTLIB=_vc71 OPTION_DEBUG=0
+				</screen>
+				</para>
+				<para>
+				There are the following make targets that can be built independently:
+				<itemizedlist>	
+					<listitem>ZLib</listitem>					
+					<listitem>libAGG</listitem>					
+					<listitem>LibJPEG</listitem>					
+					<listitem>LibPNG</listitem>					
+					<listitem>LibMNG</listitem>					
+					<listitem>LibTIFF</listitem>					
+					<listitem>FreeImage</listitem>					
+					<listitem>RegExx</listitem>					
+					<listitem>FoundationKit</listitem>					
+					<listitem>GraphicsKit</listitem>					
+					<listitem>ApplicationKit</listitem>
+					<listitem>HTMLKit</listitem>
+					<listitem>OpenGLKit</listitem>
+					<listitem>NetworkKit</listitem>
+					<listitem>RemoteObjectKit</listitem>
+					<listitem>InternetKit</listitem>
+					<listitem>ImageFormats</listitem>
+				</itemizedlist>	
+				</para>
+				</section>				
+				
+				<section><title>Baked Project Files</title>
+				<para>
+				The ready-to-use VS6 project files are located at the 
+				%VCF_DIR%\build\bakefiles.gen directory. This project does not 
+				use the described above config file at all.				
+				</para>
+				<para>
+				Please note, the project contains several configurations that 
+				allow us to choose the name of the result libraries:
+				<itemizedlist>
+					<listitem>vc80 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc80 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc80 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>vc80 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>vc71 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc71 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc71 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>vc71 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>vc70 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc70 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc70 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>vc70 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>vc60 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc60 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>vc60 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>vc60 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>icl7 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>icl7 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>icl7 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>icl7 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>icl6 DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>icl6 DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>icl6 Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>icl6 Release (based on "Win32 (x86) Static Library")</listitem>
+					
+					<listitem>DLL Debug (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>DLL Release (based on "Win32 (x86) Dynamic-Link Library")</listitem>
+					<listitem>Debug (based on "Win32 (x86) Static Library")</listitem>
+					<listitem>Release (based on "Win32 (x86) Static Library")</listitem>
+				</itemizedlist>
+				You need to choose a preferred configuration before you start to 
+				build VCF.
+				</para>
+				<para>
+				If you want to build VCF under your VS7.0, VS7.1 or VS8.0 you just 
+				need to convert all files of this project into the actual format 
+				as your VS IDE will suggest.
+				</para>
+				<para>
+				There is no the ready-to-use all-in-one project. However, you are 
+				able to generate it if you really need it. How to do this you can 
+				find in the section that describes bakefiles.
+				</para>
+				</section>
+				
+				<section><title>Building Examples</title>
+				<para>
+				Each example has its own baked make file, a name of which is the 
+				same as the main make file name. A command to build an example 
+				has to be the same as to build VCF. Run a make utility in example's 
+				directory to build the example separately. Run a make utility in 
+				the "examples" directory to build all the examples.
+				</para>
+				<para>
+				Note, an example will be built only if a kit that this example uses 
+				enabled by setting an appropriate option.
+				</para>
+				<para>
+				The VS6 project files for examples are not generated, so use non-baked 
+				VS projects.				
+				</para>
+				</section>
+
+				<section><title>Using bakefiles in your own project</title>
+					<para>
+					The easiest approach to create a make file or a VS6 project for 
+					your own project using the VCF offers is to use bakefiles. Lets look 
+					at the simplest way to start your own VCF project from scratch using 
+					your favorite editor.
+					</para>
+
+					<para>
+					Say, you created your own helloworld.cpp:
+					<programlisting>
+#include "vcf/FoundationKit/FoundationKit.h"
+
+using namespace VCF;
+
+int main( int argc, char** argv )
+{
+	FoundationKit::init( argc, argv );
+
+	System::println( "Hello world!" );
+
+	FoundationKit::terminate();
+	return 0;
+}
+					</programlisting>
+					</para>
+
+					<para>
+					You would like to test it and want to create a make file as easy
+					and as quickly as possible. Create a text file helloworld.bkl as
+					follows:
+					<programlisting>
+			<![CDATA[
+<?xml version="1.0" ?>
+
+<makefile>
+	<include file="VCFHelper.bkl"/>
+
+	<exe id="helloworld" template="vcf_exe_console">
+		<sources>helloworld.cpp</sources>
+		<vcf-use-FoundationKit/>
+	</exe>
+</makefile>
+			]]>
+					</programlisting>
+					</para>
+
+					<para>
+					That is all. You are ready to generate a make file or a VS6
+					project. Suppose you want to generate a VS6 project. You just
+					need to run the following command from a command line:
+					<screen>
+bakefile -I"%VCF_DIR%\build\bakefiles" -f msvc6prj helloworld.bkl
+					</screen>
+					This command will generate helloworld.dsp and helloworld.dsw.
+					</para>
+
+					<para>
+					If you prefer to generate a make file just run one of the
+					following commands. Which of them is yours depends on what the
+					compiler you prefer.
+					</para>
+
+					<para>
+					This command will generate makefile.vc.
+					<screen>
+bakefile -I"%VCF_DIR%\build\bakefiles" -f msvc helloworld.bkl
+					</screen>
+					</para>
+
+					<para>
+					This command will generate makefile.gcc.
+					<screen>
+bakefile -I"%VCF_DIR%\build\bakefiles" -f mingw helloworld.bkl
+					</screen>
+					</para>
+
+					<para>
+					This command will generate makefile.bcc.
+					<screen>
+bakefile -I"%VCF_DIR%\build\bakefiles" -f borland helloworld.bkl
+					</screen>
+					</para>
+
+					<para>
+					This command will generate GNUmakefile.
+					<screen>
+bakefile -I"%VCF_DIR%\build\bakefiles" -f gnu helloworld.bkl
+					</screen>
+					</para>
+
+					<para>
+					As you can see there are different formats (-f parameter) only.
+					There are the following assignments between formats and
+					compilers.
+					<itemizedlist>
+						<listitem>
+						msvc - MS VC
+						</listitem>
+						<listitem>
+						mingw - MinGW/GCC
+						</listitem>
+						<listitem>
+						borland - Borland C++ compiler
+						</listitem>
+						<listitem>
+						gnu - GCC
+						</listitem>
+					</itemizedlist>
+					The first three are Windows specific. The last one means a
+					unix-style make file that can be used on Linux, Cygwin and Mac OS
+					X.
+					</para>
+
+					<para>
+					Once you execute the bakefile utility as it is described above
+					you will get a make file. Or you will get several make files, if
+					you generate them for different formats. Anyway, one of the
+					following command will build an executable for you:
+					<itemizedlist>
+						<listitem>
+						GNU make
+						<screen>
+make -f GNUmakefile
+						</screen>
+						</listitem>
+						
+						<listitem>
+						Borland make
+						<screen>
+make -f makefile.bcc
+						</screen>
+						</listitem>
+						
+						<listitem>
+						MinGW make
+						<screen>
+mingw32-make -f makefile.gcc
+						</screen>
+						</listitem>
+						
+						<listitem>
+						MS nmake
+						<screen>
+nmake -f makefile.vc
+						</screen>
+						</listitem>
+					</itemizedlist>
+					</para>
+
+					<para>
+					Let us look at the helloworld.bkl closer. It is an XML file.
+					There are two tags &lt;include&gt; and &lt;exe&gt;. The first one includes
+					the VCFHelper.bkl file that has to be included by any user
+					project:
+					<programlisting>
+			<![CDATA[
+<include file="VCFHelper.bkl"/>
+			]]>
+					</programlisting>
+					</para>
+
+					<para>
+					The &lt;exe&gt; tag defines an executable. It is a console VCF
+					application that has the only source file helloworld.cpp and uses
+					the FoundationKit:
+					<programlisting>
+			<![CDATA[
+<exe id="helloworld" template="vcf_exe_console">
+	<sources>helloworld.cpp</sources>
+	<vcf-use-FoundationKit/>
+</exe>
+			]]>
+					</programlisting>
+					</para>
+
+					<para>
+					Suppose you created a GUI application that uses the ApplicationKit like this.
+					<programlisting>
+#include "vcf/ApplicationKit/ApplicationKit.h"
+
+using namespace VCF;
+
+int main( int argc, char** argv )
+{
+	Application* app = new Application(argc,argv);
+
+	Window* mainWindow = new Window();
+	app->setMainWindow( mainWindow );
+	mainWindow->setCaption( "Hello World" );
+	mainWindow->show();
+
+	Application::main();
+
+	return 0;
+}
+					</programlisting>
+					</para>
+
+					<para>
+					Of course, you need to modify your bakefile as follows.
+					<programlisting>
+			<![CDATA[
+<?xml version="1.0" ?>
+
+<makefile>
+	<include file="VCFHelper.bkl"/>
+
+	<exe id="helloworld" template="vcf_exe_gui">
+		<sources>helloworld.cpp</sources>
+		<vcf-use-ApplicationKit/>
+	</exe>
+</makefile>
+			]]>
+					</programlisting>
+					</para>
+
+					<para>
+					Please refer to the VCF examples to see how you can prepare a
+					bakefile appropriate to your project. Each example directory
+					contains a bakefile which can be used to learn the bakefiles
+					features that are VCF specific. Please note, all the VCF examples
+					include VCFCommon.bkl instead of VCFHelper.bkl. VCFCommon.bkl and
+					VCFHelper.bkl are similar to each other. However, there is one
+					difference. VCFCommon.bkl defines the bakefile variables that use
+					the relative paths and can be used inside the VCF source tree
+					only. VCFHelper.bkl defines the bakefile variables that use the
+					system environment variable VCF_DIR and can be used outside of
+					the VCF source tree. In other words, these are two different
+					entry points: VCFCommon.bkl is for the internal use only;
+					VCFHelper.bkl is to use in external custom projects.
+					</para>
+
+					<para>
+					As you can see the first bakefile has the &lt;vcf-use-FoundationKit&gt;
+					tag. The second bakefile has the &lt;vcf-use-ApplicationKit&gt; tag.
+					For every kit there is a certain tag.
+					<itemizedlist>
+						<listitem>
+						&lt;vcf-use-FoundationKit&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-GraphicsKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-ApplicationKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-HTMLKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-OpenGLKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-NetworkKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-RemoteObjectKit&gt;
+						</listitem>
+						
+						<listitem>
+						&lt;vcf-use-InternetKit&gt;
+						</listitem>
+					</itemizedlist>
+					</para>
+
+					<para>
+					The VCF contains some thirdparty libraries. You can use them in your
+					project, so you might want to include an appropriate tag in your bakefile.
+					For every library there is a certain tag.
+					<itemizedlist>
+						<listitem>
+						&lt;vcf-use-libAGG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-ZLib&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-LibJPEG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-LibPNG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-LibMNG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-LibTIFF&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-use-FreeImage&gt;
+						</listitem>
+					</itemizedlist>
+					</para>
+
+					<para>
+					You can just add an include path of a thirdparty library in your project.
+					Here is a list of the appropriate tags.
+					<itemizedlist>
+						<listitem>
+						&lt;vcf-include-thirdparty&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-boost&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-libAGG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-ZLib&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-LibJPEG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-LibPNG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-LibMNG&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-LibTIFF&gt;
+						</listitem>
+
+						<listitem>
+						&lt;vcf-include-FreeImage&gt;
+						</listitem>
+					</itemizedlist>
+					</para>
+				</section>
+
+				<section><title>Regenerating makefiles and VS6 project files</title>
+					<note>
+					Please note, you can only run the bakefile_gen executable from 
+					the %VCF_DIR%\build\bakefiles directory.
+					</note>
+
+					<para>
+					If you want to regenerate the baked makefiles you need to use 
+					the bakefile_gen executable of the Bakefile utility.
+					The following command will regenerate all the baked makefiles
+					of the VCF.
+					<screen>
+			bakefile_gen -f msvc,borland,msvc6prj,mingw,gnu
+					</screen>
+					There are several formats of the result makefiles that are separated 
+					by comma. Note, this command executes long time for the first time.
+					</para>
+
+					<para>
+					You can regenerate makefiles of a certain format only like this.
+					<screen>
+			bakefile_gen -f msvc
+					</screen>
+					</para>
+				</section>
+	
+				<section><title>All-in-1 VS6 project</title>
+					<note>
+					Please note, you can only run the bakefile_gen executable from 
+					the %VCF_DIR%\build\bakefiles directory.
+					</note>
+
+					<para>
+					There is no all-in-1 VS6 project by default. However, you can
+					generate it yourself. Before you begin you need to delete existing
+					*.dsw and *.dsp files. You can do this by hand file by file; or you 
+					can execute the following command that does this job for you. 
+					<screen>
+bakefile_gen -f msvc6prj -c
+					</screen>
+					</para>
+
+					<para>
+					Run the following command to generate the all-in-1 VS6 project.
+					<screen>
+bakefile_gen -f msvc6prj -DOPTION_ALLIN1=1
+					</screen>
+					</para>
+				</section>
 			</section>
 			
 			<section><title>MacOSX</title>
 				<para>
 				The VCF currently requires OSX 10.2 or better, preferably 10.3. 
-				There are projects supplied for both Project Builder, and XCode. 
-				You can download the VCF from SourceForge via cvs (see the 
-				instructions getting the VCF via CVS). 
+				There are projects supplied for XCode. The Project Builder projects
+				have been disconrtinued and are currently not supported as PB has 
+				been dropped by Apple, and will not run on newer versions of OS X 
+				later than 10.2. You can download the VCF from SourceForge via cvs 
+				(see the instructions getting the VCF via CVS). 
 				</para>
 				<para>
 				Once you have downloaded the code you need to make a few environment 
@@ -515,10 +1904,10 @@ NB: This software will not save the world.
 				you home directory. Create a file called "environment.plist" under the 
 				.MacOSX directory like so:
 				<programlisting>
-				cd ~
-				mkdir .MacOSX
-				touch .MacOSX/environment.plist
-				open .MacOSX/environment.plist
+cd ~
+mkdir .MacOSX
+touch .MacOSX/environment.plist
+open .MacOSX/environment.plist
 				</programlisting>
 				This will open the environment.plist in the Property List Editor. Add 
 				the variables VCF_INCLUDE, VCF_BIN, and VCF_LIB, with VCF_INCLUDE set 
@@ -556,20 +1945,20 @@ NB: This software will not save the world.
 				distributions include this by default, so you probably have it. An easy 
 				test would be to try the following:
 	<programlisting>
-	echo `pkg-config gtk+-2.0 --cflags`
+echo `pkg-config gtk+-2.0 --cflags`
 	</programlisting>
 				You should see some sort of GCC compiler flags - if you get back error messages 
 				like:
 	<programlisting>
-	pkg-config: command not found
+pkg-config: command not found
 	</programlisting>
 				Then you don't have the pkg-config system installed (and almost certainly not 
 				GTK which depends on pkg-config). If you see something like:
 	<programlisting>
-	Package gtk+-2.0 was not found in the pkg-config search path.
-	Perhaps you should add the directory containing `gtk+-2.0.pc'
-	to the PKG_CONFIG_PATH environment variable
-	No package 'gtk+-2.0' found
+Package gtk+-2.0 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `gtk+-2.0.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'gtk+-2.0' found
 	</programlisting>
 				Then you have the pkg-config tool, but probably not gtk installed (or not 
 				installed correctly).
@@ -581,12 +1970,16 @@ NB: This software will not save the world.
 				<para>
 				Once you have confirmed you have (or installed) GTK, go to the 
 				vcf/build/make directory. Type 
-				<programlisting>make debug</programlisting>
+				<programlisting>
+make debug
+				</programlisting>
 				for a debug version of the libraries, or 
-				<programlisting>make release</programlisting>
+				<programlisting>
+make release</programlisting>
 				for an optimized, release version of the libraries. To build both release
 				and debug targets, type:
-				<programlisting>make all</programlisting>
+				<programlisting>
+make all</programlisting>
 				</para>
 				<para>
 				The .a library files will be output to the vcf/lib directory, while the 
@@ -602,8 +1995,171 @@ NB: This software will not save the world.
 				</para>
 			</section>
 			
-		</section>		
-	</section>		
+		</section>
+		<section><title>Library Support by Compiler</title>
+			<para>
+				The libraries that constitute the VCF and support by various compilers 
+				are given in the table below. The VCF is modular by nature, and some 
+				parts of the framework are not supported by all compilers. The OSX and 
+				Linux ports are in progress, and we welcome support from new developers 
+				to help finish these ports (as well as on the Win32 side). 
+			</para>
+			<table frame="none" pgwide="1">
+				<tgroup cols="7" align="left" colsep="1" rowsep="1">
+					<thead>
+						<row>
+							<entry>Library</entry>
+							<entry>MS VC 6,7,8</entry>	
+							<entry>BCB5 and free</entry>
+							<entry>BCB6 and BDS '06</entry>
+							<entry>MinGW(GCC)</entry>
+							<entry>OSX-GCC</entry>
+							<entry>Linux-GCC</entry>					
+						</row>							
+					</thead>
+					<tbody>
+						<row>
+							<entry>FoundationKit</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>GraphicsKit</entry>	
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>ApplicationKit</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+	
+						<row>
+							<entry>OpenGLKit</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+	
+						<row>
+							<entry>RemoteObjectKit</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>No</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>NetworkKit</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>No</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>InternetKit</entry>	
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>No</entry>
+							<entry>No</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>HTMLKit</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+							<entry>Yes</entry>							
+							<entry>No</entry>
+							<entry>No</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>AGG</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>ZLib</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>LibPNG</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>LibMNG</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+						<row>
+							<entry>LibJPEG</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+						</row>
+						<row>
+							<entry>LibTIFF</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>No</entry>
+						</row>
+						<row>						
+							<entry>FreeImageLib</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>
+							<entry>Yes</entry>							
+							<entry>No</entry>
+							<entry>No</entry>
+							<entry>No</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>				
+	</section>			
 	
 	<section><title>Contributing</title>
 		<section><title>Registering at SF</title>
@@ -1205,12 +2761,37 @@ String s = f.commonBarRepository;
 			headers. Document your classes. More documentation is better that 
 			no documentation. Be as clear and concise as possible in explaining 
 			what something does. You can and should use html markup tags for further 
-			clarity, for example the &lt;B&gt; tag to emphasize some point or word. 
-			Also where applicable, feel free to put a sample piece of code that 
-			illustrates proper usage. Use the &lt;PRE&gt; tags for this. Note that you can 
+			clarity, for example the &lt;B&gt; tag to emphasize some point or word,
+			or use the "\em" doxy tag for this. Also where applicable, feel free to put 
+			a sample piece of code that illustrates proper usage. Use the &lt;PRE&gt; tags 
+			for this. Note that you can 
 			also use the doxygen <ulink url="http://www.stack.nl/~dimitri/doxygen/commands.html#cmdcode">
 			"\code"</ulink> and <ulink url="http://www.stack.nl/~dimitri/doxygen/commands.html#cmdendcode">
-			"\endcode"</ulink> tags as well.
+			"\endcode"</ulink> tags as well. 
+			</para>
+			<para>
+			The preferred format for documenting a class is to use the doxygen command
+			"\class" to specify the class name and it's proper include file, followed 
+			by the first paragraph with <emphasis>no</emphasis> "\par" command. Successive
+			paragraphs need to use the "\par" command. Doing so ensures that the doxygen
+			properly picks up you first sentence for use in it's "brief" comments section
+			for your class. For example:
+			<programlisting><![CDATA[
+/**
+\class FooBar FooBar.h "vcf/FoundationKit/FooBar.h"
+Initial paragraph explaining what this class does.
+\par
+Further paragraphs explaining what this does...
+*/
+class FooBar {
+//rest of code omitted...
+};
+			]]></programlisting>
+			The last part of the "\class" command specifies the directory path of the
+			include file. If you are adding a new class to on the VCF kits, then the 
+			proper format is "vcf/" plus the kit name, followed by the actual header
+			file name. So if you added a new CalendarControl to the ApplicationKit,
+			the path would be "vcf/ApplicationKit/CalendarControl.h".
 			</para>
 			<para>
 			Do not pollute the code, particularly the headers, with tons of "//" 
@@ -1613,6 +3194,48 @@ make tutorials
 <!--
 CVS Log info
 $Log$
+Revision 1.7  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.6.2.14  2006/04/05 01:55:40  dougtinkham
+added note for gcc 3.4.2 under codeblocks build section
+
+Revision 1.6.2.13  2006/03/28 02:20:09  ddiego
+updated projects.
+
+Revision 1.6.2.12  2006/03/21 14:48:38  dougtinkham
+update lib build table for linux
+
+Revision 1.6.2.11  2006/03/12 22:01:34  ddiego
+doc updates.
+
+Revision 1.6.2.10  2006/03/08 22:07:18  ddiego
+update for bakefiles.
+
+Revision 1.6.2.9  2006/03/07 01:34:36  dougtinkham
+table of compiler support added
+
+Revision 1.6.2.8  2006/03/02 22:13:01  ddiego
+docs update.
+
+Revision 1.6.2.7  2006/03/02 04:45:31  ddiego
+updated the docs for vc80. Updates the add-ins for vc80 support
+but currently only have the vcf app wizard working. Added a minor change
+to allow app kit to build due to a glitch in comet code. fixed a minor
+bug to allow remote object kit to build.
+
+Revision 1.6.2.6  2006/02/20 04:26:55  dougtinkham
+docs for building vcf libs with codeblocks+MinGW
+
+Revision 1.6.2.5  2006/02/18 03:44:52  ddiego
+general.xml
+
+Revision 1.6.2.4  2005/10/13 15:49:17  ddiego
+added more borland info
+
+Revision 1.6.2.1  2005/10/07 17:16:05  ddiego
+started adding bcb build docs.
+
 Revision 1.6  2005/07/09 23:14:10  ddiego
 merging in changes from devmain-0-6-7 branch.
 

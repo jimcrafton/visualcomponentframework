@@ -118,8 +118,11 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/01/02 03:04:18  ddiego
-*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
+*Revision 1.6  2006/04/07 02:34:13  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:33  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.2  2004/12/10 21:30:31  ddiego
 *fixed bug 1082362 App Icons do not appear.

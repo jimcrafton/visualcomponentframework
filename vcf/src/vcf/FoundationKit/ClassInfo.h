@@ -24,14 +24,15 @@ namespace VCF
 */
 
 /**
-*The ClassInfo is used to simplify registering
-*classes with the FoundationKit's runtime ClassRegistry.
-*The class is derived from by using the macros below. It is
-*created on the stack, and the constructor will automatically
-*register the class, as well as any of the classes properties,
-*methods, and events that have been specified through the macros.
+\class ClassInfo ClassInfo.h "vcf/FoundationKit/ClassInfo.h"
+ClassInfo is used to simplify registering
+classes with the FoundationKit's runtime ClassRegistry.
+The class is derived from by using the macros below. It is
+created on the stack, and the constructor will automatically
+register the class, as well as any of the classes properties,
+methods, and events that have been specified through the macros.
 */
-template <class CLASS_TYPE> class ClassInfo : public Object {
+template <class CLASS_TYPE> class ClassInfo  {
 public:
 	ClassInfo( const String& className,
 		       const String& superClassName, const String& classID ){
@@ -50,6 +51,7 @@ private:
 
 
 /**
+\class AbstractClassInfo ClassInfo.h "vcf/FoundationKit/ClassInfo.h"
 *The AbstractClassInfo is used to simplify registering
 *classes with the FoundationKit's runtime ClassRegistry.
 *It is uses specifically with classes that are abstract,
@@ -59,7 +61,7 @@ private:
 *register the class, as well as any of the classes properties,
 *methods, and events that have been specified through the macros.
 */
-template <class CLASS_TYPE> class AbstractClassInfo : public Object {
+template <class CLASS_TYPE> class AbstractClassInfo  {
 public:
 	AbstractClassInfo( const String& className,
 		       const String& superClassName, const String& classID ){
@@ -80,13 +82,13 @@ private:
 
 
 /**
-*The InterfaceInfo class serves bascially
-*the same purpose as the ClassInfo class.
-*It is used to register interfaces and their
-*methods with the
+\class InterfaceInfo ClassInfo.h "vcf/FoundationKit/ClassInfo.h"
+The InterfaceInfo class serves bascially
+the same purpose as the ClassInfo class.
+It is used to register interfaces and their
+methods with the
 */
-template <class INTERFACE_TYPE> class InterfaceInfo : public Object
-{
+template <class INTERFACE_TYPE> class InterfaceInfo  {
 public:
 	InterfaceInfo( const String& interfaceName,
 					const String& interfaceID,
@@ -111,480 +113,6 @@ protected:
 #ifdef VCF_RTTI
 
 
-/**
-*RTTI macros
-*/
-/**
-*When defining your classes RTTI info in the VCF you will always start
-*with either this macro or the BEGIN_ABSTRACT_CLASSINFO macro.
-*This will begin the declaration of a nested class derived from
-*ClassInfo.
-*@param  ClassType the class type to use. If you class is called Foo,
-*then you will pass in Foo here.
-*@param ClassName the fully qualified class name to identify your class by.
-*Please note that fully qualified means that namespaces need to also be
-*in the name. So if your class is called Foo in the namespace Baz, then
-*you would use then name "Baz::Foo" here
-*@param superClassName the name of the super class for this class. Once
-*again this must be a fully qualified classname (see above). If your class
-*was called Foo and derived from VCF::Object, then you would pass
-*in "VCF::Object" here.
-*@param classID a string that represents a unique id. Preferably a UUID
-*that has been converted into a string representation.
-*This macro must be paired with the END_CLASSINFO macro once
-*you are finished defining your RTTI.
-*/
-
-/*
-#define BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID ) \
-	class ClassType##_rtti_ClassInfo : public VCF::ClassInfo<ClassType> { \
-	public: \
-		ClassType##_rtti_ClassInfo(): \
-			VCF::ClassInfo<ClassType>( ClassName, superClassName, classID ){ \
-			VCF::String tmpClassName = ClassName; \
-			if ( true == isClassRegistered()  ){ \
-			\
-
-*/
-/**
-*When defining your classes RTTI info in the VCF you will always start
-*with either this macro or the BEGIN_ABSTRACT_CLASSINFO macro.
-*This will begin the declaration of a nested class derived from
-*AbstractClassInfo.
-*@param  ClassType the class type to use. If you class is called Foo,
-*then you will pass in Foo here.
-*@param ClassName the fully qualified class name to identify your class by.
-*Please note that fully qualified means that namespaces need to also be
-*in the name. So if your class is called Foo in the namespace Baz, then
-*you would use then name "Baz::Foo" here
-*@param superClassName the name of the super class for this class. Once
-*again this must be a fully qualified classname (see above). If your class
-*was called Foo and derived from VCF::Object, then you would pass
-*in "VCF::Object" here.
-*@param classID a string that represents a unique id. Preferably a UUID
-*that has been converted into a string representation.
-*This macro must be paired with the END_CLASSINFO macro once
-*you are finished defining your RTTI.
-*/
-
-/*
-#define BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, classID ) \
-	class ClassType##_rtti_ClassInfo : public VCF::AbstractClassInfo<ClassType> { \
-	public: \
-		ClassType##_rtti_ClassInfo(): \
-			VCF::AbstractClassInfo<ClassType>( ClassName, superClassName, classID ){ \
-			VCF::String tmpClassName = ClassName; \
-			if ( true == isClassRegistered()  ){ \
-			\
-*/
-
-/**
-*When defining your interfaces RTTI info in the VCF you will always start
-*with this macro. This will begin the declaration of a nested class
-*derived from InterfaceInfo.
-*@param  InterfaceType the class type to use for your interface. If your
-*interface is called FooInterface, then you will pass in FooInterface here.
-*@param InterfaceName the fully qualified class name to identify your class by.
-*Please note that fully qualified means that namespaces need to also be
-*in the name. So if your class is called FooInterface in the namespace Baz, then
-*you would use then name "Baz::FooInterface" here
-*@param SuperInterfaceName the name of the interface that this interface derives
-*from. Once again this must be a fully qualified classname (see above). If your class
-*was called FooInterface and derived from VCF::Interface, then you would pass
-*in "VCF::Interface" here (this will be the case most of the time).
-*@param InterfaceID a string that represents a unique id. Preferably a UUID
-*that has been converted into a string representation.
-*This macro must be paired with the END_INTERFACEINFO macro once
-*you are finished defining your RTTI.
-*/
-#define BEGIN_INTERFACEINFO(InterfaceType,InterfaceName,SuperInterfaceName,InterfaceID)\
-	class InterfaceType##_rtti_InterfaceInfo : public VCF::InterfaceInfo<InterfaceType> {\
-	public:\
-		InterfaceType##_rtti_InterfaceInfo():\
-		VCF::InterfaceInfo<InterfaceType>(InterfaceName,InterfaceID,SuperInterfaceName){\
-			VCF::String tmpInterfaceName = InterfaceName;\
-			if ( true == isInterfaceRegistered_ ) {\
-			\
-
-
-/**
-*This macro is used within a BEGIN_CLASSINFO/END_CLASSINFO block
-*to indicate that this class fully implements the specified
-*interface.
-*/
-#define IMPLEMENTS_INTERFACE( ClassType, InterfaceType, implementationClassName, interfaceName, interfaceID, superInterfaceClassName ) \
-	VCF::registerImplementedInterface<InterfaceType,ClassType>( NULL, VCF::String(implementationClassName), VCF::String(interfaceName), VCF::String(interfaceID), VCF::String(superInterfaceClassName) ); \
-		\
-
-
-/*
-#define FIELD(SourceType,FieldType,Field)\
-	VCF::registerFieldType<FieldType>( tmpClassName, VCF::String(#Field), offsetof(SourceType,Field) );\
-	\
-
-#define OBJ_FIELD(SourceType,FieldType,Field)\
-	VCF::registerObjectFieldType<FieldType>( tmpClassName, VCF::String(#Field), offsetof(SourceType,Field) );\
-	\
-
-
-
-#define EVENT(handlerClassName,SourceType,EventType,DelegateID) \
-		VCF::registerEvent<SourceType,EventType>( NULL, NULL, tmpClassName, \
-							VCF::String(handlerClassName), VCF::String(#EventType), \
-							VCF::String(#DelegateID), \
-							(VCF::EventProperty::DelegateMethod)&SourceType::get##DelegateID); \
-		\
-
-
-#define ABSTRACT_EVENT(handlerClassName,SourceType,EventType,DelegateID) \
-		VCF::registerEvent<SourceType,EventType>( NULL, NULL, tmpClassName, \
-							VCF::String(handlerClassName), VCF::String(#EventType), \
-							VCF::String(#DelegateID), \
-							NULL); \
-		\
-
-
-
-#define PROPERTY( type, propName, getFunc, setFunc, propType ) \
-	VCF::registerPrimitiveProperty<type>( tmpClassName, VCF::String(propName), \
-							           (VCF::TypedProperty<type>::GetFunction)&getFunc, \
-									   (VCF::TypedProperty<type>::SetFunction)&setFunc, \
-									    propType ); \
-										\
-
-#define PROPERTY_TYPEDEF( type, propName, getFunc, setFunc, propType, typeName ) \
-	VCF::registerTypeDefProperty<type>( tmpClassName, VCF::String(propName), \
-							           (VCF::TypedProperty<type>::GetFunction)&getFunc, \
-									   (VCF::TypedProperty<type>::SetFunction)&setFunc, \
-									    propType, VCF::String(typeName) ); \
-										\
-
-#define READONLY_PROPERTY( type, propName, getFunc, propType ) \
-	            VCF::registerPrimitiveReadOnlyProperty<type>( tmpClassName, VCF::String(propName), \
-							                    (VCF::TypedProperty<type>::GetFunction)&getFunc, \
-									            propType ); \
-										                    \
-
-
-#define READONLY_PROPERTY_TYPEDEF( type, propName, getFunc, propType, typeName ) \
-	            VCF::registerTypeDefReadOnlyProperty<type>( tmpClassName, VCF::String(propName), \
-							                    (VCF::TypedProperty<type>::GetFunction)&getFunc, \
-									            propType, VCF::String(typeName) ); \
-										                    \
-
-#define OBJECT_PROPERTY( type, propName, getFunc, setFunc ) \
-				VCF::registerObjectProperty<type>( tmpClassName, VCF::String(propName),  \
-                            (VCF::TypedObjectProperty<type>::GetFunction)&getFunc,  \
-							(VCF::TypedObjectProperty<type>::SetFunction)&setFunc );  \
-							                                                   \
-
-
-#define READONLY_OBJECT_PROPERTY( type, propName, getFunc ) \
-				VCF::registerObjectReadOnlyProperty<type>( tmpClassName, VCF::String(propName), \
-                            (VCF::TypedObjectProperty<type>::GetFunction)&getFunc ); \
-																		       \
-
-
-#define OBJECT_PROPERTY_REF( type, propName, getFunc, setFunc ) \
-				VCF::registerObjectPropertyRef<type>( tmpClassName, VCF::String(propName),  \
-                            (VCF::TypedObjectRefProperty<type>::GetFunction)&getFunc,  \
-							(VCF::TypedObjectRefProperty<type>::SetFunction)&setFunc );  \
-							                                                   \
-
-#define READONLY_OBJECT_PROPERTY_REF( type, propName, getFunc ) \
-				VCF::registerObjectReadOnlyPropertyRef<type>( tmpClassName, VCF::String(propName),  \
-                            (VCF::TypedObjectRefProperty<type>::GetFunction)&getFunc );  \
-							                                                   \
-
-
-#define ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper) \
-				VCF::registerEnumProperty<type>( tmpClassName, VCF::String(propName), \
-									    (VCF::TypedEnumProperty<type>::GetFunction)&getFunc, \
-										(VCF::TypedEnumProperty<type>::SetFunction)&setFunc, \
-										lower, \
-										upper); \
-										 \
-
-#define ENUM_SET_PROPERTY(propName,getFunc,setFunc, count, values, enumNames) \
-				VCF::registerEnumSetPropertyWithLabels( tmpClassName, VCF::String(propName), \
-									    (EnumSetProperty::GetFunction)&getFunc, \
-										(EnumSetProperty::SetFunction)&setFunc, \
-										count, \
-										values, \
-										enumNames ); \
-													\
-
-#define READONLY_ENUM_SET_PROPERTY(propName,getFunc, count, values, enumNames) \
-				VCF::registerEnumSetReadOnlyPropertyWithLabels( tmpClassName, VCF::String(propName), \
-									    (EnumSetProperty::GetFunction)&getFunc, \
-										count, \
-										values, \
-										enumNames ); \
-													\
-
-
-
-#define LABELED_ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper, count, enumNames) \
-				VCF::registerEnumPropertyWithLabels<type>( tmpClassName, VCF::String(propName), \
-									    (VCF::TypedEnumProperty<type>::GetFunction)&getFunc, \
-										(VCF::TypedEnumProperty<type>::SetFunction)&setFunc, \
-										lower, \
-										upper, \
-										count, \
-										enumNames ); \
-													\
-
-
-#define READONLY_ENUM_PROPERTY(type,propName,getFunc,lower, upper) \
-				VCF::registerEnumReadOnlyProperty<type>( tmpClassName, VCF::String(propName), \
-												(VCF::TypedEnumProperty<type>::GetFunction)&getFunc, \
-												lower, \
-												upper); \
-												        \
-
-
-#define READONLY_LABELED_ENUM_PROPERTY(type,propName,getFunc,lower, upper, count, enumNames) \
-				VCF::registerEnumReadOnlyPropertyWithLabels<type>( tmpClassName, VCF::String(propName), \
-									            (TypedEnumProperty<type>::GetFunction)&getFunc, \
-												lower, \
-												upper, \
-												count, \
-												enumNames ); \
-												             \
-
-
-#define COLLECTION_PROPERTY( type,propName,getFunc, propType ) \
-				VCF::registerPrimitiveCollectionProperty<type>( tmpClassName, VCF::String(propName), \
-				                                  (VCF::TypedCollectionProperty<type>::GetFunction)&getFunc, \
-                                                  propType ); \
-										            \
-
-#define OBJECT_COLLECTION_PROPERTY( type,propName,getFunc, addFunc, insertFunc, deleteFunc1, deleteFunc2 ) \
-				VCF::registerObjectCollectionProperty<type>( tmpClassName, VCF::String(propName), \
-				                                  (VCF::TypedObjectCollectionProperty<type>::GetFunction)&getFunc, \
-												  (VCF::TypedObjectCollectionProperty<type>::AddFunction)&addFunc, \
-												  (VCF::TypedObjectCollectionProperty<type>::InsertFunction)&insertFunc, \
-												  (VCF::TypedObjectCollectionProperty<type>::DeleteFunction1)&deleteFunc1, \
-												  (VCF::TypedObjectCollectionProperty<type>::DeleteFunction2)&deleteFunc2 ); \
-										            \
-*/
-
-#define METHOD_VOID( classType, method ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(void); \
-	VCF::registerVoidMethodArg0<classType,_T_##classType##method>( NULL, tmpClassName, VCF::String(#method), &classType:: method, "" );\
-	}\
-	\
-
-#define METHOD_1VOID( classType, method, argType, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType); \
-	VCF::registerVoidMethodArg1<classType,_T_##classType##method, argType>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_2VOID( classType, method, argType1, argType2, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2); \
-	VCF::registerVoidMethodArg2<classType,_T_##classType##method,argType1, argType2>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_3VOID( classType, method, argType1, argType2, argType3, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3); \
-	VCF::registerVoidMethodArg3<classType,_T_##classType##method,argType1, argType2, argType3>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_4VOID( classType, method, argType1, argType2, argType3, argType4, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4); \
-	VCF::registerVoidMethodArg4<classType,_T_##classType##method,argType1, argType2, argType3, argType4>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_5VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4,argType5); \
-	VCF::registerVoidMethodArg5<classType,_T_##classType##method,argType1, argType2, argType3, argType4, argType5>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_6VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4,argType5); \
-	VCF::registerVoidMethodArg6<classType,_T_##classType##method,argType1, argType2, argType3, argType4, argType5, argType6>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_RETURN( classType, method, returnType ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(); \
-	VCF::registerMethod0Return<classType,_T_##classType##method,returnType>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String("") ); \
-	}\
-	  \
-
-#define METHOD_1RETURN( classType, method, returnType, argType,  argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType); \
-	VCF::registerMethod1Return<classType,_T_##classType##method,returnType,argType>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_2RETURN( classType, method, returnType, argType1, argType2, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1, argType2); \
-	VCF::registerMethod2Return<classType,_T_##classType##method,returnType, argType1, argType2>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_3RETURN( classType, method, returnType, argType1, argType2, argType3, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1, argType2,argType3); \
-	VCF::registerMethod3Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_4RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1, argType2,argType3,argType4); \
-	VCF::registerMethod4Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_5RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1, argType2,argType3,argType4,argType5); \
-	VCF::registerMethod5Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4, argType5>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define METHOD_6RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1, argType2,argType3,argType4,argType5,argType6); \
-	VCF::registerMethod6Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4, argType5, argType6>( NULL, tmpClassName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc) ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD_VOID( classType, method ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(); \
-	VCF::registerVoidMethodArg0<classType,_T_##classType##method>( NULL, tmpInterfaceName, VCF::String(#method), &classType::method, "", true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD1_VOID( classType, method, argType, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType); \
-	VCF::registerVoidMethodArg1<classType,_T_##classType##method,argType>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD2_VOID( classType, method, argType1, argType2, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2); \
-	VCF::registerVoidMethodArg2<classType,_T_##classType##method,argType1, argType2>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD3_VOID( classType, method, argType1, argType2, argType3, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3); \
-	VCF::registerVoidMethodArg3<classType,_T_##classType##method,argType1, argType2, argType3>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD4_VOID( classType, method, argType1, argType2, argType3, argType4, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3argType4); \
-	VCF::registerVoidMethodArg4<classType,_T_##classType##method,argType1, argType2, argType3, argType4>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD5_VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3argType4,argType5); \
-	VCF::registerVoidMethodArg5<classType,_T_##classType##method,argType1, argType2, argType3, argType4, argType5>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD6_VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc ) \
-	{\
-	typedef  void ( classType::* _T_##classType##method )(argType1,argType2,argType3argType4,argType5,argType6); \
-	VCF::registerVoidMethodArg6<classType,_T_##classType##method,argType1, argType2, argType3, argType4, argType5, argType6>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD_RETURN( classType, method, returnType ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(); \
-	VCF::registerMethod0Return<classType,_T_##classType##method,returnType>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, "", true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD1_RETURN( classType, method, returnType, argType, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType); \
-	VCF::registerMethod1Return<classType,_T_##classType##method,returnType, argType>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD2_RETURN( classType, method, returnType, argType1, argType2, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1,argType2); \
-	VCF::registerMethod2Return<classType,_T_##classType##method,returnType, argType1, argType2>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD3_RETURN( classType, method, returnType, argType1, argType2, argType3, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1,argType2,argType3); \
-	VCF::registerMethod3Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD4_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4); \
-	VCF::registerMethod4Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD5_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4,argType5); \
-	VCF::registerMethod5Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4, argType5>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define INTERFACE_METHOD6_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc ) \
-	{\
-	typedef  returnType ( classType::* _T_##classType##method )(argType1,argType2,argType3,argType4,argType5,argType6); \
-	VCF::registerMethod6Return<classType,_T_##classType##method,returnType, argType1, argType2, argType3, argType4, argType5, argType6>( NULL, tmpInterfaceName, VCF::String(#method), &classType:: method, VCF::String(argTypeDesc), true ); \
-	}\
-	  \
-
-#define END_CLASSINFO( ClassType ) \
-  			} \
-		}; \
-		 \
-		 \
-		virtual ~ClassType##_rtti_ClassInfo(){}; \
-     \
-	}; \
-	\
-
-
-
-#define END_INTERFACEINFO(InterfaceType)\
-			}\
-		};\
-		virtual ~InterfaceType##_rtti_InterfaceInfo(){};\
-	};\
-	\
-
-
 #define REGISTER_CLASSINFO( ClassType ) \
 	ClassType::ClassType##_rtti_ClassInfo classInfoFor##ClassType; \
 		                                           \
@@ -605,109 +133,14 @@ protected:
 #else
 
 
-#define BEGIN_CLASSINFO( ClassType, ClassName, superClassName, classID )
-
-#define BEGIN_ABSTRACT_CLASSINFO( ClassType, ClassName, superClassName, classID )
-
-#define BEGIN_INTERFACEINFO(InterfaceType,InterfaceName,SuperInterfaceName,InterfaceID)
-
-#define IMPLEMENTS_INTERFACE( ClassType, InterfaceType, implementationClassName, interfaceName, interfaceID, superInterfaceClassName )
-
-#define FIELD(SourceType,FieldType,Field)
-
-#define OBJ_FIELD(SourceType,FieldType,Field)
-
-
-#define EVENT(handlerClassName,eventClassName,eventMethod)
-
-#define PROPERTY( type, propName, getFunc, setFunc, propType )
-
-#define READONLY_PROPERTY( type, propName, getFunc, propType )
-
-#define OBJECT_PROPERTY( type, propName, getFunc, setFunc )
-
-#define READONLY_OBJECT_PROPERTY( type, propName, getFunc )
-
-#define OBJECT_PROPERTY_REF( type, propName, getFunc, setFunc )
-
-#define READONLY_OBJECT_PROPERTY_REF( type, propName, getFunc )
-
-#define ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper)
-
-#define LABELED_ENUM_PROPERTY(type,propName,getFunc,setFunc, lower, upper, count, enumNames)
-
-#define READONLY_ENUM_PROPERTY(type,propName,getFunc,lower, upper)
-
-#define READONLY_LABELED_ENUM_PROPERTY(type,propName,getFunc,lower, upper, count, enumNames)
-
-#define COLLECTION_PROPERTY( type,propName,getFunc, propType )
-
-#define OBJECT_COLLECTION_PROPERTY( type,propName,getFunc, addFunc, insertFunc, deleteFunc1, deleteFunc2 )
-
-#define METHOD_VOID( classType, methType )
-
-#define METHOD_1VOID( classType, method, argType, argTypeDesc )
-
-#define METHOD_2VOID( classType, method, argType1, argType2, argTypeDesc )
-
-#define METHOD_3VOID( classType, method, argType1, argType2, argType3, argTypeDesc )
-
-#define METHOD_4VOID( classType, method, argType1, argType2, argType3, argType4, argTypeDesc )
-
-#define METHOD_5VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argTypeDesc )
-
-#define METHOD_6VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc )
-
-#define METHOD_RETURN( classType, method, returnType )
-
-#define METHOD_1RETURN( classType, method, returnType, argType, argTypeDesc )
-
-#define METHOD_2RETURN( classType, method, returnType, argType1, argType2, argTypeDesc )
-
-#define METHOD_3RETURN( classType, method, returnType, argType1, argType2, argType3, argTypeDesc )
-
-#define METHOD_4RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argTypeDesc )
-
-#define METHOD_5RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argTypeDesc )
-
-#define METHOD_6RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc )
-
-#define INTERFACE_METHOD_VOID( classType, methType )
-
-#define INTERFACE_METHOD1_VOID( classType, method, argType, argTypeDesc )
-
-#define INTERFACE_METHOD2_VOID( classType, method, argType1, argType2, argTypeDesc )
-
-#define INTERFACE_METHOD3_VOID( classType, method, argType1, argType2, argType3, argTypeDesc )
-
-#define INTERFACE_METHOD4_VOID( classType, method, argType1, argType2, argType3, argType4, argTypeDesc )
-
-#define INTERFACE_METHOD5_VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argTypeDesc )
-
-#define INTERFACE_METHOD6_VOID( classType, method, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc )
-
-#define INTERFACE_METHOD_RETURN( classType, method, returnType )
-
-#define INTERFACE_METHOD1_RETURN( classType, method, returnType, argType, argTypeDesc )
-
-#define INTERFACE_METHOD2_RETURN( classType, method, returnType, argType1, argType2, argTypeDesc )
-
-#define INTERFACE_METHOD3_RETURN( classType, method, returnType, argType1, argType2, argType3, argTypeDesc )
-
-#define INTERFACE_METHOD4_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argTypeDesc )
-
-#define INTERFACE_METHOD5_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argTypeDesc )
-
-#define INTERFACE_METHOD6_RETURN( classType, method, returnType, argType1, argType2, argType3, argType4, argType5, argType6, argTypeDesc )
-
-
-#define END_CLASSINFO( ClassType )
-
 #define REGISTER_CLASSINFO( ClassType )
 
 #define REGISTER_INTERFACEINFO(InterfaceType)
 
-#define END_INTERFACEINFO(InterfaceType)
+#define REGISTER_CLASSINFO_EXTERNAL( ClassType ) 
+
+#define REGISTER_INTERFACEINFO_EXTERNAL( InterfaceType ) 
+
 
 #endif //VCF_RTTI
 
@@ -715,6 +148,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/04/05 03:35:59  ddiego
+*post cvs crash updates.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

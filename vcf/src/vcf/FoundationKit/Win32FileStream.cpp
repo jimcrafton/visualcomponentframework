@@ -88,7 +88,7 @@ unsigned long Win32FileStream::getSize()
 	return GetFileSize( fileHandle_, NULL );
 }
 
-void Win32FileStream::read( char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long Win32FileStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
 	DWORD bytesRead = 0;
 	BOOL result = ReadFile( fileHandle_, bytesToRead, sizeOfBytes, &bytesRead, NULL );
@@ -100,9 +100,11 @@ void Win32FileStream::read( char* bytesToRead, unsigned long sizeOfBytes )
 	if ( !result )  {
 		throw FileIOError( "Error reading data from file stream.\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );
 	}
+
+	return bytesRead;
 }
 
-void Win32FileStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
+unsigned long Win32FileStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
 {
 	DWORD bytesWritten = 0;
 	BOOL result = WriteFile( fileHandle_, bytesToWrite, sizeOfBytes, &bytesWritten, NULL );
@@ -114,6 +116,8 @@ void Win32FileStream::write( const char* bytesToWrite, unsigned long sizeOfBytes
 	if ( !result )  {
 		throw FileIOError( CANT_WRITE_TO_FILE + filename_ + "\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );
 	}
+
+	return bytesWritten;
 }
 
 char* Win32FileStream::getBuffer()
@@ -191,6 +195,12 @@ DWORD Win32FileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

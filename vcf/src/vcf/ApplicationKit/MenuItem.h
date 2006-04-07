@@ -35,6 +35,9 @@ class AcceleratorKey;
 
 #define MENUITEM_CLASSID		"1E8CBE22-2915-11d4-8E88-00207811CFAB"
 
+/**
+\class MenuItem MenuItem.h "vcf/ApplicationKit/MenuItem.h"
+*/
 class APPLICATIONKIT_API MenuItem : public Item {
 public:
 
@@ -204,6 +207,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

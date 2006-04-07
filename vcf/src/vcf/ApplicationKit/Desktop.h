@@ -21,12 +21,13 @@ class GraphicsContext;
 class DesktopPeer;
 
 /**
-*Class Desktop
-*the desktop represents the Windowing systems bottom most
-*and is usuall the first window the User sees when the system starts
-*up. The Desktop is also sometimes refered to as the Shell, as in
-*MS Windows. A desktop may or may not allow files, i.e. it in fact is
-*an actual location on the filesystem
+\class Desktop Desktop.h "vcf/ApplicationKit/Desktop.h"
+The desktop represents the Windowing systems bottom most
+control or "window" and is usually the first window the 
+User sees when the system starts up. The Desktop is also 
+sometimes refered to as the Shell, as in Microsoft Windows. 
+A desktop may or may not allow files, i.e. it in fact is
+an actual location on the filesystem.
 */
 class APPLICATIONKIT_API Desktop : public VCF::Object {
 public:
@@ -76,6 +77,7 @@ public:
 
 	Rect getUsableBounds();
 
+	Point getCurrentMousePosition();
 	/**
 	*called by the UIToolkit. repeated calls after the first initialization
 	*do nothing
@@ -98,6 +100,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/15 05:14:33  ddiego
+*more browser code.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

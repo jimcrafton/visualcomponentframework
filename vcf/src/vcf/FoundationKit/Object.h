@@ -23,13 +23,13 @@ class Mutex;
 #define OBJECT_CLASSID		"ED88C099-26AB-11d4-B539-00C04F0196DA"
 
 /**
-\par
-Base class for entire Visual Component Framework.
+\class Object Object.h "vcf/FoundationKit/Object.h"
+Base class for the entire Visual Component Framework.
 New as of July 5,2001, Object will also support
 refcounting for those who need this kind of support.
 There are several places in the ApplicationKit that will need to make use
 of this fairly soon.
-\par
+
 Also Object supports a new technique for destroying Object derived instances.
 In general, in C++, when creating a destroying an object instance on the heap (free-store)
 you would use the operator delete() function. This is being phased out in the VCF
@@ -43,26 +43,24 @@ on the object.
 By default if an object is created on the heap via new, and no one addref()'s it, then a
 single call to the release() method will free up it's memory.
 
-\par
 Object::destroy() is a virtual method, where common shared cleanup may take place. Because this
 is called before the delete() method, it is still safe to call virtual methods and have them
 execute correctly (in C++ virtual calls inside of a constructor or destructor are not allowed
 and if made then the behaviour is undefined).
-\par
+
 Classes which are heap based (such as all of the UI classes that derive from Component) should
 define their destructor as having protected access. In addition the majority of the cleanup code
 should be placed in the overridden Object::destroy() method as opposed to the class destructor.
 Anything that requires method calls to other object or the class itself (particularly if the method
 is a virtual one) should be moved to the
 
-\par
 Semantics of the addRef/release usage are as follows:
 An object's refcount indicates "ownership " of the object. In other words, the "owner" of the
 object is responsible for releasing it's hold on the object, thus decrementing the objects
 refcount, which, when reduced to 0, causes the object to be deleted. This is also known as
 a strong reference to an object, as opposed to a weak reference where the "owner" doesn't
 claim any responsibility over the object.
-\par
+
 Note that this whole scheme is aimed at heap based objects. Many objects that are created on the stack
 do not need this. For example, common utility objects like Rect or Point do not need this - they
 can be created on the stack.
@@ -73,7 +71,11 @@ public:
 
 	virtual ~Object();
 
-	virtual void init();
+	/**
+	This is going to be removed from the bext release
+	@deprecated
+	*/
+	void init();
 
 	/**
 	Call this method to free up the memory of the class
@@ -338,8 +340,20 @@ private:
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/27 01:45:53  ddiego
-*fixed mistake in object ptr class.
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.4.2.3  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.4.2.2  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.4.2.1  2005/07/27 01:56:23  ddiego
+*fixed object ptr bug.
 *
 *Revision 1.4  2005/07/18 03:54:19  ddiego
 *documentation updates.

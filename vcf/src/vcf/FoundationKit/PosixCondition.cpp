@@ -29,6 +29,7 @@ PosixCondition::~PosixCondition()
 int PosixCondition::wait()
 {
     pthread_cond_wait(&cond_, mutex_);
+	pthread_mutex_unlock(mutex_);
     return (int)true;
 }
 
@@ -37,11 +38,12 @@ int PosixCondition::wait( uint32 milliseconds )
     int result;
     struct timespec timeout;
     struct timeval  now;
-    unsigned int sec, usec, nsec;
+    unsigned int sec, usec;
 
-    sec = milliseconds / 1000;
+	sec = milliseconds / 1000;
     milliseconds *= 1000;
     usec = milliseconds % 1000000;
+
     gettimeofday(&now, NULL);
     timeout.tv_sec = now.tv_sec + sec;
     timeout.tv_nsec = now.tv_usec + usec;
@@ -53,25 +55,40 @@ int PosixCondition::wait( uint32 milliseconds )
     }
 
     result = pthread_cond_timedwait(&cond_, mutex_, &timeout);
-    if ( result == 0 ) return 1;
-    else if ( result == ETIMEDOUT ) return 0;
-    else return -1;
+	pthread_mutex_unlock(mutex_);
+    if ( result == 0 ) {
+		return 1;
+	}
+    else if ( result == ETIMEDOUT ) {
+		return 0;
+	}
+    else {
+		return -1;
+	}
 }
 
 void PosixCondition::signal()
 {
     pthread_cond_signal(&cond_);
+	pthread_mutex_unlock(mutex_);
 }
 
 void PosixCondition::broadcast()
 {
     pthread_cond_broadcast(&cond_);
+	pthread_mutex_unlock(mutex_);
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

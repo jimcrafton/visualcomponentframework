@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBTIFF_HDR" hints="files">
+        thirdparty/common/FreeImage/Source/LibTIFF/t4.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dir.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_fax3.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_predict.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tiff.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tiffcomp.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tiffconf.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tiffio.h
+        thirdparty/common/FreeImage/Source/LibTIFF/tiffiop.h
+        thirdparty/common/FreeImage/Source/LibTIFF/uvcode.h
+    </set>
+
+    <set var="LIBTIFF_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/LibTIFF/fax3sm_winnt.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_aux.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_close.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_codec.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_compress.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dir.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dirinfo.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dirread.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dirwrite.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_dumpmode.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_error.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_fax3.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_flush.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_getimage.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_jpeg.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_luv.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_lzw.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_next.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_open.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_packbits.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_pixarlog.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_predict.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_print.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_read.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_strip.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_swab.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_thunder.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_tile.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_version.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_warning.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_write.c
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_zip.c
+    </set>
+
+    <set var="LIBTIFF_WIN_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_win32.c
+    </set>
+
+    <set var="LIBTIFF_UNIX_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_unix.c
+    </set>
+
+    <set var="LIBTIFF_OSX_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/LibTIFF/tif_apple.c
+    </set>
+
+    <set var="LIBTIFF_SRC" append="1" hints="files">
+        <if cond="PLATFORM_UNIX=='1'">$(LIBTIFF_UNIX_SRC)</if>
+        <if cond="PLATFORM_WIN32=='1'">$(LIBTIFF_WIN_SRC)</if>
+        <if cond="PLATFORM_MACOSX=='1'">$(LIBTIFF_OSX_SRC)</if>
+    </set>
+</makefile>

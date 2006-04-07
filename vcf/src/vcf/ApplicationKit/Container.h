@@ -38,6 +38,7 @@ class Rect;
 #define CONTAINER_CLASSID		"70ac023d-fb3f-44ee-9fc9-9b4dcebe472f"
 
 /**
+\class Container Container.h "vcf/ApplicationKit/Container.h"
 A Container is a Component that is implemented when a Control
 wants to be able to contain other child controls within itself.
 A container can have child controls added or removed, and supports
@@ -228,6 +229,14 @@ public:
 
 
 
+/**
+\class DelegatedContainer Container.h "vcf/ApplicationKit/Container.h"
+This class is used to provide easy access to a containers methods 
+so the developer doesn't have to get the container instance of the
+control. See the Container class for documentation of the actual
+methods.
+@see Container
+*/
 template< typename ContainerType>
 class DelegatedContainer {
 public:
@@ -362,39 +371,7 @@ public:
 		}
 		container->getTabList( tabList );
 	}
-/*
-	Control* getNextTabControl( Control* previousControl=NULL ) {
-		Container* container = delegate_->getContainer();
-		if ( NULL == container ) {
-			return NULL;
-		}
-		return container->getNextTabControl(previousControl);
-	}
 
-	Control* getPrevTabControl(Control* previousControl=NULL) {
-		Container* container = delegate_->getContainer();
-		if ( NULL == container ) {
-			return NULL;
-		}
-		return container->getPrevTabControl(previousControl);
-	}
-
-	Control* getFirstTabControl() {
-		Container* container = delegate_->getContainer();
-		if ( NULL == container ) {
-			return NULL;
-		}
-		return container->getFirstTabControl();
-	}
-
-	Control* getLastTabControl() {
-		Container* container = delegate_->getContainer();
-		if ( NULL == container ) {
-			return NULL;
-		}
-		return container->getLastTabControl();
-	}
-*/
 	void setContainerControl( Control* control ) {
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
@@ -426,6 +403,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

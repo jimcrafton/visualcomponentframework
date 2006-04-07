@@ -82,28 +82,35 @@ void MemoryStream::write( Persistable* persistableObject )
 	}
 }
 
-void MemoryStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
+unsigned long MemoryStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
 {
+	unsigned long result = 0;
+
 	if ( NULL != this->outputStream_ ){
-		outputStream_->write( bytesToWrite, sizeOfBytes );
+		result = outputStream_->write( bytesToWrite, sizeOfBytes );
 	}
 	else {
-		this->stream_.write( bytesToWrite, sizeOfBytes );
+		result = this->stream_.write( bytesToWrite, sizeOfBytes );
 	}
-	size_ += sizeOfBytes;
+	size_ += result;
 
-	currentSeekPos_ += sizeOfBytes;
+	currentSeekPos_ += result;
+
+	return result;
 }
 
-void MemoryStream::read( char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long MemoryStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
+	unsigned long result = 0;
 	if ( NULL != this->inputStream_ ){
-		inputStream_->read( bytesToRead, sizeOfBytes );
+		result = inputStream_->read( bytesToRead, sizeOfBytes );
 	}
 	else {
-		this->stream_.read( bytesToRead, sizeOfBytes );// currentSeekPos_ );
+		result = this->stream_.read( bytesToRead, sizeOfBytes );// currentSeekPos_ );
 	}
-	currentSeekPos_ += sizeOfBytes;
+	currentSeekPos_ += result;
+
+	return result;
 }
 
 ulong32 MemoryStream::getCurrentSeekPos()
@@ -121,6 +128,12 @@ ulong32 MemoryStream::getCurrentSeekPos()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

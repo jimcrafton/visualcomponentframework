@@ -40,7 +40,7 @@ void Parser::resetStream()
 
 	stream_->seek( 0, stSeekFromStart );
 
-	stream_->read( tmp, stream_->getSize() );
+	stream_->read( (unsigned char*)tmp, stream_->getSize() );
 
 	String tmpStr = tmp;
 	delete [] tmp;
@@ -135,7 +135,7 @@ void Parser::error( const String& Ident )
 
 void Parser::errorStr( const String& Message)
 {
-	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( Format("Parse Error, message: %s") % Message.c_str() )) );
+	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( Format("Parse Error, message: %s") % Message )) );
 }
 
 VCFChar Parser::nextToken()
@@ -151,10 +151,22 @@ VCFChar Parser::nextToken()
 	tokenPtr_ = P;
 	if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) ) {
 		P++;
-		while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' ) ) {
+		while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' )
+			     || ( *P == '@' ) ) {
 			P++;
 		}
 		result = TO_SYMBOL;
+	}
+	else if ( *P == '@' ) {
+		P++;
+		if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) ) {
+			P++;
+			while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' )
+				    || ( *P == '@' ) ) {
+				P++;
+			}
+			result = TO_SYMBOL;
+		}
 	}
 	else if ( (*P == '#') || (*P == '\'') ) {
 		S = P;
@@ -193,12 +205,20 @@ VCFChar Parser::nextToken()
 							}
 							break;
 						}
+						
+
 						if ( (*P != '\n') && (*P != '\r') ) {
 							*S = *P;
 						}
 						else {
 							*S = '\0';
 						}
+
+						if ( finished2 ) {
+							S++;
+							break;//out of while loop
+						}
+
 						P++;
 						S++;
 					}
@@ -304,18 +324,34 @@ String Parser::tokenString()
 
 bool Parser::tokenSymbolIs(const String& s)
 {
-	//only work under WIN32 for the moment - need to replace _stricmp
-#if defined(_MSC_VER) || defined (VCF_BCC)
-	return (token_ == TO_SYMBOL) && ( _wcsicmp( s.c_str(), tokenString().c_str() ) == 0 );
-#else
-	return false;
-#endif
+	return (token_ == TO_SYMBOL) && (StringUtils::noCaseCompare( s, tokenString() ) == 0);
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.6  2006/02/19 02:07:46  ddiego
+*mac osx update.
+*
+*Revision 1.3.2.5  2006/01/22 05:50:09  ddiego
+*added case insensitive string compare to string utils class.
+*
+*Revision 1.3.2.4  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
+*Revision 1.3.2.3  2005/09/18 22:54:48  ddiego
+*fixed some minor bugs in vffinput stream and parser class.
+*
+*Revision 1.3.2.2  2005/08/08 03:19:17  ddiego
+*minor updates
+*
+*Revision 1.3.2.1  2005/07/30 16:56:04  iamfraggle
+*Provide CW implementation of tokenSymbolIs
+*
 *Revision 1.3  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

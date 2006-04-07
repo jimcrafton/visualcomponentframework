@@ -18,7 +18,6 @@ class ImageViewerWindow : public Window {
 public:
 	ImageViewerWindow() : currentImage_(NULL){
 		setCaption( "ImageViewer" );
-		setVisible( true );
 
 		//lets create a menu
 
@@ -66,8 +65,6 @@ public:
 
 		Rect r = getClientBounds();
 
-		r.inflate( -5, -5 );
-
 		if ( NULL != currentImage_ ) {
 			/**
 			if we have an image, draw it centered within the available client
@@ -83,7 +80,7 @@ public:
 	}
 
 	void openImage( MenuItemEvent* e ) {
-		CommonFileOpen dlg( this );
+		CommonFileOpenDialog dlg( this );
 
 		//get the available image loader extensions
 		std::vector< std::pair<String,String> > contentTypes;
@@ -140,6 +137,7 @@ public:
 		Window* mainWindow = new ImageViewerWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -162,8 +160,20 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.7  2005/07/09 23:14:38  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.8  2006/04/07 02:34:30  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.4  2006/03/23 01:25:37  dougtinkham
+*modified centering of image
+*
+*Revision 1.7.2.3  2006/03/16 18:45:26  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.7.2.2  2005/09/02 01:01:19  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.7.2.1  2005/07/23 21:45:37  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.6.2.2  2005/06/06 02:34:03  ddiego
 *menu changes to better support win32 and osx.

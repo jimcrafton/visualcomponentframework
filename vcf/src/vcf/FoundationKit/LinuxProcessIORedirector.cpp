@@ -30,9 +30,30 @@ ulong32 LinuxProcessIORedirector::terminate()
 	return 0;
 }
 
+Waitable::WaitResult LinuxProcessIORedirector::wait( uint32 milliseconds )
+{
+	Waitable::WaitResult result = Waitable::wrWaitFailed;
+	return result;
+}
+
+Waitable::WaitResult LinuxProcessIORedirector::wait()
+{
+	Waitable::WaitResult result = Waitable::wrWaitFailed;
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.3.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
 *

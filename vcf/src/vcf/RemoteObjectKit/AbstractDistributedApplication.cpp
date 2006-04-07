@@ -58,8 +58,10 @@ AbstractDistributedApplication::AbstractDistributedApplication()
 	DistributedApplication::runningDistributedApp = this;
 
 	unMarshalledArgTypes_["i"] = pdInt;
+	unMarshalledArgTypes_["+i"] = pdUInt;
 	unMarshalledArgTypes_["l"] = pdLong;
 	unMarshalledArgTypes_["+l"] = pdULong;
+	unMarshalledArgTypes_["+h"] = pdUShort;
 	unMarshalledArgTypes_["h"] = pdShort;
 	unMarshalledArgTypes_["c"] = pdChar;
 	unMarshalledArgTypes_["d"] = pdDouble;
@@ -81,13 +83,13 @@ AbstractDistributedApplication::AbstractDistributedApplication()
 	listener_ = new DistributedAppListener(this);
 
 	onDataReceivedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, DistributedAppListener::onDataReceived );
+		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onDataReceived );
 
 	onClientConnectedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, DistributedAppListener::onClientConnected );
+		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onClientConnected );
 
 	onClientDisconnectedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, DistributedAppListener::onClientDisconnected );
+		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onClientDisconnected );
 
 
 	sock_.DataReceived.addHandler( onDataReceivedHandler_ );
@@ -227,7 +229,7 @@ void AbstractDistributedApplication::onDataReceived( VCFNet::SocketEvent* event 
 				}
 			}
 
-#if (! defined _MSC_VER) || ( (_MSC_VER < 1300) || defined ( STLPORT ) )
+#if (defined(__BORLANDC__) && (__BORLANDC__ < 0x0581)) || (defined(_MSC_VER) && (_MSC_VER < 1300)) || defined(STLPORT)
 			VariantData** methodArgs = (VariantData**)argList.begin();
 #else
 			VariantData** methodArgs = (VariantData**)argList.begin().operator->();
@@ -334,6 +336,18 @@ void AppInfo::loadFromStream( InputStream * stream )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:51  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/02/23 01:41:58  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.2.6.2  2006/01/02 13:26:14  kiklop74
+*Fixed compilation issue with BDS 2006
+*
+*Revision 1.2.6.1  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
 *Revision 1.2  2004/08/07 02:49:20  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

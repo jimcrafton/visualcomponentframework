@@ -20,7 +20,9 @@ class MenuItemPeer;
 
 #define DEFAULTMENUITEM_CLASSID		"15307228-7207-44c8-8b22-4d5575648ae8"
 
-
+/**
+\class DefaultMenuItem DefaultMenuItem.h "vcf/ApplicationKit/DefaultMenuItem.h"
+*/
 class APPLICATIONKIT_API DefaultMenuItem : public MenuItem {
 
 public:
@@ -30,28 +32,7 @@ public:
 
 	virtual ~DefaultMenuItem();
 
-	void init();
-
-	virtual void addItemPaintHandler( EventHandler* handler ){}
-
-	virtual void addItemChangedHandler( EventHandler* handler ){}
-
-	virtual void addItemSelectedHandler( EventHandler* handler ){}
-
-	virtual void addItemAddedHandler( EventHandler* handler ){}
-
-	virtual void addItemDeletedHandler( EventHandler* handler ){}
-
-	virtual void removeItemPaintHandler( EventHandler* handler ){}
-
-	virtual void removeItemChangedHandler( EventHandler* handler ){}
-
-	virtual void removeItemSelectedHandler( EventHandler* handler ){}
-
-	virtual void removeItemAddedHandler( EventHandler* handler ){}
-
-	virtual void removeItemDeletedHandler( EventHandler* handler ){}	
-	
+	void init();	
 
 
 	virtual bool containsPoint( Point * pt );
@@ -62,11 +43,7 @@ public:
 
     virtual void* getData();
 
-	virtual void setData( void* data );
-
-	virtual Model* getModel();
-
-	virtual void setModel( Model* model );
+	virtual void setData( void* data );	
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
@@ -140,14 +117,6 @@ public:
 		return &bounds_;
 	}
 
-	virtual Control* getControl() {
-		return NULL;
-	}
-
-
-	virtual void setControl( Control* control ) {}
-
-
 	virtual long getImageIndex() {
 		return imageIndex_;
 	}
@@ -157,15 +126,7 @@ public:
 	virtual bool canPaint() {
 		return false;
 	}
-
-	virtual long getState(){
-		return state_;
-	}
-
-	virtual void setState( const long& state ){
-		state_ = state;
-	}
-
+	
 	virtual void setBounds( Rect* bounds );
 
 	/**
@@ -204,18 +165,18 @@ protected:
 	long imageIndex_;
 	Rect bounds_;
 	AcceleratorKey* currentAccelerator_;
-	uint32 state_;
 };
 
 
 
 /**
+\class SeparatorMenuItem DefaultMenuItem.h "vcf/ApplicationKit/DefaultMenuItem.h"
 * a class to help creating a separator menu item
 */
 class APPLICATIONKIT_API SeparatorMenuItem : public DefaultMenuItem {
 public:
 	SeparatorMenuItem( MenuItem* parent, Menu* menuOwner=NULL ) :
-		DefaultMenuItem( "", parent, menuOwner_) {
+		DefaultMenuItem( "", parent, menuOwner) {
 		setSeparator( true );
 	}
 };
@@ -227,6 +188,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.5.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.5  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

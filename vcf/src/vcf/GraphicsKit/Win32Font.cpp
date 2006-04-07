@@ -98,7 +98,22 @@ void Win32Font::init()
 
 	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
 		if ( (osVersion.dwMinorVersion >= 1) && (osVersion.dwMinorVersion != 51) ) { //Windows XP or better
-			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
+			/*****************************************************
+			*
+			*
+			*NOTE THIS WELL!!!!
+			*If we do not use DEFAULT_GUI_FONT, we get a rather ugly
+			*aliased font that looks like crap. This is on:
+			*OS Name	Microsoft Windows XP Professional
+			*Version	5.1.2600 Service Pack 2 Build 2600
+			*Hardware Abstraction Layer	Version = "5.1.2600.2180 (xpsp_sp2_rtm.040803-2158)"
+			*
+			*So to sum up - if we change this ANSI_VAR_FONT then it looks ugly,
+			*if we use DEFAULT_GUI_FONT it looks much nicer.
+			*
+			*JC
+			******************************************************/
+			defFont = (HFONT)GetStockObject( DEFAULT_GUI_FONT );
 		}
 		else { //Windows 2k or worse
 			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
@@ -834,27 +849,48 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 
 	bool trueTypeFont = false;
 	{ //test for true type
-		LOGFONT lfTmp = {0};
-		lfTmp.lfHeight = 10; //doesn't matter - just testing the name!
-		lfTmp.lfWidth = 0; //let font mapper choose closest match				
-		lfTmp.lfCharSet = ANSI_CHARSET;//DEFAULT_CHARSET might be better ?
-		lfTmp.lfClipPrecision = CLIP_DEFAULT_PRECIS;
-		lfTmp.lfItalic = FALSE;			
-		lfTmp.lfOutPrecision = OUT_DEFAULT_PRECIS;
-		lfTmp.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-		lfTmp.lfQuality = DEFAULT_QUALITY;
-		lfTmp.lfStrikeOut = FALSE;
-		lfTmp.lfUnderline = FALSE;
-		lfTmp.lfWeight = FW_NORMAL;
-#if defined(VCF_CW) && defined(UNICODE)
-		memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(WCHAR) );
-		fontName_.copy( lfTmp.lfFaceName, minVal<int>( fontName_.size(), LF_FACESIZE) );
-#else		
-		AnsiString tmpName = fontName_;
-		memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(char) );
-		tmpName.copy( lfTmp.lfFaceName, minVal<int>( tmpName.size(), LF_FACESIZE) );
-#endif		
-		HFONT testFnt = CreateFontIndirect( &lfTmp );
+
+		HFONT testFnt = NULL;
+
+		if ( System::isUnicodeEnabled() ) {
+			LOGFONTW lfTmp = {0};
+			lfTmp.lfHeight = 10; //doesn't matter - just testing the name!
+			lfTmp.lfWidth = 0; //let font mapper choose closest match				
+			lfTmp.lfCharSet = ANSI_CHARSET;//DEFAULT_CHARSET might be better ?
+			lfTmp.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+			lfTmp.lfItalic = FALSE;			
+			lfTmp.lfOutPrecision = OUT_DEFAULT_PRECIS;
+			lfTmp.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+			lfTmp.lfQuality = DEFAULT_QUALITY;
+			lfTmp.lfStrikeOut = FALSE;
+			lfTmp.lfUnderline = FALSE;
+			lfTmp.lfWeight = FW_NORMAL;
+			memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(WideChar) );
+			fontName_.copy( lfTmp.lfFaceName, minVal<int>( fontName_.size(), LF_FACESIZE) );
+
+			testFnt = CreateFontIndirectW( &lfTmp );
+		}
+		else {
+			LOGFONTA lfTmp = {0};
+			lfTmp.lfHeight = 10; //doesn't matter - just testing the name!
+			lfTmp.lfWidth = 0; //let font mapper choose closest match				
+			lfTmp.lfCharSet = ANSI_CHARSET;//DEFAULT_CHARSET might be better ?
+			lfTmp.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+			lfTmp.lfItalic = FALSE;			
+			lfTmp.lfOutPrecision = OUT_DEFAULT_PRECIS;
+			lfTmp.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+			lfTmp.lfQuality = DEFAULT_QUALITY;
+			lfTmp.lfStrikeOut = FALSE;
+			lfTmp.lfUnderline = FALSE;
+			lfTmp.lfWeight = FW_NORMAL;
+			AnsiString tmpName = fontName_;
+			memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(char) );
+			tmpName.copy( lfTmp.lfFaceName, minVal<int>( tmpName.size(), LF_FACESIZE) );
+			testFnt = CreateFontIndirectA( &lfTmp );
+		}
+
+		
+		
 		if ( testFnt ) {
 			HFONT oldFnt = (HFONT)SelectObject( dc, testFnt );		
 
@@ -920,6 +956,15 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/02/16 04:49:57  ddiego
+*minor fixes to vc80 projects and a bug fix in graphics kit for default font on XP.
+*
+*Revision 1.5.2.1  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
 *Revision 1.5  2005/07/09 23:06:01  ddiego
 *added missing gtk files
 *

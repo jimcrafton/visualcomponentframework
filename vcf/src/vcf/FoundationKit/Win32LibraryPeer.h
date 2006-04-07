@@ -29,6 +29,10 @@ public:
 
 	virtual void unload();
 
+	virtual OSHandleID getHandleID() {
+		return (OSHandleID) libHandle_;
+	}
+
 private:
 	HMODULE libHandle_;
 
@@ -40,6 +44,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/03 17:13:23  ddiego
+*added a new argument to _vpl_init and _vpl_terminate functions.
+*
 *Revision 1.2  2004/08/07 02:49:16  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

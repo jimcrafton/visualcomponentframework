@@ -11,7 +11,7 @@ namespace VCF {
 
 
 	/**
-	\par
+	\class PrintSession PrintSession.h "vcf/GraphicsKit/PrintSession.h"
 	The PrintSession is the core printing class. You use it to 
 	set things up with default attributes, to start printing, to
 	end printing, to start a new page, and to end the page.
@@ -310,7 +310,6 @@ namespace VCF {
 		void endPage( PrintContext* context );
 
 		/**
-		\par
 		This is a high level function that can attempt to run a print loop through all
 		the pages of the printing document, starting with the first page, and ending with
 		the last page.
@@ -323,7 +322,6 @@ namespace VCF {
 		session.runDefaultPrintLoop(); //this will print 10 pages. 
 		\endcode
 
-		\par
 		This will call beginPrintingDocument(), endPrintingDocument(), beginPage(), and
 		endPage(), as appropriate. You can handle the actual drawing by add an event handler
 		to the PageBegun delegate, which will get fired for each page. See the example in 
