@@ -70,6 +70,8 @@ void TreeControl::init()
 
 	setTreeModel( new DefaultTreeModel() );
 
+	addComponent( getViewModel() );
+
 	setBorder( new Basic3DBorder( true ) );
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
@@ -352,9 +354,23 @@ void TreeControl::setAllowLabelEditing( const bool& allowLabelEditing )
 	treePeer_->setAllowLabelEditing( allowLabelEditing );
 }
 
+Rect TreeControl::getItemRect( TreeItem* item )
+{
+	return treePeer_->getItemRect( item );
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -33,7 +33,7 @@ NB: This software will not save the world.
  <!--
  this uses a local path - may need to be modified for others
  --> 
-	<xsl:import href="f:/code/docbook-xsl-1.68.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="f:/code/docbook-xsl-1.69.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
@@ -53,6 +53,13 @@ NB: This software will not save the world.
 
 	<xsl:param name="htmlhelp.hhc.generate.source.chm.link" select="0"/>
 	<xsl:param name="htmlhelp.hhp" select="'vcf-docbook.hhp'"></xsl:param>
+	
+	<xsl:param name="htmlhelp.hhp.window" select="'main'"></xsl:param>
+	<xsl:param name="htmlhelp.show.menu" select="1"></xsl:param>
+	<xsl:param name="htmlhelp.show.advanced.search" select="0"></xsl:param>
+	<xsl:param name="htmlhelp.show.favorities" select="1"></xsl:param>
+	<xsl:param name="htmlhelp.show.toolbar.text" select="1"></xsl:param>
+	<xsl:param name="htmlhelp.remember.window.position" select="1"></xsl:param>
 
 
 
@@ -96,7 +103,9 @@ VCF-SOURCE-CHM
   <xsl:call-template name="toHex">
     <xsl:with-param name="n" select="9504 + $htmlhelp.show.menu * 65536
                                           + $htmlhelp.show.advanced.search * 131072
-                                          + $htmlhelp.show.favorities * 4096"/>
+                                          + $htmlhelp.show.favorities * 4096
+                                          + (1 - $htmlhelp.show.toolbar.text) * 64
+                                          + $htmlhelp.remember.window.position * 262144"/>
   </xsl:call-template>
 </xsl:variable>
 <xsl:variable name="xbuttons">
@@ -374,8 +383,9 @@ will be replaced by a sed script in tyhe makefile
 
     <body>
       <xsl:call-template name="body.attributes"/>
-	  
-	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+<!-- header with VCF and SF logo -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
  <tr>
   <td class="logoCell" width="400" height="80" valign="top">
    <table width="400" border="0" cellpadding="0" cellspacing="0">
@@ -395,12 +405,18 @@ will be replaced by a sed script in tyhe makefile
   <td class="logoCell" width="350" valign="top">
    <table width="350" border="0" cellpadding="0" cellspacing="0">
     <tr>
-     <td width="350" height="80" align="center" valign="middle"><a href="http://sourceforge.net/projects/vcf/" target="_blank"><img alt="Sourceforge.net - The VCF's Project Host" border="0" src="gfx/sflogo.png"/></a></td>
+     <td width="350" height="80" align="center" valign="middle">
+      <a href="http://sourceforge.net/projects/vcf/" target="_blank">
+       <img alt="Sourceforge.net - The VCF's Project Host" border="0" src="gfx/sflogo.png"/>
+      </a>
+     </td>
     </tr>
    </table>
   </td>
  </tr>
 </table>
+
+<!-- header with web links, below VCF and SF logo -->
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
  <tr>
   <td class="topCell" width="100%" height="20" align="right" valign="middle">
@@ -414,26 +430,29 @@ will be replaced by a sed script in tyhe makefile
   </td>
  </tr>
 </table>
-<table align="center" width="95%" 
-  border="0" cellpadding="0" cellspacing="0"><tr><td 
-  width="100%" height="1" valign="top">
-  
-      <xsl:call-template name="user.header.navigation"/>
 
+<!-- Navigation must be in table or MS HTML Help will screw it -->
+<table align="center" width="95%" border="0" cellpadding="0" cellspacing="0">
+  <tr><td width="100%" height="1" valign="top">
+
+      <xsl:call-template name="user.header.navigation"/>
       <xsl:call-template name="header.navigation">
-	<xsl:with-param name="prev" select="$prev"/>
-	<xsl:with-param name="next" select="$next"/>
-	<xsl:with-param name="nav.context" select="$nav.context"/>
+        <xsl:with-param name="prev" select="$prev"/>
+        <xsl:with-param name="next" select="$next"/>
+        <xsl:with-param name="nav.context" select="$nav.context"/>
       </xsl:call-template>
 
+  </td></tr>
+</table>
+
+  <!-- put main page content in here, set styles in vcf.css -->
+  <div class="mainContent" >
       <xsl:call-template name="user.header.content"/>
-
       <xsl:copy-of select="$content"/>
-
       <xsl:call-template name="user.footer.content"/>
-	  
-</td></tr></table>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  </div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
  <tr>
   <td class="footerCell" width="100%" height="1" align="center" valign="middle">
    &#160;&#160;
@@ -445,13 +464,18 @@ will be replaced by a sed script in tyhe makefile
  </tr>
 </table>
 
+<!-- Navigation must be in table or MS HTML Help will screw it -->
+<table align="center" width="98%" border="0" cellpadding="0" cellspacing="0">
+  <tr><td width="100%" height="1" valign="top">
       <xsl:call-template name="footer.navigation">
-	<xsl:with-param name="prev" select="$prev"/>
-	<xsl:with-param name="next" select="$next"/>
-	<xsl:with-param name="nav.context" select="$nav.context"/>
+        <xsl:with-param name="prev" select="$prev"/>
+        <xsl:with-param name="next" select="$next"/>
+        <xsl:with-param name="nav.context" select="$nav.context"/>
       </xsl:call-template>
-
       <xsl:call-template name="user.footer.navigation"/>
+  </td></tr>
+</table>
+
     </body>
   </html>
 </xsl:template>
@@ -462,6 +486,24 @@ will be replaced by a sed script in tyhe makefile
 <!--
 CVS Log info
 $Log$
+Revision 1.11  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.10.2.5  2006/03/17 02:57:33  dougtinkham
+mod to vcf.css for docbook div.table and div.revhistory
+
+Revision 1.10.2.4  2006/03/15 06:47:33  dougtinkham
+changes to allow menu, allowing change in font size
+
+Revision 1.10.2.3  2006/03/12 22:01:36  ddiego
+doc updates.
+
+Revision 1.10.2.2  2006/03/12 06:13:41  dougtinkham
+modified docbook help to allow wrapping of text; took main content out of table.
+
+Revision 1.10.2.1  2006/03/10 21:49:27  ddiego
+updates to color example and some documentation.
+
 Revision 1.10  2005/07/13 04:04:33  ddiego
 updated more doc stuff.
 

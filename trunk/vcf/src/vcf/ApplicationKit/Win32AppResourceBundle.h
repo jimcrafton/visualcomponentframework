@@ -19,3 +19,6 @@ namespace VCF {
 
 
 #endif //_VCF_WIN32APPRESOURCEBUNDLE_H__
+
+
+

@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/DefaultTabPage.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
@@ -17,8 +17,7 @@ DefaultTabPage::DefaultTabPage( Control* component ):
 	data_(NULL),
 	preferredHeight_(8),
 	imageIndex_(0),
-	component_(NULL),
-	owningControl_(NULL)
+	component_(NULL)	
 {
 	tag_ = -1;
 	setPageComponent( component );
@@ -52,16 +51,6 @@ void* DefaultTabPage::getData()
 void DefaultTabPage::setData( void* data )
 {
 	data_ = data;
-}
-
-Model* DefaultTabPage::getModel()
-{
-	return model_;
-}
-
-void DefaultTabPage::setModel( Model* model )
-{
-	model_ = model;
 }
 
 void DefaultTabPage::setPageName( const String& name )
@@ -104,79 +93,21 @@ void DefaultTabPage::setSelected( const bool& selected )
 }
 
 void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )
-{
-	Color* hilite = GraphicsToolkit::getSystemColor(SYSCOLOR_HIGHLIGHT);
-	Color* shadow = GraphicsToolkit::getSystemColor(SYSCOLOR_SHADOW);
-	Color* face = GraphicsToolkit::getSystemColor(SYSCOLOR_FACE);
-	Color* textColor = GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW_TEXT );
-	Color* selectedTextColor = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT );
-	context->setColor( face );
-	context->rectangle( paintRect );
-	context->fillPath();
-	Color oldFontColor;
-
-	oldFontColor = *context->getCurrentFont()->getColor();
-
-	context->getCurrentFont()->setColor( textColor );
-
-	if ( true == isSelected() ) {
-		context->getCurrentFont()->setBold( true );
-
-		//context->getCurrentFont()->setColor( textColor );
-
-		context->setColor( hilite );
-		context->moveTo(paintRect->left_ , paintRect->bottom_ -1 );
-		context->lineTo(paintRect->left_ , paintRect->top_ + 2 );
-		context->lineTo(paintRect->left_ + 2 , paintRect->top_ );
-		context->lineTo(paintRect->right_ - 2 , paintRect->top_);
-		context->strokePath();
-
-		context->setColor( Color::getColor( "black" ) );
-		context->moveTo( paintRect->right_ - 2 , paintRect->top_ + 1);
-		context->lineTo( paintRect->right_ - 1 , paintRect->top_ + 2);
-		context->lineTo( paintRect->right_ - 1 , paintRect->bottom_ );
-		context->strokePath();
-
-		context->setColor( shadow );
-		context->moveTo( paintRect->right_ - 2, paintRect->top_ + 2);
-		context->lineTo( paintRect->right_ - 2, paintRect->bottom_ );
-		context->strokePath();
-	}
-	else {
-		context->setColor( hilite );
-		context->moveTo(paintRect->left_ , paintRect->bottom_ );
-		context->lineTo(paintRect->left_ , paintRect->top_ + 2 );
-		context->lineTo(paintRect->left_ + 2 , paintRect->top_  );
-		context->lineTo(paintRect->right_ - 2 , paintRect->top_ );
-		context->strokePath();
-
-		context->setColor( Color::getColor( "black" ) );
-		context->moveTo( paintRect->right_ - 2 , paintRect->top_ + 1);
-		context->lineTo( paintRect->right_ - 1 , paintRect->top_ + 2);
-		context->lineTo( paintRect->right_ - 1 , paintRect->bottom_ );
-		context->strokePath();
-
-		context->setColor( shadow );
-		context->moveTo( paintRect->right_ - 2, paintRect->top_ + 2);
-		context->lineTo( paintRect->right_ - 2, paintRect->bottom_ );
-		context->strokePath();
-	}
-
+{	
+	Control* control = getControl();
 	String text = pageName_;
-	if ( this->getUseLocaleStrings() ) {
+	if ( this->getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
 		text = System::getCurrentThreadLocale()->translate( pageName_ );
 	}
 
-	Rect tmpR = *paintRect;
+	TabState state;
+	state.setEnabled( true );
+	state.setPressed( isSelected() );
+	state.tabCaption_ = text;
 
-	tmpR.inflate( -4, 0 );
-	tmpR.normalize();
+	
 
-
-	long flags = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
-	context->textBoundedBy( &tmpR, text, flags );
-
-	context->getCurrentFont()->setColor( &oldFontColor );
+	context->drawThemeTab( paintRect, state );
 
 	bounds_.setRect( paintRect->left_, paintRect->top_, paintRect->right_, paintRect->bottom_ );
 }
@@ -206,6 +137,15 @@ void DefaultTabPage::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.1  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

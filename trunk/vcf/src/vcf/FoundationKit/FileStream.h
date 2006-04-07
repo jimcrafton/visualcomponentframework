@@ -22,12 +22,13 @@ namespace VCF  {
 class FileStreamPeer;
 
 /**
-*special file stream that uses native OS calls
-*for file IO as opposed to the more generic C++ filestream class.
-*This class uses a FileStreamPeer to do the actual work
-*
-*@author Jim Crafton
-*@version 1.0
+\class FileStreamBase FileStream.h "vcf/FoundationKit/FileStream.h"
+Special file stream that uses native OS calls
+for file IO as opposed to the more generic C++ filestream class.
+This class uses a FileStreamPeer to do the actual work
+
+@author Jim Crafton
+@version 1.0
 */
 
 
@@ -59,8 +60,10 @@ protected:
 	ulong32 currentSeekPos_;
 };
 
-
-class FOUNDATIONKIT_API FileInputStream : public InputStream , public FileStreamBase {//, public OutputStream, public Object {
+/**
+\class FileInputStream FileStream.h "vcf/FoundationKit/FileStream.h"
+*/
+class FOUNDATIONKIT_API FileInputStream : public InputStream , public FileStreamBase {
 public:
 	FileInputStream( File* file );
 
@@ -71,8 +74,8 @@ public:
 	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom);
 
 	/**
-	*returns the size of the stream. The size represents the
-	*number of bytes that have been <b>written</b>, or <b>read</b> to/from the stream
+	returns the size of the stream. The size represents the
+	number of bytes that have been <b>read</b> from the stream
 	*/
     virtual unsigned long getSize();
 
@@ -87,7 +90,7 @@ public:
 	/**
 	input
 	*/
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes );
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
 
 	/**
 	end of stream
@@ -103,7 +106,9 @@ protected:
 
 };
 
-
+/**
+\class FileOutputStream FileStream.h "vcf/FoundationKit/FileStream.h"
+*/
 class FOUNDATIONKIT_API FileOutputStream : public OutputStream , public FileStreamBase {
 public:
 	FileOutputStream( const String& filename, const bool & append = false );
@@ -129,7 +134,7 @@ public:
 	virtual ulong32 getCurrentSeekPos() ;
 
 	//output
-	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes );
+	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
 
 	void open( const String& filename, const bool & append = false );
 
@@ -144,6 +149,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

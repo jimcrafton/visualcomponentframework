@@ -34,6 +34,9 @@ namespace VCF {
 
 class TableCellItem;
 
+/**
+\class DefaultTableModel DefaultTableModel.h "vcf/ApplicationKit/DefaultTableModel.h"
+*/
 class APPLICATIONKIT_API DefaultTableModel : public AbstractModel, public TableModel {
 public:
 	DefaultTableModel();
@@ -46,12 +49,29 @@ public:
 	* The same thing happens with Borland compiler.
 	*/
 #if defined(VCF_CW) || defined(VCF_BCC)
-	VCF::Delegate& getTableCellAdded(){ return TableCellAdded; } 
-	VCF::Delegate& getTableCellDeleted(){ return TableCellDeleted; } 
-	VCF::Delegate& getTableRowsAdded(){ return TableRowsAdded; } 
-	VCF::Delegate& getTableRowsDeleted(){ return TableRowsDeleted; } 
-	VCF::Delegate& getTableColumnsAdded(){ return TableColumnsAdded; } 
-	VCF::Delegate& getTableColumnsDeleted(){ return TableColumnsDeleted; }
+	VCF::Delegate& getTableCellAdded(){ 
+		return TableCellAdded; 
+	} 
+	
+	VCF::Delegate& getTableCellDeleted(){ 
+		return TableCellDeleted; 
+	} 
+
+	VCF::Delegate& getTableRowsAdded(){ 
+		return TableRowsAdded; 
+	}
+	
+	VCF::Delegate& getTableRowsDeleted(){ 
+		return TableRowsDeleted; 
+	} 
+
+	VCF::Delegate& getTableColumnsAdded(){ 
+		return TableColumnsAdded; 
+	}
+	
+	VCF::Delegate& getTableColumnsDeleted(){ 
+		return TableColumnsDeleted; 
+	}
 #endif	
     /**
      * validate the model.
@@ -153,6 +173,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

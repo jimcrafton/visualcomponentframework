@@ -11,7 +11,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DEBUGGING_SYMBOLS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(VCF_BIN)";
+				FRAMEWORK_SEARCH_PATHS = "/Users/«USERNAME»/Library/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -20,6 +20,7 @@
 				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
 				OPTIMIZATION_CFLAGS = "-O0";
 				ZERO_LINK = NO;
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas -Wno-switch";
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -86,7 +87,7 @@
 				1AB674ADFE9D54B511CA2CBB,
 			);
 			isa = PBXGroup;
-			name = "«PROJECTNAME»";
+			name = "«PROJECTNAMEASXML»";
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -140,7 +141,7 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = "FoundationKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/FoundationKit-debug.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/FoundationKit-debug.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -183,7 +184,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "«PROJECTNAME»";
-				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas -Wno-switch";
 			};
 			dependencies = (
 			);

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="4" />
+	<Project>
+		<Option title="RemoteObjectKit" />
+		<Option default_target="-1" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="mingw_Release">
+				<Option output="..\..\..\lib\libRemoteObjectKit_mgcc_s.a" />
+				<Option working_dir="" />
+				<Option object_output="mgcc\ReleaseS\" />
+				<Option external_deps="$(VCF_LIB)\libNetworkKit_mgcc_s.a;" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option createDefFile="1" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-w" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_LIB" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DUSE_NETKIT_LIB" />
+				</Compiler>
+				<Linker>
+					<Add library="NetworkKit_$(COMPILER)$(COMPILER_VER)_s" />
+				</Linker>
+			</Target>
+			<Target title="mingw_Debug">
+				<Option output="..\..\..\lib\libRemoteObjectKit_mgcc_sd.a" />
+				<Option working_dir="" />
+				<Option object_output="mgcc\DebugS\" />
+				<Option external_deps="$(VCF_LIB)\libNetworkKit_mgcc_sd.a;" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option createDefFile="1" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_LIB" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DUSE_NETKIT_LIB" />
+				</Compiler>
+				<Linker>
+					<Add library="NetworkKit_$(COMPILER)$(COMPILER_VER)_sd" />
+				</Linker>
+			</Target>
+			<Environment>
+				<Variable name="COMPILER" value="mgcc" />
+				<Variable name="COMPILER_VER" value="" />
+			</Environment>
+		</Build>
+		<Compiler>
+			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+		</Compiler>
+		<Linker>
+			<Add directory='&quot;$(VCF_LIB)&quot;' />
+		</Linker>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedException.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedException.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\InstanceID.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\InstanceID.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\Proxy.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\Proxy.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteCommon.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteConfig.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

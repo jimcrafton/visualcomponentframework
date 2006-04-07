@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF {
 
 /**
+\class DrawStates DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
 A set of values for different states. These are masked together to form a 
 single value that represents the actual state of a UI element such as a
 button.
@@ -162,16 +163,24 @@ public:
 		the default button is the button that will be "clicked" if the user hits the 
 		enter or return key.
 		*/
-		dsDefaultButton					= 0x00800000
+		dsDefaultButton					= 0x00800000,
+
+		/**
+		Indicates that the custom color should be used if the underlying
+		windowing theme API supports this. 
+		*/
+		dsUseCustomProgressColor		= 0x01000000,
+		dsUseCustomProgressTextColor	= 0x02000000,
+
 	};	
 };
 
 /**
-\par
+\class DrawUIState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
 The DrawUIState is a utility class to make it easy to indicate the user interface state of 
 a GUI element, such as a button. The base settings indicate whether the element is active,
 enabled, focused, or highlighted.
-\par
+
 The various sub classes of DrawUIState simply make it easier to identify the state of the
 element, as well as adding a few more states, and optionally storing additional state information
 like the text or caption of the control.
@@ -240,7 +249,9 @@ protected:
 	long state_;
 };
 
-
+/**
+\class BackgroundState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class BackgroundState : public DrawUIState {
 public:
 	
@@ -254,10 +265,12 @@ public:
 	
 };
 
-
+/**
+\class MenuState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class MenuState : public DrawUIState {
 public:
-	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(kmUndefined){}
+	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(0){}
 
 	bool isSelected() const {
 		return (state_ & DrawStates::dsSelected) ? true : false;
@@ -305,6 +318,9 @@ public:
 	String menuCaption_;
 };
 
+/**
+\class ButtonState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class ButtonState : public DrawUIState {
 public:
 	bool isPressed() const {
@@ -352,7 +368,9 @@ public:
 	String buttonCaption_;
 };
 
-
+/**
+\class DisclosureButtonState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class DisclosureButtonState : public DrawUIState {
 public:
 	bool isClosed() const {
@@ -399,7 +417,9 @@ public:
 };
 
 
-
+/**
+\class ProgressState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class ProgressState : public DrawUIState {
 public:
 	ProgressState():min_(0.0),max_(100.0),position_(0.0){};
@@ -417,8 +437,36 @@ public:
 		}
 	}
 	
+	void setUseCustomProgressColor( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsUseCustomProgressColor;		
+		}
+		else {
+			state_ &= ~DrawStates::dsUseCustomProgressColor;
+		}
+	}
+
+	bool useCustomProgressColor() const {
+		return state_ & DrawStates::dsUseCustomProgressColor ? true : false;
+	}
+
+	void setUseCustomProgressTextColor( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsUseCustomProgressTextColor;		
+		}
+		else {
+			state_ &= ~DrawStates::dsUseCustomProgressTextColor;
+		}
+	}
+
+	bool useCustomProgressTextColor() const {
+		return state_ & DrawStates::dsUseCustomProgressTextColor ? true : false;
+	}
+
 	
 public:	
+	Color customColor_;
+	Color customTextColor_;
 	String progressCaption_;
 	double min_;
 	double max_;
@@ -426,7 +474,9 @@ public:
 };
 
 
-
+/**
+\class SliderState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class SliderState : public DrawUIState {
 public:
 	SliderState():min_(0.0),max_(100.0),position_(0.0),tickMarkFrequency_(10.0){};
@@ -495,10 +545,34 @@ public:
 
 
 
-
+/**
+\class ScrollBarState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class ScrollBarState : public DrawUIState {
 public:
-	ScrollBarState(): min_(0.0), max_(0.0), position_(0.0), viewSize_(0.0){};
+	ScrollBarState(): min_(0.0), max_(0.0), position_(0.0), viewSize_(0.0), buttonType_(sbNone){};
+
+	enum ScrollButtonType {
+		sbNone = 0,
+		sbUpOrLeftBtn = 1,
+		sbDownOrRightBtn = 2
+	};
+
+	void setButtonType( ScrollButtonType val ) {
+		buttonType_ = val;
+	}
+
+	ScrollButtonType getButtonType() {
+		return buttonType_;
+	}
+
+	bool isUpOrLeftBtn() const {
+		return ScrollBarState::sbUpOrLeftBtn == buttonType_ ? true : false;
+	}
+
+	bool isDownOrRightBtn() const {
+		return ScrollBarState::sbDownOrRightBtn == buttonType_ ? true : false;
+	}
 
 	bool isVertical() const {
 		return (state_ & DrawStates::dsVertical) ? true : false;
@@ -563,11 +637,15 @@ public:
 	double max_;
 	double position_;
 	double viewSize_;
+	ScrollButtonType buttonType_;
 };
 
 
 
 
+/**
+\class TabState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class TabState : public DrawUIState {
 public:
 	bool isPressed() const {
@@ -637,6 +715,9 @@ public:
 
 
 
+/**
+\class TextState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
+*/
 class TextState : public DrawUIState {
 public:
 	TextState(): DrawUIState(), themeFontType_(0),wrapText_(false){}
@@ -668,6 +749,24 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.4  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.5.2.3  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.2  2006/02/20 20:42:08  ddiego
+*comitting current state of theme code.
+*
+*Revision 1.5.2.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.5  2005/07/09 23:05:58  ddiego
 *added missing gtk files
 *

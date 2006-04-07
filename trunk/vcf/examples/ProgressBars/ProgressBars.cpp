@@ -21,11 +21,20 @@ public:
 		setHeight( 500 );
 
 		Rect bounds = getClientBounds();
+
+		ProgressControl* progressHorzFast_ = new ProgressControl();		
+		progressHorzFast_->setBounds( 20, 20, bounds.getWidth()-40, progressHorzFast_->getPreferredHeight() );
+		progressHorzFast_->setStepItIncrement( 10 );
+		progressHorzFast_->setPosition( 20 );
+		progressHorzFast_->setAnchor( AnchorLeft | AnchorRight );
+		progressHorzFast_->setDisplayProgressText( false );
+		add( progressHorzFast_ );
+
+
 		ProgressControl* progressHorz_ = new ProgressControl();
-		progressHorz_->setBounds( 20, 100, bounds.getWidth()-40, progressHorz_->getPreferredHeight() );
+		progressHorz_->setBounds( 20, 50, bounds.getWidth()-40, 30 );		
 
-
-		progressHorz_->setStepItIncrement( 10 );
+		progressHorz_->setStepItIncrement( 1 );
 
 		progressHorz_->setPosition( 20 );
 		progressHorz_->setAnchor( AnchorLeft | AnchorRight );
@@ -34,7 +43,8 @@ public:
 		progressHorz_->setUseProgressFormatString( true );
 		progressHorz_->setProgressFormatString( "Percent done: %0.3f %%" );
 		progressHorz_->setDisplayProgressText( true );
-
+		progressHorz_->getFont()->setPointSize( 8.0 );
+		progressHorz_->getFont()->setBold( true );
 
 
 		ProgressControl* progressVert_ = new ProgressControl();
@@ -132,6 +142,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:34:39  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.6.1  2006/03/23 03:09:41  dougtinkham
+*added another progress bar
+*
 *Revision 1.4  2004/08/07 02:47:33  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

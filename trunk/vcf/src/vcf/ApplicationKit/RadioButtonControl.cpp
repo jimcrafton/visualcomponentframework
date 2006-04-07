@@ -22,7 +22,7 @@ RadioButtonControl::RadioButtonControl()
 
 	groupID_ = 0;
 
-	fixedRadioButtonHeight_ = UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htRadioBoxHeight );
+	fixedRadioButtonHeight_ = UIToolkit::getUIMetricSize( UIMetricsManager::mtRadioBoxBtnSize ).height_;
 }
 
 RadioButtonControl::~RadioButtonControl()
@@ -32,7 +32,7 @@ RadioButtonControl::~RadioButtonControl()
 
 double RadioButtonControl::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtRadioBoxHeight );
 }
 
 double RadioButtonControl::getPreferredWidth()
@@ -156,6 +156,12 @@ RadioButtonControl* RadioButtonControl::getSelectedRadioButtonFromGroup()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
 *Revision 1.5  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

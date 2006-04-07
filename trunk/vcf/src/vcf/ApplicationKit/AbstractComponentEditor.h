@@ -14,9 +14,15 @@ where you installed the VCF.
 #endif
 
 
+#ifndef _VCF_COMPONENTEDITOR_H__
+#include "vcf/ApplicationKit/ComponentEditor.h"
+#endif 
+
+
 namespace VCF  {
 
 /**
+\class AbstractComponentEditor AbstractComponentEditor.h "vcf/ApplicationKit/AbstractComponentEditor.h"
 *Basic implementation of the ComponentEditor interface.
 *Useful when creating custom component editors.
 */
@@ -28,13 +34,15 @@ public:
 
 	virtual void initialize();
 
-	virtual Command* getCommand( const ulong32& index );
+	virtual int getAttributes( const ulong32& index );
 
-	virtual ulong32 getCommandCount() {
-		return commandCount_;
-	}
+	virtual int getCommandParentIndex( const ulong32& index );
 
-	virtual ulong32 getDefaultCommandIndex() {
+	virtual Command* createCommand( const ulong32& index );
+
+	virtual ulong32 getCommandCount();
+
+	virtual int getDefaultCommandIndex() {
 		return defaultCommandIndex_;
 	}
 
@@ -44,15 +52,23 @@ public:
 
 	virtual void setComponent( Component* component );
 
-	virtual String getComponentVFFFragment();
+	virtual void copy();
+
+	void setCommandCount( ulong32 val );
+
+	void setAttributes( const ulong32& index, const int& attribute );
+
+	void setParentIndex( const ulong32& index, const int& parentIndex );
 protected:
-	ulong32 commandCount_;
-	ulong32 defaultCommandIndex_;
+	int defaultCommandIndex_;
+	std::vector<int> attributes_;
+	std::vector<int> parentIndices_;
 
 	Component* component_;
 };
 
 /**
+\class AbstractControlEditor AbstractComponentEditor.h "vcf/ApplicationKit/AbstractComponentEditor.h"
 *Class AbstractComponentEditor documentation
 */
 class APPLICATIONKIT_API AbstractControlEditor : public AbstractComponentEditor, public ControlEditor {
@@ -72,6 +88,8 @@ public:
 	virtual void mouseMove( MouseEvent* event );
 
 	virtual void mouseUp( MouseEvent* event );
+
+	virtual void mouseDblClick( MouseEvent* event );
 protected:
 
 private:
@@ -83,6 +101,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="3" />
+	<Project>
+		<Option title="HTMLKitDLL" />
+		<Option default_target="-1" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="mingw_Release">
+				<Option output="..\..\..\bin\HTMLKit_mgcc.dll" />
+				<Option object_output="mgcc\ReleaseDLL\" />
+				<Option external_deps="$(VCF_LIB)\libApplicationKit_mgcc.a;" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-Wno-system-headers" />
+					<Add option="-Wno-extra" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DVCF_NO_ATL" />
+					<Add option="-DUSE_APPLICATIONKIT_DLL" />
+					<Add option="-DHTMLKit_DLL" />
+					<Add option="-DHTMLKit_EXPORTS" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-Wl,--enable-auto-import" />
+					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+					<Add option="-Wl,--subsystem=windows" />
+					<Add option="-Wl,--check-sections" />
+					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="GraphicsKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="rpcrt4" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+					<Add library="version" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="comctl32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="ws2_32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="glaux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
+					<Add after="cmd /c move ..\..\..\bin\libHTMLKit_mgcc.a ..\..\..\lib\libHTMLKit_mgcc.a" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="GCH_DIR" value="..\HTMLKit\$(COMPILER)$(COMPILER_VER)\ReleaseDLL\src" />
+				</Environment>
+			</Target>
+			<Target title="mingw_Debug">
+				<Option output="..\..\..\bin\HTMLKit_mgcc_d.dll" />
+				<Option object_output="mgcc\DebugDLL\" />
+				<Option external_deps="$(VCF_LIB)\libApplicationKit_mgcc_d.a;" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DVCF_NO_ATL" />
+					<Add option="-DUSE_APPLICATIONKIT_DLL" />
+					<Add option="-DHTMLKit_DLL" />
+					<Add option="-DHTMLKit_EXPORTS" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,--enable-auto-import" />
+					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+					<Add option="-Wl,--subsystem=windows" />
+					<Add option="-Wl,--check-sections" />
+					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="GraphicsKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="rpcrt4" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+					<Add library="version" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="comctl32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="ws2_32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="glaux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
+					<Add after="cmd /c move ..\..\..\bin\libHTMLKit_mgcc_d.a ..\..\..\lib\libHTMLKit_mgcc_d.a" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="GCH_DIR" value="..\HTMLKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
+				</Environment>
+			</Target>
+			<Environment>
+				<Variable name="COMPILER" value="mgcc" />
+				<Variable name="COMPILER_VER" value="" />
+			</Environment>
+		</Build>
+		<Compiler>
+			<Add directory="$(GCH_DIR)" />
+			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\win32&quot;' />
+			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\win32\Microsoft&quot;' />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="..\..\resources\win32" />
+		</ResourceCompiler>
+		<Linker>
+			<Add directory='&quot;$(VCF_LIB)&quot;' />
+		</Linker>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserPeer.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLDOMElements.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowserSelectLib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32WebBrowserHost.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

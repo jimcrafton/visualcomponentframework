@@ -210,8 +210,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 						parseState_ = psKey;
 						tokenString = "";
 
-						P++;
-						token = P;
+						token = P + 1;
 					}
 					break;
 
@@ -229,8 +228,8 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 					case psAssignment : {
 						parseState_ = psValue;
 						tokenString = "";
-						P++;
-						token = P;
+						
+						token = P + 1;
 					}
 					break;
 
@@ -399,6 +398,12 @@ UnicodeString StringsMessageLoader::getMessageFromID( const UnicodeString& id )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
 *Revision 1.2  2004/08/07 02:49:15  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

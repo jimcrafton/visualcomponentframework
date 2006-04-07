@@ -9,18 +9,48 @@ where you installed the VCF.
 */
 
 
+
+
 namespace VCF {
 
-	class OSXUtils {
-	public:
-		static String getErrorString( int errorCode );
+
+class OSXStringUtils {
+public:
+	static String getErrorString( int errorCode ) {
+		String result;
+
+		return result;
+	}
+	
+	static String getErrnoString( int errCode ); 
+
+	static String extractStringValueFromCFType( CFTypeRef ref ) {
+		String result;
+	
+		if ( NULL != ref ) {
+			CFStringRef resultString = CFStringCreateWithFormat( NULL, NULL, CFSTR("%@"), ref );
+			
+			if ( NULL != resultString ) {
+				
+				CFDataRef data = CFStringCreateExternalRepresentation(NULL, 
+																	  resultString, 
+																	  CFStringGetSystemEncoding(), 
+																	  '?');
+				
+				if (data != NULL) {			
+					result.assign( (char*)CFDataGetBytePtr(data), CFDataGetLength(data) );
+					
+					CFRelease(data);
+				}
+				
+				CFRelease( resultString );
+			}	
+		}
 		
-		static String extractStringValueFromCFType( CFTypeRef ref );
-		
-		static ulong32 translateButtonMask( EventMouseButton button );
-		
-		static ulong32 translateKeyMask( UInt32 keyMod );
-	};
+		return result;
+	}
+	
+};
 
 
 template < typename CFObjType>
@@ -84,8 +114,8 @@ public:
 };
 
 
-#define vcf_IntToFixed(a)	   ((Fixed)(a) << 16)
-#define vcf_FixedToInt(a)	   ((int)(a) >> 16)
+#define VCF_INTTOFIXED(a)	   ((Fixed)(a) << 16)
+#define VCF_FIXEDTOINT(a)	   ((int)(a) >> 16)
 
 class FixedPointNumber {
 public:
@@ -114,24 +144,24 @@ public:
 	}
 
 	void assign( const double& val ) {
-		int fractional = (val - floor(val)) * 0xffff;
+		int fractional = (int)((val - floor(val)) * 0xffff);
 
-		val_ = vcf_IntToFixed((int)(floor(val))) | fractional;
+		val_ = VCF_INTTOFIXED((int)(floor(val))) | fractional;
 	}
 
 	void assign( const int& val ) {
-		val_ = vcf_IntToFixed(val);
+		val_ = VCF_INTTOFIXED(val);
 	}
 
 	int asInt() const {
-		return vcf_FixedToInt(val_);
+		return VCF_FIXEDTOINT(val_);
 	}
 
 	double asDouble() const {
 		if ( 0 == val_ ) {
 			return 0.0;
 		}
-		return (double)vcf_FixedToInt(val_) + ((double)(0xFFFF)/(double)(0xFFFF0000 & val_));
+		return (double)VCF_FIXEDTOINT(val_) + ((double)(0xFFFF)/(double)(0xFFFF0000 & val_));
 	}
 
 	operator double () const {
@@ -227,7 +257,7 @@ public:
 	void assign( ConstStr255Param str ) {
 		
 		char tmp[256];
-		PLstrcpy( tmp, str );
+		PLstrcpy( (unsigned char*)tmp, str );
 		tmp[ PLstrlen(str) ] = 0;
 		
 		assign( tmp );        
@@ -236,9 +266,11 @@ public:
     void assign( CFStringRef s ) {
 		cleanup();
 
-        cfStringRef = CFStringCreateMutableCopy( NULL, 0, s );
+		if ( NULL != s ) {
+			cfStringRef = CFStringCreateMutableCopy( NULL, 0, s );
 
-		buildUnicodeBuffer();
+			buildUnicodeBuffer();
+		}
 	}
 
 
@@ -267,7 +299,10 @@ public:
 	}
 
     operator String () const {
-        String result = unicodeText;
+        String result;
+		if ( NULL != unicodeText ) {
+			result = unicodeText;
+		}
         return result;
     }
 
@@ -363,6 +398,29 @@ private:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.5  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.4.2.6  2005/12/04 20:58:32  ddiego
+ *more osx impl work. foundationkit is mostly complete now.
+ *
+ *Revision 1.4.2.5  2005/11/27 23:55:45  ddiego
+ *more osx updates.
+ *
+ *Revision 1.4.2.4  2005/11/21 04:00:51  ddiego
+ *more osx updates.
+ *
+ *Revision 1.4.2.3  2005/11/13 16:02:46  ddiego
+ *more sox updates.
+ *
+ *Revision 1.4.2.2  2005/11/10 04:43:27  ddiego
+ *updated the osx build so that it
+ *compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+ *
+ *Revision 1.4.2.1  2005/11/10 02:02:38  ddiego
+ *updated the osx build so that it
+ *compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+ *
  *Revision 1.4  2005/07/09 23:15:04  ddiego
  *merging in changes from devmain-0-6-7 branch.
  *

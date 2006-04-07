@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="SketchIt" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            SketchDocument.h
+            SketchTools.h
+            SketchView.h
+            SketchWindow.h
+        </headers>
+        <sources>
+            SketchDocument.cpp
+            SketchIt.cpp
+            SketchTools.cpp
+            SketchView.cpp
+            SketchWindow.cpp
+        </sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

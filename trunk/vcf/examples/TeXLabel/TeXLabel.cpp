@@ -209,7 +209,7 @@ public:
 		label->setCaption("\\\\infty or \\\\inf = \\infty or \\inf");
 		label->setHeight(label->getPreferredHeight());
 
-		setBounds(100, 100, 640, 480);
+		setBounds(100, 100, 640, 600);
 	}
 
 	void onResized(ControlEvent *)

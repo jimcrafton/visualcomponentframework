@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="Browser" template="vcf_exe_gui" cond="OPTION_HTMLKIT=='1'">
+        <dirname>.</dirname>
+        <sources>Browser.cpp</sources>
+        <vcf-use-HTMLKit/>
+    </exe>
+</makefile>

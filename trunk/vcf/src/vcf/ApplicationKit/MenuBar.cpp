@@ -125,33 +125,18 @@ void MenuBar::setFrame( Frame* frame )
 void MenuBar::handleEvent( Event* event )
 {
 	Menu::handleEvent( event );
-	/*
-	switch ( event->getType() ){
-		case Component::COMPONENT_ADDED : {
-			ComponentEvent* ev = (ComponentEvent*)event;
-			Component* child = ev->getChildComponent();
-			MenuItem* item = dynamic_cast<MenuItem*>(child);
-			if ( NULL != item ) {
-				getRootMenuItem()->addChild( item );
-				if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
-					getRootMenuItem()->getPeer()->addChild( item );
-				}
-			}
-		}
-		break;
-
-		case Component::COMPONENT_REMOVED : {
-
-		}
-		break;
-	}
-	*/
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/08/25 01:48:19  ddiego
+*minor update to popupmenu code
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -17,6 +17,9 @@ where you installed the VCF.
 #define ETCHEDBORDER_CLASSID		"341D8D4C-B861-4b4d-AEC4-A6911AF67DFF"
 
 namespace VCF {
+	/**
+	\class EtchedBorder EtchedBorder.h "vcf/ApplicationKit/EtchedBorder.h"
+	*/
 	class APPLICATIONKIT_API EtchedBorder : public Border {
 	public:
 
@@ -59,6 +62,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

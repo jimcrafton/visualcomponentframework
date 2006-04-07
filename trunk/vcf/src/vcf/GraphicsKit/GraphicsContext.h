@@ -46,7 +46,8 @@ class GraphicsState;
 
 
 /**
-A Graphics Context provides the lowest level graphics interface to the
+\class GraphicsContext GraphicsContext.h "vcf/GraphicsKit/GraphicsContext.h"
+A GraphicsContext provides the lowest level graphics interface to the
 native systems 2D drawing operations. Based loosely on PostScript,
 a Context takes a series of of drawing operations, or commands
 *(lineTo, moveTo, etc), and then executes them by either filling or
@@ -59,7 +60,7 @@ a test should be made as to whether the buffer should be cleared.
 The buffer should be cleared only after the stroke of fill methods
 have been  called. For example:
 
-\par
+
 \code
 	ellipse(23,23,45,67) //added to buffer
 	moveTo(89,100) //add to buffer
@@ -165,8 +166,15 @@ public:
 	/**
 	sets the current font
 	A copy of the Font is made when this is set
+	@deprecated
 	*/
-	void setCurrentFont(Font * font );
+	void setCurrentFont( Font * font );
+
+	/**
+	sets the current font
+	A copy of the Font is made when this is set
+	*/
+	void setCurrentFont( const Font * font );
 
 	/**
 	returns the current Font
@@ -233,34 +241,45 @@ public:
 	}
 
 	/**
-	*	saves the state of a Graphics context after the
-	*	paint operations are done.
-	*	The save/restore idea idea is the same as for Win32 SaveDC and RestoreDC.
-	*	It allows you to save the state of the DC (device context) at a given point in time,
-	*	and then make a whole bunch of changes to it, and when you're all done
-	*	just call RestoreDC() and everything is set back.
-	*	\par
-	*	This prevents all sorts of extra SelectObject() calls and is more efficent.
-	*	\par
-	*	Similarly this makes it easy to guarantee that the
-	*	state of the GraphicsContext is reset correctly.
+	saves the state of a Graphics context after the
+	paint operations are done.
+	The save/restore idea idea is the same as for Win32 SaveDC and RestoreDC.
+	It allows you to save the state of the DC (device context) at a given point in time,
+	and then make a whole bunch of changes to it, and when you're all done
+	just call RestoreDC() and everything is set back.
+		
+	This prevents all sorts of extra SelectObject() calls and is more efficent.
+	
+	Similarly this makes it easy to guarantee that the
+	state of the GraphicsContext is reset correctly.
 	@return int, the index of the newly saved graphics state.
 	@see GraphicsContext::restoreState()
 	*/
 	int saveState( );
 
 	/**
-	* restores the state of a Graphics context after the
-	* paint operations are done.
+	Restores the state of a Graphics context after the
+	paint operations are done.
 	@param int state, the index of the graphics state we want to restore. All
-	* the graphics states saved after this index are lost as they have lost meaning,
-	* and the current graphics state index is set to the state just restored.
+	the graphics states saved after this index are lost as they have lost meaning,
+	and the current graphics state index is set to the state just restored.
 	@see GraphicsContext::saveState()
 	*/
 	void restoreState( int state );
 
 
+	/**
+	Sets the current color of the graphics context to use for filling
+	or stroking paths.
+	@deprecated
+	*/
 	void setColor( Color* color );
+
+	/**
+	Sets the current color of the graphics context to use for filling
+	or stroking paths.
+	*/
+	void setColor( const Color* color );
 
 	Color* getColor( );
 
@@ -413,12 +432,6 @@ public:
 
 
 
-	/**
-	returns current transform matrix for this GraphicsContext instance.
-	Before the matrix is returned, a new matrix is created and then multiplied
-	into the final transform matrix. These matrices represent the various trnasform
-	values (i.e. theta_, scaleX_, etc)
-	*/
 	void setCurrentTransform( const Matrix2D& transform );
 
 	Matrix2D* getCurrentTransform( );
@@ -562,6 +575,10 @@ public:
 	with the native windowing systems default look and feel
 	*/
 	void drawThemeTabPage( Rect* rect, DrawUIState& state );
+
+	void drawThemeTabContent( Rect* rect, DrawUIState& state );
+
+	void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
 
 	/**
 	Draws tick marks, like that used for a slider control, that is compliant
@@ -800,6 +817,28 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.6  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.7.2.5  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.7.2.4  2006/03/12 22:01:45  ddiego
+*doc updates.
+*
+*Revision 1.7.2.3  2006/03/01 04:34:57  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.7.2.2  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.7.2.1  2005/09/03 14:03:53  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.7  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

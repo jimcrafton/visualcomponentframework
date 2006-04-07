@@ -1,0 +1,180 @@
+
+body {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 8pt;	
+	background-image: url('backgrnd.png');	
+}
+
+table {
+	font-size: 8pt;	
+	width:100%;
+	padding-left: 0px;
+	padding-right:0px;
+	margin-left : 0px;
+	margin-right : 0px;	
+}
+
+
+h5 {
+	margin-top: -2px;
+	margin-bottom: -2px;
+	background-color: #ECF2FE;
+	background-image: url('backgrnd-h5.png');
+	background-repeat: repeat-x;
+	color: #F1F1F1;
+}
+
+table.with-border {
+	BORDER-bottom: #F0F0F0 1px ridge;
+}
+
+table.with-full-border {
+	bottom: #F0F0F0 2px ridge;
+}
+
+td.with-border {
+	FONT-WEIGHT: bold;
+	BORDER-bottom: #F0F0F0 2px ridge;
+}
+
+tr.row-with-border {
+	background-color:#F0F0F0;
+	border-bottom: #F0F0F0 2px ridge;	
+	background-image: url('backgrnd-header.png');
+	font-weight: bold;
+}
+
+tr.row-header {
+	background-image: url('backgrnd-row-header.png');
+	background-repeat: repeat-x;
+	font-weight: bold;
+	padding-left: 0px;
+	padding-right:0px;
+	margin-left : 0px;
+	margin-right : 0px;
+	border: 0px;
+}
+
+tr.row-header2 {	
+	background-color:#B5B5B5;
+	font-weight: bold;
+	padding-left: 0px;
+	padding-right:0px;
+	margin-left : 0px;
+	margin-right : 0px;
+	border: 0px;
+}
+
+
+td.with-side-border {	
+	BORDER-left: #F0F0F0 1px ridge;
+}
+	
+.caption {		
+	FONT-WEIGHT: bold;
+	PADDING-LEFT: 20px;
+}
+
+.item-caption {		
+	FONT-WEIGHT: bold;
+	PADDING-LEFT: 20px;
+	width:65%;
+}
+
+.large-caption {
+	FONT-SIZE: 100%;
+	FONT-WEIGHT: bold;
+}
+
+.editable {
+	BORDER-left: #00FF00 1px ridge;
+	BORDER-top: #00FF00 1px ridge;
+	BORDER-right: #00FF00 1px ridge;
+	BORDER-bottom: #00FF00 1px ridge;
+}
+
+td {
+	vertical-align:top
+}
+
+td.date-time {
+	text-align:center
+}
+
+
+td.currency {
+	text-align:right;
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+
+td.bogus-currency {
+	text-align:right;
+	font-weight: bold;
+	padding-right: 10px;
+	text-decoration:blink;
+	color:#FF0000;
+}
+
+td.header {
+	text-align:left;
+	width: 7em;
+	padding-left: 0px;
+	padding-right:0px;
+	margin-left : 0px;
+	margin-right : 0px;
+}
+
+td.header-with-side-border {
+	text-align:left;
+	width: 7em;
+	border-left: #F0F0F0 1px ridge;
+}
+
+td.contributor {
+	cursor:hand;
+	color : blue;
+	text-decoration: underline;
+}
+
+td.label {
+	font-weight: bold;
+}
+
+.treemenu {
+	margin : 0px 0px;
+	padding : 1px;		
+	width: 95%
+}
+
+.treemenu UL {
+/*	list-style : none;*/
+	margin : 0px 10px;
+	padding : 0px 10px;
+}
+
+
+.treemenu LI {
+	display : inline;
+}
+
+
+.treemenu A {
+	display : block;
+	padding-left : 12px;
+	text-decoration : none;
+	color : black
+}
+
+.treemenu .treeopen {
+	background-image : url('open.gif');
+	background-repeat : no-repeat;
+	background-position : left;
+}		
+
+.treemenu .treeclosed {
+	background-image : url('closed.gif');
+	background-repeat : no-repeat;
+	background-position : left;
+}

@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/Win32DragDropPeer.h"
-#include "vcf/ApplicationKit/COMUtils.h"
+#include "vcf/ApplicationKit/Win32COMUtils.h"
 
 using namespace VCF;
 using namespace VCFCOM;
@@ -110,6 +110,12 @@ HRESULT Win32DragDropPeer::QueryContinueDrag( BOOL fEscapePressed, DWORD grfKeyS
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/02/19 19:38:12  ddiego
+*adjusted some comet code to make it compile again. renamed some of the COM utility files to have a Win32 prefix.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

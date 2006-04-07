@@ -1,10 +1,11 @@
 //controls.rc
-bmp1	BITMAP		"icon1.bmp"
-bmp2	BITMAP		"icon2.bmp"
+bmp1	  BITMAP		"icon1.bmp"
+bmp2	  BITMAP		"icon2.bmp"
 bmpLong	BITMAP		"iconLong.bmp"
-iconSaveUp        BITMAP		"iconSaveUp.bmp"
-iconSaveDown      BITMAP    "iconSaveDown.bmp"
-iconSaveDisabled	BITMAP    "iconSaveDisabled.bmp"
-iconSaveFocus     BITMAP    "iconSaveFocus.bmp"
-iconSaveHighlight BITMAP    "iconSaveHighlight.bmp"
+iconSaveUp          BITMAP		"iconSaveUp.bmp"
+iconSaveDown        BITMAP    "iconSaveDown.bmp"
+iconSaveDisabled	  BITMAP    "iconSaveDisabled.bmp"
+iconSaveFocus       BITMAP    "iconSaveFocus.bmp"
+iconSaveFocusDown   BITMAP    "iconSaveFocusDown.bmp"
+iconSaveHighlight   BITMAP    "iconSaveHighlight.bmp"
 

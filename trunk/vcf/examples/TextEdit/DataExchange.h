@@ -45,16 +45,16 @@ public:
 		control_ = NULL;
 	}
 
-	
+
 
 	DataExchangeImpl<DataType,ControlType>& operator= ( ControlBase* val ) {
 		control_ = reinterpret_cast<ControlType*>( val );
 		if ( NULL != control_ ) {
-			EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
+			VCF::EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
 			if ( NULL == ev ) {
-				ev = new ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
+				ev = new VCF::ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
 			}
-			control_->ComponentDeleted += ev;
+			control_->ComponentDestroyed += ev;
 			update( false );
 		}
 		return *this;
@@ -63,11 +63,11 @@ public:
 	DataExchangeImpl<DataType,ControlType>& operator= ( ControlType* val ) {
 		control_ = val;
 		if ( NULL != control_ ) {
-			EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
+			VCF::EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
 			if ( NULL == ev ) {
-				ev = new ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
+				ev = new VCF::ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
 			}
-			control_->ComponentDeleted += ev;
+			control_->ComponentDestroyed += ev;
 			update( false );
 		}
 		return *this;
@@ -75,7 +75,7 @@ public:
 
 	ControlType* operator ->() {
 		return control_;
-	}	
+	}
 
 	void update( bool dataFromControl ) {
 		if ( NULL != control_ ) {
@@ -86,10 +86,10 @@ public:
 				control_->setDataValue( value_ );
 			}
 		}
-	}	
-	
+	}
+
 protected:
-	ControlType* control_;	
+	ControlType* control_;
 	DataType value_;
 };
 
@@ -146,14 +146,14 @@ public:
 	typedef Base BaseType;
 
 	Val getDataValue() {
-		VariantData d( Val() );
-		d.setFromString( Base::getTextModel()->getText() );		
+		VCF::VariantData d( Val() );
+		d.setFromString( Base::getTextModel()->getText() );
 		return d;
 	}
 
 	void setDataValue( const Val& val ) {
-		
-		Base::getTextModel()->setText( StringUtils::toString(val) );
+
+		Base::getTextModel()->setText( VCF::StringUtils::toString(val) );
 	}
 };
 
@@ -171,7 +171,7 @@ public:
 		while ( items->hasMoreElements() ) {
 			VCF::ListItem* item = items->nextElement();
 			result.push_back( item->getCaption() );
-		}		
+		}
 
 		std::vector<VCF::String>::iterator found = std::find( result.begin(), result.end(), Base::getCurrentText() );
 		if ( found == result.end() ) {
@@ -183,12 +183,12 @@ public:
 	void setDataValue( const std::vector<VCF::String>& val ) {
 		VCF::ListModel* lm = Base::getListModel();
 		Base::getViewModel()->empty();
-		if (!val.empty() ) {			
+		if (!val.empty() ) {
 
 			std::vector<VCF::String>::const_iterator it = val.begin();
 			while ( it != val.end() ) {
 				if ( !(*it).empty() ) {
-					ListItem* item = new DefaultListItem();
+					VCF::ListItem* item = new VCF::DefaultListItem();
 					item->setCaption( *it );
 					lm->addItem( item );
 				}
@@ -214,24 +214,24 @@ public:
 			VCF::ListItem* item = items->nextElement();
 			result.push_back( item->getCaption() );
 		}
-		
+
 		return result;
 	}
 
 	void setDataValue( const std::vector<VCF::String>& val ) {
 		VCF::ListModel* lm = Base::getListModel();
 		Base::getViewModel()->empty();
-		if (!val.empty() ) {			
+		if (!val.empty() ) {
 
 			std::vector<VCF::String>::const_iterator it = val.begin();
 			while ( it != val.end() ) {
 				if ( !(*it).empty() ) {
-					ListItem* item = new DefaultListItem();
+					VCF::ListItem* item = new VCF::DefaultListItem();
 					item->setCaption( *it );
 					lm->addItem( item );
 				}
 				it ++;
-			}			
+			}
 		}
 	}
 };
@@ -248,7 +248,7 @@ public:
 		VCF::ListModel* lm = Base::getListModel();
 		VCF::Enumerator<VCF::ListItem*>* items = lm->getItems();
 		VCF::ListItem* selectedItem = Base::getSelectedItem();
-		
+
 		if ( NULL == selectedItem ) {
 			return -1;
 		}
@@ -260,7 +260,7 @@ public:
 			}
 			result ++;
 		}
-		
+
 		return result;
 	}
 
@@ -291,25 +291,25 @@ public:
 	KeyValueVector getDataValue() {
 
 		KeyValueVector result;
-		
+
 		VCF::ListModel* lm = Base::getListModel();
-		VCF::Enumerator<VCF::ListItem*>* items = lm->getItems();		
-		
+		VCF::Enumerator<VCF::ListItem*>* items = lm->getItems();
+
 		while ( items->hasMoreElements() ) {
 			VCF::ListItem* item = items->nextElement();
-			
+
 			KeyValue val( item->getCaption(),item->getSubItem(0)->getCaption() );
 
-			result.push_back(val);			
+			result.push_back(val);
 		}
-		
+
 		return result;
 	}
 
 	void setDataValue( const KeyValueVector& val ) {
 		VCF::ListModel* lm = Base::getListModel();
 		Base::getViewModel()->empty();
-		
+
 		KeyValueVector::const_iterator it = val.begin();
 		while ( it != val.end() ) {
 			const KeyValue& kv = *it;
@@ -317,7 +317,7 @@ public:
 			item->addSubItem( kv.second, NULL );
 
 			it ++;
-		}		
+		}
 	}
 };
 

@@ -32,7 +32,19 @@ class Dictionary;
 
 
 #define TEXTCONTROL_CLASSID			"ED88C09E-26AB-11d4-B539-00C04F0196DA"
+/**
+\class TextControl TextControl.h "vcf/ApplicationKit/TextControl.h"
+The base class for presenting text to the user. The text can be 
+plain text, or styled text, i.e. text with multiple styles.
 
+The TextControl is only for editing or presenting a single line of text.
+For editing multiple lines of text, please see the MultilineTextControl.
+
+All text controls contain a TextModel, that stores the actual text 
+data.
+@see MultilineTextControl
+@see TextModel
+*/
 class APPLICATIONKIT_API TextControl : public Control {
 public:
 
@@ -202,6 +214,12 @@ public:
 	*/
 	void redo();
 
+	/**
+	This toggles word wrapping. If you turn off word wrapping
+	the scroll bars will show up autmatically (if they are needed).
+	If you turn on word wrapping the scroll bars will disapear.
+	*/
+	void setTextWrapping( const bool& val );
 protected:
 	/**
 	handlers of some standard accelerator events.
@@ -218,7 +236,7 @@ protected:
 	By default it is added only to a single line control,
 	so we can select all the text whenever we get the focus.
 	*/
-	virtual void onFocusGained( FocusEvent* event );
+	virtual void gotFocus( FocusEvent* event );
 
 protected:
 	TextEditPeer * textPeer_;
@@ -235,6 +253,25 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.4.2.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.1  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

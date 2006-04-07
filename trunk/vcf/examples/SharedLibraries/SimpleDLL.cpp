@@ -7,15 +7,16 @@ where you installed the VCF.
 */
 
 
-#include <stdio.h>
-#include "SimpleDLL.h"
+#include <cstdio>
+#include <cwchar>
 #include <typeinfo>
+#include "SimpleDLL.h"
 
 
 
 void HelloWorld::hello()
 {
-	printf( "Hello from class: %s, instance @ %p\n", typeid(*this).name(), this );
+	wprintf( L"Hello from class: %s, instance @ %p\n", typeid(*this).name(), this );
 }
 
 extern "C" {
@@ -26,11 +27,20 @@ int getAnInteger( int val1, double d )
 	return result;
 }
 
-#ifdef __BORLANDC__
-void vpl_init (void) {}
 
-void vpl_terminate (void) {}
-#endif
+
+
+SIMPLEDLL_API void _vpl_init ( void* handle ) 
+{
+	wprintf( L"Lib initialized! Handle: %p\n", handle );
+}
+
+SIMPLEDLL_API void _vpl_terminate ( void* handle ) 
+{
+	wprintf( L"Lib terminated! Handle: %p\n", handle );
+}
+
+
 
 }
 
@@ -38,8 +48,17 @@ void vpl_terminate (void) {}
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:43  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/19 00:03:40  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.5.2.2  2005/09/03 17:13:23  ddiego
+*added a new argument to _vpl_init and _vpl_terminate functions.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:41  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.2.2  2005/04/17 17:19:10  iamfraggle
 *Small fixes

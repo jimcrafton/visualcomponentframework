@@ -1,0 +1,143 @@
+<?xml version="1.0" ?>
+<makefile>
+
+    <set var="GRAPHICSKIT_HDR" hints="files">
+        vcf/GraphicsKit/AbstractImage.h
+        vcf/GraphicsKit/AggCommon.h
+        vcf/GraphicsKit/BasicFill.h
+        vcf/GraphicsKit/BasicRectangle.h
+        vcf/GraphicsKit/BasicStroke.h
+        vcf/GraphicsKit/BezierCurve.h
+        vcf/GraphicsKit/Circle.h
+        vcf/GraphicsKit/Color.h
+        vcf/GraphicsKit/Composition.h
+        vcf/GraphicsKit/ContextPeer.h
+        vcf/GraphicsKit/DrawUIState.h
+        vcf/GraphicsKit/Ellipse.h
+        vcf/GraphicsKit/Fill.h
+        vcf/GraphicsKit/Filter.h
+        vcf/GraphicsKit/Font.h
+        vcf/GraphicsKit/FontPeer.h
+        vcf/GraphicsKit/GraphicsContext.h
+        vcf/GraphicsKit/GraphicsKit.h
+        vcf/GraphicsKit/GraphicsKitPrivate.h
+        vcf/GraphicsKit/GraphicsKitSelectLib.h
+        vcf/GraphicsKit/GraphicsResourceBundle.h
+        vcf/GraphicsKit/GraphicsResourceBundlePeer.h
+        vcf/GraphicsKit/GraphicsToolKit.h
+        vcf/GraphicsKit/Image.h
+        vcf/GraphicsKit/ImageBits.h
+        vcf/GraphicsKit/ImageEvent.h
+        vcf/GraphicsKit/ImageLoader.h
+        vcf/GraphicsKit/ImageLoaderException.h
+        vcf/GraphicsKit/ImageTile.h
+        vcf/GraphicsKit/InvalidImage.h
+        vcf/GraphicsKit/JPEGLoader.h
+        vcf/GraphicsKit/Kernel.h
+        vcf/GraphicsKit/Layer.h
+        vcf/GraphicsKit/MagicFMLibType.h
+        vcf/GraphicsKit/Matrix2D.h
+        vcf/GraphicsKit/NoGraphicsToolkitFoundException.h
+        vcf/GraphicsKit/Path.h
+        vcf/GraphicsKit/PixelFormats.h
+        vcf/GraphicsKit/Pixels.h
+        vcf/GraphicsKit/PNGLoader.h
+        vcf/GraphicsKit/Point.h
+        vcf/GraphicsKit/Printable.h
+        vcf/GraphicsKit/PrintContext.h
+        vcf/GraphicsKit/PrintEvent.h
+        vcf/GraphicsKit/PrintSession.h
+        vcf/GraphicsKit/PrintSessionPeer.h
+        vcf/GraphicsKit/Rect.h
+        vcf/GraphicsKit/Size.h
+        vcf/GraphicsKit/Stroke.h
+        vcf/GraphicsKit/TileManager.h
+        vcf/GraphicsKit/UVMap.h
+        vcf/GraphicsKit/GraphicsKitRTTI.inl
+    </set>
+
+    <set var="GRAPHICSKIT_SRC" hints="files">
+        vcf/GraphicsKit/AbstractImage.cpp
+        vcf/GraphicsKit/BasicFill.cpp
+        vcf/GraphicsKit/BasicStroke.cpp
+        vcf/GraphicsKit/BezierCurve.cpp
+        vcf/GraphicsKit/Color.cpp
+        vcf/GraphicsKit/Font.cpp
+        vcf/GraphicsKit/GraphicsContext.cpp
+        vcf/GraphicsKit/GraphicsKit.cpp
+        vcf/GraphicsKit/GraphicsResourceBundle.cpp
+        vcf/GraphicsKit/GraphicsToolKit.cpp
+        vcf/GraphicsKit/ImageEvent.cpp
+        vcf/GraphicsKit/JPEGLoader.cpp
+        vcf/GraphicsKit/Matrix2D.cpp
+        vcf/GraphicsKit/PNGLoader.cpp
+        vcf/GraphicsKit/Point.cpp
+        vcf/GraphicsKit/PrintSession.cpp
+        vcf/GraphicsKit/Rect.cpp
+    </set>
+
+    <set var="GRAPHICSKIT_WIN_HDR" hints="files">
+        vcf/GraphicsKit/Win32Context.h
+        vcf/GraphicsKit/Win32Font.h
+        vcf/GraphicsKit/Win32FontManager.h
+        vcf/GraphicsKit/Win32GraphicsResourceBundle.h
+        vcf/GraphicsKit/Win32GraphicsToolkit.h
+        vcf/GraphicsKit/Win32Image.h
+        vcf/GraphicsKit/Win32PrintSession.h
+        vcf/GraphicsKit/Win32VisualStylesWrapper.h
+    </set>
+
+    <set var="GRAPHICSKIT_WIN_SRC" hints="files">
+        vcf/GraphicsKit/Win32Context.cpp
+        vcf/GraphicsKit/Win32Font.cpp
+        vcf/GraphicsKit/Win32FontManager.cpp
+        vcf/GraphicsKit/Win32GraphicsResourceBundle.cpp
+        vcf/GraphicsKit/Win32GraphicsToolkit.cpp
+        vcf/GraphicsKit/Win32Image.cpp
+        vcf/GraphicsKit/Win32PrintSession.cpp
+    </set>
+
+    <set var="GRAPHICSKIT_GTK_HDR" hints="files">
+        vcf/GraphicsKit/GTKContext.h
+        vcf/GraphicsKit/GTKFont.h
+        vcf/GraphicsKit/GTKGraphicsResourceBundle.h
+        vcf/GraphicsKit/GTKGraphicsToolkit.h
+        vcf/GraphicsKit/GTKImage.h
+        vcf/GraphicsKit/GTKPrintSession.h
+    </set>
+
+    <set var="GRAPHICSKIT_GTK_SRC" hints="files">
+        vcf/GraphicsKit/GTKContext.cpp
+        vcf/GraphicsKit/GTKFont.cpp
+        vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
+        vcf/GraphicsKit/GTKGraphicsToolkit.cpp
+        vcf/GraphicsKit/GTKImage.cpp
+        vcf/GraphicsKit/GTKPrintSession.cpp
+    </set>
+
+    <set var="GRAPHICSKIT_OSX_HDR" hints="files">
+        vcf/GraphicsKit/OSXContext.h
+        vcf/GraphicsKit/OSXFont.h
+        vcf/GraphicsKit/OSXGraphicsToolkit.h
+        vcf/GraphicsKit/OSXImage.h
+    </set>
+
+    <set var="GRAPHICSKIT_OSX_SRC" hints="files">
+        vcf/GraphicsKit/OSXContext.cpp
+        vcf/GraphicsKit/OSXFont.cpp
+        vcf/GraphicsKit/OSXGraphicsToolkit.cpp
+        vcf/GraphicsKit/OSXImage.cpp
+    </set>
+
+    <set var="GRAPHICSKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_GTK_HDR)</if>
+        <if cond="PLATFORM_WIN32=='1'">$(GRAPHICSKIT_WIN_HDR)</if>
+        <if cond="PLATFORM_MACOSX=='1'">$(GRAPHICSKIT_OSX_HDR)</if>
+    </set>
+
+    <set var="GRAPHICSKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_GTK_SRC)</if>
+        <if cond="PLATFORM_WIN32=='1'">$(GRAPHICSKIT_WIN_SRC)</if>
+        <if cond="PLATFORM_MACOSX=='1'">$(GRAPHICSKIT_OSX_SRC)</if>
+    </set>
+</makefile>

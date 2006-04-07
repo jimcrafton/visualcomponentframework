@@ -19,9 +19,9 @@ namespace VCF {
 #define DOCUMENT_CLASSID		"4c5ca064-5a3e-4d0a-bbe9-f37d722af092"
 
 /**
-*class Document
-* a document is a model has many extra features like saving, loading, cutting 
-* and all that kind of stuff.
+\class Document Document.h "vcf/ApplicationKit/Document.h"
+A document is a model has many extra features like saving, loading, cutting 
+and all that kind of stuff.
 */
 class APPLICATIONKIT_API Document : public AbstractModel {
 
@@ -72,7 +72,7 @@ public:
 	* This is the name of the file without its path component
 	*@return String, the filename.
 	*/
-	String getName() {
+	virtual String getName() {
 		return fileName_.getBaseName(true);
 	}
 
@@ -83,7 +83,7 @@ public:
 	* path component of the previous filename.
 	*@param String, the filename.
 	*/
-	void setName( const String& name ) {
+	virtual void setName( const String& name ) {
 		FilePath fp = name;
 
 		fileName_ = fileName_.getPathName(true) + fp.getBaseName(true);
@@ -319,6 +319,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.1  2005/07/30 17:01:09  iamfraggle
+*get/setName made explicitly virtual
+*
 *Revision 1.5  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

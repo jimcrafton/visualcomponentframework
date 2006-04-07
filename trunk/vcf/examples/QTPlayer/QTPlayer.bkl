@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="QTPlayer" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            MainWindow.h
+            QTPlayerAbout.h
+            QTPlayerApplication.h
+            QuickTimeControl.h
+            QuickTimeMovie.h
+            StatusBarControl.h
+        </headers>
+        <sources>
+            MainWindow.cpp
+            QTPlayer.cpp
+            QTPlayerAbout.cpp
+            QTPlayerApplication.cpp
+            QuickTimeControl.cpp
+            QuickTimeMovie.cpp
+            StatusBarControl.cpp
+        </sources>
+        <win32-res>QTResFile.rc</win32-res>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

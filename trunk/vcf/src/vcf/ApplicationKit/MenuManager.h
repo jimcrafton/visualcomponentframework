@@ -25,7 +25,7 @@ namespace VCF {
 
 
 	/**
-	\par
+	\class MenuManager MenuManager.h "vcf/ApplicationKit/MenuManager.h"
 	The MenuManager class is used by the internals of the framework
 	to make sure that menu are handled in a platform neutral way.
 	When run on a specific platform work the menu manager peer
@@ -34,7 +34,7 @@ namespace VCF {
 	that on Win32 each window can have a menu (or not), and on Mac OS X
 	you just have the main system menu. The MenuManager insulates you
 	from having to care one way or the other. 
-	\par
+	
 	The menu manager is a singleton and cannot be created directly. 
 	Developers should never call the MenuManager::create() or 
 	MenuManager::terminate() functions - they will be called for you
@@ -61,6 +61,8 @@ namespace VCF {
 		a single menu item peer.
 		*/
 		static MenuItemPeer* getMenuItemPeer( MenuItem* item );
+
+		static void destroyMenuItemPeer( MenuItem* item );
 
 		/**
 		Register this window with the menu manager
@@ -110,6 +112,19 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.2.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.2.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.2.1  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
 *Revision 1.2  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

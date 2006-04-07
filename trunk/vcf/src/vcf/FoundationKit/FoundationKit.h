@@ -27,7 +27,7 @@ where you installed the VCF.
 #endif
 
 
-#include <iostream>
+//#include <iostream>
 
 #include <typeinfo>
 
@@ -44,6 +44,10 @@ where you installed the VCF.
 #ifdef macintosh
 	#include <string.h>
 	#include <extras.h>
+#endif
+
+#ifdef __BORLANDC__
+  #include <string.h>
 #endif
 
 #ifdef WIN32
@@ -79,6 +83,7 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKitSelectLib.h"
 
+#include "vcf/FoundationKit/SmartPtr.h"
 #include "vcf/FoundationKit/VCFChar.h"
 #include "vcf/FoundationKit/VCFString.h"
 #include "vcf/FoundationKit/CommonDefines.h"
@@ -98,16 +103,16 @@ where you installed the VCF.
 
 namespace VCF{
 	/**
-	\par
+	\class FoundationKit FoundationKit.h "vcf/FoundationKit/FoundationKit.h"
 	The FoundationKit class is used to initialize the Foundation Kit runtime.
 	This includes registering the basic classes in the runtime system, such as the 
 	correct SystemToolkit implementation, and the ClassRegistry.
-	\par
+	
 	FoundationKit::init() MUST be called at start up before anything else in the
 	VCF is used.
 	FoundationKit::terminate() MUST be called to free up any resources used by the
 	FoundationKit.
-	\par
+	
 	An example of proper usage looks like this:
 	\code
 	int main( int argc, char** argv ) 
@@ -122,7 +127,7 @@ namespace VCF{
 	}
 	\endcode
 
-	\par
+	
 	The FoundationKit is cannot be instantiated nor can it be derived from.
 	@see SystemToolkit
 	@see ClassRegistry
@@ -169,13 +174,13 @@ namespace VCF{
 		See the CommandLine class for examples of how to use this class. 
 		@see CommandLine
 		*/
-		static CommandLine getCommandLine();
+		static const CommandLine& getCommandLine();
 
 		/**
-		\par
+		
 		Use this to cause an assert to be fired. Currently an assert is implemented 
 		by throwing an exception. An assert is triggered if the condition is false.
-		\par
+		
 		As a general rule you don't need to call this directly, instead use the VCF_ASSERT 
 		macro's because in addition to a message the macro will be able to also include
 		the file and line number where the assertion was triggered, which is more useful.
@@ -327,7 +332,7 @@ namespace VCF{
 What follows is documentation for the main VCF source documentaion page.
 
 \mainpage
-\par
+
 This document is meant, first of all, as a general introduction to the VCF. It 
 intends to orient you to the basic concepts of how the VCF is designed and how 
 to begin using the features. Here’s what it won’t do: It won’t teach you how 
@@ -354,7 +359,7 @@ kit will make your application more powerful.
 any application, items like fonts, lines, and Bezier curves. If you want to add 
 pizzazz to your application, this kit is your best bet.
 
-\par
+
 The VCF also has additional secondary kits that perform specific functions. At 
 the moment, we have three:
 \li OpenGLKit: This kit facilitates the display of OpenGL code within an application. If you wish to use three-dimensional graphics, an OpenGLControl will be a good friend.
@@ -369,7 +374,6 @@ multi-party interaction, use this kit.
   this point it is more of a proof of concept - it works, but needs to be revamped 
   before using it for anything more than experiments.
 
-\par
 Since components’ interactions with the operating system vary from system to 
 system, each kit contains implementations of the generalized components. Classes 
 prefaced with Win32 pertain to 32-bit Windows environments; those prefaced with 
@@ -385,7 +389,6 @@ A standard download of the VCF will contain an examples directory, replete with
 basic demonstrations of features of the VCF. If you are completely unaware of how 
 to use a feature, it is best first to consult one of these examples.
 
-\par
 For example, if you want to use a slider control (like one Windows uses to control 
 the volume), use VisualStudio to open up the project in examples/Sliders. If you 
 build this project, it will appear in the examples/Sliders/vcXX/Debug directory. 
@@ -393,7 +396,7 @@ Here, you will see horizontal and vertical sliders, sliders with different begin
 and end values, sliders which send update events upon moving, etc. You can read 
 the code and use these ideas to begin your application.
 
-\par
+
 If you aren’t sure which example contains a certain item, perform a recursive 
 search through the examples directory with your item’s name. Then open up one of 
 the projects that contains the item.
@@ -404,7 +407,6 @@ application. Thus the API is available to facilitate your creative use of the
 features. To view this, see the Source Manual. The Class List will show a list 
 of the classes.
 
-\par
 When you click on a class, you will see its inheritance diagram. If you wish to 
 view the class’s inherited members, click the “List of all members” link.
 
@@ -414,24 +416,20 @@ cryptic. If the class is a control, a paint method will paint the control; you
 should not call this method as it is called automatically.
 
 
-\par
 Sometimes methods have models which represent a collection of multiple items. For 
 example, a ListBoxControl (a vertical list of items) uses a ListModel (available 
 via the getListModel command) to manage a group of ListItems. To build a list, 
 create a DefaultListItem (an implementation of ListItem), add it to the ListModel 
 via addItem, and it will be added to the ListBoxControl.
 
-\par
 Other methods use events. There may be various event-handler methods present in 
 a class. Again, you will usually not access these directly.
 
 
-\par
 A control can be positioned and sized via the setBounds method, or via setLeft, 
 setRight, setTop, setBottom, setWidth, and setHeight methods. These are 
 universally inherited from the base Control class.
 
-\par
 Some items use enumerations to specify particular functionalities. You can click 
 on the class name to view a full description of the enumeration. An example from 
 the directory should help you flesh this out.
@@ -445,7 +443,6 @@ handle an event occurring at a certain point in the code. There are several type
 of EventHandlers; you can use the \c GenericEventHandler or fetch the specific type 
 of EventHandler for your specific need.
 
-\par
 In the following example, an EventHandler is added to a ListBoxControl, calling 
 the function onChange every time the selection is changed in the ListBox.
 
@@ -472,14 +469,12 @@ functionality to a class. You can change the source code directly to make this
 happen. You may want to suggest the change in the forums or talk over the change 
 to ensure that you don’t unnecessarily break something.
 
-\par 
 Or suppose that you wish to create your own custom classes. You can inherit from 
 a base class much as the already existing classes do. For example, you can 
 inherit from class VCF::CustomControl to make your own control. You may need to 
 write the paint method, much as the other controls do, to be sure that it is 
 painted correctly.
 
-\par
 If you run into trouble, be sure to pose a question in the forums. Chances are 
 that someone will be able to relate to your concern.
 
@@ -490,6 +485,27 @@ that someone will be able to relate to your concern.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.6  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.6.2.5  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.6.2.4  2006/03/10 21:49:33  ddiego
+*updates to color example and some documentation.
+*
+*Revision 1.6.2.3  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.6.2.2  2005/12/28 20:43:40  kiklop74
+*Fixed error - missing strcmp
+*
+*Revision 1.6.2.1  2005/12/16 02:01:09  obirsoy
+*. added boost smart_ptr library.
+*
 *Revision 1.6  2005/07/13 01:55:43  ddiego
 *doc updates.
 *

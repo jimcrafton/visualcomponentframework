@@ -98,19 +98,23 @@ void Win32ScrollPeer::setScrollableControl( Control* scrollableControl )
 		else {
 			hInst = ::GetModuleHandle(NULL);
 		}
-#if defined(VCF_CW) && defined(UNICODE)
-		vScrollHWnd_ = CreateWindowEx( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
+
+		if ( System::isUnicodeEnabled() ) {
+			vScrollHWnd_ = CreateWindowExW( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
 			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
 
-		hScrollHWnd_ = CreateWindowEx( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
-			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
-#else
-		vScrollHWnd_ = CreateWindowEx( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
-			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
+			hScrollHWnd_ = CreateWindowExW( 0, L"SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
+				CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
+		}
+		else {
+			vScrollHWnd_ = CreateWindowExA( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_VERT | WS_VISIBLE, 0, 0, 200,
+				CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
 
-		hScrollHWnd_ = CreateWindowEx( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
-			CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
-#endif
+			hScrollHWnd_ = CreateWindowExA( 0, "SCROLLBAR", NULL, WS_CHILD | SBS_HORZ | WS_VISIBLE, 0, 0, 200,
+				CW_USEDEFAULT, hwnd, NULL, hInst, NULL );
+
+		}
+
 		scrollCorner_ = new Win32ScrollCorner();
 		HWND scHwnd = (HWND)scrollCorner_->getPeer()->getHandleID();
 		SetParent( scHwnd, hwnd );
@@ -126,10 +130,21 @@ void Win32ScrollPeer::scrollTo( const double& xPosition, const double& yPosition
 	Scrollable* scrollable = scrollableControl_->getScrollable();
 	if ( NULL != scrollable ) {
 
+		double h = scrollableControl_->getHeight();
+
 		bool hasVertSB = (scrollable->hasVerticalScrollBar()) && (::IsWindowEnabled(vScrollHWnd_));
 		bool hasHorzSB = (scrollable->hasHorizontalScrollBar()) && (::IsWindowEnabled(hScrollHWnd_));
 
+		int x, origX;
+		x = origX = 0;
+
+		int y, origY;
+		y = origY = 0;
+
 		if ( true == hasVertSB ) {
+			origY = y = GetScrollPos( vScrollHWnd_, SB_CTL );
+			y = (int)yPosition;
+
 			si.cbSize = sizeof(SCROLLINFO);
 			si.fMask = SIF_POS;
 			si.nPos = (long)yPosition;
@@ -137,12 +152,31 @@ void Win32ScrollPeer::scrollTo( const double& xPosition, const double& yPosition
 		}
 
 		if ( true == hasHorzSB ) {
+			origX = x = GetScrollPos( hScrollHWnd_, SB_CTL );
+			x = (int)xPosition;
+
 			memset( &si, 0, sizeof(si) );
 			si.cbSize = sizeof(SCROLLINFO);
 			si.fMask = SIF_POS ;
 			si.nPos = (long)xPosition;
 			SetScrollInfo( hScrollHWnd_, SB_CTL, &si, TRUE );
 		}
+
+		if ( hasHorzSB || hasVertSB ) {
+			Container* container = scrollableControl_->getContainer();
+			if ( NULL != container ) {
+				Enumerator<Control*>* children = container->getChildren();
+				while ( children->hasMoreElements() ) {
+					Control* child = children->nextElement();
+					if ( !child->ignoreForParentScrolling() ) {
+						Rect r = child->getBounds();
+						r.offset( -(x-origX), -(y-origY) );
+						child->setBounds( &r );
+					}
+				}
+			}
+		}
+
 	}
 }
 
@@ -179,6 +213,7 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	// initially set showVertSB and showHorzSB false, then check.
 	bool showVertSB = false;
 	bool showHorzSB = false;
+
 	
 	// if hasSB and keepSB then we show them anyway
 	if ( hasVertSB ) {
@@ -228,6 +263,8 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	if ( needHorzSB ) {
 		showHorzSB = true;
 	}
+
+
 	
 	// set isVertSBVisible_ and isHorzSBVisible_
 	isVertSBVisible_ = showVertSB;
@@ -238,7 +275,7 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	scrollInfoVert.cbSize = sizeof(SCROLLINFO);
 	scrollInfoVert.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
 	scrollInfoVert.nPage = (long)( needVertSB ? bounds.getHeight() : 0);	
-	scrollInfoVert.nPos = (long)scrollable->getVerticalPosition();
+	scrollInfoVert.nPos =  (long)scrollable->getVerticalPosition();
 	scrollInfoVert.nMin = 0;
 	scrollInfoVert.nMax = (long) ( showVertSB  ? virtViewHeight : scrollInfoVert.nMin );	
 	if ( showHorzSB && (scrollInfoVert.nMax > 0)) {
@@ -249,13 +286,13 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	scrollInfoHorz.cbSize = sizeof(SCROLLINFO);
 	scrollInfoHorz.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
 	scrollInfoHorz.nPage = (long)( needHorzSB ? bounds.getWidth() : 0 );
-	scrollInfoHorz.nPos = (long)scrollable->getHorizontalPosition();
+	scrollInfoHorz.nPos =  (long)scrollable->getHorizontalPosition();
 	scrollInfoHorz.nMin = 0;
 	scrollInfoHorz.nMax = (long)( showHorzSB ? virtViewWidth : scrollInfoHorz.nMin );
 	if ( showVertSB && (scrollInfoHorz.nMax > 0) ) {
 		scrollInfoHorz.nMax += (long)( vertSBWidth + 1 );
 	}
-
+	
 
 	// dimensions of the vertical scrollbar
 	int x1 = (long)( bounds.left_ + ( bounds.getWidth() - vertSBWidth ) );
@@ -278,6 +315,8 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	if ( showVertSB ) {
 		::ShowWindow( vScrollHWnd_, SW_NORMAL );
 		MoveWindow( vScrollHWnd_, x1, y1, w1, h1, TRUE );
+		::InvalidateRect( vScrollHWnd_, NULL, TRUE );
+		UpdateWindow( vScrollHWnd_ );
 		if ( !needVertSB ) {
 			::EnableWindow( vScrollHWnd_, FALSE );
 			scrollInfoVert.nPage = 0;
@@ -298,6 +337,8 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	if ( showHorzSB ) {
 		::ShowWindow( hScrollHWnd_, SW_NORMAL );
 		MoveWindow( hScrollHWnd_, x2, y2, w2, h2, TRUE );
+		::InvalidateRect( hScrollHWnd_, NULL, TRUE );
+		UpdateWindow( hScrollHWnd_ );
 		if ( !needHorzSB ) {
 			::EnableWindow( hScrollHWnd_, FALSE );
 			scrollInfoHorz.nPage = 0;
@@ -328,7 +369,6 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	else {
 		scrollCorner_->setVisible( false );
 	}
-
 }
 
 double Win32ScrollPeer::getHorizontalScrollbarHeight()
@@ -466,6 +506,21 @@ void Win32ScrollPeer::getAdjustedPositions( double& xPosition, double& yPosition
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/26 16:34:31  ddiego
+*repositioning scrollbars is more or less flicker free now.
+*
+*Revision 1.4.2.3  2006/03/22 03:18:20  ddiego
+*fixed a glitch in scroll vert and horz position values.
+*
+*Revision 1.4.2.2  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
+*Revision 1.4.2.1  2005/10/07 04:06:24  ddiego
+*minor adjustment to control state variables
+*
 *Revision 1.4  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

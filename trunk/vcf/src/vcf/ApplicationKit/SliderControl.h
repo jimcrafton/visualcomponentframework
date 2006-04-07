@@ -27,7 +27,14 @@ static String DisplayOrientationNames[] = { "SliderControl::doHorizontal",
 static String TickMarkStyleNames[] = { "SliderControl::tmsNone",
                                          "SliderControl::tmsTopLeft",
 										"SliderControl::tmsBottomRight" };
-
+/**
+\class SliderControl SliderControl.h "vcf/ApplicationKit/SliderControl.h"
+The SliderControl, sometimes referred to as a "trackbar" provides
+a UI that consists of a thumb button that slides, vertically or
+horizontally, along a "track". Sliding this causes the position 
+value to change. The position is bounded by a minimum and maximum
+value.
+*/
 class APPLICATIONKIT_API SliderControl : public CustomControl {
 public:
 
@@ -151,6 +158,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

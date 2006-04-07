@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -29,11 +29,12 @@ namespace agg
     public:
         typedef PixFmt pixfmt_type;
         typedef typename pixfmt_type::color_type color_type;
+        typedef typename pixfmt_type::row_data row_data;
         typedef AlphaMask amask_type;
         typedef typename amask_type::cover_type cover_type;
 
     private:
-        enum { span_extra_tail = 256 };
+        enum span_extra_tail_e { span_extra_tail = 256 };
 
         void realloc_span(unsigned len)
         {
@@ -168,10 +169,20 @@ namespace agg
 
 
         //--------------------------------------------------------------------
+        void copy_color_hspan(int x, int y, unsigned len, const color_type* colors)
+        {
+            realloc_span(len);
+            m_mask->fill_hspan(x, y, m_span, len);
+            m_pixf->blend_color_hspan(x, y, len, colors, m_span, cover_full);
+        }
+
+
+        //--------------------------------------------------------------------
         void blend_color_hspan(int x, int y,
                                unsigned len, 
                                const color_type* colors,
-                               const cover_type* covers)
+                               const cover_type* covers,
+                               cover_type cover = cover_full)
         {
             if(covers) 
             {
@@ -183,7 +194,7 @@ namespace agg
                 realloc_span(len);
                 m_mask->fill_hspan(x, y, m_span, len);
             }
-            m_pixf->blend_color_hspan(x, y, len, colors, m_span);
+            m_pixf->blend_color_hspan(x, y, len, colors, m_span, cover);
         }
 
 
@@ -191,7 +202,8 @@ namespace agg
         void blend_color_vspan(int x, int y,
                                unsigned len, 
                                const color_type* colors,
-                               const cover_type* covers)
+                               const cover_type* covers,
+                               cover_type cover = cover_full)
         {
             if(covers) 
             {
@@ -203,7 +215,7 @@ namespace agg
                 realloc_span(len);
                 m_mask->fill_vspan(x, y, m_span, len);
             }
-            m_pixf->blend_color_vspan(x, y, len, colors, m_span);
+            m_pixf->blend_color_vspan(x, y, len, colors, m_span, cover);
         }
 
     private:

@@ -22,8 +22,9 @@ class Image;
 class GraphicsResourceBundlePeer;
 
 /**
-*A ResourceBundle is used to represent a collection of resources. ResourceBundle's can
-*be attached to external files or applications.
+\class GraphicsResourceBundle GraphicsResourceBundle.h "vcf/GraphicsKit/GraphicsResourceBundle.h"
+*A GraphicsResourceBundle is used to represent a collection of resources
+that happen to be images. 
 */
 class GRAPHICSKIT_API GraphicsResourceBundle : public ResourceBundle {
 public:

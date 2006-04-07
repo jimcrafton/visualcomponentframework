@@ -21,7 +21,7 @@ class Color;
 class Font;
 
 /**
-*
+\class CommonDialogPeer CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonDialogPeer : public Interface{
 public:
@@ -34,7 +34,7 @@ public:
 
 
 /**
-*
+\class CommonFileDialog CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonFileDialogPeer : public CommonDialogPeer{
 public:
@@ -66,7 +66,7 @@ public:
 };
 
 /**
-*
+\class CommonFolderBrowseDialogPeer CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonFolderBrowseDialogPeer : public CommonDialogPeer{
 public:
@@ -79,7 +79,7 @@ public:
 };
 
 /**
-*
+\class CommonColorDialogPeer CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonColorDialogPeer : public CommonDialogPeer {
 public:
@@ -93,7 +93,7 @@ public:
 
 
 /**
-*
+\class CommonPrintDialogPeer CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonPrintDialogPeer : public CommonDialogPeer {
 public:
@@ -118,7 +118,7 @@ public:
 
 
 /**
-*
+\class CommonFontDialogPeer CommonDialogPeer.h "vcf/ApplicationKit/CommonDialogPeer.h"
 */
 class APPLICATIONKIT_API CommonFontDialogPeer : public CommonDialogPeer {
 public:
@@ -135,6 +135,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

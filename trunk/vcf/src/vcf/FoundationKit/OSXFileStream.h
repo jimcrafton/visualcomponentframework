@@ -28,9 +28,9 @@ public:
 
 	virtual unsigned long getSize();
 
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes );
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
 
-	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes );
+	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
 
 	virtual char* getBuffer();
 private:
@@ -47,6 +47,13 @@ private:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.3  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.2.6.1  2005/11/10 02:02:38  ddiego
+ *updated the osx build so that it
+ *compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+ *
  *Revision 1.2  2004/08/07 02:49:13  ddiego
  *merged in the devmain-0-6-5 branch to stable
  *

@@ -199,7 +199,8 @@ bool OSXFileSaveDialog::execute()
 		CFRelease( saveDlgOptions.popupExtension );
 	}
 	
-	for ( int i=0;i<filter_.size();i++ ) {
+	int i=0;
+	for ( i=0;i<filter_.size();i++ ) {
 		CFRelease( descriptionArray[i] );
 	}
 	
@@ -448,6 +449,12 @@ void OSXFileSaveDialog::setFileMustExist( const bool& fileMustExist )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.3  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

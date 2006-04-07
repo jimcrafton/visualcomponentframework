@@ -18,7 +18,7 @@ Object base class.
 class Foo : public VCF::Object {
 public:
 	virtual VCF::String toString() {
-		return "Foo here!\n\t" + Object::toString();
+		return VCF::String("Foo here!\n\t") + VCF::Object::toString();
 	}
 };
 
@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
 {
 	FoundationKit::init( argc, argv );
 
-	try { 
+	try { 	
+		
 		// creating strings
 		String s = "Now";
 		String t = s + " is the time."; // concatenate strings with + operator
@@ -76,13 +77,13 @@ int main(int argc, char *argv[])
 		System::println( toFind );
 
 		pos = t.find("time"); // finds the string "time" in position 11
-		System::println(Format("string \"time\" found at position: %d in string {%ls}") % pos % t.c_str() );
+		System::println( Format("string \"time\" found at position: %d in string {%s}") % pos % t );
 
 
 		
 
 		Foo f;
-		System::println( "f is: " + f + "\n" + 99.5643231 + " bottles of " + &f + " on the wall!" );
+		System::println( String("f is: ") + f + "\n" + 99.5643231 + " bottles of " + &f + " on the wall!" );
 
 		System::println( String("Is this ") + true + " or is this " + false + "?" );
 
@@ -95,10 +96,10 @@ int main(int argc, char *argv[])
 		System::println( String("The value of the void* pointer ptr is: ") + ptr );
 
 
-		int i;
-		bool j;
-		const double* k;
-		float l;
+		int i = 0;
+		bool j = false;
+		const double* k = NULL;
+		float l = 0;
 		Object o;
 		
 		System::println( "i is a " + typeid(i) + " type" );
@@ -160,7 +161,7 @@ int main(int argc, char *argv[])
 			System::println( formattedString );
 		}
 		catch ( std::exception& e ) {
-			printf( "%s\n", e.what() );
+			System::print( Format("%s\n") % e.what() );
 		}
 
 
@@ -170,17 +171,100 @@ int main(int argc, char *argv[])
 			System::println( formattedString );
 		}
 		catch ( std::exception& e ) {
-			printf( "%s\n", e.what() );
+			System::print( Format("%s\n") % e.what() );
 		}
 
 		//StringUtils::format is deprecated - don't use in new code
-		formattedString = StringUtils::format( "Number: %d, as hex: 0x%08X, a string: %ls", 12, 12, toFind.c_str() );
+		formattedString = Format( "Number: %d, as hex: 0x%08X, a string: %s" ) % 12 % 12 % toFind;
 		System::println( formattedString );
 
 
 		//same thing with a Format
-		formattedString = Format( "Number: %d, as hex: 0x%08X, a string: %ls") % 12 % 12 % toFind.c_str();
+		formattedString = Format( "Number: %d, as hex: 0x%08X, a string: %s") % 12 % 12 % toFind;
 		System::println( formattedString );
+
+		/**
+		code added with only purpose of fulling testing the Format functionality
+		*/
+		s = Format( "abc" );
+		VCF_ASSERT(  "abc" == s );
+
+		s = Format( "%%" );
+		VCF_ASSERT(  "%" == s );
+
+		s = Format( "%d" ) % 1;
+		VCF_ASSERT(  "1" == s );
+
+		s = Format( "%d%%" ) % 1;
+		VCF_ASSERT(  "1%" == s );
+
+		s = Format( "a %d%%" ) % 1;
+		VCF_ASSERT(  "a 1%" == s );
+
+		s = Format( "%% %d%%" ) % 1;
+		VCF_ASSERT(  "% 1%" == s );
+
+		s = Format( "a %% %% %d" ) % 1;
+		VCF_ASSERT(  "a % % 1" == s );
+
+		s = Format( "%da %% %% %d" ) % 1 % 2;
+		VCF_ASSERT(  "1a % % 2" == s );
+
+		s = Format( "%da %% %% %d%%" ) % 1 % 2;
+		VCF_ASSERT(  "1a % % 2%" == s );
+
+		s = Format( "%da %% %% %d%%%d" ) % 1 % 2 % 3;
+		VCF_ASSERT( "1a % % 2%3" == s );
+
+		s = Format( "%da %% %% %d%%%d%%" ) % 1 % 2 % 3;
+		VCF_ASSERT( "1a % % 2%3%" == s );
+
+		s = Format( "%da %% %% %d%%%%%d%%" ) % 1 % 2 % 3;
+		VCF_ASSERT( "1a % % 2%%3%" == s );
+
+		s = Format("Hola from %s") % String("me");
+		VCF_ASSERT( "Hola from me" == s );
+
+		s = Format("Hola from %s%%") % String("me");
+		VCF_ASSERT( "Hola from me%" == s );
+
+		s = Format( "a %d \r\n" ) % 1 ;
+		VCF_ASSERT( "a 1 \r\n" == s );
+
+		s = Format( "a %5d \r\n" ) % 1 ;
+		VCF_ASSERT( "a     1 \r\n" == s );
+
+		s = Format( "a	%d --> %d  is %d .. %d \r\n" ) % 1 % 2 % 3 % 4;
+		VCF_ASSERT( "a	1 --> 2  is 3 .. 4 \r\n" == s );
+
+
+		//error - too many arguments, expecting 2 argument, recv'd 3!
+		try {
+			s = Format( "%%d" ) % 1;
+		}
+		catch ( std::exception& e ) {
+			System::print( Format("%s\n") % e.what() );
+		}
+
+		s = Format( "%d" ) %1;
+
+		try {
+			s = Format( "%d" );
+		}
+		catch ( std::exception& e ) {
+			System::print( Format("%s\n") % e.what() );
+		}
+
+		try {
+			s = Format( "%d %d" ) % 1;
+		}
+		catch ( std::exception& e ) {
+			System::print( Format("%s\n") % e.what() );
+		}
+
+
+
+
 
 		
 		/**
@@ -189,13 +273,13 @@ int main(int argc, char *argv[])
 
 		String className = StringUtils::getClassNameFromTypeInfo( typeid(double) );
 
-		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %ls") % className.c_str() );
+		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %s") % className );
 
 		className = StringUtils::getClassNameFromTypeInfo( typeid(StringUtils) );
-		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %ls") % className.c_str() );
+		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %s") % className );
 
 		className = StringUtils::getClassNameFromTypeInfo( typeid(System) );
-		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %ls") % className.c_str() );
+		System::println( Format("StringUtils::getClassNameFromTypeInfo() returned: %s") % className );
 
 
 
@@ -205,11 +289,11 @@ int main(int argc, char *argv[])
 
 		String xfrmedString = StringUtils::lowerCase( className );
 
-		System::println( Format("lowercase: %ls") % xfrmedString.c_str() );
+		System::println( Format("lowercase: %s") % xfrmedString );
 
 		xfrmedString = StringUtils::upperCase( className );
 
-		System::println( Format("uppercase: %ls") % xfrmedString.c_str() );
+		System::println( Format("uppercase: %s") % xfrmedString );
 
 
 		/**
@@ -217,7 +301,7 @@ int main(int argc, char *argv[])
 		*/
 		String newUUID = StringUtils::newUUID();
 
-		System::println( Format("new UUID: %ls") % newUUID.c_str() );
+		System::println( Format("new UUID: %s") % newUUID );
 
 
 		/**
@@ -225,19 +309,19 @@ int main(int argc, char *argv[])
 		*/
 
 		String val = StringUtils::toString( 12 );
-		System::println( Format("value: %ls") % val.c_str() );
+		System::println( Format("value: %s") % val );
 
 		val = StringUtils::toString( 1234.009459034 );
-		System::println( Format("value: %ls") % val.c_str() );
+		System::println( Format("value: %s") % val );
 
 		val = StringUtils::toString( 53433.000034f );
-		System::println( Format("value: %ls") % val.c_str() );
+		System::println( Format("value: %s") % val );
 
 		val = StringUtils::toString( true );
-		System::println( Format("value: %ls") % val.c_str() );
+		System::println( Format("value: %s") % val );
 
 		val = StringUtils::toString( false );
-		System::println( Format("value: %ls") % val.c_str() );
+		System::println( Format("value: %s") % val );
 
 
 		/**
@@ -250,7 +334,7 @@ int main(int argc, char *argv[])
 		/**
 		Same as above, only with variable arguments
 		*/
-		StringUtils::traceWithArgs( Format("Hello World %d times") % 10 );
+		StringUtils::trace( Format("Hello World %d times") % 10 );
 
 
 		/**
@@ -259,14 +343,14 @@ int main(int argc, char *argv[])
 		String original = "####Some text#######";
 
 		xfrmedString = StringUtils::trim( original, '#' );
-		System::println( Format("original: %ls \nxfrmedString after StringUtils::trim(): %ls") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: %s \nxfrmedString after StringUtils::trim(): %s") % original % xfrmedString );
 
 
 		xfrmedString = StringUtils::trimLeft( original, '#' );
-		System::println( Format("original: %ls \nxfrmedString after StringUtils::trimLeft(): %ls") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: %s \nxfrmedString after StringUtils::trimLeft(): %s") % original % xfrmedString );
 
 		xfrmedString = StringUtils::trimRight( original, '#' );
-		System::println( Format("original: %ls \nxfrmedString after StringUtils::trimRight(): %ls") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: %s \nxfrmedString after StringUtils::trimRight(): %s") % original % xfrmedString );
 
 
 		/**
@@ -277,19 +361,23 @@ int main(int argc, char *argv[])
 
 		xfrmedString = original;
 		StringUtils::trimWhiteSpaces( xfrmedString );
-		System::println( Format("original: \"%ls\"\nxfrmedString after StringUtils::trimWhiteSpaces(): %ls") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: \"%s\"\nxfrmedString after StringUtils::trimWhiteSpaces(): %s") % original % xfrmedString );
 
 		xfrmedString = original;
 		StringUtils::trimWhiteSpacesLeft( xfrmedString );
-		System::println( Format("original: \"%ls\"\nxfrmedString after StringUtils::trimWhiteSpacesLeft(): \"%ls\"") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: \"%s\"\nxfrmedString after StringUtils::trimWhiteSpacesLeft(): \"%s\"") % original % xfrmedString );
 
 
 		xfrmedString = original;
 		StringUtils::trimWhiteSpacesRight( xfrmedString );
-		System::println( Format("original: \"%ls\"\nxfrmedString after StringUtils::trimWhiteSpacesRight(): \"%ls\"") % original.c_str() % xfrmedString.c_str() );
+		System::println( Format("original: \"%s\"\nxfrmedString after StringUtils::trimWhiteSpacesRight(): \"%s\"") % original % xfrmedString );
+
+
+		System::println( "." );
+		System::println( "all the tests and the example have completed successfully" );
 	}
 	catch ( std::exception& e ) {
-		printf( e.what() );
+		System::print( e.what() );
 	}
 
 
@@ -321,8 +409,27 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
-*Revision 1.4  2005/07/09 23:14:44  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.5  2006/04/07 02:34:43  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.5  2006/03/29 19:45:59  kdmix
+*A bcc issue fixed.
+*
+*Revision 1.4.2.4  2006/03/19 00:03:41  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.4.2.3  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.4.2.2  2005/07/31 02:36:54  marcelloptr
+*made the Format class 10% faster and fixed handling on the %% character sequence
+*
+*Revision 1.4.2.1  2005/07/23 21:45:42  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
+*Revision 1.3.4.7  2005/07/12 13:33:58  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.3.4.4  2005/04/17 15:11:47  iamfraggle
 *Replaced old-style var arg calls with new Format calls.

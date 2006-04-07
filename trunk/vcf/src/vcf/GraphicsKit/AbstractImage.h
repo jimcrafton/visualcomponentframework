@@ -20,6 +20,7 @@ class ImageBits;
 class GraphicsContext;
 
 /**
+\class AbstractImage AbstractImage.h "vcf/GraphicsKit/AbstractImage.h"
 AbstractImage represents a base implementation of the Image interface. It implements
 common functions, such as getWidth, etc, but still requires actually image class to be
 derived from it. It also provides basic support for ImageSizeChangedHandlers, so derived classes
@@ -118,13 +119,17 @@ public:
 	virtual Image::ImageChannelType getChannelType() const ;
 
 	virtual Image::PixelLayoutOrder getPixelLayoutOrder() const ;
+
+	virtual void* getData();
 protected:
 	ImageBits* imageBits_;
+	unsigned char* dataBuffer_;
 	int height_;
     int width_;
 	GraphicsContext * context_;
 	Color transparencyColor_;
 	bool isTransparent_;
+	bool needsMemAlloc_;
 
 	/**
 	Implementer note: flags_ needs to be intialized in the constructor of the
@@ -146,6 +151,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
+*Revision 1.4.2.2  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.4.2.1  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
 *Revision 1.4  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

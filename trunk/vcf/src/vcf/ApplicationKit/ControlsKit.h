@@ -62,10 +62,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ImageControl.h"
 #endif // _VCF_IMAGECONTROL_H__
 
-#ifndef _VCF_HTMLBROWSERCONTROL_H__
-#	include "vcf/ApplicationKit/HTMLBrowserControl.h"
-#endif // _VCF_HTMLBROWSERCONTROL_H__
-
 
 #ifndef _VCF_PUSHBUTTON_H__
 #	include "vcf/ApplicationKit/PushButton.h"
@@ -150,6 +146,15 @@ where you installed the VCF.
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.3.2.1  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

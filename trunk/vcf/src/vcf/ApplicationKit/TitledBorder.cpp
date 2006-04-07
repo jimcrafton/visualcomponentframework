@@ -110,11 +110,11 @@ Rect TitledBorder::getClientRect( Rect* initialBounds, Control* control )
 		result.inflate( -2.0, 0.0 );	
 		result.bottom_ -= 2.0;
 
-		Font* oldFont = context->getCurrentFont();
+		Font oldFont = *context->getCurrentFont();
 		context->setCurrentFont( &font_ );
 
 		result.top_ += context->getTextHeight( "EM" );
-		context->setCurrentFont( oldFont );
+		context->setCurrentFont( &oldFont );
 	}
 	else {
 		result.inflate( -2.0, -2.0 );	
@@ -126,6 +126,12 @@ Rect TitledBorder::getClientRect( Rect* initialBounds, Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/25 04:42:14  ddiego
+*fixed glitch in titled border where the old font was not being set correctly.
+*
 *Revision 1.3  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

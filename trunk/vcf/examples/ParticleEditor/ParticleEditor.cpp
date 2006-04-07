@@ -462,8 +462,7 @@ void ParticleEditor::onInitialSpeed(TextEvent *e){
 	try{
 		value=StringUtils::fromStringAsFloat(mInitialSpeed->getTextModel()->getText());
 	}
-	catch(std::exception &e){
-		e.what(); // Get rid of unused e warning
+	catch(std::exception&){
 		value=0;
 	}
 
@@ -475,8 +474,7 @@ void ParticleEditor::onInitialVariance(TextEvent *e){
 	try{
 		value=StringUtils::fromStringAsFloat(mInitialVariance->getTextModel()->getText());
 	}
-	catch(std::exception &e){
-		e.what(); // Get rid of unused e warning
+	catch(std::exception&){
 		value=0;
 	}
 
@@ -488,8 +486,7 @@ void ParticleEditor::onGravity(TextEvent *e){
 	try{
 		value=StringUtils::fromStringAsFloat(mGravity->getTextModel()->getText());
 	}
-	catch(std::exception &e){
-		e.what(); // Get rid of unused e warning
+	catch(std::exception&){
 		value=0;
 	}
 
@@ -501,8 +498,7 @@ void ParticleEditor::onGravityVariance(TextEvent *e){
 	try{
 		value=StringUtils::fromStringAsFloat(mGravityVariance->getTextModel()->getText());
 	}
-	catch(std::exception &e){
-		e.what(); // Get rid of unused e warning
+	catch(std::exception&){
 		value=0;
 	}
 
@@ -604,7 +600,7 @@ void ParticleEditor::onEndingSystem(TextEvent *e){
 }
 
 void ParticleEditor::onNewTexture(ButtonEvent *e){
-	CommonFileOpen *dialog=new CommonFileOpen();
+	CommonFileOpenDialog *dialog=new CommonFileOpenDialog();
 	FilePath path(Application::getRunningInstance()->getFileName());
 	dialog->setDirectory(path.getPathName());
 	dialog->addFilter("Bitmaps (*.bmp)","*.bmp");
@@ -643,7 +639,7 @@ void ParticleEditor::onDeleteTexture(ButtonEvent *e){
 }
 
 void ParticleEditor::onFileLoad(MenuItemEvent *e){
-	CommonFileOpen *dialog=new CommonFileOpen();
+	CommonFileOpenDialog *dialog=new CommonFileOpenDialog();
 	FilePath path(Application::getRunningInstance()->getFileName());
 	dialog->setDirectory(path.getPathName());
 	dialog->addFilter("Particle XML Files (*.xml)","*.xml");
@@ -656,8 +652,7 @@ void ParticleEditor::onFileLoad(MenuItemEvent *e){
 		try{
 			in=new FileInputStream(dialog->getFileName());
 		}
-		catch(std::exception &e){
-			e.what();
+		catch(std::exception&){
 		}
 
 		if(in){
@@ -683,7 +678,7 @@ void ParticleEditor::onFileLoad(MenuItemEvent *e){
 }
 
 void ParticleEditor::onFileSave(MenuItemEvent *e){
-	CommonFileOpen *dialog=new CommonFileOpen();
+	CommonFileOpenDialog *dialog=new CommonFileOpenDialog();
 	FilePath path(Application::getRunningInstance()->getFileName());
 	dialog->setDirectory(path.getPathName());
 	dialog->addFilter("Particle XML Files (*.xml)","*.xml");
@@ -736,8 +731,17 @@ void ParticleEditor::onFileExit(MenuItemEvent *e){
 /**
 *CVS Log info
 *$Log$
-*Revision 1.3  2005/07/09 23:14:40  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.4  2006/04/07 02:34:38  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2005/10/01 00:54:18  kiklop74
+*minor sample fixes
+*
+*Revision 1.3.2.2  2005/09/02 01:01:19  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.3.2.1  2005/07/23 21:45:39  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.2.2.1  2005/06/06 02:34:04  ddiego
 *menu changes to better support win32 and osx.

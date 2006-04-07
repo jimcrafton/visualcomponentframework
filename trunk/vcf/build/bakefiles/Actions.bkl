@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <if cond="FORMAT_SUPPORTS_CONDITIONS=='1'">
+
+        <action id="FoundationKit" cond="OPTION_FOUNDATIONKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>FoundationKit_lib</depends>
+            <depends>FoundationKit_dll</depends>
+        </action>
+        
+        <action id="GraphicsKit" cond="OPTION_GRAPHICSKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>GraphicsKit_lib</depends>
+            <depends>GraphicsKit_dll</depends>
+        </action>
+        
+        <action id="ApplicationKit" cond="OPTION_APPLICATIONKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>ApplicationKit_lib</depends>
+            <depends>ApplicationKit_dll</depends>
+        </action>
+        
+        <action id="HTMLKit" cond="OPTION_HTMLKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>HTMLKit_lib</depends>
+            <depends>HTMLKit_dll</depends>
+        </action>
+
+        <action id="OpenGLKit" cond="OPTION_OPENGLKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>OpenGLKit_lib</depends>
+            <depends>OpenGLKit_dll</depends>
+        </action>
+        
+        <action id="NetworkKit" cond="OPTION_NETWORKKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>NetworkKit_lib</depends>
+            <depends>NetworkKit_dll</depends>
+        </action>
+        
+        <action id="RemoteObjectKit" cond="OPTION_REMOTEOBJECTKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>RemoteObjectKit_lib</depends>
+            <depends>RemoteObjectKit_dll</depends>
+        </action>
+        
+        <action id="InternetKit" cond="OPTION_INTERNETKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>InternetKit_lib</depends>
+            <depends>InternetKit_dll</depends>
+        </action>
+        
+        <action id="ImageFormats" cond="OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
+            <is-phony>1</is-phony>
+            <depends>ImageFormats_lib</depends>
+            <depends>ImageFormats_dll</depends>
+        </action>
+
+        <action id="ZLib" cond="OPTION_ZLIB=='1'">
+            <is-phony>1</is-phony>
+            <depends>ZLib_lib</depends>
+        </action>
+
+        <action id="libAGG" cond="OPTION_LIBAGG=='1'">
+            <is-phony>1</is-phony>
+            <depends>libAGG_lib</depends>
+        </action>
+
+        <action id="LibJPEG" cond="OPTION_LIBJPEG=='1'">
+            <is-phony>1</is-phony>
+            <depends>LibJPEG_lib</depends>
+        </action>
+
+        <action id="LibPNG" cond="OPTION_LIBPNG=='1'">
+            <is-phony>1</is-phony>
+            <depends>LibPNG_lib</depends>
+        </action>
+
+        <action id="LibMNG" cond="OPTION_LIBMNG=='1'">
+            <is-phony>1</is-phony>
+            <depends>LibMNG_lib</depends>
+        </action>
+
+        <action id="LibTIFF" cond="OPTION_LIBTIFF=='1'">
+            <is-phony>1</is-phony>
+            <depends>LibTIFF_lib</depends>
+        </action>
+
+        <action id="FreeImage" cond="OPTION_FREEIMAGE=='1'">
+            <is-phony>1</is-phony>
+            <depends>FreeImage_lib</depends>
+        </action>
+
+        <action id="RegExx" cond="OPTION_REGEXX=='1'">
+            <is-phony>1</is-phony>
+            <depends>RegExx_lib</depends>
+        </action>
+
+    </if>
+
+</makefile>

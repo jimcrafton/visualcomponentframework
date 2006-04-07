@@ -13,16 +13,26 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#ifndef _VCF_PROPERTYEDITOR_H__
+#include "vcf/ApplicationKit/PropertyEditor.h"
+#endif 
+
 
 namespace VCF {
-
+/**
+\class AbstractPropertyEditor AbstractPropertyEditor.h "vcf/ApplicationKit/AbstractPropertyEditor.h"
+*/
 class APPLICATIONKIT_API AbstractPropertyEditor : public ObjectWithEvents, public PropertyEditor {
 public:
-	AbstractPropertyEditor() : attributes_(0),rootDesignerComponent_(NULL) {
+	AbstractPropertyEditor() : property_(NULL), attributes_(0),rootDesignerComponent_(NULL) {
 
 	}
 
 	virtual ~AbstractPropertyEditor(){}
+
+	virtual void setProperty( Property* property ) {
+		property_ = property;
+	}
 
 	virtual int getAttributes() {
 		return attributes_;
@@ -58,6 +68,7 @@ public:
 		}
 		else {
 			data_ = *value;
+			VCF_ASSERT( pdUndefined != data_.type );
 		}
 	}
 
@@ -83,6 +94,14 @@ public:
 		return false;
 	}
 
+	virtual String getPropertyDescription() {
+		return propertyDescription_;
+	}
+
+	virtual String getPropertyName() {
+		return propertyName_;
+	}
+
 	virtual bool equalTo( PropertyEditor* editor ) {
 		if ( NULL == editor ) {
 			return false;
@@ -106,10 +125,14 @@ public:
 	virtual void setRootDesignerComponent( Component* rootDesigner ) {
 		rootDesignerComponent_ = rootDesigner;
 	}
+	
 protected:
+	Property* property_;
 	int attributes_;
 	VariantData data_;
 	String propertyType_;
+	String propertyDescription_;
+	String propertyName_;
 	Component* rootDesignerComponent_;
 private:
 
@@ -124,6 +147,24 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.5  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.4  2005/09/17 21:37:43  ddiego
+*minor update
+*
+*Revision 1.3.2.3  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.3.2.2  2005/09/01 03:56:57  ddiego
+*doc updates and some minor mods to the property editor interface.
+*
+*Revision 1.3.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.3  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

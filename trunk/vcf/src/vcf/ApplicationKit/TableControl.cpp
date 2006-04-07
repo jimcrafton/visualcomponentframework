@@ -40,7 +40,9 @@ TableControl::TableControl( TableModel* model ):
 	allowFixedColumnSelection_(true),
 	allowFixedRowSelection_(true),
 	allowLiveResizing_(true),
-	autoSizeStyle_(TableControl::asoBoth)
+	autoSizeStyle_(TableControl::asoBoth),
+	defaultCellColor_(NULL),
+	defaultCellFont_(NULL)
 {
 	setContainerDelegate( this );
 
@@ -51,7 +53,11 @@ TableControl::TableControl( TableModel* model ):
 
 TableControl::~TableControl()
 {
+	defaultCellFont_->free();
+	defaultCellFont_ = NULL;
 
+	defaultCellColor_->free();
+	defaultCellColor_ = NULL;
 }
 
 void TableControl::setDrawGridLinesStyle( DrawGridLines val )
@@ -88,6 +94,9 @@ void TableControl::paint( GraphicsContext * context )
 	ulong32 columnCount = tm->getColumnCount();
 
 	if ( (rowCount > 0) && (columnCount > 0) ) {
+
+		int gcs = context->saveState();
+
 
 		ulong32 fixedRowCount = tm->getFixedRowsCount();
 		ulong32 fixedColumnCount = tm->getFixedColumnsCount();
@@ -142,6 +151,11 @@ void TableControl::paint( GraphicsContext * context )
 				cellItem->paint( context, &rect );
 			}
 		}
+		
+		context->restoreState( gcs );
+
+		gcs = context->saveState();
+
 
 		// draw fixed column cells:  m_nFixedRows..n, 0..m_nFixedCols-1
 		rect.bottom_ = fixedRowHeight-1;
@@ -186,6 +200,10 @@ void TableControl::paint( GraphicsContext * context )
 				cellItem->paint( context, &rect );
 			}
 		}
+
+		context->restoreState( gcs );
+
+		gcs = context->saveState();
 
 		// draw fixed row cells  0..m_nFixedRows, m_nFixedCols..n
 		rect.bottom_ = -1;
@@ -240,6 +258,10 @@ void TableControl::paint( GraphicsContext * context )
 			}
 
 		}
+
+		context->restoreState( gcs );
+
+		gcs = context->saveState();
 
 		// draw rest of non-fixed cells
 
@@ -309,6 +331,10 @@ void TableControl::paint( GraphicsContext * context )
 			}
 		}
 
+		context->restoreState( gcs );
+
+		gcs = context->saveState();
+
 		context->setStrokeWidth( 1 );
 		context->setColor( &Color(0.0,0.0,0.0) );
 		// draw vertical lines (drawn at ends of cells)
@@ -349,7 +375,8 @@ void TableControl::paint( GraphicsContext * context )
 			context->strokePath();
 		}
 
-	}
+		context->restoreState( gcs );
+	}	
 
 	paintChildren( context );
 }
@@ -364,6 +391,15 @@ void TableControl::init()
 	listMode_ = false;
 	allowColumnHide_ = false;
 	allowRowHide_ = false;
+
+
+	defaultCellColor_ = new Color();
+
+	*defaultCellColor_ = *GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW );
+
+	defaultCellFont_ = new Font();
+	*defaultCellFont_ = *getFont();
+
 
 	//selectedCellItem_ = NULL;
 
@@ -383,6 +419,7 @@ void TableControl::init()
 
 	if ( NULL == getViewModel() ){
 		setTableModel( new DefaultTableModel() );
+		addComponent( getViewModel() );
 	}
 	EventHandler* tmh =
 		new TableModelEventHandler<TableControl>( this, &TableControl::onTableModelChanged, "TableModelHandler" );
@@ -484,12 +521,14 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 				for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
 
-					Item* item = tm->getItem( row, col );
+					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
 							item->addItemSelectedHandler( itemHandler );
 						}
 						item->setControl( this );
+						item->setColor( getDefaultTableCellColor() );
+						item->setFont( getDefaultTableCellFont() );
 					}
 				}
 			}
@@ -512,12 +551,14 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 				for (int col=0;col<colCount;col++ ) {
 
-					Item* item = tm->getItem( row, col );
+					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
 							item->addItemSelectedHandler( itemHandler );
 						}
 						item->setControl( this );
+						item->setColor( getDefaultTableCellColor() );
+						item->setFont( getDefaultTableCellFont() );
 					}
 				}
 			}
@@ -586,16 +627,7 @@ void TableControl::setRowCount( const uint32& rowCount )
 
 void TableControl::onFocusLost( FocusEvent* e )
 {
-	//if ( e->getType() == 0 ) {
-		finishEditing();
-	//	e->setConsumed( true );
-	//}
-	//else {
-	//	EventHandler* ev = getEventHandler( "TableControl::onFocusLost" );
-	//	FocusEvent* newEvent = new FocusEvent( e->getSource(), 0 );
-	//	StringUtils::traceWithArgs( "newEvent: %s\n", newEvent->toString().c_str() );
-	//	UIToolkit::postEvent( ev, newEvent, false );
-	//}
+	finishEditing();
 }
 
 void TableControl::mouseDown( MouseEvent* event ){
@@ -606,7 +638,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 		event->getPoint()->x_ -= scrollable->getHorizontalPosition();
 		event->getPoint()->y_ -= scrollable->getVerticalPosition();
 	}
-
+	
 	finishEditing();
 
 	if ( event->hasLeftButton() ) {
@@ -999,21 +1031,16 @@ void TableControl::mouseMove( MouseEvent* event ){
 				mouseState_ = msPrepareColResize;
 				setCursorID( Cursor::SCT_SIZE_HORZ );
 			}
-			else {
-				setCursorID( Cursor::SCT_DEFAULT );
-			}
 		}
 		else if ( allowRowResizing_ && rowResizeAreaHitTest( *event->getPoint() ) ) {
 			if ( msPrepareRowResize != mouseState_ ) {
 				mouseState_ = msPrepareRowResize;
 				setCursorID( Cursor::SCT_SIZE_VERT );
 			}
-			else {
-				setCursorID( Cursor::SCT_DEFAULT );
-			}
 		}
 		else if ( msNone != mouseState_ ) {
 			mouseState_ = msNone;
+			setCursorID( Cursor::SCT_DEFAULT );
 		}
 
 		if ( msNone == mouseState_ ) {
@@ -1180,6 +1207,7 @@ void TableControl::mouseUp( MouseEvent* event ){
 		TableSelectionChanged.fireEvent( &event );
 	}
 
+	setCursorID( Cursor::SCT_DEFAULT );
 
 	mouseState_ = msNone;
 }
@@ -1318,12 +1346,14 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 
 
 				add( editorControl );
-				currentEditingControl_ = editorControl;
-				currentEditingControl_->setVisible( true );
-				currentEditingControl_->setFocused();
+				
+				editorControl->setVisible( true );
+				editorControl->setFocused();
 
 				EventHandler* kl = getEventHandler( TABLECONTROL_KBRD_HANDLER );
-				currentEditingControl_->KeyDown.addHandler( kl );
+				editorControl->KeyDown.addHandler( kl );
+
+				currentEditingControl_ = editorControl;
 			}
 			else {
 				finishEditing();
@@ -1492,8 +1522,8 @@ void TableControl::onFinishEditing( Event* e )
 	Control* editingControl = (Control*)e->getSource();
 	TableItemEditor* editor = fe->editor_;
 	if ( NULL != editingControl ){
-		StringUtils::traceWithArgs( Format("TableControl::finishEditing(), editor[%s]@ %s\n") %
-									editor->getClassName().c_str() % editor->toString().c_str() );
+		//StringUtils::traceWithArgs( Format("TableControl::onFinishEditing(), editor[%s]@ %s\n") %
+		//							editor->getClassName() % editor->toString() );
 		remove( editingControl );
 		removeComponent( editingControl );
 		editingControl->free();
@@ -1521,6 +1551,8 @@ void TableControl::finishEditing()
 	if ( NULL == currentItemEditor_ ){
 		return;
 	}
+
+	//StringUtils::trace( "TableControl::finishEditing()\n" );
 
 	currentItemEditor_->updateItem();
 
@@ -1726,10 +1758,6 @@ CellID TableControl::setFocusedCell( const CellID& cell )
 
 bool TableControl::columnResizeAreaHitTest( const Point& pt )
 {
-	if ( pt.y_ > getFixedRowHeight() ) {
-		//return false;
-	}
-
 	CellID cell = getCellIDFromPoint( pt );
 
 	Point start;
@@ -1742,8 +1770,8 @@ bool TableControl::columnResizeAreaHitTest( const Point& pt )
 
 	bool result = false;
 
-	if ( ((abs((long)(pt.x_ - start.x_)) < resizeCaptureRange_) && (cell.column != 0)) ||
-        (abs((long)(endx - pt.x_)) < resizeCaptureRange_) )  {
+	if ( (((pt.x_ - start.x_) < resizeCaptureRange_) && (cell.column != 0)) ||
+        ((endx - pt.x_) < resizeCaptureRange_) )  {
         result = true;
     }
     else {
@@ -1755,10 +1783,6 @@ bool TableControl::columnResizeAreaHitTest( const Point& pt )
 
 bool TableControl::rowResizeAreaHitTest( const Point& pt )
 {
-	if ( pt.x_ > getFixedColumnWidth() ) {
-		return false;
-	}
-
 	CellID cell = getCellIDFromPoint( pt );
 
 	Point start;
@@ -1771,8 +1795,8 @@ bool TableControl::rowResizeAreaHitTest( const Point& pt )
 
 	bool result = false;
 
-	if ( ((abs((long)(pt.y_ - start.y_)) < resizeCaptureRange_) && (cell.row != 0)) ||
-        (abs((long)(endy - pt.y_)) < resizeCaptureRange_) )  {
+	if ( (((pt.y_ - start.y_) < resizeCaptureRange_) && (cell.row != 0)) ||
+        ((endy - pt.y_) < resizeCaptureRange_) )  {
         result = true;
     }
     else {
@@ -2388,10 +2412,46 @@ void TableControl::keyDown( KeyboardEvent* e )
 	}
 }
 
+Color* TableControl::getDefaultTableCellColor()
+{
+	return defaultCellColor_;
+}
+
+void TableControl::setDefaultTableCellColor( Color* color )
+{
+	*defaultCellColor_ = *color;
+}
+
+Font* TableControl::getDefaultTableCellFont()
+{
+	return defaultCellFont_;
+}
+
+void TableControl::setDefaultTableCellFont( Font* font )
+{
+	*defaultCellFont_ = *font;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/26 16:18:13  ddiego
+*fixed a glitch in the table control that was not properly
+*displaying the resize cursor for columns or rows.
+*
+*Revision 1.4.2.3  2006/03/21 01:29:22  ddiego
+*fixed table control double click bug.
+*
+*Revision 1.4.2.2  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.4.2.1  2005/09/03 14:03:52  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

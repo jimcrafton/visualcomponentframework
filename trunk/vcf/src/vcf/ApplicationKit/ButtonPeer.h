@@ -18,7 +18,9 @@ where you installed the VCF.
 namespace VCF {
 	
 	class Image;
-	
+	/**
+	\class ButtonPeer ButtonPeer.h "vcf/ApplicationKit/ButtonPeer.h"
+	*/
 	class ButtonPeer : public VCF::Interface {
 	public:	
 		virtual Image* getImage() = 0;
@@ -34,6 +36,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

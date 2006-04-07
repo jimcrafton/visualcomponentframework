@@ -22,9 +22,13 @@ where you installed the VCF.
 namespace VCF {
 
 class BasicTableItemEditor;
+class TableModel;
 
 #define DEFAULTTABLECELLITEM_CLASSID	"53EA0BA6-7068-11d4-8F12-00207811CFAB"
 
+/**
+\class DefaultTableCellItem DefaultTableCellItem.h "vcf/ApplicationKit/DefaultTableCellItem.h"
+*/
 class APPLICATIONKIT_API DefaultTableCellItem : public TableCellItem {
 public:
 
@@ -33,55 +37,6 @@ public:
 	virtual ~DefaultTableCellItem();
 
 	virtual bool containsPoint( Point * pt );
-
-
-
-	DELEGATE(ItemPaint);
-	DELEGATE(ItemChanged);
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemAdded);
-	DELEGATE(ItemDeleted);
-
-	virtual void addItemPaintHandler( EventHandler* handler ){
-		ItemPaint += handler;
-	}
-
-	virtual void addItemChangedHandler( EventHandler* handler ){
-		ItemChanged += handler;
-	}
-
-	virtual void addItemSelectedHandler( EventHandler* handler ){
-		ItemSelected += handler;
-	}
-
-	virtual void addItemAddedHandler( EventHandler* handler ){
-		ItemAdded += handler;
-	}
-
-	virtual void addItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted += handler;
-	}
-
-	virtual void removeItemPaintHandler( EventHandler* handler ){
-		ItemPaint -= handler;
-	}
-
-	virtual void removeItemChangedHandler( EventHandler* handler ){
-		ItemChanged -= handler;
-	}
-
-	virtual void removeItemSelectedHandler( EventHandler* handler ){
-		ItemSelected -= handler;
-	}
-
-	virtual void removeItemAddedHandler( EventHandler* handler ){
-		ItemAdded -= handler;
-	}
-
-	virtual void removeItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted -= handler;
-	}
-
 
     virtual unsigned long getIndex() {
 		return -1;
@@ -93,35 +48,28 @@ public:
 
 	virtual void setData( void* data );
 
-	virtual Model* getModel();
-
-	virtual void setModel( Model* model );
-
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
-
-
 
 	virtual TableItemEditor* createItemEditor();
 
-
 	virtual bool isSelected() {
-		return (state_ & TableCellItem::tisSelected) ? true : false;
+		return (itemState_ & TableCellItem::tisSelected) ? true : false;
 	}
 
 	virtual bool isReadonly() {
-		return (state_ & TableCellItem::tisReadonly) ? true : false;
+		return (itemState_ & TableCellItem::tisReadonly) ? true : false;
 	}
 
 	virtual bool isFixed() {
-		return (state_ & TableCellItem::tcsFixed) ? true : false;
+		return (itemState_ & TableCellItem::tcsFixed) ? true : false;
 	}
 
 	virtual bool isFocused() {
-		return (state_ & TableCellItem::tcsFocused) ? true : false;
+		return (itemState_ & TableCellItem::tcsFocused) ? true : false;
 	}
 
 	virtual bool isDropHighlighted() {
-		return (state_ & TableCellItem::tcsDropHighlighted) ? true : false;
+		return (itemState_ & TableCellItem::tcsDropHighlighted) ? true : false;
 	}
 
 	virtual bool isEditable() {
@@ -147,15 +95,6 @@ public:
 		return &bounds_;
 	}
 
-	virtual Control* getControl() {
-		return owningControl_;
-	}
-
-
-	virtual void setControl( Control* control ) {
-		owningControl_ = control;
-	}
-
 	virtual long getImageIndex() {
 		return imageIndex_;
 	}
@@ -164,14 +103,6 @@ public:
 
 	virtual bool canPaint() {
 		return true;
-	}
-
-	virtual long getState(){
-		return state_;
-	}
-
-	virtual void setState( const long& state ) {
-		state_ = state;
 	}
 
 	virtual void setBounds( Rect* bounds );
@@ -183,6 +114,8 @@ public:
 		return -1;
 	};
 
+	virtual void setModel( Model* model );
+
 	/**
 	*not supported
 	*/
@@ -191,15 +124,31 @@ public:
 	virtual double getTextCellWidth( GraphicsContext* context );
 
 	virtual double getTextCellHeight( GraphicsContext* context );
+
+	virtual const Color& getColor();
+
+	virtual void setColor( Color* color );
+
+	virtual const Font& getFont();
+
+	virtual void setFont( Font* font );
 private:
 	void init();
-	Control* owningControl_;
 	Rect bounds_;
 	void* data_;
-	Model* model_;
-	long state_;
 	String caption_;
 	long imageIndex_;
+
+	TableModel* tableModel_;
+	Color* color_;
+	typedef std::map<uint32,Color> ColorMap;
+	static  ColorMap tableCellsColorMap;
+
+	Font* font_;
+	typedef std::map<String,Font> FontMap;
+	static FontMap tableCellsFontMap;
+
+	void onFontChanged( Event* e );
 };
 
 }; //end of namespace VCF
@@ -208,6 +157,25 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.4.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.1  2005/09/03 14:03:52  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

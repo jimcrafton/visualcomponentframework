@@ -17,10 +17,10 @@ using namespace VCF;
 
 
 BasicStroke::BasicStroke():
-	opacity_(1.0),
-	context_(NULL),
 	width_(0.0),
+	opacity_(1.0),
 	color_ (*Color::getColor( VCF::ColorNames::at( VCF::ColorNames::black ) )),
+	context_(NULL),		
 	antiAlias_(true),
 	dashed_(false),
 	dashStart_(0.0)
@@ -126,7 +126,7 @@ void BasicStroke::render( Path * path )
 		else {
 
 			typedef agg::renderer_base<pixfmt> ren_base;
-			typedef agg::renderer_scanline_p_solid<ren_base> renderer_solid;			
+			typedef agg::renderer_scanline_aa_solid<ren_base> renderer_solid;			
 
 			pixfmt pixf(*renderingBuffer);
 			ren_base renb(pixf);
@@ -196,6 +196,15 @@ void BasicStroke::render( Path * path )
 									currentXFrm[Matrix2D::mei21] );
 			
 
+			//JC
+			//I added this to account for anti-aliasing "defects"
+			//that occur with thin lines (1-2 pixels wide)
+			//See http://antigrain.com/tips/line_alignment/line_alignment.agdoc.html
+			//for more information about why this happens, and why this 
+			//may not be the optimal solution
+			mat*=agg::trans_affine_translation(0.5,0.5);
+			
+
 			agg::conv_curve< agg::path_storage > smooth(strokePath);
 
 			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
@@ -228,7 +237,8 @@ void BasicStroke::render( Path * path )
 
 			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
 
-			rasterizer.render(scanline,renderer);
+			agg::render_scanlines(rasterizer, scanline, renderer);
+			//rasterizer.render(scanline,renderer);
 		}
 	}
 
@@ -264,6 +274,19 @@ void BasicStroke::line( const double& x1, const double& y1,
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.4.2.2  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.4.2.1  2005/10/06 23:45:52  ddiego
+*fixed a small display bug in the BasicStroke class when rendering lines.
+*
 *Revision 1.4  2005/07/09 23:05:56  ddiego
 *added missing gtk files
 *

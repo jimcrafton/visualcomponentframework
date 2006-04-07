@@ -9,12 +9,17 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
+#include "vcf/ApplicationKit/PropertyEditorManager.h"
+
 #include "vcf/ApplicationKit/ComboBoxControl.h"
 #include "vcf/ApplicationKit/TextControl.h"
 #include "vcf/ApplicationKit/CommandButton.h"
 #include "vcf/ApplicationKit/DefaultListItem.h"
 #include "vcf/ApplicationKit/ListBoxControl.h"
 #include "vcf/ApplicationKit/Label.h"
+
+
+#include "vcf/FoundationKit/VCFRTTIImpl.h"
 
 using namespace VCF;
 
@@ -74,6 +79,216 @@ std::vector<String> EnumPropertyEditor::getStringValues(){
 	return result;
 }
 
+class EnumSetItemPropertyEditor : public BoolPropertyEditor {
+public:
+	EnumSetItemPropertyEditor( const String& itemName, 
+								const unsigned long& enumSetElement,
+								const unsigned long& enumVal,
+								PropertyEditor* parent ) {
+		attributes_ |= PropertyEditor::paCompositeValue | PropertyEditor::paOverridePropertyName;
+		propertyName_ = itemName;
+		enumSetElement_ = enumSetElement;
+		enumVal_ = enumVal;
+		parent_ = parent;
+	}
+
+	virtual ~EnumSetItemPropertyEditor() {}
+
+	virtual void setValueAsText( const String& textValue ) {
+		BoolPropertyEditor::setValueAsText( textValue );
+
+		enumVal_ = *parent_->getValue();
+
+		bool val = data_;
+		if ( val ) {
+			enumVal_ |= enumSetElement_;
+		}
+		else {
+			enumVal_ &= ~enumSetElement_;
+		}
+
+		VariantData enumVal = enumVal_;
+		enumVal.type = pdEnumMask;
+		parent_->setValue(&enumVal) ;
+	}
+
+	virtual void setValue( VariantData* value ) {
+		BoolPropertyEditor::setValue( value );
+
+		enumVal_ = *parent_->getValue();
+
+		bool val = data_;
+
+		if ( val ) {
+			enumVal_ |= enumSetElement_;
+		}
+		else {
+			enumVal_ &= ~enumSetElement_;
+		}
+
+
+		VariantData enumVal = enumVal_;
+		enumVal.type = pdEnumMask;
+		parent_->setValue(&enumVal) ;
+	}
+	
+protected:
+	unsigned long enumSetElement_;
+	unsigned long enumVal_;
+	PropertyEditor* parent_;
+};
+
+
+EnumSetPropertyEditor::EnumSetPropertyEditor()
+{
+	attributes_ = PropertyEditor::paHasSubProperties | PropertyEditor::paEditorRequestsProperty;
+}
+
+EnumSetPropertyEditor::~EnumSetPropertyEditor()
+{
+
+}
+
+String EnumSetPropertyEditor::getValueAsText()
+{
+	String result;
+
+	if ( NULL != property_ ) {
+		if ( pdEnumMask == property_->getType() ) {
+			EnumSetProperty* enumSetProp = (EnumSetProperty*)property_;
+
+			std::vector<String> names;
+			std::vector<unsigned long> values;
+
+			
+			if ( enumSetProp->getNameValuesAsSet( names, values ) ) {
+				unsigned long val = *getValue();
+				std::vector<String>::iterator it = names.begin();
+				std::vector<unsigned long>::iterator it2 = values.begin();
+				VariantData boolVal;
+
+				while ( it != names.end() ) {
+
+					if ( val & *it2 ) {
+						if ( !result.empty() ) {
+							result += ", ";
+						}
+						result += *it;
+					}
+
+					it ++;
+					it2 ++;
+				}
+			}
+		}
+	}
+	return result;
+}
+
+std::vector<PropertyEditor*> EnumSetPropertyEditor::getSubProperties()
+{
+	std::vector<PropertyEditor*> result;	
+	
+	if ( NULL != property_ ) {
+		if ( pdEnumMask == property_->getType() ) {
+			EnumSetProperty* enumSetProp = (EnumSetProperty*)property_;
+
+			std::vector<String> names;
+			std::vector<unsigned long> values;
+
+			
+			if ( enumSetProp->getNameValuesAsSet( names, values ) ) {
+				unsigned long val = *getValue();
+
+				std::vector<String>::iterator it = names.begin();
+				std::vector<unsigned long>::iterator it2 = values.begin();
+				VariantData boolVal;
+
+				while ( it != names.end() ) {
+					PropertyEditor* editor = 
+						new EnumSetItemPropertyEditor( *it, *it2, val, this );
+					
+					boolVal = (val & *it2) ? true : false;
+
+					editor->setValue( &boolVal );
+					editor->setRootDesignerComponent( getRootDesignerComponent() );
+
+					result.push_back( editor );
+					it ++;
+					it2 ++;
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+static String cursorNames[] = { "Cursor::SCT_DEFAULT",
+		"Cursor::SCT_CROSSHAIRS",
+		"Cursor::SCT_SPLIT_VERT",
+		"Cursor::SCT_SPLIT_HORZ",
+		"Cursor::SCT_SIZE_HORZ",
+		"Cursor::SCT_SIZE_VERT",
+		"Cursor::SCT_SIZE_NE_SW",
+		"Cursor::SCT_SIZE_NW_SE",
+		"Cursor::SCT_TEXT",
+		"Cursor::SCT_HELP",
+		"Cursor::SCT_NOWAYHOSER",
+		"Cursor::SCT_WAITING",
+		"Cursor::SCT_POINTING_HAND",
+		"Cursor::SCT_WAIT" };
+
+CursorPropertyEditor::CursorPropertyEditor()
+{
+	attributes_ = PropertyEditor::paHasValues;
+}
+
+CursorPropertyEditor::~CursorPropertyEditor()
+{
+
+}
+
+std::vector<String> CursorPropertyEditor::getStringValues()
+{
+	std::vector<String> result( sizeof(cursorNames)/sizeof(String) );
+
+	for (int i=0;i<result.size();i++ ) {
+		result[i] = cursorNames[i];
+	}
+	
+
+	return result;
+}
+
+void CursorPropertyEditor::setValueAsText( const String& textValue )
+{
+	data_ = (long)(Cursor::SCT_DEFAULT);
+
+	int len = sizeof(cursorNames)/sizeof(String);
+	for (int i=0;i<len;i++ ) {
+		if ( cursorNames[i] == textValue ) {
+
+			data_ = (long)(Cursor::SCT_DEFAULT) + i;
+			break;
+		}
+	}
+}
+
+String CursorPropertyEditor::getValueAsText()
+{
+	String result;
+
+	long val = data_;
+	val = val - (long)(Cursor::SCT_DEFAULT);
+	if ( (val >=0) && (val < sizeof(cursorNames)/sizeof(String)) ) {
+		result = cursorNames[val];
+	}
+
+	return result;
+}
+
+
 ColorPropertyEditor::ColorPropertyEditor()
 {
 	attributes_ = PropertyEditor::paHasValues | PropertyEditor::paUsesModalDialogForEditing | 
@@ -123,7 +338,7 @@ void ColorPropertyEditor::setValueAsText( const String& textValue )
 
 void ColorPropertyEditor::edit()
 {
-	CommonColor clrDlg;
+	CommonColorDialog clrDlg;
 	Color* c = (Color*)(Object*)(*(this->getValue()));
 	clrDlg.setSelectedColor( c );
 	if ( clrDlg.execute() ) {
@@ -190,7 +405,7 @@ void FontPropertyEditor::paintValue( VariantData* value, GraphicsContext* contex
 
 void FontPropertyEditor::edit()
 {
-	CommonFont fontDlg(NULL);
+	CommonFontDialog fontDlg(NULL);
 	Font* f = (Font*)(Object*)(*(this->getValue()));
 	fontDlg.setSelectedFont( f );
 	if ( true == fontDlg.execute() ){
@@ -251,6 +466,21 @@ DefaultListModelPropertyEditor::~DefaultListModelPropertyEditor()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.4  2005/09/17 21:37:43  ddiego
+*minor update
+*
+*Revision 1.3.2.3  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.3.2.2  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.3.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

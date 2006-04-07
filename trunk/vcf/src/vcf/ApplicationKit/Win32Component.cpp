@@ -60,7 +60,7 @@ void Win32Component::create( Control* owningControl )
 
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
-		setFont( owningControl->getFont() );
+		registerForFontChanges();
 	}
 	else {
 		//throw exception
@@ -73,6 +73,12 @@ void Win32Component::create( Control* owningControl )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
 *Revision 1.3  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -1,19 +1,15 @@
-
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
-
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 6.00.0347 */
-/* at Wed Jul 20 00:11:36 2005
+
+/* File created by MIDL compiler version 5.01.0164 */
+/* at Wed Apr 05 19:44:11 2006
+
  */
-/* Compiler settings for f:\code\vcfdev\stable\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
-    protocol : dce , ms_ext, c_ext
+/* Compiler settings for f:\code\vcfdev\dev\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
+    Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
+
     error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
-         __declspec(uuid()), __declspec(selectany), __declspec(novtable)
-         DECLSPEC_UUID(), MIDL_INTERFACE()
 */
 //@@MIDL_FILE_HEADING(  )
 
@@ -29,9 +25,9 @@
 #ifndef __COMTOVCFCLASSWIZARD_h__
 #define __COMTOVCFCLASSWIZARD_h__
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once
-#endif
+#ifdef __cplusplus
+extern "C"{
+#endif 
 
 /* Forward Declarations */ 
 
@@ -69,12 +65,8 @@ typedef struct COMToVCFClassWizard COMToVCFClassWizard;
 #include "oaidl.h"
 #include "ocidl.h"
 
-#ifdef __cplusplus
-extern "C"{
-#endif 
-
-void * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void * ); 
+void __RPC_FAR * __RPC_USER MIDL_user_allocate(size_t);
+void __RPC_USER MIDL_user_free( void __RPC_FAR * ); 
 
 
 #ifndef __COMTOVCFCLASSWIZARDLib_LIBRARY_DEFINED__
@@ -113,58 +105,58 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
     {
         BEGIN_INTERFACE
         
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            ICommands * This,
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )( 
+            ICommands __RPC_FAR * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ void **ppvObject);
+            /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
         
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            ICommands * This);
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )( 
+            ICommands __RPC_FAR * This);
         
-        ULONG ( STDMETHODCALLTYPE *Release )( 
-            ICommands * This);
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
+            ICommands __RPC_FAR * This);
         
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
-            ICommands * This,
-            /* [out] */ UINT *pctinfo);
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )( 
+            ICommands __RPC_FAR * This,
+            /* [out] */ UINT __RPC_FAR *pctinfo);
         
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
-            ICommands * This,
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )( 
+            ICommands __RPC_FAR * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
-            /* [out] */ ITypeInfo **ppTInfo);
+            /* [out] */ ITypeInfo __RPC_FAR *__RPC_FAR *ppTInfo);
         
-        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
-            ICommands * This,
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )( 
+            ICommands __RPC_FAR * This,
             /* [in] */ REFIID riid,
-            /* [size_is][in] */ LPOLESTR *rgszNames,
+            /* [size_is][in] */ LPOLESTR __RPC_FAR *rgszNames,
             /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
-            /* [size_is][out] */ DISPID *rgDispId);
+            /* [size_is][out] */ DISPID __RPC_FAR *rgDispId);
         
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
-            ICommands * This,
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )( 
+            ICommands __RPC_FAR * This,
             /* [in] */ DISPID dispIdMember,
             /* [in] */ REFIID riid,
             /* [in] */ LCID lcid,
             /* [in] */ WORD wFlags,
-            /* [out][in] */ DISPPARAMS *pDispParams,
-            /* [out] */ VARIANT *pVarResult,
-            /* [out] */ EXCEPINFO *pExcepInfo,
-            /* [out] */ UINT *puArgErr);
+            /* [out][in] */ DISPPARAMS __RPC_FAR *pDispParams,
+            /* [out] */ VARIANT __RPC_FAR *pVarResult,
+            /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
+            /* [out] */ UINT __RPC_FAR *puArgErr);
         
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ConvertCOMTypeLib )( 
-            ICommands * This);
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ConvertCOMTypeLib )( 
+            ICommands __RPC_FAR * This);
         
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ConvertActiveXControl )( 
-            ICommands * This);
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *ConvertActiveXControl )( 
+            ICommands __RPC_FAR * This);
         
         END_INTERFACE
     } ICommandsVtbl;
 
     interface ICommands
     {
-        CONST_VTBL struct ICommandsVtbl *lpVtbl;
+        CONST_VTBL struct ICommandsVtbl __RPC_FAR *lpVtbl;
     };
 
     
@@ -209,7 +201,7 @@ DEFINE_GUID(IID_ICommands,0x4abb8ee9,0xb42b,0x42cb,0x99,0x3f,0x98,0x55,0x54,0xf4
 
 
 /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ICommands_ConvertCOMTypeLib_Proxy( 
-    ICommands * This);
+    ICommands __RPC_FAR * This);
 
 
 void __RPC_STUB ICommands_ConvertCOMTypeLib_Stub(
@@ -220,7 +212,7 @@ void __RPC_STUB ICommands_ConvertCOMTypeLib_Stub(
 
 
 /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ICommands_ConvertActiveXControl_Proxy( 
-    ICommands * This);
+    ICommands __RPC_FAR * This);
 
 
 void __RPC_STUB ICommands_ConvertActiveXControl_Stub(
@@ -260,5 +252,3 @@ COMToVCFClassWizard;
 #endif
 
 #endif
-
-

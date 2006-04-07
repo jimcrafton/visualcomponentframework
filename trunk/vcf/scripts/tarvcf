@@ -38,13 +38,14 @@ MAKE_FILES="./build/make/Makefile \n\
 ./build/make/OpenGLKit.mak \n\
 ./build/make/Makefile.mak "
 
-find ./build/bcc -iname '*.mak' -o -iname '*.txt' -o -iname '*.inc' > bcc-makefiles.out
+find ./build/bcc -iname '*.mak' -o -iname '*.txt' -o -iname '*.inc' -o -iname '*.cmd' -o -iname '*.cfg' > bcc-makefiles.out
+find ./build/mingw -iname '*.mak' -o -iname '*.txt' -o -iname 'Makefile*' > mingw-makefiles.out
 
 #combine the outoput into a master list
 echo -e $MAKE_FILES > mkfiles.out
-cat srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out > files.out
+cat srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out mingw-makefiles.out > files.out
 
-rm srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out
+rm srcfiles.out srcfiles1.out srcfiles2.out examples.out mkfiles.out bcc-makefiles.out mingw-makefiles.out
 
 #display in notepad
 notepad files.out

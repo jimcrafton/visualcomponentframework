@@ -77,6 +77,7 @@ public:
 		p1->setColor( Color::getColor("yellow") );
 		p1->setToolTipText( "p1: AlignBottom, yellow" );
 
+
 		Panel* p2 = new Panel();
 		p2->setHeight( 5 );
 		p2->setUseColorForBackground( true );
@@ -208,8 +209,10 @@ public:
 		label2->setCaption( "This is Label 2, Aligned to the Bottom!" );
 		label2->setVerticalAlignment( tvaTextBottom );
 		label2->setToolTipText( "clientControl/label2: AlignBottom, gray158" );
-		clientControl->add( label2, AlignBottom );		
+		clientControl->add( label2, AlignBottom );	
 		
+		setMinWidth( 400 );
+		setMinHeight( 500 );		
 	}
 
 	virtual ~AlignmentWindow(){};
@@ -253,8 +256,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:14  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:12  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/16 04:43:55  ddiego
+*fixed alignment example per fraggles req.
+*
+*Revision 1.5.2.2  2006/01/09 02:21:58  ddiego
+*more osx code
+*
+*Revision 1.5.2.1  2005/07/23 21:45:24  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.2  2005/05/04 00:58:21  marcelloptr
 *formatting and slightly changed initial size of the main window so the bottom label shows better

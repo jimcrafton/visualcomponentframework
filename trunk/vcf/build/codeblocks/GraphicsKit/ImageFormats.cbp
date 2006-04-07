@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="2" />
+	<Project>
+		<Option title="ImageFormats" />
+		<Option compiler="0" />
+		<Build>
+			<Target title="mingw_gcc344_Release">
+				<Option output="..\..\..\bin\ImageFormats_mgcc.dll" />
+				<Option working_dir="..\..\..\bin" />
+				<Option object_output="mgcc\ReleaseDLL\" />
+				<Option type="3" />
+				<Option compiler="0" />
+				<Option includeInTargetAll="1" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-D_UNICODE" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DFREEIMAGE_LIB" />
+					<Add option="-DUSE_FREEIMAGE_LIB" />
+					<Add option="-DUSE_APPLICATIONKIT_DLL" />
+					<Add option="-DIMAGEFORMATS_DLL" />
+					<Add option="-DIMAGEFORMATS_EXPORTS" />
+					<Add directory="$(VCF_INCLUDE)" />
+					<Add directory="..\..\..\thirdparty\common\FreeImage\Source" />
+					<Add directory="$(VCF_INCLUDE)\thirdparty\common\agg\include\" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(VCF_INCLUDE)" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="FreeImage_$(COMPILER)$(COMPILER_VER)_s.a" />
+					<Add directory="$(VCF_BIN)" />
+					<Add directory="$(VCF_LIB)" />
+				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="_mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
+			</Target>
+			<Target title="mingw_gcc344_Debug">
+				<Option output="..\..\..\bin\ImageFormats_mgcc_d.dll" />
+				<Option working_dir="..\..\..\bin" />
+				<Option object_output="mgcc\DebugDLL\" />
+				<Option type="3" />
+				<Option compiler="0" />
+				<Option includeInTargetAll="1" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-D_UNICODE" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DFREEIMAGE_LIB" />
+					<Add option="-DUSE_FREEIMAGE_LIB" />
+					<Add option="-DUSE_APPLICATIONKIT_DLL" />
+					<Add option="-DIMAGEFORMATS_DLL" />
+					<Add option="-DIMAGEFORMATS_EXPORTS" />
+					<Add directory="$(VCF_INCLUDE)" />
+					<Add directory="..\..\..\thirdparty\common\FreeImage\Source" />
+					<Add directory="$(VCF_INCLUDE)\thirdparty\common\agg\include\" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(VCF_INCLUDE)" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="FreeImage_$(COMPILER)$(COMPILER_VER)_sd.a" />
+					<Add directory="$(VCF_BIN)" />
+					<Add directory="$(VCF_LIB)" />
+				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="_mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
+			</Target>
+			<Environment>
+				<Variable name="COMPILER" value="mgcc" />
+				<Variable name="COMPILER_VER" value="" />
+			</Environment>
+		</Build>
+		<Unit filename="..\..\..\src\ImageFormats\ImageFormats.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\ImageFormats\ImageFormats.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\ImageFormats\ImageFormatsSelectLib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

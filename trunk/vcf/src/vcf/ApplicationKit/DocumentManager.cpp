@@ -115,7 +115,9 @@ void DocumentManager::terminate() {
 	std::vector<Document*>::iterator it2 = openDocuments_.begin();
 	while ( it2 != openDocuments_.end() ) {
 		Document* document = *it2;
-		document->release();
+		if ( NULL == document->getOwner() ) {
+			document->release();
+		}
 		it2 ++;
 	}
 }
@@ -143,6 +145,7 @@ void DocumentManager::cutFromDocument( Document* doc ) {
 	if ( NULL != data ) {
 		Clipboard* clipboard = UIToolkit::getSystemClipboard();
 		clipboard->copyTo( data );
+		data->free();
 	}
 }
 
@@ -165,6 +168,8 @@ void DocumentManager::copyFromDocument( Document* doc ) {
 	if ( NULL != data ) {
 		Clipboard* clipboard = UIToolkit::getSystemClipboard();
 		clipboard->copyTo( data );
+
+		data->free();
 	}
 }
 
@@ -427,7 +432,7 @@ DocumentManager* DocumentManager::getDocumentManager()
 	return DocumentManager::docManagerInstance;
 }
 
-void DocumentManager::prepareOpenDialog( CommonFileOpen* openDialog )
+void DocumentManager::prepareOpenDialog( CommonFileOpenDialog* openDialog )
 {
 	DocumentInfoMap::iterator it = docInfo_.begin();
 
@@ -436,7 +441,7 @@ void DocumentManager::prepareOpenDialog( CommonFileOpen* openDialog )
 		DocumentInfo& info = it->second;
 		fileTypes = info.fileTypes;
 
-		int pos = fileTypes.find( ";" );
+		size_t pos = fileTypes.find( ";" );
 		while ( pos != String::npos ) {
 			String filter = fileTypes.substr( 0 , pos );
 			fileTypes.erase( 0, pos + 1 );
@@ -453,7 +458,7 @@ void DocumentManager::prepareOpenDialog( CommonFileOpen* openDialog )
 
 }
 
-void DocumentManager::prepareSaveDialog( CommonFileSave* saveDialog, Document* doc )
+void DocumentManager::prepareSaveDialog( CommonFileSaveDialog* saveDialog, Document* doc )
 {
 	String fileType;
 	String fileTypes;
@@ -464,7 +469,7 @@ void DocumentManager::prepareSaveDialog( CommonFileSave* saveDialog, Document* d
 		fileTypes = info->fileTypes;
 	}
 
-	int pos = fileTypes.find( ";" );
+	size_t pos = fileTypes.find( ";" );
 	while ( pos != String::npos ) {
 		String filter = fileTypes.substr( 0 , pos );
 		fileTypes.erase( 0, pos + 1 );
@@ -520,7 +525,7 @@ void DocumentManager::addDocumentInfo( const VCF::String& mimeType, const Docume
 void DocumentManager::addDocument( Document* document )
 {
 	openDocuments_.push_back( document );
-	document->addRef();
+	//document->addRef();
 }
 
 void DocumentManager::removeDocument( Document* document )
@@ -528,7 +533,7 @@ void DocumentManager::removeDocument( Document* document )
 	std::vector<Document*>::iterator found = std::find( openDocuments_.begin(), openDocuments_.end(), document );
 	if ( found != openDocuments_.end() ) {
 		openDocuments_.erase( found );
-		document->release();
+		//document->release();
 	}
 }
 
@@ -559,7 +564,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	Document* doc = NULL;
 	if ( !mimetype.empty() )  {
 		// provides a default document to 'host' the file, and its UI too if it should
-		doc = newDefaultDocument( mimetype );
+		doc = newDefaultDocument( "", mimetype );
 	}
 
 	// finally reads what is specific about the document: its file
@@ -610,6 +615,30 @@ void DocumentManager::addAction( ulong32 tag, Action* action )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.7  2006/01/09 02:22:30  ddiego
+*more osx code
+*
+*Revision 1.4.2.6  2005/10/19 04:25:00  ddiego
+*minor doc view manager update.
+*
+*Revision 1.4.2.5  2005/10/18 04:42:38  ddiego
+*fixed minor bug in doc manager.
+*
+*Revision 1.4.2.4  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.4.2.3  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.4.2.2  2005/08/15 03:10:51  ddiego
+*minor updates to vff in out streaming.
+*
+*Revision 1.4.2.1  2005/08/12 03:13:44  ddiego
+*minor changes
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

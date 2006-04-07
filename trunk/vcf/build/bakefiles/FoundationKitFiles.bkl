@@ -1,0 +1,322 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="FOUNDATIONKIT_HDR" hints="files">
+        vcf/FoundationKit/BasicException.h
+        vcf/FoundationKit/BasicFileError.h
+        vcf/FoundationKit/BasicInputStream.h
+        vcf/FoundationKit/BasicOutputStream.h
+        vcf/FoundationKit/CantCreateObjectException.h
+        vcf/FoundationKit/Class.h
+        vcf/FoundationKit/ClassInfo.h
+        vcf/FoundationKit/ClassNotFound.h
+        vcf/FoundationKit/ClassRegistry.h
+        vcf/FoundationKit/CommandLine.h
+        vcf/FoundationKit/CommonDefines.h
+        vcf/FoundationKit/Condition.h
+        vcf/FoundationKit/ConditionPeer.h
+        vcf/FoundationKit/DateTime.h
+        vcf/FoundationKit/Delegate.h
+        vcf/FoundationKit/Dictionary.h
+        vcf/FoundationKit/Directory.h
+        vcf/FoundationKit/Enum.h
+        vcf/FoundationKit/Enumerator.h
+        vcf/FoundationKit/ErrorLog.h
+        vcf/FoundationKit/ErrorStrings.h
+        vcf/FoundationKit/Event.h
+        vcf/FoundationKit/EventHandler.h
+        vcf/FoundationKit/Field.h
+        vcf/FoundationKit/File.h
+        vcf/FoundationKit/FileIOError.h
+        vcf/FoundationKit/FileNotFound.h
+        vcf/FoundationKit/FilePath.h
+        vcf/FoundationKit/FilePeer.h
+        vcf/FoundationKit/FileStream.h
+        vcf/FoundationKit/FileStreamPeer.h
+        vcf/FoundationKit/Format.h
+        vcf/FoundationKit/FoundationKit.h
+        vcf/FoundationKit/FoundationKitPrivate.h
+        vcf/FoundationKit/FoundationKitSelectLib.h
+        vcf/FoundationKit/FrameworkConfig.h
+        vcf/FoundationKit/Interface.h
+        vcf/FoundationKit/InterfaceClass.h
+        vcf/FoundationKit/InvalidImplementer.h
+        vcf/FoundationKit/InvalidPeer.h
+        vcf/FoundationKit/InvalidPointerException.h
+        vcf/FoundationKit/InvalidStateException.h
+        vcf/FoundationKit/Library.h
+        vcf/FoundationKit/LibraryPeer.h
+        vcf/FoundationKit/LocalePeer.h
+        vcf/FoundationKit/Locales.h
+        vcf/FoundationKit/Lock.h
+        vcf/FoundationKit/MemoryStream.h
+        vcf/FoundationKit/MemStreamUtils.h
+        vcf/FoundationKit/MessageLoader.h
+        vcf/FoundationKit/Method.h
+        vcf/FoundationKit/MIMEType.h
+        vcf/FoundationKit/Mutex.h
+        vcf/FoundationKit/MutexPeer.h
+        vcf/FoundationKit/NoFreeMemException.h
+        vcf/FoundationKit/NoImplementerFoundException.h
+        vcf/FoundationKit/NoPeerFoundException.h
+        vcf/FoundationKit/NoSuchElementException.h
+        vcf/FoundationKit/NotifyEvent.h
+        vcf/FoundationKit/NotImplementedException.h
+        vcf/FoundationKit/NoToolKitFoundException.h
+        vcf/FoundationKit/Object.h
+        vcf/FoundationKit/ObjectWithEvents.h
+        vcf/FoundationKit/OutOfBoundsException.h
+        vcf/FoundationKit/OutputReadyEvent.h
+        vcf/FoundationKit/PackageInfo.h
+        vcf/FoundationKit/Parser.h
+        vcf/FoundationKit/Persistable.h
+        vcf/FoundationKit/ProcessException.h
+        vcf/FoundationKit/ProcessIORedirectionPeer.h
+        vcf/FoundationKit/ProcessPeer.h
+        vcf/FoundationKit/ProcessWithRedirectedIO.h
+        vcf/FoundationKit/ProgramInfo.h
+        vcf/FoundationKit/Property.h
+        vcf/FoundationKit/PropertyChangeEvent.h
+        vcf/FoundationKit/PropertyChangeException.h
+        vcf/FoundationKit/References.h
+        vcf/FoundationKit/Registry.h
+        vcf/FoundationKit/RegistryPeer.h
+        vcf/FoundationKit/Resource.h
+        vcf/FoundationKit/ResourceBundle.h
+        vcf/FoundationKit/ResourceBundlePeer.h
+        vcf/FoundationKit/ResourceException.h
+        vcf/FoundationKit/RTTIMacros.h
+        vcf/FoundationKit/RunLoop.h
+        vcf/FoundationKit/RunLoopPeer.h
+        vcf/FoundationKit/RunLoopSource.h
+        vcf/FoundationKit/Runnable.h
+        vcf/FoundationKit/RuntimeException.h
+        vcf/FoundationKit/Semaphore.h
+        vcf/FoundationKit/SemaphorePeer.h
+        vcf/FoundationKit/SmartPtr.h
+        vcf/FoundationKit/Stream.h
+        vcf/FoundationKit/StringsMessageLoader.h
+        vcf/FoundationKit/StringTokenizer.h
+        vcf/FoundationKit/StringUtils.h
+        vcf/FoundationKit/SynchObject.h
+        vcf/FoundationKit/System.h
+        vcf/FoundationKit/SystemPeer.h
+        vcf/FoundationKit/SystemToolkit.h
+        vcf/FoundationKit/TextCodec.h
+        vcf/FoundationKit/TextInputStream.h
+        vcf/FoundationKit/TextOutputStream.h
+        vcf/FoundationKit/Thread.h
+        vcf/FoundationKit/ThreadEvent.h
+        vcf/FoundationKit/ThreadException.h
+        vcf/FoundationKit/ThreadKit.h
+        vcf/FoundationKit/ThreadManager.h
+        vcf/FoundationKit/ThreadManagerPeer.h
+        vcf/FoundationKit/ThreadPeer.h
+        vcf/FoundationKit/TypeCastException.h
+        vcf/FoundationKit/VariantData.h
+        vcf/FoundationKit/VariantDataStream.h
+        vcf/FoundationKit/VCF.h
+        vcf/FoundationKit/VCFChar.h
+        vcf/FoundationKit/VCFMath.h
+        vcf/FoundationKit/VCFProcess.h
+        vcf/FoundationKit/VCFRTTIImpl.h
+        vcf/FoundationKit/VCFString.h
+        vcf/FoundationKit/VCFulong64.h
+        vcf/FoundationKit/Waitable.h
+        vcf/FoundationKit/WarningsOffVc.h
+        vcf/FoundationKit/XMLParser.h
+        vcf/FoundationKit/FoundationKitRTTI.inl
+    </set>
+
+    <set var="FOUNDATIONKIT_SRC" hints="files">
+        vcf/FoundationKit/BasicException.cpp
+        vcf/FoundationKit/BasicInputStream.cpp
+        vcf/FoundationKit/BasicOutputStream.cpp
+        vcf/FoundationKit/Class.cpp
+        vcf/FoundationKit/ClassRegistry.cpp
+        vcf/FoundationKit/CommandLine.cpp
+        vcf/FoundationKit/Condition.cpp
+        vcf/FoundationKit/DateTime.cpp
+        vcf/FoundationKit/Dictionary.cpp
+        vcf/FoundationKit/Directory.cpp
+        vcf/FoundationKit/ErrorLog.cpp
+        vcf/FoundationKit/Event.cpp
+        vcf/FoundationKit/EventHandler.cpp
+        vcf/FoundationKit/File.cpp
+        vcf/FoundationKit/FilePath.cpp
+        vcf/FoundationKit/FileStream.cpp
+        vcf/FoundationKit/FoundationKit.cpp
+        vcf/FoundationKit/InterfaceClass.cpp
+        vcf/FoundationKit/Library.cpp
+        vcf/FoundationKit/Locales.cpp
+        vcf/FoundationKit/MemoryStream.cpp
+        vcf/FoundationKit/MessageLoader.cpp
+        vcf/FoundationKit/MIMEType.cpp
+        vcf/FoundationKit/Mutex.cpp
+        vcf/FoundationKit/Object.cpp
+        vcf/FoundationKit/ObjectWithEvents.cpp
+        vcf/FoundationKit/PackageInfo.cpp
+        vcf/FoundationKit/Parser.cpp
+        vcf/FoundationKit/ProcessWithRedirectedIO.cpp
+        vcf/FoundationKit/PropertyChangeEvent.cpp
+        vcf/FoundationKit/Registry.cpp
+        vcf/FoundationKit/Resource.cpp
+        vcf/FoundationKit/ResourceBundle.cpp
+        vcf/FoundationKit/RunLoop.cpp
+        vcf/FoundationKit/Semaphore.cpp
+        vcf/FoundationKit/Stream.cpp
+        vcf/FoundationKit/StringsMessageLoader.cpp
+        vcf/FoundationKit/StringUtils.cpp
+        vcf/FoundationKit/System.cpp
+        vcf/FoundationKit/SystemToolkit.cpp
+        vcf/FoundationKit/TextCodec.cpp
+        vcf/FoundationKit/TextInputStream.cpp
+        vcf/FoundationKit/TextOutputStream.cpp
+        vcf/FoundationKit/Thread.cpp
+        vcf/FoundationKit/ThreadEvent.cpp
+        vcf/FoundationKit/ThreadManager.cpp
+        vcf/FoundationKit/VariantData.cpp
+        vcf/FoundationKit/VCFMath.cpp
+        vcf/FoundationKit/VCFProcess.cpp
+        vcf/FoundationKit/VCFString.cpp
+        vcf/FoundationKit/XMLParser.cpp
+    </set>
+
+    <set var="FOUNDATIONKIT_WIN_HDR" hints="files">
+        vcf/FoundationKit/Win32Condition.h
+        vcf/FoundationKit/Win32FilePeer.h
+        vcf/FoundationKit/Win32FileStream.h
+        vcf/FoundationKit/Win32LibraryPeer.h
+        vcf/FoundationKit/Win32LocalePeer.h
+        vcf/FoundationKit/Win32Mutex.h
+        vcf/FoundationKit/Win32Peer.h
+        vcf/FoundationKit/Win32ProcessIORedirector.h
+        vcf/FoundationKit/Win32ProcessPeer.h
+        vcf/FoundationKit/Win32Registry.h
+        vcf/FoundationKit/Win32ResourceBundle.h
+        vcf/FoundationKit/Win32RunLoopPeer.h
+        vcf/FoundationKit/Win32SemaphorePeer.h
+        vcf/FoundationKit/Win32SystemPeer.h
+        vcf/FoundationKit/Win32SystemToolkit.h
+        vcf/FoundationKit/Win32Thread.h
+        vcf/FoundationKit/Win32ThreadManagerPeer.h
+    </set>
+
+    <set var="FOUNDATIONKIT_WIN_SRC" hints="files">
+        vcf/FoundationKit/Win32Condition.cpp
+        vcf/FoundationKit/Win32FilePeer.cpp
+        vcf/FoundationKit/Win32FileStream.cpp
+        vcf/FoundationKit/Win32LibraryPeer.cpp
+        vcf/FoundationKit/Win32LocalePeer.cpp
+        vcf/FoundationKit/Win32Mutex.cpp
+        vcf/FoundationKit/Win32Peer.cpp
+        vcf/FoundationKit/Win32ProcessIORedirector.cpp
+        vcf/FoundationKit/Win32ProcessPeer.cpp
+        vcf/FoundationKit/Win32Registry.cpp
+        vcf/FoundationKit/Win32ResourceBundle.cpp
+        vcf/FoundationKit/Win32RunLoopPeer.cpp
+        vcf/FoundationKit/Win32SemaphorePeer.cpp
+        vcf/FoundationKit/Win32SystemPeer.cpp
+        vcf/FoundationKit/Win32SystemToolkit.cpp
+        vcf/FoundationKit/Win32Thread.cpp
+        vcf/FoundationKit/Win32ThreadManagerPeer.cpp
+    </set>
+
+    <set var="FOUNDATIONKIT_POSIX_HDR" hints="files">
+        vcf/FoundationKit/PosixCondition.h
+        vcf/FoundationKit/PosixMutex.h
+        vcf/FoundationKit/PosixThread.h
+        vcf/FoundationKit/PosixThreadManagerPeer.h
+    </set>
+
+    <set var="FOUNDATIONKIT_POSIX_SRC" hints="files">
+        vcf/FoundationKit/PosixCondition.cpp
+        vcf/FoundationKit/PosixMutex.cpp
+        vcf/FoundationKit/PosixThread.cpp
+        vcf/FoundationKit/PosixThreadManagerPeer.cpp
+    </set>
+
+    <set var="FOUNDATIONKIT_LINUX_HDR" hints="files">
+        $(FOUNDATIONKIT_POSIX_HDR)
+        vcf/FoundationKit/LinuxFilePeer.h
+        vcf/FoundationKit/LinuxFileStream.h
+        vcf/FoundationKit/LinuxLibraryPeer.h
+        vcf/FoundationKit/LinuxLocalePeer.h
+        vcf/FoundationKit/LinuxPeer.h
+        vcf/FoundationKit/LinuxProcessIORedirector.h
+        vcf/FoundationKit/LinuxProcessPeer.h
+        vcf/FoundationKit/LinuxRegistry.h
+        vcf/FoundationKit/LinuxResourceBundle.h
+        vcf/FoundationKit/LinuxSemaphorePeer.h
+        vcf/FoundationKit/LinuxSystemPeer.h
+        vcf/FoundationKit/LinuxSystemToolkit.h
+	vcf/FoundationKit/LinuxRunLoopPeer.h
+    </set>
+
+    <set var="FOUNDATIONKIT_LINUX_SRC" hints="files">
+        $(FOUNDATIONKIT_POSIX_SRC)
+        vcf/FoundationKit/LinuxFilePeer.cpp
+        vcf/FoundationKit/LinuxFileStream.cpp
+        vcf/FoundationKit/LinuxLibraryPeer.cpp
+        vcf/FoundationKit/LinuxLocalePeer.cpp
+        vcf/FoundationKit/LinuxPeer.cpp
+        vcf/FoundationKit/LinuxProcessIORedirector.cpp
+        vcf/FoundationKit/LinuxProcessPeer.cpp
+        vcf/FoundationKit/LinuxRegistry.cpp
+        vcf/FoundationKit/LinuxResourceBundle.cpp
+        vcf/FoundationKit/LinuxSemaphorePeer.cpp
+        vcf/FoundationKit/LinuxSystemPeer.cpp
+        vcf/FoundationKit/LinuxSystemToolkit.cpp
+	vcf/FoundationKit/LinuxRunLoopPeer.cpp
+    </set>
+
+    <set var="FOUNDATIONKIT_OSX_HDR" hints="files">
+        $(FOUNDATIONKIT_POSIX_HDR)
+        vcf/FoundationKit/OSXConditionPeer.h
+        vcf/FoundationKit/OSXFilePeer.h
+        vcf/FoundationKit/OSXFileStream.h
+        vcf/FoundationKit/OSXLibraryPeer.h
+        vcf/FoundationKit/OSXLocalePeer.h
+        vcf/FoundationKit/OSXMutexPeer.h
+        vcf/FoundationKit/OSXPeer.h
+        vcf/FoundationKit/OSXProcessPeer.h
+        vcf/FoundationKit/OSXRegistry.h
+        vcf/FoundationKit/OSXResourceBundle.h
+        vcf/FoundationKit/OSXSemaphorePeer.h
+        vcf/FoundationKit/OSXSystemPeer.h
+        vcf/FoundationKit/OSXSystemToolkit.h
+        vcf/FoundationKit/OSXThread.h
+    </set>
+
+    <set var="FOUNDATIONKIT_OSX_SRC" hints="files">
+        $(FOUNDATIONKIT_POSIX_SRC)
+        vcf/FoundationKit/OSXConditionPeer.cpp
+        vcf/FoundationKit/OSXFilePeer.cpp
+        vcf/FoundationKit/OSXFileStream.cpp
+        vcf/FoundationKit/OSXLibraryPeer.cpp
+        vcf/FoundationKit/OSXLocalePeer.cpp
+        vcf/FoundationKit/OSXMutexPeer.cpp
+        vcf/FoundationKit/OSXPeer.cpp
+        vcf/FoundationKit/OSXProcessPeer.cpp
+        vcf/FoundationKit/OSXRegistry.cpp
+        vcf/FoundationKit/OSXResourceBundle.cpp
+        vcf/FoundationKit/OSXSemaphorePeer.cpp
+        vcf/FoundationKit/OSXSystemPeer.cpp
+        vcf/FoundationKit/OSXSystemToolkit.cpp
+        vcf/FoundationKit/OSXThread.cpp
+    </set>
+
+    <set var="FOUNDATIONKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_UNIX=='1'">$(FOUNDATIONKIT_LINUX_HDR)</if>
+        <if cond="PLATFORM_WIN32=='1'">$(FOUNDATIONKIT_WIN_HDR)</if>
+        <if cond="PLATFORM_MACOSX=='1'">$(FOUNDATIONKIT_OSX_HDR)</if>
+    </set>
+
+    <set var="FOUNDATIONKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_UNIX=='1'">$(FOUNDATIONKIT_LINUX_SRC)</if>
+        <if cond="PLATFORM_WIN32=='1'">$(FOUNDATIONKIT_WIN_SRC)</if>
+        <if cond="PLATFORM_MACOSX=='1'">$(FOUNDATIONKIT_OSX_SRC)</if>
+    </set>
+
+</makefile>

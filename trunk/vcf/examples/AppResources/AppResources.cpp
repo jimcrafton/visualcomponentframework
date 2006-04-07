@@ -10,8 +10,7 @@ using namespace VCF;
 class AppResourcesWindow : public Window {
 public:
 	AppResourcesWindow() {
-		setCaption( "AppResources" );
-		setVisible( true );
+		setCaption( "AppResources" );		
 		background_ = NULL;
 
 		/**
@@ -100,7 +99,8 @@ public:
 		
 		Window* mainWindow = new AppResourcesWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
+		mainWindow->show();
 		
 		return result;
 	}

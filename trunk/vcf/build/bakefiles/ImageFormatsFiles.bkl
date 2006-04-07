@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="IMAGEFORMATS_HDR" hints="files">
+        ImageFormats/ImageFormats.h
+        ImageFormats/ImageFormatsSelectLib.h
+    </set>
+
+    <set var="IMAGEFORMATS_SRC" hints="files">
+        ImageFormats/ImageFormats.cpp
+    </set>
+
+</makefile>

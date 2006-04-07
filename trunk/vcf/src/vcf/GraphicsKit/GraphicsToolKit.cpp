@@ -9,6 +9,9 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
+#include "vcf/GraphicsKit/JPEGLoader.h"
+#include "vcf/GraphicsKit/PNGLoader.h"
+
 
 using namespace VCF;
 
@@ -74,14 +77,14 @@ FontPeer* GraphicsToolkit::createFontPeer( const String& fontName, const double&
 }
 
 
-Image* GraphicsToolkit::createImage( const unsigned long& width, const unsigned long& height )
+Image* GraphicsToolkit::createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
 {
-	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( width, height );
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( width, height, imageType );
 }
 
-Image* GraphicsToolkit::createImage( GraphicsContext* context, Rect* rect )
+Image* GraphicsToolkit::createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
 {
-	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( context, rect );
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( context, rect, imageType );
 }
 
 Image* GraphicsToolkit::createImage( const String& fileName )
@@ -177,6 +180,10 @@ GraphicsResourceBundlePeer* GraphicsToolkit::createGraphicsResourceBundlePeer()
 }
 
 
+void GraphicsToolkit::systemSettingsChanged()
+{
+	GraphicsToolkit::graphicsToolkitInstance->internal_systemSettingsChanged();
+}
 
 
 
@@ -480,7 +487,13 @@ void GraphicsToolkit::initGraphicsToolkit()
 
 	System::internal_replaceResourceBundleInstance( new GraphicsResourceBundle() );
 
-	//GraphicsToolkit::graphicsToolkitInstance->init();
+#if !defined(VCF_MINGW) /* cant compile ImageLoaders for now, so just turn they off for MINGW */
+	
+	GraphicsToolkit::registerImageLoader( "image/jpeg", new JPEGLoader() );
+
+	GraphicsToolkit::registerImageLoader( "image/png", new PNGLoader() );
+#endif
+	
 }
 
 void GraphicsToolkit::terminate()
@@ -1335,6 +1348,21 @@ void GraphicsToolkit::destroySystemColorNameMap()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.4  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
+*Revision 1.5.2.2  2005/09/22 02:43:42  ddiego
+*added png loader.
+*
+*Revision 1.5.2.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.5  2005/07/09 23:05:59  ddiego
 *added missing gtk files
 *

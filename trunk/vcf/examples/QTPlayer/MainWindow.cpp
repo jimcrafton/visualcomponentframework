@@ -26,7 +26,7 @@ using namespace VCF;
 
 
 
-class PlayListDictionary : public Object, public Dictionary {
+class PlayListDictionary : public Dictionary {
 public:
 
 
@@ -293,7 +293,7 @@ public:
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
-			controlJustAdded = ( found == controls_.end() - 1 );
+			controlJustAdded = ( found == controls_.end() );
 		}
 
 
@@ -801,13 +801,11 @@ void MainQTWindow::buildUI()
 
 	PopupMenu* pm = new PopupMenu();
 	this->addComponent( pm );
-	DefaultMenuItem* pmRoot = new DefaultMenuItem("root",NULL,pm);
+	MenuItem* pmRoot = pm->getRootMenuItem();
 
 	DefaultMenuItem* pmItem = new DefaultMenuItem( "Edit/Create a search Catalog...", pmRoot,pm );
 
 	pmItem->MenuItemClicked += new GenericEventHandler<MainQTWindow>(this,&MainQTWindow::onEditCreateSearchCatalog, "MainQTWindow::onEditCreateSearchCatalog" );
-
-	pm->setRootMenuItem( pmRoot );
 
 	searchIcon->setPopupMenu( pm );
 
@@ -1286,7 +1284,7 @@ void MainQTWindow::onFilesDropped( VCF::DropTargetEvent* e )
 void MainQTWindow::onFileOpenMovie( Event* e )
 {
 	movieLoaded_ = false;
-	CommonFileOpen openDlg( this );
+	CommonFileOpenDialog openDlg( this );
 	openDlg.addFilter( "Quicktime Movie", "*.mov" );
 	openDlg.addFilter( "MPEG movies", "*.mpg;*.mpeg" );
 	openDlg.addFilter( "AVI movies", "*.avi" );
@@ -1386,7 +1384,7 @@ void MainQTWindow::onMovieFrameChanged( Event* movieEvent )
 	short tmp = ::GetMovieVolume( *movie ) * 100;
 	int volume = tmp / 255;
 
-	String s = StringUtils::format( "%02d:%02d:%02d", hours, minutes, i_seconds );
+	String s = Format( "%02d:%02d:%02d" ) % hours % minutes % i_seconds ;
 
 	mediaLabel_->setCaption( movie->getTitle() + "\n" + s );
 }
@@ -1669,7 +1667,7 @@ void MainQTWindow::onSearchIconClick( VCF::Event* e )
 void MainQTWindow::onSearchTextEntered( VCF::KeyboardEvent* e )
 {
 	TextControl* textCtrl = (TextControl*)e->getSource();
-	StringUtils::traceWithArgs( "Searching for \"" + textCtrl->getTextModel()->getText() + "\"...\n" );
+	StringUtils::trace( "Searching for \"" + textCtrl->getTextModel()->getText() + "\"...\n" );
 }
 
 void MainQTWindow::onPlaylistItemSelected( VCF::Event* e )
@@ -1840,7 +1838,7 @@ void MainQTWindow::onPlaylistFilesDropped( VCF::DropTargetEvent* e )
 
 void MainQTWindow::onAddToFilesPlaylist(  VCF::Event* event )
 {
-	CommonFileOpen openDlg( this );
+	CommonFileOpenDialog openDlg( this );
 	openDlg.setAllowsMultiSelect( true );
 	openDlg.addFilter( "Quicktime Movie", "*.mov" );
 	openDlg.addFilter( "MPEG movies", "*.mpg;*.mpeg" );
@@ -2096,7 +2094,7 @@ void MainQTWindow::onCreateSearchCatalogThreadDone(  VCF::Event* event )
 
 void MainQTWindow::onEditCreateSearchCatalog(  VCF::Event* event )
 {
-	CommonFileBrowse browse;
+	CommonFileBrowseDialog browse;
 
 	browse.setTitle( L"Select Directory to catalog" );
 
@@ -2115,13 +2113,35 @@ void MainQTWindow::onEditCreateSearchCatalog(  VCF::Event* event )
 }
 
 
+
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:41  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:39  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2005/09/13 01:58:06  ddiego
+*minor changes to dictionary class.
+*
+*Revision 1.5.2.4  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
+*Revision 1.5.2.3  2005/08/25 01:48:42  ddiego
+*minor update to popupmenu code
+*
+*Revision 1.5.2.2  2005/08/01 20:02:23  marcelloptr
+*rolled back a container's change
+*
+*Revision 1.5.2.1  2005/07/23 21:45:39  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
+*Revision 1.4.2.6  2005/07/22 00:24:39  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.4.2.3  2005/06/25 22:47:20  marcelloptr
 *[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
 *AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
+*
 */
+
+

@@ -55,30 +55,32 @@ Win32Image::Win32Image( GraphicsContext* context, Rect* rect  ):
 			IMTRAITS::setImageType( flags_, IMTRAITS::getTraitsImageType() );
 			IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
 
-			hBitmap_ = NULL;
+			//hBitmap_ = NULL;
 
 			palette_ = NULL;
 
-			dc_ = (HDC)ctx->getContextID();
+			HDC contextDC = (HDC)ctx->getContextID();
 
 			//the deletion of the context_ should delete the
 			//dc_ handle
 			context_ = context;
 
-			HDC tmpDC = CreateCompatibleDC( dc_ );
-			HDC origDC = dc_;
-			dc_ = tmpDC;
+			HDC tmpDC = CreateCompatibleDC( contextDC );
+			HDC origDC = contextDC;
+			contextDC = tmpDC;
 
 			setSize( rect->getWidth(), rect->getHeight() );
 
-			dc_ = origDC;
+			contextDC = origDC;
 
-			int r = BitBlt( tmpDC, 0, 0, getWidth(), getHeight(), dc_, (int)rect->left_, (int)rect->top_, SRCCOPY );
+			int r = BitBlt( tmpDC, 0, 0, getWidth(), getHeight(), contextDC, (int)rect->left_, (int)rect->top_, SRCCOPY );
 
-			::SelectObject( tmpDC, hOldBitmap_ );
+			::SelectObject( tmpDC, hbmp_.oldBMP() );
 			DeleteDC( tmpDC );
 
-			hOldBitmap_ = (HBITMAP)::SelectObject( dc_, hBitmap_ );
+			hbmp_.attach( contextDC );
+
+			//hOldBitmap_ = (HBITMAP)::SelectObject( dc_, (HBITMAP)hbmp );
 			//ownDC_ = false;
 		}
 		else {
@@ -120,7 +122,7 @@ Win32Image::Win32Image( HICON icon )
 		
 			setSize( bmp.bmWidth, bmp.bmHeight );
 
-			if ( !DrawIcon( dc_, 0, 0, icon ) ) {
+			if ( !DrawIcon( hbmp_.dc(), 0, 0, icon ) ) {
 				StringUtils::traceWithArgs( Format("DrawIcon failed, err: %d\n") % GetLastError()  );
 			}
 		}
@@ -129,19 +131,20 @@ Win32Image::Win32Image( HICON icon )
 
 Win32Image::~Win32Image()
 {
-	if ( NULL != hBitmap_ ){
-		SelectObject( dc_, hOldBitmap_ );
-		int err = DeleteObject( hBitmap_ );
-	}
+	//if ( NULL != hBitmap_ ){
+	//	SelectObject( dc_, hOldBitmap_ );
+	//	int err = DeleteObject( hBitmap_ );
+	//}
 
 	//the base class AbstractImage will take care of
 	//deleting hte GraphicsContext. If we don't
 	//own the DC then set the context_ to null
 	//to prevent from deleting it
 	if ( ownDC_ ) {
-		DeleteDC( dc_ );
+		//DeleteDC( dc_ );
 	}
 	else {
+		hbmp_.detach();
 		context_ = NULL;
 	}
 	imageBits_->pixels_ = NULL;
@@ -155,20 +158,20 @@ void Win32Image::init()
 	IMTRAITS::setImageType( flags_, IMTRAITS::getTraitsImageType() );
 	IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
 
-	hBitmap_ = NULL;
+	//hBitmap_ = NULL;
 
 	palette_ = NULL;
 
-	dc_ = ::CreateCompatibleDC( NULL );
+	//dc_ = ::CreateCompatibleDC( NULL );
 
 	//the deletion of the context_ should delete the
 	//dc_ handle
-	context_ = new GraphicsContext( (OSHandleID)dc_ );
+	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
 }
 
 void Win32Image::setSize( const unsigned long & width, const unsigned long & height )
 {
-	if ( (!ownDC_) && (NULL != hBitmap_) ) {
+	if ( (!ownDC_) && (hbmp_ != NULL) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );
 	}
 	AbstractImage::setSize( width, height );
@@ -178,16 +181,16 @@ void Win32Image::setSize( const unsigned long & width, const unsigned long & hei
 
 void Win32Image::createBMP()
 {
-	if ( (!ownDC_) && (NULL != hBitmap_) ) {
+	if ( (!ownDC_) && (hbmp_ != NULL) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );
 	}
 
-	if ( NULL != hBitmap_ ) {
-		::SelectObject( dc_, hOldBitmap_ );
-		int err = DeleteObject( hBitmap_ );
-	}
+	
 
-	hBitmap_ = NULL;
+	dataBuffer_ = NULL;
+
+	
+	//hBitmap_ = NULL;
 	memset( &bmpInfo_, 0, sizeof (BITMAPINFOHEADER) );
 	bmpInfo_.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
 	bmpInfo_.bmiHeader.biWidth = getWidth();
@@ -206,9 +209,16 @@ void Win32Image::createBMP()
 	bmpInfo_.bmiHeader.biSizeImage = abs(bmpInfo_.bmiHeader.biHeight) * bmpInfo_.bmiHeader.biWidth * 4;
 	imageBits_->pixels_ = NULL;
 
-	hBitmap_ = CreateDIBSection ( dc_, &bmpInfo_, DIB_RGB_COLORS, (void **)&imageBits_->pixels_, NULL, NULL );
+	hbmp_.setSize( getWidth(), getHeight() );
 
-	if ( (NULL != hBitmap_) ) {
+
+	//hBitmap_ = CreateDIBSection ( dc_, &bmpInfo_, DIB_RGB_COLORS, (void **)&imageBits_->pixels_, NULL, NULL );
+
+	if ( (hbmp_ != NULL) ) {
+		
+		dataBuffer_ = (unsigned char*)hbmp_.data();
+		imageBits_->pixels_ = (SysPixelType*)hbmp_.data();
+
 		SysPixelType* pix = imageBits_->pixels_;
 		int sz = bmpInfo_.bmiHeader.biWidth * abs(bmpInfo_.bmiHeader.biHeight);
 		do {
@@ -217,19 +227,19 @@ void Win32Image::createBMP()
 		} while( sz > 0 );
 
 
-		hOldBitmap_ = (HBITMAP)::SelectObject( dc_, hBitmap_ );
+		//hOldBitmap_ = (HBITMAP)::SelectObject( dc_, hBitmap_ );
 		//::DeleteObject( oldObj );//clear out the old object
 	}
 }
 
 HBITMAP Win32Image::getBitmap()
 {
-	return hBitmap_;
+	return hbmp_;
 }
 
 HDC Win32Image::getDC()
 {
-	return dc_;
+	return hbmp_.dc();
 }
 
 void Win32Image::loadFromFile( const String& fileName )
@@ -263,7 +273,7 @@ void Win32Image::loadFromBMPHandle( HBITMAP bitmap )
 	HDC tmpBMPDC = CreateCompatibleDC( NULL );
 	HBITMAP oldBitmap = (HBITMAP)::SelectObject(  tmpBMPDC, bitmap );
 
-	BitBlt( dc_, 0, 0, bmp.bmWidth, bmp.bmHeight, tmpBMPDC, 0, 0, SRCCOPY );
+	BitBlt( hbmp_.dc(), 0, 0, bmp.bmWidth, bmp.bmHeight, tmpBMPDC, 0, 0, SRCCOPY );
 
 	::SelectObject(  tmpBMPDC, oldBitmap );
 	DeleteDC( tmpBMPDC );
@@ -433,7 +443,7 @@ HICON Win32Image::convertToIcon()
 	unsigned char* ANDBits = NULL;
 	SysPixelType* XORBits = NULL;
 
-	HBITMAP hANDBitmap = CreateDIBSection ( dc_, monochromeInfo, DIB_RGB_COLORS,
+	HBITMAP hANDBitmap = CreateDIBSection ( hbmp_.dc(), monochromeInfo, DIB_RGB_COLORS,
 		(void **)&ANDBits, NULL, NULL );
 
 	BITMAPINFO info = {0};
@@ -446,7 +456,7 @@ HICON Win32Image::convertToIcon()
 	info.bmiHeader.biSizeImage =
 		info.bmiHeader.biWidth * abs(info.bmiHeader.biHeight) * 4;
 
-	HBITMAP hXORBitmap = CreateDIBSection ( dc_, &info, DIB_RGB_COLORS,
+	HBITMAP hXORBitmap = CreateDIBSection ( hbmp_.dc(), &info, DIB_RGB_COLORS,
 		(void **)&XORBits, NULL, NULL );
 
 	unsigned char andAlphaVal = isTransparent_ ? 255 : 0;
@@ -566,6 +576,12 @@ void BMPLoader::saveImageToFile( const String& fileName, Image* image )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
 *Revision 1.5  2005/07/09 23:06:02  ddiego
 *added missing gtk files
 *

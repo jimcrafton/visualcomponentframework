@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -40,21 +40,23 @@ namespace agg
         }
 
         //--------------------------------------------------------------------
-        color_type* allocate(unsigned max_span_len)
+        AGG_INLINE color_type* allocate(unsigned span_len)
         {
-            if(max_span_len > m_max_span_len)
+            if(span_len > m_max_span_len)
             {
+                // To reduce the number of reallocs we align the 
+                // span_len to 256 color elements. 
+                // Well, I just like this number and it looks reasonable.
+                //-----------------------
                 delete [] m_span;
-                m_span = new color_type[m_max_span_len = max_span_len];
+                span_len = ((span_len + 255) >> 8) << 8;
+                m_span = new color_type[m_max_span_len = span_len];
             }
             return m_span;
         }
 
-        //--------------------------------------------------------------------
-        color_type* span()
-        { 
-            return m_span; 
-        }
+        AGG_INLINE color_type* span()               { return m_span; }
+        AGG_INLINE unsigned    max_span_len() const { return m_max_span_len; }
 
     private:
         //--------------------------------------------------------------------

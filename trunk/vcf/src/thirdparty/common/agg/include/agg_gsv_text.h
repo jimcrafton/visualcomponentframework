@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -55,7 +55,7 @@ namespace agg
         void start_point(double x, double y);
         void text(const char* text);
 
-        void rewind(unsigned id);
+        void rewind(unsigned path_id);
         unsigned vertex(double* x, double* y);
 
     private:
@@ -129,11 +129,11 @@ namespace agg
             m_trans->transformer(trans);
         }
 
-        void rewind(unsigned id) 
+        void rewind(unsigned path_id) 
         { 
-            m_trans.rewind(id); 
-            m_polyline.line_join(vcgen_stroke::round_join);
-            m_polyline.line_cap(vcgen_stroke::round_cap);
+            m_trans.rewind(path_id); 
+            m_polyline.line_join(round_join);
+            m_polyline.line_cap(round_cap);
         }
 
         unsigned vertex(double* x, double* y)

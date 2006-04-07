@@ -26,11 +26,15 @@ namespace VCF{
 #define WINDOW_EVENT_MAXIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 3
 #define WINDOW_EVENT_MINIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 4
 
+/**
+\class WindowEvent WindowEvent.h "vcf/ApplicationKit/WindowEvent.h"  
+*/
 class APPLICATIONKIT_API WindowEvent : public VCF::Event {
 public:
-	WindowEvent( Object* source );
+	WindowEvent( Object* source ): Event(source) {}
 
-	WindowEvent( Object* source, const unsigned long& eventType );
+	WindowEvent( Object* source, const unsigned long& eventType ):
+		Event(source,eventType) {}
 
 	virtual ~WindowEvent(){};
 
@@ -70,6 +74,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:27  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

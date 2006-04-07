@@ -30,15 +30,7 @@ class Win32ProcessIORedirector  : public Object, public ProcessIORedirectionPeer
 public:
 	Win32ProcessIORedirector();
 
-	virtual ~Win32ProcessIORedirector();
-
-	virtual void addOutputReadyHandler( EventHandler* eventHandler ) {
-		outputReady_.addHandler( eventHandler );
-	}
-
-	virtual void removeOutputReadyHandler( EventHandler* eventHandler ) {
-		outputReady_.removeHandler( eventHandler );
-	}
+	virtual ~Win32ProcessIORedirector();	
 
 	virtual int getProcessID() {
 		return processID_;
@@ -79,6 +71,10 @@ public:
 	}
 
 	virtual ulong32 terminate();
+
+	virtual Waitable::WaitResult wait( uint32 milliseconds );
+
+	virtual Waitable::WaitResult wait();
 protected:
 	//this is the handle to the child process that gets started
 	HANDLE childProcess_;
@@ -87,7 +83,6 @@ protected:
 	int processThreadID_;
 	UINT readThreadID_;
 	String commandLine_;
-	Delegate outputReady_;
 	HANDLE readThread_;
 
 	HANDLE	childStdinRdHandle_;
@@ -115,6 +110,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
+*Revision 1.4.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.4  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

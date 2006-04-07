@@ -18,6 +18,7 @@ namespace VCF
 {
 
 /**
+\class ImageLoader ImageLoader.h "vcf/GraphicsKit/ImageLoader.h"
 *The ImageLoader interface provides a means to load up images into a generic Bitmap.
 *Examples are JPEG ImageLoaders, GIF, BMP, etc ImageLoaders.
 *
@@ -60,6 +61,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:17  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

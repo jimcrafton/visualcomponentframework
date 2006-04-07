@@ -21,7 +21,7 @@ class ListItem;
 
 
 /**
-\par
+\class ListModel ListModel.h "vcf/ApplicationKit/ListModel.h"
 The List model is a interface for describing what a model that implements
 a list of items should do. It does not \emnot inherit from the Model class
 directly. This is to allow different implementations different base classes.
@@ -76,6 +76,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

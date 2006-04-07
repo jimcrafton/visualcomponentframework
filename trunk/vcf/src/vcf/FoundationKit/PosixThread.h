@@ -23,7 +23,7 @@ class PosixThread : public ThreadPeer
 public:
 
     /* Creates a normal priority, joinable thread */
-    PosixThread( Thread* thread );
+    PosixThread( Thread* thread, bool mainThread);
 
     /* Cancels the thread if it is still running */
 	virtual ~PosixThread();
@@ -48,13 +48,11 @@ public:
 		return processID_;
 	}
 
-
     /* Returns TRUE if called in Thread::run(), FALSE if not */
     int inThreadProc() {
-		return pthread_self() == threadID_;
+		return pthread_equal(pthread_self(), threadID_) != 0;
 	}
 
-    /* Not implemented yet */
 	virtual void sleep( uint32 milliseconds );
 
 	virtual int wait();
@@ -66,13 +64,18 @@ public:
 	}
 	
 protected:
+    static void* threadProc(void* arg);
 
+protected:
 
 	pthread_t threadID_;
-    pid_t processID_;
-	Thread* thread_;
-    bool isActive_;
-    bool isDetached_;
+    pid_t     processID_;
+	Thread*   thread_;
+    bool      isActive_;
+
+	// these are required to create the thread suspended.
+	Mutex     threadSuspendMutex_;
+	Condition threadSuspendCond_;
 };
 
 };
@@ -81,6 +84,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.5  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

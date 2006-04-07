@@ -23,6 +23,7 @@ class View;
 
 
 /**
+\class Model Model.h "vcf/ApplicationKit/Model.h"
 A Model is the base class for storing data for a control or other visual elements.
 */
 class APPLICATIONKIT_API Model : public Component {
@@ -130,6 +131,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

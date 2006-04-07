@@ -3,6 +3,30 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "AllIn1"=".\AllIn1\AllIn1_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AllIn1DLL"=".\AllIn1\AllIn1DLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ApplicationKit"=".\ApplicationKit\ApplicationKit_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -98,6 +122,15 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -115,6 +148,45 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name libAGG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKit"=".\HTMLKit\HTMLKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKitDll"=".\HTMLKit\HTMLKitDll_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
     End Project Dependency
 }}}
 
@@ -135,7 +207,31 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"="..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG_vc70.dsp" - Package Owner=<4>
+Project: "InternetKit"=".\InternetKit\InternetKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKitDLL"=".\InternetKit\InternetKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -159,7 +255,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"="..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG_vc70.dsp" - Package Owner=<4>
+Project: "LibPNG"="..\..\src\thirdparty\common\LibPNG\LibPNG_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -243,18 +339,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExx"=".\FoundationKit\RegExx_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -285,37 +369,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Win32HTMLBrowser"=".\Win32HTMLBrowser\Win32HTMLBrowser_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"=".\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_vc70.dsp" - Package Owner=<4>
+Project: "ZLib"="..\..\src\thirdparty\common\ZLib\ZLib_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -352,9 +406,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ImageFormats
@@ -397,9 +448,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLKit

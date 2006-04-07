@@ -22,3 +22,5 @@ HINSTANCE Win32AppResourceBundle::getResourceInstance()
 	
 	return result;
 }
+
+

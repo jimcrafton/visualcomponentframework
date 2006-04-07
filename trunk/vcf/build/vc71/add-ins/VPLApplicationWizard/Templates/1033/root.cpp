@@ -26,8 +26,18 @@ public:
 
 
 
-extern "C" [!output UPPER_CASE_PROJECT_NAME]_API void initPackage()
+extern "C" {
+
+[!output UPPER_CASE_PROJECT_NAME]_API void _vpl_init( OSHandleID handle )
 {
+
+}
+
+
+[!output UPPER_CASE_PROJECT_NAME]_API void _vpl_terminate( OSHandleID handle )
+{
+
+}
 
 }
 

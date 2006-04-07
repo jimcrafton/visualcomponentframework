@@ -18,10 +18,6 @@ where you installed the VCF.
 
 
 
-/**
-The StringUtils class is a collection of static
-utility methods for operating on strings.
-*/
 // forward declaration needed for bcc32
 class type_info;
 
@@ -31,11 +27,16 @@ class DateTime;
 class VariantData;
 class Format;
 
+/**
+\class StringUtils StringUtils.h "vcf/FoundationKit/StringUtils.h"
+The StringUtils class is a collection of static
+utility methods for operating on strings.
+*/
 class FOUNDATIONKIT_API StringUtils  {
 public:
 
 	/**
-	outs the text to the debugger output
+	outputs the text to the debugger output
 	@param String the text to output
 	*/
 	static void trace( const VCF::String& text );
@@ -50,7 +51,7 @@ public:
 	code should be changed to make use of the traceWithArgs( const Format& ) function 
 	instead. It will be removed entirely in an upcoming release.
 	*/
-	static void traceWithArgs( VCF::String text,... );
+	//static void traceWithArgs( const VCF::String& text );
 
 	static void traceWithArgs( const Format& formatter );
 
@@ -64,7 +65,7 @@ public:
 	code should be changed to make use of the traceWithArgs( const Format& ) function 
 	instead. It will be removed entirely in an upcoming release.
 	*/
-	static VCF::String format( VCF::String formatText, ... );
+	//static VCF::String format( VCF::String formatText, ... );
 
 	/**
 	formats a string. Uses the same formatting rules as
@@ -173,6 +174,17 @@ public:
 	*/
 	static VCF::String upperCase( const VCF::String& text );
 
+	/**
+	Performs a case insensitive string compare between str1 and
+	str2. This may not be locale safe, but it will try and use
+	the lower level OS facilities for case insensitive string
+	comparison if they exist. Otherwise it will simply convert 
+	both strings to uppercase and compare the results.
+	@return int returns 0 if the strings are equivalent, returns
+	greater than 0 if str1 is greater than str2, and returns less
+	than 0 if str1 is less than str2.
+ 	*/
+	static int noCaseCompare( const VCF::String& str1, const VCF::String& str2 );
 
 	/**
 	converts the value to a string
@@ -366,6 +378,13 @@ public:
 	static VCF::String getClassNameFromTypeInfo( const std::type_info& typeInfo );
 
 	/**
+	Converts a typeinfo to a string. GCC does such a piss poor job of this
+	that we have to write our own coverter, since the data returned by
+	the GCC implemented type_info::name() is useless.
+	*/
+	static VCF::String toString( const std::type_info& typeInfo );
+	
+	/**
 	Formats a string from date time object using the various argument/formatting
 	tags in the formatting string. For example, a date that equals "Jan 2, 2005",
 	and a formatting string of "%a %B %#d, %Y" will return string that equals
@@ -526,7 +545,7 @@ The goal is to slowly get away from using the variable argument sprintf() style
 functions such as StringUtils::traceWithArgs(), or System::println().
 For example, you might have written the following code:
 \code
-System::println( "Name %s, number %d", str.c_str(), 1223 );
+System::println( Format("Name %s, number %d") % str % 1223 );
 \endcode
 With the operators below you can now rewrite this like so:
 \code
@@ -805,6 +824,24 @@ inline String& operator+= ( String& lhs, const VariantData& rhs )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.5  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
+*Revision 1.5.2.4  2006/01/22 17:19:38  ddiego
+*fixed some bugs in type_info handling for gcc.
+*
+*Revision 1.5.2.3  2006/01/22 05:50:09  ddiego
+*added case insensitive string compare to string utils class.
+*
+*Revision 1.5.2.2  2005/08/01 17:11:46  marcelloptr
+*minor fixes or additions
+*
+*Revision 1.5.2.1  2005/07/24 02:30:26  ddiego
+*fixed bug in retreiving program info.
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

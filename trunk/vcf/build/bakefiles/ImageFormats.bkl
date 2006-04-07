@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="ImageFormatsFiles.bkl"/>
+
+    <template id="ImageFormats_base">
+        <set var="LIBRARY_NAME">$(IMAGEFORMATS_NAME)</set>
+
+        <headers>$(IMAGEFORMATS_HDR)</headers>
+        <sources>$(IMAGEFORMATS_SRC)</sources>
+
+        <vcf-use-ApplicationKit/>
+
+        <library>libAGG_lib</library>
+        <library>ZLib_lib</library>
+        <library>LibJPEG_lib</library>
+        <library>LibPNG_lib</library>
+        <library>LibMNG_lib</library>
+        <library>LibTIFF_lib</library>
+
+        <define>FREEIMAGE_LIB</define>
+        <library>FreeImage_lib</library>
+    </template>
+
+    <lib id="ImageFormats_lib" template="ImageFormats_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
+        <depends>ApplicationKit_lib</depends>
+    </lib>
+
+    <dll id="ImageFormats_dll" template="ImageFormats_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
+        <define>IMAGEFORMATS_DLL</define>
+        <define>IMAGEFORMATS_EXPORTS</define>
+        <depends>Allin1_dll</depends>
+        <depends>ApplicationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
+        ImageFormats=ImageFormats_lib+ImageFormats_dll
+    </set>
+
+</makefile>

@@ -1,0 +1,283 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+Project: "libAGG_lib"=VCF_libAGG_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZLib_lib"=VCF_ZLib_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibJPEG_lib"=VCF_LibJPEG_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibMNG_lib"=VCF_LibMNG_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibPNG_lib"=VCF_LibPNG_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibTIFF_lib"=VCF_LibTIFF_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExx_lib"=VCF_RegExx_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FoundationKit"=VCF_FoundationKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsKit"=VCF_GraphicsKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name libAGG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibJPEG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibPNG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name ZLib_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name FoundationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ApplicationKit"=VCF_ApplicationKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name GraphicsKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKit"=VCF_HTMLKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name ApplicationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKit"=VCF_OpenGLKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name ApplicationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NetworkKit"=VCF_NetworkKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name FoundationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKit"=VCF_RemoteObjectKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name FoundationKit
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name NetworkKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "InternetKit"=VCF_InternetKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name FoundationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FreeImage_lib"=VCF_FreeImage_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name ZLib_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibJPEG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibPNG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibMNG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibTIFF_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImageFormats"=VCF_ImageFormats.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name libAGG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name ZLib_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibJPEG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibPNG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibMNG_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name LibTIFF_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name FreeImage_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name ApplicationKit
+End Project Dependency
+}}}
+
+###############################################################################
+

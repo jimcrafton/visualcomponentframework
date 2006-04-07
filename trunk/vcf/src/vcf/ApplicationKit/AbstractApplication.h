@@ -21,10 +21,13 @@ class ApplicationPeer;
 class ResourceBundle;
 
 class Frame;
+class Window;
+class Dialog;
 
 class AcceleratorKey;
 
 /**
+\class AbstractApplication AbstractApplication.h "vcf/ApplicationKit/AbstractApplication.h"
 *An AbstractApplication is a base class for deriving new application types
 *Currently there are two main types, standard Application classes, which
 *represent the current process the application is associated with and of which there
@@ -88,7 +91,6 @@ public:
 	
 
 	/**
-	\par
 	This returns the application's resource bundle. If the application in question
 	is the application instance that represents the running process/program (
 	in other words, the instance returned by Application::getRunningInstance() )
@@ -96,7 +98,7 @@ public:
 	System::getResourceBundle(). However, if the application instance is
 	a LibraryApplication, then the resource bundle is unique to that library, and
 	independant from that of the main application's resource bundle.
-	\par
+	
 	This is re-implemented in LibraryApplication class.
 	*/
 	virtual GraphicsResourceBundle* getResourceBundle();
@@ -126,14 +128,18 @@ public:
 	*or the class doesn't exist. Otherwise it represent a full loaded
 	*instance, using the data from the resource VFF.
 	*/
-	Frame* createFrame( const String& frameClassName );
+	Window* createWindow( Class* windowClass );
+
+	Dialog* createDialog( Class* dialogClass );
 
 	/**
 	*Loads an already existing Frame from a frame derived class name
 	*@param Frame a pointer to new instance of the type specified
 	*in the frameClassName argument.
 	*/
-	void loadFrame( Frame** frame );
+	void loadWindow( Window* window );
+
+	void loadDialog( Dialog* dialog );
 
 	/**
 	*This virtual function is called during the event loops idle phase.
@@ -172,6 +178,22 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.4  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.5.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.2  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.5.2.1  2005/10/09 04:32:44  ddiego
+*added some minor fixes in component persistence for vcf builder.
+*
 *Revision 1.5  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

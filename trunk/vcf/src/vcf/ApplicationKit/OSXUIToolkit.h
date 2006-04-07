@@ -19,6 +19,15 @@ where you installed the VCF.
 #define VCF_WINDOW_MOUSE_RGN			'VCfW'
 #define VCF_CONTROL_MOUSE_RGN			'VCfC'
 
+class OSXUIUtils {
+public:
+static VCF::ulong32 translateButtonMask( EventMouseButton button );
+
+static VCF::ulong32 translateKeyMask( UInt32 keyMod );
+
+};
+
+
 template <typename ViewType >
 class ViewCreator {
 public:
@@ -29,8 +38,7 @@ public:
 
 		OSStatus			err;
 		EventRef			event = TObject::CreateInitializationEvent();
-		ControlRef			root = NULL;
-
+		
 		// Register this class
 		VCF::CFTextString classID;
 		VCF::String className = VCF::StringUtils::getClassNameFromTypeInfo( typeid(ViewType) );
@@ -161,8 +169,6 @@ public:
 
 	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component );
 
-	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control );
-
 	virtual ContextPeer* internal_createContextPeer( Control* component );
 
 	virtual CommonFileDialogPeer* internal_createCommonFileOpenDialogPeer( Control* owner );
@@ -217,6 +223,7 @@ public:
 
 	virtual void internal_quitCurrentEventLoop();
 
+	virtual void internal_systemSettingsChanged();
 	/**
 	*@param void* in this implementation, the eventData represents a
 	*pointer to an OSX EventRef structure.
@@ -225,11 +232,15 @@ public:
 
 	virtual Size internal_getDragDropDelta();
 
+	virtual void internal_displayHelpContents( const String& helpBookName, const String& helpDirectory );
 
-	//static void  internal_osxEventHandler( EventRef osxEvent, gpointer data);
+	virtual void internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory );
 
-	//static gboolean internal_gdkIdleHandler(gpointer data);
-    static EventRef createUserCarbonEvent( UInt32 eventType );
+	virtual bool internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );
+	
+	static EventRef createUserCarbonEvent( UInt32 eventType );
 protected:
 	//VirtualKeyCode translateKeyCode( guint code );
 	//ulong32 translateKeyMask( GdkModifierType keyState );
@@ -262,6 +273,28 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.6  2006/03/17 03:08:11  ddiego
+*updated osx code to latest changes.
+*
+*Revision 1.6.2.5  2006/02/26 23:44:10  ddiego
+*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
+*
+*Revision 1.6.2.4  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.6.2.3  2006/01/09 02:22:31  ddiego
+*more osx code
+*
+*Revision 1.6.2.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.6  2005/07/10 00:20:40  ddiego
 *updated osx code from merge over of devmain-0-6-7.
 *

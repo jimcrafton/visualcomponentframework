@@ -36,3 +36,6 @@ namespace VCF {
 };
 
 #endif //_VCF_WIN32THREADMANAGERPEER_H__
+
+
+

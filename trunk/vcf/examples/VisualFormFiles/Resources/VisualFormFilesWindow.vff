@@ -1,0 +1,1540 @@
+object Form1 : Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
+
+	alignment = AlignNone
+
+	anchor = 0
+
+	autoStartDragDrop = false
+
+	border = @
+
+	borderSize = 0.00000
+
+	bottom = 555.00000
+
+	bottomBorderHeight = 0.00000
+
+	color.blue = 0.78431
+
+	color.green = 0.81569
+
+	color.red = 0.83137
+
+	container = @
+
+	doubleBuffered = true
+
+	enabled = true
+
+	font.bold = false
+
+	font.color.blue = 0.00000
+
+	font.color.green = 0.00000
+
+	font.color.red = 0.00000
+
+	font.italic = false
+
+	font.name = 'MS Sans Serif'
+
+	font.pointSize = 9.00000
+
+	font.strikeout = false
+
+	font.underlined = false
+
+	height = 537.00000
+
+	left = 234.00000
+
+	leftBorderWidth = 0.00000
+
+	name = 'Form1'
+
+	popupMenu = null
+
+	right = 589.00000
+
+	rightBorderWidth = 0.00000
+
+	tabOrder = 2
+
+	tabStop = false
+
+	tag = 53
+
+	toolTipText = ''
+
+	top = 70.00000
+
+	topBorderHeight = 0.00000
+
+	transparent = false
+
+	useColorForBackground = false
+
+	useParentFont = false
+
+	visible = true
+
+	whatThisHelpString = ''
+
+	width = 565.00000
+
+	object label1 : VCF::Label, 'ED88C09F-26AB-11d4-B539-00C04F0196DA'
+
+		anchor = [AnchorLeft,AnchorRight]
+
+		autoStartDragDrop = false
+
+		border = null
+
+		bottom = 100.00000
+
+		caption = 'This is a label!'
+
+		color.blue = 0.50000
+
+		color.green = 1.00000
+
+		color.red = 0.00000
+
+		container = null
+
+		doubleBuffered = true
+
+		enabled = true
+
+		focusControl = null
+
+		font.bold = false
+
+		font.color.blue = 0.00000
+
+		font.color.green = 0.00000
+
+		font.color.red = 0.00000
+
+		font.italic = false
+
+		font.name = 'MS Sans Serif'
+
+		font.pointSize = 9.00000
+
+		font.strikeout = false
+
+		font.underlined = false
+
+		height = 45.00000
+
+		left = 20.00000
+
+		name = 'label1'
+
+		popupMenu = null
+
+		right = 320.00000
+
+		tabOrder = 0
+
+		tabStop = false
+
+		tag = 279
+
+		textAlignment = taTextLeft
+
+		toolTipText = ''
+
+		top = 55.00000
+
+		transparent = false
+
+		useColorForBackground = true
+
+		useParentFont = false
+
+		verticalAlignment = tvaTextCenter
+
+		visible = true
+
+		whatThisHelpString = ''
+
+		width = 300.00000
+
+		wordWrap = false
+
+		delegates 
+
+		end
+
+	end
+
+	object text1 : VCF::TextControl, 'ED88C09E-26AB-11d4-B539-00C04F0196DA'
+
+		alignment = AlignNone
+
+		anchor = 0
+
+		autoStartDragDrop = false
+
+		border = @
+
+		bottom = 176.00000
+
+		color.blue = 0.50000
+
+		color.green = 1.00000
+
+		color.red = 0.00000
+
+		container = null
+
+		doubleBuffered = true
+
+		enabled = true
+
+		font.bold = false
+
+		font.color.blue = 0.00000
+
+		font.color.green = 0.00000
+
+		font.color.red = 0.00000
+
+		font.italic = false
+
+		font.name = 'MS Sans Serif'
+
+		font.pointSize = 9.00000
+
+		font.strikeout = false
+
+		font.underlined = false
+
+		height = 35.00000
+
+		left = 242.00000
+
+		name = 'text1'
+
+		popupMenu = null
+
+		right = 542.00000
+
+		tabOrder = 1
+
+		tabStop = true
+
+		tag = 280
+
+		toolTipText = ''
+
+		top = 141.00000
+
+		useParentFont = false
+
+		visible = true
+
+		whatThisHelpString = ''
+
+		width = 300.00000
+
+		delegates 
+
+			FocusGained = [
+				text1@TextControl::onFocusGained]
+
+		end
+
+	end
+
+	object button1 : VCF::CommandButton, '8B2CDC30-3CAD-11d4-B553-00C04F0196DA'
+
+		alignment = AlignNone
+
+		anchor = 0
+
+		autoStartDragDrop = false
+
+		border = null
+
+		bottom = 402.00000
+
+		caption = 'Hello World!'
+
+		color.blue = 0.78431
+
+		color.green = 0.81569
+
+		color.red = 0.83137
+
+		commandType = BC_NONE
+
+		container = null
+
+		doubleBuffered = true
+
+		enabled = true
+
+		font.bold = false
+
+		font.color.blue = 0.00000
+
+		font.color.green = 0.00000
+
+		font.color.red = 0.00000
+
+		font.italic = false
+
+		font.name = 'MS Sans Serif'
+
+		font.pointSize = 9.00000
+
+		font.strikeout = false
+
+		font.underlined = false
+
+		height = 35.00000
+
+		left = 30.00000
+
+		name = 'button1'
+
+		popupMenu = null
+
+		right = 330.00000
+
+		tabOrder = 2
+
+		tabStop = true
+
+		tag = 403
+
+		toolTipText = ''
+
+		top = 367.00000
+
+		useParentFont = false
+
+		visible = true
+
+		whatThisHelpString = ''
+
+		width = 300.00000
+
+		delegates 
+
+			FocusGained = [
+				button1@CommandButton::onFocusGained]
+
+			FocusLost = [
+				button1@CommandButton::onFocusLost]
+
+		end
+
+	end
+
+	object menuBar : VCF::MenuBar, '7B6F28B4-3E3F-11d4-B555-00C04F0196DA'
+
+		name = 'menuBar'
+
+		rootMenuItem = @RootMenuItem
+
+		tag = 283
+
+		object fileMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+			caption = '&File'
+
+			object fileOpenMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open1...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu1 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open2...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu2 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open3...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu3 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open4...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu4 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open5...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu5 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open5...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu6 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open6...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu7 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open7...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu8 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open8...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu9 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open9...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu10 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open10...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu11 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open11...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu12 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Ope12...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu13 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open13...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu14 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open14...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu15 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open15...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu16 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open16...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu17 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open17...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu18 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open19...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu19 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu20 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu21 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu22 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu23 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu24 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu25 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu26 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu27 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu28 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu29 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu30 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu31 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu32 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu33 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu34 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu35 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu36 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu37 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu38 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu39 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu40 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu41 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu42 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu43 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu44 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu45 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu46 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu47 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu48 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu49 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu50 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu51 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu52 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu53 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu54 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu55 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu56 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open...'
+
+				delegates 
+
+				end
+
+			end
+
+			object fileOpenMenu57 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Open57...'
+
+				delegates 
+
+				end
+
+			end
+
+			delegates 
+
+			end
+
+		end
+
+		object editMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+			caption = '&Edit'
+
+			object editStuffMenu : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu1 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu2 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu3 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu4 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu5 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu6 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu7 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu8 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu9 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu10 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu11 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu12 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu13 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu14 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu15 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu16 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu17 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu18 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu19 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu20 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu21 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu22 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu23 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu24 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu25 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu26 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu27 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu28 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu29 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu30 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu31 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu32 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu33 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu34 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu35 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu36 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu37 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu38 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu39 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu40 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu41 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu42 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu43 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu44 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu45 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu46 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu47 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu48 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu49 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu50 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu51 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu52 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu53 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu54 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu55 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu56 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&Stuff'
+
+				delegates 
+
+				end
+
+			end
+
+			object editStuffMenu57 : VCF::DefaultMenuItem, '15307228-7207-44c8-8b22-4d5575648ae8'
+
+				caption = '&editStuffMenu57'
+
+				delegates 
+
+				end
+
+			end
+
+			delegates 
+
+			end
+
+		end
+
+		delegates 
+
+		end
+
+	end
+
+	delegates 
+
+		ComponentDeleted = [
+			VisualFormFilesWindow.vff@VFFDocument::rootFrameDestroyed]
+
+	end
+
+end
+

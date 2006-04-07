@@ -10,6 +10,9 @@
 	<!ENTITY coreLibGraphicsKit SYSTEM "corelib_graphicsKit.xml">
 	<!ENTITY coreLibApplicationKit SYSTEM "corelib_applicationKit.xml">
 	<!ENTITY componentAuthoring SYSTEM "corelib_componentAuthoring.xml">
+	<!ENTITY coreLibHTMLKit SYSTEM "corelib_htmlKit.xml">
+	<!ENTITY coreLibInternetKit SYSTEM "corelib_internetKit.xml">
+	<!ENTITY coreLibOpenGLKit SYSTEM "corelib_openGLKit.xml">
 	<!ENTITY coreLibNetworkKit SYSTEM "corelib_networkKit.xml">
 	<!ENTITY coreLibRemoteObjectKit SYSTEM "corelib_remoteObjectKit.xml">
 	<!ENTITY faqs SYSTEM "faqs.xml">
@@ -141,10 +144,8 @@ NB: This software will not save the world.
 
 
 
-<book>
-	
-	&vcf_book;
-	
+<book>	
+	&vcf_book;	
 	<index id="index"/>
 </book>
 
@@ -152,6 +153,15 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.7  2006/04/07 02:34:02  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.6.4.2  2006/03/06 04:38:41  ddiego
+added new docs sections for the HTMLKit, OpenGLKit, and INternetKit.
+
+Revision 1.6.4.1  2006/02/18 03:44:52  ddiego
+general.xml
+
 Revision 1.6  2004/12/02 04:54:02  ddiego
 added some more documentation to the graphics kit classes.
 

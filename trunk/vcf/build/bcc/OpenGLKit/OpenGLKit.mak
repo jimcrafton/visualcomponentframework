@@ -109,8 +109,7 @@ dirs::
 ##################################
 $(PROJECT1):: $(OBJFILES)
    @echo Linking $(<F) static library
-   @$(LB) @&&|
-   $< $(LPARAM) &
+   @$(LB) $< $(LPARAM) @&&|
    -+$(?: = &^
    -+)
    

@@ -15,6 +15,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TitledBorder.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 #include "vcf/ApplicationKit/ColorEtchedBorder.h"
+
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/ApplicationKit/TextPeer.h"
@@ -26,8 +27,6 @@ where you installed the VCF.
 
 #include "MainWindow.h"
 //#include "HorizontalLayoutContainer.h"
-
-
 
 
 using namespace VCF;
@@ -77,8 +76,6 @@ MainWindow::MainWindow()
 
 	mainPagesModel_ = mainPages_->getModel();
 	mainPagesModel_->setSelectedPage( listBoxPage_ );
-
-	setVisible( true );
 }
 
 MainWindow::~MainWindow()
@@ -342,7 +339,6 @@ void MainWindow::makeBordersPage()
 
 
 
-
 void MainWindow::makeButtonsPage()
 {
 	HorizontalLayoutContainer* container = new HorizontalLayoutContainer();
@@ -390,7 +386,9 @@ void MainWindow::makeButtonsPage()
 
 	btn1->setCaption(  "Button 1" );
 	container->add( btn1 );
-	btn1->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onButtonClicked, "MainWindow::onButtonClicked" ) );
+
+	EventHandler* btnHandler = new ButtonEventHandler<MainWindow>( this, &MainWindow::onButtonClicked, "MainWindow::onButtonClicked" );
+	btn1->ButtonClicked.addHandler( btnHandler );
 
 
 
@@ -403,7 +401,7 @@ void MainWindow::makeButtonsPage()
 	btn2->setCaption(  "Button 2" );
 	btn2->setEnabled( false );
 	container->add( btn2 );
-	btn2->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onButtonClicked, "MainWindow::onButtonClicked" ) );
+	btn2->ButtonClicked.addHandler( btnHandler );
 
 
 
@@ -467,7 +465,7 @@ void MainWindow::makeButtonsPage()
 	il->addImage( img );
 	delete img;
 
-	img = resBundle->getImage( "iconSaveDown" );
+	img = resBundle->getImage( "iconSaveFocusDown" );
 	il->addImage( img );
 	delete img;
 
@@ -848,13 +846,6 @@ void MainWindow::makeTextPage()
 	int c = text.size();
 	TextModel* textModel = multiTextCtrl->getTextModel();
 	textModel->setText( text );
-	String txt1 = textModel->getText();
-	
-	c = txt1.size();
-
-	String txt2 = (dynamic_cast<TextEditPeer*>(multiTextCtrl->getPeer()))->getText( 0, textModel->getSize() );
-
-	c = txt2.size();
 }
 
 
@@ -889,10 +880,27 @@ void MainWindow::makeTreePage()
 	container->add( tc, AlignClient );
 }
 
-
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:34:19  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.5  2006/03/19 21:59:41  ddiego
+*updated various settings in vc80 projects.
+*
+*Revision 1.3.2.4  2006/03/16 18:45:24  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.3.2.3  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.3.2.2  2005/08/01 16:46:06  marcelloptr
+*forgotten fixes
+*
+*Revision 1.3.2.1  2005/07/23 21:45:34  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
 *Revision 1.3  2005/07/09 23:14:34  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

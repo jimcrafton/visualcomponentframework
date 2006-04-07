@@ -18,7 +18,9 @@ where you installed the VCF.
 
 
 namespace VCF {
-
+/**
+\class NoFreeMemException NoFreeMemException.h "vcf/FoundationKit/NoFreeMemException.h"
+*/
 class FOUNDATIONKIT_API NoFreeMemException : public BasicException {
 public:
 	NoFreeMemException( const String & message ):
@@ -39,6 +41,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -85,10 +85,31 @@ ulong32 Process::terminate()
 	return processPeer_->terminate();
 }
 
+Waitable::WaitResult Process::wait()
+{
+	return processPeer_->wait();
+}
+
+Waitable::WaitResult Process::wait( uint32 milliseconds )
+{
+	return processPeer_->wait(milliseconds);
+}
+
+OSHandleID Process::getPeerHandleID()
+{
+	return processPeer_->getHandleID();
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.4  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

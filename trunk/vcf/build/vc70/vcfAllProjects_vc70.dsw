@@ -63,6 +63,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AllIn1"=".\AllIn1\AllIn1_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AllIn1DLL"=".\AllIn1\AllIn1DLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Anchors"="..\..\examples\Anchors\Anchors_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -125,6 +149,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name GraphicsKitDLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Browser"="..\..\examples\Browser\Browser_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -369,6 +405,9 @@ Package=<4>
     Project_Dep_Name ApplicationIcons
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Browser
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Cards
     End Project Dependency
     Begin Project Dependency
@@ -441,16 +480,25 @@ Package=<4>
     Project_Dep_Name HelloWorld3
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Help
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ImageBasics
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ImageViewer
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name InetKit
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Labels
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ListBox
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LocaleUI
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Localization
@@ -463,6 +511,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name MVCBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MinMax
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLShapes
@@ -493,6 +544,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Scrolling
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Scrolling2
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name SharedLibraries
@@ -528,6 +582,9 @@ Package=<4>
     Project_Dep_Name TextLayout
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Themes
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ThreadBasics
     End Project Dependency
     Begin Project Dependency
@@ -537,10 +594,16 @@ Package=<4>
     Project_Dep_Name Toolbars
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Tooltips
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Transformations
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TreeListControls
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Variants
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name VisualFormFiles
@@ -665,6 +728,15 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -682,6 +754,45 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name libAGG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKit"=".\HTMLKit\HTMLKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKitDll"=".\HTMLKit\HTMLKitDll_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
     End Project Dependency
 }}}
 
@@ -735,6 +846,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Help"="..\..\examples\Help\Help_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ImageBasics"="..\..\examples\ImageBasics\ImageBasics_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -774,6 +897,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "InetKit"="..\..\examples\InetKit\InetKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKit"=".\InternetKit\InternetKit_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKitDLL"=".\InternetKit\InternetKitDLL_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Labels"="..\..\examples\Labels\Labels_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -786,7 +945,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"="..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG_vc70.dsp" - Package Owner=<4>
+Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -810,7 +969,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"="..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG_vc70.dsp" - Package Owner=<4>
+Project: "LibPNG"="..\..\src\thirdparty\common\LibPNG\LibPNG_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -835,6 +994,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ListBox"="..\..\examples\ListBox\ListBox_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LocaleUI"="..\..\examples\LocaleUI\LocaleUI_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -883,6 +1054,18 @@ Package=<4>
 ###############################################################################
 
 Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MinMax"="..\..\examples\MinMax\MinMax_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1050,19 +1233,8 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExx"=".\FoundationKit\RegExx_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit_vc70.dsp" - Package Owner=<4>
+
 
 Package=<5>
 {{{
@@ -1117,6 +1289,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Scrolling"="..\..\examples\Scrolling\Scrolling_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scrolling2"="..\..\examples\Scrolling2\Scrolling2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scrolling2"="..\..\examples\Scrolling2\Scrolling2_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1260,6 +1456,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Themes"="..\..\examples\Themes\Themes_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ThreadBasics"="..\..\examples\ThreadBasics\ThreadBasics_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1296,6 +1504,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Tooltips"="..\..\examples\Tooltips\Tooltips_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Transformations"="..\..\examples\Transformations\Transformations_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1320,6 +1540,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Variants"="..\..\examples\Variants\Variants_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "VisualFormFiles"="..\..\examples\VisualFormFiles\VisualFormFiles_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1328,36 +1560,6 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser"=".\Win32HTMLBrowser\Win32HTMLBrowser_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"=".\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1374,7 +1576,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"="..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib_vc70.dsp" - Package Owner=<4>
+Project: "ZLib"="..\..\src\thirdparty\common\ZLib\ZLib_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1422,6 +1624,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "vcfAll"=".\AllIn1\vcfAll_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "vcfAllDynamicLibs"=".\vcfAllDynamicLibs_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1435,9 +1649,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ImageFormats
@@ -1480,9 +1691,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLKit

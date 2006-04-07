@@ -49,10 +49,9 @@ public:
 
 MainWindow::MainWindow(CombosApplication* app)
 {
-	setBounds( &Rect( 100.0, 100.0, 475.0, 450.0 ) );
+	setBounds( &Rect( 100.0, 100.0, 480.0, 450.0 ) );
 
 	Panel* p = new Panel();
-	p->setHeight( 350 );
 	add( p , AlignClient );
 
 	itemCount_ = 10;
@@ -60,54 +59,57 @@ MainWindow::MainWindow(CombosApplication* app)
 	discreteScroll_ = true; // for a combo and any listbox it should be true by default 
 
 	cb_ = new ComboBoxControl();
-	cb_->setBounds( &Rect(250, 50, 350, 75) );
+	cb_->setBounds( &Rect(250, 50, 350, cb_->getPreferredHeight()) );
 	//cb->addItem( "Item 1" );
 	cb_->setVisible( true );
 	cb_->setComboBoxStyle( cbsDropDownWithEdit );
 	cb_->setDropDownCount( 200 );
 	add( cb_ );
 
-
 	VCF::CommandButton* btn;
 	ButtonEventHandler<MainWindow>* bh;
 
 	eddc_ = new TextControl();
-	eddc_->setBounds( &Rect(25, 20, 60, 45) );
+	eddc_->setBounds( 25, 20, 45, eddc_->getPreferredHeight() );
 	eddc_->setVisible( true );
 	eddc_->setToolTipText( "dropdown count for the combo" );
 	add( eddc_ );
 
 	btn = new CommandButton();
-	btn->setBounds ( &Rect(100, 20, 200, 55) );
+
 	btn->setCaption( "Set DropDown Count" );
+	btn->setBounds ( 100, 20, btn->getPreferredWidth(), btn->getPreferredHeight() );	
 	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownCount, "MainWindow::onSetDropDownCount" );
 	btn->addButtonClickHandler( bh );
 	add( btn );
 
 
 	edic_ = new TextControl();
-	edic_->setBounds( &Rect(25, 75, 60, 100) );
+	edic_->setBounds( 25, 75, 45, edic_->getPreferredHeight() );
 	edic_->setVisible( true );
 	edic_->setToolTipText( "number of items in the combo" );
 	add( edic_ );
 
 	btn = new CommandButton();
-	btn->setBounds ( &Rect(100, 75, 200, 100) );
+
 	btn->setCaption( "Set Items count" );
+	btn->setBounds ( 100, 75, btn->getPreferredWidth(), btn->getPreferredHeight() );	
 	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetComboItemCount, "MainWindow::onSetComboItemCount" );
 	btn->addButtonClickHandler( bh );
 	add( btn );
 
 
 	eddw_ = new TextControl();
-	eddw_->setBounds( &Rect(25, 125, 60, 150) );
+	eddw_->setBounds( 25, 125, 45, eddw_->getPreferredHeight() );
 	eddw_->setVisible( true );
 	eddw_->setToolTipText( "dropdown width for the combo" );
 	add( eddw_ );
 
 	btn = new CommandButton();
-	btn->setBounds ( &Rect(100, 125, 200, 160) );
+
 	btn->setCaption( "Set DropDown Width" );
+	btn->setBounds ( 100, 125, btn->getPreferredWidth(), btn->getPreferredHeight() );
+	
 	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownWidth, "MainWindow::onSetDropDownWidth" );
 	btn->addButtonClickHandler( bh );
 	add( btn );
@@ -121,7 +123,6 @@ MainWindow::MainWindow(CombosApplication* app)
 	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownExtendFullScreen, "MainWindow::onSetDropDownExtendFullScreen" );
 	chkDropDownExtendFullScreen_->addButtonClickHandler( bh );
 	add( chkDropDownExtendFullScreen_ );
-
 
 
 	chkDiscreteScroll_ = new CheckBoxControl();

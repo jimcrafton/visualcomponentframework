@@ -31,6 +31,9 @@ namespace VCF{
 
 #define DEFAULTTREEMODEL_CLASSID		"3126B226-2819-11d4-B53A-00C04F0196DA"
 
+/**
+\class DefaultTreeModel DefaultTreeModel.h "vcf/ApplicationKit/DefaultTreeModel.h"
+*/
 class APPLICATIONKIT_API DefaultTreeModel : public AbstractModel, public AbstractTreeModel {
 public:
 	/**
@@ -114,6 +117,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

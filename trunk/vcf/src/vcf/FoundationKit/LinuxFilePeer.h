@@ -1,6 +1,7 @@
 #ifndef _VCF_LINUXFILEPEER_H__
 #define _VCF_LINUXFILEPEER_H__ 
 
+
 /*
 Copyright 2000-2004 The VCF Project.
 Please see License.txt in the top level directory
@@ -13,13 +14,7 @@ namespace VCF
 class LinuxFilePeer : public Object, public FilePeer
 {
 public:
-	class FileSearchData
-	{
-	public:
-		FileSearchData()
-		{
-		}
-	};
+	class FileSearchData;
 
 	LinuxFilePeer( File* file );
 
@@ -106,6 +101,7 @@ public:
 	*/
 	virtual void copyTo( const String& copyFileName );
 
+    ulong32 convertAttributesFromSystemSpecific( const struct stat& st, const String& fileName );
 
 	/* Directory::Finder support functions */
 
@@ -125,12 +121,12 @@ public:
 private:
 	int fileHandle_;
 	File* file_;
-	bool searchStarted_;
-	std::vector<String> searchFilters_;
-	std::vector<String>::iterator searchFilterIterator_;
-	std::map<Directory::Finder*,FileSearchData> searchMap_;
+
+    bool searchStarted_;
+    FileSearchData* fileSearchData_;
 
 	void buildSearchFilters( const String& searchFilter );
+
 };
 
 } //end of namespace VCF
@@ -139,6 +135,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.4  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
 *

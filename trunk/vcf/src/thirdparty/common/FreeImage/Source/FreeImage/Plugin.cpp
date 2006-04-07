@@ -57,6 +57,12 @@ static int s_search_list_size = sizeof(s_search_list) / sizeof(char *);
 // Reimplementation of stricmp (it is not supported on some systems)
 // =====================================================================
 
+//Ugly hack for bcb6 w. Stlport w. fixed ctype.h header
+#if defined(__BORLANDC__) && defined(__SGI_STL_PORT) && ((__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570))
+#define toupper std::_ltoupper
+#define tolower std::_ltolower
+#endif
+
 int
 FreeImage_stricmp(const char *s1, const char *s2) {
 	int c1, c2;
@@ -311,7 +317,7 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 
 		s_plugins->AddNode(InitBMP);
 		s_plugins->AddNode(InitICO);
-		s_plugins->AddNode(InitJPEG);
+		//s_plugins->AddNode(InitJPEG);
 		s_plugins->AddNode(InitMNG, NULL, "JNG", "JPEG Network Graphics", "jng", "");
 		s_plugins->AddNode(InitKOALA);
 		s_plugins->AddNode(InitIFF);
@@ -322,7 +328,7 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 		s_plugins->AddNode(InitPCX);
 		s_plugins->AddNode(InitPNM, NULL, "PGM", "Portable Greymap (ASCII)", "pgm", "^P2");
 		s_plugins->AddNode(InitPNM, NULL, "PGMRAW", "Portable Greymap (RAW)", "pgm", "^P5");
-		s_plugins->AddNode(InitPNG);
+		//s_plugins->AddNode(InitPNG);
 		s_plugins->AddNode(InitPNM, NULL, "PPM", "Portable Pixelmap (ASCII)", "ppm", "^P3");
 		s_plugins->AddNode(InitPNM, NULL, "PPMRAW", "Portable Pixelmap (RAW)", "ppm", "^P6");
 		s_plugins->AddNode(InitRAS);

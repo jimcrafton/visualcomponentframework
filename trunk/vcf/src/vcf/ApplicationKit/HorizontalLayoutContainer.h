@@ -23,6 +23,9 @@ namespace VCF {
 
 #define HORIZONTALLAYOUTCONTAINER_CLASSID		"11aab5e2-36d2-47c7-9391-c40b185d6b9e"
 
+/**
+\class HorizontalLayoutContainer HorizontalLayoutContainer.h "vcf/ApplicationKit/HorizontalLayoutContainer.h"
+*/
 class HorizontalLayoutContainer : public StandardContainer {
 public:
 
@@ -32,7 +35,7 @@ public:
 		averageHeights_(false),
 		keepControlsWidth_(false) {
 
-		setBorderWidth( UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta) );
+		setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) );
 
 		setNumberOfColumns(2);
 
@@ -40,12 +43,12 @@ public:
 
 		setColumnWidth( 1, 100 );
 
-		setColumnTweenWidth( 0, UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlHorizontalSpacing) );
+		setColumnTweenWidth( 0, UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
 
 
-		setMaxRowHeight( UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight ) );
+		setMaxRowHeight( UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight ) );
 
-		setRowSpacerHeight( UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlVerticalSpacing) );
+		setRowSpacerHeight( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) );
 	}
 
 	HorizontalLayoutContainer( Component* owner ):
@@ -53,7 +56,7 @@ public:
 		maximizeLastRow_(false)
 	{
 
-		setBorderWidth( UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta) );
+		setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) );
 
 		setNumberOfColumns(2);
 
@@ -61,12 +64,12 @@ public:
 
 		setColumnWidth( 1, 100 );
 
-		setColumnTweenWidth( 0, UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlHorizontalSpacing) );
+		setColumnTweenWidth( 0, UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
 
 
-		setMaxRowHeight( UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight ) );
+		setMaxRowHeight( UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight ) );
 
-		setRowSpacerHeight( UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlVerticalSpacing) );
+		setRowSpacerHeight( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) );
 
 	}
 
@@ -105,36 +108,39 @@ public:
 	}
 
 	/**
-	sets if we want all the row heights to be the same
+	Set if we want all the row heights to be the same
 	as the hightest one. The default is false;
 	This flag excludes setEqualizeHeights().
 	*/
 	void setEqualizeHeights( bool equalize ) {
 		equalizeHeights_ = equalize;
 	}
+
 	bool getEqualizeHeights() {
 		return equalizeHeights_;
 	}
 
 	/**
-	sets if we want all the row heights to be the same
+	Set if we want all the row heights to be the same
 	as the average height that fills the parent control. The default is false;
 	*/
 	void setAverageHeights( bool average ) {
 		averageHeights_ = average;
 	}
+
 	bool getAverageHeights() {
 		return averageHeights_;
 	}
 
 	/**
-	sets if we want the controls to keep their width or,
-	as it is by default, resizing their width to the one of
+	Set if we want the controls to keep their width or,
+	as it is by default, resize their width to the one of
 	the column where they are located.
 	*/
 	void setKeepControlsWidth( bool keep ) {
 		keepControlsWidth_ = keep;
 	}
+
 	bool getKeepControlsWidth() {
 		return keepControlsWidth_;
 	}
@@ -337,6 +343,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

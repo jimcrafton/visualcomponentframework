@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="GraphicsKitFiles.bkl"/>
+
+    <template id="GraphicsKit_base">
+        <set var="LIBRARY_NAME">$(GRAPHICSKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)GraphicsKit$(DIRSEP)GraphicsKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)GraphicsKit$(DIRSEP)GraphicsKit.cpp</set>
+
+        <headers>$(GRAPHICSKIT_HDR)</headers>
+        <sources>$(GRAPHICSKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+
+        <library>libAGG_lib</library>
+        <library>LibJPEG_lib</library>
+        <library>LibPNG_lib</library>
+        <library>ZLib_lib</library>
+    </template>
+
+    <lib id="GraphicsKit_lib" template="GraphicsKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_GRAPHICSKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+    </lib>
+
+    <dll id="GraphicsKit_dll" template="GraphicsKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_GRAPHICSKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>GRAPHICSKIT_DLL</define>
+        <define>GRAPHICSKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_GRAPHICSKIT=='1' and OPTION_ALLIN1=='0'">
+        GraphicsKit=GraphicsKit_lib+GraphicsKit_dll
+    </set>
+</makefile>

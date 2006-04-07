@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="Resources" template="vcf_exe_console" cond="OPTION_FOUNDATIONKIT=='1'">
+        <dirname>.</dirname>
+        <exename>Resources</exename>
+        <sources>Resources.cpp</sources>
+        <win32-res>Resources.rc</win32-res>
+        <vcf-use-FoundationKit/>
+    </exe>
+</makefile>

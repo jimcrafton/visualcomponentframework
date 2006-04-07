@@ -71,8 +71,6 @@ public:
 		*/
 		mainWindow->setCaption( "Hello World" );
 
-        mainWindow->setBounds( 100, 100, 500, 500 );
-
 		/**
 		*show the main window.
 		*By default the window is invisible until
@@ -119,8 +117,14 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:38  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:28  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/19 20:12:34  ddiego
+*removed positioning code in hello world example.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:36  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.1  2005/03/06 22:50:53  ddiego
 *overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.

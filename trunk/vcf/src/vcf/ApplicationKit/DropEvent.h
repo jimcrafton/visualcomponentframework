@@ -21,7 +21,8 @@ where you installed the VCF.
 
 namespace VCF{
 /**
- * Drop event are fired when an object is dropped during a drag drop operation.
+\class DropTargetEvent DropEvent.h "vcf/ApplicationKit/DropEvent.h"
+Drop event are fired when an object is dropped during a drag drop operation.
  */
 class APPLICATIONKIT_API DropTargetEvent : public Event {
 
@@ -110,6 +111,9 @@ protected:
 
 
 
+/**
+\class DropEventHandler DropEvent.h "vcf/ApplicationKit/DropEvent.h"
+*/
 template <class SOURCE_TYPE>
 class DropEventHandler : public EventHandlerInstance<SOURCE_TYPE,DropTargetEvent>  {
 public:
@@ -129,6 +133,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

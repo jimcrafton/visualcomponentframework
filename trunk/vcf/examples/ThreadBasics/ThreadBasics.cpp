@@ -296,7 +296,7 @@ void example3()
 						% thread->getOwningProcessID()
 						% thread->getThreadID() );
 
-	System::println( Format("Thread: %s") % thread->toString().c_str() );
+	System::println( Format("Thread: %s") % thread->toString() );
 	thread->free();
 
 
@@ -415,8 +415,14 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
-*Revision 1.4  2005/07/09 23:14:46  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.5  2006/04/07 02:34:51  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/07/23 21:45:44  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
+*Revision 1.3.4.3  2005/07/11 18:36:19  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.3.4.2  2005/05/05 12:42:26  ddiego
 *this adds initial support for run loops,

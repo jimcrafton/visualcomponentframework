@@ -29,24 +29,15 @@ TextControl::TextControl( const bool& multiLineControl ):
 
 	peer_ = dynamic_cast<ControlPeer*>(textPeer_ );
 
+	peer_->create( this );
 
 
 	setColor(  GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
-
-
-	peer_->create( this );
+	
 
 	setTextModel( new DefaultTextModel() );
 
-
-	//if we are a single line control then add a
-	//handler for getting the focus so we can
-	//select all the text whenever we get the focus
-	if ( false == multiLineControl ) {
-		FocusGained.addHandler( new FocusEventHandler<TextControl>( this,
-																&TextControl::onFocusGained,
-																"TextControl::onFocusGained" ) );
-	}
+	addComponent( getViewModel() );	
 
 	init();
 }
@@ -62,6 +53,7 @@ TextControl::~TextControl()
 void TextControl::init()
 {
 	setVisible( true );
+	
 	setFocused();
 	setEnabled( true );
 	keepTabbingCharacters_ = false;
@@ -324,7 +316,7 @@ void TextControl::replaceSelectedText( const String& text )
 	model_->replaceText( selectionStart, selectionCount, text );
 }
 
-void TextControl::onFocusGained( FocusEvent* event )
+void TextControl::gotFocus( FocusEvent* event )
 {
 	if ( NULL != model_ ) {
 		String text = model_->getText();
@@ -335,10 +327,10 @@ void TextControl::onFocusGained( FocusEvent* event )
 
 double TextControl::getPreferredHeight()
 {
-	double result = Control::getPreferredHeight();
+	double result = UIToolkit::getUIMetricValue( UIMetricsManager::mtTextControlHeight );
 
 	if ( NULL != getFont() ) {
-		result = getFont()->getPixelSize() * 1.85;
+		//result = getFont()->getPixelSize() * 1.85;
 	}
 
 	return result;
@@ -413,16 +405,16 @@ void TextControl::handleEvent( Event* event )
 
 								//Debug diagnostics - JC
 								//String text = model->getText();
-								//StringUtils::traceWithArgs( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-								//		text.c_str(), text[pos], text[pos], pos );
+								//StringUtils::trace( Format( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+								//											text % text[pos] % text[pos] % pos );
 
 								if ( 0 != length ) {
 									model->deleteText( pos, length );
 								}
 
 								//text = model->getText();
-								//StringUtils::traceWithArgs( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-								//		text.c_str(), text[pos], text[pos], pos );
+								//StringUtils::trace( Format( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+								//											text % text[pos] % text[pos] % pos );
 							}
 
 						}
@@ -458,8 +450,8 @@ void TextControl::handleEvent( Event* event )
 
 							//Debug diagnostics - JC
 							//String text = model->getText();
-							//StringUtils::traceWithArgs( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-							//		text.c_str(), text[pos], text[pos], pos );
+							//StringUtils::trace( Format( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+							//											text % text[pos] % text[pos] % pos );
 
 
 							if ( 0 != length ) {
@@ -468,8 +460,8 @@ void TextControl::handleEvent( Event* event )
 
 
 							//text = model->getText();
-							//StringUtils::traceWithArgs( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-							//		text.c_str(), text[pos-length], text[pos-length], pos-length );
+							//StringUtils::trace( Format( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+							//											text % text[pos-length] % text[pos-length] % pos-length );
 
 
 						}
@@ -552,8 +544,8 @@ void TextControl::handleEvent( Event* event )
 										model->deleteText( pos, length );
 									}
 
-									//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-									//	text.c_str(), text[0], text[0], pos );
+									//StringUtils::trace( Format( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+									//											text % text[0] % text[0] % pos );
 
 									model->insertText( pos, text );
 								}
@@ -613,8 +605,8 @@ void TextControl::handleEvent( Event* event )
 
 								if ( !text.empty() ) {
 
-									//StringUtils::traceWithArgs( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n", 
-									//	text.c_str(), text[0], text[0], pos );
+									//StringUtils::trace( Format( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+									//											text % text[0] % text[0] % pos );
 
 									//determnine if we have sleected text. If we 
 									//have, then delete the selection ant *then*
@@ -708,9 +700,38 @@ void TextControl::redo()
 	textPeer_->redo();
 }
 
+void TextControl::setTextWrapping( const bool& val )
+{
+	textPeer_->setTextWrapping(val);
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.9  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.8.2.6  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.8.2.5  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.8.2.4  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.8.2.3  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.8.2.2  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.8.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
 *Revision 1.8  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

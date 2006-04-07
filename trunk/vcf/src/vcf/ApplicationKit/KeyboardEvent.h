@@ -22,17 +22,37 @@ where you installed the VCF.
 namespace VCF
 {
 
+/**
+Keyboard masks
+*/
+enum KeyboardMasks{
+	kmUndefined = 0,
+	kmAlt = 1,
+	kmShift = 2,
+	kmCtrl = 4
+};
 
 
+
+
+
+/**
+\class KeyboardEvent KeyboardEvent.h "vcf/ApplicationKit/KeyboardEvent.h"
+*/
 class APPLICATIONKIT_API KeyboardEvent : public Event {
 public:
 
-	KeyboardEvent( Object* source );
+	KeyboardEvent( Object* source ) : Event(source),
+		keyMask_(0), keyValue_(0), repeatCount_(0), virtualKeyCode_((VirtualKeyCode)0)  {
+
+	}
 
 	KeyboardEvent( Object* source, const unsigned long& eventType,
 		           const unsigned long& repeatCount, const unsigned long& keyMask,
 				   const VCFChar& keyValue,
-				   const VirtualKeyCode& virtKeyValue );
+				   const VirtualKeyCode& virtKeyValue ): Event(source,eventType),
+		keyMask_(keyMask), keyValue_(keyValue), repeatCount_(repeatCount),
+		virtualKeyCode_(virtKeyValue) {}
 
 	KeyboardEvent( const KeyboardEvent& rhs ):Event(rhs) {
 		*this = rhs;
@@ -47,24 +67,38 @@ public:
 		keyValue_ = rhs.keyValue_;
 		repeatCount_ = rhs.repeatCount_;
 		virtualKeyCode_ = rhs.virtualKeyCode_;
-
+		
 		return *this;
 	}
-
-    unsigned long getKeyMask();
-
-	VCFChar getKeyValue();
-
-	unsigned long getRepeatCount();
-
-	void init();
-
-	bool hasShiftKey();
-	bool hasAltKey();
-	bool hasControlKey();
-
-	VirtualKeyCode getVirtualCode();
-
+	
+    unsigned long getKeyMask() {
+		return keyMask_;
+	}
+	
+	VCFChar getKeyValue() {
+		return keyValue_;
+	}
+	
+	unsigned long getRepeatCount() {
+		return repeatCount_;
+	}
+	
+	bool hasShiftKey() {
+		return ( kmShift & keyMask_ ) != 0;
+	}
+	
+	bool hasAltKey() {
+		return ( kmAlt & keyMask_ ) != 0;
+	}
+	
+	bool hasControlKey() {
+		return ( kmCtrl & keyMask_ ) != 0;
+	}
+	
+	VirtualKeyCode getVirtualCode() {
+		return virtualKeyCode_;
+	}
+	
 	virtual Object* clone( bool deep=false ) {
 		return new KeyboardEvent(*this);
 	}
@@ -77,6 +111,7 @@ private:
 
 
 /**
+\class KeyboardEventHandler KeyboardEvent.h "vcf/ApplicationKit/KeyboardEvent.h"
 *KeyboardEventHandler
 *handles the following:
 *onKeyPressed
@@ -102,6 +137,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.2  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.2.6.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -1,0 +1,206 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <requires version="0.1.9"/>
+
+    <using module="datafiles"/>
+    <using module="vcf"/>
+
+    <include file="Options.bkl"/>
+    <include file="Vars.bkl"/>
+    <include file="Names.bkl"/>
+    <include file="Defines.bkl"/>
+
+
+    <template id="base">
+        <debug-info>$(DEBUG_INFO)</debug-info>
+        <debug-runtime-libs>$(DEBUG_RUNTIME_LIBS)</debug-runtime-libs>
+        <runtime-libs>$(RUNTIME_LIBS)</runtime-libs>
+        <optimize>$(OPTIMIZE)</optimize>
+        <threading>multi</threading>
+        <cxx-rtti>on</cxx-rtti>
+        <cxx-exceptions>on</cxx-exceptions>
+        <warnings>default</warnings>
+
+        <define>$(substituteFromDict( OPTION_DEBUG, {'0':'NDEBUG', '1':'_DEBUG'} ))</define>
+
+        <!--
+        We disable the "#pragma comment" linking.
+        -->
+        <define>VCF_DISABLE_PRAGMA_LINKING</define>
+
+        <if cond="PLATFORM_WIN32=='1'">
+           <define>_WINDOWS</define>
+           <define>_WIN32</define>
+           <define>WIN32</define>
+        </if>
+
+        <if cond="FORMAT=='borland'">
+            <sys-lib>ole2w32</sys-lib>
+            <lib-path>$(VCF_LIB_BCC)</lib-path>
+        </if>
+
+        <if cond="FORMAT=='mingw'">
+           <define>VCF_MINGW</define>
+           <ldflags>-Wl,--enable-runtime-pseudo-reloc</ldflags>
+        </if>
+
+        <if cond="FORMAT in ['mingw','gnu']">
+           <cppflags>-Wno-multichar</cppflags>
+           <define>_UNICODE</define>
+        </if>
+
+        <if cond="FORMAT in ['msvc','msvc6prj']">
+          <define>_CRT_SECURE_NO_DEPRECATE</define>
+          <define>_SCL_SECURE_NO_DEPRECATE</define>
+          <define>_CRT_NON_CONFORMING_SWPRINTFS</define>
+        </if>
+
+        <if cond="FORMAT!='autoconf' and FORMAT!='gnu'">
+	        <if cond="FORMAT!='borland'">
+                <sys-lib>rpcrt4</sys-lib>
+                <sys-lib>odbc32</sys-lib>
+                <sys-lib>odbccp32</sys-lib>
+                <sys-lib>version</sys-lib>
+                <sys-lib>kernel32</sys-lib>
+                <sys-lib>user32</sys-lib>
+                <sys-lib>gdi32</sys-lib>
+                <sys-lib>winspool</sys-lib>
+                <sys-lib>comdlg32</sys-lib>
+                <sys-lib>advapi32</sys-lib>
+                <sys-lib>shell32</sys-lib>
+                <sys-lib>ole32</sys-lib>
+                <sys-lib>oleaut32</sys-lib>
+                <sys-lib>uuid</sys-lib>
+                <sys-lib>odbc32</sys-lib>
+                <sys-lib>odbccp32</sys-lib>
+                <sys-lib>comctl32</sys-lib>
+                <sys-lib>ws2_32</sys-lib>
+                <sys-lib>opengl32</sys-lib>
+                <sys-lib>glu32</sys-lib>
+            </if>
+
+            <if cond="FORMAT in ['msvc','msvc6prj','borland']">
+                <sys-lib>oleacc</sys-lib>
+                <sys-lib>urlmon</sys-lib>
+            </if>
+        </if>
+
+        <if cond="FORMAT=='gnu'">
+        	<sys-lib>dl</sys-lib>
+		<sys-lib>uuid</sys-lib>
+		<sys-lib>rt</sys-lib>
+        </if>
+
+        <include>$(VCF_INCLUDE)</include>
+        <lib-path>$(VCF_LIB)</lib-path>
+    </template>
+
+
+    <template id="precomp">
+        <if cond="PRECOMPILED=='1'">
+            <precomp-headers>
+                $(substituteFromDict( OPTION_PRECOMPILED, {'0':'off', '1':'on'} ))
+            </precomp-headers>
+            <precomp-headers-file>$(LIBRARY_FILENAME)</precomp-headers-file>
+            <precomp-headers-header>$(LIBRARY_PRECOMP_HDR)</precomp-headers-header>
+            <precomp-headers-gen>$(LIBRARY_PRECOMP_SRC)</precomp-headers-gen>
+        </if>
+    </template>
+
+
+    <template id="precomp_auto">
+        <if cond="PRECOMPILED=='1'">
+            <precomp-headers>
+                $(substituteFromDict( OPTION_PRECOMPILED, {'0':'off', '1':'on'} ))
+            </precomp-headers>
+            <precomp-headers-file>$(LIBRARY_FILENAME)</precomp-headers-file>
+            <precomp-headers-header>$(LIBRARY_PRECOMP_HDR)</precomp-headers-header>
+        </if>
+    </template>
+
+
+    <template id="vcf_base" template="base">
+        <dirname>$(VCF_LIB)</dirname>
+    </template>
+
+
+    <template id="vcf_lib" template="vcf_base">
+        <set var="LIBRARY_FILENAME">
+            $(vcf.getLibFilename( LIBRARY_NAME ))
+        </set>
+        <libname>$(LIBRARY_FILENAME)</libname>
+
+        <if cond="PLATFORM_WIN32=='1'">
+           <define>_LIB</define>
+        </if>
+
+        <if cond="FORMAT in ['msvc','msvc6prj']">
+           <define>_MBCS</define>
+           <define>NO_MFC</define>
+        </if>
+
+        <!--
+        Add an appropriate .pdb file to the "clean" target.
+        -->
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(vcf.joinPaths( VCF_LIB, LIBRARY_FILENAME + ".pdb" ))
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="vcf_dll" template="vcf_base">
+        <set var="LIBRARY_FILENAME">
+            $(vcf.getDllFilename( LIBRARY_NAME ))
+        </set>
+
+        <libname>$(LIBRARY_FILENAME)</libname>
+        <dllname>..$(DIRSEP)bin$(DIRSEP)$(LIBRARY_FILENAME)</dllname>
+
+        <if cond="PLATFORM_WIN32=='1'">
+            <define>_USRDLL</define>
+        </if>
+
+        <!--
+        Add an appropriate .exp file to the "clean" target.
+        -->
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(vcf.joinPaths( VCF_LIB, LIBRARY_FILENAME + ".exp" ))
+            </clean-files>
+        </if>
+        <if cond="FORMAT=='borland'">
+            <clean-files>
+                $(vcf.joinPaths( VCF_LIB, '..' + DIRSEP + 'bin' + DIRSEP + LIBRARY_FILENAME + ".map" ))
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="vcf_exe" template="base">
+        <set var="EXE_FILENAME">
+            $(vcf.getFilename( id ))
+        </set>
+        <exename>$(EXE_FILENAME)</exename>
+    </template>
+
+
+    <template id="vcf_exe_gui" template="vcf_exe">
+        <app-type>gui</app-type>
+        <if cond="FORMAT in ['msvc','msvc6prj']">
+            <ldflags>/ENTRY:"mainCRTStartup"</ldflags>
+        </if>
+        <if cond="FORMAT=='borland'">
+            <set var="__startup_obj_type">x</set>
+        </if>
+    </template>
+
+
+    <template id="vcf_exe_console" template="vcf_exe">
+        <app-type>console</app-type>
+    </template>
+
+
+</makefile>

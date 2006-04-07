@@ -18,6 +18,7 @@ namespace VCF
 {
 
 /**
+\class BadComponentStateException BadComponentStateException.h "vcf/ApplicationKit/BadComponentStateException.h"
 *This exception should be thrown when a component is used in an incorrect way. FOr
 *example, trying to display a component that requires a parent when the component
 *has no parent would result in a BadComponentStateException being thrown.
@@ -48,6 +49,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

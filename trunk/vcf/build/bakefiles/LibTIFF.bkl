@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="LibTIFFFiles.bkl"/>
+
+    <template id="LibTIFF_base">
+        <set var="LIBRARY_NAME">$(LIBTIFF_NAME)</set>
+
+        <headers>$(LIBTIFF_HDR)</headers>
+        <sources>$(LIBTIFF_SRC)</sources>
+    </template>
+
+    <lib id="LibTIFF_lib" template="LibTIFF_base,vcf_lib"
+            cond="OPTION_LIBTIFF=='1'">
+    </lib>
+</makefile>

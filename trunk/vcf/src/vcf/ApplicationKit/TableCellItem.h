@@ -25,7 +25,9 @@ class TableItemEditor;
 
 #define TABLECELLITEM_CLASSID		"53EA0BA2-7068-11d4-8F12-00207811CFAB"
 
-/** @interface */
+/**
+\class TableCellItem TableCellItem.h "vcf/ApplicationKit/TableCellItem.h"
+*/
 class APPLICATIONKIT_API TableCellItem : public Item {
 public:
 
@@ -42,9 +44,9 @@ public:
 	virtual ~TableCellItem(){};
 
 	/**
-	\par
+
 	Calling this will create a new table item editor.
-	\par
+
 	The implementor is responsible for returning an
 	editor that is properly initialized with the data 
 	from the item.
@@ -95,6 +97,24 @@ public:
 	*/
 	virtual double getTextCellWidth( GraphicsContext* context ) = 0;
 	virtual double getTextCellHeight( GraphicsContext* context ) = 0;
+
+	/**
+	Returns a non modifiable color reference. If you need to 
+	change the cell's color, you should call setColor().
+	@see setColor()
+	*/
+	virtual const Color& getColor() = 0;
+
+	virtual void setColor( Color* color ) = 0;
+
+	/**
+	Returns a non modifiable font reference. If you need to 
+	change the cell's font, you should call setFont().
+	@see setFont()
+	*/
+	virtual const Font& getFont() = 0;
+
+	virtual void setFont( Font* font ) = 0;
 };
 
 }
@@ -103,6 +123,20 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.1  2005/09/03 14:03:52  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

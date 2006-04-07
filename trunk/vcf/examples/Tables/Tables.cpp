@@ -29,19 +29,35 @@ public:
 
 		model->empty();
 
+		table->setDefaultTableCellFont( &Font("Tahoma") );
+
 		model->addColumns( 12 );
 		model->addRows(300);
 		model->setFixedRowsCount( 1 );
-		model->setFixedColumnsCount( 1 );
+		model->setFixedColumnsCount( 1 );		
 
 		for (int y=0;y<model->getRowCount();y++ ){
 			for ( int x=0;x<model->getColumnCount();x++ ) {
 				model->getItem( y, x )->setCaption( Format( "Cell [%d,%d]" ) % y % x );
+				if ( y == 10 && x == 5 ) {
+					Font font = model->getItem( y, x )->getFont();
+					font.setName( "Times New Roman" );
+					font.setPointSize( 12.6 );
+					font.setBold( true );
+					model->getItem( y, x )->setFont( &font );
+					model->getItem( y, x )->setColor( Color::getColor("yellow") );
+				}
 			}
 		}
 
 
 
+		/*******************************************
+		---------------------------------------------
+		|	Hey there!!!! Yes you! The following line 
+		|	turns *OFF* row selection!! :)		
+		---------------------------------------------
+		********************************************/
 		table->setAllowFixedRowSelection( false );
 
 	}
@@ -89,8 +105,18 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:45  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:46  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.2  2005/09/03 14:03:52  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:43  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.2.3  2005/04/26 04:03:47  ddiego
 *the first half of [ 1184432 ] Tables cell edit box follows scroll movement, is fixed. Still need to get the scrollbars to update.

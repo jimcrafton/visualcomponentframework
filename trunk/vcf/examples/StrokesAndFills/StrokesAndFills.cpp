@@ -109,14 +109,14 @@ public:
 		of line displayed will correspond to the short dashed segment
 		specified above (3.0). 
 		*/
-		stroke.dashStart( 15.0 );	
-		
+		stroke.dashStart( 15.0 );
 		
 		/**
 		Add two points to the path
 		*/
 		shape.moveTo( 100, 100 );
 		shape.lineTo( 300, 300 );
+		shape.lineTo( 500, 300 );
 
 		/**
 		Draw the path. The GraphicsContext will use
@@ -295,8 +295,14 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.6  2005/07/09 23:14:45  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.7  2006/04/07 02:34:46  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.2  2005/10/06 23:45:50  ddiego
+*fixed a small display bug in the BasicStroke class when rendering lines.
+*
+*Revision 1.6.2.1  2005/07/23 21:45:43  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.5.4.1  2005/02/01 19:45:02  dougtinkham
 *added dashing

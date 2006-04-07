@@ -40,13 +40,18 @@ namespace VCF {
 	object or handle. 
 	*/
 	typedef void*			OSHandleID;
-
 };
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
 *Revision 1.4  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

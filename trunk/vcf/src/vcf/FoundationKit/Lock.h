@@ -18,7 +18,7 @@ namespace VCF
 {
 
 /**
-\par
+\class Lock Lock.h "vcf/FoundationKit/Lock.h"
 The Lock class represents a way to automatically lock or unlock a 
 syncronizeable primitive, like a thread, mutex, or semaphore, by 
 having the lifetime of the Lock stack based. This frees the 
@@ -71,6 +71,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

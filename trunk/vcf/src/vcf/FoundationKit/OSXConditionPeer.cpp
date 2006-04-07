@@ -354,7 +354,7 @@ void OSXConditionPeer::signal()
 	VCF_ASSERT2(err == noErr,"MPExitCriticalRegion( mutex_ ) failed");
 
 	if ( signals ) {
-        for ( int sigCount=0;sigCount<signals;sigCount++ ) {
+        for ( size_t sigCount=0;sigCount<signals;sigCount++ ) {
             err = MPSignalSemaphore( queue_ );
             VCF_ASSERT2( err == noErr, "MPSignalSemaphore( queue_ ) failed");
         }
@@ -364,8 +364,6 @@ void OSXConditionPeer::signal()
 void OSXConditionPeer::broadcast()
 {
 	unsigned signals = 0;
-
-	int res = 0;
 
     OSStatus err = MPEnterCriticalRegion( mutex_, kDurationForever );
 	VCF_ASSERT2(err == noErr,"MPEnterCriticalRegion( mutex_ ) failed");
@@ -407,7 +405,7 @@ void OSXConditionPeer::broadcast()
 
 
 	if ( signals ) {
-        for ( int sigCount=0;sigCount<signals;sigCount++ ) {
+        for ( size_t sigCount=0;sigCount<signals;sigCount++ ) {
             err = MPSignalSemaphore( queue_ );
             VCF_ASSERT2( err == noErr, "MPSignalSemaphore( queue_ ) failed");
         }
@@ -418,6 +416,13 @@ void OSXConditionPeer::broadcast()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

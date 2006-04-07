@@ -22,11 +22,13 @@ class Control;
 class GraphicsContext;
 class DrawUIState;
 
+
 /**
+\class PropertyEditor PropertyEditor.h "vcf/ApplicationKit/PropertyEditor.h"
 This is the common base class for any editor that is specific
 of any property.
 @see VCF::Property
-\par
+
 Any property, and in general any kind of data, can be changed 
 through an appropriate GUI interface called editor. A text 
 editor is good for many kind of data, but some of them are
@@ -34,7 +36,7 @@ more easily chaged through more specific editors. For example
 a ComboBox control can be considered an appropriate editor for
 any boolean value, or for any enumerated value.
 The VCF library makes readily available some of them.
-\par
+
 the editor is used by the host in order to display the 
 property content, retrieve possible values, and to 
 provide a possible UI for performing the editing. The
@@ -106,12 +108,42 @@ public:
 		this indicates an error condition). The object should be cloned by a 
 		call to the original object's Object::clone() method.
 		*/
-		paValueNeedsDuplicating = 0x040
+		paValueNeedsDuplicating = 0x040,
+
+		paEditorRequestsProperty = 0x080,
+
+		/**
+		This indicates that the proeprty editor's value
+		is part of a set of values, such as a bit mask.
+		*/
+		paCompositeValue = 0x0100,
+
+		/**
+		This indicates to the host that the property editor's 
+		string description of the property should be used over
+		the value that is retreived from calling Property::getDescription().
+		*/
+		paOverridePropertyDescription = 0x010000,
+
+		/**
+		This indicates to the host that the property editor's 
+		string name of the property should be used over
+		the value that is retreived from calling Property::getName().
+		*/
+		paOverridePropertyName = 0x020000
 
 	};
 
 	virtual ~PropertyEditor(){};
 
+
+	/**
+	This sets the current property instance for
+	the property editor. This should \em only 
+	get called if the property editor has the 
+	paEditorRequestsProperty attribute set.
+	*/
+	virtual void setProperty( Property* property ) = 0;
 
 	/**
 	This method needs to be oveeriden so to specify when two PropertyEditor(s)
@@ -154,7 +186,7 @@ public:
 	virtual void setRootDesignerComponent( Component* rootDesigner )  = 0;
 
 	/**
-	\par
+	
 	Returns a control instance that belongs to this editor. This control
 	instance is managed by the tool using this property editor so
 	you just need to create it. This may be called multiple times, it is the
@@ -171,13 +203,13 @@ public:
 
 
 	/**
-	\par
+	
 	This method is used to edit the property value. This is an optional method 
 	to implement, and only needs to be done if createEditingControl() returns
 	a non null value. If createEditingControl() is NULL then it's assumed that
 	the actual editing process will be completely handled by the host of the
 	property editor.
-	\par
+	
 	If the implementor does edit this method, then it's up to the implemementor 
 	to properly transfer the contents of the propert value to the control.
 	*/
@@ -238,8 +270,28 @@ public:
 	*/
 	virtual bool sort( const String& strVal1, const String& strVal2 ) = 0;
 	
+	/**
+	This returns a string that describes the property. A host that
+	displays a UI should first try and call the property's 
+	Property::getDescription() method. If this returns an empty string,
+	then the host should call the property editor's getPropertyDescription().
+	@see Property::getDescription()
+	@see paOverridePropertyDescription
+	*/
+	virtual String getPropertyDescription() = 0;
+
+	/**
+	This returns a string that describes the property. A host that
+	displays a UI should first try and call the property's 
+	Property::getName() method. If this returns an empty string,
+	then the host should call the property editor's getPropertyName().
+	@see Property::getName()
+	@see paOverridePropertyName
+	*/
+	virtual String getPropertyName() = 0;
+
 	/*
-	Useful shortcut methods for determing which attributes are set
+	Useful shortcut methods for determining which attributes are set
 	for a property editor
 	*/
 	bool hasValues() {
@@ -275,12 +327,24 @@ public:
 		return (getAttributes() & PropertyEditor::paValueNeedsDuplicating) ? true : false;		
 	}
 	
+	bool overridesPropertyDescription() { 
+		return (getAttributes() & PropertyEditor::paOverridePropertyDescription) ? true : false;		
+	}
+	
+	bool overridesPropertyName() { 
+		return (getAttributes() & PropertyEditor::paOverridePropertyName) ? true : false;		
+	}
+
+	bool editorRequestsProperty() { 
+		return (getAttributes() & PropertyEditor::paEditorRequestsProperty) ? true : false;		
+	}
+
+	bool isCompositeValue() { 
+		return (getAttributes() & PropertyEditor::paCompositeValue) ? true : false;		
+	}
 
 	
 };
-
-
-
 
 
 
@@ -291,6 +355,22 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.4  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.2.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.2  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.3.2.1  2005/09/01 03:56:57  ddiego
+*doc updates and some minor mods to the property editor interface.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

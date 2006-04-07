@@ -81,7 +81,6 @@ class Desktop;
 
 class ComponentInfo;
 class ScrollPeer;
-class HTMLBrowserPeer;
 class AcceleratorKey;
 class Button;
 class Toolbar;
@@ -96,27 +95,19 @@ class MenuManagerPeer;
 
 
 /**
+\class UIToolkit UIToolkit.h "vcf/ApplicationKit/UIToolkit.h"  
 The UIToolkit is used to create instances of various peer's needed by the VCF,
 as well as providing certain low level services, such as modal and non-modal
 event loops, and getting at UI metrics. Each system the VCF is ported to has
 a concrete implementation of the UIToolkit. The UIToolkit is a singleton, and
 there should only be one instance for a given process running the VCF libraries.
 
-To work with the toolkit you retreive it's instance via a static function,
-UIToolkit::getDefaultUIToolkit(). If no toolkit is found (which is an extremely bad thing!)
-a NoToolKitFoundException is thrown. A quick example:
-<pre>
-try {
-	UIToolkit* toolkit = UIToolkit::getDefaultUIToolkit();
-}
-catch ( NoToolKitFoundException & e ) {
-	//we are screwed!!!
-	System::print( e.getMessage() );
-}
-</pre>
+To work with the toolkit you just call it's static functions. These
+in turn forward the call to the toolkit instance. 
+
 The UIToolkit is a singleton, meaning there is only ever one single instance of it.
 Developers porting the VCF to another platform will have to create a derived class
-from UIToolkit and implement various functions.
+from UIToolkit and implement the various virtual functions.
 */
 class APPLICATIONKIT_API UIToolkit : public ObjectWithEvents {
 public:
@@ -209,14 +200,6 @@ public:
 
 	static TextEditPeer* createTextEditPeer( TextControl* component, const bool& isMultiLineControl);
 
-	
-
-	/**
-	This creates a peer that implements the HTMLBrowserPeer interface. The HTMLBrowserPeer
-	allows you to view HTML.
-	*/
-	static HTMLBrowserPeer* createHTMLBrowserPeer( Control* control );
-
 	/**
 	This creates a peer that implements the ButtonPeer interface. This ensures that you have a button
 	control that correctly implements ALL the look and feel requirements for the windowing system.
@@ -288,7 +271,7 @@ public:
 	static void setCaretPos( Point* point );
 
 	/**
-	\par
+	
 	This method posts an event to the underlying platform's windowing system. 
 	The event handler instance that is passed in is called when the event is 
 	processed later on in the event queue. Once this happens the handler's 
@@ -320,7 +303,7 @@ public:
 	Note that in our example above we did \em not give the event handler a name.
 	This prevents the event handler from being added to it's source, and insures 
 	that it will not be owned, allowing the UIToolkit to safely delete it.
-	\par 
+	 
 	If we want to manage the event handler ourselves, then we might do the following:
 	\code
 	//assuming that we are in an object instance that derives from ObjectWithEvents.
@@ -425,16 +408,153 @@ public:
 
 	static UIMetricsManager* getUIMetricsManager();
 
+	static double getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text="" );
+
+	static Size getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text="" );
+
+	static Rect getUIMetricRect( const UIMetricsManager::MetricType& type, Rect* rect=NULL );
+
 	static UIPolicyManager* getUIPolicyManager();
+
+	/**
+	
+	This attempts to to display the help contents for the application.
+	
+	It first checks to see if there's a running Application instance.
+	If there is, then it calls the Application's virtual displayHelpContents()
+	which lets the application have first crack at this. If 
+	Application::displayHelpContents() returns true, then the function exits,
+	if it does not then it attempts to determine the help book and help directory
+	using this set of methods:
+	\li it checks for the running app instance, and if it finds it, then it 
+	requests the application to fill in the help book and help directory
+	(these are virtual methods that can be overridden). 
+	\li if no app is found or the help dir or help book entries are still
+	empty, then the toolkit attempts to extract this from the resource bundle's 
+	book and help directory entries.
+	\li if the entries are still empty, then the help book becomes the 
+	applications name (Application::getName()) or the executables name (
+	without the extension), and the help directory is assumed to be "Help".
+
+	
+	So if you do nothing all, provide no overridden functions, or 
+	resource bundle support for program info entries, then the default
+	help would be look something like this, assuming the 
+	app is in c:/Program Files/MyApp/MyApp.exe, the help book
+	would be "MyApp" and the the peers would look in the directory
+	c:/Program Files/MyApp/Help/ for the help content.
+
+	@see Application::displayHelpContents()
+	@see Application::getHelpInfo()
+	*/
+	static void displayHelpContents();
+
+	/**
+	
+	This attempts to to display the help index for the application.
+	
+	It first checks to see if there's a running Application instance.
+	If there is, then it calls the Application's virtual displayHelpContents()
+	which lets the application have first crack at this. If 
+	Application::displayHelpContents() returns true, then the function exits,
+	if it does not then it attempts to determine the help book and help directory
+	using this set of methods:
+	\li it checks for the running app instance, and if it finds it, then it 
+	requests the application to fill in the help book and help directory
+	(these are virtual methods that can be overridden). 
+	\li if no app is found or the help dir or help book entries are still
+	empty, then the toolkit attempts to extract this from the resource bundle's 
+	book and help directory entries.
+	\li if the entries are still empty, then the help book becomes the 
+	applications name (Application::getName()) or the executables name (
+	without the extension), and the help directory is assumed to be "Help".
+
+	
+	So if you do nothing all, provide no overridden functions, or 
+	resource bundle support for program info entries, then the default
+	help would be look something like this, assuming the 
+	app is in c:/Program Files/MyApp/MyApp.exe, the help book
+	would be "MyApp" and the the peers would look in the directory
+	c:/Program Files/MyApp/Help/ for the help content.
+
+	@see Application::displayHelpContents()
+	@see Application::getHelpInfo()
+	*/
+	static void displayHelpIndex();
+
+
+	/**
+	
+	This attempts to to display a specific help section for a given
+	help book and help directory. The help section is normally assumed 
+	to be an anchor ref. This method allows you exact control over what 
+	gets loaded. The helpBookName and helpDirectory may be
+	be empty strings.
+	
+	If the helpBookName or helpDirectory are empty the toolkit
+	first checks to see if there's a running Application instance.
+	It then attempts to determine the help book and help directory
+	using this set of methods:
+	\li it checks for the running app instance, and if it finds it, then it 
+	requests the application to fill in the help book and help directory
+	(these are virtual methods that can be overridden). 
+	\li if no app is found or the help dir or help book entries are still
+	empty, then the toolkit attempts to extract this from the resource bundle's 
+	book and help directory entries.
+	\li if the entries are still empty, then the help book becomes the 
+	applications name (Application::getName()) or the executables name (
+	without the extension), and the help directory is assumed to be "Help".
+
+	So if you do nothing all, provide no overridden functions, or 
+	resource bundle support for program info entries, then the default
+	help would be look something like this, assuming the 
+	app is in c:/Program Files/MyApp/MyApp.exe, the help book
+	would be "MyApp" and the the peers would look in the directory
+	c:/Program Files/MyApp/Help/ for the help content.
+
+
+
+	@see Application::displayHelpContents()
+	@see Application::getHelpInfo()
+	*/
+	static void displayHelpSection( const String& helpSection, const String& helpBookName="", const String& helpDirectory="" );
+
+	/**
+	
+	This attempts to display the context sensitive help for a control. It is 
+	triggered by the underlying windowing platform, usually as a result of 
+	the user hitting the F1 key.
+	When this is called it first calls the toolkit's internal_displayContextHelpForControl(),
+	this is turn will trigger the control's ControlHelpRequested delegate and fire and
+	event. The WhatsThisHelpEvent has a member variable called helpString, and can be
+	set to override the the value of the control's getWhatThisHelpString(). If the
+	event's helpString member is not empty, \em or the controls getWhatThisHelpString()
+	returns a non empty string, then the OS specific portion of the context help display
+	should take place and the internal_displayContextHelpForControl() will return true.
+	For Win32 systems this generally means the display of popup help.
+	
+	However, if internal_displayContextHelpForControl() returns false, then the toolkit 
+	performs the following actions:
+	\li It first fires a HelpEvent on the control's HelpRequested delegate. When this returns
+	if the event's helpSection value is an empty string, then the toolkit gets the
+	control's parent and does the same thing, continuing to do so until it receives 
+	a NULL parent, or finds a non empty helpSection string. 
+	\li if the helpSection from the event is not empty the toolkit will then call 
+	UIToolkit::displayHelpSection() passing in the values of the event's helpSection,
+	helpBook, and helpDirectory.
+	*/
+	static void displayContextHelpForControl( Control* control );
 
 	/**
 	public so platform implementers can get at it easily
 	*/
 	static UIToolkit* internal_getDefaultUIToolkit();
 
-	static void addToUpdateTimer( Component* component );
-	static void removeFromUpdateTimer( Component* component );
+	static void addToUpdateList( Component* component );
+	static void removeFromUpdateList( Component* component );
 	static void setUpdateTimerSpeed( const unsigned long& milliseconds );
+
+	static void systemSettingsChanged();
 protected:
 	static UIToolkit* toolKitInstance;
 
@@ -481,8 +601,6 @@ protected:
 	virtual TextPeer* internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined ) = 0;
 
     virtual TextEditPeer* internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl ) = 0;
-
-	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control ) = 0;
 
     virtual ButtonPeer* internal_createButtonPeer( CommandButton* component) = 0;
 
@@ -585,6 +703,20 @@ protected:
 	*/
 	virtual Size internal_getDragDropDelta() = 0;
 
+	virtual void internal_displayHelpContents( const String& helpBookName, const String& helpDirectory ) = 0;
+
+	virtual void internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory ) = 0;
+
+	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection ) = 0;
+	/**
+	This should display the appropriate context sensitive infor for the control,
+	and return true, or it should return false, indicating that the control didn't 
+	have any context help to display.
+	*/
+	virtual bool internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory ) = 0;
+
+	virtual void internal_systemSettingsChanged() = 0;
+
 	virtual void internal_handleKeyboardEvent( KeyboardEvent* event );
 
 	virtual VirtualKeyCode internal_findMnemonic( const String& caption );
@@ -622,6 +754,7 @@ protected:
 
 	bool internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
 
+	virtual void internal_idleTime();
 
 
 	ComponentInfo* internal_getComponentInfo( const String& componentUUID );
@@ -636,8 +769,8 @@ protected:
 		return policyMgr_;
 	}
 
-	void internal_addToUpdateTimer( Component* component );
-	void internal_removeFromUpdateTimer( Component* component );
+	void internal_addToUpdateList( Component* component );
+	void internal_removeFromUpdateList( Component* component );
 	void internal_setUpdateTimerSpeed( const unsigned long& milliseconds );
 
 	void onUpdateComponentsTimer( TimerEvent* e );
@@ -651,6 +784,41 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.10  2006/03/28 04:10:17  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.5.2.9  2006/03/28 04:04:36  ddiego
+*added a slight adjustment to idle message handling. Component
+*updating is now handled there instead of a timer.
+*
+*Revision 1.5.2.8  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.5.2.7  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.5.2.6  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.5.2.5  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.5.2.4  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.5.2.3  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.2  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.5.2.1  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
 *Revision 1.5  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -27,8 +27,216 @@ NB: This software will not save the world.
 
 <section><title>Strings</title>
 	<para>
-		Your content here, explaining the usage/functioning of your example.
+	This will provide a brief overview of how to use the String class in the VCF. 
+	For more details on this see the String class in the source documentation and 
+	the <link linkend="FK_Strings">Strings</link> section in the FoundationKit 
+	reference manual.
 	</para>
+	<section><title>Concatenating Strings</title>
+	<para>
+	You can easily add to a string by using the "+=" operator or "+" operator. 
+	The String class has essentially the same interface that the STL's 
+	basic_string class uses	so any STL experience pays off with regards to 
+	the VCF's String class. You can assign strings through the "=" operator
+	or using the String's constructor. For example:
+	<programlisting><![CDATA[
+String s1("Hello");
+String s2 = "Hello";
+String s3;
+s3 += s2 + " World";
+System::println( s3 );//outputs "Hello World"
+	]]></programlisting>
+	</para>
+	</section>
+	
+	
+	<section><title>Finding substrings</title>
+	<para>
+	You can search a String just like you can an STL string using 
+	the String's find() function. It works exactly like the STL 
+	basic_string::find() does. For example:
+	<programlisting><![CDATA[
+String s = "here's some text.";
+size_t pos = s.find("here");
+if ( pos != String::npos ) {
+	System::println( "Found the string!" );
+}
+
+pos = s.find("Huck Finn");
+if ( pos == String::npos ) {
+	System::println( "Didn't find the string!" );
+}
+	]]></programlisting>
+	</para>
+	</section>
+	
+	<section><title>Extracting substrings</title>
+	<para>
+	You can extract a a substring from a String just like you can 
+	an STL string using the String's substr() function. It works 
+	exactly like the STL basic_string::substr() does. For example:
+	<programlisting><![CDATA[
+String s = "here's some text.";
+System::println( s.substr( s.find("some"), 4 ) ); //prints out "some"
+	]]></programlisting>
+	</para>
+	</section>
+	
+	<section><title>Formatting with the Format class</title>
+	<para>
+	In the VCF we've gone out of our way to get rid of the usage of 
+	variable argument functions for string formatting. Typically 
+	you might use printf or sprintf to do this. In the VCF we use
+	the Format class to do this. The Format constructor takes a
+	formatting string, and the Format class provides an overload
+	of the "%" operator to add variable arguments. For example:
+	<programlisting><![CDATA[	
+String s = Format("Say hello %d times.") % 100; //s will equal "Say hello 100 times."	
+	]]></programlisting>
+	You can format strings easily - you can pass in the whole string
+	object, as opposed to just passing in a pointer to the character
+	data.
+<programlisting><![CDATA[	
+String myName = "Bobby Fillagutty";
+String s = Format("My name is %s.") % myName; //s will equal "My name is Bobby Fillagutty."	
+	]]></programlisting>	
+	</para>
+	
+	<para>
+	You can format multiple arguments by simply following the previous
+	argument with another "%" operator. Since the Format's "%" operator 
+	overload returns a reference to the Format object, you can easily
+	use it for a variable number of arguments. For example:
+	<programlisting><![CDATA[
+System::println( Format("The planet %s orbits at a distance of %u AU from the Sun.") % "Krypton" % 100000 );
+	]]></programlisting>
+	This will output "The planet Krypton orbits at a distance of 100000 AU from the Sun.".
+	</para>
+	<para>
+	The formatting codes for the Format class are identical to those
+	used for printf or sprintf.
+	</para>
+	</section>
+	
+	<section><title>Strings and other types</title>
+	<para>
+	There are concatenation operators provided for various primitive types 
+	to make it easy to form more complex strings. For example, you can 
+	concatenate integer values or even bool values to a string:
+	<programlisting><![CDATA[
+String bigString = String("Some info is ")  + true + " but some is worth " + 100.342 + " times it's weight in gold." ;
+	]]></programlisting>
+	The value of the string will be "Some info is true but some is worth 100.342 times it's weight in gold.".
+	</para>
+	<para>
+	You can concatenate complex objects as well, so long as the class derives in some way from VCF::Object.
+	For example:
+	<programlisting><![CDATA[
+class Foo : public VCF::Object {
+public:
+	virtual VCF::String toString() {
+		return VCF::String("Foo here!\n\t") + Object::toString();
+	}
+};
+
+Foo f;
+System::println( String("f is: ") + f + "\n" + 99.5643231 + " bottles of " + &f + " on the wall!" );
+	]]></programlisting>
+	The Foo's toString() function will be called to convert the foo instance to a string.
+	</para>
+	</section>
+	
+	
+	<section><title>Extracting type names</title>
+	<para>
+	You can extract the type name of a primitive type by using the typeid() operator,
+	in conjunction with a string. This is not the same as calling the 
+	type_info::name() function. The difference is that the VCF makes certain guarantees
+	about what is returned. For example, if you call typeid(int).name() using 
+	Microsoft Visual C++, you get "int" returned, however the same code when
+	compiled with GCC's G++ will output "i" (or maybe something different, it may
+	depend on the version). The VCF string extraction routines will always
+	output "int". For example:
+	<programlisting><![CDATA[
+int i = 0;
+bool j = false;
+const double* k = NULL;
+float l = 0;	
+System::println( "i is a " + typeid(i) + " type" );
+System::println( "j is a " + typeid(j) + " type" );
+System::println( "k is a " + typeid(k) + " type" );
+System::println( "l is a " + typeid(l) + " type" );
+	]]></programlisting>
+	This will output 
+	<screen>
+i is a int type
+j is a bool type
+k is a double const * type
+l is a float type
+	</screen>	
+	</para>
+	</section>
+	
+	<section><title>Changing case</title>
+	<para>
+	You can change the case of a string by using the StringUtils::lowerCase() and 
+	StringUtils::upperCase(). Both functions take a string reference and 
+	<emphasis>modify</emphasis> this string. So if we had:
+	<programlisting><![CDATA[
+String s = "Some text to chAngE.";
+StringUtils::upperCase(s); 
+	]]></programlisting>
+	The variable "s" is now uppercased to "SOME TEXT TO CHANGE.", as opposed to 
+	returning a new string. If you don't want to have the original string modified
+	then you need to make a copy of it. For example:
+	<programlisting><![CDATA[
+String s = "Some text to chAngE.";
+String s2 = s;
+StringUtils::upperCase(s2); 
+	]]></programlisting>
+	The uppercase/lowercase conversion is not locale or culture sensitive. If you 
+	want an accurate case conversion that takes the locale into consideration,
+	then use the Locale class's Locale::toLowerCase() and Locale::toUpperCase().
+	</para>	
+	</section>
+	
+	<section><title>Converting types to a String</title>
+	<para>
+	You can convert an int, long, double, and so on, to a string by using the
+	StringUtils::toString() functions. For example:
+	<programlisting><![CDATA[
+String val = StringUtils::toString( 12 );
+System::println( Format("value: %s") % val );
+
+val = StringUtils::toString( 1234.009459034 );
+System::println( Format("value: %s") % val );
+
+val = StringUtils::toString( 53433.000034f );
+System::println( Format("value: %s") % val );
+
+val = StringUtils::toString( true );
+System::println( Format("value: %s") % val );
+
+val = StringUtils::toString( false );
+System::println( Format("value: %s") % val );
+	]]></programlisting>
+	This will output:
+	<screen>
+value: 12
+value: 1234.00946
+value: 53433.00000
+value: true
+value: false	
+	</screen>
+	</para>
+	</section>
+	
+	<section><title>Trimming a String</title>
+	Strings can be trimmed using the StringUtils::trim(), StringUtils::trimLeft(), 
+	and StringUtils::trimRight() functions. These all take a string source reference to 
+	operate on, and a string of characters to trim from the source.
+	
+	</section>	
 </section>
 
 
@@ -37,6 +245,15 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.3  2006/04/07 02:34:43  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.2.12.2  2006/03/07 04:33:34  ddiego
+more doc updates.
+
+Revision 1.2.12.1  2006/03/06 22:08:26  ddiego
+updated docs
+
 Revision 1.2  2003/12/18 05:15:55  ddiego
 merge from devmain-0-6-2 branch into the stable branch
 

@@ -1,0 +1,283 @@
+#pragma once on
+
+#ifndef NO_PRECOMPILE
+#pragma faster_pch_gen on
+#endif
+
+#if __dest_os==__win32_os
+#define WIN32
+//#define _WIN32_WINDOWS 0x0410 // For Win98 upwards
+#define _WIN32_WINNT 0x0400 // For NT4 upwards
+#define WINVER 0x0400
+//#define _WIN32_IE 0x0400 // unsure about what to set this to, if at all
+#endif
+
+#if __dest_os==__mac_os
+#endif
+
+// All-in-1 kit dll exclusions here
+// Don't forget to remove the relevant .cpp files from the target
+
+//#define VCF_ALLIN1_NO_REMOTEKIT
+//#define VCF_ALLIN1_NO_NETKIT
+//#define VCF_ALLIN1_NO_OPENGLKIT
+//#define VCF_ALLIN1_NO_APPLICATIONKIT
+//#define VCF_ALLIN1_NO_GRAPHICSKIT
+//#define VCF_ALLIN1_NO_FOUNDATIONKIT
+
+// UNICODE define may or may not be appropriate!?!
+
+//#define UNICODE
+
+#if __ide_target("W32 All-in-1 DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32Allin1DLL.mch"
+#endif
+
+#define VCF_ALLIN1_DLL
+#define VCF_ALLIN1_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 All-in-1 DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32Allin1DLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define VCF_ALLIN1_DLL
+#define VCF_ALLIN1_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 FoundationKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32FoundationDLL.mch"
+#endif
+
+#define FOUNDATIONKIT_DLL
+#define FOUNDATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 FoundationKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32FoundationDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define FOUNDATIONKIT_DLL
+#define FOUNDATIONKIT_EXPORTS
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 GraphicsKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32GraphicsDLL.mch"
+#endif
+
+#define GRAPHICSKIT_DLL
+#define GRAPHICSKIT_EXPORTS
+#define USE_FOUNDATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 GraphicsKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32GraphicsDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define GRAPHICSKIT_DLL
+#define GRAPHICSKIT_EXPORTS
+#define USE_FOUNDATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 ApplicationKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32ApplicationDLL.mch"
+#endif
+
+#define APPLICATIONKIT_DLL
+#define APPLICATIONKIT_EXPORTS
+#define USE_GRAPHICSKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 ApplicationKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32ApplicationDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define APPLICATIONKIT_DLL
+#define APPLICATIONKIT_EXPORTS
+#define USE_GRAPHICSKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 OpenGLKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32OpenGLDLL.mch"
+#endif
+
+#define OPENGLKIT_DLL
+#define OPENGLKIT_EXPORTS
+#define USE_APPLICATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 OpenGLKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32OpenGLDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define OPENGLKIT_DLL
+#define OPENGLKIT_EXPORTS
+#define USE_APPLICATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 NetworkKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32NetworkDLL.mch"
+#endif
+
+#define NETKIT_DLL
+#define NETKIT_EXPORTS
+#define USE_FOUNDATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 NetworkKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32NetworkDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define NETKIT_DLL
+#define NETKIT_EXPORTS
+#define USE_FOUNDATIONKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 RemoteObjKit DLL")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32RemoteDLL.mch"
+#endif
+
+#define REMOTEKIT_DLL
+#define REMOTEKIT_EXPORTS
+#define USE_NETKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 RemoteObjKit DLL (D)")
+
+#ifndef NO_PRECOMPILE
+#pragma precompile_target "W32RemoteDLLDebug.mch"
+#endif
+
+#define _DEBUG
+
+#define REMOTEKIT_DLL
+#define REMOTEKIT_EXPORTS
+#define USE_NETKIT_DLL
+
+#include "UseDLLPrefix.h"
+
+#elif __ide_target("W32 Precompile Lib")
+
+#pragma precompile_target "W32LIB.mch"
+
+#define _LIB
+
+#elif __ide_target("W32 Precompile Lib (D)")
+
+#pragma precompile_target "W32LIBDebug.mch"
+
+#define _DEBUG
+#define _LIB
+
+#endif
+
+#ifdef WIN32
+#include "ansi_prefix.win32.h"
+#define NOMINMAX
+#endif
+
+// VCF Includes
+
+#if defined(REMOTEKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_REMOTEKIT)) || \
+defined(_LIB)
+
+#include "vcf/RemoteObjectKit/RemoteObjectKit.h"
+
+#endif
+
+#if defined(NETKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_NETKIT)) || \
+defined(_LIB)
+
+#include "vcf/NetworkKit/NetworkKit.h"
+#include "vcf/NetworkKit/NetworkKitPrivate.h"
+
+#endif
+
+#if defined(OPENGLKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_OPENGLKIT)) || \
+defined(_LIB)
+
+#include "vcf/OpenGLKit/OpenGLKit.h"
+
+#endif
+
+#if defined(APPLICATIONKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_APPLICATIONKIT)) || \
+defined(_LIB)
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ModelViewKit.h"
+#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+
+#endif
+
+#if defined(GRAPHICSKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_GRAPHICSKIT)) || \
+defined(_LIB)
+
+#include "vcf/GraphicsKit/GraphicsKit.h"
+#include "vcf/GraphicsKit/GraphicsKitPrivate.h"
+
+#endif
+
+#if defined(FOUNDATIONKIT_EXPORTS) || \
+(defined(VCF_ALLIN1_EXPORTS) && !defined(VCF_ALLIN1_NO_FOUNDATIONKIT)) || \
+defined(_LIB)
+
+#include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/FoundationKitPrivate.h"
+
+#endif

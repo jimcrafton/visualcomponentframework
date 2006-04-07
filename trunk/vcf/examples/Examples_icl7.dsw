@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Accelerators"=".\Accelerators\Accelerators_icl7.dsp" - Package Owner=<4>
+Project: "Accelerators"=.\Accelerators\Accelerators_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Actions"=".\Actions\Actions_icl7.dsp" - Package Owner=<4>
+Project: "Actions"=.\Actions\Actions_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AdvancedAlignment"=".\AdvancedAlignment\AdvancedAlignment_icl7.dsp" - Package Owner=<4>
+Project: "AdvancedAlignment"=.\AdvancedAlignment\AdvancedAlignment_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AdvancedUI"=".\AdvancedUI\AdvancedUI_icl7.dsp" - Package Owner=<4>
+Project: "AdvancedUI"=.\AdvancedUI\AdvancedUI_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Alignment"=".\Alignment\Alignment_icl7.dsp" - Package Owner=<4>
+Project: "Alignment"=.\Alignment\Alignment_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Anchors"=".\Anchors\Anchors_icl7.dsp" - Package Owner=<4>
+Project: "Anchors"=.\Anchors\Anchors_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +75,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AppResources"=".\AppResources\AppResources_icl7.dsp" - Package Owner=<4>
+Project: "AppResources"=.\AppResources\AppResources_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -87,7 +87,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationIcons"=".\ApplicationIcons\ApplicationIcons_icl7.dsp" - Package Owner=<4>
+Project: "ApplicationIcons"=.\ApplicationIcons\ApplicationIcons_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKit"="..\build\icl7\ApplicationKit\ApplicationKit_icl7.dsp" - Package Owner=<4>
+Project: "ApplicationKit"=..\build\icl7\ApplicationKit\ApplicationKit_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -114,7 +114,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"="..\build\icl7\ApplicationKit\ApplicationKitDLL_icl7.dsp" - Package Owner=<4>
+Project: "ApplicationKitDLL"=..\build\icl7\ApplicationKit\ApplicationKitDLL_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -129,7 +129,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cards"=".\Cards\Cards_icl7.dsp" - Package Owner=<4>
+Project: "Browser"=.\Browser\Browser_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -141,7 +141,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Colors"=".\Colors\Colors_icl7.dsp" - Package Owner=<4>
+Project: "Cards"=.\Cards\Cards_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -153,7 +153,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Combos"=".\Combos\Combos_icl7.dsp" - Package Owner=<4>
+Project: "Colors"=.\Colors\Colors_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -165,7 +165,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CommonDirectories"=".\CommonDirectories\CommonDirectories_icl7.dsp" - Package Owner=<4>
+Project: "Combos"=.\Combos\Combos_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -177,7 +177,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Conditions"=".\Conditions\Conditions_icl7.dsp" - Package Owner=<4>
+Project: "CommonDirectories"=.\CommonDirectories\CommonDirectories_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -189,7 +189,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Controls"=".\Controls\Controls_icl7.dsp" - Package Owner=<4>
+Project: "Conditions"=.\Conditions\Conditions_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -201,7 +201,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CopyAndPaste"=".\CopyAndPaste\CopyAndPaste_icl7.dsp" - Package Owner=<4>
+Project: "Controls"=.\Controls\Controls_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -213,7 +213,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DateTimeUI"=".\DateTimeUI\DateTimeUI_icl7.dsp" - Package Owner=<4>
+Project: "CopyAndPaste"=.\CopyAndPaste\CopyAndPaste_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -225,7 +225,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DatesAndTime"=".\DatesAndTime\DatesAndTime_icl7.dsp" - Package Owner=<4>
+Project: "DateTimeUI"=.\DateTimeUI\DateTimeUI_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -237,7 +237,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dialogs"=".\Dialogs\Dialogs_icl7.dsp" - Package Owner=<4>
+Project: "DatesAndTime"=.\DatesAndTime\DatesAndTime_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -249,7 +249,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dictionaries"=".\Dictionaries\Dictionaries_icl7.dsp" - Package Owner=<4>
+Project: "Dialogs"=.\Dialogs\Dialogs_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -261,7 +261,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Directories"=".\Directories\Directories_icl7.dsp" - Package Owner=<4>
+Project: "Dictionaries"=.\Dictionaries\Dictionaries_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -273,7 +273,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DocViewAdvanced"=".\DocViewAdvanced\DocViewAdvanced_icl7.dsp" - Package Owner=<4>
+Project: "Directories"=.\Directories\Directories_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -285,7 +285,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DocViewBasics"=".\DocViewBasics\DocViewBasics_icl7.dsp" - Package Owner=<4>
+Project: "DocViewAdvanced"=.\DocViewAdvanced\DocViewAdvanced_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -297,7 +297,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DragAndDrop"=".\DragAndDrop\DragAndDrop_icl7.dsp" - Package Owner=<4>
+Project: "DocViewBasics"=.\DocViewBasics\DocViewBasics_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -309,7 +309,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "EventBasics"=".\EventBasics\EventBasics_icl7.dsp" - Package Owner=<4>
+Project: "DragAndDrop"=.\DragAndDrop\DragAndDrop_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -321,7 +321,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Examples"=".\Examples\Examples_icl7.dsp" - Package Owner=<4>
+Project: "EventBasics"=.\EventBasics\EventBasics_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Examples"=.\Examples\Examples_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -355,6 +367,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ApplicationIcons
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Browser
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Cards
@@ -429,16 +444,25 @@ Package=<4>
     Project_Dep_Name HelloWorld3
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Help
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ImageBasics
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ImageViewer
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name InetKit
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Labels
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ListBox
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LocaleUI
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Localization
@@ -451,6 +475,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name MVCBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MinMax
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLShapes
@@ -481,6 +508,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Scrolling
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Scrolling2
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name SharedLibraries
@@ -516,6 +546,9 @@ Package=<4>
     Project_Dep_Name TextLayout
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Themes
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ThreadBasics
     End Project Dependency
     Begin Project Dependency
@@ -525,10 +558,16 @@ Package=<4>
     Project_Dep_Name Toolbars
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Tooltips
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Transformations
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TreeListControls
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Variants
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name VisualFormFiles
@@ -540,7 +579,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FilesAndDirectories"=".\FilesAndDirectories\FilesAndDirectories_icl7.dsp" - Package Owner=<4>
+Project: "FilesAndDirectories"=.\FilesAndDirectories\FilesAndDirectories_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -552,7 +591,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKit"="..\build\icl7\FoundationKit\FoundationKit_icl7.dsp" - Package Owner=<4>
+Project: "FoundationKit"=..\build\icl7\FoundationKit\FoundationKit_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -564,7 +603,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKitDLL"="..\build\icl7\FoundationKit\FoundationKitDLL_icl7.dsp" - Package Owner=<4>
+Project: "FoundationKitDLL"=..\build\icl7\FoundationKit\FoundationKitDLL_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -576,7 +615,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FrameStyles"=".\FrameStyles\FrameStyles_icl7.dsp" - Package Owner=<4>
+Project: "FrameStyles"=.\FrameStyles\FrameStyles_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -588,7 +627,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsAndMouseMoves"=".\GraphicsAndMouseMoves\GraphicsAndMouseMoves_icl7.dsp" - Package Owner=<4>
+Project: "GraphicsAndMouseMoves"=.\GraphicsAndMouseMoves\GraphicsAndMouseMoves_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -600,7 +639,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsBasics"=".\GraphicsBasics\GraphicsBasics_icl7.dsp" - Package Owner=<4>
+Project: "GraphicsBasics"=.\GraphicsBasics\GraphicsBasics_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -612,7 +651,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKit"="..\build\icl7\GraphicsKit\GraphicsKit_icl7.dsp" - Package Owner=<4>
+Project: "GraphicsKit"=..\build\icl7\GraphicsKit\GraphicsKit_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -626,11 +665,20 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "GraphicsKitDLL"="..\build\icl7\GraphicsKit\GraphicsKitDLL_icl7.dsp" - Package Owner=<4>
+Project: "GraphicsKitDLL"=..\build\icl7\GraphicsKit\GraphicsKitDLL_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -644,554 +692,20 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "HeavyAndLight"=".\HeavyAndLight\HeavyAndLight_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld"=".\HelloWorld\HelloWorld_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld2"=".\HelloWorld2\HelloWorld2_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "HelloWorld3"=".\HelloWorld3\HelloWorld3_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ImageBasics"=".\ImageBasics\ImageBasics_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ImageViewer"=".\ImageViewer\ImageViewer_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Labels"=".\Labels\Labels_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ListBox"=".\ListBox\ListBox_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Localization"=".\Localization\Localization_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MFCIntegration1"=".\MFCIntegration1\MFCIntegration1_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MFCIntegration2"=".\MFCIntegration2\MFCIntegration2_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "MVCBasics"=".\MVCBasics\MVCBasics_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "NetworkKit"="..\build\icl7\NetworkKit\NetworkKit_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
     Begin Project Dependency
-    Project_Dep_Name FoundationKit
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "NetworkKitDLL"="..\build\icl7\NetworkKit\NetworkKitDLL_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name FoundationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "OpenGLShapes"=".\OpenGLShapes\OpenGLShapes_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ParticleEditor"=".\ParticleEditor\ParticleEditor_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Printing"=".\Printing\Printing_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Processes"=".\Processes\Processes_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ProgressBars"=".\ProgressBars\ProgressBars_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "QTPlayer"=".\QTPlayer\QTPlayer_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Reflection"=".\Reflection\Reflection_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKit"="..\build\icl7\RemoteObjectKit\RemoteObjectKit_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKitStatic"="..\build\icl7\RemoteObjectKit\RemoteObjectKitStatic_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKit
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Resources"=".\Resources\Resources_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RunLoops"=".\RunLoops\RunLoops_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Scrolling"=".\Scrolling\Scrolling_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SharedLibraries"=".\SharedLibraries\SharedLibraries_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SketchIt"=".\SketchIt\SketchIt_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Sliders"=".\Sliders\Sliders_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Splitters"=".\Splitters\Splitters_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Strings"=".\Strings\Strings_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "StrokesAndFills"=".\StrokesAndFills\StrokesAndFills_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SysTray"=".\SysTray\SysTray_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Tables"=".\Tables\Tables_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TeXLabel"=".\TeXLabel\TeXLabel_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TextEdit"=".\TextEdit\TextEdit_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TextLayout"=".\TextLayout\TextLayout_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ThreadBasics"=".\ThreadBasics\ThreadBasics_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ThreadsInGUI"=".\ThreadsInGUI\ThreadsInGUI_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Toolbars"=".\Toolbars\Toolbars_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Transformations"=".\Transformations\Transformations_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TreeListControls"=".\TreeListControls\TreeListControls_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "VisualFormFiles"=".\VisualFormFiles\VisualFormFiles_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser"="..\build\icl7\Win32HTMLBrowser\Win32HTMLBrowser_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"="..\build\icl7\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib_icl7.dsp" - Package Owner=<4>
+Project: "HTMLKit"=..\build\icl7\HTMLKit\HTMLKit_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1206,7 +720,22 @@ Package=<4>
 
 ###############################################################################
 
-Project: "WorkingWithEnumerators"=".\WorkingWithEnumerators\WorkingWithEnumerators_icl7.dsp" - Package Owner=<4>
+Project: "HTMLKitDll"=..\build\icl7\HTMLKit\HTMLKitDll_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HeavyAndLight"=.\HeavyAndLight\HeavyAndLight_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1218,7 +747,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libAGG"="..\build\icl7\GraphicsKit\libAGG_icl7.dsp" - Package Owner=<4>
+Project: "HelloWorld"=.\HelloWorld\HelloWorld_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1230,7 +759,673 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libAGG"="..\build\icl7\GraphicsKit\libAGG_icl7.dsp" - Package Owner=<4>
+Project: "HelloWorld2"=.\HelloWorld2\HelloWorld2_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HelloWorld3"=.\HelloWorld3\HelloWorld3_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Help"=.\Help\Help_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageBasics"=.\ImageBasics\ImageBasics_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageViewer"=.\ImageViewer\ImageViewer_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InetKit"=.\InetKit\InetKit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKit"=..\build\icl7\InternetKit\InternetKit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKitDLL"=..\build\icl7\InternetKit\InternetKitDLL_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Labels"=.\Labels\Labels_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ListBox"=.\ListBox\ListBox_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LocaleUI"=.\LocaleUI\LocaleUI_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Localization"=.\Localization\Localization_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MFCIntegration1"=.\MFCIntegration1\MFCIntegration1_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MFCIntegration2"=.\MFCIntegration2\MFCIntegration2_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MVCBasics"=.\MVCBasics\MVCBasics_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MinMax"=.\MinMax\MinMax_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "NetworkKit"=..\build\icl7\NetworkKit\NetworkKit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NetworkKitDLL"=..\build\icl7\NetworkKit\NetworkKitDLL_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKit"=..\build\icl7\OpenGLKit\OpenGLKit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKitDLL"=..\build\icl7\OpenGLKit\OpenGLKitDLL_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLShapes"=.\OpenGLShapes\OpenGLShapes_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ParticleEditor"=.\ParticleEditor\ParticleEditor_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Printing"=.\Printing\Printing_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Processes"=.\Processes\Processes_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ProgressBars"=.\ProgressBars\ProgressBars_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "QTPlayer"=.\QTPlayer\QTPlayer_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Reflection"=.\Reflection\Reflection_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKit"=..\build\icl7\RemoteObjectKit\RemoteObjectKit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RemoteObjectKitStatic"=..\build\icl7\RemoteObjectKit\RemoteObjectKitStatic_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Resources"=.\Resources\Resources_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RunLoops"=.\RunLoops\RunLoops_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scrolling"=.\Scrolling\Scrolling_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scrolling2"=.\Scrolling2\Scrolling2_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SharedLibraries"=.\SharedLibraries\SharedLibraries_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SketchIt"=.\SketchIt\SketchIt_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sliders"=.\Sliders\Sliders_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Splitters"=.\Splitters\Splitters_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Strings"=.\Strings\Strings_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "StrokesAndFills"=.\StrokesAndFills\StrokesAndFills_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SysTray"=.\SysTray\SysTray_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tables"=.\Tables\Tables_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TeXLabel"=.\TeXLabel\TeXLabel_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextEdit"=.\TextEdit\TextEdit_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextLayout"=.\TextLayout\TextLayout_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Themes"=.\Themes\Themes_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadBasics"=.\ThreadBasics\ThreadBasics_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadsInGUI"=.\ThreadsInGUI\ThreadsInGUI_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Toolbars"=.\Toolbars\Toolbars_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Tooltips"=.\Tooltips\Tooltips_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Transformations"=.\Transformations\Transformations_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TreeListControls"=.\TreeListControls\TreeListControls_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Variants"=.\Variants\Variants_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VisualFormFiles"=.\VisualFormFiles\VisualFormFiles_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "WorkingWithEnumerators"=.\WorkingWithEnumerators\WorkingWithEnumerators_icl7.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"=..\build\icl7\GraphicsKit\libAGG_icl7.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

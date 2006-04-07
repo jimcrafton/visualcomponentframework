@@ -12,29 +12,76 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
+#include <errno.h>
+
 using namespace VCF;
 
 LinuxSemaphorePeer::LinuxSemaphorePeer( long initialCount, long maxCount )
-		: handle_( 0 )
-{}
+{
+	sem_init(&semaphore_, 0, initialCount);
+}
 
 LinuxSemaphorePeer::~LinuxSemaphorePeer()
-{}
+{
+	sem_destroy(&semaphore_);
+}
 
 bool LinuxSemaphorePeer::lock ()
 {
-	return false;
+	int retCode = sem_wait(&semaphore_);
+	return retCode == 0;
+}
+
+bool  LinuxSemaphorePeer::lock( uint32 timeoutInMilliseconds )
+{
+	int retCode = 0;
+	uint32 timeout = 0;
+	while(timeout < timeoutInMilliseconds) {
+		timespec delay;
+        delay.tv_sec = 0;
+		delay.tv_nsec = 1000000;  // 1 milli sec
+
+		retCode = sem_trywait(&semaphore_); // event semaphore handle
+                                            // non blocking call
+		if(retCode == 0) {
+			break;
+		}
+		else {
+			// check whether somebody else has the mutex
+			if (retCode == EPERM ) {
+				// sleep for delay time
+				nanosleep(&delay, NULL);
+				timeout++ ;
+			}
+			else { 
+				// Error, what should we do?
+				retCode = -1;
+				break;
+			}
+		}
+	}
+    return retCode == 0;
 }
 
 bool LinuxSemaphorePeer::unlock()
 {
-	return false;
+	int retCode = sem_post(&semaphore_);
+	return retCode == 0;
 }
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.3.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
 *

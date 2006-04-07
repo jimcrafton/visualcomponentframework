@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="2" />
+	<Project>
+		<Option title="FreeImageLib" />
+		<Option default_target="-1" />
+		<Option compiler="0" />
+		<Build>
+			<Target title="mingw_gcc344_Release">
+				<Option output="..\..\..\..\..\..\lib\libFreeImage_mingw_gcc344_s.a" />
+				<Option working_dir="" />
+				<Option object_output="mgcc\Release\" />
+				<Option external_deps="$(VCF_LIB)\libLibJPEG_mgcc_s.a;$(VCF_LIB)\libLibMNG_mgcc_s.a;$(VCF_LIB)\libLibPNG_mgcc_s.a;$(VCF_LIB)\libLibTIFF_mgcc_s.a;$(VCF_LIB)\libZLib_mgcc_s.a;" />
+				<Option type="2" />
+				<Option compiler="0" />
+				<Option createDefFile="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_LIB" />
+					<Add option="-D_UNICODE" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DUSE_LIBMNG_LIB" />
+					<Add option="-DUSE_LIBJPEG_LIB" />
+					<Add option="-DUSE_LIBPNG_LIB" />
+					<Add option="-DUSE_LIBTIFF_LIB" />
+					<Add option="-DUSE_ZLIB_LIB" />
+					<Add directory="..\" />
+					<Add directory="$(VCF_INCLUDE)" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(VCF_INCLUDE)" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="LibJPEG_mingw_gcc344_s" />
+					<Add library="LibMNG_mingw_gcc344_s" />
+					<Add library="LibPNG_mingw_gcc344_s" />
+					<Add library="LibTIFF_mingw_gcc344_s" />
+					<Add library="ZLib_mingw_gcc344_s" />
+					<Add directory="$(VCF_LIB)" />
+				</Linker>
+			</Target>
+			<Target title="mingw_gcc344_Debug">
+				<Option output="..\..\..\..\..\..\lib\libFreeImage_mgcc_sd.a" />
+				<Option working_dir="" />
+				<Option object_output="mgcc\Debug\" />
+				<Option external_deps="$(VCF_LIB)\libLibJPEG_mgcc_sd.a;$(VCF_LIB)\libLibMNG_mgcc_sd.a;$(VCF_LIB)\libLibPNG_mgcc_sd.a;$(VCF_LIB)\libLibTIFF_mgcc_sd.a;$(VCF_LIB)\libZLib_mgcc_sd.a;" />
+				<Option type="2" />
+				<Option compiler="0" />
+				<Option createDefFile="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_LIB" />
+					<Add option="-D_UNICODE" />
+					<Add option="-DVCF_MINGW" />
+					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+					<Add option="-DUSE_LIBMNG_LIB" />
+					<Add option="-DUSE_LIBJPEG_LIB" />
+					<Add option="-DUSE_LIBPNG_LIB" />
+					<Add option="-DUSE_LIBTIFF_LIB" />
+					<Add option="-DUSE_ZLIB_LIB" />
+					<Add directory="..\" />
+					<Add directory="$(VCF_INCLUDE)" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(VCF_INCLUDE)" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="LibJPEG_mingw_gcc344_sd" />
+					<Add library="LibMNG_mingw_gcc344_sd" />
+					<Add library="LibPNG_mingw_gcc344_sd" />
+					<Add library="LibTIFF_mingw_gcc344_sd" />
+					<Add library="ZLib_mingw_gcc344_sd" />
+					<Add directory="$(VCF_LIB)" />
+				</Linker>
+			</Target>
+			<Environment>
+				<Variable name="COMPILER" value="mgcc" />
+				<Variable name="COMPILER_VER" value="" />
+			</Environment>
+		</Build>
+		<Unit filename="..\FreeImage.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImageIO.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImageSelectLib.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\BitmapAccess.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion16_555.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion16_565.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion24.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion32.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Conversion8.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\FreeImage.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\FreeImageIO.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\GetType.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\LoadFunctions.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\NNQuantizer.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\Plugin.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginBMP.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginICO.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginIFF.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginJPEG.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginKOALA.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginMNG.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginPCD.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginPCX.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginPNG.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginPNM.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginPSD.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginRAS.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginTARGA.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginTIFF.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\PluginWBMP.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\FreeImage\WuQuantizer.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\Plugin.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\Quantizers.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+		<Unit filename="..\Utilities.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_gcc344_Release" />
+			<Option target="mingw_gcc344_Debug" />
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

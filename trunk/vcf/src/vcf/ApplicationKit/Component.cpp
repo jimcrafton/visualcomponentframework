@@ -8,6 +8,7 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/VFFInputStream.h"
 
 
 static long ComponentTagID = 0;
@@ -82,11 +83,16 @@ Component::~Component()
 
 void Component::destroy()
 {
+	if ( !(Component::csDestroying & componentState_) ) {
+		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );
+		handleEvent( &e );
+	}
+
 	Action* action = getAction();
 	if ( NULL != action ) {
 		action->removeTarget( this );
 	
-		removeFromUpdateTimer();	
+		removeFromUpdateList();	
 	}
 
 	std::vector<Component*>::iterator componentIter = components_.begin();
@@ -96,7 +102,7 @@ void Component::destroy()
 		component = NULL;
 		componentIter++;
 	}
-	components_.clear();
+	components_.clear();	
 
 	ObjectWithEvents::destroy();
 }
@@ -128,10 +134,10 @@ void Component::handleEvent( Event* event )
 			}
 			break;
 
-			case Component::COMPONENT_DELETED:{
+			case Component::COMPONENT_DESTROYED:{
 				ComponentEvent* componentEvent = (ComponentEvent*)event;
 				beforeDestroy( componentEvent );
-				ComponentDeleted.fireEvent( componentEvent );
+				ComponentDestroyed.fireEvent( componentEvent );
 			}
 			break;
 
@@ -407,10 +413,10 @@ void Component::setAction( Action* action )
 	action_ = action;
 
 	if ( NULL == action_ ) {
-		removeFromUpdateTimer();
+		removeFromUpdateList();
 	}
 	else {
-		addToUpdateTimer();
+		addToUpdateList();
 	}
 }
 
@@ -425,14 +431,14 @@ bool Component::updateAction()
 	return false;
 }
 
-void Component::addToUpdateTimer()
+void Component::addToUpdateList()
 {
-	UIToolkit::addToUpdateTimer( this );
+	UIToolkit::addToUpdateList( this );
 }
 
-void Component::removeFromUpdateTimer()
+void Component::removeFromUpdateList()
 {
-	UIToolkit::removeFromUpdateTimer( this );
+	UIToolkit::removeFromUpdateList( this );
 }
 
 void Component::loading()
@@ -447,16 +453,20 @@ void Component::saving()
 
 void Component::loaded()
 {
-	componentState_ &= ~Component::csLoading;
-	ComponentEvent e( this, Component::COMPONENT_LOADED );
-	ComponentLoaded.fireEvent( &e );
+	if ( componentState_ & Component::csLoading ) {
+		componentState_ &= ~Component::csLoading;
+		ComponentEvent e( this, Component::COMPONENT_LOADED );
+		ComponentLoaded.fireEvent( &e );
+	}
 }
 
 void Component::saved()
 {
-	componentState_ &= ~Component::csSaving;
-	ComponentEvent e( this, Component::COMPONENT_SAVED );
-	ComponentSaved.fireEvent( &e );
+	if ( componentState_ & Component::csSaving ) {
+		componentState_ &= ~Component::csSaving;
+		ComponentEvent e( this, Component::COMPONENT_SAVED );
+		ComponentSaved.fireEvent( &e );
+	}
 }
 
 bool Component::isNormal() const
@@ -527,9 +537,82 @@ void Component::setUseLocaleStrings( const bool& val )
 }
 
 
+void Component::initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle ) 
+{
+	if ( (clazz->getID() == COMPONENT_CLASSID) || (clazz == rootClazz) ) {
+		return;
+	}
+
+	Component::initComponent( instance, clazz->getSuperClass(), rootClazz, resBundle );
+
+	String resourceName;
+	ResourceBundle* bundle = resBundle;
+	if ( NULL == bundle ) {
+		bundle = System::getResourceBundle();
+	}
+
+	String vffContents;
+
+	resourceName = clazz->getClassName();
+
+	vffContents = bundle->getVFF(resourceName);
+		
+	if ( !vffContents.empty() ) {
+		BasicInputStream bis( vffContents );
+		VFFInputStream vis( &bis );
+		vis.readNewComponentInstance( instance );
+	}
+}
+
+
+Component* Component::createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle )
+{
+	Component* result = NULL;
+	
+	VCF_ASSERT( clazz != NULL );
+
+	try {
+		Object* newObject = clazz->createInstance();
+
+		result = dynamic_cast<Component*>(newObject);
+
+		if ( NULL != result ) {
+			Component::initComponent( result, clazz, rootClazz );
+			
+			result->loaded();
+		}
+		else {
+			newObject->free();
+		}
+	}
+	catch ( BasicException& ) {
+
+	}
+
+	return result;
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.5  2006/03/28 04:12:48  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.4.2.4  2006/03/28 04:10:17  ddiego
+*tweaked some function names for the update process.
+*
+*Revision 1.4.2.3  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.4.2.2  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
+*Revision 1.4.2.1  2005/08/24 05:03:21  ddiego
+*better component loading and creation functions.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

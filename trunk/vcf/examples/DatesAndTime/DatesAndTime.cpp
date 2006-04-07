@@ -23,7 +23,7 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-    /**
+	/**
 	retrieve the current time
 	*/
 	DateTime currentTime = DateTime::now();
@@ -31,6 +31,7 @@ int main( int argc, char** argv ){
 	/**
 	Output the date time instance using the Object::toString method
 	*/
+
     String timeStr = currentTime.toString();
 	System::println( Format("currentTime: %ls") % timeStr.c_str() );
 
@@ -44,12 +45,14 @@ int main( int argc, char** argv ){
 	/**
 	Output the date time instance using the StringUtils::format() method
 	*/
+
 	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
 					% StringUtils::format( currentTime, "Day %#j in the year %Y, week %#U, %A day %#d of %B month %#m" ).c_str() );
 
 	/**
 	Output the time portion of the date time instance using the StringUtils::format() method
 	*/
+
 	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
 					% StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
@@ -57,6 +60,7 @@ int main( int argc, char** argv ){
 	Modify the time, hours, minutes and seconds
 	*/
 	currentTime.setTime( 9, 45, 12 );
+
 	System::println( Format("currentTime from StringUtils::format():\n\t%ls")
 					% StringUtils::format( currentTime, "%H:%M:%S.%s" ).c_str() );
 
@@ -135,13 +139,14 @@ int main( int argc, char** argv ){
 
 	DateTimeSpan howLong = dt3 - dt4;
 
-	System::println( Format("Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %ls seconds!")
+
+	System::println( Format("Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %s seconds!")
 					%	howLong.getYears()
 					%	howLong.getMonths()
 					%	howLong.getDays()
 					%	howLong.getHours()
 					%	howLong.getMinutes()
-					%	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ).c_str() );
+                    %	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ) );
 
 
 	/**
@@ -153,7 +158,6 @@ int main( int argc, char** argv ){
 
 	DateTime storeMe( 1977, 10, 3, 19, 23, 12 );
 
-
 	{
 		FileOutputStream fs( "datetime.out" );
 
@@ -163,13 +167,14 @@ int main( int argc, char** argv ){
 	}
 
 	DateTime loadMe;
-	System::println( Format("loadMe is equal to %ls") % loadMe.toString().c_str() );
+	System::println( Format("loadMe is equal to %s") % loadMe.toString() );
+
 	{
 		FileInputStream fs( "datetime.out" );
 
 		fs >> static_cast<VCF::Persistable*>(&loadMe);
 
-		System::println( Format("loadMe (%ls) loaded!") % loadMe.toString().c_str() );
+		System::println( Format("loadMe (%s) loaded!") % loadMe.toString() );
 	}
 
 
@@ -181,8 +186,23 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:34:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/19 00:03:39  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:34  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
 *Revision 1.5  2005/07/09 23:14:35  ddiego
 *merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4.2.1  2005/04/17 15:11:42  iamfraggle
+*Replaced old-style var arg calls with new Format calls.
+*
+*Revision 1.4.2.4  2005/07/14 03:45:15  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.4.2.1  2005/04/17 15:11:42  iamfraggle
 *Replaced old-style var arg calls with new Format calls.

@@ -43,7 +43,6 @@ public:
 		panelVisible_ = true;
 
 		setCaption( "Splitters" );
-		setVisible( true );
 
 		ControlSized += new ControlEventHandler<SplittersWindow>(this, &SplittersWindow::onResized, "SplittersWindow::onResized" );
 		ControlPositioned += new ControlEventHandler<SplittersWindow>(this, &SplittersWindow::onPosChanged, "SplittersWindow::onPosChanged" );
@@ -176,7 +175,7 @@ public:
 	}
 
 	void onBtnShow( ButtonEvent* e ) {
-		//String s = StringUtils::format( "panel%d", i );
+		//String s = Format( "panel%d" ) % i ;
 		//Panel* panel = (Panel*)panelLeft_->findComponent( s );
 		if ( NULL != clickedPanel_ ) {
 			panelVisible_ = !panelVisible_;
@@ -232,7 +231,7 @@ void MyPanel::onMouseClicked( ControlEvent* e ) {
 	getMainWindow()->setClickedPanel( this );
 	getMainWindow()->btnShow_->setCaption( "Hide " + getName() );
 	//Rect r = getBounds();
-	//StringUtils::traceWithArgs( "New Left/Top: %0.2f, %0.2f\n", r.left_, r.top_ );
+	//trace( Format( "New Left/Top: %0.2f, %0.2f\n", r.left_, r.top_ );
 }
 
 
@@ -250,6 +249,7 @@ public:
 		Window* mainWindow = new SplittersWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 700.0, 700.0 ) );
+		mainWindow->show();
 
 		return result;
 	}
@@ -270,8 +270,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.7  2005/07/09 23:14:44  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.8  2006/04/07 02:34:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.2  2006/03/16 18:45:23  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.7.2.1  2005/07/23 21:45:42  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
+*Revision 1.6.2.3  2005/07/11 19:39:57  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.6.2.2  2005/06/28 20:37:08  marcelloptr
 *first step to remove flickering when dragging a splitter

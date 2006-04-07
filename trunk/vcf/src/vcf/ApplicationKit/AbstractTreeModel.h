@@ -32,6 +32,7 @@ namespace VCF{
 
 
 /**
+\class AbstractTreeModel AbstractTreeModel.h "vcf/ApplicationKit/AbstractTreeModel.h"
 *AbstractTreeModel is a basic implementation of Treemodel. It used for
 *deriving classes to have a starting point for implementing
 *a concrete TreeModel class.
@@ -112,6 +113,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:19  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

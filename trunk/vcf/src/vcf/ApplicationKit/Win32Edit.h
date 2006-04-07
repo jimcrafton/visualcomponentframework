@@ -35,7 +35,7 @@ public:
 		esStyleChanging =			0x0010,
 		esPeerTextChanging =		0x0100,
 		esModelTextChanging =		0x0200,
-		esExternalTextChanging =	0x0400, /* means something like undo/redo/cut/paste */
+		esExternalTextChanging =	0x0400, /* means something like undo/redo/cut/paste */		
 		esKeyEvent =				0x1000
 	};
 
@@ -159,6 +159,7 @@ public:
 
 	virtual void redo();
 
+	virtual void setTextWrapping( const bool& val ); 
 protected:
 	VCF::Point posAtChar_;
 	HBRUSH backgroundBrush_;
@@ -173,7 +174,6 @@ protected:
 
 	void onTextModelTextChanged( TextEvent* event );
 
-	void onTextControlFontChanged( Event* event );
 	/**
 	this is a fix from Marcello to work around an apparent bug in Win32's handling of
 	crlf's
@@ -193,8 +193,23 @@ protected:
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/09/30 02:23:43  ddiego
-*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.4.2.3  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.4.2.2  2006/02/22 05:00:40  ddiego
+*some minor text updates to support toggling word wrap.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
 *
 *Revision 1.4  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.

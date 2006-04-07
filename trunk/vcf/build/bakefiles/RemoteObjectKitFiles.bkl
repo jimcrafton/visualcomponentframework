@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="REMOTEOBJECTKIT_HDR" hints="files">
+        vcf/RemoteObjectKit/AbstractDistributedApplication.h
+        vcf/RemoteObjectKit/ClassRegistryEntry.h
+        vcf/RemoteObjectKit/ClassServerInstance.h
+        vcf/RemoteObjectKit/DistributedClassRegistry.h
+        vcf/RemoteObjectKit/DistributedException.h
+        vcf/RemoteObjectKit/InstanceID.h
+        vcf/RemoteObjectKit/Proxy.h
+        vcf/RemoteObjectKit/RemoteCommon.h
+        vcf/RemoteObjectKit/RemoteConfig.h
+        vcf/RemoteObjectKit/RemoteObjectKit.h
+        vcf/RemoteObjectKit/RemoteObjectKitSelectLib.h
+    </set>
+
+    <set var="REMOTEOBJECTKIT_SRC" hints="files">
+        vcf/RemoteObjectKit/AbstractDistributedApplication.cpp
+        vcf/RemoteObjectKit/ClassRegistryEntry.cpp
+        vcf/RemoteObjectKit/ClassServerInstance.cpp
+        vcf/RemoteObjectKit/DistributedClassRegistry.cpp
+        vcf/RemoteObjectKit/DistributedException.cpp
+        vcf/RemoteObjectKit/InstanceID.cpp
+        vcf/RemoteObjectKit/Proxy.cpp
+        vcf/RemoteObjectKit/RemoteObjectKit.cpp
+    </set>
+
+</makefile>

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <mkdir id="mkdir_help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+        <dir>Help</dir>
+        <dependency-of>all</dependency-of>
+    </mkdir>
+
+    <exe id="Help" template="vcf_exe_gui" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <sources>Help.cpp</sources>
+        <vcf-use-ApplicationKit/>
+        <clean-files>
+            "Help\Help*.chm"
+        </clean-files>
+    </exe>
+
+    <action id="hhc_Help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+        <is-phony>1</is-phony>
+        <dependency-of>all</dependency-of>
+        <command>
+            -hhc "Help App.hhp"
+        </command>
+    </action>
+</makefile>

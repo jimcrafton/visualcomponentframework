@@ -24,6 +24,7 @@ class WindowEvent;
 class Library;
 
 /**
+\class Application Application.h "vcf/ApplicationKit/Application.h"
 Represents the main process for a application.
 Each application contains a main window, pointed to by  mainWindow_.
 Application are started by some entry point of the executing process.
@@ -32,7 +33,7 @@ the static function Application::appMain() is called to start
 the application initializing itself.
 While the Application instance is optional, if it is present
 there should only be one instance that is created on the stack.
- \par
+ 
  Typically the startup code looks like this:
  *\code
  int main( int argc, char** argv ) {
@@ -139,6 +140,34 @@ public:
 
 	void setAutoLoadSaveAppState( const bool& autoLoadSaveState );
 
+	/**
+	This gets called by the internals of the framework 
+	in response standard OS events. You can customize how
+	or what help contents are loaded by overriding this function.
+	@return bool returns true if this function handles
+	the help message. Otherwise it returns false, in which
+	case the framework handles the rest. The default behaviour
+	is to return false.
+	*/
+	virtual bool displayHelpContents();
+
+	/**
+	This gets called by the internals of the framework 
+	in response standard OS events. You can customize how
+	or what help index is loaded by overriding this function.
+	@return bool returns true if this function handles
+	the help message. Otherwise it returns false, in which
+	case the framework handles the rest. The default behaviour
+	is to return false.
+	*/
+	virtual bool displayHelpIndex();
+
+	/**
+	returns the values for the help book and the directory it's 
+	located in. The default returns empty strings for both values.
+	*/
+	virtual void getHelpInfo( String& helpBookName, String& helpDirectory );
+
 	//Event handlers
 
 	/**
@@ -155,7 +184,7 @@ public:
 	@param Event this instance has in it's UserData a pointer to a wrapper struct. For Win32
 	systems please see the Win32Toolkit.h and look at the Win32MSG class. This will wrap
 	up a MSG struct that you can use.
-	\par
+	
 	Example (this is pertinent ONLY to Win32 systems):
 	\code
 		void MyApp::onOSNativeEvent( Event* e )
@@ -192,6 +221,19 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.2.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.1  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
 *Revision 1.3  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

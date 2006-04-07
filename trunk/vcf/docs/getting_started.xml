@@ -255,11 +255,66 @@ _VCF_&lt;name of the header in upper case - no breaks, underbars, etc&gt;_H__
 			size this helps reduce compile time and makes it more efficient to use.
 			</para>
 		</section>
+		<section><title>Accessing the Source Documentation</title>
+		<para>
+		There are two main forms of documentation in the VCF. The reference manual that
+		you're reading right now, and the source documentation. The reference manual
+		is produced using <ulink url="http://www.oreilly.com/catalog/docbook/chapter/book/docbook.html">
+		docbook</ulink>. The reference manual is made up of a series of chapters which 
+		you can navigate through using the links on the top and bottom of the page.
+ 		</para>
+		<para>
+		The source documentation is produced using <ulink url="http://www.stack.nl/~dimitri/doxygen/">
+		Doxygen</ulink> and has a slightly different feel to it. Let's look at a sample page, and
+		we'll break down how it's organized:
+		<screenshot>
+			<graphic fileref="gfx/src-ref.png"></graphic>
+		</screenshot>
+		<orderedlist numeration="arabic">
+			<listitem>
+				This lists the various sections, the main page, namespaces, classes, etc
+			</listitem>
+			<listitem>
+			The name of the class being documented.
+			</listitem>
+			<listitem>
+			A brief bit of documentation. Usually the first sentence of the 
+			class complete documentation.
+			</listitem>
+			<listitem>
+			The header to include to make use of the this class. Note that doxygen
+			incorrectly shows this with "&lt;" and "&gt;", instead it should be using
+			quote characters.
+			</listitem>
+			<listitem>
+			An inheritance diagram showing the class (in white) with other classes
+			that derive from it (in yellow).
+			</listitem>
+			<listitem>
+			Member functions follow next. These are all the various enums, functions,
+			and variables that are part of the class. The order is publicly declared 
+			items first, followed by protected, and then private items. Each item
+			has a brief, one line description for it, assuming it was documented.
+			</listitem>
+			<listitem>
+			This is the core of the documentation for the class it contains all the detailed
+			documentation that was written for the class and any of it's other items like
+			functions, variable, etc.
+			</listitem>
+		</orderedlist>
+		</para>
+		</section>
 	</chapter>
 
 <!--	
 CVS Log info
 $Log$
+Revision 1.5  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.4.2.1  2006/03/12 22:01:36  ddiego
+doc updates.
+
 Revision 1.4  2005/07/13 04:04:33  ddiego
 updated more doc stuff.
 

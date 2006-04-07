@@ -19,23 +19,17 @@ using namespace VCF;
 
 
 
-#if defined(VCF_CW) && defined(UNICODE)
-	static wchar_t szDefaultDocName[] = L"Untitled";
-#else
-	static char szDefaultDocName[] = "Untitled";
-#endif
 
 
 Win32PrintSession::Win32PrintSession():
 	printerDC_(0)
 {
-	
-
-	printInfo_.docInfo_.cbSize = sizeof(printInfo_.docInfo_);
-
-	
-	printInfo_.printDlg_.lStructSize = sizeof(printInfo_.printDlg_);
-	printInfo_.printDlg_.Flags |= PD_RETURNDEFAULT;
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getPrintDlgW().Flags |= PD_RETURNDEFAULT;
+	}
+	else{
+		printInfo_.getPrintDlgA().Flags |= PD_RETURNDEFAULT;
+	}
 }
 
 Win32PrintSession::~Win32PrintSession()
@@ -61,38 +55,91 @@ BOOL CALLBACK Win32PrintSession::AbortProc( HDC hdc, int iError )
 
 void Win32PrintSession::setDefaultPageSettings()
 {
-	printInfo_.printDlg_.Flags |= PD_RETURNDEFAULT;
-	::PrintDlg( &printInfo_.printDlg_ );
-
-	LPDEVNAMES devNamesPtr = (LPDEVNAMES)::GlobalLock(printInfo_.printDlg_.hDevNames);
-	LPDEVMODE  devModePtr = NULL;
-	if ( NULL != printInfo_.printDlg_.hDevMode ) {
-		devModePtr = (LPDEVMODE)::GlobalLock(printInfo_.printDlg_.hDevMode);
-	}
-
-
-	if ( NULL == devNamesPtr ) {
-
-		//error!
-	}
-
 	HDC hDC = NULL;
 	
-	hDC = ::CreateDC((LPCTSTR)devNamesPtr + devNamesPtr->wDriverOffset,
-					  (LPCTSTR)devNamesPtr + devNamesPtr->wDeviceOffset,
-					  (LPCTSTR)devNamesPtr + devNamesPtr->wOutputOffset,
-					  devModePtr);
+	if ( System::isUnicodeEnabled() ) {
+		PRINTDLGW& printDlg =  printInfo_.getPrintDlgW();
 
-	::GlobalUnlock(printInfo_.printDlg_.hDevNames);
 
-	if ( NULL != printInfo_.printDlg_.hDevMode ) {
+		printDlg.Flags |= PD_RETURNDEFAULT;
+		
+		::PrintDlgW( &printDlg );
+		
+		LPDEVNAMES devNamesPtr = (LPDEVNAMES)::GlobalLock(printDlg.hDevNames);
+		LPDEVMODEW  devModePtr = NULL;
+		if ( NULL != printDlg.hDevMode ) {
+			devModePtr = (LPDEVMODEW)::GlobalLock(printDlg.hDevMode);
+		}
+		
+		
+		if ( NULL == devNamesPtr ) {
+			
+			//error!
+		}
+		
+		
+		
+		hDC = ::CreateDCW((WideChar*)devNamesPtr + devNamesPtr->wDriverOffset,
+			(WideChar*)devNamesPtr + devNamesPtr->wDeviceOffset,
+			(WideChar*)devNamesPtr + devNamesPtr->wOutputOffset,
+			devModePtr);
+		
+		::GlobalUnlock(printDlg.hDevNames);
+		
+		if ( NULL != printDlg.hDevMode ) {
+			
+			::GlobalUnlock(printDlg.hDevMode);
+		}
 
-		::GlobalUnlock(printInfo_.printDlg_.hDevMode);
+
+		static WideChar DefaultDocumentName[] = L"Untitled";
+
+
+		// [bugfix 1227570] do not assign this to a temporary
+		printInfo_.getDocInfoW().lpszDocName = DefaultDocumentName;
+	}
+	else {
+		PRINTDLGA& printDlg =  printInfo_.getPrintDlgA();
+
+
+		printDlg.Flags |= PD_RETURNDEFAULT;
+		
+		::PrintDlgA( &printDlg );
+		
+		LPDEVNAMES devNamesPtr = (LPDEVNAMES)::GlobalLock(printDlg.hDevNames);
+		LPDEVMODEA  devModePtr = NULL;
+		if ( NULL != printDlg.hDevMode ) {
+			devModePtr = (LPDEVMODEA)::GlobalLock(printDlg.hDevMode);
+		}
+		
+		
+		if ( NULL == devNamesPtr ) {
+			
+			//error!
+		}
+		
+		
+		
+		hDC = ::CreateDCA((char*)devNamesPtr + devNamesPtr->wDriverOffset,
+			(char*)devNamesPtr + devNamesPtr->wDeviceOffset,
+			(char*)devNamesPtr + devNamesPtr->wOutputOffset,
+			devModePtr);
+		
+		::GlobalUnlock(printDlg.hDevNames);
+		
+		if ( NULL != printDlg.hDevMode ) {
+			
+			::GlobalUnlock(printDlg.hDevMode);
+		}
+
+
+		static char DefaultDocumentName[] = "Untitled";
+
+
+		// [bugfix 1227570] do not assign this to a temporary
+		printInfo_.getDocInfoA().lpszDocName = DefaultDocumentName;
 	}
 	
-
-	// [bugfix 1227570] do not assign this to a temporary
-	printInfo_.docInfo_.lpszDocName = szDefaultDocName;
 
 	printerDC_ = hDC;
 
@@ -173,7 +220,12 @@ void Win32PrintSession::setPrintInfoHandle( PrintInfoHandle info )
 	if ( NULL != infoPtr ) {
 		printInfo_ = *infoPtr;
 
-		printerDC_ = printInfo_.printDlg_.hDC;
+		if ( System::isUnicodeEnabled() ) {
+			printerDC_ = printInfo_.getPrintDlgW().hDC;
+		}
+		else {
+			printerDC_ = printInfo_.getPrintDlgA().hDC;
+		}		
 	}
 }
 
@@ -184,15 +236,22 @@ void Win32PrintSession::abort()
 
 PrintContext* Win32PrintSession::beginPrintingDocument()
 {
-#if defined(VCF_CW) && defined(UNICODE)
-	printInfo_.docInfo_.lpszDocName = title_.c_str();	
-#else
-	printInfo_.docInfo_.lpszDocName = title_.ansi_c_str();
-#endif
-	if ( !::StartDoc( printerDC_, &printInfo_.docInfo_ ) ) {
-		//throw exception???		
-		return NULL;
+	if ( System::isUnicodeEnabled() ) {
+		printInfo_.getDocInfoW().lpszDocName = title_.c_str();
+		if ( !::StartDocW( printerDC_, &printInfo_.getDocInfoW() ) ) {
+			//throw exception???		
+			return NULL;
+		}
 	}
+	else{
+		printInfo_.getDocInfoA().lpszDocName = title_.ansi_c_str();
+		if ( !::StartDocA( printerDC_, &printInfo_.getDocInfoA() ) ) {
+			//throw exception???		
+			return NULL;
+		}
+	}
+
+	
 
 	PrintContext* result = new PrintContext((OSHandleID)printerDC_);
 
@@ -243,6 +302,12 @@ void Win32PrintSession::setPrintablePages( const std::vector<ulong32>& printable
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
 *Revision 1.4  2005/07/09 23:06:02  ddiego
 *added missing gtk files
 *

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="Dialogs" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <sources>Dialogs.cpp</sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

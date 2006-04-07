@@ -19,7 +19,8 @@ namespace VCF {
 class LibraryPeer;
 
 /**
-A Library represnts a DLL (Dynamic Linked Library) or SO (Shared Object). 
+\class Library Library.h "vcf/FoundationKit/Library.h"
+A Library represents a DLL (Dynamic Linked Library) or SO (Shared Object). 
 It can be created by passing in a fully qualified file name to the constructor. 
 The specified DLL/SO will then be dynamically loaded (and unloaded when the
 Library obejct is destroyed if autoUnloadLib is true).
@@ -33,9 +34,8 @@ public:
 	virtual ~Library();
 
 	/**
-	\par
 	Dynamically loads the DLL/SO specified by the libraryFilename argument.
-	\par
+	
 	The default behaviour is to just load the library, assuming the libraryFilename is a
 	path to the library. However, we are now going to get a tad fancier!
 	If the libraryFilename is a directory, then we will try and locate the 
@@ -86,6 +86,15 @@ private:
 /**
 CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.5  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

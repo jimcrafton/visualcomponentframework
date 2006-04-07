@@ -26,6 +26,7 @@ enum PropertyDescriptorType{
 	pdInt,
 	pdLong,
 	pdShort,
+	pdUShort,
 	pdULong,
 	pdFloat,
 	pdChar,
@@ -44,172 +45,12 @@ enum PropertyDescriptorType{
 	pdLast,
 };
 
-/**
-*the controls alignment type
-*/
-enum AlignmentType{
-    AlignNone=0,
-    AlignTop,
-    AlignLeft,
-    AlignRight,
-    AlignBottom,
-    AlignClient
-};
-
-/**
-*A string array for the controls alignement types
-*/
-static String AlignmentTypeNames[] = { "AlignNone",
-                                         "AlignTop",
-										 "AlignLeft",
-										 "AlignRight",
-										 "AlignBottom",
-										 "AlignClient" };
 
 
 /**
-*An enum of anchor types for a control,
-*may be masked together
+This enum is a mapping of virtual keys on a keyboard 
+to a standard value.
 */
-enum AnchorType {
-	AnchorNone = 0,
-	AnchorTop = 1,
-	AnchorLeft = 2,
-	AnchorBottom = 4,
-	AnchorRight = 8
-};
-
-/**
-*an array of Anchor type names
-*/
-static String AnchorTypeNames[] = { "AnchorNone",
-                                         "AnchorTop",
-										 "AnchorLeft",
-										 "AnchorBottom",
-										 "AnchorRight" };
-
-static unsigned long AnchorTypeValues[] = { AnchorNone,
-                                         AnchorTop,
-										 AnchorLeft,
-										 AnchorBottom,
-										 AnchorRight };
-
-/**
-*An enum of icon styles for list views
-*/
-enum IconStyleType {
-	isLargeIcon=0,
-	isSmallIcon,
-	isList,
-	isDetails
-};
-
-/**
-*An enum of icon alignment types for list views
-*/
-enum IconAlignType {
-	iaNone=0,
-	iaTop,
-	iaLeft,
-	iaAutoArrange
-};
-
-static String IconStyleTypeNames[] = { "isLargeIcon",
-                                         "isSmallIcon",
-										 "isList",
-										 "isDetails" };
-
-static String IconAlignTypeNames[] = { "iaNone",
-                                         "iaTop",
-										 "iaLeft",
-										 "iaAutoArrange" };
-
-
-enum TextAlignmentType {
-	taTextLeft = 0,
-	taTextCenter,
-	taTextRight
-};
-
-static String TextAlignmentTypeNames[] = { "taTextLeft",
-                                         "taTextCenter",
-										 "taTextRight" };
-
-
-/**
-*Mouse button masks
-*/
-enum MouseButtomMasks{
-	mbmUndefined = 0,
-	mbmLeftButton = 1,
-	mbmMiddleButton = 2,
-	mbmRightButton = 4
-};
-
-/**
-*Keyboard masks
-*/
-
-enum KeyboardMasks{
-	kmUndefined = 0,
-	kmAlt = 1,
-	kmShift = 2,
-	kmCtrl = 4
-};
-
-
-//conversion defines
-#define INT_STR_CONVERSION            "%d "
-#define UINT_STR_CONVERSION           "%u "
-#define LONG_STR_CONVERSION           "%ld "
-#define ULONG_STR_CONVERSION          "%lu "
-#define CHAR_STR_CONVERSION           "%c "
-#define SHORT_STR_CONVERSION          "%hd "
-#define USHORT_STR_CONVERSION         "%hu "
-#define FLOAT_STR_CONVERSION          "%.5f "
-#define DOUBLE_STR_CONVERSION         "%.5f "
-#define BOOL_STR_CONVERSION_TRUE      "true "
-#define BOOL_STR_CONVERSION_FALSE     "false "
-
-#define STR_INT_CONVERSION            "%d"
-#define STR_UINT_CONVERSION           "%u"
-#define STR_LONG_CONVERSION           "%ld"
-#define STR_ULONG_CONVERSION          "%lu"
-#define STR_CHAR_CONVERSION           "%c"
-#define STR_SHORT_CONVERSION          "%hd"
-#define STR_USHORT_CONVERSION         "%hu"
-#define STR_FLOAT_CONVERSION          "%f"
-#define STR_DOUBLE_CONVERSION         "%lf"
-#define STR_BOOL_CONVERSION_TRUE      "true"
-#define STR_BOOL_CONVERSION_FALSE     "false"
-
-
-#define W_INT_STR_CONVERSION          L"%d "
-#define W_UINT_STR_CONVERSION         L"%u "
-#define W_LONG_STR_CONVERSION         L"%ld "
-#define W_ULONG_STR_CONVERSION        L"%lu "
-#define W_CHAR_STR_CONVERSION         L"%c "
-#define W_SHORT_STR_CONVERSION        L"%hd "
-#define W_USHORT_STR_CONVERSION       L"%hu "
-#define W_FLOAT_STR_CONVERSION        L"%.5f "
-#define W_DOUBLE_STR_CONVERSION       L"%.5f "
-#define W_BOOL_STR_CONVERSION_TRUE    L"true "
-#define W_BOOL_STR_CONVERSION_FALSE   L"false "
-
-#define W_STR_INT_CONVERSION          L"%d"
-#define W_STR_UINT_CONVERSION         L"%u"
-#define W_STR_LONG_CONVERSION         L"%ld"
-#define W_STR_ULONG_CONVERSION        L"%lu"
-#define W_STR_CHAR_CONVERSION         L"%c"
-#define W_STR_SHORT_CONVERSION        L"%hd"
-#define W_STR_USHORT_CONVERSION       L"%hu"
-#define W_STR_FLOAT_CONVERSION        L"%f"
-#define W_STR_DOUBLE_CONVERSION       L"%lf"
-#define W_STR_BOOL_CONVERSION_TRUE    L"true"
-#define W_STR_BOOL_CONVERSION_FALSE   L"false"
-
-
-
 enum VirtualKeyCode{
 	vkUndefined = 0,
 	vkF1 = 200,
@@ -323,12 +164,75 @@ enum VirtualKeyCode{
 };
 
 
+
+
+//conversion defines
+#define INT_STR_CONVERSION            "%d "
+#define UINT_STR_CONVERSION           "%u "
+#define LONG_STR_CONVERSION           "%ld "
+#define ULONG_STR_CONVERSION          "%lu "
+#define CHAR_STR_CONVERSION           "%c "
+#define SHORT_STR_CONVERSION          "%hd "
+#define USHORT_STR_CONVERSION         "%hu "
+#define FLOAT_STR_CONVERSION          "%.5f "
+#define DOUBLE_STR_CONVERSION         "%.5f "
+#define BOOL_STR_CONVERSION_TRUE      "true "
+#define BOOL_STR_CONVERSION_FALSE     "false "
+
+#define STR_INT_CONVERSION            "%d"
+#define STR_UINT_CONVERSION           "%u"
+#define STR_LONG_CONVERSION           "%ld"
+#define STR_ULONG_CONVERSION          "%lu"
+#define STR_CHAR_CONVERSION           "%c"
+#define STR_SHORT_CONVERSION          "%hd"
+#define STR_USHORT_CONVERSION         "%hu"
+#define STR_FLOAT_CONVERSION          "%f"
+#define STR_DOUBLE_CONVERSION         "%lf"
+#define STR_BOOL_CONVERSION_TRUE      "true"
+#define STR_BOOL_CONVERSION_FALSE     "false"
+
+
+#define W_INT_STR_CONVERSION          L"%d "
+#define W_UINT_STR_CONVERSION         L"%u "
+#define W_LONG_STR_CONVERSION         L"%ld "
+#define W_ULONG_STR_CONVERSION        L"%lu "
+#define W_CHAR_STR_CONVERSION         L"%c "
+#define W_SHORT_STR_CONVERSION        L"%hd "
+#define W_USHORT_STR_CONVERSION       L"%hu "
+#define W_FLOAT_STR_CONVERSION        L"%.5f "
+#define W_DOUBLE_STR_CONVERSION       L"%.5f "
+#define W_BOOL_STR_CONVERSION_TRUE    L"true "
+#define W_BOOL_STR_CONVERSION_FALSE   L"false "
+
+#define W_STR_INT_CONVERSION          L"%d"
+#define W_STR_UINT_CONVERSION         L"%u"
+#define W_STR_LONG_CONVERSION         L"%ld"
+#define W_STR_ULONG_CONVERSION        L"%lu"
+#define W_STR_CHAR_CONVERSION         L"%c"
+#define W_STR_SHORT_CONVERSION        L"%hd"
+#define W_STR_USHORT_CONVERSION       L"%hu"
+#define W_STR_FLOAT_CONVERSION        L"%f"
+#define W_STR_DOUBLE_CONVERSION       L"%lf"
+#define W_STR_BOOL_CONVERSION_TRUE    L"true"
+#define W_STR_BOOL_CONVERSION_FALSE   L"false"
+
+
+
 };//end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/02/23 01:41:57  ddiego
+*some minor changes to teh variantdata class, added support for specific char* and WideChar* cosntructor and for unsigned short types.
+*
+*Revision 1.4.2.1  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
 *Revision 1.4  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

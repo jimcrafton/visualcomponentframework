@@ -14,6 +14,61 @@ where you installed the VCF.
 #endif
 
 
+#define VCF_CONTROL_CREATE		VCF_MESSAGE + 99
+
+
+
+namespace VCFWin32 {
+
+	
+struct KeyboardData {
+	int repeatCount;
+	int scanCode;
+	bool isExtendedKey;
+	bool altKeyDown;
+	unsigned short character;
+	int VKeyCode;
+	UINT keyMask;
+};
+
+#define KB_CONTEXT_CODE			29
+#define KB_PREVIOUS_STATE		30
+#define KB_IS_EXTENDED_KEY		24
+
+#define SHIFT_KEY_DOWN \
+	((GetKeyState( VK_SHIFT) & 15 ) == 1)
+
+
+
+
+class APPLICATIONKIT_API Win32UIUtils {
+public:
+	static unsigned long translateKeyMask( UINT win32KeyMask );
+
+	static unsigned long translateButtonMask( UINT win32ButtonMask );
+
+	static KeyboardData translateKeyData( HWND wndHandle, LPARAM keyData );
+
+	static DWORD translateStyle( unsigned long style );
+
+	static DWORD translateExStyle( unsigned long style );
+
+	static int getXFromLParam( LPARAM lParam );
+
+	static int getYFromLParam( LPARAM lParam );
+
+	static VCF::ulong32 translateVKCode( UINT vkCode );
+
+	static VCF::uint32 convertCharToVKCode( VCF::VCFChar ch );
+};
+
+
+};
+
+
+
+
+
 namespace VCF
 {
 
@@ -86,8 +141,6 @@ public:
 
 	virtual ButtonPeer* internal_createButtonPeer( CommandButton* component);
 
-	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control );
-
 	virtual ContextPeer* internal_createContextPeer( Control* component );
 
 	virtual CommonFileDialogPeer* internal_createCommonFileOpenDialogPeer( Control* owner );
@@ -149,13 +202,21 @@ public:
 
 	virtual Size internal_getDragDropDelta();
 
+	virtual void internal_displayHelpContents( const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );
+
+	virtual bool internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_systemSettingsChanged();
+
 	static HINSTANCE getInstanceHandle();
 protected:
 
 	void createDummyParentWindow();
-	HWND dummyParentWnd_;
-	Library browserLib_;
-	bool browserLibAvailable_;
+	HWND dummyParentWnd_;		
 	int runEventCount_;
 
 	class TimerRec {
@@ -176,6 +237,9 @@ protected:
 	static ATOM RegisterWin32ToolKitClass(HINSTANCE hInstance);
 
 	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+	static LRESULT CALLBACK mouseHookProc( int nCode, WPARAM wParam, LPARAM lParam );
+	static LRESULT CALLBACK keyboardHookProc( int nCode, WPARAM wParam, LPARAM lParam );
 };
 
 };
@@ -184,6 +248,30 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.7  2006/03/16 04:41:31  ddiego
+*fixed some tooltip issues.
+*
+*Revision 1.5.2.6  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.5.2.5  2006/02/23 05:54:23  ddiego
+*some html help integration fixes and new features. context sensitive help is finished now.
+*
+*Revision 1.5.2.4  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.3  2005/11/21 21:28:05  ddiego
+*updated win32 code a bit due to osx changes.
+*
+*Revision 1.5.2.2  2005/10/07 16:41:21  kiklop74
+*Added support for building ApplicationKit with Borland Free Compiler
+*
+*Revision 1.5.2.1  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
 *Revision 1.5  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

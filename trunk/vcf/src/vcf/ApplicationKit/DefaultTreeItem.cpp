@@ -13,25 +13,22 @@ where you installed the VCF.
 
 using namespace VCF;
 
-DefaultTreeItem::DefaultTreeItem():
-	treeModel_(NULL)
+DefaultTreeItem::DefaultTreeItem()
 {
 	init();
 }
 
-DefaultTreeItem::DefaultTreeItem( const String& caption ):
-	treeModel_(NULL)
+DefaultTreeItem::DefaultTreeItem( const String& caption )
 {
 	init();
 	caption_ = caption;
 }
 
-DefaultTreeItem::DefaultTreeItem( const String& caption, Control* owningControl, TreeModel* model ):
-	treeModel_(NULL)
+DefaultTreeItem::DefaultTreeItem( const String& caption, Control* owningControl, TreeModel* model )
 {
 	init();
 	owningControl_ = owningControl;
-	treeModel_ = dynamic_cast<Model*>(model);
+	model_ = dynamic_cast<Model*>(model);
 	setCaption( caption );
 }
 
@@ -63,7 +60,7 @@ void DefaultTreeItem::init()
 
 	selected_ = false;
 
-	state_ = Item::idsNone;
+	itemState_ = Item::idsNone;
 
 	bounds_.setRect(0.0,0.0,0.0,0.0);
 	owningControl_ = NULL;
@@ -193,6 +190,11 @@ TreeItem* DefaultTreeItem::getPrevChildNodeItem()
 
 String DefaultTreeItem::getCaption()
 {
+	Control* control = getControl();
+	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
+		return System::getCurrentThreadLocale()->translate( caption_ );
+	}
+
 	return caption_;
 }
 
@@ -297,14 +299,10 @@ void DefaultTreeItem::clearChildren()
 	ItemChanged.fireEvent( &event );
 }
 
-Model* DefaultTreeItem::getModel()
-{
-	return treeModel_;
-}
 
 void DefaultTreeItem::setModel( Model* model )
 {
-	treeModel_ = model;
+	Item::setModel( model );
 	for (std::vector<TreeItem*>::iterator it = childNodeItems_.begin(); it != childNodeItems_.end(); it ++ ){
 		(*it)->setModel( model );
 	}
@@ -364,11 +362,12 @@ ulong32 DefaultTreeItem::getLevel()
 
 void DefaultTreeItem::setControl( Control* control )
 {
-	owningControl_ = control;
+	Item::setControl( control );
+
 	std::vector<TreeItem*>::iterator it = childNodeItems_.begin();
 	while ( it != childNodeItems_.end() ){
 		TreeItem* item = *it;
-		item->setControl( owningControl_ );
+		item->setControl( control );
 		it++;
 	}
 }
@@ -390,12 +389,6 @@ void DefaultTreeItem::setExpandedImageIndex( const long& expandedImageIndex )
 	changed( ITEM_EVENT_CHANGED );
 }
 
-void DefaultTreeItem::setState( const long& state )
-{
-	state_ = state;
-	//ItemEvent event( this, ITEM_EVENT_CHANGED );
-	//ItemChanged( &event );
-}
 
 void DefaultTreeItem::setBounds( Rect* bounds )
 {
@@ -451,8 +444,8 @@ void DefaultTreeItem::subItemChanged( TreeItem::SubItem* item )
 
 void DefaultTreeItem::changed( const ulong32& eventType )
 {
-	if ( NULL != treeModel_ ) {
-		treeModel_->updateAllViews();
+	if ( NULL != getModel() ) {
+		getModel()->updateAllViews();
 	}
 	else {
 
@@ -466,6 +459,12 @@ void DefaultTreeItem::changed( const ulong32& eventType )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

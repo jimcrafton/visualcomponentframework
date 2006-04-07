@@ -157,6 +157,11 @@ void OSXGraphicsToolkit::loadSystemColors()
 
 }
 
+void OSXGraphicsToolkit::internal_systemSettingsChanged()
+{
+
+}
+
 ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( const unsigned long& width, const unsigned long& height )
 {
 	return new OSXContext( width, height );
@@ -177,12 +182,12 @@ FontPeer* OSXGraphicsToolkit::internal_createFontPeer( const String& fontName, c
 	return new OSXFont( fontName, pointSize );
 }
 
-Image* OSXGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height )
+Image* OSXGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
 {
 	return new OSXImage(width, height);
 }
 
-Image* OSXGraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect )
+Image* OSXGraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
 {
 	return new OSXImage( context, rect ) ;
 }
@@ -205,6 +210,16 @@ double OSXGraphicsToolkit::internal_getDPI( GraphicsContext* context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:06:00  ddiego
 *added missing gtk files
 *

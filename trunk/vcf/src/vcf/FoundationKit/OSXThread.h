@@ -63,6 +63,9 @@ public:
     virtual int wait();
 
 	virtual int wait( uint32 milliseconds );
+
+	void setCurrentLocale( Locale* locale );
+	Locale* getCurrentLocale();
 protected:
     static int executionContext();
 
@@ -72,6 +75,7 @@ protected:
     ProcessSerialNumber processID_;
 	Thread* thread_;
     bool isActive_;
+	Locale locale_;
 };
 
 };
@@ -80,6 +84,12 @@ protected:
 /**
 *CVS Log info
  *$Log$
+ *Revision 1.6  2006/04/07 02:35:34  ddiego
+ *initial checkin of merge from 0.6.9 dev branch.
+ *
+ *Revision 1.5.2.1  2005/11/11 22:07:40  ddiego
+ *small osx updates.
+ *
  *Revision 1.5  2005/07/09 23:15:04  ddiego
  *merging in changes from devmain-0-6-7 branch.
  *

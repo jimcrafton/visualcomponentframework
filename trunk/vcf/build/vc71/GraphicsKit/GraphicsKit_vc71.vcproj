@@ -229,6 +229,9 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
 			</File>
 			<File
@@ -247,6 +250,12 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp">
 			</File>
 			<File
@@ -260,6 +269,15 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PixelFormats.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Pixels.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Point.cpp">
@@ -342,6 +360,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32ThemeDLLWrapper.h">
 			</File>
 		</Filter>
 	</Files>

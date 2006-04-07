@@ -17,7 +17,7 @@ where you installed the VCF.
 namespace VCF {
 
 /**
-\par
+\class NotifyEvent NotifyEvent.h "vcf/FoundationKit/NotifyEvent.h"
 A generic event meant only to indicate some sort of "signal" has 
 happened on the event's source instance. The actual semantics of this
 is entirely up to the class deriving from ObjectWithEvents.
@@ -42,7 +42,9 @@ public:
 };
 
 
-
+/**
+\class NotifyEventHandler NotifyEvent.h "vcf/FoundationKit/NotifyEvent.h"
+*/
 template <class SOURCE_TYPE>
 class NotifyEventHandler : public EventHandlerInstance<SOURCE_TYPE,NotifyEvent> {
 public:
@@ -62,6 +64,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

@@ -99,7 +99,7 @@ void Win32Window::create( Control* owningControl )
 	if ( NULL != hwnd_ ){
 		Win32Object::registerWin32Object( this );
 
-		setFont( owningControl->getFont() );
+		registerForFontChanges();
 
 		if ( NULL != icon ) {		
 			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
@@ -182,38 +182,64 @@ void Win32Window::setBounds( VCF::Rect* rect )
 
 void Win32Window::setVisible( const bool& visible )
 {
-	//StringUtils::traceWithArgs( "Win32Window::setVisible( %d )\n", visible );
-	if ( true == visible ){
-
-		Frame* frame = (Frame*)peerControl_;
-
-		switch ( frame->getFrameStyle() ){
-			case fstToolbarBorderFixed : case fstToolbarBorder : case fstSizeable : case fstFixed :{
-				::ShowWindow( hwnd_, SW_SHOW );//SW_SHOWNORMAL );
-				//not sure if we want this here...
-				::BringWindowToTop( hwnd_ );
+	if ( peerControl_->isDesigning() || peerControl_->isLoading() ) {
+		
+		if ( NULL != GetParent(hwnd_) ) {
+			if ( visible ){
+				::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );				
 			}
-			break;
-
-			case fstNoBorder : case fstNoBorderFixed : {
-				::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
+			else{
+				::ShowWindow( hwnd_, SW_HIDE );
 			}
-			break;
 		}
 	}
-	else{
-		::ShowWindow( hwnd_, SW_HIDE );
+	else {
+		//StringUtils::trace( Format( "Win32Window::setVisible( %d )\n" ) % visible );
+		if ( true == visible ){
+			
+			Frame* frame = (Frame*)peerControl_;
+			
+			switch ( frame->getFrameStyle() ){
+				case fstToolbarBorderFixed : case fstToolbarBorder : case fstSizeable : case fstFixed :{
+					::ShowWindow( hwnd_, SW_SHOW );//SW_SHOWNORMAL );
+					//not sure if we want this here...
+					::BringWindowToTop( hwnd_ );
+
+					//we need this here to repaint the window contents???
+					//seems kind of funky, but it works
+					::RedrawWindow( hwnd_, NULL, NULL, RDW_INVALIDATE | RDW_ERASENOW | RDW_ALLCHILDREN);
+				}
+				break;
+				
+				case fstNoBorder : case fstNoBorderFixed : {
+					::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
+					::RedrawWindow( hwnd_, NULL, NULL, RDW_INVALIDATE | RDW_ERASENOW | RDW_ALLCHILDREN);
+				}
+				break;
+			}
+		}
+		else{
+			::ShowWindow( hwnd_, SW_HIDE );
+		}
 	}
 }
 
 void Win32Window::handleActivate()
-{
-	activatesPending_ = true;
+{	
+	if ( NULL != peerControl_ ) {
+		//do nothing if we are in design mode
 
-	Frame* frame = (Frame*)peerControl_;
-	if ( peerControl_->isNormal() ) {
-		frame->activate();
-	}
+		if ( peerControl_->isDesigning() || peerControl_->isLoading() ) {
+			return;
+		}
+
+		activatesPending_ = true;
+		
+		Frame* frame = (Frame*)peerControl_;
+		if ( peerControl_->isNormal() ) {
+			frame->activate();
+		}
+	}	
 }
 
 bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
@@ -224,6 +250,51 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 	static bool windowRestoredAlready = true;
 	switch ( message ) {
+		case WM_SETTINGCHANGE : {
+			//settings change!
+
+			result = true;
+
+			wndProcResult = 0;
+
+			::RedrawWindow( hwnd_, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+
+			return result;
+		}
+		break;
+
+
+		case WM_GETMINMAXINFO : {
+			
+			if ( !peerControl_->isDesigning() ) {
+				result = false;
+				wndProcResult = 0;
+				
+				Size minSize = peerControl_->getMinSize();
+				Size maxSize = peerControl_->getMaxSize();
+				
+				
+				MINMAXINFO* info = (MINMAXINFO*)lParam;
+				
+				if ( minSize.width_ > Control::mmIgnoreMinWidth ) {
+					info->ptMinTrackSize.x = minSize.width_;
+				}
+				
+				if ( minSize.height_ > Control::mmIgnoreMinHeight ) {
+					info->ptMinTrackSize.y = minSize.height_;
+				}
+				
+				if ( maxSize.width_ > Control::mmIgnoreMaxWidth ) {
+					info->ptMaxTrackSize.x = maxSize.width_;
+				}
+				
+				if ( maxSize.height_ > Control::mmIgnoreMaxHeight ) {
+					info->ptMaxTrackSize.y = maxSize.height_;
+				}
+			}
+
+		}
+		break;
 
 		case WM_SIZE : {
 
@@ -272,38 +343,62 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 		
 
 		case VCF_CONTROL_CREATE: {
-					
-
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 			if ( activatesPending_ ) {
 				activatesPending_ = false;
-				::PostMessage( hwnd_, WM_ACTIVATE, MAKEWPARAM (WA_ACTIVE,0), 0 );
+				if ( !(peerControl_->isDesigning() || peerControl_->isLoading()) ) {
+					::PostMessage( hwnd_, WM_ACTIVATE, MAKEWPARAM (WA_ACTIVE,0), 0 );
+				}
 			}
 		}
 		break;
 
+		case WM_SYSCOMMAND: {
+			
+			if ( peerControl_->isDesigning() ) {
+				wndProcResult = 0;
+				result = true;
+			}
+			else {
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			}		
+		}
+		break;
+
 		case WM_NCLBUTTONDOWN: {
-			handleActivate();			
+			handleActivate();
 
-			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-
-			wndProcResult = 0;
-			result = false;
+			if ( peerControl_->isDesigning() ) {
+				wndProcResult = 0;
+				result = false;
+			}
+			else {
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+				wndProcResult = 0;
+				result = false;
+			}			
 		}
 		break;
 
 		case WM_NCACTIVATE : {
-			BOOL active = (BOOL)wParam;
-
-
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-
-			Frame* frame = (Frame*)peerControl_;
-			//StringUtils::traceWithArgs( "WM_NCACTIVATE, active: %d\n", active );
-
-			if ( active ) {
-				handleActivate();
+			if ( NULL != peerControl_ ) {
+				BOOL active = (BOOL)wParam;
+				
+				if ( peerControl_->isDesigning() || peerControl_->isLoading() ) {
+					wndProcResult = TRUE;
+					result = true;
+				}
+				else {
+					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+					
+					Frame* frame = (Frame*)peerControl_;
+					//StringUtils::trace( Format( "WM_NCACTIVATE, active: %d\n" ) % active );
+					
+					if ( active ) {
+						handleActivate();
+					}
+				}
 			}
 		}
 		break;
@@ -311,38 +406,68 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 		case WM_ACTIVATEAPP : {
 			BOOL fActive = (BOOL) wParam;
 
-			//StringUtils::traceWithArgs( "WM_ACTIVATEAPP, fActive: %d\n", fActive );
-			if ( !fActive && (NULL != peerControl_) ) {
-				Frame* frame = (Frame*)peerControl_;
-
-				switch ( frame->getFrameStyle() ){
-
-					case fstNoBorder : case fstNoBorderFixed : {
-						Frame::internal_setActiveFrame( NULL );
-						if ( frame->getComponentState() == Component::csNormal ) {
-							VCF::WindowEvent event( frame, Frame::ACTIVATION_EVENT );
-							frame->FrameActivation.fireEvent( &event );
-						}
-					}
-					break;
-				}
+			//do nothing if we are in design mode
+			if ( peerControl_->isDesigning() ) {
+				wndProcResult = 0;
+				result = true;
 			}
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			else {
+				//StringUtils::trace( Format( "WM_ACTIVATEAPP, fActive: %d\n" ) % fActive );
+				if ( !fActive && (NULL != peerControl_) ) {
+					
+					Frame* frame = (Frame*)peerControl_;
+					
+					switch ( frame->getFrameStyle() ){
+						
+						case fstNoBorder : case fstNoBorderFixed : {
+							Frame::internal_setActiveFrame( NULL );
+							if ( frame->getComponentState() == Component::csNormal ) {
+								VCF::WindowEvent event( frame, Frame::ACTIVATION_EVENT );
+								frame->FrameActivation.fireEvent( &event );
+							}
+						}
+						break;
+					}
+					
+				}
+				else if ( fActive && (NULL != peerControl_) ) {
+					RedrawWindow( hwnd_, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN );	
+				}
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			}
 		}
 		break;
 
 		case WM_ACTIVATE : {
 
-			BOOL active = LOWORD(wParam);
-
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-
-			//StringUtils::traceWithArgs( "WM_ACTIVATE, active: %d\n", active );
-
-			if ( active ) {
-				handleActivate();
-
-				::BringWindowToTop( hwnd_ );
+			if ( NULL != peerControl_ ) {
+				BOOL active = LOWORD(wParam);
+				
+				if ( peerControl_->isDesigning() || peerControl_->isLoading() ) {
+					wndProcResult = 0;
+					result = (WA_INACTIVE == active) ? false : true;
+					
+					HWND hwndPrevious = (HWND) lParam; 
+					
+					Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndPrevious );			
+					
+					if ( (NULL != win32Obj) && active ) {
+						SetActiveWindow( hwndPrevious );
+					}
+				}
+				else {
+					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+					
+					
+					
+					if ( active ) {
+						handleActivate();
+						
+						if ( !peerControl_->isDesigning() ) {
+							::BringWindowToTop( hwnd_ );
+						}
+					}
+				}
 			}
 		}
 		break;
@@ -358,69 +483,80 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 		case WM_MOUSEACTIVATE : {
 
-			Frame* frame = (Frame*)peerControl_;
-
-			switch ( frame->getFrameStyle() ){
-				case fstToolbarBorderFixed : case fstToolbarBorder : case fstSizeable : case fstFixed :{
-					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-				}
-				break;
-
-				case fstNoBorder : case fstNoBorderFixed : {
-
-					/**
-					NOTE!!!!
-					This MUST return true. Returning true means that we have handled all the processing
-					and no further processing by the DefWndProc is required. If we don't return 
-					true here (i.e. result = true), then we end up with focus/activate issues with the
-					controls that popup a fixed window, like the drop down list box for the
-					ComboBoxControl.
-					*/
-					result = true;
-					wndProcResult = MA_NOACTIVATE;
-				}
-				break;
+			if ( peerControl_->isDesigning() || peerControl_->isLoading() ) {
+				wndProcResult = MA_NOACTIVATE;
+				result = true;
 			}
+			else {
+				Frame* frame = (Frame*)peerControl_;
 
-			handleActivate();
+				switch ( frame->getFrameStyle() ){
+					case fstToolbarBorderFixed : case fstToolbarBorder : case fstSizeable : case fstFixed :{
+						result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+					}
+					break;
+
+					case fstNoBorder : case fstNoBorderFixed : {
+
+						/**
+						NOTE!!!!
+						This MUST return true. Returning true means that we have handled all the processing
+						and no further processing by the DefWndProc is required. If we don't return 
+						true here (i.e. result = true), then we end up with focus/activate issues with the
+						controls that popup a fixed window, like the drop down list box for the
+						ComboBoxControl.
+						*/
+						result = true;
+						wndProcResult = MA_NOACTIVATE;
+					}
+					break;
+				}
+
+				handleActivate();
+			}
 		}
 		break;
 
 		case WM_CLOSE:{
-			result = false;
-			wndProcResult = 0;
-			//check if we need to re notify the listeners of the close event
-
-			VCF::Window* window = (VCF::Window*)getControl();
-
-			if ( window->allowClose() ) {
-
-				VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
-
-
-				window->FrameClose.fireEvent( &event );
-
-				if ( false == internalClose_ ){
-					//check if the main window is clossing - if it is
-					//then close the app !
-
-					Application* app = Application::getRunningInstance();
-					if ( NULL != app ){
-						Window* mainWindow = app->getMainWindow();
-						if ( mainWindow == getControl() ){
-							::PostMessage( hwnd_, WM_QUIT, 0, 0 );
+			if ( peerControl_->isDesigning() ) {
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			}
+			else {
+				result = false;
+				wndProcResult = 0;
+				//check if we need to re notify the listeners of the close event
+				
+				VCF::Window* window = (VCF::Window*)getControl();
+				
+				if ( window->allowClose() ) {
+					
+					VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
+					
+					
+					window->FrameClose.fireEvent( &event );
+					
+					if ( false == internalClose_ ){
+						//check if the main window is clossing - if it is
+						//then close the app !
+						
+						Application* app = Application::getRunningInstance();
+						if ( NULL != app ){
+							Window* mainWindow = app->getMainWindow();
+							if ( mainWindow == getControl() ){
+								::PostMessage( hwnd_, WM_QUIT, 0, 0 );
+							}
+							else {
+								result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+							}
 						}
-						else {
-							result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-						}
+					}
+					else {
+						result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 					}
 				}
 				else {
-					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+					result = true;
 				}
-			}
-			else {
-				result = true;
 			}
 		}
 		break;
@@ -434,9 +570,6 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 						return result;
 					}
 
-					//check to see if the font needs updating
-					checkForFontChange();
-
 					PAINTSTRUCT ps;
 					HDC contextID = 0;
 					contextID = ::BeginPaint( hwnd_, &ps);
@@ -448,7 +581,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 				}
 			}
 
-			wndProcResult = 1;
+			wndProcResult = 0;
 			result = true;
 		}
 		break;
@@ -493,6 +626,7 @@ void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 		case fstSizeable :{
 			style |= WS_OVERLAPPEDWINDOW;
 			exStyle &= ~WS_EX_TOOLWINDOW;
+			exStyle |= WS_EX_WINDOWEDGE;// otherwise it is not resizable anymore (MP)
 			style |= WS_THICKFRAME;
 		}
 		break;
@@ -543,12 +677,9 @@ void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 	::SetWindowLong( hwnd_, GWL_STYLE, style );
 	::SetWindowLong( hwnd_, GWL_EXSTYLE, exStyle );
 
-	//Rect* r = peerControl_->getBounds();
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
 	::UpdateWindow( hwnd_ );
-
-	//peerControl_->setBounds( r );
 }
 
 void Win32Window::setFrameTopmost( const bool& isTopmost )
@@ -561,29 +692,56 @@ void Win32Window::setFrameTopmost( const bool& isTopmost )
 	}
 }
 
-void Win32Window::setParent( VCF::Control* parent )
+DWORD Win32Window::generateStyleForSetParent(VCF::Control* parent)
 {
-	DWORD oldStyle = ::GetWindowLong( hwnd_, GWL_STYLE );
-	DWORD style = oldStyle;
+	DWORD result = ::GetWindowLong( hwnd_, GWL_STYLE );
+
 	if ( NULL == parent ) {
-		style &= ~WS_CHILD;
-		style |= WS_POPUP;
-		::SetParent( hwnd_, NULL );
+		if ( !peerControl_->isDesigning() ) {
+			result &= ~WS_CHILD;
+			result |= WS_POPUP;
+		}
 	}
 	else {
 		Frame* frame = (Frame*)peerControl_;
 		if ( frame->allowFrameAsChildControl() ) {
-			style &= ~WS_POPUP;
-			style |= WS_CHILD;
+			result &= ~WS_POPUP;
+			result |= WS_CHILD;
+		}		
+	}
+
+	return result;
+}
+
+void Win32Window::setParent( VCF::Control* parent )
+{
+	bool showWindow = false;
+
+	DWORD oldStyle = ::GetWindowLong( hwnd_, GWL_STYLE );
+	DWORD style = generateStyleForSetParent(parent);
+
+	if ( NULL == parent ) {
+		if ( !peerControl_->isDesigning() ) {
+			::SetParent( hwnd_, NULL );
 		}
+	}
+	else {
 		VCF::ControlPeer* peer = parent->getPeer();
 		HWND wndParent = (HWND)peer->getHandleID();
 		::SetParent( hwnd_, wndParent );
+
+		if ( (peerControl_->isDesigning()) && (NULL != wndParent) && (style & WS_CHILD) ) {
+			showWindow = peerControl_->getVisible();
+		}
 	}
 
 	if ( oldStyle != style ) {
 		::SetWindowLong( hwnd_, GWL_STYLE, style );
-		::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED );
+		::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED );
+	}
+
+	if ( showWindow ) {
+		setVisible( true );
 	}
 }
 
@@ -667,6 +825,7 @@ void Win32Window::setIconImage( Image* icon )
 
 	RedrawWindow( hwnd_, NULL, 0, RDW_FRAME | RDW_INVALIDATE );
 
+
 	//JC I commented this out. If this get's called
 	//just before the window is made visible for the first time
 	//then it ends up making everything (all the icons) disapear
@@ -694,6 +853,56 @@ void Win32Window::setText( const VCF::String& text )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.15  2006/03/18 19:04:56  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.5.2.14  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.13  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.5.2.12  2006/03/10 05:35:57  ddiego
+*fixed repaint for win32window when first made visible.
+*
+*Revision 1.5.2.11  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.5.2.10  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
+*Revision 1.5.2.9  2005/09/19 04:55:46  ddiego
+*minor updates.
+*
+*Revision 1.5.2.8  2005/09/18 23:56:30  ddiego
+*fixed minor bug in recv active win state for a win in design mode.
+*
+*Revision 1.5.2.7  2005/09/18 22:54:47  ddiego
+*fixed some minor bugs in vffinput stream and parser class.
+*
+*Revision 1.5.2.6  2005/09/17 17:41:40  ddiego
+*minor update
+*
+*Revision 1.5.2.5  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.5.2.4  2005/09/14 18:55:17  ddiego
+*update to win32window. initial code for new pixels
+*type to replace imagebits class.
+*
+*Revision 1.5.2.3  2005/09/14 01:50:07  ddiego
+*minor adjustment to control for enable setting. and registered
+*more proeprty editors.
+*
+*Revision 1.5.2.2  2005/08/05 01:11:38  ddiego
+*splitter fixes finished.
+*
+*Revision 1.5.2.1  2005/08/01 18:50:32  marcelloptr
+*minor changes
+*
 *Revision 1.5  2005/07/09 23:14:59  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

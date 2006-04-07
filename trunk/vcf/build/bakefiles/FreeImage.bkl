@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="FreeImageFiles.bkl"/>
+
+    <template id="FreeImage_base">
+        <set var="LIBRARY_NAME">$(FREEIMAGE_NAME)</set>
+
+        <headers>$(FREEIMAGE_HDR)</headers>
+        <sources>$(FREEIMAGE_SRC)</sources>
+
+        <library>ZLib_lib</library>
+        <library>LibJPEG_lib</library>
+        <library>LibPNG_lib</library>
+        <library>LibMNG_lib</library>
+        <library>LibTIFF_lib</library>
+    </template>
+
+    <lib id="FreeImage_lib" template="FreeImage_base,vcf_lib"
+            cond="OPTION_FREEIMAGE=='1'">
+    </lib>
+</makefile>

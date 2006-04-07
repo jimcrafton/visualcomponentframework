@@ -34,6 +34,10 @@ public:
 	virtual OSHandleID getHandleID();
 
 	virtual ulong32 terminate();
+
+	virtual Waitable::WaitResult wait( uint32 milliseconds );
+
+	virtual Waitable::WaitResult wait();
 protected:
 	VCF::String processFileName_;
 	PROCESS_INFORMATION win32ProcessInfo_;
@@ -45,6 +49,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.3  2005/01/02 03:04:24  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

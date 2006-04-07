@@ -324,7 +324,7 @@ void OSXDialog::setVisible( const bool& visible )
 		OSXWindow::setVisible( visible );
 		if ( visible ) {
 			ActivateWindow( windowRef_, TRUE ); 
-			repaint();
+			repaint(NULL, false);
 		}
 	 }
 }
@@ -576,6 +576,13 @@ OSStatus OSXDialog::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.3  2004/12/01 04:31:37  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

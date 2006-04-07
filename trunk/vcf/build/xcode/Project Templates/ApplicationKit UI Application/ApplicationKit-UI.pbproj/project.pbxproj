@@ -47,7 +47,7 @@
 				195DF8CFFE9D517E11CA2CBB,
 			);
 			isa = PBXGroup;
-			name = "«PROJECTNAME»";
+			name = "«PROJECTNAMEASXML»";
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";
@@ -163,8 +163,8 @@
 		5E5B209A069532A7000447FE = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
-			name = "FoundationKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/FoundationKit-debug.framework";
+			name = "FoundationKit_d.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/FoundationKit_d.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -177,8 +177,8 @@
 		5E5B209F069532AE000447FE = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
-			name = "GraphicsKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/GraphicsKit-debug.framework";
+			name = "GraphicsKit_d.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/GraphicsKit_d.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -191,8 +191,8 @@
 		5E8662510695DF560000789B = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
-			name = "ApplicationKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/ApplicationKit-debug.framework";
+			name = "ApplicationKit_d.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/ApplicationKit_d.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -223,7 +223,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/jimcrafton/code/vcfdev/dev/vcf/bin;
+				FRAMEWORK_SEARCH_PATHS = /Users/«USERNAME»/Library/Frameworks/;
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -243,7 +243,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "«PROJECTNAME»";
 				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas -Wno-multichar";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas -Wno-multichar -Wno-switch";
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (

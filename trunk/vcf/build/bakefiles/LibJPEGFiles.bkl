@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBJPEG_HDR" hints="files">
+        thirdparty/common/LibJPEG/jchuff.h
+        thirdparty/common/LibJPEG/jconfig.h
+        thirdparty/common/LibJPEG/jdct.h
+        thirdparty/common/LibJPEG/jdhuff.h
+        thirdparty/common/LibJPEG/jerror.h
+        thirdparty/common/LibJPEG/jinclude.h
+        thirdparty/common/LibJPEG/jmemsys.h
+        thirdparty/common/LibJPEG/jmorecfg.h
+        thirdparty/common/LibJPEG/jpegint.h
+        thirdparty/common/LibJPEG/jpeglib.h
+        thirdparty/common/LibJPEG/jversion.h
+    </set>
+
+    <set var="LIBJPEG_SRC" hints="files">
+        thirdparty/common/LibJPEG/jcapimin.c
+        thirdparty/common/LibJPEG/jcapistd.c
+        thirdparty/common/LibJPEG/jccoefct.c
+        thirdparty/common/LibJPEG/jccolor.c
+        thirdparty/common/LibJPEG/jcdctmgr.c
+        thirdparty/common/LibJPEG/jchuff.c
+        thirdparty/common/LibJPEG/jcinit.c
+        thirdparty/common/LibJPEG/jcmainct.c
+        thirdparty/common/LibJPEG/jcmarker.c
+        thirdparty/common/LibJPEG/jcmaster.c
+        thirdparty/common/LibJPEG/jcomapi.c
+        thirdparty/common/LibJPEG/jcparam.c
+        thirdparty/common/LibJPEG/jcphuff.c
+        thirdparty/common/LibJPEG/jcprepct.c
+        thirdparty/common/LibJPEG/jcsample.c
+        thirdparty/common/LibJPEG/jctrans.c
+        thirdparty/common/LibJPEG/jdapimin.c
+        thirdparty/common/LibJPEG/jdapistd.c
+        thirdparty/common/LibJPEG/jdatadst.c
+        thirdparty/common/LibJPEG/jdatasrc.c
+        thirdparty/common/LibJPEG/jdcoefct.c
+        thirdparty/common/LibJPEG/jdcolor.c
+        thirdparty/common/LibJPEG/jddctmgr.c
+        thirdparty/common/LibJPEG/jdhuff.c
+        thirdparty/common/LibJPEG/jdinput.c
+        thirdparty/common/LibJPEG/jdmainct.c
+        thirdparty/common/LibJPEG/jdmarker.c
+        thirdparty/common/LibJPEG/jdmaster.c
+        thirdparty/common/LibJPEG/jdmerge.c
+        thirdparty/common/LibJPEG/jdphuff.c
+        thirdparty/common/LibJPEG/jdpostct.c
+        thirdparty/common/LibJPEG/jdsample.c
+        thirdparty/common/LibJPEG/jdtrans.c
+        thirdparty/common/LibJPEG/jerror.c
+        thirdparty/common/LibJPEG/jfdctflt.c
+        thirdparty/common/LibJPEG/jfdctfst.c
+        thirdparty/common/LibJPEG/jfdctint.c
+        thirdparty/common/LibJPEG/jidctflt.c
+        thirdparty/common/LibJPEG/jidctfst.c
+        thirdparty/common/LibJPEG/jidctint.c
+        thirdparty/common/LibJPEG/jidctred.c
+        thirdparty/common/LibJPEG/jmemmgr.c
+        thirdparty/common/LibJPEG/jmemnobs.c
+        thirdparty/common/LibJPEG/jquant1.c
+        thirdparty/common/LibJPEG/jquant2.c
+        thirdparty/common/LibJPEG/jutils.c
+    </set>
+
+</makefile>

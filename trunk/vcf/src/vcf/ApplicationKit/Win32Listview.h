@@ -118,6 +118,7 @@ private:
 
 	ListViewControl* listviewControl_;
 	bool headerControlIsTracking_;
+	bool internalMessage_;
 	std::vector<ListItem*> selectedItems_;
 	EnumeratorContainer<std::vector<ListItem*>, ListItem*> enumContainer_;
 	WNDPROC oldHeaderWndProc_;
@@ -168,6 +169,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/16 03:23:11  ddiego
+*fixes some font change notification issues in win32 peers.
+*
 *Revision 1.4  2005/07/09 23:14:58  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

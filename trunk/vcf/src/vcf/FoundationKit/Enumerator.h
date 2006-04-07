@@ -19,6 +19,7 @@ where you installed the VCF.
 
 namespace VCF{
 /**
+\class Enumerator Enumerator.h "vcf/FoundationKit/Dictionary.h"
  This is a template class that provides an interface for
  iterating through a collection, and provides a standard set of methods.
  Either multiply inherited by classes that want to public expose a single set of children,
@@ -26,6 +27,8 @@ namespace VCF{
  */
 
 template <class COLLECTION_TYPE> class Enumerator{
+protected:
+	bool supportsEditing_;  /* moved to begin for MINGW */
 public:
 	Enumerator(){
 		supportsEditing_ = false;
@@ -75,25 +78,24 @@ public:
 	bool supportsEditing(){
 		return supportsEditing_;
 	};
-protected:
-	bool supportsEditing_;
 };
 
 
 
 /**
-\par
+\class EnumeratorContainer Enumerator.h "vcf/FoundationKit/Enumerator.h"
+
 EnumeratorContainer is based on some COLLECTION class that represents a collection
 class of some sort, i.e. std::vector<>, std::list, et al.
-\par
+
 The internal implementation counts on the collection having a common interface to
 STL's collection classes.
-\par
+
 The collection must support forward and reverse iterators
-\par
+
 The COLLECTION type specifies the full collection associated with
 the enumerator. 
-\par
+
 For example, an enumerator container of Object* using
 a std::vector as it's collection type would look like this:
 \code
@@ -106,6 +108,10 @@ call the initContainer() method with a reference to the collection
 */
 template <class COLLECTION, class COLLECTION_TYPE> class EnumeratorContainer : public Enumerator<COLLECTION_TYPE>{
 public:
+
+	#if defined(VCF_MINGW) || defined(VCF_GCC)
+	using Enumerator<COLLECTION_TYPE>::supportsEditing_; /* mingw follows the standart */
+	#endif
 
 	EnumeratorContainer( COLLECTION &container ): container_(&container) {
 		reset();
@@ -184,18 +190,18 @@ private:
 };
 
 /**
-\par
+\class EnumeratorMapContainer Enumerator.h "vcf/FoundationKit/Enumerator.h"
 EnumeratorMapContainer is based on some COLLECTION class that represents
 an  associative collection of some sort, i.e. std::map<>
-\par
+
 The internal implementation counts on the collection having a common interface to
 STL's collection classes.
-\par
+
 The collection must support forward and reverse iterators
-\par
+
 The COLLECTION type specifies the full collection associated with
 the enumerator. 
-\par
+
 For example, an enumerator container of Object* using
 a std::map as it's collection type would look like this:
 \code
@@ -281,6 +287,21 @@ private:
 /**
 CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.4  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.3  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.3.2.2  2005/11/10 00:04:07  obirsoy
+*changes required for gcc under Linux.
+*
+*Revision 1.3.2.1  2005/10/07 19:31:53  ddiego
+*merged patch 1315995 and 1315991 into dev repos.
+*
 *Revision 1.3  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

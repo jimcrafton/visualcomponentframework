@@ -35,7 +35,7 @@ public:
 
 	virtual void setControl( Control* control );
 
-	virtual void popup( Point* pt );
+	virtual MenuItem* popup( Point* pt );
 private:
 	Control* control_;
 	PopupMenu* popupMenu_;
@@ -47,6 +47,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.2  2004/08/07 02:49:11  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

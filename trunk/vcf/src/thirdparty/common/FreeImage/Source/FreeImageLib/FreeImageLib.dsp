@@ -142,10 +142,6 @@ SOURCE=..\FreeImage\PluginIFF.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\FreeImage\PluginJPEG.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\FreeImage\PluginKOALA.cpp
 # End Source File
 # Begin Source File
@@ -159,10 +155,6 @@ SOURCE=..\FreeImage\PluginPCD.cpp
 # Begin Source File
 
 SOURCE=..\FreeImage\PluginPCX.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\FreeImage\PluginPNG.cpp
 # End Source File
 # Begin Source File
 

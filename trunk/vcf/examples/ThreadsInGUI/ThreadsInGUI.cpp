@@ -158,13 +158,13 @@ public:
 			while ( canContinue() ) {
 				
 				threadPool_.waitForNewThreads();
-				StringUtils::traceWithArgs( "waitForNewThreads done\n" );
+				StringUtils::trace( "waitForNewThreads done\n" );
 
 				threadPool_.waitForThreadsToFinish();
-				StringUtils::traceWithArgs( "waitForThreadsToFinish done\n" );
+				StringUtils::trace( "waitForThreadsToFinish done\n" );
 			}
 
-			StringUtils::traceWithArgs( "ThreadPoolThread done\n" );
+			StringUtils::trace( "ThreadPoolThread done\n" );
 			return true;
 		}
 
@@ -183,10 +183,10 @@ public:
 		
 		waitCondition_->broadcast();
 
-		StringUtils::traceWithArgs( "stopping ThreadPoolThread\n" );
+		StringUtils::trace( "stopping ThreadPoolThread\n" );
 		poolThread_->stop();
 
-		StringUtils::traceWithArgs( "waitCondition_->broadcast()\n" );
+		StringUtils::trace( "waitCondition_->broadcast()\n" );
 		waitCondition_->broadcast();
 
 		
@@ -224,7 +224,7 @@ public:
 
 			threads_.erase(first);
 
-			StringUtils::traceWithArgs( "Removed thread\n" );
+			StringUtils::trace( "Removed thread\n" );
 			poolMutex_.unlock();
 			
 
@@ -233,7 +233,7 @@ public:
 
 			if ( !thread->canAutoDelete() ) {
 				thread->free();
-				StringUtils::traceWithArgs( "Freed thread\n" );
+				StringUtils::trace( "Freed thread\n" );
 			}
 			
 
@@ -398,6 +398,12 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:34:51  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.6.1  2005/07/23 21:45:44  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
 *Revision 1.4  2004/08/07 02:47:40  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

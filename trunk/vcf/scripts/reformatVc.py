@@ -68,7 +68,7 @@ g_printFilterGroupTrees = False
 addEntriesForVc71WhenSynchToVc70 = False # this will alter the configuration information contained in the vcproj. Better False
 addToolsForVc71WhenSynchToVc70   = False # this will alter the configuration information contained in the vcproj. Better False
 g_uses_FileConfiguration_infos_from_original_file = True # IMPORTANT: keep this True otherwise you loos all the per-file information specific of vc70 and vc71 and unknown to vc6
-g_debugFileList = [ '' ] # [ 'xmake', 'vcfAllLibs' ] [ 'Examples.dsw', 'vcfAllProjects.dsw' ] [ 'win32htmlbrowser_staticlib' ] [ 'docbookarticle_vc70.vcproj' ] [ 'vcmcvs_vc71.vcproj' ] [ 'js' ] [ 'docbookarticle' ] [ 'defaultxmldoc_vc70' ] [ 'freeimagelib' ] [ 'msdnintegrator' ] [ 'localization' ]   ( see isFileIn2() )
+g_debugFileList = [ '' ] # [ 'xmake', 'vcfAllLibs' ] [ 'Examples.dsw', 'vcfAllProjects.dsw' ] [ 'docbookarticle_vc70.vcproj' ] [ 'vcmcvs_vc71.vcproj' ] [ 'js' ] [ 'docbookarticle' ] [ 'defaultxmldoc_vc70' ] [ 'freeimagelib' ] [ 'msdnintegrator' ] [ 'localization' ]   ( see isFileIn2() )
 g_include_vcproj_in_changed_files_counted = True # this includes the vcproj files created/changed in the total count of changed files
 g_keepFirstDot_standard = 4 # === g_keepFirstDot_StandardVc # standard format for paths in projects files has ./ at the beginning
 g_fix_last_slash_in_path = True # True only when we need to fix it. Then put it back
@@ -9048,8 +9048,7 @@ class Workspace( DspFile ):
         #                       ( 'GraphicsKitDLL'    , 'GraphicsKit'               ), \
         #                       ( 'ApplicationKitDLL' , 'ApplicationKit'            ), \
         #                       ( 'NetworkKitDLL'     , 'NetworkKit'                ), \
-        #                       ( 'RemoteObjectKit'   , 'RemoteObjectKitStatic'     ), \
-        #                       ( 'Win32HTMLBrowser'  , 'Win32HTMLBrowser_StaticLib')  ]
+        #                       ( 'RemoteObjectKit'   , 'RemoteObjectKitStatic'     ) ]
 
         for item in app.conformLibrariesList:
             # dllname --> libname or dllname --> libname

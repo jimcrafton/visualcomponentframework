@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <if cond="FORMAT_SUPPORTS_CONDITIONS=='0'">
+        <set var="OPTION_SHARED_RUNTIME">1</set>
+        <set var="OPTION_ALLIN1">0</set>
+        <set var="OPTION_FOUNDATIONKIT">1</set>
+        <set var="OPTION_GRAPHICSKIT">1</set>
+        <set var="OPTION_APPLICATIONKIT">1</set>
+        <set var="OPTION_HTMLKIT">1</set>
+        <set var="OPTION_OPENGLKIT">1</set>
+        <set var="OPTION_NETWORKKIT">1</set>
+        <set var="OPTION_REMOTEOBJECTKIT">1</set>
+        <set var="OPTION_INTERNETKIT">1</set>
+        <set var="OPTION_ZLIB">1</set>
+        <set var="OPTION_LIBAGG">1</set>
+        <set var="OPTION_LIBJPEG">1</set>
+        <set var="OPTION_LIBPNG">1</set>
+        <set var="OPTION_LIBMNG">1</set>
+        <set var="OPTION_LIBTIFF">1</set>
+        <set var="OPTION_FREEIMAGE">1</set>
+        <set var="OPTION_IMAGEFORMATS">1</set>
+        <set var="OPTION_REGEXX">1</set>
+    </if>
+
+    <if cond="FORMAT=='msevc4prj'">
+        <set var="OPTION_ALLIN1">1</set>
+    </if>
+
+    <if cond="FORMAT=='dmars'">
+        <set var="OPTION_SHARED_RUNTIME">0</set>
+        <set var="OPTION_SHARED">0</set>
+        <set var="OPTION_DEBUG">1</set>
+        <set var="OPTION_OPENGLKIT">0</set>
+    </if>
+
+
+    <set var="DEBUG_INFO">
+        <if cond="OPTION_DEBUG=='1'">on</if>
+        <if cond="OPTION_DEBUG=='0'">off</if>
+    </set>
+
+    <set var="DEBUG_RUNTIME_LIBS">
+        <if cond="OPTION_DEBUG=='1'">on</if>
+        <if cond="OPTION_DEBUG=='0'">off</if>
+    </set>
+
+    <set var="OPTIMIZE">
+        <if cond="OPTION_DEBUG=='1'">off</if>
+        <if cond="OPTION_DEBUG=='0'">speed</if>
+    </set>
+
+    <set var="RUNTIME_LIBS">
+        <if cond="OPTION_SHARED_RUNTIME=='default'">dynamic</if>
+        <if cond="OPTION_SHARED_RUNTIME=='1'">dynamic</if>
+        <if cond="OPTION_SHARED_RUNTIME=='0'">static</if>
+    </set>
+
+    <set var="SUFFIX_SELECTLIB">
+        $(OPTION_SELECTLIB)
+    </set>
+
+    <set var="SUFFIX_STATIC">
+        <if cond="OPTION_DEBUG=='0'">_s</if>
+        <if cond="OPTION_DEBUG=='1'">_sd</if>
+    </set>
+
+    <set var="SUFFIX_DYNAMIC">
+        <if cond="OPTION_DEBUG=='0'"></if>
+        <if cond="OPTION_DEBUG=='1'">_d</if>
+    </set>
+
+    <set var="SUFFIX_LIBRARY">
+        <if cond="OPTION_SHARED=='0'">$(SUFFIX_STATIC)</if>
+        <if cond="OPTION_SHARED=='1'">$(SUFFIX_DYNAMIC)</if>
+    </set>
+
+    <if cond="FORMAT!='autoconf'">
+        <set var="OBJDIR" make_var="1">
+            $(FORMAT)$(SUFFIX_SELECTLIB)$(SUFFIX_LIBRARY)
+        </set>
+
+        <set var="BUILDDIR">
+            $(OBJDIR)
+        </set>
+    </if>
+
+</makefile>

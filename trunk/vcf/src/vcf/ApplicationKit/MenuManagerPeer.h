@@ -17,12 +17,16 @@ where you installed the VCF.
 
 
 namespace VCF {
-
+/**
+\class MenuManagerPeer MenuManagerPeer.h "vcf/ApplicationKit/MenuManagerPeer.h"
+*/
 	class APPLICATIONKIT_API MenuManagerPeer {
 	public:
 		virtual ~MenuManagerPeer(){}
 
 		virtual MenuItemPeer* getMenuItemPeer( MenuItem* item ) = 0;
+
+		virtual void destroyMenuItemPeer( MenuItem* item ) = 0;
 
 		virtual void windowActivated( Window* frame ) = 0;
 

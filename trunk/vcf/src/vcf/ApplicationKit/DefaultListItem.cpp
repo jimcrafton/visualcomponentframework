@@ -49,7 +49,7 @@ DefaultListItem::~DefaultListItem()
 
 void DefaultListItem::init()
 {
-	state_ = Item::idsNone;
+	itemState_ = Item::idsNone;
 	tag_ = -1;
 	model_ = NULL;
 	owningControl_ = NULL;
@@ -92,7 +92,9 @@ void DefaultListItem::setData( void* data )
 
 String DefaultListItem::getCaption()
 {
-	if ( getUseLocaleStrings() ) {
+	//control's getUseLocaleStrings() takes precedence over ours
+	Control* control = getControl();
+	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
 		return System::getCurrentThreadLocale()->translate( caption_ );
 	}
 	return caption_;
@@ -103,16 +105,6 @@ void DefaultListItem::setCaption( const String& caption )
 	caption_ = caption;
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
 	ItemChanged.fireEvent( &event );
-}
-
-Model* DefaultListItem::getModel()
-{
-	return this->model_;
-}
-
-void DefaultListItem::setModel( Model* model )
-{
-	model_ = model;
 }
 
 void DefaultListItem::paint( GraphicsContext* context, Rect* paintRect )
@@ -208,6 +200,12 @@ void DefaultListItem::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

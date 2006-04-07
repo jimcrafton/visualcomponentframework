@@ -35,7 +35,9 @@ typedef Enumerator<TableCellItem*> TableRowItemEnumerator;
 
 
 
-
+/**
+\class CellID TableModel.h "vcf/ApplicationKit/TableModel.h"
+*/
 class APPLICATIONKIT_API CellID {
 public:
 	CellID():row(-1), column(-1){}
@@ -65,6 +67,7 @@ public:
 
 
 /**
+\class TableModel TableModel.h "vcf/ApplicationKit/TableModel.h"
 @delegates	
 	@del TableModel::TableCellAdded
 	@del TableModel::TableCellDeleted
@@ -75,6 +78,7 @@ public:
 	@del TableModel::TableColumnsDeleted
 
 */
+
 class APPLICATIONKIT_API TableModel  {
 public:
 
@@ -190,6 +194,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2004/12/01 04:31:38  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

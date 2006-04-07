@@ -354,12 +354,12 @@ void OSXContext::textAt( const VCF::Rect& bounds, const String & text, const lon
 										(ATSUAttributeValuePtr)&orginalVal, &actualSz[0] );
 	
 	if ( err != noErr ) {
-		StringUtils::trace( "ATSUGetLayoutControl(kATSULineFlushFactorTag) failed" );
+		//StringUtils::trace( "ATSUGetLayoutControl(kATSULineFlushFactorTag) failed" );
 	}
 	
 	err = ATSUSetLayoutControls( textLayout_, 1, tag, actualSz, attrVals );
 	if ( err != noErr ) {
-		StringUtils::trace( "ATSUSetLayoutControls(kATSULineFlushFactorTag) failed" );
+		//StringUtils::trace( "ATSUSetLayoutControls(kATSULineFlushFactorTag) failed" );
 	}
 	
 	
@@ -392,7 +392,7 @@ void OSXContext::textAt( const VCF::Rect& bounds, const String & text, const lon
 		err = ATSUBreakLine(textLayout_, kATSUFromTextBeginning, lineWidth, true, &lineEndOffset);
 		
 		if ( noErr != err ) {
-			StringUtils::trace( "ATSUBreakLine() failed" );
+			//StringUtils::trace( "ATSUBreakLine() failed" );
 		}
 		
 		err = ATSUDrawText( textLayout_,
@@ -856,8 +856,8 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
 	}
 
     OSXImage* osXimage = (OSXImage*)(image);
-    ulong32 imgBoundsWidth = imageBounds->getWidth();
-    ulong32 imgBoundsHeight = imageBounds->getHeight();
+    ulong32 imgBoundsWidth = (ulong32)imageBounds->getWidth();
+    ulong32 imgBoundsHeight = (ulong32)imageBounds->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
         CGImageRef imgRef = osXimage->getCGImage();
@@ -998,10 +998,10 @@ void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptio
 
 		FixedPointNumber xPos = rect.left_;
 		double EMTextHeight = getTextHeight("EM");
-		ATSUTextMeasurement	yPos = vcf_IntToFixed((int) ( rect.top_ + EMTextHeight ));
+		ATSUTextMeasurement	yPos = VCF_INTTOFIXED((int) ( rect.top_ + EMTextHeight ));
 
 		ATSUTextMeasurement	lineStart = xPos;
-		ATSUTextMeasurement	lineEnd = vcf_IntToFixed((int)rect.right_);
+		ATSUTextMeasurement	lineEnd = VCF_INTTOFIXED((int)rect.right_);
 		ATSUTextMeasurement	lineWidth = 0;
 
 		//at the moment we are not taking text angle into account
@@ -1034,7 +1034,7 @@ void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptio
 			err = ATSUBreakLine(textLayout_, lineStartOffset, lineWidth, true, &lineEndOffset);
 			if ( err != noErr ) {
 				failed = true;
-				printf ( "err: %d, ATSUBreakLine()\n", (int)err );
+				//printf ( "err: %d, ATSUBreakLine()\n", (int)err );
 				goto EXIT;
 			}
 
@@ -1123,11 +1123,11 @@ void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptio
 		//	draw each line
 
 		if ( drawOptions & GraphicsContext::tdoBottomAlign ) {
-			yPos = vcf_IntToFixed( rect.bottom_ + EMTextHeight );
+			yPos = VCF_INTTOFIXED( rect.bottom_ + EMTextHeight );
 			yPos -=	(lineCount * (maxAscent+maxDescent));
 		}
 		else if ( drawOptions & GraphicsContext::tdoCenterVertAlign ) {
-			yPos = vcf_IntToFixed( rect.top_ + rect.getHeight()/2.0 + EMTextHeight );
+			yPos = VCF_INTTOFIXED( rect.top_ + rect.getHeight()/2.0 + EMTextHeight );
 			yPos -=	((lineCount * (maxAscent+maxDescent))/2);
 		}
 
@@ -1258,17 +1258,23 @@ void OSXContext::setClippingPath( Path* clippingPath )
 
 void OSXContext::setClippingRect( Rect* clipRect )
 {	
-	if ( clipRect->isNull() || clipRect->isEmpty() ) {
-		CGContextRestoreGState( contextID_ );	
+	if ( NULL != clipRect ) {
+		if ( clipRect->isNull() || clipRect->isEmpty() ) {
+			//CGContextRestoreGState( contextID_ );	
+			//CGContextRestoreGState( contextID_ );		
+		}
+		else {
+			Rect tmpClipRect = *clipRect;
+			tmpClipRect.offset( origin_.x_, origin_.y_ );
+			
+			OSXRect r = &tmpClipRect;
+			
+			//CGContextSaveGState( contextID_ );
+			CGContextClipToRect( contextID_, r );
+		}
 	}
 	else {
-		Rect tmpClipRect = *clipRect;
-		tmpClipRect.offset( origin_.x_, origin_.y_ );
-		
-		OSXRect r = &tmpClipRect;
-		
-		CGContextSaveGState( contextID_ );
-		CGContextClipToRect( contextID_, r );
+		//CGContextRestoreGState( contextID_ );		
 	}
 }
 
@@ -1582,12 +1588,23 @@ void OSXContext::drawThemeTab( Rect* rect, TabState& state )
 	DrawThemeTab( r, tabStyle, dir, NULL, 0 );
 }
 
+void OSXContext::drawThemeTabContent( Rect* rect, DrawUIState& state )
+{
+
+}
+
 void OSXContext::drawThemeTabPage( Rect* rect, DrawUIState& state )
 {
 	Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
 	DrawThemeTabPane( r, state.isActive() ? kThemeStateActive : kThemeStateInactive );
+}
+
+void OSXContext::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex )
+{
+		
+
 }
 
 void OSXContext::drawThemeTickMarks( Rect* rect, SliderState& state )
@@ -1651,18 +1668,18 @@ void OSXContext::drawThemeTickMarks( Rect* rect, SliderState& state )
 	if ( drawBothSides ) {
 		info.trackInfo.slider.thumbDir = kThemeThumbUpward;
 		
-		if ( noErr != DrawThemeTrackTickMarks( &info, state.tickMarkFrequency_, NULL, 0 ) ) {
+		if ( noErr != DrawThemeTrackTickMarks( &info, (unsigned int)state.tickMarkFrequency_, NULL, 0 ) ) {
 			StringUtils::trace( "DrawThemeTrackTickMarks failed\n" );
 		}
 		
 		info.trackInfo.slider.thumbDir = kThemeThumbDownward;
 		
-		if ( noErr != DrawThemeTrackTickMarks( &info, state.tickMarkFrequency_, NULL, 0 ) ) {
+		if ( noErr != DrawThemeTrackTickMarks( &info, (unsigned int)state.tickMarkFrequency_, NULL, 0 ) ) {
 			StringUtils::trace( "DrawThemeTrackTickMarks failed\n" );
 		}
 	}
 	else if ( info.trackInfo.slider.thumbDir != 0 ) {//if info.trackInfo.slider.thumbDir == 0 then no track marks
-		if ( noErr != DrawThemeTrackTickMarks( &info, state.tickMarkFrequency_, NULL, 0 ) ) {
+		if ( noErr != DrawThemeTrackTickMarks( &info, (unsigned int)state.tickMarkFrequency_, NULL, 0 ) ) {
 			StringUtils::trace( "DrawThemeTrackTickMarks failed\n" );
 		}
 	}
@@ -1781,8 +1798,8 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
 	}
 
     OSXImage* osXimage = (OSXImage*)(image);
-    ulong32 imgBoundsWidth = rect->getWidth();
-    ulong32 imgBoundsHeight = rect->getHeight();
+    ulong32 imgBoundsWidth = (ulong32)rect->getWidth();
+    ulong32 imgBoundsHeight = (ulong32)rect->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
         CGImageRef imgRef = osXimage->getCGImage();
@@ -2281,6 +2298,28 @@ void OSXContext::drawThemeText( Rect* rect, TextState& state )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.6  2006/03/17 03:08:12  ddiego
+*updated osx code to latest changes.
+*
+*Revision 1.5.2.5  2006/02/26 23:44:10  ddiego
+*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
+*
+*Revision 1.5.2.4  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.5.2.3  2006/01/09 02:22:31  ddiego
+*more osx code
+*
+*Revision 1.5.2.2  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:06:00  ddiego
 *added missing gtk files
 *

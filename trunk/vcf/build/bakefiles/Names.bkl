@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBAGG_NAME">libAGG</set>
+    <set var="LIBAGG_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBAGG_NAME ))
+    </set>
+
+    <set var="ZLIB_NAME">ZLib</set>
+    <set var="ZLIB_FILENAME" make_var="1">
+        $(vcf.getLibFilename( ZLIB_NAME ))
+    </set>
+
+    <set var="LIBJPEG_NAME">LibJPEG</set>
+    <set var="LIBJPEG_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBJPEG_NAME ))
+    </set>
+
+    <set var="LIBMNG_NAME">LibMNG</set>
+    <set var="LIBMNG_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBMNG_NAME ))
+    </set>
+
+    <set var="LIBPNG_NAME">LibPNG</set>
+    <set var="LIBPNG_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBPNG_NAME ))
+    </set>
+
+    <set var="LIBTIFF_NAME">LibTIFF</set>
+    <set var="LIBTIFF_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBTIFF_NAME ))
+    </set>
+
+    <set var="REGEXX_NAME">RegExx</set>
+    <set var="REGEXX_FILENAME" make_var="1">
+        $(vcf.getLibFilename( REGEXX_NAME ))
+    </set>
+
+    <set var="FREEIMAGE_NAME">FreeImage</set>
+    <set var="FREEIMAGE_FILENAME" make_var="1">
+        $(vcf.getLibFilename( FREEIMAGE_NAME ))
+    </set>
+    
+    <set var="FOUNDATIONKIT_NAME">FoundationKit</set>
+    <set var="FOUNDATIONKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( FOUNDATIONKIT_NAME ))
+    </set>
+    
+    <set var="GRAPHICSKIT_NAME">GraphicsKit</set>
+    <set var="GRAPHICSKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( GRAPHICSKIT_NAME ))
+    </set>
+    
+    <set var="APPLICATIONKIT_NAME">ApplicationKit</set>
+    <set var="APPLICATIONKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( APPLICATIONKIT_NAME ))
+    </set>
+    
+    <set var="HTMLKIT_NAME">HTMLKit</set>
+    <set var="HTMLKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( HTMLKIT_NAME ))
+    </set>
+
+    <set var="OPENGLKIT_NAME">OpenGLKit</set>
+    <set var="OPENGLKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( OPENGLKIT_NAME ))
+    </set>
+    
+    <set var="NETWORKKIT_NAME">NetworkKit</set>
+    <set var="NETWORKKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( NETWORKKIT_NAME ))
+    </set>
+    
+    <set var="REMOTEOBJECTKIT_NAME">RemoteObjectKit</set>
+    <set var="REMOTEOBJECTKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( REMOTEOBJECTKIT_NAME ))
+    </set>
+    
+    <set var="INTERNETKIT_NAME">InternetKit</set>
+    <set var="INTERNETKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( INTERNETKIT_NAME ))
+    </set>
+    
+    <set var="ALLIN1_NAME">VCF</set>
+    <set var="ALLIN1_FILENAME" make_var="1">
+        $(vcf.getFilename( ALLIN1_NAME ))
+    </set>
+    
+    <set var="IMAGEFORMATS_NAME">ImageFormats</set>
+    <set var="IMAGEFORMATS_FILENAME" make_var="1">
+        $(vcf.getFilename( IMAGEFORMATS_NAME ))
+    </set>
+    
+</makefile>

@@ -70,8 +70,8 @@ public:
 
 	virtual void setFont( Font* font );
 
-	virtual void repaint( Rect* repaintRect=NULL );
-
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
+	
 	virtual void keepMouseEvents();
 
 	virtual void releaseMouseEvents();
@@ -113,6 +113,16 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/01/09 02:22:31  ddiego
+*more osx code
+*
+*Revision 1.5.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

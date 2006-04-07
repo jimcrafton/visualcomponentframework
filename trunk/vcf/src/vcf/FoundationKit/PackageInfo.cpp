@@ -16,7 +16,7 @@ PackageInfo::PackageInfo( const String& packageName, const String& packageUUID,
 							long linkageFlags,
 							const String& author, const String& company,
 							const String& copyright, const String& additionalInfo):
-	ProgramInfo(packageName,"",author,copyright,company,additionalInfo,"","")
+	ProgramInfo(packageName,"",author,copyright,company,additionalInfo,"","","","")
 {	
 	packageUUID_ = packageUUID;	
 	additionalInfo_ = additionalInfo;
@@ -98,9 +98,84 @@ void PackageInfo::removeAllSupportedPlatforms()
 }
 
 
+
+PackageManager* PackageManager::pkgMgrInstance = NULL;
+
+
+void PackageManager::init()
+{
+	PackageManager::pkgMgrInstance = new PackageManager();
+}
+
+void PackageManager::terminate()
+{
+	delete PackageManager::pkgMgrInstance;
+}
+
+Enumerator<PackageInfo*>* PackageManager::getPackages()
+{
+	return PackageManager::pkgMgrInstance->packagesContainer_.getEnumerator();
+}
+
+void PackageManager::registerPackage( PackageInfo* package )
+{
+	std::vector<PackageInfo*>::iterator found = 
+		std::find( PackageManager::pkgMgrInstance->packages_.begin(), 
+					PackageManager::pkgMgrInstance->packages_.end(), package );
+
+	if ( found == PackageManager::pkgMgrInstance->packages_.end() ) {
+		PackageManager::pkgMgrInstance->packages_.push_back( package );
+	}
+}
+
+void PackageManager::removePackage( PackageInfo* package )
+{
+	std::vector<PackageInfo*>::iterator found = 
+		std::find( PackageManager::pkgMgrInstance->packages_.begin(), 
+					PackageManager::pkgMgrInstance->packages_.end(), package );
+
+	if ( found != PackageManager::pkgMgrInstance->packages_.end() ) {
+		delete *found;
+
+		PackageManager::pkgMgrInstance->packages_.erase( found );		
+	}
+}
+
+PackageManager* PackageManager::getPackageManager()
+{
+	return PackageManager::pkgMgrInstance;
+}
+
+PackageManager::PackageManager()
+{
+	packagesContainer_.initContainer(packages_);
+}
+
+PackageManager::~PackageManager()
+{
+	std::vector<PackageInfo*>::iterator it = packages_.begin();
+	while ( it != packages_.end() ) {
+		delete *it;
+		it ++;
+	}
+	packages_.clear();
+}
+
+
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.2  2005/09/07 04:19:55  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.3.4.1  2005/09/03 14:03:53  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

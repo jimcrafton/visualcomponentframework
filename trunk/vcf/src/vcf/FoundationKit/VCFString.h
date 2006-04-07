@@ -20,19 +20,17 @@ namespace VCF{
 typedef std::basic_string<char> AnsiString;
 
 
-
-
 class TextCodec;
 
 
 /**
-\par
+\class UnicodeString VCFString.h "vcf/FoundationKit/VCFString.h"
 The UnicodeString class represents a thin wrapper around the
 std::basic_string class since std::basic_string cannot
 be derived from (it has no virtual destructor). The
 type of std::basic_string is a std::basic_string<wchar_t>
 meaning that the string class maintains unicode data internally.
-\par
+
 The main purpose of the String class is to provide a
 drop in replacement for std::basic_string<wchar_t>, with an
 interface that is 100% compatible. In addition we add a few
@@ -48,13 +46,12 @@ extra functions of our own:
 	ordinarily take a wchar_t* also have a matching method that
 	takes a char*, with automatic conversion taking place from
 	ansi to unicode.
-\par
+
 These extra functions make it seamless to use with existing code that uses
 either old C style strings and/or std::string/std::wstring instances.
 For complete documentation of the std::basic_string, please see
 <a href="http://www.sgi.com/tech/stl/basic_string.html">SGI's documentation</a>.
 
-\par
 Another set of functions is used to encode or decode text using a
 particular text codec isntance as specified by the TextCodec class.
 These encoding/decoding methods are:
@@ -65,18 +62,19 @@ These encoding/decoding methods are:
 	content of this string as a result
 	\li encoding the data from another string intance into this string
 
-\par
 In addition there are also a whole series of typedefs, again solely to make the
 class compatible with the std::basic_string class.
 */
 class FOUNDATIONKIT_API UnicodeString {
 public:
+		
+
 	typedef char AnsiChar;
 
 	//JC - see VCFChar.h for definiton of WideChar
 	typedef VCF::WideChar UniChar;
 #ifdef VCF_OSX
-	typedef std::basic_string< UniChar, std::char_traits<VCF::WideChar> > StringData;
+	typedef std::basic_string< WideChar, std::char_traits<WideChar> > StringData;
 #else
 	typedef std::basic_string<UniChar> StringData;
 #endif
@@ -84,7 +82,15 @@ public:
 
 
 	enum {
-		npos = (unsigned int)-1
+		npos = (unsigned int)-1,
+		UTF8BOMSize = sizeof(uchar) * 3,
+		UTF16BOMSize = sizeof(ushort),
+		UTF32BOMSize = sizeof(ulong32),
+		UTF8BOM = 0xEFBBBF,
+		UTF16LittleEndianBOM = 0xFFFE,
+		UTF16BigEndianBOM = 0xFEFF,
+		UTF32LittleEndianBOM = 0xFFFE0000,
+		UTF32BigEndianBOM = 0x0000FEFF
 	};
 
 
@@ -181,7 +187,7 @@ public:
 	/**
 	Returns a const char* pointer. Equivalent to the c_str() method,
 	only this translates the internal unicode data to an ansi string.
-	\par
+	
 	Please note that the pointer returned from this function is only
 	valid for the lifetime of the string that it was returned from.
 	Calling this function requires that a new char buffer be allocated. As
@@ -223,7 +229,7 @@ public:
 	Returns a const char* pointer s a result of translating the
 	unicode data to an ansi string. In Win32, the default
 	behaviour is to convert this using the UTF8 code page.
-	\par
+	
 	This pointer is "garbage collected" and is only valid for the lifetime of
 	the string instance that it was retreived from. Once that
 	instance is destroyed, the pointer is invalid. For example:
@@ -360,7 +366,11 @@ public:
 	friend bool operator <( const UnicodeString& lhs, const UnicodeString& rhs );
 
 	bool operator <( const StringData& rhs ) const {
-		return data_ <= rhs;
+		return data_ < rhs;
+	}
+	
+	bool operator <( const UniChar* rhs ) const {
+		return data_ < rhs;
 	}
 
 	friend bool operator <=( const UnicodeString& lhs, const UnicodeString& rhs );
@@ -939,6 +949,8 @@ public:
 
 	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c );
 	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c );
+
+	static int adjustForBOMMarker( AnsiChar*& stringPtr, uint32& len );
 protected:
 	StringData data_;
 	mutable AnsiChar* ansiDataBuffer_;
@@ -1083,6 +1095,28 @@ typedef UnicodeString String;
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.6  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.4.2.5  2006/03/12 22:01:44  ddiego
+*doc updates.
+*
+*Revision 1.4.2.4  2005/11/30 05:31:36  ddiego
+*further osx drag-drop updates.
+*
+*Revision 1.4.2.3  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.4.2.2  2005/09/08 03:16:58  ddiego
+*fix for BOM marker in input stream handling and xml parser.
+*
+*Revision 1.4.2.1  2005/07/30 16:57:34  iamfraggle
+*Fix operator < overloads for AnsiChar and UniChar
+*
 *Revision 1.4  2005/07/09 23:15:06  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

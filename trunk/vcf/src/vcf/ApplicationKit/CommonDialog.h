@@ -16,6 +16,19 @@ where you installed the VCF.
 
 namespace VCF {
 
+/**
+\class CommonDialog CommonDialog.h "vcf/ApplicationKit/CommonDialog.h"
+Base class for all the standard, or "common" dialog classes. A common
+dialog is one like a color dialog, or font selection dialog or 
+open or save file dialog. These are generally provided by the 
+windowing system, and these classes just provide convenient 
+wrappers around them.
+
+To display any common dialog, you simply call the execute() function.
+This funtion will return true if the user chose something, like a 
+font, color, or filename, and false if the user canceled the dialog.
+
+*/
 class APPLICATIONKIT_API CommonDialog : public Component {
 public:
 
@@ -24,7 +37,9 @@ public:
 	virtual ~CommonDialog(){};
 
 	/**
-	* opens the dialog.
+	"Executes" or displays the dialog.
+	@return bool returns true if the user made a valid selection,
+	otherwise false.
 	*/
 	virtual bool execute() = 0;
 
@@ -41,6 +56,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -29,19 +29,77 @@ class Locale;
 class GraphicsContext;
 
 #define FONT_CLASSID	"C41B2C4C-C95F-4ba2-B844-185C3AFCEF35"
+/**
+\class Font Font.h "vcf/GraphicsKit/Font.h"
+A Font wraps the windowing system's graphics font object.
+Fonts are used to (partially) describe how a string of 
+text will be rendered, for example the size of the glyphs 
+used to paint the text characters on the screen.
 
+A Font has a number of properties that can be set, such 
+as it's name, color, size (both in points and in pixels), and
+so on. If you change a font's property, the font will fire off 
+an event that can be handled by some other object, for 
+example if you needed to recalculate some setting based on
+the characteristics of teh font, you handle this kind of event
+to always keep in synch with the font's settings.
+*/
 class GRAPHICSKIT_API Font : public Object {
 
 public:
+	/**
+	This enum describes the various event types that
+	changes to a font can produce.
+	*/
 	enum FontChangeEvent{
+		/**
+		An event is fired of this type if the font's 
+		name is changed.
+		*/
 		fcFontName = 0xF097,
+
+		/**
+		An event is fired of this type if the font's 
+		italic attribute (true or false) is changed.
+		*/
 		fcFontItalic,
+
+		/**
+		An event is fired of this type if the font's 
+		bold attribute (true or false) is changed.
+		*/
 		fcFontBold,
+
+		/**
+		An event is fired of this type if the font's 
+		strike out attribute (true or false) is changed.
+		*/
 		fcFontStrikeOut,
+
+		/**
+		An event is fired of this type if the font's 
+		underline attribute (true or false) is changed.
+		*/
 		fcFontUnderline,
+
+		/**
+		An event is fired of this type if the font's 
+		size attribute is changed.
+		*/
 		fcFontSize,
+
+		/**
+		An event is fired of this type if the font's 
+		color attribute is changed.
+		*/
 		fcFontColor,
+
+		/**
+		An event is fired of this type if the font's 
+		locale instance is changed.
+		*/
 		fcFontLocale,
+
 		fcAll
 	};
 
@@ -51,12 +109,28 @@ public:
 	even when the font is not changed through its
 	associated control.
 	*/
+
+	/**
+	@delegate FontChanged this is is fired every time a font is 
+	changed. This let the peer of a control to be notified of the 
+	change even when the font is not changed through its associated 
+	control.
+	@event	Event
+	@eventtype FontChangeEvent
+	*/
 	DELEGATE(FontChanged);
 
 	Font();
 
+	/**
+	Constructs a font from a valid font name (say "Tiems New Roman") - 
+	the size of the font is the default font size for the system.
+	*/
 	Font( const String& fontName );
 
+	/**
+	Constructs a font from a name and a size in points.
+	*/
 	Font( const String& fontName, const double& pointSize );
 
 	Font( const Font& font );
@@ -65,10 +139,15 @@ public:
 
 	Font& operator= (const Font& rhs );
 
+	/**
+	Returns true if the font is a True Type font. On Windows some 
+	font's are \em not True Type font's and because of this they 
+	will not respond to certain effects (such as being rotated).
+	*/
 	bool isTrueType() const;
 
 	/**
-	*returns the Color the Font will be rendered in
+	returns the Color the Font will be rendered in
 	*/
 	Color* getColor() ;
 
@@ -183,6 +262,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/04/05 03:35:59  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.2.1  2006/03/12 22:42:08  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.4  2005/07/09 23:05:58  ddiego
 *added missing gtk files
 *

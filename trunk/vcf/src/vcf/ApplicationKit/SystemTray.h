@@ -12,6 +12,7 @@ namespace VCF {
 	class SystemTrayPeer;
 
 	/**
+	\class SystemTray SystemTray.h "vcf/ApplicationKit/SystemTray.h"
 	The SystemTray component provides a simple wrapper around system 
 	tray functionality. On Win32 the system tray is the rectangular
 	area on the lower right side of the Start bar. It contains 

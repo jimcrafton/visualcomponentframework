@@ -35,7 +35,9 @@ class ToolbarDock;
 class ToolbarPeer;
 
 
-
+/**
+\class ToolbarItem Toolbar.h "vcf/ApplicationKit/Toolbar.h" 
+*/
 class APPLICATIONKIT_API ToolbarItem : public Item, public Button {
 public:
 
@@ -70,56 +72,11 @@ public:
 		tisChecked = 0x200
 	};
 
-	DELEGATE(ItemPainted);
-	DELEGATE(ItemChanged);
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemAdded);
-	DELEGATE(ItemDeleted);
-
+	
 	DELEGATE(ItemClicked);
 
 	DELEGATE(ItemUpdate);
-
-
-	virtual void addItemPaintHandler( EventHandler* handler ){
-		ItemPainted += handler;
-	}
-
-	virtual void addItemChangedHandler( EventHandler* handler ) {
-		ItemChanged += handler;
-	}
-
-	virtual void addItemSelectedHandler( EventHandler* handler ) {
-		ItemSelected += handler;
-	}
-
-	virtual void addItemAddedHandler( EventHandler* handler ) {
-		ItemAdded += handler;
-	}
-
-	virtual void addItemDeletedHandler( EventHandler* handler ) {
-		ItemDeleted += handler;
-	}
-
-	virtual void removeItemPaintHandler( EventHandler* handler ) {
-		ItemPainted -= handler;
-	}
-
-	virtual void removeItemChangedHandler( EventHandler* handler ) {
-		ItemChanged -= handler;
-	}
-
-	virtual void removeItemSelectedHandler( EventHandler* handler ) {
-		ItemSelected -= handler;
-	}
-
-	virtual void removeItemAddedHandler( EventHandler* handler ) {
-		ItemAdded -= handler;
-	}
-
-	virtual void removeItemDeletedHandler( EventHandler* handler ) {
-		ItemDeleted -= handler;
-	}
+	
 
 	virtual void addButtonClickHandler( EventHandler* handler ) {
 		ItemClicked += handler;
@@ -144,13 +101,7 @@ public:
 	}
 
 	virtual void setBounds( Rect* bounds );
-
-	virtual long getState() {
-		return state_;
-	}
-
-	virtual void setState( const long& state );
-
+	
 	virtual long getStateImageIndex() {
 		return imageStateIndex_;
 	}
@@ -174,14 +125,8 @@ public:
 	virtual void setData( void* data ) {
 		data_ = data;
 	}
-
-	virtual Model* getModel() {
-		return model_;
-	}
-
-	virtual void setModel( Model* model ) {
-		model_ = model;
-	}
+	
+	virtual void setState( const long& state );
 
 	virtual bool canPaint() {
 		return false;
@@ -192,16 +137,6 @@ public:
 	virtual bool isSelected() ;
 
 	virtual void setSelected( const bool& selected );
-
-	virtual Control* getControl() {
-		return control_;
-	}
-
-	virtual void setControl( Control* control ) {
-		control_ = control;
-	}
-
-
 
 	void setWidth( const double& val );
 
@@ -253,10 +188,7 @@ public:
 
 	
 protected:
-	Control* control_;
-	Control* itemControl_;
-	unsigned long state_;
-	Model* model_;
+	Control* itemControl_;	
 	void* data_;
 	long imageIndex_;
 	long imageStateIndex_;
@@ -272,6 +204,9 @@ protected:
 
 class ToolbarModel;
 
+/**
+\class ToolbarModelEvent Toolbar.h "vcf/ApplicationKit/Toolbar.h" 
+*/
 class APPLICATIONKIT_API ToolbarModelEvent : public ModelEvent {
 public:
 
@@ -297,7 +232,9 @@ public:
 
 
 
-
+/**
+\class ToolbarItem Toolbar.h "vcf/ApplicationKit/Toolbar.h" 
+*/
 class APPLICATIONKIT_API ToolbarModel : public AbstractModel {
 public:
 	ToolbarModel();
@@ -313,6 +250,10 @@ public:
 
 	ulong32 getItemIndex( ToolbarItem* item );
 	void setItemIndex( ToolbarItem* item, const ulong32& newIndex );
+
+	ToolbarItem* getItemAtIndex( const ulong32& index ) {
+		return toolbarItems_[index];
+	}
 
 	Enumerator<ToolbarItem*>* getToolbarItems() {
 		return itemsContainer_.getEnumerator();
@@ -334,8 +275,9 @@ protected:
 #define TOOLBAR_CLASSID		"D8B85915-BCE1-44e3-8FBB-3B43427F99F1"
 
 /**
- *a floating frame that remains top level, has a close button,
- *and a caption height that is shorter than normal.
+\class Toolbar Toolbar.h "vcf/ApplicationKit/Toolbar.h" 
+A class for adding toolbars to your window. A toolbar has a 
+series of buttons (each represented by a ToolbarItem). 
  */
 class APPLICATIONKIT_API Toolbar : public Control {
 public:
@@ -411,6 +353,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.2  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
+*Revision 1.4.2.1  2006/02/10 04:24:11  ddiego
+*more updates.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

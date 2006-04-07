@@ -96,7 +96,7 @@ void PushButton::drawCaption( const Rect& rect, Rect* imageRect, GraphicsContext
 
 void PushButton::drawImage( const Rect& rect, const ButtonState& state, const Rect* imageRect, GraphicsContext* context )
 {
-	if ( NULL != this->imageList_ ) {
+	if ( ( NULL != this->imageList_ ) && ( 0 != imageIndexes_.size() ) ) {
 
 		ImageState imageState = bisUp;
 
@@ -505,7 +505,7 @@ void PushButton::setCommandType( const ButtonCommandType& commandType )
 
 double PushButton::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtButtonHeight );
 }
 
 double PushButton::getPreferredWidth()
@@ -513,7 +513,7 @@ double PushButton::getPreferredWidth()
 	return 120;
 }
 
-void PushButton::setInitialStatePressed( const bool& pressed )
+void PushButton::setStatePressed( const bool& pressed )
 {
 	isPressed_ = pressed;
 	wasPressed_ = isPressed_;
@@ -632,10 +632,17 @@ void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStat
 		throw RuntimeException( MAKE_ERROR_MSG_2( "No image list specified yet" ) );
 	}
 
+	if ( imgStates != ( imgStates & bisAll ) ) {
+		String msg = Format("The specified image state(s) [0x00%x] is not valid ( see PushButtons::bisAll mask ).") % (int)imgStates ;
+		StringUtils::trace( msg + "\n" );
+		imgStates = (PushButton::ImageState)( imgStates & bisAll );
+	}
+
 	long imageCount = imageList_->getImageCount();
 	if ( ( btnImageIndex < 0 ) || ( imageCount <= btnImageIndex ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( Format("PushButton request to set an image index [%d] outside range [0,%d]") % btnImageIndex % imageCount ) );
 	}
+
 
 	if ( 0 == imageIndexes_.size() ) {
 		imageIndexes_[ bisUp        ] = btnImageIndex;
@@ -647,12 +654,25 @@ void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStat
 		imageStateSpecified_ = 0;
 	}
 	else {
-		imageIndexes_[ imgStates & bisUp        ] = btnImageIndex;
-		imageIndexes_[ imgStates & bisDown      ] = btnImageIndex;
-		imageIndexes_[ imgStates & bisDisable   ] = btnImageIndex;
-		imageIndexes_[ imgStates & bisFocus     ] = btnImageIndex;
-		imageIndexes_[ imgStates & bisFocusDown ] = btnImageIndex;
-		imageIndexes_[ imgStates & bisHighlight ] = btnImageIndex;
+		// note: we need not to add imageIndexes_[0]
+		if ( 0 != ( imgStates & bisUp ) ) {
+			imageIndexes_[ bisUp ] = btnImageIndex;
+		}
+		if ( 0 != ( imgStates & bisDown ) ) {
+			imageIndexes_[ bisDown ] = btnImageIndex;
+		}
+		if ( 0 != ( imgStates & bisDisable ) ) {
+			imageIndexes_[ bisDisable ] = btnImageIndex;
+		}
+		if ( 0 != ( imgStates & bisFocus ) ) {
+			imageIndexes_[ bisFocus ] = btnImageIndex;
+		}
+		if ( 0 != ( imgStates & bisFocusDown ) ) {
+			imageIndexes_[ bisFocusDown ] = btnImageIndex;
+		}
+		if ( 0 != ( imgStates & bisHighlight ) ) {
+			imageIndexes_[ bisHighlight ] = btnImageIndex;
+		}
 	}
 
 	imageStateSpecified_ |= ( imgStates & bisUp        );
@@ -661,6 +681,28 @@ void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStat
 	imageStateSpecified_ |= ( imgStates & bisFocus     );
 	imageStateSpecified_ |= ( imgStates & bisFocusDown );
 	imageStateSpecified_ |= ( imgStates & bisHighlight );
+
+
+	// if we are changing the bisUp image state, and it has been the only one set,
+	// we need to set it for all the other unspecified image states
+	if ( 0 != ( imgStates & bisUp ) ) {
+		if ( 0 == ( imageStateSpecified_ & bisDown ) ) {
+			imageIndexes_[ bisDown      ] = btnImageIndex;
+		}
+		if ( 0 == ( imageStateSpecified_ & bisDisable ) ) {
+			imageIndexes_[ bisDisable   ] = btnImageIndex;
+		}
+		if ( 0 == ( imageStateSpecified_ & bisFocus ) ) {
+			imageIndexes_[ bisFocus     ] = btnImageIndex;
+		}
+		if ( 0 == ( imageStateSpecified_ & bisFocusDown ) ) {
+			imageIndexes_[ bisFocusDown ] = btnImageIndex;
+		}
+		if ( 0 == ( imageStateSpecified_ & bisHighlight ) ) {
+			imageIndexes_[ bisHighlight ] = btnImageIndex;
+		}
+	}
+
 
 	// if we specified a bisDown state image then we don't move it
 	if ( 0 != ( imageStateSpecified_ & bisDown ) ) {
@@ -757,6 +799,15 @@ void PushButton::onFocusLost( FocusEvent* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.3.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

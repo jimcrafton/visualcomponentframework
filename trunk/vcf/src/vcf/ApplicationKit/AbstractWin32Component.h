@@ -81,7 +81,7 @@ public:
 	virtual void setFont( Font* font );
 
 
-	virtual void repaint( Rect* repaintRect=NULL );
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
 
 	virtual void keepMouseEvents();
 
@@ -102,12 +102,6 @@ public:
 	virtual void translateFromScreenCoords( Point* pt );
 
 	virtual void setBorder( Border* border );
-
-	/*
-	HDWP getWindPosInfo() {
-		return winPosInfo_;
-	}
-	*/
 
 	/**
 	* manages a paint message for a control.
@@ -134,15 +128,6 @@ protected:
 	*/
 	LRESULT handleNCCalcSize( WPARAM wParam, LPARAM lParam );
 
-	/**
-	let the peer to change its font 
-	when the font has been changed.
-	Actually this function is obsolete, as
-	now the peer listen to a font change notification.
-	@see Font::FontChanged delegate.
-	*/
-	void checkForFontChange();
-
 protected:
 	void init();
 	HDC memDC_;
@@ -161,11 +146,8 @@ protected:
 
 	std::vector<MSG>* cachedMessages_;
 
-	/*
-	JC I remove this cause we don't really need them
-	//HDWP winPosInfo_;
-	//AbstractWin32Component* parent_;
-	*/
+	void registerForFontChanges();
+	void onControlFontChanged( Event* event );
 
 };
 
@@ -176,6 +158,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/03/18 19:04:55  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.5.2.2  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.5.2.1  2005/08/05 01:11:37  ddiego
+*splitter fixes finished.
+*
 *Revision 1.5  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

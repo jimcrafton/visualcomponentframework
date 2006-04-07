@@ -32,7 +32,6 @@ class AnchorsWindow : public Window {
 public:
 	AnchorsWindow() {
 		setCaption( "Anchors" );
-		setVisible( true );
 
 		/**
 		note: we must have the width (or height) set
@@ -78,6 +77,13 @@ public:
 		panel->setAnchor( AnchorLeft | AnchorRight | AnchorTop | AnchorBottom );
 		panel->setColor( Color::getColor("blue") );
 
+		Label* l = new Label();
+		l->setCaption( "This is a panel that is anchored to the left, right, top, and bottom sides of it's parent" );
+		l->setWordWrap( true );
+		l->setTextAlignment( taTextCenter );
+		l->setVerticalAlignment( tvaTextCenter );
+		panel->add( l, AlignClient );
+
 		add( panel );
 
 	}
@@ -101,7 +107,8 @@ public:
 
 		Window* mainWindow = new AnchorsWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
+		mainWindow->show();
 
 		return result;
 	}
@@ -122,6 +129,15 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:34:13  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.6.2  2006/03/16 16:33:02  ddiego
+*fixed per fraggles req.
+*
+*Revision 1.4.6.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.4  2004/08/07 02:46:56  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

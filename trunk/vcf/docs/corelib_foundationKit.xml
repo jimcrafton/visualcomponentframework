@@ -349,8 +349,8 @@ public:
 };
 
 #define FOO_CLASSID		"99c0754b-c18f-49b0-999f-81384c65fd18"
-BEGIN_CLASSINFO( Foo, "Foo", "VCF::Object", FOO_CLASSID )
-END_CLASSINFO( Foo )
+_class_rtti_( Foo, "VCF::Object", FOO_CLASSID )
+_class_rtti_end_
 
 int main( int argc, char** argv ) 
 {
@@ -973,7 +973,7 @@ int main( int argc, char** argv )
 		</section>
 	</section>
 	
-	<section><title>Strings</title>
+	<section id="FK_Strings"><title>Strings</title>
 		<para>
 		Strings in the VCF are represented by the VCF::UnicodeString
 		class, which is typedeffed as "String" to make it more convenient
@@ -2208,33 +2208,168 @@ catch (	BasicException& e ) {
 
 	<section><title>Dynamic Libraries</title>
 		<para>
+		Dynamic Link Libraries (DLLs) or Shared Objects (SOs),on some Unix systems, are
+		libraries that are linked to dynamically, at runtime, so that a 
+		single library's functionality can be easily shared amongst 
+		multiple applications. A DLL is loaded, and then the exported functions
+		of the library at "linked" with at runtime for the executable that uses them.
+		The VCF supports this through the Library class.
 		</para>
-		
+		<para>
+		You can easily load the DLL up using the Library class, and then access
+		the DLL's function pointers by calling the Library::getFunction() function.
+		This will return a function pointer to a named function that you pass in 
+		when you make the call. If the function pointer does not exist, then the 
+		return value is NULL.
+		</para>		
 		<section><title>Init and term functions</title>
 			<para>
+			When a DLL is loaded or unloaded you may want to have certain 
+			initialization or termination routines called. Different platforms
+			support this in different ways, so to simplify this, the VCF enforces the 
+			following policy that you can take advantage of.
+			</para>
+			<para>
+			When the DLL is first loaded by the VCF's Library class, it attempt to 
+			find an exported function named "_vpl_init" ("vpl" stands for "Visual
+			Package Library"). If this function is exported it should be function
+			protottype should look like this:
+			<programlisting>
+typedef void (*initFunc)(OSHandleID);			
+			</programlisting>			
+			If this function exists, then the VCF will call it, ensuring that you have
+			an initilization routine. The OSHandleID parameter is the Library
+			peer's library handle, which may be NULL, depending on your platform.
+			On Win32 platforms this is the HINSTANCE of the DLL.
+			</para>
+			<para>
+			The function you export for initialization <emphasis>must</emphasis>
+			be named "_vpl_init", so somewhere in your code you'll have something 
+			like this:
+			<programlisting>
+void _vpl_init( OSHandleID handle )
+{
+  //init code here...
+}
+			</programlisting>
+			</para>
+			<para>
+			To ensure a termination routine gets called, a similar process takes
+			place when the Library instance unloads the DLL. Just prior to actually 
+			unloading the DLL, the Library instance will look for a function exported
+			by the name "_vpl_terminate". If it finds one, it will then invoke it,
+			passing in the same peer handle that was passed into the initialization
+			routine. The funtion prototype loks like this:
+			<programlisting>
+typedef void (*terminateFunc)(OSHandleID);			
+			</programlisting>
+			Like the initialization routine, you must export with a specific
+			function name for this to work, so you need to have an exported 
+			function like this:
+			<programlisting>
+void _vpl_terminate( OSHandleID handle )
+{
+  //cleanup code here...
+}			
+			</programlisting>			
+			</para>
+			<para>
+			If the libraries do not support initialization and/or termination
+			routines, then nothing will happen. 
+			<note>
+			In order for this to work, you must load the DLL with the 
+			Library class, otherwise these specific routines will not get 
+			called (unless you write explicit code to check for their presence 
+			and invoke them yourself).
+			</note>
 			</para>
 		</section>
 	</section>
 
 	<section><title>Processes</title>
 		<para>
+		The VCF supports executing external processes through the Process class.
+		You can start any process using this class and pass any number of arbirtrary
+		command line arguments to it. The only limits over what processes you can run 
+		are those imposed by the host OS. 		
+		</para>
+		<para>
+		Starting a process is easy:
+		<programlisting><![CDATA[
+Process p1;
+p1.createProcess( "XCOPY", "/?" );
+		]]></programlisting>
+		The createProcess() call will not block, so if you need to wait for the process to
+		complete, you can call the Process::wait() function, like this:
+		<programlisting><![CDATA[
+Process p1;
+p1.createProcess( "XCOPY", "/?" );
+p1.wait(); //blocks indefinitely till the "XCOPY" process ends.
+		]]></programlisting>		
 		</para>
 		<section><title>Process Output</title>
 			<para>
+			If you need to run a process that outputs content to stdout, but you want
+			to capture this output for your own use, such as displaying the progress
+			of a compiler process, you can use the ProcessWithRedirectedIO class to
+			help with this.
+			</para>
+			<para>
+			The  ProcessWithRedirectedIO class hooks into the stdout output stream and 
+			captures output data as it becomes available. Once a chunk of data is made 
+			available, the framework will send an event to the class's OutputReady
+			delegate. The current implementation assumes that the data in the stream
+			is text data. The OutputReadyEvent holds this data in the form of String,
+			which does allow arbitrary bytes to be assigned to it.
+			</para>
+			<para>
+			An important note: when your event handler is invoked, it will be
+			done in a different thread than the thread that created the ProcessWithRedirectedIO
+			instance and started the process running. You should plan for this accordingly
+			and make sure that if you need to make changes to UI classes that you post an 
+			event to the UIToolkit, instead of modifying the class directly. This is 
+			especially true for making modfications to Model based classes.
 			</para>
 		</section>
 	</section>
 
 	<section><title>XML Parsing</title>
 		<para>
-		</para>		
+		The VCF supports basic XML parseing through the XMLParser, XMLNode,
+		and XMLAttr classes. These handle all the basic XML tags including 
+		CDATA, attributes, the use of "&lt;![CDATA[" entity for arbitrary
+		text data, and basic character tags like "&lt;" (&amp;lt;). Fancier
+		features like XML Namespaces, and XSLT are not supported, nor is 
+		validating the XML to check that it's correct XML. 
+		</para>	
+		<para>
+		The parser is quite easy to use, and you can work with in either a 
+		SAX fashion, where you are notified via an event as the XML is parsed,
+		or DOM style, where you traverse the whole tree of xml nodes once the
+		xml data has been completely parsed. Of the two, the second, DOM styles
+		approach is easier to use.
+		</para>
 		<section><title>SAX style parsing</title>
 			<para>
+			The XMLParser will notify event handlers whenever a new tags is 
+			encountered, or whenever a new chunk of character data is
+			eoncountered.
+			</para>
+			<para>
+			To make use of this, simply add an event handler to either the
+			XMLParser's NodeFound delegate or the NodeCDATAFound delegate. 
+			The NodeFound is called when a new entity or node tag is encountered,
+			and the NodeCDATAFound is called whever text (or character data) is 
+			encountered between the start and end tag of a node.
 			</para>
 		</section>
 		
 		<section><title>DOM style parsing</title>
 			<para>
+			While the XMPParser class is parsing the XML data, it builds a tree of
+			XML nodes, represented by the XMLNode class. Once the parsing is done,
+			you can get an Enumerator of all the nodes that the parser created
+			and you can enumerate through them.
 			</para>
 		</section>
 	</section>	
@@ -2244,6 +2379,21 @@ catch (	BasicException& e ) {
 <!-- 
 CVS Log info
 $Log$
+Revision 1.9  2006/04/07 02:34:01  ddiego
+initial checkin of merge from 0.6.9 dev branch.
+
+Revision 1.8.2.4  2006/04/05 03:35:57  ddiego
+post cvs crash updates.
+
+Revision 1.8.2.3  2006/03/12 22:01:33  ddiego
+doc updates.
+
+Revision 1.8.2.2  2006/03/10 21:49:27  ddiego
+updates to color example and some documentation.
+
+Revision 1.8.2.1  2006/03/02 22:13:01  ddiego
+docs update.
+
 Revision 1.8  2005/07/18 03:54:19  ddiego
 documentation updates.
 

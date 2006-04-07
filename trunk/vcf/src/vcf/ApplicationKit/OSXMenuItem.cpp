@@ -19,6 +19,51 @@ using namespace VCF;
 
 uint32 OSXMenuItem::globalMenuItemID = 0;
 
+String OSXGenerateCaption( MenuItem* item, OSXMenuItem* peer, String caption )
+{
+	String acceleratorText;
+	VCF::AcceleratorKey* accelerator = item->getAccelerator();
+	//generate accelerator text if we are not owner drawn
+	if ( !item->canPaint() && (NULL != accelerator) ) {
+		
+		if ( accelerator->hasCtrlKey() ) {			
+			acceleratorText += "Ctrl";
+		}
+
+		if ( accelerator->hasShiftKey() ) {
+			if ( !acceleratorText.empty() ) {
+				acceleratorText += "+";
+			}
+			acceleratorText += "Shift";
+		}
+
+		if ( accelerator->hasAltKey() ) {
+			if ( !acceleratorText.empty() ) {
+				acceleratorText += "+";
+			}
+			acceleratorText += "Alt";
+		}
+
+		if ( !acceleratorText.empty() ) {
+			acceleratorText += "+";
+		}
+
+		acceleratorText += StringUtils::translateVKCodeToString( (VirtualKeyCode)accelerator->getKeyCode() );		
+	}
+
+	if ( !acceleratorText.empty() ) {
+		caption = caption + "\t" + acceleratorText;
+	}
+	
+	UIPolicyManager* pm = UIToolkit::getUIPolicyManager();
+	caption = pm->transformMnemonicValues( caption );
+
+	return caption;
+}
+
+
+
+
 OSXMenuItem::OSXMenuItem( MenuItem* item ):
 	itemID_(0),
 	menuItem_(item),
@@ -146,7 +191,7 @@ void OSXMenuItem::insertChild( const unsigned long& index, MenuItem* child )
 {
 	child->setIndex( index );
 	
-	CFTextString tmp( child->getCaption() );
+	CFTextString tmp( OSXGenerateCaption( child, (OSXMenuItem*)child->getPeer(), child->getCaption() ) );
 	//is this child a top level menu item?
 	
 	
@@ -361,6 +406,9 @@ void OSXMenuItem::setMenuItem( MenuItem* item )
 	menuItem_ = item;
 }
 
+
+
+
 void OSXMenuItem::setCaption( const String& caption )
 {
 	if ( true == menuItem_->isSeparator() ){
@@ -371,7 +419,7 @@ void OSXMenuItem::setCaption( const String& caption )
 	MenuItem* parent = menuItem_->getParent();
 	
 	if ( NULL != parent ) {
-		CFTextString tmp(caption);
+		CFTextString tmp( OSXGenerateCaption( menuItem_, this, caption ) );
 		
 		if ( isParentMenuItemRoot() ) {
 			MenuRef handle = (MenuRef) getMenuID();		
@@ -483,7 +531,7 @@ void OSXMenuItem::setAsSeparator( const bool& isSeperator )
 
 void OSXMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 {
-
+	setCaption( menuItem_->getCaption() );
 }
 
 
@@ -494,6 +542,12 @@ void OSXMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.4  2005/07/09 23:14:54  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

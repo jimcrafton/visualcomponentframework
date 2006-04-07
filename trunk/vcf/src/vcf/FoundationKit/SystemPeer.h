@@ -21,7 +21,8 @@ class DateTime;
 class ResourceBundle;
 
 /**
-*Defines the SYstem Peer interface
+\class SystemPeer SystemPeer.h "vcf/FoundationKit/SystemPeer.h"
+*Defines the SystemPeer interface
 */
 class FOUNDATIONKIT_API SystemPeer {
 public:
@@ -52,6 +53,8 @@ public:
 
 	virtual String getCommonDirectory( System::CommonDirectory directory ) = 0;
 
+	virtual String createTempFileName( const String& directory ) = 0;
+
 	virtual void setDateToSystemTime( DateTime* date ) = 0;
 
 	virtual void setDateToLocalTime( DateTime* date ) = 0;
@@ -79,6 +82,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
+*Revision 1.5.2.1  2006/02/19 06:50:31  ddiego
+*minor updates.
+*
 *Revision 1.5  2005/07/09 23:15:05  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -21,8 +21,9 @@ namespace VCF{
 
 
 /**
-*A MemoryStream a stream for in memory data for both reading
-*and writing
+\class MemoryStream MemoryStream.h "vcf/FoundationKit/MemoryStream.h"
+A MemoryStream a stream for in memory data for both reading
+and writing
 */
 class FOUNDATIONKIT_API MemoryStream : public VCF::InputStream, public VCF::OutputStream, public VCF::Object {
 public:
@@ -58,9 +59,9 @@ public:
 
 	virtual void write( Persistable* persistableObject );
 
-	virtual void write( const char* bytesToWrite, unsigned long sizeOfBytes );
+	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
 
-	virtual void read( char* bytesToRead, unsigned long sizeOfBytes );
+	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
 
 	void init();
 
@@ -83,6 +84,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

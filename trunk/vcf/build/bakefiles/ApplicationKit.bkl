@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="ApplicationKitFiles.bkl"/>
+
+    <template id="ApplicationKit_base">
+        <set var="LIBRARY_NAME">$(APPLICATIONKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)ApplicationKit$(DIRSEP)ApplicationKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)ApplicationKit$(DIRSEP)ApplicationKit.cpp</set>
+
+        <headers>$(APPLICATIONKIT_HDR)</headers>
+        <sources>$(APPLICATIONKIT_SRC)</sources>
+
+        <vcf-include-thirdparty/>
+        <vcf-use-GraphicsKit/>
+    </template>
+
+    <lib id="ApplicationKit_lib" template="ApplicationKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_APPLICATIONKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>GraphicsKit_lib</depends>
+    </lib>
+
+    <dll id="ApplicationKit_dll" template="ApplicationKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_APPLICATIONKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>APPLICATIONKIT_DLL</define>
+        <define>APPLICATIONKIT_EXPORTS</define>
+
+        <res-include>../../build/resources/win32</res-include>
+        <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>
+        
+        <depends>GraphicsKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_APPLICATIONKIT=='1' and OPTION_ALLIN1=='0'">
+        ApplicationKit=ApplicationKit_lib+ApplicationKit_dll
+    </set>
+</makefile>

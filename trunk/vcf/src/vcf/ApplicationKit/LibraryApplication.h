@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
+\class LibraryApplication LibraryApplication.h "vcf/ApplicationKit/LibraryApplication.h"
 *Class LibraryApplication documentation
 */
 class APPLICATIONKIT_API LibraryApplication : public AbstractApplication {
@@ -77,6 +78,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/01/02 03:04:21  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

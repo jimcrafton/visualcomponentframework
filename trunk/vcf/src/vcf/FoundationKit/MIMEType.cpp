@@ -60,7 +60,7 @@ String MIMEType::getType() const
 
 	VCF_ASSERT( !data_.empty() ) ;
 
-	int pos = data_.find_first_of("/");
+	size_t pos = data_.find_first_of("/");
 	if ( pos != String::npos ) {
 		result = data_.substr( 0, pos );
 		StringUtils::trimWhiteSpaces( result );
@@ -75,9 +75,9 @@ String MIMEType::getSubType() const
 
 	VCF_ASSERT( !data_.empty() ) ;
 
-	int pos = data_.find_first_of("/");
+	size_t pos = data_.find_first_of("/");
 	if ( pos != String::npos ) {
-		int pos2 = data_.find_first_of(";");
+		size_t pos2 = data_.find_first_of(";");
 		if ( pos2 == String::npos ) {
 			pos2 = data_.size();
 		}
@@ -94,16 +94,16 @@ std::vector<MIMEType::Parameter> MIMEType::getParameters() const
 
 	VCF_ASSERT( !data_.empty() ) ;
 
-	int pos = data_.find_first_of(";");
+	size_t pos = data_.find_first_of(";");
 
 	if ( pos != String::npos ) {
-		int pos2 = data_.find_first_of(";",pos+1);
+		size_t pos2 = data_.find_first_of(";",pos+1);
 		while ( (pos != String::npos) && (pos2!=String::npos) ) {
 
 			MIMEType::Parameter parameter;
 			String p = data_.substr( pos+1, pos2-(pos+1) );
 
-			int pos3 = p.find_first_of("=");
+			size_t pos3 = p.find_first_of("=");
 			if ( pos3 != String::npos ) {
 				parameter.first = p.substr(0,pos3);
 				StringUtils::trimWhiteSpaces( parameter.first );
@@ -303,6 +303,13 @@ void MIMEType::registerExtension( const String& extension, const String& mimeTyp
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

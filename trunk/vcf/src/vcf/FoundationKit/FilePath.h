@@ -20,7 +20,7 @@ namespace VCF {
 
 
 /**
-\par
+\class FilePath FilePath.h "vcf/FoundationKit/FilePath.h"
 A FilePath represents a path to a file in the filesystem.
 
 \par
@@ -100,6 +100,11 @@ format so that more complex operations can be performed without repetitions.
 		*/
 		inline FilePath& operator= ( const String& filename ) {
 			filename_ = transformToNative( filename );
+			return *this;
+		}
+
+		inline FilePath& operator+= ( const String& filename ) {
+			filename_ += transformToNative( filename );
 			return *this;
 		}
 		
@@ -493,6 +498,15 @@ inline std::vector<String> FilePath::getPathComponents() const {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.6.2.1  2005/09/07 20:24:49  ddiego
+*added some more help support.
+*
 *Revision 1.6  2005/07/18 03:54:19  ddiego
 *documentation updates.
 *

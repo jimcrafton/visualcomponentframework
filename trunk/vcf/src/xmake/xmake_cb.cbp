@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="4" />
+	<Project>
+		<Option title="xmake" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="mingw_Release">
+				<Option output="..\..\bin\xmake.exe" />
+				<Option object_output="mgcc\Release\" />
+				<Option external_deps="..\..\lib\liblibXmake_mgcc_s.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-DNDEBUG" />
+					<Add directory=".\" />
+				</Compiler>
+				<Linker>
+					<Add library="liblibXmake_mgcc_s.a" />
+				</Linker>
+			</Target>
+			<Target title="mingw_Debug">
+				<Option output="..\..\bin\xmake.exe" />
+				<Option object_output="mgcc\Debug\" />
+				<Option external_deps="..\..\lib\liblibXmake_mgcc_s_d.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+					<Add directory=".\" />
+				</Compiler>
+				<Linker>
+					<Add library="liblibXmake_mgcc_s_d.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-pipe" />
+			<Add option="-frtti" />
+			<Add option="-fexceptions" />
+			<Add option="-mthreads" />
+			<Add option="-Wno-multichar" />
+			<Add option="-DWIN32" />
+			<Add option="-D_WIN32" />
+			<Add option="-D_WINDOWS" />
+			<Add option="-DUSE_LIBXMAKE_LIB" />
+		</Compiler>
+		<Linker>
+			<Add directory="..\..\lib" />
+		</Linker>
+		<Unit filename="ReadMe.txt">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="makefile.xml">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="xmake.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="xmake_warnings_off.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

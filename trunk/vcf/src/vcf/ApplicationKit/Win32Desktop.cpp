@@ -178,10 +178,23 @@ Rect Win32Desktop::desktopGetUsableBounds()
 	return result;
 }
 
+Point Win32Desktop::getCurrentMousePosition()
+{
+	::POINT pt;
+	::GetCursorPos(&pt);
+	return Point( pt.x, pt.y );
+}
+
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/02/15 05:14:33  ddiego
+*more browser code.
+*
 *Revision 1.4  2005/07/09 23:14:57  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

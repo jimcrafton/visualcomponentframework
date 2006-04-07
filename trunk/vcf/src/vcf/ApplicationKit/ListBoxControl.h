@@ -39,7 +39,9 @@ class ImageList;
 
 
 #define LISTBOXCONTROL_CLASSID		"ED88C0A5-26AB-11d4-B539-00C04F0196DA"
-
+/**
+\class ListBoxControl ListBoxControl.h "vcf/ApplicationKit/ListBoxControl.h"
+*/
 class APPLICATIONKIT_API ListBoxControl : public CustomControl {
 
 public:
@@ -193,6 +195,8 @@ protected:
 	ImageList* stateImageList_;
 	double stateItemIndent_;
 
+	virtual void destroy();
+
 	void paintSelectionRect( GraphicsContext* ctx, Rect* rect, ListItem* item );
 
 	ListItem* findSingleSelectedItem( Point* pt );
@@ -218,6 +222,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

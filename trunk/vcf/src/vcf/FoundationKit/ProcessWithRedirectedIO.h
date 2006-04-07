@@ -29,6 +29,7 @@ namespace VCF {
 	class ProcessIORedirectionPeer;
 
 	/**
+	\class ProcessWithRedirectedIO ProcessWithRedirectedIO.h "vcf/FoundationKit/ProcessWithRedirectedIO.h"
 	This class represents a process that has it's IO redirected so that when
 	there is new data available an event is fired to any registered event
 	handlers. Currently only output is captured and redirected.
@@ -54,8 +55,24 @@ namespace VCF {
 
 		virtual ~ProcessWithRedirectedIO();
 
+
 		/**
-		Returns the ID of hte process
+		@delegate OutputReady fires an OutputReadyEvent. This is 
+		fired by the framework, specifically the ProcessIORedirectionPeer,
+		whenever data has become available and read to read. The peer
+		will allocate the data in the form of a string (it's assumed to
+		be text format). 
+		\note Please note that when data is a ready and the the new event 
+		is fired, at least in the Win32 implementation, this event will
+		be fired in the context of a different thread than the one in which 
+		the ProcessWithRedirectedIO	was created in.
+		@event OutputReadyEvent
+		@eventtype 
+		*/
+		DELEGATE(OutputReady);
+
+		/**
+		Returns the ID of the process
 		*/
 		int getID();
 
@@ -92,10 +109,18 @@ namespace VCF {
 		when data is a ready and the the new event is fired, this will happen in the
 		context of a different thread than the one in which the ProcessWithRedirectedIO
 		was created in.
+		@deprecated - use the OutputReady delegate directly.
 		*/
-		void addOutputReadyHandler( EventHandler* eventHandler );
+		void addOutputReadyHandler( EventHandler* eventHandler ) {
+			OutputReady += eventHandler;
+		}
 
-		void removeOutputReadyHandler( EventHandler* eventHandler );
+		/**
+		@deprecated - use the OutputReady delegate directly.
+		*/
+		void removeOutputReadyHandler( EventHandler* eventHandler ) {
+			OutputReady -= eventHandler;
+		}
 
 		ulong32 terminate();
 	protected:
@@ -107,6 +132,12 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

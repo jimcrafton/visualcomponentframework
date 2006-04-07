@@ -83,7 +83,8 @@ void Frame::State::saveToStream( OutputStream* stream )
 Frame::Frame():
 	frameStyle_(fstSizeable),
 	isTopmostFrame_(false),
-	useColorForBackground_(false)
+	useColorForBackground_(false),
+	allowFrameAsChildControl_(false)
 {
 	setContainerDelegate( this );
 	setContainer( new StandardContainer() );	
@@ -160,10 +161,9 @@ void Frame::paint( GraphicsContext * context )
 }
 
 void Frame::show()
-{
-	//if ( !getVisible() ) {
-		setVisible( true );
-	//}
+{	
+	setVisible( true );
+	repaint();
 
 	activate();
 }
@@ -206,6 +206,9 @@ void Frame::activate()
 		return;
 	}
 
+	if ( this->isDesigning() ) {
+		return;
+	}
 	
 
 	if ( this != Frame::currentActiveFrame ) {
@@ -223,8 +226,8 @@ void Frame::activate()
 				
 				VCF::WindowEvent event( oldActiveFrame, Frame::ACTIVATION_EVENT );
 
-				//StringUtils::traceWithArgs( "oldActiveFrame->FrameActivation.fireEvent, this[%s]@ %s\n",
-				//					oldActiveFrame->getClassName().c_str(), oldActiveFrame->toString().c_str() );
+				//StringUtils::trace( Format( "oldActiveFrame->FrameActivation.fireEvent, this[%s]@ %s\n" ) %
+				//					oldActiveFrame->getClassName() % oldActiveFrame->toString() );
 
 				oldActiveFrame->FrameActivation.fireEvent( &event );
 			}
@@ -246,9 +249,9 @@ bool Frame::isActive()
 Frame* Frame::getActiveFrame()
 {
 	/*
-	StringUtils::traceWithArgs( "Frame::getActiveFrame(): %p\n", Frame::currentActiveFrame );
+	StringUtils::trace( Format( "Frame::getActiveFrame(): %p\n" ) % Frame::currentActiveFrame );
 	Control* c = Control::getCurrentFocusedControl();
-	StringUtils::traceWithArgs( "Control::getCurrentFocusedControl(): %p\n", c );
+	StringUtils::trace( Format( "Control::getCurrentFocusedControl(): %p\n" ) % c );
 
 	if ( NULL == Frame::currentActiveFrame ) {
 		Frame::currentActiveFrame = c->getParentFrame();
@@ -277,10 +280,48 @@ bool Frame::allowClose()
 	return result;
 }
 
+Dialog* Frame::createDialog( Class* dialogClazz, ResourceBundle* resBundle )
+{
+	Dialog* result = NULL;
+
+	result = (Dialog*)Component::createComponentFromResources( dialogClazz, classid(VCF::Dialog), resBundle );
+
+	return result;
+}
+
+Window* Frame::createWindow( Class* windowClazz, ResourceBundle* resBundle )
+{
+	Window* result = NULL;
+
+	result = (Window*)Component::createComponentFromResources( windowClazz, classid(VCF::Window), resBundle );
+
+	return result;
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.6  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.4.2.5  2005/09/18 22:54:47  ddiego
+*fixed some minor bugs in vffinput stream and parser class.
+*
+*Revision 1.4.2.4  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.4.2.3  2005/08/24 05:03:21  ddiego
+*better component loading and creation functions.
+*
+*Revision 1.4.2.2  2005/08/05 01:11:38  ddiego
+*splitter fixes finished.
+*
+*Revision 1.4.2.1  2005/08/01 18:50:31  marcelloptr
+*minor changes
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

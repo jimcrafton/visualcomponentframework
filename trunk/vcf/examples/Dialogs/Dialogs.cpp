@@ -60,16 +60,14 @@ public:
 		Panel* bottom = new Panel();
 		bottom->setBorder( NULL );
 
-		UIMetricsManager* metrics = UIToolkit::getUIMetricsManager();		
-
-		bottom->setHeight( okBtn->getPreferredHeight() + metrics->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta) * 2 );
+		bottom->setHeight( okBtn->getPreferredHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta) * 2 );
 		
 
 		HorizontalLayoutContainer* container2 = new HorizontalLayoutContainer();
 		container2->setLeftBorderWidth( getWidth() / 2.0 );	
 
 		double width = getWidth() / 2.0;
-		width -= metrics->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta);
+		width -= UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 		width -= container2->getColumnTweenWidth( 0 );
 
 		container2->setColumnWidth( 0, width / 2.0 );
@@ -104,7 +102,6 @@ class DialogsWindow : public Window {
 public:
 	DialogsWindow() {
 		setCaption( "Dialogs" );
-		setVisible( true );
 
 
 		CommandButton* btn1 = new CommandButton();
@@ -277,7 +274,7 @@ public:
 	This example shows how to call up the common font dialog
 	*/
 	void example4( Event* e ) {
-		CommonFont dlg(this);
+		CommonFontDialog dlg(this);
 		dlg.setSelectedFont( getFont() );
 		if ( dlg.execute() ) {
 			Font font = *dlg.getSelectedFont();
@@ -290,15 +287,12 @@ public:
 	This example shows how to call up the common Color dialog
 	*/	
 	void example5( Event* e ) {
-		CommonColor dlg(this);
+		CommonColorDialog dlg(this);
 		dlg.setSelectedColor( getColor() );
 		if ( dlg.execute() ) {
 			Color color = *dlg.getSelectedColor();
 
-			String hexName = StringUtils::format( Format("#%02X%02X%02X") 
-												%	(int)(color.getRed() * 255.0)
-												%	(int)(color.getGreen() * 255.0)
-												%	(int)(color.getBlue() * 255.0) );
+			String hexName = color.toString();
 
 			Dialog::showMessage( "You chose color (in hex) : " + hexName );
 		}
@@ -308,7 +302,7 @@ public:
 	This example shows how to call up the common file browse dialog
 	*/
 	void example6( Event* e ) {
-		CommonFileBrowse dlg(this);
+		CommonFileBrowseDialog dlg(this);
 		
 		dlg.setDirectory( System::getCurrentWorkingDirectory() );
 
@@ -321,7 +315,7 @@ public:
 	This example shows how to call up the common file open dialog
 	*/
 	void example7( Event* e ) {
-		CommonFileOpen dlg(this);
+		CommonFileOpenDialog dlg(this);
 		
 		dlg.addFilter( "Pumpernikel Bread", "*.pmk" );
 		if ( dlg.execute() ) {
@@ -333,7 +327,7 @@ public:
 	This example shows how to call up the common file save dialog
 	*/
 	void example8( Event* e ) {
-		CommonFileSave dlg(this);
+		CommonFileSaveDialog dlg(this);
 		
 		if ( dlg.execute() ) {
 
@@ -344,7 +338,7 @@ public:
 	This example shows how to call up the common print dialog
 	*/
 	void example9( Event* e ) {
-		CommonPrint dlg(this);
+		CommonPrintDialog dlg(this);
 		
 		if ( dlg.execute() ) {
 
@@ -368,6 +362,7 @@ public:
 		Window* mainWindow = new DialogsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 		
 		return result;
 	}

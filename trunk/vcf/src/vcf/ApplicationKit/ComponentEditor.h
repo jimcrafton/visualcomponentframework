@@ -21,117 +21,161 @@ class Component;
 class Control;
 
 /**
-*A ComponentEditor is an interface used to edit
-*an entire component at once, as opposed to a PropertyEditor
-*which only edits a single property of a specific component or
-*object.
+\class ComponentEditor ComponentEditor.h "vcf/ApplicationKit/ComponentEditor.h"
+A ComponentEditor is an interface used to edit
+an entire component at once, as opposed to a PropertyEditor
+which only edits a single property of a specific component or
+object.
 */
 class APPLICATIONKIT_API ComponentEditor : public Interface  {
 public:
 	virtual ~ComponentEditor(){};
 
+	enum ComponentAttributes {
+		caNone						= 0x00000,
+		caSeparator					= 0x10000,
+		caHasParentIndex			= 0x00001,
+		caUsesModalDialogForEditing	= 0x00002,
+	};
+
 	/**
-	*this is called only once, immediately after the component has been
-	*created, after the caller has made the setComponent() call
-	*on the editor
+	This is called immediately after the component has been
+	created, after the caller has made the setComponent() call
+	on the editor
 	*/
 	virtual void initialize() = 0;
 
 	/**
-	*retreives a new command instance associated with this index
-	*@param ulong32 index of the command to retrieve
-	*@return Command* returns a <b><i>NEW</i></b> instance of the Command object to
-	*be associated with the given index. <b>Note:</b>It is the <b>callers</b> responsibility
-	*to clean up memory and the caller owns the command after this call.
+	This method returns a mask of potential attributes
+	for the command at the given index.
 	*/
-	virtual Command* getCommand( const ulong32& index ) = 0;
+	virtual int getAttributes( const ulong32& index ) = 0;
 
 	/**
-	*Gets the number of unique commands associated with this
-	*component editor
-	*@return ulong32 the number of commands for the editor
+	Returns the index value of the command's parent
+	if one exists. If no parent exists, then the value
+	returned is -1. Most comamnds will \em not have a 
+	parent. However this is used if you have a complex
+	set of commands that make sense to nest in a heirarchy.
+	*/
+	virtual int getCommandParentIndex( const ulong32& index ) = 0;
+
+	/**
+	Retreives a new command instance associated with this index
+	@param ulong32 index of the command to retrieve
+	@return Command* returns a \em NEW instance of the 
+	Command object to be associated with the given index. 
+	
+	\em Note: It is the \em callers responsibility
+	to clean up memory and the caller owns the command 
+	after this call.
+	*/
+	virtual Command* createCommand( const ulong32& index ) = 0;
+
+	/**
+	Returns the number of unique commands associated with this
+	component editor
+	@return ulong32 the number of commands for the editor
 	*/
 	virtual ulong32 getCommandCount() = 0;
 
 	/**
-	*returns the editors default command index. This is
-	*the command that will be executed when the component is
-	*double clicked on.
+	Returns the editors default command index. This is
+	the command that will be executed when the component is
+	double clicked on. Return a value of -1 to indicate that 
+	there is no default command index.
 	*/
-	virtual ulong32 getDefaultCommandIndex() = 0;
+	virtual int getDefaultCommandIndex() = 0;
 
 	/**
-	*@return Component the component this Editor is currently attached
-	*to.
+	@return Component the component this Editor is currently attached
+	to.
 	*/
 	virtual Component* getComponent() = 0;
 
 	/**
-	*Sets the component for this editor
+	Sets the component for this editor
 	*/
 	virtual void setComponent( Component* component ) = 0;
 
-	/**
-	*gets the text representation of this editor's component
-	*@return String a text represention of this component and any of it's
-	*children if it supports a Container interface
-	*/
-	virtual String getComponentVFFFragment() = 0;
+	virtual void copy() = 0;
 
+	//attributes 
+
+	bool isSeparator( const ulong32& index ) {
+		return (getAttributes( index ) & ComponentEditor::caSeparator) ? true : false;
+	}
+
+	bool hasParentIndex( const ulong32& index ) {
+		return (getAttributes( index ) & ComponentEditor::caHasParentIndex) ? true : false;
+	}
+
+	bool usesModalDialogForEditing( const ulong32& index ) {
+		return (getAttributes( index ) & ComponentEditor::caUsesModalDialogForEditing) ? true : false;
+	}
 
 };
 
 
 /**
-*A ControlEditor is an additional interface used to edit
-*an entire <b>Control</b> at once, as opposed to a PropertyEditor
-*which only edits a single property of a specific component or
-*object. The ControlEditor interface provides several extra methods
-*specific to editing controls
+\class ControlEditor ComponentEditor.h "vcf/ApplicationKit/ComponentEditor.h"
+A ControlEditor is an additional interface used to edit
+an entire \em Control instance at once, as opposed to a 
+PropertyEditor which only edits a single property of a 
+specific component or object. 
+
+The ControlEditor interface provides several extra methods 
+specific to editing controls.
 */
 class APPLICATIONKIT_API ControlEditor : public Interface  {
 public:
 	virtual ~ControlEditor() {};
 
 	/**
-	*indicates whether the passed in parent is OK for this editor's
-	*control to use.
-	*@param Control* a pointer to the potential parent to be
-	*evaluated by the editor for this control.
-	*@return bool returns false if the parent is unacceptable, for instance
-	*if it were the wrong type of class, or true if it is OK to use the parent
+	indicates whether the passed in parent is OK for this editor's
+	control to use.
+	@param Control* a pointer to the potential parent to be
+	evaluated by the editor for this control.
+	@return bool returns false if the parent is unacceptable, for instance
+	if it were the wrong type of class, or true if it is OK to use the parent
 	for this control.
 	*/
 	virtual bool isParentValid( Control* parent ) = 0;
 
 	/**
-	*@return Control the control this Editor is currently attached
-	*to.
+	@return Control the control this Editor is currently attached
+	to.
 	*/
 	virtual Control* getControl() = 0;
 
 	/**
-	*Sets the control for this editor
+	Sets the control for this editor
 	*/
 	virtual void setControl( Control* control ) = 0;
 
 	/**
-	*called from the designer whenever a mouse down event is generated by
-	*the control in design mode.
+	called from the designer whenever a mouse down event is generated by
+	the control in design mode.
 	*/
 	virtual void mouseDown( MouseEvent* event ) = 0;
 
 	/**
-	*called from the designer whenever a mouse move event is generated by
-	*the control in design mode.
+	called from the designer whenever a mouse move event is generated by
+	the control in design mode.
 	*/
 	virtual void mouseMove( MouseEvent* event ) = 0;
 
 	/**
-	*called from the designer whenever a mouse up event is generated by
-	*the control in design mode.
+	called from the designer whenever a mouse up event is generated by
+	the control in design mode.
 	*/
 	virtual void mouseUp( MouseEvent* event ) = 0;
+
+	/**
+	called from the designer whenever a mouse double click event is generated 
+	by the control in design mode.
+	*/
+	virtual void mouseDblClick( MouseEvent* event ) = 0;
 };
 
 }; //end of namespace VCF
@@ -140,6 +184,19 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.2  2004/08/07 02:49:06  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

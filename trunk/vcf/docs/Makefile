@@ -5,7 +5,7 @@
 
 
 #This is the version number for the core VCF - make sure to modify this for new releases
-VERSION = 0.6.8
+VERSION = $(shell cat ../VERSION)
 
 
 #version number for the XMake program
@@ -13,7 +13,7 @@ XMAKE_VERSION = 1.0.5
 
 
 HTMLHELP_COMPILER = "c:/Program Files/HTML Help Workshop/hhc.exe"
-XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.68.1"
+XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.69.1"
 XSL_HTMLHELP_IMPORT = "$(XSL_DOCBOOK_DIR)/htmlhelp/htmlhelp.xsl"
 XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"
 
@@ -383,6 +383,7 @@ doxy :
 	mv Doxyfile.bak Doxyfile
 	cp -r gfx/ doxy_html/
 	cp vcf.css doxy_html/
+	cp vcf_tabs.css doxy_html/
 
 
 online_doxy :  
@@ -392,16 +393,52 @@ online_doxy :
 	doxygen Doxyfile.online
 	mv Doxyfile.bak Doxyfile.online
 	cp -r gfx/ doxy_html/
+	cp vcf.css doxy_html/
+	cp vcf_tabs.css doxy_html/
 		
 
 
 
 doxy_hh : doxy_html/index.hhp
+	sed -i "s?tabs.css?vcf_tabs.css?g" doxy_html/index.hhp
+	sed -i "s?tab_b.gif?gfx/vcf_tab_b.gif?g" doxy_html/index.hhp
+	sed -i "s?tab_l.gif?gfx/vcf_tab_l.gif?g" doxy_html/index.hhp
+	sed -i "s?tab_r.gif?gfx/vcf_tab_r.gif?g" doxy_html/index.hhp
+	sed -i "s?0x23520?0x53520?g" doxy_html/index.hhp
 	mv doxy_html/index.hhp doxy_html/$(VERSIONED_SRC_HHP_FILENAME)
 	-$(HTMLHELP_COMPILER) doxy_html/$(VERSIONED_SRC_HHP_FILENAME)	
 	mv doxy_html/$(VERSIONED_SRC_CHM_FILENAME) ./
 	mv doxy_html/$(VERSIONED_SRC_CHI_FILENAME) ./
 	
+
+mshelp2_doxy_hh : 
+	cp Doxyfile_mshelp2 Doxyfile_mshelp2.bak
+	sed "s?VERSION-NUMBER?$(VERSION)?g" Doxyfile_mshelp2 > Doxyfile_mshelp2.tmp
+	mv Doxyfile_mshelp2.tmp Doxyfile_mshelp2
+	doxygen Doxyfile_mshelp2
+	mv Doxyfile_mshelp2.bak Doxyfile_mshelp2
+	cp -r gfx/ doxy_mshelp2_html/
+	cp vcf.css doxy_mshelp2_html/
+	cp vcf_tabs.css doxy_mshelp2_html/
+	sed -i "s?tabs.css?vcf_tabs.css?g" doxy_mshelp2_html/index.hhp
+	sed -i "s?tab_b.gif?gfx/vcf_tab_b.gif?g" doxy_mshelp2_html/index.hhp
+	sed -i "s?tab_l.gif?gfx/vcf_tab_l.gif?g" doxy_mshelp2_html/index.hhp
+	sed -i "s?tab_r.gif?gfx/vcf_tab_r.gif?g" doxy_mshelp2_html/index.hhp
+	sed -i "s?0x23520?0x53520?g" doxy_mshelp2_html/index.hhp
+	mv doxy_mshelp2_html/index.hhp doxy_mshelp2_html/$(VERSIONED_SRC_HHP_FILENAME)
+	-$(HTMLHELP_COMPILER) doxy_mshelp2_html/$(VERSIONED_SRC_HHP_FILENAME)
+
+mshelp2_coredocs :  $(VCF_DOCS) test_tools
+	sed "s?VERSION-NUMBER?$(VERSION)?g" vcf_book.xml > vcf_book.xml.tmp
+	cp vcf_book.xml vcf_book.xml.bak
+	mv vcf_book.xml.tmp vcf_book.xml
+	xsltproc --nonet vcf.xsl vcf_docbook.xml
+	mv vcf_book.xml.bak vcf_book.xml
+
+mshelp2_coredocs_hh : mshelp2_coredocs vcf-docbook.hhp 
+	-$(HTMLHELP_COMPILER) vcf-docbook.hhp
+	mv $(RAW_CHM_FILENAME) $(VERSIONED_CHM_FILENAME)
+	mv $(RAW_CHI_FILENAME) $(VERSIONED_CHI_FILENAME)
 
 #dist : coredocs hh 
 #	find *.html > files.out
@@ -476,6 +513,8 @@ dist : dist_all_online alldocs_hh_with_source dist_all
 clean :
 	mv doxy_footer.html doxy_footer.html.bak
 	mv doxy_header.html doxy_header.html.bak
+	mv doxy_header.mshelp2.html doxy_header.mshelp2.html.bak
+	mv doxy_footer.mshelp2.html doxy_footer.mshelp2.html.bak
 	rm -f *.html
 	rm -f $(HTML_TAR_FILENAME).gz
 	rm -f $(HTML_ONLINE_TAR_FILENAME).gz
@@ -489,11 +528,34 @@ clean :
 	rm -f hrefmunger hrefmunger.o
 	mv doxy_footer.html.bak doxy_footer.html
 	mv doxy_header.html.bak doxy_header.html
+	mv doxy_header.mshelp2.html.bak doxy_header.mshelp2.html
+	mv doxy_footer.mshelp2.html.bak doxy_footer.mshelp2.html
 
 
 
 ###############################################################################
 #$Log$
+#Revision 1.20  2006/04/07 02:34:01  ddiego
+#initial checkin of merge from 0.6.9 dev branch.
+#
+#Revision 1.19.2.6  2006/03/19 01:29:27  dougtinkham
+#more changes for help
+#
+#Revision 1.19.2.5  2006/03/17 23:20:41  dougtinkham
+#update for doxy .chm building
+#
+#Revision 1.19.2.4  2006/03/13 12:31:48  dougtinkham
+#added targets for MSHelp2
+#
+#Revision 1.19.2.3  2006/03/12 22:01:33  ddiego
+#doc updates.
+#
+#Revision 1.19.2.2  2006/03/10 21:49:26  ddiego
+#updates to color example and some documentation.
+#
+#Revision 1.19.2.1  2006/03/05 02:28:04  ddiego
+#updated the Item interface and adjusted the other classes accordingly.
+#
 #Revision 1.19  2005/07/19 03:05:01  ddiego
 #doc makefile changes.
 #

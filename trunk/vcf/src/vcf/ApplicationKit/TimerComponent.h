@@ -21,7 +21,13 @@ namespace VCF  {
 
 
 /**
-*Class TimerComponent documentation
+\class TimerComponent TimerComponent.h "vcf/ApplicationKit/TimerComponent.h"
+The TimerComponent is used to fire timer events. Simply create
+the component, add an event handler to it's TimerPulse delegate,
+set it's time out interval, and activate the timer. You can
+stop the timer at any point by call it's setActivated() function
+and passing in false. The default state of the timer is not 
+active.
 */
 class APPLICATIONKIT_API TimerComponent : public Component {
 public:
@@ -44,16 +50,35 @@ public:
 
 	virtual void afterCreate( ComponentEvent* event );
 
+	/**
+	Indicates whether or not the component is active. The timer is 
+	considered active if it is firing timer events. It 
+	will remain active till it's destroyed, or setActive() is called
+	with false for a value.
+	*/
 	bool isActive() {
 		return isActive_;
 	}
 
+	/**
+	Activates the timer. Pass in true to activate the timer, and
+	false to turn it off. If the timer is activated, it will
+	start to fire timer events.
+	*/
 	void setActivated( const bool& isActive );
 
+	/**
+	Returns the time out interval in milliseconds.
+	*/
 	long getTimeoutInterval() {
 		return timeoutInterval_;
 	}
 
+	/**
+	Set's the time out interval. A new timer event, i.e. 
+	TimerPulse will fire an event, ever interval number of 
+	milliseconds.
+	*/
 	void setTimeoutInterval( const long& interval );
 
 protected:
@@ -71,6 +96,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

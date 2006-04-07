@@ -20,6 +20,7 @@ class Resource;
 class ResourceBundlePeer;
 
 /**
+\class ResourceBundle ResourceBundle.h "vcf/FoundationKit/ResourceBundle.h"
 *A ResourceBundle is used to represent a collection of resources. ResourceBundle's can
 *be attached to external files or applications.
 */
@@ -64,6 +65,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/01/02 03:04:23  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

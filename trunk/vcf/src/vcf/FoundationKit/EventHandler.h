@@ -20,13 +20,13 @@ class Delegate;
 
 
 /**
-\par
+\class EventHandler EventHandler.h "vcf/FoundationKit/EventHandler.h"
 EventHandler's form the back bone of the event
 model in the VCF. The EventHandler base class
 provides a clean way to invoke the class
 specific member function pointers in the
 derived EventHandlerInstance template class.
-\par
+
 The EventHandler is an abstract class an cannot be created.
 Instead you need to derive your own custom class from it
 and implement the invoke() method. Typically you can 
@@ -45,44 +45,63 @@ public:
 	virtual ~EventHandler();
 
 	/**
-	*called during the events dispatch cycle
-	*The implemtnation will end up calling the
-	*appropriate call back method
+	
+	Called during the events dispatch cycle.
+	The implementation will end up calling the
+	appropriate call back method.
 	*/
 	virtual void invoke( Event* e ) = 0;
 
+
 	/**
-	*adds the EventHandler to it's source object.
-	*For this to work the source must be derived
-	*from ObjectWithEvents. By adding the event handler
-	*to the source, the handler's memory will be cleaned
-	*up by the source when the source is destroyed.
-	*The EventHandler may be retreived at any time
-	*by calling the getEventHandler() method on the
-	*source (once again, assuming the source is derived
-	*from ObjectWithEvents).
-	*@param Object the source to which the EventHandler
-	*will be added.
-	*@param String the name the EventHandler is referred to.
-	*This should be a reasonably unique name.
+	Returns the source that the event handler is attached to. Some 
+	event handler implementations may not return a source for public
+	use, or may not use one at all, so this method may return NULL. 
+	An example of not using a source would be the StaticEventHandlerInstance
+	which is used to wrap static functions.
+	The default implementation returns a NULL object source.
+	*/
+	virtual Object* getSource() {
+		return NULL;
+	}
+
+
+	/**
+	
+	Adds the EventHandler to it's source object.
+	For this to work the source must be derived
+	from ObjectWithEvents. By adding the event handler
+	to the source, the handler's memory will be cleaned
+	up by the source when the source is destroyed.
+	
+	The EventHandler may be retreived at any time
+	by calling the getEventHandler() method on the
+	source (once again, assuming the source is derived
+	from ObjectWithEvents).
+	@param Object the source to which the EventHandler
+	will be added.
+	@param String the name the EventHandler is referred to.
+	This should be a reasonably unique name.
 	*/
 	void addHandlerToSource( Object* source, const String& handlerName );
 
+	String getHandlerName();
 protected:
-	
+
+	String getHandlerNameFromSource( Object* source );	
 };
 
 
 /**
-\par
-EventHandlerInstances are used to provide a
-typesafe wrapper around specific class members method pointers.
-In addition, when the are created, if the source passed in is
+\class EventHandlerInstance EventHandler.h "vcf/FoundationKit/EventHandler.h"
+The EventHandlerInstance class is used to provide a
+typesafe wrapper around a specific class's member function pointer.
+In addition, when the instance is created, if the source passed in is
 derived from VCF::ObjectWithEvents, then the handler will be
 maintained in a list by the source, and destroyed when the source
 is destroyed, freeing the creator of the handler from worrying about
 memory leaks.
-\par 
+ 
 The SOURCE template parameter specified the source class that 
 the event handler method is a member of. The EVENT template
 parameter is the event class type. The event class type
@@ -192,12 +211,16 @@ public:
 		}
 	}
 
+	virtual Object* getSource() {
+		return source_;
+	}
 protected:
 	SOURCE* source_;
 	OnEventHandlerMethod handlerMethod_;
 };
 
 /**
+\class StaticEventHandlerInstance EventHandler.h "vcf/FoundationKit/EventHandler.h"
 StaticEventHandlerInstance's are used to provide a
 typesafe wrapper around a specific class's <b>static</a> function pointers,
 as opposed to method pointers (which take the implicit this pointer).
@@ -237,6 +260,7 @@ protected:
 
 
 /**
+\class GenericEventHandler EventHandler.h "vcf/FoundationKit/EventHandler.h"
 The GenericEventHandler class is provided as a convenience class for use when dealing with a generic
 Event object.
 */
@@ -259,6 +283,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.7.2.2  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
+*Revision 1.7.2.1  2005/08/08 03:19:17  ddiego
+*minor updates
+*
 *Revision 1.7  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

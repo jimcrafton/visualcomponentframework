@@ -342,14 +342,31 @@ void Win32LocalePeer::setLocale( const UnicodeString& language, const UnicodeStr
 int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 {
 	int result = 0;
+	int cmpRes = CSTR_EQUAL;
 	if ( System::isUnicodeEnabled() ) {
-		result = ::CompareStringW( lcid_, 0, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
+		cmpRes = ::CompareStringW( lcid_, 0, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
 	}
 	else {
 		AnsiString tmp1 = s1;
 		AnsiString tmp2 = s2;
 
-		result = ::CompareStringA( lcid_, 0, tmp1.c_str(), tmp1.size(), tmp2.c_str(), tmp2.size() );
+		cmpRes = ::CompareStringA( lcid_, 0, tmp1.c_str(), tmp1.size(), tmp2.c_str(), tmp2.size() );
+	}
+	switch ( cmpRes ) {
+		case CSTR_LESS_THAN : {
+			result = -1;
+		}
+		break;
+		
+		case CSTR_EQUAL : {
+			result = 0;
+		}
+		break;
+		
+		case CSTR_GREATER_THAN : {
+			result = 1;
+		}
+		break;
 	}
 
 	return result;
@@ -750,6 +767,7 @@ UnicodeString Win32LocalePeer::toString( const double& val )
 	return result;
 }
 
+
 UnicodeString Win32LocalePeer::toString( const float& val )
 {
 	UnicodeString result;
@@ -818,7 +836,7 @@ UnicodeString Win32LocalePeer::toStringFromCurrency( const double& val )
 		int size = ::GetCurrencyFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
 		VCFChar* numStr = new VCFChar[size+1];
 		memset(numStr,0,(size+1)*sizeof(VCFChar));
-		::GetNumberFormatW( lcid_, 0, tmp, NULL, numStr, size );
+		::GetCurrencyFormatW( lcid_, 0, tmp, NULL, numStr, size );
 
 		result = numStr;
 
@@ -832,7 +850,7 @@ UnicodeString Win32LocalePeer::toStringFromCurrency( const double& val )
 		int size = ::GetCurrencyFormatA( lcid_, 0, tmp, NULL, NULL, 0 );
 		char* numStr = new char[size+1];
 		memset(numStr,0,(size+1)*sizeof(char));
-		::GetNumberFormatA( lcid_, 0, tmp, NULL, numStr, size );
+		::GetCurrencyFormatA( lcid_, 0, tmp, NULL, numStr, size );
 
 
 		result = numStr;
@@ -1955,7 +1973,29 @@ ulong32 Win32LocalePeer::getLanguageCode()
 
 }
 
+String Win32LocalePeer::getLanguage()
+{
+	String result;
 
+	if ( System::isUnicodeEnabled() ) {
+		int size = ::GetLocaleInfoW( lcid_, LOCALE_SLANGUAGE, NULL, 0 );
+		VCFChar* tmp = new VCFChar[size+1];
+		memset( tmp, 0, (size+1)*sizeof(VCFChar) );
+		::GetLocaleInfoW( lcid_, LOCALE_SLANGUAGE, tmp, size );
+		result = tmp;
+		delete [] tmp;
+	}
+	else {
+		int size = ::GetLocaleInfoA( lcid_, LOCALE_SLANGUAGE, NULL, 0 );
+		char* tmp = new char[size+1];
+		memset( tmp, 0, (size+1) );
+		::GetLocaleInfoA( lcid_, LOCALE_SLANGUAGE, tmp, size );
+		result = tmp;
+		delete [] tmp;
+	}	
+
+	return result;
+}
 
 ulong32 Win32LocalePeer::getCountryCode()
 {
@@ -2781,6 +2821,18 @@ Swahili is also used in Rwanda, in Burundi (for commercial purposes), and by a s
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/03/23 05:15:39  ddiego
+*fix to localize the locale language name.
+*
+*Revision 1.4.2.2  2006/03/23 00:56:09  ddiego
+*added a fix to algo for determing resource directory name.
+*
+*Revision 1.4.2.1  2006/01/22 14:24:12  ddiego
+*updated to add case insens str compare.
+*
 *Revision 1.4  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

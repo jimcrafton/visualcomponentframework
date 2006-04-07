@@ -296,7 +296,7 @@ void OSXWindow::setVisible( const bool& visible )
 		if ( doResize ) {
 			control_->getContainer()->resizeChildren( NULL );
 		}
-		repaint( NULL );
+		repaint( NULL,false );
 	}
 }
 
@@ -368,7 +368,7 @@ void OSXWindow::setFont( Font* font )
 
 }
 
-void OSXWindow::repaint( Rect* repaintRect )
+void OSXWindow::repaint( Rect* repaintRect, const bool& immediately )
 {
 	OSXRect r;
 	if ( NULL == repaintRect ) {
@@ -617,7 +617,7 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 					GetEventParameter( theEvent, kEventParamMouseButton, typeMouseButton, NULL,
 										sizeof (EventMouseButton), NULL, &button);
 								
-					currentMouseBtn_ = OSXUtils::translateButtonMask( button );
+					currentMouseBtn_ = OSXUIUtils::translateButtonMask( button );
 					
 					Control* childControl = getControlForMouseEvent( theEvent );
 					if ( NULL == childControl && !control_->isDestroying() ) {
@@ -1028,12 +1028,26 @@ void OSXWindow::copyControlsFromWndRef( WindowRef oldWndRef )
 	}						
 }
 
+
 };//end of namespace VCF
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/01/09 02:22:31  ddiego
+*more osx code
+*
+*Revision 1.4.2.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.4.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.4  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

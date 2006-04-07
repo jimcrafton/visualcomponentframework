@@ -23,8 +23,6 @@ CFG=AllIn1 - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -41,7 +39,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6\ReleaseS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /Zm200 /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/thirdparty/win32" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /Zm200 /c
+
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +63,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Fd"..\..\..\lib\VCF_vc6_sd.pdb" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
+
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1128,6 +1128,11 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp
+# SUBTRACT CPP /YX /Yc /Yu
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp
 # SUBTRACT CPP /YX /Yc /Yu
 # End Source File
@@ -1146,6 +1151,11 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Path.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\PixelFormats.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp
+# SUBTRACT CPP /YX /Yc /Yu
 # End Source File
 # Begin Source File
 
@@ -1404,17 +1414,7 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationException.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp
-
-!IF  "$(CFG)" == "AllIn1 - Win32 Release"
-
 # ADD CPP /Yc"vcf/ApplicationKit/ApplicationKit.h"
-
-!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
-
-# ADD CPP /Yc"vcf/ApplicationKit/ApplicationKit.h"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -1478,10 +1478,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Button.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ButtonEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ButtonEvent.h
 # End Source File
 # Begin Source File
@@ -1506,10 +1502,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Clipboard.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ClipboardEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ClipboardEvent.h
 # End Source File
 # Begin Source File
@@ -1530,10 +1522,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItemEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItemEvent.h
 # End Source File
 # Begin Source File
@@ -1546,10 +1534,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModelEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModelEvent.h
 # End Source File
 # Begin Source File
@@ -1559,14 +1543,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComboBoxControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\COMDataObject.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\COMDataObject.h
 # End Source File
 # Begin Source File
 
@@ -1590,11 +1566,11 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommandGroup.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColor.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColorDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColor.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h
 # End Source File
 # Begin Source File
 
@@ -1606,11 +1582,11 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonDialogPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowse.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowse.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h
 # End Source File
 # Begin Source File
 
@@ -1622,35 +1598,35 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpen.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpen.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSave.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSave.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFont.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFont.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrint.cpp
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrint.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h
 # End Source File
 # Begin Source File
 
@@ -1686,14 +1662,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\COMUtils.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\COMUtils.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Container.h
 # End Source File
 # Begin Source File
@@ -1719,10 +1687,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ControlContainer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ControlContainer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ControlEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -1982,10 +1946,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\EtchedBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\FocusEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\FocusEvent.h
 # End Source File
 # Begin Source File
@@ -2010,27 +1970,11 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\HeaderControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\HelpEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\HelpEvent.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\HorizontalLayoutContainer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\HTMLBrowserControl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\HTMLBrowserControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\HTMLBrowserPeer.h
 # End Source File
 # Begin Source File
 
@@ -2050,10 +1994,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ImageListEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ImageListEvent.h
 # End Source File
 # Begin Source File
@@ -2066,15 +2006,7 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ItemEditorEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ItemEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ItemEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\KeyboardEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2127,10 +2059,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ListModelEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2215,10 +2143,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ModelEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ModelViewKit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\MouseEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2394,10 +2318,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TabModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.h
 # End Source File
 # Begin Source File
@@ -2431,10 +2351,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TimerComponent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TimerComponent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TimerEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2474,10 +2390,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ToolbarDock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ToolTipEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ToolTipEvent.h
 # End Source File
 # Begin Source File
@@ -2506,10 +2418,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModelEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModelEvent.h
 # End Source File
 # Begin Source File
@@ -2534,10 +2442,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UIToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoEvent.h
 # End Source File
 # Begin Source File
@@ -2547,10 +2451,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ValidationEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2579,10 +2479,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\View.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\WhatsThisHelpEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -2630,11 +2526,31 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32ColorDialog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32COMDataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32COMDataObject.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32COMException.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Component.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32COMUtils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32COMUtils.h
 # End Source File
 # Begin Source File
 
@@ -2843,10 +2759,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Window.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Window.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\WindowEvent.cpp
 # End Source File
 # Begin Source File
 

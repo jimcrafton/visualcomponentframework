@@ -20,6 +20,7 @@ namespace VCF
 class VariantData;
 
 /**
+\class PropertyChangeEvent PropertyChangeEvent.h "vcf/FoundationKit/PropertyChangeEvent.h"
 *Property change event's are used whenever a propertys value changes
 */
 class FOUNDATIONKIT_API PropertyChangeEvent : public Event
@@ -65,6 +66,7 @@ private:
 
 
 /**
+\class PropertyChangeEventHandler PropertyChangeEvent.h "vcf/FoundationKit/PropertyChangeEvent.h"
 *Classes implmenting this interface <b><i>MUST</i></b> throw PropertyChangeException
 *if they do not want the change to be processed.
 */
@@ -86,6 +88,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:14  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

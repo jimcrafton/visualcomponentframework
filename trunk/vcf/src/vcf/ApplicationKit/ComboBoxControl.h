@@ -53,6 +53,7 @@ static String ComboBoxStyleTypeNames[] = { "cbsDropDown",
 
 
 /**
+\class ComboBoxControl ComboBoxControl.h "vcf/ApplicationKit/ComboBoxControl.h"
 *A combo box control is a control that is used to display a selection from a list of choices
 *in a single field. When the down arrow is clicked on a popup list is displayed that shows
 *all the possible choices for the control.
@@ -336,6 +337,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

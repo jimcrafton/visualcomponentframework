@@ -2,6 +2,8 @@
 #define _VCF_LINUXSEMAPHOREPEER_H__ 
 //LinuxSemaphorePeer.h
 
+
+
 /*
 Copyright 2000-2004 The VCF Project.
 Please see License.txt in the top level directory
@@ -32,14 +34,16 @@ public:
 
 	virtual bool lock();
 
+    virtual bool lock( uint32 timeoutInMilliseconds );
+
 	virtual bool unlock();
 
 	virtual OSHandleID getHandleID() {
-		return handle_;
+		return (OSHandleID)&semaphore_;
 	}
 	
 protected:
-	OSHandleID handle_;
+	sem_t semaphore_;
 
 };
 
@@ -49,6 +53,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
+*Revision 1.4.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

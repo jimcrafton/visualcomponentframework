@@ -12,6 +12,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/FoundationKit/Win32ResourceBundle.h"
 
+#if defined(VCF_BCC)
+  #include <cstring>
+  using std::strcmp;
+#endif
 
 using namespace VCF;
 
@@ -149,32 +153,6 @@ String Win32ResourceBundle::getVFF( const String& resourceName )
 		//throw exception- resource not found !!!!
 	}
 
-
-	if ( failedToFindRes ) {
-		//try res directory
-
-		String localeName = System::getCurrentThreadLocale()->getName();
-
-		bool fileExists = false;
-		String vffFile = System::findResourceDirectory() + resourceName;
-
-		if ( File::exists( vffFile ) ) {
-			fileExists = true;
-		}
-		else {
-			vffFile += ".vff";
-			if ( File::exists( vffFile ) ) {
-				fileExists = true;
-			}
-		}
-
-		if ( fileExists ) {
-			FileInputStream fs(vffFile);
-
-			fs >> result;
-		}
-	}
-
 	return result;
 }
 
@@ -239,7 +217,7 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 		FileInputStream fs(fileName);
 		ulong32 size = fs.getSize();
 		char* buf = new char[size];
-		fs.read( buf, size );
+		fs.read( (unsigned char*)buf, size );
 		
 
 		result = new Resource( buf, size, resourceName );
@@ -673,7 +651,7 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 		programFileName = fileName;
 
 
-		result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion );
+		result = new ProgramInfo( name, programFileName, author, copyright, company, description, programVersion, fileVersion, "", "" );
 	}
 
 	return result;
@@ -703,6 +681,24 @@ ProgramInfo* Win32ResourceBundle::getProgramInfo()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.5  2006/03/06 15:01:18  kiklop74
+*fix for borland compiler
+*
+*Revision 1.3.2.4  2005/12/28 20:43:40  kiklop74
+*Fixed error - missing strcmp
+*
+*Revision 1.3.2.3  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
+*Revision 1.3.2.2  2005/09/19 04:55:56  ddiego
+*minor updates.
+*
+*Revision 1.3.2.1  2005/09/07 04:19:55  ddiego
+*filled in initial code for help support.
+*
 *Revision 1.3  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

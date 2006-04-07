@@ -7,6 +7,7 @@ namespace VCF {
 class Image;
 
 /**
+\class GraphicsResourceBundlePeer GraphicsResourceBundlePeer.h "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
 class GraphicsResourceBundlePeer documentation
 */
 class GRAPHICSKIT_API GraphicsResourceBundlePeer {

@@ -19,7 +19,9 @@ where you installed the VCF.
 
 
 namespace VCF{
-
+/**
+\class ScrollEvent ScrollEvent.h "vcf/ApplicationKit/ScrollEvent.h"
+*/
 class APPLICATIONKIT_API ScrollEvent : public VCF::Event {
 public:
     ScrollEvent( Object* source, const unsigned long& eventType ) : Event(source,eventType) {}
@@ -74,6 +76,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:09  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

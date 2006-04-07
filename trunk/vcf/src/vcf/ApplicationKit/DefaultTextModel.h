@@ -34,7 +34,9 @@ where you installed the VCF.
 namespace VCF{
 
 #define DEFAULTTEXTMODEL_CLASSID		"8B2CDC32-3CAD-11d4-B553-00C04F0196DA"
-
+/**
+\class DefaultTextModel DefaultTextModel.h "vcf/ApplicationKit/DefaultTextModel.h"
+*/
 class APPLICATIONKIT_API DefaultTextModel : public AbstractModel, public TextModel {
 public:
 
@@ -83,6 +85,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

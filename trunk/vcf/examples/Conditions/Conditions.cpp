@@ -14,7 +14,7 @@ using namespace VCF;
 
 static Mutex* theMutex = NULL;
 static Condition* theCondition = NULL;
-static producerDone = false;
+static bool producerDone = false;
 
 
 
@@ -250,8 +250,14 @@ int main( int argc, char** argv ){
 /**
 *CVS Log info
 *$Log$
-*Revision 1.4  2005/07/09 23:14:33  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.5  2006/04/07 02:34:18  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2005/11/02 04:38:22  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.4.2.1  2005/07/23 21:45:33  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.3.4.1  2005/04/17 15:11:42  iamfraggle
 *Replaced old-style var arg calls with new Format calls.

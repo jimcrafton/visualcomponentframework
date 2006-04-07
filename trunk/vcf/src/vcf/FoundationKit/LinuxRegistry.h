@@ -35,21 +35,20 @@ public:
 	                       const uint32& dataBufferSize,
 	                       const String& valuename );
 
-	virtual String getStringValue( const String& valuename );
+    virtual bool getStringValue( const String& valuename, String& value );
 
-	virtual uint32 getIntValue( const String& valuename );
+    virtual bool getIntValue( const String& valuename, uint32& value );
 
-	virtual bool getBoolValue( const String& valuename );
+    virtual bool getBoolValue( const String& valuename, bool& value );
 
-	virtual void getDataBufValue( const String& valuename,
-	                              uint32& dataBufferSize,
-	                              void** dataBuffer );
+    virtual bool getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer );
 
 	virtual Enumerator<String>* getKeyNames();
 
 	virtual Enumerator<RegistryValueInfo*>* getValues();
 
 	virtual String getCurrentKey();
+
 private:
 	std::vector<RegistryValueInfo*> values_;
 	std::vector<String> keys_;
@@ -66,6 +65,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/10 00:04:08  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.3  2005/04/05 23:44:22  jabelardo
 *a lot of fixes to compile on linux, it does not run but at least it compile
 *

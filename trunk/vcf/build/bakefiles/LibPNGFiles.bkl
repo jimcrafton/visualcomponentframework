@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBPNG_HDR" hints="files">
+        thirdparty/common/LibPNG/png.h
+        thirdparty/common/LibPNG/pngconf.h
+    </set>
+
+    <set var="LIBPNG_SRC" hints="files">
+        thirdparty/common/LibPNG/png.c
+        thirdparty/common/LibPNG/pngerror.c
+        thirdparty/common/LibPNG/pnggccrd.c
+        thirdparty/common/LibPNG/pngget.c
+        thirdparty/common/LibPNG/pngmem.c
+        thirdparty/common/LibPNG/pngpread.c
+        thirdparty/common/LibPNG/pngread.c
+        thirdparty/common/LibPNG/pngrio.c
+        thirdparty/common/LibPNG/pngrtran.c
+        thirdparty/common/LibPNG/pngrutil.c
+        thirdparty/common/LibPNG/pngset.c
+        thirdparty/common/LibPNG/pngtest.c
+        thirdparty/common/LibPNG/pngtrans.c
+        thirdparty/common/LibPNG/pngvcrd.c
+        thirdparty/common/LibPNG/pngwio.c
+        thirdparty/common/LibPNG/pngwrite.c
+        thirdparty/common/LibPNG/pngwtran.c
+        thirdparty/common/LibPNG/pngwutil.c
+    </set>
+
+</makefile>

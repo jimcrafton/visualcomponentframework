@@ -17,7 +17,8 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
-*Class MutexPeer documentation
+\class MutexPeer MutexPeer.h "vcf/FoundationKit/MutexPeer.h"
+Class MutexPeer documentation
 */
 class FOUNDATIONKIT_API MutexPeer {
 public:
@@ -41,6 +42,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.4  2005/07/09 23:15:03  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

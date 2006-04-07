@@ -150,13 +150,14 @@ bool Win32Registry::setValue( void* dataBuffer, const uint32& dataBufferSize, co
 	return (resVal == ERROR_SUCCESS);
 }
 
-String Win32Registry::getStringValue( const String& valuename )
+bool Win32Registry::getStringValue( const String& valuename, String& value )
 {
-
+	
 	DWORD type = 0;
 	BYTE* buf = NULL;
 	DWORD size = 0;
-	String result;
+	bool result = false;
+
 	LONG resVal = 0;
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, NULL, &size );
@@ -173,10 +174,8 @@ String Win32Registry::getStringValue( const String& valuename )
 				resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
 				if ( resVal == ERROR_SUCCESS ){
 
-					result = (VCFChar*)buf;
-				}
-				else {
-					//throw exception
+					value = (VCFChar*)buf;
+					result = true;
 				}
 			}
 			else {
@@ -184,76 +183,73 @@ String Win32Registry::getStringValue( const String& valuename )
 				resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, buf, &size );
 				if ( resVal == ERROR_SUCCESS ){
 
-					result = (char*)buf;
-				}
-				else {
-					//throw exception
+					value = (char*)buf;
+					result = true;
 				}
 			}
 
 			delete [] buf;
 		}
 	}
-	else {
-		//throw exception
-	}
 
 	return result;
 }
 
-uint32 Win32Registry::getIntValue( const String& valuename )
+bool Win32Registry::getIntValue( const String& valuename, uint32& value )
 {
-	uint32 result = 0;
+	bool result = false;
 
 	DWORD type = 0;
-	DWORD size = sizeof(result);
+	DWORD size = sizeof(value);
 	LONG resVal = 0;
 
 	if ( System::isUnicodeEnabled() ) {
-		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&result, &size );
+		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&value, &size );
 	}
 	else {
-		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&result, &size );
+		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&value, &size );
 	}
 	if ( resVal == ERROR_SUCCESS ){
+		result = true;
 		if ( (type != REG_DWORD) && (size <= 0) ){
-			//throw exception
+			result = false;
 		}
-	}
-	else {
-
-		//throw exception
 	}
 
 	return result;
 }
 
-bool Win32Registry::getBoolValue( const String& valuename )
+bool Win32Registry::getBoolValue( const String& valuename, bool& value )
 {
-	DWORD result = 0;
+	bool result = false;
+	DWORD tmp = 0;
 	DWORD type = 0;
 	DWORD size = sizeof(DWORD);
 	LONG resVal = 0;
 	if ( System::isUnicodeEnabled() ) {
-		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&result, &size );
+		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&tmp, &size );
 	}
 	else {
-		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&result, &size );
+		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&tmp, &size );
 	}
 	if ( resVal == ERROR_SUCCESS ){
+		result = true;
 		if ( (type != REG_DWORD) && (size <= 0) ){
-			//throw exception
+			result = false;
+		}
+
+		if ( result ) {
+			value = tmp ? true : false;
 		}
 	}
-	else {
-		//throw exception
-	}
 
-	return result ? true : false;
+	return result;
 }
 
-void Win32Registry::getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer )
+bool Win32Registry::getDataBufValue( const String& valuename, uint32& dataBufferSize, void** dataBuffer )
 {
+	bool result = false;
+
 	DWORD type = 0;
 	BYTE* buf = NULL;
 	DWORD size = 0;
@@ -283,48 +279,56 @@ void Win32Registry::getDataBufValue( const String& valuename, uint32& dataBuffer
 			if ( resVal == ERROR_SUCCESS ){
 				*dataBuffer = (void*)buf;
 				dataBufferSize = (uint32)size;
+				result = true;
 			}
 			else {
-				//throw exception
+				dataBufferSize = 0;
+				*dataBuffer = NULL;
+				delete [] buf;
 			}
 		}
 	}
-	else {
-		//throw exception
-	}
+
+	return result;
 }
 
 Enumerator<String>* Win32Registry::getKeyNames()
 {
 	DWORD index = 0;
-	DWORD size = MAX_PATH + 1;
-	TCHAR* keyName = new TCHAR[size];
-	memset( keyName, 0, size*sizeof(TCHAR) );
-	keys_.clear();
-	while ( ERROR_SUCCESS == RegEnumKey( currentKeyHandle_, index, keyName, size ) ){
-		this->keys_.push_back( String(keyName) );
-		memset( keyName, 0, size*sizeof(TCHAR) );
-		index ++;
+	const DWORD size = MAX_PATH + 1;
+
+
+	if ( System::isUnicodeEnabled() ) {
+		WideChar keyName[size];
+		memset( keyName, 0, size*sizeof(WideChar) );
+
+		keys_.clear();
+		while ( ERROR_SUCCESS == RegEnumKeyW( currentKeyHandle_, index, keyName, size ) ){
+			keys_.push_back( String(keyName) );
+			memset( keyName, 0, size*sizeof(WideChar) );
+			index ++;
+		}
 	}
+	else {
+		char keyName[size];
+		memset( keyName, 0, size*sizeof(char) );
+
+		keys_.clear();
+		while ( ERROR_SUCCESS == RegEnumKeyA( currentKeyHandle_, index, keyName, size ) ){
+			keys_.push_back( String(keyName) );
+			memset( keyName, 0, size*sizeof(char) );
+			index ++;
+		}
+	}
+
+	
 	keysContainer_.initContainer( keys_ );
-	delete [] keyName;
 
 	return keysContainer_.getEnumerator();
 }
 
 Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 {
-	DWORD index = 0;
-#if defined(VCF_CW) && defined(UNICODE)
-	WCHAR valName[256];
-#else
-	CHAR valName[256];
-#endif
-	DWORD type = 0;
-	DWORD valNameSize = 256;
-	BYTE buffer[256];
-	DWORD bufferSize = 256;
-
 	std::vector<RegistryValueInfo*>::iterator it = values_.begin();
 	while ( it != values_.end() ){
 		RegistryValueInfo* regVal = *it;
@@ -332,47 +336,110 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 		regVal = NULL;
 		it++;
 	}
-
 	values_.clear();
-	memset( valName, 0, sizeof(valName) );
 
-	while ( ERROR_NO_MORE_ITEMS != RegEnumValue( currentKeyHandle_, index, valName, &valNameSize, NULL, &type, (BYTE*)&buffer, &bufferSize ) ){
-		String tmp = String(valName);
-		RegistryValueInfo* regVal = NULL;
-		VariantData data;
 
-		switch ( type ){
-			case REG_SZ:{
-				String strVal( (VCFChar*)buffer );
-				data = strVal;
-				regVal = new RegistryValueInfo( &data, RDT_STRING, tmp );
-			}
-			break;
+	DWORD index = 0;
 
-			case REG_DWORD:{
-				ulong32* intVal = (ulong32*)buffer;
-				data = *intVal;
-				regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
-			}
-			break;
+	DWORD type = 0;
+	DWORD valNameSize = 256;		
+	DWORD bufferSize = 256;		
 
-			case REG_BINARY:{
-				void* dataBuf = NULL;
-				if ( NULL != buffer ){
-					dataBuf = (void*)new char[bufferSize];
-					memcpy( dataBuf, buffer, bufferSize );
+	if ( System::isUnicodeEnabled() ) {
+		WideChar valName[256];	
+		BYTE buffer[sizeof(valName) * sizeof(WideChar)];
+
+		bufferSize = sizeof(buffer);
+		
+		memset( valName, 0, sizeof(valName) * sizeof(WideChar) );
+
+		while ( ERROR_NO_MORE_ITEMS != RegEnumValueW( currentKeyHandle_, index, valName, &valNameSize, NULL, &type, (BYTE*)&buffer, &bufferSize ) ){
+			String tmp = String(valName);
+			RegistryValueInfo* regVal = NULL;
+			VariantData data;
+
+			switch ( type ){
+				case REG_SZ:{
+					String strVal( (WideChar*)buffer );
+					data = strVal;
+					regVal = new RegistryValueInfo( &data, RDT_STRING, tmp );
 				}
-				regVal = new RegistryValueInfo( NULL, RDT_BINARY, tmp, (char*)dataBuf, bufferSize );
-			}
-			break;
-		}
+				break;
 
-		values_.push_back( regVal );
-		bufferSize=256;
-		valNameSize = 256;
-		memset( valName, 0, 256*sizeof(CHAR) );
-		index ++;
+				case REG_DWORD:{
+					ulong32* intVal = (ulong32*)buffer;
+					data = *intVal;
+					regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
+				}
+				break;
+
+				case REG_BINARY:{
+					void* dataBuf = NULL;
+					if ( NULL != buffer ){
+						dataBuf = (void*)new char[bufferSize];
+						memcpy( dataBuf, buffer, bufferSize );
+					}
+					regVal = new RegistryValueInfo( NULL, RDT_BINARY, tmp, (char*)dataBuf, bufferSize );
+				}
+				break;
+			}
+
+			values_.push_back( regVal );
+			bufferSize = sizeof(buffer);
+
+			valNameSize = 256;
+			memset( valName, 0, sizeof(valName) * sizeof(WideChar) );
+			index ++;
+		}
 	}
+	else {
+		char valName[256];	
+		BYTE buffer[sizeof(valName) * sizeof(char)];
+
+		bufferSize = sizeof(buffer);
+		
+		memset( valName, 0, sizeof(valName) * sizeof(char) );
+
+		while ( ERROR_NO_MORE_ITEMS != RegEnumValueA( currentKeyHandle_, index, valName, &valNameSize, NULL, &type, (BYTE*)&buffer, &bufferSize ) ){
+			String tmp = String(valName);
+			RegistryValueInfo* regVal = NULL;
+			VariantData data;
+
+			switch ( type ){
+				case REG_SZ:{
+					String strVal( (char*)buffer );
+					data = strVal;
+					regVal = new RegistryValueInfo( &data, RDT_STRING, tmp );
+				}
+				break;
+
+				case REG_DWORD:{
+					ulong32* intVal = (ulong32*)buffer;
+					data = *intVal;
+					regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
+				}
+				break;
+
+				case REG_BINARY:{
+					void* dataBuf = NULL;
+					if ( NULL != buffer ){
+						dataBuf = (void*)new char[bufferSize];
+						memcpy( dataBuf, buffer, bufferSize );
+					}
+					regVal = new RegistryValueInfo( NULL, RDT_BINARY, tmp, (char*)dataBuf, bufferSize );
+				}
+				break;
+			}
+
+			values_.push_back( regVal );
+			bufferSize = sizeof(buffer);
+
+			valNameSize = 256;
+			memset( valName, 0, sizeof(valName) * sizeof(char) );
+			index ++;
+		}
+	}
+
 	valuesContainer_.initContainer( values_ );
 
 	return valuesContainer_.getEnumerator();
@@ -387,6 +454,24 @@ String Win32Registry::getCurrentKey()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:36  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.4  2005/11/04 17:56:17  ddiego
+*fixed bugs in some win32 code to better handle unicode - ansi functionality.
+*
+*Revision 1.4.2.3  2005/09/05 18:48:12  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
+*Revision 1.4.2.2  2005/09/05 18:26:59  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
+*Revision 1.4.2.1  2005/09/05 18:17:17  ddiego
+*adjusted reg class methods for reading data so that they now throw
+*exceptions for bad reads.
+*
 *Revision 1.4  2005/07/09 23:15:07  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

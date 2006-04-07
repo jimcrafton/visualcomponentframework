@@ -22,7 +22,6 @@ DefaultColumnItem::DefaultColumnItem()
 {
 	index_ = 0;
 	data_ = NULL;
-	model_ = NULL;
 	width_ = 100.0;
 	imageIndex_ = -1;
 	textAlignment_ = taTextLeft;
@@ -69,14 +68,14 @@ void DefaultColumnItem::setCaption( const String& caption )
 	ItemChanged.fireEvent( &event );
 }
 
-Model* DefaultColumnItem::getModel()
+String DefaultColumnItem::getCaption()
 {
-	return model_;
-}
-
-void DefaultColumnItem::setModel( Model* model )
-{
-	model_ = dynamic_cast<ColumnModel*>( model );
+	//control's getUseLocaleStrings() takes precedence over ours
+	Control* control = getControl();
+	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
+		return System::getCurrentThreadLocale()->translate( caption_ );
+	}
+	return caption_;
 }
 
 void DefaultColumnItem::paint( GraphicsContext* context, Rect* paintRect )
@@ -123,6 +122,12 @@ void DefaultColumnItem::setBounds( Rect* bounds )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/05 02:28:04  ddiego
+*updated the Item interface and adjusted the other classes accordingly.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

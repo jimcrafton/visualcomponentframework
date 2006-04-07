@@ -17,7 +17,6 @@ class SysTrayWindow : public Window {
 public:
 	SysTrayWindow() {
 		setCaption( "SysTray" );
-		setVisible( true );
 
 		/**
 		Create a new system tray. Passing a pointer to the
@@ -90,7 +89,7 @@ public:
 		*/
 
 		PopupMenu* pm = new PopupMenu(this);
-		DefaultMenuItem* root = new DefaultMenuItem( "root", NULL, pm );
+		MenuItem* root = pm->getRootMenuItem(); // new DefaultMenuItem( "root", NULL, pm );
 
 		DefaultMenuItem* hello = new DefaultMenuItem( "Hello!", root, pm );
 		hello->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onHello,"SysTrayWindow::onHello");
@@ -100,13 +99,7 @@ public:
 
 		DefaultMenuItem* quit = new DefaultMenuItem( "Quit", root, pm );
 		quit->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onQuit,"SysTrayWindow::onQuit");
-
-
-		/**
-		Set the root item for the popupmenu
-		*/
-		pm->setRootMenuItem( root );
-
+		
 		/**
 		Set the tray icon's popup menu
 		*/
@@ -145,6 +138,7 @@ public:
 		Window* mainWindow = new SysTrayWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->show();
 		
 		return result;
 	}

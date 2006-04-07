@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="ZLIB_HDR" hints="files">
+        thirdparty/common/ZLib/deflate.h
+        thirdparty/common/ZLib/infblock.h
+        thirdparty/common/ZLib/infcodes.h
+        thirdparty/common/ZLib/inffast.h
+        thirdparty/common/ZLib/inffixed.h
+        thirdparty/common/ZLib/inftrees.h
+        thirdparty/common/ZLib/infutil.h
+        thirdparty/common/ZLib/trees.h
+        thirdparty/common/ZLib/zconf.h
+        thirdparty/common/ZLib/zlib.h
+        thirdparty/common/ZLib/zutil.h
+    </set>
+
+    <set var="ZLIB_SRC" hints="files">
+        thirdparty/common/ZLib/adler32.c
+        thirdparty/common/ZLib/compress.c
+        thirdparty/common/ZLib/crc32.c
+        thirdparty/common/ZLib/deflate.c
+        thirdparty/common/ZLib/gzio.c
+        thirdparty/common/ZLib/infblock.c
+        thirdparty/common/ZLib/infcodes.c
+        thirdparty/common/ZLib/inffast.c
+        thirdparty/common/ZLib/inflate.c
+        thirdparty/common/ZLib/inftrees.c
+        thirdparty/common/ZLib/infutil.c
+        thirdparty/common/ZLib/trees.c
+        thirdparty/common/ZLib/uncompr.c
+        thirdparty/common/ZLib/zutil.c
+    </set>
+
+</makefile>

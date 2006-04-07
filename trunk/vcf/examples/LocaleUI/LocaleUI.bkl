@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="LocaleUI" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <exename>LocaleUI</exename>
+        <sources>LocaleUI.cpp</sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>

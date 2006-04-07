@@ -21,6 +21,7 @@ namespace VCF  {
 class UndoRedoStack;
 
 /**
+\class AbstractCommand AbstractCommand.h "vcf/ApplicationKit/AbstractCommand.h"
 *A partial implementation of the Command interface.
 *Useful for using as a base class when creating your own Command based
 *classes.
@@ -64,6 +65,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:05  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

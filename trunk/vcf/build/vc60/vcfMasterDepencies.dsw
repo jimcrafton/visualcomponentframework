@@ -416,6 +416,15 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name libAGG
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -433,6 +442,45 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name libAGG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKit"=.\HTMLKit\HTMLKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HTMLKitDll"=.\HTMLKit\HTMLKitDll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
     End Project Dependency
 }}}
 
@@ -537,7 +585,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"=..\..\src\thirdparty\common\FreeImage\Source\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+Project: "LibJPEG"=..\..\src\thirdparty\common\LibJPEG\LibJPEG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -561,7 +609,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"=..\..\src\thirdparty\common\FreeImage\Source\LibPNG\LibPNG.dsp - Package Owner=<4>
+Project: "LibPNG"=..\..\src\thirdparty\common\LibPNG\LibPNG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -694,18 +742,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Reflection"=..\..\examples\Reflection\Reflection.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RegExx"=.\FoundationKit\RegExx.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -915,36 +951,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Win32HTMLBrowser"=.\Win32HTMLBrowser\Win32HTMLBrowser.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Win32HTMLBrowser_StaticLib"=.\Win32HTMLBrowser\Win32HTMLBrowser_StaticLib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "WorkingWithEnumerators"=..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators.dsp - Package Owner=<4>
 
 Package=<5>
@@ -957,7 +963,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"=..\..\src\thirdparty\common\FreeImage\Source\ZLib\ZLib.dsp - Package Owner=<4>
+Project: "ZLib"=..\..\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1008,9 +1014,6 @@ Package=<4>
     Project_Dep_Name RemoteObjectKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ImageFormats
     End Project Dependency
     Begin Project Dependency
@@ -1051,9 +1054,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RemoteObjectKitStatic
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Win32HTMLBrowser_StaticLib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLKit

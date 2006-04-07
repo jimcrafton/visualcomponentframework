@@ -18,6 +18,9 @@ where you installed the VCF.
 *Helps linking with the right library
 */
 
+// We don't need any of this if we've disabled pragma linking
+#ifndef VCF_DISABLE_PRAGMA_LINKING
+
 //If using the All-in-1 library, then this task has already been done
 #if !defined(VCF_USE_ALLIN1_DLL) && !defined(VCF_USE_ALLIN1_LIB)
 
@@ -31,7 +34,9 @@ where you installed the VCF.
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
-#   if (_MSC_VER >= 1310)
+#   if (_MSC_VER >= 1400)
+#     define _LIB_CPLVERNUM "vc80"
+#   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)
 #     define _LIB_CPLVERNUM "vc70"
@@ -60,11 +65,19 @@ defined to use the DLL or static libraries.
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 
 	//link to libAgg automatically here
+	#if !defined(VCF_DISABLE_PRAGMA_LINKING)
 	#	ifdef _DEBUG
 	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_sd.lib")
+	#		pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_sd.lib")
+	#		pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_sd.lib")
+	#		pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_sd.lib")
 	#	else
 	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_s.lib")
+	#		pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_s.lib")
+	#		pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_s.lib")
+	#		pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_s.lib")
 	#	endif
+	#endif
 
 
 	#ifdef USE_GRAPHICSKIT_DLL
@@ -87,10 +100,40 @@ defined to use the DLL or static libraries.
 
 #endif //_MSC_VER
 
+
 #endif //VCF_USE_ALLIN1_DLL/LIB
+
+
+#endif
+// VCF_DISABLE_PRAGMA_LINKING
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.7  2006/02/06 00:39:52  dougtinkham
+*skip pragmas if VCF_DISABLE_PRAGMA_LINKING is defined
+*
+*Revision 1.4.2.6  2005/12/04 18:59:47  kdmix
+*The VCF_ prefix has been added.
+*
+*Revision 1.4.2.5  2005/12/04 15:05:32  kdmix
+*DISABLE_PRAGMA_LINKING is used to skip the pragma linking that is required by bakefiles.
+*
+*Revision 1.4.2.4  2005/11/15 21:31:46  kdmix
+*bakefiles are not based on the "comment" pragma, all the dependencies are hardcoded now.
+*
+*Revision 1.4.2.3  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.4.2.2  2005/09/22 02:43:42  ddiego
+*added png loader.
+*
+*Revision 1.4.2.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.4  2005/07/09 23:05:59  ddiego
 *added missing gtk files
 *

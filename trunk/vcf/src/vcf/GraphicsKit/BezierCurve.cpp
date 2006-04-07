@@ -47,8 +47,6 @@ void BezierCurve::applyTransform( const Matrix2D& transform )
 
 bool BezierCurve::contains( const Rect& rect )
 {
-	bool result = false;
-
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::path_storage path;
 
@@ -107,7 +105,7 @@ bool BezierCurve::contains( const Rect& rect )
 	Point topLeft = rect.getTopLeft();
 	Point bottomRight = rect.getTopLeft();
 
-	return rasterizer.hit_test( bottomRight.x_, bottomRight.y_ ) && rasterizer.hit_test( topLeft.x_, topLeft.y_ );
+	return rasterizer.hit_test( (unsigned int)bottomRight.x_, (unsigned int)bottomRight.y_ ) && rasterizer.hit_test( (unsigned int)topLeft.x_, (unsigned int)topLeft.y_ );
 }
 
 bool BezierCurve::contains( const Point& pt )
@@ -169,7 +167,7 @@ bool BezierCurve::contains( const Point& pt )
 	rasterizer.add_path( smooth );
 
 
-	return rasterizer.hit_test( pt.x_, pt.y_ );
+	return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 }
 
 bool BezierCurve::intersects( const Point& pt )
@@ -231,7 +229,7 @@ bool BezierCurve::intersects( const Point& pt )
 	rasterizer.add_path( stroke );
 
 
-	return rasterizer.hit_test( pt.x_, pt.y_ );
+	return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 }
 
 bool BezierCurve::intersects( const Rect& rect)
@@ -291,19 +289,19 @@ bool BezierCurve::intersects( const Rect& rect)
 	rasterizer.add_path( smooth );
 
 
-	if ( rasterizer.hit_test( rect.left_, rect.top_ ) ) {
+	if ( rasterizer.hit_test( (unsigned int)rect.left_, (unsigned int)rect.top_ ) ) {
 		return true;
 	}
 
-	if ( rasterizer.hit_test( rect.right_, rect.top_ ) ) {
+	if ( rasterizer.hit_test( (unsigned int)rect.right_, (unsigned int)rect.top_ ) ) {
 		return true;
 	}
 
-	if ( rasterizer.hit_test( rect.right_, rect.bottom_ ) ) {
+	if ( rasterizer.hit_test( (unsigned int)rect.right_, (unsigned int)rect.bottom_ ) ) {
 		return true;
 	}
 
-	if ( rasterizer.hit_test( rect.left_, rect.bottom_ ) ) {
+	if ( rasterizer.hit_test( (unsigned int)rect.left_, (unsigned int)rect.bottom_ ) ) {
 		return true;
 	}
 
@@ -496,6 +494,13 @@ void BezierCurve::clear()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.1  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.3  2004/12/01 04:31:42  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

@@ -19,13 +19,14 @@ namespace VCF  {
 class ConditionPeer;
 
 /**
-\par
+\class Condition Condition.h "vcf/FoundationKit/Condition.h"
 The Condition object is used as a synchronization primitive, like the Mutex, and
 Semaphore. While the Mutex and Semaphore can cause multiple threads to block, waiting
 for the mutex or semaphore to become signaled, only one thread will every wake at
 any given moment. In contrast, a Condition can be used to wake up a series of threads
 all waiting on the condition.
-\par The Condition class follows the same pattern that the Pthreads condition variable
+
+The Condition class follows the same pattern that the Pthreads condition variable
 uses, or the <a href="http://boost.org/libs/thread/doc/condition.html">
 Boost condition class</a>. In fact, the Win32 implementation is written largely
 based of off the excellent code in the Boost condition class that was written by
@@ -91,6 +92,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/26 22:37:34  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

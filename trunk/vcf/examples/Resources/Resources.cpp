@@ -30,6 +30,10 @@ int main( int argc, char** argv ){
 
 	System::println( "HELLO_STR: " + val );
 
+	val = resBundle->getString( "TEST" );
+
+	System::println( "TEST: " + val );
+
 	val = resBundle->getString( "goodbye_str" );
 
 	System::println( "goodbye_str: " + val );
@@ -56,7 +60,7 @@ int main( int argc, char** argv ){
 	/**
 	This will extract a resource from the exe
 	*/
-	res = resBundle->getResource( "logo.png" );
+	res = resBundle->getResource( "logo_png" );
 	if ( NULL == res ) {
 		System::println( "Failed to find resource!" );
 	}

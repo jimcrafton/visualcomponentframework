@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="INTERNETKIT_HDR" hints="files">
+        vcf/InternetKit/InternetKit.h
+        vcf/InternetKit/InternetToolkit.h
+        vcf/InternetKit/URL.h
+    </set>
+
+    <set var="INTERNETKIT_SRC" hints="files">
+        vcf/InternetKit/InternetKit.cpp
+        vcf/InternetKit/InternetToolkit.cpp
+    </set>
+
+    <set var="INTERNETKIT_WIN_HDR" hints="files">
+        vcf/InternetKit/Win32InternetToolkit.h    
+    </set>
+
+    <set var="INTERNETKIT_WIN_SRC" hints="files">
+        vcf/InternetKit/Win32InternetToolkit.cpp
+    </set>
+
+    <set var="INTERNETKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(INTERNETKIT_WIN_HDR)</if>
+    </set>
+
+    <set var="INTERNETKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(INTERNETKIT_WIN_SRC)</if>
+    </set>
+
+</makefile>

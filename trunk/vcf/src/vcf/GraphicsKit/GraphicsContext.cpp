@@ -35,6 +35,9 @@ public:
 	Stroke* stroke_;
 	Path* clippingPath_;
 	GraphicsContext* owningContext_;
+	
+	double strokeWidth_;
+	
 	Font font_;
 	Matrix2D transformMatrix_;
 	Point currentMoveTo_;
@@ -46,9 +49,7 @@ public:
 	double translateX_;
 	double translateY_;
 	double scaleX_;
-	double scaleY_;
-
-	double strokeWidth_;
+	double scaleY_;	
 };
 
 
@@ -161,9 +162,9 @@ void GraphicsState::compositeMatrix()
 
 
 GraphicsContext::GraphicsContext():
-	currentDrawingState_(GraphicsContext::gsNone),
-	drawingArea_(NULL),
 	contextPeer_(NULL),
+	currentDrawingState_(GraphicsContext::gsNone),		
+	drawingArea_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -181,9 +182,9 @@ GraphicsContext::GraphicsContext():
 }
 
 GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned long& height ):
-	currentDrawingState_(GraphicsContext::gsNone),
-	drawingArea_(NULL),
 	contextPeer_(NULL),
+	currentDrawingState_(GraphicsContext::gsNone),		
+	drawingArea_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -208,10 +209,10 @@ GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned lon
 
 }
 
-GraphicsContext::GraphicsContext( OSHandleID contextID ):
+GraphicsContext::GraphicsContext( OSHandleID contextID ):	
+	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
 	drawingArea_(NULL),
-	contextPeer_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -265,6 +266,14 @@ void GraphicsContext::init()
 
 
 void GraphicsContext::setCurrentFont(Font * font)
+{
+	Font& currentFont = currentGraphicsState_->font_;
+	currentFont = *font;
+	currentFont.setGraphicsContext( this );
+	currentFont.setPointSize( currentFont.getPointSize() );
+}
+
+void GraphicsContext::setCurrentFont( const Font * font )
 {
 	Font& currentFont = currentGraphicsState_->font_;
 	currentFont = *font;
@@ -656,6 +665,13 @@ void GraphicsContext::setColor( Color* color )
 	}
 }
 
+void GraphicsContext::setColor( const Color* color )
+{
+	if ( NULL != color ) {
+		currentGraphicsState_->color_ = *color;
+	}
+}
+
 Color* GraphicsContext::getColor()
 {
 	return &currentGraphicsState_->color_;
@@ -848,6 +864,16 @@ void GraphicsContext::drawThemeTab( Rect* rect, TabState& state )
 void GraphicsContext::drawThemeTabPage( Rect* rect, DrawUIState& state )
 {
 	contextPeer_->drawThemeTabPage( rect, state );
+}
+
+void GraphicsContext::drawThemeTabContent( Rect* rect, DrawUIState& state )
+{
+	contextPeer_->drawThemeTabContent( rect, state );
+}
+
+void GraphicsContext::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex )
+{
+	contextPeer_->drawThemeTabs( rect, paneState, selectedTabState, otherTabs, tabNames, selectedTabIndex );
 }
 
 void GraphicsContext::drawThemeTickMarks( Rect* rect, SliderState& state )
@@ -1267,25 +1293,22 @@ void GraphicsContext::buildArc( double centerX,  double centerY,
 						radiusWidth, radiusHeight,
 						Math::degreesToRadians(startAngle), Math::degreesToRadians(endAngle));
 
-	path.add_path( arcPath );
+	path.concat_path( arcPath );
 
-	agg::path_storage::const_iterator it = path.begin();
-
-	while ( it != path.end() ) {
-		const agg::vertex_type& vert = *it;
+	for ( size_t i=0;i<path.total_vertices();i++ ) {
+		double vert_x,vert_y;
+		path.vertex(i,&vert_x, &vert_y);	
 
 		Point pt;
-		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
-							vert.y * (transform[Matrix2D::mei10]) +
+		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
+							vert_y * (transform[Matrix2D::mei10]) +
 								(transform[Matrix2D::mei20]);
 
-		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
-							vert.y * (transform[Matrix2D::mei11]) +
+		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
+							vert_y * (transform[Matrix2D::mei11]) +
 								(transform[Matrix2D::mei21]);
 
 		pts.push_back( pt );
-
-		++it;
 	}
 
 
@@ -1307,7 +1330,7 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(270), Math::degreesToRadians(0));
 
-	path.add_path( arc1 );
+	path.concat_path( arc1 );
 
 	path.line_to( x2, y2 - cornerArcHeight/2.0 );
 
@@ -1316,7 +1339,7 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(0), Math::degreesToRadians(90));
 
-	path.add_path( arc2 );
+	path.concat_path( arc2 );
 
 	path.line_to( x1 + cornerArcWidth/2.0, y2 );
 
@@ -1325,7 +1348,7 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(90), Math::degreesToRadians(180));
 
-	path.add_path( arc3 );
+	path.concat_path( arc3 );
 
 	path.line_to( x1, y1 + cornerArcHeight/2.0 );
 
@@ -1334,26 +1357,25 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 		cornerArcWidth/2.0, cornerArcHeight/2.0,
 		Math::degreesToRadians(180), Math::degreesToRadians(270));
 
-	path.add_path( arc4 );
+	path.concat_path( arc4 );
 
 
-	agg::path_storage::const_iterator it = path.begin();
+	//agg::path_storage::const_iterator it = path.begin();
+	for (size_t i=0;i<path.total_vertices();i++ ) {	
+		double vert_x, vert_y;
+		path.vertex( i, &vert_x, &vert_y );
 
-	while ( it != path.end() ) {
-		const agg::vertex_type& vert = *it;
 
 		Point pt;
-		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
-							vert.y * (transform[Matrix2D::mei10]) +
+		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
+							vert_y * (transform[Matrix2D::mei10]) +
 								(transform[Matrix2D::mei20]);
 
-		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
-							vert.y * (transform[Matrix2D::mei11]) +
+		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
+							vert_y * (transform[Matrix2D::mei11]) +
 								(transform[Matrix2D::mei21]);
 
 		pts.push_back( pt );
-
-		++it;
 	}
 }
 
@@ -1363,25 +1385,23 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 	agg::path_storage path;
 	agg::ellipse ellipseShape( x1 + ((x2-x1)/2.0), y1 + ((y2-y1)/2.0),
 								abs(static_cast<long>(x2-x1)), abs(static_cast<long>(y2-y1)), 100 );
-	path.add_path( ellipseShape );
+	path.concat_path( ellipseShape );
 
-	agg::path_storage::const_iterator it = path.begin();
+	for (size_t i=0;i<path.total_vertices();i++ ) {
+		double vert_x, vert_y;
+		path.vertex( i, &vert_x, &vert_y );
 
-	while ( it != path.end() ) {
-		const agg::vertex_type& vert = *it;
 
 		Point pt;
-		pt.x_ = vert.x * (transform[Matrix2D::mei00]) +
-							vert.y * (transform[Matrix2D::mei10]) +
+		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
+							vert_y * (transform[Matrix2D::mei10]) +
 								(transform[Matrix2D::mei20]);
 
-		pt.y_ = vert.x * (transform[Matrix2D::mei01]) +
-							vert.y * (transform[Matrix2D::mei11]) +
+		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
+							vert_y * (transform[Matrix2D::mei11]) +
 								(transform[Matrix2D::mei21]);
 
 		pts.push_back( pt );
-
-		++it;
 	}
 
 	pts.back() = pts[0];
@@ -1401,10 +1421,10 @@ int GraphicsContext::saveState()
 
 void GraphicsContext::restoreState( int state )
 {
-	VCF_ASSERT( state < stateCollection_.size() );
+	VCF_ASSERT( state < (int)stateCollection_.size() );
 	VCF_ASSERT( state >= 0 );
 	if ( (stateCollection_.size() - state) > 0 ) {
-		for ( int i=state;i<stateCollection_.size();i++ ) {
+		for ( size_t i=state;i<stateCollection_.size();i++ ) {
 			delete stateCollection_[i];
 		}
 
@@ -1492,6 +1512,35 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.8  2006/03/04 02:35:48  ddiego
+*upgraded agg from 2.2 to the latest 2.4 version.
+*
+*Revision 1.6.2.7  2006/03/01 04:34:57  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.6.2.6  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.6.2.5  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.4  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.3  2005/11/10 02:02:39  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.6.2.2  2005/10/17 01:36:34  ddiego
+*some more under the hood image stuff. updated agg.
+*
+*Revision 1.6.2.1  2005/09/03 14:03:53  ddiego
+*added a package manager to support package info instances, and
+*fixed feature request 1278069 - Background color of the TableControl cells.
+*
 *Revision 1.6  2005/07/09 23:05:58  ddiego
 *added missing gtk files
 *

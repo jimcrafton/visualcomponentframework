@@ -35,6 +35,16 @@ MenuItemPeer* Win32MenuManagerPeer::getMenuItemPeer( MenuItem* item )
 	return result;
 }
 
+void Win32MenuManagerPeer::destroyMenuItemPeer( MenuItem* item )
+{
+	MenuItemMap::iterator found = menuItemsMap_.find( item );
+	if ( found != menuItemsMap_.end() ) {
+		MenuItemPeer* peer = found->second; 
+		menuItemsMap_.erase( found );
+		delete peer;
+	}
+}
+
 void Win32MenuManagerPeer::windowActivated( Window* window )
 {
 	MenuBar* menuBar = window->getMenuBar();
@@ -118,3 +128,6 @@ void Win32MenuManagerPeer::menuItemChanged( int menuItemEventType, MenuItem* ite
 		break;	
 	}
 }
+
+
+

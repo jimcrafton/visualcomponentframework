@@ -109,7 +109,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DEBUGGING_SYMBOLS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(VCF_BIN)";
+				FRAMEWORK_SEARCH_PATHS = "/Users/«USERNAME»/Library/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -120,6 +120,7 @@
 				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
 				OPTIMIZATION_CFLAGS = "-O0";
 				ZERO_LINK = NO;
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -163,7 +164,7 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = "FoundationKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/FoundationKit-debug.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/FoundationKit-debug.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -177,7 +178,7 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = "GraphicsKit-debug.framework";
-			path = "/Users/jimcrafton/code/vcfdev/dev/vcf/bin/GraphicsKit-debug.framework";
+			path = "/Users/«USERNAME»/Library/Frameworks/GraphicsKit-debug.framework";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -208,7 +209,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/jimcrafton/code/vcfdev/dev/vcf/bin;
+				FRAMEWORK_SEARCH_PATHS = /Users/«USERNAME»/Library/Frameworks;
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;

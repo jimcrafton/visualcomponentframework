@@ -45,7 +45,7 @@ public:
 																			&SketchIt::onDocInitialized,
 																			"SketchIt::onDocInitialized" );
 
-		newDefaultDocument();
+		newDefaultDocument("","");
 
 		return result;
 	}
@@ -251,8 +251,14 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.7  2005/07/09 23:14:43  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.8  2006/04/07 02:34:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.2  2005/10/26 03:29:19  ddiego
+*fixed little bug in png loader code.
+*
+*Revision 1.7.2.1  2005/07/23 21:45:41  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.6.2.1  2005/06/06 02:34:04  ddiego
 *menu changes to better support win32 and osx.

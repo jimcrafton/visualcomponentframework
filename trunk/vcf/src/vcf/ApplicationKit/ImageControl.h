@@ -14,6 +14,10 @@ where you installed the VCF.
 #endif
 
 
+#ifndef _VCF_ABSTRACTPROPERTYEDITOR_H__
+#include "vcf/ApplicationKit/AbstractPropertyEditor.h"
+#endif 
+
 #define IMAGEFILENAMESTRING_CLASSID		"166982EF-60DB-4476-ABF1-AD4EB82B2B08"
 
 
@@ -26,12 +30,15 @@ namespace VCF  {
 This is a typedef for a string. This typedef is then used
 by the RTTI info for this class (see vcf/ApplicationKit/ApplicationKitRTTI.inl)
 to "typedef" the property. So even though this is just a string, the 
-proeprty type is a ImageFilenameString, which then allows us to specify
+property type is a ImageFilenameString, which then allows us to specify
 a different kind of PropertyEditor for the string.
 */
 typedef String ImageFilenameString;
 
+
+
 /**
+\class ImageControl ImageControl.h "vcf/ApplicationKit/ImageControl.h"
 *Class ImageControl documentation
 */
 class APPLICATIONKIT_API ImageControl : public VCF::CustomControl {
@@ -106,6 +113,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -27,6 +27,7 @@ public:
 	PosixMutex();
 	virtual ~PosixMutex();
 	virtual bool lock();
+    virtual bool lock( uint32 timeoutInMilliseconds );
 	virtual bool unlock();
 	virtual OSHandleID getHandleID() { return (OSHandleID)&mutex_; }
 
@@ -42,6 +43,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2005/11/10 00:04:23  obirsoy
+*changes required for gcc under Linux.
+*
 *Revision 1.4  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

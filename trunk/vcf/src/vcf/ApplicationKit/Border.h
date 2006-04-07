@@ -22,7 +22,7 @@ namespace VCF
 #define BORDER_CLASSID		"3126B221-2819-11d4-B53A-00C04F0196DA"
 
 /**
-\p
+\class Border Border.h "vcf/ApplicationKit/Border.h"
 A Border component is responsible for drawing the border of a control.
 The border is used to produce effects like a 3D border or bevel, or
 a border with a text/caption area. How this is made to look is entirely 
@@ -89,6 +89,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

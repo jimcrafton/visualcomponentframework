@@ -387,7 +387,6 @@ class TransformationsWindow : public Window {
 public:
 	TransformationsWindow() {
 		setCaption( "Transformations" );
-		setVisible( true );
 
 		TransformView* xfrmView = new TransformView() ;
 
@@ -424,6 +423,7 @@ public:
 		Window* mainWindow = new TransformationsWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 550.0, 700.0 );
+		mainWindow->show();
 		
 		return result;
 	}

@@ -25,7 +25,7 @@ CheckBoxControl::~CheckBoxControl()
 
 double CheckBoxControl::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtCheckBoxHeight );
 }
 
 double CheckBoxControl::getPreferredWidth()
@@ -37,15 +37,7 @@ void CheckBoxControl::paint( GraphicsContext* context )
 {
 	ToggledButton::paint( context );
 
-	Rect r = getClientBounds();//( 0.0, 0.0, getWidth(), getHeight() );
-
-//	Rect checkBtnRect = r;
-/*
-	double checkBoxHeight = UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htCheckBoxHeight );
-
-		checkBtnRect.top_ = maxVal<double>( 0, r.top_ + (r.getHeight() / 2.0 - fixedCheckboxHeight_/2.0));
-		checkBtnRect.bottom_ = minVal<double>( r.bottom_, checkBtnRect.top_ + fixedCheckboxHeight_ );
-*/	
+	Rect r = getClientBounds();
 	
 	ButtonState buttonState;
 	buttonState.setActive( isActive() );
@@ -69,6 +61,15 @@ void CheckBoxControl::paint( GraphicsContext* context )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.3.2.1  2005/08/05 01:11:37  ddiego
+*splitter fixes finished.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

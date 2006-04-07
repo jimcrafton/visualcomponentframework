@@ -13,10 +13,19 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#ifndef _VCF_ABSTRACTPROPERTYEDITOR_H__
+#include "vcf/ApplicationKit/AbstractPropertyEditor.h"
+#endif 
+
+
+
+
 namespace VCF {
 
 
-
+/**
+\class IntegerPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API IntegerPropertyEditor : public AbstractPropertyEditor {
 public:
 	IntegerPropertyEditor(){};
@@ -27,7 +36,9 @@ private:
 
 };
 
-
+/**
+\class DoublePropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API DoublePropertyEditor : public AbstractPropertyEditor {
 public:
 	DoublePropertyEditor(){};
@@ -38,6 +49,9 @@ private:
 
 };
 
+/**
+\class StringPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API StringPropertyEditor : public AbstractPropertyEditor {
 public:
 	StringPropertyEditor(){};
@@ -49,6 +63,9 @@ private:
 };
 
 
+/**
+\class BoolPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API BoolPropertyEditor : public AbstractPropertyEditor {
 public:
 	BoolPropertyEditor();
@@ -58,6 +75,10 @@ public:
 	virtual std::vector<String> getStringValues();
 };
 
+
+/**
+\class EnumPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API EnumPropertyEditor : public AbstractPropertyEditor{
 public:
 	EnumPropertyEditor();
@@ -69,6 +90,41 @@ public:
 
 
 
+/**
+\class EnumSetPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
+class APPLICATIONKIT_API EnumSetPropertyEditor : public AbstractPropertyEditor{
+public:
+	EnumSetPropertyEditor();
+
+	virtual ~EnumSetPropertyEditor();
+	
+	virtual std::vector<PropertyEditor*> getSubProperties();
+
+	virtual String getValueAsText();
+};
+
+
+/**
+\class CursorPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
+class APPLICATIONKIT_API CursorPropertyEditor : public AbstractPropertyEditor{
+public:
+	CursorPropertyEditor();
+
+	virtual ~CursorPropertyEditor();
+	
+	virtual std::vector<String> getStringValues();
+
+	virtual void setValueAsText( const String& textValue );
+
+	virtual String getValueAsText();
+};
+
+
+/**
+\class ColorPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API ColorPropertyEditor : public AbstractPropertyEditor {
 public:
 	ColorPropertyEditor();
@@ -88,6 +144,11 @@ public:
 	virtual void setValueAsText( const String& textValue );	
 };
 
+
+
+/**
+\class FontPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API FontPropertyEditor : public AbstractPropertyEditor {
 public:
 	FontPropertyEditor();
@@ -103,6 +164,9 @@ public:
 };
 
 
+/**
+\class DefaultMenuItemPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API DefaultMenuItemPropertyEditor : public AbstractPropertyEditor {
 public:
 	DefaultMenuItemPropertyEditor();
@@ -111,6 +175,10 @@ public:
 
 };
 
+
+/**
+\class DefaultListModelPropertyEditor DefaultPropertyEditors.h "vcf/ApplicationKit/DefaultPropertyEditors.h"
+*/
 class APPLICATIONKIT_API DefaultListModelPropertyEditor : public AbstractPropertyEditor {
 public:
 	DefaultListModelPropertyEditor();
@@ -131,6 +199,18 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:22  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.2  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.3.2.1  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
 *Revision 1.3  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

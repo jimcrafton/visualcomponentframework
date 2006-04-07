@@ -33,9 +33,9 @@ public:
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize );
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height );
+	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType );
 
-	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect );
+	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType );
 
 	virtual PrintSessionPeer* internal_createPrintSessionPeer();
 
@@ -46,6 +46,8 @@ public:
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer();
 
 	virtual double internal_getDPI( GraphicsContext* context );
+
+	virtual void internal_systemSettingsChanged();
 protected:
 	void initSystemFont();
 	void loadSystemColors();
@@ -60,6 +62,15 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:42  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/02/21 04:32:51  ddiego
+*comitting moer changes to theme code, progress bars, sliders and tab pages.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.4  2005/01/02 03:04:26  ddiego
 *merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
 *

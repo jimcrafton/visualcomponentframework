@@ -70,11 +70,19 @@ def main():
 	extensions = [".h", '.hpp', '.c', '.dsw', '.dsp', '.bmp', '.rgs', '.rc', '.xml', '.idl',
 			'.def', '.vcfdir', '.vcp', '.ico', '.rc2', '.odl', '.inl',
 			'.vff', '.inf', '.vcproj', '.sln', '.cpp', '.CPP', '.HPP', '.cxx', '.CXX',
-			'.cur', '.CUR', '.mak', '.inc', '.txt', '.vsdir', '.vsz', '.js', '.gif', '.htm', '.css' ]
+			'.cur', '.CUR', '.mak', '.txt', '.vsdir', '.vsz', '.js', '.gif', '.htm', '.css',
+			'.bkl', '.inc', '.bcc', '.bpf', '.bpr', '.cbp', '.workspace', '.vc', '.gcc', '.gnu', 
+			'.bkgen', '.dat', '.cfg', '.png', '.xsl', '.py']
+
 	
 	
 	exampleExtensions = [ '.h', '.cpp', '.CPP', '.dsw', '.dsp', '.bmp', '.rgs', '.rc', '.idl',
-			   '.def', '.ico', '.rc2', '.odl', '.vff', '.html', '.xml', '.vcproj', '.sln' ]
+			   '.def', '.ico', '.rc2', '.odl', '.vff', '.html', '.xml', '.vcproj', '.sln',
+				'.bkl', '.inc', '.bcc', '.bpf', '.bpr', '.cbp', '.workspace', '.vc', '.gcc',
+				'.bpg', '.png', '.mov', '.strings', '.vp', '.txt', '.hpp', '.yy', '.ll', '.hhp',
+				 '.js', '.css', '.bat', '.gif', '.hhk', '.hhc', '.plist' ]
+
+
 	
 	srcFiles = []
 	
@@ -85,7 +93,13 @@ def main():
 		else :
 			reStr = reStr + '|(.*\\' + ext + "$)"
 	
-	
+	reStr = reStr + '|(.*\\GNUmakefile' + "$)"
+	reStr = reStr + '|(.*\\Makefile' + "$)"
+	reStr = reStr + '|(.*\\README' + "$)"
+
+
+
+
 	fileTest = re.compile( reStr, re.IGNORECASE )
 	
 	cvsTest = re.compile( ".*\/CVS" )
@@ -110,6 +124,9 @@ def main():
 			reStr = '(.*\\' + ext + '$)'
 		else :
 			reStr = reStr + '|(.*\\' + ext + "$)"
+
+	reStr = reStr + '|(.*\\GNUmakefile' + "$)"
+
 	fileTest = re.compile( reStr, re.IGNORECASE )
 	exampleFiles = []
 	

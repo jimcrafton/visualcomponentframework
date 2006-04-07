@@ -8,6 +8,9 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/GraphicsKit/Win32Image.h"
+#include "vcf/GraphicsKit/Pixels.h"
+
 
 
 using namespace VCF;
@@ -17,18 +20,17 @@ This example will demonstrate some of the basics of
 working with images
 */
 
+
 class ImageBasicsWindow : public Window {
 public:
 	ImageBasicsWindow() {
-		setCaption( "ImageBasics" );
-		setVisible( true );
+		setCaption( "ImageBasics" );		
 	}
 
 	virtual ~ImageBasicsWindow(){};
 
 	virtual void paint( GraphicsContext* ctx ) {
 		Window::paint( ctx );
-
 
 		/**
 		This will create an image from a given file name
@@ -138,21 +140,23 @@ public:
 		retrieve the image bits - you'll get a pointer to
 		a SysPixelType
 		*/
-		SysPixelType* pix = logoImage->getImageBits()->pixels_;
+		{
+			ColorPixels pix(logoImage);//->getImageBits()->pixels_;
 
-		/**
-		Calculate the size, width * height
-		*/
-		int size = logoImage->getHeight() * logoImage->getWidth();
-		/**
-		manipulate the values of the green color channel
-		*/
-		for ( int i=0;i<size;i++ ) {
-			pix[i].g = minVal<>( 255, pix[i].g + 50 );
+										/**
+										Calculate the size, width * height
+			*/
+			int size = logoImage->getHeight() * logoImage->getWidth();
+			/**
+			manipulate the values of the green color channel
+			*/
+			for ( int i=0;i<size;i++ ) {
+				pix[i].g = minVal<>( 255, pix[i].g + 50 );
+			}
+
+
+			ctx->drawImage( x, y, logoImage );
 		}
-
-
-		ctx->drawImage( x, y, logoImage );
 
 		/**
 		delete the image cause we don't need it anymore
@@ -177,7 +181,10 @@ public:
 
 		Window* mainWindow = new ImageBasicsWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+
+		mainWindow->setBounds( 100.0, 100.0, 400.0, 875.0 );
+		mainWindow->show();
+
 
 		return result;
 	}
@@ -198,8 +205,45 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:38  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:30  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.12  2006/03/19 18:54:45  ddiego
+*adjusted image basics window height.
+*
+*Revision 1.5.2.11  2006/03/16 18:45:24  kdmix
+*setVisible(true) removed from constructor of the main window.
+*
+*Revision 1.5.2.10  2006/02/15 18:24:27  iamfraggle
+*Corrected pixels etc. constructor calls
+*
+*Revision 1.5.2.9  2006/02/14 20:19:25  ddiego
+*some minor bugs
+*
+*Revision 1.5.2.8  2005/11/11 00:20:58  ddiego
+*comitting mostuffs linux foundationkit patchs [1351922].
+*
+*Revision 1.5.2.7  2005/11/02 16:07:16  ddiego
+*updates to createinfo program.
+*
+*Revision 1.5.2.6  2005/10/11 00:54:51  ddiego
+*added initial changes for grayscale image support. fixed some minor changes to form loading and creating.
+*
+*Revision 1.5.2.5  2005/09/22 18:16:56  ddiego
+*added save support for png loader.
+*
+*Revision 1.5.2.4  2005/09/22 04:02:55  ddiego
+*added more png support. we can read png files now.
+*
+*Revision 1.5.2.3  2005/09/22 00:32:51  ddiego
+*added jpeg support to graphics kit.
+*
+*Revision 1.5.2.2  2005/09/14 18:55:15  ddiego
+*update to win32window. initial code for new pixels
+*type to replace imagebits class.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:37  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.2  2005/04/17 17:19:10  iamfraggle
 *Small fixes

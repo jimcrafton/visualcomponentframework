@@ -14,11 +14,20 @@ where you installed the VCF.
 #endif
 
 
+
+#ifndef _VCF_WAITABLE_H__
+#include "vcf/FoundationKit/Waitable.h"
+#endif
+
+
 namespace VCF {
 
 class ProcessPeer;
 
-class FOUNDATIONKIT_API Process : public Object {
+/**
+\class Process VCFProcess.h "vcf/FoundationKit/VCFProcess.h"
+*/
+class FOUNDATIONKIT_API Process : public Object, public Waitable {
 
 public:
 	Process();
@@ -32,7 +41,8 @@ public:
 	/**
 	The default behaviour is to just start the process, assuming the processName is a
 	path to the executable. However, we are now going to get a tad fancier!
-	If the processName is a directory, then we will try and locate the 
+	
+	If the processName is a directory, we will try and locate the 
 	Info.plist/Info.xml file, read it, and, based on the info we get, 
 	attempt to use this to open the binary inside.
 	@param String the fully qualified file name of the process to
@@ -48,6 +58,12 @@ public:
 	String getName();
 
 	ulong32 terminate();
+
+	virtual WaitResult wait();
+
+	virtual WaitResult wait( uint32 milliseconds );
+
+	virtual OSHandleID getPeerHandleID(); 
 protected:
 	ProcessPeer* processPeer_;
 };
@@ -58,6 +74,18 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.3  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.3.4.2  2006/03/12 22:01:41  ddiego
+*doc updates.
+*
+*Revision 1.3.4.1  2005/11/28 21:01:06  ddiego
+*added wait function to process class. added stubs for linux.
+*
 *Revision 1.3  2004/12/01 04:31:41  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

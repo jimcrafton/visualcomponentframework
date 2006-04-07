@@ -21,7 +21,9 @@ where you installed the VCF.
 namespace VCF{
 
 class GraphicsContext;
-
+/**
+\class BasicStroke BasicStroke.h "vcf/GraphicsKit/BasicStroke.h"
+*/
 class GRAPHICSKIT_API BasicStroke : public VCF::Object, public VCF::Stroke {
 public:
 	BasicStroke();
@@ -101,6 +103,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:41  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:42:07  ddiego
+*more doc updates - specific to graphicskit.
+*
 *Revision 1.3  2005/07/09 23:05:56  ddiego
 *added missing gtk files
 *

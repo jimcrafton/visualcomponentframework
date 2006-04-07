@@ -28,19 +28,22 @@ namespace VCF
 #define IMAGELIST_EVENT_ITEM_DELETED		CUSTOM_EVENT_TYPES + IMAGELIST_CONST + 6
 
 
-class APPLICATIONKIT_API ImageListEvent : public Event
-{
+/**
+\class ImageListEvent ImageListEvent.h "vcf/ApplicationKit/ImageListEvent.h"
+*/
+class APPLICATIONKIT_API ImageListEvent : public Event {
 public:
 
-	ImageListEvent( Object * source);
+	ImageListEvent( Object * source): Event(source), image_(NULL), imageIndex_(0) {}
 
-	ImageListEvent( Object* source, const unsigned long& eventType, Image* image=NULL );
+	ImageListEvent( Object* source, const unsigned long& eventType, Image* image=NULL )
+		: Event(source,eventType), image_(image), imageIndex_(0) {}
 
 	ImageListEvent( const ImageListEvent& rhs ):Event(rhs) {
 		*this = rhs;
 	}
 
-	virtual ~ImageListEvent();
+	virtual ~ImageListEvent() {}
 
 
 	ImageListEvent& operator=( const ImageListEvent& rhs ) {
@@ -77,6 +80,7 @@ protected:
 
 
 /**
+\class ImageListEventHandler ImageListEvent.h "vcf/ApplicationKit/ImageListEvent.h"
 *ImageListEventHandler
 *This handles the following Image List events:
 *ImageListSizeChanged
@@ -106,6 +110,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.2.6.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

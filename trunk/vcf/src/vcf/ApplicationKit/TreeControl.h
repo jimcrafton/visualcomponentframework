@@ -38,7 +38,7 @@ namespace VCF {
 
 
 class TreePeer;
-
+class TreeItem;
 class ImageList;
 
 class ModelEvent;
@@ -49,6 +49,9 @@ class ModelEvent;
 #define TREEITEM_SELECTED	CUSTOM_EVENT_TYPES + ITEM_CONST + 20
 #define TREEITEM_EXPANDED	CUSTOM_EVENT_TYPES + ITEM_CONST + 21
 
+/**
+\class TreeControl TreeControl.h "vcf/ApplicationKit/TreeControl.h" 
+*/
 class APPLICATIONKIT_API TreeControl : public VCF::Control {
 public:
 
@@ -98,6 +101,8 @@ public:
 
 	Rect getItemImageRect( TreeItem* item );
 
+	Rect getItemRect( TreeItem* item );
+
 	bool getAllowLabelEditing();
 
 	void setAllowLabelEditing( const bool& allowLabelEditing );
@@ -130,6 +135,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

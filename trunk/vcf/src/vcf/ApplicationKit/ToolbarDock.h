@@ -116,6 +116,7 @@ protected:
 
 
 /**
+\class DockManager ToolbarDock.h "vcf/ApplicationKit/ToolbarDock.h"
 *DockManager class uses to manage ToolbarDock's and floating toolbars
 */
 class DockManager : public VCF::Object {
@@ -158,6 +159,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.2  2004/08/07 02:49:10  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

@@ -54,16 +54,18 @@ public:
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
-			controlJustAdded = ( found == (controls_.end()-1) );
+			controlJustAdded = ( found == controls_.end() );
 		}
 
 		double childCount = AbstractContainer::getChildCount();
+                //check for zero is added because on Borland getChildCount returns 0
+                //during initialization and than we have floating point exception
 		if ( controlJustAdded ) {
 			childCount = childCount + 1.0;
 		}
 
 		//calculate the width for each section
-		double width = clientBounds.getWidth() / childCount ;
+                double width = clientBounds.getWidth() / ((childCount <= 0.0) ? 1.0 : childCount) ;
 
 		//note: we could have used the containers vector - this would be every so slightly faster,
 		//but this is a bit cleaner for teh sake of an example.
@@ -237,7 +239,7 @@ public:
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
-			controlJustAdded = ( found == (controls_.end()-1) );
+			controlJustAdded = ( found == controls_.end() );
 		}
 
 
@@ -394,7 +396,6 @@ class AdvancedAlignmentWindow : public Window {
 public:
 	AdvancedAlignmentWindow() {
 		setCaption( "AdvancedAlignment" );
-		setVisible( true );
 
 
 		CommandButton* btn1 = new CommandButton();
@@ -450,7 +451,8 @@ public:
 
 		Window* mainWindow = new AdvancedAlignmentWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 250.0, 150.0 );
+		mainWindow->show();
 
 		return result;
 	}
@@ -471,8 +473,20 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:14  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:09  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.4  2006/03/16 01:32:18  ddiego
+*fixed AdvancedAlignment example per fraggles req.
+*
+*Revision 1.5.2.3  2005/10/14 13:00:58  kiklop74
+*Fix exception error with divide by zero
+*
+*Revision 1.5.2.2  2005/08/01 16:44:04  marcelloptr
+*forgotten fixes
+*
+*Revision 1.5.2.1  2005/07/23 21:44:57  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
 *
 *Revision 1.4.4.1  2005/06/25 22:46:10  marcelloptr
 *[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.

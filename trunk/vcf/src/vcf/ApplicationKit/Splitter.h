@@ -20,6 +20,7 @@ where you installed the VCF.
 namespace VCF  {
 
 /**
+\class Splitter Splitter.h "vcf/ApplicationKit/Splitter.h"
 *Class Splitter documentation
 */
 class APPLICATIONKIT_API Splitter : public CustomControl {
@@ -87,6 +88,12 @@ private:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

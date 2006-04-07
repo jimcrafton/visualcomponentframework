@@ -36,6 +36,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/MenuManagerPeer.h"
 #include "vcf/ApplicationKit/OSXMenuManagerPeer.h"
 #include "vcf/ApplicationKit/OSXTextPeer.h"
+#include "vcf/ApplicationKit/OSXTextEditPeer.h"
+
 
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/OSXToolbar.h"
@@ -54,6 +56,45 @@ where you installed the VCF.
 
 
 #define kSleepTime	32767
+
+
+
+VCF::ulong32 OSXUIUtils::translateButtonMask( EventMouseButton button )
+{
+	VCF::ulong32 result = 0;
+	
+	if ( button == kEventMouseButtonPrimary ) {
+		result = VCF::mbmLeftButton;
+	}
+	else if ( button == kEventMouseButtonSecondary ) {
+		result = VCF::mbmRightButton;
+	}
+	else if ( button == kEventMouseButtonTertiary ) {
+		result = VCF::mbmMiddleButton;
+	}
+	
+	return result;
+}
+
+VCF::ulong32 OSXUIUtils::translateKeyMask( UInt32 keyMod )
+{
+    VCF::ulong32 result = 0;
+	
+    if ( keyMod & shiftKey ) {
+        result |= VCF::kmShift;
+    }
+	
+    if ( keyMod & cmdKey ) {
+        result |= VCF::kmAlt;
+    }
+	
+    if ( keyMod & controlKey ) {
+        result |= VCF::kmCtrl;
+    }
+    return result;
+}
+
+
 
 
 namespace VCF {
@@ -520,7 +561,8 @@ public:
 		double result = 0.0;
 
 		//values largely derived from the Apple HIG at
-		//http://developer.apple.com/techpubs/macosx/Essentials/AquaHIGuidelines/AHIGLayout/index.html
+		//http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/index.html
+		//http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGLayout/chapter_19_section_2.html#//apple_ref/doc/uid/TP30000360-BEIBEAFJ
 		switch ( type ) {
 			case UIMetricsManager::stWindowBorderDelta : {
 				result = 20.0;
@@ -599,6 +641,238 @@ public:
 
 		return result;
 	}
+	
+	virtual double getValue( const MetricType& type, const String& text ) {
+		double result = 0;
+
+		switch ( type ) {
+			case mtLabelHeight : {
+				result = 18;
+			}
+			break;
+
+			case mtComboBoxHeight : {
+				result = 20;
+			}
+			break;
+
+			case mtListItemHeight : {
+				result = 19.0;
+			}
+			break;
+
+			case mtButtonHeight : {			
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricPushButtonHeight, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtRadioBoxHeight : {			
+				result = 18;
+			}
+			break;
+
+			case mtCheckBoxHeight : {				
+				result = 18;
+			}
+			break;
+
+			case mtToolTipHeight : {
+				result = 18;
+			}
+			break;
+
+			case mtSeparatorHeight : {
+				result = 2.0;
+			}
+			break;
+
+			case mtHeaderHeight : {
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricListHeaderHeight, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtTreeItemHeight : {//???? is this even right?
+				result = 19.0;
+			}
+			break;
+
+			case mtTextControlHeight : {
+				result = 22.0;
+			}
+			break;
+
+			case mtVerticalProgressWidth : {
+				result = 16.0;
+			}
+			break;
+
+			case mtHorizontalProgressHeight : {
+				result = 16.0;
+			}
+			break;
+
+			case mtInformationalControlHeight : {
+				
+			}
+			break;
+
+			case mtVerticalScrollbarThumbWidth : {
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtHorizontalScrollbarThumbHeight : {
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtVerticalScrollbarWidth : {
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtHorizontalScrollbarHeight : {
+				SInt32 val = 0;
+				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
+					result = val;
+				}
+				else {
+					result = 20;
+				}
+			}
+			break;
+
+			case mtMenuIndent : {
+
+			}
+			break;
+
+			case mtWindowBorderDelta : {
+				result = 20.0;
+			}
+			break;
+
+			case mtContainerBorderDelta : {
+				result = 22;
+			}
+			break;
+
+			case mtControlVerticalSpacing : {
+				result = 12;
+			}
+			break;
+
+			case mtControlHorizontalSpacing : {
+				result = 12;
+			}
+			break;
+
+			case mtInformationControlTopSpacer : {
+				result = 2.0;
+			}
+			break;
+
+			case mtInformationControlBottomSpacer : {
+				result = 8.0;
+			}
+			break;
+
+			default : {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
+			}
+			break;
+		}
+		
+		return result;
+	}
+	
+	virtual VCF::Size getSize( const MetricType& type, const String& text ) {
+		Size result;
+		
+		switch ( type ) {
+			case mtMenuSize : {
+				
+			}
+			break;
+
+			case mtVerticalSliderThumbSize : {
+				
+			}
+			break;
+
+			case mtHorizontalSliderThumbSize : {
+				
+			}
+			break;
+
+			case mtTabSize : {
+				
+			}
+			break;
+
+			case mtRadioBoxBtnSize : {
+				
+			}
+			break;
+
+			case mtCheckBoxBtnSize : {
+				
+			}
+			break;
+
+			case mtComboBoxDropBtnSize : {
+			
+			}
+			break;
+
+			case mtDisclosureButtonSize : {
+				
+			}
+			break;
+
+			default : {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
+			}
+			break;
+		}
+
+		return result;
+
+	}
+	
+	virtual VCF::Rect getRect( const MetricType& type, VCF::Rect* rect ) {
+		return VCF::Rect();
+	}
 };
 
 
@@ -645,12 +919,123 @@ public:
 	}
 	
 	virtual String transformMnemonicValues( const String& input ) {
-		return "";
+		String result = input;
+		
+		size_t pos = result.find( "&" );
+		while ( pos != String::npos ) {
+			if ( result[pos+1] != '&' ) {
+				result.erase( pos, 1 );
+			}
+			else {
+				pos ++;
+			}
+			
+			pos = result.find( "&", pos +1 );
+		}
+		
+		return result;
 	}
 	
 	virtual AcceleratorKey::Value getStandardAcceleratorFor( const StandardAccelerator& val ) {
 		AcceleratorKey::Value result;
 		
+		switch ( val ) {
+			case UIPolicyManager::saApplicationQuit : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterQ );
+			}
+			break;
+
+			case UIPolicyManager::saApplicationAbout : {
+				
+			}
+			break;
+
+			case UIPolicyManager::saApplicationPreferences : {
+				result = AcceleratorKey::Value( kmCtrl,vkComma );
+			}
+			break;
+
+			case UIPolicyManager::saFileNew : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterN );
+			}
+			break;
+
+			case UIPolicyManager::saFileOpen : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterO );
+			}
+			break;
+
+			case UIPolicyManager::saFileSave : {
+				result = AcceleratorKey::Value( kmCtrl,vkLetterS );
+			}
+			break;
+
+			case UIPolicyManager::saFileSaveAs : {
+				result = AcceleratorKey::Value( kmCtrl | kmShift,vkLetterS );
+			}
+			break;
+
+			case UIPolicyManager::saFilePrint : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterP );
+			}
+			break;
+
+			case UIPolicyManager::saFilePageSetup : {
+				result = AcceleratorKey::Value( kmCtrl | kmShift,vkLetterP );
+			}
+			break;
+
+			case UIPolicyManager::saEditUndo : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterZ );
+			}
+			break;
+
+			case UIPolicyManager::saEditRedo : {
+				result = AcceleratorKey::Value( kmCtrl | kmShift,vkLetterZ );
+			}
+			break;
+
+			case UIPolicyManager::saEditCut : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterX );
+			}
+			break;
+
+			case UIPolicyManager::saEditCopy : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterC );
+			}
+			break;
+
+			case UIPolicyManager::saEditPaste : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterV );
+			}
+			break;
+
+			case UIPolicyManager::saEditDelete : {
+				result = AcceleratorKey::Value( kmUndefined, vkDelete );
+			}
+			break;
+
+			case UIPolicyManager::saEditSelectAll : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterA );
+			}
+			break;
+
+			case UIPolicyManager::saEditFind : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterF );
+			}
+			break;
+
+			case UIPolicyManager::saEditFindNext : {
+				result = AcceleratorKey::Value( kmCtrl, vkLetterG );
+			}
+			break;
+
+			case UIPolicyManager::saHelpContents : {
+				result = AcceleratorKey::Value( kmCtrl, vkQuestionMark );
+			}
+			break;
+		}
+
 		return result;
 	}
 };
@@ -735,7 +1120,7 @@ TextPeer* OSXUIToolkit::internal_createTextPeer( const bool& autoWordWrap, const
 
 TextEditPeer* OSXUIToolkit::internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl )
 {
-	return NULL;
+	return new OSXTextEditPeer(component,isMultiLineControl);
 }
 	
 	
@@ -805,11 +1190,6 @@ PopupMenuPeer* OSXUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu 
 ButtonPeer* OSXUIToolkit::internal_createButtonPeer( CommandButton* component )
 {
     return new OSXButton( component );
-}
-
-HTMLBrowserPeer* OSXUIToolkit::internal_createHTMLBrowserPeer( Control* control )
-{
-    return NULL;
 }
 
 ContextPeer* OSXUIToolkit::internal_createContextPeer( Control* control )
@@ -951,16 +1331,14 @@ void OSXUIToolkit::handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTime
 {
     OSXUIToolkit* toolkit = (OSXUIToolkit*)inUserData;
 
-    printf( "idle handler...\n" );
-
-    switch ( inState ) {
+       switch ( inState ) {
         case kEventLoopIdleTimerStarted : {
 
         }
         break;
 
         case kEventLoopIdleTimerIdling : {
-            printf( "\tkEventLoopIdleTimerIdling...\n" );
+            
             Application* app = Application::getRunningInstance();
             if ( NULL != app ) {
 				app->idleTime();
@@ -1272,8 +1650,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_DOWN,
-											OSXUtils::translateButtonMask( button ),
-											OSXUtils::translateKeyMask( keyboardModifier ), &pt );
+											OSXUIUtils::translateButtonMask( button ),
+											OSXUIUtils::translateKeyMask( keyboardModifier ), &pt );
 
                 }
                 break;
@@ -1286,8 +1664,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_UP,
-											OSXUtils::translateButtonMask( button ),
-											OSXUtils::translateKeyMask( keyboardModifier ), &pt );
+											OSXUIUtils::translateButtonMask( button ),
+											OSXUIUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1300,8 +1678,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
-                                                OSXUtils::translateButtonMask( button ),
-                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
+                                                OSXUIUtils::translateButtonMask( button ),
+                                                OSXUIUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1313,8 +1691,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
                     
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
-                                                OSXUtils::translateButtonMask( button ),
-                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
+                                                OSXUIUtils::translateButtonMask( button ),
+                                                OSXUIUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -1326,8 +1704,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_ENTERED,
-                                                    OSXUtils::translateButtonMask( 0 ),
-                                                    OSXUtils::translateKeyMask( 0 ), &pt );
+                                                    OSXUIUtils::translateButtonMask( 0 ),
+                                                    OSXUIUtils::translateKeyMask( 0 ), &pt );
                 }
                 break;
 
@@ -1339,8 +1717,8 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     }
 
                     result = new VCF::MouseEvent( msg->control_, Control::MOUSE_LEAVE,
-                                                    OSXUtils::translateButtonMask( 0 ),
-                                                    OSXUtils::translateKeyMask( 0 ), &pt );
+                                                    OSXUIUtils::translateButtonMask( 0 ),
+                                                    OSXUIUtils::translateKeyMask( 0 ), &pt );
                 }
                 break;
 
@@ -1664,7 +2042,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                 break;
 
                 case kEventWindowClose : {
-                    result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DELETED );
+                    result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DESTROYED );
                 }
                 break;
 
@@ -1778,7 +2156,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                 break;
 
                 case kEventControlDispose : {
-					result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DELETED );
+					result = new VCF::ComponentEvent( msg->control_, Component::COMPONENT_DESTROYED );
                 }
                 break;
 
@@ -1841,7 +2219,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 					
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_MOVE,
                                                 mbmLeftButton,
-                                                OSXUtils::translateKeyMask( 0 ), &pt );
+                                                OSXUIUtils::translateKeyMask( 0 ), &pt );
 
                 }
                 break;
@@ -1953,7 +2331,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
                     
                     result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_DOWN,
                                                 mbmLeftButton,
-                                                OSXUtils::translateKeyMask( keyboardModifier ), &pt );
+                                                OSXUIUtils::translateKeyMask( keyboardModifier ), &pt );
                 }
                 break;
 
@@ -2215,14 +2593,63 @@ EventRef OSXUIToolkit::createUserCarbonEvent( UInt32 eventType )
 
 VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 {
-    Size result;
+    Size result(5,5);
     return result;
 }
 
+void OSXUIToolkit::internal_displayHelpContents( const String& helpBookName, const String& helpDirectory )
+{
+
+}
+
+void OSXUIToolkit::internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory )
+{
+
+}
+
+bool OSXUIToolkit::internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory )
+{
+	return false;
+}
+
+void OSXUIToolkit::internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection )
+{
+
+}
+
+void OSXUIToolkit::internal_systemSettingsChanged()
+{
+
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.7  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.6.2.7  2006/03/17 03:08:11  ddiego
+*updated osx code to latest changes.
+*
+*Revision 1.6.2.6  2006/02/26 23:44:10  ddiego
+*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
+*
+*Revision 1.6.2.5  2006/02/22 01:26:22  ddiego
+*mac osx updates.
+*
+*Revision 1.6.2.4  2005/11/30 05:31:35  ddiego
+*further osx drag-drop updates.
+*
+*Revision 1.6.2.3  2005/11/27 23:55:45  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.6.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.6  2005/07/10 00:20:40  ddiego
 *updated osx code from merge over of devmain-0-6-7.
 *

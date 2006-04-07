@@ -284,9 +284,13 @@ void OSXControl::setParent( Control* parent )
 	Frame* windowParent = NULL;
 	
 	if ( parent->isLightWeight() ) {
-		OSXLightweightControl* lwPeer = (OSXLightweightControl*) parent->getPeer();
-		
-		windowParent = dynamic_cast<Frame*>(lwPeer->getHeavyWeightParent());
+		OSXLightweightControl* lwPeer = dynamic_cast<OSXLightweightControl*>(parent->getPeer());
+		if ( NULL != lwPeer ) {
+			Control* lwParent = lwPeer->getHeavyWeightParent();
+			if ( NULL != lwParent ) {
+				windowParent = dynamic_cast<Frame*>(lwParent);
+			}
+		}
 	}
 	else {
 		windowParent = dynamic_cast<Frame*>(parent);
@@ -294,7 +298,7 @@ void OSXControl::setParent( Control* parent )
 	
 	
 	if ( NULL != windowParent ) {
- 		OSXWindow* osxWnd = (OSXWindow*)parent->getPeer();
+ 		OSXWindow* osxWnd = dynamic_cast<OSXWindow*>(windowParent->getPeer());
 		WindowRef wnd = (WindowRef) osxWnd->getHandleID();
 		
 		ControlRef contentView = osxWnd->getRootControl();		
@@ -383,7 +387,7 @@ void OSXControl::setFont( Font* font )
 	SetControlFontStyle( hiView_, &fontRec );	
 }
 
-void OSXControl::repaint( Rect* repaintRect=NULL )
+void OSXControl::repaint( Rect* repaintRect, const bool& immediately )
 {
 	HIViewSetNeedsDisplay( hiView_, true );
 }
@@ -441,7 +445,7 @@ OSStatus OSXControl::handleOSXEvents(EventHandlerCallRef nextHandler, EventRef t
 void OSXControl::setBorder( Border* border )
 {
 	//cause the control to repaint itself!
-	repaint(NULL);
+	repaint(NULL,false);
 }
 
 OSStatus OSXControl::handleWrappedControlHitTest( EventRef theEvent )
@@ -449,16 +453,15 @@ OSStatus OSXControl::handleWrappedControlHitTest( EventRef theEvent )
 	GetEventParameter( theEvent, kEventParamMouseLocation, typeQDPoint, NULL,
 					   sizeof (lastMousePt_), NULL, &lastMousePt_);
 	
-	//printf( "lastMousePt_ X: %d, Y: %d\n", lastMousePt_.h, lastMousePt_.v );				
 	OSXEventMsg msg( theEvent, control_ );
 	
 	Event* mouseMove = UIToolkit::createEventFromNativeOSEventData( &msg );
 	if ( NULL != mouseMove ) {
-		MouseEvent* e = (MouseEvent*)mouseMove;
-		//printf( "X: %0.2f, Y: %0.2f\n", e->getPoint()->x_, e->getPoint()->y_ );
 		control_->handleEvent( mouseMove );
 		mouseMove->free();
 	}
+	
+	return noErr;
 }
 
 OSStatus OSXControl::handleWrappedControlTrack( EventRef theEvent )
@@ -499,12 +502,14 @@ OSStatus OSXControl::handleWrappedControlTrackDone( EventRef theEvent )
 	
 	Event* mouseUp = new VCF::MouseEvent ( control_, Control::MOUSE_UP,
 										   buttonVal,
-										   OSXUtils::translateKeyMask( 0 ), //fix this - !!!!!
+										   OSXUIUtils::translateKeyMask( 0 ), //fix this - !!!!!
 										   &pt );
 	control_->handleEvent( mouseUp );
 	mouseUp->free();
 	
 	mouseState_ = OSXControl::msUp;
+	
+	return noErr;
 }
 
 OSStatus OSXControl::handleControlTrack( EventRef theEvent )
@@ -570,7 +575,7 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 			
 			Event* mouseMove = new VCF::MouseEvent ( control_, Control::MOUSE_MOVE,
 										   mouseBtnDown,
-										   OSXUtils::translateKeyMask( mods ), &pt );
+										   OSXUIUtils::translateKeyMask( mods ), &pt );
 										   
 			control_->handleEvent( mouseMove );
 			mouseMove->free();
@@ -592,7 +597,7 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 	
 	Event* mouseUp = new VCF::MouseEvent ( control_, Control::MOUSE_UP,
 										   mbmLeftButton,
-										   OSXUtils::translateKeyMask( mods ), &pt );
+										   OSXUIUtils::translateKeyMask( mods ), &pt );
 	control_->handleEvent( mouseUp );
 	mouseUp->free();
 			
@@ -749,7 +754,6 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 	return result;
 }
 
-
 	
 };
 
@@ -758,6 +762,19 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/01/09 02:22:30  ddiego
+*more osx code
+*
+*Revision 1.5.2.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
@@ -829,6 +846,19 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 *Revision 1.1.2.6  2004/05/23 14:11:59  ddiego
 *osx updates
 *$Log$
+*Revision 1.6  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.3  2006/01/09 02:22:30  ddiego
+*more osx code
+*
+*Revision 1.5.2.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.5.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

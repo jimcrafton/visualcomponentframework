@@ -63,7 +63,7 @@ public:
 
 		VCF::Rect textRect = rect;
 
-		textRect.bottom_ = 100;
+		textRect.bottom_ = 150;
 		textRect.inflate( -5, -5 );
 
 		String s = Format( "%ls. %ls")
@@ -82,9 +82,15 @@ public:
 
 		s += current.isAM() ? " AM" : " PM";
 
+		s += "\n\nHit the space bar to update the current time.";
+		s += "\nTo increment/decrement the Day use the up/down arrow keys with Ctrl+Shift held down.";
+		s += "\nTo increment/decrement the Month use the up/down arrow keys with Ctrl held down.";
+		s += "\nTo increment/decrement the Year use the up/down arrow keys.";
+		
+
 		ctx->textBoundedBy( &textRect, s );
 
-		rect.top_ += 100;
+		rect.top_ += textRect.bottom_ + 5;
 
 
 		VCF::Size sizeBorder = VCF::Size( 5, 2 );
@@ -479,8 +485,17 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/07/09 23:14:35  ddiego
-*merging in changes from devmain-0-6-7 branch.
+*Revision 1.6  2006/04/07 02:34:20  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/19 18:34:47  ddiego
+*added explanatory text to the datetimeui example.
+*
+*Revision 1.5.2.1  2005/07/23 21:45:34  ddiego
+*merged in marcellos changes from the 0-6-7 dev branch.
+*
+*Revision 1.4.2.3  2005/07/11 19:56:46  marcelloptr
+*fixed all deprecated traceWithArgs(...) and format(...) calls
 *
 *Revision 1.4.2.2  2005/04/17 17:18:24  iamfraggle
 *Small fixes

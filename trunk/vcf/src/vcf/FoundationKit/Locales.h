@@ -22,7 +22,7 @@ class MessageLoader;
 
 
 /**
-\par
+\class Locale Locales.h "vcf/FoundationKit/Locales.h"
 A locale instance represents the cultural data used to convert data to string
 in manner appropriate to the language and country. Each locale is identified
 by a language and a country code, where the language code is one of the possible
@@ -33,7 +33,7 @@ and the country code is one of the possible values as listed in
 ISO-3166</a>. The complete locale is referred to as a combination of both these values,
 for example, the french locale is referred to as "fr_FR", and the United States locale
 is referred to as "en_US".
-\par
+
 A locale offers a variety of methods to translate data into a string, based on the rules
 of the locale. For example, monetary units are represented by the dollar symbol ("$")
 in the "en_US" locale, but the United Kindom ("en_GB") are represented by the pound ("£").
@@ -48,11 +48,11 @@ Locale loc("it_IT"); //Italy
 String numString = loc.toString( 123456 ); //numString = "123.456"
 \endcode
 You can also convert currency data (as a double) to a string.
-\par
+
 There are date and time functions for transforming a DateTime instance into a string
 that is representative of the time in hours, minutes, and seconds, and into
 a string that represents the date.
-\par
+
 There are case transformation functions, to convert a string into all upper case
 or into all lowercase.
 */
@@ -631,7 +631,7 @@ public:
 	/**
 	converts a date/time instance into a string representing the date portion of
 	the DateTime instance.
-	\par
+	
 	For example:
 	\code
 	Locale loc("it", "IT" );
@@ -640,7 +640,7 @@ public:
 
 	UnicodeString datStr = loc.toStringFromDate( aDate );
 	\endcode
-	\par
+	
 	You can also format the string that is output by using the following codes. Note that
 	the case of the codes <strong>must</strong> be preserved, i.e. "dd", not "DD".
 	<table>
@@ -697,7 +697,7 @@ public:
 	/**
 	converts a date/time instance into a string representing the time portion of
 	the DateTime instance.
-	\par
+	
 	For example:
 	\code
 	Locale loc("it", "IT" );
@@ -707,7 +707,7 @@ public:
 	UnicodeString datStr = loc.toStringFromTime( aDate );
 	//datStr = "14.34.45"
 	\endcode
-	\par
+	
 	You can also format the string that is output by using the following codes. Note that
 	the case of the codes <strong>must</strong> be preserved, i.e. "dd", not "DD".
 	<table>
@@ -823,6 +823,15 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2006/03/23 00:56:09  ddiego
+*added a fix to algo for determing resource directory name.
+*
+*Revision 1.2.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

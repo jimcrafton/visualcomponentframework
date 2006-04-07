@@ -22,6 +22,10 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Win32Font.h"
 #include "vcf/ApplicationKit/CursorPeer.h"
 
+#include "thirdparty/win32/Microsoft/htmlhelp.h"
+
+#include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+
 using namespace VCF;
 
 using namespace VCFWin32;
@@ -108,14 +112,7 @@ void AbstractWin32Component::init()
 	memDC_ = NULL;
 	mouseEnteredControl_ = false;
 
-	cachedMessages_ = new std::vector<MSG>();
-
-	/*
-	JC I remove this cause we don't really need them
-	*/
-	//parent_ = NULL;
-	//winPosInfo_ = NULL;
-	
+	cachedMessages_ = new std::vector<MSG>();	
 }
 
 OSHandleID AbstractWin32Component::getHandleID()
@@ -166,59 +163,31 @@ void AbstractWin32Component::setText( const VCF::String& text )
 }
 
 void AbstractWin32Component::setBounds( VCF::Rect* rect )
-{
-	/*
-	JEC - I commented this out to simplify/speed up some resize/repaint issues
-	HDWP winPosInfo = NULL;
-	if ( NULL != parent_ ) {
-		winPosInfo = parent_->getWindPosInfo();
+{	
+	if ( !peerControl_->hasChildren() ) {
+		::MoveWindow( hwnd_, (int)rect->left_, (int)rect->top_, rect->getWidth(), (int)rect->getHeight(), TRUE );
 	}
-
-
-	if ( NULL != winPosInfo ) {
-		parent_->winPosInfo_ = ::DeferWindowPos( winPosInfo, hwnd_, NULL, (int)rect->left_, (int)rect->top_,
-													(int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER| SWP_NOZORDER );
-	}
-	else{
+	else {
 		::SetWindowPos( hwnd_, NULL, (int)rect->left_, (int)rect->top_,
-                    (int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER| SWP_NOZORDER );
-	}
-	*/
-
-	bool repaint = peerControl_->getRepaintOnSize();
-	//StringUtils::trace( Format( "AbstractWin32Component::MoveWindow: [%d] %s\n" ) % repaint  % peerControl_->getToolTipText());
-
-	::MoveWindow( hwnd_, (int)rect->left_, (int)rect->top_, rect->getWidth(), (int)rect->getHeight(), repaint );
-	//UINT rep = ( repaint ) ? 0 : SWP_NOREDRAW;
-	//::SetWindowPos( hwnd_, NULL, (int)rect->left_, (int)rect->top_,
-	//                (int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER | rep );
+			          (int)rect->getWidth(), (int)rect->getHeight(), SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER );
+	}	
 }
 
 
 
 bool AbstractWin32Component::beginSetBounds( const ulong32& numberOfChildren )
 {
-	/*
-	JEC - I commented this out to simplify/speed up some resize/repaint issues
-	bool result = false;
+	
+	//JEC - I commented this out to simplify/speed up some resize/repaint issues
+	bool result = true;
 
-	winPosInfo_ = NULL;
-	winPosInfo_ = ::BeginDeferWindowPos( numberOfChildren );
-
-	result = (NULL != winPosInfo_);
-	*/
-
-	return true;//result;
+	
+	return result;
 }
 
 void AbstractWin32Component::endSetBounds()
 {
-	/*
-	JEC - I commented this out to simplify/speed up some resize/repaint issues
-	::EndDeferWindowPos( winPosInfo_ );
-
-	winPosInfo_ = NULL;
-	*/
+	
 }
 
 VCF::Rect AbstractWin32Component::getBounds()
@@ -257,6 +226,10 @@ VCF::Rect AbstractWin32Component::getBounds()
 
 void AbstractWin32Component::setVisible( const bool& visible )
 {
+	if ( (peerControl_->isDesigning()) && (NULL == GetParent(hwnd_)) ) {
+		return; //do nothing! can't show the control till it's parented
+	}
+
 	if ( true == visible ){
 		::ShowWindow( hwnd_, SW_SHOW );
 	}
@@ -285,6 +258,7 @@ void AbstractWin32Component::setControl( VCF::Control* component )
 
 void AbstractWin32Component::setParent( VCF::Control* parent )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND dummyParent = toolkit->getDummyParent();
 
@@ -294,18 +268,9 @@ void AbstractWin32Component::setParent( VCF::Control* parent )
 	}
 	else {
 		VCF::ControlPeer* parentPeer = parent->getPeer();
-		/*
-		JC I remove this cause we don't really need them
-		*/
-		//parent_ = NULL;
 		
 		if ( NULL == dynamic_cast<Frame*>(peerControl_) ){
-			HWND wndParent = (HWND)parentPeer->getHandleID();
-			
-			/*
-			JC I remove this cause we don't really need them
-			*/
-			//parent_ = (AbstractWin32Component*)(parentPeer);
+			HWND wndParent = (HWND)parentPeer->getHandleID();			
 			
 			if ( NULL == wndParent ){
 				//throw exception !!!
@@ -329,6 +294,7 @@ VCF::Control* AbstractWin32Component::getParent()
 
 bool AbstractWin32Component::isFocused()
 {
+	VCF_ASSERT(NULL != hwnd_);
 	HWND focusedHandle = ::GetFocus();
 	bool result = (NULL != focusedHandle) && (focusedHandle == hwnd_);
 	return result;
@@ -336,21 +302,25 @@ bool AbstractWin32Component::isFocused()
 
 void AbstractWin32Component::setFocused()
 {
+	VCF_ASSERT(NULL != hwnd_);
 	::SetFocus( hwnd_ );
 }
 
 bool AbstractWin32Component::isEnabled()
 {
+	VCF_ASSERT(NULL != hwnd_);
 	return (::IsWindowEnabled( hwnd_ ) != 0);
 }
 
 void AbstractWin32Component::setEnabled( const bool& enabled )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	::EnableWindow( hwnd_, enabled );
 }
 
 void AbstractWin32Component::setFont( Font* font )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	if ( NULL != font ){
 		Win32Font* win32FontPeer = NULL;
 		FontPeer* fontPeer = font->getFontPeer();
@@ -419,14 +389,23 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 					break;
 
 					case cpControlOnly : {
+						peerControl_->internal_beforePaint( paintCtx );
+
 						peerControl_->paint( paintCtx );
+
+						peerControl_->internal_afterPaint( paintCtx );
 
 					}
 					break;
 
 					case cpBorderAndControl : {
 						peerControl_->paintBorder( paintCtx );
+						
+						peerControl_->internal_beforePaint( paintCtx );
+
 						peerControl_->paint( paintCtx );
+
+						peerControl_->internal_afterPaint( paintCtx );
 					}
 					break;
 				}
@@ -462,7 +441,6 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			POINT oldOrg = {0};
 			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 			
-			
 			/**
 			* we prevents the owning control of the context to alter
 			* the HDC and the viewport, as this is done here using 
@@ -484,14 +462,23 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 				break;
 
 				case cpControlOnly : {
+
+					peerControl_->internal_beforePaint( ctx );
+
 					peerControl_->paint( ctx );
 
+					peerControl_->internal_afterPaint( ctx );
 				}
 				break;
 
 				case cpBorderAndControl : {
 					peerControl_->paintBorder( ctx );
+					
+					peerControl_->internal_beforePaint( ctx );
+
 					peerControl_->paint( ctx );
+
+					peerControl_->internal_afterPaint( ctx );
 				}
 				break;
 			}
@@ -533,14 +520,22 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 				break;
 
 				case cpControlOnly : {
+					peerControl_->internal_beforePaint( ctx );
+
 					peerControl_->paint( ctx );
 
+					peerControl_->internal_afterPaint( ctx );
 				}
 				break;
 
 				case cpBorderAndControl : {
 					peerControl_->paintBorder( ctx );
+					
+					peerControl_->internal_beforePaint( ctx );
+
 					peerControl_->paint( ctx );
+
+					peerControl_->internal_afterPaint( ctx );
 				}
 				break;
 			}
@@ -599,64 +594,9 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 			
 			if ( err == FALSE ) {
 				err = GetLastError();
-				StringUtils::traceWithArgs( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %	
+				StringUtils::trace( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %	
 											err );
 			}
-
-		}
-	}
-}
-
-void AbstractWin32Component::checkForFontChange()
-{	
-	if ( NULL != currentFont_ ) {
-		Font* font = peerControl_->getFont();
-
-		void* lf1 = NULL;
-		void* lf2 = NULL;
-		int lfSize = 0;
-		lf1 = font->getFontPeer()->getFontHandleID();
-
-		LOGFONTW lf2w;
-		LOGFONTA lf2a;
-
-		if ( System::isUnicodeEnabled() ) {			
-			memset( &lf2w, 0, sizeof(LOGFONTW) );
-			GetObjectW( currentFont_, sizeof(LOGFONTW), &lf2w );
-
-			//set lfWidth to 0 - essentially we want to 
-			//ignore this in our compare, as we do
-			//not bother to set it
-			lf2w.lfWidth = 0;
-
-			lf2 = &lf2w;
-			lfSize = sizeof(LOGFONTW);
-		}
-		else {
-			memset( &lf2a, 0, sizeof(LOGFONTW) );		
-			GetObjectA( currentFont_, sizeof(LOGFONTA), &lf2a );
-
-			//set lfWidth to 0 - essentially we want to 
-			//ignore this in our compare, as we do
-			//not bother to set it
-			lf2a.lfWidth = 0;
-
-			lf2 = &lf2a;
-			lfSize = sizeof(LOGFONTA);
-		}	
-		
-		
-		
-		int cmp = memcmp( &lf2, lf1, lfSize );
-		if ( cmp != 0 ) {
-			Win32Font* win32FontPeer = (Win32Font*)font->getFontPeer();
-			
-			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( win32FontPeer );
-			if ( NULL != fontHandle ){
-				::SendMessage( hwnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(FALSE, 0) );
-				currentFont_ = fontHandle;
-			}
-			
 
 		}
 	}
@@ -769,10 +709,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndLoseFocus );
 			if ( NULL != obj ){
 
-
-				StringUtils::traceWithArgs( "lost focus: %s @ %p\n",
-											obj->getPeerControl()->getClassName().c_str(), obj->getPeerControl() );
-
+				StringUtils::trace( Format( "lost focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
 			*/
@@ -788,8 +725,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndGetFocus );
 			if ( NULL != obj ){
 
-				StringUtils::traceWithArgs( "gained focus: %s @ %p\n",
-											obj->getPeerControl()->getClassName().c_str(), obj->getPeerControl() );
+				StringUtils::trace( Format( "gained focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
 			*/
@@ -803,11 +739,6 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		case WM_COPYDATA: {
 			Application* app = Application::getRunningInstance();
 			if ( NULL != app ){
-				/*
-				PCOPYDATASTRUCT pcd = (PCOPYDATASTRUCT) lParam;
-				VCF::ulong32 dwData = (VCF::ulong32) pcd->dwData;
-				VCF::ulong32 cbData = (VCF::ulong32) pcd->cbData;
-				*/
 				Win32MSG msg( hwnd_, message, wParam, lParam, peerControl_ );
 				Event e(peerControl_) ;
 				e.setUserData( &msg );
@@ -816,21 +747,33 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		}
 		break;
 
+		case WM_HELP : {
+			HELPINFO* helpInfo = (HELPINFO*) lParam;
+
+			
+			StringUtils::trace( Format("hwnd: %p, ctx: %d, type %d, handle %p, id: %d, x %d, y %d\n") % 
+						hwnd_ %
+						helpInfo->dwContextId % helpInfo->iContextType %
+						helpInfo->hItemHandle % helpInfo->iCtrlId %
+						helpInfo->MousePos.x % helpInfo->MousePos.y );
+
+			UIToolkit::displayContextHelpForControl( peerControl_ );
+
+			wndProcResult = 1;
+			result = true;
+		}
+		break;
+
+
 		case WM_PAINT:{
 			if ( true == isCreated() ){
-				//StringUtils::trace( Format( "AbstractWin32Component::WM_PAINT: [%d] %s\n" ) % peerControl_->getRepaintOnSize() % peerControl_->getToolTipText() );
-				if ( !peerControl_->isDestroying() ) {
+				//StringUtils::trace( "AbstractWin32Component::WM_PAINT\n" );
+				if ( !peerControl_->isDestroying() ) {					
 					if( !GetUpdateRect( hwnd_, NULL, FALSE ) ){
 						wndProcResult = 0;
 						result = true;
 						return result;
 					}
-
-
-					//check to see if the font needs updating
-					checkForFontChange();
-
-
 
 					PAINTSTRUCT ps;
 					HDC contextID = 0;
@@ -847,26 +790,6 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			result = true;
 		}
 		break;
-/*
-
-
-		case WM_HELP : {
-			if ( !peerControl_->isDestroying() ) {
-				HELPINFO* helpInfo = (HELPINFO*) lParam;
-				if ( HELPINFO_WINDOW == helpInfo->iContextType ) {
-					if ( helpInfo->hItemHandle == hwnd_ ) {
-						peerControl_->processWhatsThisHelpEvent();
-					}
-				}
-				else if ( HELPINFO_MENUITEM == helpInfo->iContextType ) {
-					HelpEvent event(peerControl_);
-					peerControl_->fireOnHelpRequested( &event );
-				}
-			}
-		}
-		break;
-
-*/
 
 		case WM_DESTROY: {
 			VCF_ASSERT( !destroyed_ );
@@ -930,6 +853,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case WM_DRAWITEM : {
+			
 			UINT idCtl = (UINT) wParam;
 			DRAWITEMSTRUCT* drawItemStruct = (DRAWITEMSTRUCT*) lParam;
 
@@ -965,7 +889,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				if ( (!peerControl_->isDestroying()) && (ODT_BUTTON == drawItemStruct->CtlType) ) {
 					HWND hwndCtl = drawItemStruct->hwndItem;
 					Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
-					if ( NULL != win32Obj ){
+					if ( NULL != win32Obj ){						
 						win32Obj->handleEventMessages( WM_DRAWITEM, wParam, lParam, wndProcResult );
 						result = true;
 					}
@@ -1104,26 +1028,39 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 					short xPos = (short) LOWORD(lParam);    // horizontal position of pointer
 					short yPos = (short) HIWORD(lParam);    // vertical position of pointer
 
-					if ( scrollable->hasVerticalScrollBar() && (scrollable->getVirtualViewHeight() > peerControl_->getHeight() ) ) {
+                    Rect clientBoundsRect = peerControl_->getClientBounds();
+                    if ( scrollable->hasVerticalScrollBar() && (scrollable->getVirtualViewHeight() > clientBoundsRect.getHeight() ) ) {
 						int pos = 0;
-						//StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
+						//StringUtils::trace( Format( "zDelta: %d\n" ) % zDelta );
+						
+						double actualViewHeight = clientBoundsRect.getHeight();
+						if ( scrollable->isHorizontalScrollbarVisible() ) {
+							actualViewHeight -= scrollable->getHorizontalScrollbarHeight();
+						}
+						
 						if ( zDelta < 0 ) {
-							pos = VCF::minVal<long>((scrollable->getVerticalPosition() + 10),
-												abs((long)(scrollable->getVirtualViewHeight() - peerControl_->getHeight())) );
+							pos = VCF::minVal<long>((scrollable->getVerticalPosition() + 10 ),
+												abs((long)(scrollable->getVirtualViewHeight() - actualViewHeight )) );
 						}
 						else if ( zDelta > 0 ) {
-							pos = VCF::maxVal<long>((scrollable->getVerticalPosition() - 10), 0 );
+							pos = VCF::maxVal<long>((scrollable->getVerticalPosition() - 10 ), 0 );
 						}
 
 						scrollable->setVerticalPosition( pos );
 
 					}
-					else if ( scrollable->hasHorizontalScrollBar() && (scrollable->getVirtualViewWidth() > peerControl_->getWidth() ) ) {
+					else if ( scrollable->hasHorizontalScrollBar() && (scrollable->getVirtualViewWidth() > clientBoundsRect.getWidth() ) ) {
 						int pos = 0;
-						//StringUtils::traceWithArgs( "zDelta: %d\n", zDelta );
+						//StringUtils::trace( Format( "zDelta: %d\n" ) % zDelta );
+						
+						double actualViewWidth = clientBoundsRect.getWidth();
+						if ( scrollable->isVerticalScrollbarVisible() ) {
+							actualViewWidth -= scrollable->getVerticalScrollbarWidth();
+						}
+						
 						if ( zDelta < 0 ) {
 							pos = VCF::minVal<long>((scrollable->getHorizontalPosition() + 10),
-												abs((long)(scrollable->getVirtualViewWidth() - peerControl_->getWidth())) );
+												abs((long)(scrollable->getVirtualViewWidth() - actualViewWidth )) );
 						}
 						else if ( zDelta > 0 ) {
 							pos = VCF::maxVal<long>((scrollable->getHorizontalPosition() - 10), 0 );
@@ -1131,6 +1068,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 						scrollable->setHorizontalPosition( pos );
 					}
+
 				}
 			}
 		}
@@ -1485,8 +1423,10 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 	return result;
 }
 
-void AbstractWin32Component::repaint( Rect* repaintRect )
-{
+void AbstractWin32Component::repaint( Rect* repaintRect, const bool& immediately )
+{	
+	VCF_ASSERT(NULL != hwnd_);
+
 	if ( NULL == repaintRect ){
 		::InvalidateRect( hwnd_, NULL, TRUE );
 	}
@@ -1498,15 +1438,21 @@ void AbstractWin32Component::repaint( Rect* repaintRect )
 		rect.bottom = (long)repaintRect->bottom_;
 		::InvalidateRect( hwnd_, &rect, TRUE );
 	}
+
+	if ( immediately ) {
+		UpdateWindow( hwnd_ );
+	}	
 }
 
 void AbstractWin32Component::keepMouseEvents()
 {
+	VCF_ASSERT(NULL != hwnd_);
 	::SetCapture( hwnd_ );
 }
 
 void AbstractWin32Component::releaseMouseEvents()
 {
+	VCF_ASSERT(NULL != hwnd_);
 	::ReleaseCapture();
 }
 
@@ -1530,6 +1476,7 @@ void AbstractWin32Component::setCursor( Cursor* cursor )
 
 void AbstractWin32Component::translateToScreenCoords( Point* pt )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	POINT aPt = { (long)pt->x_, (long)pt->y_ };
 	ClientToScreen( hwnd_, &aPt );
 	pt->x_ = aPt.x;
@@ -1538,6 +1485,7 @@ void AbstractWin32Component::translateToScreenCoords( Point* pt )
 
 void AbstractWin32Component::translateFromScreenCoords( Point* pt )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	POINT aPt = { (long)pt->x_, (long)pt->y_ };
 	ScreenToClient( hwnd_, &aPt );
 	pt->x_ = aPt.x;
@@ -1546,11 +1494,13 @@ void AbstractWin32Component::translateFromScreenCoords( Point* pt )
 
 void AbstractWin32Component::setBorder( Border* border )
 {	
+	VCF_ASSERT(NULL != hwnd_);
 	SetWindowPos(hwnd_, NULL,0,0,0,0, SWP_FRAMECHANGED|SWP_NOMOVE|SWP_NOSIZE);
 }
 
 LRESULT AbstractWin32Component::handleNCPaint( WPARAM wParam, LPARAM lParam )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	defaultWndProcedure( WM_NCPAINT, wParam, lParam );
 	
 	HDC hdc = GetWindowDC(hwnd_);
@@ -1614,6 +1564,7 @@ LRESULT AbstractWin32Component::handleNCPaint( WPARAM wParam, LPARAM lParam )
 
 LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 {
+	VCF_ASSERT(NULL != hwnd_);
 	RECT* rectToModify = NULL;
 
 	if ( !wParam ) {
@@ -1657,9 +1608,83 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 	return 0;
 }
 
+void AbstractWin32Component::registerForFontChanges()
+{
+	VCF_ASSERT( peerControl_ != NULL );
+
+	setFont( peerControl_->getFont() );
+
+	peerControl_->getFont()->FontChanged += 
+			new GenericEventHandler<AbstractWin32Component>( this, &AbstractWin32Component::onControlFontChanged, "AbstractWin32Component::onControlFontChanged" );
+}
+
+void AbstractWin32Component::onControlFontChanged( Event* event )
+{
+	Font* font = (Font*) event->getSource();	
+
+	setFont( font );
+}
+
 /**
 *CVS Log info
 *$Log$
+*Revision 1.8  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.7.2.17  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.7.2.16  2006/03/20 04:47:24  dougtinkham
+*another change for scrolling in case WM_MOUSEWHEEL
+*
+*Revision 1.7.2.15  2006/03/20 00:58:35  dougtinkham
+*changes to case WM_MOUSEWHEEL to fix scrolling
+*
+*Revision 1.7.2.14  2006/03/18 19:04:55  ddiego
+*minor update to remove dead code for checkFontUpdate function.
+*
+*Revision 1.7.2.13  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.7.2.12  2006/03/15 04:18:21  ddiego
+*fixed text control desktop refresh bug 1449840.
+*
+*Revision 1.7.2.11  2006/03/10 05:35:57  ddiego
+*fixed repaint for win32window when first made visible.
+*
+*Revision 1.7.2.10  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.7.2.9  2006/02/13 22:11:59  ddiego
+*added further html support and better browser example code.
+*
+*Revision 1.7.2.8  2005/11/02 04:41:27  obirsoy
+*fix a typo. changed LOGFONTW to LOGFONTA.
+*
+*Revision 1.7.2.7  2005/09/16 01:12:01  ddiego
+*fixed bug in component loaded function.
+*
+*Revision 1.7.2.6  2005/09/07 20:24:48  ddiego
+*added some more help support.
+*
+*Revision 1.7.2.5  2005/09/07 04:19:54  ddiego
+*filled in initial code for help support.
+*
+*Revision 1.7.2.4  2005/09/05 14:38:31  ddiego
+*added pre and post paint delegates to the control class.
+*
+*Revision 1.7.2.3  2005/08/15 03:10:51  ddiego
+*minor updates to vff in out streaming.
+*
+*Revision 1.7.2.2  2005/08/05 01:11:37  ddiego
+*splitter fixes finished.
+*
+*Revision 1.7.2.1  2005/08/01 18:50:29  marcelloptr
+*minor changes
+*
 *Revision 1.7  2005/07/09 23:14:50  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

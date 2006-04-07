@@ -100,7 +100,7 @@ int doCalc( int p1, int p2 )
 }
 \endcode
 
-\par
+
 If the assert fails (i.e. in this if p1 equals 0) the message will look something like 
 \code
 	p1 > 0
@@ -108,22 +108,32 @@ If the assert fails (i.e. in this if p1 equals 0) the message will look somethin
 
 \endcode
 
-\par
+
 Many thanks to Marcello for contributing this!!
 @see VCF_ASSERT2
 */
 	#define VCF_ASSERT(condition) VCF_ASSERT2( (condition), VCF_WIDEN( #condition ) )
-
+	#define VCF_VERIFY(condition) VCF_ASSERT(condition)
 
 #else
 	#define VCF_ASSERT2(condition,msg)
 	#define VCF_ASSERT(condition)
+	#define VCF_VERIFY(condition) condition
 #endif //_DEBUG
 
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/03/26 22:37:35  ddiego
+*minor update to source docs.
+*
+*Revision 1.5.2.1  2006/03/19 00:04:16  obirsoy
+*Linux FoundationKit improvements.
+*
 *Revision 1.5  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

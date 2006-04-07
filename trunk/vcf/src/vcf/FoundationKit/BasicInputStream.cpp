@@ -23,7 +23,7 @@ BasicInputStream::BasicInputStream( const String& textBuffer )
 	WARNING !!!!
 	We are treating this like ascii strings!!!
 	*/
-	inStream_.write( textBuffer.ansi_c_str(), textBuffer.size() );
+	inStream_.write( (const unsigned char*)textBuffer.ansi_c_str(), textBuffer.size() );
 	inStream_.setSeekPos( 0 );
 	totalStreamSize_ = textBuffer.size();
 }
@@ -31,7 +31,7 @@ BasicInputStream::BasicInputStream( const String& textBuffer )
 BasicInputStream::BasicInputStream( const char* dataBuffer, const unsigned long& dataBufferSize )
 {
 	init();
-	inStream_.write( dataBuffer, dataBufferSize );
+	inStream_.write( (const unsigned char*)dataBuffer, dataBufferSize );
 	inStream_.setSeekPos( 0 );
 	totalStreamSize_ = dataBufferSize;
 }
@@ -88,15 +88,18 @@ char* BasicInputStream::getBuffer()
 	return inStream_.getBuffer();
 }
 
-void BasicInputStream::read( char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long BasicInputStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
+	unsigned long result = 0;
 	if ( NULL != inputStream_ ){
-		inputStream_->read( bytesToRead, sizeOfBytes );
+		result = inputStream_->read( bytesToRead, sizeOfBytes );
 		inStream_.write( bytesToRead, sizeOfBytes );
 	}
 	else {
-		inStream_.read( bytesToRead, sizeOfBytes );
+		result = inStream_.read( bytesToRead, sizeOfBytes );
 	}
+
+	return result;
 }
 
 ulong32 BasicInputStream::getCurrentSeekPos()
@@ -119,6 +122,12 @@ bool BasicInputStream::isEOS()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2005/09/21 02:21:53  ddiego
+*started to integrate jpeg support directly into graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

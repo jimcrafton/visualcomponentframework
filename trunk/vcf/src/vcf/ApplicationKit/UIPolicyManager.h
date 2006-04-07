@@ -17,7 +17,7 @@ where you installed the VCF.
 namespace VCF {
 class Dialog;
 /**
-* class UIPolicyManager
+\class UIPolicyManager UIPolicyManager.h "vcf/ApplicationKit/UIPolicyManager.h"  
 *
 * helper class for any document interface policy
 * it manages things like merging menus, etc.
@@ -111,6 +111,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:26  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.1  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -38,7 +38,7 @@ TDIR=S
 
 LIBNAME=libAGG_bcc_s$(DBG).lib
 DLLNAME=
-INCDIR=..\..\..\src
+INCDIR=..\..\..\src;..\..\..\src\thirdparty\common\agg\include
 LIBDIR=..\..\..\lib
 SRC=..\..\..\src\thirdparty\common\agg\src
 OBJ=.\$(OBJDIR)
@@ -57,8 +57,7 @@ OBJFILES=agg_arc.obj  \
 	agg_bezier_arc.obj  \
 	agg_bspline.obj  \
 	agg_curves.obj  \
-	agg_path_storage.obj  \
-	agg_rasterizer_scanline_aa.obj  \
+	agg_sqrt_tables.obj  \
 	agg_trans_affine.obj  \
 	agg_vcgen_bspline.obj  \
 	agg_vcgen_dash.obj  \

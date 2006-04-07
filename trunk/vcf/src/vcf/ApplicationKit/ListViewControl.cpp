@@ -34,9 +34,12 @@ ListViewControl::ListViewControl():
 
 	setListModel( new DefaultListModel() );
 
+	addComponent( getViewModel() );
 
 
 	columnModel_ = new DefaultColumnModel();
+
+	addComponent( columnModel_ );
 
 	EventHandler* cmh = new ColumnModelEventHandler<ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
 	columnModel_->addItemAddedHandler( cmh );
@@ -58,12 +61,8 @@ ListViewControl::ListViewControl():
 
 ListViewControl::~ListViewControl()
 {
-	if ( NULL != listModel_ ) {
-		//listModel_->release();
-	}
-
 	if ( NULL != columnModel_ ) {
-		columnModel_->release();
+		//columnModel_->release();
 	}
 
 
@@ -523,11 +522,23 @@ void ListViewControl::paint( GraphicsContext * context )
 	context->fillPath();
 }
 
-
+Rect ListViewControl::getItemRect( ListItem* item )
+{
+	return listviewPeer_->getItemRect( item );
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.2  2006/03/16 03:23:09  ddiego
+*fixes some font change notification issues in win32 peers.
+*
+*Revision 1.4.2.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.4  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

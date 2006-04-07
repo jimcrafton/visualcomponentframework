@@ -18,15 +18,16 @@ namespace VCF {
 
 
 /**
+\class FocusEvent FocusEvent.h "vcf/ApplicationKit/FocusEvent.h"
 * the event class for events specific of any change of focus.
 */
 class APPLICATIONKIT_API FocusEvent : public Event {
 public:
-	FocusEvent( Object* source );
+	FocusEvent( Object* source ): Event(source){}
 
-	FocusEvent( Object* source, const ulong32& eventType );
+	FocusEvent( Object* source, const ulong32& eventType ): Event(source,eventType){}
 
-	virtual ~FocusEvent();
+	virtual ~FocusEvent(){}
 
 	virtual Object* clone( bool deep=false ) {
 		return new FocusEvent(*this);
@@ -35,13 +36,13 @@ public:
 
 
 /**
-* The handler class for a FocusEvent.
-* \par
-* handles the following:
-* <ul>
-* 	<li>FocusGained
-* 	<li>FocusLost
-* </ul>
+ The handler class for a FocusEvent.
+ 
+ handles the following:
+ 
+ 	\li FocusGained
+ 	\li FocusLost
+ 
 */
 template <class SOURCE_TYPE> class FocusEventHandler : public EventHandlerInstance<SOURCE_TYPE,FocusEvent> {
 public:
@@ -61,6 +62,19 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.4.3  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.3.4.2  2006/03/14 02:25:47  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.4.1  2006/02/17 05:23:05  ddiego
+*fixed some bugs, and added support for minmax in window resizing, as well as some fancier control over tooltips.
+*
 *Revision 1.3  2004/12/01 04:31:21  ddiego
 *merged over devmain-0-6-6 code. Marcello did a kick ass job
 *of fixing a nasty bug (1074768VCF application slows down modal dialogs.)

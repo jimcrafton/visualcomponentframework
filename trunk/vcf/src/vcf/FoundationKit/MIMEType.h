@@ -17,7 +17,7 @@ where you installed the VCF.
 namespace VCF {
 
 /**
-class MIMEType documentation
+\class MIMEType MIMEType.h "vcf/FoundationKit/MIMEType.h"
 Specification for this MIME Types may be found at
 RFC 2045 http://www.faqs.org/rfcs/rfc2045.html.
 This is a simple class that makes it easy to deal with 
@@ -104,6 +104,12 @@ protected:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.6.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2004/08/08 22:09:33  ddiego
 *final checkin before the 0-6-5 release
 *

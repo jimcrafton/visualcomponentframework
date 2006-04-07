@@ -48,6 +48,7 @@ static String ButtonCommandTypeNames[] = { "BC_NONE",
 
 
 /**
+\class Button Button.h "vcf/ApplicationKit/Button.h"
 *The Button interface represents a standard set of behaviours
 *for any control that wishes to act like a button. Currently the
 *basic behaviour is to fire click events when the click() method
@@ -55,7 +56,8 @@ static String ButtonCommandTypeNames[] = { "BC_NONE",
 */
 class APPLICATIONKIT_API Button {
 public:
-
+	virtual ~Button(){}
+	
 	/**
 	*This represents the user pressing the button,
 	*which then invokes whatever command is associated
@@ -94,6 +96,15 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.2  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.3.2.1  2005/11/27 23:55:44  ddiego
+*more osx updates.
+*
 *Revision 1.3  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

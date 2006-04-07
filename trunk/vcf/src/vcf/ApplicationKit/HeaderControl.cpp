@@ -28,7 +28,9 @@ HeaderControl::HeaderControl():
 	pressedColumn_(NULL),
 	minColumnWidth_(5)
 {
-	columnModel_ = new DefaultColumnModel();
+	setColumnModel( new DefaultColumnModel() );
+	addComponent( getViewModel() );
+
 	aligment_ = AlignTop;
 	setHeight( getPreferredHeight() );
 	setTabStop(false);
@@ -36,22 +38,12 @@ HeaderControl::HeaderControl():
 
 HeaderControl::~HeaderControl()
 {
-	if ( NULL != columnModel_ ) {
-		columnModel_->release();
-	}
+	
 }
 
 void HeaderControl::setColumnModel( ColumnModel* model )
 {
-	if ( NULL != columnModel_ ) {
-		columnModel_->release();
-	}
-
 	columnModel_ = model;
-
-	if ( NULL != columnModel_ ) {
-		columnModel_->addRef();
-	}
 
 	setViewModel( columnModel_ );
 }
@@ -179,7 +171,7 @@ void HeaderControl::paint( GraphicsContext * context )
 
 double HeaderControl::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtHeaderHeight );
 }
 
 double HeaderControl::getPreferredWidth()
@@ -316,6 +308,11 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 	}
 	drawOptions |= GraphicsContext::tdoCenterVertAlign;
 
+	String itemText = item->getCaption();
+	if ( getUseLocaleStrings() ) {
+		itemText = System::getCurrentThreadLocale()->translate( itemText );
+	}
+
 	ButtonState state;
 	state.setPressed( pressedColumn_ == item );
 	state.setActive( true );
@@ -339,11 +336,9 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 		captionRect.left_ = imageRect.right_ + 10;
 	}
 
-	String itemText = item->getCaption();
-	if ( getUseLocaleStrings() ) {
-		itemText = System::getCurrentThreadLocale()->translate( itemText );
-	}
+	
 
+	captionRect.right_ -= 5;
 
 	context->textBoundedBy( &captionRect, itemText, drawOptions );
 
@@ -351,7 +346,7 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 
 
 	item->setBounds( paintRect );
-	if ( true == item->canPaint() ) {
+	if ( item->canPaint() ) {
 		item->paint( context, paintRect );
 	}
 }
@@ -360,6 +355,18 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.3  2006/03/22 03:18:20  ddiego
+*fixed a glitch in scroll vert and horz position values.
+*
+*Revision 1.2.6.2  2006/03/01 04:34:56  ddiego
+*fixed tab display to use themes api.
+*
+*Revision 1.2.6.1  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
 *Revision 1.2  2004/08/07 02:49:08  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

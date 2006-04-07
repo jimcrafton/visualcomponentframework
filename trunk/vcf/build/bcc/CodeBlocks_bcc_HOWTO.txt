@@ -1,0 +1,39 @@
+HOWTO Setup CodeBlocks IDE with Borland Free Compiler and VCF
+
+Requirements:
+1. Borland Free Compiler (http://www.borland.com/products/downloads/download_cbuilder.html#)
+2. VCF (http://vcf-online.org/)
+3. CodeBlocks IDE (http://www.codeblocks.org/)
+
+Steps:
+
+1. Install and setup Borland free compiler (for this and configuration refer to readme.txt supplied with VCF bcc makefiles)
+2. Get latest VCF source snapshot and compile it.
+3. Install CodeBlocks IDE (get one without mingw since you do not need it).
+4. Open CodeBlocks IDE and Setup Borland compiler as default. You can do that by selecting menu command Settings/Compiler. 
+5. In the same settings window on the tab page compiler there are another 3 tab subpages. Select one called #defines 
+and enter these several defines:
+WIN32
+_MBCS
+_RTLDLL
+USE_FOUNDATIONKIT_DLL
+USE_GRAPHICSKIT_DLL
+USE_APPLICATIONKIT_DLL
+USE_OPENGLKIT_DLL
+USE_NETWORKKIT_DLL
+USE_REMOTEOBJECTKIT_DLL
+USE_INTERNETKIT_DLL
+
+6. Now switch to linker tab and add these 3 libraries: import32, cw32mti, comctl32.
+7. Now switch to Directories tab and on subpage compiler add include folder of compiler (default is C:\Borland\BCC55\Include) and add path to VCF include folder which is <VCF_FOLDER>\src.
+8. Switch to subpage linker and add these folder in this exact order:
+<Borland_compiler_folder>\Lib\PSDK
+<Borland_compiler_folder>\Lib_patch
+<Borland_compiler_folder>\Lib
+<VCF_folder>\Lib
+
+9. That is all for compiler default settings. 
+
+Now create new project. You should allways use console application template. For an example code of generic VCF app take a look into VCF examples folder.
+
+Darko 

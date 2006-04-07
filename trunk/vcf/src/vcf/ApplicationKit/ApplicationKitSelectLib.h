@@ -18,6 +18,9 @@ where you installed the VCF.
 *Helps linking with the right library
 */
 
+// We don't need any of this if we've disabled pragma linking
+#ifndef VCF_DISABLE_PRAGMA_LINKING
+
 //If using the All-in-1 library, then this task has already been done
 #if !defined(VCF_USE_ALLIN1_DLL) && !defined(VCF_USE_ALLIN1_LIB)
 
@@ -31,7 +34,9 @@ where you installed the VCF.
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
-#   if (_MSC_VER >= 1310)
+#   if (_MSC_VER >= 1400)
+#     define _LIB_CPLVERNUM "vc80"
+#   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)
 #     define _LIB_CPLVERNUM "vc70"
@@ -82,11 +87,24 @@ defined to use the DLL or static libraries.
 #endif //_MSC_VER
 
 #endif //VCF_USE_ALLIN1_DLL/LIB
+
+#endif
+// VCF_DISABLE_PRAGMA_LINKING
+
 /**
 *CVS Log info
 *$Log$
-*Revision 1.5  2005/09/30 02:23:42  ddiego
-*fixed a bug in the way key board event were handled - does a better job of interpreting key hits on the num pad area.
+*Revision 1.6  2006/04/07 02:35:21  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.3  2006/02/06 00:39:52  dougtinkham
+*skip pragmas if VCF_DISABLE_PRAGMA_LINKING is defined
+*
+*Revision 1.4.2.2  2005/11/02 04:38:23  obirsoy
+*changes required for vc80 support.
+*
+*Revision 1.4.2.1  2005/09/28 14:06:38  ddiego
+*fixed up auto linkage of win32 libs.
 *
 *Revision 1.4  2005/07/09 23:14:51  ddiego
 *merging in changes from devmain-0-6-7 branch.

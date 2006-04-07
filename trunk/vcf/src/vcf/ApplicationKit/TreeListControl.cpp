@@ -68,6 +68,8 @@ void TreeListControl::init()
 
 	setTreeModel( new DefaultTreeModel() );
 
+	addComponent( getViewModel() );
+
 	itemHeight_ = getContext()->getTextHeight("EM") + 2.0;
 	itemIndent_ = 19;
 	stateItemIndent_ = 19;
@@ -83,6 +85,9 @@ void TreeListControl::init()
 	header_ = new HeaderControl();
 	columnHeight_ = header_->getHeight();
 	add( header_, AlignTop );
+
+
+	header_->setIgnoreForParentScrolling( true );
 
 	header_->ColumnWidthChanged.addHandler(
 							new ItemEventHandler<TreeListControl>( this,
@@ -149,6 +154,7 @@ void TreeListControl::onModelEmptied( Event* event )
 {
 	if ( Model::MODEL_EMPTIED == event->getType() ) {
 		selectedItems_.clear();
+		cancelEditing();
 		recalcScrollable();
 	}
 }
@@ -201,6 +207,8 @@ void TreeListControl::recalcScrollable()
 			it ++;
 		}
 
+		scrollable->setVirtualViewHeight( visibleItemsHeight_ );
+
 		if ( (getHeight() > visibleItemsHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
 			scrollable->setVerticalPosition( 0.0 );
 		}
@@ -210,8 +218,6 @@ void TreeListControl::recalcScrollable()
 			scrollable->setVerticalPosition( newPos );
 			
 		}
-		
-		scrollable->setVirtualViewHeight( visibleItemsHeight_ );
 	}
 }
 
@@ -363,6 +369,8 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 
 	context->getCurrentFont()->setBold( item->getTextBold() );
 
+	captionRect.right_ -= 5;
+
 	context->textBoundedBy( &captionRect, item->getCaption(), drawOptions );
 
 	context->getCurrentFont()->setColor( &oldColor );
@@ -429,6 +437,8 @@ void TreeListControl::paintSubItem( TreeItem* item, GraphicsContext* context, co
 			drawOptions |= GraphicsContext::tdoLeftAlign;
 			Rect captionRect = *paintRect;
 			captionRect.left_ += 5;
+			captionRect.right_ -= 5;
+			
 			double textH = context->getTextHeight( "EM" );
 			captionRect.top_ = captionRect.top_ + ((captionRect.getHeight() / 2.0) - textH/2.0);
 			captionRect.bottom_ = captionRect.top_ + textH;
@@ -646,13 +656,7 @@ void TreeListControl::paint( GraphicsContext * context )
 
 	paintChildren( context );
 	
-
-	double oldVisibleHeight = visibleItemsHeight_;
-
 	visibleItemsHeight_ = 0;
-	if ( header_->getVisible() ) {
-		visibleItemsHeight_ += header_->getHeight();
-	}
 
 	hierarchyHeightMap_.clear();
 
@@ -689,11 +693,6 @@ void TreeListControl::paint( GraphicsContext * context )
 		if (intersection.getWidth() > 0 && intersection.getHeight() > 0)
 		{
 			paintItem( item, context, &itemRect );
-/*
-			if ( item->canPaint() ) {
-				item->paint( context, &tmp );
-			}
-			*/
 		}
 
 		prevTop += (itemRect.bottom_ - tmp.top_);
@@ -907,6 +906,13 @@ void TreeListControl::clearSelectedItems()
 	repaint();
 }
 
+void TreeListControl::mouseClick(  MouseEvent* event )
+{
+	CustomControl::mouseClick( event );
+
+	
+}
+
 void TreeListControl::mouseDblClick(  MouseEvent* event )
 {
 	CustomControl::mouseDblClick( event );
@@ -969,7 +975,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 
 			//currentSelectedItem_ = foundItem;
 
-			if ( true == expanderRect.containsPt( event->getPoint() ) ) {
+			if ( expanderRect.containsPt( event->getPoint() ) ) {
 				foundItem->expand( !foundItem->isExpanded() );
 				ItemEvent event( this, ITEM_EVENT_CHANGED );
 				ItemExpanded.fireEvent( &event );
@@ -987,7 +993,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 					}
 				}
 			}
-			else if ( true == stateHitTest( event->getPoint(), foundItem ) ) {
+			else if ( stateHitTest( event->getPoint(), foundItem ) ) {
 				long state = foundItem->getState();
 				//probably need to come up with better id's
 				//for enum values so that we can mask together
@@ -1394,13 +1400,7 @@ void TreeListControl::mouseDown( MouseEvent* event )
 
 	draggingSelectionRect_ = false;
 	Point pt = *event->getPoint();
-	draggingSelectedItems_.clear();
-
-	Rect borderRect(0,0,getWidth(), getHeight() );
-	Border* border = getBorder();
-	if ( NULL != border ) {
-		borderRect = border->getClientRect( &borderRect, this );
-	}
+	draggingSelectedItems_.clear();	
 
 	if ( event->hasLeftButton() ) {
 		allowMultipleSelection_ = (event->hasControlKey()  || event->hasShiftKey() );
@@ -2119,21 +2119,23 @@ void TreeListControl::editItem( TreeItem* item, Point* point ) {
 	
 	Rect bounds = getBoundsForEdit( item, currentEditColumn_ );
 	
-	if ( currentEditColumn_ != -1 ) {		
-		currentEditingControl_ = createEditor( item, currentEditColumn_ );
+	if ( currentEditColumn_ != -1 ) {
+		Control* editor = createEditor( item, currentEditColumn_ );
 		
-		if ( NULL != currentEditingControl_ ) {			
-			currentEditingControl_->setBounds( &bounds );
+		if ( NULL != editor ) {			
+			editor->setBounds( &bounds );
 			EventHandler* ev = getEventHandler( "TreeListControl::onEditorFocusLost" );
-			currentEditingControl_->FocusLost += ev;
-			
-			add( currentEditingControl_ );
-			
-			currentEditingControl_->setVisible( true );
-			currentEditingControl_->setFocused();
-			
+			editor->FocusLost += ev;
+
 			ev = getEventHandler( "TreeListControl::onEditingControlKeyPressed" );
-			currentEditingControl_->KeyDown.addHandler( ev );
+			editor->KeyDown.addHandler( ev );
+			
+			add( editor );
+
+			editor->setVisible( true );
+			editor->setFocused();	
+			
+			currentEditingControl_ = editor;
 		}
 	}		
 }
@@ -2141,6 +2143,35 @@ void TreeListControl::editItem( TreeItem* item, Point* point ) {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:25  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.7  2006/03/26 16:52:10  ddiego
+*fixed a bug in the treelist control that was incorrectly
+*calculating the virtual height for the control.
+*
+*Revision 1.4.2.6  2006/03/22 03:18:20  ddiego
+*fixed a glitch in scroll vert and horz position values.
+*
+*Revision 1.4.2.5  2006/03/21 00:57:35  ddiego
+*fixed bug in table control - problem was really with casting a
+*model to a table model, and having the pointer value not be right. Needed
+*to use dynamic_cast() to fix it. Curiously this problem was not flagegd in
+*debug at all.
+*
+*Revision 1.4.2.4  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.4.2.3  2005/09/14 01:50:07  ddiego
+*minor adjustment to control for enable setting. and registered
+*more proeprty editors.
+*
+*Revision 1.4.2.2  2005/09/12 03:47:04  ddiego
+*more prop editor updates.
+*
+*Revision 1.4.2.1  2005/08/15 03:10:51  ddiego
+*minor updates to vff in out streaming.
+*
 *Revision 1.4  2005/07/09 23:14:56  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

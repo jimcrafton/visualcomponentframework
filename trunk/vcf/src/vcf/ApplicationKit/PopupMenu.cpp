@@ -30,7 +30,7 @@ PopupMenu::PopupMenu( Control* control )
 	}
 	setControl( control );
 
-	MenuManager::registerPopupMenu( this );
+	init();
 }
 
 PopupMenu::PopupMenu( Component* owner ):
@@ -43,6 +43,7 @@ PopupMenu::PopupMenu( Component* owner ):
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
 	}
 
+	init();
 }
 
 PopupMenu::PopupMenu( const String& name, Component* owner ):
@@ -54,6 +55,7 @@ PopupMenu::PopupMenu( const String& name, Component* owner ):
 		//throw exception
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
 	}
+	init();
 }
 
 PopupMenu::PopupMenu( const String& name ):
@@ -65,6 +67,8 @@ PopupMenu::PopupMenu( const String& name ):
 		//throw exception
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
 	}
+
+	init();
 }
 
 PopupMenu::~PopupMenu()
@@ -76,21 +80,39 @@ PopupMenu::~PopupMenu()
 	popupPeer_ = NULL;
 }
 
-void PopupMenu::popup( Point* pt )
+void PopupMenu::destroy()
 {
-	if ( NULL == popupPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	if ( NULL != popupPeer_ ){
+		delete popupPeer_;
+		popupPeer_ = NULL;
 	}
 
-	popupPeer_->popup( pt );
+	Menu::destroy();
+}
+
+void PopupMenu::init()
+{
+	MenuManager::registerPopupMenu( this );
+
+	setRootMenuItem( new DefaultMenuItem() );
+	MenuItem* item = getRootMenuItem();
+
+	item->setMenuOwner( this );
+	item->setName( "RootMenuItem" );
+
+	EventHandler* ev = new GenericEventHandler<Menu> ( this, &Menu::handleEvent, "Menu::handleEvent" );
+
+	ComponentAdded += ev;
+	ComponentRemoved += ev;
+}
+
+MenuItem* PopupMenu::popup( Point* pt )
+{
+	return popupPeer_->popup( pt );
 }
 
 void PopupMenu::setControl( Control* control )
 {
-	if ( NULL == popupPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
 	popupPeer_->setControl( control );
 }
 
@@ -98,6 +120,18 @@ void PopupMenu::setControl( Control* control )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.3  2005/08/28 05:14:17  ddiego
+*small changes to component editor class.
+*
+*Revision 1.3.2.2  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
+*Revision 1.3.2.1  2005/08/25 01:48:19  ddiego
+*minor update to popupmenu code
+*
 *Revision 1.3  2005/07/09 23:14:55  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

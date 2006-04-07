@@ -23,7 +23,8 @@ Resource::Resource( void* data, const uint32& size, const String& name )
 
 Resource::~Resource()
 {
-	delete data_;
+	char* tmp = (char*)data_;
+	delete tmp;
 }
 
 void* Resource::getData()
@@ -50,6 +51,13 @@ uint32 Resource::getDataSize()
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.3  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

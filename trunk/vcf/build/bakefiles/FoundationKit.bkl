@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="FoundationKitFiles.bkl"/>
+
+    <template id="FoundationKit_base">
+        <set var="LIBRARY_NAME">$(FOUNDATIONKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)FoundationKit$(DIRSEP)FoundationKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)FoundationKit$(DIRSEP)FoundationKit.cpp</set>
+
+        <headers>$(FOUNDATIONKIT_HDR)</headers>
+        <sources>$(FOUNDATIONKIT_SRC)</sources>
+    </template>
+
+    <lib id="FoundationKit_lib" template="FoundationKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_FOUNDATIONKIT=='1' and OPTION_ALLIN1=='0'">
+    </lib>
+
+    <dll id="FoundationKit_dll" template="FoundationKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_FOUNDATIONKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>FOUNDATIONKIT_DLL</define>
+        <define>FOUNDATIONKIT_EXPORTS</define>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_FOUNDATIONKIT=='1' and OPTION_ALLIN1=='0'">
+        FoundationKit=FoundationKit_lib+FoundationKit_dll
+    </set>
+</makefile>

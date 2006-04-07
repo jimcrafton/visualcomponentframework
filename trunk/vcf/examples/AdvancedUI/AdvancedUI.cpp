@@ -123,6 +123,7 @@ public:
 	}
 
 	virtual void paint( GraphicsContext* ctx, Rect* paintRect ) {
+
 		DefaultTreeItem::paint( ctx, paintRect );
 
 		int gcs = ctx->saveState();
@@ -293,13 +294,17 @@ public:
 		categories_->getFont()->setPointSize( 12 );
 		categories_->getFont()->setColor( Color::getColor("blue") );
 
-		CategoryItem* item = new CategoryItem();
+		CategoryItem* selectedCat = NULL;
+		TemplateItem* selectedTempl = NULL;
+
+		CategoryItem* item = new CategoryItem();		
 		categories_->getTreeModel()->addNodeItem( item );
-		item->setCaption( "Block Diagrams" );
+		item->setCaption( "Block Diagrams" );		
 
 		item = new CategoryItem();
 		categories_->getTreeModel()->addNodeItem( item );
 		item->setCaption( "Really Big Block Diagrams" );
+		selectedCat = item;
 
 		item = new CategoryItem();
 		categories_->getTreeModel()->addNodeItem( item );
@@ -327,18 +332,20 @@ public:
 		templates_->getFont()->setPointSize( 10 );
 
 
+
 		TemplateItem* templateItem = new TemplateItem();
 		templateItem->setCaption( "Oggle Boggle" );
 		templateItem->setImageIndex( 0 );
 		templateItem->setComments( "Creates structures relevant to value-add propositions within the relevant vertical Oggle markets." );
-
+		
 		templates_->addItem( templateItem );
 
 		templateItem = new TemplateItem();
 		templateItem->setCaption( "Sub Tactical Design" );
 		templateItem->setImageIndex( 1 );
-		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );
+		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );		
 
+		selectedTempl = templateItem;
 		templates_->addItem( templateItem );
 
 		templateItem = new TemplateItem();
@@ -360,11 +367,10 @@ public:
 
 		il->setImageHeight( 93 );
 		il->setImageWidth( 93 );
-		//try {
-
+		
 		GraphicsResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
 
-		Image* img =  resBundle->getImage("template1.bmp"); //GraphicsToolkit::createImage( "template1.bmp" );
+		Image* img =  resBundle->getImage("template1.bmp"); 
 		if ( NULL != img ) {
 			il->addImage( img );
 			delete img;
@@ -381,12 +387,14 @@ public:
 			il->addImage( img );
 			delete img;
 		}
-		//}
-		//catch (BasicException& e ) {
-		//	Dialog::showMessage( e.getMessage() );
-		//}
+		
 
 		templates_->setLargeImageList( il );
+
+		selectedCat->setSelected( true );
+		selectedTempl->setSelected( true );
+
+		templates_->setFocused();
 	}
 
 	ListViewControl* templates_;
@@ -420,8 +428,8 @@ public:
 
 		Rect itemRect;
 
-		if ( NULL != categories_->getSelectedItem() ) {
-			itemRect = *categories_->getSelectedItem()->getBounds();
+		if ( NULL != categories_->getSelectedItem() ) {			
+			itemRect = categories_->getItemRect( categories_->getSelectedItem() );
 		}
 
 		categories_->translateToScreenCoords( &itemRect );
@@ -477,11 +485,6 @@ public:
 		ctx->setColor( Color::getColor("black") );
 		ctx->strokePath();
 
-
-
-
-
-
 		ctx->restoreState( gcs );
 	}
 };
@@ -494,7 +497,6 @@ public:
 		Panel* p = new CategoryTemplatePanel();
 
 		add( p, AlignClient );
-
 	}
 
 	virtual ~AdvancedUIWindow(){};
@@ -516,7 +518,7 @@ public:
 
 		Window* mainWindow = new AdvancedUIWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
+		mainWindow->setBounds( 100.0, 100.0, 700.0, 600.0 );
 		mainWindow->show();
 
 		return result;

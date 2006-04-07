@@ -105,7 +105,7 @@ void Menu::handleEvent( Event* event )
 		break;
 
 		case Component::COMPONENT_REMOVED : {
-
+			
 		}
 		break;
 	}
@@ -114,6 +114,12 @@ void Menu::handleEvent( Event* event )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:24  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2005/08/27 04:49:35  ddiego
+*menu fixes.
+*
 *Revision 1.3  2005/07/09 23:14:53  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

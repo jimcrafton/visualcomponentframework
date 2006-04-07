@@ -73,7 +73,7 @@ OSXFileStream::OSXFileStream( File* file ):
 {
 	filename_ = file_->getName();	
 	
-	OSXFilePeer* filePeer = file_->getPeer();
+	OSXFilePeer* filePeer = (OSXFilePeer*)file_->getPeer();
 	fileHandle_ = filePeer->getFileHandle();
 	
 	if (fileHandle_ < 0)	{
@@ -102,7 +102,7 @@ void OSXFileStream::seek(const unsigned long& offset, const SeekType& offsetFrom
 
 	if (err < 0 ) {
 		int errorCode = errno;
-		String errMsg = "Error attempting to seek in stream.\n" + OSXUtils::getErrorString( errorCode );
+		String errMsg = "Error attempting to seek in stream.\n" + OSXStringUtils::getErrorString( errorCode );
 		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
 	}
 }
@@ -119,15 +119,15 @@ unsigned long OSXFileStream::getSize()
 	return result;
 }
 
-void OSXFileStream::read( char* bytesToRead, unsigned long sizeOfBytes )
+unsigned long OSXFileStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
 {
-	int bytesRead = 0;
-	ssize_t err = ::read( fileHandle_, bytesToRead, sizeOfBytes );
+	size_t bytesRead = 0;
+	size_t err = ::read( fileHandle_, bytesToRead, sizeOfBytes );
 
 	if (err < 0)	{
 		// TODO: peer error string
 		int errorCode = errno;
-		String errMsg = "Error reading data from file stream.\n" + OSXUtils::getErrorString( errorCode );
+		String errMsg = "Error reading data from file stream.\n" + OSXStringUtils::getErrorString( errorCode );
 		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
 	}
 	else
@@ -138,17 +138,19 @@ void OSXFileStream::read( char* bytesToRead, unsigned long sizeOfBytes )
 	if ( bytesRead != sizeOfBytes ){ //error if we are not read /writing asynchronously !
 								  //throw exception ?
 	}
+	
+	return bytesRead;
 }
 
-void OSXFileStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
+unsigned long OSXFileStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
 {
 	int bytesWritten = 0;
-	ssize_t err = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
+	size_t err = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
 
 	if (err < 0)
 	{
 		int errorCode = errno;
-		String errMsg = CANT_WRITE_TO_FILE + filename_ + "\n" + OSXUtils::getErrorString( errorCode );
+		String errMsg = CANT_WRITE_TO_FILE + filename_ + "\n" + OSXStringUtils::getErrorString( errorCode );
 
 		throw FileIOError( MAKE_ERROR_MSG_2(errMsg) );
 	}
@@ -161,6 +163,8 @@ void OSXFileStream::write( const char* bytesToWrite, unsigned long sizeOfBytes )
 									//throw exception ?
 		 //throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
 	}
+	
+	return bytesWritten;
 }
 
 char* OSXFileStream::getBuffer()
@@ -197,6 +201,16 @@ int OSXFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.2  2005/11/21 04:00:51  ddiego
+*more osx updates.
+*
+*Revision 1.2.6.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.2  2004/08/07 02:49:13  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

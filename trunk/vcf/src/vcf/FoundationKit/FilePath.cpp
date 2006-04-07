@@ -77,7 +77,7 @@ void FilePath::splitDrive( const String& fullname, String& drive, String& pathna
 {
 	// DriveSeparator is included in drive
 
-	int lastDrivePos = fullname.find_last_of( FilePath::getDriveSeparator() );
+	size_t lastDrivePos = fullname.find_last_of( FilePath::getDriveSeparator() );
 
 	if ( String::npos != lastDrivePos ) {
 		drive = fullname.substr( 0, lastDrivePos + 1 );
@@ -94,7 +94,7 @@ String FilePath::getDriveName( const String& fullname )
 {
 	// DriveSeparator is included in drive
 
-	int lastDrivePos = fullname.find_last_of( FilePath::getDriveSeparator() );
+	size_t lastDrivePos = fullname.find_last_of( FilePath::getDriveSeparator() );
 
 	if ( String::npos != lastDrivePos ) {
 		return fullname.substr( 0, lastDrivePos + 1 );
@@ -119,7 +119,7 @@ void FilePath::splitPath( const String& fullname, String& path, String& name )
 	*   with a negligible performance penalty.
 	*/
 
-	int lastDirsepPos = fullname.find_last_of( L"/\\" );
+	size_t lastDirsepPos = fullname.find_last_of( L"/\\" );
 
 	if ( lastDirsepPos != String::npos ) {
 		path = fullname.substr( 0, lastDirsepPos + 1 );
@@ -136,12 +136,12 @@ String FilePath::getPathName( const String& fullname, const bool& includeDriveNa
 {
 	// DirectorySeparator is included in path
 
-	int lastDrivePos = String::npos;
+	size_t lastDrivePos = String::npos;
 	if ( !includeDriveName ) {
 		lastDrivePos = fullname.find_last_of( FilePath::getDriveSeparator() );
 	}
 
-	int lastDirsepPos = fullname.find_last_of( L"/\\" );
+	size_t lastDirsepPos = fullname.find_last_of( L"/\\" );
 
 	String path;
 	if ( lastDrivePos != String::npos ) {
@@ -167,7 +167,7 @@ void FilePath::splitExtension( const String& fullname, String& root, String& ext
 {
 	// ExtensionSeparator is included in ext
 
-	int lastExtPos   = fullname.find_last_of( FilePath::getExtensionSeparator() );
+	size_t lastExtPos   = fullname.find_last_of( FilePath::getExtensionSeparator() );
 	if ( lastExtPos != String::npos ) {
 		root = fullname.substr( 0, lastExtPos );
 		ext  = fullname.substr( lastExtPos, fullname.size() - lastExtPos );
@@ -181,9 +181,9 @@ void FilePath::splitExtension( const String& fullname, String& root, String& ext
 
 String FilePath::getBaseName( const String& fullname, const bool& includeExtension )
 {
-	int lastDirsepPos = fullname.find_last_of( L"/\\" );
+	size_t lastDirsepPos = fullname.find_last_of( L"/\\" );
 
-	int lastExtPos = String::npos;
+	size_t lastExtPos = String::npos;
 	if ( !includeExtension ) {
 		lastExtPos = fullname.find_last_of( FilePath::getExtensionSeparator() );
 	}
@@ -208,7 +208,7 @@ String FilePath::getBaseName( const String& fullname, const bool& includeExtensi
 String FilePath::getExtension( const String& fullname )
 {
 	String path;
-	int lastExtPos = fullname.find_last_of( FilePath::getExtensionSeparator() );
+	size_t lastExtPos = fullname.find_last_of( FilePath::getExtensionSeparator() );
 	if ( lastExtPos != String::npos ) {
 		path = fullname.substr( lastExtPos, fullname.size() - 1 );
 	}
@@ -264,8 +264,8 @@ String FilePath::getTransformedToRelativePathName( const String& fullPath, const
 		String sep = String( 1, (VCFChar)DirectorySeparator );
 		String tmp;
 		std::vector<String>::iterator workIt = workPathComponents.begin();
-		int workingIndex = 0;
-		int currentIndex = 0;
+		size_t workingIndex = 0;
+		size_t currentIndex = 0;
 		while ( workIt != workPathComponents.end() ) {
 			if ( (!compareDirectoryComponent( *workIt, currentPathComponents[currentIndex] )) || (workingIndex != currentIndex) ) {
 				tmp += L".." + sep;
@@ -289,7 +289,7 @@ String FilePath::getTransformedToRelativePathName( const String& fullPath, const
 			}
 			//only go on if we are NOT on the last element
 			if ( currentIndex <= currentPathComponents.size()-1 ) {
-				for ( int j=currentIndex; j<currentPathComponents.size(); j++ ) {
+				for ( size_t j=currentIndex; j<currentPathComponents.size(); j++ ) {
 					if ( j < workPathComponents.size() ) {
 						if ( !compareDirectoryComponent( workPathComponents[j], currentPathComponents[j]) ) {
 							tmp += currentPathComponents[j];
@@ -343,7 +343,7 @@ String FilePath::getExpandedRelativePathName( const String& fullPath, const Stri
 	String drive = FilePath::getDriveName( workDir );
 
 	std::vector<String> workPathComponents = getPathComponents( workDir );
-	int pos = fullPathCopy.find( L".." + sep );
+	size_t pos = fullPathCopy.find( L".." + sep );
 	if ( pos != String::npos ) {
 
 		while ( pos != String::npos ) {
@@ -400,8 +400,8 @@ std::vector<String> FilePath::getPathComponents( const String& path )
 
 	String sep = String( 1, (VCFChar)DirectorySeparator );
 
-	int pos = pathCopy.find( sep, 0 );
-	int lastPos = 0;
+	size_t pos = pathCopy.find( sep, 0 );
+	size_t lastPos = 0;
 	while ( pos != String::npos ) {
 		pathComponents.push_back( pathCopy.substr( lastPos, (pos - lastPos)+1 ) );
 		lastPos = pos+1;
@@ -493,6 +493,13 @@ bool FilePath::wildCharsMatchName( const String& filename, const String& wildCha
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/07 02:35:34  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.1  2005/11/10 02:02:38  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
 *Revision 1.5  2005/07/09 23:15:02  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

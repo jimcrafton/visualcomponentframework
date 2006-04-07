@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.1
-// Copyright (C) 2002-2004 Maxim Shemanarev (http://www.antigrain.com)
+// Anti-Grain Geometry - Version 2.4
+// Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
 // Permission to copy, use, modify, sell and distribute this software 
 // is granted provided this copyright notice appears in all copies. 
@@ -16,7 +16,7 @@
 // Affine transformations
 //
 //----------------------------------------------------------------------------
-#include "thirdparty/common/agg/include/agg_trans_affine.h"
+#include "agg_trans_affine.h"
 
 
 
@@ -125,6 +125,69 @@ namespace agg
         m0 = m3 = 1.0; 
         m1 = m2 = m4 = m5 = 0.0;
         return *this;
+    }
+
+    //------------------------------------------------------------------------
+    inline bool is_equal_eps(double v1, double v2, double epsilon)
+    {
+        return fabs(v1 - v2) < epsilon;
+    }
+
+    //------------------------------------------------------------------------
+    bool trans_affine::is_identity(double epsilon) const
+    {
+        return is_equal_eps(m0, 1.0, epsilon) &&
+               is_equal_eps(m1, 0.0, epsilon) &&
+               is_equal_eps(m2, 0.0, epsilon) && 
+               is_equal_eps(m3, 1.0, epsilon) &&
+               is_equal_eps(m4, 0.0, epsilon) &&
+               is_equal_eps(m5, 0.0, epsilon);
+    }
+
+    //------------------------------------------------------------------------
+    bool trans_affine::is_equal(const trans_affine& m, double epsilon) const
+    {
+        return is_equal_eps(m0, m.m0, epsilon) &&
+               is_equal_eps(m1, m.m1, epsilon) &&
+               is_equal_eps(m2, m.m2, epsilon) && 
+               is_equal_eps(m3, m.m3, epsilon) &&
+               is_equal_eps(m4, m.m4, epsilon) &&
+               is_equal_eps(m5, m.m5, epsilon);
+    }
+
+    //------------------------------------------------------------------------
+    double trans_affine::rotation() const
+    {
+        double x1 = 0.0;
+        double y1 = 0.0;
+        double x2 = 1.0;
+        double y2 = 0.0;
+        transform(&x1, &y1);
+        transform(&x2, &y2);
+        return atan2(y2-y1, x2-x1);
+    }
+
+    //------------------------------------------------------------------------
+    void trans_affine::translation(double* dx, double* dy) const
+    {
+        trans_affine t(*this);
+        t *= trans_affine_rotation(-rotation());
+        t.transform(dx, dy);
+    }
+
+    //------------------------------------------------------------------------
+    void trans_affine::scaling(double* sx, double* sy) const
+    {
+        double x1 = 0.0;
+        double y1 = 0.0;
+        double x2 = 1.0;
+        double y2 = 1.0;
+        trans_affine t(*this);
+        t *= trans_affine_rotation(-rotation());
+        t.transform(&x1, &y1);
+        t.transform(&x2, &y2);
+        *sx = x2 - x1;
+        *sy = y2 - y1;
     }
 
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBMNG_HDR" hints="files">
+        thirdparty/common/FreeImage/Source/LibMNG/libmng.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_io.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_prc.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunks.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_cms.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_conf.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_data.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_display.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_dither.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_error.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_filter.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_jpeg.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_memory.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_object_prc.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_objects.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_pixels.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_read.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_trace.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_types.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_write.h
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_zlib.h    
+    </set>
+
+    <set var="LIBMNG_SRC" hints="files">
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_callback_xs.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_io.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_prc.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_xs.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_cms.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_display.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_dither.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_error.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_filter.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_hlapi.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_jpeg.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_object_prc.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_pixels.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_prop_xs.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_read.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_trace.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_write.c
+        thirdparty/common/FreeImage/Source/LibMNG/libmng_zlib.c
+    </set>
+
+</makefile>

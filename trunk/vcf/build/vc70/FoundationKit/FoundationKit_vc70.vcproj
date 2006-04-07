@@ -401,9 +401,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\FileStream.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\FileStreamPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.cpp">
 			</File>
 			<File
@@ -475,12 +472,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MIMEType.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.cpp">
@@ -571,6 +562,12 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ProgramInfo.h">
 			</File>
 			<File
@@ -630,6 +627,9 @@
 			Filter="*.h">
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ConditionPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\FileStreamPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\LibraryPeer.h">

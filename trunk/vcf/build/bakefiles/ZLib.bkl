@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="ZLibFiles.bkl"/>
+
+    <template id="ZLib_base">
+        <set var="LIBRARY_NAME">$(ZLIB_NAME)</set>
+
+        <headers>$(ZLIB_HDR)</headers>
+        <sources>$(ZLIB_SRC)</sources>
+    </template>
+
+    <lib id="ZLib_lib" template="ZLib_base,vcf_lib"
+            cond="OPTION_ZLIB=='1'">
+    </lib>
+</makefile>

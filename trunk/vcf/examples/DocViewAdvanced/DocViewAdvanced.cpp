@@ -765,9 +765,7 @@ public:
 
 		bool result = MDIDocumentBasedApplication::initRunningApplication();
 
-		newDefaultDocument();
-
-		
+		newDefaultDocument("","");		
 		
 		return result;
 	}

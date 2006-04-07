@@ -19,6 +19,7 @@ namespace VCF
 
 
 /**
+\class Property Property.h "vcf/FoundationKit/Property.h"
 *The Property class represents a member attribute of a class. Properties allow a
 *programmer to dynamically query a class at runtime for all of it attributes
 *with out knowing the exact type of class the object instance is. Property is
@@ -363,7 +364,9 @@ private:
 };
 
 
-
+/**
+\class EventProperty Property.h "vcf/FoundationKit/Property.h"
+*/
 class FOUNDATIONKIT_API EventProperty  {
 public :
 	/**
@@ -444,7 +447,9 @@ protected:
 	DelegateMethod delegateMethod_;
 };
 
-
+/**
+\class AbstractEventProperty Property.h "vcf/FoundationKit/Property.h"
+*/
 class FOUNDATIONKIT_API AbstractEventProperty : public EventProperty {
 public:
 	AbstractEventProperty( const String& eventClassName, const String& handlerClassName,
@@ -471,6 +476,12 @@ public:
 /**
 *CVS Log info
 *$Log$
+*Revision 1.4  2006/04/07 02:35:35  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.3.2.1  2006/03/12 22:01:40  ddiego
+*doc updates.
+*
 *Revision 1.3  2005/07/09 23:15:04  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="OpenGLKitFiles.bkl"/>
+
+    <template id="OpenGLKit_base">
+        <set var="LIBRARY_NAME">$(OPENGLKIT_NAME)</set>
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)OpenGLKit$(DIRSEP)OpenGLKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)OpenGLKit$(DIRSEP)OpenGLToolkit.cpp</set>
+
+        <headers>$(OPENGLKIT_HDR)</headers>
+        <sources>$(OPENGLKIT_SRC)</sources>
+
+        <vcf-use-ApplicationKit/>
+    </template>
+
+    <lib id="OpenGLKit_lib" template="OpenGLKit_base,vcf_lib,precomp"
+            cond="OPTION_SHARED=='0' and OPTION_OPENGLKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>ApplicationKit_lib</depends>
+    </lib>
+
+    <dll id="OpenGLKit_dll" template="OpenGLKit_base,vcf_dll,precomp"
+            cond="OPTION_SHARED=='1' and OPTION_OPENGLKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>OPENGLKIT_DLL</define>
+        <define>OPENGLKIT_EXPORTS</define>
+        <depends>ApplicationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_OPENGLKIT=='1' and OPTION_ALLIN1=='0'">
+        OpenGLKit=OpenGLKit_lib+OpenGLKit_dll
+    </set>
+</makefile>

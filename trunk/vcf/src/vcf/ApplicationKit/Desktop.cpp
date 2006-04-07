@@ -99,10 +99,20 @@ Rect Desktop::getUsableBounds()
 	return peer_->desktopGetUsableBounds();
 }
 
+Point Desktop::getCurrentMousePosition()
+{
+	return peer_->getCurrentMousePosition();
+}
 
 /**
 *CVS Log info
 *$Log$
+*Revision 1.3  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.2.6.1  2006/02/15 05:14:33  ddiego
+*more browser code.
+*
 *Revision 1.2  2004/08/07 02:49:07  ddiego
 *merged in the devmain-0-6-5 branch to stable
 *

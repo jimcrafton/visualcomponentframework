@@ -23,22 +23,19 @@ namespace VCF {
 
 
 /**
-*<p>
-* class DocumentInfo
-* 
-* contains the string infos characterizing a document class or a kind of document.
-*
-*	classID     is the uuid identifying the document. It lets the VCF RTTI to create our document,
-*                with no other informations or to get all the DocumentInfo associated to a document
-*                according to the map stored by the DocumentManager.
-*	className   is the name for this class of documents.
-*	view        is the uuid identifying the kind of view to be associated to this kind of document.
-*	window      is the uuid identifying the kind of window to be associated to this kind of document.
-*	fileTypes   is the list of allowed extension (separated by ';') for the files associated to this
-*                kind of document.
-*	mimetype    is the mime type for this kind of document.
-*	description is just a generic description for this class of documents.
-*</p>
+\class DocumentInfo DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
+Contains the string infos characterizing a document class or a kind of document.
+
+	\li classID     is the uuid identifying the document. It lets the VCF RTTI create our document,
+                with no other informations or to get all the DocumentInfo associated to a document
+                according to the map stored by the DocumentManager.
+	\li className   is the name for this class of documents.
+	\li view        is the uuid identifying the kind of view to be associated to this kind of document.
+	\li window      is the uuid identifying the kind of window to be associated to this kind of document.
+	\li fileTypes   is the list of allowed extension (separated by ';') for the files associated to this
+                kind of document.
+	\li mimetype    is the mime type for this kind of document.
+	\li description is just a generic description for this class of documents.
 */
 class APPLICATIONKIT_API DocumentInfo {
 public:
@@ -54,30 +51,30 @@ public:
 
 
 /**
-*<p>
-* class DocManagerEvent
-* 
-* while a normal event is appropriated to notify the user interface
-* that a file operation has been performed on a document,
-* a user will need this special kind of event if he needs to bypass
-* a standard operation on documents as normally execute by the DocumentManager.
-* Even if the DocumentManager is already very flexible, this let the user
-* to have a comlete control in some case he may need ( very unfrequent though ).
-*
-* This how this mechanism works:
-* this event class has two member functions that are normally supposed
-* to work togheter. Yet are normally *not* used.
-* Let's take the case of DocumentManager::saveFile() for example,
-* and imagine that the user needs to completely bypass the way saveFile works 
-* and adopt his personal implementation.
-* In order to do that he needs to add an handler to the manager, that is performing
-* the operation in hte way he needs. He will also have to setAllowFileOperation( false )
-* from inside this handler, and setFileOperationStatus( true ) whenever the saving 
-* operation has been completed successfuly.
-* The standard implementation of saveFile will then call the handler, collect that 
-* fileOperationStatus_ value and return it. See comment for setFileOperationStatus.
-*</p>
-*@see saveFile()
+\class DocManagerEvent DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
+class DocManagerEvent
+
+while a normal event is appropriated to notify the user interface
+that a file operation has been performed on a document,
+a user will need this special kind of event if he needs to bypass
+a standard operation on documents as normally execute by the DocumentManager.
+Even if the DocumentManager is already very flexible, this let the user
+to have a comlete control in some case he may need ( very unfrequent though ).
+
+This how this mechanism works:
+this event class has two member functions that are normally supposed
+to work togheter. Yet are normally *not* used.
+Let's take the case of DocumentManager::saveFile() for example,
+and imagine that the user needs to completely bypass the way saveFile works 
+and adopt his personal implementation.
+In order to do that he needs to add an handler to the manager, that is performing
+the operation in hte way he needs. He will also have to setAllowFileOperation( false )
+from inside this handler, and setFileOperationStatus( true ) whenever the saving 
+operation has been completed successfuly.
+The standard implementation of saveFile will then call the handler, collect that 
+fileOperationStatus_ value and return it. See comment for setFileOperationStatus.
+
+@see saveFile()
 */
 class APPLICATIONKIT_API DocManagerEvent : public Event {
 public:
@@ -134,7 +131,7 @@ protected:
 
 
 /**
-<p>
+\class DocumentManager DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
 The DocumentManager manages the interaction between the application (and any other
 UI classes) and a collection of one or more documents.
 A DocumentBasedApplication inherits from this class and from a DocInterfacePolicy
@@ -374,7 +371,7 @@ public:
 	* implementation and open an appropriate New File dialog.
 	*/
 	virtual void newDocument() {
-		newDefaultDocument();
+		newDefaultDocument("", "");
 	}
 
 	/**
@@ -386,7 +383,7 @@ public:
 	*in which case the only registered DocumentInfo is used to open the document.
 	*@return Document*, the newly created document.
 	*/
-	virtual Document* newDefaultDocument( const String& mimetype=L"" ) {
+	virtual Document* newDefaultDocument( const String& fileName, const String& mimetype ) {
 		return NULL;
 	};
 
@@ -604,16 +601,16 @@ protected:
 	DocumentInfo* getDocumentInfo( Document* doc );
 
 	/** called to prepare a file open dialog */
-	virtual void prepareOpenDialog( CommonFileOpen* openDialog );
+	virtual void prepareOpenDialog( CommonFileOpenDialog* openDialog );
 
 	/** called after the file open dialog has been closed by the user and confirmed Ok */
-	virtual void openDialogFinished( CommonFileOpen* openDialog ){};
+	virtual void openDialogFinished( CommonFileOpenDialog* openDialog ){};
 
 	/** called to prepare a file save dialog */
-	virtual void prepareSaveDialog( CommonFileSave* saveDialog, Document* doc );
+	virtual void prepareSaveDialog( CommonFileSaveDialog* saveDialog, Document* doc );
 
 	/** called after the file save dialog has been closed by the user and confirmed Ok */
-	virtual void saveDialogFinished( CommonFileSave* saveDialog ){};
+	virtual void saveDialogFinished( CommonFileSaveDialog* saveDialog ){};
 
 	/** called when this target gets notified for update events of the UI of a save operation */
 	virtual void updateSave( ActionEvent* event, Document* doc );
@@ -697,6 +694,7 @@ protected:
 
 
 /**
+\class DocumentManagerImpl DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
 * class DocumentManagerImpl
 * implementation of the DocumentManager for which also the DocInterfacePolicy
 * is specified.
@@ -832,9 +830,9 @@ public:
 	*		<li>it calls the user implementation of Document::initNew()
 	*		<li>it attaches a UI to the document if this getShouldCreateUI() is true.
 	* </ul>
-	*\par
+	*
 	* this is normally called before actually opening the file for the document.
-	*\par
+	*
 	* In a SDI policy saveBeforeNewDocument() returns true so,
 	* if we create a new document while the current document has been modified
 	* the user is asked what to do, and the operation is aborted if the he decides to.
@@ -842,7 +840,7 @@ public:
 	*@see DocInterfacePolicy::saveBeforeNewDocument()
 	*@see DocumentManagerImpl:: attachUI()
 	*/
-	virtual Document* newDefaultDocument( const String& mimetype=L"" );
+	virtual Document* newDefaultDocument( const String& fileName, const String& mimetype=L"" );
 
 	/**
 	* attaches a document specific User Interface to a document
@@ -1343,7 +1341,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 				bool found = false;
 				while ( it != pathComponents.rend() ) {
 					String s = (*it);
-					int length = (*it).length();// + FilePath::getDirectorySeparator().length();
+					size_t length = (*it).length();// + FilePath::getDirectorySeparator().length();
 
 					appDir.erase( appDir.length()-length, length );
 					
@@ -1364,7 +1362,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 			}
 		}
 
-		CommonFileSave saveDialog( doc->getWindow(), currentDir );
+		CommonFileSaveDialog saveDialog( doc->getWindow(), currentDir );
 
 		saveDialog.setFileName( currentDir + basename );
 		prepareSaveDialog( &saveDialog, doc );
@@ -1393,8 +1391,15 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 		fileType = fp.getExtension();
 	}
 
+	//store off the current name
+	String oldName = doc->getName();
+	//set the name to the new file
+	doc->setFileName( fp );
 	try {
 		result = doc->saveAsType( fp, fileType );
+
+		//reset it back to the old name, we'll change it later
+		doc->setFileName( oldName );
 	}
 	catch ( BasicException& e) {
 		Dialog::showMessage( "Error saving '" + doc->getName() + "'\nError: " + e.getMessage() );
@@ -1430,7 +1435,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
 
 	String currentDir = System::getCurrentWorkingDirectory();
 
-	CommonFileOpen openDialog( Frame::getActiveFrame(), currentDir );
+	CommonFileOpenDialog openDialog( Frame::getActiveFrame(), currentDir );
 
 	prepareOpenDialog( &openDialog );
 
@@ -1447,21 +1452,36 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
 template < typename AppClass, typename DocInterfacePolicy >
 void DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeCurrentDocument()
 {
-	closingDocument_ = true;
+	//JC - I got rid of this because I beleive it is no longer 
+	//neccessary
+	/*closingDocument_ = true;
 
 	Document* currentDoc = DocInterfacePolicy::getCurrentDocument();
 
-	// remove the current document form the list of opened documents
-	// and frees it.
-	removeDocument( currentDoc );
-
+	Component* owner = currentDoc->getOwner();
+	if ( NULL != owner ) {
+		owner->removeComponent( currentDoc );
+	}
+	documentClosedOK_ = false;
 	// closes the current document window ( and so the window 
 	// associated  to the just deleted document ).
 	DocInterfacePolicy::closeDocument();
 
+
+	// remove the current document form the list of opened documents
+	// and frees it.
+	removeDocument( currentDoc );	
+
 	closingDocument_ = false;
 
 	removeUndoRedoStackForDocument( currentDoc );
+
+	currentDoc->free();
+
+	documentClosedOK_ = false;
+	*/
+
+	DocInterfacePolicy::closeDocument();
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
@@ -1554,6 +1574,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 	initializeWindowMenus( window, document, info );
 
 	document->setWindow( window );
+	window->addComponent( document );
 
 	if ( NULL == docEv ) {
 
@@ -1593,14 +1614,14 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 	}
 
 	//need to provide a common place to
-	//init everything once all the "connections" are in place
-
-	// let the policy to update its data to the new document
-	DocInterfacePolicy::afterNewDocument( document );
+	//init everything once all the "connections" are in place	
 
 	DocManagerEvent event( document, DocumentManager::dmDocumentInitialized );
 
 	DocumentInitialized.fireEvent( &event );
+
+	// let the policy to update its data to the new document
+	DocInterfacePolicy::afterNewDocument( document );
 
 	// makes sure the Frame has an handler to 
 	// to catch if the document's window is to be closing
@@ -1673,7 +1694,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
-Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& mimetype )
+Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& fileName, const String& mimetype )
 {
 	/**
 	* if we create a new document while the current document of 
@@ -1719,6 +1740,11 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 
 
 	if ( NULL != newDocument ) {
+
+		if ( !fileName.empty() ) {
+			newDocument->setFileName( fileName );
+		}
+
 		// calls user implementation
 		newDocument->initNew();
 
@@ -1859,6 +1885,37 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.5  2006/04/07 02:35:23  ddiego
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.4.2.9  2006/04/05 03:35:58  ddiego
+*post cvs crash updates.
+*
+*Revision 1.4.2.8  2006/03/18 22:17:42  ddiego
+*removed par tag for doxygen comments as its not needed and
+*screws up the doc formatting.
+*
+*Revision 1.4.2.7  2006/03/14 02:25:46  ddiego
+*large amounts of source docs updated.
+*
+*Revision 1.4.2.6  2006/03/06 03:48:30  ddiego
+*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
+*
+*Revision 1.4.2.5  2006/01/22 23:52:21  ddiego
+*some minor changed to doc manager.
+*
+*Revision 1.4.2.4  2005/10/18 04:42:39  ddiego
+*fixed minor bug in doc manager.
+*
+*Revision 1.4.2.3  2005/10/09 04:32:44  ddiego
+*added some minor fixes in component persistence for vcf builder.
+*
+*Revision 1.4.2.2  2005/10/04 01:57:03  ddiego
+*fixed some miscellaneous issues, especially with model ownership.
+*
+*Revision 1.4.2.1  2005/09/02 01:01:20  ddiego
+*changed some of the common dialogs around, was using a less clear class name.
+*
 *Revision 1.4  2005/07/09 23:14:52  ddiego
 *merging in changes from devmain-0-6-7 branch.
 *
