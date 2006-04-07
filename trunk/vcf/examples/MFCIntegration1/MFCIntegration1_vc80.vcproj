@@ -47,6 +47,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -136,7 +137,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),.\"
+				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;USE_FOUNDATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
