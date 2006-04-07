@@ -1235,7 +1235,6 @@ Package=<4>
 
 Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit_vc70.dsp" - Package Owner=<4>
 
-
 Package=<5>
 {{{
 }}}
@@ -1289,18 +1288,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Scrolling"="..\..\examples\Scrolling\Scrolling_vc70.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Scrolling2"="..\..\examples\Scrolling2\Scrolling2_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

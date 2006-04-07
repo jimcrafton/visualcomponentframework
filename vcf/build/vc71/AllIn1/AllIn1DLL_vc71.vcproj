@@ -155,6 +155,39 @@
 		<Filter
 			Name="ApplicationKit"
 			Filter="">
+			<Filter
+				Name="Res"
+				Filter="">
+				<File
+					RelativePath="..\..\resources\win32\ApplicationKit.rc">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\inform.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\question.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\stop.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\vcf.ico">
+				</File>
+			</Filter>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.cpp">
 				<FileConfiguration
@@ -3539,39 +3572,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Wizard.h">
 			</File>
-			<Filter
-				Name="Res"
-				Filter="">
-				<File
-					RelativePath="..\..\resources\win32\ApplicationKit.rc">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\resources\win32\"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\resources\win32\"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\inform.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\question.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\stop.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\vcf.ico">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="GraphicsKit"

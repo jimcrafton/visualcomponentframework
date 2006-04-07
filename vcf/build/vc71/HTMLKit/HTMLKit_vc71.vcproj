@@ -12,8 +12,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\HTMLKit___Win32_Debug"
-			IntermediateDirectory=".\HTMLKit___Win32_Debug"
+			OutputDirectory=".\HTMLKit___Win32_Debug\"
+			IntermediateDirectory=".\HTMLKit___Win32_Debug\"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -21,16 +21,16 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/thirdparty/win32"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_APPLICATIONKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="vcf/HTMLKit/HTMLKit.h"
-				PrecompiledHeaderFile=".\HTMLKit___Win32_Debug/HTMLKit_vc71.pch"
-				AssemblerListingLocation=".\HTMLKit___Win32_Debug/"
-				ObjectFile=".\HTMLKit___Win32_Debug/"
+				PrecompiledHeaderFile=".\HTMLKit___Win32_Debug\HTMLKit_vc71_sd.pch"
+				AssemblerListingLocation=".\HTMLKit___Win32_Debug\"
+				ObjectFile=".\HTMLKit___Win32_Debug\"
 				ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc71_sd.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -40,7 +40,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../../../lib/HTMLKit_vc71_sd.lib"
+				OutputFile="..\..\..\lib\HTMLKit_vc71_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -65,8 +65,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release"
-			IntermediateDirectory=".\Release"
+			OutputDirectory=".\Release\"
+			IntermediateDirectory=".\Release\"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -75,7 +75,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/thirdparty/win32"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_APPLICATIONKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -83,10 +83,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="vcf/HTMLKit/HTMLKit.h"
-				PrecompiledHeaderFile=".\Release/HTMLKit_vc71.pch"
-				AssemblerListingLocation=".\Release/"
-				ObjectFile=".\Release/"
-				ProgramDataBaseFileName=".\Release/"
+				PrecompiledHeaderFile=".\Release\HTMLKit_vc71_s.pch"
+				AssemblerListingLocation=".\Release\"
+				ObjectFile=".\Release\"
+				ProgramDataBaseFileName=".\Release\"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -94,7 +94,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../../../lib/HTMLKit_vc71_s.lib"
+				OutputFile="..\..\..\lib\HTMLKit_vc71_s.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>

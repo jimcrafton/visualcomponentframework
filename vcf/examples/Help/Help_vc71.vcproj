@@ -3,8 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Help"
-	ProjectGUID="{1BBF8886-EF76-4F87-B6D5-0B0B173E5726}"
-	RootNamespace="Help"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -22,7 +20,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
@@ -160,7 +158,7 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""/>
 				</FileConfiguration>

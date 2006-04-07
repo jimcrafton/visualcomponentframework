@@ -54,6 +54,7 @@ LINK32=link.exe
 # ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib version.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\FoundationKit_vc70.dll"
 # SUBTRACT LINK32 /pdb:none /debug
 
+
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
 
 # PROP BASE Use_MFC 0

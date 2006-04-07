@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE),..\..\..\thirdparty\common\FreeImage\Source,$(VCF_INCLUDE)\..\thirdparty\common\agg\include\"
-				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS,NO_MFC,IMAGEFORMATS_DLL,IMAGEFORMATS_EXPORTS,FREEIMAGE_LIB,USE_FREEIMAGE_LIB,USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
@@ -38,23 +38,24 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
 				OutputFile="..\..\..\bin\ImageFormats_vc71_d.dll"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\vc71\Debug\ImageFormats_vc71_d.pdb"
 				SubSystem="2"
-				ImportLibrary=".\vc71\Debug/ImageFormats_vc71_d.lib"/>
+				ImportLibrary=".\vc71\Debug/ImageFormats_vc71_d.lib"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc71\Debug\ImageFormats_vc71_d.tlb"/>
+				TypeLibraryName=".\vc71\Debug\ImageFormats_vc71_d.tlb"
+				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -68,7 +69,13 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
 				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -83,7 +90,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE),..\..\..\thirdparty\common\FreeImage\Source\"
-				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS,NO_MFC,IMAGEFORMATS_DLL,IMAGEFORMATS_EXPORTS,FREEIMAGE_LIB,USE_FREEIMAGE_LIB,USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -99,7 +106,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
 				OutputFile="..\..\..\bin\ImageFormats_vc71.dll"
 				LinkIncremental="1"
@@ -107,14 +113,16 @@
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				ProgramDatabaseFile=".\vc71\Release\ImageFormats_vc71.pdb"
 				SubSystem="2"
-				ImportLibrary=".\vc71\Release/ImageFormats_vc71.lib"/>
+				ImportLibrary=".\vc71\Release/ImageFormats_vc71.lib"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc71\Release\ImageFormats_vc71.tlb"/>
+				TypeLibraryName=".\vc71\Release\ImageFormats_vc71.tlb"
+				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -128,7 +136,13 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
 				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -139,6 +153,23 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
 				RelativePath="..\..\..\src\ImageFormats\ImageFormats.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

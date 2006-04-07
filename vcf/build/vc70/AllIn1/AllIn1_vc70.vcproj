@@ -2345,7 +2345,8 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2354,7 +2355,8 @@
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2399,7 +2401,8 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2408,7 +2411,8 @@
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2693,14 +2697,14 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\VCF\reFormatVc2\vcf\build\resources\win32\"/>
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\VCF\reFormatVc2\vcf\build\resources\win32\"/>
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 					</FileConfiguration>
 				</File>
 				<File
