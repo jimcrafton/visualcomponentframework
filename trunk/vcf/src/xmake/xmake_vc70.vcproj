@@ -11,6 +11,60 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\vc70\Debug\"
+			IntermediateDirectory=".\vc70\Debug\"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories=".\"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_LIBXMAKE_LIB"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\vc70\Debug\xmake.pch"
+				AssemblerListingLocation=".\vc70\Debug\"
+				ObjectFile=".\vc70\Debug\"
+				ProgramDataBaseFileName=".\vc70\Debug\"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile="..\..\bin\xmake.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\lib\"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\vc70\Debug\xmake.pdb"
+				SubSystem="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				TypeLibraryName=".\vc70\Debug\xmake.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\vc70\Release\"
 			IntermediateDirectory=".\vc70\Release\"
@@ -23,7 +77,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories=".\"
-				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,USE_LIBXMAKE_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;USE_LIBXMAKE_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -39,7 +93,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\bin\xmake.exe"
 				LinkIncremental="1"
@@ -65,61 +118,6 @@
 			<Tool
 				Name="VCWebDeploymentTool"/>
 		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\vc70\Debug\"
-			IntermediateDirectory=".\vc70\Debug\"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories=".\"
-				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,USE_LIBXMAKE_LIB"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc70\Debug\xmake.pch"
-				AssemblerListingLocation=".\vc70\Debug\"
-				ObjectFile=".\vc70\Debug\"
-				ProgramDataBaseFileName=".\vc70\Debug\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\bin\xmake.exe"
-				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\lib\"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\vc70\Debug\xmake.pdb"
-				SubSystem="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				TypeLibraryName=".\vc70\Debug\xmake.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
@@ -127,6 +125,23 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
 				RelativePath="main.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

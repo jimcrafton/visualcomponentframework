@@ -11,6 +11,66 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc70\Debug\"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="vcf/RemoteObjectKit/RemoteObjectKit.h"
+				PrecompiledHeaderFile=".\vc70\Debug\RemoteObjectKit_vc70_d.pch"
+				AssemblerListingLocation=".\vc70\Debug\"
+				ObjectFile=".\vc70\Debug\"
+				ProgramDataBaseFileName="..\..\..\bin\RemoteObjectKit_vc70_d.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\bin\RemoteObjectKit_vc70_d.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\..\lib\"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="..\..\..\lib\RemoteObjectKit_vc70_d.pdb"
+				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc70_d.lib"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName="..\..\..\lib\RemoteObjectKit_vc70_d.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc70\Release\"
@@ -41,7 +101,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\RemoteObjectKit_vc70.dll"
 				LinkIncremental="1"
@@ -71,67 +130,6 @@
 			<Tool
 				Name="VCWebDeploymentTool"/>
 		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc70\Debug\"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="vcf/RemoteObjectKit/RemoteObjectKit.h"
-				PrecompiledHeaderFile=".\vc70\Debug\RemoteObjectKit_vc70_d.pch"
-				AssemblerListingLocation=".\vc70\Debug\"
-				ObjectFile=".\vc70\Debug\"
-				ProgramDataBaseFileName="..\..\..\bin\RemoteObjectKit_vc70_d.pdb"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin\RemoteObjectKit_vc70_d.dll"
-				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib\"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="..\..\..\lib\RemoteObjectKit_vc70_d.pdb"
-				ImportLibrary=".\..\..\..\lib/RemoteObjectKit_vc70_d.lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\RemoteObjectKit_vc70_d.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
@@ -139,37 +137,163 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
 				RelativePath="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\DistributedException.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\InstanceID.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\Proxy.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\DistributedException.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\InstanceID.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\Proxy.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL;$(NoInherit)"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>

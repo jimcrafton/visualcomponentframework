@@ -147,14 +147,14 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\VCF\reFormatVc2\vcf\build\resources\win32\"/>
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32">
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\VCF\reFormatVc2\vcf\build\resources\win32\"/>
+							AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 					</FileConfiguration>
 				</File>
 				<File
@@ -467,7 +467,8 @@
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
@@ -475,7 +476,8 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -3894,7 +3896,8 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -3952,7 +3955,8 @@
 						Name="VCCLCompilerTool"
 						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 			<File

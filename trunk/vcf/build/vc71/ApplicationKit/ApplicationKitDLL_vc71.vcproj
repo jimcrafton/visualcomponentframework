@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="ApplicationKitDLL"
-	ProjectGUID="{27686100-CE72-4861-B1A8-8BE74AE9607E}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -203,14 +202,14 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\Dev\VCF\vcf\build\resources\win32\"/>
+						AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\Dev\VCF\vcf\build\resources\win32\"/>
+						AdditionalIncludeDirectories="\Dev\vcfHead\vcfRef2\build\resources\win32\"/>
 				</FileConfiguration>
 			</File>
 			<File

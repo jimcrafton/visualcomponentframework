@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Accelerators"=..\..\examples\Accelerators\Accelerators.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Actions"=..\..\examples\Actions\Actions.dsp - Package Owner=<4>
 
 Package=<5>
@@ -27,6 +39,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AdvancedUI"=..\..\examples\AdvancedUI\AdvancedUI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Alignment"=..\..\examples\Alignment\Alignment.dsp - Package Owner=<4>
 
 Package=<5>
@@ -39,7 +63,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AllIn1"=.\AllIn1\AllIn1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AllIn1DLL"=.\AllIn1\AllIn1DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Anchors"=..\..\examples\Anchors\Anchors.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AppResources"=..\..\examples\AppResources\AppResources.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -93,6 +153,66 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Browser"=..\..\examples\Browser\Browser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Cards"=..\..\examples\Cards\Cards.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Colors"=..\..\examples\Colors\Colors.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Combos"=..\..\examples\Combos\Combos.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CommonDirectories"=..\..\examples\CommonDirectories\CommonDirectories.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Conditions"=..\..\examples\Conditions\Conditions.dsp - Package Owner=<4>
 
 Package=<5>
@@ -105,7 +225,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Controls"=..\..\examples\Controls\Controls.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "CopyAndPaste"=..\..\examples\CopyAndPaste\CopyAndPaste.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CreateBundle"=..\..\src\createbundle\CreateBundle.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -141,7 +285,55 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Dialogs"=..\..\examples\Dialogs\Dialogs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Dictionaries"=..\..\examples\Dictionaries\Dictionaries.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Directories"=..\..\examples\Directories\Directories.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DocViewAdvanced"=..\..\examples\DocViewAdvanced\DocViewAdvanced.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DocViewBasics"=..\..\examples\DocViewBasics\DocViewBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -189,10 +381,16 @@ Package=<4>
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Accelerators
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Actions
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name AdvancedAlignment
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name AdvancedUI
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Alignment
@@ -201,10 +399,31 @@ Package=<4>
     Project_Dep_Name Anchors
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name AppResources
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ApplicationIcons
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Browser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Cards
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Colors
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Combos
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CommonDirectories
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Conditions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Controls
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CopyAndPaste
@@ -216,7 +435,19 @@ Package=<4>
     Project_Dep_Name DatesAndTime
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Dialogs
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Dictionaries
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Directories
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DocViewAdvanced
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DocViewBasics
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name DragAndDrop
@@ -226,6 +457,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name FilesAndDirectories
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FrameStyles
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
@@ -246,16 +480,49 @@ Package=<4>
     Project_Dep_Name HelloWorld3
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Help
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ImageBasics
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ImageViewer
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name InetKit
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Labels
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name ListBox
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LocaleUI
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Localization
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MFCIntegration1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MFCIntegration2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MVCBasics
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MinMax
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLShapes
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ParticleEditor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Printing
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Processes
@@ -264,10 +531,22 @@ Package=<4>
     Project_Dep_Name ProgressBars
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name QTPlayer
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Reflection
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Resources
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RunLoops
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Scrolling
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Scrolling2
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name SharedLibraries
@@ -288,10 +567,22 @@ Package=<4>
     Project_Dep_Name StrokesAndFills
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name SysTray
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Tables
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name TeXLabel
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TextEdit
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name TextLayout
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Themes
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ThreadBasics
@@ -303,7 +594,16 @@ Package=<4>
     Project_Dep_Name Toolbars
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Tooltips
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Transformations
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name TreeListControls
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Variants
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name VisualFormFiles
@@ -340,6 +640,18 @@ Package=<4>
 ###############################################################################
 
 Project: "FoundationKitDLL"=.\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FrameStyles"=..\..\examples\FrameStyles\FrameStyles.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -534,6 +846,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Help"=..\..\examples\Help\Help.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ImageBasics"=..\..\examples\ImageBasics\ImageBasics.dsp - Package Owner=<4>
 
 Package=<5>
@@ -562,6 +886,42 @@ Package=<4>
 ###############################################################################
 
 Project: "ImageViewer"=..\..\examples\ImageViewer\ImageViewer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InetKit"=..\..\examples\InetKit\InetKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKit"=.\InternetKit\InternetKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InternetKitDLL"=.\InternetKit\InternetKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -633,6 +993,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ListBox"=..\..\examples\ListBox\ListBox.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LocaleUI"=..\..\examples\LocaleUI\LocaleUI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Localization"=..\..\examples\Localization\Localization.dsp - Package Owner=<4>
 
 Package=<5>
@@ -645,7 +1029,43 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MSDNIntegrator"=..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.dsp - Package Owner=<4>
+Project: "MFCIntegration1"=..\..\examples\MFCIntegration1\MFCIntegration1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MFCIntegration2"=..\..\examples\MFCIntegration2\MFCIntegration2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MVCBasics"=..\..\examples\MVCBasics\MVCBasics.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MinMax"=..\..\examples\MinMax\MinMax.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -717,6 +1137,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "OpenGLShapes"=..\..\examples\OpenGLShapes\OpenGLShapes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ParticleEditor"=..\..\examples\ParticleEditor\ParticleEditor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Printing"=..\..\examples\Printing\Printing.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Processes"=..\..\examples\Processes\Processes.dsp - Package Owner=<4>
 
 Package=<5>
@@ -741,7 +1197,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "QTPlayer"=..\..\examples\QTPlayer\QTPlayer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Reflection"=..\..\examples\Reflection\Reflection.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegEnVar"=..\..\src\thirdparty\win32\RegEnVar\RegEnVar.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -783,7 +1263,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Resources"=..\..\examples\Resources\Resources.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RunLoops"=..\..\examples\RunLoops\RunLoops.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Scrolling"=..\..\examples\Scrolling\Scrolling.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scrolling2"=..\..\examples\Scrolling2\Scrolling2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -867,6 +1383,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SysTray"=..\..\examples\SysTray\SysTray.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Tables"=..\..\examples\Tables\Tables.dsp - Package Owner=<4>
 
 Package=<5>
@@ -879,7 +1407,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TeXLabel"=..\..\examples\TeXLabel\TeXLabel.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TextEdit"=..\..\examples\TextEdit\TextEdit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "TextLayout"=..\..\examples\TextLayout\TextLayout.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Themes"=..\..\examples\Themes\Themes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -927,7 +1491,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Tooltips"=..\..\examples\Tooltips\Tooltips.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Transformations"=..\..\examples\Transformations\Transformations.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "TreeListControls"=..\..\examples\TreeListControls\TreeListControls.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Variants"=..\..\examples\Variants\Variants.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -975,6 +1575,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "createinfo"=..\..\src\createinfo\createinfo.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "libAGG"=.\GraphicsKit\libAGG.dsp - Package Owner=<4>
 
 Package=<5>
@@ -988,6 +1600,18 @@ Package=<4>
 ###############################################################################
 
 Project: "libXmake"=..\..\src\xmake\libXmake.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "vcfAll"=.\AllIn1\vcfAll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

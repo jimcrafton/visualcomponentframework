@@ -12,30 +12,34 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\vc70\Release\"
-			IntermediateDirectory=".\vc70\Release\"
+			Name="Debug|Win32"
+			OutputDirectory=".\vc70\Debug\"
+			IntermediateDirectory=".\vc70\Debug\"
 			ConfigurationType="10"
-			UseOfMFC="0">
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCMIDLTool"
+				TypeLibraryName=".\vc70\Debug\Examples_vc70.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\vc70\Debug\"
-			IntermediateDirectory=".\vc70\Debug\"
+			Name="Release|Win32"
+			OutputDirectory=".\vc70\Release\"
+			IntermediateDirectory=".\vc70\Release\"
 			ConfigurationType="10"
-			UseOfMFC="0">
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCMIDLTool"
+				TypeLibraryName=".\vc70\Release\Examples_vc70.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool

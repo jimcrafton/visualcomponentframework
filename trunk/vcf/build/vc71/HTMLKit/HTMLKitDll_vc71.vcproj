@@ -12,8 +12,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc71\DebugDLL"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc71\DebugDLL\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -21,16 +21,16 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/thirdparty/win32"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;HTMLKIT_DLL;HTMLKIT_EXPORTS;USE_APPLICATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="vcf/HTMLKit/HTMLKit.h"
-				PrecompiledHeaderFile=".\vc71\DebugDLL/HTMLKitDll_vc71.pch"
-				AssemblerListingLocation=".\vc71\DebugDLL/"
-				ObjectFile=".\vc71\DebugDLL/"
+				PrecompiledHeaderFile=".\vc71\DebugDLL\HTMLKitDll_vc71_d.pch"
+				AssemblerListingLocation=".\vc71\DebugDLL\"
+				ObjectFile=".\vc71\DebugDLL\"
 				ProgramDataBaseFileName="..\..\..\bin\HTMLKit_vc71_d.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -43,9 +43,9 @@
 				OutputFile="..\..\..\bin\HTMLKit_vc71_d.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib"
+				AdditionalLibraryDirectories="..\..\..\lib\"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\..\lib/HTMLKit_vc71_d.pdb"
+				ProgramDatabaseFile="..\..\..\lib\HTMLKit_vc71_d.pdb"
 				ImportLibrary=".\..\..\..\lib/HTMLKit_vc71_d.lib"
 				TargetMachine="1"/>
 			<Tool
@@ -54,7 +54,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\..\lib/HTMLKitDll_vc71.tlb"
+				TypeLibraryName="..\..\..\lib\HTMLKitDll_vc71_d.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -79,8 +79,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\..\..\..\lib"
-			IntermediateDirectory=".\vc71\ReleaseDLL"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc71\ReleaseDLL\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -89,7 +89,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)/thirdparty/win32"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),$(VCF_INCLUDE)\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;HTMLKIT_DLL;HTMLKIT_EXPORTS;USE_APPLICATIONKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -97,10 +97,10 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="vcf/HTMLKit/HTMLKit.h"
-				PrecompiledHeaderFile=".\vc71\ReleaseDLL/HTMLKitDll_vc71.pch"
-				AssemblerListingLocation=".\vc71\ReleaseDLL/"
-				ObjectFile=".\vc71\ReleaseDLL/"
-				ProgramDataBaseFileName=".\vc71\ReleaseDLL/"
+				PrecompiledHeaderFile=".\vc71\ReleaseDLL\HTMLKitDll_vc71.pch"
+				AssemblerListingLocation=".\vc71\ReleaseDLL\"
+				ObjectFile=".\vc71\ReleaseDLL\"
+				ProgramDataBaseFileName=".\vc71\ReleaseDLL\"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -111,8 +111,8 @@
 				OutputFile="..\..\..\bin\HTMLKit_vc71.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib"
-				ProgramDatabaseFile=".\..\..\..\lib/HTMLKit_vc71.pdb"
+				AdditionalLibraryDirectories="..\..\..\lib\"
+				ProgramDatabaseFile="..\..\..\lib\HTMLKit_vc71.pdb"
 				ImportLibrary=".\..\..\..\lib/HTMLKit_vc71.lib"
 				TargetMachine="1"/>
 			<Tool
@@ -121,7 +121,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\..\lib/HTMLKitDll_vc71.tlb"
+				TypeLibraryName="..\..\..\lib\HTMLKitDll_vc71.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>

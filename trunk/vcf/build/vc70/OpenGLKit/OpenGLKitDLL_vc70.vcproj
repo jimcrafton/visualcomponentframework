@@ -11,6 +11,64 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\..\..\lib\"
+			IntermediateDirectory=".\vc70\ReleaseDLL\"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="TRUE"
+				PrecompiledHeaderFile=".\vc70\ReleaseDLL\OpenGLKitDLL_vc70.pch"
+				AssemblerListingLocation=".\vc70\ReleaseDLL\"
+				ObjectFile=".\vc70\ReleaseDLL\"
+				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib rpcrt4.lib odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\bin\OpenGLKit_vc70.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\..\..\lib\"
+				ProgramDatabaseFile="..\..\..\lib\OpenGLKit_vc70.pdb"
+				ImportLibrary=".\..\..\..\lib/OpenGLKit_vc70.lib"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName="..\..\..\lib\OpenGLKitDLL_vc70.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\lib\"
 			IntermediateDirectory=".\vc70\DebugDLL\"
@@ -38,7 +96,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib Rpcrt4.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\OpenGLKit_vc70_d.dll"
 				LinkIncremental="2"
@@ -69,65 +126,6 @@
 			<Tool
 				Name="VCWebDeploymentTool"/>
 		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\..\..\lib\"
-			IntermediateDirectory=".\vc70\ReleaseDLL\"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
-				StringPooling="TRUE"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc70\ReleaseDLL\OpenGLKitDLL_vc70.pch"
-				AssemblerListingLocation=".\vc70\ReleaseDLL\"
-				ObjectFile=".\vc70\ReleaseDLL\"
-				ProgramDataBaseFileName=".\vc70\ReleaseDLL\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib rpcrt4.lib odbc32.lib odbccp32.lib"
-				OutputFile="..\..\..\bin\OpenGLKit_vc70.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\lib\"
-				ProgramDatabaseFile="..\..\..\lib\OpenGLKit_vc70.pdb"
-				ImportLibrary=".\..\..\..\lib/OpenGLKit_vc70.lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="..\..\..\lib\OpenGLKitDLL_vc70.tlb"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
@@ -135,15 +133,83 @@
 			Filter="">
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

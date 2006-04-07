@@ -40,8 +40,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\GraphicsKit_vc70_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -102,7 +100,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\GraphicsKit_vc70.dll"
 				LinkIncremental="1"
@@ -159,17 +156,41 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -177,6 +198,23 @@
 			Filter="h;hpp;hxx;hm;inl;cpp;c;cxx;rc;def;r;odl;idl;hpj">
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\AbstractImage.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\AbstractImage.h">
@@ -186,6 +224,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicFill.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicFill.h">
@@ -195,12 +250,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicStroke.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicStroke.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BezierCurve.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BezierCurve.h">
@@ -210,6 +299,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Color.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Color.h">
@@ -231,6 +337,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Font.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Font.h">
@@ -240,12 +363,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.h">
@@ -264,6 +421,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h">
@@ -276,12 +450,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Matrix2D.h">
@@ -300,12 +508,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Point.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Point.h">
@@ -321,6 +563,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintSession.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintSession.h">
@@ -330,6 +589,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Rect.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Rect.h">
@@ -346,42 +622,161 @@
 			Filter="*.cpp;*.h">
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Context.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Context.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Font.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Font.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Image.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Image.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;GRAPHICSKIT_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.h">
