@@ -80,7 +80,7 @@ def main():
 			   '.def', '.ico', '.rc2', '.odl', '.vff', '.html', '.xml', '.vcproj', '.sln',
 				'.bkl', '.inc', '.bcc', '.bpf', '.bpr', '.cbp', '.workspace', '.vc', '.gcc',
 				'.bpg', '.png', '.mov', '.strings', '.vp', '.txt', '.hpp', '.yy', '.ll', '.hhp',
-				 '.js', '.css', '.bat', '.gif', '.hhk', '.hhc', '.plist' ]
+				 '.js', '.css', '.bat', '.gif', '.hhk', '.hhc', '.dat', '.scan', '.tab', '.plist' ]
 
 
 	
