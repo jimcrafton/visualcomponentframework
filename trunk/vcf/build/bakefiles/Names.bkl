@@ -32,11 +32,6 @@
         $(vcf.getLibFilename( LIBTIFF_NAME ))
     </set>
 
-    <set var="REGEXX_NAME">RegExx</set>
-    <set var="REGEXX_FILENAME" make_var="1">
-        $(vcf.getLibFilename( REGEXX_NAME ))
-    </set>
-
     <set var="FREEIMAGE_NAME">FreeImage</set>
     <set var="FREEIMAGE_FILENAME" make_var="1">
         $(vcf.getLibFilename( FREEIMAGE_NAME ))

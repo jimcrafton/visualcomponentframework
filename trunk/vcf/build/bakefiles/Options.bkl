@@ -200,16 +200,6 @@ Compile the FreeImage library:
         </description>
     </option>
 
-    <option name="OPTION_REGEXX">
-        <values>0,1</values>
-        <default-value>
-            $(vcf.getOptionValue( 'OPTION_REGEXX', '0' ))
-        </default-value>
-        <description>
-            Compile the RegExx library:
-        </description>
-    </option>
-
 
     <!--
     Kits.
@@ -312,8 +302,8 @@ Compile RemoteObjectKit:
     </option>
 
     <set var="OPTION_INTERNETKIT_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
+        <if cond="FORMAT not in ['msvc','msvc6prj','borland']">0</if>
+        <if cond="FORMAT in ['msvc','msvc6prj','borland']">1</if>
     </set>
     <option name="OPTION_INTERNETKIT">
         <values>0,1</values>

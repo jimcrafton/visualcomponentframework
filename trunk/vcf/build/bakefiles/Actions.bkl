@@ -93,11 +93,6 @@
             <depends>FreeImage_lib</depends>
         </action>
 
-        <action id="RegExx" cond="OPTION_REGEXX=='1'">
-            <is-phony>1</is-phony>
-            <depends>RegExx_lib</depends>
-        </action>
-
     </if>
 
 </makefile>
