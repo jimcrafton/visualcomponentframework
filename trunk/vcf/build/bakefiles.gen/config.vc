@@ -78,9 +78,6 @@ OPTION_LIBTIFF = 0
 # Compile the FreeImage library: [0,1]
 OPTION_FREEIMAGE = 0
 
-# Compile the RegExx library: [0,1]
-OPTION_REGEXX = 0
-
 # Compile FoundationKit: [0,1]
 OPTION_FOUNDATIONKIT = 1
 

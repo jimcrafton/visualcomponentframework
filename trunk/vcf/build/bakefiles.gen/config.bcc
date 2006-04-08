@@ -111,11 +111,6 @@ OPTION_LIBTIFF = 0
 OPTION_FREEIMAGE = 0
 !endif
 
-# Compile the RegExx library: [0,1]
-!ifndef OPTION_REGEXX
-OPTION_REGEXX = 0
-!endif
-
 # Compile FoundationKit: [0,1]
 !ifndef OPTION_FOUNDATIONKIT
 OPTION_FOUNDATIONKIT = 1

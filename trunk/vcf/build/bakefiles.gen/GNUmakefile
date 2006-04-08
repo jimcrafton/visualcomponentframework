@@ -201,16 +201,6 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)/LibTIFF_lib_tif_write.o \
 	$(OBJDIR)/LibTIFF_lib_tif_zip.o \
 	$(OBJDIR)/LibTIFF_lib_tif_unix.o
-REGEXX_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -D_UNICODE \
-	-I../../src $(CPPFLAGS) $(CFLAGS)
-REGEXX_LIB_OBJECTS =  \
-	$(OBJDIR)/RegExx_lib_chartables.o \
-	$(OBJDIR)/RegExx_lib_get.o \
-	$(OBJDIR)/RegExx_lib_maketables.o \
-	$(OBJDIR)/RegExx_lib_pcre.o \
-	$(OBJDIR)/RegExx_lib_pcreposix.o \
-	$(OBJDIR)/RegExx_lib_study.o
 FOUNDATIONKIT_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE \
 	-pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-D_UNICODE -I../../src $(CPPFLAGS) $(CXXFLAGS)
@@ -1526,9 +1516,6 @@ endif
 ifeq ($(OPTION_LIBTIFF),1)
 VAR_4 = ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
-ifeq ($(OPTION_REGEXX),1)
-VAR_5 = ../../lib/libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-endif
 ifeq ($(OPTION_ALLIN1),0)
 Kit_dll_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
@@ -1572,13 +1559,10 @@ ifeq ($(OPTION_LIBTIFF),1)
 ____Allin1_4 = $(VAR_4)
 endif
 ifeq ($(OPTION_FREEIMAGE),1)
-____Allin1_5 = $(VAR_6)
-endif
-ifeq ($(OPTION_REGEXX),1)
-____Allin1_6 = $(VAR_5)
+____Allin1_5 = $(VAR_5)
 endif
 ifeq ($(OPTION_FREEIMAGE),1)
-VAR_6 = ../../lib/libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_5 = ../../lib/libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -1606,7 +1590,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: ../../bin ../../lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) createinfo_ CreateBundle_ xmake_
+all: ../../bin ../../lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) createinfo_ CreateBundle_ xmake_
 
 install: all
 
@@ -1621,7 +1605,6 @@ clean:
 	rm -f ../../lib/libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	rm -f ../../lib/libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
@@ -1699,13 +1682,6 @@ ifeq ($(OPTION_LIBTIFF),1)
 ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBTIFF_LIB_OBJECTS)
 	rm -f $@
 	$(AR) rcu $@ $(LIBTIFF_LIB_OBJECTS)
-	$(RANLIB) $@
-endif
-
-ifeq ($(OPTION_REGEXX),1)
-../../lib/libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(REGEXX_LIB_OBJECTS)
-	rm -f $@
-	$(AR) rcu $@ $(REGEXX_LIB_OBJECTS)
 	$(RANLIB) $@
 endif
 
@@ -1871,7 +1847,7 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
 	rm -f $@
 	$(AR) rcu $@ $(ALLIN1_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -1880,8 +1856,8 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(VAR_5) -ldl -luuid -lrt
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) -ldl -luuid -lrt
 endif
 endif
 
@@ -1949,11 +1925,7 @@ LibTIFF: $(VAR_4)
 endif
 
 ifeq ($(OPTION_FREEIMAGE),1)
-FreeImage: $(VAR_6)
-endif
-
-ifeq ($(OPTION_REGEXX),1)
-RegExx: $(VAR_5)
+FreeImage: $(VAR_5)
 endif
 
 createinfo: createinfo_
@@ -2429,24 +2401,6 @@ $(OBJDIR)/LibTIFF_lib_tif_zip.o: ../../src/thirdparty/common/FreeImage/Source/Li
 
 $(OBJDIR)/LibTIFF_lib_tif_unix.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_unix.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_chartables.o: ../../src/thirdparty/common/pcre/chartables.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_get.o: ../../src/thirdparty/common/pcre/get.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_maketables.o: ../../src/thirdparty/common/pcre/maketables.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_pcre.o: ../../src/thirdparty/common/pcre/pcre.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_pcreposix.o: ../../src/thirdparty/common/pcre/pcreposix.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)/RegExx_lib_study.o: ../../src/thirdparty/common/pcre/study.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)/FoundationKit_lib_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
@@ -5265,7 +5219,7 @@ $(OBJDIR)/FreeImage_lib_PluginWBMP.o: ../../src/thirdparty/common/FreeImage/Sour
 $(OBJDIR)/FreeImage_lib_WuQuantizer.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/WuQuantizer.cpp
 	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF FreeImage RegExx createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF FreeImage createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:

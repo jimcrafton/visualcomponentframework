@@ -21,7 +21,6 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 	OPTION_LIBAGG="$(OPTION_LIBAGG)" OPTION_LIBJPEG="$(OPTION_LIBJPEG)" \
 	OPTION_LIBPNG="$(OPTION_LIBPNG)" OPTION_LIBMNG="$(OPTION_LIBMNG)" \
 	OPTION_LIBTIFF="$(OPTION_LIBTIFF)" OPTION_FREEIMAGE="$(OPTION_FREEIMAGE)" \
-	OPTION_REGEXX="$(OPTION_REGEXX)" \
 	OPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	OPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
 	OPTION_APPLICATIONKIT="$(OPTION_APPLICATIONKIT)" \
@@ -246,21 +245,6 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)\LibTIFF_lib_tif_write.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_zip.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_win32.obj
-REGEXX_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__DEBUG_INFO) \
-	/Fd..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
-	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
-	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC \
-	$(CPPFLAGS) $(CFLAGS)
-REGEXX_LIB_OBJECTS =  \
-	$(OBJDIR)\RegExx_lib_chartables.obj \
-	$(OBJDIR)\RegExx_lib_get.obj \
-	$(OBJDIR)\RegExx_lib_maketables.obj \
-	$(OBJDIR)\RegExx_lib_pcre.obj \
-	$(OBJDIR)\RegExx_lib_pcreposix.obj \
-	$(OBJDIR)\RegExx_lib_study.obj
 FOUNDATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 $(__DEBUG_INFO) \
 	/Fd..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
@@ -268,7 +252,7 @@ FOUNDATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_104_105) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_91_92) $(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\FoundationKit_lib_BasicException.obj \
 	$(OBJDIR)\FoundationKit_lib_BasicInputStream.obj \
@@ -345,7 +329,7 @@ FOUNDATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DFOUNDATIONKIT_DLL \
-	/DFOUNDATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_120_121) \
+	/DFOUNDATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_107_108) \
 	$(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\FoundationKit_dll_BasicException.obj \
@@ -423,7 +407,7 @@ GRAPHICSKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_135_136) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_122_123) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_lib_AbstractImage.obj \
 	$(OBJDIR)\GraphicsKit_lib_BasicFill.obj \
@@ -456,7 +440,7 @@ GRAPHICSKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DGRAPHICSKIT_DLL \
-	/DGRAPHICSKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_151_152) \
+	/DGRAPHICSKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_138_139) \
 	$(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_dll_AbstractImage.obj \
@@ -494,7 +478,7 @@ APPLICATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_166_167) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_153_154) $(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\ApplicationKit_lib_AbstractApplication.obj \
 	$(OBJDIR)\ApplicationKit_lib_AbstractCommand.obj \
@@ -642,7 +626,7 @@ APPLICATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DAPPLICATIONKIT_DLL \
-	/DAPPLICATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_182_183) \
+	/DAPPLICATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_169_170) \
 	$(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\ApplicationKit_dll_AbstractApplication.obj \
@@ -792,7 +776,7 @@ HTMLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_197_198) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_184_185) $(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\HTMLKit_lib_HTMLBrowserControl.obj \
 	$(OBJDIR)\HTMLKit_lib_HTMLKit.obj \
@@ -811,7 +795,7 @@ HTMLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DHTMLKIT_DLL \
-	/DHTMLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_213_214) $(CPPFLAGS) \
+	/DHTMLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_200_201) $(CPPFLAGS) \
 	$(CXXFLAGS)
 HTMLKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\HTMLKit_dll_HTMLBrowserControl.obj \
@@ -830,7 +814,7 @@ OPENGLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_228_229) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_215_216) $(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\OpenGLKit_lib_OpenGLControl.obj \
 	$(OBJDIR)\OpenGLKit_lib_OpenGLControlContext.obj \
@@ -846,7 +830,7 @@ OPENGLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DOPENGLKIT_DLL \
-	/DOPENGLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_244_245) $(CPPFLAGS) \
+	/DOPENGLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_231_232) $(CPPFLAGS) \
 	$(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\OpenGLKit_dll_OpenGLControl.obj \
@@ -860,7 +844,7 @@ NETWORKKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_259_260) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_246_247) $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\NetworkKit_lib_DatagramSocket.obj \
 	$(OBJDIR)\NetworkKit_lib_NetToolkit.obj \
@@ -878,7 +862,7 @@ NETWORKKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DNETKIT_DLL \
-	/DNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_275_276) $(CPPFLAGS) \
+	/DNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_262_263) $(CPPFLAGS) \
 	$(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\NetworkKit_dll_DatagramSocket.obj \
@@ -898,7 +882,7 @@ REMOTEOBJECTKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_290_291) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_277_278) $(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\RemoteObjectKit_lib_AbstractDistributedApplication.obj \
 	$(OBJDIR)\RemoteObjectKit_lib_ClassRegistryEntry.obj \
@@ -916,7 +900,7 @@ REMOTEOBJECTKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DREMOTEKIT_DLL \
-	/DREMOTEKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_306_307) $(CPPFLAGS) \
+	/DREMOTEKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_293_294) $(CPPFLAGS) \
 	$(CXXFLAGS)
 REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\RemoteObjectKit_dll_AbstractDistributedApplication.obj \
@@ -934,7 +918,7 @@ INTERNETKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_321_322) $(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_PRECOMPILED_308_309) $(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\InternetKit_lib_InternetKit.obj \
 	$(OBJDIR)\InternetKit_lib_InternetToolkit.obj \
@@ -946,7 +930,7 @@ INTERNETKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DINTERNETKIT_DLL \
-	/DINTERNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_337_338) \
+	/DINTERNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_324_325) \
 	$(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\InternetKit_dll_InternetKit.obj \
@@ -1079,10 +1063,10 @@ __FoundationKit_lib___depname = \
 	..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_104_105 = 
+____OPTION_PRECOMPILED_91_92 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_104_105 = /Yu"vcf\FoundationKit\FoundationKit.h" \
+____OPTION_PRECOMPILED_91_92 = /Yu"vcf\FoundationKit\FoundationKit.h" \
 	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1090,10 +1074,10 @@ __FoundationKit_dll___depname = \
 	..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_120_121 = 
+____OPTION_PRECOMPILED_107_108 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_120_121 = /Yu"vcf\FoundationKit\FoundationKit.h" \
+____OPTION_PRECOMPILED_107_108 = /Yu"vcf\FoundationKit\FoundationKit.h" \
 	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1101,10 +1085,10 @@ __GraphicsKit_lib___depname = \
 	..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_135_136 = 
+____OPTION_PRECOMPILED_122_123 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_135_136 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
+____OPTION_PRECOMPILED_122_123 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
 	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1112,10 +1096,10 @@ __GraphicsKit_dll___depname = \
 	..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_151_152 = 
+____OPTION_PRECOMPILED_138_139 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_151_152 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
+____OPTION_PRECOMPILED_138_139 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
 	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1123,10 +1107,10 @@ __ApplicationKit_lib___depname = \
 	..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_166_167 = 
+____OPTION_PRECOMPILED_153_154 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_166_167 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
+____OPTION_PRECOMPILED_153_154 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
 	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1140,10 +1124,10 @@ __FOUNDATIONKIT_DLL_p_5 = /d FOUNDATIONKIT_DLL
 __GRAPHICSKIT_DLL_p_2 = /d GRAPHICSKIT_DLL
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_182_183 = 
+____OPTION_PRECOMPILED_169_170 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_182_183 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
+____OPTION_PRECOMPILED_169_170 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
 	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1151,10 +1135,10 @@ __HTMLKit_lib___depname = \
 	..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_197_198 = 
+____OPTION_PRECOMPILED_184_185 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_197_198 = /Yu"vcf\HTMLKit\HTMLKit.h" \
+____OPTION_PRECOMPILED_184_185 = /Yu"vcf\HTMLKit\HTMLKit.h" \
 	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1162,10 +1146,10 @@ __HTMLKit_dll___depname = \
 	..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_213_214 = 
+____OPTION_PRECOMPILED_200_201 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_213_214 = /Yu"vcf\HTMLKit\HTMLKit.h" \
+____OPTION_PRECOMPILED_200_201 = /Yu"vcf\HTMLKit\HTMLKit.h" \
 	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1173,10 +1157,10 @@ __OpenGLKit_lib___depname = \
 	..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_228_229 = 
+____OPTION_PRECOMPILED_215_216 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_228_229 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
+____OPTION_PRECOMPILED_215_216 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
 	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1184,10 +1168,10 @@ __OpenGLKit_dll___depname = \
 	..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_244_245 = 
+____OPTION_PRECOMPILED_231_232 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_244_245 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
+____OPTION_PRECOMPILED_231_232 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
 	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1195,10 +1179,10 @@ __NetworkKit_lib___depname = \
 	..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_259_260 = 
+____OPTION_PRECOMPILED_246_247 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_259_260 = /Yu"vcf\NetworkKit\NetworkKit.h" \
+____OPTION_PRECOMPILED_246_247 = /Yu"vcf\NetworkKit\NetworkKit.h" \
 	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1206,10 +1190,10 @@ __NetworkKit_dll___depname = \
 	..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_275_276 = 
+____OPTION_PRECOMPILED_262_263 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_275_276 = /Yu"vcf\NetworkKit\NetworkKit.h" \
+____OPTION_PRECOMPILED_262_263 = /Yu"vcf\NetworkKit\NetworkKit.h" \
 	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1217,10 +1201,10 @@ __RemoteObjectKit_lib___depname = \
 	..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_290_291 = 
+____OPTION_PRECOMPILED_277_278 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_290_291 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
+____OPTION_PRECOMPILED_277_278 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
 	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1243,10 +1227,10 @@ ____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
 ____RemoteObjectKit_dll_NETWORKKIT_p = $(NETWORKKIT_FILENAME).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_306_307 = 
+____OPTION_PRECOMPILED_293_294 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_306_307 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
+____OPTION_PRECOMPILED_293_294 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
 	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1254,10 +1238,10 @@ __InternetKit_lib___depname = \
 	..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_321_322 = 
+____OPTION_PRECOMPILED_308_309 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_321_322 = /Yu"vcf\InternetKit\InternetKit.h" \
+____OPTION_PRECOMPILED_308_309 = /Yu"vcf\InternetKit\InternetKit.h" \
 	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
@@ -1265,10 +1249,10 @@ __InternetKit_dll___depname = \
 	..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
 !if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_337_338 = 
+____OPTION_PRECOMPILED_324_325 = 
 !endif
 !if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_337_338 = /Yu"vcf\InternetKit\InternetKit.h" \
+____OPTION_PRECOMPILED_324_325 = /Yu"vcf\InternetKit\InternetKit.h" \
 	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -1867,9 +1851,6 @@ VAR_3 = ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !if "$(OPTION_LIBTIFF)" == "1"
 VAR_4 = ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_REGEXX)" == "1"
-VAR_5 = ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
 !if "$(OPTION_DEBUG)" == "0"
 ____DEBUG_RUNTIME_LIBS_0 = 
 !endif
@@ -1916,13 +1897,10 @@ ____Allin1_3 = $(VAR_2)
 ____Allin1_4 = $(VAR_4)
 !endif
 !if "$(OPTION_FREEIMAGE)" == "1"
-____Allin1_5 = $(VAR_6)
-!endif
-!if "$(OPTION_REGEXX)" == "1"
-____Allin1_6 = $(VAR_5)
+____Allin1_5 = $(VAR_5)
 !endif
 !if "$(OPTION_FREEIMAGE)" == "1"
-VAR_6 = ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+VAR_5 = ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 __DEBUG_INFO_3 = 
@@ -1986,7 +1964,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) sub_createinfo_ sub_CreateBundle_ sub_xmake_
+all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) sub_createinfo_ sub_CreateBundle_ sub_xmake_
 
 clean: 
 	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
@@ -2004,8 +1982,6 @@ clean:
 	-if exist ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
-	-if exist ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	-if exist ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -2142,14 +2118,6 @@ clean:
 <<
 !endif
 
-!if "$(OPTION_REGEXX)" == "1"
-..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(REGEXX_LIB_OBJECTS)
-	if exist $@ del $@
-	link /LIB /NOLOGO /OUT:$@ @<<
-	$(REGEXX_LIB_OBJECTS)
-<<
-!endif
-
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(OBJDIR)\FoundationKit_lib_FoundationKit.obj  $(FOUNDATIONKIT_LIB_OBJECTS)
 	if exist $@ del $@
@@ -2271,7 +2239,7 @@ clean:
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
+..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
 	if exist $@ del $@
 	link /LIB /NOLOGO /OUT:$@ @<<
 	$(ALLIN1_LIB_OBJECTS)
@@ -2279,9 +2247,9 @@ clean:
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(OBJDIR)\Allin1_dll_ApplicationKit.res
+..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(OBJDIR)\Allin1_dll_ApplicationKit.res
 	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) /INCREMENTAL:NO $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
-	$(ALLIN1_DLL_OBJECTS)  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(VAR_5) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
+	$(ALLIN1_DLL_OBJECTS)  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
 
@@ -2294,7 +2262,7 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__ApplicationKit_lib___depname)
+..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__ApplicationKit_lib___depname)
 	if exist $@ del $@
 	link /LIB /NOLOGO /OUT:$@ @<<
 	$(IMAGEFORMATS_LIB_OBJECTS)
@@ -2302,7 +2270,7 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
+..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
 	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
 	$(IMAGEFORMATS_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
@@ -2369,11 +2337,7 @@ LibTIFF: $(VAR_4)
 !endif
 
 !if "$(OPTION_FREEIMAGE)" == "1"
-FreeImage: $(VAR_6)
-!endif
-
-!if "$(OPTION_REGEXX)" == "1"
-RegExx: $(VAR_5)
+FreeImage: $(VAR_5)
 !endif
 
 createinfo: sub_createinfo_
@@ -2855,24 +2819,6 @@ $(OBJDIR)\LibTIFF_lib_tif_zip.obj: ..\..\src\thirdparty\common\FreeImage\Source\
 
 $(OBJDIR)\LibTIFF_lib_tif_win32.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_win32.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_chartables.obj: ..\..\src\thirdparty\common\pcre\chartables.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_get.obj: ..\..\src\thirdparty\common\pcre\get.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_maketables.obj: ..\..\src\thirdparty\common\pcre\maketables.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_pcre.obj: ..\..\src\thirdparty\common\pcre\pcre.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_pcreposix.obj: ..\..\src\thirdparty\common\pcre\pcreposix.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_study.obj: ..\..\src\thirdparty\common\pcre\study.c
-	$(CC) /c /nologo /TC /Fo$@ $(REGEXX_LIB_CFLAGS) $**
 
 $(OBJDIR)\FoundationKit_lib_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**

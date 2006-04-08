@@ -31,7 +31,6 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_LIBJPEG="$(OPTION_LIBJPEG)" -DOPTION_LIBPNG="$(OPTION_LIBPNG)" \
 	-DOPTION_LIBMNG="$(OPTION_LIBMNG)" -DOPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
 	-DOPTION_FREEIMAGE="$(OPTION_FREEIMAGE)" \
-	-DOPTION_REGEXX="$(OPTION_REGEXX)" \
 	-DOPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	-DOPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
 	-DOPTION_APPLICATIONKIT="$(OPTION_APPLICATIONKIT)" \
@@ -229,16 +228,6 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)\LibTIFF_lib_tif_write.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_zip.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_win32.obj
-REGEXX_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
-REGEXX_LIB_OBJECTS =  \
-	$(OBJDIR)\RegExx_lib_chartables.obj \
-	$(OBJDIR)\RegExx_lib_get.obj \
-	$(OBJDIR)\RegExx_lib_maketables.obj \
-	$(OBJDIR)\RegExx_lib_pcre.obj \
-	$(OBJDIR)\RegExx_lib_pcreposix.obj \
-	$(OBJDIR)\RegExx_lib_study.obj
 FOUNDATIONKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
 	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
@@ -1645,9 +1634,6 @@ VAR_3 = ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !if "$(OPTION_LIBTIFF)" == "1"
 VAR_4 = ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_REGEXX)" == "1"
-VAR_5 = ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
 !if "$(OPTION_DEBUG)" == "0"
 ____OPTION_DEBUG_0 = -dNDEBUG
 !endif
@@ -1688,22 +1674,19 @@ ____Allin1_3 = $(VAR_2)
 ____Allin1_4 = $(VAR_4)
 !endif
 !if "$(OPTION_FREEIMAGE)" == "1"
-____Allin1_5 = $(VAR_6)
-!endif
-!if "$(OPTION_REGEXX)" == "1"
-____Allin1_6 = $(VAR_5)
+____Allin1_5 = $(VAR_5)
 !endif
 !if "$(OPTION_FREEIMAGE)" == "1"
-VAR_6 = ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+VAR_5 = ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS_7 = 
+__RUNTIME_LIBS_8 = 
 !endif
 !if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS_7 = i
+__RUNTIME_LIBS_8 = i
 !endif
 !if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS_7 = i
+__RUNTIME_LIBS_8 = i
 !endif
 !if "$(OPTION_SHARED)" == "1"
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
@@ -1749,7 +1732,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
+all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
 
 clean: 
 	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
@@ -1761,7 +1744,6 @@ clean:
 	-if exist ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	-if exist ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds
@@ -1920,14 +1902,6 @@ clean:
 |
 !endif
 
-!if "$(OPTION_REGEXX)" == "1"
-..\..\lib\RegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(REGEXX_LIB_OBJECTS)
-	if exist $@ del $@
-	tlib /a /p4096 $@ @&&|
-	$(REGEXX_LIB_OBJECTS)
-|
-!endif
-
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FOUNDATIONKIT_LIB_OBJECTS)
 	if exist $@ del $@
@@ -1939,7 +1913,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(FOUNDATIONKIT_DLL_OBJECTS)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(FOUNDATIONKIT_DLL_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(FOUNDATIONKIT_DLL_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -1955,7 +1929,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(GRAPHICSKIT_DLL_OBJECTS) $(VAR) $(VAR_1) $(VAR_3) $(VAR_0) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(GRAPHICSKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(GRAPHICSKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -1971,7 +1945,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(APPLICATIONKIT_DLL_OBJECTS)  $(OBJDIR)\ApplicationKit_dll_ApplicationKit.res $(__GraphicsKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(APPLICATIONKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,, $(OBJDIR)\ApplicationKit_dll_ApplicationKit.res
+	c0d32.obj $(APPLICATIONKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,, $(OBJDIR)\ApplicationKit_dll_ApplicationKit.res
 |
 	implib -f ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -1987,7 +1961,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(HTMLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(HTMLKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(HTMLKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2003,7 +1977,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(OPENGLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(OPENGLKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(OPENGLKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2019,7 +1993,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(NETWORKKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(NETWORKKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(NETWORKKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2035,7 +2009,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(REMOTEOBJECTKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname) $(__NetworkKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(REMOTEOBJECTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(____RemoteObjectKit_dll_NETWORKKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(REMOTEOBJECTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(____RemoteObjectKit_dll_NETWORKKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2051,13 +2025,13 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(INTERNETKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(INTERNETKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(INTERNETKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
+..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
 	if exist $@ del $@
 	tlib /a /p4096 $@ @&&|
 	$(ALLIN1_LIB_OBJECTS)
@@ -2065,9 +2039,9 @@ clean:
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)  $(OBJDIR)\Allin1_dll_ApplicationKit.res
+..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)  $(OBJDIR)\Allin1_dll_ApplicationKit.res
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(ALLIN1_DLL_OBJECTS),$@,, $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(VAR_5) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,, $(OBJDIR)\Allin1_dll_ApplicationKit.res
+	c0d32.obj $(ALLIN1_DLL_OBJECTS),$@,, $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,, $(OBJDIR)\Allin1_dll_ApplicationKit.res
 |
 	implib -f ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2081,7 +2055,7 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__ApplicationKit_lib___depname)
+..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__ApplicationKit_lib___depname)
 	if exist $@ del $@
 	tlib /a /p4096 $@ @&&|
 	$(IMAGEFORMATS_LIB_OBJECTS)
@@ -2089,9 +2063,9 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
+..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib @&&|
-	c0d32.obj $(IMAGEFORMATS_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_7).lib,,
+	c0d32.obj $(IMAGEFORMATS_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32mt$(__RUNTIME_LIBS_8).lib,,
 |
 	implib -f ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2157,11 +2131,7 @@ LibTIFF: $(VAR_4)
 !endif
 
 !if "$(OPTION_FREEIMAGE)" == "1"
-FreeImage: $(VAR_6)
-!endif
-
-!if "$(OPTION_REGEXX)" == "1"
-RegExx: $(VAR_5)
+FreeImage: $(VAR_5)
 !endif
 
 createinfo: createinfo_
@@ -2646,24 +2616,6 @@ $(OBJDIR)\LibTIFF_lib_tif_zip.obj: ..\..\src\thirdparty\common\FreeImage\Source\
 
 $(OBJDIR)\LibTIFF_lib_tif_win32.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_win32.c
 	$(CC) -q -c -P- -o$@ $(LIBTIFF_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_chartables.obj: ..\..\src\thirdparty\common\pcre\chartables.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_get.obj: ..\..\src\thirdparty\common\pcre\get.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_maketables.obj: ..\..\src\thirdparty\common\pcre\maketables.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_pcre.obj: ..\..\src\thirdparty\common\pcre\pcre.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_pcreposix.obj: ..\..\src\thirdparty\common\pcre\pcreposix.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
-
-$(OBJDIR)\RegExx_lib_study.obj: ..\..\src\thirdparty\common\pcre\study.c
-	$(CC) -q -c -P- -o$@ $(REGEXX_LIB_CFLAGS) $**
 
 $(OBJDIR)\FoundationKit_lib_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
