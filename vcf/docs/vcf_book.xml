@@ -28,8 +28,8 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book devmain-0.9.0</title>
-	<titleabbrev>VCF Documentation devmain-0.9.0</titleabbrev>
+<title>The VCF Book VERSION-NUMBER</title>
+	<titleabbrev>VCF Documentation VERSION-NUMBER</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
@@ -302,6 +302,9 @@ NB: This software will not save the world.
 <!--
 CVS Log info
 $Log$
+Revision 1.9  2006/04/08 03:05:08  ddiego
+fix to vcf book for verion numbering.
+
 Revision 1.8  2006/04/07 02:34:02  ddiego
 initial checkin of merge from 0.6.9 dev branch.
 
