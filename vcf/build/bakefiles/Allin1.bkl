@@ -132,11 +132,6 @@
         </set>
         <library>$(ALLIN1_FREEIMAGE_LIB)</library>
 
-        <set var="ALLIN1_REGEXX_LIB">
-            <if cond="OPTION_REGEXX=='1'">RegExx_lib</if>
-        </set>
-        <library>$(ALLIN1_REGEXX_LIB)</library>
-
 
         <vcf-include-thirdparty/>
     </template>

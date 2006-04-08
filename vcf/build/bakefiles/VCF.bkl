@@ -25,7 +25,6 @@
     <include file="LibMNG.bkl"/>
     <include file="LibPNG.bkl"/>
     <include file="LibTIFF.bkl"/>
-    <include file="RegExx.bkl"/>
 
     <include file="FoundationKit.bkl"/>
     <include file="GraphicsKit.bkl"/>

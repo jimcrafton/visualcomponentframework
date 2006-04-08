@@ -21,7 +21,6 @@
         <set var="OPTION_LIBTIFF">1</set>
         <set var="OPTION_FREEIMAGE">1</set>
         <set var="OPTION_IMAGEFORMATS">1</set>
-        <set var="OPTION_REGEXX">1</set>
     </if>
 
     <if cond="FORMAT=='msevc4prj'">
