@@ -1709,11 +1709,12 @@ System::println( Format("It took %d millsecs for calc.") % (tick2-tick1) );
 			<para>
 			It also possible to get the current system time, in either UTC (GMT) or
 			local time, and store this in a DateTime instance. 
+<!--
 			<TODO>
 			RENAME these functions - these are piss poor names and are quite confusing
 			as to what they do. Also it's debateable that we need BOTH functions - perhaps
 			only one would do.
-			</TODO>
+			</TODO> -->
 			<programlisting>
 <![CDATA[
 DateTime localSysTime;
@@ -2379,6 +2380,9 @@ p1.wait(); //blocks indefinitely till the "XCOPY" process ends.
 <!-- 
 CVS Log info
 $Log$
+Revision 1.10  2006/04/08 03:15:09  ddiego
+minor update
+
 Revision 1.9  2006/04/07 02:34:01  ddiego
 initial checkin of merge from 0.6.9 dev branch.
 
