@@ -281,7 +281,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\code\vcfdev\dev\vcf\build\resources\win32"
+						AdditionalIncludeDirectories="$(VCF_INCLUDE)\..\build\resources\win32\"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -290,7 +290,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\code\vcfdev\dev\vcf\build\resources\win32"
+						AdditionalIncludeDirectories="$(VCF_INCLUDE)\..\build\resources\win32\"
 					/>
 				</FileConfiguration>
 			</File>
