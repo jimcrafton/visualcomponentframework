@@ -3789,6 +3789,7 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 		VCF::Font btnFont = *context_->getCurrentFont();
 		HFONT font = NULL;
 
+		::SetTextColor( dc_, btnFont.getColor()->getColorRef32() );
 
 		if ( state.isVertical() ) {
 			Win32VisualStylesWrapper::GetThemeBackgroundContentRect(theme, dc_, PP_CHUNKVERT, 0, &r, &progressContent );
@@ -4569,6 +4570,10 @@ void Win32Context::finishedDrawing( long drawingOperation )
 /**
 *CVS Log info
 *$Log$
+*Revision 1.9  2006/04/08 02:42:38  ddiego
+*fix to add support for drawing the font color for the progress
+*bar text. However xp themes don't seem to honor this at the moment.
+*
 *Revision 1.8  2006/04/07 02:35:41  ddiego
 *initial checkin of merge from 0.6.9 dev branch.
 *
