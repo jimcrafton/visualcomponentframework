@@ -45,6 +45,7 @@ public:
 		progressHorz_->setDisplayProgressText( true );
 		progressHorz_->getFont()->setPointSize( 8.0 );
 		progressHorz_->getFont()->setBold( true );
+		progressHorz_->getFont()->setColor( Color::getColor("blue") );
 
 
 		ProgressControl* progressVert_ = new ProgressControl();
@@ -142,6 +143,9 @@ int main(int argc, char *argv[])
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/08 14:58:34  ddiego
+*updating bakefiles due to errors with cvs merge.
+*
 *Revision 1.5  2006/04/07 02:34:39  ddiego
 *initial checkin of merge from 0.6.9 dev branch.
 *

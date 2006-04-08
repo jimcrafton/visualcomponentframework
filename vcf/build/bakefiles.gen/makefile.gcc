@@ -20,7 +20,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 	OPTION_ZLIB="$(OPTION_ZLIB)" OPTION_LIBAGG="$(OPTION_LIBAGG)" \
 	OPTION_LIBJPEG="$(OPTION_LIBJPEG)" OPTION_LIBPNG="$(OPTION_LIBPNG)" \
 	OPTION_LIBMNG="$(OPTION_LIBMNG)" OPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
-	OPTION_FREEIMAGE="$(OPTION_FREEIMAGE)" OPTION_REGEXX="$(OPTION_REGEXX)" \
+	OPTION_FREEIMAGE="$(OPTION_FREEIMAGE)" \
 	OPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	OPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
 	OPTION_APPLICATIONKIT="$(OPTION_APPLICATIONKIT)" \
@@ -218,16 +218,6 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)\LibTIFF_lib_tif_write.o \
 	$(OBJDIR)\LibTIFF_lib_tif_zip.o \
 	$(OBJDIR)\LibTIFF_lib_tif_win32.o
-REGEXX_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -mthreads $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -DVCF_MINGW \
-	-Wno-multichar -D_UNICODE -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
-REGEXX_LIB_OBJECTS =  \
-	$(OBJDIR)\RegExx_lib_chartables.o \
-	$(OBJDIR)\RegExx_lib_get.o \
-	$(OBJDIR)\RegExx_lib_maketables.o \
-	$(OBJDIR)\RegExx_lib_pcre.o \
-	$(OBJDIR)\RegExx_lib_pcreposix.o \
-	$(OBJDIR)\RegExx_lib_study.o
 FOUNDATIONKIT_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -mthreads \
 	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
 	-DVCF_MINGW -Wno-multichar -D_UNICODE -I..\..\src -D_LIB $(CPPFLAGS) \
@@ -1705,9 +1695,6 @@ endif
 ifeq ($(OPTION_LIBTIFF),1)
 VAR_4 = ..\..\lib\libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
-ifeq ($(OPTION_REGEXX),1)
-VAR_5 = ..\..\lib\libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-endif
 ifeq ($(OPTION_DEBUG),0)
 ____OPTION_DEBUG_0 = --define NDEBUG
 endif
@@ -1748,13 +1735,10 @@ ifeq ($(OPTION_LIBTIFF),1)
 ____Allin1_4 = $(VAR_4)
 endif
 ifeq ($(OPTION_FREEIMAGE),1)
-____Allin1_5 = $(VAR_6)
-endif
-ifeq ($(OPTION_REGEXX),1)
-____Allin1_6 = $(VAR_5)
+____Allin1_5 = $(VAR_5)
 endif
 ifeq ($(OPTION_FREEIMAGE),1)
-VAR_6 = ..\..\lib\libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_5 = ..\..\lib\libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
@@ -1791,7 +1775,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
+all: ..\..\bin ..\..\lib $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
 
 clean: 
 	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
@@ -1802,7 +1786,6 @@ clean:
 	-if exist ..\..\lib\libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\lib\libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\lib\libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	-if exist ..\..\lib\libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\lib\libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 	-if exist ..\..\lib\libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a del ..\..\lib\libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a
@@ -1883,13 +1866,6 @@ ifeq ($(OPTION_LIBTIFF),1)
 ..\..\lib\libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBTIFF_LIB_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(LIBTIFF_LIB_OBJECTS)
-	ranlib $@
-endif
-
-ifeq ($(OPTION_REGEXX),1)
-..\..\lib\libRegExx$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(REGEXX_LIB_OBJECTS)
-	if exist $@ del $@
-	ar rcu $@ $(REGEXX_LIB_OBJECTS)
 	ranlib $@
 endif
 
@@ -2055,7 +2031,7 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),0)
-..\..\lib\libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
+..\..\lib\libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
 	if exist $@ del $@
 	ar rcu $@ $(ALLIN1_LIB_OBJECTS)
 	ranlib $@
@@ -2064,8 +2040,8 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
-..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(OBJDIR)\Allin1_dll_ApplicationKit_rc.o
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--out-implib,..\..\lib\libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(VAR_5) -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
+..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(OBJDIR)\Allin1_dll_ApplicationKit_rc.o
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--out-implib,..\..\lib\libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a  $(VAR_0) $(VAR) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 endif
 
@@ -2078,7 +2054,7 @@ endif
 
 ifeq ($(OPTION_IMAGEFORMATS),1)
 ifeq ($(OPTION_SHARED),0)
-..\..\lib\libImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__ApplicationKit_lib___depname)
+..\..\lib\libImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(IMAGEFORMATS_LIB_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__ApplicationKit_lib___depname)
 	if exist $@ del $@
 	ar rcu $@ $(IMAGEFORMATS_LIB_OBJECTS)
 	ranlib $@
@@ -2087,7 +2063,7 @@ endif
 
 ifeq ($(OPTION_IMAGEFORMATS),1)
 ifeq ($(OPTION_SHARED),1)
-..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_6) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
+..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
 	$(CXX) -shared -fPIC -o $@ $(IMAGEFORMATS_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--out-implib,..\..\lib\libImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a  $(dll_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\liblibAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\lib\libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 endif
@@ -2153,11 +2129,7 @@ LibTIFF: $(VAR_4)
 endif
 
 ifeq ($(OPTION_FREEIMAGE),1)
-FreeImage: $(VAR_6)
-endif
-
-ifeq ($(OPTION_REGEXX),1)
-RegExx: $(VAR_5)
+FreeImage: $(VAR_5)
 endif
 
 createinfo: createinfo_
@@ -2633,24 +2605,6 @@ $(OBJDIR)\LibTIFF_lib_tif_zip.o: ../../src/thirdparty/common/FreeImage/Source/Li
 
 $(OBJDIR)\LibTIFF_lib_tif_win32.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_win32.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_chartables.o: ../../src/thirdparty/common/pcre/chartables.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_get.o: ../../src/thirdparty/common/pcre/get.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_maketables.o: ../../src/thirdparty/common/pcre/maketables.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_pcre.o: ../../src/thirdparty/common/pcre/pcre.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_pcreposix.o: ../../src/thirdparty/common/pcre/pcreposix.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\RegExx_lib_study.o: ../../src/thirdparty/common/pcre/study.c
-	$(CC) -c -o $@ $(REGEXX_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)\FoundationKit_lib_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
@@ -5829,7 +5783,7 @@ $(OBJDIR)\ImageFormats_lib_ImageFormats.o: ../../src/ImageFormats/ImageFormats.c
 $(OBJDIR)\ImageFormats_dll_ImageFormats.o: ../../src/ImageFormats/ImageFormats.cpp
 	$(CXX) -c -o $@ $(IMAGEFORMATS_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ImageFormats ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF FreeImage RegExx createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+.PHONY: all clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ImageFormats ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF FreeImage createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:
