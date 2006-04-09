@@ -21,6 +21,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="liblibXmake_mgcc_s.a" />
+					<Add directory="$(VCF_LIB)" />
 				</Linker>
 			</Target>
 			<Target title="mingw_Debug">
@@ -38,7 +39,8 @@
 					<Add directory=".\" />
 				</Compiler>
 				<Linker>
-					<Add library="liblibXmake_mgcc_s_d.a" />
+					<Add library="liblibXmake_mgcc_sd.a" />
+					<Add directory="$(VCF_LIB)" />
 				</Linker>
 			</Target>
 		</Build>
