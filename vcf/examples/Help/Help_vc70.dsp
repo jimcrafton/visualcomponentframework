@@ -51,6 +51,10 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /machine:I386 /out:"Release\Help_vc70.exe" /libpath:"$(VCF_LIB)"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Cmds=BuildHelp.bat
+# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "Help - Win32 Debug"
 
@@ -78,7 +82,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"Debug\Help_vc70.exe" /pdbtype:sept /libpath:"$(VCF_LIB)"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=hhc "Help App.hhp"
+PostBuild_Cmds=BuildHelp.bat
 # End Special Build Tool
 
 !ENDIF 
