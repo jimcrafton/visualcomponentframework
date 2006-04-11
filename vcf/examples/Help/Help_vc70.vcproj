@@ -115,7 +115,7 @@
 				TypeLibraryName=".\Debug\Help_vc70.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="hhc &quot;Help App.hhp&quot;"/>
+				CommandLine=".\BuildHelp.bat"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
