@@ -9,11 +9,96 @@
 </head>
 
 <body>
-<h1>Visual Component Framework 0.6.9</h1>
+<h1>Visual Component Framework 0.9.0</h1>
 <h2>Readme</h2>
 <p>
+Bugs fixed include:
+<ul>
+	<li>1458095 TextControl not operational
+	<li>1449840 Undesirable repeatable desktop update
+	<li>1391597 bakefile build for MinGW broken
+	<li>1276040 DefaultMenuItem::clearChildren doesn't call the peer
+	<li>1251431 Drag and Drop example doesn't work with images
+	<li>1249777 Win32ProcessIORedirector
+	<li>1228429 ComboBox drop down list font is unchangable
+	<li>1227570 Win32PrintSession::setDefaultPageSettings pointer...
+	<li>1184442 Components move through each other when shrinking window
+	<li>1171985 printInfo_.docInfo_.lpszDocName pointing to orphan pointer
+	<li>1121899 ApplicationKitRTTI.inl error
+	<li>1102590 Difficulty changing Windows themes
+	<li>1090689 problem loading png image
+	<li>Added proper repainting when windows system settings changes
+	<li>Fixed bugs in Scrollbars that caused them to not move
+as fluidly as they should
+	<li>Fixed bug in TreeListControl for incorrect calculation of virtual height
+	<li>Fixed bug in TreeListControl that caused the header control to be
+misplaced.
+	<li>Fixed a number of appearance glitches in various examples
+	<li>Fixed a bug in the Win32Locales code that caused currency string
+formatting to not show up correctly.
+	<li>Fixed bug in document manager that left hanging document instances
+in SDI policy mode.
+</ul>
+</p>
+<p>
+New features include:
+<ul>
+	<li>Added basic XP theming for most controls.
+	<li>Added HTML Help integration
+	<li>Added better tooltip integration and support for fancier customization
+	of the tooltip
+	<li>Further OS X support, still ongoing.
+	<li>Consolidated some of the Item classes
+	<li>Added more documentation to both the source files and to the core
+	reference manual documentation.
+	<li>Added new compiler support in the form of mingw and CodeBlocks
+	support.
+	<li>Added new compiler support for Visual C++ 2005, including the Express
+	Edition.
+	<li>Added JPEG and PNG builtin support to the GraphicsKit
+	<li>Added HTMLKit and added new features to HTMLBrowserControl allowing
+	fairly advanced customization of the browser and navigation of the HTML DOM.
+	<li>Added InternetKit
+	<li>Added several new examples
+	<li>Updated AGG to the newest version (2.4)
+	<li>Added Boost smart pointer integration
+	<li>Added min/max constraints for windows
+	<li>Revamped PropertyEditor interface and implementations
+	<li>Revamped ComponentEditor interface and implementations
+	<li>Added better support for reading in the Visual Form File format
+	<li>Proper support for inheritance in reading VFF files. This means that
+	one file can be specified for a base class, and another class which
+	derives from the base, will inherit and process the values from the 
+	original base class's VFF before processing it's own.
+</ul>
+</p>
+<p>
+<i>Side note:</i> A lot of time was spent on the <a href="http://vcfbuilder.org">
+VCF Builder</a> and getting that to work better, especially the Form Designer part.
+</p>
+<p>
+OS X work includes further enhancements to the text edit peer, some enhancements 
+to the menu handler, drag drop code including drop target support, and nearly 
+complete clipboard support.
+</p>
+<p>
+Issues:
+<ul>
+	<li>Some of the examples will not compile or work right with the Borland Free 
+	compiler, specifically TeXLabel, and SharedLibraries.
+	<li>The MFC examples (MFCIntegration1 and MFCIntegration2) will not work 
+	using Microsoft's Visual C++ 2005 Express. This is due to the fact that the 
+	Express version does not come with the required MFC libraries, and is a known, 
+	built-in limitation of the Express version.
+	<li>For people who would like to use the bakefile utility to regenerate the VCF's 
+	bakefiles, there is a patch that you need to apply first, before doing so. If 
+	you simply want to build the existing bakefile projects, then you don't need
+	to worry about this. You can download the patch from:<br>
+	<a href="http://vcf-online.org/tmp/bakefile020.patch.diff.zip">bakefile020.patch.diff.zip</a>
+</ul>
 </p>
 
+<hr>
 <h1>Visual Component Framework 0.6.8</h1>
 <h2>Readme</h2>
 <p>
@@ -104,6 +189,8 @@ TextModel.
 Further work on OSX, almost all peer classes now implemented, at least 
 to some degree.
 </p>
+
+<hr>
 
 
 <h1>Visual Component Framework 0.6.6&nbsp;</h1>
@@ -226,6 +313,8 @@ application level, so that differences in how Win32 vs. OS X see menus are all
 handled transparently. 
 </p>
 
+
+<hr>
 
 
 <h1>Visual Component Framework 0.6.5&nbsp;</h1>
@@ -363,6 +452,9 @@ The linux port is also still in progress. Not much to say other than it
 needs a lot of help.
 </ol>
 
+ 
+ <hr>
+ 
  
 <h1>Visual Component Framework 0.6.4&nbsp;</h1>
 <h2>Readme</h2>

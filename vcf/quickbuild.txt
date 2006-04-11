@@ -1,7 +1,7 @@
 Quick Build Instructions for Win32
 
 This will briefly cover the basics of building the VCF binaries using Microsoft's 
-Visual C++ IDE versions 6, 7, or 7.1. For more details on this please see the 
+Visual C++ IDE versions 6, 7, or 7.1 or 8.0. For more details on this please see the 
 VCF documentation installed with MSDN, or view it online at 
 http://vcf-online.org/docs/ref_manual/. Additional information is also provided 
 for users of Intel's C/C++ compiler.
@@ -73,6 +73,25 @@ can typically open the vcf/build/vc71/vcfAllProjects_vc71.sln solution file
 instead of the workspace file should you decide to rebuild any of the projects 
 at a later time.
 
+Microsoft Visual C++ 8.0.  The following section deals with building the VCF libraries 
+using the Microsoft Visual C++ 8.0 IDE, including the Express version.
+
+To build the VCF open the vcf/build/vc80/vcfAllProjects_vc80.sln solution. This 
+solution has all the various framework projects, both as static .lib files and DLL 
+projects. 
+
+To build all the VCF libraries select the "vcfAllLibs" project and make it the active 
+project.
+
+Building this project will automatically build the FoundationKit, GraphicsKit, 
+ApplicationKit, NetworkKit, and RemoteObjectKit. The libraries will be built as 
+both static and DLL binaries. To build just the static libraries, build the 
+"vcfAllStaticLibs" project. To build all the libraries as DLL's, build the 
+"vcfAllDynamicLibs" project. After having built the VCF for the first time, you 
+can typically open the vcf/build/vc80/vcfAllProjects_vc80.sln solution file 
+instead of the workspace file should you decide to rebuild any of the projects 
+at a later time.
+
 Microsoft Visual C++ 6 using the Intel C/C++ compiler.  The following section deals 
 with building the VCF libraries using the Microsoft Visual C++ 7.0 IDE with the 
 Intel C/C++ compiler installed.
@@ -85,3 +104,15 @@ FoundationKit, GraphicsKit, ApplicationKit, NetworkKit, and RemoteObjectKit. The
 libraries will be built as both static and DLL binaries. To build just the static 
 libraries, build the "vcfAllStaticLibs" project. To build all the libraries as 
 DLL's, build the "vcfAllDynamicLibs" project.
+
+MinGW-GCC compiler with the Code::Blocks IDE. The following section deals with 
+building the VCF libraries using the Code::Blocks IDE and the MinGW-GCC toolchain.
+
+To build the VCF open the vcf/build/codeblocks/vcfAllProjects.workspace workspace.
+This workspace has all the various framework projects, both as static .lib files and 
+DLL projects. Select the "All" target and make sure that the IDE is set to use the 
+"GCC Compiler" compiler, then choose "Build->Build workspace" to build the libraries. 
+The dynamic libraries (dll's) are placed in vcf\bin, and the dll import libraries and 
+static libraries are placed in vcf\lib.
+
+
