@@ -9,27 +9,27 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 
+/**
+*use the VCF namespace to make it more convenient
+*to refer to VCF classes
+*/
+using namespace VCF;
+
 
 
 /**
 Sample object that demonstrates overloading the toString method of the 
 Object base class.
 */
-class Foo : public VCF::Object {
+class Foo : public Object {
 public:
-	virtual VCF::String toString() {
-		return VCF::String("Foo here!\n\t") + VCF::Object::toString();
+	virtual String toString() {
+		return String("Foo here!\n\t") + Object::toString();
 	}
 };
 
 
 
-
-/**
-*use the VCF namespace to make it more convenient
-*to refer to VCF classes
-*/
-using namespace VCF;
 
 
 
@@ -409,6 +409,9 @@ namespace VCF {
 /**
 *CVS Log info
 *$Log$
+*Revision 1.6  2006/04/11 01:57:49  ddiego
+*fixed bug in compiler for vc6 - hope this doesn't screw up bcc.
+*
 *Revision 1.5  2006/04/07 02:34:43  ddiego
 *initial checkin of merge from 0.6.9 dev branch.
 *
