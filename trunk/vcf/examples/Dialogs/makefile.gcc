@@ -24,8 +24,8 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 DIALOGS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 \
-	-DWIN32 -DVCF_MINGW -Wno-multichar -D_UNICODE -I..\..\src \
-	$(__FOUNDATIONKIT_DLL_p) -I..\..\src\thirdparty\common\agg\include \
+	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
+	-I..\..\src\thirdparty\common\agg\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)

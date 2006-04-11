@@ -472,9 +472,25 @@ dist_all_hh : alldocs_hh
 	-mkdir VCFDocs-$(VERSION)	
 	cp $(VERSIONED_CHM_FILENAME) VCFDocs-$(VERSION)/
 	-cp $(VERSIONED_CHI_FILENAME) VCFDocs-$(VERSION)/	
+	-cp $(VERSIONED_SRC_CHM_FILENAME) VCFDocs-$(VERSION)/
+	-cp $(VERSIONED_SRC_CHI_FILENAME) VCFDocs-$(VERSION)/
 	tar -cf VCFHtmlHelpDocs-$(VERSION).tar VCFDocs-$(VERSION)/ 
 	gzip VCFHtmlHelpDocs-$(VERSION).tar
 	rm -rf VCFDocs-$(VERSION)/	
+
+dist_doxy : 
+	@echo creating tmp directory in VCFHTMLDocs-$(VERSION)
+	-mkdir VCFHTMLDocs-$(VERSION)
+	@echo copying over files...
+	cp -r doxy_html/* VCFHTMLDocs-$(VERSION)/
+	@echo creating tar file VCFHtmlDocs-$(VERSION).tar from files...
+	tar -cf VCFHtmlDocs-$(VERSION).tar VCFHTMLDocs-$(VERSION)/	
+	@echo compressing tar file VCFHtmlDocs-$(VERSION).tar...
+	gzip VCFHtmlDocs-$(VERSION).tar
+	@echo Removing tmp directory VCFHTMLDocs-$(VERSION)/
+	-rm -rf VCFHTMLDocs-$(VERSION)/	
+
+	
 
 dist_online : coredocs_online  
 	find *.html > files.out
@@ -535,6 +551,9 @@ clean :
 
 ###############################################################################
 #$Log$
+#Revision 1.21  2006/04/11 23:43:04  ddiego
+#updated kdmixs makefiles.
+#
 #Revision 1.20  2006/04/07 02:34:01  ddiego
 #initial checkin of merge from 0.6.9 dev branch.
 #
