@@ -137,6 +137,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -827,6 +830,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name InternetKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -851,6 +857,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
