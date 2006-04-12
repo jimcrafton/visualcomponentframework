@@ -24,11 +24,32 @@ namespace VCF {
 
 namespace VCF {
 
+
+	class NetworkException : public BasicException {
+	public:		
+		NetworkException( const String & message ):
+			BasicException( message ){};
+
+		NetworkException():
+			BasicException( "Unknown Network Exception occurred." ){};
+			
+		NetworkException( const String & message, int lineNumber ):
+			BasicException(message, lineNumber){};
+			
+		virtual ~NetworkException() throw() {};
+	};
+
+};
+
+namespace VCF {
+
 	class Socket;
 	class SocketPeer;
 
 	class IPAddressPeer;
 	
+
+
 
 	class SocketEvent : public Event {
 	public:
@@ -547,7 +568,7 @@ namespace VCF {
 		*/
 		virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
 			//no-op
-			throw RuntimeException( "You cannot seek in a Socket Input stream" );
+			throw NetworkException( "You cannot seek in a Socket Input stream" );
 		}
 
 		virtual unsigned long getSize() {
@@ -558,13 +579,13 @@ namespace VCF {
 		Returns NULL - this is not permitted
 		*/
 		virtual char* getBuffer() {
-			throw RuntimeException( "You cannot access the buffer pointer in a Socket Input stream" );
+			throw NetworkException( "You cannot access the buffer pointer in a Socket Input stream" );
 			return NULL;
 		}
 
 		
 		virtual ulong32 getCurrentSeekPos() {
-			throw RuntimeException( "You cannot access the seek position in a Socket Input stream" );
+			throw NetworkException( "You cannot access the seek position in a Socket Input stream" );
 			return 0;	
 		}
 
@@ -588,7 +609,7 @@ namespace VCF {
 		If the socket is a blocking socket, then this is probably
 		a disconnect.
 		\li If the socket's peer reports an error in reading  
-		from the socket, then the method will throw a RuntimeException.
+		from the socket, then the method will throw a NetworkException.
 		*/
 		virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
 
@@ -609,7 +630,7 @@ namespace VCF {
 		*/
 		virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
 			//no-op
-			throw RuntimeException( "You cannot seek in a Socket Output stream" );
+			throw NetworkException( "You cannot seek in a Socket Output stream" );
 		}
 
 		virtual unsigned long getSize() {
@@ -620,13 +641,13 @@ namespace VCF {
 		Returns NULL - this is not permitted
 		*/
 		virtual char* getBuffer() {
-			throw RuntimeException( "You cannot access the buffer pointer in a Socket Output stream" );
+			throw NetworkException( "You cannot access the buffer pointer in a Socket Output stream" );
 			return NULL;
 		}
 
 		
 		virtual ulong32 getCurrentSeekPos() {
-			throw RuntimeException( "You cannot access the seek position in a Socket Output stream" );
+			throw NetworkException( "You cannot access the seek position in a Socket Output stream" );
 			return 0;	
 		}
 
@@ -644,7 +665,7 @@ namespace VCF {
 		If the socket is a blocking socket, then this is probably
 		an error.
 		\li If the socket's peer reports an error in writing to 
-		the socket, then the method will throw a RuntimeException.
+		the socket, then the method will throw a NetworkException.
 		*/
 		virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
 
@@ -677,7 +698,7 @@ unsigned long SocketInputStream::read( unsigned char* bytesToRead, unsigned long
 	}
 	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
 
-		throw RuntimeException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
+		throw NetworkException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
 	}
 	
 	totalBytesRecvd_ += bytesRead;
@@ -705,7 +726,7 @@ unsigned long SocketOutputStream::write( const unsigned char* bytesToWrite, unsi
 	}
 	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
 
-		throw RuntimeException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
+		throw NetworkException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
 	}
 
 	totalBytesWritten_ += bytesWritten;
@@ -880,7 +901,7 @@ Win32NetworkToolkit::Win32NetworkToolkit()
 	}
 	
 	if (0 != startedOk) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("WSAStartup failed to initialize!") );
+		throw NetworkException( MAKE_ERROR_MSG_2("WSAStartup failed to initialize!") );
 	}
 }
 
@@ -953,6 +974,9 @@ IPAddress::RawBytes Win32IPAddressPeer::getAddressBytes()
 		if ( NULL != host ) {
 			memcpy( &(addr.s_addr), host->h_addr, host->h_length );
 		}
+		else {
+			throw NetworkException("Unable to determine host information from address: " + host_ );
+		}
 		ipAddress_ = inet_ntoa(addr);
 	}
 	else {
@@ -974,12 +998,34 @@ String Win32IPAddressPeer::getHostName()
 	
 	struct in_addr addr;
 	memset( &addr,0,sizeof(addr) );
-	addr.S_un.S_addr = inet_addr( ipAddress_.c_str() );
 
-	hostent* host = gethostbyaddr( (const char*)&addr.S_un, sizeof(addr.S_un), 0 );
-	if ( NULL != host ) {
-		host_ = host->h_name;
+
+	if ( !ipAddress_.empty() ) {
+		addr.S_un.S_addr = inet_addr( ipAddress_.c_str() );	
+		
+
+		hostent* host = gethostbyaddr( (const char*)&addr.S_un, sizeof(addr.S_un), 0 );		
+		if ( NULL != host ) {
+			host_ = host->h_name;
+		}
+		else {
+			throw NetworkException("Unable to determine host information from address: " + ipAddress_ );
+		}
 	}
+	else if ( !host_.empty() ) {
+		hostent* host = gethostbyname( host_.c_str() );
+		if ( NULL != host ) {
+			host_ = host->h_name;
+			
+			memcpy( &(addr.s_addr), host->h_addr, host->h_length );
+			ipAddress_ = inet_ntoa(addr);
+		}
+		else {
+			throw NetworkException("Unable to determine host information from address: " + host_ );
+		}
+	}
+
+	
 	
 
 	result = host_;
@@ -1003,6 +1049,9 @@ String Win32IPAddressPeer::getHostAddress()
 		if ( host->h_name != host_ ) {
 			host_ = host->h_name;
 		}
+	}
+	else {
+		throw NetworkException("Unable to determine host information from address: " + host_ );
 	}
 	ipAddress_ = inet_ntoa(addr);
 	
@@ -1946,96 +1995,104 @@ int main( int argc, char** argv ){
 
 	NetworkKit::init(  argc, argv );
 	
+	try {
 
-	IPAddress::RawBytes ip(4);
-	ip[0] = 123;
-	ip[1] = 168;
-	ip[2] = 23;
-	ip[3] = 103;
+		IPAddress::RawBytes ip(4);
+		ip[0] = 123;
+		ip[1] = 168;
+		ip[2] = 23;
+		ip[3] = 103;
 
-	IPAddress addr(ip);
+		IPAddress addr(ip);
 
-	IPAddress addr2;
+		IPAddress addr2;
 
-	IPAddress addr3("www.google.com");
+		IPAddress addr3("www.google.com");
 
-	IPAddress::RawBytes ipBytes = addr.getAddressBytes();
-	System::println( Format("%d.%d.%d.%d") % ipBytes[0] % ipBytes[1] % ipBytes[2] % ipBytes[3] ) ;
+		IPAddress::RawBytes ipBytes = addr.getAddressBytes();
+		System::println( Format("%d.%d.%d.%d") % ipBytes[0] % ipBytes[1] % ipBytes[2] % ipBytes[3] ) ;
 
-	System::println( Format("host address: %s") % addr.getHostAddress() );
+		System::println( Format("host address: %s") % addr.getHostAddress() );
 
-	System::println( Format("host address: %s") % addr2.getHostAddress() );
-	System::println( Format("host name: %s") % addr2.getHostName() );
+		System::println( Format("host address: %s") % addr2.getHostAddress() );
+		System::println( Format("host name: %s") % addr2.getHostName() );
 
-	System::println( Format("host address: %s") % 	addr3.getHostAddress() );
-	System::println( Format("host name: %s") % addr3.getHostName() );
-
-
+		System::println( Format("host address: %s") % 	addr3.getHostAddress() );
+		System::println( Format("host name: %s") % addr3.getHostName() );
 
 
-	Socket server;
-	Dictionary options;
-	options[Socket::soBlocking] = false;
-	server.setOptions( options );
 
-	server.listen( 10032 );
+		IPAddress addr4("sdkfdsf");
+		addr4.getHostName();
 
-	System::println( "Listening on port: " + StringUtils::toString(server.getPort()) );
 
-	SocketArray clients;
+		Socket server;
+		Dictionary options;
+		options[Socket::soBlocking] = false;
+		server.setOptions( options );
 
-	while (true ) {
-		Socket* client = server.accept();
-		if ( NULL != client ) {
-			clients.push_back( client );
-			client->setOptions( options );
-			System::println( "Recv'd connect! From: " + client->getHostIPAddress() +
-							" port: " + (int)client->getPort() );
-		}
-		else {
-			
-			System::sleep( 100 );
+		server.listen( 10032 );
 
-			SocketArray readList = clients;	
-			SocketArray writeList = clients;
-			SocketArray errorList = clients;
+		System::println( "Listening on port: " + StringUtils::toString(server.getPort()) );
 
-			
-			server.getPeer()->select( 100, &readList, &writeList, &errorList );
+		SocketArray clients;
 
-			uchar tmp[256];
-			SocketArray::iterator it;
-			for (it=readList.begin();it != readList.end(); it++ ) {
-				Socket* s = *it;
+		while (true ) {
+			Socket* client = server.accept();
+			if ( NULL != client ) {
+				clients.push_back( client );
+				client->setOptions( options );
+				System::println( "Recv'd connect! From: " + client->getHostIPAddress() +
+								" port: " + (int)client->getPort() );
+			}
+			else {
+				
+				System::sleep( 100 );
 
-				SocketInputStream sis(*s);
+				SocketArray readList = clients;	
+				SocketArray writeList = clients;
+				SocketArray errorList = clients;
 
-				do {
-					try {
-						ulong32 err = sis.read( tmp, sizeof(tmp) );
-						
-						if ( err == 0 ) {
-							System::println( "Disconnect!" );
+				
+				server.getPeer()->select( 100, &readList, &writeList, &errorList );
+
+				uchar tmp[256];
+				SocketArray::iterator it;
+				for (it=readList.begin();it != readList.end(); it++ ) {
+					Socket* s = *it;
+
+					SocketInputStream sis(*s);
+
+					do {
+
+						try {
+							ulong32 err = sis.read( tmp, sizeof(tmp) );
 							
+							if ( err == 0 ) {
+								System::println( "Disconnect!" );
+								
+								clients.erase( std::find(clients.begin(),clients.end(),s) );
+								break;
+							}
+							else {
+								tmp[err] = 0;
+								System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
+							}
+						}
+						catch ( BasicException& ) {
+							System::println( "Socket error! Manually disconnecting!" );
+								
 							clients.erase( std::find(clients.begin(),clients.end(),s) );
 							break;
 						}
-						else {
-							tmp[err] = 0;
-							System::println( Format( "Recv'd %d bytes: %s\n") % err % tmp );
-						}
-					}
-					catch ( BasicException& ) {
-						System::println( "Socket error! Manually disconnecting!" );
-							
-						clients.erase( std::find(clients.begin(),clients.end(),s) );
-						break;
-					}
-				} while( s->pending() && s->isReadable() );
+					} while( s->pending() && s->isReadable() );
+				}
 			}
 		}
 	}
-	
+	catch ( BasicException& e ) {
+		System::println( e.getMessage() );
+	}
 
 	NetworkKit::terminate();
 
