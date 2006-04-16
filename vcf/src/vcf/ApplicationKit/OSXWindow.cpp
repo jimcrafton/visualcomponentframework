@@ -663,6 +663,28 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 
 		case kEventClassWindow : {
 			switch( whatHappened ) {
+				case kEventWindowGetMinimumSize : {
+					Control* ctrl = getControl();
+					::Point minHeightAndWidth;
+					minHeightAndWidth.h = ctrl->getMinWidth(); 
+					minHeightAndWidth.v = ctrl->getMinHeight();
+					
+					SetEventParameter(theEvent,kEventParamDimensions,typeQDPoint,
+										sizeof(minHeightAndWidth),&minHeightAndWidth);
+				}
+				break;
+				
+				case kEventWindowGetMaximumSize : {
+					Control* ctrl = getControl();
+					::Point maxHeightAndWidth;
+					maxHeightAndWidth.h = ctrl->getMaxWidth(); 
+					maxHeightAndWidth.v = ctrl->getMaxHeight();
+					
+					SetEventParameter(theEvent,kEventParamDimensions,typeQDPoint,
+										sizeof(maxHeightAndWidth),&maxHeightAndWidth);
+				}
+				break;
+				
 				case kEventWindowClose : {
 
 					result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
