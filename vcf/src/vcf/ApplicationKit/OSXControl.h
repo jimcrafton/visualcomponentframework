@@ -82,6 +82,10 @@ public:
 	
 	virtual void setBorder( Border* border );
 	
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+	
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+	
 	static OSXControl* getControlFromControlRef( ControlRef control );
 protected:
 	ControlRef hiView_;

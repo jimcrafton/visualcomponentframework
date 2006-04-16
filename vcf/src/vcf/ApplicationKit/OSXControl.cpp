@@ -605,6 +605,16 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 	return result;
 }
 
+void OSXControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	
+}
+
+void OSXControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	
+}
+
 OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
 {
 	OSStatus result = eventNotHandledErr;

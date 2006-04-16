@@ -1260,7 +1260,6 @@ void OSXContext::setClippingRect( Rect* clipRect )
 {	
 	if ( NULL != clipRect ) {
 		if ( clipRect->isNull() || clipRect->isEmpty() ) {
-			//CGContextRestoreGState( contextID_ );	
 			//CGContextRestoreGState( contextID_ );		
 		}
 		else {

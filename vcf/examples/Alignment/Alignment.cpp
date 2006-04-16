@@ -40,12 +40,14 @@ public:
 		setCaption( "Alignment" );
 
 
+		setName( "AlignmentWindow" );
 		//first we create a Panel, this will hold the other controls
 		//we don't have to do this - this is strictly to have a control
 		//that is aligned as a AlignClient
 		Panel* main = new Panel();
 		add( main, AlignClient );
 		main->setToolTipText( "main panel" );
+		main->setName( "main" );
 
 		//create a new container  - agina, by default we do not have top do this
 		//as a panel already has a container instance. Setting it here will destroy
@@ -153,6 +155,7 @@ public:
 		main->add( clientControl, AlignClient );
 		clientControl->setBorderSize( 20 );
 		clientControl->setToolTipText( "clientControl: AlignClient" );
+		clientControl->setName( "clientControl" );
 
 		Panel* clientP1 = new Panel();
 		clientP1->setHeight( 25 );
@@ -166,6 +169,7 @@ public:
 		label1->setWordWrap( true );
 		label1->setCaption( "This is Label 1" );
 		label1->setToolTipText( "clientControl/label1: AlignTop, white" );
+		label1->setName( "label1" );
 		clientControl->add( label1, AlignTop );
 
 
@@ -202,6 +206,7 @@ public:
 
 
 		Label* label2 = new Label();
+		label2->setName( "Label2" );
 		label2->setHeight( 55 );
 		label2->setColor( Color::getColor("gray158") );
 		label2->setTransparent( false );
