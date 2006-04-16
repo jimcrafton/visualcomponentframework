@@ -1625,6 +1625,18 @@ void AbstractWin32Component::onControlFontChanged( Event* event )
 	setFont( font );
 }
 
+
+void AbstractWin32Component::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	graphicsContext->setClippingRect( childClipRect );
+}
+
+void AbstractWin32Component::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	graphicsContext->setClippingRect( oldClipRect );
+}
+
+
 /**
 *CVS Log info
 *$Log$

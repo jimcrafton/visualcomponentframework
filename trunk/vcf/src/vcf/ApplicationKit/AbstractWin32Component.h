@@ -103,6 +103,10 @@ public:
 
 	virtual void setBorder( Border* border );
 
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+	
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+	
 	/**
 	* manages a paint message for a control.
 	* it prepares the Graphics context for the control so the correct device context handle is used.
