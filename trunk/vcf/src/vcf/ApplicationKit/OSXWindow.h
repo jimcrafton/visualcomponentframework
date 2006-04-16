@@ -85,6 +85,11 @@ public:
 	virtual void translateFromScreenCoords( Point* pt );
 	
 	virtual void setBorder( Border* border );	
+	
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+	
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+	
 
 	Rect internal_getBounds() {
 		return bounds_;

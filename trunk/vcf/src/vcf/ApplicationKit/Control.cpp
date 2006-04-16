@@ -1688,6 +1688,16 @@ void Control::internal_afterPaint( GraphicsContext* context )
 	}
 }
 
+void Control::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	peer_->preChildPaint( graphicsContext, child, childClipRect );
+}
+
+void Control::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	peer_->postChildPaint( graphicsContext, child, oldClipRect );
+}
+
 /**
 *CVS Log info
 *$Log$

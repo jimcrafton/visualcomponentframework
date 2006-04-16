@@ -297,6 +297,10 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 		mainBounds = controlContainer_->getClientBounds();
 	}
 
+	if ( oldClipRect.isNull() || oldClipRect.isEmpty() ) {
+		oldClipRect.setRect( 0, 0, mainBounds.getWidth(), mainBounds.getHeight() );
+	}
+
 	Rect childClipRect;
 	Rect bounds;
 
@@ -310,7 +314,6 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 		VCF_ASSERT( NULL != child );
 
 		if ( child->isLightWeight() && child->getVisible() ){
-			
 			bounds = child->getBounds();
 			
 
@@ -337,9 +340,10 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 			//screwing up the state for the child control
 			Matrix2D xfrm;
 			int gcs = context->saveState();
-			context->setCurrentTransform( xfrm );			
-						
-			context->setClippingRect( &childClipRect );
+			context->setCurrentTransform( xfrm );
+									
+			controlContainer_->preChildPaint( context , child, &childClipRect );
+			//context->setClippingRect( &childClipRect );
 
 			child->paintBorder( context );
 
@@ -350,7 +354,8 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 
 			context->setOrigin( oldOrigin.x_, oldOrigin.y_ );
 			
-			context->setClippingRect( &oldClipRect );
+			controlContainer_->postChildPaint( context , child, &oldClipRect );
+			//context->setClippingRect( &oldClipRect );
 		}
 	}
 }

@@ -74,6 +74,11 @@ public:
 	VCF::Control* getHeavyWeightParent();
 	
 	virtual void setBorder( Border* border ){}
+	
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+	
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+	
 protected:
 	
 	VCF::Control* component_;
