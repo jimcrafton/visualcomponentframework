@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="AllIn1DLL"
-	ProjectGUID="{B55466EC-D312-479A-9B16-9FA8FF3512DA}"
+	ProjectGUID="{93943EDE-A510-43E5-97FB-AA269E4F0C0B}"
 	>
 	<Platforms>
 		<Platform
@@ -4119,7 +4119,7 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\resources\win32"
+							AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4128,7 +4128,7 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\resources\win32"
+							AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32"
 						/>
 					</FileConfiguration>
 				</File>
