@@ -2,9 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="LocaleUI_vc80"
-	ProjectGUID="{2C731541-F8AF-417B-92BF-D1276CBC2B13}"
-	RootNamespace="LocaleUI_vc80"
+	Name="LocaleUI"
+	ProjectGUID="{4263ADDC-3F63-4DE8-B43E-CBEDFC4C003F}"
 	>
 	<Platforms>
 		<Platform
@@ -16,10 +15,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc80\Debug\"
-			IntermediateDirectory=".\vc80\Debug\"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -42,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug\LocaleUI_vc71.tlb"
+				TypeLibraryName=".\Debug/LocaleUI_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -50,17 +49,17 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;_DEBUG;USE_APPLICATIONKIT_LIB"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug\LocaleUI_vc80.pch"
-				AssemblerListingLocation=".\vc80\Debug\"
-				ObjectFile=".\vc80\Debug\"
-				ProgramDataBaseFileName=".\vc80\Debug\"
+				PrecompiledHeaderFile=".\Debug/LocaleUI_vc80.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -76,12 +75,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc80\Debug\LocaleUI_vc80.exe"
-				LinkIncremental="1"
+				OutputFile="Debug\LocaleUI_vc80.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug\LocaleUI_vc80.pdb"
+				ProgramDatabaseFile=".\Debug/LocaleUI_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -97,6 +96,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/LocaleUI_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -113,10 +114,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc80\Release\"
-			IntermediateDirectory=".\vc80\Release\"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -139,7 +140,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release\LocaleUI_vc71.tlb"
+				TypeLibraryName=".\Release/LocaleUI_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -152,13 +153,12 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release\LocaleUI_vc80.pch"
-				AssemblerListingLocation=".\vc80\Release\"
-				ObjectFile=".\vc80\Release\"
-				ProgramDataBaseFileName=".\vc80\Release\"
+				PrecompiledHeaderFile=".\Release/LocaleUI_vc80.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -174,11 +174,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc80\Release\LocaleUI_vc80.exe"
+				OutputFile="Release\LocaleUI_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release\LocaleUI_vc80.pdb"
+				ProgramDatabaseFile=".\Release/LocaleUI_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -194,6 +194,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/LocaleUI_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -224,10 +226,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -235,7 +235,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 					/>

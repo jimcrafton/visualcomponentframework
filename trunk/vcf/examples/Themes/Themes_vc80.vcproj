@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Themes"
-	ProjectGUID="{A63572F1-D0AF-45DB-B242-C4691A505078}"
-	RootNamespace="Themes"
+	ProjectGUID="{B27C8220-DDA6-48DE-A3A5-F84FE9F95B50}"
 	>
 	<Platforms>
 		<Platform
@@ -42,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/Themes.tlb"
+				TypeLibraryName=".\Release/Themes_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -55,7 +54,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release/Themes.pch"
+				PrecompiledHeaderFile=".\Release/Themes_vc80.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -80,7 +79,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release/Themes_vc6.pdb"
+				ProgramDatabaseFile=".\Release/Themes_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -97,7 +96,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/Themes.bsc"
+				OutputFile=".\Release/Themes_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -140,7 +139,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/Themes.tlb"
+				TypeLibraryName=".\Debug/Themes_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -152,7 +151,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/Themes.pch"
+				PrecompiledHeaderFile=".\Debug/Themes_vc80.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -179,7 +178,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/Themes_vc6.pdb"
+				ProgramDatabaseFile=".\Debug/Themes_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -196,7 +195,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/Themes.bsc"
+				OutputFile=".\Debug/Themes_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

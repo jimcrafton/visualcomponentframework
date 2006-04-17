@@ -35,8 +35,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release\"
-# PROP Intermediate_Dir "Release\"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc70\ReleaseS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/thirdparty/win32" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "USE_APPLICATIONKIT_LIB" /Yu"vcf/HTMLKit/HTMLKit.h" /FD /c
@@ -53,13 +53,13 @@ LIB32=link.exe -lib
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "HTMLKit___Win32_Debug"
-# PROP BASE Intermediate_Dir "HTMLKit___Win32_Debug"
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "HTMLKit___Win32_Debug\"
-# PROP Intermediate_Dir "HTMLKit___Win32_Debug\"
+# PROP Output_Dir "..\..\..\lib\"
+# PROP Intermediate_Dir "vc70\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "USE_APPLICATIONKIT_LIB" /Fd"..\..\..\lib\HTMLKit_vc70_sd.pdb" /Yu"vcf/HTMLKit/HTMLKit.h" /FD /GZ /c

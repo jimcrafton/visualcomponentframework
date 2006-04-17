@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="xmake_vc80"
-	ProjectGUID="{90985D5D-122C-4A81-9B76-CFC47E29C41F}"
+	Name="xmake"
+	ProjectGUID="{C8E3DF07-3CE0-47B3-B524-3D4B9F280B0D}"
 	>
 	<Platforms>
 		<Platform
@@ -14,11 +14,11 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\vc80\Release\"
-			IntermediateDirectory=".\vc80\Release\"
+			Name="Debug|Win32"
+			OutputDirectory=".\vc80\Debug"
+			IntermediateDirectory=".\vc80\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -37,32 +37,32 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\vc71\Release\xmake.tlb"
+				TypeLibraryName=".\vc80\Debug/xmake_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".\"
-				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,USE_LIBXMAKE_LIB"
-				StringPooling="true"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
+				Optimization="0"
+				AdditionalIncludeDirectories="./"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_LIBXMAKE_LIB"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\vc80\Release\xmake.pch"
-				AssemblerListingLocation=".\vc80\Release\"
-				ObjectFile=".\vc80\Release\"
-				ProgramDataBaseFileName=".\vc80\Release\"
+				PrecompiledHeaderFile=".\vc80\Debug/xmake_vc80.pch"
+				AssemblerListingLocation=".\vc80\Debug/"
+				ObjectFile=".\vc80\Debug/"
+				ProgramDataBaseFileName=".\vc80\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -70,14 +70,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\bin\xmake.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\"
-				ProgramDatabaseFile=".\vc80\Release\xmake.pdb"
+				AdditionalLibraryDirectories="..\..\lib"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=".\vc80\Debug/xmake.pdb"
 				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -90,6 +90,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile="vc80/Debug/xmake_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -105,11 +107,11 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\vc80\Debug\"
-			IntermediateDirectory=".\vc80\Debug\"
+			Name="Release|Win32"
+			OutputDirectory=".\vc80\Release"
+			IntermediateDirectory=".\vc80\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -128,31 +130,32 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\vc71\Debug\xmake.tlb"
+				TypeLibraryName=".\vc80\Release/xmake_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories=".\"
-				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,USE_LIBXMAKE_LIB"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="./"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;USE_LIBXMAKE_LIB"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\vc80\Debug\xmake.pch"
-				AssemblerListingLocation=".\vc80\Debug\"
-				ObjectFile=".\vc80\Debug\"
-				ProgramDataBaseFileName=".\vc80\Debug\"
+				PrecompiledHeaderFile=".\vc80\Release/xmake_vc80.pch"
+				AssemblerListingLocation=".\vc80\Release/"
+				ObjectFile=".\vc80\Release/"
+				ProgramDataBaseFileName=".\vc80\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -160,15 +163,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\bin\xmake.exe"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\"
-				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\vc80\Debug\xmake.pdb"
+				AdditionalLibraryDirectories="..\..\lib"
+				ProgramDatabaseFile=".\vc80\Release/xmake.pdb"
 				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -181,6 +182,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile="vc80/Release/xmake_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -206,6 +209,24 @@
 			<File
 				RelativePath="main.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

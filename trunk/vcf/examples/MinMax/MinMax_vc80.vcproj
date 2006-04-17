@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="MinMax"
-	ProjectGUID="{ED8854E5-7399-4413-9503-39CF705899A4}"
-	RootNamespace="MinMax"
+	ProjectGUID="{9B24AA0B-5CF4-4B26-81E8-F9768EA3E5A0}"
 	>
 	<Platforms>
 		<Platform
@@ -42,12 +41,12 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/MinMax.tlb"
+				TypeLibraryName=".\Release/MinMax_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
@@ -55,7 +54,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release/MinMax.pch"
+				PrecompiledHeaderFile=".\Release/MinMax_vc80.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -76,11 +75,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Release/MinMax_vc80.exe"
+				OutputFile="Release\MinMax_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release/MinMax.pdb"
+				ProgramDatabaseFile=".\Release/MinMax_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -97,7 +96,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/MinMax.bsc"
+				OutputFile=".\Release/MinMax_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -140,7 +139,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/MinMax.tlb"
+				TypeLibraryName=".\Debug/MinMax_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -152,7 +151,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/MinMax.pch"
+				PrecompiledHeaderFile=".\Debug/MinMax_vc80.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -174,12 +173,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Debug/MinMax_vc80.exe"
+				OutputFile="Debug\MinMax_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/MinMax.pdb"
+				ProgramDatabaseFile=".\Debug/MinMax_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -196,7 +195,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/MinMax.bsc"
+				OutputFile=".\Debug/MinMax_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

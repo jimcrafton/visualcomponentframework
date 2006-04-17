@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BBTest", ".\BBTest\BBTest_vc70.vcproj", "{ba3c4d90-190e-463b-9c0f-dc898b1433ed}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BBTest", ".\BBTest\BBTest_vc70.vcproj", "{8a1dedc5-8bee-4adf-9ece-d6675498339a}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlackBox", ".\BlackBox_vc70.vcproj", "{499594c2-7468-4696-ba67-e09fdd194d2b}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlackBox", ".\BlackBox_vc70.vcproj", "{073c0509-66b1-4646-9478-023500671a87}"
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
@@ -14,10 +14,10 @@ Global
 	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
-		{ba3c4d90-190e-463b-9c0f-dc898b1433ed}.Debug.ActiveCfg = Debug|Win32
-		{ba3c4d90-190e-463b-9c0f-dc898b1433ed}.Release.ActiveCfg = Release|Win32
-		{499594c2-7468-4696-ba67-e09fdd194d2b}.Debug.ActiveCfg = Debug|Win32
-		{499594c2-7468-4696-ba67-e09fdd194d2b}.Release.ActiveCfg = Release|Win32
+		{8a1dedc5-8bee-4adf-9ece-d6675498339a}.Debug.ActiveCfg = Debug|Win32
+		{8a1dedc5-8bee-4adf-9ece-d6675498339a}.Release.ActiveCfg = Release|Win32
+		{073c0509-66b1-4646-9478-023500671a87}.Debug.ActiveCfg = Debug|Win32
+		{073c0509-66b1-4646-9478-023500671a87}.Release.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

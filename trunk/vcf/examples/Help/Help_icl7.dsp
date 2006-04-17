@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /machine:I386 /out:"Release\Help_icl7.exe" /libpath:"$(VCF_LIB)"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=BuildHelp.bat
+PostBuild_Cmds=.\BuildHelp.bat
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "Help - Win32 Debug"
@@ -67,6 +67,7 @@ PostBuild_Cmds=BuildHelp.bat
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug\"
 # PROP Intermediate_Dir "Debug\"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_FOUNDATIONKIT_DLL" /D "USE_GRAPHICSKIT_DLL" /D "USE_APPLICATIONKIT_DLL" /FD /GZ /c
@@ -82,7 +83,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"Debug\Help_icl7.exe" /pdbtype:sept /libpath:"$(VCF_LIB)"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=BuildHelp.bat
+PostBuild_Cmds=.\BuildHelp.bat
 # End Special Build Tool
 
 !ENDIF 
@@ -108,7 +109,7 @@ SOURCE=Help.cpp
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=Help App.hhp
+SOURCE=Help
 # End Source File
 # Begin Source File
 
@@ -120,7 +121,7 @@ SOURCE=index.html
 # End Source File
 # Begin Source File
 
-SOURCE=Table of Contents.hhc
+SOURCE=Table
 # End Source File
 # End Group
 # End Target

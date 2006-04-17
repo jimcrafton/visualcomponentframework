@@ -161,6 +161,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -881,6 +884,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FreeImageLib
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -905,6 +911,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name InternetKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1643,6 +1652,15 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name OpenGLKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name InternetKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1681,6 +1699,15 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OpenGLKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HTMLKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name InternetKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NetworkKit
     End Project Dependency
 }}}
 

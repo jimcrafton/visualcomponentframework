@@ -3,55 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AllIn1"=.\AllIn1\AllIn1.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibJPEG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibPNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ZLib
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "AllIn1DLL"=.\AllIn1\AllIn1DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name libAGG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibJPEG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibPNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ZLib
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "LibJPEG"=..\..\src\thirdparty\common\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+Project: "AllIn1"=".\AllIn1\AllIn1.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"=..\..\src\thirdparty\common\LibPNG\LibPNG.dsp - Package Owner=<4>
+Project: "AllIn1DLL"=".\AllIn1\AllIn1DLL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"=..\..\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
+Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -87,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libAGG"=.\GraphicsKit\libAGG.dsp - Package Owner=<4>
+Project: "LibPNG"="..\..\src\thirdparty\common\LibPNG\LibPNG.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAll"=.\ALLIN1\vcfAll.dsp - Package Owner=<4>
+Project: "ZLib"="..\..\src\thirdparty\common\ZLib\ZLib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -107,12 +59,30 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name AllIn1
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name AllIn1DLL
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libAGG"=".\GraphicsKit\libAGG.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "vcfAll"=".\AllIn1\vcfAll.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

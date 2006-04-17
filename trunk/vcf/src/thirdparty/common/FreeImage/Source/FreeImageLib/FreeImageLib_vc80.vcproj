@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="FreeImageLib"
-	ProjectGUID="{F89F253D-BDD2-4F7F-BF22-CE1CB9356C81}"
-	RootNamespace="FreeImageLib"
+	ProjectGUID="{675ED9EB-C153-41DC-9E7B-D3A03305BE48}"
 	>
 	<Platforms>
 		<Platform
@@ -43,11 +42,11 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../,$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_LIBMNG_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NONSTDC_NO_DEPRECATE=1"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_LIBMNG_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile=".\vc80\Debug/FreeImageLib.pch"
+				PrecompiledHeaderFile=".\vc80\Debug/FreeImageLib_vc80.pch"
 				AssemblerListingLocation=".\vc80\Debug/"
 				ObjectFile=".\vc80\Debug/"
 				ProgramDataBaseFileName="..\..\..\..\..\..\lib\FreeImage_vc80_sd.pdb"
@@ -119,14 +118,14 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="../,$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_LIBMNG_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NONSTDC_NO_DEPRECATE=1"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_LIBMNG_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\vc80\Release/FreeImageLib.pch"
+				PrecompiledHeaderFile=".\vc80\Release/FreeImageLib_vc80.pch"
 				AssemblerListingLocation=".\vc80\Release/"
 				ObjectFile=".\vc80\Release/"
-				ProgramDataBaseFileName="..\..\..\..\..\..\lib\FreeImage_vc80_s.pdb"
+				ProgramDataBaseFileName=".\vc80\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -558,28 +557,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\FreeImage\PluginJPEG.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath="..\FreeImage\PluginKOALA.cpp"
 					>
 					<FileConfiguration
@@ -647,28 +624,6 @@
 				</File>
 				<File
 					RelativePath="..\FreeImage\PluginPCX.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\FreeImage\PluginPNG.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"

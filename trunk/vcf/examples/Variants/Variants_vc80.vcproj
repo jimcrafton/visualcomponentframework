@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Variants"
-	ProjectGUID="{5E23CC60-C456-4CF0-88E8-72D8AE715CD0}"
-	RootNamespace="Variants"
+	ProjectGUID="{DA8508EE-5063-4722-81F0-1C7AF02DA421}"
 	>
 	<Platforms>
 		<Platform
@@ -42,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/Variants.tlb"
+				TypeLibraryName=".\Debug/Variants_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -54,7 +53,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/Variants.pch"
+				PrecompiledHeaderFile=".\Debug/Variants_vc80.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -81,7 +80,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/Variants_vc6.pdb"
+				ProgramDatabaseFile=".\Debug/Variants_vc80.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -97,7 +96,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/Variants.bsc"
+				OutputFile=".\Debug/Variants_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -140,7 +139,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/Variants.tlb"
+				TypeLibraryName=".\Release/Variants_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -153,7 +152,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release/Variants.pch"
+				PrecompiledHeaderFile=".\Release/Variants_vc80.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -178,7 +177,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release/Variants_vc6.pdb"
+				ProgramDatabaseFile=".\Release/Variants_vc80.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -194,7 +193,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/Variants.bsc"
+				OutputFile=".\Release/Variants_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
