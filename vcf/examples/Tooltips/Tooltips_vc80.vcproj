@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Tooltips"
-	ProjectGUID="{67C2FFBF-3F8D-4BE7-8F92-40750F03EA20}"
-	RootNamespace="Tooltips"
+	ProjectGUID="{42D9C7BB-AEF2-4736-8CAE-F1212375FF4D}"
 	>
 	<Platforms>
 		<Platform
@@ -42,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/Tooltips.tlb"
+				TypeLibraryName=".\Debug/Tooltips_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -54,7 +53,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/Tooltips.pch"
+				PrecompiledHeaderFile=".\Debug/Tooltips_vc80.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -76,12 +75,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Debug/Tooltips_vc80.exe"
+				OutputFile="Debug\Tooltips_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/Tooltips.pdb"
+				ProgramDatabaseFile=".\Debug/Tooltips_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -98,7 +97,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/Tooltips.bsc"
+				OutputFile=".\Debug/Tooltips_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -141,12 +140,12 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/Tooltips.tlb"
+				TypeLibraryName=".\Release/Tooltips_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
@@ -154,7 +153,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release/Tooltips.pch"
+				PrecompiledHeaderFile=".\Release/Tooltips_vc80.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -175,11 +174,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Release/Tooltips_vc80.exe"
+				OutputFile="Release\Tooltips_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release/Tooltips.pdb"
+				ProgramDatabaseFile=".\Release/Tooltips_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
@@ -196,7 +195,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/Tooltips.bsc"
+				OutputFile=".\Release/Tooltips_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

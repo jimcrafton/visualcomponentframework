@@ -13,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug\"
-			IntermediateDirectory=".\Debug\"
+			OutputDirectory=".\vc71\Debug\"
+			IntermediateDirectory=".\vc71\Debug\"
 			ConfigurationType="10"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -22,7 +22,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug\vcfAll_vc71.tlb"
+				TypeLibraryName=".\vc71\Debug\vcfAll_vc71.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -31,8 +31,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release\"
-			IntermediateDirectory=".\Release\"
+			OutputDirectory=".\vc71\Release\"
+			IntermediateDirectory=".\vc71\Release\"
 			ConfigurationType="10"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -40,7 +40,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Release\vcfAll_vc71.tlb"
+				TypeLibraryName=".\vc71\Release\vcfAll_vc71.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>

@@ -57,7 +57,8 @@
 				TypeLibraryName=".\Release\Help_vc71.tlb"
 				HeaderFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine=".\BuildHelp.bat"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -181,7 +182,7 @@
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="Help App.hhp">
+				RelativePath="Help">
 			</File>
 			<File
 				RelativePath="Index.hhk">
@@ -190,7 +191,7 @@
 				RelativePath="index.html">
 			</File>
 			<File
-				RelativePath="Table of Contents.hhc">
+				RelativePath="Table">
 			</File>
 		</Filter>
 	</Files>

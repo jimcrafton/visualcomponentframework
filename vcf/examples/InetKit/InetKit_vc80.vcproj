@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="InetKit"
-	ProjectGUID="{18BAE185-1B4C-4CB6-8BD2-07474DB2858A}"
-	RootNamespace="InetKit"
+	ProjectGUID="{3432A108-8E39-4DA3-A146-36D3A9D8707E}"
 	>
 	<Platforms>
 		<Platform
@@ -42,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/InetKit.tlb"
+				TypeLibraryName=".\Release/InetKit_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -55,7 +54,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release/InetKit.pch"
+				PrecompiledHeaderFile=".\Release/InetKit_vc80.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -96,7 +95,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/InetKit.bsc"
+				OutputFile=".\Release/InetKit_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -139,7 +138,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/InetKit.tlb"
+				TypeLibraryName=".\Debug/InetKit_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -151,7 +150,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/InetKit.pch"
+				PrecompiledHeaderFile=".\Debug/InetKit_vc80.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -194,7 +193,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/InetKit.bsc"
+				OutputFile=".\Debug/InetKit_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

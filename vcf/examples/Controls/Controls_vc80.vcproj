@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Controls"
-	ProjectGUID="{B8E4EC84-8667-435B-A436-01830630546D}"
+	ProjectGUID="{6E1A60D9-AF93-41FF-AC12-831B0C149DAB}"
 	>
 	<Platforms>
 		<Platform
@@ -14,10 +14,11 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\vc80\Debug\"
-			IntermediateDirectory=".\vc80\Debug\"
+			Name="Release|Win32"
+			OutputDirectory=".\vc80\Release"
+			IntermediateDirectory=".\vc80\Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -36,35 +37,36 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc80\Debug\Controls_vc80.tlb"
+				TypeLibraryName=".\vc80\Release/Controls_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="1"
+				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				PreprocessorDefinitions="WIN32;NDEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\vc80\Debug\Controls_vc80.pch"
-				AssemblerListingLocation=".\vc80\Debug\"
-				ObjectFile=".\vc80\Debug\"
-				ProgramDataBaseFileName=".\vc80\Debug\"
+				PrecompiledHeaderFile=".\vc80\Release/Controls_vc80.pch"
+				AssemblerListingLocation=".\vc80\Release/"
+				ObjectFile=".\vc80\Release/"
+				ProgramDataBaseFileName=".\vc80\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -72,16 +74,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc80\Debug\Controls_vc80.exe"
-				LinkIncremental="2"
+				OutputFile="vc80\Release\Controls_vc80.exe"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\vc80\Debug\Controls_vc80.pdb"
+				ProgramDatabaseFile=".\vc80\Release/Controls_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -94,6 +95,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\vc80\Release/Controls_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -109,10 +112,11 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\vc80\Release\"
-			IntermediateDirectory=".\vc80\Release\"
+			Name="Debug|Win32"
+			OutputDirectory=".\vc80\Debug"
+			IntermediateDirectory=".\vc80\Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -131,36 +135,36 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\vc80\Release\Controls_vc80.tlb"
+				TypeLibraryName=".\vc80\Debug/Controls_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
+				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL"
-				StringPooling="true"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
+				PreprocessorDefinitions="WIN32;_DEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\vc80\Release\Controls_vc80.pch"
-				AssemblerListingLocation=".\vc80\Release\"
-				ObjectFile=".\vc80\Release\"
-				ProgramDataBaseFileName=".\vc80\Release\"
+				PrecompiledHeaderFile=".\vc80\Debug/Controls_vc80.pch"
+				AssemblerListingLocation=".\vc80\Debug/"
+				ObjectFile=".\vc80\Debug/"
+				ProgramDataBaseFileName=".\vc80\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -168,15 +172,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\vc80\Release\Controls_vc80.exe"
-				LinkIncremental="1"
+				OutputFile="vc80\Debug\Controls_vc80.exe"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\vc80\Release\Controls_vc80.pdb"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=".\vc80\Debug/Controls_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -189,6 +194,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\vc80\Debug/Controls_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -214,18 +221,90 @@
 			<File
 				RelativePath="Controls.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="ControlsAbout.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="ControlsApplication.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MainWindow.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -256,6 +335,22 @@
 			<File
 				RelativePath="Controls.rc"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="iconSaveDown.bmp"

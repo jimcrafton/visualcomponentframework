@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="MFCIntegration1"
-	ProjectGUID="{A433CD87-69CE-4B20-96B0-1C31F7B267D9}"
+	ProjectGUID="{0F7F768B-5463-4B8D-90FB-6401A5BB46E4}"
 	Keyword="MFCProj"
 	>
 	<Platforms>
@@ -16,9 +16,10 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release\"
-			IntermediateDirectory=".\Release\"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -41,22 +42,23 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release\MFCIntegration1_vc80.tlb"
+				TypeLibraryName=".\Release/MFCIntegration1_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),./"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;USE_FOUNDATIONKIT_DLL"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Release\MFCIntegration1_vc80.pch"
-				AssemblerListingLocation=".\Release\"
-				ObjectFile=".\Release\"
-				ProgramDataBaseFileName=".\Release\"
+				RuntimeTypeInfo="true"
+				PrecompiledHeaderFile=".\Release/MFCIntegration1_vc80.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -65,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_AFXDLL;NDEBUG"
+				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -73,12 +75,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				OutputFile=".\Release\MFCIntegration1_vc80.exe"
+				OutputFile="Release\MFCIntegration1_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				ProgramDatabaseFile=".\Release\MFCIntegration1_vc80.pdb"
+				AdditionalLibraryDirectories="$(VCF_LIB)"
+				ProgramDatabaseFile=".\Release/MFCIntegration1_vc80.pdb"
 				SubSystem="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -91,6 +94,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/MFCIntegration1_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -107,9 +112,10 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug\"
-			IntermediateDirectory=".\Debug\"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -132,33 +138,32 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug\MFCIntegration1_vc80.tlb"
+				TypeLibraryName=".\Debug/MFCIntegration1_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.\"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),./"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;USE_FOUNDATIONKIT_DLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug\MFCIntegration1_vc80.pch"
-				AssemblerListingLocation=".\Debug\"
-				ObjectFile=".\Debug\"
-				ProgramDataBaseFileName=".\Debug\"
+				PrecompiledHeaderFile=".\Debug/MFCIntegration1_vc80.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_AFXDLL;_DEBUG"
+				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
 			/>
 			<Tool
@@ -166,15 +171,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="rpcrt4.lib"
-				OutputFile=".\Debug\MFCIntegration1_vc80.exe"
+				OutputFile="Debug\MFCIntegration1_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug\MFCIntegration1_vc80.pdb"
+				ProgramDatabaseFile=".\Debug/MFCIntegration1_vc80.pdb"
 				SubSystem="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -187,6 +192,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/MFCIntegration1_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -212,18 +219,88 @@
 			<File
 				RelativePath="ChildView.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MainFrm.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MFCIntegration1.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MFCIntegration1.rc"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="StdAfx.cpp"
@@ -233,7 +310,10 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -241,7 +321,10 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>

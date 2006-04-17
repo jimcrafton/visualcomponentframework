@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibJPEG"
-	ProjectGUID="{C27EFE62-79CC-4133-ADB7-48E09D122782}"
-	RootNamespace="LibJPEG"
+	ProjectGUID="{6EEE04E1-E1F4-4B72-B480-FEFEDA2E9017}"
 	>
 	<Platforms>
 		<Platform
@@ -43,11 +42,11 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NONSTDC_NO_DEPRECATE=1"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile=".\vc80\Debug/LibJPEG.pch"
+				PrecompiledHeaderFile=".\vc80\Debug/LibJPEG_vc80.pch"
 				AssemblerListingLocation=".\vc80\Debug/"
 				ObjectFile=".\vc80\Debug/"
 				ProgramDataBaseFileName="..\..\..\..\lib\LibJPEG_vc80_sd.pdb"
@@ -80,7 +79,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=""
+				OutputFile="../../../../lib/LibJPEG_vc80_sd.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -119,14 +118,14 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="../zlib,$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NONSTDC_NO_DEPRECATE=1"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\vc80\Release/LibJPEG.pch"
+				PrecompiledHeaderFile=".\vc80\Release/LibJPEG_vc80.pch"
 				AssemblerListingLocation=".\vc80\Release/"
 				ObjectFile=".\vc80\Release/"
-				ProgramDataBaseFileName="..\..\..\..\lib\LibJPEG_vc80_s.pdb"
+				ProgramDataBaseFileName=".\vc80\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>

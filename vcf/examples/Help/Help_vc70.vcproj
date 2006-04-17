@@ -55,7 +55,8 @@
 				TargetEnvironment="1"
 				TypeLibraryName=".\Release\Help_vc70.tlb"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine=".\BuildHelp.bat"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -156,14 +157,10 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
-		</Filter>
-		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="Help App.hhp">
+				RelativePath="Help">
 			</File>
 			<File
 				RelativePath="Index.hhk">
@@ -172,8 +169,12 @@
 				RelativePath="index.html">
 			</File>
 			<File
-				RelativePath="Table of Contents.hhc">
+				RelativePath="Table">
 			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
 		</Filter>
 	</Files>
 	<Globals>

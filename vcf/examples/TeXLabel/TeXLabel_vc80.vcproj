@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="TeXLabel"
-	ProjectGUID="{917D25CC-5924-40DF-9BC8-0A1CE6676FEC}"
+	ProjectGUID="{4583BAB3-DAFD-4543-A29E-55906A935C39}"
 	>
 	<Platforms>
 		<Platform
@@ -14,10 +14,109 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Generate YY and LL files|Win32"
-			OutputDirectory=".\TeXLabel___Win32_Generate_YY_and_LL_files\"
-			IntermediateDirectory=".\TeXLabel___Win32_Generate_YY_and_LL_files\"
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Release/TeXLabel_vc80.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				PreprocessorDefinitions="WIN32;NDEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				RuntimeTypeInfo="true"
+				PrecompiledHeaderFile=".\Release/TeXLabel_vc80.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
+				OutputFile="Release\TeXLabel_vc80.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(VCF_LIB)"
+				ProgramDatabaseFile=".\Release/TeXLabel_vc80.pdb"
+				SubSystem="2"
+				EntryPointSymbol="mainCRTStartup"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Release/TeXLabel_vc80.bsc"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Generate YY and LL files|Win32"
+			OutputDirectory=".\TeXLabel___Win32_Generate_YY_and_LL_files"
+			IntermediateDirectory=".\TeXLabel___Win32_Generate_YY_and_LL_files"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -40,27 +139,28 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\TeXLabel___Win32_Generate_YY_and_LL_files\TeXLabel_vc80.tlb"
+				TypeLibraryName=".\TeXLabel___Win32_Generate_YY_and_LL_files/TeXLabel_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
 				StringPooling="true"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\TeXLabel___Win32_Generate_YY_and_LL_files\TeXLabel_vc80.pch"
-				AssemblerListingLocation=".\TeXLabel___Win32_Generate_YY_and_LL_files\"
-				ObjectFile=".\TeXLabel___Win32_Generate_YY_and_LL_files\"
-				ProgramDataBaseFileName=".\TeXLabel___Win32_Generate_YY_and_LL_files\"
+				PrecompiledHeaderFile=".\TeXLabel___Win32_Generate_YY_and_LL_files/TeXLabel_vc80.pch"
+				AssemblerListingLocation=".\TeXLabel___Win32_Generate_YY_and_LL_files/"
+				ObjectFile=".\TeXLabel___Win32_Generate_YY_and_LL_files/"
+				ProgramDataBaseFileName=".\TeXLabel___Win32_Generate_YY_and_LL_files/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -75,15 +175,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\TeXLabel___Win32_Generate_YY_and_LL_files\TeXLabel_vc80.exe"
+				OutputFile="TeXLabel___Win32_Generate_YY_and_LL_files\TeXLabel_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\TeXLabel___Win32_Generate_YY_and_LL_files\TeXLabel_vc80.pdb"
+				ProgramDatabaseFile=".\TeXLabel___Win32_Generate_YY_and_LL_files/TeXLabel_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -96,6 +196,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\TeXLabel___Win32_Generate_YY_and_LL_files/TeXLabel_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -112,9 +214,10 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug\"
-			IntermediateDirectory=".\Debug\"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -137,24 +240,25 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug\TeXLabel_vc80.tlb"
+				TypeLibraryName=".\Debug/TeXLabel_vc80.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,_DEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug\TeXLabel_vc80.pch"
-				AssemblerListingLocation=".\Debug\"
-				ObjectFile=".\Debug\"
-				ProgramDataBaseFileName=".\Debug\"
+				PrecompiledHeaderFile=".\Debug/TeXLabel_vc80.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -169,16 +273,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Debug\TeXLabel_vc80.exe"
+				OutputFile="Debug\TeXLabel_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug\TeXLabel_vc80.pdb"
+				ProgramDatabaseFile=".\Debug/TeXLabel_vc80.pdb"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -191,6 +295,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=".\Debug/TeXLabel_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -200,102 +306,6 @@
 			/>
 			<Tool
 				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\Release\"
-			IntermediateDirectory=".\Release\"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\Release\TeXLabel_vc80.tlb"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
-				PreprocessorDefinitions="WIN32,NDEBUG,USE_FOUNDATIONKIT_DLL,USE_GRAPHICSKIT_DLL,USE_APPLICATIONKIT_DLL"
-				StringPooling="true"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Release\TeXLabel_vc80.pch"
-				AssemblerListingLocation=".\Release\"
-				ObjectFile=".\Release\"
-				ProgramDataBaseFileName=".\Release\"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-				CompileAs="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Release\TeXLabel_vc80.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release\TeXLabel_vc80.pdb"
-				SubSystem="2"
-				EntryPointSymbol="mainCRTStartup"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-				ExcludedFromBuild="true"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -312,10 +322,66 @@
 			<File
 				RelativePath="TeXLabel.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Generate YY and LL files|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="TeXTypes.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Generate YY and LL files|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -351,14 +417,78 @@
 						Outputs="$(InputName).scan.cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="TeXLabel.scan.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Generate YY and LL files|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="TeXLabel.tab.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Generate YY and LL files|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="TeXLabel.yy"
@@ -368,8 +498,16 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="bison -d $(InputPath) move $(InputName).tab.cc $(InputName).tab.cpp move $(InputName).tab.hh $(InputName).tab.hpp&#x0D;&#x0A;"
+						CommandLine="bison -d $(InputPath)&#x0D;&#x0A;move $(InputName).tab.cc $(InputName).tab.cpp&#x0D;&#x0A;move $(InputName).tab.hh $(InputName).tab.hpp&#x0D;&#x0A;"
 						Outputs="TeXLabel.tab.cpp;TeXLabel.tab.hpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
 			</File>

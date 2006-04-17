@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Browser"
-	ProjectGUID="{406ACD25-2CE1-46CD-9A2D-31C62D312AB0}"
-	RootNamespace="Browser"
+	ProjectGUID="{E6D89C39-744A-4309-99F1-1D3FA2876DC8}"
 	>
 	<Platforms>
 		<Platform
@@ -76,7 +75,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="Release\Browser_vc80.exe"
+				OutputFile="Browser_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
@@ -174,7 +173,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="Debug\Browser_vc80.exe"
+				OutputFile="Browser_vc80.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
@@ -243,13 +242,49 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
-		</Filter>
-		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+			>
+			<File
+				RelativePath="Resources\back.png"
+				>
+			</File>
+			<File
+				RelativePath="Resources\chance_of_rain.gif"
+				>
+			</File>
+			<File
+				RelativePath="Resources\customUI.html"
+				>
+			</File>
+			<File
+				RelativePath="Resources\forward.png"
+				>
+			</File>
+			<File
+				RelativePath="Resources\go.png"
+				>
+			</File>
+			<File
+				RelativePath="Resources\home.png"
+				>
+			</File>
+			<File
+				RelativePath="Resources\mostly_sunny.gif"
+				>
+			</File>
+			<File
+				RelativePath="Resources\refresh.png"
+				>
+			</File>
+			<File
+				RelativePath="Resources\stop.png"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl"
 			>
 		</Filter>
 	</Files>
