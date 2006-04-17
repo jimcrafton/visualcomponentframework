@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="vcfAll"
-	ProjectGUID="{A503D5C5-0755-48CA-A345-25672C4B986F}"
+	ProjectGUID="{C59F9186-362C-4020-AFEC-F9F42BDD3723}"
 	Keyword="MakeFileProj"
 	>
 	<Platforms>
@@ -16,8 +16,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory=".\Debug"
+			OutputDirectory=".\vc80\Debug"
+			IntermediateDirectory=".\vc80\Debug"
 			ConfigurationType="10"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -31,7 +31,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/vcfAll_vc80.tlb"
+				TypeLibraryName=".\vc80\Debug/vcfAll_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -40,8 +40,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release"
-			IntermediateDirectory=".\Release"
+			OutputDirectory=".\vc80\Release"
+			IntermediateDirectory=".\vc80\Release"
 			ConfigurationType="10"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -55,7 +55,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Release/vcfAll_vc80.tlb"
+				TypeLibraryName=".\vc80\Release/vcfAll_vc80.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
