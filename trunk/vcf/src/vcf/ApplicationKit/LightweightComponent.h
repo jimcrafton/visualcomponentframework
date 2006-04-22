@@ -78,6 +78,9 @@ public:
 
 	virtual void translateFromScreenCoords( Point* pt );
 
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 	/**
 	* sets the control's border.
 	* Called by the control when it's border object changes.

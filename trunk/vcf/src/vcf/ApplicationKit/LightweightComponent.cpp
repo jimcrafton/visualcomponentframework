@@ -342,6 +342,16 @@ void LightweightComponent::translateFromScreenCoords( Point* pt )
 	}
 }
 
+void LightweightComponent::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	graphicsContext->setClippingRect( childClipRect );
+}
+
+void LightweightComponent::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	graphicsContext->setClippingRect( oldClipRect );
+}
+
 
 /**
 *CVS Log info
