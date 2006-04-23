@@ -61,11 +61,10 @@ where you installed the VCF.
 
 
 
-
-
 #include "thirdparty/win32/Microsoft/htmlhelp.h"
 
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+
 
 
 typedef HWND  (WINAPI *HtmlHelpW_Func)(HWND hwndCaller, LPCWSTR pszFile, UINT uCommand, DWORD_PTR dwData );
@@ -73,9 +72,11 @@ typedef HWND (WINAPI *HtmlHelpA_Func)(HWND hwndCaller, LPCSTR pszFile, UINT uCom
 
 
 
+
 static HtmlHelpW_Func HtmlHelp_W = NULL;
 static HtmlHelpA_Func HtmlHelp_A = NULL;
 static HMODULE HtmlHelpLibHandle = NULL;
+
 
 
 
@@ -2951,19 +2952,21 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 LRESULT CALLBACK Win32ToolKit::mouseHookProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
+	Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
+
 	if ( NULL != toolTipWatcher ) {
 		if ( WM_MOUSEMOVE == wParam ) {
 			if ( 0 == ToolTipTimerID ) {
-				Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
-				
 				ToolTipTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMERID, 500, NULL );
-			}
+			}			
 		}
 		else {
-			Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
-			
 			ToolTipTimoutTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMEOUT_TIMERID, 1, NULL );
 		}
+	}
+
+	if ( WM_LBUTTONDOWN == wParam ) {
+		toolkit->setWhatsThisHelpActive(false);
 	}
 
 	return CallNextHookEx( Win32ToolKit_mouseHook, nCode, wParam, lParam );
@@ -3026,7 +3029,8 @@ ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 Win32ToolKit::Win32ToolKit():
 	UIToolkit(),
 	dummyParentWnd_(NULL),
-	runEventCount_(0)
+	runEventCount_(0),
+	whatsThisHelpActive_(false)
 
 {
 	if ( System::isUnicodeEnabled() ) {
