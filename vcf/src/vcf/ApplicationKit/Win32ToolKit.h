@@ -213,6 +213,15 @@ public:
 	virtual void internal_systemSettingsChanged();
 
 	static HINSTANCE getInstanceHandle();
+
+
+	bool getWhatsThisHelpActive() {
+		return whatsThisHelpActive_;
+	}
+
+	void setWhatsThisHelpActive( bool val ) {
+		whatsThisHelpActive_ = val;
+	}
 protected:
 
 	void createDummyParentWindow();
@@ -230,6 +239,7 @@ protected:
 		EventHandler* handler_;
 	};
 
+	bool whatsThisHelpActive_;
 	std::map<UINT,TimerRec*> timerMap_;
 
 	TimerRec* findTimerRec( UINT id );

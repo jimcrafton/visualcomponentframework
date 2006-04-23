@@ -199,6 +199,19 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 		}
 		break;*/
 
+		case WM_SYSCOMMAND : {
+			UINT cmdType = wParam;
+			if ( SC_CONTEXTHELP == cmdType ) {
+				StringUtils::trace( "SC_CONTEXTHELP\n" );
+
+				Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
+				toolkit->setWhatsThisHelpActive( true );
+
+			}
+							 
+		}
+		break;
+
 		case WM_CLOSE:{
 			Dialog* dlg = (Dialog*)peerControl_;
 
@@ -674,5 +687,3 @@ DWORD Win32Dialog::generateStyleForSetParent(VCF::Control* parent)
 *to facilitate change tracking
 *
 */
-
-

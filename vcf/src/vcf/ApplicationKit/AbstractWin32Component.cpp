@@ -759,6 +759,9 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 			UIToolkit::displayContextHelpForControl( peerControl_ );
 
+			Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
+			toolkit->setWhatsThisHelpActive( false );
+
 			wndProcResult = 1;
 			result = true;
 		}
@@ -1469,7 +1472,17 @@ String AbstractWin32Component::toString()
 
 void AbstractWin32Component::setCursor( Cursor* cursor )
 {
-	if ( NULL != cursor ) {
+	Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
+
+	//this is here to override the 
+	//default cursor so that we can see the help cursor
+	//if what's-up help is triggered, i.e. the user 
+	//has pressed the little question mark button
+	//on a dialog title bar.
+	if ( toolkit->getWhatsThisHelpActive() ) {
+		::SetCursor( ::LoadCursor(NULL,IDC_HELP) );
+	}
+	else if ( NULL != cursor ) {
 		::SetCursor( (HCURSOR)cursor->getPeer()->getCursorHandleID() );
 	}
 }
