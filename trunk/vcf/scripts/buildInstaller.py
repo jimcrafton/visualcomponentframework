@@ -102,13 +102,13 @@ def main():
 
 	fileTest = re.compile( reStr, re.IGNORECASE )
 	
-	cvsTest = re.compile( ".*\/CVS" )
+	svnTest = re.compile( ".*\/\.svn" )
 
 	buildLogTest = re.compile( "BuildLog.htm", re.IGNORECASE )
 	
 	for dir in SRC_DIRS :
 		for root, dirs, files in os.walk( dir ):
-			if not cvsTest.match( root ) :
+			if not svnTest.match( root ) :
 				print ( 'Scanning ' + root + "..." ) 
 				for afile in files :
 					if  fileTest.match( afile ) and not buildLogTest.match( afile ) :
@@ -131,7 +131,7 @@ def main():
 	exampleFiles = []
 	
 	for root, dirs, files in os.walk( "../../examples" ):
-		if not cvsTest.match( root ) :
+		if not svnTest.match( root ) :
 			print ( 'Scanning Examples ' + root + "..." ) 
 			for afile in files :
 				if  fileTest.match( afile ) :
