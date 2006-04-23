@@ -289,50 +289,66 @@ void Win32Image::loadFromBMPHandle( HBITMAP bitmap )
 
 void Win32Image::internal_saveToFile( const String& fileName )
 {
-#ifdef VCF_CW
-	FILE* f = fopen( fileName.ansi_c_str(), "w" );
-#else
-	FILE* f = _wfopen( fileName.c_str(), L"w" );
-#endif
 
-	bool bitFields = (bmpInfo_.bmiHeader.biBitCount == 16);
+	/**
+	NOTE!!!!
+	It's important that this get's written out with "wb", not 
+	just "w" here.
+	*/
+#ifdef VCF_CW
+	FILE* f = fopen( fileName.ansi_c_str(), "wb" );
+#else
+	FILE* f = _wfopen( fileName.c_str(), L"wb" );
+#endif
 
 	// write the file header
 
+	const int bitsPerPix = 24;
 	//store width for 24bit image NOT 32
-	DWORD width = ((((24 * getWidth()) + 31) / 32) * 4);
+	DWORD width = ((((bitsPerPix * getWidth()) + 31) / 32) * 4);
 
 	DWORD size = getHeight() * width;
 
+	BITMAPINFOHEADER bih = {0};
+	
+	bih.biHeight = getHeight();
+	bih.biWidth = getWidth();
+	
+	bih.biClrImportant = 0;
+	bih.biClrUsed = 0;
+
+	bih.biPlanes = 1;
+	bih.biSizeImage = size;
+	bih.biBitCount = bitsPerPix;
+	bih.biSize = sizeof(BITMAPINFOHEADER);
+
+	bih.biCompression = BI_RGB;
+
+	bih.biXPelsPerMeter = 0;
+	bih.biYPelsPerMeter = 0;
+
+
 	BITMAPFILEHEADER bitmapfileheader;
 	bitmapfileheader.bfType = 0x4D42;
-	bitmapfileheader.bfSize = bmpInfo_.bmiHeader.biSize + size + sizeof(BITMAPFILEHEADER);
+	bitmapfileheader.bfSize = sizeof(BITMAPFILEHEADER) + size;
 
-	bitmapfileheader.bfOffBits = (DWORD) sizeof(bitmapfileheader) + bmpInfo_.bmiHeader.biSize;
+	bitmapfileheader.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) + bih.biSize;
 		//sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) +
 		//0 * sizeof(RGBQUAD);
 
 	bitmapfileheader.bfReserved1 = 0;
 	bitmapfileheader.bfReserved2 = 0;
 
-	if (bitFields) {
-		bitmapfileheader.bfSize += 3 * sizeof(DWORD);
-		bitmapfileheader.bfOffBits += 3 * sizeof(DWORD);
-	}
-
 	fwrite( &bitmapfileheader, sizeof(BITMAPFILEHEADER), 1, f );
+	
+
 
 	// write the info header
+	fwrite( &bih, bih.biSize, 1, f );
 
-	BITMAPINFOHEADER bih = {0};
-	memcpy( &bih, &bmpInfo_.bmiHeader, sizeof(bih) );
-	bih.biSizeImage = size;
-	bih.biBitCount = 24;
-	bih.biHeight = abs(bih.biHeight);
 
-	bih.biCompression = (bitFields) ? 3 : 0;
 
-	fwrite( &bih, sizeof(BITMAPINFOHEADER), 1, f );
+	
 
 	// write the palette here, but we'll do nothing since we don't support palettes
 
@@ -341,31 +357,25 @@ void Win32Image::internal_saveToFile( const String& fileName )
 	SysPixelType* bits = getImageBits()->pixels_;
 	unsigned char* row = new unsigned char[width];
 	unsigned long imgWidth = getWidth();
-	int xx = 0;
 
 	// write the bitmap data
 
 	unsigned char* tmpRow = row;
-	for ( int y=height-1;y>=0;y-- ) {
-		memset( row, 0, width * sizeof(unsigned char) );
+	for ( int y=height-1;y>=0;y-- ) {		
 		tmpRow = row;
-		for (unsigned long x=0;x<imgWidth;x++ ) {
-			if ( xx < width ) {
-				SysPixelType& pix = bits[y*imgWidth + x];
-				*tmpRow = pix.b;
-				tmpRow++;
-				*tmpRow = pix.g;
-				tmpRow++;
-				*tmpRow = pix.r;
-				tmpRow++;
-				xx += 3;
-			}
+		for (unsigned long x=0;x<imgWidth;x++ ) {		
+			SysPixelType& pix = bits[y*imgWidth + x];
+			
+			*tmpRow = pix.b;
+			tmpRow++;
+			*tmpRow = pix.g;
+			tmpRow++;
+			*tmpRow = pix.r;
+			tmpRow++;
 		}
 		fwrite( row, width, 1, f );
-		xx = 0;
 	}
 	delete []row;
-
 
 	fclose( f );
 }
