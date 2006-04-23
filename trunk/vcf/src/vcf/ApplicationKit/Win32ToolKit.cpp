@@ -2716,8 +2716,10 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			*/
 			static bool changeStyle = true;
 
+			Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+
 			if ( changeStyle ) {
-				Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+				
 				long style = ::GetWindowLong( toolkit->dummyParentWnd_, GWL_STYLE );
 				if ( style & WS_POPUP ) {
 					style &= ~WS_POPUP;
@@ -2748,6 +2750,8 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				::KillTimer( hWnd, TOOLTIP_TIMERID );
 				ToolTipTimerID = 0;
 			}
+
+			toolkit->setWhatsThisHelpActive( false );
 		}
 		break;
 
