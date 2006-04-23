@@ -15,6 +15,9 @@ where you installed the VCF.
 
 
 
+
+
+
 using namespace VCF;
 
 AbstractApplication::AbstractApplication():
