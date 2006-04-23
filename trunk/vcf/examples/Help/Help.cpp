@@ -3,8 +3,94 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
+
 
 using namespace VCF;
+
+class MyDialog : public Dialog {
+public:
+	MyDialog() {
+
+		setWidth( 350 );
+		setHeight( 150 );
+
+		Panel* pane1 = new Panel();
+		pane1->setBorder( NULL );
+
+		HorizontalLayoutContainer* container = new HorizontalLayoutContainer();		
+		pane1->setContainer( container );
+
+		
+
+		Label* lable1 = new Label();
+		lable1->setCaption( "Name:" );
+		pane1->add( lable1 );
+
+		TextControl* edit1 = new TextControl();
+		//set your what's this help description here.
+		edit1->setWhatThisHelpString( "Type in your name here." );
+
+		pane1->add( edit1 );
+
+
+		Label* lable2 = new Label();
+		lable2->setCaption( "Are you Mergatroid?:" );
+		pane1->add( lable2 );
+
+		CheckBoxControl* checkBox = new CheckBoxControl();
+		checkBox->setCaption( "Yes I am!" );
+		
+		//set your what's this help description here.
+		checkBox->setWhatThisHelpString( "This indicates whether or not you're a Mergatroid. \nThink carefully before answering." );
+
+		pane1->add( checkBox );
+
+		add( pane1, AlignClient );
+
+		CommandButton* okBtn = new CommandButton();
+
+		Panel* bottom = new Panel();
+		bottom->setBorder( NULL );
+
+		bottom->setHeight( okBtn->getPreferredHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta) * 2 );
+		
+
+		HorizontalLayoutContainer* container2 = new HorizontalLayoutContainer();
+		container2->setLeftBorderWidth( getWidth() / 2.0 );	
+
+		double width = getWidth() / 2.0;
+		width -= UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
+		width -= container2->getColumnTweenWidth( 0 );
+
+		container2->setColumnWidth( 0, width / 2.0 );
+		
+		bottom->setContainer( container2 );
+
+
+		
+		
+		bottom->add( okBtn );
+
+		CommandButton* cancelBtn = new CommandButton();
+		bottom->add( cancelBtn );
+
+		okBtn->setCaption( "OK" );
+		okBtn->setCommandType ( BC_OK );
+		okBtn->setDefault(true);
+		okBtn->setWhatThisHelpString( "Click this to accept the changes and close the dialog!" );
+
+		cancelBtn->setCaption( "Cancel" );
+		cancelBtn->setCommandType ( BC_CANCEL );
+		cancelBtn->setWhatThisHelpString( "Click this close the dialog without relaying any information to the SSDC*!\n\n\n\t*Super Secret Decoder Club" );
+
+		add( bottom, AlignBottom );
+
+		edit1->setFocused();
+
+		setCaption( "Mergatroid Questionaire" );
+	}
+};
 
 
 class HelpWindow : public Window {
@@ -39,6 +125,19 @@ public:
 		showHelpContents->ButtonClicked += new GenericEventHandler<HelpWindow>( this, &HelpWindow::showContents, "HelpWindow::showContents" );
 		showHelpIndex->ButtonClicked += new GenericEventHandler<HelpWindow>( this, &HelpWindow::showIndex, "HelpWindow::showIndex" );
 		
+
+
+		CommandButton* showDlg = new CommandButton();
+		showDlg->setBounds( 20, 120, 150, showDlg->getPreferredHeight() );
+		showDlg->setCaption( "Show Dialog..." );
+		showDlg->ButtonClicked += 
+			new GenericEventHandler<HelpWindow>( this, &HelpWindow::showDialog, "HelpWindow::showDialog" );
+
+		add( showDlg );
+
+		
+
+
 
 		Basic3DBorder* b = new Basic3DBorder(this);
 
@@ -107,6 +206,13 @@ public:
 	Label* l4;
 
 	virtual ~HelpWindow(){};
+
+	void showDialog( Event* e ) {
+		MyDialog dialog;
+
+		dialog.showModal();
+	}
+
 
 	void onContextHelp( Event* e ) {
 		HelpEvent* he = (HelpEvent*)e;
