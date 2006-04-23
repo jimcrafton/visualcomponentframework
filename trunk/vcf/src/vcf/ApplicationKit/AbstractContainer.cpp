@@ -314,6 +314,7 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 		VCF_ASSERT( NULL != child );
 
 		if ( child->isLightWeight() && child->getVisible() ){
+			
 			bounds = child->getBounds();
 			
 

@@ -257,7 +257,6 @@ void OSXLightweightControl::translateToScreenCoords( Point* pt )
 	}	
 }
 
-
 void OSXLightweightControl::translateFromScreenCoords( Point* pt )
 {
 	Size offset;
@@ -309,6 +308,42 @@ void OSXLightweightControl::postChildPaint( GraphicsContext* graphicsContext, Co
 {
 	
 }
-
+*initial checkin of merge from 0.6.9 dev branch.
+*
+*Revision 1.5.2.2  2006/01/09 02:22:31  ddiego
+*more osx code
+*
+*Revision 1.5.2.1  2005/11/10 04:43:27  ddiego
+*updated the osx build so that it
+*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
+*
+*Revision 1.5  2005/07/09 23:14:54  ddiego
+*merging in changes from devmain-0-6-7 branch.
+*
+*Revision 1.4  2005/01/08 20:52:46  ddiego
+*fixed some glitches in osx impl.
+*
+*Revision 1.3.2.1  2005/05/08 19:55:31  ddiego
+*osx updates, not yet functional.
+*
+*Revision 1.3  2004/12/01 04:31:37  ddiego
+*merged over devmain-0-6-6 code. Marcello did a kick ass job
+*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
+*that he found. Many, many thanks for this Marcello.
+*
+*Revision 1.2.2.1  2004/10/18 03:10:30  ddiego
+*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
+*
+*Revision 1.2  2004/08/07 17:15:07  ddiego
+*added missing osx files and projects
+*
+*Revision 1.1.4.1  2004/08/07 16:32:50  ddiego
+*added missing files
+*
+*Revision 1.1.2.1  2004/07/06 03:34:56  ddiego
+*added new files for osx update, and added new
+*project template files for creating VCF based projects with XCode.
+*
+*/
 
 
