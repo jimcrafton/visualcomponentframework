@@ -94,9 +94,9 @@ void SliderControl::setTickFrequency( const long& val )
 double SliderControl::getPreferredWidth()
 {
 	if ( SliderControl::doVertical == orientation_ ) {
-		Size thumbSize = UIToolkit::getUIMetricsManager()->getDefaultSliderThumbDimensions();
+		double h = UIToolkit::getUIMetricValue( UIMetricsManager::mtVerticalScrollbarWidth );
 
-		return thumbSize.height_ * 2;// UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+		return h * 2;// UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
 	}
 	else {
 		return 100;
@@ -111,8 +111,8 @@ double SliderControl::getPreferredHeight()
 		return 100;
 	}
 	else {
-		Size thumbSize = UIToolkit::getUIMetricsManager()->getDefaultSliderThumbDimensions();
-		return thumbSize.height_ * 2;
+		double h = UIToolkit::getUIMetricValue( UIMetricsManager::mtHorizontalProgressHeight );
+		return h * 2;
 	}
 
 	return 0.0;
@@ -144,7 +144,14 @@ void SliderControl::paint( GraphicsContext* ctx )
 	sliderRect = clientBounds;
 
 
-	Size thumbSize = UIToolkit::getUIMetricsManager()->getDefaultSliderThumbDimensions();
+	Size thumbSize;
+	if ( state.isVertical() ) {
+		thumbSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtVerticalSliderThumbSize );
+	}
+	else {
+		thumbSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtHorizontalSliderThumbSize );
+	}
+	
 
 	if ( state.isVertical() ) {
 		sliderRect.inflate( -2, -thumbSize.width_/2.0 );
@@ -168,19 +175,6 @@ void SliderControl::paint( GraphicsContext* ctx )
 	}
 
 	tickMarkRect = sliderRect;
-/*
-	thumbRect = sliderRect;
-	if ( info.vertical ) {
-		thumbRect.top_ = thumbRect.bottom_ - thumbSize.width_;
-
-		thumbRect.offset( 0, (int)(thumbSize.width_/2)-(int)((position_/(maxVal_-minVal_))*sliderRect.getHeight()) );
-	}
-	else {
-		thumbRect.right_ = thumbRect.left_ + thumbSize.width_;
-
-		thumbRect.offset( (int)(((position_-minVal_)/(maxVal_-minVal_))*sliderRect.getWidth()) - (int)(thumbSize.width_/2), 0 );
-	}	
-*/
 
 	ctx->drawThemeTickMarks( &tickMarkRect, state );
 
@@ -238,7 +232,13 @@ void SliderControl::movePosition( MouseEvent* e )
 	double delta = 0;
 	double range = maxVal_ - minVal_;
 
-	Size thumbSize = UIToolkit::getUIMetricsManager()->getDefaultSliderThumbDimensions();
+	Size thumbSize;
+	if ( SliderControl::doVertical == orientation_ ) {
+		thumbSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtVerticalSliderThumbSize );
+	}
+	else {
+		thumbSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtHorizontalSliderThumbSize );
+	}
 
 
 	double newPos = 0.0;

@@ -123,10 +123,10 @@ public:
 
 	virtual void setImageIndex( const long& imageIndex );
 
-	virtual bool canPaint() {
-		return false;
-	}
+	virtual bool canPaint();
 	
+	virtual void setCanPaint( const bool& val );
+
 	virtual void setBounds( Rect* bounds );
 
 	/**

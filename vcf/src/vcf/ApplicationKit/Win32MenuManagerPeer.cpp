@@ -82,8 +82,16 @@ void Win32MenuManagerPeer::menuItemChanged( int menuItemEventType, MenuItem* ite
 		}
 		break;
 
-		case MenuItem::miStateChanged : {
+		
 
+		case MenuItem::miStateChanged : {
+			
+		}
+		break;
+
+		case MenuItem::miCanPaintStateChanged : {
+			Win32MenuItem* peer = (Win32MenuItem*)item->getPeer();
+			peer->changePaintState();
 		}
 		break;
 

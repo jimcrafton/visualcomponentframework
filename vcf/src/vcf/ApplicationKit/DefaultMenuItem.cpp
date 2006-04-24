@@ -491,6 +491,27 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 	}
 }
 
+bool DefaultMenuItem::canPaint()
+{
+	return (itemState_ & Item::idsCanPaint) ? true : false;
+}
+
+void DefaultMenuItem::setCanPaint( const bool& val )
+{
+	if ( val ) {
+		itemState_ |= Item::idsCanPaint;
+	}
+	else {
+		itemState_ &= ~Item::idsCanPaint;
+	}
+
+	Menu* owner = getMenuOwner();
+	if ( NULL != owner ) {
+		owner->itemChanged( MenuItem::miCanPaintStateChanged, this );
+	}
+}
+
+
 bool DefaultMenuItem::isSeparator()
 {
 	return (itemState_ & MenuItem::mdsSeparator) ? true : false;;

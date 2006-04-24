@@ -25,15 +25,11 @@ namespace VCF {
 class ColumnLayoutContainer : public StandardContainer {
 public:
 	ColumnLayoutContainer(): columnCount_(0) {
-		UIMetricsManager* metricsMgr = UIToolkit::getUIMetricsManager();
-		setBorderWidth( metricsMgr->getPreferredSpacingFor(UIMetricsManager::stWindowBorderDelta) );
-
+		setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
 	}
 
 	ColumnLayoutContainer(Component* owner): StandardContainer(owner), columnCount_(0) {
-		UIMetricsManager* metricsMgr = UIToolkit::getUIMetricsManager();
-		setBorderWidth( metricsMgr->getPreferredSpacingFor(UIMetricsManager::stWindowBorderDelta) );
-
+		setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
 	}
 
 	enum {
@@ -113,13 +109,13 @@ public:
 
 			controlBounds.left_ = controlBounds.right_;
 			controlBounds.left_ +=
-					UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlHorizontalSpacing);
+				UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 
 			col ++;
 			if ( col >= columnCount_ ) {
 				controlBounds.top_ = controlBounds.bottom_;
 				controlBounds.top_ +=
-					UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stControlVerticalSpacing);
+					UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing );
 
 
 				controlBounds.left_ = clientBounds.left_;

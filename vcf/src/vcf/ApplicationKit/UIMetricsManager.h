@@ -44,92 +44,41 @@ namespace VCF {
 			ftToolTipFont
 		};
 
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		enum HeightType {
+		enum MetricType {
 			/**
 			returns the height for any label control. This should
 			be used for the actual control height for radio and
 			check boxes as well, with the actual height of the
 			radio or check box rect being indicated by the htRadioBoxHeight
 			or htCheckBoxHeight values
-			*/
-			htLabelHeight = 0,
+			*/			
+			mtLabelHeight = 0,
+
 			/**
 			returns the default height for combo box, or drop down box controls.
 			*/
-			htComboBoxHeight,
-
+			mtComboBoxHeight,
 			/**
 			returns the default item height for item in a list like control, such as hte
 			list box control, or the popup list for a combo box
 			*/
-			htListItemHeight,
-
+			mtListItemHeight,	
 			/**
 			returns the default height for a button control, typically used by the
 			command button
 			*/
-			htButtonHeight,
-
+			mtButtonHeight,
 			/**
 			returns the default height for a radio box. The radio box is bounded by a
 			square, so the height and width for the radio box are indicated by this
 			value
 			*/
-			htRadioBoxHeight,
-
+			mtRadioBoxHeight,
 			/**
 			returns the default height for a check box. The check box is bounded by a
 			square, so the height and width for the radio box are indicated by this
 			value
 			*/
-			htCheckBoxHeight,
-			htToolTipHeight,
-			htSeparatorHeight,
-
-			/**
-			returns the default height for an informational control such as a status bar or
-			a progress bar. This is also referred to as a "placard" in Apple's HIG
-			*/
-			htInformationalControl,
-			htLast
-		};
-
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		enum SpacingType {
-			stWindowBorderDelta = htLast,
-			stContainerBorderDelta,
-			stControlVerticalSpacing,
-			stControlHorizontalSpacing,
-
-			/**
-			returns the appropriate value for the space between an informational
-			control (like a status label) and the control above it
-			*/
-			stInformationControlTopSpacer,
-
-			/**
-			returns the appropriate value for the space between an informational
-			control (like a status label) and the control below it
-			*/
-			stInformationControlBottomSpacer
-		};
-
-		enum MetricType {
-			mtLabelHeight = 0,
-			mtComboBoxHeight,
-			mtListItemHeight,			
-			mtButtonHeight,
-			mtRadioBoxHeight,
 			mtCheckBoxHeight,
 			mtToolTipHeight,
 			mtSeparatorHeight,
@@ -138,6 +87,10 @@ namespace VCF {
 			mtTextControlHeight,
 			mtVerticalProgressWidth,
 			mtHorizontalProgressHeight,
+			/**
+			returns the default height for an informational control such as a status bar or
+			a progress bar. This is also referred to as a "placard" in Apple's HIG
+			*/
 			mtInformationalControlHeight, //status bar
 			mtStatusHeight = mtInformationalControlHeight,
 			mtVerticalScrollbarThumbWidth,
@@ -149,7 +102,15 @@ namespace VCF {
 			mtContainerBorderDelta,
 			mtControlVerticalSpacing,
 			mtControlHorizontalSpacing,
+			/**
+			returns the appropriate value for the space between an informational
+			control (like a status label) and the control above it
+			*/
 			mtInformationControlTopSpacer,
+			/**
+			returns the appropriate value for the space between an informational
+			control (like a status label) and the control below it
+			*/
 			mtInformationControlBottomSpacer,			
 			mtMenuSize,
 			mtVerticalSliderThumbSize,
@@ -169,59 +130,9 @@ namespace VCF {
 		virtual ~UIMetricsManager(){};
 
 		virtual Font getDefaultFontFor( const FontType& type ) = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual double getDefaultHeightFor( const HeightType& type ) = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual double getPreferredSpacingFor( const SpacingType& type ) = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual Size getDefaultSliderThumbDimensions() = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual Size getDefaultMenuItemDimensions( const String& caption ) = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual Size getDefaultVerticalScrollButtonDimensions() = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual Size getDefaultHorizontalScrollButtonDimensions() = 0;
-
-		/**
-		These are going away in the next release, please don't use them any more.
-		Instead use the getMetricXXX functions.
-		@deprecated
-		*/
-		virtual Size getDefaultTabDimensions( const String& caption ) = 0;
-
-
-		/**
 		
+		/**
+
 		Returns a double value for a UI metric, such as the standard height of the 
 		combox box control. The text is an optional parameter that may be taken
 		into consideration when calculating teh retrun value by certain 

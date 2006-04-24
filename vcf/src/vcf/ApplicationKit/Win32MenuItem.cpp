@@ -704,6 +704,36 @@ void Win32MenuItem::setAsSeparator( const bool& isSeperator )
 	}
 }
 
+void Win32MenuItem::changePaintState()
+{
+	MenuItem* parent = getParent();
+	if ( NULL != parent ){
+		MenuItemPeer* parentPeer = parent->getPeer();
+		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		
+		if ( NULL != menuHandle ){
+			
+			MENUITEMINFO info = {0};
+			info.cbSize = sizeof(MENUITEMINFO);
+			info.fMask = MIIM_TYPE;
+			
+			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
+					
+				bool ownerDrawn = (info.fType & MFT_OWNERDRAW) ? true : false;
+				if ( ownerDrawn != menuItem_->canPaint() ) {
+					if ( menuItem_->canPaint() ) {
+						info.fType |= MFT_OWNERDRAW;
+					}
+					else {
+						info.fType &= ~MFT_OWNERDRAW;
+					}
+					SetMenuItemInfo( menuHandle, itemId_, FALSE, &info );
+				}
+			}
+		}
+	}
+}
+
 void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 {
 

@@ -56,6 +56,7 @@ public:
 		miRadioStateChanged,
 		miVisibleStateChanged,
 		miEnabledStateChanged,
+		miCanPaintStateChanged,
 		miItemClicked = MENU_ITEM_EVENT_CLICKED,
 		miItemUpdate = MENU_ITEM_EVENT_UPDATED
 	};
@@ -108,6 +109,8 @@ public:
 	virtual bool isChecked() = 0;
 
 	virtual void setChecked( const bool& checked ) = 0;
+
+	virtual void setCanPaint( const bool& val ) = 0;
 
 	virtual bool hasParent() = 0;
 

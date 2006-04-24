@@ -195,7 +195,7 @@ double Label::getPreferredHeight()
 		return maxHeight;
 	}
 
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight );
 }
 
 

@@ -80,7 +80,8 @@ public:
 		idsChecked =		0x0005,
 		idsUnChecked =		0x0006,
 		idsRadioUnpressed = 0x0007,
-		idsRadioPressed =	0x0008
+		idsRadioPressed =	0x0008,
+		idsCanPaint =		0x0010
 	};
 
 
