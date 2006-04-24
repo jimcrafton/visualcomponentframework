@@ -1439,7 +1439,7 @@ public:
 
 		return result;
 	}
-
+/*
 	virtual double getDefaultHeightFor( const UIMetricsManager::HeightType& type )  {
 		double result = 0.0;
 		switch ( type ) {
@@ -1475,14 +1475,14 @@ public:
 			break;
 
 			case UIMetricsManager::htRadioBoxHeight : case UIMetricsManager::htCheckBoxHeight : {
-				/**
-				JC
-				Stripped this all out  -
-				it turns out that the height/width is ALWAYS 13 pixels - no matter what
-				the DPI is
-				GetSystemMetrics( SM_CXMENUCHECK ) returns a value that changes based on the DPI
-				13 at 96 DPI and 17 at 120 DPI
-				*/
+				
+				//JC
+				//Stripped this all out  -
+				//it turns out that the height/width is ALWAYS 13 pixels - no matter what
+				//the DPI is
+				//GetSystemMetrics( SM_CXMENUCHECK ) returns a value that changes based on the DPI
+				//13 at 96 DPI and 17 at 120 DPI
+				//
 				result = 13;
 			}
 			break;
@@ -1508,6 +1508,9 @@ public:
 		return result;
 
 	}
+*/
+
+/*
 
 	virtual double getPreferredSpacingFor( const UIMetricsManager::SpacingType& type )  {
 		double result = 0.0;
@@ -1561,7 +1564,8 @@ public:
 
 		return result;
 	}
-
+*/
+/*
 	virtual Size getDefaultSliderThumbDimensions()  {
 		Size result;
 
@@ -1656,7 +1660,7 @@ public:
 
 		return result;
 	}
-
+*/
 	virtual double getValue( const MetricType& type, const String& text ) {		
 		double result = 0;
 

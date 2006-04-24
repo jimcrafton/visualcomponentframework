@@ -1568,7 +1568,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 		viewBounds.offset( scrollPos.x_, scrollPos.y_ );
 
 		if ( isHorzScrollbarVisible && ( scrollable->getVirtualViewWidth() > scrollAdjustedWidth ) ) {		
-			Size horzSize = mgr->getDefaultHorizontalScrollButtonDimensions();
+			Size horzSize = mgr->getSize( UIMetricsManager::mtHorizontalSliderThumbSize );
 
 			//viewBounds.bottom_ = minVal<>( viewBounds.bottom_-horzSize.height_,viewBounds.bottom_ );
 						
@@ -1580,7 +1580,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 			}
 		}
 		else {
-			Size horzSize = mgr->getDefaultHorizontalScrollButtonDimensions();
+			Size horzSize = mgr->getSize( UIMetricsManager::mtHorizontalSliderThumbSize );
 
 			//viewBounds.bottom_ = minVal<>( viewBounds.bottom_-horzSize.height_,viewBounds.bottom_ );
 
@@ -1594,7 +1594,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 
 		
 		if ( isVertScrollbarVisible && ( scrollable->getVirtualViewHeight() > scrollAdjustedHeight ) ) {
-			Size vertSize = mgr->getDefaultVerticalScrollButtonDimensions();
+			Size vertSize = mgr->getSize( UIMetricsManager::mtVerticalSliderThumbSize );
 
 			//viewBounds.right_ = minVal<>( viewBounds.right_-vertSize.width_,viewBounds.right_ );
 
@@ -1604,7 +1604,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 			}
 		}
 		else {
-			Size vertSize = mgr->getDefaultVerticalScrollButtonDimensions();
+			Size vertSize = mgr->getSize( UIMetricsManager::mtVerticalSliderThumbSize );
 
 			//viewBounds.right_ = minVal<>( viewBounds.right_-vertSize.width_,viewBounds.right_ );
 

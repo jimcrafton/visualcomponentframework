@@ -550,12 +550,12 @@ void Splitter::paint( GraphicsContext* ctx )
 
 double Splitter::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htSeparatorHeight ) * 3;
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtSeparatorHeight ) * 3;
 }
 
 double Splitter::getPreferredWidth()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htSeparatorHeight ) * 3;
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtSeparatorHeight ) * 3;
 }
 
 

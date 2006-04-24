@@ -411,7 +411,7 @@ void TableControl::init()
 
 	defaultColumnWidth_ = DEFAULT_COLUMN_WIDTH;
 	defaultRowHeight_ = 
-		UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htLabelHeight );
+		UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight );
 
 	mouseState_ = msNone;
 

@@ -467,7 +467,7 @@ void ComboBoxControl::paint( GraphicsContext* context )
 	if ( NULL != selectedItem ){		
 		if ( selectedItem->canPaint() ) {
 			Rect r = clientRect;
-			Size sz = UIToolkit::getUIMetricsManager()->getDefaultVerticalScrollButtonDimensions();
+			Size sz = UIToolkit::getUIMetricSize( UIMetricsManager::mtVerticalSliderThumbSize );
 			r.right_ -= sz.width_;
 			selectedItem->paint( context, &r );
 		}

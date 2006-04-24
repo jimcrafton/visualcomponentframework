@@ -76,6 +76,8 @@ public:
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 
+	void changePaintState();
+
 	static MenuItem* getMenuItemFromID( const uint32 id );
 	static MenuItem* getMenuItemFromHandle( HMENU handle );
 

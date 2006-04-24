@@ -36,10 +36,10 @@ MessageDialog::MessageDialog():
 	commandPane_ = new Panel();
 	commandPane_->setBorder( NULL );
 
-	commandPane_->setHeight( metricMgr->getDefaultHeightFor( UIMetricsManager::htButtonHeight ) +
-								(metricMgr->getPreferredSpacingFor( UIMetricsManager::stContainerBorderDelta ) * 2.0 ) );
+	commandPane_->setHeight( UIToolkit::getUIMetricValue( UIMetricsManager::mtButtonHeight ) +
+								(UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) * 2.0 ) );
 
-	commandPane_->setBorderSize( metricMgr->getPreferredSpacingFor( UIMetricsManager::stContainerBorderDelta ) );
+	commandPane_->setBorderSize( UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) );
 
 	add( commandPane_, AlignBottom );
 
@@ -60,24 +60,24 @@ MessageDialog::MessageDialog():
 
 	messageLabel_->setFont( &font );
 
-	double x = metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing );
-	double y = metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing );
+	double x = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
+	double y = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing );
 
 	messageHeight = messageLabel_->getPreferredHeight() * 2.0 +
-					metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing ) +
-					metricMgr->getPreferredSpacingFor( UIMetricsManager::stInformationControlTopSpacer ) +
-					metricMgr->getPreferredSpacingFor( UIMetricsManager::stInformationControlBottomSpacer );
+					UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) +
+					UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) +
+					UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer );
 
 	font = metricMgr->getDefaultFontFor( UIMetricsManager::ftToolTipFont );
 
-	double w = labelsPane_->getWidth() - (metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) *2) ;
+	double w = labelsPane_->getWidth() - (UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) *2) ;
 
 	messageLabel_->setBounds(x, y, w, messageLabel_->getPreferredHeight()*2.0 );
 
 	labelsPane_->add( messageLabel_ );
 
 	y =  messageLabel_->getBottom() +
-				metricMgr->getPreferredSpacingFor( UIMetricsManager::stInformationControlTopSpacer );
+				UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer );
 
 	infoLabel_ = new Label();
 
@@ -205,7 +205,7 @@ void MessageDialog::addActionButton( const String& caption, const UIToolkit::Mod
 	Label* l = new Label();
 	l->setCaption("");
 	UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
-	l->setWidth( metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) );
+	l->setWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
 	l->setHeight( newButton->getHeight() );
 
 
@@ -288,7 +288,7 @@ PushButton* MessageDialog::addPushButton( const String& caption, const UIToolkit
 		Label* l = new Label();
 		l->setCaption("");
 		UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
-		l->setWidth( metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) );
+		l->setWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
 		l->setHeight( newButton->getHeight() );
 
 		commandPane_->add( l, AlignRight );
@@ -297,7 +297,7 @@ PushButton* MessageDialog::addPushButton( const String& caption, const UIToolkit
 	Label* l = new Label();
 	l->setCaption("");
 	UIMetricsManager* metricMgr = UIToolkit::getUIMetricsManager();
-	l->setWidth( metricMgr->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ) );
+	l->setWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
 	l->setHeight( newButton->getHeight() );
 
 	commandPane_->add( newButton, AlignRight );
