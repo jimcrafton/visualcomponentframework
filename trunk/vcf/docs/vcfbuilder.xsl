@@ -24,17 +24,6 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NB: This software will not save the world.
-CVS Log info
-$Log$
-Revision 1.2  2003/05/17 20:36:55  ddiego
-this is the checkin for the 0.6.1 release - represents the merge over from
-the devmain-0-6-0 branch plus a few minor bug fixes
-
-Revision 1.1.2.1  2003/03/07 22:24:07  ddiego
-added initial vcf builders docbook files
-
-
-
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	        version="1.0">
@@ -46,4 +35,8 @@ added initial vcf builders docbook files
 	 <xsl:import href="vcf.xsl"/>
 	 <xsl:param name="htmlhelp.chm" select="'vcfbuilder_docs.chm'"/>
 
- </xsl:stylesheet>
+</xsl:stylesheet>
+
+<!--
+$Id$
+-->

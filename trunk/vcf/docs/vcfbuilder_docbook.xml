@@ -43,37 +43,6 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NB: This software will not save the world.
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:52  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/09/24 19:41:18  ddiego
-switched the sgml files over to xml file extensions
-made a slight adjustment to the docbook makefile
-
-Revision 1.2  2003/05/17 20:36:55  ddiego
-this is the checkin for the 0.6.1 release - represents the merge over from
-the devmain-0-6-0 branch plus a few minor bug fixes
-
-Revision 1.1.2.5  2003/04/17 04:29:45  ddiego
-updated scintilla, added gtk support for the application kit, with stubs
-for the basic peers.
-
-Revision 1.1.2.4  2003/03/13 02:34:40  ddiego
-added some more docs and broke apart the various "books" so they can be all
-put together or in separate books. Made to changes to Makefile
-
-Revision 1.1.2.3  2003/03/12 22:43:06  ddiego
-more xmake docs
-
-Revision 1.1.2.2  2003/03/12 02:51:39  ddiego
-more documentation updates
-
-Revision 1.1.2.1  2003/03/07 22:24:07  ddiego
-added initial vcf builders docbook files
-
-
 -->
 
 
@@ -83,3 +52,6 @@ added initial vcf builders docbook files
 	<index id="index"/>
 </book>
 
+<!--
+$Id$
+-->

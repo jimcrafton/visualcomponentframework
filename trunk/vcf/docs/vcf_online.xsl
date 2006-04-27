@@ -24,43 +24,6 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NB: This software will not save the world.
-CVS Log info
-$Log$
-Revision 1.4  2003/12/18 05:15:52  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.3.2.1  2003/12/08 05:05:27  ddiego
-added a bunch more documentation to classes, and added support for new doc
-keywords (@delegates, @del, @delegate, @event, and @eventtype). This
-makes it easier to see at a glance what events a class fires off.
-Added finishing touches for the Action implementation and have a partially
-complete example for this checked in.
-
-Revision 1.3  2003/08/09 21:01:40  ddiego
-minor changes to doc makefile
-
-Revision 1.2  2003/05/17 20:36:55  ddiego
-this is the checkin for the 0.6.1 release - represents the merge over from
-the devmain-0-6-0 branch plus a few minor bug fixes
-
-Revision 1.1.2.1  2003/03/10 03:58:34  ddiego
-fixes ot better support online html, plus the addition of a little C++
-program to stip stuff
-
-Revision 1.1.2.4  2003/03/07 04:33:02  ddiego
-added more docs for appkit. made some mods to the vcf.xsl stylesheet
-to turn on section numbering
-
-Revision 1.1.2.3  2003/03/04 04:53:51  ddiego
-filled some docs
-
-Revision 1.1.2.2  2003/03/03 22:42:41  ddiego
-stuff
-
-Revision 1.1.2.1  2003/03/03 03:39:49  ddiego
-initial check-in of docbook vcf documentation, plus neccesary stylsheets
-and images
-
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	        version="1.0">
@@ -157,3 +120,7 @@ and images
 
 
 </xsl:stylesheet>
+
+<!--
+$Id$
+-->

@@ -24,48 +24,6 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NB: This software will not save the world.
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:52  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/09/24 19:41:18  ddiego
-switched the sgml files over to xml file extensions
-made a slight adjustment to the docbook makefile
-
-Revision 1.2  2003/05/17 20:36:55  ddiego
-this is the checkin for the 0.6.1 release - represents the merge over from
-the devmain-0-6-0 branch plus a few minor bug fixes
-
-Revision 1.1.2.6  2003/05/13 03:57:12  ddiego
-cleaned up the GraphicsKit, got rid of some old crap files, cleaned
-up the ContextPeer so that tehre are fewer methods to implement, and
-moved the repetitive fillPath and strokePath code that was copied into
-all the context peers back into the GraphicsContext where it belongs
-
-Revision 1.1.2.5  2003/04/22 21:31:14  ddiego
-more docs
-
-Revision 1.1.2.4  2003/04/21 21:06:18  ddiego
-more docs
-
-Revision 1.1.2.3  2003/04/17 04:29:45  ddiego
-updated scintilla, added gtk support for the application kit, with stubs
-for the basic peers.
-
-Revision 1.1.2.2  2003/04/07 03:38:47  ddiego
-did some documentation work, and got everything to compile cleanly with some
-of the new additions, particularly the chnages inteh Image/ImageBits classes.
-
-Revision 1.1.2.1  2003/03/12 03:09:07  ddiego
-switched all member variable that used the "m_"<name> prefix to
- <name>"_" suffix nameing standard.
-Also changed all vcf builder files to accomadate this.
-Changes were made to the Stream classes to NOT multiple inheritance and to
-be a little more correct. Changes include breaking the FileStream into two
-distinct classes, one for input and one for output.
-
-
 -->
 
 <chapter><title>Design and Architecture</title>
@@ -493,3 +451,6 @@ void setOwningObject( ProjectObject* owningObject )
 	</section>
 </chapter>
 
+<!--
+$Id$
+-->
