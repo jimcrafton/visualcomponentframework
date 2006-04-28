@@ -564,4 +564,6 @@ namespace VCF {
 };
 #endif //_VCF_PIXELS_H__
 
-
+/**
+$Id$
+*/

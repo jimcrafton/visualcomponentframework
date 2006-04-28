@@ -39,3 +39,6 @@ public:
 
 #endif //_VCF_JPEGLOADER_H__
 
+/**
+$Id$
+*/

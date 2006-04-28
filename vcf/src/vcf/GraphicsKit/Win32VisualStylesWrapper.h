@@ -858,3 +858,6 @@ public:
 
 #endif // _VCF_WIN32VISUALSTYLESWRAPPER_H__
 
+/**
+$Id$
+*/

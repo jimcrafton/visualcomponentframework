@@ -26,3 +26,6 @@ namespace VCF {
 };
 #endif //_VCF_GRAYSCALEIMAGE_H__
 
+/**
+$Id$
+*/

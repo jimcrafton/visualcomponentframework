@@ -270,56 +270,7 @@ GlyphCollection* GTKFont::getGlyphCollection( const String& text )
 void GTKFont::setFont( Font* font )
 {}
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/04/05 23:44:23  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
-*
-*Revision 1.2  2004/08/07 02:49:17  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/04/29 04:10:27  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.2  2004/04/28 18:42:26  ddiego
-*migrating over changes for unicode strings.
-*This contains fixes for the linux port and changes to the Makefiles
-*
-*Revision 1.1.2.1  2004/04/28 03:40:31  ddiego
-*migration towards new directory structure
-*
-*Revision 1.4  2003/12/18 05:16:01  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.3.4.1  2003/08/25 03:14:01  ddiego
-*adjusted the gtk peers to account for the new toolkit method names
-*
-*Revision 1.3  2003/05/17 20:37:32  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.2.2.2  2003/04/17 04:29:51  ddiego
-*updated scintilla, added gtk support for the application kit, with stubs
-*for the basic peers.
-*
-*Revision 1.2.2.1  2003/04/14 19:06:26  ddiego
-*mods to add better support for fonts and text using Pango. Not
-*finished and may not compile! :)
-*
-*Revision 1.2  2003/02/26 04:30:48  ddiego
-*merge of code in the devmain-0-5-9 branch into the current tree.
-*most additions are in the area of the current linux port, but the major
-*addition to this release is the addition of a Condition class (currently
-*still under development) and the change over to using the Delegate class
-*exclusively from the older event handler macros.
-*
-*Revision 1.1.2.1  2003/02/20 02:46:03  ddiego
-*added in the base files for supporting a GTK peer implementation. Core parts
-*of the GTKContext work (basic line primitives), and working on the GTKImage
-*class.
-*
-Auto generated C++ implementation for class GTKFont
+$Id$
 */
-
-

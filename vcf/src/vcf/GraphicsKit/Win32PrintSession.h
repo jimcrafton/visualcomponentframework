@@ -193,25 +193,8 @@ namespace VCF {
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:42  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/11/04 17:56:17  ddiego
-*fixed bugs in some win32 code to better handle unicode - ansi functionality.
-*
-*Revision 1.3  2005/07/09 23:06:02  ddiego
-*added missing gtk files
-*
-*Revision 1.2.2.1  2005/05/05 13:46:00  marcelloptr
-*added standard VCF formatting
-*
-*/
-
-
 #endif //_VCF_WIN32PRINTSESSION_H__
 
-
-
+/**
+$Id$
+*/

@@ -141,3 +141,7 @@ void GTKPrintSession::setPrintablePages( const std::vector<ulong32>& printablePa
 	
 }
 
+
+/**
+$Id$
+*/

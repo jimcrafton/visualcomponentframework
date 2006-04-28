@@ -28,5 +28,6 @@ public:
 
 #endif //_GRAPHICSRESOURCEBUNDLEPEER_H__
 
-
-
+/**
+$Id$
+*/

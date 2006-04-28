@@ -38,20 +38,6 @@ Image* GTKGraphicsResourceBundle::getImage( const String& resourceName )
 }
 
 
-
-
-
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:05:58  ddiego
-*added missing gtk files
-*
-*Revision 1.1.2.1  2005/04/17 16:11:32  ddiego
-*brought the foundation, agg, and graphics kits uptodate on linux
-*
+$Id$
 */
-
-
-
