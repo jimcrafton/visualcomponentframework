@@ -451,25 +451,8 @@ protected:
 };//namespace xmake;
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:35:52  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.1  2006/03/01 04:34:57  ddiego
-*fixed tab display to use themes api.
-*
-*Revision 1.5  2005/07/09 23:15:18  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3.2.1  2004/12/21 01:25:17  marcelloptr
-*added cvs log section
-*
-*/
-
-
 #endif  //_XMLMAKE_H__
 
-
-
+/**
+$Id$
+*/

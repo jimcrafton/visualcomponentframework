@@ -292,17 +292,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:14:48  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.6  2005/02/16 05:09:30  ddiego
-*bunch o bug fixes and enhancements to the property editor and treelist control.
-*
-*Revision 1.1.2.5  2004/12/22 02:58:22  marcelloptr
-*eliminated a warning for unreferenced variable
-*
+$Id$
 */
-
-
