@@ -58,5 +58,6 @@ namespace VCF {
 
 #endif //_PRINTEVENT_H__
 
-
-
+/**
+$Id$
+*/

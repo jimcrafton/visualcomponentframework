@@ -228,49 +228,7 @@ void OSXImage::loadFromURL( CFURLRef url, const String& ext )
 	}
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:41  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/11/10 02:02:39  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.3  2005/07/09 23:06:01  ddiego
-*added missing gtk files
-*
-*Revision 1.2.4.1  2005/06/23 01:26:57  ddiego
-*build updates
-*
-*Revision 1.2  2004/08/07 02:49:18  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.6  2004/07/27 04:26:05  ddiego
-*updated devmain-0-6-5 branch with osx changes
-*
-*Revision 1.1.2.5.2.1  2004/06/20 00:36:11  ddiego
-*finished the new theme API updates
-*
-*Revision 1.1.2.5  2004/06/06 07:05:34  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.4  2004/05/31 13:20:59  ddiego
-*more osx updates
-*
-*Revision 1.1.2.3  2004/04/30 05:44:34  ddiego
-*added OSX changes for unicode migration
-*
-*Revision 1.2  2004/04/03 15:48:47  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.2  2004/02/23 05:51:31  ddiego
-*basic GraphicsKit implementation done for OSX
-*
-*Revision 1.1.2.1  2004/02/21 03:27:09  ddiego
-*updates for OSX porting
-*
+$Id$
 */
-
-

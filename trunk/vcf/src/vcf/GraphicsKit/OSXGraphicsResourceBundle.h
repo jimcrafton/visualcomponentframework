@@ -37,25 +37,8 @@ protected:
 
 
 
-
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:06:00  ddiego
-*added missing gtk files
-*
-*Revision 1.1.2.2  2005/06/23 01:26:56  ddiego
-*build updates
-*
-*/
-
-
-
-
-
-
-
 #endif //_OSXGRAPHICSRESOURCEBUNDLE_H__
 
-
-
+/**
+$Id$
+*/

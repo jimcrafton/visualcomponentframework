@@ -746,40 +746,8 @@ public:
 }; // namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:35:41  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.5  2006/03/26 22:37:35  ddiego
-*minor update to source docs.
-*
-*Revision 1.5.2.4  2006/03/12 22:42:07  ddiego
-*more doc updates - specific to graphicskit.
-*
-*Revision 1.5.2.3  2006/02/21 04:32:51  ddiego
-*comitting moer changes to theme code, progress bars, sliders and tab pages.
-*
-*Revision 1.5.2.2  2006/02/20 20:42:08  ddiego
-*comitting current state of theme code.
-*
-*Revision 1.5.2.1  2005/11/21 04:00:51  ddiego
-*more osx updates.
-*
-*Revision 1.5  2005/07/09 23:05:58  ddiego
-*added missing gtk files
-*
-*Revision 1.4.2.2  2005/03/14 18:56:48  marcelloptr
-*comments and added an error message to avoid an infinite loop
-*
-*/
-
-
 #endif //_VCF_DRAWUISTATE_H__
 
-
-
-
-
-
+/**
+$Id$
+*/

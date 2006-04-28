@@ -300,23 +300,5 @@ void Win32PrintSession::setPrintablePages( const std::vector<ulong32>& printable
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:42  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/11/04 17:56:17  ddiego
-*fixed bugs in some win32 code to better handle unicode - ansi functionality.
-*
-*Revision 1.4  2005/07/09 23:06:02  ddiego
-*added missing gtk files
-*
-*Revision 1.2.2.5  2005/06/25 23:10:24  marcelloptr
-*[bugfix 1227570] Win32PrintSession::setDefaultPageSettings assigns a pointer to a temporary
-*
-*Revision 1.2.2.3  2005/04/29 15:03:40  marcelloptr
-*added cvs log section
-*
+$Id$
 */
-
-

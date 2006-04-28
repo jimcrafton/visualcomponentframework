@@ -531,4 +531,6 @@ void JPEGLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
-
+/**
+$Id$
+*/

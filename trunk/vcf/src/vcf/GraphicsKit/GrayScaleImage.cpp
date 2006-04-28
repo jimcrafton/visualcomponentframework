@@ -26,3 +26,8 @@ void GrayScaleImage::setSize( const unsigned long & width, const unsigned long &
 {
 
 }
+
+
+/**
+$Id$
+*/

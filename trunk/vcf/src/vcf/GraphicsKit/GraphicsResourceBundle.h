@@ -49,8 +49,6 @@ protected:
 
 #endif //_GRAPHICSRESOURCEBUNDLE_H__
 
-
-
-
-
-
+/**
+$Id$
+*/

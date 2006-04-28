@@ -60,5 +60,6 @@ public:
 
 #endif //_PRINTSESSIONPEER_H__
 
-
-
+/**
+$Id$
+*/

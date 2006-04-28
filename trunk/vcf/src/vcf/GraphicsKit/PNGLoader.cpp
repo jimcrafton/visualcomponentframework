@@ -540,3 +540,8 @@ void PNGLoader::saveImageToFile( const String& fileName, Image* image )
 		png_free(png_ptr, palette);	
 	}
 }
+
+
+/**
+$Id$
+*/

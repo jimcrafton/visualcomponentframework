@@ -104,39 +104,8 @@ AGG_ABGR32, AGG_RGB565, or AGG_RGB555
 #endif
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:41  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.1  2005/10/17 01:36:34  ddiego
-*some more under the hood image stuff. updated agg.
-*
-*Revision 1.2  2004/08/07 02:49:18  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:10:27  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:40:31  ddiego
-*migration towards new directory structure
-*
-*Revision 1.3.4.1  2004/04/26 21:58:40  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.3  2003/12/18 05:15:58  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.2.2.1  2003/10/28 04:06:11  ddiego
-*updated the GraphicsContext and ContextPeer classes to support
-*slider control drawing. adjusted the Slider control accordingly.
-*Also changed some of the GraphicsKit headers to conform to the
-*current header style.
-*
-*/
-
-
 #endif // _VCF_PIXELFORMATS_H__
 
-
+/**
+$Id$
+*/

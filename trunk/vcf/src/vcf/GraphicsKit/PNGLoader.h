@@ -38,3 +38,6 @@ public:
 
 #endif //_VCF_PNGLOADER_H__
 
+/**
+$Id$
+*/

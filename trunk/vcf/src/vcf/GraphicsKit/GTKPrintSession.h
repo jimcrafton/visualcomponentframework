@@ -54,5 +54,6 @@ namespace VCF {
 
 #endif //_GTKPRINTSESSION_H__
 
-
-
+/**
+$Id$
+*/
