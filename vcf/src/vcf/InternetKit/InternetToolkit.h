@@ -58,4 +58,6 @@ namespace VCF {
 
 #endif //_VCF_INTERNETTOOLKIT_H__
 
-
+/**
+$Id$
+*/

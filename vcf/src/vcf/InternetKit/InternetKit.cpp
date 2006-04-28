@@ -22,3 +22,8 @@ void InternetKit::terminate()
 {
 	InternetToolkit::terminate();
 }
+
+
+/**
+$Id$
+*/

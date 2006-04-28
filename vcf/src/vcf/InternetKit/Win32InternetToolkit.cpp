@@ -280,3 +280,8 @@ void Win32InternetToolkit::internal_getDataFromURL( URL* url, OutputStream* stre
 		//
 	}
 }
+
+
+/**
+$Id$
+*/
