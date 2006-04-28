@@ -1033,3 +1033,6 @@ void VCF::HTMLDocument::clearSelection ()
 }
 
 
+/**
+$Id$
+*/

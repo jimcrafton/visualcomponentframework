@@ -31,3 +31,8 @@ HTMLBrowserPeer* HTMLToolkit::createHTMLBrowserPeer( Control* control )
 {
 	return HTMLToolkit::toolkitInstance->internal_createHTMLBrowserPeer( control );
 }
+
+
+/**
+$Id$
+*/

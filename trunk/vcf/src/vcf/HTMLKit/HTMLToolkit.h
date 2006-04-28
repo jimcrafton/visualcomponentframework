@@ -41,4 +41,6 @@ protected:
 
 #endif // _VCF_HTMLTOOLKIT_H__
 
-
+/**
+$Id$
+*/

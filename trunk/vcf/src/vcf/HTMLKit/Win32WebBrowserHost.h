@@ -2201,3 +2201,7 @@ protected:
 };
 
 #endif //_VCF_WIN32WEBBROWSERHOST_H__
+
+/**
+$Id$
+*/

@@ -29,3 +29,8 @@ HTMLBrowserPeer* Win32HTMLToolkit::internal_createHTMLBrowserPeer( Control* cont
 
 	return result;
 }
+
+
+/**
+$Id$
+*/

@@ -79,3 +79,7 @@ namespace VCF {
 
 
 #endif //_VCF_WIN32HTMLDOMELEMENTS_H__
+
+/**
+$Id$
+*/
