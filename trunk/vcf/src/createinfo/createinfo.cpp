@@ -315,20 +315,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:34:58  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.1  2005/11/02 16:07:16  ddiego
-*updates to createinfo program.
-*
-*Revision 1.2  2005/07/09 23:14:49  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.3  2004/12/22 02:59:14  marcelloptr
-*added cvs log section
-*
+$Id$
 */
-
-

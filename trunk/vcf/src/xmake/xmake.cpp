@@ -2787,16 +2787,6 @@ StringList XMLMake::getConfigs()
 }
 
 
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2005/07/09 23:15:18  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3.2.1  2004/12/21 01:25:17  marcelloptr
-*added cvs log section
-*
+$Id$
 */
-
-

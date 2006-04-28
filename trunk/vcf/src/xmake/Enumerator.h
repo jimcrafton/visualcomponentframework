@@ -1,61 +1,4 @@
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:51  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.2  2006/02/22 04:21:02  dougtinkham
-*added __MINGW32__ check
-*
-*Revision 1.2.6.1  2005/11/18 16:03:05  obirsoy
-*changes required for gcc under Linux.
-*
-*Revision 1.2  2004/08/07 02:49:20  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.1  2004/04/28 04:07:36  ddiego
-*migration towards new directory structure
-*
-*Revision 1.4  2003/05/17 20:38:12  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.3.10.2  2003/03/23 03:24:13  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.3.10.1  2003/03/12 03:13:35  ddiego
-*switched all member variable that used the "m_"<name> prefix to
-* <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
-*
-*Revision 1.3  2002/09/12 03:26:12  ddiego
-*merged over the changes from the devmain-0-5-5b branch
-*
-*Revision 1.2.12.1  2002/07/16 15:52:48  ddiego
-*mods to xmake to separate it into a lib file and
-*command line program. This means there is now a
-*separate libXmake for using in other programs
-*also moved all the xmake classes into their
-*own xmake namespace.
-*Changes made to the makefile as well as a new
-*dsp for the libXmake
-*
-*Revision 1.2  2002/03/15 16:33:22  ddiego
-*gcc compile fixes
-*
-*Revision 1.1  2002/02/25 05:01:53  ddiego
-*added the xmake project
-*
-*Revision 1.7  2002/01/24 01:46:48  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
-*/
-
-/**
 *Copyright (c) 2000-2001, Jim Crafton
 *All rights reserved.
 *Redistribution and use in source and binary forms, with or without
@@ -350,4 +293,6 @@ private:
 
 #endif //_ENUMERATOR_H__
 
-
+/**
+$Id$
+*/
