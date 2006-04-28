@@ -40,3 +40,8 @@ void HTMLKit::terminate()
 {
 	HTMLToolkit::destroy();
 }
+
+
+/**
+$Id$
+*/

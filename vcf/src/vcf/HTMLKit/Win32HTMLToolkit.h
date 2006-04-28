@@ -29,3 +29,7 @@ protected:
 
 
 #endif //_VCF_WIN32HTMLTOOLKIT_H__
+
+/**
+$Id$
+*/

@@ -396,3 +396,7 @@ private:
 
 
 #endif //_VCF_HTMLDOMELEMENTS_H__
+
+/**
+$Id$
+*/
