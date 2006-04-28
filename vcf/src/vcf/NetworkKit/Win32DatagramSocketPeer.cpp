@@ -152,20 +152,5 @@ int Win32DatagramSocketPeer::getRemoteHostPort() {
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:15:17  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.1  2005/04/09 17:21:40  marcelloptr
-*bugfix [ 1179853 ] memory fixes around memset. Documentation. DocumentManager::saveAs and DocumentManager::reload
-*
-*Revision 1.2  2004/08/07 02:49:19  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:12:57  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-
