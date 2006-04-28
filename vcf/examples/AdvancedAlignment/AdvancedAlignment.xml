@@ -139,21 +139,6 @@ virtual void resizeChildren( Control* control ) {
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:53  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.2  2003/10/22 21:21:57  ddiego
-added some more docs to advanced alignment
-
-Revision 1.1.2.1  2003/10/22 03:56:44  ddiego
-added two more tutorials for advanced alignment and another for anchors
-also finished off the alignment tutorial. yay :)
-
+$Id$
 -->
-
-

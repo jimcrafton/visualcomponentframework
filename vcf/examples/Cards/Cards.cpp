@@ -145,14 +145,5 @@ int main(int argc, char** argv)
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:14:14  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.3  2005/05/05 14:15:43  marcelloptr
-*standard VCF formatting
-*
+$Id$
 */
-
-

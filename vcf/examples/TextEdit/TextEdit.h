@@ -45,22 +45,8 @@ public:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:34:47  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.1  2005/05/04 20:47:20  marcelloptr
-*standard file formatting and cvs log section added
-*
-*/
-
-
 #endif //_TEXTEDIT_H__
 
-
-
+/**
+$Id$
+*/

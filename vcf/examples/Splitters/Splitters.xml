@@ -139,30 +139,6 @@ virtual void resizeChildren( Control* control ) {
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:55  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/12/02 05:50:04  ddiego
-added preliminary support for teh Action class. This will make it easier
-to hook up complimentary UI elements (such as a "copy" menu item, and a
-"copy" toolbar item) and have tehm respond to update and actions via a
-single source.
-Got rid of the old toolbar button and separator class. Merged in Marcellos
-new fixes for the Container and Splitter classes.
-Some misc fixes to the Toolbar, groups and checks now work correctly.
-
-Revision 1.1.2.2  2003/10/22 21:21:57  ddiego
-added some more docs to advanced alignment
-
-Revision 1.1.2.1  2003/10/22 03:56:44  ddiego
-added two more tutorials for advanced alignment and another for anchors
-also finished off the alignment tutorial. yay :)
-
+$Id$
 -->
-
-

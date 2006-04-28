@@ -410,56 +410,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.8  2006/04/07 02:34:55  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.7.2.2  2005/08/25 01:48:42  ddiego
-*minor update to popupmenu code
-*
-*Revision 1.7.2.1  2005/07/23 21:45:44  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.6.2.5  2005/06/06 02:34:05  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.6.2.4  2005/04/17 15:12:05  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.6.2.3  2005/03/04 19:59:22  marcelloptr
-*minor improvement to the example
-*
-*Revision 1.6.2.2  2005/03/04 04:42:22  ddiego
-*fixed a bug in the tree list control that was not taking into account the tree item text color or text bold.
-*
-*Revision 1.6.2.1  2005/02/16 05:09:30  ddiego
-*bunch o bug fixes and enhancements to the property editor and treelist control.
-*
-*Revision 1.6  2004/12/01 04:15:36  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-
-*Revision 1.5  2004/08/17 00:13:39  kiklop74
-*Fixed for compilation with Borland C++
-*
-*Revision 1.4.2.2  2004/10/07 15:03:51  kiklop74
-*Fixed building issues with bcb
-*
-*Revision 1.4.2.1  2004/08/21 21:06:51  ddiego
-*migrated over the Resource code to the FoudationKit.
-*Added support for a GraphicsResourceBundle that can get images.
-*Changed the AbstractApplication class to call the System::getResourceBundle.
-*Updated the various example code accordingly.
-*
-*Revision 1.4  2004/08/07 02:47:41  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.4  2004/04/29 03:40:58  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

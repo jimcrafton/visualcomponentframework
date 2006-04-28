@@ -532,33 +532,5 @@ void TextEditDocument::internal_replaceText( const VCF::ulong32& pos, const VCF:
 }
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:34:47  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.2  2005/09/23 05:30:34  kdmix
-*The first parameter of the OutputStream.write() method is const unsigned char* now.
-*
-*Revision 1.3.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.5  2005/06/02 16:28:23  marcelloptr
-*removed obsolete code
-*
-*Revision 1.2.2.4  2005/05/19 02:19:09  ddiego
-*more win32 edit fixes.
-*
-*Revision 1.2.2.3  2005/05/18 03:19:17  ddiego
-*more text edit changes, fixes some subtle bugs in doc and win32 edit peer.
-*
-*Revision 1.2.2.2  2005/05/15 23:17:36  ddiego
-*fixes for better accelerator handling, and various fixes in hwo the text model works.
-*
-*Revision 1.2.2.1  2005/05/04 20:47:20  marcelloptr
-*standard file formatting and cvs log section added
-*
+$Id$
 */
-
-
-

@@ -32,25 +32,6 @@ NB: This software will not save the world.
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2004/12/01 04:15:14  ddiego
-merged over devmain-0-6-6 code. Marcello did a kick ass job
-of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-that he found. Many, many thanks for this Marcello.
-
-Revision 1.1.2.1  2004/08/25 15:52:52  marcelloptr
-project added
-
-Revision 1.2  2003/12/18 05:15:54  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/09/27 23:04:20  ddiego
-added tutorial docbook files
-
+$Id$
 -->
-
-

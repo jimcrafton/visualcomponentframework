@@ -199,35 +199,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:28  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.3  2006/03/19 21:59:42  ddiego
-*updated various settings in vc80 projects.
-*
-*Revision 1.5.2.2  2006/03/16 18:45:26  kdmix
-*setVisible(true) removed from constructor of the main window.
-*
-*Revision 1.5.2.1  2005/07/23 21:45:36  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.4.4  2005/06/28 00:10:10  marcelloptr
-*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
-*
-*Revision 1.4.4.2  2005/04/17 17:19:09  iamfraggle
-*Small fixes
-*
-*Revision 1.4.4.1  2005/04/17 15:11:44  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.4  2004/08/07 02:47:04  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.4  2004/04/29 03:40:54  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

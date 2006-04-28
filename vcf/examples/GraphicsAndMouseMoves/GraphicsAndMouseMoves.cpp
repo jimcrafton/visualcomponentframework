@@ -197,20 +197,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:27  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.6.1  2006/03/19 18:39:20  ddiego
-*fixed size for graphics mouse move example, per fraggles req.
-*
-*Revision 1.5  2004/08/07 02:47:03  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.4.2.4  2004/04/29 03:40:53  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

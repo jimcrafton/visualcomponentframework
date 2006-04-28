@@ -115,54 +115,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:28  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.2  2006/03/19 20:12:34  ddiego
-*removed positioning code in hello world example.
-*
-*Revision 1.5.2.1  2005/07/23 21:45:36  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.4.1  2005/03/06 22:50:53  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.4  2004/08/07 02:47:04  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.11  2004/07/09 03:39:28  ddiego
-*merged in changes from the OSX branch for new theming API. Added
-*support for controlling the use of locale translated strings in components.
-*
-*Revision 1.3.2.10.2.1  2004/06/27 18:19:15  ddiego
-*more osx updates
-*Revision 1.3.2.10.2.2  2004/07/09 02:01:24  ddiego
-*more osx updates
-*
-*Revision 1.3.2.10.2.1  2004/06/27 18:19:15  ddiego
-*more osx updates
-*
-*Revision 1.3.2.10  2004/06/07 03:07:06  ddiego
-*more osx updates dealing with mouse handling
-*
-*Revision 1.3.2.9  2004/06/06 07:05:27  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-
-*Revision 1.3.2.7  2004/05/31 22:24:52  ddiego
-*OSX code for handling focus events
-*
-*Revision 1.3.2.6  2004/05/15 17:59:36  marcelloptr
-*minor project changes
-*
-*Revision 1.3.2.5  2004/05/06 03:03:43  ddiego
-*checking in OSX updates
-*
-*Revision 1.3.2.4  2004/04/29 03:40:54  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

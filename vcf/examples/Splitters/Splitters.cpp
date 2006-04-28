@@ -268,48 +268,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.8  2006/04/07 02:34:42  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.7.2.2  2006/03/16 18:45:23  kdmix
-*setVisible(true) removed from constructor of the main window.
-*
-*Revision 1.7.2.1  2005/07/23 21:45:42  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.6.2.3  2005/07/11 19:39:57  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.6.2.2  2005/06/28 20:37:08  marcelloptr
-*first step to remove flickering when dragging a splitter
-*
-*Revision 1.6.2.1  2005/04/17 15:11:47  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.6  2004/12/01 04:15:14  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.5.2.1  2004/10/07 15:03:35  kiklop74
-*Fixed building issues with bcb
-*
-*Revision 1.5  2004/08/07 02:47:37  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.4.2.6  2004/07/11 22:54:03  ddiego
-*fixed some miscellaneous examples
-*
-*Revision 1.4.2.5  2004/07/08 15:09:53  ddiego
-*made the change to the StandardContainer name - the
-*old StandardContainer is now called DesignTimeContainer and
-*the old FixedStandardContainer is now renamed to StandardContainer.
-*
-*Revision 1.4.2.4  2004/04/29 03:40:56  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

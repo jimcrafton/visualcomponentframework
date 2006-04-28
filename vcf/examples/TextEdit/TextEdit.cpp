@@ -270,33 +270,6 @@ int main(int argc, char *argv[])
 }
 
 
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:34:47  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.3  2005/11/02 04:38:23  obirsoy
-*changes required for vc80 support.
-*
-*Revision 1.3.2.2  2005/09/02 01:01:20  ddiego
-*changed some of the common dialogs around, was using a less clear class name.
-*
-*Revision 1.3.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.3  2005/06/06 02:34:05  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.2.2.2  2005/05/05 12:42:25  ddiego
-*this adds initial support for run loops,
-*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
-*changes to teh etxt model so that notification of text change is more
-*appropriate.
-*
-*Revision 1.2.2.1  2005/05/04 20:47:20  marcelloptr
-*standard file formatting and cvs log section added
-*
+$Id$
 */
-

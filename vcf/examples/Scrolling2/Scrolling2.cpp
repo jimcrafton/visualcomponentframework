@@ -188,14 +188,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2006/04/07 02:34:40  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.1.2.1  2006/03/19 21:03:45  ddiego
-*added additional scrollign example.
-*
+$Id$
 */
-
-

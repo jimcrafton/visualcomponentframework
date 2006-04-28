@@ -286,30 +286,5 @@ void TextEditWindow::onSelectionChanged( VCF::Event* e )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:34:47  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.7  2005/06/06 02:34:05  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.2.2.6  2005/05/15 23:17:37  ddiego
-*fixes for better accelerator handling, and various fixes in hwo the text model works.
-*
-*Revision 1.2.2.5  2005/05/05 12:42:25  ddiego
-*this adds initial support for run loops,
-*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
-*changes to teh etxt model so that notification of text change is more
-*appropriate.
-*
-*Revision 1.2.2.4  2005/05/04 20:58:54  marcelloptr
-*standard file formatting and cvs log section added. More documentation.
-*
+$Id$
 */
-
-
-

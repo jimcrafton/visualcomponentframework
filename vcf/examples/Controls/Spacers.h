@@ -67,28 +67,5 @@ private :
 #endif //_SPACERS_H__
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:19  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:34  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.2  2005/01/31 00:13:59  marcelloptr
-*added newlines at end of file
-*
-*Revision 1.2.2.1  2005/01/18 00:17:43  ddiego
-*fixed aromans text edit bug
-*
-*Revision 1.2  2004/12/01 04:15:00  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.2  2004/08/30 03:50:47  dougtinkham
-*added copyright
-*
+$Id$
 */
-
-

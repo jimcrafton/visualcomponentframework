@@ -75,31 +75,5 @@ int main( int argc, char** argv )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:41  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.1  2005/07/23 21:45:41  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.2.1  2005/04/17 15:11:47  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.4  2004/12/01 04:15:12  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.3.2.1  2004/09/15 04:41:23  ddiego
-*made some minor changes to the SharedLibraries example, and the init and term code of the Library class.
-*
-*Revision 1.3  2004/08/07 02:47:36  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.4.4  2004/04/29 03:40:56  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

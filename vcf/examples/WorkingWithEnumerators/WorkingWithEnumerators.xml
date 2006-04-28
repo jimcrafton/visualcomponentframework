@@ -151,25 +151,6 @@ Enumerator<String>* stringEnum = stringContainer.getEnumerator();
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:56  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.3  2003/12/01 03:44:13  ddiego
-added some fixes to the Win32Toolbar impl. A few minor changes to the
-toolbar example (which also got added). Some minor changes to docs
-as well.
-
-Revision 1.1.2.2  2003/11/24 05:05:23  ddiego
-added some more docs, and some minor changes to the Win32ScrollPeer
-
-Revision 1.1.2.1  2003/09/27 23:04:21  ddiego
-added tutorial docbook files
-
+$Id$
 -->
-
-

@@ -293,29 +293,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.7  2006/04/07 02:34:46  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.6.2.2  2005/10/06 23:45:50  ddiego
-*fixed a small display bug in the BasicStroke class when rendering lines.
-*
-*Revision 1.6.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.5.4.1  2005/02/01 19:45:02  dougtinkham
-*added dashing
-*
-*Revision 1.5  2004/08/07 02:47:38  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.4.2.5  2004/07/11 22:54:03  ddiego
-*fixed some miscellaneous examples
-*
-*Revision 1.4.2.4  2004/04/29 03:40:57  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-
