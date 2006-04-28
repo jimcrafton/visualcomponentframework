@@ -28,3 +28,6 @@ namespace VCF {
 
 #endif //_VCF_WIN32INTERNETTOOLKIT_H__
 
+/**
+$Id$
+*/

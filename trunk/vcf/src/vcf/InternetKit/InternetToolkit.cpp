@@ -33,3 +33,8 @@ void InternetToolkit::terminate()
 {
 	delete InternetToolkit::inetKitInstance;
 }
+
+
+/**
+$Id$
+*/

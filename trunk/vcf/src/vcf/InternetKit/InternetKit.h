@@ -125,3 +125,7 @@ namespace VCF {
 
 
 #endif //_VCF_INTERNETKIT_H__
+
+/**
+$Id$
+*/
