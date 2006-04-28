@@ -43,20 +43,6 @@ NB: This software will not save the world.
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:53  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.2  2003/12/13 15:56:08  ddiego
-*** empty log message ***
-
-Revision 1.1.2.1  2003/12/10 04:41:53  ddiego
-added missing xml files for the Actions and TOolbars examples
-
+$Id$
 -->
-
-

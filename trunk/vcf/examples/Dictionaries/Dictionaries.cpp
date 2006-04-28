@@ -559,51 +559,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.10  2006/04/07 02:34:22  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.9.2.2  2005/09/21 02:21:53  ddiego
-*started to integrate jpeg support directly into graphicskit.
-*
-*Revision 1.9.2.1  2005/07/23 21:45:35  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.7.2.5  2005/06/25 19:53:32  marcelloptr
-*forgotten MP mark
-*
-*Revision 1.7.2.4  2005/06/07 15:50:39  marcelloptr
-*project change on use of Format
-*
-*Revision 1.7.2.3  2005/04/25 00:11:55  ddiego
-*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
-*
-*Revision 1.7.2.2  2005/04/17 15:11:43  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.7.2.1  2004/12/19 04:04:57  ddiego
-*made modifications to methods that return a handle type. Introduced
-*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
-*which was causing a problem for 64bit compiles.
-*
-*Revision 1.7  2004/12/01 04:15:01  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.6.2.1  2004/10/07 15:03:24  kiklop74
-*Fixed building issues with bcb
-*
-*Revision 1.6  2004/08/07 02:46:58  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.5.2.5  2004/08/02 04:11:52  ddiego
-*added more examples to xcode project
-*
-*Revision 1.5.2.4  2004/04/29 03:40:52  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

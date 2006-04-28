@@ -240,26 +240,6 @@ value: false
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.3  2006/04/07 02:34:43  ddiego
-initial checkin of merge from 0.6.9 dev branch.
-
-Revision 1.2.12.2  2006/03/07 04:33:34  ddiego
-more doc updates.
-
-Revision 1.2.12.1  2006/03/06 22:08:26  ddiego
-updated docs
-
-Revision 1.2  2003/12/18 05:15:55  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/09/27 23:04:21  ddiego
-added tutorial docbook files
-
+$Id$
 -->
-
-

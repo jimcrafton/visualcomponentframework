@@ -113,20 +113,6 @@ while ( it != dict.end() ) {
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:53  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.2  2003/11/24 05:05:23  ddiego
-added some more docs, and some minor changes to the Win32ScrollPeer
-
-Revision 1.1.2.1  2003/11/23 15:10:05  ddiego
-added dictionaries tutorial
-
+$Id$
 -->
-
-

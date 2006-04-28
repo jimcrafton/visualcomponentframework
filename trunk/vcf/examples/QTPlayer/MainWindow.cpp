@@ -2115,33 +2115,5 @@ void MainQTWindow::onEditCreateSearchCatalog(  VCF::Event* event )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:39  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.5  2005/09/13 01:58:06  ddiego
-*minor changes to dictionary class.
-*
-*Revision 1.5.2.4  2005/09/02 01:01:20  ddiego
-*changed some of the common dialogs around, was using a less clear class name.
-*
-*Revision 1.5.2.3  2005/08/25 01:48:42  ddiego
-*minor update to popupmenu code
-*
-*Revision 1.5.2.2  2005/08/01 20:02:23  marcelloptr
-*rolled back a container's change
-*
-*Revision 1.5.2.1  2005/07/23 21:45:39  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.2.6  2005/07/22 00:24:39  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.4.2.3  2005/06/25 22:47:20  marcelloptr
-*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
-*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
-*
+$Id$
 */
-
-

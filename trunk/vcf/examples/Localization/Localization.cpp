@@ -771,51 +771,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:33  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.4.3  2006/03/26 22:37:34  ddiego
-*minor update to source docs.
-*
-*Revision 1.4.4.2  2005/11/13 16:02:46  ddiego
-*more sox updates.
-*
-*Revision 1.4.4.1  2005/07/23 21:45:38  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.2.2  2005/07/12 13:33:58  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.4  2004/12/01 04:15:08  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.3.2.4  2004/09/16 03:26:25  ddiego
-*fixed it so we can now get program information from a resource bundle. This can be embedded in the exe like in windows, or read from an external file a la OS X info.plist xml files.
-*
-*Revision 1.3.2.3  2004/09/15 04:25:51  ddiego
-*fixed some issues that duff had with the examples, plu added the ability to get the platforms version and name and compiler
-*
-*Revision 1.3.2.2  2004/09/06 03:33:20  ddiego
-*updated the graphic context code to support image transforms.
-*
-*Revision 1.3.2.1  2004/08/31 04:12:10  ddiego
-*cleaned up the GraphicsContext class - made more pervasive use
-*of transformation matrix. Added common print dialog class. Fleshed out
-*printing example more.
-*
-*Revision 1.3  2004/08/07 02:47:30  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.2.6  2004/08/04 22:37:39  marcelloptr
-*added Italian and Spanish localization strings
-*
-*Revision 1.2.2.5  2004/04/29 03:40:55  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

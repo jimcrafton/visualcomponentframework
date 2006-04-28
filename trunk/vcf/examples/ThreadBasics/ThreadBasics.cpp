@@ -413,35 +413,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:51  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:44  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.4.3  2005/07/11 18:36:19  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.3.4.2  2005/05/05 12:42:26  ddiego
-*this adds initial support for run loops,
-*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
-*changes to teh etxt model so that notification of text change is more
-*appropriate.
-*
-*Revision 1.3.4.1  2005/04/17 15:12:05  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3  2004/08/07 02:47:40  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.4.5  2004/07/05 00:14:14  marcelloptr
-*minor improvements on the messages displayed by this example
-*
-*Revision 1.2.4.4  2004/04/29 03:40:57  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

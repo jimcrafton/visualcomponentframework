@@ -181,31 +181,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.7  2006/04/07 02:34:28  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.6.4.1  2006/03/19 18:42:10  ddiego
-*fixed window size for graphics basics example per fraggles req.
-*
-*Revision 1.6  2004/12/01 04:15:04  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.5.2.1  2004/11/15 05:41:27  ddiego
-*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
-*
-*Revision 1.5  2004/08/07 02:47:03  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.4.2.5  2004/08/02 04:11:53  ddiego
-*added more examples to xcode project
-*
-*Revision 1.4.2.4  2004/04/29 03:40:53  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

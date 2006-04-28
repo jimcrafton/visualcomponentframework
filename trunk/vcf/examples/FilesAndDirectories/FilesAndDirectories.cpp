@@ -209,58 +209,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:27  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:36  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4  2005/07/09 23:14:37  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3.4.4  2005/07/11 19:58:52  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.3.4.3  2005/07/11 18:36:18  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.3.4.2  2005/04/17 17:19:09  iamfraggle
-*Small fixes
-*
-*Revision 1.3.4.1  2005/04/17 15:11:44  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3  2004/08/07 02:47:02  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.4.10  2004/08/01 23:40:08  ddiego
-*fixed a few osx bugs
-*
-*Revision 1.2.4.9  2004/07/29 02:39:13  ddiego
-*fixed a bug with File::getINputStream and File::getOutputStream.
-*
-*Revision 1.2.4.8  2004/07/25 17:04:02  marcelloptr
-*project changes
-*
-*Revision 1.2.4.7  2004/07/23 00:56:37  ddiego
-*added the latest changes to the File and Directory finder classes.
-*
-*Revision 1.2.4.6  2004/07/19 04:08:52  ddiego
-*more files and directories integration. Added Marcello's Directories example as well
-*
-*Revision 1.2.4.5  2004/05/03 03:44:52  ddiego
-*This checks in a bunch of changes to the FoundationKit for OSX
-*porting. The thread, mutex, semaphor, condition, and file peers
-*have all been implemented and tested. The file peer could be improved
-*and needs search functionality. The locale peer is only partially
-*complete, but the functions will return values. The unicode transition
-*is also finished and works OK now.
-*
-*Revision 1.2.4.4  2004/04/29 03:40:53  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

@@ -595,48 +595,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:38  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.3  2006/03/16 18:45:24  kdmix
-*setVisible(true) removed from constructor of the main window.
-*
-*Revision 1.4.2.2  2005/10/04 01:57:02  ddiego
-*fixed some miscellaneous issues, especially with model ownership.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:38  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.2.2  2005/04/17 15:11:45  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3.2.1  2005/03/06 22:50:55  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.3  2004/12/01 04:15:08  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.2.2.2  2004/10/23 12:31:57  marcelloptr
-*minor fix
-*
-*Revision 1.2.2.1  2004/10/16 15:22:38  kiklop74
-*Updated MVCBasics example to enable compilation on BCB 5
-*
-*Revision 1.2  2004/08/07 02:47:32  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.6  2004/07/08 15:09:42  ddiego
-*made the change to the StandardContainer name - the
-*old StandardContainer is now called DesignTimeContainer and
-*the old FixedStandardContainer is now renamed to StandardContainer.
-*
-*Revision 1.1.2.5  2004/06/06 07:05:27  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
+$Id$
 */
-
-

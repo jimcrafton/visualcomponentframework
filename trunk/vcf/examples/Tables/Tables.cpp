@@ -103,46 +103,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:46  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.3  2006/03/26 22:37:34  ddiego
-*minor update to source docs.
-*
-*Revision 1.5.2.2  2005/09/03 14:03:52  ddiego
-*added a package manager to support package info instances, and
-*fixed feature request 1278069 - Background color of the TableControl cells.
-*
-*Revision 1.5.2.1  2005/07/23 21:45:43  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.2.3  2005/04/26 04:03:47  ddiego
-*the first half of [ 1184432 ] Tables cell edit box follows scroll movement, is fixed. Still need to get the scrollbars to update.
-*
-*Revision 1.4.2.2  2005/04/17 17:19:10  iamfraggle
-*Small fixes
-*
-*Revision 1.4.2.1  2005/04/17 15:11:48  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.4  2004/12/01 04:15:15  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.3.2.1  2004/08/31 04:12:11  ddiego
-*cleaned up the GraphicsContext class - made more pervasive use
-*of transformation matrix. Added common print dialog class. Fleshed out
-*printing example more.
-*
-*Revision 1.3  2004/08/07 02:47:39  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.2.4  2004/04/29 03:40:57  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

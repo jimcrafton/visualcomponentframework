@@ -237,25 +237,6 @@ simple.talk();
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:53  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.4  2003/10/13 04:05:45  ddiego
-updated the scrolling example - this now demonstrates how to use the
-ScrollManager component and how to customize the scrollbars -
-even shows how to control where they go and how you have a little
-control on left (or right side) of the scroll bar (like Word does)
-
-Revision 1.1.2.3  2003/09/29 03:48:03  ddiego
-added the app iconms ex
-
-
-Revision 1.1.2.1  2003/09/27 23:04:19  ddiego
-added tutorial docbook files
-
+$Id$
 -->

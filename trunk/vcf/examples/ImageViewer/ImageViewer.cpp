@@ -158,46 +158,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.8  2006/04/07 02:34:30  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.7.2.4  2006/03/23 01:25:37  dougtinkham
-*modified centering of image
-*
-*Revision 1.7.2.3  2006/03/16 18:45:26  kdmix
-*setVisible(true) removed from constructor of the main window.
-*
-*Revision 1.7.2.2  2005/09/02 01:01:19  ddiego
-*changed some of the common dialogs around, was using a less clear class name.
-*
-*Revision 1.7.2.1  2005/07/23 21:45:37  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.6.2.2  2005/06/06 02:34:03  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.6.2.1  2005/03/06 22:50:54  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.6  2004/12/01 04:15:07  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.5  2004/08/20 23:59:16  ddiego
-*minor fix to listboxcontrol
-*
-*Revision 1.4.2.1  2004/10/07 15:03:33  kiklop74
-*Fixed building issues with bcb
-*
-*Revision 1.4  2004/08/07 02:47:29  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.4  2004/04/29 03:40:54  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

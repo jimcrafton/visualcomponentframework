@@ -615,28 +615,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:34:16  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.4.3  2006/03/18 23:04:41  ddiego
-*updated the colors example per fraggles request.
-*
-*Revision 1.2.4.2  2006/03/12 22:01:39  ddiego
-*doc updates.
-*
-*Revision 1.2.4.1  2006/03/10 21:49:31  ddiego
-*updates to color example and some documentation.
-*
-*Revision 1.2  2004/12/01 04:14:59  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/08/27 22:27:50  marcelloptr
-*added Colors example. It will be improved.
-*
+$Id$
 */
-
-

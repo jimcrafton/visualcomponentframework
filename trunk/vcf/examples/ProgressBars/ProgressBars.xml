@@ -32,19 +32,6 @@ NB: This software will not save the world.
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:55  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/10/25 04:30:20  ddiego
-added two more examples one for progress bars and one for slider controls.
-also added two more control classes to the ApplicationKit, a SliderControl
-and a ProgressControl.
-
+$Id$
 -->
-
-

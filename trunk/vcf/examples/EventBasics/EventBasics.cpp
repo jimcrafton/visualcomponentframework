@@ -217,23 +217,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:25  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:35  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.4.1  2005/04/17 15:11:44  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3  2004/08/07 02:47:01  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.4.4  2004/04/29 03:40:53  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

@@ -143,25 +143,5 @@ public:
 #endif
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/12/01 04:15:09  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.6  2004/11/07 19:31:14  marcelloptr
-*more documentation
-*
-*Revision 1.1.2.3  2004/11/04 21:04:09  pallindo
-*Fixed alpha selection in the color picker
-*
-*Revision 1.1.2.2  2004/11/01 17:19:00  marcelloptr
-*just added few lines at the end of file
-*
-*Revision 1.1.2.1  2004/11/01 14:38:59  pallindo
-*Initial checkin of the particle editor example.  Just shows off a more complex opengl application using the VCF.
-*
+$Id$
 */
-
-

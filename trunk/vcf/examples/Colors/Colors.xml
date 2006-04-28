@@ -32,26 +32,6 @@ NB: This software will not save the world.
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2004/12/01 04:14:59  ddiego
-merged over devmain-0-6-6 code. Marcello did a kick ass job
-of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-that he found. Many, many thanks for this Marcello.
-
-Revision 1.1.2.1  2004/08/27 22:27:50  marcelloptr
-added Colors example. It will be improved.
-
-Revision 1.2  2003/12/18 05:15:53  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/10/20 03:32:54  ddiego
-added the alignment example - still need to write a bit more, and will
-need other alignment exampels as well.
-
+$Id$
 -->
-
-

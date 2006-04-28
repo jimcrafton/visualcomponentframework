@@ -672,17 +672,5 @@ void QuickTimeMovie::setTitle()
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:39  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:40  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.4.3  2005/05/05 14:19:52  marcelloptr
-*standard VCF formatting
-*
+$Id$
 */
-
-

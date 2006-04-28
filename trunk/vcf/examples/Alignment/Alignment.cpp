@@ -259,51 +259,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:12  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.3  2006/03/16 04:43:55  ddiego
-*fixed alignment example per fraggles req.
-*
-*Revision 1.5.2.2  2006/01/09 02:21:58  ddiego
-*more osx code
-*
-*Revision 1.5.2.1  2005/07/23 21:45:24  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.4.2  2005/05/04 00:58:21  marcelloptr
-*formatting and slightly changed initial size of the main window so the bottom label shows better
-*
-*Revision 1.4.4.1  2005/04/26 02:28:42  ddiego
-*fixes font setting bug brought up by scott and glen_f
-*
-*Revision 1.4  2004/08/07 02:46:55  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.7  2004/07/11 22:53:45  ddiego
-*fixed some miscellaneous examples
-*
-*Revision 1.3.2.6  2004/07/09 03:39:27  ddiego
-*merged in changes from the OSX branch for new theming API. Added
-*support for controlling the use of locale translated strings in components.
-*
-
-*Revision 1.3.2.5  2004/07/08 15:09:18  ddiego
-*made the change to the StandardContainer name - the
-*old StandardContainer is now called DesignTimeContainer and
-*the old FixedStandardContainer is now renamed to StandardContainer.
-*
-*Revision 1.3.2.4.2.1  2004/07/06 03:27:12  ddiego
-*more osx updates that add proper support
-*for lightweight controls, some fixes to text layout, and some window painting issues. Also a fix
-*so that controls and windows paint either their default theme background or their background
-*color.
-*
-*Revision 1.3.2.4  2004/04/29 03:40:51  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

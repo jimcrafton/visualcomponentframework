@@ -729,36 +729,5 @@ void ParticleEditor::onFileExit(MenuItemEvent *e){
 }
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:34:38  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.3  2005/10/01 00:54:18  kiklop74
-*minor sample fixes
-*
-*Revision 1.3.2.2  2005/09/02 01:01:19  ddiego
-*changed some of the common dialogs around, was using a less clear class name.
-*
-*Revision 1.3.2.1  2005/07/23 21:45:39  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.2.2.1  2005/06/06 02:34:04  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.2  2004/12/01 04:15:09  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.3  2004/11/04 21:04:09  pallindo
-*Fixed alpha selection in the color picker
-*
-*Revision 1.1.2.2  2004/11/01 20:44:22  kiklop74
-*Added support for building ParticleEditor in BCB. Fixed some issues in header and cpp files
-*
-*Revision 1.1.2.1  2004/11/01 14:38:59  pallindo
-*Initial checkin of the particle editor example.  Just shows off a more complex opengl application using the VCF.
-*
+$Id$
 */
-

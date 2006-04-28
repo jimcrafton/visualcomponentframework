@@ -471,33 +471,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:09  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.4  2006/03/16 01:32:18  ddiego
-*fixed AdvancedAlignment example per fraggles req.
-*
-*Revision 1.5.2.3  2005/10/14 13:00:58  kiklop74
-*Fix exception error with divide by zero
-*
-*Revision 1.5.2.2  2005/08/01 16:44:04  marcelloptr
-*forgotten fixes
-*
-*Revision 1.5.2.1  2005/07/23 21:44:57  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.4.1  2005/06/25 22:46:10  marcelloptr
-*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
-*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
-*
-*Revision 1.4  2004/08/07 02:46:54  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.4  2004/04/29 03:40:51  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

@@ -31,8 +31,6 @@ public:
 
 
 
-
-
 /**
 This example show how to work with strings
 in the VCF and some of the extra utility functions in the StringUtils class.
@@ -389,15 +387,6 @@ int main(int argc, char *argv[])
 
 
 
-
-
-
-
-
-
-
-
-
 namespace VCF {
 
 
@@ -407,65 +396,5 @@ namespace VCF {
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/11 01:57:49  ddiego
-*fixed bug in compiler for vc6 - hope this doesn't screw up bcc.
-*
-*Revision 1.5  2006/04/07 02:34:43  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.5  2006/03/29 19:45:59  kdmix
-*A bcc issue fixed.
-*
-*Revision 1.4.2.4  2006/03/19 00:03:41  obirsoy
-*Linux FoundationKit improvements.
-*
-*Revision 1.4.2.3  2005/11/10 04:43:27  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.4.2.2  2005/07/31 02:36:54  marcelloptr
-*made the Format class 10% faster and fixed handling on the %% character sequence
-*
-*Revision 1.4.2.1  2005/07/23 21:45:42  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.4.7  2005/07/12 13:33:58  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.3.4.4  2005/04/17 15:11:47  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3.4.3  2005/03/14 05:44:50  ddiego
-*added the Formatter class as part of the process of getting rid of the var arg methods in System and StringUtils.
-*
-*Revision 1.3.4.2  2005/03/06 22:50:57  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.3.4.1  2005/02/16 05:09:30  ddiego
-*bunch o bug fixes and enhancements to the property editor and treelist control.
-*
-*Revision 1.3  2004/08/07 02:47:38  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.4.9  2004/06/06 07:05:27  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.2.4.7  2004/05/31 13:20:56  ddiego
-*more osx updates
-*
-*Revision 1.2.4.6  2004/05/03 03:44:52  ddiego
-*This checks in a bunch of changes to the FoundationKit for OSX
-*porting. The thread, mutex, semaphor, condition, and file peers
-*have all been implemented and tested. The file peer could be improved
-*and needs search functionality. The locale peer is only partially
-*complete, but the functions will return values. The unicode transition
-*is also finished and works OK now.
-*
-*Revision 1.2.4.5  2004/04/29 03:40:57  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

@@ -330,32 +330,6 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:34:09  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.3  2006/03/20 01:21:56  dougtinkham
-*minor cosmetic change
-*
-*Revision 1.2.2.2  2006/03/16 01:31:31  ddiego
-*fixed accelerators example per fraggles req.
-*
-*Revision 1.2.2.1  2006/01/29 18:18:10  dougtinkham
-*minor change for mingw
-*
-*Revision 1.2  2005/07/09 23:14:13  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.5  2005/06/06 02:34:03  ddiego
-*menu changes to better support win32 and osx.
-*
-*Revision 1.1.2.4  2005/06/02 20:27:03  marcelloptr
-*few more comments
-*
-*Revision 1.1.2.2  2005/06/02 17:27:31  marcelloptr
-*Example made by Jim.
-*Added comments and few fixes.
-*
+$Id$
 */
 

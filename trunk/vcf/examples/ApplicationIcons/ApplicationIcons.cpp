@@ -116,26 +116,5 @@ int main(int argc, char *argv[])
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:34:13  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.1  2005/07/23 21:45:33  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.4.4.2  2004/12/10 21:30:31  ddiego
-*fixed bug 1082362 App Icons do not appear.
-*
-*Revision 1.4.4.1  2004/12/10 21:12:27  ddiego
-*fixed bug 1082362 App Icons do not appear.
-*
-*Revision 1.4  2004/08/07 02:46:56  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.3.2.4  2004/04/29 03:40:51  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

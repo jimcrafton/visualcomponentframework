@@ -382,40 +382,5 @@ int main( int argc, char** argv ){
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:34:39  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.1  2005/07/23 21:45:40  ddiego
-*merged in marcellos changes from the 0-6-7 dev branch.
-*
-*Revision 1.3.4.3  2005/07/11 19:58:54  marcelloptr
-*fixed all deprecated traceWithArgs(...) and format(...) calls
-*
-*Revision 1.3.4.2  2005/04/17 15:11:46  iamfraggle
-*Replaced old-style var arg calls with new Format calls.
-*
-*Revision 1.3.4.1  2005/03/06 22:50:55  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.3  2004/08/07 02:47:35  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.2.2.6  2004/05/31 13:20:55  ddiego
-*more osx updates
-*
-*Revision 1.2.2.5  2004/05/03 03:44:52  ddiego
-*This checks in a bunch of changes to the FoundationKit for OSX
-*porting. The thread, mutex, semaphor, condition, and file peers
-*have all been implemented and tested. The file peer could be improved
-*and needs search functionality. The locale peer is only partially
-*complete, but the functions will return values. The unicode transition
-*is also finished and works OK now.
-*
-*Revision 1.2.2.4  2004/04/29 03:40:55  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

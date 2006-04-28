@@ -139,15 +139,6 @@ use main() just like normal.
 </section>
 
 
-
-
 <!--
-CVS Log info
-$Log$
-Revision 1.2  2003/12/18 05:15:54  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.1.2.1  2003/09/24 19:42:48  ddiego
-added docbook documentation for this example.
-
+$Id$
 -->
