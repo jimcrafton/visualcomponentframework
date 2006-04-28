@@ -117,43 +117,5 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2006/04/07 02:35:42  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.1.2.1  2006/03/06 03:48:31  ddiego
-*more docs, plus update add-ins, plus migrated HTML browser code to a new kit called HTMLKit.
-*
-*Revision 1.2  2004/08/07 02:49:11  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 03:43:15  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:20  ddiego
-*migration towards new directory structure
-*
-*Revision 1.11  2003/05/17 20:37:36  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.10.14.1  2003/03/23 03:23:57  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.10  2002/06/19 21:48:46  ddiego
-**** empty log message ***
-*
-*Revision 1.9  2002/05/09 03:10:44  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
-*
-*Revision 1.8.4.1  2002/04/08 20:55:30  zzack
-*changed include style
-*
-*Revision 1.8  2002/01/24 01:46:49  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
+$Id$
 */
-
-
