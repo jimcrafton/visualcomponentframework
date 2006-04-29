@@ -211,3 +211,8 @@ void Win32RunLoopPeer::postEvent( Event* event, EventHandler* handler, bool dele
 
 	PostThreadMessage( runLoop_->getOwningThread()->getThreadID(), VCF_POSTMSGTORUNLOOP, 0, (LPARAM)pe );
 }
+
+
+/**
+$Id$
+*/

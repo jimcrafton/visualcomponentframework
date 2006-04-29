@@ -203,65 +203,8 @@ protected:
 
 
 
-/**
-CVS Log info
-$Log$
-Revision 1.4  2006/04/07 02:35:35  ddiego
-initial checkin of merge from 0.6.9 dev branch.
-
-Revision 1.3.2.3  2006/03/26 22:37:35  ddiego
-minor update to source docs.
-
-Revision 1.3.2.2  2006/03/12 22:01:41  ddiego
-doc updates.
-
-Revision 1.3.2.1  2005/11/27 23:55:45  ddiego
-more osx updates.
-
-Revision 1.3  2005/07/18 03:54:19  ddiego
-documentation updates.
-
-Revision 1.2  2004/08/07 02:49:15  ddiego
-merged in the devmain-0-6-5 branch to stable
-
-Revision 1.1.2.2  2004/04/29 04:07:13  marcelloptr
-reformatting of source files: macros and csvlog and copyright sections
-
-Revision 1.1.2.1  2004/04/28 03:29:40  ddiego
-migration towards new directory structure
-
-Revision 1.3.4.1  2004/04/26 21:58:48  marcelloptr
-changes for dir reorganization: _VCF_MACRO_H__
-
-Revision 1.3  2003/12/18 05:15:59  ddiego
-merge from devmain-0-6-2 branch into the stable branch
-
-Revision 1.2.4.2  2003/11/10 01:57:43  ddiego
-add a fromString methods to StingUtils
-added some minor fixes to list box control and added a SelectionChanged
-Delegate to it
-add some minor fixes ot ComboBoxControl
-added an unknownColor() method to ColorNames class
-
-Revision 1.2.4.1  2003/10/23 04:24:51  ddiego
-more musical chairs with headers again, in yet another attempt to make
-them more efficent to speed up compiles.
-Removed all teh template RTTI classes and put them all in one header
-called VCFRTTIImpl.h. This should help compile speeds a bit.
-The next step is to look at some of the event classes and remove ones
-that aren't really neccessary - I'd estimate that 50% of the current
-event classes are unneccessary and can be removed.
-
-Revision 1.2  2003/05/17 20:37:17  ddiego
-this is the checkin for the 0.6.1 release - represents the merge over from
-the devmain-0-6-0 branch plus a few minor bug fixes
-
-Revision 1.1.2.1  2003/04/23 03:44:36  ddiego
-added a string tokenizer class, long overdue :)
-
-*/
-
-
 #endif // _VCF_STRINGTOKENIZER_H__
 
-
+/**
+$Id$
+*/

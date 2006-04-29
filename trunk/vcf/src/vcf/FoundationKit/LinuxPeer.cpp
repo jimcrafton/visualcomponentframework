@@ -173,52 +173,5 @@ String LinuxUtils::getErrorString( const int& errorCode )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2006/03/19 00:04:16  obirsoy
-*Linux FoundationKit improvements.
-*
-*Revision 1.3  2005/04/05 23:44:22  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
-*
-*Revision 1.5  2003/05/17 20:37:34  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.4.14.1  2003/03/23 03:23:57  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.4  2002/05/27 22:52:34  ddiego
-*added two new tests for testing File and System support in the FoudnationKit
-*and verified that they work in Linux. Fixed associated code in getting that to
-*work.
-*
-*Revision 1.3  2002/05/27 15:58:22  ddiego
-*added linux peer classes for the FoundationKit port to linux
-*this now means the FoundationKit will start up correctly on
-*linu thought it is still not 100% functional yet
-*
-*Revision 1.2  2002/05/09 03:10:44  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
-*
-*Revision 1.1.4.1  2002/03/26 04:46:34  cesarmello
-*Linux headers
-*
-*Revision 1.1  2002/01/28 02:07:59  cesarmello
-*Linux file peer
-*
+$Id$
 */
-
-

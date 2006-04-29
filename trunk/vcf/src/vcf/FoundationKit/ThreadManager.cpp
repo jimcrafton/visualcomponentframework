@@ -112,3 +112,7 @@ void ThreadManager::internal_removeThread( Thread* thread )
 		threads_.erase( found );
 	}
 }
+
+/**
+$Id$
+*/

@@ -36,3 +36,6 @@ public:
 
 #endif //_VCF_RUNLOOPSOURCE_H__
 
+/**
+$Id$
+*/

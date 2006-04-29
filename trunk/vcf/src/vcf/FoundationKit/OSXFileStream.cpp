@@ -199,33 +199,5 @@ int OSXFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.2  2005/11/21 04:00:51  ddiego
-*more osx updates.
-*
-*Revision 1.2.6.1  2005/11/10 02:02:38  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.9  2004/08/02 04:11:53  ddiego
-*added more examples to xcode project
-*
-*Revision 1.1.2.8  2004/08/01 23:40:16  ddiego
-*fixed a few osx bugs
-*
-*Revision 1.1.2.7  2004/07/29 03:55:21  ddiego
-*osx updates
-*
-*Revision 1.1.2.6  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
+$Id$
 */
-
-

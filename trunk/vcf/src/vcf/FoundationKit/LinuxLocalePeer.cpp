@@ -466,43 +466,7 @@ String LinuxLocalePeer::getLanguage()
 	return result;
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.2  2006/03/23 05:20:23  ddiego
-*added missing stub for linux to locale peer.
-*
-*Revision 1.3.2.1  2006/03/19 00:04:16  obirsoy
-*Linux FoundationKit improvements.
-*
-*Revision 1.3  2005/04/05 23:44:22  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.2  2004/04/28 18:42:26  ddiego
-*migrating over changes for unicode strings.
-*This contains fixes for the linux port and changes to the Makefiles
-*
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2  2004/04/03 15:48:46  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.1  2004/02/16 05:38:10  ddiego
-*updated linux makefiles as a result of new locale support - pushed in stubs for locale peer impl, but no functionality at this point
-*
-*Revision 1.1.2.1  2004/02/16 04:08:44  ddiego
-*updates some missing locale impl files
-*
+$Id$
 */
-
-

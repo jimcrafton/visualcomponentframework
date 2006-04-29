@@ -35,3 +35,8 @@ namespace VCF {
 };
 
 #endif //_VCF_POSIXTHREADMANAGERPEER_H__
+
+
+/**
+$Id$
+*/

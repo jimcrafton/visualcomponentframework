@@ -256,69 +256,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.3  2006/03/26 22:37:34  ddiego
-*minor update to source docs.
-*
-*Revision 1.4.2.2  2006/03/12 22:01:40  ddiego
-*doc updates.
-*
-*Revision 1.4.2.1  2005/09/13 01:58:07  ddiego
-*minor changes to dictionary class.
-*
-*Revision 1.4  2005/07/18 03:54:19  ddiego
-*documentation updates.
-*
-*Revision 1.3  2004/08/08 22:09:33  ddiego
-*final checkin before the 0-6-5 release
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 04:07:07  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
-*
-*Revision 1.5.2.1  2004/04/26 21:58:48  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.5  2004/04/03 19:03:35  ddiego
-*Added enumeration support for the Dictionary class,
-*and updated the Dictionary example accordingly.
-*
-*Revision 1.4  2004/01/20 01:54:55  ddiego
-*merged some more changes from dev branch, primarily changes to
-*teh RTTI API so that we now process enum sets correctly (i.e. a long
-*that is a mask made of enum values).
-*
-*Revision 1.2.2.2  2004/01/06 04:40:53  ddiego
-*added first handler and setting the first handler to the delegate
-*
-*Revision 1.2.2.1  2004/01/05 05:45:17  ddiego
-**** empty log message ***
-*
-*Revision 1.2  2003/12/18 05:15:59  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.1.2.2  2003/11/24 05:05:23  ddiego
-*added some more docs, and some minor changes to the Win32ScrollPeer
-*
-*Revision 1.1.2.1  2003/11/21 20:30:14  ddiego
-**** empty log message ***
-*
-*/
-
-
 #endif // _VCF_DICTIONARY_H__
 
-
+/**
+$Id$
+*/

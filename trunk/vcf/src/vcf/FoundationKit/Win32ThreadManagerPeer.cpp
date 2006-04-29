@@ -112,4 +112,6 @@ uint32 Win32ThreadManagerPeer::getCurrentThreadID()
 }
 
 
-
+/**
+$Id$
+*/

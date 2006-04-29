@@ -457,27 +457,7 @@ String OSXRegistry::getCurrentKey()
 	return currentRegKey_;
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.3  2005/12/04 20:58:32  ddiego
-*more osx impl work. foundationkit is mostly complete now.
-*
-*Revision 1.2.6.2  2005/11/21 04:00:51  ddiego
-*more osx updates.
-*
-*Revision 1.2.6.1  2005/11/14 22:05:42  ddiego
-*osx update.
-*
-*Revision 1.2  2004/08/07 02:49:14  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.6  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
+$Id$
 */
-
-

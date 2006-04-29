@@ -36,3 +36,6 @@ namespace VCF {
 
 #endif //_VCF_THREADMANAGERPEER_H__
 
+/**
+$Id$
+*/

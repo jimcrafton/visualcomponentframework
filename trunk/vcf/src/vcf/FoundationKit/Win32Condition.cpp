@@ -413,38 +413,5 @@ void Win32Condition::broadcast()
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.1  2004/06/05 01:18:41  marcelloptr
-*moved some files to the directory where they logically belong
-*
-*Revision 1.1.2.2  2004/04/29 03:43:15  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:20  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2  2004/04/03 15:48:47  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.4  2004/03/26 01:38:11  ddiego
-*added Marcello's suggestion for the additional VCF_ASSERT
-*macro. So we now have one which takes a single parameter, and another
-*which takes 2 parameters, the assert condition, and a message.
-*
-*Revision 1.1.2.3  2004/03/18 22:28:58  marcelloptr
-*just spacing formatting
-*
-*Revision 1.1.2.2  2004/03/12 04:05:30  ddiego
-*minor documentation for condition stuff
-*
-*Revision 1.1.2.1  2004/03/11 22:20:00  ddiego
-*added condition implementation to FoundationKit.
-*added a Conditions example to the examples directory.
-*
+$Id$
 */
-
-

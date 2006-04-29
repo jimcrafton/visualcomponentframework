@@ -56,3 +56,8 @@ uint32 OSXThreadManagerPeer::getCurrentThreadID()
 {
 	return (uint32) MPCurrentTaskID();
 }
+
+
+/**
+$Id$
+*/

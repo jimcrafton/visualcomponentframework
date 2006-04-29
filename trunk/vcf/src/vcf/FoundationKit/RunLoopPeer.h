@@ -43,3 +43,7 @@ public:
 };
 
 #endif //_VCF_RUNLOOPPEER_H__
+
+/**
+$Id$
+*/

@@ -396,36 +396,5 @@ UnicodeString StringsMessageLoader::getMessageFromID( const UnicodeString& id )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:35  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.1  2006/03/26 22:37:35  ddiego
-*minor update to source docs.
-*
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:13  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:40  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.2.1  2004/04/21 02:17:27  ddiego
-*checking in change to FoundationKit, GraphicsKit and Application
-*Kit to support unicode in Win32
-*
-*Revision 1.2  2004/04/03 15:48:50  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.2  2004/02/21 03:27:10  ddiego
-*updates for OSX porting
-*
-*Revision 1.1.2.1  2004/02/16 04:00:49  ddiego
-*added some missing files for locales
-*
+$Id$
 */
-
-

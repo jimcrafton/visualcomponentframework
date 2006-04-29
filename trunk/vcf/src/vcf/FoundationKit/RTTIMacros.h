@@ -475,27 +475,8 @@ you are finished defining your RTTI.
 #endif
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:35  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.2  2006/04/05 03:35:59  ddiego
-*post cvs crash updates.
-*
-*Revision 1.2.2.1  2005/09/12 03:47:05  ddiego
-*more prop editor updates.
-*
-*Revision 1.2  2005/07/09 23:15:04  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.1  2005/03/06 23:13:29  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*/
-
-
 #endif // _VCF_RTTIMACROS_H__
 
-
+/**
+$Id$
+*/

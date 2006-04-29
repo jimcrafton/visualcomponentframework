@@ -245,6 +245,8 @@ ProgramInfo* OSXResourceBundle::getProgramInfo()
 	
 	return OSXResourceBundle::getProgramInfo( bundle );
 }
-		
-		
-		
+
+
+/**
+$Id$
+*/

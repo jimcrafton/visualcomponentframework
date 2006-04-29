@@ -86,3 +86,6 @@ namespace VCF {
 
 #endif //_VCF_LINUXRUNLOOPPEER_H__
 
+/**
+$Id$
+*/

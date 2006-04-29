@@ -155,3 +155,7 @@ protected:
 };
 
 #endif //_VCF_RUNLOOP_H__
+
+/**
+$Id$
+*/

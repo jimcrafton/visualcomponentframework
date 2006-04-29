@@ -558,37 +558,6 @@ void OSXFilePeer::endFileSearch( Directory::Finder* finder )
 }
 	
 
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.1  2005/12/04 20:58:32  ddiego
-*more osx impl work. foundationkit is mostly complete now.
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.12  2004/08/02 04:11:53  ddiego
-*added more examples to xcode project
-*
-*Revision 1.1.2.11  2004/08/01 23:40:16  ddiego
-*fixed a few osx bugs
-*
-*Revision 1.1.2.10  2004/07/30 02:15:29  ddiego
-*added some impl in OSXFilePeer
-*
-*Revision 1.1.2.9  2004/07/29 03:55:12  ddiego
-*osx updates
-*
-*Revision 1.1.2.8  2004/07/27 04:26:04  ddiego
-*updated devmain-0-6-5 branch with osx changes
-*
-*Revision 1.1.2.7  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
+$Id$
 */
-
-

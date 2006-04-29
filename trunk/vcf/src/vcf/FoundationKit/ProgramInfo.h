@@ -134,3 +134,6 @@ namespace VCF {
 
 #endif //_VCF_PROGRAMINFO_H__
 
+/**
+$Id$
+*/
