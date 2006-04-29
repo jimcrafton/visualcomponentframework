@@ -90,3 +90,7 @@ void SystemTray::hideFromTray()
 	TrayIconChanged.fireEvent( &e );
 }
 
+
+/**
+$Id$
+*/

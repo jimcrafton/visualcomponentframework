@@ -155,56 +155,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:25  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2006/03/14 02:25:47  ddiego
-*large amounts of source docs updated.
-*
-*Revision 1.3  2005/07/09 23:14:55  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.1  2005/02/28 04:51:56  ddiego
-*fixed issue in handling componenent state and events when in design mode
-*
-*Revision 1.2  2004/08/07 02:49:09  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/06/06 07:05:30  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 03:43:14  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:19  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.4.1  2004/04/26 21:58:21  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2003/12/18 05:15:57  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.1.2.3  2003/10/28 04:06:10  ddiego
-*updated the GraphicsContext and ContextPeer classes to support
-*slider control drawing. adjusted the Slider control accordingly.
-*Also changed some of the GraphicsKit headers to conform to the
-*current header style.
-*
-*Revision 1.1.2.2  2003/10/27 04:20:35  ddiego
-*more tweaks to the Slider control
-*
-*Revision 1.1.2.1  2003/10/25 04:30:20  ddiego
-*added two more examples one for progress bars and one for slider controls.
-*also added two more control classes to the ApplicationKit, a SliderControl
-*and a ProgressControl.
-*
-*/
-
-
 #endif // _VCF_SLIDERCONTROL_H__
 
-
+/**
+$Id$
+*/

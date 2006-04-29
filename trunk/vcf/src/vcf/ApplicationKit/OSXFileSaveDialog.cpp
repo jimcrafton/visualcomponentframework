@@ -444,30 +444,6 @@ void OSXFileSaveDialog::setFileMustExist( const bool& fileMustExist )
 };
 
 
-
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/11/27 23:55:44  ddiego
-*more osx updates.
-*
-*Revision 1.3  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.2.1  2005/05/08 19:55:31  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.2  2004/12/01 04:31:37  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/11/10 06:16:40  ddiego
-*started adding osx menu code
-*
-*
+$Id$
 */

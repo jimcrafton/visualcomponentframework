@@ -19,3 +19,7 @@ namespace VCF {
 
 
 #endif //_VCF_OSXAPPRESOURCEBUNDLE_H__
+
+/**
+$Id$
+*/

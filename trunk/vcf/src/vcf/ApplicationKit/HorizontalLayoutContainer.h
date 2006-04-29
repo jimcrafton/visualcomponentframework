@@ -335,76 +335,8 @@ public:
 }; // namespace VCF
 
 
-
-
-
-
-
-/**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:23  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.2  2006/03/14 02:25:47  ddiego
-*large amounts of source docs updated.
-*
-*Revision 1.4.2.1  2006/03/05 02:28:04  ddiego
-*updated the Item interface and adjusted the other classes accordingly.
-*
-*Revision 1.4  2005/07/09 23:14:53  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3  2005/02/26 14:44:03  ddiego
-*checked in changes from dev for horz container.
-*
-
-*Revision 1.2.2.8  2005/06/26 01:34:37  marcelloptr
-*[bugfix 1227549] HorizontalLayoutContainer set the heights in the wrong rows.
-*AbstractContainer::add() needs to resizeChildren *after* the child control has been added.
-*
-*Revision 1.2.2.6  2005/05/22 04:05:43  ddiego
-*more text edit fixes.
-*
-*Revision 1.2.2.5  2005/04/25 00:11:57  ddiego
-*added more advanced text support. fixed some memory leaks. fixed some other miscellaneous things as well.
-*
-*Revision 1.2.2.4  2005/04/20 02:26:00  ddiego
-*fixes for single line text and formatting problems in text window creation.
-*
-*Revision 1.2.2.3  2005/03/20 04:29:21  ddiego
-*added ability to set image lists for list box control.
-*
-*Revision 1.2.2.2  2005/03/06 22:50:59  ddiego
-*overhaul of RTTI macros. this includes changes to various examples to accommadate the new changes.
-*
-*Revision 1.2.2.1  2005/02/10 20:59:37  ddiego
-*fixed a layout error in horz layout container
-*
-*Revision 1.2  2004/12/01 04:31:21  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.3  2004/11/17 04:52:48  ddiego
-*added some minor fixes to win32 resource loading, and added 2 new examples that demonstrate basic resource loading and basic usage of dialogs.
-*
-*Revision 1.1.2.2  2004/09/07 03:57:04  ddiego
-*misc tree control update
-*
-*Revision 1.1.2.1  2004/08/31 04:12:12  ddiego
-*cleaned up the GraphicsContext class - made more pervasive use
-*of transformation matrix. Added common print dialog class. Fleshed out
-*printing example more.
-*
-*/
-
-
-
 #endif //_HORIZONTALLAYOUTCONTAINER_H__
 
-
-
-
-
-
+/**
+$Id$
+*/

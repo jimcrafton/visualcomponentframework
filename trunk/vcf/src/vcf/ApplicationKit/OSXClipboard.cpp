@@ -299,29 +299,7 @@ DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoa
 	return result;
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.2  2005/11/30 05:31:35  ddiego
-*further osx drag-drop updates.
-*
-*Revision 1.2.2.1  2005/11/27 23:55:44  ddiego
-*more osx updates.
-*
-*Revision 1.2  2005/07/09 23:14:53  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.3  2005/06/27 03:28:54  ddiego
-*more osx work.
-*
-*Revision 1.1.2.2  2005/06/23 01:26:55  ddiego
-*build updates
-*
-*Revision 1.1.2.1  2005/06/15 15:41:13  ddiego
-*minor osx stuff
+$Id$
 */
-
-

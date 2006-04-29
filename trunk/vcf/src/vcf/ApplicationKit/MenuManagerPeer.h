@@ -41,3 +41,7 @@ namespace VCF {
 
 
 #endif //_VCF_MENUMANAGERPEER_H__
+
+/**
+$Id$
+*/

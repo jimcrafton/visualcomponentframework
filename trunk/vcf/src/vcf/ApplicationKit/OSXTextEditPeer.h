@@ -166,24 +166,8 @@ protected:
 }; // namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.1  2006/02/26 23:44:10  ddiego
-*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
-*
-*Revision 1.2  2005/07/09 23:14:55  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.1  2005/06/27 03:28:54  ddiego
-*more osx work.
-*
-*/
-
-
 #endif // _VCF_OSXTEXTEDITPEER_H__
 
-
+/**
+$Id$
+*/

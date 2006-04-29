@@ -320,45 +320,5 @@ void SliderControl::keyUp( KeyboardEvent* e )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:14:55  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.1  2005/03/15 01:51:50  ddiego
-*added support for Format class to take the place of the
-*previously used var arg funtions in string utils and system. Also replaced
-*existing code in the framework that made use of the old style var arg
-*functions.
-*
-*Revision 1.2  2004/08/07 02:49:09  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/07/09 03:39:29  ddiego
-*merged in changes from the OSX branch for new theming API. Added
-*support for controlling the use of locale translated strings in components.
-*
-*Revision 1.1.2.2.2.1  2004/06/27 18:19:15  ddiego
-*more osx updates
-*
-*Revision 1.1.2.2  2004/04/29 03:43:14  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:19  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2  2003/12/18 05:16:00  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.1.2.3  2003/10/28 04:06:12  ddiego
-*updated the GraphicsContext and ContextPeer classes to support
-*slider control drawing. adjusted the Slider control accordingly.
-*Also changed some of the GraphicsKit headers to conform to the
-*current header style.
-*
-*Revision 1.1.2.2  2003/10/27 04:20:39  ddiego
-*more tweaks to the Slider control
-*
+$Id$
 */
-
-

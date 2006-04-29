@@ -179,46 +179,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:05  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/06/06 07:05:29  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 03:43:12  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:13  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.4.1  2004/04/26 21:58:36  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2003/12/18 05:15:57  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.1.2.2  2003/12/08 05:05:28  ddiego
-*added a bunch more documentation to classes, and added support for new doc
-*keywords (@delegates, @del, @delegate, @event, and @eventtype). This
-*makes it easier to see at a glance what events a class fires off.
-*Added finishing touches for the Action implementation and have a partially
-*complete example for this checked in.
-*
-*Revision 1.1.2.1  2003/12/02 05:50:05  ddiego
-*added preliminary support for teh Action class. This will make it easier
-*to hook up complimentary UI elements (such as a "copy" menu item, and a
-*"copy" toolbar item) and have tehm respond to update and actions via a
-*single source.
-*Got rid of the old toolbar button and separator class. Merged in Marcellos
-*new fixes for the Container and Splitter classes.
-*Some misc fixes to the Toolbar, groups and checks now work correctly.
-*
-*/
-
-
 #endif // _VCF_ACTIONEVENT_H__
 
-
+/**
+$Id$
+*/

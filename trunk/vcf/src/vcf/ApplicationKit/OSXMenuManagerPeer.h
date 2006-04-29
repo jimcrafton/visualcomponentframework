@@ -45,3 +45,7 @@ namespace VCF {
 };
 
 #endif //_VCF_OSXMENUMANAGERPEER_H__
+
+/**
+$Id$
+*/

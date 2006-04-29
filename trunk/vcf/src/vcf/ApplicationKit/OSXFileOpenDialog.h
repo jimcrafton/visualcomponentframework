@@ -80,20 +80,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/12/01 04:31:37  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/11/02 05:20:41  ddiego
-*more osx updates for open file dialog.
-*
-*/
-
-
 #endif // _VCF_OSXFILEOPENDIALOG_H__
 
-
+/**
+$Id$
+*/

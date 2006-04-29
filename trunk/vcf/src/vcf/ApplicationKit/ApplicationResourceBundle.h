@@ -35,5 +35,6 @@ namespace VCF  {
 
 #endif //_VCF_APPLICATIONRESOURCEBUNDLE_H__
 
-
-
+/**
+$Id$
+*/

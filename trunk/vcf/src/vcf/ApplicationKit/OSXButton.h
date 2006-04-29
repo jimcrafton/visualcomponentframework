@@ -52,18 +52,8 @@ protected:
 
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/12/01 04:31:21  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/10/18 03:10:30  ddiego
-*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
-*
-*/
-
 #endif //_VCF_OSXBUTTON_H__
 
+/**
+$Id$
+*/

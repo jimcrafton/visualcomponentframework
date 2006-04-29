@@ -136,28 +136,7 @@ void GTKToolbar::setEnableAutoResize( const bool& val )
 void GTKToolbar::setBorder( Border* border )
 {}
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/04/05 23:44:22  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
-*
-*Revision 1.2  2004/08/07 02:49:08  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 03:43:13  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:17  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2  2003/12/18 05:16:01  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.1.2.1  2003/11/01 20:35:23  ddiego
-*added GTKToolbar class impl - no real functionality at this point
-*
-*
+$Id$
 */
-
-

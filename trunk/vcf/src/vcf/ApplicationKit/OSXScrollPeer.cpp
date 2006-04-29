@@ -113,14 +113,5 @@ void OSXScrollPeer::getAdjustedPositions( double& xPosition, double& yPosition )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.1  2005/06/23 00:35:36  ddiego
-*added osx classes
-*
+$Id$
 */
-
-

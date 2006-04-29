@@ -400,23 +400,5 @@ void MessageDialog::verifyUIState()
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:14:53  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.2  2005/07/01 15:30:53  marcelloptr
-*added support for PushButtons with images
-*
-*Revision 1.2.4.1  2005/02/16 05:09:31  ddiego
-*bunch o bug fixes and enhancements to the property editor and treelist control.
-*
-*Revision 1.2  2004/08/07 02:49:08  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 03:43:14  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
+$Id$
 */
-
-

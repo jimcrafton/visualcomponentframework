@@ -109,31 +109,8 @@ namespace VCF {
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.3  2006/03/18 22:17:42  ddiego
-*removed par tag for doxygen comments as its not needed and
-*screws up the doc formatting.
-*
-*Revision 1.2.2.2  2006/03/14 02:25:47  ddiego
-*large amounts of source docs updated.
-*
-*Revision 1.2.2.1  2005/08/27 04:49:35  ddiego
-*menu fixes.
-*
-*Revision 1.2  2005/07/09 23:14:53  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.4  2005/06/08 13:50:29  marcelloptr
-*added CVS log section
-*
-*/
-
-
 #endif //_VCF_MENUMANAGER_H__
 
-
+/**
+$Id$
+*/

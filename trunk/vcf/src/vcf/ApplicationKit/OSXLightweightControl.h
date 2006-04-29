@@ -91,42 +91,9 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.2  2006/01/09 02:22:31  ddiego
-*more osx code
-*
-*Revision 1.4.2.1  2005/11/10 04:43:27  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.4  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.2  2005/06/29 05:15:41  marcelloptr
-*fixed some white spaces
-*
-*Revision 1.2.4.1  2005/05/08 19:55:31  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.2  2004/08/07 17:15:07  ddiego
-*added missing osx files and projects
-*
-*Revision 1.1.4.1  2004/08/07 16:32:50  ddiego
-*added missing files
-*
-*Revision 1.1.2.1  2004/07/06 03:34:56  ddiego
-*added new files for osx update, and added new
-*project template files for creating VCF based projects with XCode.
-*
-*/
-
-
 #endif // _VCF_OSXLIGHTWEIGHTCONTROL_H__
 
-
+/**
+$Id$
+*/
 

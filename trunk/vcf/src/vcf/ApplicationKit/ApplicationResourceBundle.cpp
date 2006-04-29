@@ -34,3 +34,7 @@ String ApplicationResourceBundle::getResourcesDirectory()
 	return System::findResourceDirectoryForExecutable( app_->getFileName() );
 }
 
+
+/**
+$Id$
+*/

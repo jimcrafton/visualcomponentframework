@@ -1015,34 +1015,7 @@ void OSXTextEditPeer::setTextWrapping( const bool& val )
 
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.3  2006/02/26 23:44:10  ddiego
-*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
-*
-*Revision 1.2.2.2  2006/01/09 02:22:31  ddiego
-*more osx code
-*
-*Revision 1.2.2.1  2005/11/10 04:43:27  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.2  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.3  2005/07/07 23:28:58  ddiego
-*last osx checkins before release - not complete :(
-*
-*Revision 1.1.2.2  2005/06/28 04:03:35  ddiego
-*osx text edit mods and started on osx tree peer.
-*
-*Revision 1.1.2.1  2005/06/27 03:28:54  ddiego
-*more osx work.
-*
+$Id$
 */
-
-

@@ -118,42 +118,8 @@ protected:
 }; // end of namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:14:59  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.3  2005/04/30 11:52:36  marcelloptr
-*added a comment for the enabledSetTextOnControl_ member variable
-*
-*Revision 1.2  2004/08/07 02:49:12  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 03:43:16  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:21  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.10.1  2004/04/26 21:58:44  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2003/02/26 04:30:41  ddiego
-*merge of code in the devmain-0-5-9 branch into the current tree.
-*most additions are in the area of the current linux port, but the major
-*addition to this release is the addition of a Condition class (currently
-*still under development) and the change over to using the Delegate class
-*exclusively from the older event handler macros.
-*
-*Revision 1.1.2.1  2003/02/09 05:38:54  ddiego
-*added a VERY simple editable text control. It is dog slow though, but
-*better than nothing.
-*
-*Auto generated header for class X11SimpleTextControl
-*/
-
-
 #endif // _VCF_X11SIMPLETEXTCONTROL_H__
 
-
+/**
+$Id$
+*/

@@ -67,4 +67,6 @@ namespace VCF {
 
 #endif //_VCF_WIN32SYSTEMTRAYPEER_H__
 
-
+/**
+$Id$
+*/

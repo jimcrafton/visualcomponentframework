@@ -70,3 +70,7 @@ bool OSXColorDialog::execute()
 
 };
 
+
+/**
+$Id$
+*/

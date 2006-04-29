@@ -627,33 +627,8 @@ void OSXListview::onListModelItemDeleted( Event* e )
 	
 	RemoveDataBrowserItems( hiView_, kDataBrowserNoItem, 1, &dbItem, kDataBrowserItemNoProperty );
 }
+
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.1  2005/11/27 23:55:44  ddiego
-*more osx updates.
-*
-*Revision 1.2  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.5  2005/07/07 23:28:58  ddiego
-*last osx checkins before release - not complete :(
-*
-*Revision 1.1.2.4  2005/06/30 02:29:12  ddiego
-*more osx work on list view
-*
-*Revision 1.1.2.3  2005/06/29 03:46:13  ddiego
-*more osx tree and list coding.
-*
-*Revision 1.1.2.2  2005/06/23 01:26:55  ddiego
-*build updates
-*
-*Revision 1.1.2.1  2005/06/22 03:59:30  ddiego
-*added osx stub classes for peers
-*
+$Id$
 */
-
-
