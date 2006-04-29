@@ -44,3 +44,7 @@ class PopupMenu;
 
 
 #endif //_VCF_SYSTEMTRAYPEER_H__
+
+/**
+$Id$
+*/

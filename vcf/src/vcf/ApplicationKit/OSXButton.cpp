@@ -240,3 +240,8 @@ OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 	return result;
 	//return OSXControl::handleOSXEvent( nextHandler, theEvent );
 }
+
+
+/**
+$Id$
+*/

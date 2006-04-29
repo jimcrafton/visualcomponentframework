@@ -100,29 +100,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.4  2005/07/09 23:14:54  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3  2005/01/08 20:52:46  ddiego
-*fixed some glitches in osx impl.
-*
-*Revision 1.2.2.1  2005/05/08 19:55:31  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.2  2004/12/01 04:31:37  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.2  2004/11/15 05:41:28  ddiego
-*finished almost all the osx menu code except for custom drawing. This completes this releases osx effort.
-*
-*Revision 1.1.2.1  2004/11/10 06:16:40  ddiego
-*started adding osx menu code
-*
-*/
-
 #endif //_VCF_OSXMENUITEM_H__
+
+/**
+$Id$
+*/

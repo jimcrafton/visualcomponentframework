@@ -399,21 +399,7 @@ LRESULT CALLBACK Win32SystemTrayPeer::wndProc(HWND hWnd, UINT message, WPARAM wP
 	return result;
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:26  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.4.1  2005/11/14 17:11:21  pallindo
-*Fixed a crash that came from not nulling out the end of szTip in setTooltipText.
-*
-*Revision 1.2  2004/12/01 04:31:39  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.4  2004/09/09 02:41:06  marcelloptr
-*warning eliminated
-*
+$Id$
 */

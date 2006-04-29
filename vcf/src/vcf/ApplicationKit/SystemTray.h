@@ -87,5 +87,6 @@ namespace VCF {
 
 #endif //_SYSTEMTRAY_H__
 
-
-
+/**
+$Id$
+*/

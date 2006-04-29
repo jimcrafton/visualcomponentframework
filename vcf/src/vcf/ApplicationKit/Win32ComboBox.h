@@ -161,52 +161,8 @@ private:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:14:57  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.1  2005/06/29 05:00:03  marcelloptr
-*some white spaces
-*
-*Revision 1.2  2004/08/07 02:49:10  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/06/06 07:05:31  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 03:43:15  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:20  ddiego
-*migration towards new directory structure
-*
-*Revision 1.7.8.1  2004/04/26 21:58:43  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.7  2003/05/17 20:37:12  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.6.22.2  2003/03/23 03:23:50  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.6.22.1  2003/03/12 03:11:08  ddiego
-*switched all member variable that used the "m_"<name> prefix to
-* <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
-*
-*Revision 1.6  2002/01/24 01:46:48  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
-*/
-
-
 #endif // _VCF_WIN32COMBOBOX_H__
 
-
+/**
+$Id$
+*/

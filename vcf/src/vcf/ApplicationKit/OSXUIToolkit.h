@@ -270,85 +270,8 @@ protected:
 }; //end of namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.7  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.6.2.6  2006/03/17 03:08:11  ddiego
-*updated osx code to latest changes.
-*
-*Revision 1.6.2.5  2006/02/26 23:44:10  ddiego
-*minor updates to sync osx version with latest cvs. added xcode proj for Themes example.
-*
-*Revision 1.6.2.4  2006/02/22 01:26:22  ddiego
-*mac osx updates.
-*
-*Revision 1.6.2.3  2006/01/09 02:22:31  ddiego
-*more osx code
-*
-*Revision 1.6.2.2  2005/11/21 04:00:51  ddiego
-*more osx updates.
-*
-*Revision 1.6.2.1  2005/11/10 04:43:27  ddiego
-*updated the osx build so that it
-*compiles again on xcode 1.5. this applies to the foundationkit and graphicskit.
-*
-*Revision 1.6  2005/07/10 00:20:40  ddiego
-*updated osx code from merge over of devmain-0-6-7.
-*
-*Revision 1.5  2005/07/09 23:14:55  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.4  2005/01/08 20:52:46  ddiego
-*fixed some glitches in osx impl.
-*
-
-*Revision 1.3.2.2  2005/06/09 02:25:50  ddiego
-*updated osx build
-*
-*Revision 1.3.2.1  2005/05/08 19:55:32  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.3  2004/12/01 04:31:38  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.2.2.2  2004/10/18 03:10:30  ddiego
-*osx updates - add initial command button support, fixed rpoblem in mouse handling, and added dialog support.
-*
-*Revision 1.2.2.1  2004/10/10 15:23:12  ddiego
-*updated os x code
-*
-*Revision 1.2  2004/08/07 02:49:09  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.5  2004/06/06 07:05:30  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.4  2004/05/16 02:39:01  ddiego
-*OSX code updates
-*
-*Revision 1.1.2.3  2004/04/30 05:44:33  ddiego
-*added OSX changes for unicode migration
-*
-*Revision 1.2.2.1  2004/04/26 21:58:43  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2004/04/03 15:48:42  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.2  2004/02/25 05:17:55  ddiego
-*updates to ApplicationKit to support posting events and timer and idle time handlers for the OSX UI Toolkit.
-*
-*Revision 1.1.2.1  2004/02/24 01:42:43  ddiego
-*initial OSX ApplicationKit port checkin
-*
-*/
-
-
 #endif // _VCF_OSXUITOOLKIT_H__
 
-
+/**
+$Id$
+*/

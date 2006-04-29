@@ -24,3 +24,6 @@ HINSTANCE Win32AppResourceBundle::getResourceInstance()
 }
 
 
+/**
+$Id$
+*/

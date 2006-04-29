@@ -47,5 +47,6 @@ namespace VCF {
 
 #endif //_VCF_WIN32MENUMANAGERPEER_H__
 
-
-
+/**
+$Id$
+*/

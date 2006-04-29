@@ -13,3 +13,8 @@ OSXAppResourceBundle::OSXAppResourceBundle( AbstractApplication* app ):
 {
 	VCF_ASSERT( NULL != app_ );
 }
+
+
+/**
+$Id$
+*/

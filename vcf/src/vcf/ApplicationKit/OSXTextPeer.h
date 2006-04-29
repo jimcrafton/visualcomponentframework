@@ -74,21 +74,8 @@ protected:
 }; // namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2005/07/09 23:14:55  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.1  2005/06/23 01:26:55  ddiego
-*build updates
-*
-*Revision 1.1.2.5  2005/06/07 18:11:31  marcelloptr
-*added missed getStyle() function. Fixed underline text that couldn't be removed once introduced.
-*
-*/
-
-
 #endif //_VCF_OSXTEXTPEER_H__
 
-
+/**
+$Id$
+*/

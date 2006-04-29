@@ -100,3 +100,7 @@ private:
 
 
 #endif //_VCF_WIN32HRESULT_H__
+
+/**
+$Id$
+*/

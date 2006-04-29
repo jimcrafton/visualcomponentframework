@@ -1116,32 +1116,5 @@ void Win32TextPeer::setDefaultStyle( Dictionary&  styles )
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:26  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.2.1  2005/10/07 19:31:53  ddiego
-*merged patch 1315995 and 1315991 into dev repos.
-*
-*Revision 1.2  2005/07/09 23:14:58  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.1.2.12  2005/07/05 03:34:35  marcelloptr
-*minor bug fixed
-*
-*Revision 1.1.2.11  2005/06/26 01:31:20  marcelloptr
-*improvements to the Color class. The default, when packing the components into a single integer, is now cpsARGB instead than cpsABGR.
-*
-*Revision 1.1.2.10  2005/06/25 19:50:49  marcelloptr
-*forgotten MP mark
-*
-*Revision 1.1.2.9  2005/06/09 07:18:25  marcelloptr
-*simpler and more useful use of Color class with ctor and getters/setters
-*
-*Revision 1.1.2.6  2005/06/07 17:31:29  marcelloptr
-*added missed getStyle() function. Fixed underline text that couldn't be removed once introduced.
-*
+$Id$
 */
-
-

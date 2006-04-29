@@ -311,42 +311,6 @@ PrintSession::PrintJob Win32PrintDialog::getPrintJobType()
 }
 
 
-
-
-
-
-
-
-
-
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.4  2006/04/07 02:35:26  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.3.2.1  2005/11/04 17:56:17  ddiego
-*fixed bugs in some win32 code to better handle unicode - ansi functionality.
-*
-*Revision 1.3  2005/07/09 23:14:58  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.2.1  2005/04/13 00:57:02  iamfraggle
-*Enable Unicode in CodeWarrior
-*
-*Revision 1.2  2004/12/01 04:31:39  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.2  2004/11/21 00:19:10  ddiego
-*fixed a few more res loading bugs, and added yet another resource example.
-*
-*Revision 1.1.2.1  2004/08/31 04:12:12  ddiego
-*cleaned up the GraphicsContext class - made more pervasive use
-*of transformation matrix. Added common print dialog class. Fleshed out
-*printing example more.
-*
+$Id$
 */
-

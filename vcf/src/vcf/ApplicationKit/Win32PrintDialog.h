@@ -62,26 +62,8 @@ protected:
 };
 
 
-
-
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/12/01 04:31:39  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/08/31 04:12:12  ddiego
-*cleaned up the GraphicsContext class - made more pervasive use
-*of transformation matrix. Added common print dialog class. Fleshed out
-*printing example more.
-*
-*/
-
-
-
 #endif //_WIN32PRINTDIALOG_H__
 
-
-
+/**
+$Id$
+*/

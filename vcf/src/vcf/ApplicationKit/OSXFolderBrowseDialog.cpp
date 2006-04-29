@@ -139,26 +139,6 @@ void OSXFolderBrowseDialog::BrowseDlgCallbackProc( NavEventCallbackMessage callB
 };
 
 
-
-
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.4.1  2005/11/21 04:00:51  ddiego
-*more osx updates.
-*
-*Revision 1.2  2004/12/01 04:31:37  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.1.2.1  2004/10/30 20:27:26  ddiego
-*added osx color dialog and browse for folder dialog
-**
+$Id$
 */
-
-
-

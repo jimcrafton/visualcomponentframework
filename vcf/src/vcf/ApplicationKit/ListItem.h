@@ -162,86 +162,8 @@ public:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:24  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.2  2006/03/14 02:25:47  ddiego
-*large amounts of source docs updated.
-*
-*Revision 1.2.6.1  2006/03/05 02:28:04  ddiego
-*updated the Item interface and adjusted the other classes accordingly.
-*
-*Revision 1.2  2004/08/07 02:49:08  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.4  2004/07/09 18:48:05  ddiego
-*added locale translation support for most classes
-*
-*Revision 1.1.2.3  2004/06/06 07:05:30  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 03:43:14  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 00:28:18  ddiego
-*migration towards new directory structure
-*
-*Revision 1.13.4.1  2004/04/26 21:58:20  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.13  2003/12/18 05:15:57  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.12.4.1  2003/09/12 00:09:32  ddiego
-*added better tabbing behaviour - fixed an earlier bug.
-*Code is easier to understand and it simplified the implementation
-*a bit as well
-*Moved around the RTTI definitions for various Appkit classes to a
-*single inline and stripped them from the various class headers
-*
-*Revision 1.12  2003/05/17 20:37:03  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.11.2.1  2003/03/12 03:09:35  ddiego
-*switched all member variable that used the "m_"<name> prefix to
-* <name>"_" suffix nameing standard.
-*Also changed all vcf builder files to accomadate this.
-*Changes were made to the Stream classes to NOT multiple inheritance and to
-*be a little more correct. Changes include breaking the FileStream into two
-*distinct classes, one for input and one for output.
-*
-*Revision 1.11  2003/02/26 04:30:38  ddiego
-*merge of code in the devmain-0-5-9 branch into the current tree.
-*most additions are in the area of the current linux port, but the major
-*addition to this release is the addition of a Condition class (currently
-*still under development) and the change over to using the Delegate class
-*exclusively from the older event handler macros.
-*
-*Revision 1.10.14.1  2002/12/25 22:38:00  ddiego
-*more stupid fixes to get rid of the damn gcc no newline warning...grrr...
-*
-*Revision 1.10  2002/05/09 03:10:42  ddiego
-*merged over code from development branch devmain-0-5-1a into the main CVS trunk
-*
-*Revision 1.9.4.1  2002/04/27 15:42:40  ddiego
-*removed ApplicationKit.h and optimized header includes as
-*well as adding better include guard support
-*
-*Revision 1.9  2002/02/27 04:16:11  ddiego
-*add sub items to TreeItem class for teh tree list control
-*added fixes to the RemoteObject stuff
-*
-*Revision 1.8  2002/01/24 01:46:47  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
-*/
-
-
 #endif // _VCF_LISTITEM_H__
 
-
+/**
+$Id$
+*/
