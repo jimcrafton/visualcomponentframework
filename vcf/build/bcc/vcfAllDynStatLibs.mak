@@ -46,7 +46,6 @@ clean::
 	-@$(MK) -fApplicationKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean
 	-@cd $(VCFBUILDROOT)\FoundationKit
 	-@$(MK) -fFoundationKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean
-	-@$(MK) -fRegExx.mak -DBMODE=$(BMODE) clean
 	-@cd $(VCFBUILDROOT)\GraphicsKit
 	-@$(MK) -fImageFormats.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean
 	-@$(MK) -fGraphicsKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean
@@ -85,7 +84,7 @@ ApplicationKit_dll:: FoundationKit_dll GraphicsKit_dll
 	@$(MK) -fApplicationKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=DLL
 	@cd $(VCFBUILDROOT)
 	
-FoundationKit:: RegExx
+FoundationKit::
 	@cd $(VCFBUILDROOT)\FoundationKit
 	@$(MK) -fFoundationKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET)
 	@cd $(VCFBUILDROOT)
@@ -133,11 +132,6 @@ GraphicsKit_stat:: FoundationKit_stat libAGG thirdparty
 libAGG::
 	@cd $(VCFBUILDROOT)\GraphicsKit
 	@$(MK) -flibAGG.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET)
-	@cd $(VCFBUILDROOT)
-
-RegExx::
-	@cd $(VCFBUILDROOT)\FoundationKit
-	@$(MK) -fRegExx.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE)
 	@cd $(VCFBUILDROOT)
 
 NetworkKit:: FoundationKit
