@@ -84,56 +84,8 @@ protected:
 }; //end of namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.4  2005/07/09 23:15:06  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3  2005/01/02 03:04:23  ddiego
-*merged over some of the changes from the dev branch because they're important resoource loading bug fixes. Also fixes a few other bugs as well.
-*
-*Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
-*made modifications to methods that return a handle type. Introduced
-*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
-*which was causing a problem for 64bit compiles.
-*
-*Revision 1.2.4.2  2005/05/05 12:42:27  ddiego
-*this adds initial support for run loops,
-*fixes to some bugs in the win32 control peers, some fixes to the win32 edit
-*changes to teh etxt model so that notification of text change is more
-*appropriate.
-*
-*Revision 1.2.4.1  2004/12/19 04:05:02  ddiego
-*made modifications to methods that return a handle type. Introduced
-*a new typedef for handles, that is a pointer, as opposed to a 32bit int,
-*which was causing a problem for 64bit compiles.
-*
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:14  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:41  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.2.1  2004/04/26 21:58:43  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2004/04/03 15:48:42  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.2  2004/03/12 04:05:30  ddiego
-*minor documentation for condition stuff
-*
-*Revision 1.1.2.1  2004/03/11 22:19:58  ddiego
-*added condition implementation to FoundationKit.
-*added a Conditions example to the examples directory.
-*
-*/
-
-
 #endif // _VCF_WIN32CONDITION_H__
 
-
+/**
+$Id$
+*/

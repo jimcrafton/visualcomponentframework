@@ -1094,62 +1094,8 @@ public:
 };// end of namespace
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.6  2006/04/07 02:35:36  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.5.2.1  2006/03/12 22:01:44  ddiego
-*doc updates.
-*
-*Revision 1.5  2005/07/18 03:54:19  ddiego
-*documentation updates.
-*
-*Revision 1.4  2005/07/09 23:15:06  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3.2.1  2005/02/16 05:09:33  ddiego
-*bunch o bug fixes and enhancements to the property editor and treelist control.
-*
-*Revision 1.3  2004/12/01 04:31:42  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.2.2.1  2004/08/23 21:12:35  marcelloptr
-*added *=, /= and %= operators to lon64 and ulong64 classes
-*
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.8  2004/07/31 12:22:52  kiklop74
-*Minor tweak in long64 class needed to properly define type for bcc
-*
-*Revision 1.1.2.7  2004/07/30 17:28:40  kiklop74
-*Added first release of Borland midifications for VCF
-*
-*Revision 1.1.2.6  2004/07/24 01:40:42  ddiego
-*committed changes requested by Marcello. Got rid of the remaining
-*date time members on the File class - now the dat time function call the
-*FilePeer directly each time. Also added 2 functions to DateTime to convert
-*directly to UTC or Local time.
-*
-*Revision 1.1.2.5  2004/07/05 01:01:55  marcelloptr
-*added ulong64 ctor, operators and toString conversion
-*
-*Revision 1.1.2.4  2004/06/16 15:40:47  marcelloptr
-*just some comments
-*
-*Revision 1.1.2.3  2004/06/06 07:05:33  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 04:07:13  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*/
-
-
 #endif // _VCF_VCFULONG64_H__
 
-
+/**
+$Id$
+*/

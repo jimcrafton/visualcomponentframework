@@ -91,42 +91,8 @@ protected:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2006/04/07 02:35:35  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.2.6.2  2006/03/12 22:01:41  ddiego
-*doc updates.
-*
-*Revision 1.2.6.1  2005/11/27 23:55:45  ddiego
-*more osx updates.
-*
-*Revision 1.2  2004/08/07 02:49:15  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.3  2004/06/06 07:05:33  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 04:07:13  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:40  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.2.1  2004/04/26 21:58:49  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2004/04/03 15:48:42  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.1  2004/02/16 04:00:30  ddiego
-*added some missing files for locales
-*
-*/
-
-
 #endif // _VCF_TEXTCODEC_H__
 
-
+/**
+$Id$
+*/

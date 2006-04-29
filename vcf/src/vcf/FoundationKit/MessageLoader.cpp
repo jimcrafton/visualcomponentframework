@@ -44,23 +44,5 @@ void MessageLoader::internal_freeAllRegisteredMessageLoaders()
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:40  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2  2004/04/03 15:48:49  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.1  2004/02/16 04:00:48  ddiego
-*added some missing files for locales
-*
+$Id$
 */
-
-

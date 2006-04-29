@@ -150,80 +150,8 @@ public:
 }; //end of namespace VCF
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.3  2004/12/01 04:31:40  ddiego
-*merged over devmain-0-6-6 code. Marcello did a kick ass job
-*of fixing a nasty bug (1074768VCF application slows down modal dialogs.)
-*that he found. Many, many thanks for this Marcello.
-*
-*Revision 1.2.2.1  2004/11/10 19:09:46  marcelloptr
-*fixed documentation for doxygen
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.8  2004/08/02 00:48:23  ddiego
-*fixed build errors in linux for FoundationKit
-*
-*Revision 1.1.2.7  2004/07/29 02:39:14  ddiego
-*fixed a bug with File::getINputStream and File::getOutputStream.
-*
-*Revision 1.1.2.6  2004/07/24 01:40:42  ddiego
-*committed changes requested by Marcello. Got rid of the remaining
-*date time members on the File class - now the dat time function call the
-*FilePeer directly each time. Also added 2 functions to DateTime to convert
-*directly to UTC or Local time.
-*
-*Revision 1.1.2.5  2004/07/19 04:08:53  ddiego
-*more files and directories integration. Added Marcello's Directories example as well
-*
-*Revision 1.1.2.4  2004/07/18 14:45:19  ddiego
-*integrated Marcello's new File/Directory API changes into both
-*the FoundationKit and the ApplicationKit. Many, many thanks go out
-*to Marcello for a great job with this. This adds much better file searching
-*capabilities, with many options for how to use it and extend it in the
-*future.
-*
-*Revision 1.1.2.3  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 04:07:07  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
-*
-*Revision 1.9.4.1  2004/04/26 21:58:41  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.9  2003/12/18 05:15:58  ddiego
-*merge from devmain-0-6-2 branch into the stable branch
-*
-*Revision 1.8.4.1  2003/10/23 04:24:51  ddiego
-*more musical chairs with headers again, in yet another attempt to make
-*them more efficent to speed up compiles.
-*Removed all teh template RTTI classes and put them all in one header
-*called VCFRTTIImpl.h. This should help compile speeds a bit.
-*The next step is to look at some of the event classes and remove ones
-*that aren't really neccessary - I'd estimate that 50% of the current
-*event classes are unneccessary and can be removed.
-*
-*Revision 1.8  2003/05/17 20:37:11  ddiego
-*this is the checkin for the 0.6.1 release - represents the merge over from
-*the devmain-0-6-0 branch plus a few minor bug fixes
-*
-*Revision 1.7.22.1  2003/03/23 03:23:49  marcelloptr
-*3 empty lines at the end of the files
-*
-*Revision 1.7  2002/01/24 01:46:48  ddiego
-*added a cvs "log" comment to the top of all files in vcf/src and vcf/include
-*to facilitate change tracking
-*
-*/
-
-
 #endif // _VCF_FILEPEER_H__
 
-
+/**
+$Id$
+*/

@@ -42,18 +42,8 @@ public:
 };
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*/
-
-
 #endif // _VCF_INVALIDIMPLEMENTER_H__
 
-
+/**
+$Id$
+*/

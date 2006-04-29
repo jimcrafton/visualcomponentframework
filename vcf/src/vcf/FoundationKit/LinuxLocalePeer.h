@@ -80,54 +80,8 @@ protected:
 }
 
 
-/**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.2  2006/03/23 05:20:23  ddiego
-*added missing stub for linux to locale peer.
-*
-*Revision 1.4.2.1  2006/03/19 00:04:16  obirsoy
-*Linux FoundationKit improvements.
-*
-*Revision 1.4  2005/07/09 23:15:03  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3  2005/04/05 23:44:22  jabelardo
-*a lot of fixes to compile on linux, it does not run but at least it compile
-*
-*Revision 1.2.4.1  2005/04/17 16:11:31  ddiego
-*brought the foundation, agg, and graphics kits uptodate on linux
-*
-*Revision 1.2  2004/08/07 02:49:13  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.4  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.2  2004/04/29 04:07:08  marcelloptr
-*reformatting of source files: macros and csvlog and copyright sections
-*
-*Revision 1.1.2.1  2004/04/28 03:29:39  ddiego
-*migration towards new directory structure
-*
-*Revision 1.2.2.1  2004/04/26 21:58:42  marcelloptr
-*changes for dir reorganization: _VCF_MACRO_H__
-*
-*Revision 1.2  2004/04/03 15:48:41  ddiego
-*Merged over code from the 0-6-3 branch.
-*
-*Revision 1.1.2.1  2004/02/16 05:38:08  ddiego
-*updated linux makefiles as a result of new locale support - pushed in stubs for locale peer impl, but no functionality at this point
-*
-*Revision 1.1.2.1  2004/02/16 04:08:44  ddiego
-*updates some missing locale impl files
-*
-*/
-
-
 #endif // _VCF_LINUXLOCALEPEER_H__
 
-
+/**
+$Id$
+*/

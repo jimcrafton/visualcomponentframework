@@ -45,3 +45,8 @@ uint32 PosixThreadManagerPeer::getCurrentThreadID()
 {
     return pthread_self();
 }
+
+
+/**
+$Id$
+*/

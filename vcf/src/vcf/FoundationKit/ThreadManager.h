@@ -102,3 +102,7 @@ private:
 };
 
 #endif //_VCF_THREADMANAGER_H__
+
+/**
+$Id$
+*/

@@ -56,28 +56,5 @@ bool OSXSemaphore::unlock()
 
 
 /**
-*CVS Log info
-*$Log$
-*Revision 1.3  2005/07/09 23:15:04  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.2.4.1  2005/05/08 19:55:32  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.2  2004/08/07 02:49:14  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.6  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
-*Revision 1.1.2.4  2004/05/03 03:44:53  ddiego
-*This checks in a bunch of changes to the FoundationKit for OSX
-*porting. The thread, mutex, semaphor, condition, and file peers
-*have all been implemented and tested. The file peer could be improved
-*and needs search functionality. The locale peer is only partially
-*complete, but the functions will return values. The unicode transition
-*is also finished and works OK now.
-*
+$Id$
 */
-
-

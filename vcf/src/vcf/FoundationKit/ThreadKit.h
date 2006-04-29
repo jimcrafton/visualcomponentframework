@@ -15,4 +15,6 @@
 
 #endif //_VCF_THREADKIT_H__
 
-
+/**
+$Id$
+*/

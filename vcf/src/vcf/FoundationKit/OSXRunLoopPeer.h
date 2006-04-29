@@ -69,4 +69,6 @@ namespace VCF {
 
 #endif //_VCF_OSXRUNLOOPPEER_H__
 
-
+/**
+$Id$
+*/

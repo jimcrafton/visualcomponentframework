@@ -71,3 +71,6 @@ namespace VCF {
 
 #endif //_VCF_WIN32RUNLOOPPEER_H__
 
+/**
+$Id$
+*/

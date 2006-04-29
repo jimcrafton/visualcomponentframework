@@ -30,3 +30,7 @@ namespace VCF {
 };
 
 #endif //_VCF_OSXTHREADMANAGERPEER_H__
+
+/**
+$Id$
+*/

@@ -281,33 +281,7 @@ Locale* OSXThread::getCurrentLocale()
 	return &locale_;
 }
 
+
 /**
-*CVS Log info
-*$Log$
-*Revision 1.5  2006/04/07 02:35:34  ddiego
-*initial checkin of merge from 0.6.9 dev branch.
-*
-*Revision 1.4.2.2  2005/11/13 16:02:46  ddiego
-*more sox updates.
-*
-*Revision 1.4.2.1  2005/11/11 22:07:40  ddiego
-*small osx updates.
-*
-*Revision 1.4  2005/07/09 23:15:04  ddiego
-*merging in changes from devmain-0-6-7 branch.
-*
-*Revision 1.3.4.1  2005/05/08 19:55:32  ddiego
-*osx updates, not yet functional.
-*
-*Revision 1.3  2004/08/08 22:09:33  ddiego
-*final checkin before the 0-6-5 release
-*
-*Revision 1.2  2004/08/07 02:49:14  ddiego
-*merged in the devmain-0-6-5 branch to stable
-*
-*Revision 1.1.2.6  2004/06/06 07:05:32  marcelloptr
-*changed macros, text reformatting, copyright sections
-*
+$Id$
 */
-
-

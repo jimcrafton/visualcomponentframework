@@ -89,3 +89,8 @@ ProgramInfo* LinuxResourceBundle::getProgramInfo()
 {
 	return NULL;
 }
+
+
+/**
+$Id$
+*/

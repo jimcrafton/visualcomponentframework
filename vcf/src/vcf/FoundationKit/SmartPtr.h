@@ -30,3 +30,7 @@ namespace VCF  {
 }
 
 #endif // _VCF_SMARTPTR_H__
+
+/**
+$Id$
+*/

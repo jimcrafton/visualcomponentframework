@@ -52,15 +52,5 @@ namespace VCF {
 #endif //_VCF_LINUXRESOURCEBUNDLE_H__
 
 /**
-CVS Log info
-$Log$
-Revision 1.2  2005/07/09 23:15:03  ddiego
-merging in changes from devmain-0-6-7 branch.
-
-Revision 1.1.2.1  2005/04/17 16:11:32  ddiego
-brought the foundation, agg, and graphics kits uptodate on linux
-
-
+$Id$
 */
-
-
