@@ -34,3 +34,7 @@
         RemoteObjectKit=RemoteObjectKit_lib+RemoteObjectKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

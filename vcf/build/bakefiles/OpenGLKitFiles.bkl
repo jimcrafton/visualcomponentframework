@@ -32,3 +32,7 @@
         <if cond="PLATFORM_WIN32=='1'">$(OPENGLKIT_WIN_SRC)</if>
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

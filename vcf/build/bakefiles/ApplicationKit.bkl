@@ -36,3 +36,7 @@
         ApplicationKit=ApplicationKit_lib+ApplicationKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

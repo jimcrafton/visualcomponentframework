@@ -14,3 +14,7 @@
             cond="OPTION_LIBJPEG=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->

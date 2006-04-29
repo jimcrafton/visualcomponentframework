@@ -27,3 +27,7 @@
         FoundationKit=FoundationKit_lib+FoundationKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

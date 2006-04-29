@@ -36,3 +36,7 @@
         GraphicsKit=GraphicsKit_lib+GraphicsKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

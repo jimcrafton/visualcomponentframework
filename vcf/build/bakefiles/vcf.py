@@ -75,3 +75,6 @@ def getOptionValue( option, defaultValue ):
             print '\t%s: %s => %s' % ( option, defaultValue, preferred )
             return preferred
     return defaultValue
+
+
+#$Id$

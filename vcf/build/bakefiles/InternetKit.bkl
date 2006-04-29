@@ -31,3 +31,7 @@
         InternetKit=InternetKit_lib+InternetKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

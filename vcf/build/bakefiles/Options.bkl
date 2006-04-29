@@ -336,3 +336,7 @@ Compile ImageFormats:
     </option>
 
 </makefile>
+
+<!--
+$Id$
+-->
