@@ -9,3 +9,7 @@
         <vcf-use-HTMLKit/>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->

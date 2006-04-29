@@ -9,3 +9,7 @@
         <vcf-use-OpenGLKit/>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->

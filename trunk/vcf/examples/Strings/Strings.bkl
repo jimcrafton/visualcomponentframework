@@ -9,3 +9,7 @@
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->

@@ -23,3 +23,7 @@
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->

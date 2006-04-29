@@ -28,3 +28,7 @@
         <precomp-headers-file>$(EXE_FILENAME)</precomp-headers-file>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->
