@@ -20,3 +20,7 @@
             cond="OPTION_FREEIMAGE=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->

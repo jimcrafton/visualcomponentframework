@@ -31,3 +31,7 @@
         OpenGLKit=OpenGLKit_lib+OpenGLKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

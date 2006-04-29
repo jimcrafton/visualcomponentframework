@@ -14,3 +14,7 @@
             cond="OPTION_LIBPNG=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->

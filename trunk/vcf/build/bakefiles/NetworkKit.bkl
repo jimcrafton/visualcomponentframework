@@ -31,3 +31,7 @@
         NetworkKit=NetworkKit_lib+NetworkKit_dll
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

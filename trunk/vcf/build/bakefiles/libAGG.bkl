@@ -16,3 +16,7 @@
             cond="OPTION_LIBAGG=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->

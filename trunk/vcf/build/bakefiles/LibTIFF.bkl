@@ -14,3 +14,7 @@
             cond="OPTION_LIBTIFF=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->

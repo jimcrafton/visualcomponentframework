@@ -68,3 +68,7 @@
         <if cond="PLATFORM_MACOSX=='1'">$(LIBTIFF_OSX_SRC)</if>
     </set>
 </makefile>
+
+<!--
+$Id$
+-->

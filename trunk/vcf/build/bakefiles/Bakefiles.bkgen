@@ -178,3 +178,7 @@
     <include file="Bakefiles.local.bkgen" ignore_missing="1"/>
     
 </bakefile-gen>
+
+<!--
+$Id$
+-->

@@ -14,3 +14,7 @@
             cond="OPTION_ZLIB=='1'">
     </lib>
 </makefile>
+
+<!--
+$Id$
+-->
