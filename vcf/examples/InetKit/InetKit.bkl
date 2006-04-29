@@ -9,3 +9,7 @@
         <vcf-use-InternetKit/>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->

@@ -17,3 +17,7 @@
         <depends>SimpleDLL</depends>
     </exe>
 </makefile>
+
+<!--
+$Id$
+-->
