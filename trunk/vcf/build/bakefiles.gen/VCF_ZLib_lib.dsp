@@ -755,11 +755,7 @@ SOURCE=..\..\src\thirdparty\common\ZLib\gzio.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\ZLib\infblock.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\thirdparty\common\ZLib\infcodes.c
+SOURCE=..\..\src\thirdparty\common\ZLib\infback.c
 # End Source File
 # Begin Source File
 
@@ -772,10 +768,6 @@ SOURCE=..\..\src\thirdparty\common\ZLib\inflate.c
 # Begin Source File
 
 SOURCE=..\..\src\thirdparty\common\ZLib\inftrees.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\thirdparty\common\ZLib\infutil.c
 # End Source File
 # Begin Source File
 
@@ -795,15 +787,11 @@ SOURCE=..\..\src\thirdparty\common\ZLib\zutil.c
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\..\src\thirdparty\common\ZLib\crc32.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\thirdparty\common\ZLib\deflate.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\thirdparty\common\ZLib\infblock.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\thirdparty\common\ZLib\infcodes.h
 # End Source File
 # Begin Source File
 
@@ -815,11 +803,11 @@ SOURCE=..\..\src\thirdparty\common\ZLib\inffixed.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\ZLib\inftrees.h
+SOURCE=..\..\src\thirdparty\common\ZLib\inflate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\ZLib\infutil.h
+SOURCE=..\..\src\thirdparty\common\ZLib\inftrees.h
 # End Source File
 # Begin Source File
 

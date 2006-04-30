@@ -47,7 +47,6 @@
 
         <if cond="FORMAT in ['mingw','gnu']">
            <cppflags>-Wno-multichar</cppflags>
-           <define>_UNICODE</define>
         </if>
 
         <if cond="FORMAT in ['msvc','msvc6prj']">
