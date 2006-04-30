@@ -78,12 +78,10 @@ ZLIB_LIB_OBJECTS =  \
 	$(OBJDIR)\ZLib_lib_crc32.o \
 	$(OBJDIR)\ZLib_lib_deflate.o \
 	$(OBJDIR)\ZLib_lib_gzio.o \
-	$(OBJDIR)\ZLib_lib_infblock.o \
-	$(OBJDIR)\ZLib_lib_infcodes.o \
+	$(OBJDIR)\ZLib_lib_infback.o \
 	$(OBJDIR)\ZLib_lib_inffast.o \
 	$(OBJDIR)\ZLib_lib_inflate.o \
 	$(OBJDIR)\ZLib_lib_inftrees.o \
-	$(OBJDIR)\ZLib_lib_infutil.o \
 	$(OBJDIR)\ZLib_lib_trees.o \
 	$(OBJDIR)\ZLib_lib_uncompr.o \
 	$(OBJDIR)\ZLib_lib_zutil.o
@@ -2230,10 +2228,7 @@ $(OBJDIR)\ZLib_lib_deflate.o: ../../src/thirdparty/common/ZLib/deflate.c
 $(OBJDIR)\ZLib_lib_gzio.o: ../../src/thirdparty/common/ZLib/gzio.c
 	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\ZLib_lib_infblock.o: ../../src/thirdparty/common/ZLib/infblock.c
-	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\ZLib_lib_infcodes.o: ../../src/thirdparty/common/ZLib/infcodes.c
+$(OBJDIR)\ZLib_lib_infback.o: ../../src/thirdparty/common/ZLib/infback.c
 	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)\ZLib_lib_inffast.o: ../../src/thirdparty/common/ZLib/inffast.c
@@ -2243,9 +2238,6 @@ $(OBJDIR)\ZLib_lib_inflate.o: ../../src/thirdparty/common/ZLib/inflate.c
 	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)\ZLib_lib_inftrees.o: ../../src/thirdparty/common/ZLib/inftrees.c
-	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
-
-$(OBJDIR)\ZLib_lib_infutil.o: ../../src/thirdparty/common/ZLib/infutil.c
 	$(CC) -c -o $@ $(ZLIB_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)\ZLib_lib_trees.o: ../../src/thirdparty/common/ZLib/trees.c

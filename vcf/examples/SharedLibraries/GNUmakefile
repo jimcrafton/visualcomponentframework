@@ -21,8 +21,7 @@ SIMPLEDLL_OBJECTS =  \
 	$(OBJDIR)/SimpleDLL_SimpleDLL.o
 SHAREDLIBRARIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_3) -D_THREAD_SAFE \
 	-pthread $(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING \
-	-Wno-multichar -D_UNICODE -I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-Wno-multichar -I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SHAREDLIBRARIES_OBJECTS =  \
 	$(OBJDIR)/SharedLibraries_SharedLibraries.o
 
