@@ -1967,7 +1967,7 @@ public:
 		Size result;
 		
 		switch ( type ) {
-			case mtMenuSize : {
+			case mtMenuItemSize : {
 				NONCLIENTMETRICSA ncInfo;
 				ncInfo.cbSize = sizeof(ncInfo);
 				::SystemParametersInfoA (SPI_GETNONCLIENTMETRICS, sizeof(ncInfo), &ncInfo, 0);
@@ -2000,7 +2000,9 @@ public:
 					cx += CXTEXTMARGIN << 1;		// L/R margin for readability
 					cx += CXGAP;					// space between button and menu text
 					
-					//cx += szButton_.cx<<1;		// button width (L=button; R=empty margin)
+					int cxButn = result.height_;				// width of button
+
+					cx += cxButn;//<<1;		// button width (L=button; R=empty margin)
 					
 					// whatever value I return in lpms->itemWidth, Windows will add the
 					// width of a menu checkmark, so I must subtract to defeat Windows. Argh.
@@ -2011,6 +2013,12 @@ public:
 					::DeleteObject( menuHFont );
 					::DeleteDC( dc );
 				}
+			}
+			break;
+
+			case mtMenuItemSeparatorSize : {
+				result.height_ = GetSystemMetrics(SM_CYMENU)>>1;
+				result.width_  = 0;
 			}
 			break;
 

@@ -87,6 +87,9 @@ namespace VCF {
 			mtTextControlHeight,
 			mtVerticalProgressWidth,
 			mtHorizontalProgressHeight,
+			mtMenuSeparatorHeight,
+			mtMenuBarHeight,
+
 			/**
 			returns the default height for an informational control such as a status bar or
 			a progress bar. This is also referred to as a "placard" in Apple's HIG
@@ -112,7 +115,8 @@ namespace VCF {
 			control (like a status label) and the control below it
 			*/
 			mtInformationControlBottomSpacer,			
-			mtMenuSize,
+			mtMenuItemSize,
+			mtMenuItemSeparatorSize,
 			mtVerticalSliderThumbSize,
 			mtHorizontalSliderThumbSize,						
 			mtTabSize,

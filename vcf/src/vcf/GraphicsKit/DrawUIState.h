@@ -172,6 +172,16 @@ public:
 		dsUseCustomProgressColor		= 0x01000000,
 		dsUseCustomProgressTextColor	= 0x02000000,
 
+		/**
+		This indicates that the UI will be a radio button
+		like look. In other words only one choice will show up.
+		Its typicalle used in menu items. 
+		*/
+		dsMutualExclusiveToggle			= 0x04000000,
+
+		dsMenuItemHasChildren			= 0x08000000,
+		dsMenuItemHasImage				= 0x10000000,
+
 	};	
 };
 
@@ -269,6 +279,14 @@ public:
 \class MenuState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
 */
 class MenuState : public DrawUIState {
+protected:
+	enum ModifierMasks{
+		mmUndefined = 0,
+		mmAlt = 1,
+		mmShift = 2,
+		mmCtrl = 4
+	};
+
 public:
 	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(0){}
 
@@ -298,6 +316,7 @@ public:
 		}
 	}
 
+	
 	bool isToggled() const {
 		return  (state_ & DrawStates::dsToggledYes) ? true : false;
 	}
@@ -312,10 +331,95 @@ public:
 			state_ |= DrawStates::dsToggledNo;
 		}
 	}
+
+	bool isMutuallyExclusive() const {
+		return  (state_ & DrawStates::dsMutualExclusiveToggle) ? true : false;
+	}
 	
+	void setMutuallyExclusive( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsMutualExclusiveToggle;
+		}
+		else {
+			state_ &= ~DrawStates::dsMutualExclusiveToggle;
+		}
+	}
+	
+	bool hasChildren() const {
+		return  (state_ & DrawStates::dsMenuItemHasChildren) ? true : false;
+	}
+	
+	void setHasChildren( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsMenuItemHasChildren;			
+		}
+		else {
+			state_ &= ~DrawStates::dsMenuItemHasChildren;
+		}
+	}
+
+	bool menuItemHasImage() const {
+		return  (state_ & DrawStates::dsMenuItemHasImage) ? true : false;
+	}
+	
+	void setMenuItemHasImage( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsMenuItemHasImage;			
+		}
+		else {
+			state_ &= ~DrawStates::dsMenuItemHasImage;
+		}
+	}
+	
+	void setHasShiftKey( bool val ) {
+		if ( val ) {
+			modifierMask_ |= MenuState::mmShift;
+		}
+		else {
+			modifierMask_ &= ~MenuState::mmShift;
+		}
+	}
+
+	void setHasControlKey( bool val ) {
+		if ( val ) {
+			modifierMask_ |= MenuState::mmCtrl;
+		}
+		else {
+			modifierMask_ &= ~MenuState::mmCtrl;
+		}
+	}
+
+	void setHasAltKey( bool val ) {
+		if ( val ) {
+			modifierMask_ |= MenuState::mmAlt;
+		}
+		else {
+			modifierMask_ &= ~MenuState::mmAlt;
+		}
+	}
+
+	bool hasShiftKey() const {
+		return ( MenuState::mmShift & modifierMask_ ) != 0;
+	}
+	
+	bool hasAltKey() const {
+		return ( MenuState::mmAlt & modifierMask_ ) != 0;
+	}
+	
+	bool hasControlKey() const {
+		return ( MenuState::mmCtrl & modifierMask_ ) != 0;
+	}
+
 	VirtualKeyCode keyCode_;
 	ulong32 modifierMask_;
 	String menuCaption_;
+
+	/**
+	This may be modified during the drawThemeMenuItem() call,
+	or it may be set prior to this by the underlying OS windowing
+	system during menu item events handled by the framework.
+	*/
+	Rect imageRect_;
 };
 
 /**

@@ -25,6 +25,8 @@ where you installed the VCF.
 #include "thirdparty/win32/Microsoft/htmlhelp.h"
 
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
+
 
 using namespace VCF;
 
@@ -871,17 +873,22 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 					//foundItem->setEnabled( (drawItemStruct->itemState & ODS_CHECKED) != 0 );
 
-					if ( true == foundItem->canPaint() ) {
+					foundItem->setHighlighted( (drawItemStruct->itemState & ODS_SELECTED) != 0 );
+
+					if ( foundItem->canPaint() ) {
 
 						Win32MenuItem* itemPeer = (Win32MenuItem*)foundItem->getPeer();
 
-						itemPeer->drawDefaultMenuItem( idCtl, *drawItemStruct );
-
 						GraphicsContext gc( (OSHandleID)drawItemStruct->hDC );
-						foundItem->paint( &gc, &Rect(drawItemStruct->rcItem.left, drawItemStruct->rcItem.top,
-														drawItemStruct->rcItem.right, drawItemStruct->rcItem.bottom) );
-						gc.getPeer()->setContextID(0);
 
+						//itemPeer->drawDefaultMenuItem( &gc, idCtl, *drawItemStruct );						
+						
+						Rect menuRect(drawItemStruct->rcItem.left, drawItemStruct->rcItem.top,
+										drawItemStruct->rcItem.right, drawItemStruct->rcItem.bottom);						
+
+						foundItem->paint( &gc, &menuRect );
+
+						gc.getPeer()->setContextID(0);
 						
 						wndProcResult = TRUE;
 						result = true;
@@ -915,7 +922,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				MenuItem* foundItem = Win32MenuItem::getMenuItemFromID( measureInfo->itemID );
 				if ( NULL != foundItem ) {
 
-					if ( true == foundItem->canPaint() ) {
+					if ( foundItem->canPaint() ) {
 						result = TRUE;
 						Rect* bounds = foundItem->getBounds();
 						bool needsBounds = false;
@@ -925,9 +932,11 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 						else {
 							needsBounds = true;
 						}
-						if ( true == needsBounds ) {
+						if ( needsBounds ) {
 							Win32MenuItem* peer = (Win32MenuItem*)foundItem->getPeer();
 							peer->fillInMeasureItemInfo( *measureInfo );
+							//
+
 						}
 						else {
 							measureInfo->itemHeight = (long)bounds->getHeight();

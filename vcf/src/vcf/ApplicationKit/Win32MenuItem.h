@@ -81,9 +81,7 @@ public:
 	static MenuItem* getMenuItemFromID( const uint32 id );
 	static MenuItem* getMenuItemFromHandle( HMENU handle );
 
-	void fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo );
-
-	void drawDefaultMenuItem( const UINT& idCtl, DRAWITEMSTRUCT& drawItemStruct );
+	void fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo );	
 protected:
 
 	HMENU itemHandle_;
@@ -93,13 +91,7 @@ protected:
 					//fixChildren() should take care of it
 
 	void insertSimpleMenuItem( MenuItem* child, HMENU menu );
-
-	bool draw3DCheckmark( HDC dc, const RECT& rc, const bool& bSelected, HBITMAP hbmCheck );
-
-	void fillMenuItemRect( HDC dc, const RECT& rc, COLORREF color );
-
-	void drawMenuItemText( HDC dc, RECT rc, COLORREF color );
-
+	
 	static std::map<uint32,MenuItem*> menuItemMap;
 	static std::map<HMENU,MenuItem*> menuItemHandleMap;
 

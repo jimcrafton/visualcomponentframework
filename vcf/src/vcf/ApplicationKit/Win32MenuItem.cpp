@@ -10,6 +10,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/Win32MenuItem.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
+
 
 
 #define BASE_MENU_ID	32000
@@ -736,7 +738,26 @@ void Win32MenuItem::changePaintState()
 
 void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 {
+	Size menuSz;
 
+	if ( menuItem_->isSeparator() ) {
+		menuSz = UIToolkit::getUIMetricSize( UIMetricsManager::mtMenuItemSeparatorSize );
+	}
+	else {
+		String caption = menuItem_->getCaption();
+		if ( menuItem_->getUseLocaleStrings() ) {
+			caption = System::getCurrentThreadLocale()->translate( caption );
+		}
+		
+		caption = generateCaption( menuItem_, caption );
+		menuSz = UIToolkit::getUIMetricSize( UIMetricsManager::mtMenuItemSize, caption );
+	}
+	
+
+	measureItemInfo.itemWidth = menuSz.width_;
+	measureItemInfo.itemHeight = menuSz.height_;
+
+/*
 	int index = menuItem_->getIndex();
 	MENUITEMINFO info = {0};
 	info.cbSize = sizeof(MENUITEMINFO);
@@ -808,167 +829,7 @@ void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 			}
 		}
 	}
-}
-
-void Win32MenuItem::drawDefaultMenuItem( const UINT& idCtl, DRAWITEMSTRUCT& drawItemStruct )
-{
-	if ( drawItemStruct.CtlType != ODT_MENU ) {
-		return; // not handled by me
-	}
-
-	if ( NULL == drawItemStruct.hDC ) {
-		return; //throw exception ??
-	}
-
-	int index = menuItem_->getIndex();
-	MENUITEMINFO info = {0};
-	info.cbSize = sizeof(MENUITEMINFO);
-	info.fMask = MIIM_TYPE | MIIM_CHECKMARKS;
-	MenuItem* parent = getParent();
-	if ( NULL != parent ){
-		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
-		if ( NULL != menuHandle ){
-			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
-
-				if ( (info.fType & MFT_SEPARATOR) != 0 ) {
-					// draw separator
-					RECT tmp = drawItemStruct.rcItem;
-
-					tmp.top += (tmp.bottom - tmp.top) >>1; 	// vertical center
-
-					DrawEdge( drawItemStruct.hDC, &tmp, EDGE_ETCHED, BF_TOP);		// draw separator line
-				}
-				else {
-					// not a separator
-					bool menuDisabled = (drawItemStruct.itemState & ODS_GRAYED) != 0;
-					bool menuSelected = (drawItemStruct.itemState & ODS_SELECTED) != 0;
-					bool menuChecked  = (drawItemStruct.itemState & ODS_CHECKED) != 0;
-					bool menuHasButn = false;
-
-
-
-					RECT tmpBtnRect = {drawItemStruct.rcItem.left + 2, drawItemStruct.rcItem.top,
-										drawItemStruct.rcItem.left + 2 + (drawItemStruct.rcItem.right - drawItemStruct.rcItem.left),
-										drawItemStruct.rcItem.top + (drawItemStruct.rcItem.bottom - drawItemStruct.rcItem.top) };
-
-					// no button: look for custom checked/unchecked bitmaps
-					if ( (true == menuChecked) || (NULL != info.hbmpUnchecked) ) {
-						menuHasButn =
-							draw3DCheckmark( drawItemStruct.hDC, tmpBtnRect,
-												menuSelected,
-												menuChecked ? info.hbmpChecked : info.hbmpUnchecked );
-					}
-
-					// Done with button, now paint text. First do background if needed.
-					int cxButn = tmpBtnRect.bottom - tmpBtnRect.top;				// width of button
-
-					COLORREF colorBG = ::GetSysColor( menuSelected ? COLOR_HIGHLIGHT : COLOR_MENU );
-
-					if ( (true == menuSelected) || (drawItemStruct.itemAction==ODA_SELECT) ) {
-						// selected or selection state changed: paint text background
-						RECT rcBG = drawItemStruct.rcItem;	// whole rectangle
-
-						if ( true == menuHasButn) {	// if there's a button:
-							rcBG.left += cxButn + CXGAP;			//  don't paint over it!
-						}
-						fillMenuItemRect( drawItemStruct.hDC, rcBG, colorBG );
-					}
-
-					// compute text rectangle and colors
-					RECT rcText = drawItemStruct.rcItem;				 // start w/whole item
-					rcText.left += cxButn + CXGAP + CXTEXTMARGIN; // left margin
-					rcText.right -= cxButn;				 // right margin
-					::SetBkMode( drawItemStruct.hDC, TRANSPARENT );			 // paint transparent text
-
-					COLORREF colorText =
-						GetSysColor( menuDisabled ?  COLOR_GRAYTEXT :
-										(menuSelected ? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT));
-
-					// Now paint menu item text.	No need to select font,
-					// because windows sets it up before sending WM_DRAWITEM
-					//
-					if ( (true == menuDisabled) && ((false == menuSelected) || (colorText == colorBG)) ) {
-						// disabled: draw hilite text shifted southeast 1 pixel for embossed
-						// look. Don't do it if item is selected, tho--unless text color same
-						// as menu highlight color. Got it?
-						//
-						rcText.left += 1;
-						rcText.top += 1;
-
-						drawMenuItemText( drawItemStruct.hDC, rcText, GetSysColor(COLOR_3DHILIGHT) );
-						rcText.left -= 1;
-						rcText.top -= 1;
-					}
-
-					drawMenuItemText( drawItemStruct.hDC, rcText, colorText ); // finally!
-				}
-			}
-		}
-	}
-}
-
-bool Win32MenuItem::draw3DCheckmark( HDC dc, const RECT& rc, const bool& bSelected, HBITMAP hbmCheck )
-{
-	bool result = false;
-
-	return result;
-}
-
-
-// Shorthand to fill a rectangle with a solid color.
-void Win32MenuItem::fillMenuItemRect( HDC dc, const RECT& rc, COLORREF color )
-{
-	HBRUSH brush = ::CreateSolidBrush( color );
-
-	HBRUSH oldBrush = (HBRUSH)::SelectObject( dc, brush );
-
-	PatBlt( dc, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, PATCOPY);
-
-	::SelectObject( dc, oldBrush );
-	DeleteObject( brush );
-}
-
-void Win32MenuItem::drawMenuItemText( HDC dc, RECT rc, COLORREF color )
-{
-	String left = menuItem_->getCaption();
-	if ( menuItem_->getUseLocaleStrings() ) {
-		left = System::getCurrentThreadLocale()->translate( left );
-	}
-
-	left = generateCaption( menuItem_, left );
-
-	String right;
-
-	int tabPos = left.find('\t');
-	if ( tabPos != String::npos ) {
-		if ( tabPos >= 0 ) {
-			right = left.substr( tabPos + 1, left.size() - tabPos );
-
-			left  = left.substr( 0, tabPos );
-		}
-	}
-
-	::SetTextColor( dc, color );
-
-	if ( System::isUnicodeEnabled() ) {
-		DrawTextW( dc, left.c_str(), left.size(), &rc, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
-	}
-	else {
-		AnsiString tmp = left;
-		DrawTextA( dc, tmp.c_str(), tmp.size(), &rc, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
-	}
-
-	if (tabPos > 0) {
-		if ( System::isUnicodeEnabled() ) {
-			DrawTextW( dc, right.c_str(), right.size(), &rc, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
-		}
-		else {
-			AnsiString tmp = right;
-			DrawTextA( dc, tmp.c_str(), tmp.size(), &rc, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
-		}
-
-	}
+	*/
 }
 
 
