@@ -88,6 +88,13 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
+		<Unit filename="crc32.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
 		<Unit filename="deflate.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
@@ -105,27 +112,8 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="infblock.c">
+		<Unit filename="infback.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="infblock.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="infcodes.c">
-			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="infcodes.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
@@ -153,24 +141,19 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="inftrees.c">
-			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="inftrees.h">
+		<Unit filename="inflate.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="infutil.c">
+		<Unit filename="inftrees.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="infutil.h">
+		<Unit filename="inftrees.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
