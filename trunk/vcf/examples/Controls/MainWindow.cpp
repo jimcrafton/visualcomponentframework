@@ -54,7 +54,7 @@ MainWindow::MainWindow()
 	//add TabbedPages
 	mainPages_ = new TabbedPages();
 	mainPages_->setBorderWidth( 4 );
-	( (StandardContainer*)mainPages_->getContainer() )->setBorderWidth( UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta) );
+	( (StandardContainer*)mainPages_->getContainer() )->setBorderWidth( UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta) );
 	this->add( mainPages_, AlignClient );
 
 	//add individual TabPage here.
@@ -95,7 +95,7 @@ void MainWindow::onHelpAbout( MenuItemEvent* e )
 // begin listBoxPage_ code
 void MainWindow::makeListBoxPage()
 {
-	double borderWidth = UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta);
+	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
 	Panel* panel1 = (Panel*)listBoxPage_->getPageComponent();
 
@@ -269,7 +269,7 @@ void MainWindow::onbtnAddItemClicked( VCF::ButtonEvent* ) {
 // begin bordersPage code
 void MainWindow::makeBordersPage()
 {
-	double borderWidth = UIToolkit::getUIMetricsManager()->getPreferredSpacingFor(UIMetricsManager::stContainerBorderDelta);
+	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
 	Panel* pagePanel = (Panel*)bordersPage_->getPageComponent();
 
