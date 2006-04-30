@@ -1,9 +1,9 @@
 
 /* pngget.c - retrieval of values from info struct
  *
- * libpng 1.0.12 - June 8, 2001
+ * libpng 1.2.8 - December 3, 2004
  * For conditions of distribution and use, see copyright notice in png.h
- * Copyright (c) 1998-2001 Glenn Randers-Pehrson
+ * Copyright (c) 1998-2004 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  */
@@ -540,14 +540,15 @@ png_get_IHDR(png_structp png_ptr, png_infop info_ptr,
    if (png_ptr != NULL && info_ptr != NULL && width != NULL && height != NULL &&
       bit_depth != NULL && color_type != NULL)
    {
-      int pixel_depth, channels;
-      png_uint_32 rowbytes_per_pixel;
-
       png_debug1(1, "in %s retrieval function\n", "IHDR");
       *width = info_ptr->width;
       *height = info_ptr->height;
       *bit_depth = info_ptr->bit_depth;
+      if (info_ptr->bit_depth < 1 || info_ptr->bit_depth > 16)
+        png_error(png_ptr, "Invalid bit depth");
       *color_type = info_ptr->color_type;
+      if (info_ptr->color_type > 6)
+        png_error(png_ptr, "Invalid color type");
       if (compression_type != NULL)
          *compression_type = info_ptr->compression_type;
       if (filter_type != NULL)
@@ -556,17 +557,16 @@ png_get_IHDR(png_structp png_ptr, png_infop info_ptr,
          *interlace_type = info_ptr->interlace_type;
 
       /* check for potential overflow of rowbytes */
-      if (*color_type == PNG_COLOR_TYPE_PALETTE)
-         channels = 1;
-      else if (*color_type & PNG_COLOR_MASK_COLOR)
-         channels = 3;
-      else
-         channels = 1;
-      if (*color_type & PNG_COLOR_MASK_ALPHA)
-         channels++;
-      pixel_depth = *bit_depth * channels;
-      rowbytes_per_pixel = (pixel_depth + 7) >> 3;
-      if ((*width > PNG_MAX_UINT/rowbytes_per_pixel))
+      if (*width == 0 || *width > PNG_UINT_31_MAX)
+        png_error(png_ptr, "Invalid image width");
+      if (*height == 0 || *height > PNG_UINT_31_MAX)
+        png_error(png_ptr, "Invalid image height");
+      if (info_ptr->width > (PNG_UINT_32_MAX
+                 >> 3)      /* 8-byte RGBA pixels */
+                 - 64       /* bigrowbuf hack */
+                 - 1        /* filter byte */
+                 - 7*8      /* rounding of width to multiple of 8 pixels */
+                 - 8)       /* extra max_pixel_depth pad */
       {
          png_warning(png_ptr,
             "Width too large for libpng to process image data.");
@@ -819,11 +819,116 @@ png_get_user_chunk_ptr(png_structp png_ptr)
 }
 #endif
 
-
+#ifdef PNG_WRITE_SUPPORTED
 png_uint_32 PNGAPI
 png_get_compression_buffer_size(png_structp png_ptr)
 {
    return (png_uint_32)(png_ptr? png_ptr->zbuf_size : 0L);
 }
+#endif
+
+#ifndef PNG_1_0_X
+#ifdef PNG_ASSEMBLER_CODE_SUPPORTED
+/* this function was added to libpng 1.2.0 and should exist by default */
+png_uint_32 PNGAPI
+png_get_asm_flags (png_structp png_ptr)
+{
+    return (png_uint_32)(png_ptr? png_ptr->asm_flags : 0L);
+}
+
+/* this function was added to libpng 1.2.0 and should exist by default */
+png_uint_32 PNGAPI
+png_get_asm_flagmask (int flag_select)
+{
+    png_uint_32 settable_asm_flags = 0;
+
+    if (flag_select & PNG_SELECT_READ)
+        settable_asm_flags |=
+          PNG_ASM_FLAG_MMX_READ_COMBINE_ROW  |
+          PNG_ASM_FLAG_MMX_READ_INTERLACE    |
+          PNG_ASM_FLAG_MMX_READ_FILTER_SUB   |
+          PNG_ASM_FLAG_MMX_READ_FILTER_UP    |
+          PNG_ASM_FLAG_MMX_READ_FILTER_AVG   |
+          PNG_ASM_FLAG_MMX_READ_FILTER_PAETH ;
+          /* no non-MMX flags yet */
+
+#if 0
+    /* GRR:  no write-flags yet, either, but someday... */
+    if (flag_select & PNG_SELECT_WRITE)
+        settable_asm_flags |=
+          PNG_ASM_FLAG_MMX_WRITE_ [whatever] ;
+#endif /* 0 */
+
+    return settable_asm_flags;  /* _theoretically_ settable capabilities only */
+}
+#endif /* PNG_ASSEMBLER_CODE_SUPPORTED */
 
 
+#if defined(PNG_ASSEMBLER_CODE_SUPPORTED)
+    /* GRR:  could add this:   && defined(PNG_MMX_CODE_SUPPORTED) */
+/* this function was added to libpng 1.2.0 */
+png_uint_32 PNGAPI
+png_get_mmx_flagmask (int flag_select, int *compilerID)
+{
+    png_uint_32 settable_mmx_flags = 0;
+
+    if (flag_select & PNG_SELECT_READ)
+        settable_mmx_flags |=
+          PNG_ASM_FLAG_MMX_READ_COMBINE_ROW  |
+          PNG_ASM_FLAG_MMX_READ_INTERLACE    |
+          PNG_ASM_FLAG_MMX_READ_FILTER_SUB   |
+          PNG_ASM_FLAG_MMX_READ_FILTER_UP    |
+          PNG_ASM_FLAG_MMX_READ_FILTER_AVG   |
+          PNG_ASM_FLAG_MMX_READ_FILTER_PAETH ;
+#if 0
+    /* GRR:  no MMX write support yet, but someday... */
+    if (flag_select & PNG_SELECT_WRITE)
+        settable_mmx_flags |=
+          PNG_ASM_FLAG_MMX_WRITE_ [whatever] ;
+#endif /* 0 */
+
+    if (compilerID != NULL) {
+#ifdef PNG_USE_PNGVCRD
+        *compilerID = 1;    /* MSVC */
+#else
+#ifdef PNG_USE_PNGGCCRD
+        *compilerID = 2;    /* gcc/gas */
+#else
+        *compilerID = -1;   /* unknown (i.e., no asm/MMX code compiled) */
+#endif
+#endif
+    }
+
+    return settable_mmx_flags;  /* _theoretically_ settable capabilities only */
+}
+
+/* this function was added to libpng 1.2.0 */
+png_byte PNGAPI
+png_get_mmx_bitdepth_threshold (png_structp png_ptr)
+{
+    return (png_byte)(png_ptr? png_ptr->mmx_bitdepth_threshold : 0);
+}
+
+/* this function was added to libpng 1.2.0 */
+png_uint_32 PNGAPI
+png_get_mmx_rowbytes_threshold (png_structp png_ptr)
+{
+    return (png_uint_32)(png_ptr? png_ptr->mmx_rowbytes_threshold : 0L);
+}
+#endif /* ?PNG_ASSEMBLER_CODE_SUPPORTED */
+
+#ifdef PNG_SET_USER_LIMITS_SUPPORTED
+/* these functions were added to libpng 1.2.6 */
+png_uint_32 PNGAPI
+png_get_user_width_max (png_structp png_ptr)
+{
+    return (png_ptr? png_ptr->user_width_max : 0);
+}
+png_uint_32 PNGAPI
+png_get_user_height_max (png_structp png_ptr)
+{
+    return (png_ptr? png_ptr->user_height_max : 0);
+}
+#endif /* ?PNG_SET_USER_LIMITS_SUPPORTED */
+
+#endif /* ?PNG_1_0_X */

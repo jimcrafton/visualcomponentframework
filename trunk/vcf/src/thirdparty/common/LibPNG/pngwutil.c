@@ -1,9 +1,9 @@
 
 /* pngwutil.c - utilities to write a PNG file
  *
- * libpng 1.0.12 - June 8, 2001
+ * libpng version 1.2.8 - December 3, 2004
  * For conditions of distribution and use, see copyright notice in png.h
- * Copyright (c) 1998-2001 Glenn Randers-Pehrson
+ * Copyright (c) 1998-2004 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  */
@@ -25,7 +25,7 @@ png_save_uint_32(png_bytep buf, png_uint_32 i)
    buf[3] = (png_byte)(i & 0xff);
 }
 
-#if defined(PNG_WRITE_pCAL_SUPPORTED)
+#if defined(PNG_WRITE_pCAL_SUPPORTED) || defined(PNG_WRITE_oFFs_SUPPORTED)
 /* The png_save_int_32 function assumes integers are stored in two's
  * complement format.  If this isn't the case, then this routine needs to
  * be modified to write data in two's complement format.
@@ -219,7 +219,7 @@ png_text_compress(png_structp png_ptr,
             png_error(png_ptr, "zlib error");
       }
       /* check to see if we need more room */
-      if (!png_ptr->zstream.avail_out && png_ptr->zstream.avail_in)
+      if (!(png_ptr->zstream.avail_out))
       {
          /* make sure the output array has room */
          if (comp->num_output_ptr >= comp->max_output_ptr)
@@ -234,14 +234,16 @@ png_text_compress(png_structp png_ptr,
 
                old_ptr = comp->output_ptr;
                comp->output_ptr = (png_charpp)png_malloc(png_ptr,
-                  (png_uint_32)(comp->max_output_ptr * sizeof (png_charpp)));
+                  (png_uint_32)(comp->max_output_ptr *
+                  png_sizeof (png_charpp)));
                png_memcpy(comp->output_ptr, old_ptr, old_max
-                  * sizeof (png_charp));
+                  * png_sizeof (png_charp));
                png_free(png_ptr, old_ptr);
             }
             else
                comp->output_ptr = (png_charpp)png_malloc(png_ptr,
-                  (png_uint_32)(comp->max_output_ptr * sizeof (png_charp)));
+                  (png_uint_32)(comp->max_output_ptr *
+                  png_sizeof (png_charp)));
          }
 
          /* save the data */
@@ -283,14 +285,16 @@ png_text_compress(png_structp png_ptr,
                   old_ptr = comp->output_ptr;
                   /* This could be optimized to realloc() */
                   comp->output_ptr = (png_charpp)png_malloc(png_ptr,
-                     (png_uint_32)(comp->max_output_ptr * sizeof (png_charpp)));
+                     (png_uint_32)(comp->max_output_ptr *
+                     png_sizeof (png_charpp)));
                   png_memcpy(comp->output_ptr, old_ptr,
-                     old_max * sizeof (png_charp));
+                     old_max * png_sizeof (png_charp));
                   png_free(png_ptr, old_ptr);
                }
                else
                   comp->output_ptr = (png_charpp)png_malloc(png_ptr,
-                     (png_uint_32)(comp->max_output_ptr * sizeof (png_charp)));
+                     (png_uint_32)(comp->max_output_ptr *
+                     png_sizeof (png_charp)));
             }
 
             /* save off the data */
@@ -332,7 +336,8 @@ png_write_compressed_data_out(png_structp png_ptr, compression_state *comp)
    /* handle the no-compression case */
    if (comp->input)
    {
-       png_write_chunk_data(png_ptr, (png_bytep)comp->input, comp->input_len);
+       png_write_chunk_data(png_ptr, (png_bytep)comp->input,
+                            (png_size_t)comp->input_len);
        return;
    }
 
@@ -352,9 +357,9 @@ png_write_compressed_data_out(png_structp png_ptr, compression_state *comp)
       png_write_chunk_data(png_ptr, png_ptr->zbuf,
          png_ptr->zbuf_size - png_ptr->zstream.avail_out);
 
-   /* reset zlib for another zTXt/iTXt or the image data */
+   /* reset zlib for another zTXt/iTXt or image data */
    deflateReset(&png_ptr->zstream);
-
+   png_ptr->zstream.data_type = Z_BINARY;
 }
 #endif
 
@@ -463,11 +468,12 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
 #if defined(PNG_MNG_FEATURES_SUPPORTED)
    png_ptr->filter_type = (png_byte)filter_type;
 #endif
+   png_ptr->compression_type = (png_byte)compression_type;
    png_ptr->width = width;
    png_ptr->height = height;
 
    png_ptr->pixel_depth = (png_byte)(bit_depth * png_ptr->channels);
-   png_ptr->rowbytes = ((width * (png_size_t)png_ptr->pixel_depth + 7) >> 3);
+   png_ptr->rowbytes = PNG_ROWBYTES(png_ptr->pixel_depth, width);
    /* set the usr info, so any transformations can modify it */
    png_ptr->usr_width = png_ptr->width;
    png_ptr->usr_bit_depth = png_ptr->bit_depth;
@@ -517,6 +523,9 @@ png_write_IHDR(png_structp png_ptr, png_uint_32 width, png_uint_32 height,
       png_ptr->zlib_mem_level, png_ptr->zlib_strategy);
    png_ptr->zstream.next_out = png_ptr->zbuf;
    png_ptr->zstream.avail_out = (uInt)png_ptr->zbuf_size;
+   /* libpng is not interested in zstream.data_type */
+   /* set it to a predefined value, to avoid its evaluation inside zlib */
+   png_ptr->zstream.data_type = Z_BINARY;
 
    png_ptr->mode = PNG_HAVE_IHDR;
 }
@@ -537,8 +546,7 @@ png_write_PLTE(png_structp png_ptr, png_colorp palette, png_uint_32 num_pal)
 
    png_debug(1, "in png_write_PLTE\n");
    if ((
-#if defined(PNG_MNG_FEATURES_SUPPORTED) || \
-    defined(PNG_WRITE_EMPTY_PLTE_SUPPORTED)
+#if defined(PNG_MNG_FEATURES_SUPPORTED)
         !(png_ptr->mng_features_permitted & PNG_FLAG_MNG_EMPTY_PLTE) &&
 #endif
         num_pal == 0) || num_pal > 256)
@@ -596,6 +604,46 @@ png_write_IDAT(png_structp png_ptr, png_bytep data, png_size_t length)
    PNG_IDAT;
 #endif
    png_debug(1, "in png_write_IDAT\n");
+
+   /* Optimize the CMF field in the zlib stream. */
+   /* This hack of the zlib stream is compliant to the stream specification. */
+   if (!(png_ptr->mode & PNG_HAVE_IDAT) &&
+       png_ptr->compression_type == PNG_COMPRESSION_TYPE_BASE)
+   {
+      unsigned int z_cmf = data[0];  /* zlib compression method and flags */
+      if ((z_cmf & 0x0f) == 8 && (z_cmf & 0xf0) <= 0x70)
+      {
+         /* Avoid memory underflows and multiplication overflows. */
+         /* The conditions below are practically always satisfied;
+            however, they still must be checked. */
+         if (length >= 2 &&
+             png_ptr->height < 16384 && png_ptr->width < 16384)
+         {
+            png_uint_32 uncompressed_idat_size = png_ptr->height *
+               ((png_ptr->width *
+               png_ptr->channels * png_ptr->bit_depth + 15) >> 3);
+            unsigned int z_cinfo = z_cmf >> 4;
+            unsigned int half_z_window_size = 1 << (z_cinfo + 7);
+            while (uncompressed_idat_size <= half_z_window_size &&
+                   half_z_window_size >= 256)
+            {
+               z_cinfo--;
+               half_z_window_size >>= 1;
+            }
+            z_cmf = (z_cmf & 0x0f) | (z_cinfo << 4);
+            if (data[0] != (png_byte)z_cmf)
+            {
+               data[0] = (png_byte)z_cmf;
+               data[1] &= 0xe0;
+               data[1] += (png_byte)(0x1f - ((z_cmf << 8) + data[1]) % 0x1f);
+            }
+         }
+      }
+      else
+         png_error(png_ptr,
+            "Invalid zlib compression method or flags in IDAT");
+   }
+
    png_write_chunk(png_ptr, (png_bytep)png_IDAT, data, length);
    png_ptr->mode |= PNG_HAVE_IDAT;
 }
@@ -608,7 +656,8 @@ png_write_IEND(png_structp png_ptr)
    PNG_IEND;
 #endif
    png_debug(1, "in png_write_IEND\n");
-   png_write_chunk(png_ptr, (png_bytep)png_IEND, NULL, (png_size_t)0);
+   png_write_chunk(png_ptr, (png_bytep)png_IEND, png_bytep_NULL,
+     (png_size_t)0);
    png_ptr->mode |= PNG_HAVE_IEND;
 }
 
@@ -642,7 +691,7 @@ png_write_gAMA_fixed(png_structp png_ptr, png_fixed_point file_gamma)
 
    png_debug(1, "in png_write_gAMA\n");
    /* file_gamma is saved in 1/100,000ths */
-   png_save_uint_32(buf, file_gamma);
+   png_save_uint_32(buf, (png_uint_32)file_gamma);
    png_write_chunk(png_ptr, (png_bytep)png_gAMA, buf, (png_size_t)4);
 }
 #endif
@@ -764,7 +813,7 @@ png_write_sPLT(png_structp png_ptr, png_sPLT_tp spalette)
            png_save_uint_16(entrybuf + 6, ep->alpha);
            png_save_uint_16(entrybuf + 8, ep->frequency);
        }
-       png_write_chunk_data(png_ptr, entrybuf, entry_size);
+       png_write_chunk_data(png_ptr, entrybuf, (png_size_t)entry_size);
    }
 #else
    ep=spalette->entries;
@@ -939,32 +988,32 @@ png_write_cHRM_fixed(png_structp png_ptr, png_fixed_point white_x,
 #endif
       return;
    }
-   png_save_uint_32(buf, white_x);
-   png_save_uint_32(buf + 4, white_y);
+   png_save_uint_32(buf, (png_uint_32)white_x);
+   png_save_uint_32(buf + 4, (png_uint_32)white_y);
 
    if (red_x > 80000L || red_y > 80000L || red_x + red_y > 100000L)
    {
       png_warning(png_ptr, "Invalid cHRM fixed red point specified");
       return;
    }
-   png_save_uint_32(buf + 8, red_x);
-   png_save_uint_32(buf + 12, red_y);
+   png_save_uint_32(buf + 8, (png_uint_32)red_x);
+   png_save_uint_32(buf + 12, (png_uint_32)red_y);
 
    if (green_x > 80000L || green_y > 80000L || green_x + green_y > 100000L)
    {
       png_warning(png_ptr, "Invalid fixed cHRM green point specified");
       return;
    }
-   png_save_uint_32(buf + 16, green_x);
-   png_save_uint_32(buf + 20, green_y);
+   png_save_uint_32(buf + 16, (png_uint_32)green_x);
+   png_save_uint_32(buf + 20, (png_uint_32)green_y);
 
    if (blue_x > 80000L || blue_y > 80000L || blue_x + blue_y > 100000L)
    {
       png_warning(png_ptr, "Invalid fixed cHRM blue point specified");
       return;
    }
-   png_save_uint_32(buf + 24, blue_x);
-   png_save_uint_32(buf + 28, blue_y);
+   png_save_uint_32(buf + 24, (png_uint_32)blue_x);
+   png_save_uint_32(buf + 28, (png_uint_32)blue_y);
 
    png_write_chunk(png_ptr, (png_bytep)png_cHRM, buf, (png_size_t)32);
 }
@@ -996,6 +1045,12 @@ png_write_tRNS(png_structp png_ptr, png_bytep trans, png_color_16p tran,
    else if (color_type == PNG_COLOR_TYPE_GRAY)
    {
       /* one 16 bit value */
+      if(tran->gray >= (1 << png_ptr->bit_depth))
+      {
+         png_warning(png_ptr,
+           "Ignoring attempt to write tRNS chunk out-of-range for bit_depth");
+         return;
+      }
       png_save_uint_16(buf, tran->gray);
       png_write_chunk(png_ptr, (png_bytep)png_tRNS, buf, (png_size_t)2);
    }
@@ -1005,6 +1060,12 @@ png_write_tRNS(png_structp png_ptr, png_bytep trans, png_color_16p tran,
       png_save_uint_16(buf, tran->red);
       png_save_uint_16(buf + 2, tran->green);
       png_save_uint_16(buf + 4, tran->blue);
+      if(png_ptr->bit_depth == 8 && (buf[0] | buf[2] | buf[4]))
+         {
+            png_warning(png_ptr,
+              "Ignoring attempt to write 16-bit tRNS chunk when bit_depth is 8");
+            return;
+         }
       png_write_chunk(png_ptr, (png_bytep)png_tRNS, buf, (png_size_t)6);
    }
    else
@@ -1028,8 +1089,7 @@ png_write_bKGD(png_structp png_ptr, png_color_16p back, int color_type)
    if (color_type == PNG_COLOR_TYPE_PALETTE)
    {
       if (
-#if defined(PNG_MNG_FEATURES_SUPPORTED) || \
-    defined(PNG_WRITE_EMPTY_PLTE_SUPPORTED)
+#if defined(PNG_MNG_FEATURES_SUPPORTED)
           (png_ptr->num_palette ||
           (!(png_ptr->mng_features_permitted & PNG_FLAG_MNG_EMPTY_PLTE))) &&
 #endif
@@ -1046,10 +1106,22 @@ png_write_bKGD(png_structp png_ptr, png_color_16p back, int color_type)
       png_save_uint_16(buf, back->red);
       png_save_uint_16(buf + 2, back->green);
       png_save_uint_16(buf + 4, back->blue);
+      if(png_ptr->bit_depth == 8 && (buf[0] | buf[2] | buf[4]))
+         {
+            png_warning(png_ptr,
+              "Ignoring attempt to write 16-bit bKGD chunk when bit_depth is 8");
+            return;
+         }
       png_write_chunk(png_ptr, (png_bytep)png_bKGD, buf, (png_size_t)6);
    }
    else
    {
+      if(back->gray >= (1 << png_ptr->bit_depth))
+      {
+         png_warning(png_ptr,
+           "Ignoring attempt to write bKGD chunk out-of-range for bit_depth");
+         return;
+      }
       png_save_uint_16(buf, back->gray);
       png_write_chunk(png_ptr, (png_bytep)png_bKGD, buf, (png_size_t)2);
    }
@@ -1117,7 +1189,12 @@ png_check_keyword(png_structp png_ptr, png_charp key, png_charpp new_key)
 
    png_debug1(2, "Keyword to be checked is '%s'\n", key);
 
-   *new_key = (png_charp)png_malloc(png_ptr, (png_uint_32)(key_len + 2));
+   *new_key = (png_charp)png_malloc_warn(png_ptr, (png_uint_32)(key_len + 2));
+   if (*new_key == NULL)
+   {
+      png_warning(png_ptr, "Out of memory while procesing keyword");
+      return ((png_size_t)0);
+   }
 
    /* Replace non-printing characters with a blank and print a warning */
    for (kp = key, dp = *new_key; *kp != '\0'; kp++, dp++)
@@ -1325,21 +1402,27 @@ png_write_iTXt(png_structp png_ptr, int compression, png_charp key,
       png_warning(png_ptr, "Empty keyword in iTXt chunk");
       return;
    }
-   if (lang == NULL || (lang_len = png_check_keyword(png_ptr, lang,
-      &new_lang))==0)
+   if (lang == NULL || (lang_len = png_check_keyword(png_ptr, lang, &new_lang))==0)
    {
       png_warning(png_ptr, "Empty language field in iTXt chunk");
-      return;
+      new_lang = NULL;
+      lang_len = 0;
    }
-   lang_key_len = png_strlen(lang_key);
-   text_len = png_strlen(text);
 
-   if (text == NULL || *text == '\0')
+   if (lang_key == NULL)
+     lang_key_len = 0;
+   else
+     lang_key_len = png_strlen(lang_key);
+
+   if (text == NULL)
       text_len = 0;
+   else
+     text_len = png_strlen(text);
 
    /* compute the compressed data; do it now for the length */
    text_len = png_text_compress(png_ptr, text, text_len, compression-2,
       &comp);
+
 
    /* make sure we include the compression flag, the compression byte,
     * and the NULs after the key, lang, and lang_key parts */
@@ -1370,23 +1453,22 @@ png_write_iTXt(png_structp png_ptr, int compression, png_charp key,
    cbuf[1] = 0;
    png_write_chunk_data(png_ptr, cbuf, 2);
 
-   png_write_chunk_data(png_ptr, (png_bytep)new_lang, lang_len + 1);
-   png_write_chunk_data(png_ptr, (png_bytep)lang_key, lang_key_len+1);
-   png_write_chunk_data(png_ptr, '\0', 1);
-
+   cbuf[0] = 0;
+   png_write_chunk_data(png_ptr, (new_lang ? (png_bytep)new_lang : cbuf), lang_len + 1);
+   png_write_chunk_data(png_ptr, (lang_key ? (png_bytep)lang_key : cbuf), lang_key_len + 1);
    png_write_compressed_data_out(png_ptr, &comp);
 
    png_write_chunk_end(png_ptr);
    png_free(png_ptr, new_key);
-   png_free(png_ptr, new_lang);
+   if (new_lang)
+     png_free(png_ptr, new_lang);
 }
 #endif
 
 #if defined(PNG_WRITE_oFFs_SUPPORTED)
 /* write the oFFs chunk */
 void /* PRIVATE */
-png_write_oFFs(png_structp png_ptr, png_uint_32 x_offset,
-   png_uint_32 y_offset,
+png_write_oFFs(png_structp png_ptr, png_int_32 x_offset, png_int_32 y_offset,
    int unit_type)
 {
 #ifdef PNG_USE_LOCAL_ARRAYS
@@ -1398,8 +1480,8 @@ png_write_oFFs(png_structp png_ptr, png_uint_32 x_offset,
    if (unit_type >= PNG_OFFSET_LAST)
       png_warning(png_ptr, "Unrecognized unit type for oFFs chunk");
 
-   png_save_uint_32(buf, x_offset);
-   png_save_uint_32(buf + 4, y_offset);
+   png_save_int_32(buf, x_offset);
+   png_save_int_32(buf + 4, y_offset);
    buf[8] = (png_byte)unit_type;
 
    png_write_chunk(png_ptr, (png_bytep)png_oFFs, buf, (png_size_t)9);
@@ -1432,7 +1514,7 @@ png_write_pCAL(png_structp png_ptr, png_charp purpose, png_int_32 X0,
    total_len = purpose_len + units_len + 10;
 
    params_len = (png_uint_32p)png_malloc(png_ptr, (png_uint_32)(nparams
-      *sizeof(png_uint_32)));
+      *png_sizeof(png_uint_32)));
 
    /* Find the length of each parameter, making sure we don't count the
       null terminator for the last parameter. */
@@ -1477,6 +1559,7 @@ png_write_sCAL(png_structp png_ptr, int unit, double width,double height)
 #endif
    png_size_t total_len;
    char wbuf[32], hbuf[32];
+   png_byte bunit = unit;
 
    png_debug(1, "in png_write_sCAL\n");
 
@@ -1497,7 +1580,7 @@ png_write_sCAL(png_structp png_ptr, int unit, double width,double height)
 
    png_debug1(3, "sCAL total length = %d\n", (int)total_len);
    png_write_chunk_start(png_ptr, (png_bytep)png_sCAL, (png_uint_32)total_len);
-   png_write_chunk_data(png_ptr, (png_bytep)&unit, 1);
+   png_write_chunk_data(png_ptr, (png_bytep)&bunit, 1);
    png_write_chunk_data(png_ptr, (png_bytep)wbuf, png_strlen(wbuf)+1);
    png_write_chunk_data(png_ptr, (png_bytep)hbuf, png_strlen(hbuf));
 
@@ -1514,6 +1597,7 @@ png_write_sCAL_s(png_structp png_ptr, int unit, png_charp width,
 #endif
    png_size_t total_len;
    char wbuf[32], hbuf[32];
+   png_byte bunit = unit;
 
    png_debug(1, "in png_write_sCAL_s\n");
 
@@ -1523,7 +1607,7 @@ png_write_sCAL_s(png_structp png_ptr, int unit, png_charp width,
 
    png_debug1(3, "sCAL total length = %d\n", total_len);
    png_write_chunk_start(png_ptr, (png_bytep)png_sCAL, (png_uint_32)total_len);
-   png_write_chunk_data(png_ptr, (png_bytep)&unit, 1);
+   png_write_chunk_data(png_ptr, (png_bytep)&bunit, 1);
    png_write_chunk_data(png_ptr, (png_bytep)wbuf, png_strlen(wbuf)+1);
    png_write_chunk_data(png_ptr, (png_bytep)hbuf, png_strlen(hbuf));
 
@@ -1612,8 +1696,8 @@ png_write_start_row(png_structp png_ptr)
    png_size_t buf_size;
 
    png_debug(1, "in png_write_start_row\n");
-   buf_size = (png_size_t)(((png_ptr->width * png_ptr->usr_channels *
-                            png_ptr->usr_bit_depth + 7) >> 3) + 1);
+   buf_size = (png_size_t)(PNG_ROWBYTES(
+      png_ptr->usr_channels*png_ptr->usr_bit_depth,png_ptr->width)+1);
 
    /* set up row buffer */
    png_ptr->row_buf = (png_bytep)png_malloc(png_ptr, (png_uint_32)buf_size);
@@ -1749,9 +1833,8 @@ png_write_finish_row(png_structp png_ptr)
       {
          if (png_ptr->prev_row != NULL)
             png_memset(png_ptr->prev_row, 0,
-               (png_size_t) (((png_uint_32)png_ptr->usr_channels *
-               (png_uint_32)png_ptr->usr_bit_depth *
-               png_ptr->width + 7) >> 3) + 1);
+               (png_size_t)(PNG_ROWBYTES(png_ptr->usr_channels*
+               png_ptr->usr_bit_depth,png_ptr->width))+1);
          return;
       }
    }
@@ -1791,6 +1874,7 @@ png_write_finish_row(png_structp png_ptr)
    }
 
    deflateReset(&png_ptr->zstream);
+   png_ptr->zstream.data_type = Z_BINARY;
 }
 
 #if defined(PNG_WRITE_INTERLACING_SUPPORTED)
@@ -1958,8 +2042,8 @@ png_do_write_interlace(png_row_infop row_info, png_bytep row, int pass)
          png_pass_inc[pass] - 1 -
          png_pass_start[pass]) /
          png_pass_inc[pass];
-         row_info->rowbytes = ((row_info->width *
-            row_info->pixel_depth + 7) >> 3);
+         row_info->rowbytes = PNG_ROWBYTES(row_info->pixel_depth,
+            row_info->width);
    }
 }
 #endif
@@ -1968,7 +2052,7 @@ png_do_write_interlace(png_row_infop row_info, png_bytep row, int pass)
  * been specified by the application, and then writes the row out with the
  * chosen filter.
  */
-#define PNG_MAXSUM (~((png_uint_32)0) >> 1)
+#define PNG_MAXSUM (((png_uint_32)(-1)) >> 1)
 #define PNG_HISHIFT 10
 #define PNG_LOMASK ((png_uint_32)0xffffL)
 #define PNG_HIMASK ((png_uint_32)(~PNG_LOMASK >> PNG_HISHIFT))
@@ -1985,7 +2069,7 @@ png_write_find_filter(png_structp png_ptr, png_row_infop row_info)
 
    png_debug(1, "in png_write_find_filter\n");
    /* find out how many bytes offset each pixel is */
-   bpp = (row_info->pixel_depth + 7) / 8;
+   bpp = (row_info->pixel_depth + 7) >> 3;
 
    prev_row = png_ptr->prev_row;
    best_row = row_buf = png_ptr->row_buf;
@@ -2136,7 +2220,7 @@ png_write_find_filter(png_structp png_ptr, png_row_infop row_info)
 
          sum += (v < 128) ? v : 256 - v;
       }
-      for (lp = row_buf + 1; i < row_info->rowbytes;
+      for (lp = row_buf + 1; i < row_bytes;
          i++, rp++, lp++, dp++)
       {
          v = *dp = (png_byte)(((int)*rp - (int)*lp) & 0xff);
@@ -2644,5 +2728,3 @@ png_write_filtered_row(png_structp png_ptr, png_bytep filtered_row)
 #endif
 }
 #endif /* PNG_WRITE_SUPPORTED */
-
-

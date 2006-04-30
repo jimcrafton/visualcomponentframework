@@ -1,28 +1,32 @@
 
-Libpng 1.0.10 - March 30, 2001
+Libpng 1.2.8 - December 3, 2004
 
 This is a public release of libpng, intended for use in production codes.
 
-Changes since the last public release (1.0.9):
+Changes since the last public release (1.2.7):
 
-  Revised makefile.dec
-  Reformatted libpng.3 to eliminate bad line breaks.
-  Added checks for _mmx_supported in the read_filter_row function of pnggccrd.c
-  Added prototype for png_mmx_support() near the top of pnggccrd.c
-  Moved some error checking from png_handle_IHDR to png_set_IHDR.
-  Added PNG_NO_READ_SUPPORTED and PNG_NO_WRITE_SUPPORTED macros.
-  Revised png_mmx_support() function in pnggccrd.c
-  Restored version 1.0.8 PNG_WRITE_EMPTY_PLTE_SUPPORTED behavior in pngwutil.c
-  Fixed memory leak in contrib/visupng/PngFile.c
-  Fixed bugs in png_combine_row() in pnggccrd.c and pngvcrd.c (C version)
-  Added warnings when retrieving or setting gamma=0.
-  Changed all instances of memcpy, strcpy, and strlen to png_memcpy, png_strcpy,
-    and png_strlen.
-  Fixed bug in progressive reading (pngpread.c) with small images (height < 8).
-  Deleted extraneous space (introduced in 1.0.9) from line 42 of makefile.cygwin
-  Added beos project files (Chris Herborth)
+  Fixed bug in png_text_compress() that would fail to complete a large block.
+  Fixed bug, introduced in libpng-1.2.7, that overruns a buffer during
+    strip alpha operation in png_do_strip_filler().
+  Added PNG_1_2_X definition in pngconf.h
+  #ifdef out png_info_init in png.c and png_read_init in pngread.c (as of 1.3.0)
+  Reduce color_type to a nonalpha type after strip alpha operation in
+    png_do_strip_filler().
+  Revised definitions of PNG_MAX_UINT_32, PNG_MAX_SIZE, and PNG_MAXSUM
+  Fixed (again) definition of PNG_LIBPNG_VER_DLLNUM in png.h (Cosmin).
+  Added PNG_LIBPNG_BUILD_PRIVATE in png.h (Cosmin).
+  Set png_ptr->zstream.data_type to Z_BINARY, to avoid unnecessary detection
+    of data type in deflate (Cosmin).
+  Deprecated but continue to support SPECIALBUILD and PRIVATEBUILD in favor of
+    PNG_LIBPNG_BUILD_SPECIAL_STRING and PNG_LIBPNG_BUILD_PRIVATE_STRING.
+  Despammed mailing addresses by masking "@" with "at".
+  Added scripts/makefile.elf with supporting code in pngconf.h for symbol
+    versioning (John Bowler).
+  Added projects/visualc71 (Simon-pierre).
 
 Send comments/corrections/commendations to
-png-implement@ccrc.wustl.edu or to randeg@alum.rpi.edu
+png-implement at ccrc.wustl.edu (subscription required; write to
+majordomo at ccrc.wustl.edu with "subscribe png-implement" in the message)
+or to glennrp at users.sourceforge.net
 
 Glenn R-P

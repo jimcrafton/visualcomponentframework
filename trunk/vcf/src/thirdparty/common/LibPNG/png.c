@@ -1,26 +1,26 @@
 
 /* png.c - location for general purpose libpng functions
  *
- * libpng version 1.0.12 - June 8, 2001
- * Copyright (c) 1998-2001 Glenn Randers-Pehrson
+ * libpng version 1.2.8 - December 3, 2004
+ * For conditions of distribution and use, see copyright notice in png.h
+ * Copyright (c) 1998-2004 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
- *
  */
 
 #define PNG_INTERNAL
 #define PNG_NO_EXTERN
-#include "thirdparty/common/LibPNG/png.h"
+#include "png.h"
 
 /* Generate a compiler error if there is an old png.h in the search path. */
-typedef version_1_0_12 Your_png_h_is_not_version_1_0_12;
+typedef version_1_2_8 Your_png_h_is_not_version_1_2_8;
 
 /* Version information for C files.  This had better match the version
  * string defined in png.h.  */
 
 #ifdef PNG_USE_GLOBAL_ARRAYS
 /* png_libpng_ver was changed to a function in version 1.0.5c */
-const char png_libpng_ver[18] = "1.0.12";
+const char png_libpng_ver[18] = PNG_LIBPNG_VER_STRING;
 
 /* png_sig was changed to a function in version 1.0.5c */
 /* Place to hold the signature string for a PNG file. */
@@ -80,7 +80,7 @@ const int FARDATA png_pass_mask[] = {0x80, 0x08, 0x88, 0x22, 0xaa, 0x55, 0xff};
 const int FARDATA png_pass_dsp_mask[]
    = {0xff, 0x0f, 0xff, 0x33, 0xff, 0x55, 0xff};
 
-#endif
+#endif /* PNG_USE_GLOBAL_ARRAYS */
 
 /* Tells libpng that we have already handled the first "num_bytes" bytes
  * of the PNG file signature.  If the PNG data is embedded into another
@@ -135,13 +135,33 @@ png_check_sig(png_bytep sig, int num)
 }
 
 /* Function to allocate memory for zlib and clear it to 0. */
-voidpf /* PRIVATE */
+#ifdef PNG_1_0_X
+voidpf PNGAPI
+#else
+voidpf /* private */
+#endif
 png_zalloc(voidpf png_ptr, uInt items, uInt size)
 {
-   png_uint_32 num_bytes = (png_uint_32)items * size;
-   png_voidp ptr = (png_voidp)png_malloc((png_structp)png_ptr, num_bytes);
+   png_voidp ptr;
+   png_structp p=png_ptr;
+   png_uint_32 save_flags=p->flags;
+   png_uint_32 num_bytes;
 
-#ifndef PNG_NO_ZALLOC_ZERO
+   if (items > PNG_UINT_32_MAX/size)
+   {
+     png_warning (png_ptr, "Potential overflow in png_zalloc()");
+     return (NULL);
+   }
+   num_bytes = (png_uint_32)items * size;
+
+   p->flags|=PNG_FLAG_MALLOC_NULL_MEM_OK;
+   ptr = (png_voidp)png_malloc((png_structp)png_ptr, num_bytes);
+   p->flags=save_flags;
+
+#if defined(PNG_1_0_X) && !defined(PNG_NO_ZALLOC_ZERO)
+   if (ptr == NULL)
+       return ((voidpf)ptr);
+
    if (num_bytes > (png_uint_32)0x8000L)
    {
       png_memset(ptr, 0, (png_size_t)0x8000L);
@@ -157,7 +177,11 @@ png_zalloc(voidpf png_ptr, uInt items, uInt size)
 }
 
 /* function to free memory for zlib */
-void /* PRIVATE */
+#ifdef PNG_1_0_X
+void PNGAPI
+#else
+void /* private */
+#endif
 png_zfree(voidpf png_ptr, voidpf ptr)
 {
    png_free((png_structp)png_ptr, (png_voidp)ptr);
@@ -200,7 +224,7 @@ png_calculate_crc(png_structp png_ptr, png_bytep ptr, png_size_t length)
 
 /* Allocate the memory for an info_struct for the application.  We don't
  * really need the png_ptr, but it could potentially be useful in the
- * future.  This should be used in favour of malloc(sizeof(png_info))
+ * future.  This should be used in favour of malloc(png_sizeof(png_info))
  * and png_info_init() so that applications that want to use a shared
  * libpng don't have to be recompiled if png_info changes size.
  */
@@ -212,14 +236,13 @@ png_create_info_struct(png_structp png_ptr)
    png_debug(1, "in png_create_info_struct\n");
    if(png_ptr == NULL) return (NULL);
 #ifdef PNG_USER_MEM_SUPPORTED
-   if ((info_ptr = (png_infop)png_create_struct_2(PNG_STRUCT_INFO,
-      png_ptr->malloc_fn, png_ptr->mem_ptr)) != NULL)
+   info_ptr = (png_infop)png_create_struct_2(PNG_STRUCT_INFO,
+      png_ptr->malloc_fn, png_ptr->mem_ptr);
 #else
-   if ((info_ptr = (png_infop)png_create_struct(PNG_STRUCT_INFO)) != NULL)
+   info_ptr = (png_infop)png_create_struct(PNG_STRUCT_INFO);
 #endif
-   {
-      png_info_init_3(&info_ptr, sizeof(png_info));
-   }
+   if (info_ptr != NULL)
+      png_info_init_3(&info_ptr, png_sizeof(png_info));
 
    return (info_ptr);
 }
@@ -248,7 +271,7 @@ png_destroy_info_struct(png_structp png_ptr, png_infopp info_ptr_ptr)
 #else
       png_destroy_struct((png_voidp)info_ptr);
 #endif
-      *info_ptr_ptr = (png_infop)NULL;
+      *info_ptr_ptr = NULL;
    }
 }
 
@@ -256,6 +279,7 @@ png_destroy_info_struct(png_structp png_ptr, png_infopp info_ptr_ptr)
  * and applications using it are urged to use png_create_info_struct()
  * instead.
  */
+#if defined(PNG_1_0_X) || defined (PNG_1_2_X)
 #undef png_info_init
 void PNGAPI
 png_info_init(png_infop info_ptr)
@@ -263,6 +287,7 @@ png_info_init(png_infop info_ptr)
    /* We only come here via pre-1.0.12-compiled applications */
    png_info_init_3(&info_ptr, 0);
 }
+#endif
 
 void PNGAPI
 png_info_init_3(png_infopp ptr_ptr, png_size_t png_info_struct_size)
@@ -271,7 +296,7 @@ png_info_init_3(png_infopp ptr_ptr, png_size_t png_info_struct_size)
 
    png_debug(1, "in png_info_init_3\n");
 
-   if(sizeof(png_info) > png_info_struct_size)
+   if(png_sizeof(png_info) > png_info_struct_size)
      {
        png_destroy_struct(info_ptr);
        info_ptr = (png_infop)png_create_struct(PNG_STRUCT_INFO);
@@ -279,7 +304,7 @@ png_info_init_3(png_infopp ptr_ptr, png_size_t png_info_struct_size)
      }
 
    /* set everything to 0 */
-   png_memset(info_ptr, 0, sizeof (png_info));
+   png_memset(info_ptr, 0, png_sizeof (png_info));
 }
 
 #ifdef PNG_FREE_ME_SUPPORTED
@@ -346,6 +371,9 @@ if ((mask & PNG_FREE_TRNS) && (png_ptr->flags & PNG_FLAG_FREE_TRNS))
 {
     png_free(png_ptr, info_ptr->trans);
     info_ptr->valid &= ~PNG_INFO_tRNS;
+#ifndef PNG_FREE_ME_SUPPORTED
+    png_ptr->flags &= ~PNG_FLAG_FREE_TRNS;
+#endif
     info_ptr->trans = NULL;
 }
 #endif
@@ -489,6 +517,9 @@ if ((mask & PNG_FREE_HIST) && (png_ptr->flags & PNG_FLAG_FREE_HIST))
     png_free(png_ptr, info_ptr->hist);
     info_ptr->hist = NULL;
     info_ptr->valid &= ~PNG_INFO_hIST;
+#ifndef PNG_FREE_ME_SUPPORTED
+    png_ptr->flags &= ~PNG_FLAG_FREE_HIST;
+#endif
 }
 #endif
 
@@ -502,6 +533,9 @@ if ((mask & PNG_FREE_PLTE) && (png_ptr->flags & PNG_FLAG_FREE_PLTE))
     png_zfree(png_ptr, info_ptr->palette);
     info_ptr->palette = NULL;
     info_ptr->valid &= ~PNG_INFO_PLTE;
+#ifndef PNG_FREE_ME_SUPPORTED
+    png_ptr->flags &= ~PNG_FLAG_FREE_PLTE;
+#endif
     info_ptr->num_palette = 0;
 }
 
@@ -556,7 +590,7 @@ png_info_destroy(png_structp png_ptr, png_infop info_ptr)
    }
 #endif
 
-   png_info_init_3(&info_ptr, sizeof(png_info));
+   png_info_init_3(&info_ptr, png_sizeof(png_info));
 }
 
 /* This function returns a pointer to the io_ptr associated with the user
@@ -598,7 +632,7 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
    if (png_ptr->time_buffer == NULL)
    {
       png_ptr->time_buffer = (png_charp)png_malloc(png_ptr, (png_uint_32)(29*
-         sizeof(char)));
+         png_sizeof(char)));
    }
 
 #if defined(_WIN32_WCE)
@@ -620,7 +654,7 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
           ptime->year, ptime->hour % 24, ptime->minute % 60,
           ptime->second % 61);
       png_memcpy(png_ptr->time_buffer, near_time_buf,
-          29*sizeof(char));
+          29*png_sizeof(char));
    }
 #else
    sprintf(png_ptr->time_buffer, "%d %s %d %02d:%02d:%02d +0000",
@@ -645,49 +679,51 @@ png_sig_bytes(void)
 png_charp PNGAPI
 png_get_copyright(png_structp png_ptr)
 {
-   if (png_ptr != NULL || png_ptr == NULL)  /* silence compiler warning */
-   return ((png_charp) "\n libpng version 1.0.12 - June 8, 2001\n\
-   Copyright (c) 1998-2001 Glenn Randers-Pehrson\n\
-   Copyright (c) 1996, 1997 Andreas Dilger\n\
-   Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.\n");
+   if (&png_ptr != NULL)  /* silence compiler warning about unused png_ptr */
+   return ((png_charp) "\n libpng version 1.2.8 - December 3, 2004\n\
+   Copyright (c) 1998-2004 Glenn Randers-Pehrson\n\
+   Copyright (c) 1996-1997 Andreas Dilger\n\
+   Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.\n");
    return ((png_charp) "");
 }
 
 /* The following return the library version as a short string in the
- * format 1.0.0 through 99.99.99zz.  To get the version of *.h files used
- * with your application, print out PNG_LIBPNG_VER_STRING, which is defined
- * in png.h.
+ * format 1.0.0 through 99.99.99zz.  To get the version of *.h files
+ * used with your application, print out PNG_LIBPNG_VER_STRING, which
+ * is defined in png.h.
+ * Note: now there is no difference between png_get_libpng_ver() and
+ * png_get_header_ver().  Due to the version_nn_nn_nn typedef guard,
+ * it is guaranteed that png.c uses the correct version of png.h.
  */
-
 png_charp PNGAPI
 png_get_libpng_ver(png_structp png_ptr)
 {
    /* Version of *.c files used when building libpng */
-   if(png_ptr != NULL) /* silence compiler warning about unused png_ptr */
-      return((png_charp) "1.0.12");
-   return((png_charp) "1.0.12");
+   if (&png_ptr != NULL)  /* silence compiler warning about unused png_ptr */
+      return ((png_charp) PNG_LIBPNG_VER_STRING);
+   return ((png_charp) "");
 }
 
 png_charp PNGAPI
 png_get_header_ver(png_structp png_ptr)
 {
    /* Version of *.h files used when building libpng */
-   if(png_ptr != NULL) /* silence compiler warning about unused png_ptr */
-      return((png_charp) PNG_LIBPNG_VER_STRING);
-   return((png_charp) PNG_LIBPNG_VER_STRING);
+   if (&png_ptr != NULL)  /* silence compiler warning about unused png_ptr */
+      return ((png_charp) PNG_LIBPNG_VER_STRING);
+   return ((png_charp) "");
 }
 
 png_charp PNGAPI
 png_get_header_version(png_structp png_ptr)
 {
    /* Returns longer string containing both version and date */
-   if(png_ptr != NULL) /* silence compiler warning about unused png_ptr */
-      return((png_charp) PNG_HEADER_VERSION_STRING);
-   return((png_charp) PNG_HEADER_VERSION_STRING);
+   if (&png_ptr != NULL)  /* silence compiler warning about unused png_ptr */
+      return ((png_charp) PNG_HEADER_VERSION_STRING);
+   return ((png_charp) "");
 }
 
 #ifdef PNG_HANDLE_AS_UNKNOWN_SUPPORTED
-int /* PRIVATE */
+int PNGAPI
 png_handle_as_unknown(png_structp png_ptr, png_bytep chunk_name)
 {
    /* check chunk_name and return "keep" value if it's on the list, else 0 */
@@ -715,8 +751,58 @@ png_uint_32 PNGAPI
 png_access_version_number(void)
 {
    /* Version of *.c files used when building libpng */
-   return((png_uint_32) 10012L);
+   return((png_uint_32) PNG_LIBPNG_VER);
 }
+
+
+#if !defined(PNG_1_0_X)
+#if defined(PNG_ASSEMBLER_CODE_SUPPORTED)
+    /* GRR:  could add this:   && defined(PNG_MMX_CODE_SUPPORTED) */
+/* this INTERNAL function was added to libpng 1.2.0 */
+void /* PRIVATE */
+png_init_mmx_flags (png_structp png_ptr)
+{
+    png_ptr->mmx_rowbytes_threshold = 0;
+    png_ptr->mmx_bitdepth_threshold = 0;
+
+#  if (defined(PNG_USE_PNGVCRD) || defined(PNG_USE_PNGGCCRD))
+
+    png_ptr->asm_flags |= PNG_ASM_FLAG_MMX_SUPPORT_COMPILED;
+
+    if (png_mmx_support() > 0) {
+        png_ptr->asm_flags |= PNG_ASM_FLAG_MMX_SUPPORT_IN_CPU
+#    ifdef PNG_HAVE_ASSEMBLER_COMBINE_ROW
+                              | PNG_ASM_FLAG_MMX_READ_COMBINE_ROW
+#    endif
+#    ifdef PNG_HAVE_ASSEMBLER_READ_INTERLACE
+                              | PNG_ASM_FLAG_MMX_READ_INTERLACE
+#    endif
+#    ifndef PNG_HAVE_ASSEMBLER_READ_FILTER_ROW
+                              ;
+#    else
+                              | PNG_ASM_FLAG_MMX_READ_FILTER_SUB
+                              | PNG_ASM_FLAG_MMX_READ_FILTER_UP
+                              | PNG_ASM_FLAG_MMX_READ_FILTER_AVG
+                              | PNG_ASM_FLAG_MMX_READ_FILTER_PAETH ;
+
+        png_ptr->mmx_rowbytes_threshold = PNG_MMX_ROWBYTES_THRESHOLD_DEFAULT;
+        png_ptr->mmx_bitdepth_threshold = PNG_MMX_BITDEPTH_THRESHOLD_DEFAULT;
+#    endif
+    } else {
+        png_ptr->asm_flags &= ~( PNG_ASM_FLAG_MMX_SUPPORT_IN_CPU
+                               | PNG_MMX_READ_FLAGS
+                               | PNG_MMX_WRITE_FLAGS );
+    }
+
+#  else /* !((PNGVCRD || PNGGCCRD) && PNG_ASSEMBLER_CODE_SUPPORTED)) */
+
+    /* clear all MMX flags; no support is compiled in */
+    png_ptr->asm_flags &= ~( PNG_MMX_FLAGS );
+
+#  endif /* ?(PNGVCRD || PNGGCCRD) */
+}
+
+#endif /* !(PNG_ASSEMBLER_CODE_SUPPORTED) */
 
 /* this function was added to libpng 1.2.0 */
 #if !defined(PNG_USE_PNGGCCRD) && \
@@ -727,5 +813,16 @@ png_mmx_support(void)
     return -1;
 }
 #endif
+#endif /* PNG_1_0_X */
 
-
+#ifdef PNG_SIZE_T
+/* Added at libpng version 1.2.6 */
+   PNG_EXTERN png_size_t PNGAPI png_convert_size PNGARG((size_t size));
+png_size_t PNGAPI
+png_convert_size(size_t size)
+{
+  if (size > (png_size_t)-1)
+     PNG_ABORT();  /* We haven't got access to png_ptr, so no png_error() */
+  return ((png_size_t)size);
+}
+#endif /* PNG_SIZE_T */
