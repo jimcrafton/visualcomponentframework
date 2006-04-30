@@ -221,27 +221,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="infblock.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="infcodes.c">
+				RelativePath="infback.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -302,26 +282,6 @@
 			</File>
 			<File
 				RelativePath="inftrees.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="infutil.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -405,13 +365,10 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
+				RelativePath="crc32.h">
+			</File>
+			<File
 				RelativePath="deflate.h">
-			</File>
-			<File
-				RelativePath="infblock.h">
-			</File>
-			<File
-				RelativePath="infcodes.h">
 			</File>
 			<File
 				RelativePath="inffast.h">
@@ -420,10 +377,10 @@
 				RelativePath="inffixed.h">
 			</File>
 			<File
-				RelativePath="inftrees.h">
+				RelativePath="inflate.h">
 			</File>
 			<File
-				RelativePath="infutil.h">
+				RelativePath="inftrees.h">
 			</File>
 			<File
 				RelativePath="trees.h">

@@ -55,12 +55,10 @@ OBJFILES=$(OBJ)\adler32.obj \
 	$(OBJ)\crc32.obj \
 	$(OBJ)\deflate.obj \
 	$(OBJ)\gzio.obj \
-	$(OBJ)\infblock.obj \
-	$(OBJ)\infcodes.obj \
+	$(OBJ)\infback.obj \
 	$(OBJ)\inffast.obj \
 	$(OBJ)\inflate.obj \
 	$(OBJ)\inftrees.obj \
-	$(OBJ)\infutil.obj \
 	$(OBJ)\trees.obj \
 	$(OBJ)\uncompr.obj \
 	$(OBJ)\zutil.obj
@@ -108,12 +106,10 @@ $(OBJ)\compress.obj:   .\compress.c
 $(OBJ)\crc32.obj:      .\crc32.c   
 $(OBJ)\deflate.obj:    .\deflate.c 
 $(OBJ)\gzio.obj:       .\gzio.c    
-$(OBJ)\infblock.obj:   .\infblock.c
-$(OBJ)\infcodes.obj:   .\infcodes.c
+$(OBJ)\infback.obj:    .\infback.c
 $(OBJ)\inffast.obj:    .\inffast.c 
 $(OBJ)\inflate.obj:    .\inflate.c 
 $(OBJ)\inftrees.obj:   .\inftrees.c
-$(OBJ)\infutil.obj:    .\infutil.c 
 $(OBJ)\trees.obj:      .\trees.c   
 $(OBJ)\uncompr.obj:    .\uncompr.c 
 $(OBJ)\zutil.obj:      .\zutil.c   
