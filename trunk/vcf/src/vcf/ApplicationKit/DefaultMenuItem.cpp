@@ -12,7 +12,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Action.h"
 #include "vcf/ApplicationKit/ActionEvent.h"
 #include "vcf/ApplicationKit/MenuManager.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
@@ -134,7 +134,24 @@ void DefaultMenuItem::paint( GraphicsContext* context, Rect* paintRect )
 		text = System::getCurrentThreadLocale()->translate( caption_ );
 	}
 
-	context->textAt( paintRect->left_, paintRect->top_, text );
+	//context->textAt( paintRect->left_, paintRect->top_, text );
+
+	MenuState state;
+	
+	state.menuCaption_ = text;
+
+	state.setEnabled( isEnabled() );
+	state.setSelected( isSelected() );
+	
+	state.setHighlighted( isHighlighted() );
+
+	state.setToggled( isChecked() );
+	state.setHasChildren( hasChildren() );
+	state.setSeparator( isSeparator() );
+
+	context->drawThemeMenuItem( paintRect, state );
+
+	context->drawThemeMenuItemText( paintRect, state );
 }
 
 bool DefaultMenuItem::isSelected()
@@ -161,6 +178,21 @@ void DefaultMenuItem::setSelected( const bool& selected )
 	}	
 	
 	previousSelectedItem = this;
+}
+
+bool DefaultMenuItem::isHighlighted()
+{
+	return (itemState_ & MenuItem::mdsHighlighted) ? true : false;	
+}
+
+void DefaultMenuItem::setHighlighted( const bool& val )
+{
+	if ( val ) {
+		itemState_ |= MenuItem::mdsHighlighted;		
+	}
+	else {
+		itemState_ &= ~MenuItem::mdsHighlighted;
+	}
 }
 
 Enumerator<MenuItem*>* DefaultMenuItem::getChildren()

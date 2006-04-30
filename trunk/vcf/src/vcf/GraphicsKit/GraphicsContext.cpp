@@ -921,6 +921,11 @@ void GraphicsContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 	contextPeer_->drawThemeMenuItem( rect, state );
 }
 
+void GraphicsContext::drawThemeMenuItemText( Rect* rect, MenuState& state )
+{
+	contextPeer_->drawThemeMenuItemText( rect, state );
+}
+
 void GraphicsContext::drawThemeText( Rect* rect, TextState& state )
 {
 	contextPeer_->drawThemeText( rect, state );

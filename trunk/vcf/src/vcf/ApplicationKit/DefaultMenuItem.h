@@ -109,6 +109,10 @@ public:
 
 	virtual void setSeparator( const bool& separator );
 
+	virtual bool isHighlighted();
+
+	virtual void setHighlighted( const bool& val );
+
 	virtual void click();
 
 	virtual void update();

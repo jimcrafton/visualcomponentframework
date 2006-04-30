@@ -4218,6 +4218,12 @@ void Win32Context::drawThemeBackground( Rect* rect, BackgroundState& state )
 	context_->fillPath();		
 }
 
+#define CXGAP				1		// num pixels between button and text
+#define CXTEXTMARGIN		2		// num pixels after hilite to start text
+#define CXBUTTONMARGIN		2		// num pixels wider button is than bitmap
+#define CYBUTTONMARGIN		2		// ditto for height
+
+
 /**
 Draws the background appropriate for a menu item that is compliant
 with the native windowing systems default look and feel.
@@ -4226,12 +4232,215 @@ look and feel in it's background before drawing any thing else
 */
 void Win32Context::drawThemeMenuItem( Rect* rect, MenuState& state )
 {
+	RECT menuRect = {0};
 
+	menuRect.left = (long)rect->left_;
+	menuRect.top = (long)rect->top_;
+	menuRect.right = (long)rect->right_;
+	menuRect.bottom = (long)rect->bottom_;
+
+
+	HTHEME theme = NULL;
+
+	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"MENU" );
+	}
+
+	if ( theme ) {
+
+	}
+	else {
+
+		if ( state.isSeparator() ) {
+			RECT tmp = menuRect;
+			
+			tmp.top += (tmp.bottom - tmp.top) >>1; 	// vertical center
+			
+			::DrawEdge( dc_, &tmp, EDGE_ETCHED, BF_TOP);// draw separator line
+			
+		}
+		else {
+			RECT tmpBtnRect;
+			tmpBtnRect.left = menuRect.left + 2;
+			tmpBtnRect.top = menuRect.top;
+			tmpBtnRect.right = menuRect.left + 2 + (menuRect.right - menuRect.left);
+			tmpBtnRect.bottom = menuRect.top + (menuRect.bottom - menuRect.top);
+
+			int cxButn = tmpBtnRect.bottom - tmpBtnRect.top;				// width of button
+
+
+			state.imageRect_.setRect( tmpBtnRect.left, tmpBtnRect.top, 
+										tmpBtnRect.right, tmpBtnRect.bottom );
+
+			state.imageRect_.right_ = state.imageRect_.left_ + cxButn;
+
+			
+
+			COLORREF colorBG = ::GetSysColor( state.isHighlighted() ? COLOR_HIGHLIGHT : COLOR_MENU );
+		
+			// selected or selection state changed: paint text background
+			RECT rcBG = menuRect;	// whole rectangle
+			
+			//if ( true == menuHasButn) {	// if there's a button:
+			//	rcBG.left += cxButn + CXGAP;			//  don't paint over it!
+			//}
+
+			{
+				HBRUSH brush = ::CreateSolidBrush( colorBG );
+				
+				HBRUSH oldBrush = (HBRUSH)::SelectObject( dc_, brush );
+				
+				PatBlt( dc_, rcBG.left, rcBG.top, rcBG.right - rcBG.left, rcBG.bottom - rcBG.top, PATCOPY);
+				
+				::SelectObject( dc_, oldBrush );
+				DeleteObject( brush );
+
+			}			
+		}
+	}
 }
+
+
+String generateMenuItemCaption( MenuState& state )
+{
+	String acceleratorText;
+	
+	//generate accelerator text if we are not owner drawn
+	
+	if ( state.hasControlKey() ) {			
+		acceleratorText += "Ctrl";
+	}
+
+	if ( state.hasShiftKey() ) {
+		if ( !acceleratorText.empty() ) {
+			acceleratorText += "+";
+		}
+		acceleratorText += "Shift";
+	}
+
+	if ( state.hasAltKey() ) {
+		if ( !acceleratorText.empty() ) {
+			acceleratorText += "+";
+		}
+		acceleratorText += "Alt";
+	}
+
+	if ( !acceleratorText.empty() ) {
+		acceleratorText += "+";
+	}
+
+	acceleratorText += 
+			StringUtils::translateVKCodeToString( (VirtualKeyCode)state.keyCode_ );		
+
+
+	String result = state.menuCaption_;
+
+	if ( !acceleratorText.empty() ) {
+		result = result + "\t" + acceleratorText;
+	}
+
+	return result;
+}
+
 
 void Win32Context::drawThemeMenuItemText( Rect* rect, MenuState& state )
 {
+	HTHEME theme = NULL;
 
+	RECT rcText = {0};
+
+	rcText.left = (long)rect->left_;
+	rcText.top = (long)rect->top_;
+	rcText.right = (long)rect->right_;
+	rcText.bottom = (long)rect->bottom_;
+
+	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"MENU" );
+	}
+
+	if ( theme ) {
+
+	}
+	else {
+		
+		COLORREF colorText =
+			GetSysColor( !state.isEnabled() ?  COLOR_GRAYTEXT :
+								(state.isHighlighted() ? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT));
+	
+		String left = generateMenuItemCaption( state );
+		
+		String right;
+		
+		int tabPos = left.find('\t');
+		if ( tabPos != String::npos ) {
+			if ( tabPos >= 0 ) {
+				right = left.substr( tabPos + 1, left.size() - tabPos );
+				
+				left  = left.substr( 0, tabPos );
+			}
+		}
+		
+		::SetBkMode( dc_, TRANSPARENT );	
+
+		COLORREF colorBG = ::GetSysColor( state.isHighlighted() ? COLOR_HIGHLIGHT : COLOR_MENU );
+
+		rcText.left += state.imageRect_.getWidth() + CXGAP + CXTEXTMARGIN; // left margin
+		rcText.right -= state.imageRect_.getWidth() - 2;				 // right margin
+
+		if ( (!state.isEnabled() && !state.isHighlighted()) || (colorText == colorBG) ) {
+				// disabled: draw hilite text shifted southeast 1 pixel for embossed
+				// look. Don't do it if item is selected, tho--unless text color same
+				// as menu highlight color. Got it?
+				//
+			rcText.left += 1;
+			rcText.top += 1;
+
+			::SetTextColor( dc_, GetSysColor(COLOR_3DHILIGHT) );
+
+			if ( System::isUnicodeEnabled() ) {
+				DrawTextW( dc_, left.c_str(), left.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
+			}
+			else {
+				AnsiString tmp = left;
+				DrawTextA( dc_, tmp.c_str(), tmp.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
+			}
+			
+			if (tabPos > 0) {
+				if ( System::isUnicodeEnabled() ) {
+					DrawTextW( dc_, right.c_str(), right.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
+				}
+				else {
+					AnsiString tmp = right;
+					DrawTextA( dc_, tmp.c_str(), tmp.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
+				}
+				
+			}
+			
+			rcText.left -= 1;
+			rcText.top -= 1;
+		}
+
+
+		::SetTextColor( dc_, colorText );
+		
+		if ( System::isUnicodeEnabled() ) {
+			DrawTextW( dc_, left.c_str(), left.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
+		}
+		else {
+			AnsiString tmp = left;
+			DrawTextA( dc_, tmp.c_str(), tmp.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER );
+		}
+		
+		if (tabPos > 0) {
+			if ( System::isUnicodeEnabled() ) {
+				DrawTextW( dc_, right.c_str(), right.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
+			}
+			else {
+				AnsiString tmp = right;
+				DrawTextA( dc_, tmp.c_str(), tmp.size(), &rcText, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_RIGHT);
+			}			
+		}
+	}
 }
 
 void Win32Context::drawThemeText( Rect* rect, TextState& state )

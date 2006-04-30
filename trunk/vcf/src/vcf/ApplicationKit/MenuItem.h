@@ -66,11 +66,12 @@ public:
 		mdsUnChecked = Item::idsUnChecked,
 		mdsRadioUnpressed = Item::idsRadioUnpressed,
 		mdsRadioPressed = Item::idsRadioPressed,
-		mdsVisible = 0x0100,
-		mdsSelected = 0x0200,
-		mdsEnabled = 0x0400,
-		mdsRadioItem = 0x0800,
-		mdsSeparator = 0x1000,
+		mdsVisible =		0x0100,
+		mdsSelected =		0x0200,
+		mdsEnabled =		0x0400,
+		mdsRadioItem =		0x0800,
+		mdsSeparator =		0x1000,
+		mdsHighlighted =	0x2000,
 		/**
 		This state value indicates that the menu item
 		has been bound/associated with a real menu item 
@@ -175,6 +176,10 @@ public:
 	virtual bool isSeparator() = 0;
 
 	virtual void setSeparator( const bool& separator ) = 0;
+
+	virtual bool isHighlighted() = 0;
+
+	virtual void setHighlighted( const bool& val ) = 0;
 
 	virtual void click() = 0;
 
