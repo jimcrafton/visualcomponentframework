@@ -18,16 +18,16 @@ ReplaceDialog::ReplaceDialog()
 
 	Rect clientRect = this->getClientBounds();
 	
-	UIMetricsManager* metrics = UIToolkit::getUIMetricsManager();
-	double y = metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta );
-	double x = clientRect.right_ - (100 + metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta ));
+	
+	double y = UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta );
+	double x = clientRect.right_ - (100 + UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ));
 
 	findNext_ = new CommandButton();
 	findNext_->setBounds( x, y, 100, findNext_->getPreferredHeight() );
 	findNext_->setCaption( "&Find Next" );	
 	add( findNext_ );
 
-	y += findNext_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager ::stControlVerticalSpacing );
+	y += findNext_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
 	findNext_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::findNextClicked, "ReplaceDialog::findNextClicked" ) );
 
@@ -37,7 +37,7 @@ ReplaceDialog::ReplaceDialog()
 	replace_->setCaption( "&Replace" );	
 	add( replace_ );
 
-	y += replace_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager ::stControlVerticalSpacing );
+	y += replace_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
 	replace_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::replaceClicked, "ReplaceDialog::replaceClicked" ) );
 
@@ -49,7 +49,7 @@ ReplaceDialog::ReplaceDialog()
 
 	replaceAll_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::replaceAllClicked, "ReplaceDialog::replaceAllClicked" ) );
 
-	y += replaceAll_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager ::stControlVerticalSpacing );
+	y += replaceAll_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
 
 	cancel_ = new CommandButton();
@@ -61,8 +61,8 @@ ReplaceDialog::ReplaceDialog()
 
 	
 
-	y = metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta );
-	x = replaceAll_->getLeft() - (275 + metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ));
+	y = UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta );
+	x = replaceAll_->getLeft() - (275 + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ));
 
 	searchStrings_ = new StdStringsChoiceType::Control();
 	
@@ -75,20 +75,20 @@ ReplaceDialog::ReplaceDialog()
 	searchString_->setComboBoxStyle( cbsDropDownWithEdit );
 
 
-	x = metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing );
+	x = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 
 	Label* label = new Label();
 	label->setCaption( "Search for:" );
 	label->setBounds( x, y, 
-						(searchString_->getLeft() - metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing )) - x,
+						(searchString_->getLeft() - UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing )) - x,
 						searchString_->getHeight() );
 	add( label );	
 
 	
-	y += label->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing );
+	y += label->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing );
 
 
-	x = replaceAll_->getLeft() - (275 + metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ));
+	x = replaceAll_->getLeft() - (275 + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ));
 
 	replaceStrings_ = new StdStringsChoiceType::Control();
 	
@@ -101,17 +101,17 @@ ReplaceDialog::ReplaceDialog()
 	replaceString_->setComboBoxStyle( cbsDropDownWithEdit );
 
 
-	x = metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing );
+	x = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 
 	label = new Label();
 	label->setCaption( "Replace with:" );
 	label->setBounds( x, y, 
-						(replaceString_->getLeft() - metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing )) - x,
+						(replaceString_->getLeft() - UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing )) - x,
 						replaceString_->getHeight() );
 	add( label );	
 
 	
-	y += label->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing );
+	y += label->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing );
 
 
 
@@ -120,16 +120,16 @@ ReplaceDialog::ReplaceDialog()
 	caseSensitive_->setCaption( "Match Case" );
 	caseSensitive_->setBounds( x, y, 175, caseSensitive_->getPreferredHeight() );
 	add( caseSensitive_ );
-	y += caseSensitive_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing )/2.0;
+	y += caseSensitive_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing )/2.0;
 
 	matchWordOnly_ = new StdBoolType::Control();
 	matchWordOnly_->setCaption( "Match Word only" );
 	matchWordOnly_->setBounds( x, y, 175, matchWordOnly_->getPreferredHeight() );
 	add( matchWordOnly_ );
-	y += matchWordOnly_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing )/2.0;
+	y += matchWordOnly_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing )/2.0;
 
 	
-	y += matchWordOnly_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing )/2.0;
+	y += matchWordOnly_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing )/2.0;
 
 
 	double newHeight = getHeight() + (y - clientRect.getHeight());
