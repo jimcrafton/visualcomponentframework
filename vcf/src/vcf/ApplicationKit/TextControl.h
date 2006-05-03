@@ -98,7 +98,7 @@ public:
 
 	void selectAll();
 
-	void getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color );
+	void getStyle( unsigned int start, unsigned int length, Dictionary& styles );
 
 	void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
 

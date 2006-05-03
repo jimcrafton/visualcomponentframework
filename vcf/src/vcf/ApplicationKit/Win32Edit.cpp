@@ -433,9 +433,9 @@ void Win32Edit::setStyle( unsigned int start, unsigned int length, Dictionary& s
 	editState_ &= ~esStyleChanging;
 }
 
-void Win32Edit::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
+void Win32Edit::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
-	Win32TextPeer::getStyle( start, length, styles, color );
+	Win32TextPeer::getStyle( start, length, styles );
 }
 
 

@@ -13,6 +13,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TextControl.h"
 #include "vcf/ApplicationKit/DefaultTextModel.h"
 #include "vcf/ApplicationKit/TextPeer.h"
+#include "vcf/FoundationKit/Dictionary.h"
 
 using namespace VCF;
 
@@ -275,18 +276,26 @@ void TextControl::selectAll()
 	textPeer_->setSelectionMark( 0, text.size() );
 }
 
-void TextControl::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
+void TextControl::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
-	textPeer_->getStyle( start, length, styles, color );
+	textPeer_->getStyle( start, length, styles );
+	//make sure the dictionary owns the objects it's assigned!!!
+	styles.setOwnsObjectValues( true );
 }
 
 void TextControl::setStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
+	//make sure the dictionary owns the objects it's assigned!!!
+	styles.setOwnsObjectValues( true );
+
 	textPeer_->setStyle( start, length, styles );
 }
 
 void TextControl::setDefaultStyle( Dictionary& styles )
 {
+	//make sure the dictionary owns the objects it's assigned!!!
+	styles.setOwnsObjectValues( true );
+
 	textPeer_->setDefaultStyle( styles );
 }
 
