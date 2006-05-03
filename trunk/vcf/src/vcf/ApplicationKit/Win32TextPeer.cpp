@@ -815,7 +815,7 @@ Rect Win32TextPeer::getContentBoundsForWidth(const double& width)
 	return result;
 }
 
-void Win32TextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
+void Win32TextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
 	String result;
 	ITextRange* range = NULL;
@@ -833,9 +833,19 @@ void Win32TextPeer::getStyle( unsigned int start, unsigned int length, Dictionar
 
 			long val;
 
-			font->GetForeColor( &val );
-			color.setColorRef32( val );
-			styles[ Text::fsColor ] = (Object*)&color; // color cannot be a temporary
+			font->GetForeColor( &val );			
+
+			Color* color = NULL;
+
+			color = (Color*)(Object*)styles[ Text::fsColor ];
+			if ( NULL == color ) {
+				//create a new instance
+				color = new Color();
+				styles[ Text::fsColor ] = color;
+			}
+
+			color->setColorRef32( val );
+
 
 			float size = 0;
 			font->GetSize( &size );

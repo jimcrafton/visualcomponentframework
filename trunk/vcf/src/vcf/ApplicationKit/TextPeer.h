@@ -39,7 +39,9 @@ namespace Text {
 	
 	/**
 	This key is associated with a Color object that represents the font's 
-	requested color
+	requested color. The value is expected to be a Color object. This 
+	object should be allocated on the heap when assigned to the styles
+	dictionary, and will be deleted when the styles dictionary is destroyed.
 	*/
 	const VCF::String fsColor = "fsColor"; 
 	
@@ -202,9 +204,8 @@ public:
 	@param unsigned int start the beginning of the location of which we are getting the style.
 	@param unsigned int length the length of the location of which we are getting the style.
 	@param Dictionary& styles the dictionary storing the values for each style attribute.
-	@param Color& color the instance to which the color style attribute in the dictionary is pointing to.
 	*/
-	virtual void getStyle( unsigned int start, unsigned int length, VCF::Dictionary& styles, VCF::Color& color ) = 0;
+	virtual void getStyle( unsigned int start, unsigned int length, VCF::Dictionary& styles ) = 0;
 
 	/**
 	call this to set the defaults for the text peer.
