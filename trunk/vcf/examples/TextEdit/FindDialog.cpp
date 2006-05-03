@@ -18,16 +18,16 @@ FindDialog::FindDialog()
 
 	Rect clientRect = this->getClientBounds();
 	
-	UIMetricsManager* metrics = UIToolkit::getUIMetricsManager();
-	double y = metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta );
-	double x = clientRect.right_ - (100 + metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta ));
+	
+	double y = UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta );
+	double x = clientRect.right_ - (100 + UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ));
 
 	find_ = new CommandButton();
 	find_->setBounds( x, y, 100, find_->getPreferredHeight() );
 	find_->setCaption( "&Find" );	
 	add( find_ );
 
-	y += find_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager ::stControlVerticalSpacing );
+	y += find_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
 	find_->addButtonClickHandler( new ButtonEventHandler<FindDialog>(this,&FindDialog::findClicked, "FindDialog::findClicked" ) );
 
@@ -41,8 +41,8 @@ FindDialog::FindDialog()
 
 	
 
-	y = metrics->getPreferredSpacingFor( UIMetricsManager::stWindowBorderDelta );
-	x = find_->getLeft() - (275 + metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing ));
+	y = UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta );
+	x = find_->getLeft() - (275 + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ));
 
 	searchStrings_ = new StdStringsChoiceType::Control();
 	
@@ -55,30 +55,30 @@ FindDialog::FindDialog()
 	searchString_->setComboBoxStyle( cbsDropDownWithEdit );
 
 
-	x = metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing );
+	x = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 
 	Label* label = new Label();
 	label->setCaption( "Search for:" );
 	label->setBounds( x, y, 
-						(searchString_->getLeft() - metrics->getPreferredSpacingFor( UIMetricsManager::stControlHorizontalSpacing )) - x,
+						(searchString_->getLeft() - UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing )) - x,
 						searchString_->getHeight() );
 	add( label );	
 
 	
-	y += label->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing );
+	y += label->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing );
 
 	caseSensitive_ = new StdBoolType::Control();
 
 	caseSensitive_->setCaption( "Match Case" );
 	caseSensitive_->setBounds( x, y, 175, caseSensitive_->getPreferredHeight() );
 	add( caseSensitive_ );
-	y += caseSensitive_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing )/2.0;
+	y += caseSensitive_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing )/2.0;
 
 	matchWordOnly_ = new StdBoolType::Control();
 	matchWordOnly_->setCaption( "Match Word only" );
 	matchWordOnly_->setBounds( x, y, 175, matchWordOnly_->getPreferredHeight() );
 	add( matchWordOnly_ );
-	y += matchWordOnly_->getHeight() + metrics->getPreferredSpacingFor( UIMetricsManager::stControlVerticalSpacing )/2.0;
+	y += matchWordOnly_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing )/2.0;
 
 	
 	find_->setDefault(true);
