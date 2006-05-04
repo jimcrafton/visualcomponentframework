@@ -157,7 +157,9 @@ typedef short INT16;
 
 /* INT32 must hold at least signed 32-bit values. */
 
-#ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
+/* modification from paintlib */
+#if !defined( XMD_H ) && !defined( _BASETSD_H_ )
+     /* X11/xmd.h and MS VC++ 6.0 correctly define INT32 */
 typedef long INT32;
 #endif
 
@@ -208,11 +210,16 @@ typedef unsigned int JDIMENSION;
  * by just saying "FAR *" where such a pointer is needed.  In a few places
  * explicit coding is needed; see uses of the NEED_FAR_POINTERS symbol.
  */
-
+/* Change Ulrich von Zadow 9/96:
+ *   The WIN32 headers define FAR as empty already. To prevent warnings,
+  *   we shouldn't do it here.
+   */
 #ifdef NEED_FAR_POINTERS
-#define FAR  far
+  #define FAR  far
 #else
-#define FAR
+  #ifndef FAR
+    #define FAR
+  #endif
 #endif
 
 
@@ -224,7 +231,9 @@ typedef unsigned int JDIMENSION;
  */
 
 #ifndef HAVE_BOOLEAN
-typedef int boolean;
+  #ifndef __RPCNDR_H__  /* don't conflict if rpcndr.h already read */
+  typedef unsigned char boolean;
+  #endif
 #endif
 #ifndef FALSE			/* in case these macros already exist */
 #define FALSE	0		/* values of boolean */
