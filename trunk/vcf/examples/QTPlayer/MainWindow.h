@@ -32,6 +32,7 @@ public:
 
 protected:
 	void onFileOpenMovie( VCF::Event* e );
+	void onFileOpenURLMovie( VCF::Event* e );
 	void onFileCloseMovie( VCF::Event* e );
 	void updateFileCloseMovie( VCF::ActionEvent* e );
 

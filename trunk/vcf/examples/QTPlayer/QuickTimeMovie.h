@@ -48,6 +48,8 @@ public:
 
 	bool open( const VCF::String& filename );
 
+	bool openURL( const VCF::String& url );	
+
 	void reset();
 
 	void play();

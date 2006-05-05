@@ -53,9 +53,25 @@ void QuickTimeControl::afterCreate( VCF::ComponentEvent* event )
 	m_currentMovie = new QuickTimeMovie( this );
 }
 
-bool QuickTimeControl::open( const VCF::String filename )
+bool QuickTimeControl::open( const VCF::String& filename )
 {
 	bool result = m_currentMovie->open( filename );
+
+	if ( result ) {		
+		
+		setMovieBounds( &getBounds() );
+
+		repaint();
+
+		Event movieEvent( this );
+		MovieChanged.fireEvent( &movieEvent );
+	}
+	return result;
+}
+
+bool QuickTimeControl::openFromURL( const VCF::String& url )
+{
+	bool result = m_currentMovie->openURL( url );
 
 	if ( result ) {		
 		

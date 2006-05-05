@@ -53,7 +53,9 @@ public:
 
 	virtual void afterCreate( VCF::ComponentEvent* event );
 
-	bool open( const VCF::String filename );
+	bool open( const VCF::String& filename );
+
+	bool openFromURL( const VCF::String& url );
 
 	virtual void setBounds( VCF::Rect* rect, const bool& anchorDeltasNeedUpdating=true );
 
