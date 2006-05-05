@@ -24,6 +24,86 @@ where you installed the VCF.
 
 using namespace VCF;
 
+class OpenURLDialog : public Dialog {
+public:
+
+	TextControl* urlEdit;
+	String url;
+
+	OpenURLDialog() {
+
+		setWidth( 350 );
+		setHeight( 150 );
+
+		Panel* pane1 = new Panel();
+		pane1->setBorder( NULL );
+
+		HorizontalLayoutContainer* container = new HorizontalLayoutContainer();		
+		pane1->setContainer( container );
+
+		
+
+		Label* lable1 = new Label();
+		lable1->setCaption( "URL:" );
+		pane1->add( lable1 );
+
+		urlEdit = new TextControl();
+		
+		urlEdit->getTextModel()->addTextModelChangedHandler( 
+			new GenericEventHandler<OpenURLDialog>(this, &OpenURLDialog::onTextChanged, "OpenURLDialog::onTextChanged" ) );
+
+		
+
+		pane1->add( urlEdit );
+
+		add( pane1, AlignClient );
+
+		CommandButton* okBtn = new CommandButton();
+
+		Panel* bottom = new Panel();
+		bottom->setBorder( NULL );
+
+		bottom->setHeight( okBtn->getPreferredHeight() + UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta) * 2 );
+		
+
+		HorizontalLayoutContainer* container2 = new HorizontalLayoutContainer();
+		container2->setLeftBorderWidth( getWidth() / 2.0 );	
+
+		double width = getWidth() / 2.0;
+		width -= UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
+		width -= container2->getColumnTweenWidth( 0 );
+
+		container2->setColumnWidth( 0, width / 2.0 );
+		
+		bottom->setContainer( container2 );
+
+
+		
+		bottom->add( okBtn );
+
+		CommandButton* cancelBtn = new CommandButton();
+		bottom->add( cancelBtn );
+
+		okBtn->setCaption( "OK" );
+		okBtn->setCommandType ( BC_OK );
+		okBtn->setDefault(true);
+
+		cancelBtn->setCaption( "Cancel" );
+		cancelBtn->setCommandType ( BC_CANCEL );
+
+		add( bottom, AlignBottom );
+
+		
+
+		setCaption( "Open URL" );
+	}
+
+
+
+	void onTextChanged(Event*) {
+		url = urlEdit->getTextModel()->getText();
+	}
+};
 
 
 class PlayListDictionary : public Dictionary {
@@ -95,7 +175,7 @@ _class_rtti_end_
 
 class PlayListItem : public DefaultListItem {
 public:
-	PlayListItem( Control* control, const String& caption,
+	PlayListItem( VCF::Control* control, const String& caption,
 					ListModel* model ):
 	  DefaultListItem( model, caption ),control_(control) {
 
@@ -155,7 +235,7 @@ public:
 
 	String id_;
 
-	Control* control_;
+	VCF::Control* control_;
 };
 
 
@@ -181,9 +261,9 @@ public:
 class PagedContainer : public StandardContainer {
 public:
 
-	void showPage( Control* control ) {
+	void showPage( VCF::Control* control ) {
 		if ( !pages_.empty() ) {
-			std::deque<Control*>::iterator found = std::find( pages_.begin(), pages_.end(), control );
+			std::deque<VCF::Control*>::iterator found = std::find( pages_.begin(), pages_.end(), control );
 
 			if ( found != pages_.end() ) {
 				pages_.erase( found );
@@ -191,7 +271,7 @@ public:
 			}
 
 
-			std::deque<Control*>::iterator it = pages_.begin();
+			std::deque<VCF::Control*>::iterator it = pages_.begin();
 			while ( it != pages_.end() ) {
 				if ( *it != control ) {
 					(*it)->setVisible( false );
@@ -206,16 +286,16 @@ public:
 	void first() {
 		if ( !pages_.empty() ) {
 			//resort the pages_
-			Control* control = controls_.front();
+			VCF::Control* control = controls_.front();
 
 			while ( control != pages_.front() ) {
-				Control* tmp = pages_.front();
+				VCF::Control* tmp = pages_.front();
 				pages_.pop_front();
 				pages_.push_back( tmp );
 			}
 
 
-			std::deque<Control*>::iterator it = pages_.begin();
+			std::deque<VCF::Control*>::iterator it = pages_.begin();
 			while ( it != pages_.end() ) {
 				if ( *it != control ) {
 					(*it)->setVisible( false );
@@ -229,15 +309,15 @@ public:
 
 	void last() {
 		if ( !pages_.empty() ) {
-			Control* control = controls_.back();
+			VCF::Control* control = controls_.back();
 
 			while ( control != pages_.front() ) {
-				Control* tmp = pages_.front();
+				VCF::Control* tmp = pages_.front();
 				pages_.pop_front();
 				pages_.push_back( tmp );
 			}
 
-			std::deque<Control*>::iterator it = pages_.begin();
+			std::deque<VCF::Control*>::iterator it = pages_.begin();
 			while ( it != pages_.end() ) {
 				if ( *it != control ) {
 					(*it)->setVisible( false );
@@ -251,13 +331,13 @@ public:
 
 	void next() {
 		if ( !pages_.empty() ) {
-			Control* control = pages_.front();
+			VCF::Control* control = pages_.front();
 			pages_.pop_front();
 			pages_.push_back( control );
 
 			control = pages_.front();
 
-			std::deque<Control*>::iterator it = pages_.begin();
+			std::deque<VCF::Control*>::iterator it = pages_.begin();
 			while ( it != pages_.end() ) {
 				if ( *it != control ) {
 					(*it)->setVisible( false );
@@ -269,7 +349,7 @@ public:
 		}
 	}
 
-	virtual void resizeChildren( Control* control ) {
+	virtual void resizeChildren( VCF::Control* control ) {
 		//controlContainer_ is the control that this container is attached to
 		VCF::Rect clientBounds = controlContainer_->getClientBounds();
 
@@ -289,7 +369,7 @@ public:
 			//we may have to position this separately - if it is the first time it
 			//has been added then it will not be in the child control list
 			//search for the control
-			std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
+			std::vector<VCF::Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 
 			//if found equals the controls_.end, then control has not been added yet, and this is the first time
 			//this control has been positioned for this container
@@ -304,10 +384,10 @@ public:
 		else {
 			//note: we could have used the containers vector - this would be ever so slightly faster,
 			//but this is a bit cleaner for the sake of an example.
-			Enumerator<Control*>* children = AbstractContainer::getChildren();
+			Enumerator<VCF::Control*>* children = AbstractContainer::getChildren();
 
 			while ( children->hasMoreElements() ) {
-				Control* child = children->nextElement();
+				VCF::Control* child = children->nextElement();
 				if ( child->getVisible() ) {
 					child->setBounds( &clientBounds );
 				}
@@ -316,7 +396,7 @@ public:
 	}
 
 protected:
-	std::deque<Control*> pages_;
+	std::deque<VCF::Control*> pages_;
 };
 
 
@@ -466,7 +546,7 @@ public:
 	void setMovie( QuickTimeMovie* movie ) {
 		Container* container = getContainer();
 		while ( container->getChildCount() > 0 ) {
-			Control* child = container->getControlAtIndex( 0 );
+			VCF::Control* child = container->getControlAtIndex( 0 );
 
 			container->remove(child);
 			removeComponent( child );
@@ -545,6 +625,9 @@ void MainQTWindow::buildUI()
 	DefaultMenuItem* file = new DefaultMenuItem( "&File", root, menuBar );
 
 	DefaultMenuItem* fileOpen = new DefaultMenuItem( "&Open...", file, menuBar );
+
+	DefaultMenuItem* fileOpenUrl = new DefaultMenuItem( "Open &URL...", file, menuBar );
+
 	DefaultMenuItem* fileClose = new DefaultMenuItem( "&Close", file, menuBar );
 
 	DefaultMenuItem* sep = new DefaultMenuItem( "", file, menuBar );
@@ -859,6 +942,14 @@ void MainQTWindow::buildUI()
 
 	openAction->addTarget( open );
 	openAction->addTarget( fileOpen );
+
+
+	Action* openURLAction = new Action();
+	addComponent( openURLAction );
+	openURLAction->Performed +=
+			new GenericEventHandler<MainQTWindow>(this, &MainQTWindow::onFileOpenURLMovie, "MainQTWindow::onFileOpenURLMovie" );
+	
+	openURLAction->addTarget( fileOpenUrl );
 
 
 	Action* fileAddToPlaylistAction = new Action();
@@ -1298,6 +1389,23 @@ void MainQTWindow::onFileOpenMovie( Event* e )
 
 }
 
+
+void MainQTWindow::onFileOpenURLMovie( Event* e )
+{
+	movieLoaded_ = false;
+	
+	OpenURLDialog dlg;
+
+	if ( UIToolkit::mrOK == dlg.showModal() ) {
+		if ( !quicktimeControl_->openFromURL( dlg.url ) ) {
+
+			((MediaInfoPanel*)mediaInfo_)->setMovie( NULL );
+
+		}
+	}
+
+}
+
 void MainQTWindow::onFileExit( Event* e )
 {
 	close();
@@ -1657,7 +1765,7 @@ void MainQTWindow::onSearchIconClick( VCF::Event* e )
 	}
 
 
-	Control* control = (Control*) e->getSource();
+	VCF::Control* control = (VCF::Control*) e->getSource();
 	PopupMenu* pm = control->getPopupMenu();
 
 	VCF::Point pt = control->getBounds().getBottomLeft();

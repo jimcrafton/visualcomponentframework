@@ -172,6 +172,70 @@ bool QuickTimeMovie::open( const String& filename )
 	return result;
 }
 
+bool QuickTimeMovie::openURL( const VCF::String& url )
+{
+	bool result = false;
+
+	close();
+
+	if ( ! url.empty() )  {
+		OSErr err = 0;
+		
+		long controllerFlags = 0L;
+
+		// Set the port
+		HWND hwnd = NULL;
+		if ( NULL != displayControl_ ) {
+			hwnd = (HWND) displayControl_->getPeer()->getHandleID();
+			SetGWorld( (CGrafPtr)GetNativeWindowPort( (void *)hwnd ), nil );
+		}
+
+		AnsiString tmp = url;
+		
+		Handle urlDataRef = NewHandle(tmp.size() + 1);
+
+		memcpy( *urlDataRef, tmp.c_str(), tmp.size() + 1 );
+
+
+		
+		// Get the Movie from the file
+		err = NewMovieFromDataRef( &qtMovie_, newMovieActive, 
+								nil, 
+								urlDataRef, 
+								URLDataHandlerSubType );
+
+		DisposeHandle( urlDataRef );
+
+		if (err == noErr)	{
+
+			isMovieOpen_ = true;
+
+			result = true;			
+
+			if ( NULL != displayControl_ ) {
+				SetMovieGWorld ( qtMovie_, (CGrafPtr)GetNativeWindowPort((void *) hwnd ), nil );
+			}
+			originalBounds_ = getBounds();//initialize the bounds
+
+			if ( originalBounds_.getWidth() > originalBounds_.getHeight() ) {
+				aspectRatio_ = originalBounds_.getWidth() / originalBounds_.getHeight();
+			}
+			else {
+				aspectRatio_ = originalBounds_.getHeight() / originalBounds_.getWidth();
+			}
+
+		}
+	}
+
+	if ( result ) {
+		setTitle();
+
+		Event movieEvent( this );
+		MovieOpened.fireEvent( &movieEvent );
+	}
+	return result;
+}
+
 void QuickTimeMovie::reset()
 {
 	TimeRecord time = {0};
