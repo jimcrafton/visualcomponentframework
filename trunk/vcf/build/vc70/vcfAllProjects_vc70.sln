@@ -127,6 +127,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCIntegration2", "..\..\ex
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCBasics", "..\..\examples\MVCBasics\MVCBasics_vc70.vcproj", "{be9000b0-02e5-4768-8add-4b2177cc7988}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Menus", "..\..\examples\Menus\Menus_vc70.vcproj", "{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinMax", "..\..\examples\MinMax\MinMax_vc70.vcproj", "{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NetworkKit", ".\NetworkKit\NetworkKit_vc70.vcproj", "{bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}"
@@ -215,6 +217,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", ".\GraphicsKit\lib
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libXmake", "..\..\src\xmake\libXmake_vc70.vcproj", "{c76867a6-cf04-41c6-b465-7af89272982b}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "paintlib", "..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_vc70.vcproj", "{77cb164f-acac-4802-b75c-547b6a5a2043}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAll", ".\AllIn1\vcfAll_vc70.vcproj", "{c59f9186-362c-4020-afec-f9f42bdd3723}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAllDynamicLibs", ".\vcfAllDynamicLibs_vc70.vcproj", "{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}"
@@ -283,44 +287,44 @@ Global
 		{d4175fea-2eab-410f-9b1f-d59f400930ce}.42 = {2db85331-c153-41d1-a653-275b0e2a0b4c}
 		{d4175fea-2eab-410f-9b1f-d59f400930ce}.43 = {ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}
 		{d4175fea-2eab-410f-9b1f-d59f400930ce}.44 = {be9000b0-02e5-4768-8add-4b2177cc7988}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.45 = {8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.46 = {9884820a-2e0a-4266-a6cc-a13f83bb0256}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.47 = {0162e66e-b8a0-4024-a6a2-f7557de4f3ef}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.48 = {1b4e9cd1-3f83-48be-834c-f198b268cc0e}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.49 = {7e757b5c-4ec5-4a33-8278-29eb0fa5035c}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.50 = {189e3581-6c65-4f92-a529-acb38c354fb1}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.51 = {10e89c30-9ca8-4af2-a8ea-a49c40b989e2}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.52 = {332fc043-62d6-42d0-8ab9-bfc087dd9e39}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.53 = {77578375-d531-4488-ab2a-6a56e0de965d}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.54 = {355e743b-e4b1-4530-99d3-e93ab85060d9}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.55 = {70f48013-0d78-4752-b312-070ef2bb95bb}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.56 = {2a82503b-20fa-47e4-8567-7bf68158a077}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.57 = {11afb61e-3780-4cbf-92d0-1054f42405f5}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.58 = {9de96ab4-297f-4aa9-8ca6-a10cfddfc440}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.59 = {4348087d-8c97-460d-b8d4-db563ae00877}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.60 = {8460c7f0-c8c2-4ba2-b0bb-1b8aa29de6dc}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.61 = {5982ee7a-8ecb-47bc-8fec-6389b9313fef}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.62 = {9ea10687-408d-4fc3-ac77-0e20ef806ae6}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.63 = {0581bafe-499e-4e70-84dd-1573faa756eb}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.64 = {8b27425f-6d24-47b4-8ca5-d0e24536c413}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.65 = {e3fe41e9-50ec-48bc-a0b2-be87d923889c}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.66 = {45eeec3e-9566-4ef7-a043-fad88b9b5567}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.67 = {007d9b8e-1887-4f39-bd61-2a50893161e1}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.68 = {0ef644a1-d579-4185-8e04-b3f95af29dc7}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.69 = {be4cce5b-e864-400c-996c-cc8d3cf3a33e}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.70 = {87cb044d-9c4d-48a1-a754-63c31eb8bef8}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.71 = {d59f5b99-8160-4344-8dfa-9c4a1de1d4f0}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.72 = {7b69d174-3429-4f18-99a8-35e238c68feb}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.73 = {def80c5b-5492-4cda-8265-d649172880f3}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.74 = {471607b1-ecd2-4048-8dbc-678bf124a603}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.75 = {74eea0fc-e720-4aee-8627-92cd81a35ff1}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.76 = {e8722e55-93d2-4ed1-a5c4-c045e59a2609}
-		{d4175fea-2eab-410f-9b1f-d59f400930ce}.77 = {182151c8-6a51-499b-b604-56918a9e18ad}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.45 = {24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.46 = {8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.47 = {9884820a-2e0a-4266-a6cc-a13f83bb0256}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.48 = {0162e66e-b8a0-4024-a6a2-f7557de4f3ef}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.49 = {1b4e9cd1-3f83-48be-834c-f198b268cc0e}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.50 = {7e757b5c-4ec5-4a33-8278-29eb0fa5035c}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.51 = {189e3581-6c65-4f92-a529-acb38c354fb1}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.52 = {10e89c30-9ca8-4af2-a8ea-a49c40b989e2}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.53 = {332fc043-62d6-42d0-8ab9-bfc087dd9e39}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.54 = {77578375-d531-4488-ab2a-6a56e0de965d}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.55 = {355e743b-e4b1-4530-99d3-e93ab85060d9}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.56 = {70f48013-0d78-4752-b312-070ef2bb95bb}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.57 = {2a82503b-20fa-47e4-8567-7bf68158a077}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.58 = {11afb61e-3780-4cbf-92d0-1054f42405f5}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.59 = {9de96ab4-297f-4aa9-8ca6-a10cfddfc440}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.60 = {4348087d-8c97-460d-b8d4-db563ae00877}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.61 = {8460c7f0-c8c2-4ba2-b0bb-1b8aa29de6dc}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.62 = {5982ee7a-8ecb-47bc-8fec-6389b9313fef}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.63 = {9ea10687-408d-4fc3-ac77-0e20ef806ae6}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.64 = {0581bafe-499e-4e70-84dd-1573faa756eb}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.65 = {8b27425f-6d24-47b4-8ca5-d0e24536c413}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.66 = {e3fe41e9-50ec-48bc-a0b2-be87d923889c}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.67 = {45eeec3e-9566-4ef7-a043-fad88b9b5567}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.68 = {007d9b8e-1887-4f39-bd61-2a50893161e1}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.69 = {0ef644a1-d579-4185-8e04-b3f95af29dc7}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.70 = {be4cce5b-e864-400c-996c-cc8d3cf3a33e}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.71 = {87cb044d-9c4d-48a1-a754-63c31eb8bef8}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.72 = {d59f5b99-8160-4344-8dfa-9c4a1de1d4f0}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.73 = {7b69d174-3429-4f18-99a8-35e238c68feb}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.74 = {def80c5b-5492-4cda-8265-d649172880f3}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.75 = {471607b1-ecd2-4048-8dbc-678bf124a603}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.76 = {74eea0fc-e720-4aee-8627-92cd81a35ff1}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.77 = {e8722e55-93d2-4ed1-a5c4-c045e59a2609}
+		{d4175fea-2eab-410f-9b1f-d59f400930ce}.78 = {182151c8-6a51-499b-b604-56918a9e18ad}
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.0 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.1 = {d385a04c-f56b-4dc3-b898-23cc51c8dd62}
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.2 = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
-		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.3 = {1f5aeb6c-bf81-4664-8071-925a8d01c676}
-		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.4 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
+		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.3 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.0 = {18f07694-fc61-4c07-9650-189e329972b2}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.1 = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.2 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
@@ -342,6 +346,10 @@ Global
 		{f57a4951-0fb4-44a8-b085-0ee25c6451bf}.0 = {ae86332f-2e64-460b-8363-c502de1bbfb3}
 		{86b5ee3a-638c-481a-9869-4230fc112429}.0 = {b4119c21-7e30-4967-91cc-8e0b3482ea4e}
 		{1012d59e-6477-4541-9ecc-d6c295da8d9e}.0 = {bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.0 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.1 = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.2 = {1f5aeb6c-bf81-4664-8071-925a8d01c676}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.3 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.0 = {ae86332f-2e64-460b-8363-c502de1bbfb3}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.1 = {86b5ee3a-638c-481a-9869-4230fc112429}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.2 = {b6be4f10-66ab-4bb4-b2d4-9bb5f6fc10e3}
@@ -488,6 +496,8 @@ Global
 		{ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}.Release.ActiveCfg = Release|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Debug.ActiveCfg = Debug|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Release.ActiveCfg = Release|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Debug.ActiveCfg = Debug|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Release.ActiveCfg = Release|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Debug.ActiveCfg = Debug|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Release.ActiveCfg = Release|Win32
 		{bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}.Debug.ActiveCfg = Debug|Win32
@@ -577,6 +587,8 @@ Global
 		{9c900d7c-dde4-4e0f-b5de-a326c39607dc}.Release.ActiveCfg = Release|Win32
 		{c76867a6-cf04-41c6-b465-7af89272982b}.Debug.ActiveCfg = Debug|Win32
 		{c76867a6-cf04-41c6-b465-7af89272982b}.Release.ActiveCfg = Release|Win32
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.Debug.ActiveCfg = Debug|Win32
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.Release.ActiveCfg = Release|Win32
 		{c59f9186-362c-4020-afec-f9f42bdd3723}.Debug.ActiveCfg = Debug|Win32
 		{c59f9186-362c-4020-afec-f9f42bdd3723}.Release.ActiveCfg = Release|Win32
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.Debug.ActiveCfg = Debug|Win32

@@ -153,6 +153,14 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<Filter
 			Name="sharedLib"
 			Filter="">
 			<File
@@ -181,14 +189,6 @@ link /nologo /dll /out:SimpleDLL.so SimpleDLL.obj
 			<File
 				RelativePath="SimpleDLL.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 		</Filter>
 	</Files>
 	<Globals>

@@ -51,6 +51,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\src\thirdpart
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", ".\GraphicsKit\libAGG_vc70.vcproj", "{9c900d7c-dde4-4e0f-b5de-a326c39607dc}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "paintlib", "..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_vc70.vcproj", "{77cb164f-acac-4802-b75c-547b6a5a2043}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAllDynamicLibs", ".\vcfAllDynamicLibs_vc70.vcproj", "{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAllLibs", ".\vcfAllLibs_vc70.vcproj", "{e516c5d6-7130-4d9a-a233-8dedcb777a83}"
@@ -71,8 +73,7 @@ Global
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.0 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.1 = {d385a04c-f56b-4dc3-b898-23cc51c8dd62}
 		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.2 = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
-		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.3 = {1f5aeb6c-bf81-4664-8071-925a8d01c676}
-		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.4 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
+		{675ed9eb-c153-41dc-9e7b-d3a03305be48}.3 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.0 = {18f07694-fc61-4c07-9650-189e329972b2}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.1 = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.2 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
@@ -93,6 +94,10 @@ Global
 		{f57a4951-0fb4-44a8-b085-0ee25c6451bf}.0 = {ae86332f-2e64-460b-8363-c502de1bbfb3}
 		{86b5ee3a-638c-481a-9869-4230fc112429}.0 = {b4119c21-7e30-4967-91cc-8e0b3482ea4e}
 		{1012d59e-6477-4541-9ecc-d6c295da8d9e}.0 = {bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.0 = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.1 = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.2 = {1f5aeb6c-bf81-4664-8071-925a8d01c676}
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.3 = {5ddc0f07-9887-46ed-b030-6df67daf619e}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.0 = {ae86332f-2e64-460b-8363-c502de1bbfb3}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.1 = {86b5ee3a-638c-481a-9869-4230fc112429}
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.2 = {b6be4f10-66ab-4bb4-b2d4-9bb5f6fc10e3}
@@ -162,6 +167,8 @@ Global
 		{5ddc0f07-9887-46ed-b030-6df67daf619e}.Release.ActiveCfg = Release|Win32
 		{9c900d7c-dde4-4e0f-b5de-a326c39607dc}.Debug.ActiveCfg = Debug|Win32
 		{9c900d7c-dde4-4e0f-b5de-a326c39607dc}.Release.ActiveCfg = Release|Win32
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.Debug.ActiveCfg = Debug|Win32
+		{77cb164f-acac-4802-b75c-547b6a5a2043}.Release.ActiveCfg = Release|Win32
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.Debug.ActiveCfg = Debug|Win32
 		{8d0b1cca-1c9e-4113-acb5-67d0c8eb9ffc}.Release.ActiveCfg = Release|Win32
 		{e516c5d6-7130-4d9a-a233-8dedcb777a83}.Debug.ActiveCfg = Debug|Win32
