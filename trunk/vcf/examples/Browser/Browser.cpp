@@ -153,7 +153,8 @@ protected:
 			MenuItem* item = popupMenuEvent->popupMenu->getRootMenuItem()->getChildAt(0);
 			item->setCaption( id );
 		}
-		else {MenuItem* item = popupMenuEvent->popupMenu->getRootMenuItem()->getChildAt(0);
+		else {
+			MenuItem* item = popupMenuEvent->popupMenu->getRootMenuItem()->getChildAt(0);
 			item->setCaption( "Hello" );
 		}
 	}
@@ -166,6 +167,12 @@ public:
 		HTMLKit::init( argc, argv );
 	}
 	
+	void onMainWindowClosed( Event* e ) {
+		Window* mainWindow = getMainWindow();
+
+		mainWindow->storeSettings(true);
+	}
+
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
@@ -193,6 +200,14 @@ public:
 
 
 
+		mainWindow->assignSetting( "mainwindow.top", "top" );
+		mainWindow->assignSetting( "mainwindow.left", "left" );
+		mainWindow->assignSetting( "mainwindow.width", "width" );
+		mainWindow->assignSetting( "mainwindow.height", "height" );
+
+		mainWindow->FrameClose += 
+			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onMainWindowClosed, "BrowserApp::onMainWindowClosed" );
+		
 
 
 		Toolbar* tb = new Toolbar();
@@ -375,6 +390,10 @@ public:
 		browser->setCurrentURL( "http://vcf-online.org" );
 
 		mainWindow->setCaption( "Browser" );
+
+
+		mainWindow->initializeSettings(true);
+		
 
 		mainWindow->show();
 		
