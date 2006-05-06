@@ -23,8 +23,6 @@ CFG=paintlib - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""$/paintlib", CAAAAAAA"
-# PROP Scc_LocalPath "."
 CPP=cl.exe
 RSC=rc.exe
 
@@ -37,11 +35,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc6\Release"
-# PROP Intermediate_Dir "vc6\Release"
+# PROP Output_Dir "vc6\Release\"
+# PROP Intermediate_Dir "vc6\Release\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GR /GX /O2 /Ob2 /I "$(VCF_INCLUDE)" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /YX /c
+# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_INCLUDE)" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /YX /c
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -60,12 +58,12 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc6\Debug"
-# PROP Intermediate_Dir "vc6\Debug"
+# PROP Output_Dir "vc6\Debug\"
+# PROP Intermediate_Dir "vc6\Debug\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /Ze /W3 /Gm /Gi- /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /YX"" /Yd /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /MDd /Ze /W3 /Gm /Gi- /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc6_sd.pdb" /YX"" /Yd /c
+# SUBTRACT CPP /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -813,7 +811,7 @@ DEP_CPP_PLINP=\
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\pldibsect.cpp
+SOURCE=pldibsect.cpp
 DEP_CPP_PLDIB=\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
@@ -847,7 +845,7 @@ DEP_CPP_PLDIB=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\plressrc.cpp
+SOURCE=plressrc.cpp
 DEP_CPP_PLRES=\
 	"..\..\common\pldatasrc.h"\
 	"..\..\common\pldebug.h"\
@@ -871,7 +869,7 @@ DEP_CPP_PLRES=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\plStreamSink.cpp
+SOURCE=plStreamSink.cpp
 DEP_CPP_PLSTR=\
 	"..\..\common\pldatasink.h"\
 	"..\..\common\plexcept.h"\
@@ -894,7 +892,7 @@ DEP_CPP_PLSTR=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\plwemfdec.cpp
+SOURCE=plwemfdec.cpp
 DEP_CPP_PLWEM=\
 	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
@@ -932,7 +930,7 @@ DEP_CPP_PLWEM=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\plwinbmp.cpp
+SOURCE=plwinbmp.cpp
 DEP_CPP_PLWIN=\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
@@ -2355,23 +2353,23 @@ SOURCE=..\..\common\Filter\plinplacefilter.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\pldibsect.h
+SOURCE=pldibsect.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\plressrc.h
+SOURCE=plressrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\plStreamSink.h
+SOURCE=plStreamSink.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\plwemfdec.h
+SOURCE=plwemfdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\plwinbmp.h
+SOURCE=plwinbmp.h
 # End Source File
 # End Group
 # Begin Source File

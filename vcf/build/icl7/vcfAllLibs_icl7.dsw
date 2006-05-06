@@ -99,9 +99,6 @@ Package=<4>
     Project_Dep_Name LibPNG
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name LibTIFF
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ZLib
     End Project Dependency
 }}}
@@ -392,6 +389,30 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################

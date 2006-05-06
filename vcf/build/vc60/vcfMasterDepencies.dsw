@@ -684,9 +684,6 @@ Package=<4>
     Project_Dep_Name LibPNG
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name LibTIFF
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ZLib
     End Project Dependency
 }}}
@@ -990,7 +987,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"=..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.dsp - Package Owner=<4>
+Project: "LibTIFF"=..\..\src\thirdparty\common\LibTIFF\LibTIFF.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1616,6 +1613,30 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"=..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################

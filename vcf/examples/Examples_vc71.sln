@@ -157,6 +157,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", ".\Examples\Exam
 		{2db85331-c153-41d1-a653-275b0e2a0b4c} = {2db85331-c153-41d1-a653-275b0e2a0b4c}
 		{ffeac7ab-e3c6-479b-b679-bdabad3f3aa2} = {ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}
 		{be9000b0-02e5-4768-8add-4b2177cc7988} = {be9000b0-02e5-4768-8add-4b2177cc7988}
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489} = {24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d} = {8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}
 		{9884820a-2e0a-4266-a6cc-a13f83bb0256} = {9884820a-2e0a-4266-a6cc-a13f83bb0256}
 		{0162e66e-b8a0-4024-a6a2-f7557de4f3ef} = {0162e66e-b8a0-4024-a6a2-f7557de4f3ef}
@@ -220,18 +221,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsKit", "..\build\vc7
 	ProjectSection(ProjectDependencies) = postProject
 		{18f07694-fc61-4c07-9650-189e329972b2} = {18f07694-fc61-4c07-9650-189e329972b2}
 		{9c900d7c-dde4-4e0f-b5de-a326c39607dc} = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
-		{6eee04e1-e1f4-4b72-b480-fefeda2e9017} = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
-		{772555b9-bb1b-4d8f-8f95-e4abe93f8300} = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
-		{5ddc0f07-9887-46ed-b030-6df67daf619e} = {5ddc0f07-9887-46ed-b030-6df67daf619e}
+		{F047EF26-4445-49F1-8E57-8DE2BA7A2AEB} = {F047EF26-4445-49F1-8E57-8DE2BA7A2AEB}
+		{C8572A0B-FB71-4AA6-BDB9-953CA14E2F0C} = {C8572A0B-FB71-4AA6-BDB9-953CA14E2F0C}
+		{047D65FD-4CF9-41AD-BDB2-13424D16EDF6} = {047D65FD-4CF9-41AD-BDB2-13424D16EDF6}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsKitDLL", "..\build\vc71\GraphicsKit\GraphicsKitDLL_vc71.vcproj", "{b68a433e-59b4-41a2-9243-af448a3f7bad}"
 	ProjectSection(ProjectDependencies) = postProject
 		{49eccc34-695d-472f-be5f-1e2fc4fdcecd} = {49eccc34-695d-472f-be5f-1e2fc4fdcecd}
 		{9c900d7c-dde4-4e0f-b5de-a326c39607dc} = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
-		{6eee04e1-e1f4-4b72-b480-fefeda2e9017} = {6eee04e1-e1f4-4b72-b480-fefeda2e9017}
-		{772555b9-bb1b-4d8f-8f95-e4abe93f8300} = {772555b9-bb1b-4d8f-8f95-e4abe93f8300}
-		{5ddc0f07-9887-46ed-b030-6df67daf619e} = {5ddc0f07-9887-46ed-b030-6df67daf619e}
+		{F047EF26-4445-49F1-8E57-8DE2BA7A2AEB} = {F047EF26-4445-49F1-8E57-8DE2BA7A2AEB}
+		{C8572A0B-FB71-4AA6-BDB9-953CA14E2F0C} = {C8572A0B-FB71-4AA6-BDB9-953CA14E2F0C}
+		{047D65FD-4CF9-41AD-BDB2-13424D16EDF6} = {047D65FD-4CF9-41AD-BDB2-13424D16EDF6}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HTMLKit", "..\build\vc71\HTMLKit\HTMLKit_vc71.vcproj", "{37828cfc-766c-4eb6-aa88-438f963055f1}"
@@ -310,6 +311,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCIntegration2", ".\MFCInt
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCBasics", ".\MVCBasics\MVCBasics_vc71.vcproj", "{be9000b0-02e5-4768-8add-4b2177cc7988}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Menus", ".\Menus\Menus_vc71.vcproj", "{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -600,6 +605,8 @@ Global
 		{ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}.Release.ActiveCfg = Release|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Debug.ActiveCfg = Debug|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Release.ActiveCfg = Release|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Debug.ActiveCfg = Debug|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Release.ActiveCfg = Release|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Debug.ActiveCfg = Debug|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Release.ActiveCfg = Release|Win32
 		{bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}.Debug.ActiveCfg = Debug|Win32

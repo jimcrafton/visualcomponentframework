@@ -516,6 +516,9 @@ Package=<4>
     Project_Dep_Name MVCBasics
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Menus
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name MinMax
     End Project Dependency
     Begin Project Dependency
@@ -682,9 +685,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name LibPNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibTIFF
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ZLib
@@ -1063,6 +1063,18 @@ Package=<4>
 ###############################################################################
 
 Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Menus"="..\..\examples\Menus\Menus_icl7.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1616,6 +1628,30 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################

@@ -24,7 +24,7 @@
 				AdditionalOptions="/Yd "
 				Optimization="0"
 				OptimizeForProcessor="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.;..\libtiff;..\libjpeg;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include"
+				AdditionalIncludeDirectories=".\&quot;$(VCF_INCLUDE)&quot;;.;..\libtiff;..\libjpeg;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="3"
@@ -37,9 +37,9 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile=".\vc71\Debug\paintlib_vc71_sd.pch"
-				AssemblerListingLocation=".\vc71\Debug/"
-				ObjectFile=".\vc71\Debug/"
-				ProgramDataBaseFileName="$(OutDir)/paintlib_vc71_sd.pdb"
+				AssemblerListingLocation=".\vc71\Debug\"
+				ObjectFile=".\vc71\Debug\"
+				ProgramDataBaseFileName="$(OutDir)\paintlib_vc71_sd.pdb"
 				BrowseInformation="0"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
@@ -84,7 +84,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="2"
 				OptimizeForProcessor="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.;..\libtiff;..\libjpeg;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include"
+				AdditionalIncludeDirectories=".\&quot;$(VCF_INCLUDE)&quot;;.;..\libtiff;..\libjpeg;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -94,9 +94,9 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile=".\vc71\Debug\paintlib_vc71_s.pch"
-				AssemblerListingLocation=".\vc71\Release/"
-				ObjectFile=".\vc71\Release/"
-				ProgramDataBaseFileName="$(OutDir)/paintlib_vc71_s.pdb"
+				AssemblerListingLocation=".\vc71\Release\"
+				ObjectFile=".\vc71\Release\"
+				ProgramDataBaseFileName="$(OutDir)\paintlib_vc71_s.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -106,7 +106,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc71_s.lib"
-				AdditionalLibraryDirectories="&quot;$(VCF_LIB)&quot;"
+				AdditionalLibraryDirectories=".\&quot;$(VCF_LIB)&quot;\"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -135,6 +135,95 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90">
+			<Filter
+				Name="Filter."
+				Filter="">
+				<File
+					RelativePath="..\..\common\Filter\PLFilter.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfiltercolorize.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterContrast.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterCrop.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterFlip.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfilterfliprgb.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterGetAlpha.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterGrayscale.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterIntensity.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterLightness.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterMirror.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterQuantize.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResize.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeBox.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeHamming.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfilterrotate.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterThreshold.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfiltervideoinvert.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plhsvconvert.cpp">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plinplacefilter.cpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="Win."
+				Filter="">
+				<File
+					RelativePath="pldibsect.cpp">
+				</File>
+				<File
+					RelativePath="plressrc.cpp">
+				</File>
+				<File
+					RelativePath="plStreamSink.cpp">
+				</File>
+				<File
+					RelativePath="plwemfdec.cpp">
+				</File>
+				<File
+					RelativePath="plwinbmp.cpp">
+				</File>
+			</Filter>
 			<File
 				RelativePath="..\..\common\jmemdest.cpp">
 			</File>
@@ -261,99 +350,114 @@
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
-			<Filter
-				Name="Filter."
-				Filter="">
-				<File
-					RelativePath="..\..\common\Filter\PLFilter.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfiltercolorize.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterContrast.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterCrop.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterFlip.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfilterfliprgb.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterGetAlpha.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterGrayscale.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterIntensity.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterLightness.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterMirror.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterQuantize.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResize.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeBox.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeHamming.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfilterrotate.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterThreshold.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfiltervideoinvert.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plhsvconvert.cpp">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plinplacefilter.cpp">
-				</File>
-			</Filter>
-			<Filter
-				Name="Win."
-				Filter="">
-				<File
-					RelativePath=".\pldibsect.cpp">
-				</File>
-				<File
-					RelativePath=".\plressrc.cpp">
-				</File>
-				<File
-					RelativePath=".\plStreamSink.cpp">
-				</File>
-				<File
-					RelativePath=".\plwemfdec.cpp">
-				</File>
-				<File
-					RelativePath=".\plwinbmp.cpp">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;fi;fd">
+			<Filter
+				Name="Filter"
+				Filter="">
+				<File
+					RelativePath="..\..\common\Filter\pl2PassScale.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plcontribdefs.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilter.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfiltercolorize.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterContrast.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterCrop.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterFill.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterFillRect.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterFlip.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfilterfliprgb.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterGetAlpha.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterGrayscale.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterIntensity.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterLightness.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterMirror.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfilterpixel.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterQuantize.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResize.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeBox.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterResizeHamming.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plfilterrotate.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterThreshold.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\PLFilterVideoInvert.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plhsvconvert.h">
+				</File>
+				<File
+					RelativePath="..\..\common\Filter\plinplacefilter.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="Win"
+				Filter="">
+				<File
+					RelativePath="pldibsect.h">
+				</File>
+				<File
+					RelativePath="plressrc.h">
+				</File>
+				<File
+					RelativePath="plStreamSink.h">
+				</File>
+				<File
+					RelativePath="plwemfdec.h">
+				</File>
+				<File
+					RelativePath="plwinbmp.h">
+				</File>
+			</Filter>
 			<File
 				RelativePath="..\..\Common\config.h">
 			</File>
@@ -401,9 +505,6 @@
 			</File>
 			<File
 				RelativePath="..\..\common\plexcept.h">
-			</File>
-			<File
-				RelativePath="..\..\common\plexif.h">
 			</File>
 			<File
 				RelativePath="..\..\common\plfilesink.h">
@@ -502,6 +603,9 @@
 				RelativePath="..\..\common\plsgidec.h">
 			</File>
 			<File
+				RelativePath="..\..\common\plstdpch.h">
+			</File>
+			<File
 				RelativePath="..\..\common\plsubbmp.h">
 			</File>
 			<File
@@ -520,118 +624,11 @@
 				RelativePath="..\..\common\pltiffencex.h">
 			</File>
 			<File
-				RelativePath="..\..\common\plurlsrc.h">
-			</File>
-			<File
 				RelativePath="..\..\common\plwindefs.h">
 			</File>
 			<File
 				RelativePath="..\..\Common\tif_msrc.h">
 			</File>
-			<Filter
-				Name="Filter"
-				Filter="">
-				<File
-					RelativePath="..\..\common\Filter\pl2PassScale.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plcontribdefs.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilter.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfiltercolorize.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterContrast.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterCrop.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterFill.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterFillRect.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterFlip.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfilterfliprgb.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterGetAlpha.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterGrayscale.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterIntensity.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterLightness.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterMirror.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfilterpixel.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterQuantize.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResize.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeBox.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterResizeHamming.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plfilterrotate.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterThreshold.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\PLFilterVideoInvert.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plhsvconvert.h">
-				</File>
-				<File
-					RelativePath="..\..\common\Filter\plinplacefilter.h">
-				</File>
-			</Filter>
-			<Filter
-				Name="Win"
-				Filter="">
-				<File
-					RelativePath=".\pldibsect.h">
-				</File>
-				<File
-					RelativePath=".\plressrc.h">
-				</File>
-				<File
-					RelativePath=".\plStreamSink.h">
-				</File>
-				<File
-					RelativePath=".\plwemfdec.h">
-				</File>
-				<File
-					RelativePath=".\plwinbmp.h">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -639,23 +636,6 @@
 		</Filter>
 		<File
 			RelativePath="..\..\common\config.vc">
-			<FileConfiguration
-				Name="Debug|Win32">
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Copying config.vc"
-					CommandLine="copy ..\..\common\config.vc ..\..\common\config.h
-"
-					Outputs="..\..\common\config.h"/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32">
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\common\config.vc ..\..\common\config.h
-"
-					Outputs="..\..\common\config.h"/>
-			</FileConfiguration>
 		</File>
 	</Files>
 	<Globals>
