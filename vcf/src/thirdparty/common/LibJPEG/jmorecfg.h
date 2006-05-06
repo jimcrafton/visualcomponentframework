@@ -271,7 +271,7 @@ typedef unsigned int JDIMENSION;
 
 #define DCT_ISLOW_SUPPORTED	/* slow but accurate integer algorithm */
 #define DCT_IFAST_SUPPORTED	/* faster, less accurate integer method */
-#undef DCT_FLOAT_SUPPORTED	/* floating-point: accurate, fast on fast HW */
+#define DCT_FLOAT_SUPPORTED	/* floating-point: accurate, fast on fast HW */
 
 /* Encoder capability options: */
 
@@ -294,13 +294,13 @@ typedef unsigned int JDIMENSION;
 #undef  D_ARITH_CODING_SUPPORTED    /* Arithmetic coding back end? */
 #define D_MULTISCAN_FILES_SUPPORTED /* Multiple-scan JPEG files? */
 #define D_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN)*/
-#define SAVE_MARKERS_SUPPORTED	    /* jpeg_save_markers() needed? */
-#define BLOCK_SMOOTHING_SUPPORTED   /* Block smoothing? (Progressive only) */
-#undef IDCT_SCALING_SUPPORTED	    /* Output rescaling via IDCT? */
-#undef UPSAMPLE_SCALING_SUPPORTED  /* Output rescaling at upsample stage? */
+#undef BLOCK_SMOOTHING_SUPPORTED   /* Block smoothing? (Progressive only) */
+#define IDCT_SCALING_SUPPORTED      /* Output rescaling via IDCT? */
+#undef  UPSAMPLE_SCALING_SUPPORTED  /* Output rescaling at upsample stage? */
 #define UPSAMPLE_MERGING_SUPPORTED  /* Fast path for sloppy upsampling? */
-#undef QUANT_1PASS_SUPPORTED	    /* 1-pass color quantization? */
-#undef QUANT_2PASS_SUPPORTED	    /* 2-pass color quantization? */
+#define QUANT_1PASS_SUPPORTED     /* 1-pass color quantization? */
+#define QUANT_2PASS_SUPPORTED     /* 2-pass color quantization? */
+#define SAVE_MARKERS_SUPPORTED
 
 /* more capability options later, no doubt */
 
@@ -323,7 +323,7 @@ typedef unsigned int JDIMENSION;
 #define RGB_RED		2	/* Offset of Red in an RGB scanline element */
 #define RGB_GREEN	1	/* Offset of Green */
 #define RGB_BLUE	0	/* Offset of Blue */
-#define RGB_PIXELSIZE	3	/* JSAMPLEs per RGB scanline element */
+#define RGB_PIXELSIZE	4	/* JSAMPLEs per RGB scanline element */
 
 
 /* Definitions for speed-related optimizations. */
@@ -360,13 +360,20 @@ typedef unsigned int JDIMENSION;
  * pre-ANSI compilers (because they insist on converting to double anyway).
  * The code below therefore chooses float if we have ANSI-style prototypes.
  */
-
+/* Change Ulrich von Zadow 9/96:
+ *   Double is the native pentium floating point type, so it's
+ *   definitely the fastest in this configuration.
+ */
 #ifndef FAST_FLOAT
-#ifdef HAVE_PROTOTYPES
-#define FAST_FLOAT  float
-#else
-#define FAST_FLOAT  double
-#endif
+  #ifdef HAVE_PROTOTYPES
+    #ifdef WIN32
+      #define FAST_FLOAT  double
+     #else
+      #define FAST_FLOAT  float
+    #endif
+   #else
+    #define FAST_FLOAT  double
+  #endif
 #endif
 
 #endif /* JPEG_INTERNAL_OPTIONS */
