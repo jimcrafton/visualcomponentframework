@@ -215,6 +215,19 @@ public:
 	*/
 	Value operator[](const Key& key) const;
 
+
+	/**
+	Returns a VariantData \em reference to the specified key
+	*/
+	Value& get(const Key& key);
+
+	/**
+	Returns a VariantData \em copy to the specified key
+	*/
+	Value get(const Key& key) const;
+
+
+
 	void insert( const Key& key, const Value& value );
 
 	void remove( const Key& key );
@@ -243,7 +256,8 @@ public:
 
 	virtual void saveToStream( OutputStream* stream );
 
-	Dictionary::Enumerator* getEnumerator();	
+	Dictionary::Enumerator* getEnumerator();
+
 protected:
 	DictionaryMap data_;
 	DictionaryEnumerator dataContainer_;	

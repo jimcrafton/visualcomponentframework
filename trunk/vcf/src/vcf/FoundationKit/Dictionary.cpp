@@ -20,7 +20,7 @@ Dictionary::Dictionary():
 
 Dictionary::~Dictionary()
 {
-
+	clear();
 }
 
 Dictionary::Dictionary( const Dictionary& rhs ):
@@ -121,7 +121,7 @@ Dictionary::Value& Dictionary::operator[](const Dictionary::Key& key)
 	return data_[key];
 }
 
-Dictionary::Value Dictionary::operator[](const Key& key) const
+Dictionary::Value Dictionary::operator[](const Dictionary::Key& key) const
 {
 	Dictionary::Value result;
 
@@ -132,6 +132,25 @@ Dictionary::Value Dictionary::operator[](const Key& key) const
 
 	return result;
 }
+
+
+Dictionary::Value& Dictionary::get(const Dictionary::Key& key)
+{
+	return data_[key];
+}
+
+Dictionary::Value Dictionary::get(const Dictionary::Key& key) const
+{
+	Dictionary::Value result;
+
+	DictionaryMap::const_iterator found = data_.find( key );
+	if ( found != data_.end() ) {
+		result = found->second;
+	}
+
+	return result;
+}
+
 
 void Dictionary::insert( const Dictionary::Key& key, const Dictionary::Value& value )
 {
@@ -150,7 +169,6 @@ Dictionary::Enumerator* Dictionary::getEnumerator()
 {
 	return dataContainer_.getEnumerator();
 }
-
 
 /**
 $Id$

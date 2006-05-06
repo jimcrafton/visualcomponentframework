@@ -23,10 +23,56 @@ namespace VCF {
 
 class InvalidPeer;
 class Action;
+class Dictionary;
 
 
 #define COMPONENT_CLASSID		"ED88C09B-26AB-11d4-B539-00C04F0196DA"
 
+
+
+/**
+A component setting is a special "value" that may be added 
+to a component's settings to be stored when the program 
+shuts down, and initialized with the program starts up.
+
+The settings stores it's value in the form of a VariantData
+value, which typically is some value that is mapped to a 
+property of the component. 
+
+The setting's value has a scope that indicates whether it is 
+stored only for the current user account, or stored on the 
+local machine (globally). The default scope is user level.
+For systems that are single user only (like devices that run
+Windows CE), the scope is ignored.
+
+The name of the setting is used to identify the setting's value
+to the component where the setting is used. Typically it is the
+name of a property, but it doesn't have to be. If it is \em not
+the name of a property, then a custom settings loaded method 
+needs to be written.
+*/
+class ComponentSetting : public Object {
+public:
+	enum Scope {
+		sUser = 0,
+		sLocal = 1
+	};
+
+	ComponentSetting() : scope(ComponentSetting::sUser) {}
+
+
+	ComponentSetting( const String& n, const VariantData& v ) : 
+		name(n), value(v) {}
+
+	ComponentSetting( const String& n, const String& s, const VariantData& v ) : 
+		name(n), section(s), value(v) {}
+
+
+	Scope scope;
+	String name;
+	String section;
+	VariantData value;
+};
 
 
 
@@ -113,7 +159,8 @@ public:
 		csCreated = 1,
 		csDesigning = 0x100,
 		csNormal = 3,
-		csDestroying = 4
+		csDestroying = 4,
+		csUsesLocaleStrings = 0x10000,
 	};
 
 	/**
@@ -462,9 +509,61 @@ public:
 	ignored.
 
 	*/
-	bool getUseLocaleStrings() {
-		return useLocaleStrings_;
-	}
+	bool getUseLocaleStrings();
+
+
+
+	/**
+	Returns the dictionary that holds this component's settings. 
+	May return NULL. The default value for a component's settings is
+	NULL, so if no settings have been assigned this will definitely
+	return NULL.
+	*/
+	Dictionary* getSettings();
+
+	/**
+	Returns a specific setting specified by the name argument. The 
+	name is the key that is used to store the setting in the component's
+	settings dictionary. This name may be completely different from the
+	setting's value name.
+	@see ComponentSetting
+	*/
+	ComponentSetting* getSetting( const String& name );
+
+	/**
+	Assigns a setting to the component's settings dictionary. If the
+	setting already exists it's value is modified, otherwise a new setting
+	is created. Returns the setting that was modified or created.
+	@param String the name setting's key in the dictionary
+	@param String the value name of the setting
+	@param the value of the setting
+	*/
+	ComponentSetting* assignSetting( const String& settingName, const String& valueName,
+										const VariantData& v );
+
+	/**
+	Assigns a setting to the component's settings dictionary. If the
+	setting already exists it's value is modified, otherwise a new setting
+	is created. Returns the setting that was modified or created. This version
+	uses the component's property to get the initial value for the setting. 
+	Therefore the value name needs to be a valid component property name.
+	@param String the name setting's key in the dictionary
+	@param String the value name of the setting. This \em must be a valid,
+	existing property name that belongs to the component's Class.
+	@see Class
+	@see Property
+	*/
+	ComponentSetting* assignSetting( const String& settingName, const String& valueName );
+
+
+	void assignSetting( const String& settingName, ComponentSetting* setting );	
+
+
+	virtual void initializeSettings( const bool& recursive );
+
+	virtual void storeSettings( const bool& recursive );
+
+
 
 	/**
 	registers a component in the system component map. The map is organized into
@@ -528,13 +627,8 @@ protected:
 	Action* action_;
 	std::vector<Component*> components_;
 	EnumeratorContainer<std::vector<Component*>, Component*> componentContainer_;
-	
-	/**
-	*
-	*
-	*/
-	bool useLocaleStrings_;
 
+	Dictionary* settings_;
 
 	/**
 	a map of component classes to categories

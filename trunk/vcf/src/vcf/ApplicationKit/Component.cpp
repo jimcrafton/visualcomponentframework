@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/VFFInputStream.h"
-
+#include "vcf/FoundationKit/Dictionary.h"
 
 static long ComponentTagID = 0;
 
@@ -17,10 +17,10 @@ using namespace VCF;
 
 Component::Component():
 	owner_(NULL),
-	componentState_(Component::csUnknown),
+	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
 	action_(NULL),
-	useLocaleStrings_(true)
+	settings_(NULL)
 {
 	ComponentTagID++;
 	componentContainer_.initContainer( components_ );
@@ -30,10 +30,10 @@ Component::Component():
 
 Component::Component( Component* owner ):
 	owner_(NULL),
-	componentState_(Component::csUnknown),
+	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
 	action_(NULL),
-	useLocaleStrings_(true)
+	settings_(NULL)
 {
 	ComponentTagID++;
 	componentContainer_.initContainer( components_ );
@@ -45,10 +45,10 @@ Component::Component( Component* owner ):
 
 Component::Component( const String& name, Component* owner ):
 	owner_(NULL),
-	componentState_(Component::csUnknown),
+	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
 	action_(NULL),
-	useLocaleStrings_(true)
+	settings_(NULL)
 {
 	ComponentTagID++;
 	componentContainer_.initContainer( components_ );
@@ -61,10 +61,10 @@ Component::Component( const String& name, Component* owner ):
 
 Component::Component( const String& name ):
 	owner_(NULL),
-	componentState_(Component::csUnknown),
+	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
 	action_(NULL),
-	useLocaleStrings_(true)
+	settings_(NULL)
 {
 	ComponentTagID++;
 	componentContainer_.initContainer( components_ );
@@ -78,7 +78,7 @@ Component::Component( const String& name ):
 
 Component::~Component()
 {
-
+	delete settings_;
 }
 
 void Component::destroy()
@@ -525,9 +525,19 @@ void Component::setDesigning( const bool& designing )
 }
 
 
+bool Component::getUseLocaleStrings() {
+	return (Component::csUsesLocaleStrings & componentState_) ? true : false;
+}
+
 void Component::setUseLocaleStrings( const bool& val )
 {
-	useLocaleStrings_ = val;
+	if ( val ) {
+		setComponentState( componentState_ | Component::csUsesLocaleStrings );
+	}
+	else {
+		setComponentState( componentState_ & ~Component::csUsesLocaleStrings );
+	}
+
 	std::vector<Component*>::iterator componentIter = components_.begin();
 	while ( componentIter != components_.end() ){
 		Component* component = *componentIter;
@@ -592,6 +602,365 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 	return result;
 }
 
+Dictionary* Component::getSettings()
+{
+	return settings_;
+}
+
+ComponentSetting* Component::getSetting( const String& name )
+{
+	ComponentSetting* result = NULL;
+
+	if ( NULL != settings_ ) {
+		VariantData& v = settings_->get( name );
+
+		if ( pdUndefined != v.type ) {
+			VCF_ASSERT( v.type == pdObject );
+
+			if ( pdObject == v.type ) {
+				Object* object = v;
+				//verify that we are REALLY a setting!
+				result = dynamic_cast<ComponentSetting*>(object);
+			}
+		}
+	}	
+
+	return result;
+}
+
+ComponentSetting* Component::assignSetting( const String& settingName, const String& valueName,
+										const VariantData& v )
+{
+	ComponentSetting* result = NULL;
+
+	result = getSetting( settingName );
+
+	if ( NULL == result ) {
+		result = new ComponentSetting();
+	}
+
+
+	result->name = valueName;
+	result->value = v;
+
+	assignSetting( settingName, result );
+
+	return result;
+}
+
+ComponentSetting* Component::assignSetting( const String& settingName, const String& valueName )
+{
+	ComponentSetting* result = NULL;
+
+	result = getSetting( settingName );
+
+	if ( NULL == result ) {
+		result = new ComponentSetting();
+	}
+
+
+	result->name = valueName;
+
+	Class* clazz = this->getClass();
+	VCF_ASSERT( NULL != clazz );
+
+	if ( NULL == clazz ) {
+		delete result;
+
+		throw RuntimeException( MAKE_ERROR_MSG_2("No class was found for this component instance. Did you register the component with the ClassRegistry?") );
+	}
+
+	Property* property = clazz->getProperty( valueName );
+
+	VCF_ASSERT( NULL != property );
+
+	if ( NULL == property ) {
+		delete result;
+
+		throw RuntimeException( MAKE_ERROR_MSG_2("Invalid value name for setting, no such property found that corresponds to this name.") );
+	}
+
+	VariantData* propVal = property->get();
+	if ( propVal != NULL ) {
+		result->value = *propVal; 
+	}
+
+	assignSetting( settingName, result );
+
+	return result;
+}
+
+void Component::assignSetting( const String& settingName, ComponentSetting* setting )
+{
+	if ( NULL == settings_ ) {
+		settings_ = new Dictionary();
+		settings_->setOwnsObjectValues(true);
+	}
+
+	settings_->insert( settingName, setting );
+}
+
+
+void getAppNameAndKey( String& appName, String& key )
+{
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
+	
+	FilePath programName = cmdLine.getArgument(0);
+	
+	appName = programName.getBaseName();
+	
+	key = "Software\\";
+	
+	if ( Application::getRunningInstance() != NULL ) {
+		appName = Application::getRunningInstance()->getName();
+	}
+	else {
+		ResourceBundle* bundle = System::getResourceBundle();
+		if ( NULL != bundle ) {
+			ProgramInfo* info = bundle->getProgramInfo(); 
+			if ( NULL != info ) {
+				String s = info->getProgramName();
+				if ( !s.empty() ) {
+					appName = s;
+				}
+				
+				s = info->getCompany();
+				if ( !s.empty() ) {
+					key += s + "\\";
+				}
+				
+				delete info;
+			}
+		}
+	}
+	
+	//need a way to generate platform 
+	//neutral reg keys!!!!! 
+	//These are window specific for now!
+	key += appName + "\\";
+}
+
+
+void Component::initializeSettings( const bool& recursive )
+{
+
+	if ( NULL != settings_ ) {
+		Registry reg;
+
+		String appName;
+		String key;
+
+		getAppNameAndKey( appName, key );
+
+
+		Class* clazz = this->getClass();
+
+		VCF_ASSERT( NULL != clazz );
+
+		if ( NULL == clazz ) {
+			throw RuntimeException( MAKE_ERROR_MSG_2("No class was found for this component instance. Did you register the component with the ClassRegistry?") );
+		}
+
+
+		Dictionary::Enumerator* items = settings_->getEnumerator();
+
+		while ( items->hasMoreElements() ) {
+			Dictionary::pair item = items->nextElement();
+
+			const String& name = item.first;
+
+			VariantData& v = item.second;
+
+			if ( pdObject == v.type ) {
+				Object* obj = v;
+				if ( NULL != obj ) {
+					ComponentSetting* setting = dynamic_cast<ComponentSetting*>(obj);
+					if ( NULL != setting ) {
+						if ( ComponentSetting::sUser == setting->scope ) {
+							reg.setRoot( RKT_CURRENT_USER );
+						}
+						else if ( ComponentSetting::sLocal == setting->scope ) {
+							reg.setRoot( RKT_LOCAL_MACHINE );
+						}
+
+						if ( reg.openKey( key + setting->section ) ) {
+							try {
+								switch ( setting->value.type ) {
+									case pdString : {										
+										setting->value = reg.getStringValue(name);
+									}
+									break;								
+
+									case pdULong : case pdLong : case pdUInt : case pdInt : {										
+										setting->value = reg.getIntValue(name);
+									}
+									break;
+
+									case pdDouble : {
+										setting->value = (double)reg.getIntValue(name);
+									}
+									break;
+
+									case pdFloat : {
+										setting->value = (float)reg.getIntValue(name);
+									}
+									break;
+
+									case pdBool : {
+										setting->value = reg.getBoolValue(name);
+									}
+									break;
+
+									default : {
+										StringUtils::trace("Unsupported data type for: " + name);
+										continue; //skip to next element
+									}
+									break;
+								}
+							}
+							catch (...){
+								StringUtils::trace("No value found for: " + name);
+								continue; //skip to next element
+							}
+							
+							Property* property = clazz->getProperty( setting->name );
+							
+							if ( NULL != property ) {
+								property->set( &setting->value );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	if ( recursive ) {
+		std::vector<Component*>::iterator it = components_.begin();
+		while ( it != components_.end() ){
+			Component* child = *it;
+			
+			child->initializeSettings( recursive );
+			
+			++ it;
+		}
+	}
+}
+
+void Component::storeSettings( const bool& recursive )
+{
+	VCF_ASSERT( !isDestroying() );
+
+	if ( NULL != settings_ ) {
+		Registry reg;
+
+		String appName;
+		String key;
+
+		getAppNameAndKey( appName, key );
+
+
+		Class* clazz = this->getClass();
+
+		VCF_ASSERT( NULL != clazz );
+
+		if ( NULL == clazz ) {
+			throw RuntimeException( MAKE_ERROR_MSG_2("No class was found for this component instance. Did you register the component with the ClassRegistry?") );
+		}
+
+
+		Dictionary::Enumerator* items = settings_->getEnumerator();
+
+		while ( items->hasMoreElements() ) {
+			Dictionary::pair item = items->nextElement();
+			const String& name = item.first;
+
+			VariantData& v = item.second;
+
+			if ( pdObject == v.type ) {
+				Object* obj = v;
+				if ( NULL != obj ) {
+					ComponentSetting* setting = dynamic_cast<ComponentSetting*>(obj);
+					if ( NULL != setting ) {
+						if ( ComponentSetting::sUser == setting->scope ) {
+							reg.setRoot( RKT_CURRENT_USER );
+						}
+						else if ( ComponentSetting::sLocal == setting->scope ) {
+							reg.setRoot( RKT_LOCAL_MACHINE );
+						}
+
+						if ( reg.openKey( key + setting->section, true ) ) {
+							Property* property = clazz->getProperty( setting->name );
+							
+							if ( NULL != property ) {
+								VariantData* propVal = property->get();
+								if ( propVal ) {
+									setting->value = *propVal;
+								}
+							}
+
+							try {
+								switch ( setting->value.type ) {
+									case pdString : {	
+										String val = setting->value;
+										reg.setValue( val, name);
+									}
+									break;								
+
+									case pdULong : case pdLong : case pdUInt : case pdInt : {
+										uint32 val = setting->value;
+										reg.setValue( val, name);
+									}
+									break;
+
+									case pdDouble : {
+										uint32 val = (double)setting->value;
+										reg.setValue( val, name);
+									}
+									break;
+
+									case pdFloat : {
+										uint32 val = (float)setting->value;
+										reg.setValue( val, name);
+									}
+									break;
+
+									case pdBool : {
+										bool val = setting->value;
+										reg.setValue( val, name);
+									}
+									break;
+
+									default : {
+										StringUtils::trace("Unsupported data type for: " + name);
+										continue; //skip to next element
+									}
+									break;
+								}
+							}
+							catch (...){
+								StringUtils::trace("No value found for: " + name);
+								continue; //skip to next element
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if ( recursive ) {
+		std::vector<Component*>::iterator it = components_.begin();
+		while ( it != components_.end() ){
+			Component* child = *it;
+			
+			child->storeSettings( recursive );
+			
+			++ it;
+		}
+	}
+}
 
 /**
 $Id$
