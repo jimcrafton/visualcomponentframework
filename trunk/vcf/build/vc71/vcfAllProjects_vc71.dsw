@@ -990,7 +990,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_vc71.dsp" - Package Owner=<4>
+Project: "LibTIFF"="..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc71.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
