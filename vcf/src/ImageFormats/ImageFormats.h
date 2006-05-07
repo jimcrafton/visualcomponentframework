@@ -8,6 +8,7 @@
 
 
 
+
 class TIFFLoader : public VCF::Object, public VCF::ImageLoader {
 public:
 	TIFFLoader() {} ;
@@ -42,77 +43,6 @@ public:
 	
 };
 
-class KOALALoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	KOALALoader() {} ;
-	
-	virtual ~KOALALoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-
-class LBMLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	LBMLoader() {} ;
-	
-	virtual ~LBMLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-
-class MNGLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	MNGLoader() {} ;
-	
-	virtual ~MNGLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-class PCDLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	PCDLoader() {} ;
-	
-	virtual ~PCDLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-
 class PCXLoader : public VCF::Object, public VCF::ImageLoader {
 public:
 	PCXLoader() {} ;
@@ -129,25 +59,6 @@ public:
 	}
 	
 };
-
-class PNMLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	PNMLoader() {} ;
-	
-	virtual ~PNMLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-
 
 class PSDLoader : public VCF::Object, public VCF::ImageLoader {
 public:
@@ -166,24 +77,6 @@ public:
 	
 };
 
-class RASLoader : public VCF::Object, public VCF::ImageLoader {
-public:
-	RASLoader() {} ;
-	
-	virtual ~RASLoader() {};
-
-	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
-
-	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
-
-	virtual bool canSaveImage(){
-		return false;
-	}
-	
-};
-
-
 class TARGALoader : public VCF::Object, public VCF::ImageLoader {
 public:
 	TARGALoader() {} ;
@@ -200,6 +93,60 @@ public:
 	}
 	
 };
+
+class PGMLoader : public VCF::Object, public VCF::ImageLoader {
+public:
+	PGMLoader() {} ;
+	
+	virtual ~PGMLoader() {};
+
+	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
+	
+
+	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
+
+	virtual bool canSaveImage(){
+		return false;
+	}
+	
+};
+
+class PICTLoader : public VCF::Object, public VCF::ImageLoader {
+public:
+	PICTLoader() {} ;
+	
+	virtual ~PICTLoader() {};
+
+	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
+	
+
+	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
+
+	virtual bool canSaveImage(){
+		return false;
+	}
+	
+};
+
+class SGILoader : public VCF::Object, public VCF::ImageLoader {
+public:
+	SGILoader() {} ;
+	
+	virtual ~SGILoader() {};
+
+	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
+	
+
+	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
+
+	virtual bool canSaveImage(){
+		return false;
+	}
+	
+};
+
+
+
 
 #endif //_IMAGEFORMATS_H__
 

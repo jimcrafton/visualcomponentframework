@@ -5,65 +5,71 @@
 #include "vcf/ApplicationKit/LibraryApplication.h"
 #include "ImageFormats/ImageFormats.h"
 
-#include "thirdparty/common/FreeImage/Source/FreeImage.h"
+#include "thirdparty/common/paintlib/common/planydec.h"
+#include "thirdparty/common/paintlib/common/planybmp.h"
+
 
 using namespace VCF;
 
 
+Image* loadImageFromFile( const String& fileName )
+{
+	Image* result = NULL;	
+
+	PLAnyPicDecoder Decoder;
+	PLAnyBmp dib;
+		
+	Decoder.MakeBmpFromFile (fileName.ansi_c_str(), &dib);		
+		
+	ulong32 width  = dib.GetWidth();
+	ulong32 height = dib.GetHeight();
+
+	uchar* bits = NULL;
+	unsigned bpp = dib.GetBitsPerPixel();
+
+	if ( bpp < 32 ) {
+		PLAnyBmp dib2;
+
+		// NOTE: This is Win32 format BGRA order. Need to change for OSX and Linux
+		dib2.CreateCopy(dib, PLPixelFormat::B8G8R8X8);
+
+		bits = dib2.GetPixels();
+
+		if ( NULL != bits ) {			
+			result = GraphicsToolkit::createImage( width, height );			
+			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
+			int size = height * (width * 4);
+			memcpy( imageBits, bits, size );
+		}
+	}
+	else {
+		bits = dib.GetPixels();
+
+		if ( NULL != bits ) {			
+			result = GraphicsToolkit::createImage( width, height );			
+			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
+			int size = height * (width * 4);
+			memcpy( imageBits, bits, size );
+		}
+	}
+	return result;
+}
 
 Image* TIFFLoader::loadImageFromFile( const String& fileName )
 {
 	Image* result = NULL;
 
-	FIBITMAP *dib = NULL;
+	result = loadImageFromFile( fileName );
 
-	dib = FreeImage_LoadTIFF( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
 	return result;
+
 }
 	
 void TIFFLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	ulong32 width = image->getWidth();
 	ulong32 height = image->getHeight();
-	uchar* imageBits = (uchar*)image->getImageBits()->pixels_;
-
-	FIBITMAP* dib = FreeImage_ConvertFromRawBits( imageBits, width, height, width*4, 32, 0, 0, 0, true );
-
-	if ( NULL != dib ) {
-		FreeImage_SaveTIFF( dib, fileName.ansi_c_str() );
-
-		FreeImage_Free( dib ); 
-	}
+//	uchar* imageBits = (uchar*)image->getImageBits()->pixels_;
 }
 
 
@@ -71,39 +77,8 @@ Image* IFFLoader::loadImageFromFile( const String& fileName )
 {
 	Image* result = NULL;
 
-	FIBITMAP *dib = NULL;
+	result = loadImageFromFile( fileName );
 
-	dib = FreeImage_LoadIFF( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
 	return result;
 }
 	
@@ -113,228 +88,12 @@ void IFFLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
-Image* KOALALoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadKOALA( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void KOALALoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
-Image* LBMLoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadLBM( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void LBMLoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
-Image* MNGLoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadMNG( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void MNGLoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
-Image* PCDLoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadPCD( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void PCDLoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
-
 Image* PCXLoader::loadImageFromFile( const String& fileName )
 {
 	Image* result = NULL;
 
-	FIBITMAP *dib = NULL;
+	result = loadImageFromFile( fileName );
 
-	dib = FreeImage_LoadPCX( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
 	return result;
 }
 	
@@ -344,90 +103,12 @@ void PCXLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
-
-Image* PNMLoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadPNM( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void PNMLoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
 Image* PSDLoader::loadImageFromFile( const String& fileName )
 {
 	Image* result = NULL;
 
-	FIBITMAP *dib = NULL;
+	result = loadImageFromFile( fileName );
 
-	dib = FreeImage_LoadPSD( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
 	return result;
 }
 	
@@ -437,90 +118,12 @@ void PSDLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
-Image* RASLoader::loadImageFromFile( const String& fileName )
-{
-	Image* result = NULL;
-
-	FIBITMAP *dib = NULL;
-
-	dib = FreeImage_LoadRAS( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
-	return result;
-}
-	
-void RASLoader::saveImageToFile( const String& fileName, Image* image )
-{
-	
-}
-
-
-
 Image* TARGALoader::loadImageFromFile( const String& fileName )
 {
 	Image* result = NULL;
 
-	FIBITMAP *dib = NULL;
+	result = loadImageFromFile( fileName );
 
-	dib = FreeImage_LoadTARGA( fileName.ansi_c_str() );
-	
-	if (dib != NULL) {				
-		
-		int bpp = FreeImage_GetBPP( dib );
-
-		BITMAPINFOHEADER* bih = FreeImage_GetInfoHeader( dib );
-
-		if ( bpp < 32 ) {
-			FIBITMAP * oldDib = dib;			
-
-			dib = FreeImage_ConvertTo32Bits( oldDib );
-
-			FreeImage_Free(oldDib);	
-		}
-
-		ulong32 width = FreeImage_GetWidth( dib );
-		ulong32 height = FreeImage_GetHeight( dib );
-
-		uchar* bits = FreeImage_GetBits( dib );
-		
-		if ( NULL != bits ) {
-			result = GraphicsToolkit::createImage( width, height );
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
-			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
-		}		
-		
-		//now we're finished
-		FreeImage_Free(dib);
-	}
 	return result;
 }
 	
@@ -528,6 +131,51 @@ void TARGALoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
 }
+
+Image* PGMLoader::loadImageFromFile( const String& fileName )
+{
+	Image* result = NULL;
+
+	result = loadImageFromFile( fileName );
+
+	return result;
+}
+	
+void PGMLoader::saveImageToFile( const String& fileName, Image* image )
+{
+	
+}
+
+
+Image* PICTLoader::loadImageFromFile( const String& fileName )
+{
+	Image* result = NULL;
+
+	result = loadImageFromFile( fileName );
+
+	return result;
+}
+	
+void PICTLoader::saveImageToFile( const String& fileName, Image* image )
+{
+	
+}
+
+
+Image* SGILoader::loadImageFromFile( const String& fileName )
+{
+	Image* result = NULL;
+
+	result = loadImageFromFile( fileName );
+
+	return result;
+}
+	
+void SGILoader::saveImageToFile( const String& fileName, Image* image )
+{
+	
+}
+
 
 
 
@@ -537,7 +185,7 @@ public:
 	virtual bool initRunningApplication(){
 		bool result = LibraryApplication::initRunningApplication();	
 		
-		FreeImage_Initialise(); //intialize FreeImage
+		//FreeImage_Initialise(); //intialize FreeImage
 
 		//register the image formats here
 
@@ -545,29 +193,23 @@ public:
 
 		GraphicsToolkit::registerImageLoader( "image/iff", new IFFLoader() );
 
-		GraphicsToolkit::registerImageLoader( "image/koala", new KOALALoader() );
-
-		GraphicsToolkit::registerImageLoader( "image/lbm", new LBMLoader() );
-
-		GraphicsToolkit::registerImageLoader( "image/mng", new MNGLoader() );
-
-		GraphicsToolkit::registerImageLoader( "image/pcd", new PCDLoader() );
-
 		GraphicsToolkit::registerImageLoader( "image/pcx", new PCXLoader() );
-
-		GraphicsToolkit::registerImageLoader( "image/pnm", new PNMLoader() );
 
 		GraphicsToolkit::registerImageLoader( "image/psd", new PSDLoader() );
 
-		GraphicsToolkit::registerImageLoader( "image/ras", new RASLoader() );
-
 		GraphicsToolkit::registerImageLoader( "image/targa", new TARGALoader() );
+
+		GraphicsToolkit::registerImageLoader( "image/pgm", new PGMLoader() );
+
+		GraphicsToolkit::registerImageLoader( "image/pict", new PICTLoader() );
+
+		GraphicsToolkit::registerImageLoader( "image/sgi", new SGILoader() );
 
 		return result;
 	}
 
 	virtual void terminateRunningApplication() {
-		FreeImage_DeInitialise();
+		//FreeImage_DeInitialise();
 
 		LibraryApplication::terminateRunningApplication();		
 	}
