@@ -267,7 +267,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.dsp" - Package Owner=<4>
+Project: "LibTIFF"="..\..\src\thirdparty\common\LibTIFF\LibTIFF.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
