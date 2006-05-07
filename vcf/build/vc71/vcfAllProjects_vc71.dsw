@@ -516,9 +516,6 @@ Package=<4>
     Project_Dep_Name MVCBasics
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name Menus
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name MinMax
     End Project Dependency
     Begin Project Dependency
@@ -882,7 +879,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FreeImageLib
+    Project_Dep_Name paintlib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
@@ -1063,18 +1060,6 @@ Package=<4>
 ###############################################################################
 
 Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics_vc71.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Menus"="..\..\examples\Menus\Menus_vc71.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
