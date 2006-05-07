@@ -17,6 +17,20 @@
 
 using namespace std;
 
+#ifdef _MSC_VER
+#if _MSC_VER < 1300
+	#ifndef  min
+	#define min(a, b)       ((a) < (b) ? (a) : (b))
+	#endif
+
+	#ifndef  max
+	#define max(a, b)       ((a) < (b) ? (b) : (a))
+	#endif
+#endif
+#endif
+
+
+
 template<class DestPixelC>
 void createTrueColorCopy (PLBmp & DestBmp, const PLBmpBase & SrcBmp,
                                       DestPixelC Dummy);

@@ -113,7 +113,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdpa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\..\src\thirdparty\common\LibPNG\LibPNG_vc70.vcproj", "{772555b9-bb1b-4d8f-8f95-e4abe93f8300}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTIFF", "..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_vc70.vcproj", "{1f5aeb6c-bf81-4664-8071-925a8d01c676}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTIFF", "..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc70.vcproj", "{1f5aeb6c-bf81-4664-8071-925a8d01c676}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ListBox", "..\..\examples\ListBox\ListBox_vc70.vcproj", "{5629470c-bb30-4d55-bba7-62ea2eb1191d}"
 EndProject
