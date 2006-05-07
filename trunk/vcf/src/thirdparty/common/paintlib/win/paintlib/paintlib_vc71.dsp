@@ -35,8 +35,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc6\Release\"
-# PROP Intermediate_Dir "vc6\Release\"
+# PROP Output_Dir "vc71\Release\"
+# PROP Intermediate_Dir "vc71\Release\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
 # ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_INCLUDE)" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
@@ -45,10 +45,10 @@ RSC=rc.exe
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc6_s.bsc"
+# ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc71_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib - Win32 Debug"
 
@@ -59,20 +59,20 @@ LIB32=link.exe -lib
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc6\Debug\"
-# PROP Intermediate_Dir "vc6\Debug\"
+# PROP Output_Dir "vc71\Debug\"
+# PROP Intermediate_Dir "vc71\Debug\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc6_sd.pdb" /Yd /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc71_sd.pdb" /Yd /c
 # SUBTRACT CPP /YX /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc6_sd.bsc"
+# ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc71_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc71_sd.lib"
 
 !ENDIF 
 
