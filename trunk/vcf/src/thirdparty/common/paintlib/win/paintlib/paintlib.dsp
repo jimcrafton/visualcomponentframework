@@ -48,7 +48,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc6_s.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib - Win32 Debug"
 
@@ -72,7 +72,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../../../../lib/paintlib_vc6_sd.bsc"
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\..\..\..\lib\paintlib_vc6_sd.lib"
 
 !ENDIF 
 
