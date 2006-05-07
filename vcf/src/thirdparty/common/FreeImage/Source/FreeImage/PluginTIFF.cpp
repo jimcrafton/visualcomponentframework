@@ -29,7 +29,7 @@
 #undef __unix
 #endif
 
-#include "thirdparty/common/FreeImage/Source/LibTIFF/tiffiop.h"
+#include "thirdparty/common/LibTIFF/tiffiop.h"
 
 #include "thirdparty/common/FreeImage/Source/FreeImage.h"
 #include "thirdparty/common/FreeImage/Source/Utilities.h"
