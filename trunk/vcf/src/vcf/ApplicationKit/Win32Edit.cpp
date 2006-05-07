@@ -724,7 +724,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 							when handling WM_CHAR's from the numpad, which gives
 							us the right character, but a bogus virtual key
 							*/
-							if ( isgraph( keyData.character ) ) {
+							if ( iswgraph( keyData.character ) ) {
 
 								virtKeyCode = Win32UIUtils::convertCharToVKCode( keyData.character );
 							}
