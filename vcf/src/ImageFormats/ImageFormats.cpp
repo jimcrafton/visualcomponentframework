@@ -5,8 +5,7 @@
 #include "vcf/ApplicationKit/LibraryApplication.h"
 #include "ImageFormats/ImageFormats.h"
 
-#include "thirdparty/common/paintlib/common/planydec.h"
-#include "thirdparty/common/paintlib/common/planybmp.h"
+#include "thirdparty/common/paintlib/common/PaintLib.h"
 
 
 using namespace VCF;
