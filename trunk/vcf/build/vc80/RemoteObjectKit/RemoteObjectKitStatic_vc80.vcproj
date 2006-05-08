@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RemoteObjectKitStatic"
-	ProjectGUID="{1012D59E-6477-4541-9ECC-D6C295DA8D9E}"
+	ProjectGUID="{98986AE0-BC57-4DE6-8E08-09516199B95F}"
 	>
 	<Platforms>
 		<Platform

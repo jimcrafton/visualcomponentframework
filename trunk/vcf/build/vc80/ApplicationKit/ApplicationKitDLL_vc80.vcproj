@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ApplicationKitDLL"
-	ProjectGUID="{AE86332F-2E64-460B-8363-C502DE1BBFB3}"
+	ProjectGUID="{4862042A-E982-449E-94D1-BC9B6D824879}"
 	>
 	<Platforms>
 		<Platform

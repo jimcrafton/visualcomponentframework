@@ -71,7 +71,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdpa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\..\src\thirdparty\common\LibPNG\LibPNG_vc80.vcproj", "{772555B9-BB1B-4D8F-8F95-E4ABE93F8300}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTIFF", "..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_vc80.vcproj", "{1F5AEB6C-BF81-4664-8071-925A8D01C676}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTIFF", "..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc80.vcproj", "{1F5AEB6C-BF81-4664-8071-925A8D01C676}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NetworkKit", "NetworkKit\NetworkKit_vc80.vcproj", "{BD53C24C-C67B-4B24-A05F-4A1BBE5A8094}"
 	ProjectSection(ProjectDependencies) = postProject

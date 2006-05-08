@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RegEnVar_vc80"
-	ProjectGUID="{5BB10225-ABF4-4084-8B0D-1DA845EE06C3}"
+	ProjectGUID="{949946D5-2026-455D-8BD3-CDD3F6B4F905}"
 	>
 	<Platforms>
 		<Platform
