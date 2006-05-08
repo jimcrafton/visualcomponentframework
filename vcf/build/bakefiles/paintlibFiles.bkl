@@ -1,0 +1,191 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="PAINTLIB_HDR" hints="files">
+        thirdparty/common/paintlib/common/PaintLib.h
+        thirdparty/common/paintlib/common/PaintLibSelectLib.h
+        thirdparty/common/paintlib/common/Filter/plcontribdefs.h
+        thirdparty/common/paintlib/common/Filter/plfiltergetalpha.h
+        thirdparty/common/paintlib/common/Filter/plfilterresizebilinear.h
+        thirdparty/common/paintlib/common/Filter/pl2passscale.h
+        thirdparty/common/paintlib/common/Filter/plfiltergrayscale.h
+        thirdparty/common/paintlib/common/Filter/plfilterresizebox.h
+        thirdparty/common/paintlib/common/Filter/plfilterthreshold.h
+        thirdparty/common/paintlib/common/Filter/plfilter.h
+        thirdparty/common/paintlib/common/Filter/plfilterquantize.h
+        thirdparty/common/paintlib/common/Filter/plfilterresizegaussian.h
+        thirdparty/common/paintlib/common/Filter/plfiltervideoinvert.h
+        thirdparty/common/paintlib/common/Filter/plfiltercrop.h
+        thirdparty/common/paintlib/common/Filter/plfilterresize.h
+        thirdparty/common/paintlib/common/Filter/plfilterresizehamming.h
+        thirdparty/common/paintlib/common/Filter/plhsvconvert.h
+        thirdparty/common/paintlib/common/Filter/plfiltercontrast.h
+        thirdparty/common/paintlib/common/Filter/plfilterintensity.h
+        thirdparty/common/paintlib/common/Filter/plfilterlightness.h
+        thirdparty/common/paintlib/common/Filter/plfilterflip.h
+        thirdparty/common/paintlib/common/Filter/plfiltermirror.h
+        thirdparty/common/paintlib/common/Filter/plfilterfill.h
+        thirdparty/common/paintlib/common/Filter/plfilterfillrect.h
+        thirdparty/common/paintlib/common/Filter/plfilterpixel.h
+        thirdparty/common/paintlib/common/Filter/plfilterrotate.h
+        thirdparty/common/paintlib/common/Filter/plfilterfliprgb.h
+        thirdparty/common/paintlib/common/Filter/plinplacefilter.h
+        thirdparty/common/paintlib/common/Filter/plfiltercolorize.h
+        thirdparty/common/paintlib/common/planybmp.h
+        thirdparty/common/paintlib/common/pldatasrc.h
+        thirdparty/common/paintlib/common/pljpegdec.h
+        thirdparty/common/paintlib/common/plpgm.h
+        thirdparty/common/paintlib/common/plpngdec.h
+        thirdparty/common/paintlib/common/tif_msrc.h
+        thirdparty/common/paintlib/common/planydec.h
+        thirdparty/common/paintlib/common/pldebug.h
+        thirdparty/common/paintlib/common/pljpegenc.h
+        thirdparty/common/paintlib/common/plpgmdec.h
+        thirdparty/common/paintlib/common/plpngenc.h
+        thirdparty/common/paintlib/common/pltiffdec.h
+        thirdparty/common/paintlib/common/plbitmap.h
+        thirdparty/common/paintlib/common/plexcept.h
+        thirdparty/common/paintlib/common/plmemsink.h
+        thirdparty/common/paintlib/common/plpicdec.h
+        thirdparty/common/paintlib/common/plprognot.h
+        thirdparty/common/paintlib/common/plbmpdec.h
+        thirdparty/common/paintlib/common/plfilesink.h
+        thirdparty/common/paintlib/common/plmemsrc.h
+        thirdparty/common/paintlib/common/plpicenc.h
+        thirdparty/common/paintlib/common/qdraw.h
+        thirdparty/common/paintlib/common/pltiffenc.h
+        thirdparty/common/paintlib/common/plbmpenc.h
+        thirdparty/common/paintlib/common/plfilesrc.h
+        thirdparty/common/paintlib/common/ploptable.h
+        thirdparty/common/paintlib/common/plpictdec.h
+        thirdparty/common/paintlib/common/pltiffencex.h
+        thirdparty/common/paintlib/common/jmemdest.h
+        thirdparty/common/paintlib/common/plpcx.h
+        thirdparty/common/paintlib/common/plobject.h
+        thirdparty/common/paintlib/common/pltga.h
+        thirdparty/common/paintlib/common/plwindefs.h
+        thirdparty/common/paintlib/common/pldatasink.h
+        thirdparty/common/paintlib/common/jmemsrc.h
+        thirdparty/common/paintlib/common/plpcxdec.h
+        thirdparty/common/paintlib/common/plpoint.h
+        thirdparty/common/paintlib/common/pltgadec.h
+        thirdparty/common/paintlib/common/plpaintlibdefs.h
+        thirdparty/common/paintlib/common/plpixeldefs.h
+        thirdparty/common/paintlib/common/plgifdec.h
+        thirdparty/common/paintlib/common/plpixel32.h
+        thirdparty/common/paintlib/common/plrect.h
+        thirdparty/common/paintlib/common/config.h
+        thirdparty/common/paintlib/common/plpixel24.h
+        thirdparty/common/paintlib/common/plpixel8.h
+        thirdparty/common/paintlib/common/plpixel16.h
+        thirdparty/common/paintlib/common/plppmdec.h
+        thirdparty/common/paintlib/common/plppm.h
+        thirdparty/common/paintlib/common/plpsddec.h
+        thirdparty/common/paintlib/common/plbmpinfo.h
+        thirdparty/common/paintlib/common/plurlsrc.h
+        thirdparty/common/paintlib/common/plcountedpointer.h
+        thirdparty/common/paintlib/common/plexif.h
+        thirdparty/common/paintlib/common/plsgidec.h
+        thirdparty/common/paintlib/common/pliff85dec.h
+        thirdparty/common/paintlib/common/pliff85.h
+        thirdparty/common/paintlib/common/plbmpbase.h
+        thirdparty/common/paintlib/common/plsubbmp.h
+        thirdparty/common/paintlib/common/plpixelformat.h
+        thirdparty/common/paintlib/common/pldecoderfactory.h
+    </set>
+
+    <set var="PAINTLIB_SRC" hints="files">
+        thirdparty/common/paintlib/common/Filter/plfilter.cpp
+        thirdparty/common/paintlib/common/Filter/plinplacefilter.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterresize.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltercrop.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterresizebilinear.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterthreshold.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltergetalpha.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterresizebox.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltervideoinvert.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltergrayscale.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterresizegaussian.cpp
+        thirdparty/common/paintlib/common/Filter/plhsvconvert.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterquantize.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterresizehamming.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterlightness.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltercontrast.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterflip.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltermirror.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterintensity.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterrotate.cpp
+        thirdparty/common/paintlib/common/Filter/plfilterfliprgb.cpp
+        thirdparty/common/paintlib/common/Filter/plfiltercolorize.cpp
+        thirdparty/common/paintlib/common/planybmp.cpp
+        thirdparty/common/paintlib/common/pldatasrc.cpp
+        thirdparty/common/paintlib/common/plpicenc.cpp
+        thirdparty/common/paintlib/common/plpictdec.cpp
+        thirdparty/common/paintlib/common/pltgadec.cpp
+        thirdparty/common/paintlib/common/planydec.cpp
+        thirdparty/common/paintlib/common/plexcept.cpp
+        thirdparty/common/paintlib/common/plmemsink.cpp
+        thirdparty/common/paintlib/common/plbitmap.cpp
+        thirdparty/common/paintlib/common/plfilesink.cpp
+        thirdparty/common/paintlib/common/plmemsrc.cpp
+        thirdparty/common/paintlib/common/plobject.cpp
+        thirdparty/common/paintlib/common/plbmpdec.cpp
+        thirdparty/common/paintlib/common/plfilesrc.cpp
+        thirdparty/common/paintlib/common/plpcxdec.cpp
+        thirdparty/common/paintlib/common/plbmpenc.cpp
+        thirdparty/common/paintlib/common/plpgmdec.cpp
+        thirdparty/common/paintlib/common/pldatasink.cpp
+        thirdparty/common/paintlib/common/plpicdec.cpp
+        thirdparty/common/paintlib/common/plppmdec.cpp
+        thirdparty/common/paintlib/common/plpsddec.cpp
+        thirdparty/common/paintlib/common/plbmpinfo.cpp
+        thirdparty/common/paintlib/common/plexif.cpp
+        thirdparty/common/paintlib/common/plsgidec.cpp
+        thirdparty/common/paintlib/common/pliff85dec.cpp
+        thirdparty/common/paintlib/common/plbmpbase.cpp
+        thirdparty/common/paintlib/common/plsubbmp.cpp
+        thirdparty/common/paintlib/common/plpixelformat.cpp
+
+        <!-- PNG -->
+        thirdparty/common/paintlib/common/plpngdec.cpp
+        thirdparty/common/paintlib/common/plpngenc.cpp
+
+        <!-- TIFF -->
+        thirdparty/common/paintlib/common/pltiffenc.cpp
+        thirdparty/common/paintlib/common/pltiffdec.cpp
+        thirdparty/common/paintlib/common/pltiffencex.cpp
+        thirdparty/common/paintlib/common/tif_msrc.c
+
+        <!-- JPEG -->
+        thirdparty/common/paintlib/common/pljpegenc.cpp
+        thirdparty/common/paintlib/common/jmemdest.cpp
+        thirdparty/common/paintlib/common/pljpegdec.cpp
+        thirdparty/common/paintlib/common/jmemsrc.cpp
+    </set>
+
+    <set var="PAINTLIB_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">
+            thirdparty/common/paintlib/win/paintlib/pldibsect.h
+            thirdparty/common/paintlib/win/paintlib/plressrc.h
+            thirdparty/common/paintlib/win/paintlib/plStreamSink.h
+            thirdparty/common/paintlib/win/paintlib/plwemfdec.h
+            thirdparty/common/paintlib/win/paintlib/plwinbmp.h
+        </if>
+    </set>
+
+    <set var="PAINTLIB_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">
+            thirdparty/common/paintlib/win/paintlib/pldibsect.cpp
+            thirdparty/common/paintlib/win/paintlib/plressrc.cpp
+            thirdparty/common/paintlib/win/paintlib/plStreamSink.cpp
+            thirdparty/common/paintlib/win/paintlib/plwemfdec.cpp
+            thirdparty/common/paintlib/win/paintlib/plwinbmp.cpp
+        </if>
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

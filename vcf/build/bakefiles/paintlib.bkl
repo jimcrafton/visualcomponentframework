@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="paintlibFiles.bkl"/>
+
+    <template id="paintlib_base">
+        <set var="LIBRARY_NAME">$(PAINTLIB_NAME)</set>
+
+        <headers>$(PAINTLIB_HDR)</headers>
+        <sources>$(PAINTLIB_SRC)</sources>
+
+        <vcf-include-paintlib/>
+        <vcf-include-LibJPEG/>
+        <vcf-include-LibTIFF/>
+        <vcf-include-LibPNG/>
+
+        <library>LibJPEG_lib</library>
+        <library>LibPNG_lib</library>
+        <library>LibTIFF_lib</library>
+    </template>
+
+    <lib id="paintlib_lib" template="paintlib_base,vcf_lib"
+            cond="OPTION_PAINTLIB=='1'">
+    </lib>
+</makefile>
+
+<!--
+$Id$
+-->
