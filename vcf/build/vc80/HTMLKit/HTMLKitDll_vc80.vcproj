@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="HTMLKitDll"
-	ProjectGUID="{A0CB95D9-CDF6-4D02-BBA0-EEC6631FE44F}"
+	ProjectGUID="{2712FD6D-1168-4F75-915C-C40827E56838}"
 	>
 	<Platforms>
 		<Platform

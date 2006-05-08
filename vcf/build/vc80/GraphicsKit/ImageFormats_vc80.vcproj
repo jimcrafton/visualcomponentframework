@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ImageFormats"
-	ProjectGUID="{B6BE4F10-66AB-4BB4-B2D4-9BB5F6FC10E3}"
+	ProjectGUID="{BCA36E9E-7260-4900-B403-79AE5BB9B2DC}"
 	>
 	<Platforms>
 		<Platform
@@ -47,8 +47,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),../../../thirdparty/common/FreeImage/Source,$(VCF_INCLUDE)/../thirdparty/common/agg/include/"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL"
+				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;../../../thirdparty/common/paintlib/common;&quot;$(VCF_INCLUDE)/../thirdparty/common/agg/include/&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;PAINTLIB_LIB;USE_PAINTLIB_LIB;USE_APPLICATIONKIT_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -147,8 +147,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),../../../thirdparty/common/FreeImage/Source"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_APPLICATIONKIT_DLL"
+				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;../../../thirdparty/common/paintlib/common"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NO_MFC;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;PAINTLIB_LIB;USE_PAINTLIB_LIB;USE_APPLICATIONKIT_DLL"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

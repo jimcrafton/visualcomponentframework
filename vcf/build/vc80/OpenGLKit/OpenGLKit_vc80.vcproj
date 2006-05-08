@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="OpenGLKit"
-	ProjectGUID="{3D84EA17-78FF-4A20-9AB4-0A0C01702DBA}"
+	ProjectGUID="{775AAA94-B558-4EDF-8138-B2B7CFE73194}"
 	>
 	<Platforms>
 		<Platform

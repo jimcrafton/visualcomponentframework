@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="FreeImageLib"
-	ProjectGUID="{675ED9EB-C153-41DC-9E7B-D3A03305BE48}"
+	ProjectGUID="{54D21975-FA5D-401B-80AB-ACD4C8CF108D}"
 	>
 	<Platforms>
 		<Platform
