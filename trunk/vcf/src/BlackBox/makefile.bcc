@@ -127,10 +127,10 @@ clean:
 	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf
 	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils
 	-if exist ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
-	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
+	-if exist ..\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
 
 ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(BLACKBOX_DLL_OBJECTS)  $(OBJDIR)\BlackBox_dll_BlackBox.res
-	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib -Llib @&&|
+	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -Llib @&&|
 	c0d32.obj $(BLACKBOX_DLL_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib DbgHelp.lib Psapi.lib import32.lib cw32mt$(__RUNTIME_LIBS_4).lib,, $(OBJDIR)\BlackBox_dll_BlackBox.res
 |
 	implib -f ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@

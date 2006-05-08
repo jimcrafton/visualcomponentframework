@@ -18,8 +18,7 @@
         <library>LibMNG_lib</library>
         <library>LibTIFF_lib</library>
 
-        <define>FREEIMAGE_LIB</define>
-        <library>FreeImage_lib</library>
+        <library>paintlib_lib</library>
     </template>
 
     <lib id="ImageFormats_lib" template="ImageFormats_base,vcf_lib"

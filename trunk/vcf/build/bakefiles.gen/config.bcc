@@ -103,12 +103,12 @@ OPTION_LIBTIFF = 0
 !endif
 
 # Depends on:
-#     OPTION_ZLIB
-#     OPTION_LIBMNG
+#     OPTION_LIBPNG
+#     OPTION_LIBJPEG
 #     OPTION_LIBTIFF
-# Compile the FreeImage library: [0,1]
-!ifndef OPTION_FREEIMAGE
-OPTION_FREEIMAGE = 0
+# Compile the paintlib library: [0,1]
+!ifndef OPTION_PAINTLIB
+OPTION_PAINTLIB = 0
 !endif
 
 # Compile FoundationKit: [0,1]
@@ -168,7 +168,7 @@ OPTION_INTERNETKIT = 1
 !endif
 
 # Depends on:
-#     OPTION_FREEIMAGE
+#     OPTION_PAINTLIB
 #     OPTION_APPLICATIONKIT
 # Compile ImageFormats: [0,1]
 !ifndef OPTION_IMAGEFORMATS

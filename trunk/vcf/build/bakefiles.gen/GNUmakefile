@@ -165,11 +165,14 @@ LIBPNG_LIB_OBJECTS =  \
 LIBTIFF_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
 	$(CPPFLAGS) $(CFLAGS)
+LIBTIFF_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(CPPFLAGS) $(CXXFLAGS)
 LIBTIFF_LIB_OBJECTS =  \
-	$(OBJDIR)/LibTIFF_lib_fax3sm_winnt.o \
 	$(OBJDIR)/LibTIFF_lib_tif_aux.o \
 	$(OBJDIR)/LibTIFF_lib_tif_close.o \
 	$(OBJDIR)/LibTIFF_lib_tif_codec.o \
+	$(OBJDIR)/LibTIFF_lib_tif_color.o \
 	$(OBJDIR)/LibTIFF_lib_tif_compress.o \
 	$(OBJDIR)/LibTIFF_lib_tif_dir.o \
 	$(OBJDIR)/LibTIFF_lib_tif_dirinfo.o \
@@ -177,19 +180,23 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)/LibTIFF_lib_tif_dirwrite.o \
 	$(OBJDIR)/LibTIFF_lib_tif_dumpmode.o \
 	$(OBJDIR)/LibTIFF_lib_tif_error.o \
+	$(OBJDIR)/LibTIFF_lib_tif_extension.o \
 	$(OBJDIR)/LibTIFF_lib_tif_fax3.o \
+	$(OBJDIR)/LibTIFF_lib_tif_fax3sm.o \
 	$(OBJDIR)/LibTIFF_lib_tif_flush.o \
 	$(OBJDIR)/LibTIFF_lib_tif_getimage.o \
 	$(OBJDIR)/LibTIFF_lib_tif_jpeg.o \
 	$(OBJDIR)/LibTIFF_lib_tif_luv.o \
 	$(OBJDIR)/LibTIFF_lib_tif_lzw.o \
 	$(OBJDIR)/LibTIFF_lib_tif_next.o \
+	$(OBJDIR)/LibTIFF_lib_tif_ojpeg.o \
 	$(OBJDIR)/LibTIFF_lib_tif_open.o \
 	$(OBJDIR)/LibTIFF_lib_tif_packbits.o \
 	$(OBJDIR)/LibTIFF_lib_tif_pixarlog.o \
 	$(OBJDIR)/LibTIFF_lib_tif_predict.o \
 	$(OBJDIR)/LibTIFF_lib_tif_print.o \
 	$(OBJDIR)/LibTIFF_lib_tif_read.o \
+	$(OBJDIR)/LibTIFF_lib_tif_stream.o \
 	$(OBJDIR)/LibTIFF_lib_tif_strip.o \
 	$(OBJDIR)/LibTIFF_lib_tif_swab.o \
 	$(OBJDIR)/LibTIFF_lib_tif_thunder.o \
@@ -785,37 +792,81 @@ ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_NETWORKKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS)
-FREEIMAGE_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CXXFLAGS)
-FREEIMAGE_LIB_OBJECTS =  \
-	$(OBJDIR)/FreeImage_lib_BitmapAccess.o \
-	$(OBJDIR)/FreeImage_lib_Conversion.o \
-	$(OBJDIR)/FreeImage_lib_Conversion16_555.o \
-	$(OBJDIR)/FreeImage_lib_Conversion16_565.o \
-	$(OBJDIR)/FreeImage_lib_Conversion24.o \
-	$(OBJDIR)/FreeImage_lib_Conversion32.o \
-	$(OBJDIR)/FreeImage_lib_Conversion8.o \
-	$(OBJDIR)/FreeImage_lib_FreeImage.o \
-	$(OBJDIR)/FreeImage_lib_FreeImageIO.o \
-	$(OBJDIR)/FreeImage_lib_GetType.o \
-	$(OBJDIR)/FreeImage_lib_LoadFunctions.o \
-	$(OBJDIR)/FreeImage_lib_NNQuantizer.o \
-	$(OBJDIR)/FreeImage_lib_Plugin.o \
-	$(OBJDIR)/FreeImage_lib_PluginBMP.o \
-	$(OBJDIR)/FreeImage_lib_PluginICO.o \
-	$(OBJDIR)/FreeImage_lib_PluginIFF.o \
-	$(OBJDIR)/FreeImage_lib_PluginKOALA.o \
-	$(OBJDIR)/FreeImage_lib_PluginMNG.o \
-	$(OBJDIR)/FreeImage_lib_PluginPCD.o \
-	$(OBJDIR)/FreeImage_lib_PluginPCX.o \
-	$(OBJDIR)/FreeImage_lib_PluginPNM.o \
-	$(OBJDIR)/FreeImage_lib_PluginPSD.o \
-	$(OBJDIR)/FreeImage_lib_PluginRAS.o \
-	$(OBJDIR)/FreeImage_lib_PluginTARGA.o \
-	$(OBJDIR)/FreeImage_lib_PluginTIFF.o \
-	$(OBJDIR)/FreeImage_lib_PluginWBMP.o \
-	$(OBJDIR)/FreeImage_lib_WuQuantizer.o
+PAINTLIB_LIB_CFLAGS = -I../../src\thirdparty/common/paintlib/common/Filter \
+	-I../../src\thirdparty/common/paintlib/common \
+	-I../../src\thirdparty/common/LibJPEG \
+	-I../../src\thirdparty/common/LibTIFF \
+	-I../../src\thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
+	-D_THREAD_SAFE -pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
+PAINTLIB_LIB_CXXFLAGS = -I../../src\thirdparty/common/paintlib/common/Filter \
+	-I../../src\thirdparty/common/paintlib/common \
+	-I../../src\thirdparty/common/LibJPEG \
+	-I../../src\thirdparty/common/LibTIFF \
+	-I../../src\thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
+	-D_THREAD_SAFE -pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CXXFLAGS)
+PAINTLIB_LIB_OBJECTS =  \
+	$(OBJDIR)/paintlib_lib_plfilter.o \
+	$(OBJDIR)/paintlib_lib_plinplacefilter.o \
+	$(OBJDIR)/paintlib_lib_plfilterresize.o \
+	$(OBJDIR)/paintlib_lib_plfiltercrop.o \
+	$(OBJDIR)/paintlib_lib_plfilterresizebilinear.o \
+	$(OBJDIR)/paintlib_lib_plfilterthreshold.o \
+	$(OBJDIR)/paintlib_lib_plfiltergetalpha.o \
+	$(OBJDIR)/paintlib_lib_plfilterresizebox.o \
+	$(OBJDIR)/paintlib_lib_plfiltervideoinvert.o \
+	$(OBJDIR)/paintlib_lib_plfiltergrayscale.o \
+	$(OBJDIR)/paintlib_lib_plfilterresizegaussian.o \
+	$(OBJDIR)/paintlib_lib_plhsvconvert.o \
+	$(OBJDIR)/paintlib_lib_plfilterquantize.o \
+	$(OBJDIR)/paintlib_lib_plfilterresizehamming.o \
+	$(OBJDIR)/paintlib_lib_plfilterlightness.o \
+	$(OBJDIR)/paintlib_lib_plfiltercontrast.o \
+	$(OBJDIR)/paintlib_lib_plfilterflip.o \
+	$(OBJDIR)/paintlib_lib_plfiltermirror.o \
+	$(OBJDIR)/paintlib_lib_plfilterintensity.o \
+	$(OBJDIR)/paintlib_lib_plfilterrotate.o \
+	$(OBJDIR)/paintlib_lib_plfilterfliprgb.o \
+	$(OBJDIR)/paintlib_lib_plfiltercolorize.o \
+	$(OBJDIR)/paintlib_lib_planybmp.o \
+	$(OBJDIR)/paintlib_lib_pldatasrc.o \
+	$(OBJDIR)/paintlib_lib_plpicenc.o \
+	$(OBJDIR)/paintlib_lib_plpictdec.o \
+	$(OBJDIR)/paintlib_lib_pltgadec.o \
+	$(OBJDIR)/paintlib_lib_planydec.o \
+	$(OBJDIR)/paintlib_lib_plexcept.o \
+	$(OBJDIR)/paintlib_lib_plmemsink.o \
+	$(OBJDIR)/paintlib_lib_plbitmap.o \
+	$(OBJDIR)/paintlib_lib_plfilesink.o \
+	$(OBJDIR)/paintlib_lib_plmemsrc.o \
+	$(OBJDIR)/paintlib_lib_plobject.o \
+	$(OBJDIR)/paintlib_lib_plbmpdec.o \
+	$(OBJDIR)/paintlib_lib_plfilesrc.o \
+	$(OBJDIR)/paintlib_lib_plpcxdec.o \
+	$(OBJDIR)/paintlib_lib_plbmpenc.o \
+	$(OBJDIR)/paintlib_lib_plpgmdec.o \
+	$(OBJDIR)/paintlib_lib_pldatasink.o \
+	$(OBJDIR)/paintlib_lib_plpicdec.o \
+	$(OBJDIR)/paintlib_lib_plppmdec.o \
+	$(OBJDIR)/paintlib_lib_plpsddec.o \
+	$(OBJDIR)/paintlib_lib_plbmpinfo.o \
+	$(OBJDIR)/paintlib_lib_plexif.o \
+	$(OBJDIR)/paintlib_lib_plsgidec.o \
+	$(OBJDIR)/paintlib_lib_pliff85dec.o \
+	$(OBJDIR)/paintlib_lib_plbmpbase.o \
+	$(OBJDIR)/paintlib_lib_plsubbmp.o \
+	$(OBJDIR)/paintlib_lib_plpixelformat.o \
+	$(OBJDIR)/paintlib_lib_plpngdec.o \
+	$(OBJDIR)/paintlib_lib_plpngenc.o \
+	$(OBJDIR)/paintlib_lib_pltiffenc.o \
+	$(OBJDIR)/paintlib_lib_pltiffdec.o \
+	$(OBJDIR)/paintlib_lib_pltiffencex.o \
+	$(OBJDIR)/paintlib_lib_tif_msrc.o \
+	$(OBJDIR)/paintlib_lib_pljpegenc.o \
+	$(OBJDIR)/paintlib_lib_jmemdest.o \
+	$(OBJDIR)/paintlib_lib_pljpegdec.o \
+	$(OBJDIR)/paintlib_lib_jmemsrc.o
 
 ### Conditionally set variables: ###
 
@@ -1556,11 +1607,11 @@ endif
 ifeq ($(OPTION_LIBTIFF),1)
 ____Allin1_4 = $(VAR_4)
 endif
-ifeq ($(OPTION_FREEIMAGE),1)
+ifeq ($(OPTION_PAINTLIB),1)
 ____Allin1_5 = $(VAR_5)
 endif
-ifeq ($(OPTION_FREEIMAGE),1)
-VAR_5 = ../../lib/libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+ifeq ($(OPTION_PAINTLIB),1)
+VAR_5 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -1630,7 +1681,7 @@ clean:
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
-	rm -f ../../lib/libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	(cd ../../src/createinfo && $(MAKE) clean)
 	(cd ../../src/createbundle && $(MAKE) clean)
 	(cd ../../src/xmake && $(MAKE) clean)
@@ -1859,10 +1910,10 @@ ifeq ($(OPTION_SHARED),1)
 endif
 endif
 
-ifeq ($(OPTION_FREEIMAGE),1)
-../../lib/libFreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(FREEIMAGE_LIB_OBJECTS) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4)
+ifeq ($(OPTION_PAINTLIB),1)
+../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(PAINTLIB_LIB_OBJECTS) $(VAR_1) $(VAR_3) $(VAR_4)
 	rm -f $@
-	$(AR) rcu $@ $(FREEIMAGE_LIB_OBJECTS)
+	$(AR) rcu $@ $(PAINTLIB_LIB_OBJECTS)
 	$(RANLIB) $@
 endif
 
@@ -1922,8 +1973,8 @@ ifeq ($(OPTION_LIBTIFF),1)
 LibTIFF: $(VAR_4)
 endif
 
-ifeq ($(OPTION_FREEIMAGE),1)
-FreeImage: $(VAR_5)
+ifeq ($(OPTION_PAINTLIB),1)
+paintlib: $(VAR_5)
 endif
 
 createinfo: createinfo_
@@ -2295,103 +2346,115 @@ $(OBJDIR)/LibPNG_lib_pngwtran.o: ../../src/thirdparty/common/LibPNG/pngwtran.c
 $(OBJDIR)/LibPNG_lib_pngwutil.o: ../../src/thirdparty/common/LibPNG/pngwutil.c
 	$(CC) -c -o $@ $(LIBPNG_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_fax3sm_winnt.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/fax3sm_winnt.c
+$(OBJDIR)/LibTIFF_lib_tif_aux.o: ../../src/thirdparty/common/LibTIFF/tif_aux.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_aux.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_aux.c
+$(OBJDIR)/LibTIFF_lib_tif_close.o: ../../src/thirdparty/common/LibTIFF/tif_close.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_close.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_close.c
+$(OBJDIR)/LibTIFF_lib_tif_codec.o: ../../src/thirdparty/common/LibTIFF/tif_codec.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_codec.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_codec.c
+$(OBJDIR)/LibTIFF_lib_tif_color.o: ../../src/thirdparty/common/LibTIFF/tif_color.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_compress.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_compress.c
+$(OBJDIR)/LibTIFF_lib_tif_compress.o: ../../src/thirdparty/common/LibTIFF/tif_compress.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_dir.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_dir.c
+$(OBJDIR)/LibTIFF_lib_tif_dir.o: ../../src/thirdparty/common/LibTIFF/tif_dir.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_dirinfo.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_dirinfo.c
+$(OBJDIR)/LibTIFF_lib_tif_dirinfo.o: ../../src/thirdparty/common/LibTIFF/tif_dirinfo.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_dirread.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_dirread.c
+$(OBJDIR)/LibTIFF_lib_tif_dirread.o: ../../src/thirdparty/common/LibTIFF/tif_dirread.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_dirwrite.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_dirwrite.c
+$(OBJDIR)/LibTIFF_lib_tif_dirwrite.o: ../../src/thirdparty/common/LibTIFF/tif_dirwrite.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_dumpmode.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_dumpmode.c
+$(OBJDIR)/LibTIFF_lib_tif_dumpmode.o: ../../src/thirdparty/common/LibTIFF/tif_dumpmode.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_error.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_error.c
+$(OBJDIR)/LibTIFF_lib_tif_error.o: ../../src/thirdparty/common/LibTIFF/tif_error.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_fax3.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_fax3.c
+$(OBJDIR)/LibTIFF_lib_tif_extension.o: ../../src/thirdparty/common/LibTIFF/tif_extension.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_flush.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_flush.c
+$(OBJDIR)/LibTIFF_lib_tif_fax3.o: ../../src/thirdparty/common/LibTIFF/tif_fax3.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_getimage.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_getimage.c
+$(OBJDIR)/LibTIFF_lib_tif_fax3sm.o: ../../src/thirdparty/common/LibTIFF/tif_fax3sm.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_jpeg.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_jpeg.c
+$(OBJDIR)/LibTIFF_lib_tif_flush.o: ../../src/thirdparty/common/LibTIFF/tif_flush.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_luv.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_luv.c
+$(OBJDIR)/LibTIFF_lib_tif_getimage.o: ../../src/thirdparty/common/LibTIFF/tif_getimage.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_lzw.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_lzw.c
+$(OBJDIR)/LibTIFF_lib_tif_jpeg.o: ../../src/thirdparty/common/LibTIFF/tif_jpeg.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_next.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_next.c
+$(OBJDIR)/LibTIFF_lib_tif_luv.o: ../../src/thirdparty/common/LibTIFF/tif_luv.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_open.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_open.c
+$(OBJDIR)/LibTIFF_lib_tif_lzw.o: ../../src/thirdparty/common/LibTIFF/tif_lzw.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_packbits.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_packbits.c
+$(OBJDIR)/LibTIFF_lib_tif_next.o: ../../src/thirdparty/common/LibTIFF/tif_next.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_pixarlog.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_pixarlog.c
+$(OBJDIR)/LibTIFF_lib_tif_ojpeg.o: ../../src/thirdparty/common/LibTIFF/tif_ojpeg.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_predict.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_predict.c
+$(OBJDIR)/LibTIFF_lib_tif_open.o: ../../src/thirdparty/common/LibTIFF/tif_open.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_print.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_print.c
+$(OBJDIR)/LibTIFF_lib_tif_packbits.o: ../../src/thirdparty/common/LibTIFF/tif_packbits.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_read.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_read.c
+$(OBJDIR)/LibTIFF_lib_tif_pixarlog.o: ../../src/thirdparty/common/LibTIFF/tif_pixarlog.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_strip.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_strip.c
+$(OBJDIR)/LibTIFF_lib_tif_predict.o: ../../src/thirdparty/common/LibTIFF/tif_predict.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_swab.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_swab.c
+$(OBJDIR)/LibTIFF_lib_tif_print.o: ../../src/thirdparty/common/LibTIFF/tif_print.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_thunder.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_thunder.c
+$(OBJDIR)/LibTIFF_lib_tif_read.o: ../../src/thirdparty/common/LibTIFF/tif_read.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_tile.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_tile.c
+$(OBJDIR)/LibTIFF_lib_tif_stream.o: ../../src/thirdparty/common/LibTIFF/tif_stream.cxx
+	$(CXX) -c -o $@ $(LIBTIFF_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/LibTIFF_lib_tif_strip.o: ../../src/thirdparty/common/LibTIFF/tif_strip.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_version.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_version.c
+$(OBJDIR)/LibTIFF_lib_tif_swab.o: ../../src/thirdparty/common/LibTIFF/tif_swab.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_warning.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_warning.c
+$(OBJDIR)/LibTIFF_lib_tif_thunder.o: ../../src/thirdparty/common/LibTIFF/tif_thunder.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_write.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_write.c
+$(OBJDIR)/LibTIFF_lib_tif_tile.o: ../../src/thirdparty/common/LibTIFF/tif_tile.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_zip.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_zip.c
+$(OBJDIR)/LibTIFF_lib_tif_version.o: ../../src/thirdparty/common/LibTIFF/tif_version.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/LibTIFF_lib_tif_unix.o: ../../src/thirdparty/common/FreeImage/Source/LibTIFF/tif_unix.c
+$(OBJDIR)/LibTIFF_lib_tif_warning.o: ../../src/thirdparty/common/LibTIFF/tif_warning.c
+	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/LibTIFF_lib_tif_write.o: ../../src/thirdparty/common/LibTIFF/tif_write.c
+	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/LibTIFF_lib_tif_zip.o: ../../src/thirdparty/common/LibTIFF/tif_zip.c
+	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/LibTIFF_lib_tif_unix.o: ../../src/thirdparty/common/LibTIFF/tif_unix.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)/FoundationKit_lib_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
@@ -5130,88 +5193,187 @@ $(OBJDIR)/Allin1_dll_InternetKit.o: ../../src/vcf/InternetKit/InternetKit.cpp
 $(OBJDIR)/Allin1_dll_InternetToolkit.o: ../../src/vcf/InternetKit/InternetToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_BitmapAccess.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/BitmapAccess.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilter.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilter.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plinplacefilter.o: ../../src/thirdparty/common/paintlib/common/Filter/plinplacefilter.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion16_555.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion16_555.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterresize.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterresize.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion16_565.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion16_565.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltercrop.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltercrop.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion24.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion24.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterresizebilinear.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterresizebilinear.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion32.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion32.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterthreshold.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterthreshold.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Conversion8.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Conversion8.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltergetalpha.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltergetalpha.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_FreeImage.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/FreeImage.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterresizebox.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterresizebox.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_FreeImageIO.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/FreeImageIO.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltervideoinvert.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltervideoinvert.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_GetType.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/GetType.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltergrayscale.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltergrayscale.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_LoadFunctions.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/LoadFunctions.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterresizegaussian.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterresizegaussian.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_NNQuantizer.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/NNQuantizer.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plhsvconvert.o: ../../src/thirdparty/common/paintlib/common/Filter/plhsvconvert.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_Plugin.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/Plugin.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterquantize.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterquantize.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginBMP.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginBMP.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterresizehamming.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterresizehamming.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginICO.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginICO.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterlightness.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterlightness.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginIFF.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginIFF.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltercontrast.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltercontrast.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginKOALA.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginKOALA.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterflip.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterflip.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginMNG.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginMNG.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltermirror.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltermirror.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginPCD.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginPCD.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterintensity.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterintensity.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginPCX.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginPCX.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterrotate.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterrotate.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginPNM.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginPNM.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfilterfliprgb.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilterfliprgb.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginPSD.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginPSD.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plfiltercolorize.o: ../../src/thirdparty/common/paintlib/common/Filter/plfiltercolorize.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginRAS.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginRAS.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_planybmp.o: ../../src/thirdparty/common/paintlib/common/planybmp.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginTARGA.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginTARGA.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_pldatasrc.o: ../../src/thirdparty/common/paintlib/common/pldatasrc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginTIFF.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginTIFF.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plpicenc.o: ../../src/thirdparty/common/paintlib/common/plpicenc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_PluginWBMP.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/PluginWBMP.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_plpictdec.o: ../../src/thirdparty/common/paintlib/common/plpictdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/FreeImage_lib_WuQuantizer.o: ../../src/thirdparty/common/FreeImage/Source/FreeImage/WuQuantizer.cpp
-	$(CXX) -c -o $@ $(FREEIMAGE_LIB_CXXFLAGS) $(CPPDEPS) $<
+$(OBJDIR)/paintlib_lib_pltgadec.o: ../../src/thirdparty/common/paintlib/common/pltgadec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF FreeImage createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+$(OBJDIR)/paintlib_lib_planydec.o: ../../src/thirdparty/common/paintlib/common/planydec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plexcept.o: ../../src/thirdparty/common/paintlib/common/plexcept.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plmemsink.o: ../../src/thirdparty/common/paintlib/common/plmemsink.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plbitmap.o: ../../src/thirdparty/common/paintlib/common/plbitmap.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plfilesink.o: ../../src/thirdparty/common/paintlib/common/plfilesink.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plmemsrc.o: ../../src/thirdparty/common/paintlib/common/plmemsrc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plobject.o: ../../src/thirdparty/common/paintlib/common/plobject.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plbmpdec.o: ../../src/thirdparty/common/paintlib/common/plbmpdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plfilesrc.o: ../../src/thirdparty/common/paintlib/common/plfilesrc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpcxdec.o: ../../src/thirdparty/common/paintlib/common/plpcxdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plbmpenc.o: ../../src/thirdparty/common/paintlib/common/plbmpenc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpgmdec.o: ../../src/thirdparty/common/paintlib/common/plpgmdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pldatasink.o: ../../src/thirdparty/common/paintlib/common/pldatasink.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpicdec.o: ../../src/thirdparty/common/paintlib/common/plpicdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plppmdec.o: ../../src/thirdparty/common/paintlib/common/plppmdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpsddec.o: ../../src/thirdparty/common/paintlib/common/plpsddec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plbmpinfo.o: ../../src/thirdparty/common/paintlib/common/plbmpinfo.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plexif.o: ../../src/thirdparty/common/paintlib/common/plexif.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plsgidec.o: ../../src/thirdparty/common/paintlib/common/plsgidec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pliff85dec.o: ../../src/thirdparty/common/paintlib/common/pliff85dec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plbmpbase.o: ../../src/thirdparty/common/paintlib/common/plbmpbase.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plsubbmp.o: ../../src/thirdparty/common/paintlib/common/plsubbmp.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpixelformat.o: ../../src/thirdparty/common/paintlib/common/plpixelformat.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpngdec.o: ../../src/thirdparty/common/paintlib/common/plpngdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_plpngenc.o: ../../src/thirdparty/common/paintlib/common/plpngenc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pltiffenc.o: ../../src/thirdparty/common/paintlib/common/pltiffenc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pltiffdec.o: ../../src/thirdparty/common/paintlib/common/pltiffdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pltiffencex.o: ../../src/thirdparty/common/paintlib/common/pltiffencex.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_tif_msrc.o: ../../src/thirdparty/common/paintlib/common/tif_msrc.c
+	$(CC) -c -o $@ $(PAINTLIB_LIB_CFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pljpegenc.o: ../../src/thirdparty/common/paintlib/common/pljpegenc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_jmemdest.o: ../../src/thirdparty/common/paintlib/common/jmemdest.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_pljpegdec.o: ../../src/thirdparty/common/paintlib/common/pljpegdec.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/paintlib_lib_jmemsrc.o: ../../src/thirdparty/common/paintlib/common/jmemsrc.cpp
+	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ZLib libAGG LibJPEG LibPNG LibMNG LibTIFF paintlib createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:

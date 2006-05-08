@@ -134,7 +134,7 @@ clean:
 |
 
 ..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib -ap @&&|
+	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -ap @&&|
 	c0x32.obj $(XMAKE_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32mt$(__RUNTIME_LIBS_16).lib,,
 |
 

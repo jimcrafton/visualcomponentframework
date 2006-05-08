@@ -30,29 +30,28 @@
         <define>VCF_DISABLE_PRAGMA_LINKING</define>
 
         <if cond="PLATFORM_WIN32=='1'">
-           <define>_WINDOWS</define>
-           <define>_WIN32</define>
-           <define>WIN32</define>
+            <define>_WINDOWS</define>
+            <define>_WIN32</define>
+            <define>WIN32</define>
         </if>
 
         <if cond="FORMAT=='borland'">
             <sys-lib>ole2w32</sys-lib>
-            <lib-path>$(VCF_LIB_BCC)</lib-path>
         </if>
 
         <if cond="FORMAT=='mingw'">
-           <define>VCF_MINGW</define>
-           <ldflags>-Wl,--enable-runtime-pseudo-reloc</ldflags>
+            <define>VCF_MINGW</define>
+            <ldflags>-Wl,--enable-runtime-pseudo-reloc</ldflags>
         </if>
 
         <if cond="FORMAT in ['mingw','gnu']">
-           <cppflags>-Wno-multichar</cppflags>
+            <cppflags>-Wno-multichar</cppflags>
         </if>
 
         <if cond="FORMAT in ['msvc','msvc6prj']">
-          <define>_CRT_SECURE_NO_DEPRECATE</define>
-          <define>_SCL_SECURE_NO_DEPRECATE</define>
-          <define>_CRT_NON_CONFORMING_SWPRINTFS</define>
+            <define>_CRT_SECURE_NO_DEPRECATE</define>
+            <define>_SCL_SECURE_NO_DEPRECATE</define>
+            <define>_CRT_NON_CONFORMING_SWPRINTFS</define>
         </if>
 
         <if cond="FORMAT!='autoconf' and FORMAT!='gnu'">
@@ -86,9 +85,9 @@
         </if>
 
         <if cond="FORMAT=='gnu'">
-        	<sys-lib>dl</sys-lib>
-		<sys-lib>uuid</sys-lib>
-		<sys-lib>rt</sys-lib>
+            <sys-lib>dl</sys-lib>
+            <sys-lib>uuid</sys-lib>
+            <sys-lib>rt</sys-lib>
         </if>
 
         <include>$(VCF_INCLUDE)</include>
@@ -98,9 +97,7 @@
 
     <template id="precomp">
         <if cond="PRECOMPILED=='1'">
-            <precomp-headers>
-                $(substituteFromDict( OPTION_PRECOMPILED, {'0':'off', '1':'on'} ))
-            </precomp-headers>
+            <precomp-headers>on</precomp-headers>
             <precomp-headers-file>$(LIBRARY_FILENAME)</precomp-headers-file>
             <precomp-headers-header>$(LIBRARY_PRECOMP_HDR)</precomp-headers-header>
             <precomp-headers-gen>$(LIBRARY_PRECOMP_SRC)</precomp-headers-gen>
@@ -110,9 +107,7 @@
 
     <template id="precomp_auto">
         <if cond="PRECOMPILED=='1'">
-            <precomp-headers>
-                $(substituteFromDict( OPTION_PRECOMPILED, {'0':'off', '1':'on'} ))
-            </precomp-headers>
+            <precomp-headers>on</precomp-headers>
             <precomp-headers-file>$(LIBRARY_FILENAME)</precomp-headers-file>
             <precomp-headers-header>$(LIBRARY_PRECOMP_HDR)</precomp-headers-header>
         </if>
@@ -172,7 +167,7 @@
         </if>
         <if cond="FORMAT=='borland'">
             <clean-files>
-                $(vcf.joinPaths( VCF_LIB, '..' + DIRSEP + 'bin' + DIRSEP + LIBRARY_FILENAME + ".map" ))
+                $(vcf.joinPaths( VCF_BIN, LIBRARY_FILENAME + ".map" ))
             </clean-files>
         </if>
     </template>
