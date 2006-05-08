@@ -88,9 +88,9 @@
             <depends>LibTIFF_lib</depends>
         </action>
 
-        <action id="FreeImage" cond="OPTION_FREEIMAGE=='1'">
+        <action id="paintlib" cond="OPTION_PAINTLIB=='1'">
             <is-phony>1</is-phony>
-            <depends>FreeImage_lib</depends>
+            <depends>paintlib_lib</depends>
         </action>
 
     </if>

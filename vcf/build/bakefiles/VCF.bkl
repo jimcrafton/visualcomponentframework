@@ -37,7 +37,7 @@
 
     <include file="Allin1.bkl"/>
 
-    <include file="FreeImage.bkl"/>
+    <include file="paintlib.bkl"/>
     <include file="ImageFormats.bkl"/>
 
     <include file="Actions.bkl"/>

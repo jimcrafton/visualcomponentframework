@@ -58,43 +58,6 @@ The type of runtime libraries.
         </description>
     </option>
 
-    <!--
-    PRECOMPILED is 1, if VCF is ready/prepared to use the FORMAT specific 
-    precompiled header file.
-    -->
-    <set var="PRECOMPILED">0</set>
-    <if cond="FORMAT in ['msvc','msvc6prj']">
-        <set var="PRECOMPILED">1</set>
-    </if>
-
-    <!--
-    If FORMAT is a Visual Studio IDE project (msvc6prj) we do not want
-    to declare OPTION_PRECOMPILED as an option. We define it as a variable
-    below.
-    -->
-    <if cond="PRECOMPILED=='1' and FORMAT!='msvc6prj'">
-        <option name="OPTION_PRECOMPILED">
-            <values>0,1</values>
-            <default-value>
-                $(vcf.getOptionValue( 'OPTION_PRECOMPILED', '1' ))
-            </default-value>
-            <description>
-                Create and use a precompiled header file where it is possible:
-            </description>
-        </option>
-    </if>
-    <if cond="not isoption('OPTION_PRECOMPILED')">
-        <set var="OPTION_PRECOMPILED">
-            <if cond="PRECOMPILED=='0'">0</if>
-            <!--
-            If FORMAT is a Visual Studio IDE project (msvc6prj) we want to use
-            a precompiled header file always, since the IDE manages 
-            the precompiled headers well. So we have to define OPTION_PRECOMPILED.
-            -->
-            <if cond="PRECOMPILED=='1' and FORMAT=='msvc6prj'">1</if>
-        </set>
-    </if>
-
     <option name="OPTION_ALLIN1">
         <values>0,1</values>
         <default-value>
@@ -186,17 +149,17 @@ The type of runtime libraries.
         </description>
     </option>
 
-    <option name="OPTION_FREEIMAGE">
+    <option name="OPTION_PAINTLIB">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_FREEIMAGE', '0' ))
+            $(vcf.getOptionValue( 'OPTION_PAINTLIB', '0' ))
         </default-value>
         <description>
 Depends on:
-    OPTION_ZLIB
-    OPTION_LIBMNG
+    OPTION_LIBPNG
+    OPTION_LIBJPEG
     OPTION_LIBTIFF
-Compile the FreeImage library:
+Compile the paintlib library:
         </description>
     </option>
 
@@ -329,7 +292,7 @@ Compile InternetKit:
         </default-value>
         <description>
 Depends on:
-    OPTION_FREEIMAGE
+    OPTION_PAINTLIB
     OPTION_APPLICATIONKIT
 Compile ImageFormats:
         </description>

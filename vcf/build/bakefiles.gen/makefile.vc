@@ -16,11 +16,11 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" \
 	OPTION_SELECTLIB="$(OPTION_SELECTLIB)" OPTION_SHARED="$(OPTION_SHARED)" \
 	OPTION_SHARED_RUNTIME="$(OPTION_SHARED_RUNTIME)" \
-	OPTION_DEBUG="$(OPTION_DEBUG)" OPTION_PRECOMPILED="$(OPTION_PRECOMPILED)" \
-	OPTION_ALLIN1="$(OPTION_ALLIN1)" OPTION_ZLIB="$(OPTION_ZLIB)" \
-	OPTION_LIBAGG="$(OPTION_LIBAGG)" OPTION_LIBJPEG="$(OPTION_LIBJPEG)" \
-	OPTION_LIBPNG="$(OPTION_LIBPNG)" OPTION_LIBMNG="$(OPTION_LIBMNG)" \
-	OPTION_LIBTIFF="$(OPTION_LIBTIFF)" OPTION_FREEIMAGE="$(OPTION_FREEIMAGE)" \
+	OPTION_DEBUG="$(OPTION_DEBUG)" OPTION_ALLIN1="$(OPTION_ALLIN1)" \
+	OPTION_ZLIB="$(OPTION_ZLIB)" OPTION_LIBAGG="$(OPTION_LIBAGG)" \
+	OPTION_LIBJPEG="$(OPTION_LIBJPEG)" OPTION_LIBPNG="$(OPTION_LIBPNG)" \
+	OPTION_LIBMNG="$(OPTION_LIBMNG)" OPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
+	OPTION_PAINTLIB="$(OPTION_PAINTLIB)" \
 	OPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	OPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
 	OPTION_APPLICATIONKIT="$(OPTION_APPLICATIONKIT)" \
@@ -202,18 +202,26 @@ LIBPNG_LIB_OBJECTS =  \
 	$(OBJDIR)\LibPNG_lib_pngwtran.obj \
 	$(OBJDIR)\LibPNG_lib_pngwutil.obj
 LIBTIFF_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__DEBUG_INFO) \
+	/DUSE_WIN32_FILEIO $(__DEBUG_INFO) \
 	/Fd..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
 	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC \
 	$(CPPFLAGS) $(CFLAGS)
+LIBTIFF_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/DUSE_WIN32_FILEIO $(__DEBUG_INFO) \
+	/Fd..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
+	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
+	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
+	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
+	$(CPPFLAGS) $(CXXFLAGS)
 LIBTIFF_LIB_OBJECTS =  \
-	$(OBJDIR)\LibTIFF_lib_fax3sm_winnt.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_aux.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_close.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_codec.obj \
+	$(OBJDIR)\LibTIFF_lib_tif_color.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_compress.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_dir.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_dirinfo.obj \
@@ -221,19 +229,23 @@ LIBTIFF_LIB_OBJECTS =  \
 	$(OBJDIR)\LibTIFF_lib_tif_dirwrite.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_dumpmode.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_error.obj \
+	$(OBJDIR)\LibTIFF_lib_tif_extension.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_fax3.obj \
+	$(OBJDIR)\LibTIFF_lib_tif_fax3sm.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_flush.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_getimage.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_jpeg.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_luv.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_lzw.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_next.obj \
+	$(OBJDIR)\LibTIFF_lib_tif_ojpeg.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_open.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_packbits.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_pixarlog.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_predict.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_print.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_read.obj \
+	$(OBJDIR)\LibTIFF_lib_tif_stream.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_strip.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_swab.obj \
 	$(OBJDIR)\LibTIFF_lib_tif_thunder.obj \
@@ -250,7 +262,9 @@ FOUNDATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_91_92) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\FoundationKit\FoundationKit.h" \
+	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\FoundationKit_lib_BasicException.obj \
 	$(OBJDIR)\FoundationKit_lib_BasicInputStream.obj \
@@ -327,7 +341,8 @@ FOUNDATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DFOUNDATIONKIT_DLL \
-	/DFOUNDATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_107_108) \
+	/DFOUNDATIONKIT_EXPORTS /GR /EHsc /Yu"vcf\FoundationKit\FoundationKit.h" \
+	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\FoundationKit_dll_BasicException.obj \
@@ -405,7 +420,9 @@ GRAPHICSKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_122_123) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\GraphicsKit\GraphicsKit.h" \
+	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_lib_AbstractImage.obj \
 	$(OBJDIR)\GraphicsKit_lib_BasicFill.obj \
@@ -438,7 +455,8 @@ GRAPHICSKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DGRAPHICSKIT_DLL \
-	/DGRAPHICSKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_138_139) \
+	/DGRAPHICSKIT_EXPORTS /GR /EHsc /Yu"vcf\GraphicsKit\GraphicsKit.h" \
+	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_dll_AbstractImage.obj \
@@ -476,7 +494,9 @@ APPLICATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_153_154) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\ApplicationKit\ApplicationKit.h" \
+	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\ApplicationKit_lib_AbstractApplication.obj \
 	$(OBJDIR)\ApplicationKit_lib_AbstractCommand.obj \
@@ -624,7 +644,8 @@ APPLICATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DAPPLICATIONKIT_DLL \
-	/DAPPLICATIONKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_169_170) \
+	/DAPPLICATIONKIT_EXPORTS /GR /EHsc /Yu"vcf\ApplicationKit\ApplicationKit.h" \
+	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\ApplicationKit_dll_AbstractApplication.obj \
@@ -774,7 +795,9 @@ HTMLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_184_185) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\HTMLKit\HTMLKit.h" \
+	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" $(CPPFLAGS) \
+	$(CXXFLAGS)
 HTMLKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\HTMLKit_lib_HTMLBrowserControl.obj \
 	$(OBJDIR)\HTMLKit_lib_HTMLKit.obj \
@@ -793,8 +816,9 @@ HTMLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DHTMLKIT_DLL \
-	/DHTMLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_200_201) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	/DHTMLKIT_EXPORTS /GR /EHsc /Yu"vcf\HTMLKit\HTMLKit.h" \
+	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\HTMLKit_dll_HTMLBrowserControl.obj \
 	$(OBJDIR)\HTMLKit_dll_HTMLKit.obj \
@@ -812,7 +836,9 @@ OPENGLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_215_216) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\OpenGLKit\OpenGLKit.h" \
+	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\OpenGLKit_lib_OpenGLControl.obj \
 	$(OBJDIR)\OpenGLKit_lib_OpenGLControlContext.obj \
@@ -828,8 +854,9 @@ OPENGLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DOPENGLKIT_DLL \
-	/DOPENGLKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_231_232) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	/DOPENGLKIT_EXPORTS /GR /EHsc /Yu"vcf\OpenGLKit\OpenGLKit.h" \
+	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\OpenGLKit_dll_OpenGLControl.obj \
 	$(OBJDIR)\OpenGLKit_dll_OpenGLControlContext.obj \
@@ -842,7 +869,9 @@ NETWORKKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_246_247) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\NetworkKit\NetworkKit.h" \
+	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\NetworkKit_lib_DatagramSocket.obj \
 	$(OBJDIR)\NetworkKit_lib_NetToolkit.obj \
@@ -860,8 +889,9 @@ NETWORKKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DNETKIT_DLL \
-	/DNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_262_263) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	/DNETKIT_EXPORTS /GR /EHsc /Yu"vcf\NetworkKit\NetworkKit.h" \
+	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\NetworkKit_dll_DatagramSocket.obj \
 	$(OBJDIR)\NetworkKit_dll_NetToolkit.obj \
@@ -880,7 +910,9 @@ REMOTEOBJECTKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_277_278) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
+	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\RemoteObjectKit_lib_AbstractDistributedApplication.obj \
 	$(OBJDIR)\RemoteObjectKit_lib_ClassRegistryEntry.obj \
@@ -898,8 +930,9 @@ REMOTEOBJECTKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DREMOTEKIT_DLL \
-	/DREMOTEKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_293_294) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	/DREMOTEKIT_EXPORTS /GR /EHsc /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
+	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\RemoteObjectKit_dll_AbstractDistributedApplication.obj \
 	$(OBJDIR)\RemoteObjectKit_dll_ClassRegistryEntry.obj \
@@ -916,7 +949,9 @@ INTERNETKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
-	$(____OPTION_PRECOMPILED_308_309) $(CPPFLAGS) $(CXXFLAGS)
+	/Yu"vcf\InternetKit\InternetKit.h" \
+	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
+	$(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\InternetKit_lib_InternetKit.obj \
 	$(OBJDIR)\InternetKit_lib_InternetToolkit.obj \
@@ -928,7 +963,8 @@ INTERNETKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_USRDLL /DINTERNETKIT_DLL \
-	/DINTERNETKIT_EXPORTS /GR /EHsc $(____OPTION_PRECOMPILED_324_325) \
+	/DINTERNETKIT_EXPORTS /GR /EHsc /Yu"vcf\InternetKit\InternetKit.h" \
+	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\InternetKit_dll_InternetKit.obj \
@@ -973,47 +1009,103 @@ ALLIN1_DLL_OBJECTS =  \
 	$(______Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS) \
 	$(OBJDIR)\Allin1_dll_ApplicationKit.res
-FREEIMAGE_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__DEBUG_INFO) \
-	/Fd..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
+PAINTLIB_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/I..\..\src\thirdparty\common\paintlib\common\Filter \
+	/I..\..\src\thirdparty\common\paintlib\common \
+	/I..\..\src\thirdparty\common\paintlib\win\paintlib \
+	/I..\..\src\thirdparty\common\LibJPEG \
+	/I..\..\src\thirdparty\common\LibTIFF \
+	/I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) \
+	/Fd..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
+	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
+	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
+	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC \
+	$(CPPFLAGS) $(CFLAGS)
+PAINTLIB_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/I..\..\src\thirdparty\common\paintlib\common\Filter \
+	/I..\..\src\thirdparty\common\paintlib\common \
+	/I..\..\src\thirdparty\common\paintlib\win\paintlib \
+	/I..\..\src\thirdparty\common\LibJPEG \
+	/I..\..\src\thirdparty\common\LibTIFF \
+	/I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) \
+	/Fd..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
 	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
 	/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
 	$(CPPFLAGS) $(CXXFLAGS)
-FREEIMAGE_LIB_OBJECTS =  \
-	$(OBJDIR)\FreeImage_lib_BitmapAccess.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion16_555.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion16_565.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion24.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion32.obj \
-	$(OBJDIR)\FreeImage_lib_Conversion8.obj \
-	$(OBJDIR)\FreeImage_lib_FreeImage.obj \
-	$(OBJDIR)\FreeImage_lib_FreeImageIO.obj \
-	$(OBJDIR)\FreeImage_lib_GetType.obj \
-	$(OBJDIR)\FreeImage_lib_LoadFunctions.obj \
-	$(OBJDIR)\FreeImage_lib_NNQuantizer.obj \
-	$(OBJDIR)\FreeImage_lib_Plugin.obj \
-	$(OBJDIR)\FreeImage_lib_PluginBMP.obj \
-	$(OBJDIR)\FreeImage_lib_PluginICO.obj \
-	$(OBJDIR)\FreeImage_lib_PluginIFF.obj \
-	$(OBJDIR)\FreeImage_lib_PluginKOALA.obj \
-	$(OBJDIR)\FreeImage_lib_PluginMNG.obj \
-	$(OBJDIR)\FreeImage_lib_PluginPCD.obj \
-	$(OBJDIR)\FreeImage_lib_PluginPCX.obj \
-	$(OBJDIR)\FreeImage_lib_PluginPNM.obj \
-	$(OBJDIR)\FreeImage_lib_PluginPSD.obj \
-	$(OBJDIR)\FreeImage_lib_PluginRAS.obj \
-	$(OBJDIR)\FreeImage_lib_PluginTARGA.obj \
-	$(OBJDIR)\FreeImage_lib_PluginTIFF.obj \
-	$(OBJDIR)\FreeImage_lib_PluginWBMP.obj \
-	$(OBJDIR)\FreeImage_lib_WuQuantizer.obj
+PAINTLIB_LIB_OBJECTS =  \
+	$(OBJDIR)\paintlib_lib_plfilter.obj \
+	$(OBJDIR)\paintlib_lib_plinplacefilter.obj \
+	$(OBJDIR)\paintlib_lib_plfilterresize.obj \
+	$(OBJDIR)\paintlib_lib_plfiltercrop.obj \
+	$(OBJDIR)\paintlib_lib_plfilterresizebilinear.obj \
+	$(OBJDIR)\paintlib_lib_plfilterthreshold.obj \
+	$(OBJDIR)\paintlib_lib_plfiltergetalpha.obj \
+	$(OBJDIR)\paintlib_lib_plfilterresizebox.obj \
+	$(OBJDIR)\paintlib_lib_plfiltervideoinvert.obj \
+	$(OBJDIR)\paintlib_lib_plfiltergrayscale.obj \
+	$(OBJDIR)\paintlib_lib_plfilterresizegaussian.obj \
+	$(OBJDIR)\paintlib_lib_plhsvconvert.obj \
+	$(OBJDIR)\paintlib_lib_plfilterquantize.obj \
+	$(OBJDIR)\paintlib_lib_plfilterresizehamming.obj \
+	$(OBJDIR)\paintlib_lib_plfilterlightness.obj \
+	$(OBJDIR)\paintlib_lib_plfiltercontrast.obj \
+	$(OBJDIR)\paintlib_lib_plfilterflip.obj \
+	$(OBJDIR)\paintlib_lib_plfiltermirror.obj \
+	$(OBJDIR)\paintlib_lib_plfilterintensity.obj \
+	$(OBJDIR)\paintlib_lib_plfilterrotate.obj \
+	$(OBJDIR)\paintlib_lib_plfilterfliprgb.obj \
+	$(OBJDIR)\paintlib_lib_plfiltercolorize.obj \
+	$(OBJDIR)\paintlib_lib_planybmp.obj \
+	$(OBJDIR)\paintlib_lib_pldatasrc.obj \
+	$(OBJDIR)\paintlib_lib_plpicenc.obj \
+	$(OBJDIR)\paintlib_lib_plpictdec.obj \
+	$(OBJDIR)\paintlib_lib_pltgadec.obj \
+	$(OBJDIR)\paintlib_lib_planydec.obj \
+	$(OBJDIR)\paintlib_lib_plexcept.obj \
+	$(OBJDIR)\paintlib_lib_plmemsink.obj \
+	$(OBJDIR)\paintlib_lib_plbitmap.obj \
+	$(OBJDIR)\paintlib_lib_plfilesink.obj \
+	$(OBJDIR)\paintlib_lib_plmemsrc.obj \
+	$(OBJDIR)\paintlib_lib_plobject.obj \
+	$(OBJDIR)\paintlib_lib_plbmpdec.obj \
+	$(OBJDIR)\paintlib_lib_plfilesrc.obj \
+	$(OBJDIR)\paintlib_lib_plpcxdec.obj \
+	$(OBJDIR)\paintlib_lib_plbmpenc.obj \
+	$(OBJDIR)\paintlib_lib_plpgmdec.obj \
+	$(OBJDIR)\paintlib_lib_pldatasink.obj \
+	$(OBJDIR)\paintlib_lib_plpicdec.obj \
+	$(OBJDIR)\paintlib_lib_plppmdec.obj \
+	$(OBJDIR)\paintlib_lib_plpsddec.obj \
+	$(OBJDIR)\paintlib_lib_plbmpinfo.obj \
+	$(OBJDIR)\paintlib_lib_plexif.obj \
+	$(OBJDIR)\paintlib_lib_plsgidec.obj \
+	$(OBJDIR)\paintlib_lib_pliff85dec.obj \
+	$(OBJDIR)\paintlib_lib_plbmpbase.obj \
+	$(OBJDIR)\paintlib_lib_plsubbmp.obj \
+	$(OBJDIR)\paintlib_lib_plpixelformat.obj \
+	$(OBJDIR)\paintlib_lib_plpngdec.obj \
+	$(OBJDIR)\paintlib_lib_plpngenc.obj \
+	$(OBJDIR)\paintlib_lib_pltiffenc.obj \
+	$(OBJDIR)\paintlib_lib_pltiffdec.obj \
+	$(OBJDIR)\paintlib_lib_pltiffencex.obj \
+	$(OBJDIR)\paintlib_lib_tif_msrc.obj \
+	$(OBJDIR)\paintlib_lib_pljpegenc.obj \
+	$(OBJDIR)\paintlib_lib_jmemdest.obj \
+	$(OBJDIR)\paintlib_lib_pljpegdec.obj \
+	$(OBJDIR)\paintlib_lib_jmemsrc.obj \
+	$(OBJDIR)\paintlib_lib_pldibsect.obj \
+	$(OBJDIR)\paintlib_lib_plressrc.obj \
+	$(OBJDIR)\paintlib_lib_plStreamSink.obj \
+	$(OBJDIR)\paintlib_lib_plwemfdec.obj \
+	$(OBJDIR)\paintlib_lib_plwinbmp.obj
 IMAGEFORMATS_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 $(__FOUNDATIONKIT_DLL_p) /I..\..\src\thirdparty\common\agg\include \
 	/I..\..\src\thirdparty\common\ZLib /I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
-	$(__APPLICATIONKIT_DLL_p) /DFREEIMAGE_LIB $(__DEBUG_INFO) \
+	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
 	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
@@ -1026,7 +1118,7 @@ IMAGEFORMATS_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 $(__FOUNDATIONKIT_DLL_p) /I..\..\src\thirdparty\common\agg\include \
 	/I..\..\src\thirdparty\common\ZLib /I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
-	$(__APPLICATIONKIT_DLL_p) /DFREEIMAGE_LIB $(__DEBUG_INFO) \
+	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
 	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS /D_WIN32 /DWIN32 \
@@ -1060,56 +1152,21 @@ SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 __FoundationKit_lib___depname = \
 	..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_91_92 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_91_92 = /Yu"vcf\FoundationKit\FoundationKit.h" \
-	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __FoundationKit_dll___depname = \
 	..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_107_108 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_107_108 = /Yu"vcf\FoundationKit\FoundationKit.h" \
-	/Fp"$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __GraphicsKit_lib___depname = \
 	..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_122_123 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_122_123 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
-	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __GraphicsKit_dll___depname = \
 	..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_138_139 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_138_139 = /Yu"vcf\GraphicsKit\GraphicsKit.h" \
-	/Fp"$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __ApplicationKit_lib___depname = \
 	..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_153_154 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_153_154 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
-	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __ApplicationKit_dll___depname = \
@@ -1121,89 +1178,33 @@ __FOUNDATIONKIT_DLL_p_5 = /d FOUNDATIONKIT_DLL
 !if "$(OPTION_SHARED)" == "1"
 __GRAPHICSKIT_DLL_p_2 = /d GRAPHICSKIT_DLL
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_169_170 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_169_170 = /Yu"vcf\ApplicationKit\ApplicationKit.h" \
-	/Fp"$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __HTMLKit_lib___depname = \
 	..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_184_185 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_184_185 = /Yu"vcf\HTMLKit\HTMLKit.h" \
-	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __HTMLKit_dll___depname = \
 	..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_200_201 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_200_201 = /Yu"vcf\HTMLKit\HTMLKit.h" \
-	/Fp"$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __OpenGLKit_lib___depname = \
 	..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_215_216 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_215_216 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
-	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __OpenGLKit_dll___depname = \
 	..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_231_232 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_231_232 = /Yu"vcf\OpenGLKit\OpenGLKit.h" \
-	/Fp"$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __NetworkKit_lib___depname = \
 	..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_246_247 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_246_247 = /Yu"vcf\NetworkKit\NetworkKit.h" \
-	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __NetworkKit_dll___depname = \
 	..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_262_263 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_262_263 = /Yu"vcf\NetworkKit\NetworkKit.h" \
-	/Fp"$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __RemoteObjectKit_lib___depname = \
 	..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_277_278 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_277_278 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
-	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __RemoteObjectKit_dll___depname = \
@@ -1224,34 +1225,13 @@ ____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
 !if "$(OPTION_ALLIN1)" == "0"
 ____RemoteObjectKit_dll_NETWORKKIT_p = $(NETWORKKIT_FILENAME).lib
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_293_294 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_293_294 = /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
-	/Fp"$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __InternetKit_lib___depname = \
 	..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_308_309 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_308_309 = /Yu"vcf\InternetKit\InternetKit.h" \
-	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch"
-!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __InternetKit_dll___depname = \
 	..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
-!endif
-!if "$(OPTION_PRECOMPILED)" == "0"
-____OPTION_PRECOMPILED_324_325 = 
-!endif
-!if "$(OPTION_PRECOMPILED)" == "1"
-____OPTION_PRECOMPILED_324_325 = /Yu"vcf\InternetKit\InternetKit.h" \
-	/Fp"$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch"
 !endif
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
 __Allin1_lib___depname = \
@@ -1894,11 +1874,11 @@ ____Allin1_3 = $(VAR_2)
 !if "$(OPTION_LIBTIFF)" == "1"
 ____Allin1_4 = $(VAR_4)
 !endif
-!if "$(OPTION_FREEIMAGE)" == "1"
+!if "$(OPTION_PAINTLIB)" == "1"
 ____Allin1_5 = $(VAR_5)
 !endif
-!if "$(OPTION_FREEIMAGE)" == "1"
-VAR_5 = ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!if "$(OPTION_PAINTLIB)" == "1"
+VAR_5 = ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 __DEBUG_INFO_3 = 
@@ -2043,8 +2023,8 @@ clean:
 	-if exist ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
-	-if exist ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	-if exist ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
+	-if exist ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+	-if exist ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -2251,11 +2231,11 @@ clean:
 <<
 !endif
 
-!if "$(OPTION_FREEIMAGE)" == "1"
-..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FREEIMAGE_LIB_OBJECTS) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4)
+!if "$(OPTION_PAINTLIB)" == "1"
+..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(PAINTLIB_LIB_OBJECTS) $(VAR_1) $(VAR_3) $(VAR_4)
 	if exist $@ del $@
 	link /LIB /NOLOGO /OUT:$@ @<<
-	$(FREEIMAGE_LIB_OBJECTS)
+	$(PAINTLIB_LIB_OBJECTS)
 <<
 !endif
 
@@ -2270,7 +2250,7 @@ clean:
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(VAR) $(VAR_0) $(VAR_1) $(VAR_3) $(VAR_2) $(VAR_4) $(VAR_5) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
 	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
-	$(IMAGEFORMATS_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\FreeImage$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
+	$(IMAGEFORMATS_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
 
@@ -2334,8 +2314,8 @@ LibMNG: $(VAR_2)
 LibTIFF: $(VAR_4)
 !endif
 
-!if "$(OPTION_FREEIMAGE)" == "1"
-FreeImage: $(VAR_5)
+!if "$(OPTION_PAINTLIB)" == "1"
+paintlib: $(VAR_5)
 !endif
 
 createinfo: sub_createinfo_
@@ -2713,103 +2693,115 @@ $(OBJDIR)\LibPNG_lib_pngwtran.obj: ..\..\src\thirdparty\common\LibPNG\pngwtran.c
 $(OBJDIR)\LibPNG_lib_pngwutil.obj: ..\..\src\thirdparty\common\LibPNG\pngwutil.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBPNG_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_fax3sm_winnt.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\fax3sm_winnt.c
+$(OBJDIR)\LibTIFF_lib_tif_aux.obj: ..\..\src\thirdparty\common\LibTIFF\tif_aux.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_aux.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_aux.c
+$(OBJDIR)\LibTIFF_lib_tif_close.obj: ..\..\src\thirdparty\common\LibTIFF\tif_close.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_close.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_close.c
+$(OBJDIR)\LibTIFF_lib_tif_codec.obj: ..\..\src\thirdparty\common\LibTIFF\tif_codec.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_codec.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_codec.c
+$(OBJDIR)\LibTIFF_lib_tif_color.obj: ..\..\src\thirdparty\common\LibTIFF\tif_color.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_compress.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_compress.c
+$(OBJDIR)\LibTIFF_lib_tif_compress.obj: ..\..\src\thirdparty\common\LibTIFF\tif_compress.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_dir.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_dir.c
+$(OBJDIR)\LibTIFF_lib_tif_dir.obj: ..\..\src\thirdparty\common\LibTIFF\tif_dir.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_dirinfo.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_dirinfo.c
+$(OBJDIR)\LibTIFF_lib_tif_dirinfo.obj: ..\..\src\thirdparty\common\LibTIFF\tif_dirinfo.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_dirread.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_dirread.c
+$(OBJDIR)\LibTIFF_lib_tif_dirread.obj: ..\..\src\thirdparty\common\LibTIFF\tif_dirread.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_dirwrite.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_dirwrite.c
+$(OBJDIR)\LibTIFF_lib_tif_dirwrite.obj: ..\..\src\thirdparty\common\LibTIFF\tif_dirwrite.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_dumpmode.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_dumpmode.c
+$(OBJDIR)\LibTIFF_lib_tif_dumpmode.obj: ..\..\src\thirdparty\common\LibTIFF\tif_dumpmode.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_error.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_error.c
+$(OBJDIR)\LibTIFF_lib_tif_error.obj: ..\..\src\thirdparty\common\LibTIFF\tif_error.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_fax3.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_fax3.c
+$(OBJDIR)\LibTIFF_lib_tif_extension.obj: ..\..\src\thirdparty\common\LibTIFF\tif_extension.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_flush.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_flush.c
+$(OBJDIR)\LibTIFF_lib_tif_fax3.obj: ..\..\src\thirdparty\common\LibTIFF\tif_fax3.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_getimage.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_getimage.c
+$(OBJDIR)\LibTIFF_lib_tif_fax3sm.obj: ..\..\src\thirdparty\common\LibTIFF\tif_fax3sm.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_jpeg.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_jpeg.c
+$(OBJDIR)\LibTIFF_lib_tif_flush.obj: ..\..\src\thirdparty\common\LibTIFF\tif_flush.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_luv.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_luv.c
+$(OBJDIR)\LibTIFF_lib_tif_getimage.obj: ..\..\src\thirdparty\common\LibTIFF\tif_getimage.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_lzw.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_lzw.c
+$(OBJDIR)\LibTIFF_lib_tif_jpeg.obj: ..\..\src\thirdparty\common\LibTIFF\tif_jpeg.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_next.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_next.c
+$(OBJDIR)\LibTIFF_lib_tif_luv.obj: ..\..\src\thirdparty\common\LibTIFF\tif_luv.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_open.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_open.c
+$(OBJDIR)\LibTIFF_lib_tif_lzw.obj: ..\..\src\thirdparty\common\LibTIFF\tif_lzw.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_packbits.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_packbits.c
+$(OBJDIR)\LibTIFF_lib_tif_next.obj: ..\..\src\thirdparty\common\LibTIFF\tif_next.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_pixarlog.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_pixarlog.c
+$(OBJDIR)\LibTIFF_lib_tif_ojpeg.obj: ..\..\src\thirdparty\common\LibTIFF\tif_ojpeg.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_predict.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_predict.c
+$(OBJDIR)\LibTIFF_lib_tif_open.obj: ..\..\src\thirdparty\common\LibTIFF\tif_open.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_print.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_print.c
+$(OBJDIR)\LibTIFF_lib_tif_packbits.obj: ..\..\src\thirdparty\common\LibTIFF\tif_packbits.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_read.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_read.c
+$(OBJDIR)\LibTIFF_lib_tif_pixarlog.obj: ..\..\src\thirdparty\common\LibTIFF\tif_pixarlog.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_strip.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_strip.c
+$(OBJDIR)\LibTIFF_lib_tif_predict.obj: ..\..\src\thirdparty\common\LibTIFF\tif_predict.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_swab.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_swab.c
+$(OBJDIR)\LibTIFF_lib_tif_print.obj: ..\..\src\thirdparty\common\LibTIFF\tif_print.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_thunder.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_thunder.c
+$(OBJDIR)\LibTIFF_lib_tif_read.obj: ..\..\src\thirdparty\common\LibTIFF\tif_read.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_tile.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_tile.c
+$(OBJDIR)\LibTIFF_lib_tif_stream.obj: ..\..\src\thirdparty\common\LibTIFF\tif_stream.cxx
+	$(CXX) /c /nologo /TP /Fo$@ $(LIBTIFF_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\LibTIFF_lib_tif_strip.obj: ..\..\src\thirdparty\common\LibTIFF\tif_strip.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_version.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_version.c
+$(OBJDIR)\LibTIFF_lib_tif_swab.obj: ..\..\src\thirdparty\common\LibTIFF\tif_swab.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_warning.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_warning.c
+$(OBJDIR)\LibTIFF_lib_tif_thunder.obj: ..\..\src\thirdparty\common\LibTIFF\tif_thunder.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_write.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_write.c
+$(OBJDIR)\LibTIFF_lib_tif_tile.obj: ..\..\src\thirdparty\common\LibTIFF\tif_tile.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_zip.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_zip.c
+$(OBJDIR)\LibTIFF_lib_tif_version.obj: ..\..\src\thirdparty\common\LibTIFF\tif_version.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
-$(OBJDIR)\LibTIFF_lib_tif_win32.obj: ..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\tif_win32.c
+$(OBJDIR)\LibTIFF_lib_tif_warning.obj: ..\..\src\thirdparty\common\LibTIFF\tif_warning.c
+	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
+
+$(OBJDIR)\LibTIFF_lib_tif_write.obj: ..\..\src\thirdparty\common\LibTIFF\tif_write.c
+	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
+
+$(OBJDIR)\LibTIFF_lib_tif_zip.obj: ..\..\src\thirdparty\common\LibTIFF\tif_zip.c
+	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
+
+$(OBJDIR)\LibTIFF_lib_tif_win32.obj: ..\..\src\thirdparty\common\LibTIFF\tif_win32.c
 	$(CC) /c /nologo /TC /Fo$@ $(LIBTIFF_LIB_CFLAGS) $**
 
 $(OBJDIR)\FoundationKit_lib_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
@@ -5902,86 +5894,200 @@ $(OBJDIR)\Allin1_dll_Win32InternetToolkit.obj: ..\..\src\vcf\InternetKit\Win32In
 $(OBJDIR)\Allin1_dll_ApplicationKit.res: ..\..\src\..\build\resources\win32\ApplicationKit.rc
 	rc /fo$@  /d WIN32 /i ..\..\src\thirdparty\win32 $(____DEBUG_RUNTIME_LIBS_0) $(____OPTION_DEBUG_0) /d VCF_DISABLE_PRAGMA_LINKING /d _WINDOWS /d _WIN32 /d WIN32 /d _CRT_SECURE_NO_DEPRECATE /d _SCL_SECURE_NO_DEPRECATE /d _CRT_NON_CONFORMING_SWPRINTFS /i ..\..\src /d _USRDLL /d FOUNDATIONKIT_DLL /d FOUNDATIONKIT_EXPORTS /d GRAPHICSKIT_DLL /d GRAPHICSKIT_EXPORTS /d APPLICATIONKIT_DLL /d APPLICATIONKIT_EXPORTS /d HTMLKIT_DLL /d HTMLKIT_EXPORTS /d OPENGLKIT_DLL /d OPENGLKIT_EXPORTS /d NETKIT_DLL /d NETKIT_EXPORTS /d REMOTEKIT_DLL /d REMOTEKIT_EXPORTS /d INTERNETKIT_DLL /d INTERNETKIT_EXPORTS /i ..\..\build\resources\win32 $**
 
-$(OBJDIR)\FreeImage_lib_BitmapAccess.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\BitmapAccess.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilter.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plinplacefilter.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plinplacefilter.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion16_555.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion16_555.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterresize.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresize.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion16_565.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion16_565.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltercrop.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercrop.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion24.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion24.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterresizebilinear.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebilinear.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion32.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion32.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterthreshold.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterthreshold.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Conversion8.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Conversion8.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltergetalpha.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergetalpha.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_FreeImage.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\FreeImage.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterresizebox.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebox.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_FreeImageIO.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\FreeImageIO.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltervideoinvert.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltervideoinvert.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_GetType.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\GetType.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltergrayscale.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergrayscale.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_LoadFunctions.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\LoadFunctions.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterresizegaussian.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizegaussian.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_NNQuantizer.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\NNQuantizer.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plhsvconvert.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plhsvconvert.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_Plugin.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\Plugin.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterquantize.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterquantize.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginBMP.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginBMP.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterresizehamming.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizehamming.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginICO.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginICO.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterlightness.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterlightness.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginIFF.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginIFF.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltercontrast.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercontrast.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginKOALA.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginKOALA.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterflip.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterflip.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginMNG.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginMNG.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltermirror.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltermirror.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginPCD.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginPCD.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterintensity.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterintensity.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginPCX.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginPCX.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterrotate.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterrotate.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginPNM.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginPNM.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfilterfliprgb.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfliprgb.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginPSD.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginPSD.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plfiltercolorize.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercolorize.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginRAS.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginRAS.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_planybmp.obj: ..\..\src\thirdparty\common\paintlib\common\planybmp.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginTARGA.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginTARGA.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_pldatasrc.obj: ..\..\src\thirdparty\common\paintlib\common\pldatasrc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginTIFF.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginTIFF.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plpicenc.obj: ..\..\src\thirdparty\common\paintlib\common\plpicenc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_PluginWBMP.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\PluginWBMP.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_plpictdec.obj: ..\..\src\thirdparty\common\paintlib\common\plpictdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\FreeImage_lib_WuQuantizer.obj: ..\..\src\thirdparty\common\FreeImage\Source\FreeImage\WuQuantizer.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FREEIMAGE_LIB_CXXFLAGS) $**
+$(OBJDIR)\paintlib_lib_pltgadec.obj: ..\..\src\thirdparty\common\paintlib\common\pltgadec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_planydec.obj: ..\..\src\thirdparty\common\paintlib\common\planydec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plexcept.obj: ..\..\src\thirdparty\common\paintlib\common\plexcept.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plmemsink.obj: ..\..\src\thirdparty\common\paintlib\common\plmemsink.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plbitmap.obj: ..\..\src\thirdparty\common\paintlib\common\plbitmap.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plfilesink.obj: ..\..\src\thirdparty\common\paintlib\common\plfilesink.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plmemsrc.obj: ..\..\src\thirdparty\common\paintlib\common\plmemsrc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plobject.obj: ..\..\src\thirdparty\common\paintlib\common\plobject.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plbmpdec.obj: ..\..\src\thirdparty\common\paintlib\common\plbmpdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plfilesrc.obj: ..\..\src\thirdparty\common\paintlib\common\plfilesrc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpcxdec.obj: ..\..\src\thirdparty\common\paintlib\common\plpcxdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plbmpenc.obj: ..\..\src\thirdparty\common\paintlib\common\plbmpenc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpgmdec.obj: ..\..\src\thirdparty\common\paintlib\common\plpgmdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pldatasink.obj: ..\..\src\thirdparty\common\paintlib\common\pldatasink.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpicdec.obj: ..\..\src\thirdparty\common\paintlib\common\plpicdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plppmdec.obj: ..\..\src\thirdparty\common\paintlib\common\plppmdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpsddec.obj: ..\..\src\thirdparty\common\paintlib\common\plpsddec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plbmpinfo.obj: ..\..\src\thirdparty\common\paintlib\common\plbmpinfo.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plexif.obj: ..\..\src\thirdparty\common\paintlib\common\plexif.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plsgidec.obj: ..\..\src\thirdparty\common\paintlib\common\plsgidec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pliff85dec.obj: ..\..\src\thirdparty\common\paintlib\common\pliff85dec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plbmpbase.obj: ..\..\src\thirdparty\common\paintlib\common\plbmpbase.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plsubbmp.obj: ..\..\src\thirdparty\common\paintlib\common\plsubbmp.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpixelformat.obj: ..\..\src\thirdparty\common\paintlib\common\plpixelformat.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpngdec.obj: ..\..\src\thirdparty\common\paintlib\common\plpngdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plpngenc.obj: ..\..\src\thirdparty\common\paintlib\common\plpngenc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pltiffenc.obj: ..\..\src\thirdparty\common\paintlib\common\pltiffenc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pltiffdec.obj: ..\..\src\thirdparty\common\paintlib\common\pltiffdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pltiffencex.obj: ..\..\src\thirdparty\common\paintlib\common\pltiffencex.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_tif_msrc.obj: ..\..\src\thirdparty\common\paintlib\common\tif_msrc.c
+	$(CC) /c /nologo /TC /Fo$@ $(PAINTLIB_LIB_CFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pljpegenc.obj: ..\..\src\thirdparty\common\paintlib\common\pljpegenc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_jmemdest.obj: ..\..\src\thirdparty\common\paintlib\common\jmemdest.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pljpegdec.obj: ..\..\src\thirdparty\common\paintlib\common\pljpegdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_jmemsrc.obj: ..\..\src\thirdparty\common\paintlib\common\jmemsrc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_pldibsect.obj: ..\..\src\thirdparty\common\paintlib\win\paintlib\pldibsect.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plressrc.obj: ..\..\src\thirdparty\common\paintlib\win\paintlib\plressrc.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plStreamSink.obj: ..\..\src\thirdparty\common\paintlib\win\paintlib\plStreamSink.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plwemfdec.obj: ..\..\src\thirdparty\common\paintlib\win\paintlib\plwemfdec.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
+
+$(OBJDIR)\paintlib_lib_plwinbmp.obj: ..\..\src\thirdparty\common\paintlib\win\paintlib\plwinbmp.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PAINTLIB_LIB_CXXFLAGS) $**
 
 $(OBJDIR)\ImageFormats_lib_ImageFormats.obj: ..\..\src\ImageFormats\ImageFormats.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(IMAGEFORMATS_LIB_CXXFLAGS) $**

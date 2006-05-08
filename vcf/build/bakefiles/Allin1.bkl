@@ -127,10 +127,10 @@
         </set>
         <library>$(ALLIN1_LIBTIFF_LIB)</library>
 
-        <set var="ALLIN1_FREEIMAGE_LIB">
-            <if cond="OPTION_FREEIMAGE=='1'">FreeImage_lib</if>
+        <set var="ALLIN1_PAINTLIB_LIB">
+            <if cond="OPTION_PAINTLIB=='1'">paintlib_lib</if>
         </set>
-        <library>$(ALLIN1_FREEIMAGE_LIB)</library>
+        <library>$(ALLIN1_PAINTLIB_LIB)</library>
 
 
         <vcf-include-thirdparty/>

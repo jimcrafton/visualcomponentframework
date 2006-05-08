@@ -62,13 +62,19 @@
 
     <define-tag name="vcf-include-LibTIFF" rules="dll,lib,exe,module">
         <include>
-            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source/LibTIFF' ))
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/LibTIFF' ))
         </include>
     </define-tag>
 
-    <define-tag name="vcf-include-FreeImage" rules="dll,lib,exe,module">
+    <define-tag name="vcf-include-paintlib" rules="dll,lib,exe,module">
         <include>
-            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source' ))
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/paintlib/common/Filter' ))
+        </include>
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/paintlib/common' ))
+        </include>
+        <include cond="PLATFORM_WIN32=='1'">
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/paintlib/win/paintlib' ))
         </include>
     </define-tag>
 
@@ -106,10 +112,12 @@
         <sys-lib>$(LIBTIFF_FILENAME)</sys-lib>
     </define-tag>
 
-    <define-tag name="vcf-use-FreeImage" rules="dll,lib,exe,module">
-        <vcf-include-FreeImage/>
-        <define>FREEIMAGE_LIB</define>
-        <sys-lib>$(FREEIMAGE_FILENAME)</sys-lib>
+    <define-tag name="vcf-use-paintlib" rules="dll,lib,exe,module">
+        <vcf-include-paintlib/>
+        <vcf-use-LibJPEG/>
+        <vcf-use-LibTIFF/>
+        <vcf-use-LibPNG/>
+        <sys-lib>$(PAINTLIB_FILENAME)</sys-lib>
     </define-tag>
 
 

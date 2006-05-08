@@ -18,10 +18,6 @@
         $(VCF_DIR)$(DIRSEP)lib
     </set>
 
-    <set var="VCF_LIB_BCC">
-        $(VCF_DIR)$(DIRSEP)build$(DIRSEP)bcc$(DIRSEP)missing_libs
-    </set>
-
     <set var="VCF_INTERNAL">1</set>
 
     <include file="Templates.bkl"/>

@@ -32,9 +32,9 @@
         $(vcf.getLibFilename( LIBTIFF_NAME ))
     </set>
 
-    <set var="FREEIMAGE_NAME">FreeImage</set>
-    <set var="FREEIMAGE_FILENAME" make_var="1">
-        $(vcf.getLibFilename( FREEIMAGE_NAME ))
+    <set var="PAINTLIB_NAME">paintlib</set>
+    <set var="PAINTLIB_FILENAME" make_var="1">
+        $(vcf.getLibFilename( PAINTLIB_NAME ))
     </set>
     
     <set var="FOUNDATIONKIT_NAME">FoundationKit</set>

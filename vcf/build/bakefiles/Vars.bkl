@@ -19,7 +19,7 @@
         <set var="OPTION_LIBPNG">1</set>
         <set var="OPTION_LIBMNG">1</set>
         <set var="OPTION_LIBTIFF">1</set>
-        <set var="OPTION_FREEIMAGE">1</set>
+        <set var="OPTION_PAINTLIB">1</set>
         <set var="OPTION_IMAGEFORMATS">1</set>
     </if>
 
@@ -74,6 +74,15 @@
         <if cond="OPTION_SHARED=='0'">$(SUFFIX_STATIC)</if>
         <if cond="OPTION_SHARED=='1'">$(SUFFIX_DYNAMIC)</if>
     </set>
+
+    <!--
+    PRECOMPILED is 1, if VCF is ready/prepared to use the FORMAT specific 
+    precompiled header file.
+    -->
+    <set var="PRECOMPILED">0</set>
+    <if cond="FORMAT in ['msvc','msvc6prj']">
+        <set var="PRECOMPILED">1</set>
+    </if>
 
     <if cond="FORMAT!='autoconf'">
         <set var="OBJDIR" make_var="1">

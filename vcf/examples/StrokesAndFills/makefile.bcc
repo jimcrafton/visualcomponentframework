@@ -144,7 +144,7 @@ clean:
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(STROKESANDFILLS_OBJECTS)
-	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib -aa @&&|
+	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -aa @&&|
 	c0x32.obj $(STROKESANDFILLS_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____StrokesAndFills_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(____StrokesAndFills_GRAPHICSKIT_p) $(____StrokesAndFills_APPLICATIONKIT_p) import32.lib cw32mt$(__RUNTIME_LIBS_3).lib,,
 |
 !endif

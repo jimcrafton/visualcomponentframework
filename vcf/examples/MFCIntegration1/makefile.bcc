@@ -134,7 +134,7 @@ clean:
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(MFCINTEGRATION1_OBJECTS)  $(OBJDIR)\MFCIntegration1_MFCIntegration1.res
-	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib -aa @&&|
+	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -aa @&&|
 	c0w32.obj $(MFCINTEGRATION1_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____MFCIntegration1_FOUNDATIONKIT_p) import32.lib cw32mt$(__RUNTIME_LIBS_3).lib,, $(OBJDIR)\MFCIntegration1_MFCIntegration1.res
 |
 !endif

@@ -69,11 +69,11 @@ OPTION_LIBMNG = 0
 OPTION_LIBTIFF = 0
 
 # Depends on:
-#     OPTION_ZLIB
-#     OPTION_LIBMNG
+#     OPTION_LIBPNG
+#     OPTION_LIBJPEG
 #     OPTION_LIBTIFF
-# Compile the FreeImage library: [0,1]
-OPTION_FREEIMAGE = 0
+# Compile the paintlib library: [0,1]
+OPTION_PAINTLIB = 0
 
 # Compile FoundationKit: [0,1]
 OPTION_FOUNDATIONKIT = 1
@@ -116,7 +116,7 @@ OPTION_REMOTEOBJECTKIT = 0
 OPTION_INTERNETKIT = 0
 
 # Depends on:
-#     OPTION_FREEIMAGE
+#     OPTION_PAINTLIB
 #     OPTION_APPLICATIONKIT
 # Compile ImageFormats: [0,1]
 OPTION_IMAGEFORMATS = 0

@@ -129,7 +129,7 @@ clean:
 
 !if "$(OPTION_INTERNETKIT)" == "1"
 .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(INETKIT_OBJECTS)
-	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\build\bcc\missing_libs -L..\..\lib -aa @&&|
+	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -aa @&&|
 	c0x32.obj $(INETKIT_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____InetKit_FOUNDATIONKIT_p) $(____InetKit_INTERNETKIT_p) import32.lib cw32mt$(__RUNTIME_LIBS_3).lib,,
 |
 !endif

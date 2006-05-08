@@ -8,6 +8,8 @@
 
         <headers>$(LIBTIFF_HDR)</headers>
         <sources>$(LIBTIFF_SRC)</sources>
+
+        <define cond="PLATFORM_WIN32=='1'">USE_WIN32_FILEIO</define>
     </template>
 
     <lib id="LibTIFF_lib" template="LibTIFF_base,vcf_lib"
