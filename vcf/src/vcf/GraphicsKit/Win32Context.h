@@ -220,6 +220,8 @@ public:
 	*/
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image );
 
+	virtual void bitBlit( const double& x, const double& y, Image* image );
+
 
 	/* utility functions */
 

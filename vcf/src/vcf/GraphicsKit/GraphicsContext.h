@@ -391,6 +391,15 @@ public:
 	void drawImage( const Point & pt, Image * image );
 
 
+	/**
+	"Blits" the image to the underlying graphics context. No attempt is 
+	made to transform the image. The image is blitted to the coordinates 
+	specified by the x and y arguments, and the image's width and height 
+	are used to determine the bounds.
+	*/
+	void bitBlit( const double& x, const double& y, Image* image );
+	void bitBlit( const Point & pt, Image* image );
+
 
 	/**
 	draws an image at the x,y, coordinates, with
@@ -727,6 +736,11 @@ protected:
 
 inline void GraphicsContext::drawImage( const Point & pt, Image * image) {
 	drawImage( pt.x_, pt.y_, image );
+}
+
+inline void GraphicsContext::bitBlit( const Point & pt, Image* image )
+{
+	bitBlit( pt.x_, pt.y_, image );
 }
 
 inline void GraphicsContext::drawImageWithState( const Point & pt, Image * image, const bool& enabled ) {

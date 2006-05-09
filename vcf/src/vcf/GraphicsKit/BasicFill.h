@@ -51,25 +51,7 @@ public:
 	void setColor( Color color ) {
 		color_ = color;
 	}
-
-	/**
-	returns the opacity. 
-	@return double the opacity of the fill. the value will be in the range
-	of 1.0 to 0.0, where 1.0 is completely opaque, and 0.0 is completely
-	transparent.
-	*/
-	double getOpacity() {
-		return opacity_;
-	}
-
-	/**
-	Sets the fill opacity value. 
-	@param double the opacity to change the fill to. This value is 
-	clamped to the range of 1.0 to 0.0 inclusive.
-	*/
-	void setOpacity( const double& val ) {
-		opacity_ = minVal<>( maxVal<>( val, 0.0 ), 1.0 );
-	}
+	
 
 	/**
 	returns whether or not to allow antialiasing when rendering the fill

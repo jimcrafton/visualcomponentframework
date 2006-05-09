@@ -186,6 +186,14 @@ public:
 
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image ) = 0;
 
+	/**
+	"Blits" the image to the underlying graphics context. No attempt is 
+	made to transform the image. The image is blitted to the coordinates 
+	specified by the x and y arguments, and the image's width and height 
+	are used to determine the bounds.
+	*/
+	virtual void bitBlit( const double& x, const double& y, Image* image ) = 0;
+
 
 	virtual void drawThemeSelectionRect( Rect* rect, DrawUIState& state ) = 0;
 
