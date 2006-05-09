@@ -18,7 +18,6 @@ using namespace VCF;
 
 BasicStroke::BasicStroke():
 	width_(0.0),
-	opacity_(1.0),
 	color_ (*Color::getColor( VCF::ColorNames::at( VCF::ColorNames::black ) )),
 	context_(NULL),		
 	antiAlias_(true),
@@ -235,7 +234,7 @@ void BasicStroke::render( Path * path )
 			}			
 
 
-			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
+			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()));
 
 			agg::render_scanlines(rasterizer, scanline, renderer);
 			//rasterizer.render(scanline,renderer);

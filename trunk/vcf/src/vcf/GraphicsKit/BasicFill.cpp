@@ -14,7 +14,6 @@ where you installed the VCF.
 using namespace VCF;
 
 BasicFill::BasicFill():
-	opacity_(1.0),
 	context_(NULL),
 	antiAlias_(true)
 {
@@ -205,7 +204,7 @@ void BasicFill::render( Path* path )
 
 			rasterizer.add_path( xfrmedPath );
 
-			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),opacity_));
+			renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()));
 
 			//rasterizer.render(scanline,renderer);
 			agg::render_scanlines(rasterizer, scanline, renderer);

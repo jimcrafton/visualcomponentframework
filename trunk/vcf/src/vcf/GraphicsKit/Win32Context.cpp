@@ -419,6 +419,38 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 	}
 }
 
+void Win32Context::bitBlit( const double& x, const double& y, Image* image )
+{
+	Win32Image* win32image = (Win32Image*)(image);		
+			
+	ImageBits* bits = win32image->getImageBits();
+	HPALETTE oldPalette = NULL;
+	if ( NULL != win32image->palette_ ){
+		oldPalette = ::SelectPalette( dc_, win32image->palette_, FALSE );
+		::RealizePalette( dc_ );
+	}
+
+	SysPixelType* bmpBuf = NULL;
+	SysPixelType* imageBuf = image->getImageBits()->pixels_;
+
+	SetDIBitsToDevice( dc_,
+						(long)x,
+						(long)y,
+						(long)win32image->getWidth(),
+						(long)win32image->getHeight(),
+						0,
+						0,
+						0,
+						(long)win32image->getHeight(),
+						imageBuf,
+						&win32image->bmpInfo_,
+						DIB_RGB_COLORS );
+
+	if ( NULL != oldPalette ){
+		::SelectPalette( dc_, oldPalette, FALSE );
+	}
+}
+
 void Win32Context::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image )
 {
 	//checkHandle();

@@ -41,15 +41,7 @@ public:
 	Color* getColor();
 
 	void setColor( Color* color );
-
-	double getOpacity() {
-		return opacity_;
-	}
-
-	void setOpacity( const double& val ) {
-		opacity_ = minVal<>( maxVal<>( val, 0.0 ), 1.0 );
-	}
-
+	
 	bool allowAntiAlias() {
 		return antiAlias_;
 	}
@@ -85,7 +77,6 @@ public:
 
 private:
 	double width_;
-	double opacity_;
 	Color color_;
 	GraphicsContext* context_;
 	bool antiAlias_;

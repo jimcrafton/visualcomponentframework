@@ -315,6 +315,16 @@ void GraphicsContext::drawImage( const double& x, const double& y, Image * image
 	drawPartialImage( x, y, &bounds, image );
 }
 
+void GraphicsContext::bitBlit( const double& x, const double& y, Image* image )
+{
+	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
+
+		contextPeer_->bitBlit( x, y, image );
+
+		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
+	}
+}
+
 void GraphicsContext::drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled )
 {
 	drawImage( x, y, image );

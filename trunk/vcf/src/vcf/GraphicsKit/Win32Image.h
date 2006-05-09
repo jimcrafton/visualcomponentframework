@@ -212,9 +212,6 @@ protected:
 
 	void loadFromBMPHandle( HBITMAP bitmap );
 
-	//HBITMAP hBitmap_;
-	//HBITMAP hOldBitmap_;
-	//HDC dc_;
 	HBitmap32Bit hbmp_;
 	bool flipBits_;
 	bool ownDC_;

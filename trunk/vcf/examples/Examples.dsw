@@ -1053,7 +1053,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Processes"=".\Processes\Processes.dsp" - Package Owner=<4>
+Project: "Pixels"=.\Pixels\Pixels.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Printing"=.\Printing\Printing.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

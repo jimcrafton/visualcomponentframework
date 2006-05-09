@@ -29,6 +29,12 @@ Win32RunLoopPeer::~Win32RunLoopPeer()
 
 void Win32RunLoopPeer::run( const String& mode, const DateTime* duration )
 {
+	/**
+	A better way to handle this:
+	Use GetMessage(), and is duration is non-null, then add a timer to 
+	fire after the requested elapsed amount of time. When this happens
+	quit the loop
+	*/
 	MSG msg = {0};
 
 	DateTime current = DateTime::now();
