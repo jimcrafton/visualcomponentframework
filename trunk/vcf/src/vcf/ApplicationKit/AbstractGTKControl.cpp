@@ -219,7 +219,7 @@ void AbstractGTKControl::keepMouseEvents()
 
 	if ( res != GDK_GRAB_SUCCESS ) {
 		//report error throw exception here ????
-		StringUtils::traceWithArgs( "gdk_pointer_grab failed!\n" );
+		StringUtils::trace( "gdk_pointer_grab failed!\n" );
 		return ;
 	}
 
@@ -882,7 +882,7 @@ void AbstractGTKControl::Container::sizeRequest( GtkWidget *widget, GtkRequisiti
 	g_return_if_fail ( GTK_IS_VCF_CONTAINER ( widget ) );
 	g_return_if_fail ( requisition != NULL );
 
-	StringUtils::traceWithArgs( "Container::sizeRequest widget: %p, name:%s\n", widget, widget->name );
+	StringUtils::trace( Format("Container::sizeRequest widget: %p, name:%s\n") % widget % widget->name );
 
 
 	Rect bounds = AbstractGTKControl::Container::getBounds( widget );
@@ -922,7 +922,7 @@ void AbstractGTKControl::Container::sizeAllocate( GtkWidget *widget, GtkAllocati
 
 	g_return_if_fail ( allocation != NULL );
 
-	StringUtils::traceWithArgs( "Container::sizeAllocate widget: %p, name:%s\n", widget, widget->name );
+	StringUtils::trace( Format("Container::sizeAllocate widget: %p, name:%s\n") % widget % widget->name );
 
 	AbstractGTKControl::Container *container;
 
@@ -978,11 +978,11 @@ void AbstractGTKControl::Container::sizeAllocate( GtkWidget *widget, GtkAllocati
 				child_allocation.height = int( bounds.getHeight() ); // child->height;//child_requisition.height;
 
 
-				StringUtils::traceWithArgs( "\tcalling gtk_widget_size_allocate for widget: %p, name:%s, parent: %p\n\t\tx:%d, y:%d, w:%d, h:%d\n",
-				                            child->widget, child->widget->name, widget,
-				                            child->x,
-				                            child->y,
-				                            child->width,
+				StringUtils::trace( Format("\tcalling gtk_widget_size_allocate for widget: %p, name:%s, parent: %p\n\t\tx:%d, y:%d, w:%d, h:%d\n" ) %
+				                            child->widget % child->widget->name % widget %
+				                            child->x %
+				                            child->y %
+				                            child->width %
 				                            child->height );
 				gtk_widget_size_allocate ( child->widget, &child_allocation );
 

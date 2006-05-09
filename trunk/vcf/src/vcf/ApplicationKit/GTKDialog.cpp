@@ -32,7 +32,9 @@ GTKDialog::~GTKDialog()
 {}
 
 void GTKDialog::create( Control* owningControl )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKDialog::showMessage( const String& message, const String& caption )
 {
@@ -52,7 +54,6 @@ UIToolkit::ModalReturnType GTKDialog::showMessage( const String& message,
                                                    const long& messageButtons,
                                                    const Dialog::MessageStyle& messageStyle )
 {
-
 	int gtkButtons = 0;
 	int gtkStyle = 0;
 
@@ -144,7 +145,24 @@ UIToolkit::ModalReturnType GTKDialog::showMessage( const String& message,
 }
 
 void GTKDialog::setBorder( Border* border )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKDialog::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKDialog::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKDialog::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 
 /**

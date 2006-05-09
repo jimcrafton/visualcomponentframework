@@ -10,6 +10,12 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 
+#include "vcf/GraphicsKit/PrintSessionPeer.h"
+#include "vcf/GraphicsKit/GTKPrintSession.h"
+
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
+#include "vcf/GraphicsKit/GTKGraphicsResourceBundle.h"
 
 
 using namespace VCF;
@@ -77,7 +83,9 @@ GTKGraphicsToolkit::~GTKGraphicsToolkit()
 }
 
 void GTKGraphicsToolkit::init()
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKGraphicsToolkit::initSystemFont()
 {
@@ -130,31 +138,31 @@ FontPeer* GTKGraphicsToolkit::internal_createFontPeer( const String& fontName,
 }
 
 
-Image* GTKGraphicsToolkit::internal_createImage( const unsigned long& width,
-                                                 const unsigned long& height )
+Image* GTKGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
 {
 	return new GTKImage( width, height );
 }
 
-Image* GTKGraphicsToolkit::internal_createImage( GraphicsContext* context,
-                                                 Rect* rect )
+Image* GTKGraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
 {
 	return new GTKImage( context, rect );
 }
 
-
 PrintSessionPeer* GTKGraphicsToolkit::internal_createPrintSessionPeer()
 {
-	return 0;
+	return new GTKPrintSession();
 }
 
 GraphicsResourceBundlePeer* GTKGraphicsToolkit::internal_createGraphicsResourceBundlePeer()
 {
-	return 0; //new GTKGraphicsResourceBundle();
+	return new GTKGraphicsResourceBundle();
 }
 
 double GTKGraphicsToolkit::internal_getDPI( GraphicsContext* context )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return 0.0;
+}
 
 void GTKGraphicsToolkit::loadSystemColors()
 {
@@ -290,6 +298,11 @@ double GTKGraphicsToolkit::getDPI()
 	result = height / ( mmHeight / 25.4 );
 
 	return result;
+}
+
+void GTKGraphicsToolkit::internal_systemSettingsChanged()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 

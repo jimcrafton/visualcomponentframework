@@ -22,13 +22,11 @@ GTKFileOpenDialog::GTKFileOpenDialog( Control* owner ):
 
 GTKFileOpenDialog::~GTKFileOpenDialog()
 {
-
 }
-
 
 void GTKFileOpenDialog::init()
 {
-
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKFileOpenDialog::setTitle( const String& title )
@@ -38,6 +36,7 @@ void GTKFileOpenDialog::setTitle( const String& title )
 
 gboolean GTKFileOpenDialog::onDestroyGtkFileSelector( GtkWidget *widget )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return FALSE;
 }
 
@@ -113,7 +112,7 @@ bool GTKFileOpenDialog::execute()
 
 void GTKFileOpenDialog::addFilter( const String & description, const String & extension )
 {
-
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKFileOpenDialog::setDirectory( const String & directory )
@@ -158,7 +157,7 @@ void GTKFileOpenDialog::setAllowsMultiSelect( const bool& allowsMultiSelect )
 
 void GTKFileOpenDialog::setSelectedFilter( const String& selectedFilter )
 {
-
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 

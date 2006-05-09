@@ -44,6 +44,7 @@ bool GTKApplication::initApp()
 
 void GTKApplication::terminateApp()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 
@@ -54,13 +55,14 @@ void GTKApplication::setApplication( VCF::AbstractApplication* application )
 
 ResourceBundle* GTKApplication::getResourceBundle()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 String GTKApplication::getFileName()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	String result;
-
 	return result;
 }
 

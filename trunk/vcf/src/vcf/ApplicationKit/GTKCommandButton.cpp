@@ -50,11 +50,14 @@ void GTKCommandButton::create( Control* owningControl )
 
 Image* GTKCommandButton::getImage()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 void GTKCommandButton::setImage( Image* image )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 ButtonState GTKCommandButton::getState()
 {
@@ -62,7 +65,9 @@ ButtonState GTKCommandButton::getState()
 }
 
 void GTKCommandButton::setState( const ulong32& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKCommandButton::gtkButtonClicked( GtkButton* button, gpointer data )
 {
@@ -73,7 +78,6 @@ void GTKCommandButton::gtkButtonClicked( GtkButton* button, gpointer data )
 String GTKCommandButton::getText()
 {
 	String result;
-
 	result = gtk_button_get_label( gtkButton_ );
 	return result;
 }
@@ -84,7 +88,9 @@ void GTKCommandButton::setText( const String& text )
 }
 
 void GTKCommandButton::setBorder( Border* border )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 gboolean GTKCommandButton::handleEvent( GdkEvent* gtkEvent )
 {
@@ -117,6 +123,20 @@ gboolean GTKCommandButton::handleEvent( GdkEvent* gtkEvent )
 	return result;
 }
 
+void GTKCommandButton::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKCommandButton::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKCommandButton::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

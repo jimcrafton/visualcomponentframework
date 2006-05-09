@@ -24,7 +24,6 @@ GTKControlContext::~GTKControlContext()
 {
 }
 
-
 void GTKControlContext::setContext( GraphicsContext* context )
 {
 	GTKContext::setContext ( context );

@@ -12,7 +12,7 @@ where you installed the VCF.
 
 using namespace VCF;
 
-GrayScaleImage::GrayScaleImage( const bool& needsMemAlloc=true )
+GrayScaleImage::GrayScaleImage( const bool& needsMemAlloc )
 {
 
 }

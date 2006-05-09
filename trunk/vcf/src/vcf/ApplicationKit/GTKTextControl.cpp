@@ -96,6 +96,7 @@ unsigned long GTKTextControl::getLineCount()
 
 unsigned long GTKTextControl::getCurrentLinePosition()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	unsigned long result = 0;
 	if ( isMultiLineControl_ ) {
 		//result = gtk_text_view_get_left_margin( multiLine_ );
@@ -123,6 +124,7 @@ double GTKTextControl::getRightMargin()
 
 Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
 	}
 	return NULL;
@@ -130,6 +132,7 @@ Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
 
 unsigned long GTKTextControl::getCharIndexFromPosition( Point* point )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
 	}
 	return 0;
@@ -202,22 +205,24 @@ void GTKTextControl::setSelectionMark( const unsigned long& start, const unsigne
 
 void GTKTextControl::setSelectionFont( Font* font )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
 	}
 }
 
 void GTKTextControl::setParagraphAlignment( const TextAlignmentType& alignment )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
 	}
 }
 
 void GTKTextControl::scrollToLine( const ulong32& lineIndex )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
 	}
 }
-
 
 void GTKTextControl::onTextModelTextChanged( TextEvent* e )
 {
@@ -290,28 +295,124 @@ void GTKTextControl::setText( const String& text )
 
 void GTKTextControl::scrollToSelection( const bool& showEndSel )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKTextControl::setReadOnly( const bool& readonly )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKTextControl::setBorder( Border* border )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 ulong32 GTKTextControl::getTotalPrintablePageCount( PrintContext* context )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKTextControl::print( PrintContext* context, const long& page )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKTextControl::finishPrinting()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
+void GTKTextControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::insertText( unsigned int start, const String& text )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::deleteText( unsigned int start, unsigned int length )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::setDefaultStyle( Dictionary& styles )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+double GTKTextControl::getBottomMargin()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return 0.0;
+}
+
+void GTKTextControl::setStyle( unsigned int start, unsigned int length, Dictionary& styles )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::getStyle( unsigned int start, unsigned int length, VCF::Dictionary& styles )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+unsigned int GTKTextControl::getTextLength()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return 0;
+}
+
+void GTKTextControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::setBottomMargin( const double & bottomMargin )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+String GTKTextControl::getText( unsigned int start, unsigned int length )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return "";
+}
+
+OSHandleID GTKTextControl::getTextObjectHandle()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
+}
+
+void GTKTextControl::setTopMargin( const double & topMargin )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKTextControl::paint( GraphicsContext* context, const Rect& paintRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+Rect GTKTextControl::getContentBoundsForWidth( const double& width )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return Rect();
+}
+
+double GTKTextControl::getTopMargin()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return 0.0;
+}
 
 /**
 $Id$

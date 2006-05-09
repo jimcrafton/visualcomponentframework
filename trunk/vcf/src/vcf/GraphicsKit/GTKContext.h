@@ -127,7 +127,9 @@ public:
 
 	virtual void drawThemeFocusRect( Rect* rect, DrawUIState& state );
 
-	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state );
+	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
+
+	virtual void drawThemeButtonFocusRect( Rect* rect );
 
 	virtual void drawThemeCheckboxRect( Rect* rect, ButtonState& state );
 
@@ -143,6 +145,10 @@ public:
 	virtual void drawThemeTab( Rect* rect, TabState& state );
 
 	virtual void drawThemeTabPage( Rect* rect, DrawUIState& state );
+
+	virtual void drawThemeTabContent( Rect* rect, DrawUIState& state );
+
+	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
 
 	virtual void drawThemeTickMarks( Rect* rect, SliderState& state );
 
@@ -163,6 +169,8 @@ public:
 	virtual void drawThemeBackground( Rect* rect, BackgroundState& state );
 
 	virtual void drawThemeMenuItem( Rect* rect, MenuState& state );
+
+	virtual void drawThemeMenuItemText( Rect* rect, MenuState& state );
 
 	virtual void drawThemeText( Rect* rect, TextState& state );
 

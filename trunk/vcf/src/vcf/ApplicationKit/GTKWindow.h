@@ -76,6 +76,12 @@ public:
 
 	virtual bool isActiveWindow();
 
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
+
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+
 protected:
 	virtual void initGdkEventHandlers();
 

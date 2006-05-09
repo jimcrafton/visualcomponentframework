@@ -59,6 +59,7 @@ void GTKFont::setName( const String& name )
 
 bool GTKFont::isTrueType()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return true;
 }
 
@@ -126,19 +127,25 @@ void GTKFont::setItalic( const bool& italic )
 
 bool GTKFont::getUnderlined()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return false;
 }
 
 void GTKFont::setUnderlined( const bool& underlined )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 bool GTKFont::getStrikeOut()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return false;
 }
 
 void GTKFont::setStrikeOut( const bool& strikeout )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 // double GTKFont::getShear()
 // {
@@ -258,7 +265,14 @@ double GTKFont::getDescent()
 
 GlyphCollection* GTKFont::getGlyphCollection( const String& text )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
+}
+
+bool GTKFont::isFixedPitch()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return true;
 }
 
 // bool GTKFont::isEqual( Object* object )
@@ -268,8 +282,9 @@ GlyphCollection* GTKFont::getGlyphCollection( const String& text )
 
 
 void GTKFont::setFont( Font* font )
-{}
-
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

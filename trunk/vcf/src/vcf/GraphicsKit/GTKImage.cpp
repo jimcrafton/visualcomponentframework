@@ -129,10 +129,12 @@ void GTKImage::updateImageBitsFromPixmap()
 
 void GTKImage::beginDrawing()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKImage::finishedDrawing()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 

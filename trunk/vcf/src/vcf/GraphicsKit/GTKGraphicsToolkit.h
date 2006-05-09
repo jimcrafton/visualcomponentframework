@@ -32,10 +32,9 @@ public:
 	virtual FontPeer* internal_createFontPeer( const String& fontName,
 	                                           const double& pointSize );
 
-	virtual Image* internal_createImage( const unsigned long& width,
-	                                     const unsigned long& height );
+	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType );
 
-	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect );
+	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType );
 
 	virtual Font* getDefaultSystemFont()
 	{
@@ -66,6 +65,8 @@ public:
 	virtual GraphicsResourceBundlePeer* internal_createGraphicsResourceBundlePeer();
 
 	virtual double internal_getDPI( GraphicsContext* context );
+
+	virtual void internal_systemSettingsChanged();
 	
 protected:
 	bool initialized_;
