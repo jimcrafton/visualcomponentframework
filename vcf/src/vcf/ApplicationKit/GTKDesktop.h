@@ -62,6 +62,8 @@ public:
 	virtual ulong32 desktopGetHeight();
 
 	virtual Rect desktopGetUsableBounds();
+
+	virtual Point getCurrentMousePosition();
 protected:
 
 };

@@ -92,6 +92,8 @@ public:
 
 	virtual GlyphCollection* getGlyphCollection( const String& text );
 
+	virtual bool isFixedPitch();
+
 	virtual void setFont( Font* font );
 
 	//virtual bool isEqual( Object* object );

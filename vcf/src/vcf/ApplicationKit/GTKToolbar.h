@@ -48,6 +48,12 @@ public:
 
 	virtual void setEnableAutoResize( const bool& val );
 
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
+
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+
 protected:
 	void onModelChanged( ModelEvent* e );
 	bool currentlyModifyingItem_;

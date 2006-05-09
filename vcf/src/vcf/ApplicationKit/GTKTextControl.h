@@ -35,11 +35,17 @@ public:
 
 	virtual unsigned long getLineCount();
 
+	virtual Rect getContentBoundsForWidth( const double& width );
+
 	virtual unsigned long getCurrentLinePosition();
 
 	virtual double getLeftMargin();
 
 	virtual double getRightMargin();
+
+	virtual double getTopMargin();
+
+	virtual double getBottomMargin();	
 
 	virtual Point* getPositionFromCharIndex( const unsigned long& index );
 
@@ -95,6 +101,35 @@ public:
 	virtual void print( PrintContext* context, const long& page );
 
 	virtual void finishPrinting();
+
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
+
+	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
+
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
+
+
+	virtual OSHandleID getTextObjectHandle();
+
+	virtual void insertText( unsigned int start, const String& text );
+
+	virtual void deleteText( unsigned int start, unsigned int length );
+
+	virtual unsigned int getTextLength();
+
+	virtual String getText( unsigned int start, unsigned int length );
+
+	virtual void paint( GraphicsContext* context, const Rect& paintRect );
+
+	virtual void setTopMargin( const double & topMargin );
+
+	virtual void setBottomMargin( const double & bottomMargin );	
+
+	virtual void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
+
+	virtual void getStyle( unsigned int start, unsigned int length, VCF::Dictionary& styles );
+
+	virtual void setDefaultStyle( Dictionary& styles );
 
 protected:
 	TextControl* textControl_;

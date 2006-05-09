@@ -18,15 +18,11 @@ using namespace VCF;
 GTKControl::GTKControl( Control* control )
 {
 	control_ = control;
-
-
 }
 
 GTKControl::~GTKControl()
 {
 }
-
-
 
 void GTKControl::create( Control* owningControl )
 {
@@ -44,13 +40,27 @@ void GTKControl::create( Control* owningControl )
 	gtk_container_add( GTK_CONTAINER( toolkit->getDefaultParent() ), wndHandle_ );
 
 	AbstractGTKControl::registerGTKControl( this );
-
-
 }
 
 void GTKControl::setBorder( Border* border )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
+void GTKControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKControl::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

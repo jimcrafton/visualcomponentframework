@@ -338,6 +338,7 @@ void GTKContext::arc( const double & x1,
 {
 	//swap out the values to ensure they are normalized since windows is
 	//brain dead about this
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKContext::polyline( const std::vector<Point>& pts )
@@ -413,6 +414,7 @@ void GTKContext::curve( const double & x1,
 	// 			gdk_draw_lines( drawable_, gdkGC_, &xPts[ 0 ], xPts.size() );
 	// 		}
 	// 	}
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKContext::lineTo( const double & x, const double & y )
@@ -624,7 +626,9 @@ void GTKContext::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 }
 
 void GTKContext::drawThemeProgress( Rect* rect, ProgressState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 // void GTKContext::drawVerticalScrollButtonRect( Rect* rect,
 //                                                const bool& topButton,
@@ -877,65 +881,123 @@ void GTKContext::roundRect( const double & x1,
                             const double & y2,
                             const double & xc,
                             const double & yc )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 bool GTKContext::isAntiAliasingOn()
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return false;
+}
 
 void GTKContext::setAntiAliasingOn( bool antiAliasingOn )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeSelectionRect( Rect* rect, DrawUIState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeFocusRect( Rect* rect, DrawUIState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
-void GTKContext::drawThemeButtonRect( Rect* rect, ButtonState& state )
-{}
+void GTKContext::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeComboboxRect( Rect* rect, ButtonState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeDisclosureButton( Rect* rect,
                                             DisclosureButtonState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeTab( Rect* rect, TabState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeTabPage( Rect* rect, DrawUIState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeTickMarks( Rect* rect, SliderState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeSlider( Rect* rect, SliderState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeHeader( Rect* rect, ButtonState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeEdge( Rect* rect, DrawUIState& state,
                                 const long& edgeSides,
                                 const long& edgeStyle )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeSizeGripper( Rect* rect, DrawUIState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKContext::drawThemeText( Rect* rect, TextState& state )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
+void GTKContext::drawThemeTabContent( Rect* rect, DrawUIState& state )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKContext::drawThemeMenuItemText( Rect* rect, MenuState& state )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKContext::drawThemeButtonFocusRect( Rect* rect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKContext::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

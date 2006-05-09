@@ -71,8 +71,6 @@ public:
 
 	virtual PopupMenuPeer* internal_createPopupMenuPeer( PopupMenu* popupMenu );
 
-	virtual HTMLBrowserPeer* internal_createHTMLBrowserPeer( Control* control );
-
 	virtual ContextPeer* internal_createContextPeer( Control* component );
 
 	virtual CommonFileDialogPeer* internal_createCommonFileOpenDialogPeer( Control* owner );
@@ -152,6 +150,22 @@ public:
 	static void internal_gdkEventHandler( GdkEvent* gdkEvent, gpointer data );
 
 	static gboolean internal_gdkIdleHandler( gpointer data );
+
+	virtual TextPeer* internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined );
+
+	virtual TextEditPeer* internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl );
+
+	virtual  MenuManagerPeer* internal_createMenuManagerPeer();
+
+	virtual void internal_displayHelpContents( const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );
+
+	virtual bool internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory );
+
+	virtual void internal_systemSettingsChanged();
 
 protected:
 	VirtualKeyCode translateKeyCode( guint code );

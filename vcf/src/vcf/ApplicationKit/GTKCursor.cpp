@@ -30,11 +30,11 @@ GTKCursor::~GTKCursor()
 
 void GTKCursor::createFromImage( Image* cursorImage, Point* hotSpot )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 void GTKCursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor )
 {
-
 	GdkCursorType id = ( GdkCursorType ) 0;
 
 	cursorID_ = ( long ) systemCursor;
@@ -117,6 +117,7 @@ void GTKCursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor
 void GTKCursor::createFromResourceName( const String& cursorName,
                                         OSHandleID instanceHandle )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 

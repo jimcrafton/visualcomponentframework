@@ -21,9 +21,9 @@ GTKDesktop::~GTKDesktop()
 {
 }
 
-
 void GTKDesktop::desktopBeginPainting( Rect* clippingRect )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 /**
@@ -32,24 +32,26 @@ void GTKDesktop::desktopBeginPainting( Rect* clippingRect )
 */
 void GTKDesktop::desktopEndPainting()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 bool GTKDesktop::desktopSupportsVirtualDirectories()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	bool result = false;
-
 	return result;
 }
 
 bool GTKDesktop::desktopHasFileSystemDirectory()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	bool result = false;
-
 	return result;
 }
 
 String GTKDesktop::desktopGetDirectory()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return "";
 }
 
@@ -65,6 +67,7 @@ OSHandleID GTKDesktop::desktopGetGraphicsContextHandleID()
 
 void GTKDesktop::desktopSetDesktop( Desktop* desktop )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 ulong32 GTKDesktop::desktopGetWidth()
@@ -74,10 +77,8 @@ ulong32 GTKDesktop::desktopGetWidth()
 
 ulong32 GTKDesktop::desktopGetHeight()
 {
-
 	return gdk_screen_get_height( gdk_screen_get_default() );
 }
-
 
 Rect GTKDesktop::desktopGetUsableBounds()
 {
@@ -92,6 +93,12 @@ Rect GTKDesktop::desktopGetUsableBounds()
 	return result;
 }
 
+Point GTKDesktop::getCurrentMousePosition()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	Point result;
+	return result;
+}
 
 /**
 $Id$

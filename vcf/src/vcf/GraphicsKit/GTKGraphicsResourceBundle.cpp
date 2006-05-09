@@ -31,9 +31,8 @@ GTKGraphicsResourceBundle::~GTKGraphicsResourceBundle()
 
 Image* GTKGraphicsResourceBundle::getImage( const String& resourceName )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	Image* result = NULL;
-
-
 	return result;
 }
 

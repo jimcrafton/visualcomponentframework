@@ -79,36 +79,36 @@ public:
 		return result;
 	}
 
-	virtual double getDefaultHeightFor( const UIMetricsManager::HeightType& type )
+	virtual double getDefaultHeightFor( const UIMetricsManager::MetricType& type )
 	{
 		double result = 0.0;
 		switch ( type ) {
-			case UIMetricsManager::htLabelHeight : {
+			case UIMetricsManager::mtLabelHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					result = f.getHeight() * 1.75;
 				}
 				break;
 
-			case UIMetricsManager::htComboBoxHeight : {
+			case UIMetricsManager::mtComboBoxHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					result = f.getHeight() * 2.0;
 				}
 				break;
 
-			case UIMetricsManager::htListItemHeight : {
+			case UIMetricsManager::mtListItemHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					result = f.getHeight() * 1.65;
 				}
 				break;
 
-			case UIMetricsManager::htButtonHeight : {
+			case UIMetricsManager::mtButtonHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					result = ( f.getHeight() * 1.75 ) + 2.50;
 				}
 				break;
 
-			case UIMetricsManager::htRadioBoxHeight :
-			case UIMetricsManager::htCheckBoxHeight : {
+			case UIMetricsManager::mtRadioBoxHeight :
+			case UIMetricsManager::mtCheckBoxHeight : {
 					//in Win32 a radio box or check box is ALWAYS 10 dialog units high
 					//dialog units are converted by
 					//(2 * average char height dialog font / average char height system font pixels
@@ -120,18 +120,18 @@ public:
 				}
 				break;
 
-			case UIMetricsManager::htToolTipHeight : {
+			case UIMetricsManager::mtToolTipHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftToolTipFont );
 					result = f.getHeight() * 1.2222;
 				}
 				break;
 
-			case UIMetricsManager::htSeparatorHeight : {
+			case UIMetricsManager::mtSeparatorHeight : {
 					result = 2.0;
 				}
 				break;
 
-			case UIMetricsManager::htInformationalControl : {
+			case UIMetricsManager::mtInformationalControlHeight : {
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					result = f.getHeight() * 1.75;
 				}
@@ -141,39 +141,39 @@ public:
 
 	}
 
-	virtual double getPreferredSpacingFor( const UIMetricsManager::SpacingType& type )
+	virtual double getPreferredSpacingFor( const UIMetricsManager::MetricType& type )
 	{
 		double result = 0.0;
 
 		//values largely derived from the Apple HIG at
 		//http://developer.apple.com/techpubs/macosx/Essentials/AquaHIGuidelines/AHIGLayout/index.html
 		switch ( type ) {
-			case UIMetricsManager::stWindowBorderDelta : {
+			case UIMetricsManager::mtWindowBorderDelta : {
 					result = 20.0;
 				}
 				break;
 
-			case UIMetricsManager::stContainerBorderDelta : {
+			case UIMetricsManager::mtContainerBorderDelta : {
 					result = 8.0;
 				}
 				break;
 
-			case UIMetricsManager::stControlVerticalSpacing : {
+			case UIMetricsManager::mtControlVerticalSpacing : {
 					result = 14.0;
 				}
 				break;
 
-			case UIMetricsManager::stControlHorizontalSpacing : {
+			case UIMetricsManager::mtControlHorizontalSpacing : {
 					result = 10.0;
 				}
 				break;
 
-			case UIMetricsManager::stInformationControlTopSpacer : {
+			case UIMetricsManager::mtInformationControlTopSpacer : {
 					result = 2.0;
 				}
 				break;
 
-			case UIMetricsManager::stInformationControlBottomSpacer : {
+			case UIMetricsManager::mtInformationControlBottomSpacer : {
 					result = 8.0;
 				}
 				break;
@@ -227,16 +227,22 @@ public:
 
 		return result;
 	}
+
+	virtual double getValue( const MetricType& type, const String& text="" )
+	{
+		return 0.0;
+	}
+
+	virtual Size getSize( const MetricType& type, const String& text="" )
+	{
+		return Size();
+	}
+
+	virtual Rect getRect( const MetricType& type, Rect* rect=NULL )
+	{
+		return Rect();
+	}
 };
-
-
-
-
-
-
-
-
-
 
 GTKUIToolkit::GTKUIToolkit() :
 		defaultParent_( NULL )
@@ -282,16 +288,19 @@ TextPeer* GTKUIToolkit::internal_createTextPeer( TextControl* component,
 
 TreePeer* GTKUIToolkit::internal_createTreePeer( TreeControl* componentb )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
 }
 
 ListviewPeer* GTKUIToolkit::internal_createListViewPeer( ListViewControl* component )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
 }
 
 CommonPrintDialogPeer* GTKUIToolkit::internal_createCommonPrintDialogPeer( Control* owner )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
 }
 
@@ -337,27 +346,25 @@ ToolbarPeer* GTKUIToolkit::internal_createToolbarPeer( Toolbar* toolbar )
 
 MenuItemPeer* GTKUIToolkit::internal_createMenuItemPeer( MenuItem* item )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 MenuBarPeer* GTKUIToolkit::internal_createMenuBarPeer( MenuBar* menuBar )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 PopupMenuPeer* GTKUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 ButtonPeer* GTKUIToolkit::internal_createButtonPeer( CommandButton* component )
 {
 	return new GTKCommandButton( component );
-}
-
-HTMLBrowserPeer* GTKUIToolkit::internal_createHTMLBrowserPeer( Control* control )
-{
-	return NULL;
 }
 
 ContextPeer* GTKUIToolkit::internal_createContextPeer( Control* component )
@@ -372,36 +379,43 @@ CommonFileDialogPeer* GTKUIToolkit::internal_createCommonFileOpenDialogPeer( Con
 
 CommonFileDialogPeer* GTKUIToolkit::internal_createCommonFileSaveDialogPeer( Control* owner )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 CommonColorDialogPeer* GTKUIToolkit::internal_createCommonColorDialogPeer( Control* owner )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 CommonFolderBrowseDialogPeer* GTKUIToolkit::internal_createCommonFolderBrowseDialogPeer( Control* owner )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 CommonFontDialogPeer* GTKUIToolkit::internal_createCommonFontDialogPeer( Control* owner )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 DragDropPeer* GTKUIToolkit::internal_createDragDropPeer()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 DataObjectPeer* GTKUIToolkit::internal_createDataObjectPeer()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 DropTargetPeer* GTKUIToolkit::internal_createDropTargetPeer()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
@@ -412,6 +426,7 @@ DesktopPeer* GTKUIToolkit::internal_createDesktopPeer( Desktop* desktop )
 
 ScrollPeer* GTKUIToolkit::internal_createScrollPeer( Control* control )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
@@ -422,28 +437,33 @@ CursorPeer* GTKUIToolkit::internal_createCursorPeer( Cursor* cursor )
 
 ClipboardPeer* GTKUIToolkit::internal_createClipboardPeer()
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return NULL;
 }
 
 bool GTKUIToolkit::internal_createCaret( Control* owningControl, Image* caretImage )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	bool result = false;
-
 	return result;
 }
 
 bool GTKUIToolkit::internal_destroyCaret( Control* owningControl )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	bool result = false;
-
 	return result;
 }
 
 void GTKUIToolkit::internal_setCaretVisible( const bool& caretVisible )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKUIToolkit::internal_setCaretPos( Point* point )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKUIToolkit::internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler )
 {
@@ -603,7 +623,7 @@ bool GTKUIToolkit::handleGdkEvent( GdkEvent* gdkEvent )
 						KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, 1,
 						                     modifierKey, keyChar, vkCode );
 
-						StringUtils::traceWithArgs( "control: %p, keyChar: %c\n", control, keyChar );
+						StringUtils::trace( Format("control: %p, keyChar: %c\n") % control % keyChar );
 						handleKeyboardEvent( &event );
 						if ( event.isConsumed() ) {
 							result = false;
@@ -658,7 +678,7 @@ VCF::Event* GTKUIToolkit::internal_createEventFromNativeOSEventData( void* event
 			break;
 
 		case GDK_DESTROY : {
-				event = new VCF::ComponentEvent( eventMsg->control_, Component::COMPONENT_DELETED );
+				event = new VCF::ComponentEvent( eventMsg->control_, Component::COMPONENT_DESTROYED );
 			}
 			break;
 
@@ -678,7 +698,7 @@ VCF::Event* GTKUIToolkit::internal_createEventFromNativeOSEventData( void* event
 		case GDK_BUTTON_PRESS :
 		case GDK_2BUTTON_PRESS :
 		case GDK_3BUTTON_PRESS : {
-				StringUtils::traceWithArgs( "GDK_BUTTON_PRESS, %p\n", eventMsg->control_ );
+				StringUtils::trace( Format("GDK_BUTTON_PRESS, %p\n") % eventMsg->control_ );
 				GdkEventButton* gdkBtnEvent = ( GdkEventButton* ) eventMsg->gdkEvent_;
 
 				VCF::Point pt( gdkBtnEvent->x, gdkBtnEvent->y );
@@ -774,18 +794,14 @@ Size GTKUIToolkit::internal_getDragDropDelta()
 {
 	//this is completely arbitrary - need to read this from a file
 	Size result( 4, 4 );
-
 	return result;
 }
-
 
 void GTKUIToolkit::createDefaultParentWnd()
 {
 	defaultParent_ = gtk_window_new( GTK_WINDOW_TOPLEVEL );
 	gtk_widget_realize ( defaultParent_ );
 }
-
-
 
 VirtualKeyCode GTKUIToolkit::translateKeyCode( guint code )
 {
@@ -1323,14 +1339,59 @@ ulong32 GTKUIToolkit::translateKeyMask( GdkModifierType keyState )
 GraphicsResourceBundlePeer*
 GTKUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
 {
-	return 0;
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
 }
 
 SystemTrayPeer* GTKUIToolkit::internal_createSystemTrayPeer()
 {
-	return 0;
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
 }
 
+TextPeer* GTKUIToolkit::internal_createTextPeer( const bool& autoWordWrap, const bool& multiLined )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
+}
+
+void GTKUIToolkit::internal_displayHelpContents( const String& helpBookName, const String& helpDirectory )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKUIToolkit::internal_systemSettingsChanged()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+bool GTKUIToolkit::internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return false;
+}
+
+MenuManagerPeer* GTKUIToolkit::internal_createMenuManagerPeer()
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
+}
+
+TextEditPeer* GTKUIToolkit::internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return NULL;
+}
+
+void GTKUIToolkit::internal_displayHelpIndex( const String& helpBookName, const String& helpDirectory )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKUIToolkit::internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

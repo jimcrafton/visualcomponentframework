@@ -128,11 +128,9 @@ void GTKWindow::setBounds( Rect* rect )
 
 void GTKWindow::close()
 {
-
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	//GTKUIToolkit* toolkit = reinterpret_cast<GTKUIToolkit*>(UIToolkit::getDefaultUIToolkit());
 	//GTKGraphicsToolkit* grafToolkit = reinterpret_cast<GTKGraphicsToolkit*>(GraphicsToolkit::getDefaultGraphicsToolkit());
-
-
 }
 
 void GTKWindow::setFrameStyle( const FrameStyleType& frameStyle )
@@ -183,9 +181,9 @@ void GTKWindow::setFrameStyle( const FrameStyleType& frameStyle )
 
 void GTKWindow::setFrameTopmost( const bool& isTopmost )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( true == isTopmost ) {
 	}
-
 }
 
 bool GTKWindow::isMaximized()
@@ -232,6 +230,7 @@ void GTKWindow::restore()
 
 void GTKWindow::setIconImage( Image* icon )
 {
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
 gint GTKWindow::deleteEvent( GtkWidget *widget, GdkEvent *event, gpointer data )
@@ -252,7 +251,6 @@ gint GTKWindow::deleteEvent( GtkWidget *widget, GdkEvent *event, gpointer data )
 		//then close the app !
 		result = FALSE;
 	}
-
 
 	return result;
 }
@@ -389,11 +387,30 @@ Rect GTKWindow::getBounds()
 }
 
 void GTKWindow::setBorder( Border* border )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 bool GTKWindow::isActiveWindow()
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return true;
+}
 
+void GTKWindow::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKWindow::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKWindow::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$

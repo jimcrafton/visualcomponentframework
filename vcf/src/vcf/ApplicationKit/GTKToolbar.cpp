@@ -22,10 +22,8 @@ GTKToolbar::GTKToolbar( Control* control ) :
 
 void GTKToolbar::create( Control* control )
 {
-
 	control->getViewModel() ->addModelHandler(
 	    new ModelEventHandler<GTKToolbar>( this, &GTKToolbar::onModelChanged, "GTKToolbar::onModelChanged" ) );
-
 }
 
 gboolean GTKToolbar::handleEvent( GdkEvent* gtkEvent )
@@ -85,21 +83,30 @@ void GTKToolbar::onModelChanged( ModelEvent* e )
 	}
 }
 
-
 void GTKToolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::showButtonCaptions( const bool& val )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::setButtonCaptionPlacementHorizontal( const bool& val )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::setButtonSize( const Size& buttonSize )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::removeToolbarButton( ToolbarItem* item )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::onImageListImageChanged( ImageListEvent* e )
 {
@@ -125,17 +132,40 @@ void GTKToolbar::onImageListImageChanged( ImageListEvent* e )
 }
 
 void GTKToolbar::setImageList( ImageList* imageList )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 bool GTKToolbar::isAutoResizeEnabled()
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+	return true;
+}
 
 void GTKToolbar::setEnableAutoResize( const bool& val )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 void GTKToolbar::setBorder( Border* border )
-{}
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
+void GTKToolbar::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKToolbar::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
+void GTKToolbar::repaint( Rect* repaintRect, const bool& immediately )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
 
 /**
 $Id$
