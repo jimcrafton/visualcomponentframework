@@ -16,6 +16,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/GTKControlContext.h"
 #include "vcf/ApplicationKit/GTKControl.h"
 #include "vcf/ApplicationKit/GTKCursor.h"
+#include "vcf/ApplicationKit/GTKMenuManagerPeer.h"
+#include "vcf/ApplicationKit/GTKMenuBar.h"
 
 
 #include "vcf/ApplicationKit/GTKWindow.h"
@@ -31,6 +33,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/GTKFileOpenDialog.h"
 #include "vcf/ApplicationKit/GTKToolbar.h"
 #include "vcf/ApplicationKit/Toolbar.h"
+
+#include "vcf/GraphicsKit/GTKGraphicsResourceBundle.h"
 
 //get rid of the stupip fscking warning from GCC
 #define NULL 0
@@ -352,8 +356,7 @@ MenuItemPeer* GTKUIToolkit::internal_createMenuItemPeer( MenuItem* item )
 
 MenuBarPeer* GTKUIToolkit::internal_createMenuBarPeer( MenuBar* menuBar )
 {
-	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
-	return NULL;
+	return new GTKMenuBar( menuBar );
 }
 
 PopupMenuPeer* GTKUIToolkit::internal_createPopupMenuPeer( PopupMenu* popupMenu )
@@ -1339,8 +1342,7 @@ ulong32 GTKUIToolkit::translateKeyMask( GdkModifierType keyState )
 GraphicsResourceBundlePeer*
 GTKUIToolkit::internal_createGraphicsResourceBundlePeer( AbstractApplication* app )
 {
-	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
-	return NULL;
+	return new GTKGraphicsResourceBundle();
 }
 
 SystemTrayPeer* GTKUIToolkit::internal_createSystemTrayPeer()
@@ -1373,8 +1375,7 @@ bool GTKUIToolkit::internal_displayContextHelpForControl( Control* control, cons
 
 MenuManagerPeer* GTKUIToolkit::internal_createMenuManagerPeer()
 {
-	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
-	return NULL;
+	return new GTKMenuManagerPeer();
 }
 
 TextEditPeer* GTKUIToolkit::internal_createTextEditPeer( TextControl* component, const bool& isMultiLineControl )

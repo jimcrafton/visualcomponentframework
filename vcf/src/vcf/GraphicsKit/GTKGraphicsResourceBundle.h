@@ -11,6 +11,7 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/LinuxResourceBundle.h"
+#include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
 
 
 namespace VCF  {
