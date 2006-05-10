@@ -9,6 +9,8 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+#include "vcf/FoundationKit/ResourceBundlePeer.h"
+
 namespace VCF {
 	class LinuxResourceBundle : public Object, public ResourceBundlePeer {
 	public:

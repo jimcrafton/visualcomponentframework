@@ -999,6 +999,11 @@ void GTKContext::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& se
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
+void GTKContext::bitBlit( const double& x, const double& y, Image* image )
+{
+	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
+}
+
 /**
 $Id$
 */

@@ -123,6 +123,8 @@ public:
 	                        Rect* imageBounds,
 	                        Image* image );
 
+	virtual void bitBlit( const double& x, const double& y, Image* image );
+
 	virtual void drawThemeSelectionRect( Rect* rect, DrawUIState& state );
 
 	virtual void drawThemeFocusRect( Rect* rect, DrawUIState& state );
