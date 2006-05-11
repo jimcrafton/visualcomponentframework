@@ -101,9 +101,9 @@
     </del-flags>
 
 
-    <add-flags files="*">-DVCFDIR=../..</add-flags>
-    <add-flags files="../../*/*">-DVCFDIR=..</add-flags>
-    <add-flags files="../../*/*/*">-DVCFDIR=../..</add-flags>
+    <add-flags files="*">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
+    <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
 
 
     <add-flags files="VCF.bkl" formats="borland">

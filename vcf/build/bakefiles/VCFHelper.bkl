@@ -14,19 +14,19 @@
     </set>
 
     <set var="VCF_DIR">
-        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(Q)
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_ROOT)$(Q)
     </set>
 
     <set var="VCF_BIN">
-        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)bin$(Q)
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_ROOT)$(DIRSEP)bin$(Q)
     </set>
 
     <set var="VCF_INCLUDE">
-        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)src$(Q)
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_ROOT)$(DIRSEP)src$(Q)
     </set>
 
     <set var="VCF_LIB">
-        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_DIR)$(DIRSEP)lib$(Q)
+        $(Q)$(DOLLAR)($(PREFIX_VAR)VCF_ROOT)$(DIRSEP)lib$(Q)
     </set>
 
     <set var="VCF_INTERNAL">0</set>
