@@ -1153,7 +1153,7 @@ make -fvcfAllLibs.mak -DFREECOMP=TRUE make -fvcfAllLibs.mak static_libs
 				</section>
 				<section><title>Environment Variables</title>
 				<para>
-				What you need to do at the beginning is to set up the VCF_DIR 
+				What you need to do at the beginning is to set up the VCF_ROOT 
 				environment variable. It should point to the root of VCF.
 				</para>
 				<para>
@@ -1166,14 +1166,14 @@ make -fvcfAllLibs.mak -DFREECOMP=TRUE make -fvcfAllLibs.mak static_libs
 				<para>
 				We will use a Windows specific syntax of the command line in
 				examples below. This does not prevent you from using a Unix
-				specific syntax. For example, we will use %VCF_DIR%, but you can
-				use $VCF_DIR instead, if you're attempting this from a unix like
+				specific syntax. For example, we will use %VCF_ROOT%, but you can
+				use $VCF_ROOT instead, if you're attempting this from a unix like
 				command line.
 				</para>
 				</section>
 				<section><title>Baked Make Files</title>
 				<para>
-				The ready-to-use make files are located at the %VCF_DIR%\build\bakefiles.gen 
+				The ready-to-use make files are located at the %VCF_ROOT%\build\bakefiles.gen 
 				directory. The directory contains several make files for different compilers 
 				that can be used from a command line.
 				</para>
@@ -1195,7 +1195,7 @@ make -fvcfAllLibs.mak -DFREECOMP=TRUE make -fvcfAllLibs.mak static_libs
 				</itemizedlist>
 				</para>
 				<para>
-				So, to compile VCF you just need to make the %VCF_DIR%\build\bakefiles.gen 
+				So, to compile VCF you just need to make the %VCF_ROOT%\build\bakefiles.gen 
 				directory current and run one of the following commands:
 				<itemizedlist>
 					<listitem>
@@ -1410,7 +1410,7 @@ nmake -f makefile.vc OPTION_SELECTLIB=_vc71 OPTION_DEBUG=0
 				<section><title>Baked Project Files</title>
 				<para>
 				The ready-to-use VS6 project files are located at the 
-				%VCF_DIR%\build\bakefiles.gen directory. This project does not 
+				%VCF_ROOT%\build\bakefiles.gen directory. This project does not 
 				use the described above config file at all.				
 				</para>
 				<para>
@@ -1537,7 +1537,7 @@ int main( int argc, char** argv )
 					project. Suppose you want to generate a VS6 project. You just
 					need to run the following command from a command line:
 					<screen>
-bakefile -I"%VCF_DIR%\build\bakefiles" -f msvc6prj helloworld.bkl
+bakefile -I"%VCF_ROOT%\build\bakefiles" -f msvc6prj helloworld.bkl
 					</screen>
 					This command will generate helloworld.dsp and helloworld.dsw.
 					</para>
@@ -1551,28 +1551,28 @@ bakefile -I"%VCF_DIR%\build\bakefiles" -f msvc6prj helloworld.bkl
 					<para>
 					This command will generate makefile.vc.
 					<screen>
-bakefile -I"%VCF_DIR%\build\bakefiles" -f msvc helloworld.bkl
+bakefile -I"%VCF_ROOT%\build\bakefiles" -f msvc helloworld.bkl
 					</screen>
 					</para>
 
 					<para>
 					This command will generate makefile.gcc.
 					<screen>
-bakefile -I"%VCF_DIR%\build\bakefiles" -f mingw helloworld.bkl
+bakefile -I"%VCF_ROOT%\build\bakefiles" -f mingw helloworld.bkl
 					</screen>
 					</para>
 
 					<para>
 					This command will generate makefile.bcc.
 					<screen>
-bakefile -I"%VCF_DIR%\build\bakefiles" -f borland helloworld.bkl
+bakefile -I"%VCF_ROOT%\build\bakefiles" -f borland helloworld.bkl
 					</screen>
 					</para>
 
 					<para>
 					This command will generate GNUmakefile.
 					<screen>
-bakefile -I"%VCF_DIR%\build\bakefiles" -f gnu helloworld.bkl
+bakefile -I"%VCF_ROOT%\build\bakefiles" -f gnu helloworld.bkl
 					</screen>
 					</para>
 
@@ -1712,7 +1712,7 @@ int main( int argc, char** argv )
 					difference. VCFCommon.bkl defines the bakefile variables that use
 					the relative paths and can be used inside the VCF source tree
 					only. VCFHelper.bkl defines the bakefile variables that use the
-					system environment variable VCF_DIR and can be used outside of
+					system environment variable VCF_ROOT and can be used outside of
 					the VCF source tree. In other words, these are two different
 					entry points: VCFCommon.bkl is for the internal use only;
 					VCFHelper.bkl is to use in external custom projects.
@@ -1838,7 +1838,7 @@ int main( int argc, char** argv )
 				<section><title>Regenerating makefiles and VS6 project files</title>
 					<note>
 					Please note, you can only run the bakefile_gen executable from 
-					the %VCF_DIR%\build\bakefiles directory.
+					the %VCF_ROOT%\build\bakefiles directory.
 					</note>
 
 					<para>
@@ -1864,7 +1864,7 @@ int main( int argc, char** argv )
 				<section><title>All-in-1 VS6 project</title>
 					<note>
 					Please note, you can only run the bakefile_gen executable from 
-					the %VCF_DIR%\build\bakefiles directory.
+					the %VCF_ROOT%\build\bakefiles directory.
 					</note>
 
 					<para>
