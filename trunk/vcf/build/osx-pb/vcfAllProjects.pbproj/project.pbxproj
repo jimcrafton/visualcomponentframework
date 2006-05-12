@@ -359,12 +359,12 @@
 				5E2C80130641F7C600A8020D,
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_BIN)";
+				BUILD_DIR = "$(VCF_ROOT)/bin";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\" \"$(VCF_INCLUDE)/thirdparty/macOSX\"";
-				LIBRARY_SEARCH_PATHS = "/usr/lib/gcc/darwin/3.1 \"$(VCF_LIB)\" /Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb /Users/jimcrafton/code/vcfdev/dev/vcf/lib";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\" \"$(VCF_ROOT)/src/thirdparty/macOSX\"";
+				LIBRARY_SEARCH_PATHS = "/usr/lib/gcc/darwin/3.1 \"$(VCF_ROOT)/lib\" /Users/jimcrafton/code/vcfdev/dev/vcf/build/osx-pb /Users/jimcrafton/code/vcfdev/dev/vcf/lib";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -D_DEBUG -DVCF_OSX  -Wno-multichar";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -3076,10 +3076,10 @@
 				5E2C821306420C6B00A8020D,
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /Users/jimcrafton/code/vcfdev/dev/vcf/lib;
 				LIBRARY_STYLE = STATIC;
 				OPTIMIZATION_CFLAGS = "-O0";
@@ -4062,13 +4062,13 @@
 				5E2CDE770648690500A8020D,
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_BIN)";
+				BUILD_DIR = "$(VCF_ROOT)/bin";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_ROOT)/bin\"";
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\" \"$(VCF_INCLUDE)/thirdparty/macOSX/HIView\"";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" /usr/lib/gcc/darwin/3.1";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\" \"$(VCF_ROOT)/src/thirdparty/macOSX/HIView\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" /usr/lib/gcc/darwin/3.1";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -D_DEBUG -DVCF_OSX  -Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -8886,12 +8886,12 @@
 				5EAA3CEB0647341200A8020D,
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_BIN)";
+				BUILD_DIR = "$(VCF_ROOT)/bin";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_ROOT)/bin\"";
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\" \"$(VCF_INCLUDE)/thirdparty/macOSX\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\" \"$(VCF_ROOT)/src/thirdparty/macOSX\"";
 				LIBRARY_SEARCH_PATHS = "/usr/lib/gcc/darwin/3.1 /Users/jimcrafton/code/vcfdev/dev/vcf/lib";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -D_DEBUG -DVCF_OSX  -Wno-multichar";
@@ -9106,10 +9106,10 @@
 				5EAA3CFA0647358600A8020D,
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\" \"$(VCF_INCLUDE)/thirdparty/common/agg/include\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\" \"$(VCF_ROOT)/src/thirdparty/common/agg/include\"";
 				LIBRARY_STYLE = STATIC;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -D_DEBUG -DVCF_OSX  -Wno-multichar";

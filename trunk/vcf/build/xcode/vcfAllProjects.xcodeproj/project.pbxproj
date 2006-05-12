@@ -4226,13 +4226,13 @@
 			buildRules = (
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibPNG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				LIBRARY_STYLE = STATIC;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -4264,14 +4264,14 @@
 			buildRules = (
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibJPEG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -4309,20 +4309,20 @@
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_ROOT)/bin\"";
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit_debug.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/usr/lib/gcc/darwin/3.3,
 				);
 				OTHER_CFLAGS = "-Wno-multichar";
@@ -4361,7 +4361,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -4371,11 +4371,11 @@
 					_DEBUG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/agg/include",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -4416,21 +4416,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(VCF_BIN)",
+					"$(VCF_ROOT)/bin",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -4478,16 +4478,16 @@
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-ApplicationKit_debug.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/usr/lib/gcc/darwin/3.3,
 				);
 				OTHER_CFLAGS = "-Wno-multichar";
@@ -5349,15 +5349,15 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -5393,14 +5393,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5433,15 +5433,15 @@
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5464,7 +5464,7 @@
 		5E53A045093A2576007B8C80 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -5478,11 +5478,11 @@
 					_DEBUG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/agg/include",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5507,7 +5507,7 @@
 		5E53A046093A2576007B8C80 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -5519,11 +5519,11 @@
 					VCF_OSX,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/agg/include",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5546,7 +5546,7 @@
 		5E53A047093A2576007B8C80 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5556,11 +5556,11 @@
 					_DEBUG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/agg/include",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5582,19 +5582,19 @@
 		5E53A049093A2576007B8C80 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibJPEG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5617,17 +5617,17 @@
 		5E53A04A093A2576007B8C80 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibJPEG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5648,14 +5648,14 @@
 		5E53A04B093A2576007B8C80 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibJPEG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
 				);
 				LIBRARY_STYLE = STATIC;
@@ -5675,18 +5675,18 @@
 		5E53A04D093A2576007B8C80 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibPNG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				LIBRARY_STYLE = STATIC;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "";
@@ -5707,16 +5707,16 @@
 		5E53A04E093A2576007B8C80 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibPNG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				LIBRARY_STYLE = STATIC;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -5736,13 +5736,13 @@
 		5E53A04F093A2576007B8C80 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				HEADER_SEARCH_PATHS = (
-					"$(VCF_INCLUDE)",
-					"$(VCF_INCLUDE)/thirdparty/common/LibPNG",
+					"$(VCF_ROOT)/src",
+					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				LIBRARY_STYLE = STATIC;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -5773,15 +5773,15 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit_d.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -5817,14 +5817,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5856,15 +5856,15 @@
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\" ";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5899,15 +5899,15 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-ApplicationKit_d.plist";
-				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
+				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5940,14 +5940,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-ApplicationKit.plist";
-				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
+				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LIBTOOL_FLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -5976,16 +5976,16 @@
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-ApplicationKit_debug.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_LIB)",
+					"$(VCF_ROOT)/lib",
 					/usr/lib/gcc/darwin/3.3,
 				);
 				OTHER_CFLAGS = "-Wno-multichar";
@@ -6035,7 +6035,7 @@
 		5EC1A6260941EE3E001EA41D /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -6043,15 +6043,15 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -6077,14 +6077,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/FoundationKit/FoundationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -6123,7 +6123,7 @@
 		5EC1A7310941F283001EA41D /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -6131,15 +6131,15 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
+				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -6160,20 +6160,20 @@
 		5EC1A7320941F283001EA41D /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/GraphicsKit/GraphicsKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 				);
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
+				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -6212,7 +6212,7 @@
 		5EC1A9120941F55D001EA41D /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -6220,15 +6220,15 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "$(VCF_LIB)";
+				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -6249,13 +6249,13 @@
 		5EC1A9130941F55D001EA41D /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_DIR = "$(VCF_LIB)";
+				BUILD_DIR = "$(VCF_ROOT)/lib";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_INCLUDE)/vcf/ApplicationKit/ApplicationKit.h";
+				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					VCF_GCC,
 					VCF_OSX,
