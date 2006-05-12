@@ -157,9 +157,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", ".\Examples\Exam
 		{2db85331-c153-41d1-a653-275b0e2a0b4c} = {2db85331-c153-41d1-a653-275b0e2a0b4c}
 		{ffeac7ab-e3c6-479b-b679-bdabad3f3aa2} = {ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}
 		{be9000b0-02e5-4768-8add-4b2177cc7988} = {be9000b0-02e5-4768-8add-4b2177cc7988}
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489} = {24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d} = {8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}
 		{9884820a-2e0a-4266-a6cc-a13f83bb0256} = {9884820a-2e0a-4266-a6cc-a13f83bb0256}
 		{0162e66e-b8a0-4024-a6a2-f7557de4f3ef} = {0162e66e-b8a0-4024-a6a2-f7557de4f3ef}
+		{b804d67a-a0aa-4d4b-b2ad-ca17272f42a3} = {b804d67a-a0aa-4d4b-b2ad-ca17272f42a3}
 		{1b4e9cd1-3f83-48be-834c-f198b268cc0e} = {1b4e9cd1-3f83-48be-834c-f198b268cc0e}
 		{7e757b5c-4ec5-4a33-8278-29eb0fa5035c} = {7e757b5c-4ec5-4a33-8278-29eb0fa5035c}
 		{189e3581-6c65-4f92-a529-acb38c354fb1} = {189e3581-6c65-4f92-a529-acb38c354fb1}
@@ -313,6 +315,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCBasics", ".\MVCBasics\MV
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Menus", ".\Menus\Menus_vc71.vcproj", "{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinMax", ".\MinMax\MinMax_vc71.vcproj", "{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -342,6 +348,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLShapes", ".\OpenGLSha
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParticleEditor", ".\ParticleEditor\ParticleEditor_vc71.vcproj", "{0162e66e-b8a0-4024-a6a2-f7557de4f3ef}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pixels", ".\Pixels\Pixels_vc71.vcproj", "{b804d67a-a0aa-4d4b-b2ad-ca17272f42a3}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -600,6 +610,8 @@ Global
 		{ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}.Release.ActiveCfg = Release|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Debug.ActiveCfg = Debug|Win32
 		{be9000b0-02e5-4768-8add-4b2177cc7988}.Release.ActiveCfg = Release|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Debug.ActiveCfg = Debug|Win32
+		{24c5456b-f4f0-4b58-b8c2-f6dacbdcb489}.Release.ActiveCfg = Release|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Debug.ActiveCfg = Debug|Win32
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Release.ActiveCfg = Release|Win32
 		{bd53c24c-c67b-4b24-a05f-4a1bbe5a8094}.Debug.ActiveCfg = Debug|Win32
@@ -614,6 +626,8 @@ Global
 		{9884820a-2e0a-4266-a6cc-a13f83bb0256}.Release.ActiveCfg = Release|Win32
 		{0162e66e-b8a0-4024-a6a2-f7557de4f3ef}.Debug.ActiveCfg = Debug|Win32
 		{0162e66e-b8a0-4024-a6a2-f7557de4f3ef}.Release.ActiveCfg = Release|Win32
+		{b804d67a-a0aa-4d4b-b2ad-ca17272f42a3}.Debug.ActiveCfg = Debug|Win32
+		{b804d67a-a0aa-4d4b-b2ad-ca17272f42a3}.Release.ActiveCfg = Release|Win32
 		{1b4e9cd1-3f83-48be-834c-f198b268cc0e}.Debug.ActiveCfg = Debug|Win32
 		{1b4e9cd1-3f83-48be-834c-f198b268cc0e}.Release.ActiveCfg = Release|Win32
 		{7e757b5c-4ec5-4a33-8278-29eb0fa5035c}.Debug.ActiveCfg = Debug|Win32
