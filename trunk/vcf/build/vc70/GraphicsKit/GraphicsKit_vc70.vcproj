@@ -387,13 +387,13 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageBits.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp">

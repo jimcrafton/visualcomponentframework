@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="GraphicsKitDLL"
 	ProjectGUID="{C12648AC-9F9A-4FAC-B66F-1EC15152F7CF}"
+	RootNamespace="GraphicsKitDLL"
 	>
 	<Platforms>
 		<Platform
@@ -541,15 +542,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageBits.h"
 				>
 			</File>
 			<File

@@ -228,15 +228,15 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\ImageBits.h
 # End Source File
 # Begin Source File
 

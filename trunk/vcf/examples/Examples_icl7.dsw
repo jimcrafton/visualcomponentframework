@@ -480,6 +480,9 @@ Package=<4>
     Project_Dep_Name MVCBasics
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Menus
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name MinMax
     End Project Dependency
     Begin Project Dependency
@@ -487,6 +490,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ParticleEditor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Pixels
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Printing
@@ -945,6 +951,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Menus"=".\Menus\Menus_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MinMax"=".\MinMax\MinMax_icl7.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1030,6 +1048,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ParticleEditor"=".\ParticleEditor\ParticleEditor_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Pixels"=".\Pixels\Pixels_icl7.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
