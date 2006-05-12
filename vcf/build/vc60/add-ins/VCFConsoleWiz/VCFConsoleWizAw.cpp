@@ -130,12 +130,12 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /I$(VCF_INCLUDE)";
+						setting = "/GR /MDd /I$(VCF_ROOT)/src";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /I$(VCF_INCLUDE)";
+						setting = "/GR /MD /I$(VCF_ROOT)/src";
 					}
 					break;
 				}
@@ -159,12 +159,12 @@ void CVCFConsoleWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 					}
 					break;
 
 					case release: {
-						setting = "rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 					}
 					break;
 				}

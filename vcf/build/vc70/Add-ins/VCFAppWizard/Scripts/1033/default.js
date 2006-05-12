@@ -110,7 +110,7 @@ function AddConfig(proj, strProjectName)
 		CLTool.BasicRuntimeChecks = runtimeBasicCheckAll;
 		CLTool.Optimization = optimizeDisabled;
 		CLTool.ExceptionHandling = true;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.WarningLevel = warningLevelOption.warningLevel_3;
 		if(bLibDynamic)
 		{
@@ -146,7 +146,7 @@ function AddConfig(proj, strProjectName)
 		CLTool.SuppressStartupBanner = true;
 
 		var LinkTool = config.Tools('VCLinkerTool');
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		
 		if(bLibDynamic)
 		{
@@ -174,7 +174,7 @@ function AddConfig(proj, strProjectName)
 		CLTool.ExceptionHandling = true;
 		CLTool.BufferSecurityCheck = true
 		CLTool.DebugInformationFormat = debugDisabled;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.WarningLevel = warningLevelOption.warningLevel_3;
 		CLTool.EnableFunctionLevelLinking = true;
 		CLTool.InlineFunctionExpansion = inlineExpansionOption.expandOnlyInline;
@@ -215,7 +215,7 @@ function AddConfig(proj, strProjectName)
 
 		var LinkTool = config.Tools('VCLinkerTool');
 		LinkTool.AdditionalOptions = "/MACHINE:I386";
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		if(bLibDynamic)
 		{
 			LinkTool.AdditionalDependencies = "odbc32.lib odbccp32.lib rpcrt4.lib";

@@ -144,12 +144,12 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /I$(VCF_INCLUDE)";
+						setting = "/GR /MDd /I$(VCF_ROOT)/src";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /I$(VCF_INCLUDE)";
+						setting = "/GR /MD /I$(VCF_ROOT)/src";
 					}
 					break;
 				}
@@ -162,7 +162,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				
-				setting = "/D \"USE_FOUNDATIONKIT_DLL\" /D \"USE_GRAPHICSKIT_DLL\" /D \"USE_APPLICATIONKIT_DLL\"";
+				setting = "/D \"USE_APPLICATIONKIT_DLL\"";
 
 				pConfig->AddToolSettings( tool, setting, reserved );
 				
@@ -172,7 +172,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "/libpath:$(VCF_LIB)";
+						setting = "/libpath:$(VCF_ROOT)/lib";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Debug/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
@@ -183,7 +183,7 @@ void CVCFLibraryAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 					break;
 
 					case release: {
-						setting = "/libpath:$(VCF_LIB)";
+						setting = "/libpath:$(VCF_ROOT)/lib";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/dll /out:\"Release/" + rootName + ".dll\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );

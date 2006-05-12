@@ -137,12 +137,12 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /I$(VCF_INCLUDE)";
+						setting = "/GR /MDd /I$(VCF_ROOT)/src";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /I$(VCF_INCLUDE)";
+						setting = "/GR /MD /I$(VCF_ROOT)/src";
 					}
 					break;
 				}
@@ -158,20 +158,11 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->RemoveToolSettings( tool, setting, reserved );				
 				
 				int linkType = this->m_pChooser->GetLinkType();
-				if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
-					setting = "/DUSE_FOUNDATIONKIT_DLL";
-
-					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_GRAPHICSKIT_DLL";
-					pConfig->AddToolSettings( tool, setting, reserved );
+				if ( linkType == VCF_DLL_LINK ) {
 					setting = "/DUSE_APPLICATIONKIT_DLL";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				}
 				else if ( linkType == VCF_STATIC_LINK ) {
-					setting = "/DUSE_FRAMEWORK_LIB";
-					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_GRAPHICSKIT_LIB";
-					pConfig->AddToolSettings( tool, setting, reserved );
 					setting = "/DUSE_APPKIT_LIB";
 					pConfig->AddToolSettings( tool, setting, reserved );
 				}
@@ -191,7 +182,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							if ( m_pChooser->NeedsOpenGLSupport() ) {
 								setting += "opengl32.lib glu32.lib glaux.lib ";
 							}
-							setting += "/libpath:$(VCF_LIB)";
+							setting += "/libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 
@@ -207,7 +198,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							if ( m_pChooser->NeedsOpenGLSupport() ) {
 								setting += "opengl32.lib glu32.lib glaux.lib ";
 							}
-							setting += "/libpath:$(VCF_LIB)";
+							setting += "/libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 					}
@@ -223,7 +214,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							else if ( m_pChooser->NeedVCFNet() ) {
 								setting += "NetworkKit_sd.lib ";
 							}
-							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 
@@ -235,7 +226,7 @@ void CVcfwizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							else if ( m_pChooser->NeedVCFNet() ) {
 								setting += "NetworkKit_s.lib ";
 							}
-							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 					}

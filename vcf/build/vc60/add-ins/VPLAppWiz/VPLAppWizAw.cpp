@@ -151,12 +151,12 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /I$(VCF_INCLUDE)";
+						setting = "/GR /MDd /I$(VCF_ROOT)/src";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /I$(VCF_INCLUDE)";
+						setting = "/GR /MD /I$(VCF_ROOT)/src";
 					}
 					break;
 				}
@@ -169,7 +169,7 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				setting = strRoot;
 				pConfig->AddToolSettings( tool, setting, reserved );
 				
-				setting = "/DUSE_FOUNDATIONKIT_DLL /DUSE_GRAPHICSKIT_DLL /DUSE_APPLICATIONKIT_DLL";
+				setting = "/DUSE_APPLICATIONKIT_DLL";
 				pConfig->AddToolSettings( tool, setting, reserved );
 
 				pConfig->AddToolSettings( tool, setting, reserved );
@@ -180,7 +180,7 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 				tool = "link.exe";
 				switch ( t ){
 					case debug: {
-						setting = "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "comctl32.lib rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/out:\"Debug/" + rootName + ".vpl\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
@@ -191,7 +191,7 @@ void CVPLAppWizAppWiz::CustomizeProject(IBuildProject* pProject)
 					break;
 
 					case release: {
-						setting = "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
+						setting = "comctl32.lib rpcrt4.lib /libpath:$(VCF_ROOT)/lib";
 						pConfig->AddToolSettings( tool, setting, reserved );
 						setting = "/out:\"Release/" + rootName + ".vpl\"";
 						pConfig->RemoveToolSettings( tool, setting, reserved );
