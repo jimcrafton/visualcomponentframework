@@ -84,10 +84,8 @@ WizardSmallImageFile=wizsmall.bmp
 WizardImageStretch=false
 
 [Registry]
-;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: VCF_INCLUDE; ValueData: {app}\include; Flags: uninsdeletevalue dontcreatekey; Components: Src Binaries
-;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: VCF_BIN; ValueData: {app}\bin; Components: Src Binaries
-;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: VCF_LIB; ValueData: {app}\lib; Components: Src Binaries
-;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: path; ValueData: "%VCF_BIN%;{olddata}"; Components: Src Binaries
+;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: VCF_ROOT; ValueData: {app}; Components: Src Binaries
+;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: path; ValueData: "%VCF_ROOT%\bin;{olddata}"; Components: Src Binaries
 Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Include Dirs; ValueData: "{olddata};{app}\include"; Tasks: addvc6dirs
 Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Library Dirs; ValueData: "{olddata};{app}\lib"; Tasks: addvc6dirs
 Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Path Dirs; ValueData: "{olddata};{app}\bin"; Tasks: addvc6dirs
@@ -120,10 +118,8 @@ Name: VC80_installwizards; Description: Visual C++ 8.0 (Express 2005); GroupDesc
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi""    -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm""    -add -title ""VCF Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_BIN ""{app}\bin"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_LIB ""{app}\lib"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_INCLUDE ""{app}\src"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_BIN%; Components: Src; Tasks: addenvpaths; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_ROOT ""{app}"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_ROOT%\bin; Components: Src; Tasks: addenvpaths; Flags: runhidden
 
 Filename: {app}\docs\H2Reg.exe; Parameters: "-R ""cmdfile=H2Reg_cmd_090.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
 
@@ -138,10 +134,8 @@ Filename: {app}\build\vc80\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: s
 [UninstallRun]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -remove -title ""VCF Source Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
-Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_BIN%; Tasks: addenvpaths; Components: Src; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_BIN; Tasks: addenvpaths; Components: Src; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_LIB; Tasks: addenvpaths; Components: Src; Flags: runhidden
-Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_INCLUDE; Tasks: addenvpaths; Components: Src; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_ROOT%\bin; Tasks: addenvpaths; Components: Src; Flags: runhidden
+Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_ROOT; Tasks: addenvpaths; Components: Src; Flags: runhidden
 
 
 Filename: {app}\docs\H2Reg.exe; Parameters: "-U ""cmdfile=H2Reg_cmd_090.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
