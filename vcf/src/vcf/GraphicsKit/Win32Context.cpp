@@ -346,6 +346,9 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 		}
 	}
 	else {
+
+		xfrmedImageRect.offset( x, y );
+
 		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
 		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
 		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
@@ -359,11 +362,37 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 			HBITMAP oldBMP = (HBITMAP)SelectObject( memDC, hbmp );
 
+			//copy what ever is in the current DC image
 			BitBlt( memDC, 0, 0, bmpInfo.bmiHeader.biWidth, -bmpInfo.bmiHeader.biHeight,
 					dc_, xfrmedImageRect.left_, xfrmedImageRect.top_, SRCCOPY );
 
 
+			SysPixelType* pixels = (SysPixelType*)bmpBuf;
+			int incr = (long)((imageBounds->top_ * xfrmedImageRect.getWidth()) + imageBounds->left_);
+			pixels += incr;
 
+			int s = (int)imageBounds->top_;
+			int e = (int)imageBounds->bottom_;
+			int boundsWidth = (long)imageBounds->getWidth();
+			int imgWidth = (long)image->getWidth();
+			int xIndex = 0;
+
+			unsigned char* grayPix = (unsigned char*)image->getData();
+
+			for (int y1=s;y1<e;y1++) {
+				for ( xIndex=0;xIndex<boundsWidth;xIndex++ ) {
+					pixels[xIndex].r = grayPix[xIndex];
+					pixels[xIndex].g = grayPix[xIndex];
+					pixels[xIndex].b = grayPix[xIndex];
+				}
+
+				pixels += boundsWidth;
+				grayPix += imgWidth;
+			}
+
+/*
+			//this is the renderer that agg is going to work with and 
+			//will ultimately be dumped to the DC
 			imgRenderBuf.attach( (unsigned char*)bmpBuf, bmpInfo.bmiHeader.biWidth,
 										-bmpInfo.bmiHeader.biHeight,
 										bmpInfo.bmiHeader.biWidth * 4 );
@@ -395,7 +424,7 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 
 			//rasterizer.add_path(imagePath);
-			//rasterizer.render(scanLine, imageRenderer);
+			//rasterizer.render(scanLine, imageRenderer);*/
 		}
 	}
 
@@ -413,6 +442,7 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 								bmpBuf,
 								&bmpInfo,
 								DIB_RGB_COLORS );
+
 		SelectObject( memDC, oldBMP );
 		DeleteObject( hbmp );
 		DeleteDC( memDC );
@@ -421,34 +451,65 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 void Win32Context::bitBlit( const double& x, const double& y, Image* image )
 {
-	Win32Image* win32image = (Win32Image*)(image);		
+
+	if ( image->getType() == Image::itColor ) {
+		Win32Image* win32image = (Win32Image*)(image);		
 			
-	ImageBits* bits = win32image->getImageBits();
-	HPALETTE oldPalette = NULL;
-	if ( NULL != win32image->palette_ ){
-		oldPalette = ::SelectPalette( dc_, win32image->palette_, FALSE );
-		::RealizePalette( dc_ );
+		ColorPixels pixels = image; 
+		SysPixelType* imageBuf = pixels;
+
+		HPALETTE oldPalette = NULL;
+		if ( NULL != win32image->palette_ ){
+			oldPalette = ::SelectPalette( dc_, win32image->palette_, FALSE );
+			::RealizePalette( dc_ );
+		}
+		
+		SysPixelType* bmpBuf = NULL;
+		
+		
+		SetDIBitsToDevice( dc_,
+							(long)x,
+							(long)y,
+							(long)win32image->getWidth(),
+							(long)win32image->getHeight(),
+							0,
+							0,
+							0,
+							(long)win32image->getHeight(),
+							imageBuf,
+							&win32image->getBMPInfo(),
+							DIB_RGB_COLORS );
+		
+		if ( NULL != oldPalette ){
+			::SelectPalette( dc_, oldPalette, FALSE );
+		}
 	}
-
-	SysPixelType* bmpBuf = NULL;
-	SysPixelType* imageBuf = image->getImageBits()->pixels_;
-
-	SetDIBitsToDevice( dc_,
-						(long)x,
-						(long)y,
-						(long)win32image->getWidth(),
-						(long)win32image->getHeight(),
-						0,
-						0,
-						0,
-						(long)win32image->getHeight(),
-						imageBuf,
-						&win32image->bmpInfo_,
-						DIB_RGB_COLORS );
-
-	if ( NULL != oldPalette ){
-		::SelectPalette( dc_, oldPalette, FALSE );
-	}
+	else if ( image->getType() == Image::itGrayscale ) { 
+		Win32GrayScaleImage* win32image = (Win32GrayScaleImage*)(image);		
+			
+		HPALETTE oldPalette = NULL;
+		if ( NULL != win32image->palette_ ){
+			oldPalette = ::SelectPalette( dc_, win32image->palette_, TRUE );
+			::RealizePalette( dc_ );
+		}
+		
+		SetDIBitsToDevice( dc_,
+							(long)x,
+							(long)y,
+							(long)win32image->getWidth(),
+							(long)win32image->getHeight(),
+							0,
+							0,
+							0,
+							(long)win32image->getHeight(),
+							image->getData(),
+							&win32image->getBMPInfo(),
+							DIB_RGB_COLORS );
+		
+		if ( NULL != oldPalette ){
+			::SelectPalette( dc_, oldPalette, FALSE );			
+		}
+	}	
 }
 
 void Win32Context::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image )
@@ -659,10 +720,9 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 
 
+			ColorPixels pix = image;			
 
-			image->getImageBits()->attachRenderBuffer( image->getWidth(), image->getHeight() );
-
-			pixfmt imgPixf(*image->getImageBits()->renderBuffer_);
+			pixfmt imgPixf(pix);
 			SpanGenerator spanGen(//spanAllocator,
 							 imgPixf,
 							 agg::rgba(0, 0, 0, 0.0),
@@ -697,7 +757,7 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 		Win32Image* win32image = (Win32Image*)(image);
 		if ( NULL != win32image ){
 			//HDC bmpDC = win32image->getDC();
-			ImageBits* bits = win32image->getImageBits();
+			
 			HPALETTE oldPalette = NULL;
 			if ( NULL != win32image->palette_ ){
 				oldPalette = ::SelectPalette( dc_, win32image->palette_, FALSE );
@@ -725,7 +785,8 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 			HBITMAP hbmp = CreateDIBSection ( dc_, &bmpInfo, DIB_RGB_COLORS, (void**)&bmpBuf, NULL, NULL );
 
 
-			SysPixelType* imageBuf = image->getImageBits()->pixels_;
+			ColorPixels pix = image;
+			SysPixelType* imageBuf = pix;
 
 			if ( NULL != hbmp ) {
 

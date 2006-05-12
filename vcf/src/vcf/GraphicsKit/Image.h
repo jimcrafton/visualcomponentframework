@@ -315,7 +315,7 @@ public:
 
     virtual void removeImageSizeChangedHandler( EventHandler* handler ) = 0;
 
-	virtual ImageBits* getImageBits() = 0;
+	//virtual ImageBits* getImageBits() = 0;
 
 	/**
 	Call this method before calling getImageContext() to "lock" the

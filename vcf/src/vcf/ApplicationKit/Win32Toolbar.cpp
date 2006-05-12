@@ -1267,13 +1267,14 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 			matters! If it's not set back to 0 then the transparency affect doesn't
 			work? Bizarre
 			*/
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			ColorPixels pix = win32Img;
+			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 
@@ -1295,7 +1296,7 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 			sz = win32Img->getWidth() * win32Img->getHeight();
 			do {
 				sz --;
-				pix[sz].a = oldAlpaVals[sz];
+				bits[sz].a = oldAlpaVals[sz];
 			} while( sz > 0 );
 
 			delete [] oldAlpaVals;
@@ -1305,13 +1306,15 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 		case IMAGELIST_EVENT_ITEM_ADDED : {
 
 			Win32Image* win32Img = (Win32Image*)e->getImage();
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			ColorPixels pix = win32Img;
+			SysPixelType* bits = pix;
+
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 			HBITMAP hbmImage = win32Img->getBitmap();
@@ -1329,7 +1332,7 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 			sz = win32Img->getWidth() * win32Img->getHeight();
 			do {
 				sz --;
-				pix[sz].a = oldAlpaVals[sz];
+				bits[sz].a = oldAlpaVals[sz];
 			} while( sz > 0 );
 
 			delete [] oldAlpaVals;
@@ -1375,13 +1378,14 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		if ( imageList->getImageCount() > 0 ) {
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			ColorPixels pix = win32Img;
+			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 			HBITMAP hbmImage = win32Img->getBitmap();

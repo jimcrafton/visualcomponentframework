@@ -9,6 +9,8 @@ where you installed the VCF.
 */
 
 
+#include "vcf/GraphicsKit/GrayScaleImage.h"
+
 #if _MSC_VER > 1000
 #   pragma once
 #endif
@@ -16,11 +18,11 @@ where you installed the VCF.
 
 class HBitmapData {
 public:
-	HBitmapData(): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL) {
+	HBitmapData(): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL), bmpInfo_(NULL) {
 		dc_ = CreateCompatibleDC( NULL );
 	}
 
-	HBitmapData( HDC dc ): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL) {
+	HBitmapData( HDC dc ): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL), bmpInfo_(NULL) {
 		dc_ = CreateCompatibleDC( dc );
 	}
 
@@ -31,6 +33,11 @@ public:
 		}
 		if ( NULL != dc_ ) {
 			DeleteDC( dc_ );
+		}
+
+		if ( NULL != bmpInfo_ ) {
+			unsigned char* tmp = (unsigned char*)bmpInfo_;
+			delete [] tmp;
 		}
 	}
 
@@ -65,12 +72,18 @@ public:
 	HBITMAP oldBMP() {
 		return hOldBitmap_;
 	}
+
+	BITMAPINFO* bmpInfo() {
+		return bmpInfo_;
+	}
 protected:
 
 	HDC dc_;
 	HBITMAP hbmp_;
 	HBITMAP hOldBitmap_;
 	void* data_;
+
+	BITMAPINFO* bmpInfo_;
 };
 
 /**
@@ -85,9 +98,14 @@ public:
 			DeleteObject( hbmp_ );
 		}		
 
+		if ( NULL == bmpInfo_ ) {
+			unsigned char* tmp = new unsigned char[ sizeof(BITMAPINFO) ];
+			bmpInfo_ = (BITMAPINFO*)tmp;
+		}
+
 		hbmp_ = NULL;
 
-		BITMAPINFO bmpInfo;		
+		BITMAPINFO& bmpInfo = *bmpInfo_;
 
 		memset( &bmpInfo, 0, sizeof (BITMAPINFOHEADER) );
 		bmpInfo.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
@@ -118,7 +136,13 @@ public:
 
 		hbmp_ = NULL;
 		
+		if ( NULL != bmpInfo_ ) {
+			unsigned char* tmp = (unsigned char*)bmpInfo_;
+			delete [] tmp;
+		}
+
 		char* bmpStruct = new char[ sizeof(BITMAPINFO) + (sizeof(RGBQUAD) * 256) ];
+		bmpInfo_ = (BITMAPINFO*)bmpStruct;
 		
 		BITMAPINFO * bmpInfo = (BITMAPINFO*)bmpStruct;
 		memset( bmpStruct, 0, sizeof (BITMAPINFO) + (sizeof(RGBQUAD) * 256) );
@@ -132,7 +156,12 @@ public:
 		bmpInfo->bmiHeader.biPlanes = 1;
 		bmpInfo->bmiHeader.biBitCount = 8;
 		bmpInfo->bmiHeader.biCompression = BI_RGB;
-		bmpInfo->bmiHeader.biSizeImage = height * width;
+		bmpInfo->bmiHeader.biSizeImage = 
+			((width * bmpInfo->bmiHeader.biBitCount + 31) & (~31)) / 8 * height;
+
+		int clrUsed = 0;
+		int c = 1 << bmpInfo->bmiHeader.biBitCount;
+		bmpInfo->bmiHeader.biClrUsed = ((c <= 256) && (c > 1)) ? c : 0;
 		
 		RGBQUAD* colors = &bmpInfo->bmiColors[0];
 		
@@ -151,14 +180,12 @@ public:
 		
 		if ( (NULL != hbmp_) ) {
 			
-			hOldBitmap_ = (HBITMAP)::SelectObject( dc_, data_ );
+			hOldBitmap_ = (HBITMAP)::SelectObject( dc_, hbmp_ );
 			
 			colors = &bmpInfo->bmiColors[0];
 			
 			::SetDIBColorTable( dc_, 0, 256, colors );
 		}
-		
-		delete [] bmpStruct;
 	}
 
 	
@@ -200,7 +227,10 @@ public:
 
 	HDC getDC();
 
-	BITMAPINFO bmpInfo_;
+	BITMAPINFO& getBMPInfo() {
+		return *hbmp_.bmpInfo();
+	}
+
 	HPALETTE palette_;//for 256 or fewer color images
 
 	HICON convertToIcon();
@@ -216,6 +246,68 @@ protected:
 	bool flipBits_;
 	bool ownDC_;
 };
+
+
+/**
+\class Win32GrayScaleImage Win32Image.h "vcf/GraphicsKit/Win32Image.h"
+*/
+class GRAPHICSKIT_API Win32GrayScaleImage : public GrayScaleImage {
+public:
+	Win32GrayScaleImage();
+
+	Win32GrayScaleImage( const String& fileName );
+
+	Win32GrayScaleImage( const unsigned long& width, const unsigned long& height );
+
+	Win32GrayScaleImage( GraphicsContext* context, Rect* rect );
+
+
+	Win32GrayScaleImage( HBITMAP bitmap );
+
+	Win32GrayScaleImage( HICON icon );
+
+	virtual ~Win32GrayScaleImage();
+
+	void init();
+
+	virtual void setSize( const unsigned long & width, const unsigned long & height );
+
+	void createBMP();
+
+	virtual void beginDrawing();
+
+	virtual void finishedDrawing();
+
+	HBITMAP getBitmap();
+
+	HDC getDC();
+
+	BITMAPINFO& getBMPInfo() {
+		return *hbmp_.bmpInfo();
+	}
+
+	HPALETTE palette_;//for 256 or fewer color images
+
+	HICON convertToIcon();
+
+	void internal_saveToFile( const String& fileName );
+
+protected:
+	void loadFromFile( const String& fileName );
+
+	void loadFromBMPHandle( HBITMAP bitmap );
+
+	HBitmapGrayScale hbmp_;
+	bool flipBits_;
+	bool ownDC_;
+};
+
+
+
+
+
+
+
 
 /**
 \class BMPLoader Win32Image.h "vcf/GraphicsKit/Win32Image.h"

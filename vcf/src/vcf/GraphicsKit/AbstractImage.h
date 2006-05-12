@@ -16,7 +16,7 @@ where you installed the VCF.
 
 namespace VCF{
 
-class ImageBits;
+//class ImageBits;
 class GraphicsContext;
 
 /**
@@ -72,7 +72,7 @@ public:
 
     virtual GraphicsContext* getImageContext();
 
-	virtual ImageBits* getImageBits();
+	//virtual ImageBits* getImageBits();
 
 	/**
 	*returns the color that is used to blend with the contents of
@@ -122,7 +122,7 @@ public:
 
 	virtual void* getData();
 protected:
-	ImageBits* imageBits_;
+	//ImageBits* imageBits_;
 	unsigned char* dataBuffer_;
 	int height_;
     int width_;

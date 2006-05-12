@@ -101,9 +101,12 @@ MessageDialog::MessageDialog():
 	applicationIcon_ = GraphicsToolkit::createImage( image->getWidth(), image->getHeight() );
 
 
-	ImageBits* bits = applicationIcon_->getImageBits();
 
-	memcpy( bits->pixels_, image->getImageBits()->pixels_, image->getHeight() * image->getWidth() * 4 );
+	ColorPixels pix = applicationIcon_;	
+	SysPixelType* bits = pix;
+
+	memcpy( applicationIcon_->getData(), image->getData(), 
+			image->getHeight() * image->getWidth() * image->getType() );
 
 	applicationIcon_->setTransparencyColor( &Color(0.0,1.0,0.0) );
 	applicationIcon_->setIsTransparent( true );
