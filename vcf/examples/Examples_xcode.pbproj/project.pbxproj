@@ -61,7 +61,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "Alignment/Alignment-Info.plist";
 				INSTALL_PATH = "";
 				OTHER_CFLAGS = "";
@@ -449,7 +449,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "DateTimeUI/DateTimeUI-Info.plist";
 				INSTALL_PATH = "";
 				OTHER_CFLAGS = "";
@@ -582,7 +582,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "GraphicsBasics/GraphicsBasics-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
@@ -722,7 +722,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "TextLayout/TextLayout-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
@@ -865,7 +865,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "ProgressBars/ProgressBars-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
@@ -1015,7 +1015,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "VCF_OSX VCF_GCC _DEBUG";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "$(VCF_INCLUDE)";
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
 				INFOPLIST_FILE = "Labels/Labels-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
@@ -1131,7 +1131,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1361,7 +1361,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1426,7 +1426,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1491,7 +1491,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1556,7 +1556,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1622,8 +1622,8 @@
 			buildSettings = {
 				DEBUGGING_SYMBOLS = NO;
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
-				LIBRARY_SEARCH_PATHS = "/usr/lib/gcc/darwin/3.3 \"$(VCF_LIB)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = "/usr/lib/gcc/darwin/3.3 \"$(VCF_ROOT)/lib\"";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX  -Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -1687,7 +1687,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -1752,7 +1752,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -1816,7 +1816,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1881,7 +1881,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -1946,7 +1946,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
@@ -2010,7 +2010,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\" /Users/jimcrafton/Library/Frameworks";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";

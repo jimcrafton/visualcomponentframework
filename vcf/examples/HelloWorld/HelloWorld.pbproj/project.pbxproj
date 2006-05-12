@@ -205,7 +205,7 @@
 			buildSettings = {
 				DEBUGGING_SYMBOLS = NO;
 				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\"";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -Wno-multichar";
@@ -391,8 +391,8 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_BIN)\" /Users/jimcrafton/code/vcfdev/dev/vcf/bin";
-				HEADER_SEARCH_PATHS = "\"$(VCF_INCLUDE)\"";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_LIB)\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DVCF_GCC -DVCF_OSX -D_DEBUG -Wno-multichar";
 				OTHER_LDFLAGS = "";
