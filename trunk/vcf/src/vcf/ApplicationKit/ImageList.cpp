@@ -118,13 +118,16 @@ void ImageList::addImage( Image* newImage )
 	totalImageCount_++;
 	if ( totalImageCount_ >= imageCount_ ) {
 		//resize the master image
-		imageCount_ += this->resizeIncrement_;
-		this->changed();
+		imageCount_ += resizeIncrement_;
+		changed();
 	}
 
-	SysPixelType* bits = masterImage_->getImageBits()->pixels_;
+	ColorPixels pix = masterImage_;
+	SysPixelType* bits = pix;
 	bits += incr;
-	SysPixelType* newImgBits = newImage->getImageBits()->pixels_;
+
+	ColorPixels newPix = newImage;
+	SysPixelType* newImgBits = newPix;
 	int scanlineWidthToCopy = newImage->getWidth();
 	int scanlineWidthOfMasterImage = masterImage_->getWidth();//scanlineToCopy * imageCount_;
 	for (ulong32 i=0;i<imageHeight_;i++) {
@@ -159,9 +162,9 @@ void ImageList::insertImage( const unsigned long & index, Image* newImage )
 
 	//save off the old section of the
 	//image that will have to be moved over
-	char* tmpBits = new char[tmpSize];
-	char* tmpBitsPtr = tmpBits;
-	char* oldBits = (char*)this->masterImage_->getImageBits()->pixels_;
+	unsigned char* tmpBits = new unsigned char[tmpSize];
+	unsigned char* tmpBitsPtr = tmpBits;
+	unsigned char* oldBits = (unsigned char*)masterImage_->getData();
 	oldBits += incr;
 	ulong32 y = 0;
 	for ( y=0;y<imageHeight_;y++) {
@@ -174,15 +177,15 @@ void ImageList::insertImage( const unsigned long & index, Image* newImage )
 	totalImageCount_++;
 	if ( totalImageCount_ >= imageCount_ ) {
 		//resize the master image
-		imageCount_ += this->resizeIncrement_;
-		this->changed();
+		imageCount_ += resizeIncrement_;
+		changed();
 	}
 
 	int moveOverIncr = (imageWidth_ * sizeof(SysPixelType)) * index+1;
 	int indexIncr = (imageWidth_ * sizeof(SysPixelType)) * index;
-	char* buf = (char*)masterImage_->getImageBits()->pixels_;
+	unsigned char* buf = (unsigned char*)masterImage_->getData();
 
-	char* newImgBits = (char*)newImage->getImageBits()->pixels_;
+	unsigned char* newImgBits = (unsigned char*)newImage->getData();
 	memcpy( oldBits, newImgBits, imageHeight_ * imageWidth_ * sizeof(SysPixelType) );
 
 	tmpBitsPtr = tmpBits;
@@ -215,8 +218,8 @@ void ImageList::deleteImage( const unsigned long & index )
 	int tmpSize = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * (oldImgCount-(index+1));
 	//save off the old section of the
 	//image that will have to be moved over
-	char* tmpBits = new char[tmpSize];
-	char* oldBits = (char*)this->masterImage_->getImageBits()->pixels_;
+	unsigned char* tmpBits = new unsigned char[tmpSize];
+	unsigned char* oldBits = (unsigned char*)masterImage_->getData();
 	oldBits += incr;
 	memcpy( tmpBits, oldBits, tmpSize );
 
@@ -224,12 +227,12 @@ void ImageList::deleteImage( const unsigned long & index )
 	//resize the image if neccessary
 	if ( (totalImageCount_ % imageCount_) == resizeIncrement_ ) {
 		//resize the master image
-		imageCount_ -= this->resizeIncrement_;
-		this->changed();
+		imageCount_ -= resizeIncrement_;
+		changed();
 	}
 	//copy back the original bits, moving over by one spot
 	int moveOverIncr = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * index;
-	oldBits = (char*)this->masterImage_->getImageBits()->pixels_;
+	oldBits = (unsigned char*)masterImage_->getData();
 	oldBits += moveOverIncr;
 	memcpy( oldBits, tmpBits, tmpSize );
 	delete [] tmpBits;
@@ -269,9 +272,9 @@ void ImageList::draw( GraphicsContext* context, const unsigned long& index, Rect
 void ImageList::copyImage( Image* imageToCopyTo, const unsigned long& index )
 {
 	int incr  = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * index;
-	char* buf = (char*)masterImage_->getImageBits()->pixels_;
+	unsigned char* buf = (unsigned char*)masterImage_->getData();
 	buf += incr;
-	char* copyBuf = (char*)imageToCopyTo->getImageBits()->pixels_;
+	unsigned char* copyBuf = (unsigned char*)imageToCopyTo->getData();
 	memcpy( copyBuf, buf, (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) );
 }
 
@@ -286,10 +289,13 @@ void ImageList::changed()
 	}
 
 	if ( NULL != oldImage ) {
-		SysPixelType* oldBits = oldImage->getImageBits()->pixels_;
+		ColorPixels oldPix = oldImage;
+		SysPixelType* oldBits = oldPix;
 		long oldWidth = oldImage->getWidth();
 		long oldHeight = oldImage->getHeight();
-		SysPixelType* newBits = masterImage_->getImageBits()->pixels_;
+
+		ColorPixels masterPix = masterImage_;
+		SysPixelType* newBits = masterPix;
 		long newWidth = masterImage_->getWidth();
 
 		uint32 size = minVal<uint32>( oldWidth,newWidth );

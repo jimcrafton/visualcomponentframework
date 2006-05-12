@@ -151,17 +151,30 @@ FontPeer* Win32GraphicsToolkit::internal_createFontPeer( const String& fontName,
 
 Image* Win32GraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
 {
-	return new Win32Image( width, height );
+	Image* result = NULL;
+
+	if ( Image::itColor == imageType ) {
+		result = new Win32Image( width, height );
+	}
+	else if ( Image::itGrayscale == imageType ) {
+		result = new Win32GrayScaleImage( width, height );
+	}
+
+	return result;
 }
 
 Image* Win32GraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
 {
 	if ( NULL != context ){
-		return new Win32Image( context, rect );
+		if ( Image::itColor == imageType ) {
+			return new Win32Image( context, rect );
+		}
+		else if ( Image::itGrayscale == imageType ) {
+			return new Win32GrayScaleImage( context, rect );
+		}
 	}
-	else {
-		return NULL;
-	}
+
+	return NULL;
 }
 
 double Win32GraphicsToolkit::internal_getDPI( GraphicsContext* context )

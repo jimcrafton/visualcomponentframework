@@ -12,7 +12,8 @@ where you installed the VCF.
 
 using namespace VCF;
 
-GrayScaleImage::GrayScaleImage( const bool& needsMemAlloc )
+GrayScaleImage::GrayScaleImage( const bool& needsMemAlloc ):
+	AbstractImage(needsMemAlloc)
 {
 
 }
@@ -24,7 +25,7 @@ GrayScaleImage::~GrayScaleImage()
 
 void GrayScaleImage::setSize( const unsigned long & width, const unsigned long & height )
 {
-
+	AbstractImage::setSize( width, height );
 }
 
 

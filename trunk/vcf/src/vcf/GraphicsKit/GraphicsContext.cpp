@@ -1264,8 +1264,10 @@ void GraphicsContext::setDrawingArea( Rect bounds )
 		drawingArea_->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 	}
 
-	drawingArea_->getImageBits()->attachRenderBuffer( drawingArea_->getWidth(), drawingArea_->getHeight() );
-	drawingArea_->getImageContext()->setRenderingBuffer( drawingArea_->getImageBits()->renderBuffer_ );
+	//ColorPixels pix =  drawingArea_;
+
+	//drawingArea_->getImageBits()->attachRenderBuffer( drawingArea_->getWidth(), drawingArea_->getHeight() );
+	//drawingArea_->getImageContext()->setRenderingBuffer( pix );//drawingArea_->getImageBits()->renderBuffer_ );
 
 	drawingArea_->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
 

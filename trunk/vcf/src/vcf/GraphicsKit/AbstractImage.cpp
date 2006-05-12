@@ -15,7 +15,7 @@ using namespace VCF;
 
 
 AbstractImage::AbstractImage( const bool& needsMemAlloc ):	
-	imageBits_(NULL),
+//	imageBits_(NULL),
 	dataBuffer_(NULL),
 	height_(0),
 	width_(0),	
@@ -23,13 +23,13 @@ AbstractImage::AbstractImage( const bool& needsMemAlloc ):
 	isTransparent_(false),
 	needsMemAlloc_(needsMemAlloc)
 {
-	imageBits_ = new ImageBits(0,0,needsMemAlloc);	
+	//imageBits_ = new ImageBits(0,0,needsMemAlloc);	
 }
 
 AbstractImage::~AbstractImage()
 {
 	delete context_;
-	delete imageBits_;
+	//delete imageBits_;
 }
 
 void AbstractImage::setSize(const unsigned long & width, const unsigned long & height )
@@ -37,7 +37,7 @@ void AbstractImage::setSize(const unsigned long & width, const unsigned long & h
 	width_ = width;
 	height_ = height;
 	if ( (width_ > 0) && (height_ > 0) ) {
-		imageBits_->allocatePixelMemory( width_, height_ );
+//		imageBits_->allocatePixelMemory( width_, height_ );
 
 		ImageEvent event(this);
 		event.setType( IMAGE_EVENT_WIDTH_CHANGED );
@@ -65,12 +65,12 @@ GraphicsContext* AbstractImage::getImageContext()
 {
 	return context_;
 }
-
+/*
 ImageBits* AbstractImage::getImageBits()
 {
 	return imageBits_;
 }
-
+*/
 
 void AbstractImage::saveToStream( OutputStream * stream )
 {
@@ -82,7 +82,7 @@ void AbstractImage::saveToStream( OutputStream * stream )
 	stream->write( (long)height_ );
 	stream->write( (long)width_ );
 
-	const unsigned char* buffer = (const unsigned char*)imageBits_->pixels_;
+	const unsigned char* buffer = (const unsigned char*)getData();
 	stream->write( buffer, height_ * width_ * getType() );
 
 }
@@ -98,7 +98,7 @@ void AbstractImage::loadFromStream( InputStream * stream )
 	stream->read( height );
 	stream->read( width );
 	setSize( width, height );
-	unsigned char* buffer = (unsigned char*)imageBits_->pixels_;
+	unsigned char* buffer = (unsigned char*)getData();
 	stream->read( buffer, height_ * width_ * getType() );
 }
 
@@ -125,7 +125,7 @@ Image::PixelLayoutOrder AbstractImage::getPixelLayoutOrder() const
 
 void* AbstractImage::getData()
 {
-	dataBuffer_ = (unsigned char*)imageBits_->pixels_;
+//	dataBuffer_ = (unsigned char*)imageBits_->pixels_;
 	return dataBuffer_;
 }
 

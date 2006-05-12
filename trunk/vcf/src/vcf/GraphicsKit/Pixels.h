@@ -15,7 +15,7 @@ where you installed the VCF.
 #endif
 
 
-#ifdef PIXELS
+
 
 namespace VCF {
 
@@ -399,10 +399,10 @@ which in turn defines the default pixel types and formats
 	#define AGG_RGBA32
 #endif
 
+
+
 #include "vcf/GraphicsKit/PixelFormats.h"
 #include "vcf/GraphicsKit/AggCommon.h"
-
-#endif
 
 
 namespace VCF {

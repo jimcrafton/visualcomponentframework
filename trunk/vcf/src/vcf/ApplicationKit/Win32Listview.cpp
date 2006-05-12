@@ -2129,13 +2129,14 @@ void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 
 			//reset the contents
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			ColorPixels pix = imageList->getMasterImage();
+			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 			HBITMAP hbmImage = win32Img->getBitmap();
@@ -2160,13 +2161,15 @@ void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 
 		case IMAGELIST_EVENT_ITEM_ADDED : {
 			Win32Image* win32Img = (Win32Image*)event->getImage();
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+
+			ColorPixels pix = event->getImage();
+			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 			HBITMAP hbmImage = win32Img->getBitmap();
@@ -2180,7 +2183,7 @@ void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 			sz = win32Img->getWidth() * win32Img->getHeight();
 			do {
 				sz --;
-				pix[sz].a = oldAlpaVals[sz];
+				bits[sz].a = oldAlpaVals[sz];
 			} while( sz > 0 );
 
 			delete [] oldAlpaVals;
@@ -2207,13 +2210,14 @@ void Win32Listview::onSmallImageListImageChanged( ImageListEvent* event )
 			//reset the contents
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
 			HBITMAP hbmImage = win32Img->getBitmap();
-			SysPixelType* pix = win32Img->getImageBits()->pixels_;
+			ColorPixels pix = imageList->getMasterImage();
+			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
 			do {
 				sz --;
-				oldAlpaVals[sz] = pix[sz].a;
-				pix[sz].a = 0;
+				oldAlpaVals[sz] = bits[sz].a;
+				bits[sz].a = 0;
 			} while( sz > 0 );
 
 			HBITMAP hCopyImg = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP, 0, 0, NULL );
@@ -2227,7 +2231,7 @@ void Win32Listview::onSmallImageListImageChanged( ImageListEvent* event )
 			sz = win32Img->getWidth() * win32Img->getHeight();
 			do {
 				sz --;
-				pix[sz].a = oldAlpaVals[sz];
+				bits[sz].a = oldAlpaVals[sz];
 			} while( sz > 0 );
 
 			delete [] oldAlpaVals;
@@ -2253,13 +2257,14 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 								//		ILC_COLOR32, imageList->getImageCount(), 4 );
 
 		Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		ColorPixels pix = imageList->getMasterImage();
+		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
 		do {
 			sz --;
-			oldAlpaVals[sz] = pix[sz].a;
-			pix[sz].a = 0;
+			oldAlpaVals[sz] = bits[sz].a;
+			bits[sz].a = 0;
 		} while( sz > 0 );
 
 		COLORREF transparentColor = RGB(0,0,0);
@@ -2289,7 +2294,7 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 		sz = win32Img->getWidth() * win32Img->getHeight();
 		do {
 			sz --;
-			pix[sz].a = oldAlpaVals[sz];
+			bits[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
 
 		delete [] oldAlpaVals;
@@ -2324,13 +2329,14 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 										ILC_COLOR24|ILC_MASK, imageList->getImageCount(), 4 );
 
 		Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		ColorPixels pix = win32Img;
+		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
 		do {
 			sz --;
-			oldAlpaVals[sz] = pix[sz].a;
-			pix[sz].a = 0;
+			oldAlpaVals[sz] = bits[sz].a;
+			bits[sz].a = 0;
 		} while( sz > 0 );
 
 		HBITMAP hbmImage = win32Img->getBitmap();
@@ -2356,7 +2362,7 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 		sz = win32Img->getWidth() * win32Img->getHeight();
 		do {
 			sz --;
-			pix[sz].a = oldAlpaVals[sz];
+			bits[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
 
 		delete [] oldAlpaVals;

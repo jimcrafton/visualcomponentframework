@@ -302,8 +302,10 @@ Image* PNGLoader::loadImageFromFile( const String& fileName )
 	}
 	
 	png_read_end(png_ptr, info_ptr);
-	
-	SysPixelType* pix = result->getImageBits()->pixels_;
+
+	ColorPixels pixels = result; 
+	SysPixelType* pix = pixels;
+	//SysPixelType* pix = result->getImageBits()->pixels_;
 
 	unsigned int index = 0;
 	unsigned int pixIndex = 0;
@@ -481,7 +483,8 @@ void PNGLoader::saveImageToFile( const String& fileName, Image* image )
 
 	unsigned char* tmpBuffer = new unsigned char[  width * png_ptr->channels ];	
 
-	SysPixelType* pix = image->getImageBits()->pixels_;
+	ColorPixels pixels = image; 
+	SysPixelType* pix = pixels;
 
 	switch( image->getType() ) {
 		case Image::itGrayscale :

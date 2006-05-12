@@ -41,8 +41,8 @@ _class_rtti_end_
 
 
 
-_class_rtti_(ImageBits, "VCF::Object", IMAGEBITS_CLASSID)
-_class_rtti_end_
+//_class_rtti_(ImageBits, "VCF::Object", IMAGEBITS_CLASSID)
+//_class_rtti_end_
 
 
 

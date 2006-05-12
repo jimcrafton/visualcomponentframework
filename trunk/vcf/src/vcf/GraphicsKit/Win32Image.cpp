@@ -13,37 +13,39 @@ where you installed the VCF.
 
 using namespace VCF;
 
-Win32Image::Win32Image()
+Win32Image::Win32Image():
+	AbstractImage(),
+	flipBits_(false),
+	ownDC_(true)
 {
-	flipBits_ = false;
-	ownDC_ = true;
 	init();
 }
 
 Win32Image::Win32Image( const unsigned long& width, const unsigned long& height ):
-	AbstractImage(false)
+	AbstractImage(false),
+	flipBits_(false),
+	ownDC_(true)
 {
-	flipBits_ = false;
-	ownDC_ = true;
 	init();
 
 	setSize( width, height );
 }
 
 Win32Image::Win32Image( const String& fileName ):
-	AbstractImage(false)
+	AbstractImage(false),	
+	flipBits_(true),
+	ownDC_(true)
 {
-	flipBits_ = true;
-	ownDC_ = true;
 	init();
 	loadFromFile( fileName );
 }
 
 Win32Image::Win32Image( GraphicsContext* context, Rect* rect  ):
-	AbstractImage(false)
+	AbstractImage(false),
+	flipBits_(false),
+	ownDC_(false)
 {
-	flipBits_ = false;
-	ownDC_ = false; //leave it this way to begin with and then
+	//leave it this way to begin with and then
 	//switch to false for the duration after the intial
 	//bitmap has been created
 	if ( (NULL != context) && (NULL != rect) ){
@@ -95,11 +97,11 @@ Win32Image::Win32Image( GraphicsContext* context, Rect* rect  ):
 }
 
 
-Win32Image::Win32Image( HBITMAP bitmap )
-	:AbstractImage(false)
+Win32Image::Win32Image( HBITMAP bitmap ):
+	AbstractImage(false),
+	flipBits_(true),
+	ownDC_(true)	
 {
-	flipBits_ = true;
-	ownDC_ = true;
 	init();
 
 	if ( NULL == bitmap ) {
@@ -108,11 +110,11 @@ Win32Image::Win32Image( HBITMAP bitmap )
 	loadFromBMPHandle( bitmap );
 }
 
-Win32Image::Win32Image( HICON icon )
-	:AbstractImage(false)
+Win32Image::Win32Image( HICON icon ):
+	AbstractImage(false),
+	flipBits_(true),
+	ownDC_(true)	
 {
-	flipBits_ = true;
-	ownDC_ = true;
 	init();
 
 	ICONINFO info = {0};
@@ -147,7 +149,7 @@ Win32Image::~Win32Image()
 		hbmp_.detach();
 		context_ = NULL;
 	}
-	imageBits_->pixels_ = NULL;
+	//imageBits_->pixels_ = NULL;
 }
 
 void Win32Image::init()
@@ -188,39 +190,21 @@ void Win32Image::createBMP()
 	
 
 	dataBuffer_ = NULL;
-
-	
-	//hBitmap_ = NULL;
-	memset( &bmpInfo_, 0, sizeof (BITMAPINFOHEADER) );
-	bmpInfo_.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
-	bmpInfo_.bmiHeader.biWidth = getWidth();
-	if ( true == flipBits_ ) {
-		bmpInfo_.bmiHeader.biHeight = -getHeight(); // Win32 DIB are upside down - do this to filp it over
-	}
-	else {
-		//this needs to be fixed
-		//I put this back for now JEC-12-10-2001
-		bmpInfo_.bmiHeader.biHeight = -getHeight(); // this is WRONG, cause there are times when we don't
-													 // want it this way, but it will have to do for now :(
-	}
-	bmpInfo_.bmiHeader.biPlanes = 1;
-	bmpInfo_.bmiHeader.biBitCount = 32;
-	bmpInfo_.bmiHeader.biCompression = BI_RGB;
-	bmpInfo_.bmiHeader.biSizeImage = abs(bmpInfo_.bmiHeader.biHeight) * bmpInfo_.bmiHeader.biWidth * 4;
-	imageBits_->pixels_ = NULL;
+//	imageBits_->pixels_ = NULL;
 
 	hbmp_.setSize( getWidth(), getHeight() );
 
+	BITMAPINFO& bmpInfo = getBMPInfo();
 
 	//hBitmap_ = CreateDIBSection ( dc_, &bmpInfo_, DIB_RGB_COLORS, (void **)&imageBits_->pixels_, NULL, NULL );
 
 	if ( (hbmp_ != NULL) ) {
 		
 		dataBuffer_ = (unsigned char*)hbmp_.data();
-		imageBits_->pixels_ = (SysPixelType*)hbmp_.data();
+//		imageBits_->pixels_ = (SysPixelType*)hbmp_.data();
 
-		SysPixelType* pix = imageBits_->pixels_;
-		int sz = bmpInfo_.bmiHeader.biWidth * abs(bmpInfo_.bmiHeader.biHeight);
+		SysPixelType* pix = (SysPixelType*)dataBuffer_;
+		int sz = bmpInfo.bmiHeader.biWidth * abs(bmpInfo.bmiHeader.biHeight);
 		do {
 			sz --;
 			pix[sz].a = 255;
@@ -279,8 +263,10 @@ void Win32Image::loadFromBMPHandle( HBITMAP bitmap )
 	DeleteDC( tmpBMPDC );
 	DeleteObject( bitmap );
 
-	SysPixelType* pix = imageBits_->pixels_;
-	int sz = bmpInfo_.bmiHeader.biWidth * abs(bmpInfo_.bmiHeader.biHeight);
+	SysPixelType* pix = (SysPixelType*) hbmp_.data();
+	BITMAPINFO& bmpInfo = getBMPInfo();
+
+	int sz = bmpInfo.bmiHeader.biWidth * abs(bmpInfo.bmiHeader.biHeight);
 	do {
 		sz --;
 		pix[sz].a = 255;
@@ -354,7 +340,8 @@ void Win32Image::internal_saveToFile( const String& fileName )
 
 
 	DWORD height = getHeight();
-	SysPixelType* bits = getImageBits()->pixels_;
+	ColorPixels pix = this;
+	SysPixelType* bits = pix;
 	unsigned char* row = new unsigned char[width];
 	unsigned long imgWidth = getWidth();
 
@@ -402,7 +389,7 @@ HICON Win32Image::convertToIcon()
 
 	GetVersionEx( &osVersion );
 
-	SysPixelType* bits = getImageBits()->pixels_;
+	SysPixelType* bits = (SysPixelType*) hbmp_.data();
 
 	int alphaColorCount = 2;
 	bool isWindowsXP = (osVersion.dwMajorVersion >=5) && (osVersion.dwMinorVersion >= 1);
@@ -556,6 +543,248 @@ HICON Win32Image::convertToIcon()
 
 	return result;
 }
+
+
+
+
+
+
+
+
+
+
+Win32GrayScaleImage::Win32GrayScaleImage():
+	GrayScaleImage(),
+	flipBits_(false),
+	ownDC_(true)
+{
+	init();
+}
+
+Win32GrayScaleImage::Win32GrayScaleImage( const String& fileName ):
+	GrayScaleImage(false),
+	flipBits_(true),
+	ownDC_(true)
+{
+	init();
+}
+
+Win32GrayScaleImage::Win32GrayScaleImage( const unsigned long& width, const unsigned long& height ):
+	GrayScaleImage(false),	
+	flipBits_(false),
+	ownDC_(true)
+{
+	init();
+	setSize( width, height );
+}
+
+Win32GrayScaleImage::Win32GrayScaleImage( GraphicsContext* context, Rect* rect ):
+	GrayScaleImage(false),	
+	flipBits_(true),
+	ownDC_(true)
+{
+	init();
+
+	//leave it this way to begin with and then
+	//switch to false for the duration after the intial
+	//bitmap has been created
+	if ( (NULL != context) && (NULL != rect) ){
+		Win32Context* ctx = reinterpret_cast<Win32Context*>(context->getPeer() );
+		if ( NULL != ctx ){
+			//set up the bitmap data
+			IMTRAITS::setChannelType( flags_, SysGrayscalePixelType::Traits::getTraitsChannelType() );
+			IMTRAITS::setChannelSize( flags_, SysGrayscalePixelType::Traits::getTraitsChannelSize() );
+			IMTRAITS::setImageType( flags_, SysGrayscalePixelType::Traits::getTraitsImageType() );
+			IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
+
+			//hBitmap_ = NULL;
+
+			palette_ = NULL;
+
+			HDC contextDC = (HDC)ctx->getContextID();
+
+			//the deletion of the context_ should delete the
+			//dc_ handle
+			context_ = context;
+
+			HDC tmpDC = CreateCompatibleDC( contextDC );
+			HDC origDC = contextDC;
+			contextDC = tmpDC;
+
+			setSize( rect->getWidth(), rect->getHeight() );
+
+			contextDC = origDC;
+
+			int r = BitBlt( tmpDC, 0, 0, getWidth(), getHeight(), contextDC, (int)rect->left_, (int)rect->top_, SRCCOPY );
+
+			::SelectObject( tmpDC, hbmp_.oldBMP() );
+			DeleteDC( tmpDC );
+
+			hbmp_.attach( contextDC );
+
+			//hOldBitmap_ = (HBITMAP)::SelectObject( dc_, (HBITMAP)hbmp );
+			//ownDC_ = false;
+		}
+		else {
+			//throw exception !!!
+			throw InvalidPointerException( MAKE_ERROR_MSG_2("Incorrect peer class (isn't a Win32Context) for passed GraphicsContext instance" ) );
+		}
+	}
+	else {
+		//throw exception !!!
+		throw InvalidPointerException( MAKE_ERROR_MSG_2("Graphics Context passed in to Win32GrayScaleImage is NULL" ) );
+	}
+}
+
+Win32GrayScaleImage::Win32GrayScaleImage( HBITMAP bitmap ):
+	GrayScaleImage(false),
+	flipBits_(true),
+	ownDC_(true)
+{
+	init();
+}
+
+Win32GrayScaleImage::Win32GrayScaleImage( HICON icon ):
+	GrayScaleImage(false),
+	flipBits_(true),
+	ownDC_(true)
+{
+	init();
+}
+
+Win32GrayScaleImage::~Win32GrayScaleImage()
+{
+	if ( !ownDC_ ) {
+		hbmp_.detach();
+		context_ = NULL;
+	}
+}
+
+void Win32GrayScaleImage::init()
+{
+	//NOTE: init() is not called if ownDC_ is true - the constructor takes care of this
+	IMTRAITS::setChannelType( flags_, SysGrayscalePixelType::Traits::getTraitsChannelType() );
+	IMTRAITS::setChannelSize( flags_, SysGrayscalePixelType::Traits::getTraitsChannelSize() );
+	IMTRAITS::setImageType( flags_, SysGrayscalePixelType::Traits::getTraitsImageType() );
+	IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
+
+	palette_ = NULL;
+
+	//the deletion of the context_ should delete the
+	//dc_ handle
+	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
+}
+
+void Win32GrayScaleImage::setSize( const unsigned long & width, const unsigned long & height )
+{
+	if ( (!ownDC_) && (hbmp_ != NULL) ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );
+	}
+	AbstractImage::setSize( width, height );
+	createBMP();
+}
+
+void Win32GrayScaleImage::createBMP()
+{
+	if ( (!ownDC_) && (hbmp_ != NULL) ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );
+	}
+
+	
+
+	dataBuffer_ = NULL;
+
+	hbmp_.setSize( getWidth(), getHeight() );
+
+	if ( (hbmp_ != NULL) ) {
+		
+		dataBuffer_ = (unsigned char*)hbmp_.data();
+
+		//create grayscale palette!
+
+		BITMAPINFO& bmpInfo = getBMPInfo();
+
+
+		unsigned char* tmp = new unsigned char[ sizeof(LOGPALETTE) + (sizeof(PALETTEENTRY) * 256) ];
+		LOGPALETTE* pal = (LOGPALETTE*)tmp;
+
+		pal->palNumEntries = 256;
+		pal->palVersion = 0x300;
+
+		PALETTEENTRY* entry = &pal->palPalEntry[0];
+
+		for (unsigned short i=0;i<pal->palNumEntries;i++ ) {
+			entry->peRed = bmpInfo.bmiColors[i].rgbRed;
+			entry->peGreen = bmpInfo.bmiColors[i].rgbGreen;
+			entry->peBlue = bmpInfo.bmiColors[i].rgbBlue;
+			entry->peFlags = 0;
+			entry ++;
+		}
+
+
+		if ( NULL != palette_ ) {
+			DeleteObject(palette_); 
+			palette_ = NULL;
+		}
+
+		palette_ = ::CreatePalette( pal );
+
+		::SelectPalette( hbmp_.dc(), palette_, TRUE );
+		::RealizePalette( hbmp_.dc() );
+
+		delete [] tmp;
+	}
+}
+
+void Win32GrayScaleImage::beginDrawing()
+{
+
+}
+
+void Win32GrayScaleImage::finishedDrawing()
+{
+
+}
+
+HBITMAP Win32GrayScaleImage::getBitmap()
+{
+	return hbmp_;
+}
+
+HDC Win32GrayScaleImage::getDC()
+{
+	return hbmp_.dc();
+}
+
+HICON Win32GrayScaleImage::convertToIcon()
+{
+	return NULL;
+}
+
+void Win32GrayScaleImage::loadFromFile( const String& fileName )
+{
+
+}
+
+void Win32GrayScaleImage::loadFromBMPHandle( HBITMAP bitmap )
+{
+
+}
+
+void Win32GrayScaleImage::internal_saveToFile( const String& fileName )
+{
+
+}
+
+
+
+
+
+
+
+
+
+
 
 BMPLoader::BMPLoader()
 {

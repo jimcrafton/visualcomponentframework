@@ -294,13 +294,14 @@ void Win32Tree::setImageList( ImageList* imageList )
 		matters! If it's not set back to 0 then the transparency affect doesn't
 		work? Bizarre
 		*/
-		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		ColorPixels pix = win32Img;
+		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
 		do {
 			sz --;
-			oldAlpaVals[sz] = pix[sz].a;
-			pix[sz].a = 0;
+			oldAlpaVals[sz] = bits[sz].a;
+			bits[sz].a = 0;
 		} while( sz > 0 );
 
 		HBITMAP hbmImage = win32Img->getBitmap();
@@ -331,7 +332,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 		sz = win32Img->getWidth() * win32Img->getHeight();
 		do {
 			sz --;
-			pix[sz].a = oldAlpaVals[sz];
+			bits[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
 
 		delete [] oldAlpaVals;
@@ -1307,13 +1308,14 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 		Image* masterImage = imageList->getMasterImage();
 		Win32Image* win32Img = (Win32Image*)masterImage;
-		SysPixelType* pix = win32Img->getImageBits()->pixels_;
+		ColorPixels pix = win32Img;
+		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
 		do {
 			sz --;
-			oldAlpaVals[sz] = pix[sz].a;
-			pix[sz].a = 0;
+			oldAlpaVals[sz] = bits[sz].a;
+			bits[sz].a = 0;
 		} while( sz > 0 );
 
 
@@ -1332,7 +1334,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 		sz = win32Img->getWidth() * win32Img->getHeight();
 		do {
 			sz --;
-			pix[sz].a = oldAlpaVals[sz];
+			bits[sz].a = oldAlpaVals[sz];
 		} while( sz > 0 );
 
 		delete [] oldAlpaVals;
