@@ -47,7 +47,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -147,7 +147,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;REMOTEKIT_DLL;REMOTEKIT_EXPORTS;USE_NETKIT_DLL"
 				StringPooling="true"
 				RuntimeLibrary="2"

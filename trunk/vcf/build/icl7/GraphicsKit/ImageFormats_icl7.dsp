@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/../thirdparty/common/paintlib/common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "NO_MFC" /D "IMAGEFORMATS_DLL" /D "IMAGEFORMATS_EXPORTS" /D "USE_PAINTLIB_LIB" /D "USE_APPLICATIONKIT_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/../thirdparty/common/paintlib/common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "NO_MFC" /D "IMAGEFORMATS_DLL" /D "IMAGEFORMATS_EXPORTS" /D "USE_PAINTLIB_LIB" /D "USE_APPLICATIONKIT_DLL" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/ImageFormats_icl7.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\bin\ImageFormats_icl7.dll" /libpath:"$(VCF_LIB)"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\bin\ImageFormats_icl7.dll" /libpath:"$(VCF_ROOT)/lib"
 # SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "ImageFormats - Win32 Debug"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "$(VCF_INCLUDE)/../thirdparty/common/paintlib/common" /I "$(VCF_INCLUDE)/../thirdparty/common/agg/include/" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "NO_MFC" /D "IMAGEFORMATS_DLL" /D "IMAGEFORMATS_EXPORTS" /D "USE_PAINTLIB_LIB" /D "USE_APPLICATIONKIT_DLL" /Fd"..\..\..\bin\ImageFormats_icl7_d.pdb" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/../thirdparty/common/paintlib/common" /I "$(VCF_ROOT)/src/../thirdparty/common/agg/include/" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "NO_MFC" /D "IMAGEFORMATS_DLL" /D "IMAGEFORMATS_EXPORTS" /D "USE_PAINTLIB_LIB" /D "USE_APPLICATIONKIT_DLL" /Fd"..\..\..\bin\ImageFormats_icl7_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/ImageFormats_icl7_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\bin\ImageFormats_icl7_d.dll" /pdbtype:sept /libpath:"$(VCF_LIB)"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\bin\ImageFormats_icl7_d.dll" /pdbtype:sept /libpath:"$(VCF_ROOT)/lib"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 

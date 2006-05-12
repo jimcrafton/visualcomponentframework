@@ -114,7 +114,7 @@ function AddSpecificConfig(proj, strProjectName,bEmptyProject)
 		CLTool.BasicRuntimeChecks = runtimeBasicCheckAll;
 		CLTool.Optimization = optimizeDisabled;
 		CLTool.ExceptionHandling = cppExceptionHandlingYes;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.WarningLevel = warningLevel_3;
 		CLTool.PreprocessorDefinitions = "WIN32;_DEBUG;_CONSOLE;USE_FOUNDATIONKIT_DLL";
 		CLTool.RuntimeTypeInfo = true;
@@ -122,7 +122,7 @@ function AddSpecificConfig(proj, strProjectName,bEmptyProject)
 		CLTool.UsePrecompiledHeader = pchNone;
 
 		var LinkTool = config.Tools('VCLinkerTool');
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		LinkTool.AdditionalDependencies = "odbc32.lib odbccp32.lib rpcrt4.lib";
 		LinkTool.SubSystem = subSystemConsole;
 		LinkTool.TargetMachine = machineTypeOption.machineX86;
@@ -145,7 +145,7 @@ function AddSpecificConfig(proj, strProjectName,bEmptyProject)
 		CLTool.ExceptionHandling = cppExceptionHandlingYes;
 		CLTool.BufferSecurityCheck = true
 		CLTool.DebugInformationFormat = debugDisabled;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.WarningLevel = warningLevel_3;
 		CLTool.EnableFunctionLevelLinking = true;
 		CLTool.InlineFunctionExpansion = expandOnlyInline;
@@ -157,7 +157,7 @@ function AddSpecificConfig(proj, strProjectName,bEmptyProject)
 		CLTool.UsePrecompiledHeader = pchNone;
 
 		var LinkTool = config.Tools('VCLinkerTool');
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		LinkTool.AdditionalDependencies = "odbc32.lib odbccp32.lib rpcrt4.lib";
 		LinkTool.SubSystem = subSystemConsole;
 		LinkTool.TargetMachine = machineX86;

@@ -48,7 +48,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -144,7 +144,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

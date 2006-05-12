@@ -143,12 +143,12 @@ void CMVCAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				
 				switch ( t ){
 					case debug: {
-						setting = "/GR /MDd /I$(VCF_INCLUDE)";
+						setting = "/GR /MDd /I$(VCF_ROOT)/src";
 					}
 					break;
 
 					case release: {
-						setting = "/GR /MD /I$(VCF_INCLUDE)";
+						setting = "/GR /MD /I$(VCF_ROOT)/src";
 					}
 					break;
 				}
@@ -164,14 +164,10 @@ void CMVCAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 				pConfig->RemoveToolSettings( tool, setting, reserved );				
 				
 				
-				//if ( linkType == VCF_DLL_LINK ) {//VCF_STATIC_LINK
-					setting = "/DUSE_FOUNDATIONKIT_DLL";
-					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_GRAPHICSKIT_DLL";
-					pConfig->AddToolSettings( tool, setting, reserved );
-					setting = "/DUSE_APPLICATIONKIT_DLL";
-					pConfig->AddToolSettings( tool, setting, reserved );
-				//}
+				
+				setting = "/DUSE_APPLICATIONKIT_DLL";
+				pConfig->AddToolSettings( tool, setting, reserved );
+				
 				tool = "link.exe";
 				//if ( linkType == VCF_DLL_LINK ) {
 					switch ( t ){
@@ -180,7 +176,7 @@ void CMVCAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							
 							setting += "rpcrt4.lib ";
 							
-							setting += "/libpath:$(VCF_LIB)";
+							setting += "/libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 
@@ -189,42 +185,12 @@ void CMVCAppWizardAppWiz::CustomizeProject(IBuildProject* pProject)
 							
 							setting += "rpcrt4.lib ";
 							
-							setting += "/libpath:$(VCF_LIB)";
+							setting += "/libpath:$(VCF_ROOT)/lib";
 						}
 						break;
 					}
 
-				/*
-				}
-				else if ( linkType == VCF_STATIC_LINK ) {
-					switch ( t ){
-						case debug: {
-							//NetworkKit_sd, NetworkKitDLL_d, NetworkKit_s, NetworkKitDLL, RemoteObjectKit_sd, RemoteObjectKit_s, RemoteObjectKitDLL_d, RemoteObjectKitDLL
-							setting = "";
-							if ( m_pChooser->NeedVCFRemote() ) {
-								setting += "NetworkKit_sd.lib RemoteObjectKit_sd.lib ";
-							}
-							else if ( m_pChooser->NeedVCFNet() ) {
-								setting += "NetworkKit_sd.lib ";
-							}
-							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
-						}
-						break;
-
-						case release: {
-							setting = "";
-							if ( m_pChooser->NeedVCFRemote() ) {
-								setting += "NetworkKit_s.lib RemoteObjectKit_s.lib ";
-							}
-							else if ( m_pChooser->NeedVCFNet() ) {
-								setting += "NetworkKit_s.lib ";
-							}
-							setting += "comctl32.lib rpcrt4.lib /libpath:$(VCF_LIB)";
-						}
-						break;
-					}
-				}
-				*/
+			
 
 				if ( ! SUCCEEDED( pConfig->AddToolSettings( tool, setting, reserved ) ) ){
 					TRACE( "failed to set linker variables\n" );

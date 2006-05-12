@@ -112,11 +112,11 @@ function AddConfig(proj, strProjectName)
 		CLTool.PreprocessorDefinitions = strDefines;
 		CLTool.DebugInformationFormat = debugEditAndContinue;
 		CLTool.RuntimeTypeInfo = true;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.Optimization = optimizeOption.optimizeDisabled;
 
 		var LinkTool = config.Tools('VCLinkerTool');
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		LinkTool.AdditionalDependencies = "odbc32.lib odbccp32.lib rpcrt4.lib";
 		LinkTool.ProgramDatabaseFile = "$(OutDir)/" + strProjectName + ".pdb";
 		LinkTool.GenerateDebugInformation = true;
@@ -151,7 +151,7 @@ function AddConfig(proj, strProjectName)
 		strDefines += ";USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL";
 		CLTool.PreprocessorDefinitions = strDefines;
 		CLTool.RuntimeTypeInfo = true;
-		CLTool.AdditionalIncludeDirectories = "$(VCF_INCLUDE)";
+		CLTool.AdditionalIncludeDirectories = "$(VCF_ROOT)/src";
 		CLTool.EnableFunctionLevelLinking = true;
 		CLTool.InlineFunctionExpansion = inlineExpansionOption.expandOnlyInline;
 		CLTool.Optimization = optimizeOption.optimizeMinSpace;
@@ -159,7 +159,7 @@ function AddConfig(proj, strProjectName)
 		CLTool.BufferSecurityCheck = true
 
 		var LinkTool = config.Tools('VCLinkerTool');
-		LinkTool.AdditionalLibraryDirectories = "$(VCF_LIB)";
+		LinkTool.AdditionalLibraryDirectories = "$(VCF_ROOT)/lib";
 		LinkTool.AdditionalDependencies = "odbc32.lib odbccp32.lib rpcrt4.lib";
 		LinkTool.GenerateDebugInformation = true;
 		LinkTool.LinkIncremental = linkIncrementalNo;
