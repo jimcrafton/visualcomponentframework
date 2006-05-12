@@ -43,11 +43,54 @@ public:
 
 		ColorPixels pix = imgPtr;
 
+		double y = 10;
 
-		ctx->drawImage( 100, 100, imgPtr );
+		ctx->drawImage( 100, y, imgPtr );
 
-		ctx->bitBlit( 100, 300, imgPtr );
+		y += imgPtr->getHeight() + 20;
 
+		ctx->bitBlit( 100, y, imgPtr );
+
+		y += imgPtr->getHeight() + 20;
+
+
+
+
+		SmartPtr<Image>::Scoped grImg( GraphicsToolkit::createImage( 256, 100, Image::itGrayscale ) );
+
+
+		imgPtr = get_pointer(grImg);
+		GrayPixels grPix = imgPtr;
+
+		imgCtx = imgPtr->getImageContext();
+
+		imgCtx->setColor(Color::getColor("yellow"));
+		imgCtx->moveTo( 10, 10 );
+		imgCtx->lineTo( 90, 78 );
+		imgCtx->strokePath();
+
+		ctx->drawImage( 100, y, imgPtr );
+
+		y += imgPtr->getHeight() + 20;
+
+		ctx->bitBlit( 100, y, imgPtr );
+
+		unsigned char* pixPtr = (unsigned char*)imgPtr->getData();
+
+		uint32 sz =  grPix.width() * grPix.height();
+		 
+		for ( int yy=0;yy<grPix.height();yy++ ) {
+			for ( int i=0;i<grPix.width();i++) {
+				*pixPtr = i;
+				pixPtr ++;
+				//grPix.at(i,yy).value = i;
+			}
+		}
+
+
+		y += imgPtr->getHeight() + 20;
+
+		ctx->bitBlit( 100, y, imgPtr );
 	}
 
 
