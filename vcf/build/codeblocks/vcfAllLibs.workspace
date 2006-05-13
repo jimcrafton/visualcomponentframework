@@ -50,6 +50,6 @@
 			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
 		</Project>
 		<Project filename="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.cbp" />
-		<Project filename="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF.cbp" />
+		<Project filename="..\..\src\thirdparty\common\LibTIFF\LibTIFF.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

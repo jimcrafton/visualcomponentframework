@@ -53,10 +53,10 @@
 			<Add option="-DVCF_MINGW" />
 			<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 			<Add option="-DUSE_FOUNDATIONKIT_DLL" />
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
 		<Unit filename="createinfo.cpp">
 			<Option compilerVar="CPP" />

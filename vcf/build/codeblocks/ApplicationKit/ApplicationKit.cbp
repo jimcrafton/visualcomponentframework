@@ -93,16 +93,16 @@
 		</Build>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\win32&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\win32\Microsoft&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\win32&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\win32\Microsoft&quot;' />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="..\..\resources\win32" />
 		</ResourceCompiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
 		<Unit filename="..\..\resources\win32\ApplicationKit.rc">
 			<Option compilerVar="WINDRES" />

@@ -82,7 +82,7 @@
 		</Build>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\BasicException.cpp">
 			<Option compilerVar="CPP" />

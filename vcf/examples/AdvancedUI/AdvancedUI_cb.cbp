@@ -105,11 +105,11 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
 		<Unit filename="AdvancedUI.cpp">
 			<Option compilerVar="CPP" />

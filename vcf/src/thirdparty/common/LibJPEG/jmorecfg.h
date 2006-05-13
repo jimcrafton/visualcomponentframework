@@ -158,9 +158,12 @@ typedef short INT16;
 /* INT32 must hold at least signed 32-bit values. */
 
 /* modification from paintlib */
-#if !defined( XMD_H ) && !defined( _BASETSD_H_ )
+#if !defined( XMD_H ) && !defined( _BASETSD_H_ )  && !defined( __MINGW32__ )
      /* X11/xmd.h and MS VC++ 6.0 correctly define INT32 */
 typedef long INT32;
+#endif
+#if !defined (_BASETSD_H_) && defined ( __MINGW32__ )
+typedef int INT32;
 #endif
 
 /* Datatype used for image dimensions.  The JPEG standard only supports

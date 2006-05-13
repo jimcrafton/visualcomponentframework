@@ -94,13 +94,13 @@
 		</Build>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\ZLib&quot;' />
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\win32\Microsoft&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\ZLib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\win32\Microsoft&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
 		<Unit filename="..\..\..\src\vcf\ApplicationKit\ImageList.h">
 			<Option compilerVar="CPP" />
@@ -321,13 +321,6 @@
 			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="..\..\..\src\vcf\GraphicsKit\Image.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\GraphicsKit\ImageBits.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
