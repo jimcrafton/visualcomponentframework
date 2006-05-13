@@ -48,8 +48,8 @@ public:
 	/**
 	Sets the color for the fill
 	*/
-	void setColor( Color color ) {
-		color_ = color;
+	void setColor( Color* color ) {
+		color_ = *color;
 	}
 	
 

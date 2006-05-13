@@ -250,9 +250,13 @@ GraphicsContext::~GraphicsContext()
 	}
 	stateCollection_.clear();
 
+
 	if ( NULL != drawingArea_ ) {
+		renderBuffer_->attach( NULL, 0, 0, 0 );
+		delete renderBuffer_;
+
 		delete drawingArea_;
-	}
+	}	
 }
 
 void GraphicsContext::init()
@@ -1259,6 +1263,7 @@ void GraphicsContext::setDrawingArea( Rect bounds )
 
 	if ( NULL == drawingArea_ ) {
 		drawingArea_ = GraphicsToolkit::createImage( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
+		renderBuffer_ = new agg::rendering_buffer();
 	}
 	else {
 		drawingArea_->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
@@ -1269,6 +1274,13 @@ void GraphicsContext::setDrawingArea( Rect bounds )
 	//drawingArea_->getImageBits()->attachRenderBuffer( drawingArea_->getWidth(), drawingArea_->getHeight() );
 	//drawingArea_->getImageContext()->setRenderingBuffer( pix );//drawingArea_->getImageBits()->renderBuffer_ );
 
+	renderBuffer_->attach( (unsigned char*)drawingArea_->getData(), 
+							drawingArea_->getWidth(), 
+							drawingArea_->getHeight(),
+							drawingArea_->getWidth() * drawingArea_->getType() );
+
+	drawingArea_->getImageContext()->setRenderingBuffer( renderBuffer_ );
+
 	drawingArea_->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
 
 	renderAreaDirty_ = true;
@@ -1276,7 +1288,12 @@ void GraphicsContext::setDrawingArea( Rect bounds )
 
 void GraphicsContext::deleteDrawingArea()
 {
+	renderBuffer_->attach( NULL, 0, 0, 0 );
+	delete renderBuffer_;
+
 	delete drawingArea_;
+	
+	renderBuffer_ = NULL;
 	drawingArea_ = NULL;
 }
 

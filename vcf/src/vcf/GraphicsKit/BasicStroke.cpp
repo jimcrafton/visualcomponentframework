@@ -67,67 +67,16 @@ void BasicStroke::render( Path * path )
 		problems! Many, many, many thanks to Marcello for tracking this down and
 		fixing it!!!
 		*/
-		PathPoint pt, p2, c1, c2;
+		PathPoint pt, p2, c1, c2;	
 
-		agg::rendering_buffer* renderingBuffer = context_->getRenderingBuffer();
 		std::vector<PathPoint>::iterator pathIt = points.begin();
 		
-		if ( (NULL == renderingBuffer) || (!antiAlias_) ){
-			context_->setStrokeWidth( width_ );
-
-			while ( pathIt != points.end() ) {
-				pt = *pathIt;
-
-				switch ( pt.type_ ){
-					case PathPoint::ptMoveTo: {
-						context_->moveTo( pt.point_.x_, pt.point_.y_ );
-					}
-					break;
-
-					case PathPoint::ptLineTo: {
-						context_->lineTo( pt.point_.x_, pt.point_.y_ );
-					}
-					break;
-
-					case PathPoint::ptQuadTo: {
-						pathIt ++;
-						
-						c1 = *pathIt;
-						
-						pathIt ++;
-						c2 = *pathIt;
-
-						pathIt++;
-						p2 = *pathIt;
-
-						context_->curve( pt.point_.x_, pt.point_.y_,
-											c1.point_.x_, c1.point_.y_,
-											c2.point_.x_, c2.point_.y_,
-											p2.point_.x_, p2.point_.y_ );
-					}
-					break;
-
-					case PathPoint::ptCubicTo: {
-
-					}
-					break;
-
-					case PathPoint::ptClose: {
-						context_->lineTo( pt.point_.x_, pt.point_.y_ );
-					}
-					break;
-				}
-				
-				pathIt ++;
-			}
-			context_->strokePath();
-		}
-		else {
-
+		if ( (NULL != context_->getRenderingBuffer()) && (antiAlias_) ){			
+			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
 			typedef agg::renderer_base<pixfmt> ren_base;
 			typedef agg::renderer_scanline_aa_solid<ren_base> renderer_solid;			
 
-			pixfmt pixf(*renderingBuffer);
+			pixfmt pixf(renderingBuffer);
 			ren_base renb(pixf);
 
 			renderer_solid renderer( renb );
@@ -238,6 +187,58 @@ void BasicStroke::render( Path * path )
 
 			agg::render_scanlines(rasterizer, scanline, renderer);
 			//rasterizer.render(scanline,renderer);
+
+			
+		}
+		else {
+			context_->setStrokeWidth( width_ );
+
+			while ( pathIt != points.end() ) {
+				pt = *pathIt;
+
+				switch ( pt.type_ ){
+					case PathPoint::ptMoveTo: {
+						context_->moveTo( pt.point_.x_, pt.point_.y_ );
+					}
+					break;
+
+					case PathPoint::ptLineTo: {
+						context_->lineTo( pt.point_.x_, pt.point_.y_ );
+					}
+					break;
+
+					case PathPoint::ptQuadTo: {
+						pathIt ++;
+						
+						c1 = *pathIt;
+						
+						pathIt ++;
+						c2 = *pathIt;
+
+						pathIt++;
+						p2 = *pathIt;
+
+						context_->curve( pt.point_.x_, pt.point_.y_,
+											c1.point_.x_, c1.point_.y_,
+											c2.point_.x_, c2.point_.y_,
+											p2.point_.x_, p2.point_.y_ );
+					}
+					break;
+
+					case PathPoint::ptCubicTo: {
+
+					}
+					break;
+
+					case PathPoint::ptClose: {
+						context_->lineTo( pt.point_.x_, pt.point_.y_ );
+					}
+					break;
+				}
+				
+				pathIt ++;
+			}
+			context_->strokePath();			
 		}
 	}
 

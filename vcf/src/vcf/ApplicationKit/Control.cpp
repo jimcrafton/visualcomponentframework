@@ -301,6 +301,27 @@ void Control::setBounds( const double& x, const double& y, const double& width, 
 	setBounds( &Rect( x, y, x+width, y+height ) );
 }
 
+void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
+{
+	if ( useRenderBuffer ) {
+		controlState_  |= Control::csUseRenderBuffer;
+	}
+	else {
+		controlState_  &= ~Control::csUseRenderBuffer;
+	}
+
+	if ( useRenderBuffer ) {
+		if ( NULL == context_->getDrawingArea() ) {
+			context_->setDrawingArea( *bounds_ );
+		}
+	}
+	else {
+		if ( NULL != context_->getDrawingArea() ) {
+			context_->deleteDrawingArea();
+		}
+	}
+}
+
 void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
 	*bounds_ = *rect;
@@ -523,7 +544,7 @@ void Control::handleEvent( Event* event )
 				if ( isUsingRenderBuffer() ) {
 					Rect bounds = getClientBounds(false);
 					context_->setDrawingArea( bounds );						
-				}
+				}				
 			}
 			break;
 
