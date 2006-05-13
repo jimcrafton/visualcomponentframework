@@ -55,77 +55,17 @@ void BasicFill::render( Path* path )
 
 		PathPoint pt, p2, c1, c2;
 		
-		std::vector<PathPoint>::iterator pathIt = points.begin();
+		std::vector<PathPoint>::iterator pathIt = points.begin();	
 
-		agg::rendering_buffer* renderingBuffer = context_->getRenderingBuffer();
-		if ( (NULL == renderingBuffer) || (!antiAlias_) ){
+		if ( (NULL != context_->getRenderingBuffer()) && antiAlias_ ){
+
+			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
 
 
-			while ( pathIt != points.end() ) {
-				pt = *pathIt;
-
-				switch ( pt.type_ ){
-					case PathPoint::ptMoveTo: {
-						if ( !pts.empty() ) {
-							context_->polyline( pts );
-						}
-						pts.clear();
-						pts.push_back( pt.point_ );
-					}
-					break;
-
-					case PathPoint::ptLineTo: {
-						//context_->lineTo( pt.point_.x_, pt.point_.y_ );
-						pts.push_back( pt.point_ );
-					}
-					break;
-
-					case PathPoint::ptQuadTo: {
-						pathIt ++;					
-						c1 = *pathIt;
-						
-						pathIt ++;
-						c2 = *pathIt;
-
-						pathIt++;
-						p2 = *pathIt;
-
-						context_->curve( pt.point_.x_, pt.point_.y_,
-											c1.point_.x_, c1.point_.y_,
-											c2.point_.x_, c2.point_.y_,
-											p2.point_.x_, p2.point_.y_ );
-					}
-					break;
-
-					case PathPoint::ptCubicTo: {
-
-					}
-					break;
-
-					case PathPoint::ptClose: {
-						pts.push_back( pt.point_ );
-						context_->polyline( pts );
-
-						pts.clear();
-					}
-					break;
-				}
-				
-				pathIt ++;
-			}
-
-			if ( !pts.empty() ) {
-				context_->polyline( pts );
-				pts.clear();
-			}
-
-			context_->fillPath();
-		}
-		else {
 			typedef agg::renderer_base<pixfmt> ren_base;
 			typedef agg::renderer_scanline_aa_solid<ren_base> renderer_solid;			
 			
-			pixfmt pixf(*renderingBuffer);
+			pixfmt pixf(renderingBuffer);
 			ren_base renb(pixf);
 
 			renderer_solid renderer( renb );
@@ -208,6 +148,70 @@ void BasicFill::render( Path* path )
 
 			//rasterizer.render(scanline,renderer);
 			agg::render_scanlines(rasterizer, scanline, renderer);
+
+
+			
+		}
+		else {
+			while ( pathIt != points.end() ) {
+				pt = *pathIt;
+
+				switch ( pt.type_ ){
+					case PathPoint::ptMoveTo: {
+						if ( !pts.empty() ) {
+							context_->polyline( pts );
+						}
+						pts.clear();
+						pts.push_back( pt.point_ );
+					}
+					break;
+
+					case PathPoint::ptLineTo: {
+						//context_->lineTo( pt.point_.x_, pt.point_.y_ );
+						pts.push_back( pt.point_ );
+					}
+					break;
+
+					case PathPoint::ptQuadTo: {
+						pathIt ++;					
+						c1 = *pathIt;
+						
+						pathIt ++;
+						c2 = *pathIt;
+
+						pathIt++;
+						p2 = *pathIt;
+
+						context_->curve( pt.point_.x_, pt.point_.y_,
+											c1.point_.x_, c1.point_.y_,
+											c2.point_.x_, c2.point_.y_,
+											p2.point_.x_, p2.point_.y_ );
+					}
+					break;
+
+					case PathPoint::ptCubicTo: {
+
+					}
+					break;
+
+					case PathPoint::ptClose: {
+						pts.push_back( pt.point_ );
+						context_->polyline( pts );
+
+						pts.clear();
+					}
+					break;
+				}
+				
+				pathIt ++;
+			}
+
+			if ( !pts.empty() ) {
+				context_->polyline( pts );
+				pts.clear();
+			}
+
+			context_->fillPath();			
 		}
 	}
 }

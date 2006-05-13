@@ -1080,14 +1080,8 @@ public:
 	contents are copied back to the actual GraphicsContext. If the
 	control is resized the image is resized as well
 	*/
-	void setUsingRenderBuffer( const bool& useRenderBuffer ) {
-		if ( useRenderBuffer ) {
-			controlState_  |= Control::csUseRenderBuffer;
-		}
-		else {
-			controlState_  &= ~Control::csUseRenderBuffer;
-		}
-	}
+	void setUsingRenderBuffer( const bool& useRenderBuffer );
+
 	/**
 	*this keeps the mouse events being sent to this control, even if the
 	*mouse leaves the physical bounds of the control

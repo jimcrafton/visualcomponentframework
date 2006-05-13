@@ -174,7 +174,9 @@ public:
 						375, 300 );
 
 
-		stroke.setColor( &Color(1.0,0.0,0.75) );
+		Color color(1.0,0.0,0.75);
+		color.setAlpha( 0.75 );
+		stroke.setColor( &color );
 		stroke.setWidth( 15.0 );
 		/**
 		Note we set the stroke to be 75% opaque
@@ -184,7 +186,6 @@ public:
 		is enabled by calling setUsingRenderBuffer() with
 		a true value passed in.
 		*/
-		stroke.setOpacity( 0.75 );
 
 		ctx->draw( &shape2 );
 
@@ -196,8 +197,10 @@ public:
 		ctx->draw( &rect );
 
 		BasicFill fill;
-		fill.setColor( *Color::getColor("yellow") );
-		fill.setOpacity( 0.65 );
+		color = *Color::getColor("yellow");
+		color.setAlpha( 0.65 );
+
+		fill.setColor( &color );
 
 		ctx->setCurrentFill( &fill );
 
@@ -245,10 +248,10 @@ public:
 		Color ltBlue(0.0,0.0,1.0);
 		//change the color by manipulating the HSV components
 		ltBlue.setHSV( 0.23, 0.0, 0.0 );
+		ltBlue.setAlpha( 0.45 );
 
 		stroke.setColor( &ltBlue );
 		stroke.setWidth( 4.0 );
-		stroke.setOpacity( 0.45 );
 
 		ctx->draw( &rect );
 
