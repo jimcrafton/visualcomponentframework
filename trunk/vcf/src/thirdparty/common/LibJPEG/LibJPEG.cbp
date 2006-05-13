@@ -73,7 +73,7 @@
 		<Compiler>
 			<Add directory="..\LibJPEG" />
 			<Add directory="..\ZLib" />
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Unit filename="jcapimin.c">
 			<Option compilerVar="CC" />

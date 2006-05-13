@@ -81,10 +81,10 @@
 			</Environment>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
 		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.cpp">
 			<Option compilerVar="CPP" />

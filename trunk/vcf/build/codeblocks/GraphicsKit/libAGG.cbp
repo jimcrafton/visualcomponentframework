@@ -72,7 +72,7 @@
 			</Environment>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
 		</Compiler>
 		<Unit filename="..\..\..\src\thirdparty\common\agg\include\agg_alpha_mask_u8.h">
 			<Option compilerVar="CPP" />

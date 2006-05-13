@@ -74,7 +74,7 @@
 			</Environment>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 			<Add directory="..\..\..\ZLib" />
 			<Add directory="..\..\..\LibJPEG" />
 		</Compiler>
