@@ -47,7 +47,7 @@
 //------------- ASSERT
 
 #ifdef _DEBUG
-  #ifdef _WIN32
+  #if defined(_WIN32) && !defined(__MINGW32__)
     #define PLASSERT(f)            \
       if (!(f))                    \
         {                          \

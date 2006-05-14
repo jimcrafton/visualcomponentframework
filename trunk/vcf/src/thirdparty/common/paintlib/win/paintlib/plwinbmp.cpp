@@ -28,6 +28,15 @@
 #include <stdio.h>
 
 
+#if defined(__MINGW32__)
+#ifndef max
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif
+#ifndef min
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif
+#endif
+
 PLWinBmp::PLWinBmp ()
   : PLBmp(),
     m_pBMI (NULL),

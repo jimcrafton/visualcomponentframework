@@ -86,7 +86,7 @@ void PLWEMFDecoder::Open (PLDataSource * pDataSrc)
 
 	SAPMFILEHEADER* pplaceablehdr = NULL;
 	bool isadobe = false;
-      bool isemf;
+	bool isemf;
 
 	// Get the type of the file (WMF or EMF) from the file name
       if (pDataSrc->NameIsWide()){

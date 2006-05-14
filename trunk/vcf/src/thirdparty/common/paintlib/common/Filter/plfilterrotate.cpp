@@ -47,8 +47,8 @@ void PLFilterRotate::Apply(PLBmpBase * pBmpSource, PLBmp * pBmpDest) const
   {
     for (int newX = 0; newX < newWidth; ++newX)
     {
-      int oldX;
-      int oldY;
+      int oldX(0);
+      int oldY(0);
       switch(m_Angle)
       {
         case ninety:

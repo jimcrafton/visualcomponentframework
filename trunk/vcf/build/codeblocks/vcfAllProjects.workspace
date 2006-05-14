@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="vcfAllProjects workspace">
-		<Project filename="FoundationKit\FoundationKitDLL.cbp" />
-		<Project filename="GraphicsKit\GraphicsKitDLL.cbp" active="1">
+		<Project filename="FoundationKit\FoundationKitDLL.cbp" active="1" />
+		<Project filename="GraphicsKit\GraphicsKitDLL.cbp">
 			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
 			<Depends filename="GraphicsKit\libAGG.cbp" />
 			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
@@ -54,6 +54,12 @@
 			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
 			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
 			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+		</Project>
+		<Project filename="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibTIFF\LibTIFF.cbp" />
 		</Project>
 		<Project filename="..\..\examples\Accelerators\Accelerators_cb.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />

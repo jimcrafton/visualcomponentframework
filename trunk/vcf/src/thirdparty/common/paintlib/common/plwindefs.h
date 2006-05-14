@@ -73,10 +73,13 @@ typedef struct tagWINBITMAPCOREHEADER
 } WINBITMAPCOREHEADER;
 
 /* constants for the biCompression field */
+#if !defined(BI_RGB) || !defined(BI_RLE8) || !defined(BI_RLE4) || !defined(BI_BITFIELDS)
 #define BI_RGB        0L
 #define BI_RLE8       1L
 #define BI_RLE4       2L
 #define BI_BITFIELDS  3L
+#endif
+
 
 
 #endif
