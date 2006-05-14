@@ -366,7 +366,7 @@ Image* JPEGLoader::loadImageFromFile( const String& fileName )
 	unsigned char* tmpBuffer = new unsigned char[ cinfo.output_width * cinfo.out_color_components ];
 	unsigned char* tmpBufPtr = tmpBuffer;
 
-	ColorPixels pixels = result; 
+	ColorPixels pixels(result); 
 	SysPixelType* pix = pixels;//result->getImageBits()->pixels_;
 		 
 	while (cinfo.output_scanline < cinfo.output_height) {
@@ -485,7 +485,7 @@ void JPEGLoader::saveImageToFile( const String& fileName, Image* image )
 
 	unsigned char* tmpBuffer = new unsigned char[ cinfo.image_width * cinfo.input_components ];	
 
-	ColorPixels pixels = image; 
+	ColorPixels pixels(image); 
 	SysPixelType* pix = pixels;
 
 	while (cinfo.next_scanline < cinfo.image_height) {

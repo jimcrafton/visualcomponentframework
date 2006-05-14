@@ -359,6 +359,11 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
+		<Unit filename="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
