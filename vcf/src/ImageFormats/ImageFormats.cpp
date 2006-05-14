@@ -13,7 +13,7 @@ using namespace VCF;
 
 Image* loadImageFromFile( const String& fileName )
 {
-	Image* result = NULL;	
+	Image* imgPtr = NULL;	
 
 	PLAnyPicDecoder Decoder;
 	PLAnyBmp dib;
@@ -29,29 +29,37 @@ Image* loadImageFromFile( const String& fileName )
 	if ( bpp < 32 ) {
 		PLAnyBmp dib2;
 
-		// NOTE: This is Win32 format BGRA order. Need to change for OSX and Linux
+#if defined(WIN32)		
 		dib2.CreateCopy(dib, PLPixelFormat::B8G8R8X8);
 
 		bits = dib2.GetPixels();
+#elif defined(VCF_X11) || defined(VCF_GTK) || defined(VCF_OSX)
+		dib2.CreateCopy(dib, PLPixelFormat::R8G8B8X8);
+		bits = dib2.GetPixels();
+#endif		
 
 		if ( NULL != bits ) {			
-			result = GraphicsToolkit::createImage( width, height );			
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
+			//SmartPtr<Image>::Scoped img( GraphicsToolkit::createImage( width, height ) );
+			//Image* imgPtr = get_pointer(img);
+			imgPtr = GraphicsToolkit::createImage( width, height );			
+			unsigned char* pixPtr = (unsigned char*)imgPtr->getData();
 			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
+			memcpy( pixPtr, bits, size );
 		}
 	}
 	else {
 		bits = dib.GetPixels();
 
 		if ( NULL != bits ) {			
-			result = GraphicsToolkit::createImage( width, height );			
-			uchar* imageBits = (uchar*)result->getImageBits()->pixels_;
+			//SmartPtr<Image>::Scoped img( GraphicsToolkit::createImage( width, height ) );
+			//Image* imgPtr = get_pointer(img);
+			imgPtr = GraphicsToolkit::createImage( width, height );			
+			unsigned char* pixPtr = (unsigned char*)imgPtr->getData();
 			int size = height * (width * 4);
-			memcpy( imageBits, bits, size );
+			memcpy( pixPtr, bits, size );
 		}
 	}
-	return result;
+	return imgPtr;
 }
 
 Image* TIFFLoader::loadImageFromFile( const String& fileName )

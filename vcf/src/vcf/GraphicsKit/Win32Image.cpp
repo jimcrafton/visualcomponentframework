@@ -340,7 +340,7 @@ void Win32Image::internal_saveToFile( const String& fileName )
 
 
 	DWORD height = getHeight();
-	ColorPixels pix = this;
+	ColorPixels pix(this);
 	SysPixelType* bits = pix;
 	unsigned char* row = new unsigned char[width];
 	unsigned long imgWidth = getWidth();

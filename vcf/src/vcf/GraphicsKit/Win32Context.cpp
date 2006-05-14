@@ -455,7 +455,7 @@ void Win32Context::bitBlit( const double& x, const double& y, Image* image )
 	if ( image->getType() == Image::itColor ) {
 		Win32Image* win32image = (Win32Image*)(image);		
 			
-		ColorPixels pixels = image; 
+		ColorPixels pixels(image); 
 		SysPixelType* imageBuf = pixels;
 
 		HPALETTE oldPalette = NULL;
@@ -720,7 +720,7 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 
 
-			ColorPixels pix = image;			
+			ColorPixels pix(image);			
 
 			pixfmt imgPixf(pix);
 			SpanGenerator spanGen(//spanAllocator,
@@ -785,7 +785,7 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 			HBITMAP hbmp = CreateDIBSection ( dc_, &bmpInfo, DIB_RGB_COLORS, (void**)&bmpBuf, NULL, NULL );
 
 
-			ColorPixels pix = image;
+			ColorPixels pix(image);
 			SysPixelType* imageBuf = pix;
 
 			if ( NULL != hbmp ) {

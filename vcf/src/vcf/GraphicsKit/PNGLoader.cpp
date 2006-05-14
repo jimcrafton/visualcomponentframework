@@ -303,7 +303,7 @@ Image* PNGLoader::loadImageFromFile( const String& fileName )
 	
 	png_read_end(png_ptr, info_ptr);
 
-	ColorPixels pixels = result; 
+	ColorPixels pixels(result); 
 	SysPixelType* pix = pixels;
 	//SysPixelType* pix = result->getImageBits()->pixels_;
 
@@ -483,7 +483,7 @@ void PNGLoader::saveImageToFile( const String& fileName, Image* image )
 
 	unsigned char* tmpBuffer = new unsigned char[  width * png_ptr->channels ];	
 
-	ColorPixels pixels = image; 
+	ColorPixels pixels(image); 
 	SysPixelType* pix = pixels;
 
 	switch( image->getType() ) {
