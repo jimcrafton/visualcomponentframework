@@ -51,5 +51,11 @@
 		</Project>
 		<Project filename="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG.cbp" />
 		<Project filename="..\..\src\thirdparty\common\LibTIFF\LibTIFF.cbp" />
+		<Project filename="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib.cbp">
+			<Depends filename="..\..\src\thirdparty\common\ZLib\ZLib.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibJPEG\LibJPEG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibPNG\LibPNG.cbp" />
+			<Depends filename="..\..\src\thirdparty\common\LibTIFF\LibTIFF.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>

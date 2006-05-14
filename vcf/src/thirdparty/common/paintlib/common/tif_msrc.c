@@ -31,7 +31,7 @@
 #include <string.h>
 
 #include "tif_msrc.h"
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include <crtdbg.h>
 #endif
 

@@ -232,7 +232,8 @@ void PLPNGEncoder::DoEncode (PLBmpBase * pBmp, PLDataSink* pDataSnk)
    * currently be PNG_COMPRESSION_TYPE_BASE and PNG_FILTER_TYPE_BASE. REQUIRED
    */
 
-  int bit_depth, color_type;
+  int bit_depth = 0;
+  int color_type = 0;
 
   switch(pBmp->GetBitsPerPixel())
   {

@@ -178,7 +178,7 @@ void PLSGIDecoder::readRLE
 
   for (int channel = 0; channel < zsize; channel++)
   {
-    int ChannelOffset;
+    int ChannelOffset(0);
     if (zsize == 1)
       ChannelOffset = 0;
     else

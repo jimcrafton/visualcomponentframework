@@ -317,7 +317,7 @@ PLBYTE PLBmpBase::FindNearestColor (PLPixel32 col)
   int d1;
   int dMin = 100000;
   int i;
-  int index;
+  int index(0);
   for (i = 0; i<GetNumColors(); i++)
   {
     d1 = col.BoxDist (pPalette[i]);
