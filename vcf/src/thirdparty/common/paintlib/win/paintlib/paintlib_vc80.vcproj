@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Yd "
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
+				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;_CRT_SECURE_NO_DEPRECATE;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -122,7 +122,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
+				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;_CRT_SECURE_NO_DEPRECATE;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
