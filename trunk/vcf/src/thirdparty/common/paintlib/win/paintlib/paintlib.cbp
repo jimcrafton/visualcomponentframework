@@ -36,8 +36,6 @@
 					<Add option="-DUSE_ZLIB_LIB" />
 					<Add directory="$(VCF_ROOT)\src" />
 					<Add directory="." />
-					<Add directory="..\libtiff" />
-					<Add directory="..\libjpeg" />
 					<Add directory="..\..\common" />
 					<Add directory="..\..\common\filter" />
 					<Add directory="..\..\..\LibTIFF" />
@@ -82,8 +80,6 @@
 					<Add option="-DUSE_ZLIB_LIB" />
 					<Add directory="$(VCF_ROOT)\src" />
 					<Add directory="." />
-					<Add directory="..\libtiff" />
-					<Add directory="..\libjpeg" />
 					<Add directory="..\..\common" />
 					<Add directory="..\..\common\filter" />
 					<Add directory="..\..\..\LibTIFF" />
