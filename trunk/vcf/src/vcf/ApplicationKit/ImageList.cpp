@@ -122,11 +122,11 @@ void ImageList::addImage( Image* newImage )
 		changed();
 	}
 
-	ColorPixels pix = masterImage_;
+	ColorPixels pix(masterImage_);
 	SysPixelType* bits = pix;
 	bits += incr;
 
-	ColorPixels newPix = newImage;
+	ColorPixels newPix(newImage);
 	SysPixelType* newImgBits = newPix;
 	int scanlineWidthToCopy = newImage->getWidth();
 	int scanlineWidthOfMasterImage = masterImage_->getWidth();//scanlineToCopy * imageCount_;
@@ -289,12 +289,12 @@ void ImageList::changed()
 	}
 
 	if ( NULL != oldImage ) {
-		ColorPixels oldPix = oldImage;
+		ColorPixels oldPix(oldImage);
 		SysPixelType* oldBits = oldPix;
 		long oldWidth = oldImage->getWidth();
 		long oldHeight = oldImage->getHeight();
 
-		ColorPixels masterPix = masterImage_;
+		ColorPixels masterPix(masterImage_);
 		SysPixelType* newBits = masterPix;
 		long newWidth = masterImage_->getWidth();
 

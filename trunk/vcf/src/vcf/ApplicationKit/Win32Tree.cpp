@@ -294,7 +294,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 		matters! If it's not set back to 0 then the transparency affect doesn't
 		work? Bizarre
 		*/
-		ColorPixels pix = win32Img;
+		ColorPixels pix(win32Img);
 		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -1308,7 +1308,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 		Image* masterImage = imageList->getMasterImage();
 		Win32Image* win32Img = (Win32Image*)masterImage;
-		ColorPixels pix = win32Img;
+		ColorPixels pix(win32Img);
 		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];

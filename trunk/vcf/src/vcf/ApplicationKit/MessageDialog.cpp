@@ -102,7 +102,7 @@ MessageDialog::MessageDialog():
 
 
 
-	ColorPixels pix = applicationIcon_;	
+	ColorPixels pix(applicationIcon_);	
 	SysPixelType* bits = pix;
 
 	memcpy( applicationIcon_->getData(), image->getData(), 

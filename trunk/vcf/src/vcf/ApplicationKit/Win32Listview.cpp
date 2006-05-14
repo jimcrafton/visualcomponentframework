@@ -2129,7 +2129,7 @@ void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 
 			//reset the contents
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-			ColorPixels pix = imageList->getMasterImage();
+			ColorPixels pix(imageList->getMasterImage());
 			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -2162,7 +2162,7 @@ void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 		case IMAGELIST_EVENT_ITEM_ADDED : {
 			Win32Image* win32Img = (Win32Image*)event->getImage();
 
-			ColorPixels pix = event->getImage();
+			ColorPixels pix(event->getImage());
 			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -2210,7 +2210,7 @@ void Win32Listview::onSmallImageListImageChanged( ImageListEvent* event )
 			//reset the contents
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
 			HBITMAP hbmImage = win32Img->getBitmap();
-			ColorPixels pix = imageList->getMasterImage();
+			ColorPixels pix(imageList->getMasterImage());
 			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -2257,7 +2257,7 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 								//		ILC_COLOR32, imageList->getImageCount(), 4 );
 
 		Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-		ColorPixels pix = imageList->getMasterImage();
+		ColorPixels pix(imageList->getMasterImage());
 		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -2329,7 +2329,7 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 										ILC_COLOR24|ILC_MASK, imageList->getImageCount(), 4 );
 
 		Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-		ColorPixels pix = win32Img;
+		ColorPixels pix(win32Img);
 		SysPixelType* bits = pix;
 		int sz = win32Img->getWidth() * win32Img->getHeight();
 		unsigned char* oldAlpaVals = new unsigned char[sz];

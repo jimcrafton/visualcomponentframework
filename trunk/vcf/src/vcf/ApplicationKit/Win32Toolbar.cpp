@@ -1267,7 +1267,7 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 			matters! If it's not set back to 0 then the transparency affect doesn't
 			work? Bizarre
 			*/
-			ColorPixels pix = win32Img;
+			ColorPixels pix(win32Img);
 			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
@@ -1306,7 +1306,7 @@ void Win32Toolbar::onImageListImageChanged( ImageListEvent* e )
 		case IMAGELIST_EVENT_ITEM_ADDED : {
 
 			Win32Image* win32Img = (Win32Image*)e->getImage();
-			ColorPixels pix = win32Img;
+			ColorPixels pix(win32Img);
 			SysPixelType* bits = pix;
 
 			int sz = win32Img->getWidth() * win32Img->getHeight();
@@ -1378,7 +1378,7 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		if ( imageList->getImageCount() > 0 ) {
 			Win32Image* win32Img = (Win32Image*)imageList->getMasterImage();
-			ColorPixels pix = win32Img;
+			ColorPixels pix(win32Img);
 			SysPixelType* bits = pix;
 			int sz = win32Img->getWidth() * win32Img->getHeight();
 			unsigned char* oldAlpaVals = new unsigned char[sz];
