@@ -39,7 +39,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc80\Release\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_INCLUDE)" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
+# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_INCLUDE)" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
 # SUBTRACT CPP /YX /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
@@ -63,7 +63,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc80\Debug\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\libtiff" /I "..\..\..\LibTIFF" /I "..\libjpeg" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc80_sd.pdb" /Yd /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_INCLUDE)" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc80_sd.pdb" /Yd /c
 # SUBTRACT CPP /YX /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
