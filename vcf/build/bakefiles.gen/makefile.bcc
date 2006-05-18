@@ -397,6 +397,7 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_lib_GraphicsKit.obj \
 	$(OBJDIR)\GraphicsKit_lib_GraphicsResourceBundle.obj \
 	$(OBJDIR)\GraphicsKit_lib_GraphicsToolKit.obj \
+	$(OBJDIR)\GraphicsKit_lib_GrayScaleImage.obj \
 	$(OBJDIR)\GraphicsKit_lib_ImageEvent.obj \
 	$(OBJDIR)\GraphicsKit_lib_JPEGLoader.obj \
 	$(OBJDIR)\GraphicsKit_lib_Matrix2D.obj \
@@ -427,6 +428,7 @@ GRAPHICSKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\GraphicsKit_dll_GraphicsKit.obj \
 	$(OBJDIR)\GraphicsKit_dll_GraphicsResourceBundle.obj \
 	$(OBJDIR)\GraphicsKit_dll_GraphicsToolKit.obj \
+	$(OBJDIR)\GraphicsKit_dll_GrayScaleImage.obj \
 	$(OBJDIR)\GraphicsKit_dll_ImageEvent.obj \
 	$(OBJDIR)\GraphicsKit_dll_JPEGLoader.obj \
 	$(OBJDIR)\GraphicsKit_dll_Matrix2D.obj \
@@ -1185,6 +1187,7 @@ ______Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS =  \
 	$(OBJDIR)\Allin1_lib_GraphicsKit.obj \
 	$(OBJDIR)\Allin1_lib_GraphicsResourceBundle.obj \
 	$(OBJDIR)\Allin1_lib_GraphicsToolKit.obj \
+	$(OBJDIR)\Allin1_lib_GrayScaleImage.obj \
 	$(OBJDIR)\Allin1_lib_ImageEvent.obj \
 	$(OBJDIR)\Allin1_lib_JPEGLoader.obj \
 	$(OBJDIR)\Allin1_lib_Matrix2D.obj \
@@ -1470,6 +1473,7 @@ ______Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS =  \
 	$(OBJDIR)\Allin1_dll_GraphicsKit.obj \
 	$(OBJDIR)\Allin1_dll_GraphicsResourceBundle.obj \
 	$(OBJDIR)\Allin1_dll_GraphicsToolKit.obj \
+	$(OBJDIR)\Allin1_dll_GrayScaleImage.obj \
 	$(OBJDIR)\Allin1_dll_ImageEvent.obj \
 	$(OBJDIR)\Allin1_dll_JPEGLoader.obj \
 	$(OBJDIR)\Allin1_dll_Matrix2D.obj \
@@ -3121,6 +3125,9 @@ $(OBJDIR)\GraphicsKit_lib_GraphicsResourceBundle.obj: ..\..\src\vcf\GraphicsKit\
 $(OBJDIR)\GraphicsKit_lib_GraphicsToolKit.obj: ..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp
 	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_LIB_CXXFLAGS) $**
 
+$(OBJDIR)\GraphicsKit_lib_GrayScaleImage.obj: ..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
+	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_LIB_CXXFLAGS) $**
+
 $(OBJDIR)\GraphicsKit_lib_ImageEvent.obj: ..\..\src\vcf\GraphicsKit\ImageEvent.cpp
 	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_LIB_CXXFLAGS) $**
 
@@ -3191,6 +3198,9 @@ $(OBJDIR)\GraphicsKit_dll_GraphicsResourceBundle.obj: ..\..\src\vcf\GraphicsKit\
 	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\GraphicsKit_dll_GraphicsToolKit.obj: ..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp
+	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_DLL_CXXFLAGS) $**
+
+$(OBJDIR)\GraphicsKit_dll_GrayScaleImage.obj: ..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
 	$(CXX) -q -c -P -o$@ $(GRAPHICSKIT_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\GraphicsKit_dll_ImageEvent.obj: ..\..\src\vcf\GraphicsKit\ImageEvent.cpp
@@ -4462,6 +4472,9 @@ $(OBJDIR)\Allin1_lib_GraphicsResourceBundle.obj: ..\..\src\vcf\GraphicsKit\Graph
 $(OBJDIR)\Allin1_lib_GraphicsToolKit.obj: ..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
+$(OBJDIR)\Allin1_lib_GrayScaleImage.obj: ..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
 $(OBJDIR)\Allin1_lib_ImageEvent.obj: ..\..\src\vcf\GraphicsKit\ImageEvent.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
@@ -5231,6 +5244,9 @@ $(OBJDIR)\Allin1_dll_GraphicsResourceBundle.obj: ..\..\src\vcf\GraphicsKit\Graph
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\Allin1_dll_GraphicsToolKit.obj: ..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
+$(OBJDIR)\Allin1_dll_GrayScaleImage.obj: ..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\Allin1_dll_ImageEvent.obj: ..\..\src\vcf\GraphicsKit\ImageEvent.cpp

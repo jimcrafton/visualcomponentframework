@@ -46,7 +46,7 @@ LDFLAGS =
 # then the name of, say, the foundation kit debug dll
 # will be like this: FoundationKit_vc6_d.dll.
 # The default value is an empty string.
-# Backward compatibility: [_bcc]
+# Backward compatibility: [,_bcc]
 !ifndef OPTION_SELECTLIB
 OPTION_SELECTLIB = 
 !endif
