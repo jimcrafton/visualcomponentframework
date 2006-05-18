@@ -6,7 +6,7 @@
     <set var="OPTION_SELECTLIB_DEFAULT"/>
     <set var="OPTION_SELECTLIB_DEFAULT">
         <if cond="FORMAT in ['msvc','msvc6prj']">,_icl6,_icl7,_vc6,_vc70,_vc71,_vc80</if>
-        <if cond="FORMAT=='borland'">_bcc</if>
+        <if cond="FORMAT=='borland'">,_bcc</if>
     </set>
     <option name="OPTION_SELECTLIB">
         <values>$(OPTION_SELECTLIB_DEFAULT)</values>

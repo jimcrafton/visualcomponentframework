@@ -25,8 +25,8 @@
         vcf/GraphicsKit/GraphicsResourceBundle.h
         vcf/GraphicsKit/GraphicsResourceBundlePeer.h
         vcf/GraphicsKit/GraphicsToolKit.h
+        vcf/GraphicsKit/GrayScaleImage.h
         vcf/GraphicsKit/Image.h
-        vcf/GraphicsKit/ImageBits.h
         vcf/GraphicsKit/ImageEvent.h
         vcf/GraphicsKit/ImageLoader.h
         vcf/GraphicsKit/ImageLoaderException.h
@@ -67,6 +67,7 @@
         vcf/GraphicsKit/GraphicsKit.cpp
         vcf/GraphicsKit/GraphicsResourceBundle.cpp
         vcf/GraphicsKit/GraphicsToolKit.cpp
+        vcf/GraphicsKit/GrayScaleImage.cpp
         vcf/GraphicsKit/ImageEvent.cpp
         vcf/GraphicsKit/JPEGLoader.cpp
         vcf/GraphicsKit/Matrix2D.cpp
