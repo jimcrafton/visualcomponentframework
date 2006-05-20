@@ -802,7 +802,7 @@ void MainWindow::makeTextPage()
 	singleTextCtrl->getTextModel()->insertText( 0, "Hello, here's some text!" );
 
 	Dictionary styles;
-	styles [ Text::fsColor ] = Color::getColor("green");
+	styles [ Text::fsColor ] = new Color("green");
 	styles [ Text::fsBold ] = true;
 	styles [ Text::fsPointSize ] = 10.0;
 	styles [ Text::fsItalic ] = true;
