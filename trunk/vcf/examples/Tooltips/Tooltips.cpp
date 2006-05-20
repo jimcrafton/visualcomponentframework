@@ -32,12 +32,12 @@ public:
 		styles [ Text::fsPointSize ] = 14.0;
 		styles [ Text::fsFontName ] = "Arial";
 		styles [ Text::psAlignment ] = Text::paCenter;
-		styles [ Text::fsColor ] = Color::getColor("blue");
+		styles [ Text::fsColor ] = new Color("blue");
 		edit->setStyle( 0, 12, styles );
 
 		styles.clear();
 		styles [ Text::fsItalic ] = true;
-		styles [ Text::fsColor ] = Color::getColor("red");
+		styles [ Text::fsColor ] = new Color("red");
 		edit->setStyle( text.size()-25, 24, styles );
 		
 		add( edit, AlignClient );	
