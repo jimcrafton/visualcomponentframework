@@ -1,0 +1,620 @@
+# depslib dependency file v1.0
+1144649938 c:\documents and settings\mark\my documents\my projects\databasekittest\main.cpp
+	<iostream>
+	"C:\Temp\bluesky\DatabaseKit\DatabaseKit\DatabaseKit.h"
+
+1142451153 c:\temp\bluesky\databasekit\databasekit\databasekit.h
+	"DatabaseToolkit.h"
+	"Database.h"
+	"FBDatabase.h"
+	"DatabaseError.h"
+	"SQLiteDatabase.h"
+	"DataSet.h"
+	"FBDataSet.h"
+	"Transaction.h"
+	"FBTransaction.h"
+	"StringList.h"
+
+1144649240 c:\temp\vcf\src\vcf\foundationkit\foundationkit.h
+	<typeinfo>
+	<algorithm>
+	<math.h>
+	<stdarg.h>
+	<string.h>
+	<extras.h>
+	<string.h>
+	<process.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<memory.h>
+	<wchar.h>
+	<wctype.h>
+	<memory>
+	<memory.h>
+	<vector>
+	<map>
+	<string>
+	<bitset>
+	<exception>
+	<list>
+	"vcf/FoundationKit/VCF.h"
+	"vcf/FoundationKit/FoundationKitSelectLib.h"
+	"vcf/FoundationKit/SmartPtr.h"
+	"vcf/FoundationKit/VCFChar.h"
+	"vcf/FoundationKit/VCFString.h"
+	"vcf/FoundationKit/CommonDefines.h"
+	"vcf/FoundationKit/VCFMath.h"
+	"vcf/FoundationKit/VCFulong64.h"
+	"vcf/FoundationKit/Enumerator.h"
+	"vcf/FoundationKit/Interface.h"
+	"vcf/FoundationKit/Object.h"
+	"vcf/FoundationKit/CommandLine.h"
+	"vcf/FoundationKit/ErrorStrings.h"
+	"vcf/FoundationKit/StringUtils.h"
+	"vcf/FoundationKit/BasicException.h"
+	"vcf/FoundationKit/BasicFileError.h"
+	"vcf/FoundationKit/ClassNotFound.h"
+	"vcf/FoundationKit/CantCreateObjectException.h"
+	"vcf/FoundationKit/FileNotFound.h"
+	"vcf/FoundationKit/InvalidPeer.h"
+	"vcf/FoundationKit/InvalidPointerException.h"
+	"vcf/FoundationKit/NoFreeMemException.h"
+	"vcf/FoundationKit/NoPeerFoundException.h"
+	"vcf/FoundationKit/NoSuchElementException.h"
+	"vcf/FoundationKit/NotImplementedException.h"
+	"vcf/FoundationKit/OutOfBoundsException.h"
+	"vcf/FoundationKit/PropertyChangeException.h"
+	"vcf/FoundationKit/RuntimeException.h"
+	"vcf/FoundationKit/TypeCastException.h"
+	"vcf/FoundationKit/ProcessException.h"
+	"vcf/FoundationKit/Format.h"
+	"vcf/FoundationKit/ProgramInfo.h"
+	"vcf/FoundationKit/PackageInfo.h"
+	"vcf/FoundationKit/Persistable.h"
+	"vcf/FoundationKit/DateTime.h"
+	"vcf/FoundationKit/FilePath.h"
+	"vcf/FoundationKit/Event.h"
+	"vcf/FoundationKit/EventHandler.h"
+	"vcf/FoundationKit/Delegate.h"
+	"vcf/FoundationKit/NotifyEvent.h"
+	"vcf/FoundationKit/Class.h"
+	"vcf/FoundationKit/InterfaceClass.h"
+	"vcf/FoundationKit/Enum.h"
+	"vcf/FoundationKit/PropertyChangeException.h"
+	"vcf/FoundationKit/BasicFileError.h"
+	"vcf/FoundationKit/FileIOError.h"
+	"vcf/FoundationKit/MemStreamUtils.h"
+	"vcf/FoundationKit/Stream.h"
+	"vcf/FoundationKit/TextInputStream.h"
+	"vcf/FoundationKit/TextOutputStream.h"
+	"vcf/FoundationKit/BasicInputStream.h"
+	"vcf/FoundationKit/BasicOutputStream.h"
+	"vcf/FoundationKit/PropertyChangeEvent.h"
+	"vcf/FoundationKit/VariantData.h"
+	"vcf/FoundationKit/Property.h"
+	"vcf/FoundationKit/Method.h"
+	"vcf/FoundationKit/Field.h"
+	"vcf/FoundationKit/ClassRegistry.h"
+	"vcf/FoundationKit/ObjectWithEvents.h"
+	"vcf/FoundationKit/Runnable.h"
+	"vcf/FoundationKit/Waitable.h"
+	"vcf/FoundationKit/File.h"
+	"vcf/FoundationKit/Directory.h"
+	"vcf/FoundationKit/Library.h"
+	"vcf/FoundationKit/Locales.h"
+	"vcf/FoundationKit/FileStream.h"
+	"vcf/FoundationKit/Registry.h"
+	"vcf/FoundationKit/System.h"
+	"vcf/FoundationKit/SynchObject.h"
+	"vcf/FoundationKit/Mutex.h"
+	"vcf/FoundationKit/Condition.h"
+	"vcf/FoundationKit/SemaphorePeer.h"
+	"vcf/FoundationKit/Semaphore.h"
+	"vcf/FoundationKit/Lock.h"
+	"vcf/FoundationKit/Parser.h"
+	"vcf/FoundationKit/SystemToolkit.h"
+	"vcf/FoundationKit/FilePeer.h"
+	"vcf/FoundationKit/ErrorLog.h"
+	"vcf/FoundationKit/FileStreamPeer.h"
+	"vcf/FoundationKit/LibraryPeer.h"
+	"vcf/FoundationKit/MemoryStream.h"
+	"vcf/FoundationKit/MutexPeer.h"
+	"vcf/FoundationKit/RegistryPeer.h"
+	"vcf/FoundationKit/ConditionPeer.h"
+	"vcf/FoundationKit/SystemPeer.h"
+	"vcf/FoundationKit/StringUtils.h"
+	"vcf/FoundationKit/Thread.h"
+	"vcf/FoundationKit/ThreadPeer.h"
+	"vcf/FoundationKit/ThreadEvent.h"
+	"vcf/FoundationKit/VCFProcess.h"
+	"vcf/FoundationKit/ProcessPeer.h"
+	"vcf/FoundationKit/XMLParser.h"
+	"vcf/FoundationKit/VariantDataStream.h"
+	"vcf/FoundationKit/StringTokenizer.h"
+	"vcf/FoundationKit/Resource.h"
+	"vcf/FoundationKit/ResourceBundle.h"
+	"vcf/FoundationKit/ResourceException.h"
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\vcf.h
+	"vcf/FoundationKit/FrameworkConfig.h"
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\frameworkconfig.h
+	"vcf/FoundationKit/WarningsOffVc.h"
+	<windows.h>
+	<commctrl.h>
+	<shlobj.h>
+
+1091846955 c:\temp\vcf\src\vcf\foundationkit\warningsoffvc.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\foundationkitselectlib.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\smartptr.h
+	"thirdparty/common/boost/smart_ptr.hpp"
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\smart_ptr.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/scoped_ptr.hpp>
+	<thirdparty/common/boost/scoped_array.hpp>
+	<thirdparty/common/boost/shared_ptr.hpp>
+	<thirdparty/common/boost/shared_array.hpp>
+	<thirdparty/common/boost/weak_ptr.hpp>
+	<thirdparty/common/boost/intrusive_ptr.hpp>
+	<thirdparty/common/boost/enable_shared_from_this.hpp>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\config.hpp
+	<thirdparty/common/boost/config/select_compiler_config.hpp>
+	<thirdparty/common/boost/config/select_stdlib_config.hpp>
+	<thirdparty/common/boost/config/select_platform_config.hpp>
+	<thirdparty/common/boost/config/suffix.hpp>
+
+1144646288 c:\temp\vcf\src\thirdparty\common\boost\config\select_compiler_config.hpp
+
+1144646288 c:\temp\vcf\src\thirdparty\common\boost\config\select_stdlib_config.hpp
+	<utility>
+
+1144646288 c:\temp\vcf\src\thirdparty\common\boost\config\select_platform_config.hpp
+	<boost/config/posix_features.hpp>
+
+1144646288 c:\temp\vcf\src\thirdparty\common\boost\config\suffix.hpp
+	<limits.h>
+	<cstddef>
+	"thirdparty/common/boost/type.hpp"
+	"thirdparty/common/boost/non_type.hpp"
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\type.hpp
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\non_type.hpp
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\scoped_ptr.hpp
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/detail/workaround.hpp>
+	<memory>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\assert.hpp
+	<thirdparty/common/boost/current_function.hpp>
+	<assert.h>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\current_function.hpp
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\checked_delete.hpp
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\workaround.hpp
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\scoped_array.hpp
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/detail/workaround.hpp>
+	<cstddef>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\shared_ptr.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/detail/shared_ptr_nmt.hpp>
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/throw_exception.hpp>
+	<thirdparty/common/boost/detail/shared_count.hpp>
+	<thirdparty/common/boost/detail/workaround.hpp>
+	<memory>
+	<algorithm>
+	<functional>
+	<typeinfo>
+	<iosfwd>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\shared_ptr_nmt.hpp
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/throw_exception.hpp>
+	<thirdparty/common/boost/detail/atomic_count.hpp>
+	<memory>
+	<algorithm>
+	<functional>
+	<new>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\throw_exception.hpp
+	<thirdparty/common/boost/config.hpp>
+	<exception>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\atomic_count.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/detail/atomic_count_pthreads.hpp>
+	<thirdparty/common/boost/detail/atomic_count_win32.hpp>
+	<thirdparty/common/boost/detail/atomic_count_gcc.hpp>
+	<thirdparty/common/boost/detail/atomic_count_pthreads.hpp>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\atomic_count_pthreads.hpp
+	<pthread.h>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\atomic_count_win32.hpp
+	<thirdparty/common/boost/detail/interlocked.hpp>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\interlocked.hpp
+	<thirdparty/common/boost/config.hpp>
+	<windows.h>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\atomic_count_gcc.hpp
+	<bits/atomicity.h>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\shared_count.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/throw_exception.hpp>
+	<thirdparty/common/boost/detail/bad_weak_ptr.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base.hpp>
+	<thirdparty/common/boost/detail/sp_counted_impl.hpp>
+	<memory>
+	<functional>
+	<new>
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\bad_weak_ptr.hpp
+	<exception>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_nt.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_pt.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_gcc_x86.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_gcc_ia64.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_cw_ppc.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_gcc_ppc.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_w32.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_nt.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base_pt.hpp>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_nt.hpp
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_pt.hpp
+	<typeinfo>
+	<pthread.h>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_gcc_x86.hpp
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_gcc_ia64.hpp
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_cw_ppc.hpp
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_gcc_ppc.hpp
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_base_w32.hpp
+	<thirdparty/common/boost/detail/interlocked.hpp>
+	<typeinfo>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\sp_counted_impl.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/detail/sp_counted_base.hpp>
+	<memory>
+	<typeinfo>
+	<cstddef>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\shared_array.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/detail/shared_array_nmt.hpp>
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/detail/shared_count.hpp>
+	<thirdparty/common/boost/detail/workaround.hpp>
+	<cstddef>
+	<algorithm>
+	<functional>
+
+1144646289 c:\temp\vcf\src\thirdparty\common\boost\detail\shared_array_nmt.hpp
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/checked_delete.hpp>
+	<thirdparty/common/boost/throw_exception.hpp>
+	<thirdparty/common/boost/detail/atomic_count.hpp>
+	<cstddef>
+	<algorithm>
+	<functional>
+	<new>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\weak_ptr.hpp
+	<thirdparty/common/boost/shared_ptr.hpp>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\intrusive_ptr.hpp
+	<thirdparty/common/boost/config.hpp>
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/detail/workaround.hpp>
+	<functional>
+	<iosfwd>
+
+1144646287 c:\temp\vcf\src\thirdparty\common\boost\enable_shared_from_this.hpp
+	<thirdparty/common/boost/weak_ptr.hpp>
+	<thirdparty/common/boost/shared_ptr.hpp>
+	<thirdparty/common/boost/assert.hpp>
+	<thirdparty/common/boost/config.hpp>
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\vcfchar.h
+
+1144646323 c:\temp\vcf\src\vcf\foundationkit\vcfstring.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\commondefines.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\vcfmath.h
+
+1144646323 c:\temp\vcf\src\vcf\foundationkit\vcfulong64.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\enumerator.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\interface.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\object.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\commandline.h
+	"CmdLine.h"
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\errorstrings.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\stringutils.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\basicexception.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\basicfileerror.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\classnotfound.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\cantcreateobjectexception.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\filenotfound.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\invalidpeer.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\invalidpointerexception.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\nofreememexception.h
+
+1091846953 c:\temp\vcf\src\vcf\foundationkit\nopeerfoundexception.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\nosuchelementexception.h
+
+1101871901 c:\temp\vcf\src\vcf\foundationkit\notimplementedexception.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\outofboundsexception.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\propertychangeexception.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\runtimeexception.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\typecastexception.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\processexception.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\format.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\programinfo.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\packageinfo.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\persistable.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\datetime.h
+	"vcf/FoundationKit/VCFulong64.h"
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\filepath.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\event.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\eventhandler.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\delegate.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\notifyevent.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\class.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\interfaceclass.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\enum.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\fileioerror.h
+
+1144646318 c:\temp\vcf\src\vcf\foundationkit\memstreamutils.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\stream.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\textinputstream.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\textoutputstream.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\basicinputstream.h
+
+1144646313 c:\temp\vcf\src\vcf\foundationkit\basicoutputstream.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\propertychangeevent.h
+
+1144646323 c:\temp\vcf\src\vcf\foundationkit\variantdata.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\property.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\method.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\field.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\classregistry.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\objectwithevents.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\runnable.h
+
+1144646323 c:\temp\vcf\src\vcf\foundationkit\waitable.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\file.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\directory.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\library.h
+
+1144646318 c:\temp\vcf\src\vcf\foundationkit\locales.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\filestream.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\registry.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\system.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\synchobject.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\mutex.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\condition.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\semaphorepeer.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\semaphore.h
+
+1144646318 c:\temp\vcf\src\vcf\foundationkit\lock.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\parser.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\systemtoolkit.h
+
+1101871900 c:\temp\vcf\src\vcf\foundationkit\filepeer.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\errorlog.h
+
+1144646316 c:\temp\vcf\src\vcf\foundationkit\filestreampeer.h
+
+1144646317 c:\temp\vcf\src\vcf\foundationkit\librarypeer.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\memorystream.h
+
+1144646319 c:\temp\vcf\src\vcf\foundationkit\mutexpeer.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\registrypeer.h
+
+1144646314 c:\temp\vcf\src\vcf\foundationkit\conditionpeer.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\systempeer.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\thread.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\threadpeer.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\threadevent.h
+
+1144646322 c:\temp\vcf\src\vcf\foundationkit\vcfprocess.h
+	"vcf/FoundationKit/Waitable.h"
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\processpeer.h
+	"vcf/FoundationKit/Waitable.h"
+
+1144646324 c:\temp\vcf\src\vcf\foundationkit\xmlparser.h
+
+1144646323 c:\temp\vcf\src\vcf\foundationkit\variantdatastream.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\resource.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\resourcebundle.h
+
+1144646320 c:\temp\vcf\src\vcf\foundationkit\resourceexception.h
+
+1141681206 c:\temp\bluesky\databasekit\databasekit\databasetoolkit.h
+	"DatabaseKit.h"
+
+1141793682 c:\temp\bluesky\databasekit\databasekit\database.h
+	"vcf/FoundationKit/FoundationKit.h"
+	<map>
+
+1141793384 c:\temp\bluesky\databasekit\databasekit\fbdatabase.h
+	"DatabaseKit.h"
+	"ibase.h"
+
+1137589520 r:\program files\firebird\firebird 1.5\include\ibase.h
+	"iberror.h"
+
+1061733920 r:\program files\firebird\firebird 1.5\include\iberror.h
+
+1140583942 c:\temp\bluesky\databasekit\databasekit\databaseerror.h
+
+1140755315 c:\temp\bluesky\databasekit\databasekit\sqlitedatabase.h
+
+1144646321 c:\temp\vcf\src\vcf\foundationkit\stringtokenizer.h
+
+1142464646 c:\temp\bluesky\databasekit\databasekit\dataset.h
+	"vcf/FoundationKit/FoundationKit.h"
+
+1141873827 c:\temp\bluesky\databasekit\databasekit\fbdataset.h
+
+1141852676 c:\temp\bluesky\databasekit\databasekit\transaction.h
+	"vcf/FoundationKit/FoundationKit.h"
+
+1141788304 c:\temp\bluesky\databasekit\databasekit\fbtransaction.h
+	"ibase.h"
+
+1142453102 c:\temp\bluesky\databasekit\databasekit\stringlist.h
+	<vector>
+
+1148511041 c:\temp\bluesky\databasekit\test\main.cpp
+	<iostream>
+	"../DatabaseKit.h"
+
+1142451153 c:\temp\bluesky\databasekit\databasekit.h
+	"DatabaseToolkit.h"
+	"Database.h"
+	"FBDatabase.h"
+	"DatabaseError.h"
+	"SQLiteDatabase.h"
+	"DataSet.h"
+	"FBDataSet.h"
+	"Transaction.h"
+	"FBTransaction.h"
+	"StringList.h"
+
+1141681206 c:\temp\bluesky\databasekit\databasetoolkit.h
+	"DatabaseKit.h"
+
+1148512256 c:\temp\bluesky\databasekit\database.h
+	"vcf/FoundationKit/FoundationKit.h"
+	<map>
+
+1148512252 c:\temp\bluesky\databasekit\fbdatabase.h
+	"DatabaseKit.h"
+	"ibase.h"
+
+1140583942 c:\temp\bluesky\databasekit\databaseerror.h
+
+1140755315 c:\temp\bluesky\databasekit\sqlitedatabase.h
+
+1144890125 c:\temp\bluesky\databasekit\dataset.h
+	"vcf/FoundationKit/FoundationKit.h"
+
+1144888575 c:\temp\bluesky\databasekit\fbdataset.h
+
+1144736853 c:\temp\bluesky\databasekit\transaction.h
+	"vcf/FoundationKit/FoundationKit.h"
+
+1144736894 c:\temp\bluesky\databasekit\fbtransaction.h
+	"ibase.h"
+
+1142453102 c:\temp\bluesky\databasekit\stringlist.h
+	<vector>
+
