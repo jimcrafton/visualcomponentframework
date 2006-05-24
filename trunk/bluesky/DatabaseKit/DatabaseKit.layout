@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget index="-1" />
+	<File name="DataSet.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="292" topLine="6" />
+	</File>
+	<File name="DataSet.h" open="0" top="0" tabpos="4">
+		<Cursor position="754" topLine="15" />
+	</File>
+	<File name="Database.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="208" topLine="0" />
+	</File>
+	<File name="Database.h" open="1" top="0" tabpos="2">
+		<Cursor position="281" topLine="12" />
+	</File>
+	<File name="DatabaseToolkit.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="3" />
+	</File>
+	<File name="FBDataSet.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="1548" topLine="45" />
+	</File>
+	<File name="FBDataSet.h" open="0" top="0" tabpos="2">
+		<Cursor position="487" topLine="1" />
+	</File>
+	<File name="FBDatabase.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="177" topLine="48" />
+	</File>
+	<File name="FBDatabase.h" open="1" top="0" tabpos="5">
+		<Cursor position="223" topLine="3" />
+	</File>
+	<File name="FBTransaction.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="1598" topLine="2" />
+	</File>
+	<File name="FBTransaction.h" open="0" top="0" tabpos="6">
+		<Cursor position="323" topLine="0" />
+	</File>
+	<File name="StringList.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="1416" topLine="51" />
+	</File>
+	<File name="Transaction.h" open="0" top="0" tabpos="5">
+		<Cursor position="493" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
