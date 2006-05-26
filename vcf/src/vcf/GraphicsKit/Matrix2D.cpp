@@ -23,6 +23,22 @@ Matrix2D::Matrix2D( const Matrix2D& matrix ):
 	memcpy( matrix_, matrix.matrix_, 9 * sizeof(double) );
 }
 
+Matrix2D::Matrix2D ( const agg::trans_affine& matrix )
+{
+	identity();
+
+	double m[6] = {0,0,0,0,0,0};
+
+	matrix.store_to( m );
+
+	matrix_[0][0] = m[0];
+	matrix_[0][1] = m[1];
+	matrix_[1][0] = m[2];
+	matrix_[1][1] = m[3];
+	matrix_[2][0] = m[4];
+	matrix_[2][1] = m[5];
+}
+
 Matrix2D::~Matrix2D()
 {
 
@@ -89,25 +105,43 @@ void Matrix2D::identity()
 	}
 }
 
-Matrix2D* Matrix2D::multiply( Matrix2D* m1, Matrix2D* m2 )
-{
-	if ( (NULL != m1) && (NULL != m2) ) {
-		matrix_[0][0] = m1->matrix_[0][0] * m2->matrix_[0][0] + m1->matrix_[0][1] * m2->matrix_[1][0];
-		matrix_[0][1] = m1->matrix_[0][0] * m2->matrix_[0][1] + m1->matrix_[0][1] * m2->matrix_[1][1];
-		matrix_[0][2] = 0.0;
+Matrix2D& Matrix2D::multiply( const Matrix2D& rhs )
+{	
+/*
+	matrix_[0][0] = m1.matrix_[0][0] * m2.matrix_[0][0] + m1.matrix_[0][1] * m2.matrix_[1][0];
+	matrix_[0][1] = m1.matrix_[0][0] * m2.matrix_[0][1] + m1.matrix_[0][1] * m2.matrix_[1][1];
+	matrix_[0][2] = 0.0;
+	
+	matrix_[1][0] = m1.matrix_[1][0] * m2.matrix_[0][0] + m1.matrix_[1][1] * m2.matrix_[1][0];
+	matrix_[1][1] = m1.matrix_[1][0] * m2.matrix_[0][1] + m1.matrix_[1][1] * m2.matrix_[1][1];
+	matrix_[1][2] = 0.0;
+	
+	matrix_[2][0] = (m1.matrix_[2][0] * m2.matrix_[0][0]) + (m1.matrix_[2][1] * m2.matrix_[1][0]) + m2.matrix_[2][0];
+	matrix_[2][1] = (m1.matrix_[2][0] * m2.matrix_[0][1]) + (m1.matrix_[2][1] * m2.matrix_[1][1]) + m2.matrix_[2][1];
+	matrix_[2][2] = 1.0;
+	*/
 
-		matrix_[1][0] = m1->matrix_[1][0] * m2->matrix_[0][0] + m1->matrix_[1][1] * m2->matrix_[1][0];
-		matrix_[1][1] = m1->matrix_[1][0] * m2->matrix_[0][1] + m1->matrix_[1][1] * m2->matrix_[1][1];
-		matrix_[1][2] = 0.0;
+	double m00,m10,m20;
 
-		matrix_[2][0] = (m1->matrix_[2][0] * m2->matrix_[0][0]) + (m1->matrix_[2][1] * m2->matrix_[1][0]) + m2->matrix_[2][0];
-		matrix_[2][1] = (m1->matrix_[2][0] * m2->matrix_[0][1]) + (m1->matrix_[2][1] * m2->matrix_[1][1]) + m2->matrix_[2][1];
-		matrix_[2][2] = 1.0;
-		return this;
-	}
-	else {
-		return NULL;
-	}
+	m00 = matrix_[0][0] * rhs.matrix_[0][0] + matrix_[0][1] * rhs.matrix_[1][0];	
+	m10 = matrix_[1][0] * rhs.matrix_[0][0] + matrix_[1][1] * rhs.matrix_[1][0];
+	m20 = (matrix_[2][0] * rhs.matrix_[0][0]) + (matrix_[2][1] * rhs.matrix_[1][0]) + rhs.matrix_[2][0];
+
+
+	matrix_[0][1] = matrix_[0][0] * rhs.matrix_[0][1] + matrix_[0][1] * rhs.matrix_[1][1];	
+	matrix_[1][1] = matrix_[1][0] * rhs.matrix_[0][1] + matrix_[1][1] * rhs.matrix_[1][1];	
+	matrix_[2][1] = (matrix_[2][0] * rhs.matrix_[0][1]) + (matrix_[2][1] * rhs.matrix_[1][1]) + rhs.matrix_[2][1];
+	
+	matrix_[0][0] = m00;
+	matrix_[1][0] = m10;
+	matrix_[2][0] = m20;
+
+
+	matrix_[0][2] = 0.0;
+	matrix_[1][2] = 0.0;
+	matrix_[2][2] = 1.0;
+
+	return *this;	
 }
 
 void Matrix2D::translate( const double& transX, const double& transY )
@@ -134,9 +168,36 @@ void Matrix2D::invert()
 	matrix_[2][0] = t4;
 }
 
-Point* Matrix2D::apply( Point* point )
+
+Point Matrix2D::apply( Point* point ) const
 {
-	return NULL;
+	Point result;
+
+	result.x_ = point->x_ * (matrix_[0][0]) +
+							point->y_ * (matrix_[1][0]) +
+								(matrix_[2][0]);
+
+	result.y_ = point->x_ * (matrix_[0][1]) +
+							point->y_ * (matrix_[1][1]) +
+								(matrix_[2][1]);
+
+	return result;
+}
+
+void Matrix2D::apply( double& x, double& y ) const
+{
+	double tmpX = x;
+	double tmpY = y;
+
+	x = tmpX * (matrix_[0][0]) +
+							tmpY * (matrix_[1][0]) +
+								(matrix_[2][0]);
+
+	y = tmpX * (matrix_[0][1]) +
+							tmpY * (matrix_[1][1]) +
+								(matrix_[2][1]);
+
+
 }
 
 bool Matrix2D::isEqual( Object* object )const
@@ -159,16 +220,6 @@ void Matrix2D::copy( Object* source )
 {
 	Matrix2D* m = dynamic_cast<Matrix2D*>( source );
 	memcpy( matrix_, m->matrix_, 9 * sizeof(double) );
-	/**
-	slow way
-	if ( NULL != m ){
-		for ( int i=0;i<3;i++){
-			for (int j=0;j<3;j++){
-				matrix_[i][j] = m->matrix_[i][j];
-			}
-		}
-	}
-	*/
 }
 
 Matrix2D& Matrix2D::operator=( const Matrix2D& matrix )
@@ -243,6 +294,128 @@ double& Matrix2D::operator[]( MatrixElementIndex index )
 	return matrix_[index/3][index%3];
 }
 
+bool Matrix2D::isIdentity(double epsilon ) const
+{
+	//based on Maxim Shemanarev AGG matrix code ! Thanks !
+	return (fabs(matrix_[0][0] - 1.0) < epsilon) &&
+           (fabs(matrix_[0][1] - 0.0) < epsilon) &&
+           (fabs(matrix_[1][0] - 0.0) < epsilon) && 
+           (fabs(matrix_[1][1] - 1.0) < epsilon) &&
+           (fabs(matrix_[2][0] - 0.0) < epsilon) &&
+           (fabs(matrix_[2][1] - 0.0) < epsilon);
+}
+
+
+
+double Matrix2D::getRotation() const
+{
+	//based on Maxim Shemanarev AGG matrix code ! Thanks !
+	double x1 = 0.0;
+	double y1 = 0.0;
+	double x2 = 1.0;
+	double y2 = 0.0;
+	
+	apply(x1, y1);
+	apply(x2, y2);
+
+	return atan2(y2-y1, x2-x1);
+}
+
+double Matrix2D::getScaleX() const 
+{
+	double result = 0;
+	double y = 0;
+
+	getScale( result, y );
+
+	return result;
+}
+
+double Matrix2D::getScaleY() const 
+{
+	double result = 0;
+	double x = 0;
+
+	getScale( x, result );
+
+	return result;
+}
+
+double Matrix2D::getTranslateX() const 
+{
+	double result = 0;
+	double y = 0;
+
+	getTranslation( result, y );
+
+	return result;
+}
+
+double Matrix2D::getTranslateY() const 
+{
+	double result = 0;
+	double x = 0;
+
+	getTranslation( x, result );
+
+	return result;
+}
+
+
+void Matrix2D::getScale( double& x, double& y ) const
+{
+	//based on Maxim Shemanarev AGG matrix code ! Thanks !
+	double x1 = 0.0;
+	double y1 = 0.0;
+	double x2 = 1.0;
+	double y2 = 1.0;
+	Matrix2D rot;
+	rot.rotate( -getRotation() );
+
+	rot.multiply( *this );
+
+	rot.apply(x1, y1);
+	rot.apply(x2, y2);
+	
+	x = x2 - x1;
+	y = y2 - y1;
+}
+
+void Matrix2D::getTranslation( double& x, double& y ) const
+{
+	//based on Maxim Shemanarev AGG matrix code ! Thanks !
+	Matrix2D rot;
+	rot.rotate( -getRotation() );
+
+	rot.multiply( *this );
+    
+    rot.apply(x, y);
+}
+
+Matrix2D& Matrix2D::operator= ( const agg::trans_affine& matrix )
+{
+	identity();
+
+	double m[6] = {0,0,0,0,0,0};
+
+	matrix.store_to( m );
+
+	matrix_[0][0] = m[0];
+	matrix_[0][1] = m[1];
+	matrix_[1][0] = m[2];
+	matrix_[1][1] = m[3];
+	matrix_[2][0] = m[4];
+	matrix_[2][1] = m[5];
+
+	return *this;
+}
+	
+Matrix2D::operator agg::trans_affine () const
+{
+	return agg::trans_affine( matrix_[0][0], matrix_[0][1],
+								matrix_[1][0], matrix_[1][1],
+								matrix_[2][0], matrix_[2][1]  );
+}
 
 /**
 $Id$

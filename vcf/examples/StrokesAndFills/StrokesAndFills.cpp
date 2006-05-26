@@ -65,7 +65,7 @@ public:
 
 		if ( isUsingRenderBuffer() ) {
 			GraphicsContext* ctx = getContext();
-			ctx->setDrawingArea( getClientBounds() );
+			ctx->setRenderArea( getClientBounds() );
 		}
 
 		repaint();

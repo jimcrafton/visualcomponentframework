@@ -361,7 +361,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			paintRect.right, paintRect.bottom );
 
 		ctx->setViewableBounds( viewableRect );
-		Image* drawingArea = ctx->getDrawingArea();
+		Image* drawingArea = ctx->getRenderArea();
 		
 		if ( peerControl_->isUsingRenderBuffer() && 
 				!viewableRect.isNull() && 
@@ -381,7 +381,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 								exclusionRect->right, exclusionRect->bottom );
 				}
 
-				GraphicsContext* paintCtx = ctx->getDrawingArea()->getImageContext();
+				GraphicsContext* paintCtx = ctx->getRenderArea()->getImageContext();
 				int gcs = paintCtx->saveState();
 
 				switch( whatToPaint ) {
@@ -413,9 +413,9 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 				}
 				paintCtx->restoreState( gcs );
 			}
-			ctx->flushDrawingArea();
+			ctx->flushRenderArea();
 
-			ctx->getDrawingArea()->getImageContext()->setViewableBounds( Rect(0,0,0,0) );
+			ctx->getRenderArea()->getImageContext()->setViewableBounds( Rect(0,0,0,0) );
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
 			

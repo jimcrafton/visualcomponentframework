@@ -181,10 +181,7 @@ public:
 
 	virtual void setAntiAliasingOn( bool antiAliasingOn ) = 0;
 
-
-
-
-	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image ) = 0;
+	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode ) = 0;
 
 	/**
 	"Blits" the image to the underlying graphics context. No attempt is 
@@ -192,7 +189,7 @@ public:
 	specified by the x and y arguments, and the image's width and height 
 	are used to determine the bounds.
 	*/
-	virtual void bitBlit( const double& x, const double& y, Image* image ) = 0;
+	virtual void bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image ) = 0;
 
 
 	virtual void drawThemeSelectionRect( Rect* rect, DrawUIState& state ) = 0;

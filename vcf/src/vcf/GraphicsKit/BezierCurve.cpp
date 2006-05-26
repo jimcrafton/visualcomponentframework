@@ -30,6 +30,9 @@ void BezierCurve::applyTransform( const Matrix2D& transform )
 	double x = 0.0;
 	while ( it != points_.end() ) {
 		PathPoint& pt = *it;
+
+		transform.apply( &pt.point_ );
+		/*
 		x = pt.point_.x_;
 		pt.point_.x_ = x * (transform[Matrix2D::mei00]) +
 							pt.point_.y_ * (transform[Matrix2D::mei10]) +
@@ -38,7 +41,7 @@ void BezierCurve::applyTransform( const Matrix2D& transform )
 		pt.point_.y_ = x * (transform[Matrix2D::mei01]) +
 							pt.point_.y_ * (transform[Matrix2D::mei11]) +
 								(transform[Matrix2D::mei21]);
-
+*/
 
 		it ++;
 	}
@@ -386,13 +389,18 @@ bool BezierCurve::getPoints( std::vector<PathPoint>& points, Matrix2D* transform
 			PathPoint& srcPt = *it1;
 			PathPoint& destPt = *it2;
 
-			destPt.point_.x_ = srcPt.point_.x_ * (m[Matrix2D::mei00]) +
-								srcPt.point_.y_ * (m[Matrix2D::mei10]) +
-								(m[Matrix2D::mei20]);
+			//destPt.point_.x_ = srcPt.point_.x_ * (m[Matrix2D::mei00]) +
+			//					srcPt.point_.y_ * (m[Matrix2D::mei10]) +
+			//					(m[Matrix2D::mei20]);
 
-			destPt.point_.y_ = srcPt.point_.x_ * (m[Matrix2D::mei01]) +
-								srcPt.point_.y_ * (m[Matrix2D::mei11]) +
-								(m[Matrix2D::mei21]);
+			//destPt.point_.y_ = srcPt.point_.x_ * (m[Matrix2D::mei01]) +
+			//					srcPt.point_.y_ * (m[Matrix2D::mei11]) +
+			//					(m[Matrix2D::mei21]);
+
+			destPt.point_ = srcPt.point_;
+			m.apply( &destPt.point_ );
+
+
 
 			it2 ++;
 			it1 ++;

@@ -152,6 +152,37 @@ public:
 		ttToolTipFont
 	};
 
+	enum CompositingMode {
+		cmNone = 0xFF,
+		cmClear = 0,
+		cmSource,		
+		cmDestination,
+		cmSrcOver,
+		cmDestOver,
+		cmSrcIn,
+		cmDestIn,
+		cmSrcOut,
+		cmDestOut,		
+		cmSrcATop,
+		cmDestATop,
+		cmXOR,
+		cmPlus,		
+		cmMinus,
+		cmMultiply,
+		cmScreen,
+		cmOverlay,		
+		cmDarken,
+		cmLighten,	
+		cmColorDodge,	
+		cmColorBurn,		
+		cmHardLight,
+		cmSoftLight,
+		cmExclusion,
+		cmDifference,
+		cmContrast,
+		cmCustom
+	};
+
 	typedef std::vector<GraphicsState*> GraphicsStateCollection;
 	typedef GraphicsStateCollection::iterator GraphicsStateIterator;
 	typedef GraphicsStateCollection::const_iterator GraphicsStateConstIterator;
@@ -207,29 +238,48 @@ public:
 		viewableBounds_ = bounds;
 	}
 
-	void setDrawingArea( Rect bounds );
+	/**
+	This method sets the image bounds for the drawing
+	area image. This gets called by the framework to designate 
+	an image that should be used to draw on, essectially a 
+	"back buffer" that can be used to draw on, and then blitted 
+	back onto the GraphicsContext. This is used to draw on 
+	for anti-aliased graphics.
+	*/
+	void setRenderArea( Rect bounds );
 
-	void deleteDrawingArea( );
+	/**
+	This deletes the drawing area, and frees any resources 
+	associated with it.
+	*/
+	void deleteRenderArea( );
 
-	void flushDrawingArea( );
+	/**
+	Draws the drawing area image on to the graphics context.
+	*/
+	void flushRenderArea( );
 
+	/**
+	Sets the drawing area as "dirty", which means it should
+	be drawn.
+	*/
 	void markRenderAreaDirty() {
 		renderAreaDirty_ = true;
 	}
 
 	bool isRenderAreaDirty() {
-		if ( hasDrawingArea() ) {
+		if ( hasRenderArea() ) {
 			return renderAreaDirty_;
 		}
 		return false;
 	}
 
-	bool hasDrawingArea() {
-		return NULL != drawingArea_;
+	bool hasRenderArea() {
+		return NULL != renderArea_;
 	}
 
-	Image* getDrawingArea() {
-		return drawingArea_;
+	Image* getRenderArea() {
+		return renderArea_;
 	}
 
 	agg::rendering_buffer* getRenderingBuffer() {
@@ -267,6 +317,10 @@ public:
 	*/
 	void restoreState( int state );
 
+
+	void setCompositingMode( CompositingMode compositeMode );
+	
+	CompositingMode getCompositingMode();
 
 	/**
 	Sets the current color of the graphics context to use for filling
@@ -377,6 +431,9 @@ public:
 	*/
 	void setXORModeOn( const bool& XORModeOn );
 
+	void setAlpha( const double& alpha );
+	double getAlpha();
+
 
 	/**
 	draws a path. See Path for more info. Basically this simple enumerates all the
@@ -387,8 +444,8 @@ public:
 	/**
 	draws an image at the x,y, coordinates
 	*/
-	void drawImage( const double& x, const double& y, Image * image );
-	void drawImage( const Point & pt, Image * image );
+	void drawImage( const double& x, const double& y, Image * image, const bool& renderImmediately=true );
+	void drawImage( const Point & pt, Image * image, const bool& renderImmediately=true );
 
 
 	/**
@@ -399,6 +456,11 @@ public:
 	*/
 	void bitBlit( const double& x, const double& y, Image* image );
 	void bitBlit( const Point & pt, Image* image );
+
+	void bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image );
+	void bitBlit( const Point & pt, Rect* imageBounds, Image* image );
+
+	
 
 
 	/**
@@ -412,8 +474,8 @@ public:
 	version
 	Note: as of 8/4/2001 not implemented yet
 	*/
-	void drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled );
-	void drawImageWithState( const Point & pt, Image * image, const bool& enabled );
+	void drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled, const bool& renderImmediately=true );
+	void drawImageWithState( const Point & pt, Image * image, const bool& enabled, const bool& renderImmediately=true );
 
 	/**
 	draws a portion of the image.
@@ -425,7 +487,7 @@ public:
 	drawn, or the top, left of the image to the specified height and width.
 	@param Image the image to draw
 	*/
-	void drawImageWithinBounds( Rect* bounds, Image* image );
+	void drawImageWithinBounds( Rect* bounds, Image* image, const bool& renderImmediately=true );
 
 	/**
 	draws a partial image at the x,y, coordinates specified
@@ -436,9 +498,11 @@ public:
 	image to draw
 	@param Image image - the image to draw
 	*/
-	void drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image );
-	void drawPartialImage( const Point & pt, Rect* imageBounds, Image* image );
+	void drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image, const bool& renderImmediately=true );
+	void drawPartialImage( const Point & pt, Rect* imageBounds, Image* image, const bool& renderImmediately=true );
 
+
+	void renderImages( bool freeImages = true );
 
 
 	void setCurrentTransform( const Matrix2D& transform );
@@ -700,10 +764,27 @@ protected:
 		PrimitiveType primitive;
 	};
 
+	struct ImageOperation {
+		ImageOperation():image(NULL),compositeMode(cmSource){}
+
+		Image* image;
+		Rect imgSrcRect;
+		Rect imgXfrmdRect;
+		Point pt;
+		CompositingMode compositeMode;
+		Matrix2D matrix;
+		double ctxAlpha;
+	};
+
+	
+
+
 	ContextPeer* contextPeer_;
 	GraphicsDrawingState currentDrawingState_;
 	std::vector<PointOperation> pathOperations_;
-	Image* drawingArea_;
+	std::vector<ImageOperation> imageOperations_;
+	
+	Image* renderArea_;
 	Point drawingAreaTopLeft_;
 	agg::rendering_buffer* renderBuffer_;
 	bool renderAreaDirty_;
@@ -728,14 +809,21 @@ protected:
 	*/
 	GraphicsState* currentGraphicsState_;
 
+
+	void renderImage( agg::rendering_buffer& destBuffer, Rect& destRect, ImageOperation& imgOp );
+
+	Rect getRenderDestRect();
+	Rect getTransformedImageRect( ImageOperation& imgOp );
+	Point getTransformedImagePoint( ImageOperation& imgOp );
+
 };
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // inlines
 
-inline void GraphicsContext::drawImage( const Point & pt, Image * image) {
-	drawImage( pt.x_, pt.y_, image );
+inline void GraphicsContext::drawImage( const Point & pt, Image * image, const bool& renderImmediately) {
+	drawImage( pt.x_, pt.y_, image, renderImmediately );
 }
 
 inline void GraphicsContext::bitBlit( const Point & pt, Image* image )
@@ -743,12 +831,17 @@ inline void GraphicsContext::bitBlit( const Point & pt, Image* image )
 	bitBlit( pt.x_, pt.y_, image );
 }
 
-inline void GraphicsContext::drawImageWithState( const Point & pt, Image * image, const bool& enabled ) {
-	drawImageWithState( pt.x_, pt.y_, image, enabled );
+inline void GraphicsContext::bitBlit( const Point & pt, Rect* imageBounds, Image* image )
+{
+	bitBlit( pt.x_, pt.y_, imageBounds, image );
 }
 
-inline void GraphicsContext::drawPartialImage( const Point & pt, Rect* imageBounds, Image* image ) {
-	drawPartialImage( pt.x_, pt.y_, imageBounds, image );
+inline void GraphicsContext::drawImageWithState( const Point & pt, Image * image, const bool& enabled, const bool& renderImmediately ) {
+	drawImageWithState( pt.x_, pt.y_, image, enabled, renderImmediately );
+}
+
+inline void GraphicsContext::drawPartialImage( const Point & pt, Rect* imageBounds, Image* image, const bool& renderImmediately ) {
+	drawPartialImage( pt.x_, pt.y_, imageBounds, image, renderImmediately );
 }
 
 

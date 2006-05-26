@@ -13,6 +13,15 @@ where you installed the VCF.
 #include "thirdparty/common/agg/include/agg_ellipse.h"
 #include "thirdparty/common/agg/include/agg_arc.h"
 
+
+#include "thirdparty/common/agg/include/agg_renderer_scanline.h"
+#include "thirdparty/common/agg/include/agg_span_allocator.h"
+#include "thirdparty/common/agg/include/agg_span_interpolator_linear.h"
+#include "thirdparty/common/agg/include/agg_span_image_filter_rgba.h"
+#include "thirdparty/common/agg/include/agg_scanline_u.h"
+#include "thirdparty/common/agg/include/agg_bounding_rect.h"
+#include "thirdparty/common/agg/include/agg_span_converter.h"
+
 namespace VCF {
 
 /**
@@ -50,6 +59,8 @@ public:
 	double translateY_;
 	double scaleX_;
 	double scaleY_;	
+	GraphicsContext::CompositingMode compositeMode_;
+	double alpha_;
 };
 
 
@@ -68,7 +79,9 @@ GraphicsState::GraphicsState():
 	translateX_(0.0),
 	translateY_(0.0),
 	scaleX_(1.0),
-	scaleY_(1.0)
+	scaleY_(1.0),
+	compositeMode_(GraphicsContext::cmSource),
+	alpha_(1.0)
 {
 	transformMatrix_.identity();
 }
@@ -85,7 +98,9 @@ GraphicsState::GraphicsState( const GraphicsState& rhs ):
 	translateX_(0.0),
 	translateY_(0.0),
 	scaleX_(1.0),
-	scaleY_(1.0)
+	scaleY_(1.0),
+	compositeMode_(GraphicsContext::cmSource),
+	alpha_(1.0)
 {
 	transformMatrix_.identity();
 	*this = rhs;
@@ -108,6 +123,7 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	fill_ = rhs.fill_;
 	stroke_ = rhs.stroke_;
 	font_ = rhs.font_;
+	compositeMode_ = rhs.compositeMode_;
 
 	if ( NULL != clippingPath_ ) { //release the underlying object instance
 		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
@@ -134,6 +150,8 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	translateY_ = rhs.translateY_;
 	scaleX_ = rhs.scaleX_;
 	scaleY_ = rhs.scaleY_;
+	
+	alpha_ = rhs.alpha_;
 
 	return *this;
 }
@@ -152,11 +170,11 @@ void GraphicsState::compositeMatrix()
 	Matrix2D translation;
 	translation.translate( translateX_, translateY_ );
 
-	Matrix2D tmp;
-	tmp.multiply( &scale, &rotate );
-	tmp.multiply( &tmp, &shear );
-	tmp.multiply( &tmp, &translation );
-	transformMatrix_ = tmp;
+	transformMatrix_.identity();
+	transformMatrix_.multiply( scale );
+	transformMatrix_.multiply( rotate );
+	transformMatrix_.multiply( shear );
+	transformMatrix_.multiply( translation );	
 }
 
 
@@ -164,7 +182,7 @@ void GraphicsState::compositeMatrix()
 GraphicsContext::GraphicsContext():
 	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),		
-	drawingArea_(NULL),
+	renderArea_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -184,7 +202,7 @@ GraphicsContext::GraphicsContext():
 GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned long& height ):
 	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),		
-	drawingArea_(NULL),
+	renderArea_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -212,7 +230,7 @@ GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned lon
 GraphicsContext::GraphicsContext( OSHandleID contextID ):	
 	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
-	drawingArea_(NULL),
+	renderArea_(NULL),
 	renderBuffer_(NULL),
 	renderAreaDirty_(false),
 	graphicsStateIndex_(0),
@@ -251,11 +269,11 @@ GraphicsContext::~GraphicsContext()
 	stateCollection_.clear();
 
 
-	if ( NULL != drawingArea_ ) {
+	if ( NULL != renderArea_ ) {
 		renderBuffer_->attach( NULL, 0, 0, 0 );
 		delete renderBuffer_;
 
-		delete drawingArea_;
+		delete renderArea_;
 	}	
 }
 
@@ -268,6 +286,25 @@ void GraphicsContext::init()
 	//transformMatrix_.identity();
 }
 
+void GraphicsContext::setAlpha( const double& alpha )
+{
+	currentGraphicsState_->alpha_ = alpha;
+}
+
+double GraphicsContext::getAlpha()
+{
+	return currentGraphicsState_->alpha_;
+}
+
+void GraphicsContext::setCompositingMode( GraphicsContext::CompositingMode compositeMode )
+{
+	currentGraphicsState_->compositeMode_ = compositeMode;
+}
+	
+GraphicsContext::CompositingMode GraphicsContext::getCompositingMode()
+{
+	return currentGraphicsState_->compositeMode_;
+}
 
 void GraphicsContext::setCurrentFont(Font * font)
 {
@@ -313,53 +350,379 @@ void GraphicsContext::draw(Path * path)
 	}
 }
 
-void GraphicsContext::drawImage( const double& x, const double& y, Image * image)
+void GraphicsContext::drawImage( const double& x, const double& y, Image * image, const bool& renderImmediately)
 {
 	Rect bounds(0,0,image->getWidth(), image->getHeight() );
-	drawPartialImage( x, y, &bounds, image );
+	drawPartialImage( x, y, &bounds, image, renderImmediately );
 }
 
 void GraphicsContext::bitBlit( const double& x, const double& y, Image* image )
 {
-	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
-
-		contextPeer_->bitBlit( x, y, image );
-
-		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
-	}
+	Rect r(0,0,image->getWidth(),image->getHeight());
+	bitBlit( x, y, &r, image );
 }
 
-void GraphicsContext::drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled )
+void GraphicsContext::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )
 {
-	drawImage( x, y, image );
-	/*
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
-		Rect bounds(0,0,image->getWidth(), image->getHeight() );
-		contextPeer_->drawImage( x, y, &bounds, image );
+		VCF_ASSERT( imageBounds->getWidth() <= image->getWidth() );
+		VCF_ASSERT( imageBounds->getHeight() <= image->getHeight() );
+
+		contextPeer_->bitBlit( x, y, imageBounds, image );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 	}
-	*/
 }
 
-void GraphicsContext::drawImageWithinBounds( Rect* bounds, Image* image )
+void GraphicsContext::drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled, const bool& renderImmediately )
+{
+	drawImage( x, y, image, renderImmediately );
+}
+
+void GraphicsContext::drawImageWithinBounds( Rect* bounds, Image* image, const bool& renderImmediately )
 {
 	Rect imageBounds( 0,0,bounds->getWidth(), bounds->getHeight() );
-	drawPartialImage( bounds->left_, bounds->top_, &imageBounds, image );
+	drawPartialImage( bounds->left_, bounds->top_, &imageBounds, image, renderImmediately );
 }
 
-void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image )
+void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image, const bool& renderImmediately )
 {
 	//contextPeer_->drawPartialImage( x, y, imageBounds, image );
-	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
-		contextPeer_->drawImage( x, y, imageBounds, image );
+	if ( renderImmediately ) {
+		if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
+			
+			contextPeer_->drawImage( x, y, imageBounds, image, getCompositingMode() );
+			
+			contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
+		}
+	}
+	else {
+		ImageOperation imgOp;
+		imgOp.compositeMode = getCompositingMode();
 
-		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
+		Matrix2D* currentXfrm = getCurrentTransform();
+		if ( NULL != currentXfrm ) {
+			imgOp.matrix = *currentXfrm;
+		}
+		else {
+			imgOp.matrix.identity();
+		}
+
+		imgOp.image = image;
+
+		imgOp.imgSrcRect = *imageBounds;
+		imgOp.imgXfrmdRect = imgOp.imgSrcRect;
+		
+		imgOp.pt.x_ = x;
+		imgOp.pt.y_ = y;
+
+		imgOp.ctxAlpha = getAlpha();
+
+		imageOperations_.push_back( imgOp );
 	}
 }
 
+typedef agg::renderer_base<pixfmt> RendererBase;
+typedef agg::renderer_scanline_aa_solid<RendererBase> SolidRenderer;
+typedef agg::span_allocator<agg::rgba8> SpanAllocator;
+typedef agg::span_interpolator_linear<> SpanInterpolator;
+typedef agg::span_image_filter_rgba_bilinear_clip<pixfmt,SpanInterpolator> SpanGenerator;
+typedef agg::renderer_scanline_aa_solid<RendererBase> RendererType;
+
+typedef agg::rgba8 color;
+typedef agg::order_bgra order;
+
+typedef agg::comp_op_adaptor_rgba<color, order> blender_type;
+typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+
+typedef agg::blender_rgba<color, order> prim_blender_type; 
+typedef agg::pixfmt_alpha_blend_rgba<prim_blender_type, agg::rendering_buffer> prim_pixfmt_type;
+typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+struct ImageAlpha {
+	typedef agg::rgba8 color_type;
+    typedef agg::int8u alpha_type;
+
+	ImageAlpha( double a):alpha(a){}
+	void prepare() {}
+	void generate(color_type* span, int x, int y, unsigned len) const
+	{
+		if ( fabs(alpha - 1.0) < 1e-14 ) {
+			//nothing to do !
+			return;
+		}
+		else if ( fabs(alpha - 0.0) < 1e-14 ) {
+			do
+			{
+				span->a = 0;
+				++span;
+			}
+			while(--len);
+		}
+		else {			
+			do
+			{
+				span->a = span->a * alpha;
+				++span;
+			}
+			while(--len);
+		}
+	}
+
+	double alpha;
+};
+
+typedef agg::span_converter<SpanGenerator,ImageAlpha> SpanConv;
+
+void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& destRect, ImageOperation& imgOp )
+{
+	//determine if we have a default transform
+	
+	agg::path_storage imagePath;
+	imagePath.move_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.top_ );
+	imagePath.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.top_ );
+	imagePath.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.bottom_ );
+	imagePath.line_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.bottom_ );
+	imagePath.close_polygon();
+	agg::trans_affine imageMat;
+	agg::trans_affine pathMat;
+
+	if ( imgOp.matrix.isIdentity() ) {
+		
+		imageMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
+		
+
+		imageMat *= agg::trans_affine_translation( imgOp.pt.x_ ,
+													imgOp.pt.y_  );		
+
+
+		
+		pathMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
+
+		pathMat *= agg::trans_affine_translation( imgOp.pt.x_,
+													imgOp.pt.y_ );
+	}
+	else {
+		imageMat *= agg::trans_affine_translation( imgOp.pt.x_,
+													imgOp.pt.y_ );
+
+		imageMat *= imgOp.matrix;
+
+		imageMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
+		
+		
+		pathMat *= agg::trans_affine_translation( imgOp.pt.x_,
+													imgOp.pt.y_ );
+
+		pathMat *= imgOp.matrix;
+
+		pathMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
+		
+	}
+
+	imageMat.invert();
+	agg::conv_transform< agg::path_storage > xfrmdImgPath(imagePath,pathMat);
+
+	ImageAlpha imgA( imgOp.ctxAlpha );
+
+	SpanInterpolator interpolator(imageMat);
+	ColorPixels imgPix = imgOp.image;
+	
+	pixfmt imgPixf(imgPix);
+	
+	SpanGenerator spanGen(imgPixf,
+		agg::rgba(1, 0, 1,0),
+		interpolator);
+	
+	SpanConv sc(spanGen, imgA);
+	
+	SpanAllocator spanAllocator;
+	agg::rasterizer_scanline_aa<> rasterizer;
+	agg::scanline_u8 scanLine;
+	
+	rasterizer.add_path(xfrmdImgPath);
+
+	if ( GraphicsContext::cmSource == imgOp.compositeMode ) {		
+		pixfmt pixf(destBuffer);
+		RendererBase rb(pixf);
+		
+		agg::render_scanlines_aa(rasterizer, scanLine, rb, spanAllocator, sc );
+	}
+	else if ( GraphicsContext::cmCustom != imgOp.compositeMode && GraphicsContext::cmNone != imgOp.compositeMode ){		
+		pixfmt_type pixf2(destBuffer);
+		pixf2.comp_op( imgOp.compositeMode );
+
+		comp_renderer_type crb(pixf2);
+		
+		agg::render_scanlines_aa(rasterizer, scanLine, crb, spanAllocator, sc );
+	}
+}
+
+Rect GraphicsContext::getTransformedImageRect( ImageOperation& imgOp )
+{
+	Rect result = imgOp.imgSrcRect;
+		
+	uint32 pid[1] = {0};
+	agg::trans_affine pathMat;		
+	agg::path_storage path;		
+
+	pathMat *= agg::trans_affine_translation( imgOp.pt.x_, imgOp.pt.y_ );
+	pathMat *= imgOp.matrix;
+	
+	
+	path.move_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.top_ );
+	path.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.top_ );
+	path.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.bottom_ );
+	path.line_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.bottom_ );
+	path.close_polygon();
+	
+	
+	agg::conv_transform< agg::path_storage > xfrmPath(path,pathMat);
+	agg::bounding_rect( xfrmPath, pid, 0, 1,
+						&result.left_, &result.top_,
+						&result.right_, &result.bottom_ );
+
+
+	return result;
+}	
+
+Point GraphicsContext::getTransformedImagePoint( ImageOperation& imgOp )
+{
+	Point result = imgOp.pt;
+
+	imgOp.matrix.apply( result.x_, result.y_ );
+
+	return result;
+}
+
+Rect GraphicsContext::getRenderDestRect()
+{
+	Rect result;
+	
+	if ( !imageOperations_.empty() ) {
+		ImageOperation& firstImgOp = imageOperations_[0];
+
+		uint32 pid[1] = {0};
+		agg::trans_affine pathMat;
+
+		agg::path_storage path;
+
+		Point pt = getTransformedImagePoint( firstImgOp );
+
+		firstImgOp.imgXfrmdRect = getTransformedImageRect( firstImgOp );
+		result = firstImgOp.imgXfrmdRect;
+
+		std::vector<ImageOperation>::iterator it = imageOperations_.begin();
+
+		it ++;
+		
+		//determine the max bounds rect
+		//this becomes the rect that we will use to 
+		//copy the current gc contents into our "dest"
+		//image
+		while ( it != imageOperations_.end() ) {
+			ImageOperation& imgOp = *it;			
+			
+			pt = getTransformedImagePoint( imgOp );
+
+			imgOp.imgXfrmdRect = getTransformedImageRect( imgOp );
+			
+			if ( result.left_ > imgOp.imgXfrmdRect.left_ ) {
+				result.left_ = imgOp.imgXfrmdRect.left_ ;
+			}
+			if ( result.top_ > imgOp.imgXfrmdRect.top_ ) {
+				result.top_ = imgOp.imgXfrmdRect.top_ ;
+			}
+			
+			if ( result.right_ < imgOp.imgXfrmdRect.right_ ) {
+				result.right_ = imgOp.imgXfrmdRect.right_ ;
+			}
+			if ( result.bottom_ < imgOp.imgXfrmdRect.bottom_ ) {
+				result.bottom_ = imgOp.imgXfrmdRect.bottom_ ;
+			}
+			
+			it ++;
+		}
+
+		result.inflate(2,2);
+	}
+
+	return result;
+}
+
+void GraphicsContext::renderImages( bool freeImages )
+{
+	if ( imageOperations_.empty() ) {
+		return;
+	}
+
+
+	std::vector<Image*> imagesToDelete;
+	std::vector<ImageOperation>::iterator it = imageOperations_.begin();
+	
+	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
+		
+		
+
+		Rect gcRect = getRenderDestRect();
+
+		//create the dest image - this is what we'll render into...
+		Image* destImg = GraphicsToolkit::createImage( this, &gcRect );
+		ColorPixels pix = destImg;
+		agg::rendering_buffer& destBuffer = pix;
+
+
+		it = imageOperations_.begin();
+
+		while ( it != imageOperations_.end() ) {
+			ImageOperation& imgOp = *it;
+			
+
+			renderImage( destBuffer, gcRect, imgOp );
+
+			if ( freeImages ) {
+				//no dups
+				if ( std::find( imagesToDelete.begin(), imagesToDelete.end(), imgOp.image ) == imagesToDelete.end() ) {
+					imagesToDelete.push_back( imgOp.image );
+				}
+			}
+			
+			it ++;
+		}
+
+
+		contextPeer_->bitBlit( gcRect.left_, gcRect.top_, &Rect(0,0,gcRect.getWidth(),gcRect.getHeight()), destImg );
+
+
+		int gcs = this->saveState();
+		Matrix2D m;
+		m.identity();
+		this->setCurrentTransform(m);
+		setStrokeWidth(1);
+		rectangle( gcRect );
+		setColor( Color::getColor("blue") );
+		strokePath();
+		this->restoreState(gcs);
+
+
+		delete destImg;
+
+
+		//cleanup...		
+		std::vector<Image*>::iterator it2 = imagesToDelete.begin();
+		
+		while ( it2 != imagesToDelete.end() ) {
+			delete *it2;
+			it2 ++;
+		}
+		
+		imageOperations_.clear();
+		
+		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
+	}
+}
 
 void GraphicsContext::textWithStateAt( const double& x, const double& y, const String& text, const bool& enabled )
 {
@@ -390,13 +753,10 @@ void GraphicsContext::textAt(const double & x, const double & y, const String & 
 	Rect bounds( x, y, x + getTextWidth(text), y + getTextHeight(text) );
 	Rect tmp = bounds;
 
-	double xx = bounds.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
-							bounds.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+	double xx = bounds.left_;
+	double yy = bounds.top_;
 
-	double yy = bounds.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
-							bounds.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+	currentGraphicsState_->transformMatrix_.apply( xx, yy );
 
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
@@ -412,13 +772,10 @@ void GraphicsContext::textAt( const double & x, const double & y, const String& 
 {
 	Rect bounds( x, y, x + getTextWidth(text), y + getTextHeight(text) );
 
-	double xx = x * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
-							y * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+	double xx = x;
+	double yy = y;
 
-	double yy = x * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
-							y * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+	currentGraphicsState_->transformMatrix_.apply( xx, yy );
 
 	bounds.offset( xx - bounds.left_, yy - bounds.top_ );
 
@@ -624,11 +981,7 @@ void GraphicsContext::concatRotation( const double& theta )
 	currentGraphicsState_->rotation_  += theta;
 	Matrix2D rot;
 	rot.rotate( currentGraphicsState_->rotation_ );
-	Matrix2D tmp;
-	tmp.multiply( &rot, &currentGraphicsState_->transformMatrix_ );
-
-	currentGraphicsState_->transformMatrix_ = tmp;
-
+	currentGraphicsState_->transformMatrix_.multiply( rot );
 }
 
 void GraphicsContext::concatTranslation( const double transX, const double& transY )
@@ -637,10 +990,8 @@ void GraphicsContext::concatTranslation( const double transX, const double& tran
 	currentGraphicsState_->translateY_  += transY;
 	Matrix2D translation;
 	translation.translate( currentGraphicsState_->translateX_, currentGraphicsState_->translateY_);
-	Matrix2D tmp;
-	tmp.multiply( &translation, &currentGraphicsState_->transformMatrix_ );
-
-	currentGraphicsState_->transformMatrix_ = tmp;
+	
+	currentGraphicsState_->transformMatrix_.multiply( translation );
 }
 
 void GraphicsContext::concatShear( const double& shearX, const double& shearY )
@@ -649,10 +1000,7 @@ void GraphicsContext::concatShear( const double& shearX, const double& shearY )
 	currentGraphicsState_->shearY_  += shearY;
 	Matrix2D shear;
 	shear.shear( currentGraphicsState_->shearX_, currentGraphicsState_->shearY_ );
-	Matrix2D tmp;
-	tmp.multiply( &shear, &currentGraphicsState_->transformMatrix_ );
-
-	currentGraphicsState_->transformMatrix_ = tmp;
+	currentGraphicsState_->transformMatrix_.multiply( shear );
 }
 
 void GraphicsContext::concatScale( const double& scaleX, const double& scaleY )
@@ -661,10 +1009,8 @@ void GraphicsContext::concatScale( const double& scaleX, const double& scaleY )
 	currentGraphicsState_->scaleY_  += scaleY;
 	Matrix2D scale;
 	scale.scale( currentGraphicsState_->scaleX_, currentGraphicsState_->scaleY_ );
-	Matrix2D tmp;
-	tmp.multiply( &scale, &currentGraphicsState_->transformMatrix_ );
-
-	currentGraphicsState_->transformMatrix_ = tmp;
+	
+	currentGraphicsState_->transformMatrix_.multiply( scale );
 }
 
 Font* GraphicsContext::getCurrentFont()
@@ -697,14 +1043,10 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const boo
 	long drawOptions = wordWrap ? GraphicsContext::tdoWordWrap : GraphicsContext::tdoNone;
 
 	Rect tmp = *bounds;
-	double xx = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
-							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+	double xx = tmp.left_;
+	double yy = tmp.top_;
 
-	double yy = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
-							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
-
+	currentGraphicsState_->transformMatrix_.apply( xx, yy );
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
@@ -717,13 +1059,10 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const boo
 void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const long drawOptions )
 {
 	Rect tmp = *bounds;
-	double xx = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei00]) +
-							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei10]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei20]);
+	double xx = tmp.left_;
+	double yy = tmp.top_;
 
-	double yy = tmp.left_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei01]) +
-							tmp.top_ * (currentGraphicsState_->transformMatrix_[Matrix2D::mei11]) +
-								(currentGraphicsState_->transformMatrix_[Matrix2D::mei21]);
+	currentGraphicsState_->transformMatrix_.apply( xx, yy );
 
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
@@ -975,15 +1314,9 @@ void GraphicsContext::execPathOperations()
 				currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
 				currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
 
-				tmpX = pointOp.x * (transform[Matrix2D::mei00]) +
-							pointOp.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
-
-				tmpY = pointOp.x * (transform[Matrix2D::mei01]) +
-							pointOp.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
-
-
+				tmpX = pointOp.x;
+				tmpY = pointOp.y;
+				transform.apply( tmpX, tmpY );
 
 				contextPeer_->moveTo( tmpX, tmpY );
 				++it;
@@ -991,13 +1324,9 @@ void GraphicsContext::execPathOperations()
 			break;
 
 			case PointOperation::ptLineTo :{
-				tmpX = pointOp.x * (transform[Matrix2D::mei00]) +
-							pointOp.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
-
-				tmpY = pointOp.x * (transform[Matrix2D::mei01]) +
-							pointOp.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+				tmpX = pointOp.x;
+				tmpY = pointOp.y;
+				transform.apply( tmpX, tmpY );
 
 				contextPeer_->lineTo( tmpX, tmpY );
 				++it;
@@ -1011,13 +1340,9 @@ void GraphicsContext::execPathOperations()
 				while ( (it != pathOperations_.end()) && (type == PointOperation::ptPolyLine) ) {
 					PointOperation& pt = *it;
 					type = pt.primitive;
-					tmpX = pt.x * (transform[Matrix2D::mei00]) +
-							pt.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
-
-					tmpY = pt.x * (transform[Matrix2D::mei01]) +
-							pt.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+					tmpX = pt.x;
+					tmpY = pt.y;
+					transform.apply( tmpX, tmpY );					
 
 					tmpPts.push_back( Point(tmpX,tmpY) );
 					++it;
@@ -1043,46 +1368,36 @@ void GraphicsContext::execPathOperations()
 				Point p4;
 
 				PointOperation& pt1 = *it;
-				p1.x_ = pt1.x * (transform[Matrix2D::mei00]) +
-							pt1.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
 
-				p1.y_ = pt1.x * (transform[Matrix2D::mei01]) +
-							pt1.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+
+				p1.x_ = pt1.x;
+				p1.y_ = pt1.y;
+
+				transform.apply( p1.x_, p1.y_ );
 
 				++it;
 
 				PointOperation& pt2 = *it;
-				p2.x_ = pt2.x * (transform[Matrix2D::mei00]) +
-							pt2.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
+				p2.x_ = pt2.x;
+				p2.y_ = pt2.y;
 
-				p2.y_ = pt2.x * (transform[Matrix2D::mei01]) +
-							pt2.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+				transform.apply( p2.x_, p2.y_ );
 
 				++it;
 
 				PointOperation& pt3 = *it;
-				p3.x_ = pt3.x * (transform[Matrix2D::mei00]) +
-							pt3.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
+				p3.x_ = pt3.x;
+				p3.y_ = pt3.y;
 
-				p3.y_ = pt3.x * (transform[Matrix2D::mei01]) +
-							pt3.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+				transform.apply( p3.x_, p3.y_ );
 
 				++it;
 
 				PointOperation& pt4 = *it;
-				p4.x_ = pt4.x * (transform[Matrix2D::mei00]) +
-							pt4.y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
+				p4.x_ = pt4.x;
+				p4.y_ = pt4.y;
 
-				p4.y_ = pt4.x * (transform[Matrix2D::mei01]) +
-							pt4.y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+				transform.apply( p4.x_, p4.y_ );
 
 				++it;
 
@@ -1117,16 +1432,9 @@ void GraphicsContext::execPathOperations()
 
 				while ( ptIt != tmpPts.end() ) {
 					Point& p = *ptIt;
-					tmpX = p.x_ * (transform[Matrix2D::mei00]) +
-							p.y_ * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
 
-					tmpY = p.x_ * (transform[Matrix2D::mei01]) +
-							p.y_ * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+					transform.apply( p.x_, p.y_ );
 
-					p.x_ = tmpX;
-					p.y_ = tmpY;
 					++ptIt;
 				}
 
@@ -1223,94 +1531,57 @@ void GraphicsContext::checkPathOperations()
 	}
 }
 
-/*
-Image* GraphicsContext::getImage( Rect* imageBounds )
-{
-	Image* result = contextPeer_->getImage( imageBounds );
 
-	ImageRect imgRect(result,imageBounds);
-
-	imageMap_[result] = imgRect;
-	return result;
-}
-
-void GraphicsContext::putImage( Image* image )
-{
-
-	std::map<Image*, ImageRect>::iterator found = imageMap_.find( image );
-	if ( found != imageMap_.end() ) {
-
-		Rect& bounds = found->second.bounds_;
-		contextPeer_->putImage( bounds.left_, bounds.top_, image );
-
-		imageMap_.erase( found );
-		delete image;
-	}
-	else {
-		//throw an exception of some sort!
-	}
-}
-
-*/
-
-
-
-
-void GraphicsContext::setDrawingArea( Rect bounds )
+void GraphicsContext::setRenderArea( Rect bounds )
 {
 	drawingAreaTopLeft_.x_ = bounds.left_;
 	drawingAreaTopLeft_.y_ = bounds.top_;
 
-	if ( NULL == drawingArea_ ) {
-		drawingArea_ = GraphicsToolkit::createImage( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
+	if ( NULL == renderArea_ ) {
+		renderArea_ = GraphicsToolkit::createImage( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 		renderBuffer_ = new agg::rendering_buffer();
 	}
 	else {
-		drawingArea_->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
+		renderArea_->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 	}
 
-	//ColorPixels pix =  drawingArea_;
+	renderBuffer_->attach( (unsigned char*)renderArea_->getData(), 
+							renderArea_->getWidth(), 
+							renderArea_->getHeight(),
+							renderArea_->getWidth() * renderArea_->getType() );
 
-	//drawingArea_->getImageBits()->attachRenderBuffer( drawingArea_->getWidth(), drawingArea_->getHeight() );
-	//drawingArea_->getImageContext()->setRenderingBuffer( pix );//drawingArea_->getImageBits()->renderBuffer_ );
+	renderArea_->getImageContext()->setRenderingBuffer( renderBuffer_ );
 
-	renderBuffer_->attach( (unsigned char*)drawingArea_->getData(), 
-							drawingArea_->getWidth(), 
-							drawingArea_->getHeight(),
-							drawingArea_->getWidth() * drawingArea_->getType() );
-
-	drawingArea_->getImageContext()->setRenderingBuffer( renderBuffer_ );
-
-	drawingArea_->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
+	renderArea_->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
 
 	renderAreaDirty_ = true;
 }
 
-void GraphicsContext::deleteDrawingArea()
+void GraphicsContext::deleteRenderArea()
 {
 	renderBuffer_->attach( NULL, 0, 0, 0 );
 	delete renderBuffer_;
 
-	delete drawingArea_;
+	delete renderArea_;
 	
 	renderBuffer_ = NULL;
-	drawingArea_ = NULL;
+	renderArea_ = NULL;
 }
 
-void GraphicsContext::flushDrawingArea()
+void GraphicsContext::flushRenderArea()
 {
 	if ( viewableBounds_.isNull() ) {
-		drawImage( drawingAreaTopLeft_, drawingArea_ );
+		drawImage( drawingAreaTopLeft_, renderArea_ );
 	}
 	else {
 
 		//FIXME!!!!!!!
-		//drawingArea_->getImageBits()->renderBuffer_->clip_box( agg::rect( viewableBounds_.left_,
+		//renderArea_->getImageBits()->renderBuffer_->clip_box( agg::rect( viewableBounds_.left_,
 		//																	viewableBounds_.top_,
 		//																	viewableBounds_.right_,
 		//																	viewableBounds_.bottom_ ) );
 
-		drawPartialImage(  viewableBounds_.getTopLeft(), &viewableBounds_, drawingArea_ );
+		drawPartialImage(  viewableBounds_.getTopLeft(), &viewableBounds_, renderArea_ );
 	}
 
 	renderAreaDirty_ = false;
@@ -1330,18 +1601,9 @@ void GraphicsContext::buildArc( double centerX,  double centerY,
 	path.concat_path( arcPath );
 
 	for ( size_t i=0;i<path.total_vertices();i++ ) {
-		double vert_x,vert_y;
-		path.vertex(i,&vert_x, &vert_y);	
-
 		Point pt;
-		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
-							vert_y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
-
-		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
-							vert_y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
-
+		path.vertex(i,&pt.x_, &pt.y_);	
+		transform.apply( pt.x_, pt.y_ );
 		pts.push_back( pt );
 	}
 
@@ -1396,18 +1658,11 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 
 	//agg::path_storage::const_iterator it = path.begin();
 	for (size_t i=0;i<path.total_vertices();i++ ) {	
-		double vert_x, vert_y;
-		path.vertex( i, &vert_x, &vert_y );
-
-
 		Point pt;
-		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
-							vert_y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
 
-		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
-							vert_y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+		path.vertex( i, &pt.x_, &pt.y_ );
+
+		transform.apply( pt.x_, pt.y_ );
 
 		pts.push_back( pt );
 	}
@@ -1422,18 +1677,11 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 	path.concat_path( ellipseShape );
 
 	for (size_t i=0;i<path.total_vertices();i++ ) {
-		double vert_x, vert_y;
-		path.vertex( i, &vert_x, &vert_y );
-
-
 		Point pt;
-		pt.x_ = vert_x * (transform[Matrix2D::mei00]) +
-							vert_y * (transform[Matrix2D::mei10]) +
-								(transform[Matrix2D::mei20]);
+		path.vertex( i, &pt.x_, &pt.y_ );
 
-		pt.y_ = vert_x * (transform[Matrix2D::mei01]) +
-							vert_y * (transform[Matrix2D::mei11]) +
-								(transform[Matrix2D::mei21]);
+		transform.apply( pt.x_, pt.y_ );
+
 
 		pts.push_back( pt );
 	}
