@@ -38,7 +38,7 @@ VISUALFORMFILES_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 VISUALFORMFILES_OBJECTS =  \
-	$(OBJDIR)\VisualFormFiles_VisualFormFiles.obj
+	..\..\lib\$(OBJDIR)\examples\VisualFormFiles\VisualFormFiles_VisualFormFiles.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\VisualFormFiles
+..\..\lib\$(OBJDIR)\examples\VisualFormFiles:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\VisualFormFiles mkdir ..\..\lib\$(OBJDIR)\examples\VisualFormFiles
 
 ### Targets: ###
 
 all: $(__VisualFormFiles___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.obj del ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.res del ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.csm del ..\..\lib\$(OBJDIR)\examples\VisualFormFiles\*.csm
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\VisualFormFiles_VisualFormFiles.obj: .\VisualFormFiles.cpp
+..\..\lib\$(OBJDIR)\examples\VisualFormFiles\VisualFormFiles_VisualFormFiles.obj: .\VisualFormFiles.cpp
 	$(CXX) -q -c -P -o$@ $(VISUALFORMFILES_CXXFLAGS) $**
 

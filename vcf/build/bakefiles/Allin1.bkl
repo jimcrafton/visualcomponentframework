@@ -92,7 +92,7 @@
         </sources>
 
         
-        <if cond="FORMAT in ['msvc','msvc6prj','msevc4prj']">
+        <if cond="FORMAT in ['msvc','msvc6prj']">
             <ldflags>/INCREMENTAL:NO</ldflags>
         </if>
 

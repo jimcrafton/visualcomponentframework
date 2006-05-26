@@ -20,7 +20,7 @@ CONDITIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 CONDITIONS_OBJECTS =  \
-	$(OBJDIR)/Conditions_Conditions.o
+	../../lib/$(OBJDIR)/examples/Conditions/Conditions_Conditions.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Conditions
+../../lib/$(OBJDIR)/examples/Conditions:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Conditions
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Conditions/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Conditions/*.d
 	rm -f ./Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(CONDITIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Conditions_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Conditions_Conditions.o: ./Conditions.cpp
+../../lib/$(OBJDIR)/examples/Conditions/Conditions_Conditions.o: ./Conditions.cpp
 	$(CXX) -c -o $@ $(CONDITIONS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Conditions/*.d

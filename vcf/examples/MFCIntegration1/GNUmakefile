@@ -36,9 +36,9 @@ SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/MFCIntegration1
+../../lib/$(OBJDIR)/examples/MFCIntegration1:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/MFCIntegration1
 
 ### Targets: ###
 
@@ -49,11 +49,11 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/MFCIntegration1/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/MFCIntegration1/*.d
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/MFCIntegration1/*.d

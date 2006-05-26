@@ -38,7 +38,7 @@ DOCVIEWBASICS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DOCVIEWBASICS_OBJECTS =  \
-	$(OBJDIR)\DocViewBasics_DocViewBasics.obj
+	..\..\lib\$(OBJDIR)\examples\DocViewBasics\DocViewBasics_DocViewBasics.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\DocViewBasics
+..\..\lib\$(OBJDIR)\examples\DocViewBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\DocViewBasics mkdir ..\..\lib\$(OBJDIR)\examples\DocViewBasics
 
 ### Targets: ###
 
 all: $(__DocViewBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.obj del ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.res del ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.csm del ..\..\lib\$(OBJDIR)\examples\DocViewBasics\*.csm
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\DocViewBasics_DocViewBasics.obj: .\DocViewBasics.cpp
+..\..\lib\$(OBJDIR)\examples\DocViewBasics\DocViewBasics_DocViewBasics.obj: .\DocViewBasics.cpp
 	$(CXX) -q -c -P -o$@ $(DOCVIEWBASICS_CXXFLAGS) $**
 

@@ -20,7 +20,7 @@ CREATEBUNDLE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 CREATEBUNDLE_OBJECTS =  \
-	$(OBJDIR)/CreateBundle_CreateBundle.o
+	../../lib/$(OBJDIR)/utilities/CreateBundle/CreateBundle_CreateBundle.o
 
 ### Conditionally set variables: ###
 
@@ -71,9 +71,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/utilities/CreateBundle
+../../lib/$(OBJDIR)/utilities/CreateBundle:
+	@mkdir -p ../../lib/$(OBJDIR)/utilities/CreateBundle
 
 ### Targets: ###
 
@@ -84,18 +84,18 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/utilities/CreateBundle/*.o
+	rm -f ../../lib/$(OBJDIR)/utilities/CreateBundle/*.d
 	rm -f ../../bin/CreateBundle
 
 ../../bin/CreateBundle: $(CREATEBUNDLE_OBJECTS)
 	$(CXX) -o $@ $(CREATEBUNDLE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____CreateBundle_FOUNDATIONKIT_p)
 
-$(OBJDIR)/CreateBundle_CreateBundle.o: ./CreateBundle.cpp
+../../lib/$(OBJDIR)/utilities/CreateBundle/CreateBundle_CreateBundle.o: ./CreateBundle.cpp
 	$(CXX) -c -o $@ $(CREATEBUNDLE_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/utilities/CreateBundle/*.d

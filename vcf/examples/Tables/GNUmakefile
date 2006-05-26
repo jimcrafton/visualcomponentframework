@@ -30,7 +30,7 @@ TABLES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TABLES_OBJECTS =  \
-	$(OBJDIR)/Tables_Tables.o
+	../../lib/$(OBJDIR)/examples/Tables/Tables_Tables.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Tables
+../../lib/$(OBJDIR)/examples/Tables:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Tables
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Tables/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Tables/*.d
 	rm -f ./Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TABLES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Tables_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Tables_GRAPHICSKIT_p) $(____Tables_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Tables_Tables.o: ./Tables.cpp
+../../lib/$(OBJDIR)/examples/Tables/Tables_Tables.o: ./Tables.cpp
 	$(CXX) -c -o $@ $(TABLES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Tables/*.d

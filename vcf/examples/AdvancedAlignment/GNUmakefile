@@ -30,7 +30,7 @@ ADVANCEDALIGNMENT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ADVANCEDALIGNMENT_OBJECTS =  \
-	$(OBJDIR)/AdvancedAlignment_AdvancedAlignment.o
+	../../lib/$(OBJDIR)/examples/AdvancedAlignment/AdvancedAlignment_AdvancedAlignment.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/AdvancedAlignment
+../../lib/$(OBJDIR)/examples/AdvancedAlignment:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/AdvancedAlignment
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/AdvancedAlignment/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/AdvancedAlignment/*.d
 	rm -f ./AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ADVANCEDALIGNMENT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____AdvancedAlignment_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____AdvancedAlignment_GRAPHICSKIT_p) $(____AdvancedAlignment_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/AdvancedAlignment_AdvancedAlignment.o: ./AdvancedAlignment.cpp
+../../lib/$(OBJDIR)/examples/AdvancedAlignment/AdvancedAlignment_AdvancedAlignment.o: ./AdvancedAlignment.cpp
 	$(CXX) -c -o $@ $(ADVANCEDALIGNMENT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/AdvancedAlignment/*.d

@@ -29,7 +29,7 @@ RUNLOOPS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) \
 	$(CXXFLAGS)
 RUNLOOPS_OBJECTS =  \
-	$(OBJDIR)\RunLoops_RunLoops.obj
+	..\..\lib\$(OBJDIR)\examples\RunLoops\RunLoops_RunLoops.obj
 
 ### Conditionally set variables: ###
 
@@ -101,18 +101,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\RunLoops
+..\..\lib\$(OBJDIR)\examples\RunLoops:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\RunLoops mkdir ..\..\lib\$(OBJDIR)\examples\RunLoops
 
 ### Targets: ###
 
 all: $(__RunLoops___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\RunLoops\*.obj del ..\..\lib\$(OBJDIR)\examples\RunLoops\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\RunLoops\*.res del ..\..\lib\$(OBJDIR)\examples\RunLoops\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\RunLoops\*.csm del ..\..\lib\$(OBJDIR)\examples\RunLoops\*.csm
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -127,6 +127,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\RunLoops_RunLoops.obj: .\RunLoops.cpp
+..\..\lib\$(OBJDIR)\examples\RunLoops\RunLoops_RunLoops.obj: .\RunLoops.cpp
 	$(CXX) -q -c -P -o$@ $(RUNLOOPS_CXXFLAGS) $**
 

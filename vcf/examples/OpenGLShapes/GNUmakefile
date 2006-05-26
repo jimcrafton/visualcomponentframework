@@ -31,7 +31,7 @@ OPENGLSHAPES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__OPENGLKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 OPENGLSHAPES_OBJECTS =  \
-	$(OBJDIR)/OpenGLShapes_OpenGLShapes.o
+	../../lib/$(OBJDIR)/examples/OpenGLShapes/OpenGLShapes_OpenGLShapes.o
 
 ### Conditionally set variables: ###
 
@@ -104,9 +104,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/OpenGLShapes
+../../lib/$(OBJDIR)/examples/OpenGLShapes:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/OpenGLShapes
 
 ### Targets: ###
 
@@ -117,8 +117,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/OpenGLShapes/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/OpenGLShapes/*.d
 	rm -f ./OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_OPENGLKIT),1)
@@ -126,11 +126,11 @@ ifeq ($(OPTION_OPENGLKIT),1)
 	$(CXX) -o $@ $(OPENGLSHAPES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____OpenGLShapes_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____OpenGLShapes_GRAPHICSKIT_p) $(____OpenGLShapes_APPLICATIONKIT_p) $(____OpenGLShapes_OPENGLKIT_p)
 endif
 
-$(OBJDIR)/OpenGLShapes_OpenGLShapes.o: ./OpenGLShapes.cpp
+../../lib/$(OBJDIR)/examples/OpenGLShapes/OpenGLShapes_OpenGLShapes.o: ./OpenGLShapes.cpp
 	$(CXX) -c -o $@ $(OPENGLSHAPES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/OpenGLShapes/*.d

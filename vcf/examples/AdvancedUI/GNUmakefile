@@ -30,7 +30,7 @@ ADVANCEDUI_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ADVANCEDUI_OBJECTS =  \
-	$(OBJDIR)/AdvancedUI_AdvancedUI.o
+	../../lib/$(OBJDIR)/examples/AdvancedUI/AdvancedUI_AdvancedUI.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/AdvancedUI
+../../lib/$(OBJDIR)/examples/AdvancedUI:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/AdvancedUI
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/AdvancedUI/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/AdvancedUI/*.d
 	rm -f ./AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ADVANCEDUI_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____AdvancedUI_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____AdvancedUI_GRAPHICSKIT_p) $(____AdvancedUI_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/AdvancedUI_AdvancedUI.o: ./AdvancedUI.cpp
+../../lib/$(OBJDIR)/examples/AdvancedUI/AdvancedUI_AdvancedUI.o: ./AdvancedUI.cpp
 	$(CXX) -c -o $@ $(ADVANCEDUI_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/AdvancedUI/*.d

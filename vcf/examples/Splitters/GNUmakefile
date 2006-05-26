@@ -30,7 +30,7 @@ SPLITTERS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SPLITTERS_OBJECTS =  \
-	$(OBJDIR)/Splitters_Splitters.o
+	../../lib/$(OBJDIR)/examples/Splitters/Splitters_Splitters.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Splitters
+../../lib/$(OBJDIR)/examples/Splitters:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Splitters
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Splitters/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Splitters/*.d
 	rm -f ./Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(SPLITTERS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Splitters_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Splitters_GRAPHICSKIT_p) $(____Splitters_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Splitters_Splitters.o: ./Splitters.cpp
+../../lib/$(OBJDIR)/examples/Splitters/Splitters_Splitters.o: ./Splitters.cpp
 	$(CXX) -c -o $@ $(SPLITTERS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Splitters/*.d

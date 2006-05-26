@@ -24,7 +24,7 @@ THREADBASICS_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 THREADBASICS_OBJECTS =  \
-	$(OBJDIR)\ThreadBasics_ThreadBasics.obj
+	..\..\lib\$(OBJDIR)\examples\ThreadBasics\ThreadBasics_ThreadBasics.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\ThreadBasics
+..\..\lib\$(OBJDIR)\examples\ThreadBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\ThreadBasics mkdir ..\..\lib\$(OBJDIR)\examples\ThreadBasics
 
 ### Targets: ###
 
 all: $(__ThreadBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.obj del ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.res del ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.pch del ..\..\lib\$(OBJDIR)\examples\ThreadBasics\*.pch
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\ThreadBasics_ThreadBasics.obj: .\ThreadBasics.cpp
+..\..\lib\$(OBJDIR)\examples\ThreadBasics\ThreadBasics_ThreadBasics.obj: .\ThreadBasics.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(THREADBASICS_CXXFLAGS) $**
 

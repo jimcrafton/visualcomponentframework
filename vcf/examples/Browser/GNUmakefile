@@ -31,7 +31,7 @@ BROWSER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__HTMLKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 BROWSER_OBJECTS =  \
-	$(OBJDIR)/Browser_Browser.o
+	../../lib/$(OBJDIR)/examples/Browser/Browser_Browser.o
 
 ### Conditionally set variables: ###
 
@@ -103,9 +103,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Browser
+../../lib/$(OBJDIR)/examples/Browser:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Browser
 
 ### Targets: ###
 
@@ -116,8 +116,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Browser/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Browser/*.d
 	rm -f ./Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_HTMLKIT),1)
@@ -125,11 +125,11 @@ ifeq ($(OPTION_HTMLKIT),1)
 	$(CXX) -o $@ $(BROWSER_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Browser_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Browser_GRAPHICSKIT_p) $(____Browser_APPLICATIONKIT_p) $(____Browser_HTMLKIT_p)
 endif
 
-$(OBJDIR)/Browser_Browser.o: ./Browser.cpp
+../../lib/$(OBJDIR)/examples/Browser/Browser_Browser.o: ./Browser.cpp
 	$(CXX) -c -o $@ $(BROWSER_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Browser/*.d

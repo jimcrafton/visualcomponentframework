@@ -21,7 +21,7 @@ WORKINGWITHENUMERATORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) \
 	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
 	$(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 WORKINGWITHENUMERATORS_OBJECTS =  \
-	$(OBJDIR)/WorkingWithEnumerators_WorkingWithEnumerators.o
+	../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/WorkingWithEnumerators_WorkingWithEnumerators.o
 
 ### Conditionally set variables: ###
 
@@ -76,9 +76,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators
+../../lib/$(OBJDIR)/examples/WorkingWithEnumerators:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators
 
 ### Targets: ###
 
@@ -89,8 +89,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/*.d
 	rm -f ./WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -98,11 +98,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____WorkingWithEnumerators_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp
+../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp
 	$(CXX) -c -o $@ $(WORKINGWITHENUMERATORS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/*.d

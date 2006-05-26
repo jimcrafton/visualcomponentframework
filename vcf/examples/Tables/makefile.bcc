@@ -38,7 +38,7 @@ TABLES_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TABLES_OBJECTS =  \
-	$(OBJDIR)\Tables_Tables.obj
+	..\..\lib\$(OBJDIR)\examples\Tables\Tables_Tables.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Tables
+..\..\lib\$(OBJDIR)\examples\Tables:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Tables mkdir ..\..\lib\$(OBJDIR)\examples\Tables
 
 ### Targets: ###
 
 all: $(__Tables___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tables\*.obj del ..\..\lib\$(OBJDIR)\examples\Tables\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tables\*.res del ..\..\lib\$(OBJDIR)\examples\Tables\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tables\*.csm del ..\..\lib\$(OBJDIR)\examples\Tables\*.csm
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Tables_Tables.obj: .\Tables.cpp
+..\..\lib\$(OBJDIR)\examples\Tables\Tables_Tables.obj: .\Tables.cpp
 	$(CXX) -q -c -P -o$@ $(TABLES_CXXFLAGS) $**
 

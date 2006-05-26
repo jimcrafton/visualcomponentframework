@@ -20,7 +20,7 @@ RUNLOOPS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 RUNLOOPS_OBJECTS =  \
-	$(OBJDIR)/RunLoops_RunLoops.o
+	../../lib/$(OBJDIR)/examples/RunLoops/RunLoops_RunLoops.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/RunLoops
+../../lib/$(OBJDIR)/examples/RunLoops:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/RunLoops
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/RunLoops/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/RunLoops/*.d
 	rm -f ./RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(RUNLOOPS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____RunLoops_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/RunLoops_RunLoops.o: ./RunLoops.cpp
+../../lib/$(OBJDIR)/examples/RunLoops/RunLoops_RunLoops.o: ./RunLoops.cpp
 	$(CXX) -c -o $@ $(RUNLOOPS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/RunLoops/*.d

@@ -20,7 +20,7 @@ LOCALIZATION_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 LOCALIZATION_OBJECTS =  \
-	$(OBJDIR)/Localization_Localization.o
+	../../lib/$(OBJDIR)/examples/Localization/Localization_Localization.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Localization
+../../lib/$(OBJDIR)/examples/Localization:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Localization
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Localization/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Localization/*.d
 	rm -f ./Localization
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(LOCALIZATION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Localization_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Localization_Localization.o: ./Localization.cpp
+../../lib/$(OBJDIR)/examples/Localization/Localization_Localization.o: ./Localization.cpp
 	$(CXX) -c -o $@ $(LOCALIZATION_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Localization/*.d

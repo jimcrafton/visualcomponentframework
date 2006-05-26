@@ -36,9 +36,9 @@ SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/utilities/BlackBox
+../../lib/$(OBJDIR)/utilities/BlackBox:
+	@mkdir -p ../../lib/$(OBJDIR)/utilities/BlackBox
 
 ### Targets: ###
 
@@ -49,11 +49,11 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/utilities/BlackBox/*.o
+	rm -f ../../lib/$(OBJDIR)/utilities/BlackBox/*.d
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/utilities/BlackBox/*.d

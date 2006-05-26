@@ -30,7 +30,7 @@ COPYANDPASTE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 COPYANDPASTE_OBJECTS =  \
-	$(OBJDIR)/CopyAndPaste_CopyAndPaste.o
+	../../lib/$(OBJDIR)/examples/CopyAndPaste/CopyAndPaste_CopyAndPaste.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/CopyAndPaste
+../../lib/$(OBJDIR)/examples/CopyAndPaste:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/CopyAndPaste
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/CopyAndPaste/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/CopyAndPaste/*.d
 	rm -f ./CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(COPYANDPASTE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____CopyAndPaste_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____CopyAndPaste_GRAPHICSKIT_p) $(____CopyAndPaste_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/CopyAndPaste_CopyAndPaste.o: ./CopyAndPaste.cpp
+../../lib/$(OBJDIR)/examples/CopyAndPaste/CopyAndPaste_CopyAndPaste.o: ./CopyAndPaste.cpp
 	$(CXX) -c -o $@ $(COPYANDPASTE_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/CopyAndPaste/*.d

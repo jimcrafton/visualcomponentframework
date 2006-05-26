@@ -30,13 +30,13 @@ QTPLAYER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 QTPLAYER_OBJECTS =  \
-	$(OBJDIR)/QTPlayer_MainWindow.o \
-	$(OBJDIR)/QTPlayer_QTPlayer.o \
-	$(OBJDIR)/QTPlayer_QTPlayerAbout.o \
-	$(OBJDIR)/QTPlayer_QTPlayerApplication.o \
-	$(OBJDIR)/QTPlayer_QuickTimeControl.o \
-	$(OBJDIR)/QTPlayer_QuickTimeMovie.o \
-	$(OBJDIR)/QTPlayer_StatusBarControl.o
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_MainWindow.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayer.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayerAbout.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayerApplication.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QuickTimeControl.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QuickTimeMovie.o \
+	../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_StatusBarControl.o
 
 ### Conditionally set variables: ###
 
@@ -102,9 +102,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/QTPlayer
+../../lib/$(OBJDIR)/examples/QTPlayer:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/QTPlayer
 
 ### Targets: ###
 
@@ -115,8 +115,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/QTPlayer/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/QTPlayer/*.d
 	rm -f ./QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -124,29 +124,29 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(QTPLAYER_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____QTPlayer_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____QTPlayer_GRAPHICSKIT_p) $(____QTPlayer_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/QTPlayer_MainWindow.o: ./MainWindow.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_MainWindow.o: ./MainWindow.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_QTPlayer.o: ./QTPlayer.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayer.o: ./QTPlayer.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_QTPlayerAbout.o: ./QTPlayerAbout.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayerAbout.o: ./QTPlayerAbout.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_QTPlayerApplication.o: ./QTPlayerApplication.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QTPlayerApplication.o: ./QTPlayerApplication.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_QuickTimeControl.o: ./QuickTimeControl.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QuickTimeControl.o: ./QuickTimeControl.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_QuickTimeMovie.o: ./QuickTimeMovie.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_QuickTimeMovie.o: ./QuickTimeMovie.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/QTPlayer_StatusBarControl.o: ./StatusBarControl.cpp
+../../lib/$(OBJDIR)/examples/QTPlayer/QTPlayer_StatusBarControl.o: ./StatusBarControl.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/QTPlayer/*.d

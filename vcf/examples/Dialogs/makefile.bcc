@@ -38,7 +38,7 @@ DIALOGS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DIALOGS_OBJECTS =  \
-	$(OBJDIR)\Dialogs_Dialogs.obj
+	..\..\lib\$(OBJDIR)\examples\Dialogs\Dialogs_Dialogs.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Dialogs
+..\..\lib\$(OBJDIR)\examples\Dialogs:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Dialogs mkdir ..\..\lib\$(OBJDIR)\examples\Dialogs
 
 ### Targets: ###
 
 all: $(__Dialogs___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Dialogs\*.obj del ..\..\lib\$(OBJDIR)\examples\Dialogs\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Dialogs\*.res del ..\..\lib\$(OBJDIR)\examples\Dialogs\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Dialogs\*.csm del ..\..\lib\$(OBJDIR)\examples\Dialogs\*.csm
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Dialogs_Dialogs.obj: .\Dialogs.cpp
+..\..\lib\$(OBJDIR)\examples\Dialogs\Dialogs_Dialogs.obj: .\Dialogs.cpp
 	$(CXX) -q -c -P -o$@ $(DIALOGS_CXXFLAGS) $**
 

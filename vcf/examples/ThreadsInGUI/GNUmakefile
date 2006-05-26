@@ -30,7 +30,7 @@ THREADSINGUI_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 THREADSINGUI_OBJECTS =  \
-	$(OBJDIR)/ThreadsInGUI_ThreadsInGUI.o
+	../../lib/$(OBJDIR)/examples/ThreadsInGUI/ThreadsInGUI_ThreadsInGUI.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/ThreadsInGUI
+../../lib/$(OBJDIR)/examples/ThreadsInGUI:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ThreadsInGUI
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/ThreadsInGUI/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ThreadsInGUI/*.d
 	rm -f ./ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(THREADSINGUI_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ThreadsInGUI_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____ThreadsInGUI_GRAPHICSKIT_p) $(____ThreadsInGUI_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/ThreadsInGUI_ThreadsInGUI.o: ./ThreadsInGUI.cpp
+../../lib/$(OBJDIR)/examples/ThreadsInGUI/ThreadsInGUI_ThreadsInGUI.o: ./ThreadsInGUI.cpp
 	$(CXX) -c -o $@ $(THREADSINGUI_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/ThreadsInGUI/*.d

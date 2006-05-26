@@ -30,7 +30,7 @@ DIALOGS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DIALOGS_OBJECTS =  \
-	$(OBJDIR)\Dialogs_Dialogs.o
+	..\..\lib\$(OBJDIR)\examples\Dialogs\Dialogs_Dialogs.o
 
 ### Conditionally set variables: ###
 
@@ -96,17 +96,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Dialogs
+..\..\lib\$(OBJDIR)\examples\Dialogs:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Dialogs mkdir ..\..\lib\$(OBJDIR)\examples\Dialogs
 
 ### Targets: ###
 
 all: $(__Dialogs___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Dialogs\*.o del ..\..\lib\$(OBJDIR)\examples\Dialogs\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Dialogs\*.d del ..\..\lib\$(OBJDIR)\examples\Dialogs\*.d
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -114,11 +114,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(DIALOGS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Dialogs_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Dialogs_GRAPHICSKIT_p) $(____Dialogs_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\Dialogs_Dialogs.o: ./Dialogs.cpp
+..\..\lib\$(OBJDIR)\examples\Dialogs\Dialogs_Dialogs.o: ./Dialogs.cpp
 	$(CXX) -c -o $@ $(DIALOGS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Dialogs/*.d

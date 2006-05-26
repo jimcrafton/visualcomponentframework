@@ -60,15 +60,15 @@ RSC=rc.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc80_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_d\RemoteObjectKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc80_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_d\RemoteObjectKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc80_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\RemoteObjectKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc80_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\RemoteObjectKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -85,15 +85,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc80.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80\RemoteObjectKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc80.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80\RemoteObjectKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc80.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80\RemoteObjectKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc80.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80\RemoteObjectKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -110,15 +110,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc80_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_sd\RemoteObjectKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc80_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_sd\RemoteObjectKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc80_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\RemoteObjectKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc80_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\RemoteObjectKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -133,15 +133,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc80_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_s\RemoteObjectKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc80_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc80_s\RemoteObjectKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc80_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\RemoteObjectKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc80_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\RemoteObjectKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -156,15 +156,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc71_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_d\RemoteObjectKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc71_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_d\RemoteObjectKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc71_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\RemoteObjectKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc71_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\RemoteObjectKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -181,15 +181,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc71.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71\RemoteObjectKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc71.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71\RemoteObjectKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc71.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71\RemoteObjectKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc71.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71\RemoteObjectKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -206,15 +206,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc71_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_sd\RemoteObjectKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc71_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_sd\RemoteObjectKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc71_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\RemoteObjectKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc71_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\RemoteObjectKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -229,15 +229,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc71_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_s\RemoteObjectKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc71_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc71_s\RemoteObjectKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc71_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\RemoteObjectKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc71_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\RemoteObjectKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -252,15 +252,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc70_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_d\RemoteObjectKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc70_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_d\RemoteObjectKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc70_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\RemoteObjectKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc70_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\RemoteObjectKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -277,15 +277,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc70.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70\RemoteObjectKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc70.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70\RemoteObjectKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc70.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70\RemoteObjectKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc70.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70\RemoteObjectKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -302,15 +302,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc70_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_sd\RemoteObjectKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc70_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_sd\RemoteObjectKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc70_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\RemoteObjectKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc70_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\RemoteObjectKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -325,15 +325,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc70_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_s\RemoteObjectKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc70_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc70_s\RemoteObjectKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc70_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\RemoteObjectKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc70_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\RemoteObjectKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -348,15 +348,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_d\RemoteObjectKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_d\RemoteObjectKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\RemoteObjectKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_vc6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\RemoteObjectKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -373,15 +373,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6\RemoteObjectKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6\RemoteObjectKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6\RemoteObjectKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_vc6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6\RemoteObjectKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -398,15 +398,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_sd\RemoteObjectKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_sd\RemoteObjectKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\RemoteObjectKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_vc6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\RemoteObjectKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -421,15 +421,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_s\RemoteObjectKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_vc6_s\RemoteObjectKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\RemoteObjectKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_vc6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\RemoteObjectKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -444,15 +444,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl7_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_d\RemoteObjectKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl7_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_d\RemoteObjectKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl7_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_d\RemoteObjectKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl7_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_d\RemoteObjectKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -469,15 +469,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl7.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7\RemoteObjectKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl7.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7\RemoteObjectKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl7.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7\RemoteObjectKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl7.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7\RemoteObjectKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -494,15 +494,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl7_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_sd\RemoteObjectKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl7_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_sd\RemoteObjectKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl7_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_sd\RemoteObjectKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl7_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_sd\RemoteObjectKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -517,15 +517,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl7_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_s\RemoteObjectKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl7_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl7_s\RemoteObjectKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl7_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_s\RemoteObjectKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl7_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl7_s\RemoteObjectKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -540,15 +540,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_d\RemoteObjectKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_d\RemoteObjectKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_d\RemoteObjectKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_icl6_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_d\RemoteObjectKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -565,15 +565,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6\RemoteObjectKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6\RemoteObjectKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6\RemoteObjectKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit_icl6.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6\RemoteObjectKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -590,15 +590,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_sd\RemoteObjectKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_sd\RemoteObjectKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_sd\RemoteObjectKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_icl6_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_sd\RemoteObjectKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -613,15 +613,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_s\RemoteObjectKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_icl6_s\RemoteObjectKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_s\RemoteObjectKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_icl6_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_icl6_s\RemoteObjectKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -636,15 +636,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_d\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_d\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_d\RemoteObjectKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_d\RemoteObjectKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_d\RemoteObjectKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\RemoteObjectKit_d.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_d\RemoteObjectKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -661,15 +661,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj\RemoteObjectKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj\RemoteObjectKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj\RemoteObjectKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\RemoteObjectKit.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj\RemoteObjectKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_DLL" /D "NETWORKKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "REMOTEKIT_DLL" /D "REMOTEKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "FOUNDATIONKIT_DLL" /d "NETWORKKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "REMOTEKIT_DLL" /d REMOTEKIT_EXPORTS
@@ -686,15 +686,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_sd\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_sd\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_sd\RemoteObjectKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_sd\RemoteObjectKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_sd\RemoteObjectKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\RemoteObjectKit_sd.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_sd\RemoteObjectKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -709,15 +709,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_s\RemoteObjectKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\RemoteObjectKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_s\RemoteObjectKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\RemoteObjectKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_s\RemoteObjectKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"msvc6prj_s\RemoteObjectKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_s\RemoteObjectKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\RemoteObjectKit_s.pdb /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" /Fp"..\..\lib\msvc6prj_s\RemoteObjectKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe

@@ -30,11 +30,11 @@ SKETCHIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SKETCHIT_OBJECTS =  \
-	$(OBJDIR)/SketchIt_SketchDocument.o \
-	$(OBJDIR)/SketchIt_SketchIt.o \
-	$(OBJDIR)/SketchIt_SketchTools.o \
-	$(OBJDIR)/SketchIt_SketchView.o \
-	$(OBJDIR)/SketchIt_SketchWindow.o
+	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchDocument.o \
+	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o \
+	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o \
+	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o \
+	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o
 
 ### Conditionally set variables: ###
 
@@ -100,9 +100,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/SketchIt
+../../lib/$(OBJDIR)/examples/SketchIt:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/SketchIt
 
 ### Targets: ###
 
@@ -113,8 +113,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.d
 	rm -f ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -122,23 +122,23 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(SKETCHIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____SketchIt_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____SketchIt_GRAPHICSKIT_p) $(____SketchIt_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/SketchIt_SketchDocument.o: ./SketchDocument.cpp
+../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchDocument.o: ./SketchDocument.cpp
 	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/SketchIt_SketchIt.o: ./SketchIt.cpp
+../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o: ./SketchIt.cpp
 	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/SketchIt_SketchTools.o: ./SketchTools.cpp
+../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o: ./SketchTools.cpp
 	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/SketchIt_SketchView.o: ./SketchView.cpp
+../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o: ./SketchView.cpp
 	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/SketchIt_SketchWindow.o: ./SketchWindow.cpp
+../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o: ./SketchWindow.cpp
 	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/SketchIt/*.d

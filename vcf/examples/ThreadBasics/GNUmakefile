@@ -20,7 +20,7 @@ THREADBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 THREADBASICS_OBJECTS =  \
-	$(OBJDIR)/ThreadBasics_ThreadBasics.o
+	../../lib/$(OBJDIR)/examples/ThreadBasics/ThreadBasics_ThreadBasics.o
 
 ### Conditionally set variables: ###
 
@@ -75,9 +75,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/ThreadBasics
+../../lib/$(OBJDIR)/examples/ThreadBasics:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ThreadBasics
 
 ### Targets: ###
 
@@ -88,8 +88,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/ThreadBasics/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ThreadBasics/*.d
 	rm -f ./ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -97,11 +97,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(THREADBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ThreadBasics_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/ThreadBasics_ThreadBasics.o: ./ThreadBasics.cpp
+../../lib/$(OBJDIR)/examples/ThreadBasics/ThreadBasics_ThreadBasics.o: ./ThreadBasics.cpp
 	$(CXX) -c -o $@ $(THREADBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/ThreadBasics/*.d

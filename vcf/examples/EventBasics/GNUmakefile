@@ -20,7 +20,7 @@ EVENTBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 EVENTBASICS_OBJECTS =  \
-	$(OBJDIR)/EventBasics_EventBasics.o
+	../../lib/$(OBJDIR)/examples/EventBasics/EventBasics_EventBasics.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/EventBasics
+../../lib/$(OBJDIR)/examples/EventBasics:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/EventBasics
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/EventBasics/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/EventBasics/*.d
 	rm -f ./EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(EVENTBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____EventBasics_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/EventBasics_EventBasics.o: ./EventBasics.cpp
+../../lib/$(OBJDIR)/examples/EventBasics/EventBasics_EventBasics.o: ./EventBasics.cpp
 	$(CXX) -c -o $@ $(EVENTBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/EventBasics/*.d

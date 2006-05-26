@@ -30,7 +30,7 @@ LISTBOX_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 LISTBOX_OBJECTS =  \
-	$(OBJDIR)/ListBox_ListBox.o
+	../../lib/$(OBJDIR)/examples/ListBox/ListBox_ListBox.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/ListBox
+../../lib/$(OBJDIR)/examples/ListBox:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ListBox
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/ListBox/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ListBox/*.d
 	rm -f ./ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(LISTBOX_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ListBox_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____ListBox_GRAPHICSKIT_p) $(____ListBox_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/ListBox_ListBox.o: ./ListBox.cpp
+../../lib/$(OBJDIR)/examples/ListBox/ListBox_ListBox.o: ./ListBox.cpp
 	$(CXX) -c -o $@ $(LISTBOX_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/ListBox/*.d

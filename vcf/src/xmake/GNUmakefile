@@ -20,16 +20,16 @@ XMAKE_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
 	-DGCC $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
-	$(OBJDIR)/xmake_lib_CmdLine.o \
-	$(OBJDIR)/xmake_lib_FilePath.o \
-	$(OBJDIR)/xmake_lib_xmake.o \
-	$(OBJDIR)/xmake_lib_xmakeUtils.o \
-	$(OBJDIR)/xmake_lib_XMLParser.o
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o \
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_FilePath.o \
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmake.o \
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmakeUtils.o \
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_XMLParser.o
 XMAKE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
 	-DGCC $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
-	$(OBJDIR)/xmake_main.o
+	../../lib/$(OBJDIR)/utilities/Xmake/xmake_main.o
 
 ### Conditionally set variables: ###
 
@@ -80,9 +80,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/utilities/Xmake
+../../lib/$(OBJDIR)/utilities/Xmake:
+	@mkdir -p ../../lib/$(OBJDIR)/utilities/Xmake
 
 ### Targets: ###
 
@@ -93,8 +93,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/utilities/Xmake/*.o
+	rm -f ../../lib/$(OBJDIR)/utilities/Xmake/*.d
 	rm -f ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../bin/xmake
 
@@ -106,26 +106,26 @@ clean:
 ../../bin/xmake: $(XMAKE_OBJECTS) ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____xmake_FOUNDATIONKIT_p) ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
-$(OBJDIR)/xmake_lib_CmdLine.o: ./CmdLine.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/xmake_lib_FilePath.o: ./FilePath.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_FilePath.o: ./FilePath.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/xmake_lib_xmake.o: ./xmake.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmake.o: ./xmake.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/xmake_lib_xmakeUtils.o: ./xmakeUtils.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmakeUtils.o: ./xmakeUtils.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/xmake_lib_XMLParser.o: ./XMLParser.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_XMLParser.o: ./XMLParser.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/xmake_main.o: ./main.cpp
+../../lib/$(OBJDIR)/utilities/Xmake/xmake_main.o: ./main.cpp
 	$(CXX) -c -o $@ $(XMAKE_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/utilities/Xmake/*.d

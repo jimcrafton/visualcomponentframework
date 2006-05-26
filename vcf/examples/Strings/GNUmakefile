@@ -20,7 +20,7 @@ STRINGS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 STRINGS_OBJECTS =  \
-	$(OBJDIR)/Strings_Strings.o
+	../../lib/$(OBJDIR)/examples/Strings/Strings_Strings.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Strings
+../../lib/$(OBJDIR)/examples/Strings:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Strings
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Strings/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Strings/*.d
 	rm -f ./Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(STRINGS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Strings_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Strings_Strings.o: ./Strings.cpp
+../../lib/$(OBJDIR)/examples/Strings/Strings_Strings.o: ./Strings.cpp
 	$(CXX) -c -o $@ $(STRINGS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Strings/*.d

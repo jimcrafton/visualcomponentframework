@@ -20,7 +20,7 @@ REFLECTION_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 REFLECTION_OBJECTS =  \
-	$(OBJDIR)/Reflection_Reflection.o
+	../../lib/$(OBJDIR)/examples/Reflection/Reflection_Reflection.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Reflection
+../../lib/$(OBJDIR)/examples/Reflection:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Reflection
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Reflection/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Reflection/*.d
 	rm -f ./Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(REFLECTION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Reflection_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Reflection_Reflection.o: ./Reflection.cpp
+../../lib/$(OBJDIR)/examples/Reflection/Reflection_Reflection.o: ./Reflection.cpp
 	$(CXX) -c -o $@ $(REFLECTION_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Reflection/*.d

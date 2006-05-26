@@ -38,7 +38,7 @@ GRAPHICSANDMOUSEMOVES_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSANDMOUSEMOVES_OBJECTS =  \
-	$(OBJDIR)\GraphicsAndMouseMoves_GraphicsAndMouseMoves.obj
+	..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_GraphicsAndMouseMoves.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves
+..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves mkdir ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves
 
 ### Targets: ###
 
 all: $(__GraphicsAndMouseMoves___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.obj del ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.res del ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.csm del ..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\*.csm
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\GraphicsAndMouseMoves_GraphicsAndMouseMoves.obj: .\GraphicsAndMouseMoves.cpp
+..\..\lib\$(OBJDIR)\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_GraphicsAndMouseMoves.obj: .\GraphicsAndMouseMoves.cpp
 	$(CXX) -q -c -P -o$@ $(GRAPHICSANDMOUSEMOVES_CXXFLAGS) $**
 

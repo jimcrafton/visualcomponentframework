@@ -38,7 +38,7 @@ APPRESOURCES_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 APPRESOURCES_OBJECTS =  \
-	$(OBJDIR)\AppResources_AppResources.obj
+	..\..\lib\$(OBJDIR)\examples\AppResources\AppResources_AppResources.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\AppResources
+..\..\lib\$(OBJDIR)\examples\AppResources:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\AppResources mkdir ..\..\lib\$(OBJDIR)\examples\AppResources
 
 ### Targets: ###
 
 all: $(__AppResources___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\AppResources\*.obj del ..\..\lib\$(OBJDIR)\examples\AppResources\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\AppResources\*.res del ..\..\lib\$(OBJDIR)\examples\AppResources\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\AppResources\*.csm del ..\..\lib\$(OBJDIR)\examples\AppResources\*.csm
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\AppResources_AppResources.obj: .\AppResources.cpp
+..\..\lib\$(OBJDIR)\examples\AppResources\AppResources_AppResources.obj: .\AppResources.cpp
 	$(CXX) -q -c -P -o$@ $(APPRESOURCES_CXXFLAGS) $**
 

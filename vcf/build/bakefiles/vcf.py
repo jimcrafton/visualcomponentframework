@@ -3,6 +3,7 @@ import mk
 
 # Here we try to read preferred option values from ~/.vcf/config.<ext>,
 # where <ext> is an extension peculiar to the current format.
+# This is an experimental feature, may be eliminate.
 opts = {}
 if mk.vars['FORMAT_SUPPORTS_CONDITIONS'] == '1':
     config = os.path.join( os.path.expanduser( '~' ), '.vcf' + os.path.sep + 'config' )

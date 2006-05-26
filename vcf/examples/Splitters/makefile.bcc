@@ -38,7 +38,7 @@ SPLITTERS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SPLITTERS_OBJECTS =  \
-	$(OBJDIR)\Splitters_Splitters.obj
+	..\..\lib\$(OBJDIR)\examples\Splitters\Splitters_Splitters.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Splitters
+..\..\lib\$(OBJDIR)\examples\Splitters:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Splitters mkdir ..\..\lib\$(OBJDIR)\examples\Splitters
 
 ### Targets: ###
 
 all: $(__Splitters___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Splitters\*.obj del ..\..\lib\$(OBJDIR)\examples\Splitters\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Splitters\*.res del ..\..\lib\$(OBJDIR)\examples\Splitters\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Splitters\*.csm del ..\..\lib\$(OBJDIR)\examples\Splitters\*.csm
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Splitters_Splitters.obj: .\Splitters.cpp
+..\..\lib\$(OBJDIR)\examples\Splitters\Splitters_Splitters.obj: .\Splitters.cpp
 	$(CXX) -q -c -P -o$@ $(SPLITTERS_CXXFLAGS) $**
 

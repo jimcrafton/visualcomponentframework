@@ -23,7 +23,7 @@ STRINGS_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 STRINGS_OBJECTS =  \
-	$(OBJDIR)\Strings_Strings.obj
+	..\..\lib\$(OBJDIR)\examples\Strings\Strings_Strings.obj
 
 ### Conditionally set variables: ###
 
@@ -104,18 +104,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Strings
+..\..\lib\$(OBJDIR)\examples\Strings:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Strings mkdir ..\..\lib\$(OBJDIR)\examples\Strings
 
 ### Targets: ###
 
 all: $(__Strings___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Strings\*.obj del ..\..\lib\$(OBJDIR)\examples\Strings\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Strings\*.res del ..\..\lib\$(OBJDIR)\examples\Strings\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Strings\*.pch del ..\..\lib\$(OBJDIR)\examples\Strings\*.pch
 	-if exist .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -127,6 +127,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\Strings_Strings.obj: .\Strings.cpp
+..\..\lib\$(OBJDIR)\examples\Strings\Strings_Strings.obj: .\Strings.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(STRINGS_CXXFLAGS) $**
 

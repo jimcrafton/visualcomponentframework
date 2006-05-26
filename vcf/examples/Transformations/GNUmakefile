@@ -30,7 +30,7 @@ TRANSFORMATIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TRANSFORMATIONS_OBJECTS =  \
-	$(OBJDIR)/Transformations_Transformations.o
+	../../lib/$(OBJDIR)/examples/Transformations/Transformations_Transformations.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Transformations
+../../lib/$(OBJDIR)/examples/Transformations:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Transformations
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Transformations/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Transformations/*.d
 	rm -f ./Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TRANSFORMATIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Transformations_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Transformations_GRAPHICSKIT_p) $(____Transformations_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Transformations_Transformations.o: ./Transformations.cpp
+../../lib/$(OBJDIR)/examples/Transformations/Transformations_Transformations.o: ./Transformations.cpp
 	$(CXX) -c -o $@ $(TRANSFORMATIONS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Transformations/*.d

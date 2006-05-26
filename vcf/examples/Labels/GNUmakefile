@@ -30,7 +30,7 @@ LABELS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 LABELS_OBJECTS =  \
-	$(OBJDIR)/Labels_Labels.o
+	../../lib/$(OBJDIR)/examples/Labels/Labels_Labels.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Labels
+../../lib/$(OBJDIR)/examples/Labels:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Labels
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Labels/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Labels/*.d
 	rm -f ./Labels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(LABELS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Labels_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Labels_GRAPHICSKIT_p) $(____Labels_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Labels_Labels.o: ./Labels.cpp
+../../lib/$(OBJDIR)/examples/Labels/Labels_Labels.o: ./Labels.cpp
 	$(CXX) -c -o $@ $(LABELS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Labels/*.d

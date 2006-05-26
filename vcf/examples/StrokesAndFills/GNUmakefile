@@ -30,7 +30,7 @@ STROKESANDFILLS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 STROKESANDFILLS_OBJECTS =  \
-	$(OBJDIR)/StrokesAndFills_StrokesAndFills.o
+	../../lib/$(OBJDIR)/examples/StrokesAndFills/StrokesAndFills_StrokesAndFills.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/StrokesAndFills
+../../lib/$(OBJDIR)/examples/StrokesAndFills:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/StrokesAndFills
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/StrokesAndFills/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/StrokesAndFills/*.d
 	rm -f ./StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(STROKESANDFILLS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____StrokesAndFills_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____StrokesAndFills_GRAPHICSKIT_p) $(____StrokesAndFills_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/StrokesAndFills_StrokesAndFills.o: ./StrokesAndFills.cpp
+../../lib/$(OBJDIR)/examples/StrokesAndFills/StrokesAndFills_StrokesAndFills.o: ./StrokesAndFills.cpp
 	$(CXX) -c -o $@ $(STROKESANDFILLS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/StrokesAndFills/*.d

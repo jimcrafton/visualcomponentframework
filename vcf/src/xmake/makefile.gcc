@@ -20,16 +20,16 @@ XMAKE_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -mthreads \
 	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
 	-DVCF_MINGW -Wno-multichar -I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
-	$(OBJDIR)\xmake_lib_CmdLine.o \
-	$(OBJDIR)\xmake_lib_FilePath.o \
-	$(OBJDIR)\xmake_lib_xmake.o \
-	$(OBJDIR)\xmake_lib_xmakeUtils.o \
-	$(OBJDIR)\xmake_lib_XMLParser.o
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.o \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.o \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.o \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.o \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.o
 XMAKE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -mthreads $(____OPTION_DEBUG) \
 	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -DVCF_MINGW \
 	-Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
-	$(OBJDIR)\xmake_main.o
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.o
 
 ### Conditionally set variables: ###
 
@@ -80,17 +80,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\utilities\Xmake
+..\..\lib\$(OBJDIR)\utilities\Xmake:
+	-if not exist ..\..\lib\$(OBJDIR)\utilities\Xmake mkdir ..\..\lib\$(OBJDIR)\utilities\Xmake
 
 ### Targets: ###
 
 all: ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\bin\xmake.exe
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.o del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.o
+	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.d del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.d
 	-if exist ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\bin\xmake.exe del ..\..\bin\xmake.exe
 
@@ -102,26 +102,26 @@ clean:
 ..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____xmake_FOUNDATIONKIT_p) ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
-$(OBJDIR)\xmake_lib_CmdLine.o: ./CmdLine.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\xmake_lib_FilePath.o: ./FilePath.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.o: ./FilePath.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\xmake_lib_xmake.o: ./xmake.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.o: ./xmake.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\xmake_lib_xmakeUtils.o: ./xmakeUtils.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.o: ./xmakeUtils.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\xmake_lib_XMLParser.o: ./XMLParser.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.o: ./XMLParser.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\xmake_main.o: ./main.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.o: ./main.cpp
 	$(CXX) -c -o $@ $(XMAKE_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\utilities\Xmake/*.d

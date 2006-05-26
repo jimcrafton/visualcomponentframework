@@ -31,10 +31,10 @@ PARTICLEEDITOR_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__OPENGLKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PARTICLEEDITOR_OBJECTS =  \
-	$(OBJDIR)/ParticleEditor_main.o \
-	$(OBJDIR)/ParticleEditor_ParticleEditor.o \
-	$(OBJDIR)/ParticleEditor_ParticleRenderer.o \
-	$(OBJDIR)/ParticleEditor_ParticleSystem.o
+	../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_main.o \
+	../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleEditor.o \
+	../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleRenderer.o \
+	../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleSystem.o
 
 ### Conditionally set variables: ###
 
@@ -107,9 +107,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/ParticleEditor
+../../lib/$(OBJDIR)/examples/ParticleEditor:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ParticleEditor
 
 ### Targets: ###
 
@@ -120,8 +120,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/ParticleEditor/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ParticleEditor/*.d
 	rm -f ./ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_OPENGLKIT),1)
@@ -129,20 +129,20 @@ ifeq ($(OPTION_OPENGLKIT),1)
 	$(CXX) -o $@ $(PARTICLEEDITOR_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ParticleEditor_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____ParticleEditor_GRAPHICSKIT_p) $(____ParticleEditor_APPLICATIONKIT_p) $(____ParticleEditor_OPENGLKIT_p)
 endif
 
-$(OBJDIR)/ParticleEditor_main.o: ./main.cpp
+../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_main.o: ./main.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/ParticleEditor_ParticleEditor.o: ./ParticleEditor.cpp
+../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleEditor.o: ./ParticleEditor.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/ParticleEditor_ParticleRenderer.o: ./ParticleRenderer.cpp
+../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleRenderer.o: ./ParticleRenderer.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/ParticleEditor_ParticleSystem.o: ./ParticleSystem.cpp
+../../lib/$(OBJDIR)/examples/ParticleEditor/ParticleEditor_ParticleSystem.o: ./ParticleSystem.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/ParticleEditor/*.d

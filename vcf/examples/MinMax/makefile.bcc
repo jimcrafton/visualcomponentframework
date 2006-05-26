@@ -38,7 +38,7 @@ MINMAX_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 MINMAX_OBJECTS =  \
-	$(OBJDIR)\MinMax_MinMax.obj
+	..\..\lib\$(OBJDIR)\examples\MinMax\MinMax_MinMax.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\MinMax
+..\..\lib\$(OBJDIR)\examples\MinMax:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\MinMax mkdir ..\..\lib\$(OBJDIR)\examples\MinMax
 
 ### Targets: ###
 
 all: $(__MinMax___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\MinMax\*.obj del ..\..\lib\$(OBJDIR)\examples\MinMax\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\MinMax\*.res del ..\..\lib\$(OBJDIR)\examples\MinMax\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\MinMax\*.csm del ..\..\lib\$(OBJDIR)\examples\MinMax\*.csm
 	-if exist .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\MinMax$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\MinMax_MinMax.obj: .\MinMax.cpp
+..\..\lib\$(OBJDIR)\examples\MinMax\MinMax_MinMax.obj: .\MinMax.cpp
 	$(CXX) -q -c -P -o$@ $(MINMAX_CXXFLAGS) $**
 

@@ -38,7 +38,7 @@ SLIDERS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SLIDERS_OBJECTS =  \
-	$(OBJDIR)\Sliders_Sliders.obj
+	..\..\lib\$(OBJDIR)\examples\Sliders\Sliders_Sliders.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Sliders
+..\..\lib\$(OBJDIR)\examples\Sliders:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Sliders mkdir ..\..\lib\$(OBJDIR)\examples\Sliders
 
 ### Targets: ###
 
 all: $(__Sliders___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Sliders\*.obj del ..\..\lib\$(OBJDIR)\examples\Sliders\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Sliders\*.res del ..\..\lib\$(OBJDIR)\examples\Sliders\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Sliders\*.csm del ..\..\lib\$(OBJDIR)\examples\Sliders\*.csm
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Sliders_Sliders.obj: .\Sliders.cpp
+..\..\lib\$(OBJDIR)\examples\Sliders\Sliders_Sliders.obj: .\Sliders.cpp
 	$(CXX) -q -c -P -o$@ $(SLIDERS_CXXFLAGS) $**
 

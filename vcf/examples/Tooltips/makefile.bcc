@@ -38,7 +38,7 @@ TOOLTIPS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TOOLTIPS_OBJECTS =  \
-	$(OBJDIR)\Tooltips_Tooltips.obj
+	..\..\lib\$(OBJDIR)\examples\Tooltips\Tooltips_Tooltips.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Tooltips
+..\..\lib\$(OBJDIR)\examples\Tooltips:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Tooltips mkdir ..\..\lib\$(OBJDIR)\examples\Tooltips
 
 ### Targets: ###
 
 all: $(__Tooltips___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tooltips\*.obj del ..\..\lib\$(OBJDIR)\examples\Tooltips\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tooltips\*.res del ..\..\lib\$(OBJDIR)\examples\Tooltips\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Tooltips\*.csm del ..\..\lib\$(OBJDIR)\examples\Tooltips\*.csm
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Tooltips_Tooltips.obj: .\Tooltips.cpp
+..\..\lib\$(OBJDIR)\examples\Tooltips\Tooltips_Tooltips.obj: .\Tooltips.cpp
 	$(CXX) -q -c -P -o$@ $(TOOLTIPS_CXXFLAGS) $**
 

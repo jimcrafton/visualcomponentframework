@@ -30,7 +30,7 @@ SLIDERS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SLIDERS_OBJECTS =  \
-	$(OBJDIR)/Sliders_Sliders.o
+	../../lib/$(OBJDIR)/examples/Sliders/Sliders_Sliders.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Sliders
+../../lib/$(OBJDIR)/examples/Sliders:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Sliders
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Sliders/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Sliders/*.d
 	rm -f ./Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(SLIDERS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Sliders_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Sliders_GRAPHICSKIT_p) $(____Sliders_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Sliders_Sliders.o: ./Sliders.cpp
+../../lib/$(OBJDIR)/examples/Sliders/Sliders_Sliders.o: ./Sliders.cpp
 	$(CXX) -c -o $@ $(SLIDERS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Sliders/*.d

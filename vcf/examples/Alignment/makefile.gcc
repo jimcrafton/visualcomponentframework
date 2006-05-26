@@ -30,7 +30,7 @@ ALIGNMENT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ALIGNMENT_OBJECTS =  \
-	$(OBJDIR)\Alignment_Alignment.o
+	..\..\lib\$(OBJDIR)\examples\Alignment\Alignment_Alignment.o
 
 ### Conditionally set variables: ###
 
@@ -96,17 +96,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Alignment
+..\..\lib\$(OBJDIR)\examples\Alignment:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Alignment mkdir ..\..\lib\$(OBJDIR)\examples\Alignment
 
 ### Targets: ###
 
 all: $(__Alignment___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Alignment\*.o del ..\..\lib\$(OBJDIR)\examples\Alignment\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Alignment\*.d del ..\..\lib\$(OBJDIR)\examples\Alignment\*.d
 	-if exist .\Alignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Alignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -114,11 +114,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ALIGNMENT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Alignment_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Alignment_GRAPHICSKIT_p) $(____Alignment_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\Alignment_Alignment.o: ./Alignment.cpp
+..\..\lib\$(OBJDIR)\examples\Alignment\Alignment_Alignment.o: ./Alignment.cpp
 	$(CXX) -c -o $@ $(ALIGNMENT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Alignment/*.d

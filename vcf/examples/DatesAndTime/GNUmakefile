@@ -20,7 +20,7 @@ DATESANDTIME_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DATESANDTIME_OBJECTS =  \
-	$(OBJDIR)/DatesAndTime_DatesAndTime.o
+	../../lib/$(OBJDIR)/examples/DatesAndTime/DatesAndTime_DatesAndTime.o
 
 ### Conditionally set variables: ###
 
@@ -75,9 +75,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/DatesAndTime
+../../lib/$(OBJDIR)/examples/DatesAndTime:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/DatesAndTime
 
 ### Targets: ###
 
@@ -88,8 +88,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/DatesAndTime/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/DatesAndTime/*.d
 	rm -f ./DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -97,11 +97,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(DATESANDTIME_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____DatesAndTime_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/DatesAndTime_DatesAndTime.o: ./DatesAndTime.cpp
+../../lib/$(OBJDIR)/examples/DatesAndTime/DatesAndTime_DatesAndTime.o: ./DatesAndTime.cpp
 	$(CXX) -c -o $@ $(DATESANDTIME_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/DatesAndTime/*.d

@@ -24,7 +24,7 @@ EVENTBASICS_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 EVENTBASICS_OBJECTS =  \
-	$(OBJDIR)\EventBasics_EventBasics.obj
+	..\..\lib\$(OBJDIR)\examples\EventBasics\EventBasics_EventBasics.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\EventBasics
+..\..\lib\$(OBJDIR)\examples\EventBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\EventBasics mkdir ..\..\lib\$(OBJDIR)\examples\EventBasics
 
 ### Targets: ###
 
 all: $(__EventBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\EventBasics\*.obj del ..\..\lib\$(OBJDIR)\examples\EventBasics\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\EventBasics\*.res del ..\..\lib\$(OBJDIR)\examples\EventBasics\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\EventBasics\*.pch del ..\..\lib\$(OBJDIR)\examples\EventBasics\*.pch
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\EventBasics_EventBasics.obj: .\EventBasics.cpp
+..\..\lib\$(OBJDIR)\examples\EventBasics\EventBasics_EventBasics.obj: .\EventBasics.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(EVENTBASICS_CXXFLAGS) $**
 

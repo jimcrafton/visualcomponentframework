@@ -20,7 +20,7 @@ VARIANTS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 VARIANTS_OBJECTS =  \
-	$(OBJDIR)/Variants_Variants.o
+	../../lib/$(OBJDIR)/examples/Variants/Variants_Variants.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Variants
+../../lib/$(OBJDIR)/examples/Variants:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Variants
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Variants/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Variants/*.d
 	rm -f ./Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(VARIANTS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Variants_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Variants_Variants.o: ./Variants.cpp
+../../lib/$(OBJDIR)/examples/Variants/Variants_Variants.o: ./Variants.cpp
 	$(CXX) -c -o $@ $(VARIANTS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Variants/*.d

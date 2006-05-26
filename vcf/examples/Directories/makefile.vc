@@ -24,7 +24,7 @@ DIRECTORIES_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 DIRECTORIES_OBJECTS =  \
-	$(OBJDIR)\Directories_Directories.obj
+	..\..\lib\$(OBJDIR)\examples\Directories\Directories_Directories.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Directories
+..\..\lib\$(OBJDIR)\examples\Directories:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Directories mkdir ..\..\lib\$(OBJDIR)\examples\Directories
 
 ### Targets: ###
 
 all: $(__Directories___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Directories\*.obj del ..\..\lib\$(OBJDIR)\examples\Directories\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Directories\*.res del ..\..\lib\$(OBJDIR)\examples\Directories\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Directories\*.pch del ..\..\lib\$(OBJDIR)\examples\Directories\*.pch
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\Directories_Directories.obj: .\Directories.cpp
+..\..\lib\$(OBJDIR)\examples\Directories\Directories_Directories.obj: .\Directories.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DIRECTORIES_CXXFLAGS) $**
 

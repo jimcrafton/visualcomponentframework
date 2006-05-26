@@ -30,7 +30,7 @@ SCROLLING2_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SCROLLING2_OBJECTS =  \
-	$(OBJDIR)/Scrolling2_Scrolling2.o
+	../../lib/$(OBJDIR)/examples/Scrolling2/Scrolling2_Scrolling2.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Scrolling2
+../../lib/$(OBJDIR)/examples/Scrolling2:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Scrolling2
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Scrolling2/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Scrolling2/*.d
 	rm -f ./Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(SCROLLING2_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Scrolling2_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Scrolling2_GRAPHICSKIT_p) $(____Scrolling2_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Scrolling2_Scrolling2.o: ./Scrolling2.cpp
+../../lib/$(OBJDIR)/examples/Scrolling2/Scrolling2_Scrolling2.o: ./Scrolling2.cpp
 	$(CXX) -c -o $@ $(SCROLLING2_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Scrolling2/*.d

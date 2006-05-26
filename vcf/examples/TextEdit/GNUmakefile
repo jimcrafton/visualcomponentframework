@@ -30,11 +30,11 @@ TEXTEDIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TEXTEDIT_OBJECTS =  \
-	$(OBJDIR)/TextEdit_FindDialog.o \
-	$(OBJDIR)/TextEdit_ReplaceDialog.o \
-	$(OBJDIR)/TextEdit_TextEdit.o \
-	$(OBJDIR)/TextEdit_TextEditDocument.o \
-	$(OBJDIR)/TextEdit_TextEditWindow.o
+	../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_FindDialog.o \
+	../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_ReplaceDialog.o \
+	../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEdit.o \
+	../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEditDocument.o \
+	../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEditWindow.o
 
 ### Conditionally set variables: ###
 
@@ -100,9 +100,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/TextEdit
+../../lib/$(OBJDIR)/examples/TextEdit:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/TextEdit
 
 ### Targets: ###
 
@@ -113,8 +113,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/TextEdit/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/TextEdit/*.d
 	rm -f ./TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -122,23 +122,23 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TEXTEDIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____TextEdit_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TextEdit_GRAPHICSKIT_p) $(____TextEdit_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/TextEdit_FindDialog.o: ./FindDialog.cpp
+../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_FindDialog.o: ./FindDialog.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TextEdit_ReplaceDialog.o: ./ReplaceDialog.cpp
+../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_ReplaceDialog.o: ./ReplaceDialog.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TextEdit_TextEdit.o: ./TextEdit.cpp
+../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEdit.o: ./TextEdit.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TextEdit_TextEditDocument.o: ./TextEditDocument.cpp
+../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEditDocument.o: ./TextEditDocument.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TextEdit_TextEditWindow.o: ./TextEditWindow.cpp
+../../lib/$(OBJDIR)/examples/TextEdit/TextEdit_TextEditWindow.o: ./TextEditWindow.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/TextEdit/*.d

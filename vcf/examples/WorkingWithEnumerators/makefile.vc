@@ -24,7 +24,7 @@ WORKINGWITHENUMERATORS_CXXFLAGS = \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 WORKINGWITHENUMERATORS_OBJECTS =  \
-	$(OBJDIR)\WorkingWithEnumerators_WorkingWithEnumerators.obj
+	..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\WorkingWithEnumerators_WorkingWithEnumerators.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators
+..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators mkdir ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators
 
 ### Targets: ###
 
 all: $(__WorkingWithEnumerators___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.obj del ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.res del ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.pch del ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.pch
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\WorkingWithEnumerators_WorkingWithEnumerators.obj: .\WorkingWithEnumerators.cpp
+..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\WorkingWithEnumerators_WorkingWithEnumerators.obj: .\WorkingWithEnumerators.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(WORKINGWITHENUMERATORS_CXXFLAGS) $**
 

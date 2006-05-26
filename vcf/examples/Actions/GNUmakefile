@@ -30,7 +30,7 @@ ACTIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ACTIONS_OBJECTS =  \
-	$(OBJDIR)/Actions_Actions.o
+	../../lib/$(OBJDIR)/examples/Actions/Actions_Actions.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Actions
+../../lib/$(OBJDIR)/examples/Actions:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Actions
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Actions/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Actions/*.d
 	rm -f ./Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ACTIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Actions_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Actions_GRAPHICSKIT_p) $(____Actions_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Actions_Actions.o: ./Actions.cpp
+../../lib/$(OBJDIR)/examples/Actions/Actions_Actions.o: ./Actions.cpp
 	$(CXX) -c -o $@ $(ACTIONS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Actions/*.d
