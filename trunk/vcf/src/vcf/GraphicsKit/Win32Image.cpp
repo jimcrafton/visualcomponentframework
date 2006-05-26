@@ -43,13 +43,15 @@ Win32Image::Win32Image( const String& fileName ):
 Win32Image::Win32Image( GraphicsContext* context, Rect* rect  ):
 	AbstractImage(false),
 	flipBits_(false),
-	ownDC_(false)
+	ownDC_(true)
 {
+		init();
+
 	//leave it this way to begin with and then
 	//switch to false for the duration after the intial
 	//bitmap has been created
 	if ( (NULL != context) && (NULL != rect) ){
-		Win32Context* ctx = reinterpret_cast<Win32Context*>(context->getPeer() );
+		Win32Context* ctx = (Win32Context*)(context->getPeer() );
 		if ( NULL != ctx ){
 			//set up the bitmap data
 			IMTRAITS::setChannelType( flags_, IMTRAITS::getTraitsChannelType() );
@@ -57,33 +59,13 @@ Win32Image::Win32Image( GraphicsContext* context, Rect* rect  ):
 			IMTRAITS::setImageType( flags_, IMTRAITS::getTraitsImageType() );
 			IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
 
-			//hBitmap_ = NULL;
-
 			palette_ = NULL;
 
 			HDC contextDC = (HDC)ctx->getContextID();
 
-			//the deletion of the context_ should delete the
-			//dc_ handle
-			context_ = context;
-
-			HDC tmpDC = CreateCompatibleDC( contextDC );
-			HDC origDC = contextDC;
-			contextDC = tmpDC;
-
 			setSize( rect->getWidth(), rect->getHeight() );
 
-			contextDC = origDC;
-
-			int r = BitBlt( tmpDC, 0, 0, getWidth(), getHeight(), contextDC, (int)rect->left_, (int)rect->top_, SRCCOPY );
-
-			::SelectObject( tmpDC, hbmp_.oldBMP() );
-			DeleteDC( tmpDC );
-
-			hbmp_.attach( contextDC );
-
-			//hOldBitmap_ = (HBITMAP)::SelectObject( dc_, (HBITMAP)hbmp );
-			//ownDC_ = false;
+			BitBlt( hbmp_.dc(), 0, 0, getWidth(), getHeight(), contextDC, (int)rect->left_, (int)rect->top_, SRCCOPY );			
 		}
 		else {
 			//throw exception !!!
@@ -370,12 +352,42 @@ void Win32Image::internal_saveToFile( const String& fileName )
 
 void Win32Image::beginDrawing()
 {
-	//no-op don't need to worry about this
+	//Sadly windows will overwrite the alpha
+	//channel if the bmp's context is retreived and then
+	//drawn on using Win32 GDI calls like Rectangle, Polyline, etc
+	//So we need to store the values out, and then
+	//reset them in finishedDrawing()
+
+	ColorPixels pix = this;
+	size_t sz = pix.width() * pix.height();
+
+	SysPixelType* bits = pix;
+
+	tempAlphaChannel_ = new unsigned char[sz];	
+	
+	do {
+		sz --;
+		tempAlphaChannel_[sz] = bits[sz].a;
+	} while( sz > 0 );
 }
 
 void Win32Image::finishedDrawing()
 {
-	//no-op don't need to worry about this
+	if ( NULL != tempAlphaChannel_ ) {
+		ColorPixels pix = this;
+		size_t sz = pix.width() * pix.height();
+		
+		SysPixelType* bits = pix;	
+		
+		do {
+			sz --;
+			bits[sz].a = tempAlphaChannel_[sz];
+		} while( sz > 0 );
+
+		delete [] tempAlphaChannel_;
+	}
+
+	tempAlphaChannel_ = NULL;
 }
 
 

@@ -311,13 +311,13 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 	}
 
 	if ( useRenderBuffer ) {
-		if ( NULL == context_->getDrawingArea() ) {
-			context_->setDrawingArea( *bounds_ );
+		if ( NULL == context_->getRenderArea() ) {
+			context_->setRenderArea( *bounds_ );
 		}
 	}
 	else {
-		if ( NULL != context_->getDrawingArea() ) {
-			context_->deleteDrawingArea();
+		if ( NULL != context_->getRenderArea() ) {
+			context_->deleteRenderArea();
 		}
 	}
 }
@@ -372,8 +372,8 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**t
 	}
 
 	if ( isUsingRenderBuffer() ) {
-		if ( NULL == context_->getDrawingArea() ) {
-			context_->setDrawingArea( *bounds_ );
+		if ( NULL == context_->getRenderArea() ) {
+			context_->setRenderArea( *bounds_ );
 		}
 	}
 
@@ -543,7 +543,7 @@ void Control::handleEvent( Event* event )
 
 				if ( isUsingRenderBuffer() ) {
 					Rect bounds = getClientBounds(false);
-					context_->setDrawingArea( bounds );						
+					context_->setRenderArea( bounds );						
 				}				
 			}
 			break;

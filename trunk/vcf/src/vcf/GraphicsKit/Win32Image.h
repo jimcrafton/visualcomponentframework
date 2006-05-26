@@ -43,8 +43,9 @@ public:
 
 
 	void attach( HDC dc ) {
-		if ( NULL != dc_ ) {
-			DeleteDC( dc_ );
+		if ( NULL != hbmp_ ) {
+			::SelectObject( dc_, hOldBitmap_ );
+			::DeleteDC( dc_ );
 		}
 
 		dc_ = dc;
@@ -237,7 +238,7 @@ public:
 
 	void internal_saveToFile( const String& fileName );
 
-protected:
+protected:	
 	void loadFromFile( const String& fileName );
 
 	void loadFromBMPHandle( HBITMAP bitmap );
@@ -245,6 +246,7 @@ protected:
 	HBitmap32Bit hbmp_;
 	bool flipBits_;
 	bool ownDC_;
+	unsigned char* tempAlphaChannel_;
 };
 
 

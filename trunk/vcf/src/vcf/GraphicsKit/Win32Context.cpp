@@ -449,70 +449,52 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 	}
 }
 
-void Win32Context::bitBlit( const double& x, const double& y, Image* image )
+void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )
 {
 
-	if ( image->getType() == Image::itColor ) {
-		Win32Image* win32image = (Win32Image*)(image);		
-			
-		ColorPixels pixels(image); 
-		SysPixelType* imageBuf = pixels;
+	HPALETTE pal = NULL;
+	HPALETTE oldPalette = NULL;
+	BITMAPINFO* bmpInfo = NULL;
+	void* imageBuf = image->getData();
+	
 
-		HPALETTE oldPalette = NULL;
-		if ( NULL != win32image->palette_ ){
-			oldPalette = ::SelectPalette( dc_, win32image->palette_, FALSE );
-			::RealizePalette( dc_ );
-		}
-		
-		SysPixelType* bmpBuf = NULL;
-		
-		
-		SetDIBitsToDevice( dc_,
-							(long)x,
-							(long)y,
-							(long)win32image->getWidth(),
-							(long)win32image->getHeight(),
-							0,
-							0,
-							0,
-							(long)win32image->getHeight(),
-							imageBuf,
-							&win32image->getBMPInfo(),
-							DIB_RGB_COLORS );
-		
-		if ( NULL != oldPalette ){
-			::SelectPalette( dc_, oldPalette, FALSE );
-		}
+	if ( image->getType() == Image::itColor ) {
+		Win32Image* win32image = (Win32Image*)(image);
+
+		pal = win32image->palette_;
+		bmpInfo = &win32image->getBMPInfo();
 	}
 	else if ( image->getType() == Image::itGrayscale ) { 
-		Win32GrayScaleImage* win32image = (Win32GrayScaleImage*)(image);		
-			
-		HPALETTE oldPalette = NULL;
-		if ( NULL != win32image->palette_ ){
-			oldPalette = ::SelectPalette( dc_, win32image->palette_, TRUE );
-			::RealizePalette( dc_ );
-		}
-		
-		SetDIBitsToDevice( dc_,
+		Win32GrayScaleImage* win32image = (Win32GrayScaleImage*)(image);
+		pal = win32image->palette_;
+		bmpInfo = &win32image->getBMPInfo();
+	}	
+
+
+	if ( NULL != pal ){
+		oldPalette = ::SelectPalette( dc_, pal, FALSE );
+		::RealizePalette( dc_ );
+	}
+
+	SetDIBitsToDevice( dc_,
 							(long)x,
 							(long)y,
-							(long)win32image->getWidth(),
-							(long)win32image->getHeight(),
+							(long)imageBounds->getWidth(),
+							(long)imageBounds->getHeight(),
+							imageBounds->left_,
+							imageBounds->top_,
 							0,
-							0,
-							0,
-							(long)win32image->getHeight(),
-							image->getData(),
-							&win32image->getBMPInfo(),
+							(long)image->getHeight(),
+							imageBuf,
+							bmpInfo,
 							DIB_RGB_COLORS );
-		
-		if ( NULL != oldPalette ){
-			::SelectPalette( dc_, oldPalette, FALSE );			
-		}
-	}	
+
+	if ( NULL != oldPalette ){
+		::SelectPalette( dc_, oldPalette, FALSE );
+	}
 }
 
-void Win32Context::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image )
+void Win32Context::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode )
 {
 	//checkHandle();
 
@@ -663,19 +645,6 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 		size_t hbmpWidth = xfrmedImageRect.getWidth();
 		size_t hbmpHeight = xfrmedImageRect.getHeight();
 
-		//we can't get rid of this be cause we
-		//need it for the SetDIBitsToDevice
-		//call
-		BITMAPINFO bmpInfo;
-		memset( &bmpInfo, 0, sizeof(BITMAPINFO) );
-		bmpInfo.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
-		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
-		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
-		bmpInfo.bmiHeader.biPlanes = 1;
-		bmpInfo.bmiHeader.biBitCount = 32;
-		bmpInfo.bmiHeader.biCompression = BI_RGB;
-		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
-
 		SysPixelType* bmpBuf = NULL;
 
 		hbmp.setSize( hbmpWidth, hbmpHeight );
@@ -700,8 +669,6 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 			pixfmt pixf(xfrmImgRenderBuf);
 			RendererBase rb(pixf);
-			SolidRenderer srcImageRenderer(rb);
-
 
 			agg::trans_affine imageMat;
 			imageMat *= agg::trans_affine_translation( -imageTX, -imageTY );
@@ -723,13 +690,9 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 			ColorPixels pix(image);			
 
 			pixfmt imgPixf(pix);
-			SpanGenerator spanGen(//spanAllocator,
-							 imgPixf,
+			SpanGenerator spanGen( imgPixf,
 							 agg::rgba(0, 0, 0, 0.0),
 							 interpolator);
-
-
-			RendererType imageRenderer(rb);
 
 			agg::rasterizer_scanline_aa<> rasterizer;
 			agg::scanline_u8 scanLine;
@@ -748,7 +711,7 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 								0,
 								(long)xfrmedImageRect.getHeight(),
 								bmpBuf,
-								&bmpInfo,
+								hbmp.bmpInfo(),
 								DIB_RGB_COLORS );
 		}
 	}
@@ -4053,7 +4016,7 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 
 void Win32Context::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
 {
-	drawImage( rect->left_, rect->top_, rect, image );
+	drawImage( rect->left_, rect->top_, rect, image, GraphicsContext::cmSource );
 }
 
 /**

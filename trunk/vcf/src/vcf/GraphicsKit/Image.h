@@ -337,19 +337,23 @@ public:
 	finishedDrawing() when you're done with the GraphicsContext. Concrete
 	implemententations of this class will transfer the image's contents to
 	the GraphicsContext for beginDrawing(), finishedDrawing() will update
-	the image's data due to any changes in the GraphicsContext. An example:
+	the image's data due to any changes in the GraphicsContext. To ensure that
+	you call these functions correctly, use the ImageContext class.
+	An example:
 	\code
 	Image* image = getImage(); //get an image from somewhere
-	image->beginDrawing();
 
-	GraphicsContext* gc = image->getImageContext();
-	gc->rectangle( 20, 20, 400, 60 );
-	gc->strokePath();
+	//new code block...
+	{
+		ImageContext gc = image; //the ImageContext automatically calls beginDrawing()
+		gc->rectangle( 20, 20, 400, 60 );
+		gc->strokePath();
 
-	image->finishedDrawing();
+	} // the ImageContext destructor calls finishedDrawing() for you
 
 	\endcode
 
+	@see ImageContext
 	*/
 	virtual GraphicsContext* getImageContext() = 0;
 
@@ -375,6 +379,57 @@ public:
 
 	virtual void* getData() = 0;
 };
+
+/**
+\class ImageContext Image.h "vcf/GraphicsKit/Image.h"
+This is a simple class that is intended to be used when you need 
+access to an image's GraphicsContext. It should only be created on 
+the stack, and it will automatically call the appropriate 
+Image::beginDrawing() and Image::finishedDrawing() functions
+for you.
+*/
+class GRAPHICSKIT_API ImageContext {
+public:
+	ImageContext():ctx_(NULL),img_(NULL){
+	}
+
+	ImageContext(Image* img):ctx_(NULL),img_(NULL){
+		*this = img;
+	}
+
+	~ImageContext(){
+		if ( NULL != img_ ) {
+			img_->finishedDrawing();
+		}
+	}
+
+	ImageContext& operator=( Image* img ) {
+		if ( NULL != img_ ) {
+			img_->finishedDrawing();
+		}
+
+		img_ = img;
+		
+		if ( NULL != img_ ) {
+			img_->beginDrawing();
+			ctx_ = img->getImageContext();
+		}
+		return *this;
+	}
+
+
+	operator GraphicsContext* () {
+		return ctx_;
+	}
+
+	GraphicsContext* operator->(){
+		return ctx_;
+	}
+protected:
+	Image* img_;
+	GraphicsContext* ctx_;
+};
+
 
 };
 

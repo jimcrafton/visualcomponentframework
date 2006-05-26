@@ -40,6 +40,9 @@ namespace agg
             m_ren(&ren),
             m_clip_box(0, 0, ren.width() - 1, ren.height() - 1)
         {}
+
+		~renderer_base(){}
+
         void attach(pixfmt_type& ren)
         {
             m_ren = &ren;

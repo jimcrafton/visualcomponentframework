@@ -369,10 +369,19 @@ public:
 		Image* img = GraphicsToolkit::createImage( "test.bmp" );
 		if ( NULL != img ) {
 
-			context->drawImage( 500, 270, img );
+			context->drawImage( 500, 270, img, false );
 
-			delete img;
+			context->drawImage( 200, 10, img, false );
+
+			context->renderImages();
+
+			//delete img;
 		}
+
+		context->setStrokeWidth( 2 );
+		context->setColor( Color::getColor("yellow") );
+		context->rectangle( Rect(499,269,901,351) );
+		context->strokePath();
 
 		context->restoreState( gcs );
 
