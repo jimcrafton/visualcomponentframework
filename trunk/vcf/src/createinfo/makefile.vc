@@ -23,7 +23,7 @@ CREATEINFO_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 CREATEINFO_OBJECTS =  \
-	$(OBJDIR)\createinfo_createinfo.obj
+	..\..\lib\$(OBJDIR)\utilities\createinfo\createinfo_createinfo.obj
 
 ### Conditionally set variables: ###
 
@@ -101,18 +101,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\utilities\createinfo
+..\..\lib\$(OBJDIR)\utilities\createinfo:
+	-if not exist ..\..\lib\$(OBJDIR)\utilities\createinfo mkdir ..\..\lib\$(OBJDIR)\utilities\createinfo
 
 ### Targets: ###
 
 all: ..\..\bin\createinfo.exe
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\utilities\createinfo\*.obj del ..\..\lib\$(OBJDIR)\utilities\createinfo\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\utilities\createinfo\*.res del ..\..\lib\$(OBJDIR)\utilities\createinfo\*.res
+	-if exist ..\..\lib\$(OBJDIR)\utilities\createinfo\*.pch del ..\..\lib\$(OBJDIR)\utilities\createinfo\*.pch
 	-if exist ..\..\bin\createinfo.exe del ..\..\bin\createinfo.exe
 	-if exist ..\..\bin\createinfo.ilk del ..\..\bin\createinfo.ilk
 	-if exist ..\..\bin\createinfo.pdb del ..\..\bin\createinfo.pdb
@@ -122,6 +122,6 @@ clean:
 	$(CREATEINFO_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____createinfo_FOUNDATIONKIT_p)
 <<
 
-$(OBJDIR)\createinfo_createinfo.obj: .\createinfo.cpp
+..\..\lib\$(OBJDIR)\utilities\createinfo\createinfo_createinfo.obj: .\createinfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(CREATEINFO_CXXFLAGS) $**
 

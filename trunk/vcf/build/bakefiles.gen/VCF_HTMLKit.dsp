@@ -60,15 +60,15 @@ RSC=rc.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc80_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_d\HTMLKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc80_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_d\HTMLKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc80_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\HTMLKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc80_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\HTMLKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -85,15 +85,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc80.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80\HTMLKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc80.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80\HTMLKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc80.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80\HTMLKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc80.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80\HTMLKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -110,15 +110,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc80_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_sd\HTMLKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc80_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_sd\HTMLKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc80_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\HTMLKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc80_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\HTMLKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -133,15 +133,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc80_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc80_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc80_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_s\HTMLKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc80_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc80_s\HTMLKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc80_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\HTMLKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc80_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\HTMLKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -156,15 +156,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc71_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_d\HTMLKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc71_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_d\HTMLKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc71_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\HTMLKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc71_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\HTMLKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -181,15 +181,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc71.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71\HTMLKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc71.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71\HTMLKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc71.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71\HTMLKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc71.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71\HTMLKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -206,15 +206,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc71_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_sd\HTMLKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc71_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_sd\HTMLKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc71_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\HTMLKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc71_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\HTMLKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -229,15 +229,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc71_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc71_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc71_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_s\HTMLKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc71_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc71_s\HTMLKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc71_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\HTMLKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc71_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\HTMLKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -252,15 +252,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc70_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_d\HTMLKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc70_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_d\HTMLKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc70_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\HTMLKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc70_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\HTMLKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -277,15 +277,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc70.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70\HTMLKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc70.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70\HTMLKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc70.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70\HTMLKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc70.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70\HTMLKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -302,15 +302,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc70_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_sd\HTMLKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc70_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_sd\HTMLKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc70_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\HTMLKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc70_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\HTMLKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -325,15 +325,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc70_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc70_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc70_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_s\HTMLKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc70_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc70_s\HTMLKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc70_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\HTMLKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc70_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\HTMLKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -348,15 +348,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_d\HTMLKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_d\HTMLKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\HTMLKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_vc6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\HTMLKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -373,15 +373,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6\HTMLKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6\HTMLKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6\HTMLKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_vc6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6\HTMLKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -398,15 +398,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_sd\HTMLKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_sd\HTMLKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\HTMLKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_vc6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\HTMLKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -421,15 +421,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_vc6_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_vc6_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_s\HTMLKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_vc6_s\HTMLKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\HTMLKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_vc6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\HTMLKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -444,15 +444,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl7_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_d\HTMLKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl7_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_d\HTMLKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl7_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_d\HTMLKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl7_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_d\HTMLKit_icl7_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -469,15 +469,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl7.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7\HTMLKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl7.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7\HTMLKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl7.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7\HTMLKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl7.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7\HTMLKit_icl7.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -494,15 +494,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl7_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_sd\HTMLKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl7_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_sd\HTMLKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl7_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_sd\HTMLKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl7_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_sd\HTMLKit_icl7_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -517,15 +517,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl7_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl7_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl7_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl7_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl7_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_s\HTMLKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl7_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl7_s\HTMLKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl7_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_s\HTMLKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl7_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl7_s\HTMLKit_icl7_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -540,15 +540,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_d\HTMLKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_d\HTMLKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_d\HTMLKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_icl6_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_d\HTMLKit_icl6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -565,15 +565,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6\HTMLKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6\HTMLKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6\HTMLKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit_icl6.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6\HTMLKit_icl6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -590,15 +590,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_sd\HTMLKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_sd\HTMLKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_sd\HTMLKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_icl6_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_sd\HTMLKit_icl6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -613,15 +613,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_icl6_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_icl6_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_icl6_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_icl6_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_s\HTMLKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_icl6_s\HTMLKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_s\HTMLKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_icl6_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_icl6_s\HTMLKit_icl6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -636,15 +636,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_d\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_d\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_d\HTMLKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_d\HTMLKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_d\HTMLKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\HTMLKit_d.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_d\HTMLKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -661,15 +661,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj\HTMLKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj\HTMLKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj\HTMLKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\HTMLKit.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj\HTMLKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_USRDLL" /D "HTMLKIT_DLL" /D "HTMLKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /i "..\..\src\thirdparty\win32" /d "FOUNDATIONKIT_DLL" /i "..\..\src\thirdparty\common\agg\include" /i "..\..\src\thirdparty\common\ZLib" /i "..\..\src\thirdparty\common\LibJPEG" /i "..\..\src\thirdparty\common\LibPNG" /d "GRAPHICSKIT_DLL" /d "APPLICATIONKIT_DLL" /d "NDEBUG" /d "VCF_DISABLE_PRAGMA_LINKING" /d "_WINDOWS" /d "_WIN32" /d "WIN32" /d "_CRT_SECURE_NO_DEPRECATE" /d "_SCL_SECURE_NO_DEPRECATE" /d "_CRT_NON_CONFORMING_SWPRINTFS" /i "..\..\src" /d "_USRDLL" /d "HTMLKIT_DLL" /d HTMLKIT_EXPORTS
@@ -686,15 +686,15 @@ LINK32=link.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_sd\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_sd\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_sd\HTMLKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_sd\HTMLKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_sd\HTMLKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\HTMLKit_sd.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_sd\HTMLKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -709,15 +709,15 @@ LIB32=link.exe -lib
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "msvc6prj_s\HTMLKit"
+# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\HTMLKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "msvc6prj_s\HTMLKit"
+# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\HTMLKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_s\HTMLKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"msvc6prj_s\HTMLKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_s\HTMLKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
+# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\win32" /I "..\..\src\thirdparty\common\agg\include" /I "..\..\src\thirdparty\common\ZLib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\HTMLKit_s.pdb /Yu"vcf\HTMLKit\HTMLKit.h" /Fp"..\..\lib\msvc6prj_s\HTMLKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "VCF_DISABLE_PRAGMA_LINKING" /D "_WINDOWS" /D "_WIN32" /D "WIN32" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D "_LIB" /D "_MBCS" /D "NO_MFC" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe

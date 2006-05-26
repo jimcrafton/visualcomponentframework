@@ -54,7 +54,7 @@
             <define>_CRT_NON_CONFORMING_SWPRINTFS</define>
         </if>
 
-        <if cond="FORMAT!='autoconf' and FORMAT!='gnu'">
+        <if cond="FORMAT!='gnu'">
 	        <if cond="FORMAT!='borland'">
                 <sys-lib>rpcrt4</sys-lib>
                 <sys-lib>odbc32</sys-lib>

@@ -30,10 +30,10 @@ CONTROLS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 CONTROLS_OBJECTS =  \
-	$(OBJDIR)/Controls_Controls.o \
-	$(OBJDIR)/Controls_ControlsAbout.o \
-	$(OBJDIR)/Controls_ControlsApplication.o \
-	$(OBJDIR)/Controls_MainWindow.o
+	../../lib/$(OBJDIR)/examples/Controls/Controls_Controls.o \
+	../../lib/$(OBJDIR)/examples/Controls/Controls_ControlsAbout.o \
+	../../lib/$(OBJDIR)/examples/Controls/Controls_ControlsApplication.o \
+	../../lib/$(OBJDIR)/examples/Controls/Controls_MainWindow.o
 
 ### Conditionally set variables: ###
 
@@ -99,9 +99,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Controls
+../../lib/$(OBJDIR)/examples/Controls:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Controls
 
 ### Targets: ###
 
@@ -112,8 +112,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Controls/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Controls/*.d
 	rm -f ./Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -121,20 +121,20 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(CONTROLS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Controls_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Controls_GRAPHICSKIT_p) $(____Controls_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Controls_Controls.o: ./Controls.cpp
+../../lib/$(OBJDIR)/examples/Controls/Controls_Controls.o: ./Controls.cpp
 	$(CXX) -c -o $@ $(CONTROLS_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/Controls_ControlsAbout.o: ./ControlsAbout.cpp
+../../lib/$(OBJDIR)/examples/Controls/Controls_ControlsAbout.o: ./ControlsAbout.cpp
 	$(CXX) -c -o $@ $(CONTROLS_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/Controls_ControlsApplication.o: ./ControlsApplication.cpp
+../../lib/$(OBJDIR)/examples/Controls/Controls_ControlsApplication.o: ./ControlsApplication.cpp
 	$(CXX) -c -o $@ $(CONTROLS_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/Controls_MainWindow.o: ./MainWindow.cpp
+../../lib/$(OBJDIR)/examples/Controls/Controls_MainWindow.o: ./MainWindow.cpp
 	$(CXX) -c -o $@ $(CONTROLS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Controls/*.d

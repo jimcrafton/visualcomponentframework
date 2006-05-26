@@ -35,10 +35,10 @@ PARTICLEEDITOR_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	$(__APPLICATIONKIT_DLL_p) $(__OPENGLKIT_DLL_p) /GR /EHsc $(CPPFLAGS) \
 	$(CXXFLAGS)
 PARTICLEEDITOR_OBJECTS =  \
-	$(OBJDIR)\ParticleEditor_main.obj \
-	$(OBJDIR)\ParticleEditor_ParticleEditor.obj \
-	$(OBJDIR)\ParticleEditor_ParticleRenderer.obj \
-	$(OBJDIR)\ParticleEditor_ParticleSystem.obj
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_main.obj \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleEditor.obj \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleRenderer.obj \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleSystem.obj
 
 ### Conditionally set variables: ###
 
@@ -138,18 +138,18 @@ __OPENGLKIT_DLL_p = /DOPENGLKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\ParticleEditor
+..\..\lib\$(OBJDIR)\examples\ParticleEditor:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor mkdir ..\..\lib\$(OBJDIR)\examples\ParticleEditor
 
 ### Targets: ###
 
 all: $(__ParticleEditor___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.obj del ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.res del ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.pch del ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.pch
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -161,15 +161,15 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\ParticleEditor_main.obj: .\main.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_main.obj: .\main.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PARTICLEEDITOR_CXXFLAGS) $**
 
-$(OBJDIR)\ParticleEditor_ParticleEditor.obj: .\ParticleEditor.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleEditor.obj: .\ParticleEditor.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PARTICLEEDITOR_CXXFLAGS) $**
 
-$(OBJDIR)\ParticleEditor_ParticleRenderer.obj: .\ParticleRenderer.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleRenderer.obj: .\ParticleRenderer.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PARTICLEEDITOR_CXXFLAGS) $**
 
-$(OBJDIR)\ParticleEditor_ParticleSystem.obj: .\ParticleSystem.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleSystem.obj: .\ParticleSystem.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PARTICLEEDITOR_CXXFLAGS) $**
 

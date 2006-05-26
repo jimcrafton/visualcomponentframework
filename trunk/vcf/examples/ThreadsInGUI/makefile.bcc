@@ -38,7 +38,7 @@ THREADSINGUI_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 THREADSINGUI_OBJECTS =  \
-	$(OBJDIR)\ThreadsInGUI_ThreadsInGUI.obj
+	..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\ThreadsInGUI_ThreadsInGUI.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI
+..\..\lib\$(OBJDIR)\examples\ThreadsInGUI:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI mkdir ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI
 
 ### Targets: ###
 
 all: $(__ThreadsInGUI___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.obj del ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.res del ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.csm del ..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\*.csm
 	-if exist .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\ThreadsInGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\ThreadsInGUI_ThreadsInGUI.obj: .\ThreadsInGUI.cpp
+..\..\lib\$(OBJDIR)\examples\ThreadsInGUI\ThreadsInGUI_ThreadsInGUI.obj: .\ThreadsInGUI.cpp
 	$(CXX) -q -c -P -o$@ $(THREADSINGUI_CXXFLAGS) $**
 

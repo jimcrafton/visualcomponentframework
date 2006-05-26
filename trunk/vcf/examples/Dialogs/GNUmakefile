@@ -30,7 +30,7 @@ DIALOGS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DIALOGS_OBJECTS =  \
-	$(OBJDIR)/Dialogs_Dialogs.o
+	../../lib/$(OBJDIR)/examples/Dialogs/Dialogs_Dialogs.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Dialogs
+../../lib/$(OBJDIR)/examples/Dialogs:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Dialogs
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Dialogs/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Dialogs/*.d
 	rm -f ./Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(DIALOGS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Dialogs_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Dialogs_GRAPHICSKIT_p) $(____Dialogs_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Dialogs_Dialogs.o: ./Dialogs.cpp
+../../lib/$(OBJDIR)/examples/Dialogs/Dialogs_Dialogs.o: ./Dialogs.cpp
 	$(CXX) -c -o $@ $(DIALOGS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Dialogs/*.d

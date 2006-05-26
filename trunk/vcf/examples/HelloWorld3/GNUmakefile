@@ -30,7 +30,7 @@ HELLOWORLD3_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 HELLOWORLD3_OBJECTS =  \
-	$(OBJDIR)/HelloWorld3_HelloWorld3.o
+	../../lib/$(OBJDIR)/examples/HelloWorld3/HelloWorld3_HelloWorld3.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/HelloWorld3
+../../lib/$(OBJDIR)/examples/HelloWorld3:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/HelloWorld3
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/HelloWorld3/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/HelloWorld3/*.d
 	rm -f ./HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(HELLOWORLD3_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____HelloWorld3_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____HelloWorld3_GRAPHICSKIT_p) $(____HelloWorld3_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/HelloWorld3_HelloWorld3.o: ./HelloWorld3.cpp
+../../lib/$(OBJDIR)/examples/HelloWorld3/HelloWorld3_HelloWorld3.o: ./HelloWorld3.cpp
 	$(CXX) -c -o $@ $(HELLOWORLD3_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/HelloWorld3/*.d

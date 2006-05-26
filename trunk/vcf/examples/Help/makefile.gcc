@@ -30,7 +30,7 @@ HELP_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 HELP_OBJECTS =  \
-	$(OBJDIR)\Help_Help.o
+	..\..\lib\$(OBJDIR)\examples\Help\Help_Help.o
 
 ### Conditionally set variables: ###
 
@@ -102,17 +102,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Help
+..\..\lib\$(OBJDIR)\examples\Help:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Help mkdir ..\..\lib\$(OBJDIR)\examples\Help
 
 ### Targets: ###
 
 all: $(__mkdir_help___depname) $(__Help___depname) $(__hhc_Help___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Help\*.o del ..\..\lib\$(OBJDIR)\examples\Help\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Help\*.d del ..\..\lib\$(OBJDIR)\examples\Help\*.d
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist "Help\Help*.chm" del "Help\Help*.chm"
 
@@ -131,11 +131,11 @@ hhc_Help:
 	-hhc "Help App.hhp"
 endif
 
-$(OBJDIR)\Help_Help.o: ./Help.cpp
+..\..\lib\$(OBJDIR)\examples\Help\Help_Help.o: ./Help.cpp
 	$(CXX) -c -o $@ $(HELP_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean hhc_Help
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Help/*.d

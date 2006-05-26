@@ -34,7 +34,7 @@ BROWSER_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	$(__APPLICATIONKIT_DLL_p) $(__HTMLKIT_DLL_p) /GR /EHsc $(CPPFLAGS) \
 	$(CXXFLAGS)
 BROWSER_OBJECTS =  \
-	$(OBJDIR)\Browser_Browser.obj
+	..\..\lib\$(OBJDIR)\examples\Browser\Browser_Browser.obj
 
 ### Conditionally set variables: ###
 
@@ -133,18 +133,18 @@ __HTMLKIT_DLL_p = /DHTMLKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Browser
+..\..\lib\$(OBJDIR)\examples\Browser:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Browser mkdir ..\..\lib\$(OBJDIR)\examples\Browser
 
 ### Targets: ###
 
 all: $(__Browser___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Browser\*.obj del ..\..\lib\$(OBJDIR)\examples\Browser\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Browser\*.res del ..\..\lib\$(OBJDIR)\examples\Browser\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Browser\*.pch del ..\..\lib\$(OBJDIR)\examples\Browser\*.pch
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -156,6 +156,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\Browser_Browser.obj: .\Browser.cpp
+..\..\lib\$(OBJDIR)\examples\Browser\Browser_Browser.obj: .\Browser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(BROWSER_CXXFLAGS) $**
 

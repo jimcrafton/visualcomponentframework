@@ -30,7 +30,7 @@ CARDS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 CARDS_OBJECTS =  \
-	$(OBJDIR)/Cards_Cards.o
+	../../lib/$(OBJDIR)/examples/Cards/Cards_Cards.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Cards
+../../lib/$(OBJDIR)/examples/Cards:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Cards
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Cards/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Cards/*.d
 	rm -f ./Cards$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(CARDS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Cards_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Cards_GRAPHICSKIT_p) $(____Cards_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Cards_Cards.o: ./Cards.cpp
+../../lib/$(OBJDIR)/examples/Cards/Cards_Cards.o: ./Cards.cpp
 	$(CXX) -c -o $@ $(CARDS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Cards/*.d

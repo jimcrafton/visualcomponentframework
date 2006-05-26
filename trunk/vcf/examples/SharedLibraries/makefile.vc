@@ -17,7 +17,7 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 SIMPLEDLL_CXXFLAGS =  /MD /DWIN32  /GR /EHsc  $(CPPFLAGS) $(CXXFLAGS)
 SIMPLEDLL_OBJECTS =  \
-	$(OBJDIR)\SimpleDLL_SimpleDLL.obj
+	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SimpleDLL_SimpleDLL.obj
 SHAREDLIBRARIES_CXXFLAGS = /M$(__RUNTIME_LIBS_11)$(__DEBUG_RUNTIME_LIBS_6) \
 	/DWIN32 $(__DEBUG_INFO_3) \
 	/Fd.\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
@@ -27,7 +27,7 @@ SHAREDLIBRARIES_CXXFLAGS = /M$(__RUNTIME_LIBS_11)$(__DEBUG_RUNTIME_LIBS_6) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 SHAREDLIBRARIES_OBJECTS =  \
-	$(OBJDIR)\SharedLibraries_SharedLibraries.obj
+	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SharedLibraries_SharedLibraries.obj
 
 ### Conditionally set variables: ###
 
@@ -112,18 +112,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\SharedLibraries
+..\..\lib\$(OBJDIR)\examples\SharedLibraries:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries mkdir ..\..\lib\$(OBJDIR)\examples\SharedLibraries
 
 ### Targets: ###
 
 all: $(__SimpleDLL___depname) $(__SharedLibraries___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.obj del ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.res del ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.pch del ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.pch
 	-if exist .\SimpleDLL.so del .\SimpleDLL.so
 	-if exist .\SimpleDLL.ilk del .\SimpleDLL.ilk
 	-if exist .\SimpleDLL.pdb del .\SimpleDLL.pdb
@@ -146,9 +146,9 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\SimpleDLL_SimpleDLL.obj: .\SimpleDLL.cpp
+..\..\lib\$(OBJDIR)\examples\SharedLibraries\SimpleDLL_SimpleDLL.obj: .\SimpleDLL.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SIMPLEDLL_CXXFLAGS) $**
 
-$(OBJDIR)\SharedLibraries_SharedLibraries.obj: .\SharedLibraries.cpp
+..\..\lib\$(OBJDIR)\examples\SharedLibraries\SharedLibraries_SharedLibraries.obj: .\SharedLibraries.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SHAREDLIBRARIES_CXXFLAGS) $**
 

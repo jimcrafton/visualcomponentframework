@@ -24,7 +24,7 @@ COMMONDIRECTORIES_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 COMMONDIRECTORIES_OBJECTS =  \
-	$(OBJDIR)\CommonDirectories_CommonDirectories.obj
+	..\..\lib\$(OBJDIR)\examples\CommonDirectories\CommonDirectories_CommonDirectories.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\CommonDirectories
+..\..\lib\$(OBJDIR)\examples\CommonDirectories:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\CommonDirectories mkdir ..\..\lib\$(OBJDIR)\examples\CommonDirectories
 
 ### Targets: ###
 
 all: $(__CommonDirectories___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.obj del ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.res del ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.pch del ..\..\lib\$(OBJDIR)\examples\CommonDirectories\*.pch
 	-if exist .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\CommonDirectories_CommonDirectories.obj: .\CommonDirectories.cpp
+..\..\lib\$(OBJDIR)\examples\CommonDirectories\CommonDirectories_CommonDirectories.obj: .\CommonDirectories.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(COMMONDIRECTORIES_CXXFLAGS) $**
 

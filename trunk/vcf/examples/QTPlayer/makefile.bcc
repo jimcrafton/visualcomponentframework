@@ -38,13 +38,13 @@ QTPLAYER_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 QTPLAYER_OBJECTS =  \
-	$(OBJDIR)\QTPlayer_MainWindow.obj \
-	$(OBJDIR)\QTPlayer_QTPlayer.obj \
-	$(OBJDIR)\QTPlayer_QTPlayerAbout.obj \
-	$(OBJDIR)\QTPlayer_QTPlayerApplication.obj \
-	$(OBJDIR)\QTPlayer_QuickTimeControl.obj \
-	$(OBJDIR)\QTPlayer_QuickTimeMovie.obj \
-	$(OBJDIR)\QTPlayer_StatusBarControl.obj
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_MainWindow.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayer.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerAbout.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerApplication.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeControl.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeMovie.obj \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_StatusBarControl.obj
 
 ### Conditionally set variables: ###
 
@@ -134,18 +134,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\QTPlayer
+..\..\lib\$(OBJDIR)\examples\QTPlayer:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\QTPlayer mkdir ..\..\lib\$(OBJDIR)\examples\QTPlayer
 
 ### Targets: ###
 
 all: $(__QTPlayer___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.obj del ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.res del ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.csm del ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.csm
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -154,33 +154,33 @@ clean:
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
-.\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(QTPLAYER_OBJECTS)  $(OBJDIR)\QTPlayer_QTResFile.res
+.\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(QTPLAYER_OBJECTS)  ..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile.res
 	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -aa @&&|
-	c0x32.obj $(QTPLAYER_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____QTPlayer_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(____QTPlayer_GRAPHICSKIT_p) $(____QTPlayer_APPLICATIONKIT_p) import32.lib cw32mt$(__RUNTIME_LIBS_3).lib,, $(OBJDIR)\QTPlayer_QTResFile.res
+	c0x32.obj $(QTPLAYER_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____QTPlayer_FOUNDATIONKIT_p) $(LIBAGG_FILENAME).lib $(ZLIB_FILENAME).lib $(LIBJPEG_FILENAME).lib $(LIBPNG_FILENAME).lib $(____QTPlayer_GRAPHICSKIT_p) $(____QTPlayer_APPLICATIONKIT_p) import32.lib cw32mt$(__RUNTIME_LIBS_3).lib,, ..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile.res
 |
 !endif
 
-$(OBJDIR)\QTPlayer_MainWindow.obj: .\MainWindow.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_MainWindow.obj: .\MainWindow.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QTPlayer.obj: .\QTPlayer.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayer.obj: .\QTPlayer.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QTPlayerAbout.obj: .\QTPlayerAbout.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerAbout.obj: .\QTPlayerAbout.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QTPlayerApplication.obj: .\QTPlayerApplication.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerApplication.obj: .\QTPlayerApplication.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QuickTimeControl.obj: .\QuickTimeControl.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeControl.obj: .\QuickTimeControl.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QuickTimeMovie.obj: .\QuickTimeMovie.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeMovie.obj: .\QuickTimeMovie.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_StatusBarControl.obj: .\StatusBarControl.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_StatusBarControl.obj: .\StatusBarControl.cpp
 	$(CXX) -q -c -P -o$@ $(QTPLAYER_CXXFLAGS) $**
 
-$(OBJDIR)\QTPlayer_QTResFile.res: .\QTResFile.rc
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile.res: .\QTResFile.rc
 	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_12_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src $**
 

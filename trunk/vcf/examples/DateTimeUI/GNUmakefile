@@ -30,7 +30,7 @@ DATETIMEUI_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DATETIMEUI_OBJECTS =  \
-	$(OBJDIR)/DateTimeUI_DateTimeUI.o
+	../../lib/$(OBJDIR)/examples/DateTimeUI/DateTimeUI_DateTimeUI.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/DateTimeUI
+../../lib/$(OBJDIR)/examples/DateTimeUI:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/DateTimeUI
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/DateTimeUI/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/DateTimeUI/*.d
 	rm -f ./DateTimeUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(DATETIMEUI_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____DateTimeUI_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____DateTimeUI_GRAPHICSKIT_p) $(____DateTimeUI_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/DateTimeUI_DateTimeUI.o: ./DateTimeUI.cpp
+../../lib/$(OBJDIR)/examples/DateTimeUI/DateTimeUI_DateTimeUI.o: ./DateTimeUI.cpp
 	$(CXX) -c -o $@ $(DATETIMEUI_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/DateTimeUI/*.d

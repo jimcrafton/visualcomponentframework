@@ -20,7 +20,7 @@ DIRECTORIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DIRECTORIES_OBJECTS =  \
-	$(OBJDIR)/Directories_Directories.o
+	../../lib/$(OBJDIR)/examples/Directories/Directories_Directories.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Directories
+../../lib/$(OBJDIR)/examples/Directories:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Directories
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Directories/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Directories/*.d
 	rm -f ./Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(DIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Directories_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Directories_Directories.o: ./Directories.cpp
+../../lib/$(OBJDIR)/examples/Directories/Directories_Directories.o: ./Directories.cpp
 	$(CXX) -c -o $@ $(DIRECTORIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Directories/*.d

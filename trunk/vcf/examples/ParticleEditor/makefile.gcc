@@ -31,10 +31,10 @@ PARTICLEEDITOR_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__OPENGLKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PARTICLEEDITOR_OBJECTS =  \
-	$(OBJDIR)\ParticleEditor_main.o \
-	$(OBJDIR)\ParticleEditor_ParticleEditor.o \
-	$(OBJDIR)\ParticleEditor_ParticleRenderer.o \
-	$(OBJDIR)\ParticleEditor_ParticleSystem.o
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_main.o \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleEditor.o \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleRenderer.o \
+	..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleSystem.o
 
 ### Conditionally set variables: ###
 
@@ -107,17 +107,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\ParticleEditor
+..\..\lib\$(OBJDIR)\examples\ParticleEditor:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor mkdir ..\..\lib\$(OBJDIR)\examples\ParticleEditor
 
 ### Targets: ###
 
 all: $(__ParticleEditor___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.o del ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.d del ..\..\lib\$(OBJDIR)\examples\ParticleEditor\*.d
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_OPENGLKIT),1)
@@ -125,20 +125,20 @@ ifeq ($(OPTION_OPENGLKIT),1)
 	$(CXX) -o $@ $(PARTICLEEDITOR_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____ParticleEditor_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____ParticleEditor_GRAPHICSKIT_p) $(____ParticleEditor_APPLICATIONKIT_p) $(____ParticleEditor_OPENGLKIT_p)
 endif
 
-$(OBJDIR)\ParticleEditor_main.o: ./main.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_main.o: ./main.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\ParticleEditor_ParticleEditor.o: ./ParticleEditor.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleEditor.o: ./ParticleEditor.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\ParticleEditor_ParticleRenderer.o: ./ParticleRenderer.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleRenderer.o: ./ParticleRenderer.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\ParticleEditor_ParticleSystem.o: ./ParticleSystem.cpp
+..\..\lib\$(OBJDIR)\examples\ParticleEditor\ParticleEditor_ParticleSystem.o: ./ParticleSystem.cpp
 	$(CXX) -c -o $@ $(PARTICLEEDITOR_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\ParticleEditor/*.d

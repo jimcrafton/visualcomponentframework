@@ -38,7 +38,7 @@ HELLOWORLD2_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 HELLOWORLD2_OBJECTS =  \
-	$(OBJDIR)\HelloWorld2_HelloWorld2.obj
+	..\..\lib\$(OBJDIR)\examples\HelloWorld2\HelloWorld2_HelloWorld2.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\HelloWorld2
+..\..\lib\$(OBJDIR)\examples\HelloWorld2:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\HelloWorld2 mkdir ..\..\lib\$(OBJDIR)\examples\HelloWorld2
 
 ### Targets: ###
 
 all: $(__HelloWorld2___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.obj del ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.res del ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.csm del ..\..\lib\$(OBJDIR)\examples\HelloWorld2\*.csm
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\HelloWorld2_HelloWorld2.obj: .\HelloWorld2.cpp
+..\..\lib\$(OBJDIR)\examples\HelloWorld2\HelloWorld2_HelloWorld2.obj: .\HelloWorld2.cpp
 	$(CXX) -q -c -P -o$@ $(HELLOWORLD2_CXXFLAGS) $**
 

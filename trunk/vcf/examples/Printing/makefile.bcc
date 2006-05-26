@@ -38,7 +38,7 @@ PRINTING_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PRINTING_OBJECTS =  \
-	$(OBJDIR)\Printing_Printing.obj
+	..\..\lib\$(OBJDIR)\examples\Printing\Printing_Printing.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Printing
+..\..\lib\$(OBJDIR)\examples\Printing:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Printing mkdir ..\..\lib\$(OBJDIR)\examples\Printing
 
 ### Targets: ###
 
 all: $(__Printing___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Printing\*.obj del ..\..\lib\$(OBJDIR)\examples\Printing\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Printing\*.res del ..\..\lib\$(OBJDIR)\examples\Printing\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Printing\*.csm del ..\..\lib\$(OBJDIR)\examples\Printing\*.csm
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Printing_Printing.obj: .\Printing.cpp
+..\..\lib\$(OBJDIR)\examples\Printing\Printing_Printing.obj: .\Printing.cpp
 	$(CXX) -q -c -P -o$@ $(PRINTING_CXXFLAGS) $**
 

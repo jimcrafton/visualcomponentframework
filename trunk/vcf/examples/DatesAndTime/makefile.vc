@@ -24,7 +24,7 @@ DATESANDTIME_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 DATESANDTIME_OBJECTS =  \
-	$(OBJDIR)\DatesAndTime_DatesAndTime.obj
+	..\..\lib\$(OBJDIR)\examples\DatesAndTime\DatesAndTime_DatesAndTime.obj
 
 ### Conditionally set variables: ###
 
@@ -106,18 +106,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\DatesAndTime
+..\..\lib\$(OBJDIR)\examples\DatesAndTime:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\DatesAndTime mkdir ..\..\lib\$(OBJDIR)\examples\DatesAndTime
 
 ### Targets: ###
 
 all: $(__DatesAndTime___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.obj del ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.res del ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.pch del ..\..\lib\$(OBJDIR)\examples\DatesAndTime\*.pch
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -129,6 +129,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\DatesAndTime_DatesAndTime.obj: .\DatesAndTime.cpp
+..\..\lib\$(OBJDIR)\examples\DatesAndTime\DatesAndTime_DatesAndTime.obj: .\DatesAndTime.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DATESANDTIME_CXXFLAGS) $**
 

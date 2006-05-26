@@ -20,7 +20,7 @@ PROCESSES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PROCESSES_OBJECTS =  \
-	$(OBJDIR)/Processes_Processes.o
+	../../lib/$(OBJDIR)/examples/Processes/Processes_Processes.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Processes
+../../lib/$(OBJDIR)/examples/Processes:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Processes
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Processes/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Processes/*.d
 	rm -f ./Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(PROCESSES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Processes_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Processes_Processes.o: ./Processes.cpp
+../../lib/$(OBJDIR)/examples/Processes/Processes_Processes.o: ./Processes.cpp
 	$(CXX) -c -o $@ $(PROCESSES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Processes/*.d

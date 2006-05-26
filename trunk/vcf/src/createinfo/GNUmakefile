@@ -20,7 +20,7 @@ CREATEINFO_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 CREATEINFO_OBJECTS =  \
-	$(OBJDIR)/createinfo_createinfo.o
+	../../lib/$(OBJDIR)/utilities/createinfo/createinfo_createinfo.o
 
 ### Conditionally set variables: ###
 
@@ -71,9 +71,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/utilities/createinfo
+../../lib/$(OBJDIR)/utilities/createinfo:
+	@mkdir -p ../../lib/$(OBJDIR)/utilities/createinfo
 
 ### Targets: ###
 
@@ -84,18 +84,18 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/utilities/createinfo/*.o
+	rm -f ../../lib/$(OBJDIR)/utilities/createinfo/*.d
 	rm -f ../../bin/createinfo
 
 ../../bin/createinfo: $(CREATEINFO_OBJECTS)
 	$(CXX) -o $@ $(CREATEINFO_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____createinfo_FOUNDATIONKIT_p)
 
-$(OBJDIR)/createinfo_createinfo.o: ./createinfo.cpp
+../../lib/$(OBJDIR)/utilities/createinfo/createinfo_createinfo.o: ./createinfo.cpp
 	$(CXX) -c -o $@ $(CREATEINFO_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/utilities/createinfo/*.d

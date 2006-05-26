@@ -20,7 +20,7 @@ FILESANDDIRECTORIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-pthread $(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING \
 	-Wno-multichar -I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 FILESANDDIRECTORIES_OBJECTS =  \
-	$(OBJDIR)/FilesAndDirectories_FilesAndDirectories.o
+	../../lib/$(OBJDIR)/examples/FilesAndDirectories/FilesAndDirectories_FilesAndDirectories.o
 
 ### Conditionally set variables: ###
 
@@ -75,9 +75,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/FilesAndDirectories
+../../lib/$(OBJDIR)/examples/FilesAndDirectories:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/FilesAndDirectories
 
 ### Targets: ###
 
@@ -88,8 +88,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/FilesAndDirectories/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/FilesAndDirectories/*.d
 	rm -f ./FilesAndDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -97,11 +97,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(FILESANDDIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____FilesAndDirectories_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/FilesAndDirectories_FilesAndDirectories.o: ./FilesAndDirectories.cpp
+../../lib/$(OBJDIR)/examples/FilesAndDirectories/FilesAndDirectories_FilesAndDirectories.o: ./FilesAndDirectories.cpp
 	$(CXX) -c -o $@ $(FILESANDDIRECTORIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/FilesAndDirectories/*.d

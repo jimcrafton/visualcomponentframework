@@ -18,13 +18,13 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 SIMPLEDLL_CXXFLAGS =    $(CPPFLAGS) $(CXXFLAGS)
 SIMPLEDLL_OBJECTS =  \
-	$(OBJDIR)\SimpleDLL_SimpleDLL.o
+	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SimpleDLL_SimpleDLL.o
 SHAREDLIBRARIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_3) -mthreads \
 	$(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 \
 	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	$(CPPFLAGS) $(CXXFLAGS)
 SHAREDLIBRARIES_OBJECTS =  \
-	$(OBJDIR)\SharedLibraries_SharedLibraries.o
+	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SharedLibraries_SharedLibraries.o
 
 ### Conditionally set variables: ###
 
@@ -82,17 +82,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\SharedLibraries
+..\..\lib\$(OBJDIR)\examples\SharedLibraries:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries mkdir ..\..\lib\$(OBJDIR)\examples\SharedLibraries
 
 ### Targets: ###
 
 all: $(__SimpleDLL___depname) $(__SharedLibraries___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.o del ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.d del ..\..\lib\$(OBJDIR)\examples\SharedLibraries\*.d
 	-if exist .\SimpleDLL.so del .\SimpleDLL.so
 	-if exist .\libSimpleDLL.a del .\libSimpleDLL.a
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
@@ -107,14 +107,14 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(SHAREDLIBRARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____SharedLibraries_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)\SimpleDLL_SimpleDLL.o: ./SimpleDLL.cpp
+..\..\lib\$(OBJDIR)\examples\SharedLibraries\SimpleDLL_SimpleDLL.o: ./SimpleDLL.cpp
 	$(CXX) -c -o $@ $(SIMPLEDLL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\SharedLibraries_SharedLibraries.o: ./SharedLibraries.cpp
+..\..\lib\$(OBJDIR)\examples\SharedLibraries\SharedLibraries_SharedLibraries.o: ./SharedLibraries.cpp
 	$(CXX) -c -o $@ $(SHAREDLIBRARIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\SharedLibraries/*.d

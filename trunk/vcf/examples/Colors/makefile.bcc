@@ -38,7 +38,7 @@ COLORS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 COLORS_OBJECTS =  \
-	$(OBJDIR)\Colors_Colors.obj
+	..\..\lib\$(OBJDIR)\examples\Colors\Colors_Colors.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Colors
+..\..\lib\$(OBJDIR)\examples\Colors:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Colors mkdir ..\..\lib\$(OBJDIR)\examples\Colors
 
 ### Targets: ###
 
 all: $(__Colors___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Colors\*.obj del ..\..\lib\$(OBJDIR)\examples\Colors\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Colors\*.res del ..\..\lib\$(OBJDIR)\examples\Colors\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Colors\*.csm del ..\..\lib\$(OBJDIR)\examples\Colors\*.csm
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Colors_Colors.obj: .\Colors.cpp
+..\..\lib\$(OBJDIR)\examples\Colors\Colors_Colors.obj: .\Colors.cpp
 	$(CXX) -q -c -P -o$@ $(COLORS_CXXFLAGS) $**
 

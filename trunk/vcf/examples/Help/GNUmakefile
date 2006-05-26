@@ -36,9 +36,9 @@ SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Help
+../../lib/$(OBJDIR)/examples/Help:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Help
 
 ### Targets: ###
 
@@ -49,11 +49,11 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Help/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Help/*.d
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Help/*.d

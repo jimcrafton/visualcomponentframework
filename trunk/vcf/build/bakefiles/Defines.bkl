@@ -6,7 +6,7 @@
     The <header> tag can be used to define header files in ms projects.
     -->
     <define-tag name="headers" rules="dll,lib,exe,module">
-        <if cond="FORMAT in ['msvc6prj','msevc4prj']">
+        <if cond="FORMAT in ['msvc6prj']">
             <msvc-project-files>$(value)</msvc-project-files>
         </if>
     </define-tag>

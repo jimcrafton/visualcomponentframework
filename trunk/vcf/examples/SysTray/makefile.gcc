@@ -30,7 +30,7 @@ SYSTRAY_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SYSTRAY_OBJECTS =  \
-	$(OBJDIR)\SysTray_SysTray.o
+	..\..\lib\$(OBJDIR)\examples\SysTray\SysTray_SysTray.o
 
 ### Conditionally set variables: ###
 
@@ -96,17 +96,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\SysTray
+..\..\lib\$(OBJDIR)\examples\SysTray:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\SysTray mkdir ..\..\lib\$(OBJDIR)\examples\SysTray
 
 ### Targets: ###
 
 all: $(__SysTray___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\SysTray\*.o del ..\..\lib\$(OBJDIR)\examples\SysTray\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\SysTray\*.d del ..\..\lib\$(OBJDIR)\examples\SysTray\*.d
 	-if exist .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -114,11 +114,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(SYSTRAY_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____SysTray_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____SysTray_GRAPHICSKIT_p) $(____SysTray_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\SysTray_SysTray.o: ./SysTray.cpp
+..\..\lib\$(OBJDIR)\examples\SysTray\SysTray_SysTray.o: ./SysTray.cpp
 	$(CXX) -c -o $@ $(SYSTRAY_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\SysTray/*.d

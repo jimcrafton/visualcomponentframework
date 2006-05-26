@@ -30,7 +30,7 @@ APPLICATIONICONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONICONS_OBJECTS =  \
-	$(OBJDIR)/ApplicationIcons_ApplicationIcons.o
+	../../lib/$(OBJDIR)/examples/ApplicationIcons/ApplicationIcons_ApplicationIcons.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/ApplicationIcons
+../../lib/$(OBJDIR)/examples/ApplicationIcons:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ApplicationIcons
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/ApplicationIcons/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ApplicationIcons/*.d
 	rm -f ./ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(APPLICATIONICONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ApplicationIcons_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____ApplicationIcons_GRAPHICSKIT_p) $(____ApplicationIcons_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/ApplicationIcons_ApplicationIcons.o: ./ApplicationIcons.cpp
+../../lib/$(OBJDIR)/examples/ApplicationIcons/ApplicationIcons_ApplicationIcons.o: ./ApplicationIcons.cpp
 	$(CXX) -c -o $@ $(APPLICATIONICONS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/ApplicationIcons/*.d

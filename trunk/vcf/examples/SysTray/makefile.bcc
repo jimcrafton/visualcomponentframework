@@ -38,7 +38,7 @@ SYSTRAY_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SYSTRAY_OBJECTS =  \
-	$(OBJDIR)\SysTray_SysTray.obj
+	..\..\lib\$(OBJDIR)\examples\SysTray\SysTray_SysTray.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\SysTray
+..\..\lib\$(OBJDIR)\examples\SysTray:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\SysTray mkdir ..\..\lib\$(OBJDIR)\examples\SysTray
 
 ### Targets: ###
 
 all: $(__SysTray___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\SysTray\*.obj del ..\..\lib\$(OBJDIR)\examples\SysTray\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\SysTray\*.res del ..\..\lib\$(OBJDIR)\examples\SysTray\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\SysTray\*.csm del ..\..\lib\$(OBJDIR)\examples\SysTray\*.csm
 	-if exist .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\SysTray$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\SysTray_SysTray.obj: .\SysTray.cpp
+..\..\lib\$(OBJDIR)\examples\SysTray\SysTray_SysTray.obj: .\SysTray.cpp
 	$(CXX) -q -c -P -o$@ $(SYSTRAY_CXXFLAGS) $**
 

@@ -23,18 +23,6 @@
         <set var="OPTION_IMAGEFORMATS">1</set>
     </if>
 
-    <if cond="FORMAT=='msevc4prj'">
-        <set var="OPTION_ALLIN1">1</set>
-    </if>
-
-    <if cond="FORMAT=='dmars'">
-        <set var="OPTION_SHARED_RUNTIME">0</set>
-        <set var="OPTION_SHARED">0</set>
-        <set var="OPTION_DEBUG">1</set>
-        <set var="OPTION_OPENGLKIT">0</set>
-    </if>
-
-
     <set var="DEBUG_INFO">
         <if cond="OPTION_DEBUG=='1'">on</if>
         <if cond="OPTION_DEBUG=='0'">off</if>
@@ -84,15 +72,31 @@
         <set var="PRECOMPILED">1</set>
     </if>
 
-    <if cond="FORMAT!='autoconf'">
-        <set var="OBJDIR" make_var="1">
-            $(FORMAT)$(SUFFIX_SELECTLIB)$(SUFFIX_LIBRARY)
-        </set>
+    <set var="OBJDIR" make_var="1">
+        $(FORMAT)$(SUFFIX_SELECTLIB)$(SUFFIX_LIBRARY)
+    </set>
 
-        <set var="BUILDDIR">
-            $(OBJDIR)
-        </set>
-    </if>
+
+    <set var="FILENAME">
+        $(os.path.splitext(os.path.basename(INPUT_FILE))[0])
+    </set>
+
+    <set var="SUFFIX_BUILDDIR"/>
+    <set var="SUFFIX_BUILDDIR" cond="VCF_INTERNAL=='1'">
+        <if cond="'examples' in INPUT_FILE">
+            $(DIRSEP)examples$(DIRSEP)$(FILENAME)
+        </if>
+        <if cond="'src' in INPUT_FILE">
+            $(DIRSEP)utilities$(DIRSEP)$(FILENAME)
+        </if>
+    </set>
+
+    <set var="BUILDDIR">
+        <if cond="VCF_INTERNAL=='0'">$(OBJDIR)</if>
+        <if cond="VCF_INTERNAL=='1'">
+            $(VCF_LIB)$(DIRSEP)$(OBJDIR)$(SUFFIX_BUILDDIR)
+        </if>
+    </set>
 
 </makefile>
 

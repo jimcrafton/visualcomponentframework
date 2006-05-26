@@ -30,7 +30,7 @@ DOCVIEWBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DOCVIEWBASICS_OBJECTS =  \
-	$(OBJDIR)/DocViewBasics_DocViewBasics.o
+	../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/DocViewBasics
+../../lib/$(OBJDIR)/examples/DocViewBasics:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/DocViewBasics
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/DocViewBasics/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/DocViewBasics/*.d
 	rm -f ./DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(DOCVIEWBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____DocViewBasics_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____DocViewBasics_GRAPHICSKIT_p) $(____DocViewBasics_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/DocViewBasics_DocViewBasics.o: ./DocViewBasics.cpp
+../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o: ./DocViewBasics.cpp
 	$(CXX) -c -o $@ $(DOCVIEWBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/DocViewBasics/*.d

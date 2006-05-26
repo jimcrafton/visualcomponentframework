@@ -38,7 +38,7 @@ HEAVYANDLIGHT_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 HEAVYANDLIGHT_OBJECTS =  \
-	$(OBJDIR)\HeavyAndLight_HeavyAndLight.obj
+	..\..\lib\$(OBJDIR)\examples\HeavyAndLight\HeavyAndLight_HeavyAndLight.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\HeavyAndLight
+..\..\lib\$(OBJDIR)\examples\HeavyAndLight:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\HeavyAndLight mkdir ..\..\lib\$(OBJDIR)\examples\HeavyAndLight
 
 ### Targets: ###
 
 all: $(__HeavyAndLight___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.obj del ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.res del ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.csm del ..\..\lib\$(OBJDIR)\examples\HeavyAndLight\*.csm
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\HeavyAndLight_HeavyAndLight.obj: .\HeavyAndLight.cpp
+..\..\lib\$(OBJDIR)\examples\HeavyAndLight\HeavyAndLight_HeavyAndLight.obj: .\HeavyAndLight.cpp
 	$(CXX) -q -c -P -o$@ $(HEAVYANDLIGHT_CXXFLAGS) $**
 

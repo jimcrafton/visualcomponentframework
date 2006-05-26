@@ -30,10 +30,10 @@ TEXLABEL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TEXLABEL_OBJECTS =  \
-	$(OBJDIR)/TeXLabel_TeXLabel.o \
-	$(OBJDIR)/TeXLabel_TeXLabel.scan.o \
-	$(OBJDIR)/TeXLabel_TeXLabel.tab.o \
-	$(OBJDIR)/TeXLabel_TeXTypes.o
+	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.o \
+	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.scan.o \
+	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.tab.o \
+	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXTypes.o
 
 ### Conditionally set variables: ###
 
@@ -99,9 +99,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/TeXLabel
+../../lib/$(OBJDIR)/examples/TeXLabel:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/TeXLabel
 
 ### Targets: ###
 
@@ -112,8 +112,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/TeXLabel/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/TeXLabel/*.d
 	rm -f ./TeXLabel$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -121,20 +121,20 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TEXLABEL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____TeXLabel_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TeXLabel_GRAPHICSKIT_p) $(____TeXLabel_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/TeXLabel_TeXLabel.o: ./TeXLabel.cpp
+../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.o: ./TeXLabel.cpp
 	$(CXX) -c -o $@ $(TEXLABEL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TeXLabel_TeXLabel.scan.o: ./TeXLabel.scan.cpp
+../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.scan.o: ./TeXLabel.scan.cpp
 	$(CXX) -c -o $@ $(TEXLABEL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TeXLabel_TeXLabel.tab.o: ./TeXLabel.tab.cpp
+../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.tab.o: ./TeXLabel.tab.cpp
 	$(CXX) -c -o $@ $(TEXLABEL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/TeXLabel_TeXTypes.o: ./TeXTypes.cpp
+../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXTypes.o: ./TeXTypes.cpp
 	$(CXX) -c -o $@ $(TEXLABEL_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/TeXLabel/*.d

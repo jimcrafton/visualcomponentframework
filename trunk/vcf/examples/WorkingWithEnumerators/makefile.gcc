@@ -21,7 +21,7 @@ WORKINGWITHENUMERATORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	$(CPPFLAGS) $(CXXFLAGS)
 WORKINGWITHENUMERATORS_OBJECTS =  \
-	$(OBJDIR)\WorkingWithEnumerators_WorkingWithEnumerators.o
+	..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\WorkingWithEnumerators_WorkingWithEnumerators.o
 
 ### Conditionally set variables: ###
 
@@ -76,17 +76,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators
+..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators mkdir ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators
 
 ### Targets: ###
 
 all: $(__WorkingWithEnumerators___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.o del ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.d del ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\*.d
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -94,11 +94,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____WorkingWithEnumerators_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)\WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp
+..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators\WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp
 	$(CXX) -c -o $@ $(WORKINGWITHENUMERATORS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\WorkingWithEnumerators/*.d

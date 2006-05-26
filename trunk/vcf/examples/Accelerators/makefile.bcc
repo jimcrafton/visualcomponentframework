@@ -38,7 +38,7 @@ ACCELERATORS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ACCELERATORS_OBJECTS =  \
-	$(OBJDIR)\Accelerators_Accelerators.obj
+	..\..\lib\$(OBJDIR)\examples\Accelerators\Accelerators_Accelerators.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Accelerators
+..\..\lib\$(OBJDIR)\examples\Accelerators:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Accelerators mkdir ..\..\lib\$(OBJDIR)\examples\Accelerators
 
 ### Targets: ###
 
 all: $(__Accelerators___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Accelerators\*.obj del ..\..\lib\$(OBJDIR)\examples\Accelerators\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Accelerators\*.res del ..\..\lib\$(OBJDIR)\examples\Accelerators\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Accelerators\*.csm del ..\..\lib\$(OBJDIR)\examples\Accelerators\*.csm
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Accelerators_Accelerators.obj: .\Accelerators.cpp
+..\..\lib\$(OBJDIR)\examples\Accelerators\Accelerators_Accelerators.obj: .\Accelerators.cpp
 	$(CXX) -q -c -P -o$@ $(ACCELERATORS_CXXFLAGS) $**
 

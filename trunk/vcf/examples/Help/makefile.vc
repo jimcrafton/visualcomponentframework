@@ -32,7 +32,7 @@ HELP_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 HELP_OBJECTS =  \
-	$(OBJDIR)\Help_Help.obj
+	..\..\lib\$(OBJDIR)\examples\Help\Help_Help.obj
 
 ### Conditionally set variables: ###
 
@@ -131,18 +131,18 @@ __hhc_Help___depname = hhc_Help
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Help
+..\..\lib\$(OBJDIR)\examples\Help:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Help mkdir ..\..\lib\$(OBJDIR)\examples\Help
 
 ### Targets: ###
 
 all: $(__mkdir_help___depname) $(__Help___depname) $(__hhc_Help___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Help\*.obj del ..\..\lib\$(OBJDIR)\examples\Help\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Help\*.res del ..\..\lib\$(OBJDIR)\examples\Help\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Help\*.pch del ..\..\lib\$(OBJDIR)\examples\Help\*.pch
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -165,6 +165,6 @@ hhc_Help:
 	-hhc "Help App.hhp"
 !endif
 
-$(OBJDIR)\Help_Help.obj: .\Help.cpp
+..\..\lib\$(OBJDIR)\examples\Help\Help_Help.obj: .\Help.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(HELP_CXXFLAGS) $**
 

@@ -30,7 +30,7 @@ DOCVIEWADVANCED_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DOCVIEWADVANCED_OBJECTS =  \
-	$(OBJDIR)/DocViewAdvanced_DocViewAdvanced.o
+	../../lib/$(OBJDIR)/examples/DocViewAdvanced/DocViewAdvanced_DocViewAdvanced.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/DocViewAdvanced
+../../lib/$(OBJDIR)/examples/DocViewAdvanced:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/DocViewAdvanced
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/DocViewAdvanced/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/DocViewAdvanced/*.d
 	rm -f ./DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(DOCVIEWADVANCED_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____DocViewAdvanced_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____DocViewAdvanced_GRAPHICSKIT_p) $(____DocViewAdvanced_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/DocViewAdvanced_DocViewAdvanced.o: ./DocViewAdvanced.cpp
+../../lib/$(OBJDIR)/examples/DocViewAdvanced/DocViewAdvanced_DocViewAdvanced.o: ./DocViewAdvanced.cpp
 	$(CXX) -c -o $@ $(DOCVIEWADVANCED_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/DocViewAdvanced/*.d

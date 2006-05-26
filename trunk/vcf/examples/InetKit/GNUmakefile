@@ -22,7 +22,7 @@ INETKIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(__INTERNETKIT_DLL_p) $(CPPFLAGS) \
 	$(CXXFLAGS)
 INETKIT_OBJECTS =  \
-	$(OBJDIR)/InetKit_InetKit.o
+	../../lib/$(OBJDIR)/examples/InetKit/InetKit_InetKit.o
 
 ### Conditionally set variables: ###
 
@@ -82,9 +82,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/InetKit
+../../lib/$(OBJDIR)/examples/InetKit:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/InetKit
 
 ### Targets: ###
 
@@ -95,8 +95,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/InetKit/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/InetKit/*.d
 	rm -f ./InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_INTERNETKIT),1)
@@ -104,11 +104,11 @@ ifeq ($(OPTION_INTERNETKIT),1)
 	$(CXX) -o $@ $(INETKIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____InetKit_FOUNDATIONKIT_p) $(____InetKit_INTERNETKIT_p)
 endif
 
-$(OBJDIR)/InetKit_InetKit.o: ./InetKit.cpp
+../../lib/$(OBJDIR)/examples/InetKit/InetKit_InetKit.o: ./InetKit.cpp
 	$(CXX) -c -o $@ $(INETKIT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/InetKit/*.d

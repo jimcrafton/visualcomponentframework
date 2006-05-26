@@ -30,7 +30,7 @@ ANCHORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ANCHORS_OBJECTS =  \
-	$(OBJDIR)/Anchors_Anchors.o
+	../../lib/$(OBJDIR)/examples/Anchors/Anchors_Anchors.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Anchors
+../../lib/$(OBJDIR)/examples/Anchors:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Anchors
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Anchors/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Anchors/*.d
 	rm -f ./Anchors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ANCHORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Anchors_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Anchors_GRAPHICSKIT_p) $(____Anchors_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Anchors_Anchors.o: ./Anchors.cpp
+../../lib/$(OBJDIR)/examples/Anchors/Anchors_Anchors.o: ./Anchors.cpp
 	$(CXX) -c -o $@ $(ANCHORS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Anchors/*.d

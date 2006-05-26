@@ -38,7 +38,7 @@ STROKESANDFILLS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 STROKESANDFILLS_OBJECTS =  \
-	$(OBJDIR)\StrokesAndFills_StrokesAndFills.obj
+	..\..\lib\$(OBJDIR)\examples\StrokesAndFills\StrokesAndFills_StrokesAndFills.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\StrokesAndFills
+..\..\lib\$(OBJDIR)\examples\StrokesAndFills:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\StrokesAndFills mkdir ..\..\lib\$(OBJDIR)\examples\StrokesAndFills
 
 ### Targets: ###
 
 all: $(__StrokesAndFills___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.obj del ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.res del ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.csm del ..\..\lib\$(OBJDIR)\examples\StrokesAndFills\*.csm
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\StrokesAndFills_StrokesAndFills.obj: .\StrokesAndFills.cpp
+..\..\lib\$(OBJDIR)\examples\StrokesAndFills\StrokesAndFills_StrokesAndFills.obj: .\StrokesAndFills.cpp
 	$(CXX) -q -c -P -o$@ $(STROKESANDFILLS_CXXFLAGS) $**
 

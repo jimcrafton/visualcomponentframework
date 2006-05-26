@@ -21,7 +21,7 @@ DIRECTORIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	$(CPPFLAGS) $(CXXFLAGS)
 DIRECTORIES_OBJECTS =  \
-	$(OBJDIR)\Directories_Directories.o
+	..\..\lib\$(OBJDIR)\examples\Directories\Directories_Directories.o
 
 ### Conditionally set variables: ###
 
@@ -76,17 +76,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Directories
+..\..\lib\$(OBJDIR)\examples\Directories:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Directories mkdir ..\..\lib\$(OBJDIR)\examples\Directories
 
 ### Targets: ###
 
 all: $(__Directories___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Directories\*.o del ..\..\lib\$(OBJDIR)\examples\Directories\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Directories\*.d del ..\..\lib\$(OBJDIR)\examples\Directories\*.d
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -94,11 +94,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(DIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Directories_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)\Directories_Directories.o: ./Directories.cpp
+..\..\lib\$(OBJDIR)\examples\Directories\Directories_Directories.o: ./Directories.cpp
 	$(CXX) -c -o $@ $(DIRECTORIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Directories/*.d

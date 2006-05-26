@@ -30,7 +30,7 @@ PIXELS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PIXELS_OBJECTS =  \
-	$(OBJDIR)/Pixels_Pixels.o
+	../../lib/$(OBJDIR)/examples/Pixels/Pixels_Pixels.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Pixels
+../../lib/$(OBJDIR)/examples/Pixels:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Pixels
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Pixels/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Pixels/*.d
 	rm -f ./Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(PIXELS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Pixels_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Pixels_GRAPHICSKIT_p) $(____Pixels_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Pixels_Pixels.o: ./Pixels.cpp
+../../lib/$(OBJDIR)/examples/Pixels/Pixels_Pixels.o: ./Pixels.cpp
 	$(CXX) -c -o $@ $(PIXELS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Pixels/*.d

@@ -30,14 +30,14 @@ QTPLAYER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 QTPLAYER_OBJECTS =  \
-	$(OBJDIR)\QTPlayer_MainWindow.o \
-	$(OBJDIR)\QTPlayer_QTPlayer.o \
-	$(OBJDIR)\QTPlayer_QTPlayerAbout.o \
-	$(OBJDIR)\QTPlayer_QTPlayerApplication.o \
-	$(OBJDIR)\QTPlayer_QuickTimeControl.o \
-	$(OBJDIR)\QTPlayer_QuickTimeMovie.o \
-	$(OBJDIR)\QTPlayer_StatusBarControl.o \
-	$(OBJDIR)\QTPlayer_QTResFile_rc.o
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_MainWindow.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayer.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerAbout.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerApplication.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeControl.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeMovie.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_StatusBarControl.o \
+	..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile_rc.o
 
 ### Conditionally set variables: ###
 
@@ -109,50 +109,50 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\QTPlayer
+..\..\lib\$(OBJDIR)\examples\QTPlayer:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\QTPlayer mkdir ..\..\lib\$(OBJDIR)\examples\QTPlayer
 
 ### Targets: ###
 
 all: $(__QTPlayer___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.o del ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.d del ..\..\lib\$(OBJDIR)\examples\QTPlayer\*.d
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-.\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(QTPLAYER_OBJECTS) $(OBJDIR)\QTPlayer_QTResFile_rc.o
+.\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(QTPLAYER_OBJECTS) ..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile_rc.o
 	$(CXX) -o $@ $(QTPLAYER_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____QTPlayer_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____QTPlayer_GRAPHICSKIT_p) $(____QTPlayer_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\QTPlayer_MainWindow.o: ./MainWindow.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_MainWindow.o: ./MainWindow.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QTPlayer.o: ./QTPlayer.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayer.o: ./QTPlayer.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QTPlayerAbout.o: ./QTPlayerAbout.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerAbout.o: ./QTPlayerAbout.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QTPlayerApplication.o: ./QTPlayerApplication.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTPlayerApplication.o: ./QTPlayerApplication.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QuickTimeControl.o: ./QuickTimeControl.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeControl.o: ./QuickTimeControl.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QuickTimeMovie.o: ./QuickTimeMovie.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QuickTimeMovie.o: ./QuickTimeMovie.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_StatusBarControl.o: ./StatusBarControl.cpp
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_StatusBarControl.o: ./StatusBarControl.cpp
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\QTPlayer_QTResFile_rc.o: ./QTResFile.rc
+..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile_rc.o: ./QTResFile.rc
 	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_8_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WINDOWS --define _WIN32 --define WIN32 --define VCF_MINGW --include-dir ..\..\src
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\QTPlayer/*.d

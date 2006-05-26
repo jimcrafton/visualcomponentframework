@@ -20,7 +20,7 @@ DICTIONARIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread 
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 DICTIONARIES_OBJECTS =  \
-	$(OBJDIR)/Dictionaries_Dictionaries.o
+	../../lib/$(OBJDIR)/examples/Dictionaries/Dictionaries_Dictionaries.o
 
 ### Conditionally set variables: ###
 
@@ -75,9 +75,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Dictionaries
+../../lib/$(OBJDIR)/examples/Dictionaries:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Dictionaries
 
 ### Targets: ###
 
@@ -88,8 +88,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Dictionaries/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Dictionaries/*.d
 	rm -f ./Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -97,11 +97,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(DICTIONARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Dictionaries_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Dictionaries_Dictionaries.o: ./Dictionaries.cpp
+../../lib/$(OBJDIR)/examples/Dictionaries/Dictionaries_Dictionaries.o: ./Dictionaries.cpp
 	$(CXX) -c -o $@ $(DICTIONARIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Dictionaries/*.d

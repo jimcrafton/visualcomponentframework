@@ -23,7 +23,7 @@ CREATEBUNDLE_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 CREATEBUNDLE_OBJECTS =  \
-	$(OBJDIR)\CreateBundle_CreateBundle.obj
+	..\..\lib\$(OBJDIR)\utilities\CreateBundle\CreateBundle_CreateBundle.obj
 
 ### Conditionally set variables: ###
 
@@ -101,18 +101,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\utilities\CreateBundle
+..\..\lib\$(OBJDIR)\utilities\CreateBundle:
+	-if not exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle mkdir ..\..\lib\$(OBJDIR)\utilities\CreateBundle
 
 ### Targets: ###
 
 all: ..\..\bin\CreateBundle.exe
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.obj del ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.res del ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.res
+	-if exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.pch del ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.pch
 	-if exist ..\..\bin\CreateBundle.exe del ..\..\bin\CreateBundle.exe
 	-if exist ..\..\bin\CreateBundle.ilk del ..\..\bin\CreateBundle.ilk
 	-if exist ..\..\bin\CreateBundle.pdb del ..\..\bin\CreateBundle.pdb
@@ -122,6 +122,6 @@ clean:
 	$(CREATEBUNDLE_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____CreateBundle_FOUNDATIONKIT_p)
 <<
 
-$(OBJDIR)\CreateBundle_CreateBundle.obj: .\CreateBundle.cpp
+..\..\lib\$(OBJDIR)\utilities\CreateBundle\CreateBundle_CreateBundle.obj: .\CreateBundle.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(CREATEBUNDLE_CXXFLAGS) $**
 

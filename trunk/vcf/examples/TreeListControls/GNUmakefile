@@ -30,7 +30,7 @@ TREELISTCONTROLS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TREELISTCONTROLS_OBJECTS =  \
-	$(OBJDIR)/TreeListControls_TreeListControls.o
+	../../lib/$(OBJDIR)/examples/TreeListControls/TreeListControls_TreeListControls.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/TreeListControls
+../../lib/$(OBJDIR)/examples/TreeListControls:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/TreeListControls
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/TreeListControls/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/TreeListControls/*.d
 	rm -f ./TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TREELISTCONTROLS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____TreeListControls_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TreeListControls_GRAPHICSKIT_p) $(____TreeListControls_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/TreeListControls_TreeListControls.o: ./TreeListControls.cpp
+../../lib/$(OBJDIR)/examples/TreeListControls/TreeListControls_TreeListControls.o: ./TreeListControls.cpp
 	$(CXX) -c -o $@ $(TREELISTCONTROLS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/TreeListControls/*.d

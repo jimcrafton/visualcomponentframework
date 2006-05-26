@@ -30,7 +30,7 @@ PRINTING_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 PRINTING_OBJECTS =  \
-	$(OBJDIR)/Printing_Printing.o
+	../../lib/$(OBJDIR)/examples/Printing/Printing_Printing.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Printing
+../../lib/$(OBJDIR)/examples/Printing:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Printing
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Printing/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Printing/*.d
 	rm -f ./Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(PRINTING_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Printing_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Printing_GRAPHICSKIT_p) $(____Printing_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Printing_Printing.o: ./Printing.cpp
+../../lib/$(OBJDIR)/examples/Printing/Printing_Printing.o: ./Printing.cpp
 	$(CXX) -c -o $@ $(PRINTING_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Printing/*.d

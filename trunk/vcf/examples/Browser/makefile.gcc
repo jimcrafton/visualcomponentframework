@@ -31,7 +31,7 @@ BROWSER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__HTMLKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 BROWSER_OBJECTS =  \
-	$(OBJDIR)\Browser_Browser.o
+	..\..\lib\$(OBJDIR)\examples\Browser\Browser_Browser.o
 
 ### Conditionally set variables: ###
 
@@ -103,17 +103,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Browser
+..\..\lib\$(OBJDIR)\examples\Browser:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Browser mkdir ..\..\lib\$(OBJDIR)\examples\Browser
 
 ### Targets: ###
 
 all: $(__Browser___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Browser\*.o del ..\..\lib\$(OBJDIR)\examples\Browser\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Browser\*.d del ..\..\lib\$(OBJDIR)\examples\Browser\*.d
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_HTMLKIT),1)
@@ -121,11 +121,11 @@ ifeq ($(OPTION_HTMLKIT),1)
 	$(CXX) -o $@ $(BROWSER_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Browser_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Browser_GRAPHICSKIT_p) $(____Browser_APPLICATIONKIT_p) $(____Browser_HTMLKIT_p)
 endif
 
-$(OBJDIR)\Browser_Browser.o: ./Browser.cpp
+..\..\lib\$(OBJDIR)\examples\Browser\Browser_Browser.o: ./Browser.cpp
 	$(CXX) -c -o $@ $(BROWSER_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Browser/*.d

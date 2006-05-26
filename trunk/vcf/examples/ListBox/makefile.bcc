@@ -38,7 +38,7 @@ LISTBOX_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 LISTBOX_OBJECTS =  \
-	$(OBJDIR)\ListBox_ListBox.obj
+	..\..\lib\$(OBJDIR)\examples\ListBox\ListBox_ListBox.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\ListBox
+..\..\lib\$(OBJDIR)\examples\ListBox:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\ListBox mkdir ..\..\lib\$(OBJDIR)\examples\ListBox
 
 ### Targets: ###
 
 all: $(__ListBox___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\ListBox\*.obj del ..\..\lib\$(OBJDIR)\examples\ListBox\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\ListBox\*.res del ..\..\lib\$(OBJDIR)\examples\ListBox\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\ListBox\*.csm del ..\..\lib\$(OBJDIR)\examples\ListBox\*.csm
 	-if exist .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\ListBox$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\ListBox_ListBox.obj: .\ListBox.cpp
+..\..\lib\$(OBJDIR)\examples\ListBox\ListBox_ListBox.obj: .\ListBox.cpp
 	$(CXX) -q -c -P -o$@ $(LISTBOX_CXXFLAGS) $**
 

@@ -23,7 +23,7 @@ LOCALIZATION_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 LOCALIZATION_OBJECTS =  \
-	$(OBJDIR)\Localization_Localization.obj
+	..\..\lib\$(OBJDIR)\examples\Localization\Localization_Localization.obj
 
 ### Conditionally set variables: ###
 
@@ -104,18 +104,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Localization
+..\..\lib\$(OBJDIR)\examples\Localization:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Localization mkdir ..\..\lib\$(OBJDIR)\examples\Localization
 
 ### Targets: ###
 
 all: $(__Localization___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Localization\*.obj del ..\..\lib\$(OBJDIR)\examples\Localization\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Localization\*.res del ..\..\lib\$(OBJDIR)\examples\Localization\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Localization\*.pch del ..\..\lib\$(OBJDIR)\examples\Localization\*.pch
 	-if exist .\Localization.exe del .\Localization.exe
 	-if exist .\Localization.ilk del .\Localization.ilk
 	-if exist .\Localization.pdb del .\Localization.pdb
@@ -127,6 +127,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\Localization_Localization.obj: .\Localization.cpp
+..\..\lib\$(OBJDIR)\examples\Localization\Localization_Localization.obj: .\Localization.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(LOCALIZATION_CXXFLAGS) $**
 

@@ -21,7 +21,7 @@ CREATEBUNDLE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	$(CPPFLAGS) $(CXXFLAGS)
 CREATEBUNDLE_OBJECTS =  \
-	$(OBJDIR)\CreateBundle_CreateBundle.o
+	..\..\lib\$(OBJDIR)\utilities\CreateBundle\CreateBundle_CreateBundle.o
 
 ### Conditionally set variables: ###
 
@@ -72,27 +72,27 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\utilities\CreateBundle
+..\..\lib\$(OBJDIR)\utilities\CreateBundle:
+	-if not exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle mkdir ..\..\lib\$(OBJDIR)\utilities\CreateBundle
 
 ### Targets: ###
 
 all: ..\..\bin\CreateBundle.exe
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.o del ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.o
+	-if exist ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.d del ..\..\lib\$(OBJDIR)\utilities\CreateBundle\*.d
 	-if exist ..\..\bin\CreateBundle.exe del ..\..\bin\CreateBundle.exe
 
 ..\..\bin\CreateBundle.exe: $(CREATEBUNDLE_OBJECTS)
 	$(CXX) -o $@ $(CREATEBUNDLE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____CreateBundle_FOUNDATIONKIT_p)
 
-$(OBJDIR)\CreateBundle_CreateBundle.o: ./CreateBundle.cpp
+..\..\lib\$(OBJDIR)\utilities\CreateBundle\CreateBundle_CreateBundle.o: ./CreateBundle.cpp
 	$(CXX) -c -o $@ $(CREATEBUNDLE_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\utilities\CreateBundle/*.d

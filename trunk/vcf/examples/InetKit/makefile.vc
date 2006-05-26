@@ -25,7 +25,7 @@ INETKIT_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	$(__FOUNDATIONKIT_DLL_p) $(__INTERNETKIT_DLL_p) /GR /EHsc $(CPPFLAGS) \
 	$(CXXFLAGS)
 INETKIT_OBJECTS =  \
-	$(OBJDIR)\InetKit_InetKit.obj
+	..\..\lib\$(OBJDIR)\examples\InetKit\InetKit_InetKit.obj
 
 ### Conditionally set variables: ###
 
@@ -112,18 +112,18 @@ __INTERNETKIT_DLL_p = /DINTERNETKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\InetKit
+..\..\lib\$(OBJDIR)\examples\InetKit:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\InetKit mkdir ..\..\lib\$(OBJDIR)\examples\InetKit
 
 ### Targets: ###
 
 all: $(__InetKit___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\InetKit\*.obj del ..\..\lib\$(OBJDIR)\examples\InetKit\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\InetKit\*.res del ..\..\lib\$(OBJDIR)\examples\InetKit\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\InetKit\*.pch del ..\..\lib\$(OBJDIR)\examples\InetKit\*.pch
 	-if exist .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -135,6 +135,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\InetKit_InetKit.obj: .\InetKit.cpp
+..\..\lib\$(OBJDIR)\examples\InetKit\InetKit_InetKit.obj: .\InetKit.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(INETKIT_CXXFLAGS) $**
 

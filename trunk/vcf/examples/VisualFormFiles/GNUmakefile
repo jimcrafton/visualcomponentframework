@@ -30,7 +30,7 @@ VISUALFORMFILES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 VISUALFORMFILES_OBJECTS =  \
-	$(OBJDIR)/VisualFormFiles_VisualFormFiles.o
+	../../lib/$(OBJDIR)/examples/VisualFormFiles/VisualFormFiles_VisualFormFiles.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/VisualFormFiles
+../../lib/$(OBJDIR)/examples/VisualFormFiles:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/VisualFormFiles
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/VisualFormFiles/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/VisualFormFiles/*.d
 	rm -f ./VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(VISUALFORMFILES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____VisualFormFiles_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____VisualFormFiles_GRAPHICSKIT_p) $(____VisualFormFiles_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/VisualFormFiles_VisualFormFiles.o: ./VisualFormFiles.cpp
+../../lib/$(OBJDIR)/examples/VisualFormFiles/VisualFormFiles_VisualFormFiles.o: ./VisualFormFiles.cpp
 	$(CXX) -c -o $@ $(VISUALFORMFILES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/VisualFormFiles/*.d

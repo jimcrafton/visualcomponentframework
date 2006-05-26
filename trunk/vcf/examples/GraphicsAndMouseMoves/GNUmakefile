@@ -30,7 +30,7 @@ GRAPHICSANDMOUSEMOVES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSANDMOUSEMOVES_OBJECTS =  \
-	$(OBJDIR)/GraphicsAndMouseMoves_GraphicsAndMouseMoves.o
+	../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves/GraphicsAndMouseMoves_GraphicsAndMouseMoves.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves
+../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves/*.d
 	rm -f ./GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(GRAPHICSANDMOUSEMOVES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____GraphicsAndMouseMoves_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____GraphicsAndMouseMoves_GRAPHICSKIT_p) $(____GraphicsAndMouseMoves_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/GraphicsAndMouseMoves_GraphicsAndMouseMoves.o: ./GraphicsAndMouseMoves.cpp
+../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves/GraphicsAndMouseMoves_GraphicsAndMouseMoves.o: ./GraphicsAndMouseMoves.cpp
 	$(CXX) -c -o $@ $(GRAPHICSANDMOUSEMOVES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/GraphicsAndMouseMoves/*.d

@@ -30,7 +30,7 @@ ALIGNMENT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ALIGNMENT_OBJECTS =  \
-	$(OBJDIR)/Alignment_Alignment.o
+	../../lib/$(OBJDIR)/examples/Alignment/Alignment_Alignment.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Alignment
+../../lib/$(OBJDIR)/examples/Alignment:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Alignment
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Alignment/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Alignment/*.d
 	rm -f ./Alignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(ALIGNMENT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Alignment_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Alignment_GRAPHICSKIT_p) $(____Alignment_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Alignment_Alignment.o: ./Alignment.cpp
+../../lib/$(OBJDIR)/examples/Alignment/Alignment_Alignment.o: ./Alignment.cpp
 	$(CXX) -c -o $@ $(ALIGNMENT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Alignment/*.d

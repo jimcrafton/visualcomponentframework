@@ -30,7 +30,7 @@ GRAPHICSBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSBASICS_OBJECTS =  \
-	$(OBJDIR)\GraphicsBasics_GraphicsBasics.o
+	..\..\lib\$(OBJDIR)\examples\GraphicsBasics\GraphicsBasics_GraphicsBasics.o
 
 ### Conditionally set variables: ###
 
@@ -97,17 +97,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\GraphicsBasics
+..\..\lib\$(OBJDIR)\examples\GraphicsBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\GraphicsBasics mkdir ..\..\lib\$(OBJDIR)\examples\GraphicsBasics
 
 ### Targets: ###
 
 all: $(__GraphicsBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\GraphicsBasics\*.o del ..\..\lib\$(OBJDIR)\examples\GraphicsBasics\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\GraphicsBasics\*.d del ..\..\lib\$(OBJDIR)\examples\GraphicsBasics\*.d
 	-if exist .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -115,11 +115,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(GRAPHICSBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____GraphicsBasics_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____GraphicsBasics_GRAPHICSKIT_p) $(____GraphicsBasics_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\GraphicsBasics_GraphicsBasics.o: ./GraphicsBasics.cpp
+..\..\lib\$(OBJDIR)\examples\GraphicsBasics\GraphicsBasics_GraphicsBasics.o: ./GraphicsBasics.cpp
 	$(CXX) -c -o $@ $(GRAPHICSBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\GraphicsBasics/*.d

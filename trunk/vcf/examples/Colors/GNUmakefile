@@ -30,7 +30,7 @@ COLORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 COLORS_OBJECTS =  \
-	$(OBJDIR)/Colors_Colors.o
+	../../lib/$(OBJDIR)/examples/Colors/Colors_Colors.o
 
 ### Conditionally set variables: ###
 
@@ -96,9 +96,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Colors
+../../lib/$(OBJDIR)/examples/Colors:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Colors
 
 ### Targets: ###
 
@@ -109,8 +109,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Colors/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Colors/*.d
 	rm -f ./Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,11 +118,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(COLORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Colors_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Colors_GRAPHICSKIT_p) $(____Colors_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/Colors_Colors.o: ./Colors.cpp
+../../lib/$(OBJDIR)/examples/Colors/Colors_Colors.o: ./Colors.cpp
 	$(CXX) -c -o $@ $(COLORS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Colors/*.d

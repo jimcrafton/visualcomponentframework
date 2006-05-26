@@ -35,7 +35,7 @@ OPENGLSHAPES_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	$(__APPLICATIONKIT_DLL_p) $(__OPENGLKIT_DLL_p) /GR /EHsc $(CPPFLAGS) \
 	$(CXXFLAGS)
 OPENGLSHAPES_OBJECTS =  \
-	$(OBJDIR)\OpenGLShapes_OpenGLShapes.obj
+	..\..\lib\$(OBJDIR)\examples\OpenGLShapes\OpenGLShapes_OpenGLShapes.obj
 
 ### Conditionally set variables: ###
 
@@ -135,18 +135,18 @@ __OPENGLKIT_DLL_p = /DOPENGLKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\OpenGLShapes
+..\..\lib\$(OBJDIR)\examples\OpenGLShapes:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\OpenGLShapes mkdir ..\..\lib\$(OBJDIR)\examples\OpenGLShapes
 
 ### Targets: ###
 
 all: $(__OpenGLShapes___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.obj del ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.res del ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.pch del ..\..\lib\$(OBJDIR)\examples\OpenGLShapes\*.pch
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -158,6 +158,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\OpenGLShapes_OpenGLShapes.obj: .\OpenGLShapes.cpp
+..\..\lib\$(OBJDIR)\examples\OpenGLShapes\OpenGLShapes_OpenGLShapes.obj: .\OpenGLShapes.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(OPENGLSHAPES_CXXFLAGS) $**
 

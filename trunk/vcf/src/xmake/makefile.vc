@@ -24,11 +24,11 @@ XMAKE_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_LIB /D_MBCS /DNO_MFC /GR /EHsc \
 	$(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
-	$(OBJDIR)\xmake_lib_CmdLine.obj \
-	$(OBJDIR)\xmake_lib_FilePath.obj \
-	$(OBJDIR)\xmake_lib_xmake.obj \
-	$(OBJDIR)\xmake_lib_xmakeUtils.obj \
-	$(OBJDIR)\xmake_lib_XMLParser.obj
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.obj \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.obj \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.obj \
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.obj
 XMAKE_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) /Fd..\..\bin\xmake.pdb $(____DEBUG_RUNTIME_LIBS) \
 	$(__OPTIMIZE) $(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WINDOWS \
@@ -36,7 +36,7 @@ XMAKE_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
-	$(OBJDIR)\xmake_main.obj
+	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.obj
 
 ### Conditionally set variables: ###
 
@@ -114,18 +114,18 @@ ____OPTION_DEBUG = /D_DEBUG
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\utilities\Xmake
+..\..\lib\$(OBJDIR)\utilities\Xmake:
+	-if not exist ..\..\lib\$(OBJDIR)\utilities\Xmake mkdir ..\..\lib\$(OBJDIR)\utilities\Xmake
 
 ### Targets: ###
 
 all: ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\bin\xmake.exe
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.obj del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.res del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.res
+	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.pch del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.pch
 	-if exist ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\bin\xmake.exe del ..\..\bin\xmake.exe
@@ -143,21 +143,21 @@ clean:
 	$(XMAKE_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 <<
 
-$(OBJDIR)\xmake_lib_CmdLine.obj: .\CmdLine.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj: .\CmdLine.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\xmake_lib_FilePath.obj: .\FilePath.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.obj: .\FilePath.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\xmake_lib_xmake.obj: .\xmake.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.obj: .\xmake.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\xmake_lib_xmakeUtils.obj: .\xmakeUtils.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.obj: .\xmakeUtils.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\xmake_lib_XMLParser.obj: .\XMLParser.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.obj: .\XMLParser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_LIB_CXXFLAGS) $**
 
-$(OBJDIR)\xmake_main.obj: .\main.cpp
+..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.obj: .\main.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(XMAKE_CXXFLAGS) $**
 

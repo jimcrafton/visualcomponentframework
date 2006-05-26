@@ -38,7 +38,7 @@ TRANSFORMATIONS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TRANSFORMATIONS_OBJECTS =  \
-	$(OBJDIR)\Transformations_Transformations.obj
+	..\..\lib\$(OBJDIR)\examples\Transformations\Transformations_Transformations.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Transformations
+..\..\lib\$(OBJDIR)\examples\Transformations:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Transformations mkdir ..\..\lib\$(OBJDIR)\examples\Transformations
 
 ### Targets: ###
 
 all: $(__Transformations___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\Transformations\*.obj del ..\..\lib\$(OBJDIR)\examples\Transformations\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Transformations\*.res del ..\..\lib\$(OBJDIR)\examples\Transformations\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Transformations\*.csm del ..\..\lib\$(OBJDIR)\examples\Transformations\*.csm
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\Transformations_Transformations.obj: .\Transformations.cpp
+..\..\lib\$(OBJDIR)\examples\Transformations\Transformations_Transformations.obj: .\Transformations.cpp
 	$(CXX) -q -c -P -o$@ $(TRANSFORMATIONS_CXXFLAGS) $**
 

@@ -30,7 +30,7 @@ GRAPHICSBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE \
 	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSBASICS_OBJECTS =  \
-	$(OBJDIR)/GraphicsBasics_GraphicsBasics.o
+	../../lib/$(OBJDIR)/examples/GraphicsBasics/GraphicsBasics_GraphicsBasics.o
 
 ### Conditionally set variables: ###
 
@@ -97,9 +97,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/GraphicsBasics
+../../lib/$(OBJDIR)/examples/GraphicsBasics:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/GraphicsBasics
 
 ### Targets: ###
 
@@ -110,8 +110,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/GraphicsBasics/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/GraphicsBasics/*.d
 	rm -f ./GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -119,11 +119,11 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(GRAPHICSBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____GraphicsBasics_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____GraphicsBasics_GRAPHICSKIT_p) $(____GraphicsBasics_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)/GraphicsBasics_GraphicsBasics.o: ./GraphicsBasics.cpp
+../../lib/$(OBJDIR)/examples/GraphicsBasics/GraphicsBasics_GraphicsBasics.o: ./GraphicsBasics.cpp
 	$(CXX) -c -o $@ $(GRAPHICSBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/GraphicsBasics/*.d

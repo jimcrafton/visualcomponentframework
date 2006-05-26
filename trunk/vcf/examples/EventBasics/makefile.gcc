@@ -21,7 +21,7 @@ EVENTBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	$(CPPFLAGS) $(CXXFLAGS)
 EVENTBASICS_OBJECTS =  \
-	$(OBJDIR)\EventBasics_EventBasics.o
+	..\..\lib\$(OBJDIR)\examples\EventBasics\EventBasics_EventBasics.o
 
 ### Conditionally set variables: ###
 
@@ -76,17 +76,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\EventBasics
+..\..\lib\$(OBJDIR)\examples\EventBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\EventBasics mkdir ..\..\lib\$(OBJDIR)\examples\EventBasics
 
 ### Targets: ###
 
 all: $(__EventBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\EventBasics\*.o del ..\..\lib\$(OBJDIR)\examples\EventBasics\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\EventBasics\*.d del ..\..\lib\$(OBJDIR)\examples\EventBasics\*.d
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -94,11 +94,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(EVENTBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____EventBasics_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)\EventBasics_EventBasics.o: ./EventBasics.cpp
+..\..\lib\$(OBJDIR)\examples\EventBasics\EventBasics_EventBasics.o: ./EventBasics.cpp
 	$(CXX) -c -o $@ $(EVENTBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\EventBasics/*.d

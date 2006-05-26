@@ -30,11 +30,11 @@ TEXTEDIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TEXTEDIT_OBJECTS =  \
-	$(OBJDIR)\TextEdit_FindDialog.o \
-	$(OBJDIR)\TextEdit_ReplaceDialog.o \
-	$(OBJDIR)\TextEdit_TextEdit.o \
-	$(OBJDIR)\TextEdit_TextEditDocument.o \
-	$(OBJDIR)\TextEdit_TextEditWindow.o
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_FindDialog.o \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_ReplaceDialog.o \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEdit.o \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditDocument.o \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditWindow.o
 
 ### Conditionally set variables: ###
 
@@ -100,17 +100,17 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\TextEdit
+..\..\lib\$(OBJDIR)\examples\TextEdit:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\TextEdit mkdir ..\..\lib\$(OBJDIR)\examples\TextEdit
 
 ### Targets: ###
 
 all: $(__TextEdit___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\TextEdit\*.o del ..\..\lib\$(OBJDIR)\examples\TextEdit\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\TextEdit\*.d del ..\..\lib\$(OBJDIR)\examples\TextEdit\*.d
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
@@ -118,23 +118,23 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 	$(CXX) -o $@ $(TEXTEDIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____TextEdit_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TextEdit_GRAPHICSKIT_p) $(____TextEdit_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\TextEdit_FindDialog.o: ./FindDialog.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_FindDialog.o: ./FindDialog.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\TextEdit_ReplaceDialog.o: ./ReplaceDialog.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_ReplaceDialog.o: ./ReplaceDialog.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\TextEdit_TextEdit.o: ./TextEdit.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEdit.o: ./TextEdit.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\TextEdit_TextEditDocument.o: ./TextEditDocument.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditDocument.o: ./TextEditDocument.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\TextEdit_TextEditWindow.o: ./TextEditWindow.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditWindow.o: ./TextEditWindow.cpp
 	$(CXX) -c -o $@ $(TEXTEDIT_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\TextEdit/*.d

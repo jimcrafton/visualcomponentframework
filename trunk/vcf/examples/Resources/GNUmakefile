@@ -20,7 +20,7 @@ RESOURCES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 RESOURCES_OBJECTS =  \
-	$(OBJDIR)/Resources_Resources.o
+	../../lib/$(OBJDIR)/examples/Resources/Resources_Resources.o
 
 ### Conditionally set variables: ###
 
@@ -74,9 +74,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/Resources
+../../lib/$(OBJDIR)/examples/Resources:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Resources
 
 ### Targets: ###
 
@@ -87,8 +87,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/Resources/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Resources/*.d
 	rm -f ./Resources
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
@@ -96,11 +96,11 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(RESOURCES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Resources_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/Resources_Resources.o: ./Resources.cpp
+../../lib/$(OBJDIR)/examples/Resources/Resources_Resources.o: ./Resources.cpp
 	$(CXX) -c -o $@ $(RESOURCES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/Resources/*.d

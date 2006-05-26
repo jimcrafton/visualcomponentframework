@@ -38,7 +38,7 @@ COPYANDPASTE_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 COPYANDPASTE_OBJECTS =  \
-	$(OBJDIR)\CopyAndPaste_CopyAndPaste.obj
+	..\..\lib\$(OBJDIR)\examples\CopyAndPaste\CopyAndPaste_CopyAndPaste.obj
 
 ### Conditionally set variables: ###
 
@@ -123,18 +123,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\CopyAndPaste
+..\..\lib\$(OBJDIR)\examples\CopyAndPaste:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\CopyAndPaste mkdir ..\..\lib\$(OBJDIR)\examples\CopyAndPaste
 
 ### Targets: ###
 
 all: $(__CopyAndPaste___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.obj del ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.res del ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.csm del ..\..\lib\$(OBJDIR)\examples\CopyAndPaste\*.csm
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -149,6 +149,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\CopyAndPaste_CopyAndPaste.obj: .\CopyAndPaste.cpp
+..\..\lib\$(OBJDIR)\examples\CopyAndPaste\CopyAndPaste_CopyAndPaste.obj: .\CopyAndPaste.cpp
 	$(CXX) -q -c -P -o$@ $(COPYANDPASTE_CXXFLAGS) $**
 

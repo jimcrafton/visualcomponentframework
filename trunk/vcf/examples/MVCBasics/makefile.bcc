@@ -38,7 +38,7 @@ MVCBASICS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 MVCBASICS_OBJECTS =  \
-	$(OBJDIR)\MVCBasics_MVCBasics.obj
+	..\..\lib\$(OBJDIR)\examples\MVCBasics\MVCBasics_MVCBasics.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\MVCBasics
+..\..\lib\$(OBJDIR)\examples\MVCBasics:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\MVCBasics mkdir ..\..\lib\$(OBJDIR)\examples\MVCBasics
 
 ### Targets: ###
 
 all: $(__MVCBasics___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.obj del ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.res del ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.csm del ..\..\lib\$(OBJDIR)\examples\MVCBasics\*.csm
 	-if exist .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\MVCBasics_MVCBasics.obj: .\MVCBasics.cpp
+..\..\lib\$(OBJDIR)\examples\MVCBasics\MVCBasics_MVCBasics.obj: .\MVCBasics.cpp
 	$(CXX) -q -c -P -o$@ $(MVCBASICS_CXXFLAGS) $**
 

@@ -38,7 +38,7 @@ LOCALEUI_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 LOCALEUI_OBJECTS =  \
-	$(OBJDIR)\LocaleUI_LocaleUI.obj
+	..\..\lib\$(OBJDIR)\examples\LocaleUI\LocaleUI_LocaleUI.obj
 
 ### Conditionally set variables: ###
 
@@ -122,18 +122,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\LocaleUI
+..\..\lib\$(OBJDIR)\examples\LocaleUI:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\LocaleUI mkdir ..\..\lib\$(OBJDIR)\examples\LocaleUI
 
 ### Targets: ###
 
 all: $(__LocaleUI___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.obj del ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.res del ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.csm del ..\..\lib\$(OBJDIR)\examples\LocaleUI\*.csm
 	-if exist .\LocaleUI.exe del .\LocaleUI.exe
 	-if exist .\LocaleUI.tds del .\LocaleUI.tds
 	-if exist .\LocaleUI.ilc del .\LocaleUI.ilc
@@ -148,6 +148,6 @@ clean:
 |
 !endif
 
-$(OBJDIR)\LocaleUI_LocaleUI.obj: .\LocaleUI.cpp
+..\..\lib\$(OBJDIR)\examples\LocaleUI\LocaleUI_LocaleUI.obj: .\LocaleUI.cpp
 	$(CXX) -q -c -P -o$@ $(LOCALEUI_CXXFLAGS) $**
 

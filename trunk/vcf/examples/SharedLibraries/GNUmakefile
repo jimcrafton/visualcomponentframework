@@ -18,12 +18,12 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 SIMPLEDLL_CXXFLAGS =   -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
 SIMPLEDLL_OBJECTS =  \
-	$(OBJDIR)/SimpleDLL_SimpleDLL.o
+	../../lib/$(OBJDIR)/examples/SharedLibraries/SimpleDLL_SimpleDLL.o
 SHAREDLIBRARIES_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_3) -D_THREAD_SAFE \
 	-pthread $(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING \
 	-Wno-multichar -I../../src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SHAREDLIBRARIES_OBJECTS =  \
-	$(OBJDIR)/SharedLibraries_SharedLibraries.o
+	../../lib/$(OBJDIR)/examples/SharedLibraries/SharedLibraries_SharedLibraries.o
 
 ### Conditionally set variables: ###
 
@@ -81,9 +81,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+all: ../../lib/$(OBJDIR)/examples/SharedLibraries
+../../lib/$(OBJDIR)/examples/SharedLibraries:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/SharedLibraries
 
 ### Targets: ###
 
@@ -94,8 +94,8 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/*.d
+	rm -f ../../lib/$(OBJDIR)/examples/SharedLibraries/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/SharedLibraries/*.d
 	rm -f ./libSimpleDLL.so
 	rm -f ./libSimpleDLL.so
 	rm -f ./SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
@@ -110,14 +110,14 @@ ifeq ($(OPTION_FOUNDATIONKIT),1)
 	$(CXX) -o $@ $(SHAREDLIBRARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____SharedLibraries_FOUNDATIONKIT_p)
 endif
 
-$(OBJDIR)/SimpleDLL_SimpleDLL.o: ./SimpleDLL.cpp
+../../lib/$(OBJDIR)/examples/SharedLibraries/SimpleDLL_SimpleDLL.o: ./SimpleDLL.cpp
 	$(CXX) -c -o $@ $(SIMPLEDLL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/SharedLibraries_SharedLibraries.o: ./SharedLibraries.cpp
+../../lib/$(OBJDIR)/examples/SharedLibraries/SharedLibraries_SharedLibraries.o: ./SharedLibraries.cpp
 	$(CXX) -c -o $@ $(SHAREDLIBRARIES_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ../../lib/$(OBJDIR)/examples/SharedLibraries/*.d

@@ -38,11 +38,11 @@ TEXTEDIT_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TEXTEDIT_OBJECTS =  \
-	$(OBJDIR)\TextEdit_FindDialog.obj \
-	$(OBJDIR)\TextEdit_ReplaceDialog.obj \
-	$(OBJDIR)\TextEdit_TextEdit.obj \
-	$(OBJDIR)\TextEdit_TextEditDocument.obj \
-	$(OBJDIR)\TextEdit_TextEditWindow.obj
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_FindDialog.obj \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_ReplaceDialog.obj \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEdit.obj \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditDocument.obj \
+	..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditWindow.obj
 
 ### Conditionally set variables: ###
 
@@ -126,18 +126,18 @@ __DEBUG_INFO = -v
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\TextEdit
+..\..\lib\$(OBJDIR)\examples\TextEdit:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\TextEdit mkdir ..\..\lib\$(OBJDIR)\examples\TextEdit
 
 ### Targets: ###
 
 all: $(__TextEdit___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.csm del $(OBJDIR)\*.csm
+	-if exist ..\..\lib\$(OBJDIR)\examples\TextEdit\*.obj del ..\..\lib\$(OBJDIR)\examples\TextEdit\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\TextEdit\*.res del ..\..\lib\$(OBJDIR)\examples\TextEdit\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\TextEdit\*.csm del ..\..\lib\$(OBJDIR)\examples\TextEdit\*.csm
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
@@ -152,18 +152,18 @@ clean:
 |
 !endif
 
-$(OBJDIR)\TextEdit_FindDialog.obj: .\FindDialog.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_FindDialog.obj: .\FindDialog.cpp
 	$(CXX) -q -c -P -o$@ $(TEXTEDIT_CXXFLAGS) $**
 
-$(OBJDIR)\TextEdit_ReplaceDialog.obj: .\ReplaceDialog.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_ReplaceDialog.obj: .\ReplaceDialog.cpp
 	$(CXX) -q -c -P -o$@ $(TEXTEDIT_CXXFLAGS) $**
 
-$(OBJDIR)\TextEdit_TextEdit.obj: .\TextEdit.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEdit.obj: .\TextEdit.cpp
 	$(CXX) -q -c -P -o$@ $(TEXTEDIT_CXXFLAGS) $**
 
-$(OBJDIR)\TextEdit_TextEditDocument.obj: .\TextEditDocument.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditDocument.obj: .\TextEditDocument.cpp
 	$(CXX) -q -c -P -o$@ $(TEXTEDIT_CXXFLAGS) $**
 
-$(OBJDIR)\TextEdit_TextEditWindow.obj: .\TextEditWindow.cpp
+..\..\lib\$(OBJDIR)\examples\TextEdit\TextEdit_TextEditWindow.obj: .\TextEditWindow.cpp
 	$(CXX) -q -c -P -o$@ $(TEXTEDIT_CXXFLAGS) $**
 

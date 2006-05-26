@@ -30,8 +30,8 @@ ACTIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 ACTIONS_OBJECTS =  \
-	$(OBJDIR)\Actions_Actions.o \
-	$(OBJDIR)\Actions_Actions_rc.o
+	..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions.o \
+	..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o
 
 ### Conditionally set variables: ###
 
@@ -103,32 +103,32 @@ __DEBUG_INFO = -g
 endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Actions
+..\..\lib\$(OBJDIR)\examples\Actions:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Actions mkdir ..\..\lib\$(OBJDIR)\examples\Actions
 
 ### Targets: ###
 
 all: $(__Actions___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.o del $(OBJDIR)\*.o
-	-if exist $(OBJDIR)\*.d del $(OBJDIR)\*.d
+	-if exist ..\..\lib\$(OBJDIR)\examples\Actions\*.o del ..\..\lib\$(OBJDIR)\examples\Actions\*.o
+	-if exist ..\..\lib\$(OBJDIR)\examples\Actions\*.d del ..\..\lib\$(OBJDIR)\examples\Actions\*.d
 	-if exist .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-.\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ACTIONS_OBJECTS) $(OBJDIR)\Actions_Actions_rc.o
+.\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ACTIONS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o
 	$(CXX) -o $@ $(ACTIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Actions_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____Actions_GRAPHICSKIT_p) $(____Actions_APPLICATIONKIT_p)
 endif
 
-$(OBJDIR)\Actions_Actions.o: ./Actions.cpp
+..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions.o: ./Actions.cpp
 	$(CXX) -c -o $@ $(ACTIONS_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\Actions_Actions_rc.o: ./Actions.rc
+..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o: ./Actions.rc
 	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_8_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WINDOWS --define _WIN32 --define WIN32 --define VCF_MINGW --include-dir ..\..\src
 
 .PHONY: all clean
 
 
 # Dependencies tracking:
--include $(OBJDIR)/*.d
+-include ..\..\lib\$(OBJDIR)\examples\Actions/*.d

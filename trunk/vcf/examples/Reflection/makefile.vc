@@ -23,7 +23,7 @@ REFLECTION_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
 	/D_CRT_NON_CONFORMING_SWPRINTFS /I..\..\src /D_CONSOLE \
 	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 REFLECTION_OBJECTS =  \
-	$(OBJDIR)\Reflection_Reflection.obj
+	..\..\lib\$(OBJDIR)\examples\Reflection\Reflection_Reflection.obj
 
 ### Conditionally set variables: ###
 
@@ -105,18 +105,18 @@ __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 
 
-all: $(OBJDIR)
-$(OBJDIR):
-	-if not exist $(OBJDIR) mkdir $(OBJDIR)
+all: ..\..\lib\$(OBJDIR)\examples\Reflection
+..\..\lib\$(OBJDIR)\examples\Reflection:
+	-if not exist ..\..\lib\$(OBJDIR)\examples\Reflection mkdir ..\..\lib\$(OBJDIR)\examples\Reflection
 
 ### Targets: ###
 
 all: $(__Reflection___depname)
 
 clean: 
-	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
-	-if exist $(OBJDIR)\*.res del $(OBJDIR)\*.res
-	-if exist $(OBJDIR)\*.pch del $(OBJDIR)\*.pch
+	-if exist ..\..\lib\$(OBJDIR)\examples\Reflection\*.obj del ..\..\lib\$(OBJDIR)\examples\Reflection\*.obj
+	-if exist ..\..\lib\$(OBJDIR)\examples\Reflection\*.res del ..\..\lib\$(OBJDIR)\examples\Reflection\*.res
+	-if exist ..\..\lib\$(OBJDIR)\examples\Reflection\*.pch del ..\..\lib\$(OBJDIR)\examples\Reflection\*.pch
 	-if exist .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -128,6 +128,6 @@ clean:
 <<
 !endif
 
-$(OBJDIR)\Reflection_Reflection.obj: .\Reflection.cpp
+..\..\lib\$(OBJDIR)\examples\Reflection\Reflection_Reflection.obj: .\Reflection.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(REFLECTION_CXXFLAGS) $**
 
