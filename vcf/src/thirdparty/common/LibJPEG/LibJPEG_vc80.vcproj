@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="LibJPEG"
 	ProjectGUID="{B264CF26-2709-4B51-8055-CF1015A43EA0}"
+	RootNamespace="LibJPEG"
 	>
 	<Platforms>
 		<Platform
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../zlib,$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="../zlib,$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="2"
