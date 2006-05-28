@@ -84,7 +84,8 @@ bool Win32Application::initApp()
 #ifdef __GNUWIN32__
 	InitCommonControls();
 #else
-	INITCOMMONCONTROLSEX controlsToInit = {0};
+	INITCOMMONCONTROLSEX controlsToInit;
+	memset(&controlsToInit,0,sizeof(controlsToInit));
 	controlsToInit.dwSize = sizeof(controlsToInit);
 	controlsToInit.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx( &controlsToInit );

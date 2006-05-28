@@ -35,8 +35,9 @@ void Win32RunLoopPeer::run( const String& mode, const DateTime* duration )
 	fire after the requested elapsed amount of time. When this happens
 	quit the loop
 	*/
-	MSG msg = {0};
-
+	MSG msg;
+	memset(&msg,0,sizeof(msg));
+	
 	DateTime current = DateTime::now();
 
 	DateTime end;
@@ -150,8 +151,9 @@ uint32 Win32RunLoopPeer::addTimer( const String& mode,
 
 	activeTimers_[timer] = info;
 
-	LARGE_INTEGER timeOut = {0};
-
+	LARGE_INTEGER timeOut;
+	memset(&timeOut,0,sizeof(timeOut));
+	
 	timeOut.QuadPart = 0;
 
 	DateTime dueTime = System::convertLocalTimeToUTCTime( DateTime::now() );

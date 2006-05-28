@@ -121,7 +121,8 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 	
 
 	if ( System::isUnicodeEnabled() ) {
-		MENUITEMINFOW info = {0};
+		MENUITEMINFOW info;
+		memset(&info,0,sizeof(info));
 		info.cbSize = sizeof(info);
 		info.fMask = mask;
 		info.fState = state;
@@ -152,7 +153,8 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
 			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
 			
-			MENUITEMINFOW thisInfo = {0};			
+			MENUITEMINFOW thisInfo;
+			memset(&thisInfo,0,sizeof(thisInfo));			
 			
 			thisInfo.cbSize = sizeof(thisInfo);
 			thisInfo.fMask = MIIM_SUBMENU;			
@@ -170,7 +172,8 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 		}
 	}
 	else{
-		MENUITEMINFOA info = {0};
+		MENUITEMINFOA info;
+		memset(&info,0,sizeof(info));
 		info.cbSize = sizeof(info);
 		info.fMask = mask;
 		info.fState = state;
@@ -201,7 +204,8 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
 			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
 
-			MENUITEMINFOA thisInfo = {0};			
+			MENUITEMINFOA thisInfo;
+			memset(&thisInfo,0,sizeof(thisInfo));			
 			
 			thisInfo.cbSize = sizeof(thisInfo);
 			thisInfo.fMask = MIIM_SUBMENU;			
@@ -305,7 +309,8 @@ bool Win32MenuItem::isChecked()
 		MenuItemPeer* parentPeer = parent->getPeer();
 		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
 		if ( NULL != menuHandle ){
-			MENUITEMINFO info = {0};
+			MENUITEMINFO info;
+			memset(&info,0,sizeof(info));
 			info.cbSize = sizeof(MENUITEMINFO);
 			info.fMask = MIIM_STATE;
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
@@ -324,7 +329,8 @@ void Win32MenuItem::setChecked( const bool& checked )
 		return;
 	}
 	int index = menuItem_->getIndex();
-	MENUITEMINFO info = {0};
+	MENUITEMINFO info;
+	memset(&info,0,sizeof(info));
 	info.cbSize = sizeof(MENUITEMINFO);
 	info.fMask = MIIM_STATE;
 	MenuItem* parent = getParent();
@@ -374,7 +380,8 @@ bool Win32MenuItem::isEnabled()
 		int index = menuItem_->getIndex();
 
 
-		MENUITEMINFO info = {0};
+		MENUITEMINFO info;
+		memset(&info,0,sizeof(info));
 		info.cbSize = sizeof(MENUITEMINFO);
 		info.fMask = MIIM_STATE;
 		MenuItemPeer* parentPeer = parent->getPeer();
@@ -399,7 +406,8 @@ void Win32MenuItem::setEnabled( const bool& enabled )
 		return;
 	}
 	int index = menuItem_->getIndex();
-	MENUITEMINFO info = {0};
+	MENUITEMINFO info;
+	memset(&info,0,sizeof(info));
 	info.cbSize = sizeof(MENUITEMINFO);
 	info.fMask = MIIM_STATE;
 	MenuItem* parent = getParent();
@@ -545,7 +553,8 @@ void Win32MenuItem::setCaption( const String& caption )
 	String realCaption = generateCaption( menuItem_, caption );
 
 	if ( System::isUnicodeEnabled() ) {
-		MENUITEMINFOW info = {0};
+		MENUITEMINFOW info;
+		memset(&info,0,sizeof(info));
 		info.cbSize = sizeof(info);
 		info.fMask = MIIM_TYPE;
 		MenuItem* parent = getParent();
@@ -570,7 +579,8 @@ void Win32MenuItem::setCaption( const String& caption )
 		}
 	}
 	else {
-		MENUITEMINFOA info = {0};
+		MENUITEMINFOA info;
+		memset(&info,0,sizeof(info));
 		info.cbSize = sizeof(info);
 		info.fMask = MIIM_TYPE;
 		MenuItem* parent = getParent();
@@ -684,7 +694,8 @@ void Win32MenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 void Win32MenuItem::setAsSeparator( const bool& isSeperator )
 {
 	int index = menuItem_->getIndex();
-	MENUITEMINFO info = {0};
+	MENUITEMINFO info;
+	memset(&info,0,sizeof(info));
 	info.cbSize = sizeof(MENUITEMINFO);
 	info.fMask = MIIM_TYPE | MIIM_STATE;
 	MenuItem* parent = getParent();
@@ -715,7 +726,8 @@ void Win32MenuItem::changePaintState()
 		
 		if ( NULL != menuHandle ){
 			
-			MENUITEMINFO info = {0};
+			MENUITEMINFO info;
+			memset(&info,0,sizeof(info));
 			info.cbSize = sizeof(MENUITEMINFO);
 			info.fMask = MIIM_TYPE;
 			

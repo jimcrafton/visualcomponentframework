@@ -217,7 +217,9 @@ bool Win32SystemPeer::isUnicodeEnabled()
 {
 	bool result = false;
 
-	OSVERSIONINFO osVersion = {0};
+	OSVERSIONINFO osVersion;
+	memset(&osVersion,0,sizeof(osVersion));
+		
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 
 	GetVersionEx( &osVersion );
@@ -346,9 +348,9 @@ DateTime Win32SystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 String Win32SystemPeer::getOSName()
 {
 	String result;
-	OSVERSIONINFO osVersion = {0};
-
-	
+	OSVERSIONINFO osVersion;
+	memset(&osVersion,0,sizeof(osVersion));
+		
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
 	//need a way to tell WinCE???
@@ -367,9 +369,9 @@ String Win32SystemPeer::getOSName()
 String Win32SystemPeer::getOSVersion()
 {
 	String result;
-	OSVERSIONINFO osVersion = {0};
-
-	
+	OSVERSIONINFO osVersion;
+	memset(&osVersion,0,sizeof(osVersion));
+		
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
 	
@@ -386,7 +388,8 @@ ProgramInfo* Win32SystemPeer::getProgramInfoFromFileName( const String& fileName
 String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 {
 	String result;
-	OSVERSIONINFO osVersion = {0};	
+	OSVERSIONINFO osVersion;
+	memset(&osVersion,0,sizeof(osVersion));
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
 

@@ -389,7 +389,8 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			memDCState_ = ::SaveDC( memDC_ );
 			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
 
-			POINT oldOrg = {0};
+			POINT oldOrg;
+			memset(&oldOrg,0,sizeof(oldOrg));
 			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 
 			Color* color = peerControl_->getColor();
@@ -1274,7 +1275,8 @@ Rect Win32Tree::getItemRect( TreeItem* item )
 		std::map<TreeItem*,HTREEITEM>::iterator it = treeItems_.find( item );
 		if ( it != treeItems_.end() ){
 			if ( item->isSelected() ) {
-				RECT r = {0};
+				RECT r;
+				memset(&r,0,sizeof(r));
 				TreeView_GetItemRect( hwnd_, it->second, &r, TRUE );				
 
 				result.left_ = r.left;

@@ -311,7 +311,8 @@ LRESULT Win32SystemTrayPeer::handleTrayMessage( WPARAM wParam, LPARAM lParam )
 
 		if ( NULL != this->popupMenu_ ) {
 			// Display and track the popup menu
-			POINT pos = {0};
+			POINT pos;
+			memset(&pos,0,sizeof(pos));
 			::GetCursorPos(&pos);
 					
 			if ( Frame::getActiveFrame() ) {

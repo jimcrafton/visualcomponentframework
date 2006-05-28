@@ -491,7 +491,7 @@ bool Win32FilePeer::isExecutable()
 	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
 	if ( System::isUnicodeEnabled() ) {
 			Win32FindDataW* w = ((Win32FindDataW*)findData);
-			WIN32_FIND_DATAW& dataW2 = w->findData_ ;
+			//WIN32_FIND_DATAW& dataW2 = w->findData_ ;
 
 			WIN32_FIND_DATAW& dataW = ((Win32FindDataW*)findData)->findData_ ;
 
@@ -615,13 +615,13 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 			throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
 		}
 
-		st.wYear   = y;
-		st.wMonth  = m;
+		st.wYear   = (WORD)y;
+		st.wMonth  = (WORD)m;
 		st.wDayOfWeek = dateModified.getWeekDay();
-		st.wDay    = d;
-		st.wHour   = h;
-		st.wMinute = min;
-		st.wSecond = s;
+		st.wDay    = (WORD)d;
+		st.wHour   = (WORD)h;
+		st.wMinute = (WORD)min;
+		st.wSecond = (WORD)s;
 		st.wMilliseconds = ms;
 
 		// convert system time to filetime

@@ -1697,7 +1697,8 @@ public:
 				if ( theme ) {
 					HDC dc = GetDC( ::GetDesktopWindow() );
 					SIZE sz;
-					RECT r = {0};
+					RECT r;
+					memset(&r,0,sizeof(r));
 					
 					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, BP_PUSHBUTTON, PBS_NORMAL, 
 																&r, TS_TRUE, &sz);
@@ -2094,7 +2095,8 @@ public:
 					int dcs = SaveDC(dc);
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					HFONT font = NULL;	
-					SIZE textSz = {0};
+					SIZE textSz;
+					memset(&textSz,0,sizeof(textSz));
 
 					if ( System::isUnicodeEnabled() ) {
 						LOGFONTW* lf = (LOGFONTW*) f.getFontPeer()->getFontHandleID();
@@ -2140,8 +2142,10 @@ public:
 				else {
 					HDC dc = ::GetDC( ::GetDesktopWindow() );
 					int dcs = SaveDC(dc);
-					SIZE textSz = {0};
-					SIZE textSz2 = {0};
+					SIZE textSz;
+					memset(&textSz,0,sizeof(textSz));
+					SIZE textSz2;
+					memset(&textSz2,0,sizeof(textSz2));
 					
 					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
 					HFONT font = NULL;			
@@ -2343,7 +2347,8 @@ public:
 
 					int dy = abs(bodyContent.top - paneContent.top);
 					
-					SIZE tabSz = {0};
+					SIZE tabSz;
+					memset(&tabSz,0,sizeof(tabSz));
 					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, TABP_TABITEM, TIS_NORMAL, 
 																&r, TS_TRUE, &tabSz);
 

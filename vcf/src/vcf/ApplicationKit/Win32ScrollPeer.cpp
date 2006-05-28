@@ -125,7 +125,8 @@ void Win32ScrollPeer::setScrollableControl( Control* scrollableControl )
 
 void Win32ScrollPeer::scrollTo( const double& xPosition, const double& yPosition )
 {
-	SCROLLINFO si = {0};
+	SCROLLINFO si;
+	memset(&si,0,sizeof(si));
 
 	Scrollable* scrollable = scrollableControl_->getScrollable();
 	if ( NULL != scrollable ) {
@@ -271,7 +272,8 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	isHorzSBVisible_ = showHorzSB;
 
 
-	SCROLLINFO scrollInfoVert = {0};
+	SCROLLINFO scrollInfoVert;
+	memset(&scrollInfoVert,0,sizeof(scrollInfoVert));
 	scrollInfoVert.cbSize = sizeof(SCROLLINFO);
 	scrollInfoVert.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
 	scrollInfoVert.nPage = (long)( needVertSB ? bounds.getHeight() : 0);	
@@ -282,7 +284,8 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 		scrollInfoVert.nMax += (long)( horzSBWidth + 1 ); 
 	}
 
-	SCROLLINFO scrollInfoHorz = {0};
+	SCROLLINFO scrollInfoHorz;
+	memset(&scrollInfoHorz,0,sizeof(scrollInfoHorz));
 	scrollInfoHorz.cbSize = sizeof(SCROLLINFO);
 	scrollInfoHorz.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
 	scrollInfoHorz.nPage = (long)( needHorzSB ? bounds.getWidth() : 0 );
@@ -396,8 +399,10 @@ void Win32ScrollPeer::getHorizontalScrollRects( Rect* scrollBounds, Rect* leftBo
 	if ( ::IsWindowVisible( hScrollHWnd_ ) ) {
 		HWND scHwnd = (HWND)scrollableControl_->getPeer()->getHandleID();
 
-		RECT r = {0};
-		POINT pt = {0};
+		RECT r;
+		memset(&r,0,sizeof(r));
+		POINT pt;
+		memset(&pt,0,sizeof(pt));
 
 		::GetWindowRect( hScrollHWnd_, &r );
 		pt.x = r.left;
@@ -441,8 +446,10 @@ void Win32ScrollPeer::getVerticalScrollRects( Rect* scrollBounds, Rect* topBound
 	if ( ::IsWindowVisible( vScrollHWnd_ ) ) {
 		HWND scHwnd = (HWND)scrollableControl_->getPeer()->getHandleID();
 
-		RECT r = {0};
-		POINT pt = {0};
+		RECT r;
+		memset(&r,0,sizeof(r));
+		POINT pt;
+		memset(&pt,0,sizeof(pt));
 
 		::GetWindowRect( vScrollHWnd_, &r );
 		pt.x = r.left;

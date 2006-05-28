@@ -514,7 +514,9 @@ UnicodeString Win32LocalePeer::toString( const int& val )
 	#else
 		swprintf( tmp, L"%d", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
+		
 		initNumberFormatForIntW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -535,7 +537,8 @@ UnicodeString Win32LocalePeer::toString( const int& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%d", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -567,7 +570,8 @@ UnicodeString Win32LocalePeer::toString( const unsigned int& val )
 	#else
 		swprintf( tmp, L"%d", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -588,7 +592,8 @@ UnicodeString Win32LocalePeer::toString( const unsigned int& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%d", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -619,7 +624,8 @@ UnicodeString Win32LocalePeer::toString( const long& val )
 	#else
 		swprintf( tmp, L"%d", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -640,7 +646,8 @@ UnicodeString Win32LocalePeer::toString( const long& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%d", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -672,7 +679,8 @@ UnicodeString Win32LocalePeer::toString( const unsigned long& val )
 	#else
 		swprintf( tmp, L"%d", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -693,7 +701,8 @@ UnicodeString Win32LocalePeer::toString( const unsigned long& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%d", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForIntA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -726,7 +735,8 @@ UnicodeString Win32LocalePeer::toString( const double& val )
 	#else
 		swprintf( tmp, L"%.08f", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForFloatW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
@@ -747,7 +757,8 @@ UnicodeString Win32LocalePeer::toString( const double& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%.08f", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForFloatA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, NULL, NULL, 0 );
@@ -780,7 +791,8 @@ UnicodeString Win32LocalePeer::toString( const float& val )
 	#else
 		swprintf( tmp, L"%.08f", val );
 	#endif
-		NUMBERFMTW fmt = {0};
+		NUMBERFMTW fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForFloatW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
@@ -801,7 +813,8 @@ UnicodeString Win32LocalePeer::toString( const float& val )
 		memset(tmp,0,sizeof(tmp));
 		sprintf( tmp, "%.08f", val );
 
-		NUMBERFMTA fmt = {0};
+		NUMBERFMTA fmt;
+		memset(&fmt,0,sizeof(fmt));
 		initNumberFormatForFloatA( fmt );
 
 		int size = ::GetNumberFormatA( lcid_, 0, tmp, NULL, NULL, 0 );
@@ -1472,7 +1485,8 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 		throw RuntimeException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
 	}
 
-	SYSTEMTIME timeVal = {0};
+	SYSTEMTIME timeVal;
+	memset(&timeVal,0,sizeof(timeVal));
 
 	timeVal.wYear = y;
 	timeVal.wMonth = val.getMonth();
@@ -1524,7 +1538,8 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 {
 	UnicodeString result;
 
-	SYSTEMTIME timeVal = {0};
+	SYSTEMTIME timeVal;
+	memset(&timeVal,0,sizeof(timeVal));
 
 	unsigned long y, m, d, h, min, s, ms;
 	val.get( &y, &m, &d, &h, &min, &s, &ms );

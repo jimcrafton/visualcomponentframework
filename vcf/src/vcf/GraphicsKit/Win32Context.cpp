@@ -2202,7 +2202,8 @@ void Win32Context::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 
 		}
 
-		SIZE val = {0};
+		SIZE val;
+		memset(&val,0,sizeof(val));
 		Win32VisualStylesWrapper::GetThemePartSize (theme, dc_, BP_CHECKBOX, 0, NULL, TS_DRAW, &val );
 
 		btnRect.right = btnRect.left + val.cx;
@@ -2339,7 +2340,8 @@ void Win32Context::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 
 		}
 
-		SIZE val = {0};
+		SIZE val;
+		memset(&val,0,sizeof(val));
 		Win32VisualStylesWrapper::GetThemePartSize (theme, dc_, BP_RADIOBUTTON, 0, NULL, TS_DRAW, &val );
 
 		btnRect.right = btnRect.left + val.cx;
@@ -2433,7 +2435,8 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 {
 	HTHEME theme = NULL;
 
-	RECT r = {0};
+	RECT r;
+	memset(&r,0,sizeof(r));
 	r.left = rect->left_;
 	r.top = rect->top_;
 	r.right = rect->right_;
@@ -2512,7 +2515,8 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 
 		//now do drop down button
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"COMBOBOX" );
-		SIZE val = {0};
+		SIZE val;
+		memset(&val,0,sizeof(val));
 		HRESULT hr = Win32VisualStylesWrapper::GetThemePartSize (theme, dc_, CP_DROPDOWNBUTTON, 0, NULL, TS_DRAW, &val );
 		if ( SUCCEEDED(hr) && val.cx != 0 ) {
 			r.left = r.right - val.cx;
@@ -2743,7 +2747,8 @@ void Win32Context::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState&
 	}
 
 	if ( theme ) {
-		SIZE val = {0};
+		SIZE val;
+		memset(&val,0,sizeof(val));
 		int partState = state.isOpened() ? GLPS_OPENED : GLPS_CLOSED;
 
 		HRESULT hr = Win32VisualStylesWrapper::GetThemePartSize(theme, dc_, TVP_GLYPH, partState,
@@ -2804,7 +2809,8 @@ void Win32Context::drawThemeTab( Rect* rect, TabState& state )
 		int tabPart = 0;
 		int tabState = 0;
 
-		SIZE tabSz = {0};
+		SIZE tabSz;
+		memset(&tabSz,0,sizeof(tabSz));
 		tabPart = (state.isHighlighted() || state.isPressed()) ? TABP_TABITEMLEFTEDGE : TABP_TABITEM;
 
 		if ( state.isEnabled() ) {
@@ -2937,13 +2943,19 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 			::SelectObject( dc_, font );
 		}
 
-		SIZE bodySize = {0};
-		SIZE paneSize = {0};
+		SIZE bodySize;
+		memset(&bodySize,0,sizeof(bodySize));
+		
+		SIZE paneSize;
+		memset(&paneSize,0,sizeof(paneSize));
+		
 		RECT bodyContent = r;
 		RECT paneContent = r;
 
-		SIZE tabSz = {0};
-		SIZE tabSelectedSz = {0};
+		SIZE tabSz;
+		memset(&tabSz,0,sizeof(tabSz));
+		SIZE tabSelectedSz;
+		memset(&tabSelectedSz,0,sizeof(tabSelectedSz));
 
 		HRESULT hr = Win32VisualStylesWrapper::GetThemePartSize(theme, dc_, TABP_BODY, 1,
 																&r, TS_TRUE, &bodySize);
@@ -2989,7 +3001,8 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 			int totalTabWidth = 0;
 
 			std::vector<int> textWidths;
-			SIZE textSz = {0};
+			SIZE textSz;
+			memset(&textSz,0,sizeof(textSz));
 			//calculate total width
 			if ( System::isUnicodeEnabled() ) {
 				while ( it != tabsNames.end() ) {
@@ -3031,7 +3044,8 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 			//draw tabs
 			it = tabsNames.begin();
 			int idx = 0;
-			RECT textRect = {0};
+			RECT textRect;
+			memset(&textRect,0,sizeof(textRect));
 
 			int tabState = 0;
 			int tabPart = 0;
@@ -3220,8 +3234,10 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 
 		double start = 0;
 
-		RECT trackContent = {0};
-		SIZE thmbSize = {0};
+		RECT trackContent;
+		memset(&trackContent,0,sizeof(trackContent));
+		SIZE thmbSize;
+		memset(&thmbSize,0,sizeof(thmbSize));
 
 		if ( state.isVertical() ) {
 			tickPart = TKP_TICSVERT;
@@ -3280,7 +3296,8 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 			Win32VisualStylesWrapper::GetThemePartSize(theme, dc_, thmbPart, thmbState, &r, TS_TRUE, &thmbSize );
 		}
 
-		SIZE val = {0};
+		SIZE val;
+		memset(&val,0,sizeof(val));
 
 		Win32VisualStylesWrapper::GetThemePartSize(theme, dc_, tickPart, tickState, &r, TS_TRUE, &val );
 
@@ -3429,8 +3446,13 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 		int thmbPart = 0;
 		int thmbState = 0;
 		RECT trackR = r;
-		SIZE val = {0};
-		RECT trackContent = {0};
+		
+		SIZE val;
+		memset(&val,0,sizeof(val));
+		
+		RECT trackContent;
+		memset(&trackContent,0,sizeof(trackContent));
+		
 		RECT thmbR;
 
 		if ( state.isVertical() ) {
@@ -3838,7 +3860,10 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 	if ( theme ) {
 
 		int dcs = ::SaveDC( dc_ );
-		RECT progressContent = {0};
+		
+		RECT progressContent;
+		memset(&progressContent,0,sizeof(progressContent));
+		
 		RECT textRect;
 
 		SetBkMode(dc_, TRANSPARENT);
@@ -4288,7 +4313,8 @@ look and feel in it's background before drawing any thing else
 */
 void Win32Context::drawThemeMenuItem( Rect* rect, MenuState& state )
 {
-	RECT menuRect = {0};
+	RECT menuRect;
+	memset(&menuRect,0,sizeof(menuRect));
 
 	menuRect.left = (long)rect->left_;
 	menuRect.top = (long)rect->top_;
@@ -4403,7 +4429,8 @@ void Win32Context::drawThemeMenuItemText( Rect* rect, MenuState& state )
 {
 	HTHEME theme = NULL;
 
-	RECT rcText = {0};
+	RECT rcText;
+	memset(&rcText,0,sizeof(rcText));
 
 	rcText.left = (long)rect->left_;
 	rcText.top = (long)rect->top_;
