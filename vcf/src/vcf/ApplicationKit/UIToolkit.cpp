@@ -558,19 +558,19 @@ UIMetricsManager* UIToolkit::getUIMetricsManager()
 	return UIToolkit::toolKitInstance->internal_getUIMetricsManager();
 }
 
-double UIToolkit::getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text )
+double UIToolkit::getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
 {
-	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getValue( type, text );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getValue( type, text, alternateFont );
 }
 
-VCF::Size UIToolkit::getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text )
+VCF::Size UIToolkit::getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
 {
-	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getSize( type, text );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getSize( type, text, alternateFont );
 }
 
-VCF::Rect UIToolkit::getUIMetricRect( const UIMetricsManager::MetricType& type, VCF::Rect* rect )
+VCF::Rect UIToolkit::getUIMetricRect( const UIMetricsManager::MetricType& type, VCF::Rect* rect, Font* alternateFont )
 {
-	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getRect( type, rect );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getRect( type, rect, alternateFont );
 }
 
 UIPolicyManager* UIToolkit::getUIPolicyManager()

@@ -146,7 +146,7 @@ namespace VCF {
 		For example, if the caller passed in mtRadioBoxBtnSize, then a
 		RuntimeException would be thrown.
 		*/
-		virtual double getValue( const MetricType& type, const String& text="" ) = 0;
+		virtual double getValue( const MetricType& type, const String& text, Font* alternateFont ) = 0;
 
 		/**
 		
@@ -159,7 +159,7 @@ namespace VCF {
 		For example, if the caller passed in mtMenuIndent, then a
 		RuntimeException would be thrown.
 		*/
-		virtual Size getSize( const MetricType& type, const String& text="" ) = 0;
+		virtual Size getSize( const MetricType& type, const String& text, Font* alternateFont ) = 0;
 
 		/**
 		
@@ -172,7 +172,7 @@ namespace VCF {
 		For example, if the caller passed in mtMenuIndent, then a
 		RuntimeException would be thrown.
 		*/
-		virtual Rect getRect( const MetricType& type, Rect* rect=NULL ) = 0;
+		virtual Rect getRect( const MetricType& type, Rect* rect, Font* alternateFont ) = 0;
 
 	};
 };

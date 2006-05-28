@@ -1661,27 +1661,45 @@ public:
 		return result;
 	}
 */
-	virtual double getValue( const MetricType& type, const String& text ) {		
+	virtual double getValue( const MetricType& type, const String& text, Font* alternateFont ) {		
 		double result = 0;
 
 		switch ( type ) {
-			case mtLabelHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,8), f );
+			case mtLabelHeight : {				
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,8), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,8), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtComboBoxHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,14), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,14), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,14), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtListItemHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
 				result = pt.y_;
 			}
 			break;
@@ -1709,30 +1727,56 @@ public:
 					result = sz.cy;
 				}
 				else {
-					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-					Point pt = DLUToPixel( Point(0,14), f );
+					Point pt;
+					if ( NULL != alternateFont ) {
+						pt = DLUToPixel( Point(0,14), *alternateFont );
+					}
+					else {
+						VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+						pt = DLUToPixel( Point(0,14), f );
+					}
+
 					result = pt.y_;
 				}
 			}
 			break;
 
 			case mtRadioBoxHeight : {			
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
+				
 				result = pt.y_;				
 			}
 			break;
 
 			case mtCheckBoxHeight : {				
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
 				result = pt.y_;				
 			}
 			break;
 
 			case mtToolTipHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
 				result = pt.y_;
 			}
 			break;
@@ -1743,43 +1787,79 @@ public:
 			break;
 
 			case mtHeaderHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtTreeItemHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,9), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,9), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,9), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtTextControlHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,12), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,12), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,12), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtVerticalProgressWidth : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(14,14), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(14,14), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(14,14), f );
+				}
 				result = pt.x_;
 			}
 			break;
 
 			case mtHorizontalProgressHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,14), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,14), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,14), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtInformationalControlHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,10), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,10), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,10), f );
+				}
 				result = pt.y_;
 			}
 			break;
@@ -1914,43 +1994,80 @@ public:
 			break;
 
 			case mtWindowBorderDelta : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,7), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,7), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,7), f );
+				}
+
 				result = pt.y_;
 			}
 			break;
 
 			case mtContainerBorderDelta : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,7), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,7), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,7), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtControlVerticalSpacing : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,4), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,4), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,4), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtControlHorizontalSpacing : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(4,4), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(4,4), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(4,4), f );
+				}
 				result = pt.x_;
 			}
 			break;
 
 			case mtInformationControlTopSpacer : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,4), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,4), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,4), f );
+				}
 				result = pt.y_;
 			}
 			break;
 
 			case mtInformationControlBottomSpacer : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,4), f );
+				Point pt;
+				if ( NULL != alternateFont ) {
+					pt = DLUToPixel( Point(0,4), *alternateFont );
+				}
+				else {
+					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+					pt = DLUToPixel( Point(0,4), f );
+				}
 				result = pt.y_;
 			}
 			break;
@@ -1964,7 +2081,7 @@ public:
 		return result;
 	}
 
-	virtual Size getSize( const MetricType& type, const String& text ) {
+	virtual Size getSize( const MetricType& type, const String& text, Font* alternateFont ) {
 		Size result;
 		
 		switch ( type ) {
@@ -2308,7 +2425,7 @@ public:
 		return result;
 	}
 
-	virtual Rect getRect( const MetricType& type, Rect* rect ) {
+	virtual Rect getRect( const MetricType& type, Rect* rect, Font* alternateFont ) {
 		Rect result;
 
 		switch ( type ) {
@@ -2369,7 +2486,7 @@ public:
 
 					result.inflate( -5, -5 );
 
-					Size sz = getSize(mtTabSize,"");
+					Size sz = getSize(mtTabSize,"",NULL);
 					result.top_ += sz.height_;
 				}
 
