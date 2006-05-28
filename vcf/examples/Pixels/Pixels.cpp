@@ -6,6 +6,69 @@
 
 
 
+class HiResClock {
+public:
+
+	HiResClock(){
+		QueryPerformanceFrequency( &frequency_ );
+		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
+		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
+	}
+
+
+
+	void start() {
+		QueryPerformanceCounter( &performanceCounter1_ );
+	}
+
+	void stop() {
+		QueryPerformanceCounter( &performanceCounter2_ );
+	}
+
+	void clear() {
+		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
+		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
+	}
+
+	operator double() const {
+		return duration();
+	}
+
+	double duration() const {
+		return (double)(performanceCounter2_.LowPart - performanceCounter1_.LowPart)/(double)frequency_.LowPart;
+	}
+protected:
+	LARGE_INTEGER frequency_;
+	LARGE_INTEGER performanceCounter1_;
+	LARGE_INTEGER performanceCounter2_;
+private:
+	HiResClock( const HiResClock& rhs );
+
+
+	HiResClock& operator=( const HiResClock& rhs );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using namespace VCF;
 
 
@@ -79,7 +142,6 @@ public:
 			for ( int i=0;i<grPix.width();i++) {
 				*pixPtr = i;
 				pixPtr ++;
-				//grPix.at(i,yy).value = i;
 			}
 		}
 
@@ -107,6 +169,53 @@ public:
 					bits[idx].a = i;
 				}
 			}
+
+			{
+				HiResClock cl;
+
+				RedChannel c(pix2);
+				
+				cl.start();
+				RedChannel::Iterator it = c.begin();
+				while ( it != c.end() ) {
+					*it = 255;
+					++it ;
+				}
+				cl.stop();
+				StringUtils::trace( Format("RedChannel mod using iterator took %.8f seconds") % cl.duration() );
+				
+
+				cl.start();
+				bits = pix2;
+				uint32 sz = pix2.width() * pix2.height();
+				do {
+					sz --;
+					bits[sz].g = 23;
+				} while(sz > 0 );
+
+				cl.stop();
+				StringUtils::trace( Format("Direct mod using pointer access took %.8f seconds") % cl.duration() );
+
+
+				
+				cl.start();
+
+				BlueChannel c2(pix2);
+				c2.fill( 125 );
+
+				cl.stop();
+				StringUtils::trace( Format("BlueChannel::fill() took %.8f seconds") % cl.duration() );
+
+
+				Image* i = c.createImage();
+				c2.updateFromImage( i );
+
+				ctx->drawImage( 400, y, i );
+
+				delete i;
+
+			}
+
 		}
 
 		ctx->drawImage( 100, y, imgPtr, false );
@@ -156,6 +265,7 @@ public:
 		//ctx->setRotation( 45 );
 		
 
+		
 
 	}
 
