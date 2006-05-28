@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="FoundationKitDLL"
-	ProjectGUID="{3371C9C0-A6DF-4B4E-B481-EAE1159A7572}"
+	ProjectGUID="{49ECCC34-695D-472F-BE5F-1E2FC4FDCECD}"
 	>
 	<Platforms>
 		<Platform
