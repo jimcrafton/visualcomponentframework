@@ -462,7 +462,7 @@ public:
 	/**
 	initializes a color from its components in the 4 color space. ( not implemented yet )
 	*/
-	Color( const double& c, const double& m, const double& y, const double& k );
+	//Color( const double& c, const double& m, const double& y, const double& k );
 
 	/**
 	this is a constructor helping us in the conversion from an uint32 ( as in COLORREF )
@@ -1099,9 +1099,9 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 	}
 }
 
-inline Color::Color( const double& c, const double& m, const double& y, const double& k ) {
-	throw NotImplementedException();
-}
+//inline Color::Color( const double& c, const double& m, const double& y, const double& k ) {
+//	throw NotImplementedException();
+//}
 
 inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ) {
 	a_ = 1.0;

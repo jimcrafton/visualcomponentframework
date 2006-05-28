@@ -591,9 +591,9 @@ namespace VCF {
 	template <typename PixelType, int ColorChannelVal>
 	class Channel  {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef PixelType PixType;
-		typedef ChannelIterator<PixelType,ColorChannelVal> Iterator;
+		typedef _typename_ PixelType::Traits::ChannelType Type;
+		typedef _typename_ PixelType PixType;
+		typedef _typename_ ChannelIterator<PixelType,ColorChannelVal> Iterator;
 
 		enum ChannelField {
 			Field = ColorChannelVal
@@ -803,9 +803,9 @@ namespace VCF {
 	template <typename PixelType, int ColorChannelVal>
 	class ChannelIterator {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef Channel<PixelType,ColorChannelVal> ChannelType;
-		typedef ChannelType::PixType PixType;
+		typedef _typename_ PixelType::Traits::ChannelType Type;
+		typedef _typename_ Channel<PixelType,ColorChannelVal> ChannelType;
+		typedef _typename_ ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
 
@@ -877,7 +877,7 @@ namespace VCF {
 
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline Channel<PixelType,ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::begin()
+	inline _typename_ Channel<_typename_ PixelType, ColorChannelVal>::Iterator Channel<_typename_ PixelType,ColorChannelVal>::begin()
 	{
 		Iterator res;
 		res.setToBegin( *this );
@@ -885,7 +885,7 @@ namespace VCF {
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline Channel<PixelType,ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::end()
+	inline _typename_ Channel<_typename_ PixelType, ColorChannelVal>::Iterator Channel<_typename_ PixelType,ColorChannelVal>::end()
 	{
 		Iterator res;
 		res.setToEnd( *this );
@@ -893,13 +893,13 @@ namespace VCF {
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline void ChannelIterator<PixelType,ColorChannelVal>::setToBegin( ChannelType& channel )
+	inline void ChannelIterator< _typename_ PixelType, ColorChannelVal>::setToBegin( ChannelType& channel )
 	{
 		ptr_ = channel.ptr_;
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline void ChannelIterator<PixelType,ColorChannelVal>::setToEnd( ChannelType& channel )
+	inline void ChannelIterator<_typename_ PixelType, ColorChannelVal>::setToEnd( ChannelType& channel )
 	{
 		ptr_ = channel.endPtr_;
 	}
@@ -923,8 +923,8 @@ namespace VCF {
 	template <>
 	class ChannelIterator<ColorPixels::Type,ccRed> {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef Channel<PixelType,ccRed> ChannelType;
+		typedef ColorPixels::Type::Traits::ChannelType Type;
+		typedef Channel<ColorPixels::Type,ccRed> ChannelType;
 		typedef ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
@@ -963,7 +963,7 @@ namespace VCF {
 			return *this;
 		}
 
-		friend class Channel<PixelType,ccRed>;
+		friend class Channel<ColorPixels::Type,ccRed>;
 	protected:
 		void setToBegin( ChannelType& channel ) {
 			ptr_ = channel.ptr_;
@@ -983,8 +983,8 @@ namespace VCF {
 	template <>
 	class ChannelIterator<ColorPixels::Type,ccGreen> {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef Channel<PixelType,ccGreen> ChannelType;
+		typedef ColorPixels::Type::Traits::ChannelType Type;
+		typedef Channel<ColorPixels::Type,ccGreen> ChannelType;
 		typedef ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
@@ -1023,7 +1023,7 @@ namespace VCF {
 			return *this;
 		}
 
-		friend class Channel<PixelType,ccGreen>;
+		friend class Channel<ColorPixels::Type,ccGreen>;
 	protected:
 		void setToBegin( ChannelType& channel ) {
 			ptr_ = channel.ptr_;
@@ -1043,8 +1043,8 @@ namespace VCF {
 	template <>
 	class ChannelIterator<ColorPixels::Type,ccBlue> {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef Channel<PixelType,ccBlue> ChannelType;
+		typedef ColorPixels::Type::Traits::ChannelType Type;
+		typedef Channel<ColorPixels::Type,ccBlue> ChannelType;
 		typedef ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
@@ -1083,7 +1083,7 @@ namespace VCF {
 			return *this;
 		}
 
-		friend class Channel<PixelType,ccBlue>;
+		friend class Channel<ColorPixels::Type,ccBlue>;
 	protected:
 		void setToBegin( ChannelType& channel ) {
 			ptr_ = channel.ptr_;
@@ -1104,8 +1104,8 @@ namespace VCF {
 	template <>
 	class ChannelIterator<ColorPixels::Type,ccAlpha> {
 	public:
-		typedef PixelType::Traits::ChannelType Type;
-		typedef Channel<PixelType,ccAlpha> ChannelType;
+		typedef ColorPixels::Type::Traits::ChannelType Type;
+		typedef Channel<ColorPixels::Type,ccAlpha> ChannelType;
 		typedef ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
@@ -1144,7 +1144,7 @@ namespace VCF {
 			return *this;
 		}
 
-		friend class Channel<PixelType,ccAlpha>;
+		friend class Channel<ColorPixels::Type,ccAlpha>;
 	protected:
 		void setToBegin( ChannelType& channel ) {
 			ptr_ = channel.ptr_;
