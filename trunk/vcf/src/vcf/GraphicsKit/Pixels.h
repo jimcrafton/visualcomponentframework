@@ -592,8 +592,8 @@ namespace VCF {
 	class Channel  {
 	public:
 		typedef _typename_ PixelType::Traits::ChannelType Type;
-		typedef _typename_ PixelType PixType;
-		typedef _typename_ ChannelIterator<PixelType,ColorChannelVal> Iterator;
+		typedef PixelType PixType;
+		typedef ChannelIterator<PixelType,ColorChannelVal> Iterator;
 
 		enum ChannelField {
 			Field = ColorChannelVal
@@ -770,7 +770,7 @@ namespace VCF {
 		}
 
 		Image* createImage() {
-			Image* result = GraphicsToolkit::createImage( width_, height_, Image::itGrayscale );
+			Image* result = this->GraphicsToolkit::createImage( width_, height_, Image::itGrayscale );
 
 			Type* data = (Type*)result->getData();
 
@@ -804,7 +804,7 @@ namespace VCF {
 	class ChannelIterator {
 	public:
 		typedef _typename_ PixelType::Traits::ChannelType Type;
-		typedef _typename_ Channel<PixelType,ColorChannelVal> ChannelType;
+		typedef Channel<PixelType,ColorChannelVal> ChannelType;
 		typedef _typename_ ChannelType::PixType PixType;
 
 		ChannelIterator(): ptr_(NULL){}
@@ -876,8 +876,8 @@ namespace VCF {
 	};
 
 
-	template <typename PixelType, int ColorChannelVal> 
-	inline _typename_ Channel<_typename_ PixelType, ColorChannelVal>::Iterator Channel<_typename_ PixelType,ColorChannelVal>::begin()
+	template <typename PixelType, int ColorChannelVal>
+	inline _typename_ Channel<PixelType, ColorChannelVal>::Iterator Channel<PixelType, ColorChannelVal>::begin()
 	{
 		Iterator res;
 		res.setToBegin( *this );
@@ -885,7 +885,7 @@ namespace VCF {
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline _typename_ Channel<_typename_ PixelType, ColorChannelVal>::Iterator Channel<_typename_ PixelType,ColorChannelVal>::end()
+	inline _typename_ Channel<PixelType, ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::end()
 	{
 		Iterator res;
 		res.setToEnd( *this );
@@ -893,13 +893,13 @@ namespace VCF {
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline void ChannelIterator< _typename_ PixelType, ColorChannelVal>::setToBegin( ChannelType& channel )
+	inline void ChannelIterator<PixelType, ColorChannelVal>::setToBegin( ChannelType& channel )
 	{
 		ptr_ = channel.ptr_;
 	}
 
 	template <typename PixelType, int ColorChannelVal> 
-	inline void ChannelIterator<_typename_ PixelType, ColorChannelVal>::setToEnd( ChannelType& channel )
+	inline void ChannelIterator<PixelType, ColorChannelVal>::setToEnd( ChannelType& channel )
 	{
 		ptr_ = channel.endPtr_;
 	}
