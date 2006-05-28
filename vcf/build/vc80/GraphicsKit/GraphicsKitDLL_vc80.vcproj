@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="GraphicsKitDLL"
-	ProjectGUID="{C12648AC-9F9A-4FAC-B66F-1EC15152F7CF}"
+	ProjectGUID="{B68A433E-59B4-41A2-9243-AF448A3F7BAD}"
 	RootNamespace="GraphicsKitDLL"
 	>
 	<Platforms>

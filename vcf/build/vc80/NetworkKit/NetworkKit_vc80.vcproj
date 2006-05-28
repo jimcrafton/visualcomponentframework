@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="NetworkKit"
-	ProjectGUID="{9CF914C7-A8C3-411C-B444-73BEDBBAE5B8}"
+	ProjectGUID="{BD53C24C-C67B-4B24-A05F-4A1BBE5A8094}"
 	>
 	<Platforms>
 		<Platform
