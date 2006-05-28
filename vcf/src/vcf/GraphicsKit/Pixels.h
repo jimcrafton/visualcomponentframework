@@ -770,7 +770,7 @@ namespace VCF {
 		}
 
 		Image* createImage() {
-			Image* result = this->GraphicsToolkit::createImage( width_, height_, Image::itGrayscale );
+			Image* result = GraphicsToolkit::createImage( width_, height_, Image::itGrayscale );
 
 			Type* data = (Type*)result->getData();
 
