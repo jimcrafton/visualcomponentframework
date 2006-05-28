@@ -1540,9 +1540,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 
 		viewBounds.right_ = minVal<>( innerBounds.right_-1.0,viewBounds.right_ );
 		viewBounds.bottom_ = minVal<>( innerBounds.bottom_-1.0,viewBounds.bottom_ );
-
-		UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
-
+		
 		double dx = scrollable->getVirtualViewWidth() - innerBounds.getWidth();
 		double dy = scrollable->getVirtualViewHeight() - innerBounds.getHeight();
 		
@@ -1589,7 +1587,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 		viewBounds.offset( scrollPos.x_, scrollPos.y_ );
 
 		if ( isHorzScrollbarVisible && ( scrollable->getVirtualViewWidth() > scrollAdjustedWidth ) ) {		
-			Size horzSize = mgr->getSize( UIMetricsManager::mtHorizontalSliderThumbSize );
+			Size horzSize =  UIToolkit::getUIMetricSize( UIMetricsManager::mtHorizontalSliderThumbSize );
 
 			//viewBounds.bottom_ = minVal<>( viewBounds.bottom_-horzSize.height_,viewBounds.bottom_ );
 						
@@ -1601,7 +1599,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 			}
 		}
 		else {
-			Size horzSize = mgr->getSize( UIMetricsManager::mtHorizontalSliderThumbSize );
+			Size horzSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtHorizontalSliderThumbSize );
 
 			//viewBounds.bottom_ = minVal<>( viewBounds.bottom_-horzSize.height_,viewBounds.bottom_ );
 
@@ -1615,7 +1613,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 
 		
 		if ( isVertScrollbarVisible && ( scrollable->getVirtualViewHeight() > scrollAdjustedHeight ) ) {
-			Size vertSize = mgr->getSize( UIMetricsManager::mtVerticalSliderThumbSize );
+			Size vertSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtVerticalSliderThumbSize );
 
 			//viewBounds.right_ = minVal<>( viewBounds.right_-vertSize.width_,viewBounds.right_ );
 
@@ -1625,7 +1623,7 @@ void Control::adjustViewableBoundsAndOriginForScrollable( GraphicsContext* conte
 			}
 		}
 		else {
-			Size vertSize = mgr->getSize( UIMetricsManager::mtVerticalSliderThumbSize );
+			Size vertSize = UIToolkit::getUIMetricSize( UIMetricsManager::mtVerticalSliderThumbSize );
 
 			//viewBounds.right_ = minVal<>( viewBounds.right_-vertSize.width_,viewBounds.right_ );
 

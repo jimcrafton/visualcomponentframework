@@ -408,11 +408,11 @@ public:
 
 	static UIMetricsManager* getUIMetricsManager();
 
-	static double getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text="" );
+	static double getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text="", Font* alternateFont=NULL );
 
-	static Size getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text="" );
+	static Size getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text="", Font* alternateFont=NULL );
 
-	static Rect getUIMetricRect( const UIMetricsManager::MetricType& type, Rect* rect=NULL );
+	static Rect getUIMetricRect( const UIMetricsManager::MetricType& type, Rect* rect=NULL, Font* alternateFont=NULL );
 
 	static UIPolicyManager* getUIPolicyManager();
 
