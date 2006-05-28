@@ -562,6 +562,608 @@ namespace VCF {
 	typedef Pixels<SysGrayscalePixelType> GrayPixels;
 
 };
+
+
+
+
+
+
+
+
+namespace VCF {
+
+
+	template<typename PixelType, int ColorChannelVal>
+	class ChannelIterator;
+
+	template<typename PixelType, int ColorChannelVal>
+	class Channel;
+
+	enum ColorChannel {
+		ccRed,
+		ccGreen,
+		ccBlue,
+		ccAlpha
+	};
+
+
+
+	template <typename PixelType, int ColorChannelVal>
+	class Channel  {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef PixelType PixType;
+		typedef ChannelIterator<PixelType,ColorChannelVal> Iterator;
+
+		enum ChannelField {
+			Field = ColorChannelVal
+		};
+
+
+		Channel( ColorPixels& colorPixels ): ptr_(NULL), endPtr_(NULL), pixels_(colorPixels),width_(0),height_(0){
+			width_ = pixels_.width();
+			height_ = pixels_.height();
+
+			ptr_ = pixels_;
+			endPtr_ = ptr_ + (width_ * height_) + 1;			
+		}
+
+		~Channel() {}
+
+		Iterator begin();
+		Iterator end();
+
+
+		uint32 copyTo( Type* channelData, const uint32& dataLength ) const {
+			uint32 result = 0;
+
+			VCF_ASSERT( dataLength <= width_ * height_ );
+
+
+			Type* tmp = channelData;
+			while ( result < dataLength ) {
+				switch ( Field ) {
+					case ccRed : {
+						*tmp = ptr_[result].r;
+					}
+					break;
+
+					case ccGreen : {
+						*tmp = ptr_[result].g;
+					}
+					break;
+
+					case ccBlue : {
+						*tmp = ptr_[result].b;
+					}
+					break;
+
+					case ccAlpha : {
+						*tmp = ptr_[result].a;
+					}
+					break;
+				}
+
+				tmp++;
+				result ++;
+			}
+			return result;
+		}
+
+		uint32 copyFrom( const Type* channelData, const uint32& dataLength ) {
+			uint32 result = 0;
+
+			VCF_ASSERT( dataLength <= width_ * height_ );
+
+
+			const Type* tmp = channelData;
+			while ( result < dataLength ) {
+				switch ( Field ) {
+					case ccRed : {
+						ptr_[result].r = *tmp;
+					}
+					break;
+
+					case ccGreen : {
+						ptr_[result].g = *tmp;
+					}
+					break;
+
+					case ccBlue : {
+						ptr_[result].b = *tmp;
+					}
+					break;
+
+					case ccAlpha : {
+						ptr_[result].a = *tmp;
+					}
+					break;
+				}
+
+				tmp++;
+				result ++;
+			}
+			return result;
+		}
+
+		void fill( const Type& val ) {
+			PixType* tmp = ptr_;
+			while ( tmp != endPtr_ ) {
+
+				switch ( Field ) {
+					case ccRed : {
+						tmp->r = val;
+					}
+					break;
+
+					case ccGreen : {
+						tmp->g = val;
+					}
+					break;
+
+					case ccBlue : {
+						tmp->b = val;
+					}
+					break;
+
+					case ccAlpha : {
+						tmp->a = val;
+					}
+					break;
+				}
+				tmp ++;
+			}
+		}
+
+		Type& at( uint32 x, uint32 y ) {
+
+			switch ( Field ) {
+				case ccRed : {
+					return ptr_[(y*width_)+x].r;
+				}
+				break;
+
+				case ccGreen : {
+					return ptr_[(y*width_)+x].g;
+				}
+				break;
+
+				case ccBlue : {
+					return ptr_[(y*width_)+x].b;
+				}
+				break;
+
+				case ccAlpha : {
+					return ptr_[(y*width_)+x].a;
+				}
+				break;
+			}
+
+			return ptr_[(y*width_)+x].b;
+		}
+
+		Type at( uint32 x, uint32 y ) const {
+
+			switch ( Field ) {
+				case ccRed : {
+					return ptr_[(y*width_)+x].r;
+				}
+				break;
+
+				case ccGreen : {
+					return ptr_[(y*width_)+x].g;
+				}
+				break;
+
+				case ccBlue : {
+					return ptr_[(y*width_)+x].b;
+				}
+				break;
+
+				case ccAlpha : {
+					return ptr_[(y*width_)+x].a;
+				}
+				break;
+			}
+
+			return ptr_[(y*width_)+x].b;
+		}
+
+		Image* createImage() {
+			Image* result = GraphicsToolkit::createImage( width_, height_, Image::itGrayscale );
+
+			Type* data = (Type*)result->getData();
+
+			copyTo( data, height_ * width_ );
+
+			return result;
+		}
+
+		void updateFromImage( Image* image ) {
+			VCF_ASSERT( image->getWidth() == width_ );
+			VCF_ASSERT( image->getHeight() == height_ );
+			VCF_ASSERT( image->getType() == Image::itGrayscale );
+
+			Type* data = (Type*)image->getData();
+
+			copyFrom( data, width_ * height_ );
+		}
+
+		friend class ChannelIterator<PixelType,ColorChannelVal>;
+	protected:
+		PixType* ptr_;
+		PixType* endPtr_;
+		ColorPixels& pixels_;
+		uint32 width_;
+		uint32 height_;
+	};
+
+	
+
+	template <typename PixelType, int ColorChannelVal>
+	class ChannelIterator {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef Channel<PixelType,ColorChannelVal> ChannelType;
+		typedef ChannelType::PixType PixType;
+
+		ChannelIterator(): ptr_(NULL){}
+
+		~ChannelIterator(){}
+
+
+		bool operator == ( const ChannelIterator& rhs ) const {
+			return ptr_ == rhs.ptr_;
+		}
+
+		bool operator != ( const ChannelIterator& rhs ) const {
+			return ptr_ != rhs.ptr_;
+		}
+
+		Type& operator*() {
+
+			switch ( ChannelType::Field ) {
+				case ccRed : {
+					return ptr_->r;
+				}
+				break;
+
+				case ccGreen : {
+					return ptr_->g;
+				}
+				break;
+
+				case ccBlue : {
+					return ptr_->g;
+				}
+				break;
+
+				case ccAlpha : {
+					return ptr_->a;
+				}
+				break;
+			}
+
+			return ptr_->b; 
+		}
+		
+		
+		ChannelIterator& operator++() {		// prefix
+			ptr_++;
+			return *this;
+		}
+
+		ChannelIterator operator++(int) {  // postfix
+			ChannelIterator before = *this;
+			
+			ptr_++;
+
+			return before;
+		}
+
+		ChannelIterator& operator+=( const uint32& incrBy ) {		// prefix
+			ptr_+= incrBy;
+			return *this;
+		}
+
+		friend class Channel<PixelType,ColorChannelVal>;
+	protected:
+		void setToBegin( ChannelType& channel );
+
+		void setToEnd( ChannelType& channel );
+
+		PixType* ptr_;
+	};
+
+
+	template <typename PixelType, int ColorChannelVal> 
+	inline Channel<PixelType,ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::begin()
+	{
+		Iterator res;
+		res.setToBegin( *this );
+		return res;
+	}
+
+	template <typename PixelType, int ColorChannelVal> 
+	inline Channel<PixelType,ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::end()
+	{
+		Iterator res;
+		res.setToEnd( *this );
+		return res;
+	}
+
+	template <typename PixelType, int ColorChannelVal> 
+	inline void ChannelIterator<PixelType,ColorChannelVal>::setToBegin( ChannelType& channel )
+	{
+		ptr_ = channel.ptr_;
+	}
+
+	template <typename PixelType, int ColorChannelVal> 
+	inline void ChannelIterator<PixelType,ColorChannelVal>::setToEnd( ChannelType& channel )
+	{
+		ptr_ = channel.endPtr_;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/**
+	Red color channel iterator specilization
+	*/
+	template <>
+	class ChannelIterator<ColorPixels::Type,ccRed> {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef Channel<PixelType,ccRed> ChannelType;
+		typedef ChannelType::PixType PixType;
+
+		ChannelIterator(): ptr_(NULL){}
+
+		~ChannelIterator(){}
+
+
+		bool operator == ( const ChannelIterator& rhs ) const {
+			return ptr_ == rhs.ptr_;
+		}
+
+		bool operator != ( const ChannelIterator& rhs ) const {
+			return ptr_ != rhs.ptr_;
+		}
+
+		Type& operator*() {
+			return ptr_->r; 
+		}
+		
+		
+		ChannelIterator& operator++() {		// prefix
+			ptr_++;
+			return *this;
+		}
+
+		ChannelIterator operator++(int) {  // postfix
+			ChannelIterator before = *this;
+			
+			ptr_++;
+
+			return before;
+		}
+
+		ChannelIterator& operator+=( const uint32& incrBy ) {		// prefix
+			ptr_+= incrBy;
+			return *this;
+		}
+
+		friend class Channel<PixelType,ccRed>;
+	protected:
+		void setToBegin( ChannelType& channel ) {
+			ptr_ = channel.ptr_;
+		}
+
+		void setToEnd( ChannelType& channel ) {
+			ptr_ = channel.endPtr_;
+		}
+
+		PixType* ptr_;
+	};
+
+
+	/**
+	Green color channel iterator specilization
+	*/
+	template <>
+	class ChannelIterator<ColorPixels::Type,ccGreen> {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef Channel<PixelType,ccGreen> ChannelType;
+		typedef ChannelType::PixType PixType;
+
+		ChannelIterator(): ptr_(NULL){}
+
+		~ChannelIterator(){}
+
+
+		bool operator == ( const ChannelIterator& rhs ) const {
+			return ptr_ == rhs.ptr_;
+		}
+
+		bool operator != ( const ChannelIterator& rhs ) const {
+			return ptr_ != rhs.ptr_;
+		}
+
+		Type& operator*() {
+			return ptr_->g; 
+		}
+		
+		
+		ChannelIterator& operator++() {		// prefix
+			ptr_++;
+			return *this;
+		}
+
+		ChannelIterator operator++(int) {  // postfix
+			ChannelIterator before = *this;
+			
+			ptr_++;
+
+			return before;
+		}
+
+		ChannelIterator& operator+=( const uint32& incrBy ) {		// prefix
+			ptr_+= incrBy;
+			return *this;
+		}
+
+		friend class Channel<PixelType,ccGreen>;
+	protected:
+		void setToBegin( ChannelType& channel ) {
+			ptr_ = channel.ptr_;
+		}
+
+		void setToEnd( ChannelType& channel ) {
+			ptr_ = channel.endPtr_;
+		}
+
+		PixType* ptr_;
+	};
+
+
+	/**
+	Blue color channel iterator specilization
+	*/
+	template <>
+	class ChannelIterator<ColorPixels::Type,ccBlue> {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef Channel<PixelType,ccBlue> ChannelType;
+		typedef ChannelType::PixType PixType;
+
+		ChannelIterator(): ptr_(NULL){}
+
+		~ChannelIterator(){}
+
+
+		bool operator == ( const ChannelIterator& rhs ) const {
+			return ptr_ == rhs.ptr_;
+		}
+
+		bool operator != ( const ChannelIterator& rhs ) const {
+			return ptr_ != rhs.ptr_;
+		}
+
+		Type& operator*() {
+			return ptr_->b; 
+		}
+		
+		
+		ChannelIterator& operator++() {		// prefix
+			ptr_++;
+			return *this;
+		}
+
+		ChannelIterator operator++(int) {  // postfix
+			ChannelIterator before = *this;
+			
+			ptr_++;
+
+			return before;
+		}
+
+		ChannelIterator& operator+=( const uint32& incrBy ) {		// prefix
+			ptr_+= incrBy;
+			return *this;
+		}
+
+		friend class Channel<PixelType,ccBlue>;
+	protected:
+		void setToBegin( ChannelType& channel ) {
+			ptr_ = channel.ptr_;
+		}
+
+		void setToEnd( ChannelType& channel ) {
+			ptr_ = channel.endPtr_;
+		}
+
+		PixType* ptr_;
+	};
+
+
+
+	/**
+	Alpha color channel iterator specilization
+	*/
+	template <>
+	class ChannelIterator<ColorPixels::Type,ccAlpha> {
+	public:
+		typedef PixelType::Traits::ChannelType Type;
+		typedef Channel<PixelType,ccAlpha> ChannelType;
+		typedef ChannelType::PixType PixType;
+
+		ChannelIterator(): ptr_(NULL){}
+
+		~ChannelIterator(){}
+
+
+		bool operator == ( const ChannelIterator& rhs ) const {
+			return ptr_ == rhs.ptr_;
+		}
+
+		bool operator != ( const ChannelIterator& rhs ) const {
+			return ptr_ != rhs.ptr_;
+		}
+
+		Type& operator*() {
+			return ptr_->a; 
+		}
+		
+		
+		ChannelIterator& operator++() {		// prefix
+			ptr_++;
+			return *this;
+		}
+
+		ChannelIterator operator++(int) {  // postfix
+			ChannelIterator before = *this;
+			
+			ptr_++;
+
+			return before;
+		}
+
+		ChannelIterator& operator+=( const uint32& incrBy ) {		// prefix
+			ptr_+= incrBy;
+			return *this;
+		}
+
+		friend class Channel<PixelType,ccAlpha>;
+	protected:
+		void setToBegin( ChannelType& channel ) {
+			ptr_ = channel.ptr_;
+		}
+
+		void setToEnd( ChannelType& channel ) {
+			ptr_ = channel.endPtr_;
+		}
+
+		PixType* ptr_;
+	};
+
+	typedef Channel<ColorPixels::Type,ccRed> RedChannel;
+	typedef Channel<ColorPixels::Type,ccGreen> GreenChannel;
+	typedef Channel<ColorPixels::Type,ccBlue> BlueChannel;
+	typedef Channel<ColorPixels::Type,ccAlpha> AlphaChannel;
+};
+
+
 #endif //_VCF_PIXELS_H__
 
 /**

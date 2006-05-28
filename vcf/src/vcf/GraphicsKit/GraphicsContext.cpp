@@ -695,18 +695,6 @@ void GraphicsContext::renderImages( bool freeImages )
 
 		contextPeer_->bitBlit( gcRect.left_, gcRect.top_, &Rect(0,0,gcRect.getWidth(),gcRect.getHeight()), destImg );
 
-
-		int gcs = this->saveState();
-		Matrix2D m;
-		m.identity();
-		this->setCurrentTransform(m);
-		setStrokeWidth(1);
-		rectangle( gcRect );
-		setColor( Color::getColor("blue") );
-		strokePath();
-		this->restoreState(gcs);
-
-
 		delete destImg;
 
 

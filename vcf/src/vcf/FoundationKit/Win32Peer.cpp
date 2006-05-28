@@ -29,18 +29,6 @@ void Win32Utils::trace( const VCF::String& text )
 WORD Win32Utils::getWin32LangID( VCF::Locale* locale )
 {
 	WORD result = MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT );
-	/*
-	if ( NULL != locale ){
-		switch( locale->getCountryCode() ){
-			case LOCALE_USA_CODE :{
-				if ( locale->getLanguage() == "en" ){
-					result = MAKELANGID( LANG_ENGLISH, SUBLANG_ENGLISH_US );
-				}
-			}
-			break;
-		}
-	}
-	*/
 
 	return result;
 }
