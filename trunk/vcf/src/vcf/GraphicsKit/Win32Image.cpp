@@ -361,7 +361,7 @@ void Win32Image::beginDrawing()
 	//So we need to store the values out, and then
 	//reset them in finishedDrawing()
 
-	ColorPixels pix = this;
+	ColorPixels pix(this);
 	size_t sz = pix.width() * pix.height();
 
 	SysPixelType* bits = pix;
@@ -377,7 +377,7 @@ void Win32Image::beginDrawing()
 void Win32Image::finishedDrawing()
 {
 	if ( NULL != tempAlphaChannel_ ) {
-		ColorPixels pix = this;
+		ColorPixels pix(this);
 		size_t sz = pix.width() * pix.height();
 		
 		SysPixelType* bits = pix;	

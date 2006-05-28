@@ -528,7 +528,7 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 	ImageAlpha imgA( imgOp.ctxAlpha );
 
 	SpanInterpolator interpolator(imageMat);
-	ColorPixels imgPix = imgOp.image;
+	ColorPixels imgPix(imgOp.image);
 	
 	pixfmt imgPixf(imgPix);
 	
@@ -670,7 +670,7 @@ void GraphicsContext::renderImages( bool freeImages )
 
 		//create the dest image - this is what we'll render into...
 		Image* destImg = GraphicsToolkit::createImage( this, &gcRect );
-		ColorPixels pix = destImg;
+		ColorPixels pix(destImg);
 		agg::rendering_buffer& destBuffer = pix;
 
 
