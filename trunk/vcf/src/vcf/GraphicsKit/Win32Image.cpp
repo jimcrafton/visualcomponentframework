@@ -99,7 +99,8 @@ Win32Image::Win32Image( HICON icon ):
 {
 	init();
 
-	ICONINFO info = {0};
+	ICONINFO info;
+	memset(&info,0,sizeof(info));
 	if ( GetIconInfo( icon, &info ) ) {
 		BITMAP bmp;
 		if ( GetObject( info.hbmColor, sizeof(BITMAP), &bmp ) ) {
@@ -231,7 +232,8 @@ void Win32Image::loadFromBMPHandle( HBITMAP bitmap )
 	flipBits_ = true;
 
 	//hBitmap_ = bitmap;
-	BITMAP bmp = {0};
+	BITMAP bmp;
+	memset(&bmp,0,sizeof(bmp));
 	GetObject( bitmap, sizeof(bmp), &bmp );
 
 	setSize( bmp.bmWidth, bmp.bmHeight );
@@ -277,7 +279,8 @@ void Win32Image::internal_saveToFile( const String& fileName )
 
 	DWORD size = getHeight() * width;
 
-	BITMAPINFOHEADER bih = {0};
+	BITMAPINFOHEADER bih;
+	memset(&bih,0,sizeof(bih));
 	
 	bih.biHeight = getHeight();
 	bih.biWidth = getWidth();
@@ -396,7 +399,8 @@ HICON Win32Image::convertToIcon()
 	HICON result = NULL;
 	//this is justa big fat method from HELLLL
 
-	OSVERSIONINFO osVersion = {0};
+	OSVERSIONINFO osVersion;
+	memset(&osVersion,0,sizeof(osVersion));
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 
 	GetVersionEx( &osVersion );
@@ -455,7 +459,8 @@ HICON Win32Image::convertToIcon()
 	HBITMAP hANDBitmap = CreateDIBSection ( hbmp_.dc(), monochromeInfo, DIB_RGB_COLORS,
 		(void **)&ANDBits, NULL, NULL );
 
-	BITMAPINFO info = {0};
+	BITMAPINFO info;
+	memset(&info,0,sizeof(info));
 	info.bmiHeader.biBitCount = 32;
 	info.bmiHeader.biHeight = -getHeight();
 	info.bmiHeader.biWidth = getWidth();
@@ -541,7 +546,8 @@ HICON Win32Image::convertToIcon()
 			}
 		}
 
-		ICONINFO icoInfo = {0};
+		ICONINFO icoInfo;
+		memset(&icoInfo,0,sizeof(icoInfo));
 		icoInfo.fIcon = TRUE;
 		icoInfo.hbmColor = hXORBitmap;
 		icoInfo.hbmMask = hANDBitmap;

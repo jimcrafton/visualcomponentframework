@@ -233,7 +233,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			if ( System::isUnicodeEnabled() ) {
 				TBNOTIFYW* tbn = (TBNOTIFYW*)lParam;
 
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STATE | TBIF_LPARAM ;
 				info.cbSize = sizeof(info);
 
@@ -256,7 +257,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			else {
 				TBNOTIFYA* tbn = (TBNOTIFYA*)lParam;
 
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STATE | TBIF_LPARAM ;
 				info.cbSize = sizeof(info);
 
@@ -285,7 +287,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			HWND hwndCtl = (HWND) lParam;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.cbSize = sizeof(info);
 				info.dwMask |= TBIF_LPARAM | TBIF_STATE;
 				SendMessage( hwnd_, TB_GETBUTTONINFOW, wID, (LPARAM)&info );
@@ -311,7 +314,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				}
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.cbSize = sizeof(info);
 				info.dwMask |= TBIF_LPARAM | TBIF_STATE;
 				SendMessage( hwnd_, TB_GETBUTTONINFOA, wID, (LPARAM)&info );
@@ -358,7 +362,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 					}
 
 					if ( System::isUnicodeEnabled() ) {
-						TBBUTTONINFOW info = {0};
+						TBBUTTONINFOW info;
+						memset(&info,0,sizeof(info));
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
@@ -377,7 +382,8 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 
 					}
 					else {
-						TBBUTTONINFOA info = {0};
+						TBBUTTONINFOA info;
+						memset(&info,0,sizeof(info));
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOA, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
@@ -430,7 +436,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_TEXT ;
 				info.cbSize = sizeof(info);
 				VCFChar tmp[256];
@@ -449,7 +456,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, tme->getItem()->getIndex(), (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_TEXT ;
 				info.cbSize = sizeof(info);
 				char tmp[256];
@@ -480,7 +488,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_IMAGE  ;
 				info.cbSize = sizeof(info);
 
@@ -492,7 +501,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, index, (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_IMAGE  ;
 				info.cbSize = sizeof(info);
 
@@ -517,7 +527,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
 
 			if (System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE  ;
 				info.cbSize = sizeof(info);
 
@@ -533,7 +544,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, tme->getItem()->getIndex(), (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE  ;
 				info.cbSize = sizeof(info);
 
@@ -556,7 +568,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE  ;
 				info.cbSize = sizeof(info);
 
@@ -576,7 +589,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				}
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE  ;
 				info.cbSize = sizeof(info);
 
@@ -604,7 +618,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			Control* addedControl = NULL;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE;
 				info.fsStyle = TBSTYLE_SEP ;
 				info.cbSize = sizeof(info);
@@ -626,7 +641,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, index, (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_STYLE;
 				info.fsStyle = TBSTYLE_SEP ;
 				info.cbSize = sizeof(info);
@@ -656,7 +672,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			currentlyModifyingItem_ = true;
 
 
-			RECT tbRect = {0};
+			RECT tbRect;
+			memset(&tbRect,0,sizeof(tbRect));
 			if ( SendMessage( hwnd_, TB_GETITEMRECT, index, (LPARAM)&tbRect ) ) {
 				tme->getItem()->internal_setBounds( Rect(tbRect.left,tbRect.top,tbRect.right,tbRect.bottom) );
 
@@ -682,7 +699,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_SIZE ;
 				info.cbSize = sizeof(info);
 				Rect r = *tme->getItem()->getBounds();
@@ -692,7 +710,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, tme->getItem()->getIndex(), (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_SIZE ;
 				info.cbSize = sizeof(info);
 				Rect r = *tme->getItem()->getBounds();
@@ -727,7 +746,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 			long state = tme->getItem()->getState();
 
 			if ( System::isUnicodeEnabled() ) {
-				TBBUTTONINFOW info = {0};
+				TBBUTTONINFOW info;
+				memset(&info,0,sizeof(info));
 				info.cbSize = sizeof(info);
 
 				if ( state == ToolbarItem::tisSeparator ) {
@@ -766,7 +786,8 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				SendMessage( hwnd_, TB_SETBUTTONINFOW, tme->getItem()->getIndex(), (LPARAM)&info );
 			}
 			else {
-				TBBUTTONINFOA info = {0};
+				TBBUTTONINFOA info;
+				memset(&info,0,sizeof(info));
 				info.cbSize = sizeof(info);
 
 				if ( state == ToolbarItem::tisSeparator ) {
@@ -828,10 +849,12 @@ void Win32Toolbar::resizeToolbarItems( int startAt )
 	int index = (startAt >= 0) ? startAt : 0;
 
 	for (index=0;index<buttonCount;index++ ) {
-		RECT tbRect = {0};
+		RECT tbRect;
+		memset(&tbRect,0,sizeof(tbRect));
 		if ( SendMessage( hwnd_, TB_GETITEMRECT, index, (LPARAM)&tbRect ) ) {
 
-			TBBUTTONINFO info = {0};
+			TBBUTTONINFO info;
+			memset(&info,0,sizeof(info));
 			info.cbSize = sizeof(info);
 			info.dwMask |= TBIF_LPARAM;
 			SendMessage( hwnd_, TB_GETBUTTONINFO, index, (LPARAM)&info );
@@ -848,7 +871,8 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 	currentlyModifyingItem_ = true;
 
 
-	TBBUTTON btn = {0};
+	TBBUTTON btn;
+	memset(&btn,0,sizeof(btn));
 
 	if ( System::isUnicodeEnabled() ) {
 
@@ -886,7 +910,8 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 			int err = GetLastError();
 		}
 
-		TBBUTTONINFOW info = {0};
+		TBBUTTONINFOW info;
+		memset(&info,0,sizeof(info));
 		//info.dwMask = TBIF_IMAGE;
 		info.cbSize = sizeof(info);
 
@@ -982,7 +1007,8 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 			int err = GetLastError();
 		}
 
-		TBBUTTONINFOA info = {0};
+		TBBUTTONINFOA info;
+		memset(&info,0,sizeof(info));
 		//info.dwMask = TBIF_IMAGE;
 		info.cbSize = sizeof(info);
 
@@ -1072,7 +1098,8 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 	for (index=0;index<buttonCount;index++ ) {
 		if ( unicodeEnabled ) {
 
-			TBBUTTONINFOW info = {0};
+			TBBUTTONINFOW info;
+			memset(&info,0,sizeof(info));
 			info.cbSize = sizeof(info);
 			info.dwMask |= TBIF_LPARAM | TBIF_STYLE | TBIF_STATE;
 			SendMessage( hwnd_, TB_GETBUTTONINFOW, index, (LPARAM)&info );
@@ -1090,7 +1117,8 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 
 		}
 		else {
-			TBBUTTONINFOA info = {0};
+			TBBUTTONINFOA info;
+			memset(&info,0,sizeof(info));
 			info.cbSize = sizeof(info);
 			info.dwMask |= TBIF_LPARAM | TBIF_STYLE | TBIF_STATE;
 			SendMessage( hwnd_, TB_GETBUTTONINFOA, index, (LPARAM)&info );

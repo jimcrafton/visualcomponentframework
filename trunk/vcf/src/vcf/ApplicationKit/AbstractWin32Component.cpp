@@ -440,7 +440,8 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 
 			// changes the origin of the paint coordinates, by specifying which
 			// point of the device context points to the origin of the window.
-			POINT oldOrg = {0};
+			POINT oldOrg;
+			memset(&oldOrg,0,sizeof(oldOrg));
 			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 			
 			/**
@@ -627,7 +628,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			(message == WM_SETFOCUS) ||
 			(message == WM_KILLFOCUS) )  {
 			
-			MSG m = {0};
+			MSG m;
+			memset(&m,0,sizeof(m));
 			m.hwnd = hwnd_;
 			m.lParam = lParam;
 			m.message = message;
@@ -978,7 +980,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 					//UINT Pos = (UINT) LOWORD(lParam);
 					UINT uPos = (UINT) LOWORD(lParam);
 					//get the first item
-					MENUITEMINFO info = {0};
+					MENUITEMINFO info;
+					memset(&info,0,sizeof(info));
 					info.cbSize = sizeof(MENUITEMINFO);
 					info.fMask = MIIM_ID;
 

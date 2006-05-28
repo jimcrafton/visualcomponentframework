@@ -39,7 +39,8 @@ void initPopupMenu( HWND hwnd, HMENU menu )
 	DWORD lParam = MAKELONG( 0, FALSE );
 	SendMessage( hwnd, WM_INITMENUPOPUP, (WPARAM)menu, lParam );
 	for ( int i=0;i<count;i++ ){
-		MENUITEMINFO itemInfo = {0};
+		MENUITEMINFO itemInfo;
+		memset(&itemInfo,0,sizeof(itemInfo));
 		itemInfo.cbSize = sizeof(MENUITEMINFO);
 		itemInfo.fMask = MIIM_SUBMENU;
 		if ( ::GetMenuItemInfo( menu, i, TRUE, &itemInfo ) ) {
@@ -72,7 +73,8 @@ MenuItem* Win32PopupMenu::popup( Point* pt )
 			UINT flags = TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY;
 			HWND wnd = (HWND)controlPeer->getHandleID();
 			
-			POINT tmpPt = {0};
+			POINT tmpPt;
+			memset(&tmpPt,0,sizeof(tmpPt));
 			tmpPt.x = (long)pt->x_;
 			tmpPt.y = (long)pt->y_;
 			ClientToScreen( wnd, &tmpPt );

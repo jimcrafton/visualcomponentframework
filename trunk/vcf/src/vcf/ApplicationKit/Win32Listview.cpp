@@ -326,14 +326,16 @@ void Win32Listview::updateItemSubItems( ListItem* item )
 
 
 		if  (System::isUnicodeEnabled() ) {
-			LVITEMW lvItem = {0};
+			LVITEMW lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
 			lvItem.iSubItem = subItemIndex;
 			lvItem.pszText  = LPSTR_TEXTCALLBACKW;
 
 			SendMessage( hwnd_, LVM_SETITEMTEXTW, index, (LPARAM)&lvItem );
 		}
 		else {
-			LVITEMA lvItem = {0};
+			LVITEMA lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
 			lvItem.iSubItem = subItemIndex;
 			lvItem.pszText  = LPSTR_TEXTCALLBACKA;
 			SendMessage( hwnd_, LVM_SETITEMTEXTA, index, (LPARAM)&lvItem );
@@ -363,14 +365,16 @@ void Win32Listview::onSubItemDeleted( ItemEvent* event )
 		int count = Header_GetItemCount( header );
 		for ( int i=1;i<count;i++ ) {
 			if  (System::isUnicodeEnabled() ) {
-				LVITEMW lvItem = {0};
+				LVITEMW lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.iSubItem = i;
 				lvItem.pszText  = L"";
 
 				SendMessage( hwnd_, LVM_SETITEMTEXTW, item->getIndex(), (LPARAM)&lvItem );
 			}
 			else {
-				LVITEMA lvItem = {0};
+				LVITEMA lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.iSubItem = i;
 				lvItem.pszText  = "";
 				SendMessage( hwnd_, LVM_SETITEMTEXTA, item->getIndex(), (LPARAM)&lvItem );
@@ -668,7 +672,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 
 			HWND header = GetDlgItem( hwnd_, 0 );
-			RECT headerRect = {0};
+			RECT headerRect;
+			memset(&headerRect,0,sizeof(headerRect));
 			if ( NULL != header ) {
 				GetWindowRect( header, &headerRect );
 				POINT pt;
@@ -1294,7 +1299,8 @@ void Win32Listview::setFocusedItem(ListItem * item)
 			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
 
 			if ( index > -1 ) {
-				LV_ITEMW lvItem = {0};
+				LV_ITEMW lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.stateMask = LVIS_FOCUSED;
 				lvItem.state = LVIS_FOCUSED;
 
@@ -1311,7 +1317,8 @@ void Win32Listview::setFocusedItem(ListItem * item)
 			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
 
 			if ( index > -1 ) {
-				LV_ITEMA lvItem = {0};
+				LV_ITEMA lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.stateMask = LVIS_FOCUSED;
 				lvItem.state = LVIS_FOCUSED;
 
@@ -1337,7 +1344,8 @@ void Win32Listview::selectItem(ListItem * item)
 			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
 
 			if ( index > -1 ) {
-				LV_ITEMW lvItem = {0};
+				LV_ITEMW lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.stateMask = LVIS_SELECTED;
 				lvItem.state = LVIS_SELECTED;
 
@@ -1354,7 +1362,8 @@ void Win32Listview::selectItem(ListItem * item)
 			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
 
 			if ( index > -1 ) {
-				LV_ITEMA lvItem = {0};
+				LV_ITEMA lvItem;
+				memset(&lvItem,0,sizeof(lvItem));
 				lvItem.stateMask = LVIS_SELECTED;
 				lvItem.state = LVIS_SELECTED;
 

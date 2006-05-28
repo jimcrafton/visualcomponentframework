@@ -1209,7 +1209,8 @@ ulong32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 
 	ulong32 result = 1;
 
-	FORMATRANGE formatRange = {0};
+	FORMATRANGE formatRange;
+	memset(&formatRange,0,sizeof(formatRange));
 	//print everything
 	formatRange.chrg.cpMax = -1;
 	formatRange.chrg.cpMin = 0;
@@ -1287,7 +1288,8 @@ void Win32Edit::print( PrintContext* context, const long& page )
 		return;
 	}
 	else {
-		FORMATRANGE formatRange = {0};
+		FORMATRANGE formatRange;
+		memset(&formatRange,0,sizeof(formatRange));
 		//print everything
 		formatRange.chrg.cpMax = found->second;
 		if ( 0 == (page-1) ) {
