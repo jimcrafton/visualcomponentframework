@@ -528,7 +528,7 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 	ImageAlpha imgA( imgOp.ctxAlpha );
 
 	SpanInterpolator interpolator(imageMat);
-	ColorPixels imgPix(imgOp.image);
+	ColorPixels imgPix = imgOp.image;
 	
 	pixfmt imgPixf(imgPix);
 	

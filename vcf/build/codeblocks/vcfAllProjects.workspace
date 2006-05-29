@@ -190,6 +190,7 @@
 		<Project filename="..\..\examples\ParticleEditor\ParticleEditor_cb.cbp">
 			<Depends filename="OpenGLKit\OpenGLKitDLL.cbp" />
 		</Project>
+		<Project filename="..\..\examples\Pixels\Pixels_cb.cbp" />
 		<Project filename="..\..\examples\Printing\Printing_cb.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
 		</Project>

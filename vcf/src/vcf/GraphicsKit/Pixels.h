@@ -549,7 +549,7 @@ namespace VCF {
 		uint32 width_;
 		uint32 height_;
 		agg::rendering_buffer renderBuffer_;
-	private:
+	public:
 		Pixels();
 		Pixels(const Pixels&);
 		Pixels& operator=(const Pixels&);
