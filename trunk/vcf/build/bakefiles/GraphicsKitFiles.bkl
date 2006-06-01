@@ -18,6 +18,7 @@
         vcf/GraphicsKit/Filter.h
         vcf/GraphicsKit/Font.h
         vcf/GraphicsKit/FontPeer.h
+        vcf/GraphicsKit/GradientFills.h
         vcf/GraphicsKit/GraphicsContext.h
         vcf/GraphicsKit/GraphicsKit.h
         vcf/GraphicsKit/GraphicsKitPrivate.h
