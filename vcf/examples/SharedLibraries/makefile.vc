@@ -131,6 +131,7 @@ clean:
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist SimpleDLL.exp del SimpleDLL.exp
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\SimpleDLL.so: $(SIMPLEDLL_OBJECTS)

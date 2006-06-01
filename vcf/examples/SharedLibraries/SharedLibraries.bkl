@@ -15,6 +15,9 @@
         <sources>SharedLibraries.cpp</sources>
         <vcf-use-FoundationKit/>
         <depends>SimpleDLL</depends>
+        <clean-files cond="FORMAT=='msvc'">
+            SimpleDLL.exp
+        </clean-files>
     </exe>
 </makefile>
 
