@@ -36,7 +36,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_Browser sub_Cards sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_Dictionaries sub_Directories sub_DocViewAdvanced sub_DocViewBasics sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_Labels sub_ListBox sub_LocaleUI sub_Localization sub_MinMax sub_MVCBasics sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_Printing sub_Processes sub_ProgressBars sub_Reflection sub_Resources sub_RunLoops sub_Scrolling sub_Scrolling2 sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TreeListControls sub_Variants sub_VisualFormFiles sub_WorkingWithEnumerators
+all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_Browser sub_Cards sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_Dictionaries sub_Directories sub_DocViewAdvanced sub_DocViewBasics sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_Gradients sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_Labels sub_ListBox sub_LocaleUI sub_Localization sub_MinMax sub_MVCBasics sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_Printing sub_Processes sub_ProgressBars sub_Reflection sub_Resources sub_RunLoops sub_Scrolling sub_Scrolling2 sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TreeListControls sub_Variants sub_VisualFormFiles sub_WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -121,6 +121,9 @@ clean:
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd FrameStyles
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd Gradients
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd GraphicsAndMouseMoves
@@ -400,6 +403,11 @@ sub_FilesAndDirectories:
 
 sub_FrameStyles: 
 	cd FrameStyles
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_Gradients: 
+	cd Gradients
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 

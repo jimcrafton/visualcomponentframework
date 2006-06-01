@@ -47,7 +47,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -161,6 +161,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc '$(MAKEARGS)' clean >>FrameStyles.bat
 	call FrameStyles.bat
 	@del FrameStyles.bat
+	@echo cd Gradients >Gradients.bat
+	@echo $(MAKE) -f makefile.bcc '$(MAKEARGS)' clean >>Gradients.bat
+	call Gradients.bat
+	@del Gradients.bat
 	@echo cd GraphicsAndMouseMoves >GraphicsAndMouseMoves.bat
 	@echo $(MAKE) -f makefile.bcc '$(MAKEARGS)' clean >>GraphicsAndMouseMoves.bat
 	call GraphicsAndMouseMoves.bat
@@ -515,6 +519,12 @@ FrameStyles:
 	@echo $(MAKE) -f makefile.bcc '$(MAKEARGS)' all >>FrameStyles.bat
 	call FrameStyles.bat
 	@del FrameStyles.bat
+
+Gradients: 
+	@echo cd Gradients >Gradients.bat
+	@echo $(MAKE) -f makefile.bcc '$(MAKEARGS)' all >>Gradients.bat
+	call Gradients.bat
+	@del Gradients.bat
 
 GraphicsAndMouseMoves: 
 	@echo cd GraphicsAndMouseMoves >GraphicsAndMouseMoves.bat

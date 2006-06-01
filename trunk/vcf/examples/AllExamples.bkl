@@ -35,6 +35,7 @@
     <subproject id="EventBasics" template="example"/>
     <subproject id="FilesAndDirectories" template="example"/>
     <subproject id="FrameStyles" template="example"/>
+    <subproject id="Gradients" template="example"/>
     <subproject id="GraphicsAndMouseMoves" template="example"/>
     <subproject id="GraphicsBasics" template="example"/>
     <subproject id="HeavyAndLight" template="example"/>
