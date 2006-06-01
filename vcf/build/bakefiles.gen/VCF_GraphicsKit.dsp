@@ -934,6 +934,10 @@ SOURCE=..\..\src\vcf\GraphicsKit\FontPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\GraphicsKit\GradientFills.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\GraphicsKit\GraphicsContext.h
 # End Source File
 # Begin Source File
