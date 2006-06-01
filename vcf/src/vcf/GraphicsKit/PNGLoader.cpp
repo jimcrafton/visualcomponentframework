@@ -305,7 +305,6 @@ Image* PNGLoader::loadImageFromFile( const String& fileName )
 
 	ColorPixels pixels(result); 
 	SysPixelType* pix = pixels;
-	//SysPixelType* pix = result->getImageBits()->pixels_;
 
 	unsigned int index = 0;
 	unsigned int pixIndex = 0;
@@ -330,6 +329,11 @@ Image* PNGLoader::loadImageFromFile( const String& fileName )
 
 					case 2 : {
 						pix[pixIndex].r = imageData[index + channel];
+					}
+					break;
+
+					case 3 : {
+						pix[pixIndex].a = imageData[index + channel];
 					}
 					break;
 				}
