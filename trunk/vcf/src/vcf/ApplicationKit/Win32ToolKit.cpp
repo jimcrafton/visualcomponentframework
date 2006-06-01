@@ -1303,6 +1303,11 @@ protected:
 };
 
 
+#define CXGAP				1		// num pixels between button and text
+#define CXTEXTMARGIN		2		// num pixels after hilite to start text
+#define CXBUTTONMARGIN		2		// num pixels wider button is than bitmap
+#define CYBUTTONMARGIN		2		// ditto for height
+
 //UIMetricsManager implementation
 class Win32UIMetricsManager : public UIMetricsManager {
 public:
@@ -1439,132 +1444,7 @@ public:
 
 		return result;
 	}
-/*
-	virtual double getDefaultHeightFor( const UIMetricsManager::HeightType& type )  {
-		double result = 0.0;
-		switch ( type ) {
-			case UIMetricsManager::htLabelHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				//result = f.getHeight();// * 1.75;
-				Point pt = DLUToPixel( Point(0,11), f );
-				result = pt.y_;
-			}
-			break;
 
-			case UIMetricsManager::htComboBoxHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,12), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::htListItemHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,9), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::htButtonHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				result = (f.getHeight() * 1.75) + 2.50;
-
-				Point pt = DLUToPixel( Point(0,14), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::htRadioBoxHeight : case UIMetricsManager::htCheckBoxHeight : {
-				
-				//JC
-				//Stripped this all out  -
-				//it turns out that the height/width is ALWAYS 13 pixels - no matter what
-				//the DPI is
-				//GetSystemMetrics( SM_CXMENUCHECK ) returns a value that changes based on the DPI
-				//13 at 96 DPI and 17 at 120 DPI
-				//
-				result = 13;
-			}
-			break;
-
-			case UIMetricsManager::htToolTipHeight : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftToolTipFont );
-				result = f.getHeight() * 1.2222;
-			}
-			break;
-
-			case UIMetricsManager::htSeparatorHeight : {
-				result = 2.0;
-			}
-			break;
-
-			case UIMetricsManager::htInformationalControl : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,11), f );
-				result = pt.y_;//f.getHeight() * 1.75;
-			}
-			break;
-		}
-		return result;
-
-	}
-*/
-
-/*
-
-	virtual double getPreferredSpacingFor( const UIMetricsManager::SpacingType& type )  {
-		double result = 0.0;
-
-		//values largely derived from the Apple HIG at
-		//http://developer.apple.com/techpubs/macosx/Essentials/AquaHIGuidelines/AHIGLayout/index.html
-		switch ( type ) {
-			case UIMetricsManager::stWindowBorderDelta : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,7), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::stContainerBorderDelta : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,5), f );
-
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::stControlVerticalSpacing : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(0,4), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::stControlHorizontalSpacing : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-				Point pt = DLUToPixel( Point(5,0), f );
-				result = pt.x_;
-			}
-			break;
-
-			case UIMetricsManager::stInformationControlTopSpacer : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftMessageFont );
-				Point pt = DLUToPixel( Point(0,2), f );
-				result = pt.y_;
-			}
-			break;
-
-			case UIMetricsManager::stInformationControlBottomSpacer : {
-				VCF::Font f = getDefaultFontFor( UIMetricsManager::ftMessageFont );
-				Point pt = DLUToPixel( Point(0,1), f );
-				result = pt.y_;
-			}
-			break;
-		}
-
-		return result;
-	}
-*/
 /*
 	virtual Size getDefaultSliderThumbDimensions()  {
 		Size result;
@@ -1621,42 +1501,6 @@ public:
 			::DeleteObject( menuHFont );
 			::DeleteDC( dc );
 		}
-
-		return result;
-	}
-
-	virtual Size getDefaultVerticalScrollButtonDimensions()  {
-		Size result;
-
-		int w = ::GetSystemMetrics( SM_CXHTHUMB );
-		if ( (w % 2) == 0 ) {
-			w ++;
-		}
-		result.width_ = w;
-		result.height_ = ::GetSystemMetrics( SM_CYVTHUMB );
-
-		NONCLIENTMETRICS ncm;
-		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
-		ncm.cbSize = sizeof(NONCLIENTMETRICS);
-
-		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
-
-		result.width_ = ncm.iScrollWidth;
-
-		return result;
-	}
-
-	virtual Size getDefaultHorizontalScrollButtonDimensions()  {
-		Size result;
-
-		result.width_ = ::GetSystemMetrics( SM_CXHTHUMB );
-		result.height_ = ::GetSystemMetrics( SM_CYVTHUMB );
-
-		return result;
-	}
-
-	virtual Size getDefaultTabDimensions( const String& caption )  {
-		Size result;
 
 		return result;
 	}
@@ -1990,8 +1834,27 @@ public:
 
 			case mtMenuIndent : {
 
+				result = (double) ::GetSystemMetrics( SM_CXMENUCHECK ) + CXGAP + CXTEXTMARGIN;
 			}
 			break;
+
+			case mtMenuSeparatorHeight : {
+				result = 2;//????? Guestimate????
+			}
+			break;
+
+			case mtMenuBarHeight : {
+				NONCLIENTMETRICS ncm;
+				memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
+				ncm.cbSize = sizeof(NONCLIENTMETRICS);
+				
+				SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
+				
+				result = ncm.iMenuHeight;
+			}
+			break;
+
+			
 
 			case mtWindowBorderDelta : {
 				Point pt;
@@ -2108,10 +1971,6 @@ public:
 					// height of item is just height of a standard menu item
 					result.height_ = maxVal<double>( ::GetSystemMetrics(SM_CYMENU), abs(rcText.bottom - rcText.top) );
 					
-					const int CXGAP = 1;		// num pixels between button and text
-					const int CXTEXTMARGIN = 2;		// num pixels after hilite to start text
-					const int CXBUTTONMARGIN = 2;		// num pixels wider button is than bitmap
-					const int CYBUTTONMARGIN = 2;		// ditto for height
 					
 					// width is width of text plus a bunch of stuff
 					int cx = rcText.right - rcText.left;	// text width
