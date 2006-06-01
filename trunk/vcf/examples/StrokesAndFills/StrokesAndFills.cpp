@@ -226,7 +226,8 @@ public:
 
 		Matrix2D mat;
 
-		mat.multiply( &translate, &rotate );
+		mat.multiply( translate );
+		mat.multiply( rotate );
 
 		/**
 		apply the rotation/translation matrix to the shape

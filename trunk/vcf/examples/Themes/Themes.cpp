@@ -757,6 +757,8 @@ public:
 		metricsToStringMap[UIMetricsManager::mtTextControlHeight] = "UIMetricsManager::mtTextControlHeight";
 		metricsToStringMap[UIMetricsManager::mtVerticalProgressWidth] = "UIMetricsManager::mtVerticalProgressWidth";
 		metricsToStringMap[UIMetricsManager::mtHorizontalProgressHeight] = "UIMetricsManager::mtHorizontalProgressHeight";
+		metricsToStringMap[UIMetricsManager::mtMenuSeparatorHeight] = "UIMetricsManager::mtMenuSeparatorHeight";
+		metricsToStringMap[UIMetricsManager::mtMenuBarHeight] = "UIMetricsManager::mtMenuBarHeight";
 		metricsToStringMap[UIMetricsManager::mtInformationalControlHeight] = "UIMetricsManager::mtInformationalControlHeight";
 		metricsToStringMap[UIMetricsManager::mtVerticalScrollbarThumbWidth] = "UIMetricsManager::mtVerticalScrollbarThumbWidth";
 		metricsToStringMap[UIMetricsManager::mtHorizontalScrollbarThumbHeight] = "UIMetricsManager::mtHorizontalScrollbarThumbHeight";
@@ -770,7 +772,8 @@ public:
 		metricsToStringMap[UIMetricsManager::mtInformationControlTopSpacer] = "UIMetricsManager::mtInformationControlTopSpacer";
 		metricsToStringMap[UIMetricsManager::mtInformationControlBottomSpacer] = "UIMetricsManager::mtInformationControlBottomSpacer";
 
-		metricsToStringMap[UIMetricsManager::mtMenuSize] = "UIMetricsManager::mtMenuSize";
+		metricsToStringMap[UIMetricsManager::mtMenuItemSize] = "UIMetricsManager::mtMenuItemSize";
+		metricsToStringMap[UIMetricsManager::mtMenuItemSeparatorSize] = "UIMetricsManager::mtMenuItemSeparatorSize";
 		metricsToStringMap[UIMetricsManager::mtVerticalSliderThumbSize] = "UIMetricsManager::mtVerticalSliderThumbSize";
 		metricsToStringMap[UIMetricsManager::mtHorizontalSliderThumbSize] = "UIMetricsManager::mtHorizontalSliderThumbSize";
 		metricsToStringMap[UIMetricsManager::mtTabSize] = "UIMetricsManager::mtTabSize";
@@ -813,7 +816,7 @@ public:
 		double totalVirtHeight  = 0;
 		static bool setVirtHeight = true;
 
-		for ( int i=UIMetricsManager::mtLabelHeight;i<UIMetricsManager::mtMenuSize;i++ ) {
+		for ( int i=UIMetricsManager::mtLabelHeight;i<UIMetricsManager::mtMenuItemSize;i++ ) {
 			value = UIToolkit::getUIMetricValue( (UIMetricsManager::MetricType) i, "Test" );
 			
 			ctx->textBoundedBy( &textR, (Format("%s: %.2f pixels") % metricsToStringMap[i] % value), options );
@@ -834,7 +837,7 @@ public:
 		}
 
 
-		for ( int ii=UIMetricsManager::mtMenuSize;ii<=UIMetricsManager::mtDisclosureButtonSize;ii++ ) {
+		for ( int ii=UIMetricsManager::mtMenuItemSize;ii<=UIMetricsManager::mtDisclosureButtonSize;ii++ ) {
 			size = UIToolkit::getUIMetricSize( (UIMetricsManager::MetricType) ii, "Test" );
 			
 			metricsR.bottom_ = metricsR.top_ + maxVal<>( size.height_ + 10, metricsR.getHeight() );

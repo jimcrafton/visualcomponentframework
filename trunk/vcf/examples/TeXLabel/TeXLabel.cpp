@@ -43,7 +43,7 @@ void TeXLabel::paint(VCF::GraphicsContext *ctx)
 
 double TeXLabel::getPreferredHeight()
 {
-	return UIToolkit::getUIMetricsManager()->getDefaultHeightFor(UIMetricsManager::htLabelHeight);
+	return UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight, "", getFont() );
 }
 
 

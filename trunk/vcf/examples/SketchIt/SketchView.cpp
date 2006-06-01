@@ -65,12 +65,10 @@ void SketchView::paintView( GraphicsContext* ctx )
 		Shape* shape = shapes->nextElement();
 
 		bs.setColor( &shape->strokeColor_ );
-		bs.setOpacity( shape->opacity_ );
 		bs.setWidth( shape->width_ );
 
 		if ( shape->fill_ ) {
-			bf.setColor( shape->fillColor_ );
-			bf.setOpacity( shape->opacity_ );
+			bf.setColor( &shape->fillColor_ );
 			ctx->setCurrentFill( &bf );
 		}
 		else {
