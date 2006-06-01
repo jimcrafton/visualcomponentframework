@@ -63,9 +63,9 @@ void CChildView::OnPaint()
 
 	Rect drawingRect(0,0,r.Width(),r.Height());
 
-	ctx.setDrawingArea( drawingRect );
+	ctx.setRenderArea( drawingRect );
 
-	GraphicsContext* paintCtx = ctx.getDrawingArea()->getImageContext();
+	GraphicsContext* paintCtx = ctx.getRenderArea()->getImageContext();
 
 
 	paintCtx->setColor( Color::getColor("white") );
@@ -110,9 +110,9 @@ void CChildView::OnPaint()
 
 
 
-	ctx.flushDrawingArea();
+	ctx.flushRenderArea();
 
-	ctx.deleteDrawingArea();
+	ctx.deleteRenderArea();
 
 	ctx.textAt( 100, 200, "More Hell World!!!" );
 }

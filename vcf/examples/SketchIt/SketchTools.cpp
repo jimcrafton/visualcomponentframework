@@ -548,7 +548,7 @@ void RotateTool::rotateShape( Shape* shape, Point pt )
 
 	m1.translate( origin_.x_, origin_.y_ );
 
-	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
+	shape->polygon_.applyTransform( m2.multiply( m1 ) );
 }
 
 void RotateTool::onMouseMove( VCF::MouseEvent* e )
@@ -641,7 +641,7 @@ void ScaleTool::scaleShape( Shape* shape, VCF::Point pt )
 
 	m1.translate( origin_.x_, origin_.y_ );
 
-	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
+	shape->polygon_.applyTransform( m2.multiply( m1 ) );
 }
 
 void ScaleTool::onMouseMove( VCF::MouseEvent* e )
@@ -764,7 +764,7 @@ void SkewTool::skewShape( Shape* shape, VCF::Point pt )
 
 	m1.translate( origin_.x_, origin_.y_ );
 
-	shape->polygon_.applyTransform( *m2.multiply( &m2, &m1 ) );
+	shape->polygon_.applyTransform( m2.multiply( m1 ) );
 }
 
 
@@ -1125,7 +1125,6 @@ void ImageTool::onMouseDown( VCF::MouseEvent* e )
 				Shape shape;
 				shape.polygon_.rectangle( imageRect );
 				shape.image_ = img;
-				shape.image_->getImageBits()->attachRenderBuffer( img->getWidth(), img->getHeight() );
 				doc->addShape( shape );
 			}
 

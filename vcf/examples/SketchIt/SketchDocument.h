@@ -28,7 +28,7 @@ for declaring RTTI information for your class(es)
 class Shape {
 public:
 
-	Shape() :image_(NULL), fill_(false), width_(1.0), opacity_(1.0){
+	Shape() :image_(NULL), fill_(false), width_(1.0) {
 
 	}
 
@@ -45,7 +45,6 @@ public:
 
 		fill_ = rhs.fill_;
 		width_ = rhs.width_;
-		opacity_ = rhs.opacity_;
 
 		image_ = rhs.image_;
 
@@ -60,7 +59,6 @@ public:
 
 	bool fill_;
 	double width_;
-	double opacity_;
 };
 
 
