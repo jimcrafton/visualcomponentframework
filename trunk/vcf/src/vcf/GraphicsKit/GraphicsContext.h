@@ -152,6 +152,19 @@ public:
 		ttToolTipFont
 	};
 
+	/**
+	These are the set of standard compositing
+	or "blend" modes that the GraphicsContext 
+	supports. The last mode, cmCustom, is for 
+	future use, and will allow some custom
+	compositing function to be used. The blend/compositing
+	modes below are the same as used in AGG and 
+	in the PDF specification.
+	[todo]
+	We should have some little pictures of what each blend 
+	mode looks like...
+	[/todo]
+	*/
 	enum CompositingMode {
 		cmNone = 0xFF,
 		cmClear = 0,
@@ -183,12 +196,23 @@ public:
 		cmCustom
 	};
 
+	/**
+	The set of enum values define the 
+	standard line cap style. These are the same 
+	line cap styles that the PDF spec and Win32
+	uses.
+	*/
 	enum LineCapStyle {
 		lcsButtCap = 0,
 		lcsRoundCap,
 		lcsSquareCap
 	};
 
+	/**
+	The set of enum values for defining the line
+	join style. These values are the same as those
+	found in the PDF spec and Win32.
+	*/
 	enum LineJoinStyle {
 		ljsMiterJoin = 0,
 		ljsRoundJoin,
@@ -230,11 +254,13 @@ public:
 
 	/**
 	sets the current fill
+	@see Fill
 	*/
 	void setCurrentFill(Fill * fill );
 
 	/**
 	sets the current stroke
+	@see Stroke
 	*/
 	void setCurrentStroke(Stroke * stroke );
 
@@ -335,19 +361,51 @@ public:
 
 
 
-
+	/**
+	Returns the current line cap style.
+	*/
 	LineCapStyle getLineCapStyle();
+
+	/**
+	Sets the line cap style.
+	*/
 	void setLineCapStyle( LineCapStyle val );
 
 	LineJoinStyle getLineJoinStyle();
 	void setLineJoinStyle( LineJoinStyle val );
 	
+	/**
+	Returns the current miter limit. The default
+	value for this is 1.0 (for now).
+	*/
 	double getMiterLimit();
+
+	/**
+	Sets the current miter limit. The miter limit is the amount to
+	extend a miter join between two angled lines. 
+	*/
 	void setMiterLimit( double val );
 	
 
+	/**
+	Sets the current compositing mode. The default value
+	for the compositing mode is cmSource. When drawing without
+	anti-aliasing support, most of these modes will be ignored
+	with the exception of cmXOR. Setting the composite mode to cmXOR
+	takes the place of calling setXORModeOn(true), while setting 
+	the composite mode to cmSource is the same as setXORModeOn( false ).	
+
+	When anti-aliased drawing is used, then the compositing value is 
+	checked when drawing with a Stroke or Fill class.
+
+	The composite value effects how colors for new graphic elements
+	are blended with colors of existing graphic elements.
+	*/
 	void setCompositingMode( CompositingMode compositeMode );
 	
+	/**
+	Returns the current composite mode.
+	*/
 	CompositingMode getCompositingMode();
 
 	/**

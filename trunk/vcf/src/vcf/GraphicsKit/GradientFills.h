@@ -21,7 +21,24 @@ where you installed the VCF.
 
 namespace VCF  {
 
+/**
+This is the base class for gradient fills. Gradient fills
+use the AGG gradient span generators to render the gradient.
 
+The main class function is to produce a color profile,
+that is then used by the agg gradient functions to determine
+what color to use at any given pixel. 
+
+The interface for the class functions identically to that of 
+the Photoshop Gradient Editor. You have a series of 2 or more
+colors and a series of 1 or more "mid points" where the number
+of mid points is equal to 1 less than the number of colors.
+Each color is associated with a location value that indicates
+it's position within the range of 0.0 to 1.0. Location values
+need to be unique per color and the list of colors is sorted
+by it's location. Each mid point has a value ranging 0.0 to 1.0.
+Mid point values do \em not need to be unique.
+*/
 class GradientFill : public Object, public Fill {
 public:
 
