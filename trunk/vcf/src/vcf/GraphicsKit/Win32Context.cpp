@@ -4733,20 +4733,58 @@ bool Win32Context::prepareForDrawing( long drawingOperation )
 
 		switch ( op ) {
 			case GraphicsContext::doStroke : {
-				LOGPEN logPen;
-				memset( &logPen, 0, sizeof(logPen) );
-
-				logPen.lopnColor = currentColor->getColorRef32();
-
-				logPen.lopnStyle = PS_SOLID;//translateStrokeStyle( currentStroke_.style_ );
-				logPen.lopnWidth.x = (long)context_->getStrokeWidth();
-
-				currentHPen_ = ::CreatePenIndirect( &logPen );
 
 				logBrush.lbColor = 0;
 				logBrush.lbHatch = 0;
 				logBrush.lbStyle = BS_HOLLOW;
 				currentHBrush_ = ::CreateBrushIndirect( &logBrush );
+
+				logBrush.lbColor = currentColor->getColorRef32();
+				logBrush.lbHatch = 0;
+				logBrush.lbStyle = BS_SOLID;
+
+				DWORD penStyle = PS_GEOMETRIC;
+				penStyle |= PS_SOLID;
+
+				switch ( context_->getLineCapStyle() ) {
+					case GraphicsContext::lcsButtCap : {
+						penStyle |= PS_ENDCAP_FLAT;
+					}
+					break;
+
+					case GraphicsContext::lcsRoundCap : {
+						penStyle |= PS_ENDCAP_ROUND;
+					}
+					break;
+
+					case GraphicsContext::lcsSquareCap : {
+						penStyle |= PS_ENDCAP_SQUARE;
+					}
+					break;
+				}
+
+				switch ( context_->getLineJoinStyle() ) {
+					case GraphicsContext::ljsMiterJoin : {
+						penStyle |= PS_JOIN_MITER;
+					}
+					break;
+
+					case GraphicsContext::ljsRoundJoin : {
+						penStyle |= PS_JOIN_ROUND;
+					}
+					break;
+
+					case GraphicsContext::ljsBevelJoin : {
+						penStyle |= PS_JOIN_BEVEL;
+					}
+					break;
+				}
+
+				currentHPen_ = ExtCreatePen( penStyle, (DWORD)context_->getStrokeWidth(),
+											&logBrush, 0, NULL );
+
+
+				SetMiterLimit( dc_, (FLOAT)context_->getMiterLimit(), NULL );
 
 				if ( context_->getCompositingMode() == GraphicsContext::cmXOR ) {
 					SetROP2( dc_, R2_NOTXORPEN );

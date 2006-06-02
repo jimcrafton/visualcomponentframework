@@ -61,6 +61,9 @@ public:
 	double scaleY_;	
 	GraphicsContext::CompositingMode compositeMode_;
 	double alpha_;
+	GraphicsContext::LineCapStyle lineCap_;
+	GraphicsContext::LineJoinStyle lineJoin_;
+	double miterLimit_;
 };
 
 
@@ -81,7 +84,10 @@ GraphicsState::GraphicsState():
 	scaleX_(1.0),
 	scaleY_(1.0),
 	compositeMode_(GraphicsContext::cmSource),
-	alpha_(1.0)
+	alpha_(1.0),
+	lineCap_(GraphicsContext::lcsSquareCap),
+	lineJoin_(GraphicsContext::ljsRoundJoin),
+	miterLimit_(1.0)
 {
 	transformMatrix_.identity();
 }
@@ -100,7 +106,10 @@ GraphicsState::GraphicsState( const GraphicsState& rhs ):
 	scaleX_(1.0),
 	scaleY_(1.0),
 	compositeMode_(GraphicsContext::cmSource),
-	alpha_(1.0)
+	alpha_(1.0),
+	lineCap_(GraphicsContext::lcsSquareCap),
+	lineJoin_(GraphicsContext::ljsRoundJoin),
+	miterLimit_(1.0)
 {
 	transformMatrix_.identity();
 	*this = rhs;
@@ -152,6 +161,10 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	scaleY_ = rhs.scaleY_;
 	
 	alpha_ = rhs.alpha_;
+	
+	lineCap_ = rhs.lineCap_;
+	lineJoin_ = rhs.lineJoin_;
+	miterLimit_ = rhs.miterLimit_;
 
 	return *this;
 }
@@ -295,6 +308,37 @@ double GraphicsContext::getAlpha()
 {
 	return currentGraphicsState_->alpha_;
 }
+
+GraphicsContext::LineCapStyle GraphicsContext::getLineCapStyle()
+{
+	return currentGraphicsState_->lineCap_;
+}
+
+void GraphicsContext::setLineCapStyle( GraphicsContext::LineCapStyle val )
+{
+	currentGraphicsState_->lineCap_ = val;
+}
+
+GraphicsContext::LineJoinStyle GraphicsContext::getLineJoinStyle()
+{
+	return currentGraphicsState_->lineJoin_;
+}
+
+void GraphicsContext::setLineJoinStyle( GraphicsContext::LineJoinStyle val )
+{
+	currentGraphicsState_->lineJoin_ = val;
+}
+
+double GraphicsContext::getMiterLimit()
+{
+	return currentGraphicsState_->miterLimit_;
+}
+
+void GraphicsContext::setMiterLimit( double val )
+{
+	currentGraphicsState_->miterLimit_ = val;
+}
+
 
 void GraphicsContext::setCompositingMode( GraphicsContext::CompositingMode compositeMode )
 {

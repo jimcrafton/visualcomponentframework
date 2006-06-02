@@ -159,6 +159,43 @@ void BasicStroke::render( Path * path )
 
 			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
 
+			int lcs = 0;
+			int ljs = 0;
+
+			switch ( context_->getLineCapStyle() ) {
+				case GraphicsContext::lcsButtCap : {
+					lcs = agg::butt_cap;
+				}
+				break;
+
+				case GraphicsContext::lcsRoundCap : {
+					lcs = agg::round_cap;
+				}
+				break;
+
+				case GraphicsContext::lcsSquareCap : {
+					lcs = agg::square_cap;
+				}
+				break;
+			}
+
+			switch ( context_->getLineJoinStyle() ) {
+				case GraphicsContext::ljsMiterJoin : {
+					ljs = agg::miter_join;
+				}
+				break;
+
+				case GraphicsContext::ljsRoundJoin : {
+					ljs = agg::round_join;
+				}
+				break;
+
+				case GraphicsContext::ljsBevelJoin : {
+					ljs = agg::bevel_join;
+				}
+				break;
+			}
+
 			if( dashed_ ) {
 				
 				agg::conv_dash< agg::conv_transform< agg::conv_curve< agg::path_storage > > > dash(xfrmedPath);
@@ -172,6 +209,9 @@ void BasicStroke::render( Path * path )
 				agg::conv_stroke< agg::conv_dash< agg::conv_transform< agg::conv_curve< agg::path_storage > > > >  stroke(dash);
 				
 				stroke.width( maxVal<>( 0.5, width_ ) );
+				stroke.line_cap( (agg::line_cap_e)lcs );
+				stroke.line_join( (agg::line_join_e)ljs );
+				stroke.miter_limit( context_->getMiterLimit() );
 				
 				rasterizer.add_path( stroke );
 			}
@@ -180,6 +220,9 @@ void BasicStroke::render( Path * path )
 				agg::conv_stroke< agg::conv_transform< agg::conv_curve< agg::path_storage > > >  stroke(xfrmedPath);
 				
 				stroke.width( maxVal<>( 0.5, width_ ) );
+				stroke.line_cap( (agg::line_cap_e)lcs );
+				stroke.line_join( (agg::line_join_e)ljs );
+				stroke.miter_limit( context_->getMiterLimit() );
 				
 				rasterizer.add_path( stroke );
 			}			
