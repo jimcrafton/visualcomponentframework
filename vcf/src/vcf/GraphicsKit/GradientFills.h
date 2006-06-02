@@ -371,10 +371,6 @@ protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		buildColorProfile();
 
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-
-
 		typedef agg::span_gradient<ColorT, 
                                    InterpolatorType,
                                    agg::gradient_radial,
@@ -394,7 +390,23 @@ protected:
 		agg::scanline_u8 sl;
 
 
-		agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+
+		if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
+			pixfmt pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		}
+		else {
+			pixfmt_type pix(renderingBuffer);
+			pix.comp_op( context_->getCompositingMode() );
+
+			comp_renderer_type crb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, crb, span_alloc, span_gen);
+		}
 	}
 
 	double startRadius_;
@@ -434,10 +446,6 @@ protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		buildColorProfile();
 
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-
-
 		typedef agg::span_gradient<ColorT, 
                                    InterpolatorType,
                                    agg::gradient_x,
@@ -457,7 +465,23 @@ protected:
 		agg::scanline_u8 sl;
 
 
-		agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+
+		if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
+			pixfmt pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		}
+		else {
+			pixfmt_type pix(renderingBuffer);
+			pix.comp_op( context_->getCompositingMode() );
+
+			comp_renderer_type crb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, crb, span_alloc, span_gen);
+		}
 	}
 
 	double start_;
@@ -497,9 +521,6 @@ protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		buildColorProfile();
 
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-
 
 		typedef agg::span_gradient<ColorT, 
                                    InterpolatorType,
@@ -520,7 +541,23 @@ protected:
 		agg::scanline_u8 sl;
 
 
-		agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+
+		if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
+			pixfmt pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		}
+		else {
+			pixfmt_type pix(renderingBuffer);
+			pix.comp_op( context_->getCompositingMode() );
+
+			comp_renderer_type crb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, crb, span_alloc, span_gen);
+		}
 	}
 
 	double start_;
@@ -560,8 +597,7 @@ protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		buildColorProfile();
 
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
+		
 
 		typedef agg::span_gradient<ColorT, 
                                    InterpolatorType,
@@ -581,8 +617,25 @@ protected:
         GradientSpanGen      span_gen(inter, conic, colorProfile_, start_, end_);
 		agg::scanline_u8 sl;
 
+		typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 
-		agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+
+		if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
+			pixfmt pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, rb, span_alloc, span_gen);
+		}
+		else {
+			pixfmt_type pix(renderingBuffer);
+			pix.comp_op( context_->getCompositingMode() );
+
+			comp_renderer_type crb(pix);
+			agg::render_scanlines_aa(rasterizer, sl, crb, span_alloc, span_gen);
+		}
+
+		
 	}
 
 	double start_;

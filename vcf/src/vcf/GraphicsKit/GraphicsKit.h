@@ -25,7 +25,6 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Color.h"
 
 #include "vcf/GraphicsKit/Image.h"
-//#include "vcf/GraphicsKit/ImageBits.h"
 
 #include "vcf/GraphicsKit/GraphicsToolKit.h"
 #include "vcf/GraphicsKit/Pixels.h"

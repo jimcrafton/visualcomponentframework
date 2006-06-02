@@ -1061,14 +1061,15 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const lon
 	}
 }
 
+
 bool GraphicsContext::isXORModeOn()
 {
-	return contextPeer_->isXORModeOn();
+	return false;//contextPeer_->isXORModeOn();
 }
 
 void GraphicsContext::setXORModeOn( const bool& XORModeOn )
 {
-	contextPeer_->setXORModeOn( XORModeOn );
+	//contextPeer_->setXORModeOn( XORModeOn );
 }
 
 double GraphicsContext::getTextWidth( const String& text )

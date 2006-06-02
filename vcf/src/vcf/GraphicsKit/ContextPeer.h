@@ -168,14 +168,14 @@ public:
 	*at the pixel level. Thus a line drawn once, and then
 	*a second time at the same coordinates will erase itself
 	*/
-	virtual bool isXORModeOn() = 0;
+	//virtual bool isXORModeOn() = 0;
 
 	/**
 	*Turns the XOR mode on or off.
 	*@param bool XORModeOn, if true then turns the XORMode on
 	*otherwise if it's false it turns it off.
 	*/
-	virtual void setXORModeOn( const bool& XORModeOn ) = 0;
+	//virtual void setXORModeOn( const bool& XORModeOn ) = 0;
 
 	virtual bool isAntiAliasingOn() = 0;
 

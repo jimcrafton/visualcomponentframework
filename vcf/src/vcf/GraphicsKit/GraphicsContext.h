@@ -421,6 +421,9 @@ public:
 	XOR mode is on, which means that colors are alternated
 	at the pixel level. Thus a line drawn once, and then
 	a second time at the same coordinates will erase itself
+
+	@deprecated use getCompositingMode and check to see if
+	the GraphicsContext::cmXOR is the current composite mode.
 	*/
 	bool isXORModeOn( );
 
@@ -428,6 +431,9 @@ public:
 	Turns the XOR mode on or off.
 	@param bool XORModeOn, if true then turns the XORMode on
 	otherwise if it's false it turns it off.
+
+	@deprecated use setCompositingMode and pass in 
+	GraphicsContext::cmXOR for the current composite mode.
 	*/
 	void setXORModeOn( const bool& XORModeOn );
 
