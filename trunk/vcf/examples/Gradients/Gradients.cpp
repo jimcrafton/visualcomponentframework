@@ -24,7 +24,7 @@ public:
 		VCF::RadialGradientFill fill;
 		ctx->setCurrentFill(&fill);
 		BezierCurve curve;
-		curve.rectangle( Rect(0,10,1000,90) );
+		curve.rectangle( Rect(0,10,100,90) );
 		ctx->draw( &curve );
 
 		VCF::HorizontalGradientFill fill2;
@@ -73,8 +73,9 @@ public:
 		el.ellipse( Rect(0,360,200,460) );
 
 		ctx->draw(&el);
-		
 
+
+		ctx->setCompositingMode( GraphicsContext::cmScreen );
 		
 		fill3.setGradientMatrix( Matrix2D::translation(350, 410) );
 
@@ -83,6 +84,7 @@ public:
 		ctx->draw(&circ);
 
 
+		ctx->setCompositingMode( GraphicsContext::cmSource );
 
 
 		VerticalGradientFill fill4a;
@@ -135,6 +137,7 @@ public:
 
 		ctx->setCurrentFill(&fill4b);
 
+
 		curve.clear();
 		curve.rectangle( Rect(300,250,450,285) );
 		ctx->draw( &curve );
@@ -149,6 +152,45 @@ public:
 
 
 		ctx->setCurrentFill(NULL);
+
+		ctx->setCompositingMode( GraphicsContext::cmMultiply );
+
+		BasicStroke stroke;
+
+		ctx->setCurrentStroke( &stroke );
+
+		stroke.setWidth( 12 );
+		stroke.setColor( &Color("purple") );
+		
+		curve.clear();
+
+		curve.moveTo( 400, 400 );
+		curve.lineTo( 500, 400 );
+		curve.lineTo( 450, 600 );
+		curve.lineTo( 380, 380 );
+		ctx->draw( &curve );
+
+		ctx->setCurrentStroke( NULL );
+		ctx->setCompositingMode( GraphicsContext::cmSource );
+
+
+		ctx->setCompositingMode( GraphicsContext::cmOverlay );
+
+		BasicFill bf;
+
+		ctx->setCurrentFill( &bf );
+
+		bf.setColor( &Color("blue") );
+		
+		curve.clear();
+
+		curve.rectangle( Rect(500,400,600,500) );
+
+		ctx->draw( &curve );
+
+		ctx->setCurrentFill( NULL );
+		ctx->setCompositingMode( GraphicsContext::cmSource );
+
 	}
 
 };
