@@ -89,7 +89,6 @@ Win32Context::~Win32Context()
 
 void Win32Context::init()
 {
-	strokeWidth_ = 1.0;
 	dc_ = NULL;
 	clipRGN_ = NULL;
 	context_ = NULL;
@@ -102,7 +101,7 @@ void Win32Context::init()
 	oldOrigin_.y_ = 0.0;
 	origin_.x_ = 0.0;
 	origin_.y_ = 0.0;
-	isXORModeOn_ = false;
+	
 	alignToBaseline_ = false;
 
 	currentDCState_ = 0;
@@ -1511,15 +1510,6 @@ void Win32Context::textAt( const Rect& bounds, const String& text, const long& d
 	//releaseHandle();
 }
 
-bool Win32Context::isXORModeOn()
-{
-	return isXORModeOn_;
-}
-
-void Win32Context::setXORModeOn( const bool& XORModeOn )
-{
-	isXORModeOn_ = XORModeOn;
-}
 
 double Win32Context::getTextWidth( const String& text )
 {
@@ -4758,7 +4748,7 @@ bool Win32Context::prepareForDrawing( long drawingOperation )
 				logBrush.lbStyle = BS_HOLLOW;
 				currentHBrush_ = ::CreateBrushIndirect( &logBrush );
 
-				if ( isXORModeOn_ ) {
+				if ( context_->getCompositingMode() == GraphicsContext::cmXOR ) {
 					SetROP2( dc_, R2_NOTXORPEN );
 				}
 			}

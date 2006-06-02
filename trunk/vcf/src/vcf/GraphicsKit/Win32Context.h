@@ -251,17 +251,6 @@ public:
 	*/
 	virtual void releaseHandle();
 
-	/**
-	*
-	*
-	*/
-	virtual bool isXORModeOn();
-
-	/**
-	*
-	*
-	*/
-	virtual void setXORModeOn( const bool& XORModeOn );
 
 	/**
 	*
@@ -469,8 +458,6 @@ protected:
 
 	bool isMemoryCtx_;
 	GraphicsContext* context_;
-	bool isXORModeOn_;
-	double strokeWidth_;
 
 	bool alignToBaseline_;
 };
