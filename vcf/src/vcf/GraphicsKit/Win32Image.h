@@ -8,8 +8,10 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
+#ifndef _VCF_GRAYSCALEIMAGE_H__
 #include "vcf/GraphicsKit/GrayScaleImage.h"
+#endif 
+
 
 #if _MSC_VER > 1000
 #   pragma once

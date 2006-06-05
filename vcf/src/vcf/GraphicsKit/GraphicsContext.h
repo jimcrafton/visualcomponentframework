@@ -42,7 +42,7 @@ class TextState;
 
 class GraphicsState;
 
-
+class RenderArea;
 
 
 /**
@@ -220,6 +220,39 @@ public:
 	};
 
 
+	/**
+	Describes the state of the alpha channel.
+	The state is used to check whether or not 
+	the render area's alpha values have been 
+	accidentally overwritten by native GDI calls.
+	If they have, we can then reset them back to 
+	255, which is the default value. 
+	
+	The default state is rasDefault, which means
+	that all the render area's alpha values 
+	are at 0xFF (255). 
+	
+	When the graphics context's drawing routine's 
+	are called they may, depending on the platform,
+	overwrite the render area's alpha values. If
+	this happens then the state must be set to 
+	rasDirty, indicating that the graphics 
+	context needs to reset the alpha values
+	back to the original state before any drawing
+	gets done that depends on accurate alpha
+	values being present in the render area's 
+	buffer.
+
+	If the alpha values of the render area have been 
+	modified by the programmer and need to be retained, 
+	then the default state should be changed from
+	rasDefault to rasNonDefaultAlphaVals.  
+	*/
+	enum RenderAreaAlphaState {
+		rasDefault = 0,
+		rasNonDefaultAlphaVals,
+		rasDirty
+	};
 
 	typedef std::vector<GraphicsState*> GraphicsStateCollection;
 	typedef GraphicsStateCollection::iterator GraphicsStateIterator;
@@ -301,24 +334,17 @@ public:
 	*/
 	void flushRenderArea( );
 
-	/**
-	Sets the drawing area as "dirty", which means it should
-	be drawn.
-	*/
-	void markRenderAreaDirty() {
-		renderAreaDirty_ = true;
-	}
+	void cacheRenderAreaAlpha();
 
-	bool isRenderAreaDirty() {
-		if ( hasRenderArea() ) {
-			return renderAreaDirty_;
-		}
-		return false;
-	}
+	void resetRenderAreaAlpha();
 
 	bool hasRenderArea() {
 		return NULL != renderArea_;
 	}
+
+	void renderAreaAlphaOverwritten();
+
+	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );
 
 	Image* getRenderArea() {
 		return renderArea_;
@@ -423,11 +449,12 @@ public:
 
 	Color* getColor( );
 
+
+	Image* getAlphaMask();
+
+	void setAlphaMask( Image* alphaMask );
+
 	
-
-
-	void copyContext( const Rect& sourceRect, const Rect& destRect, GraphicsContext* context );
-
 	/**
 	Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
 	screen real estate the context represents
@@ -513,6 +540,8 @@ public:
 	void setAlpha( const double& alpha );
 	double getAlpha();
 
+
+	void copyContext( const Rect& sourceRect, const Rect& destRect, GraphicsContext* context );
 
 	/**
 	*/
@@ -803,6 +832,7 @@ public:
 
 	void drawThemeText( Rect* rect, TextState& state );
 
+	
 protected:
 
 	void buildArc( double centerX,  double centerY,
@@ -874,8 +904,10 @@ protected:
 	Image* renderArea_;
 	Point drawingAreaTopLeft_;
 	agg::rendering_buffer* renderBuffer_;
-	bool renderAreaDirty_;
-	Rect viewableBounds_;
+	uchar* renderAreaAlphaVal_;
+	size_t renderAreaAlphaSize_;
+	RenderAreaAlphaState renderAreaAlphaState_;
+	Rect viewableBounds_;	
 
 	/**
 	the collection of all the saved Graphics states.

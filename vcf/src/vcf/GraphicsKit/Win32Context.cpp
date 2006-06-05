@@ -4728,6 +4728,8 @@ bool Win32Context::prepareForDrawing( long drawingOperation )
 
 		Color* currentColor = context_->getColor();
 
+		context_->cacheRenderAreaAlpha();
+
 		LOGBRUSH logBrush;
 		memset( &logBrush, 0, sizeof(logBrush) );
 
@@ -4878,6 +4880,8 @@ void Win32Context::finishedDrawing( long drawingOperation )
 			DeleteObject( currentHFont_ );
 			currentHFont_ = NULL;
 		}
+
+		context_->renderAreaAlphaOverwritten();
 	}
 	else {
 		throw InvalidPointerException( MAKE_ERROR_MSG_2("HDC handle is NULL!!!") );
