@@ -74,6 +74,9 @@ public:
 		std::vector<PathPoint>::iterator pathIt = points.begin();	
 
 		if ( NULL != context_->getRenderingBuffer() ) {
+			
+			Point org = context_->getOrigin();
+
 			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
 
 			agg::path_storage fillPath;
@@ -83,17 +86,17 @@ public:
 
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
-						fillPath.move_to( pt.point_.x_, pt.point_.y_ );
+						fillPath.move_to( pt.point_.x_ + org.x_, pt.point_.y_ + org.y_ );
 					}
 					break;
 
 					case PathPoint::ptLineTo: {
-						fillPath.line_to( pt.point_.x_, pt.point_.y_ );
+						fillPath.line_to( pt.point_.x_ + org.x_, pt.point_.y_ + org.y_ );
 					}
 					break;
 
 					case PathPoint::ptQuadTo: {
-						fillPath.move_to( pt.point_.x_, pt.point_.y_ );
+						fillPath.move_to( pt.point_.x_ + org.x_, pt.point_.y_ + org.y_ );
 
 						pathIt++;
 						PathPoint& c1 = *pathIt;
@@ -104,9 +107,9 @@ public:
 						pathIt++;
 						PathPoint& p2 = *pathIt;
 						
-						fillPath.curve4( c1.point_.x_, c1.point_.y_,
-										c2.point_.x_, c2.point_.y_,
-										p2.point_.x_, p2.point_.y_ );
+						fillPath.curve4( c1.point_.x_ + org.x_, c1.point_.y_ + org.y_,
+										c2.point_.x_ + org.x_, c2.point_.y_ + org.y_,
+										p2.point_.x_ + org.x_, p2.point_.y_ + org.y_ );
 					}
 					break;
 
@@ -131,6 +134,8 @@ public:
 
 			agg::rasterizer_scanline_aa<> rasterizer;
 			rasterizer.add_path(xfrmedPath);			
+
+			context_->resetRenderAreaAlpha();
 
 			renderGradient( renderingBuffer, rasterizer );
 		}
@@ -396,7 +401,11 @@ protected:
 		typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
 		GradientSpanAlloc    span_alloc;		
 
-		agg::trans_affine mat = gradientMatrix_;
+		Point org = context_->getOrigin();
+
+		agg::trans_affine mat;
+		mat *= gradientMatrix_;
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
 
 		mat.invert();
 
@@ -471,8 +480,11 @@ protected:
 		typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
 		GradientSpanAlloc    span_alloc;		
 
-		agg::trans_affine mat = gradientMatrix_;
+		Point org = context_->getOrigin();
 
+		agg::trans_affine mat;		
+		mat *= gradientMatrix_;
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
 		mat.invert();
 
 
@@ -547,8 +559,11 @@ protected:
 		typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
 		GradientSpanAlloc    span_alloc;		
 
-		agg::trans_affine mat = gradientMatrix_;
+		Point org = context_->getOrigin();
 
+		agg::trans_affine mat;		
+		mat *= gradientMatrix_;
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
 		mat.invert();
 
 
@@ -624,14 +639,19 @@ protected:
 		typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
 		GradientSpanAlloc    span_alloc;		
 
-		agg::trans_affine mat = gradientMatrix_;
+		Point org = context_->getOrigin();
 
+		
+		agg::trans_affine mat;
+		mat *= gradientMatrix_;
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
+		
 		mat.invert();
 
 
 		InterpolatorType      inter(mat);
 		agg::gradient_conic conic;
-        GradientSpanGen      span_gen(inter, conic, colorProfile_, start_, end_);
+        GradientSpanGen      span_gen(inter, conic, colorProfile_, 0, 100);
 		agg::scanline_u8 sl;
 
 		typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;

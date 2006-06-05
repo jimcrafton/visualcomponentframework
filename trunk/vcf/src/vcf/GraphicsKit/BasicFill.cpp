@@ -33,6 +33,8 @@ void BasicFill::render( Path* path )
 		context_->setColor( &color_ );
 
 
+		
+
 		//JC - we don't need to grab the current transform since it's 
 		//applied to the points any how
 		//Matrix2D* currentXFrm = context_->getCurrentTransform();

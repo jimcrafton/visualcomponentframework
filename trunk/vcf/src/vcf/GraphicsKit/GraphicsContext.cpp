@@ -21,6 +21,10 @@ where you installed the VCF.
 #include "thirdparty/common/agg/include/agg_scanline_u.h"
 #include "thirdparty/common/agg/include/agg_bounding_rect.h"
 #include "thirdparty/common/agg/include/agg_span_converter.h"
+#include "thirdparty/common/agg/include/agg_alpha_mask_u8.h"
+
+typedef agg::amask_no_clip_gray8 alpha_mask_type;
+
 
 namespace VCF {
 
@@ -64,6 +68,7 @@ public:
 	GraphicsContext::LineCapStyle lineCap_;
 	GraphicsContext::LineJoinStyle lineJoin_;
 	double miterLimit_;
+	SmartPtr<Image>::Shared alphaMask_;
 };
 
 
@@ -119,11 +124,10 @@ GraphicsState::~GraphicsState()
 {
 
 	if ( NULL != clippingPath_ ) {
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
-		pathObj->release();
+		Object* obj = dynamic_cast<Object*>( clippingPath_ );
+		obj->release();
 	}
 	clippingPath_ = NULL;
-
 }
 
 GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
@@ -166,6 +170,8 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	lineJoin_ = rhs.lineJoin_;
 	miterLimit_ = rhs.miterLimit_;
 
+	alphaMask_ = rhs.alphaMask_;
+
 	return *this;
 }
 
@@ -197,7 +203,9 @@ GraphicsContext::GraphicsContext():
 	currentDrawingState_(GraphicsContext::gsNone),		
 	renderArea_(NULL),
 	renderBuffer_(NULL),
-	renderAreaDirty_(false),
+	renderAreaAlphaVal_(NULL),
+	renderAreaAlphaSize_(1),
+	renderAreaAlphaState_(rasDefault),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
 {
@@ -217,7 +225,9 @@ GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned lon
 	currentDrawingState_(GraphicsContext::gsNone),		
 	renderArea_(NULL),
 	renderBuffer_(NULL),
-	renderAreaDirty_(false),
+	renderAreaAlphaVal_(NULL),
+	renderAreaAlphaSize_(1),
+	renderAreaAlphaState_(rasDefault),	
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
 {
@@ -245,7 +255,9 @@ GraphicsContext::GraphicsContext( OSHandleID contextID ):
 	currentDrawingState_(GraphicsContext::gsNone),
 	renderArea_(NULL),
 	renderBuffer_(NULL),
-	renderAreaDirty_(false),
+	renderAreaAlphaVal_(NULL),
+	renderAreaAlphaSize_(1),
+	renderAreaAlphaState_(rasDefault),	
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
 {
@@ -348,6 +360,20 @@ void GraphicsContext::setCompositingMode( GraphicsContext::CompositingMode compo
 GraphicsContext::CompositingMode GraphicsContext::getCompositingMode()
 {
 	return currentGraphicsState_->compositeMode_;
+}
+
+Image* GraphicsContext::getAlphaMask()
+{
+	return get_pointer( currentGraphicsState_->alphaMask_ );
+}
+
+void GraphicsContext::setAlphaMask( Image* alphaMask )
+{
+	if ( NULL != alphaMask ) {
+		VCF_ASSERT( alphaMask->getType() == Image::itGrayscale );
+	}
+
+	currentGraphicsState_->alphaMask_.reset( alphaMask );
 }
 
 void GraphicsContext::setCurrentFont(Font * font)
@@ -1564,6 +1590,68 @@ void GraphicsContext::checkPathOperations()
 	}
 }
 
+void GraphicsContext::cacheRenderAreaAlpha()
+{
+	if ( (NULL != renderArea_) && (renderAreaAlphaState_ != rasDirty) && (NULL == renderAreaAlphaVal_) ) {
+		renderAreaAlphaVal_ = new uchar[ renderAreaAlphaSize_ ];
+
+		ColorPixels pix(renderArea_);
+		ColorPixels::Type* bits = pix;
+
+		for (size_t i=0;i<renderAreaAlphaSize_;i++ ) {
+			renderAreaAlphaVal_[i] = bits[i].a;
+		}
+	}
+}
+
+void GraphicsContext::renderAreaAlphaOverwritten()
+{
+	if ( NULL != renderArea_ ) {
+		renderAreaAlphaState_ = rasDirty;
+	}
+}
+
+void GraphicsContext::setRenderAreaAlphaSize( bool usingNonDefaultAlpha )
+{
+	if ( NULL != renderArea_ ) {
+		if ( usingNonDefaultAlpha ) {
+			renderAreaAlphaSize_ = renderArea_->getHeight() * renderArea_->getWidth();
+		}
+		else {
+			renderAreaAlphaSize_ = 1;
+		}
+	}
+}
+
+void GraphicsContext::resetRenderAreaAlpha()
+{
+	if ( (NULL != renderArea_) && (renderAreaAlphaState_ == rasDirty) && (NULL != renderAreaAlphaVal_) ) {
+
+		ColorPixels pix(renderArea_);
+		ColorPixels::Type* bits = pix;
+
+		if ( 1 == renderAreaAlphaSize_ ) {
+			size_t sz = pix.height() * pix.width();
+
+			for (size_t i=0;i<sz;i++ ) {
+				 bits[i].a = renderAreaAlphaVal_[0];
+			}
+
+			renderAreaAlphaState_ = rasDefault;
+		}
+		else {
+			for (size_t i=0;i<renderAreaAlphaSize_;i++ ) {
+				 bits[i].a = renderAreaAlphaVal_[i];
+			}
+
+			renderAreaAlphaState_ = rasNonDefaultAlphaVals;
+		}
+		
+
+		delete [] renderAreaAlphaVal_;
+		renderAreaAlphaVal_ = NULL;		
+	}
+}
 
 void GraphicsContext::setRenderArea( Rect bounds )
 {
@@ -1583,11 +1671,10 @@ void GraphicsContext::setRenderArea( Rect bounds )
 							renderArea_->getHeight(),
 							renderArea_->getWidth() * renderArea_->getType() );
 
-	renderArea_->getImageContext()->setRenderingBuffer( renderBuffer_ );
+	setRenderingBuffer( renderBuffer_ );
 
 	renderArea_->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
-
-	renderAreaDirty_ = true;
+	getPeer()->setContextID( renderArea_->getImageContext()->getPeer()->getContextID() );	
 }
 
 void GraphicsContext::deleteRenderArea()
@@ -1599,6 +1686,8 @@ void GraphicsContext::deleteRenderArea()
 	
 	renderBuffer_ = NULL;
 	renderArea_ = NULL;
+	renderAreaAlphaState_ = rasDefault;
+	renderAreaAlphaSize_ = 1;
 }
 
 void GraphicsContext::flushRenderArea()
@@ -1614,10 +1703,13 @@ void GraphicsContext::flushRenderArea()
 		//																	viewableBounds_.right_,
 		//																	viewableBounds_.bottom_ ) );
 
-		drawPartialImage(  viewableBounds_.getTopLeft(), &viewableBounds_, renderArea_ );
-	}
+		Rect tmp;
+		tmp.right_ = tmp.left_ + minVal<double>( viewableBounds_.getWidth(), renderArea_->getWidth() );
+		tmp.bottom_ = tmp.top_ + minVal<double>( viewableBounds_.getHeight(), renderArea_->getHeight() );
 
-	renderAreaDirty_ = false;
+		//drawPartialImage(  viewableBounds_.getTopLeft(), &tmp, renderArea_ );
+		bitBlit( viewableBounds_.getTopLeft(), renderArea_ );
+	}	
 }
 
 void GraphicsContext::buildArc( double centerX,  double centerY,

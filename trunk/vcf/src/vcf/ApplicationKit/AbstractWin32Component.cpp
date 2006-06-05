@@ -26,6 +26,7 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
+#include "vcf/GraphicsKit/Win32Image.h"
 
 
 using namespace VCF;
@@ -361,64 +362,66 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			paintRect.right, paintRect.bottom );
 
 		ctx->setViewableBounds( viewableRect );
-		Image* drawingArea = ctx->getRenderArea();
+		Image* renderArea = ctx->getRenderArea();
 		
 		if ( peerControl_->isUsingRenderBuffer() && 
 				!viewableRect.isNull() && 
 				!viewableRect.isEmpty() &&
-				(NULL != drawingArea) ) {
-			
-			ctx->getPeer()->setContextID( (OSHandleID)paintDC );
+				(NULL != renderArea) ) {
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+
+			ctx->setRenderArea( viewableRect );
 			
-			drawingArea->getImageContext()->setViewableBounds(ctx->getViewableBounds());
 
-			if ( ctx->isRenderAreaDirty() ) {
-
-				if ( NULL != exclusionRect ) {
-					ExcludeClipRect( paintDC, exclusionRect->left, exclusionRect->top,
-								exclusionRect->right, exclusionRect->bottom );
-				}
-
-				GraphicsContext* paintCtx = ctx->getRenderArea()->getImageContext();
-				int gcs = paintCtx->saveState();
-
-				switch( whatToPaint ) {
-					case cpBorderOnly : {
-						peerControl_->paintBorder( paintCtx );
-					}
-					break;
-
-					case cpControlOnly : {
-						peerControl_->internal_beforePaint( paintCtx );
-
-						peerControl_->paint( paintCtx );
-
-						peerControl_->internal_afterPaint( paintCtx );
-
-					}
-					break;
-
-					case cpBorderAndControl : {
-						peerControl_->paintBorder( paintCtx );
-						
-						peerControl_->internal_beforePaint( paintCtx );
-
-						peerControl_->paint( paintCtx );
-
-						peerControl_->internal_afterPaint( paintCtx );
-					}
-					break;
-				}
-				paintCtx->restoreState( gcs );
+			if ( NULL != exclusionRect ) {
+				ExcludeClipRect( paintDC, exclusionRect->left, exclusionRect->top,
+							exclusionRect->right, exclusionRect->bottom );
 			}
+
+			int gcs = ctx->saveState();
+
+			switch( whatToPaint ) {
+				case cpBorderOnly : {
+					peerControl_->paintBorder( ctx );
+				}
+				break;
+
+				case cpControlOnly : {
+					peerControl_->internal_beforePaint( ctx );
+
+					peerControl_->paint( ctx );
+
+					peerControl_->internal_afterPaint( ctx );
+
+				}
+				break;
+
+				case cpBorderAndControl : {
+					peerControl_->paintBorder( ctx );
+					
+					peerControl_->internal_beforePaint( ctx );
+
+					peerControl_->paint( ctx );
+
+					peerControl_->internal_afterPaint( ctx );
+				}
+				break;
+			}
+			ctx->restoreState( gcs );
+			
 			ctx->flushRenderArea();
 
-			ctx->getRenderArea()->getImageContext()->setViewableBounds( Rect(0,0,0,0) );
+			Win32Image* img = (Win32Image*)ctx->getRenderArea();			
+
+			BitBlt( paintDC, paintRect.left, paintRect.top, 
+					paintRect.right - paintRect.left,
+					paintRect.bottom - paintRect.top,
+					img->getDC(), paintRect.left, paintRect.top, SRCCOPY );
+
+			ctx->setViewableBounds( Rect(0,0,0,0) );
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
-			
 
 			result = paintDC;
 		}
@@ -561,7 +564,7 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 {	
 
 	if ( !peerControl_->isDestroying() ) {
-		if ( true == peerControl_->isDoubleBuffered() && !peerControl_->isUsingRenderBuffer() ) {
+		if ( true == peerControl_->isDoubleBuffered() /*&& !peerControl_->isUsingRenderBuffer()*/ ) {
 			VCF_ASSERT( memDCState_ != 0 );
 			VCF_ASSERT( originalMemBMP_ != 0 );
 			VCF_ASSERT( memBMP_ != 0 );
