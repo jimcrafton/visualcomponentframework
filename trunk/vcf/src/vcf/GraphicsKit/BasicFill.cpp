@@ -136,6 +136,10 @@ void BasicFill::render( Path* path )
 									currentXFrm[Matrix2D::mei20],
 									currentXFrm[Matrix2D::mei21] );
 
+			Point org = context_->getOrigin();
+			mat *= agg::trans_affine_translation( org.x_, org.y_  );
+
+
 			agg::conv_curve<agg::path_storage> smooth(fillPath);
 			
 			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
@@ -146,7 +150,7 @@ void BasicFill::render( Path* path )
 
 			
 
-			
+			context_->resetRenderAreaAlpha();
 
 			if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
 				pixfmt pixf(renderingBuffer);

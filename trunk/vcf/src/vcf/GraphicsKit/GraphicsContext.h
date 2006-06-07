@@ -18,6 +18,9 @@ where you installed the VCF.
 #include "thirdparty/common/agg/include/agg_rendering_buffer.h"
 #endif
 
+#ifndef AGG_SCANLINE_U_INCLUDED
+#include "thirdparty/common/agg/include/agg_scanline_u.h"
+#endif
 
 
 namespace VCF{
@@ -357,6 +360,14 @@ public:
 	void setRenderingBuffer( agg::rendering_buffer* buffer ) {
 		renderBuffer_ = buffer;
 	}
+
+
+	template<typename SpanAllocT, typename SpanGenT>
+	static void renderScanlines( GraphicsContext& gc, 
+							agg::rendering_buffer& renderingBuffer, 
+							agg::rasterizer_scanline_aa<>& rasterizer, 
+							SpanAllocT& spanAllocater,
+							SpanGenT& spanGenerator );
 
 	/**
 	saves the state of a Graphics context after the
@@ -1035,6 +1046,34 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 }
 
 
+template<typename SpanAllocT, typename SpanGenT>
+void GraphicsContext::renderScanlines( GraphicsContext& gc, 
+										agg::rendering_buffer& renderingBuffer, 
+										agg::rasterizer_scanline_aa<>& rasterizer, 
+										SpanAllocT& spanAllocater,
+										SpanGenT& spanGenerator )
+{
+	agg::scanline_u8 sl;
+	
+	typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+	
+	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+		pixfmt pix(renderingBuffer);
+		RendererBase rb(pix);
+		agg::render_scanlines_aa( rasterizer, sl, rb, spanAllocater, spanGenerator );
+	}
+	else {
+		pixfmt_type pix(renderingBuffer);
+		pix.comp_op( gc.getCompositingMode() );
+		
+		comp_renderer_type crb(pix);
+		agg::render_scanlines_aa( rasterizer, sl, crb, spanAllocater, spanGenerator );
+	}
+}
+
+				
 
 
 };

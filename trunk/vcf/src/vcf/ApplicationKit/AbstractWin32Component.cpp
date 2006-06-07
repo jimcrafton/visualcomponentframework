@@ -564,7 +564,7 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 {	
 
 	if ( !peerControl_->isDestroying() ) {
-		if ( true == peerControl_->isDoubleBuffered() /*&& !peerControl_->isUsingRenderBuffer()*/ ) {
+		if ( true == peerControl_->isDoubleBuffered() && !peerControl_->isUsingRenderBuffer() ) {
 			VCF_ASSERT( memDCState_ != 0 );
 			VCF_ASSERT( originalMemBMP_ != 0 );
 			VCF_ASSERT( memBMP_ != 0 );
