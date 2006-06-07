@@ -47,6 +47,22 @@ class GraphicsState;
 
 class RenderArea;
 
+class GraphicsContext;
+
+
+template<typename SpanAllocT, typename SpanGenT>
+void renderScanlines( GraphicsContext& gc, 
+										agg::rendering_buffer& renderingBuffer, 
+										agg::rasterizer_scanline_aa<>& rasterizer, 
+										SpanAllocT& spanAllocater,
+										SpanGenT& spanGenerator );
+
+
+void renderScanlinesSolid( GraphicsContext& gc, 
+							agg::rasterizer_scanline_aa<>& rasterizer,
+							const agg::rgba& color );
+
+
 
 /**
 \class GraphicsContext GraphicsContext.h "vcf/GraphicsKit/GraphicsContext.h"
@@ -349,25 +365,13 @@ public:
 
 	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );
 
-	Image* getRenderArea() {
-		return renderArea_;
-	}
+	Image* getRenderArea();
 
-	agg::rendering_buffer* getRenderingBuffer() {
-		return renderBuffer_;
-	}
+	agg::rendering_buffer* getRenderingBuffer();
 
-	void setRenderingBuffer( agg::rendering_buffer* buffer ) {
-		renderBuffer_ = buffer;
-	}
+	void setRenderingBuffer( agg::rendering_buffer* buffer );
 
-
-	template<typename SpanAllocT, typename SpanGenT>
-	static void renderScanlines( GraphicsContext& gc, 
-							agg::rendering_buffer& renderingBuffer, 
-							agg::rasterizer_scanline_aa<>& rasterizer, 
-							SpanAllocT& spanAllocater,
-							SpanGenT& spanGenerator );
+	agg::scanline_u8& internal_getRenderAreaScanline();
 
 	/**
 	saves the state of a Graphics context after the
@@ -911,14 +915,17 @@ protected:
 	GraphicsDrawingState currentDrawingState_;
 	std::vector<PointOperation> pathOperations_;
 	std::vector<ImageOperation> imageOperations_;
-	
+	/*
 	Image* renderArea_;
 	Point drawingAreaTopLeft_;
 	agg::rendering_buffer* renderBuffer_;
 	uchar* renderAreaAlphaVal_;
 	size_t renderAreaAlphaSize_;
 	RenderAreaAlphaState renderAreaAlphaState_;
-	Rect viewableBounds_;	
+	*/
+	Rect viewableBounds_;
+
+	RenderArea* renderArea_;
 
 	/**
 	the collection of all the saved Graphics states.
@@ -1047,33 +1054,70 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 
 
 template<typename SpanAllocT, typename SpanGenT>
-void GraphicsContext::renderScanlines( GraphicsContext& gc, 
+void renderScanlines( GraphicsContext& gc, 
 										agg::rendering_buffer& renderingBuffer, 
 										agg::rasterizer_scanline_aa<>& rasterizer, 
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator )
 {
-	agg::scanline_u8 sl;
-	
-	typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
+	typedef agg::span_interpolator_linear<> InterpolatorType;
+	typedef agg::renderer_base<pixfmt> RendererBase;
+
+	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 	
+	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+
+
 	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
 		pixfmt pix(renderingBuffer);
 		RendererBase rb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, rb, spanAllocater, spanGenerator );
+		agg::render_scanlines_aa( rasterizer, scanline, rb, spanAllocater, spanGenerator );
 	}
 	else {
 		pixfmt_type pix(renderingBuffer);
 		pix.comp_op( gc.getCompositingMode() );
 		
 		comp_renderer_type crb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, crb, spanAllocater, spanGenerator );
+		agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
 	}
 }
 
-				
+inline void renderScanlinesSolid( GraphicsContext& gc, 
+										agg::rasterizer_scanline_aa<>& rasterizer,
+										const agg::rgba& color )
+{
+	typedef agg::renderer_base<pixfmt> RendererBase;
+	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;	
+			
+	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
+	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+	agg::rendering_buffer& renderingBuffer = *gc.getRenderingBuffer();
+
+	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+
+	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+		pixfmt pixf(renderingBuffer);
+		RendererBase renb(pixf);
+		RendererSolid renderer( renb );
+		
+		renderer.color(color);
+		
+		
+		agg::render_scanlines(rasterizer, scanline, renderer);
+	}
+	else {
+		pixfmt_type pixf(renderingBuffer);
+		pixf.comp_op( gc.getCompositingMode() );
+		comp_renderer_type renb(pixf);
+		
+		
+		agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
+	}
+}
 
 
 };

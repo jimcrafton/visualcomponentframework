@@ -62,22 +62,8 @@ void BasicFill::render( Path* path )
 		if ( (NULL != context_->getRenderingBuffer()) && antiAlias_ ){
 
 			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
-
-
-			typedef agg::renderer_base<pixfmt> ren_base;
-			typedef agg::renderer_scanline_aa_solid<ren_base> renderer_solid;	
-			
-			typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
-			typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-			typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-
-
 			agg::path_storage fillPath;
-
-
 			agg::rasterizer_scanline_aa<> rasterizer;
-			agg::scanline_p8 scanline;
-			//agg::rasterizer_scanline_aa<agg::scanline_u8, agg::gamma8> rasterizer;
 
 
 			while ( pathIt != points.end() ) {
@@ -152,26 +138,7 @@ void BasicFill::render( Path* path )
 
 			context_->resetRenderAreaAlpha();
 
-			if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
-				pixfmt pixf(renderingBuffer);
-				ren_base renb(pixf);
-				renderer_solid renderer( renb );
-
-				renderer.color(agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()));
-
-
-				agg::render_scanlines(rasterizer, scanline, renderer);
-			}
-			else {
-				pixfmt_type pixf(renderingBuffer);
-				pixf.comp_op( context_->getCompositingMode() );
-				comp_renderer_type renb(pixf);
-
-
-				agg::render_scanlines_aa_solid(rasterizer, scanline, renb, agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()));
-			}
-
-			
+			renderScanlinesSolid( *context_, rasterizer, agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()) );
 		}
 		else {
 			while ( pathIt != points.end() ) {
