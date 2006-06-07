@@ -153,6 +153,9 @@ void BasicStroke::render( Path * path )
 			//for more information about why this happens, and why this 
 			//may not be the optimal solution
 			mat*=agg::trans_affine_translation(0.5,0.5);
+
+			Point org = context_->getOrigin();
+			mat *= agg::trans_affine_translation( org.x_, org.y_  );
 			
 
 			agg::conv_curve< agg::path_storage > smooth(strokePath);
@@ -196,6 +199,8 @@ void BasicStroke::render( Path * path )
 				break;
 			}
 
+			context_->resetRenderAreaAlpha();
+			
 			if( dashed_ ) {
 				
 				agg::conv_dash< agg::conv_transform< agg::conv_curve< agg::path_storage > > > dash(xfrmedPath);

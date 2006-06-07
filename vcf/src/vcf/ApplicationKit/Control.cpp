@@ -311,9 +311,9 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 	}
 
 	if ( useRenderBuffer ) {
-		//if ( NULL == context_->getRenderArea() ) {
-			//context_->setRenderArea( *bounds_ );
-		//}
+		if ( NULL == context_->getRenderArea() ) {
+			context_->setRenderArea( getBounds() );
+		}
 		repaint();
 	}
 	else {
