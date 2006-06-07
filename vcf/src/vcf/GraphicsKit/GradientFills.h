@@ -372,23 +372,6 @@ protected:
 		}
 	}	
 
-	template<typename SpanAllocT, typename SpanGenT>
-	void renderScanlines( agg::rendering_buffer& renderingBuffer, 
-							agg::rasterizer_scanline_aa<>& rasterizer, 
-							SpanAllocT& spanAllocater,
-							SpanGenT& spanGenerator );
-
-};
-
-class Foo  {
-public:
-
-template<typename SpanAllocT, typename SpanGenT>
-	static void renderScanlines( GraphicsContext& gc, agg::rendering_buffer& renderingBuffer, 
-							agg::rasterizer_scanline_aa<>& rasterizer, 
-							SpanAllocT& spanAllocater,
-							SpanGenT& spanGenerator );
-
 };
 
 
@@ -440,7 +423,7 @@ protected:
 		agg::gradient_radial func;
         GradientSpanGen      span_gen(inter, func, colorProfile_, startRadius_, endRadius_);
 
-		renderScanlines( renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double startRadius_;
@@ -500,7 +483,7 @@ protected:
 		agg::gradient_x func;
         GradientSpanGen      span_gen(inter, func, colorProfile_, start_, end_);
 
-		renderScanlines( renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double start_;
@@ -561,7 +544,7 @@ protected:
 		agg::gradient_y func;
         GradientSpanGen      span_gen(inter, func, colorProfile_, start_, end_);
 
-		renderScanlines( renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double start_;
@@ -622,7 +605,7 @@ protected:
 		agg::gradient_conic conic;
         GradientSpanGen      span_gen(inter, conic, colorProfile_, 0, 100);
 
-		Foo::renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double start_;
@@ -634,66 +617,6 @@ protected:
 
 
 
-
-template<typename SpanAllocT, typename SpanGenT>
-void GradientFill::renderScanlines( agg::rendering_buffer& renderingBuffer, 
-							agg::rasterizer_scanline_aa<>& rasterizer, 
-							SpanAllocT& spanAllocater,
-							SpanGenT& spanGenerator )
-{
-	agg::scanline_u8 sl;
-	
-	typedef agg::comp_op_adaptor_rgba<ColorT, component_order> blender_type;
-	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-	
-	if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, rb, spanAllocater, spanGenerator );
-	}
-	else {
-		pixfmt_type pix(renderingBuffer);
-		pix.comp_op( context_->getCompositingMode() );
-		
-		comp_renderer_type crb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, crb, spanAllocater, spanGenerator );
-	}
-}
-
-
-
-template<typename SpanAllocT, typename SpanGenT>
-void Foo::renderScanlines( GraphicsContext& gc, agg::rendering_buffer& renderingBuffer, 
-							agg::rasterizer_scanline_aa<>& rasterizer, 
-							SpanAllocT& spanAllocater,
-							SpanGenT& spanGenerator )
-{
-	agg::scanline_u8 sl;
-	
-	typedef agg::span_interpolator_linear<> InterpolatorType;
-	typedef color_type ColorT;
-	typedef std::vector<ColorT> ColorProfileVector;
-	typedef component_order OrderT;
-	typedef agg::renderer_base<pixfmt> RendererBase;
-
-	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
-	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-	
-	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, rb, spanAllocater, spanGenerator );
-	}
-	else {
-		pixfmt_type pix(renderingBuffer);
-		pix.comp_op( gc.getCompositingMode() );
-		
-		comp_renderer_type crb(pix);
-		agg::render_scanlines_aa( rasterizer, sl, crb, spanAllocater, spanGenerator );
-	}
-}
 
 
 };
