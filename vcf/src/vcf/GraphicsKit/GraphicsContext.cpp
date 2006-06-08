@@ -39,7 +39,8 @@ public:
 		if ( NULL != renderBuffer ) {
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
-		}	
+		}
+		delete renderArea;
 	}
 
 	Rect renderAreaRect;

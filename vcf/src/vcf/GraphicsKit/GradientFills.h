@@ -283,6 +283,7 @@ protected:
 		
 		midPoints_[0] = 0.5;
 
+		buildColorProfile();
 	}
 
 
@@ -290,6 +291,14 @@ protected:
 
 		VCF_ASSERT( colors_.size() > 1 );
 		VCF_ASSERT( midPoints_.size() == (colors_.size() - 1) );
+
+		if ( colors_.size() <= 1 ) {
+			throw RuntimeException("Less than 2 colors in gradient");
+		}
+
+		if ( midPoints_.size() != (colors_.size() - 1) ) {
+			throw RuntimeException("Wrong number of midpoints");
+		}
 
 		sortColors();
 
@@ -299,7 +308,6 @@ protected:
 
 
 		uint32 colorIdx = 0;
-		
 
 		double r1,g1,b1,a1;
 		double r2,g2,b2,a2;
@@ -344,7 +352,7 @@ protected:
 				blendVal = 0;
 			}
 			else if ( location > nextLocation ) {
-				midPtIdx ++;
+				midPtIdx = minVal<>( midPtIdx+1, midPoints_.size()-1 );
 				colorIdx ++;			
 
 				blendVal = 0.0;
