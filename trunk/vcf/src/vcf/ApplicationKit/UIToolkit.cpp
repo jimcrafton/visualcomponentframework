@@ -186,6 +186,8 @@ void UIToolkit::initToolKit()
 		UIToolkit::toolKitInstance = new GTKUIToolkit();
 #elif VCF_OSX
 		UIToolkit::toolKitInstance = new OSXUIToolkit();
+#elif VCF_XCB
+		UIToolkit::toolKitInstance = new XCBUIToolkit();
 #endif
 
 		if ( NULL == UIToolkit::toolKitInstance ) {
@@ -1042,6 +1044,9 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 				}
 			}
 			break;
+			default:
+			break;
+
 		}
 	}
 }

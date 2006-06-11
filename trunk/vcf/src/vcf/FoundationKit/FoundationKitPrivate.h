@@ -51,6 +51,7 @@ where you installed the VCF.
 #	include "vcf/FoundationKit/LinuxLibraryPeer.h"
 #	include "vcf/FoundationKit/LinuxProcessPeer.h"
 #	include "vcf/FoundationKit/LinuxSystemPeer.h"
+#	include "vcf/FoundationKit/LinuxDebugUtils.h"
 #	include "vcf/FoundationKit/PosixThread.h"
 #	include "vcf/FoundationKit/LinuxRegistry.h"
 #	include "vcf/FoundationKit/PosixMutex.h"

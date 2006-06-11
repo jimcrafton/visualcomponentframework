@@ -164,7 +164,7 @@ Enumerator<VCF::FontInfo>* GraphicsToolkit::getAvailableSystemFonts()
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getAvailableSystemFonts();
 }
 
-Font* GraphicsToolkit::getDefaultSystemFont()
+VCF::Font* GraphicsToolkit::getDefaultSystemFont()
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getDefaultSystemFont( );
 }
@@ -478,6 +478,9 @@ void GraphicsToolkit::initGraphicsToolkit()
 
 #elif VCF_OSX
 	GraphicsToolkit::graphicsToolkitInstance = new OSXGraphicsToolkit();
+
+#elif VCF_XCB
+	GraphicsToolkit::graphicsToolkitInstance = new XCBGraphicsToolkit();
 
 #endif
 

@@ -37,6 +37,8 @@ where you installed the VCF.
 #elif VCF_OSX
 
 #	include "vcf/ApplicationKit/OSXUIToolkit.h"
+#elif VCF_XCB
+#	include "vcf/ApplicationKit/XCBUIToolkit.h"
 #endif
 
 
