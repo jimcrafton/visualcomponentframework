@@ -36,9 +36,9 @@ public:
 	* the document's constructor
 	*/
 	Document():AbstractModel(), docWindow_(NULL),
+				fileName_(""),
 				modified_(false),
-				keepBackUpFile_(false),
-				fileName_("") {
+				keepBackUpFile_(false) {
 		clipFormatContainer_.initContainer(clipFormats_);
 	}
 
