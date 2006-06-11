@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-#ifdef WIN32
+#ifdef VCF_WIN
 //COM stuff
 #include "vcf/ApplicationKit/VCFCOM.h"
 #include "COMObject.h"

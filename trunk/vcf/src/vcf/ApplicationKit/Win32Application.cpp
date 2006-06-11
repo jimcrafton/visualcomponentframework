@@ -81,7 +81,7 @@ bool Win32Application::initApp()
 	if ( NULL == instanceHandle_ ) {
 		instanceHandle_ = ::GetModuleHandle( NULL );
 	}
-#ifdef __GNUWIN32__
+#ifdef VCF_CYGWIN
 	InitCommonControls();
 #else
 	INITCOMMONCONTROLSEX controlsToInit;

@@ -52,8 +52,8 @@ NETWORKKIT_FILENAME = NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 LIBAGG_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\agg\include $(__DEBUG_INFO) $(__OPTIMIZE) \
-	-tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 \
-	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
+	-tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
+	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 LIBAGG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\libAGG_lib_agg_arc.obj \
 	..\..\lib\$(OBJDIR)\libAGG_lib_agg_arrowhead.obj \
@@ -80,8 +80,8 @@ LIBAGG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\libAGG_lib_agg_vpgen_clip_polygon.obj \
 	..\..\lib\$(OBJDIR)\libAGG_lib_agg_vpgen_segmentator.obj
 ZLIB_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
 ZLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ZLib_lib_adler32.obj \
 	..\..\lib\$(OBJDIR)\ZLib_lib_compress.obj \
@@ -96,8 +96,8 @@ ZLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ZLib_lib_uncompr.obj \
 	..\..\lib\$(OBJDIR)\ZLib_lib_zutil.obj
 LIBJPEG_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
 LIBJPEG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jcapimin.obj \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jcapistd.obj \
@@ -146,8 +146,8 @@ LIBJPEG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jquant2.obj \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jutils.obj
 LIBMNG_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
 LIBMNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_callback_xs.obj \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_chunk_io.obj \
@@ -168,8 +168,8 @@ LIBMNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_write.obj \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_zlib.obj
 LIBPNG_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
 LIBPNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_png.obj \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngerror.obj \
@@ -191,12 +191,12 @@ LIBPNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngwutil.obj
 LIBTIFF_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include -DUSE_WIN32_FILEIO \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
-	$(CPPFLAGS) $(CFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CFLAGS)
 LIBTIFF_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-DUSE_WIN32_FILEIO $(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CXXFLAGS)
 LIBTIFF_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_aux.obj \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_close.obj \
@@ -237,8 +237,8 @@ LIBTIFF_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_win32.obj
 FOUNDATIONKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicException.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicInputStream.obj \
@@ -310,9 +310,8 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32ThreadManagerPeer.obj
 FOUNDATIONKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
-	-D_USRDLL -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_USRDLL \
+	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicException.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicInputStream.obj \
@@ -384,7 +383,7 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32ThreadManagerPeer.obj
 GRAPHICSKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\GraphicsKit_lib_AbstractImage.obj \
@@ -414,7 +413,7 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\GraphicsKit_lib_Win32PrintSession.obj
 GRAPHICSKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS $(CPPFLAGS) \
 	$(CXXFLAGS)
 GRAPHICSKIT_DLL_OBJECTS =  \
@@ -449,8 +448,8 @@ APPLICATIONKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CXXFLAGS)
 APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractApplication.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractCommand.obj \
@@ -593,9 +592,8 @@ APPLICATIONKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
-	-D_USRDLL -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_USRDLL \
+	-DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractApplication.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractCommand.obj \
@@ -738,7 +736,7 @@ HTMLKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\HTMLKit_lib_HTMLBrowserControl.obj \
@@ -753,7 +751,7 @@ HTMLKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DHTMLKIT_DLL -DHTMLKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\HTMLKit_dll_HTMLBrowserControl.obj \
@@ -767,7 +765,7 @@ OPENGLKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControl.obj \
@@ -779,7 +777,7 @@ OPENGLKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS $(CPPFLAGS) \
 	$(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
@@ -789,7 +787,7 @@ OPENGLKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_Win32OpenGLPeer.obj
 NETWORKKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_DatagramSocket.obj \
@@ -803,7 +801,7 @@ NETWORKKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32SocketPeer.obj
 NETWORKKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DNETKIT_DLL -DNETKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_DatagramSocket.obj \
@@ -818,8 +816,8 @@ NETWORKKIT_DLL_OBJECTS =  \
 REMOTEOBJECTKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CXXFLAGS)
 REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_lib_AbstractDistributedApplication.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_lib_ClassRegistryEntry.obj \
@@ -832,8 +830,8 @@ REMOTEOBJECTKIT_LIB_OBJECTS =  \
 REMOTEOBJECTKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) \
 	$(__DEBUG_INFO) $(__OPTIMIZE) -tWM $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
-	-D_USRDLL -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_USRDLL \
+	-DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_AbstractDistributedApplication.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_ClassRegistryEntry.obj \
@@ -845,7 +843,7 @@ REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_RemoteObjectKit.obj
 INTERNETKIT_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\InternetKit_lib_InternetKit.obj \
@@ -853,7 +851,7 @@ INTERNETKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\InternetKit_lib_Win32InternetToolkit.obj
 INTERNETKIT_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS $(CPPFLAGS) \
 	$(CXXFLAGS)
 INTERNETKIT_DLL_OBJECTS =  \
@@ -862,7 +860,7 @@ INTERNETKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\InternetKit_dll_Win32InternetToolkit.obj
 ALLIN1_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\win32 $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS) \
@@ -875,7 +873,7 @@ ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS)
 ALLIN1_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\win32 $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS \
 	-DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL \
 	-DAPPLICATIONKIT_EXPORTS -DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL \
@@ -898,7 +896,7 @@ PAINTLIB_LIB_CFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibTIFF \
 	-I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CFLAGS)
 PAINTLIB_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\paintlib\common\Filter \
@@ -907,7 +905,7 @@ PAINTLIB_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibTIFF \
 	-I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 PAINTLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plfilter.obj \
@@ -980,7 +978,7 @@ IMAGEFORMATS_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 IMAGEFORMATS_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ImageFormats_lib_ImageFormats.obj
@@ -989,7 +987,7 @@ IMAGEFORMATS_DLL_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
 	$(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -tWM \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
 	-I..\..\src -D_USRDLL -DIMAGEFORMATS_DLL -DIMAGEFORMATS_EXPORTS $(CPPFLAGS) \
 	$(CXXFLAGS)
 IMAGEFORMATS_DLL_OBJECTS =  \
@@ -4056,7 +4054,7 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res: ..\..\src\..\build\resources\win32\ApplicationKit.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include -i..\..\src\thirdparty\win32 $(__FOUNDATIONKIT_DLL_p_5) -i..\..\src\thirdparty\common\agg\include -i..\..\src\thirdparty\common\ZLib -i..\..\src\thirdparty\common\LibJPEG -i..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p_2) $(____OPTION_DEBUG_0) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -i..\..\build\resources\win32 $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include -i..\..\src\thirdparty\win32 $(__FOUNDATIONKIT_DLL_p_5) -i..\..\src\thirdparty\common\agg\include -i..\..\src\thirdparty\common\ZLib -i..\..\src\thirdparty\common\LibJPEG -i..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p_2) $(____OPTION_DEBUG_0) -dVCF_DISABLE_PRAGMA_LINKING -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -i..\..\build\resources\win32 $**
 
 ..\..\lib\$(OBJDIR)\HTMLKit_lib_HTMLBrowserControl.obj: ..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp
 	$(CXX) -q -c -P -o$@ $(HTMLKIT_LIB_CXXFLAGS) $**
@@ -5787,7 +5785,7 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res: ..\..\src\..\build\resources\win32\ApplicationKit.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include -i..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -dFOUNDATIONKIT_DLL -dFOUNDATIONKIT_EXPORTS -dGRAPHICSKIT_DLL -dGRAPHICSKIT_EXPORTS -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -dHTMLKIT_DLL -dHTMLKIT_EXPORTS -dOPENGLKIT_DLL -dOPENGLKIT_EXPORTS -dNETKIT_DLL -dNETKIT_EXPORTS -dREMOTEKIT_DLL -dREMOTEKIT_EXPORTS -dINTERNETKIT_DLL -dINTERNETKIT_EXPORTS -i..\..\build\resources\win32 $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include -i..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) -dVCF_DISABLE_PRAGMA_LINKING -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -dFOUNDATIONKIT_DLL -dFOUNDATIONKIT_EXPORTS -dGRAPHICSKIT_DLL -dGRAPHICSKIT_EXPORTS -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -dHTMLKIT_DLL -dHTMLKIT_EXPORTS -dOPENGLKIT_DLL -dOPENGLKIT_EXPORTS -dNETKIT_DLL -dNETKIT_EXPORTS -dREMOTEKIT_DLL -dREMOTEKIT_EXPORTS -dINTERNETKIT_DLL -dINTERNETKIT_EXPORTS -i..\..\build\resources\win32 $**
 
 ..\..\lib\$(OBJDIR)\paintlib_lib_plfilter.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.cpp
 	$(CXX) -q -c -P -o$@ $(PAINTLIB_LIB_CXXFLAGS) $**

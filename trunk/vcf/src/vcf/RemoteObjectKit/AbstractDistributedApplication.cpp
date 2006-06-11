@@ -229,7 +229,7 @@ void AbstractDistributedApplication::onDataReceived( VCFNet::SocketEvent* event 
 				}
 			}
 
-#if (defined(__BORLANDC__) && (__BORLANDC__ < 0x0581)) || (defined(_MSC_VER) && (_MSC_VER < 1300)) || defined(STLPORT)
+#if (defined(VCF_BCC) && (__BORLANDC__ < 0x0581)) || (defined(VCF_MSC) && (_MSC_VER < 1300)) || defined(STLPORT)
 			VariantData** methodArgs = (VariantData**)argList.begin();
 #else
 			VariantData** methodArgs = (VariantData**)argList.begin().operator->();

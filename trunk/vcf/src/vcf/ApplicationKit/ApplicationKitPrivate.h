@@ -17,7 +17,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 
 /****************/
-#ifdef WIN32
+#ifdef VCF_WIN
 //controls & GDI stuff
 #include <Commdlg.h>
 #	include "vcf/FoundationKit/Win32Peer.h"

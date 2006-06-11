@@ -50,7 +50,7 @@ where you installed the VCF.
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #		endif
-#   ifdef __BORLANDC__
+#   ifdef VCF_BCC
 #   define _LIB_CPLVERNUM "bcc"
 #   endif
 # endif
@@ -63,7 +63,7 @@ link to the correct library! This does mean that our app that uses this
 kit needs to have either "USE_OPENGLKIT_DLL" defined or "USE_OPENGLKIT_LIB"
 defined to use the DLL or static libraries.
 */
-#if defined(_MSC_VER) || defined(__BORLANDC__)
+#if defined(VCF_MSC) || defined(VCF_BCC)
 
 	#ifdef USE_FOUNDATIONKIT_DLL
 	//	using dynamic link library
@@ -86,7 +86,7 @@ defined to use the DLL or static libraries.
 	//Always link to Rpcrt4.lib version.lib no matter what
 	#		pragma comment(lib, "Rpcrt4.lib")
 	#		pragma comment(lib, "version.lib")
-#endif //_MSC_VER
+#endif //VCF_MSC
 
 #endif //VCF_ALLIN1_DLL/LIB
 

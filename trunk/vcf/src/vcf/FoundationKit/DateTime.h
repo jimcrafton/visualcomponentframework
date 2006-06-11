@@ -606,7 +606,7 @@ public:
 	*/
 	template <typename DateLogic>
 	class Iterator 
-	#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)
+	#if defined(VCF_BCC) || defined(VCF_ICL) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)
 	;
 	#else
 	{
@@ -694,7 +694,7 @@ protected:
 };
 
 
-#if defined(VCF_BCC) || defined(__INTEL_COMPILER) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)  
+#if defined(VCF_BCC) || defined(VCF_ICL) || defined(VCF_CW) || defined(VCF_MINGW) || defined(VCF_GCC)  
 	template <typename DateLogic>
 	class DateTime::Iterator {
 	public:

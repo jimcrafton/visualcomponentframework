@@ -467,7 +467,7 @@ Color* GraphicsToolkit::internal_getColorMatchFromColormap( const Color& color )
 
 void GraphicsToolkit::initGraphicsToolkit()
 {
-#ifdef WIN32
+#ifdef VCF_WIN
 	GraphicsToolkit::graphicsToolkitInstance = new Win32GraphicsToolkit();
 
 #elif VCF_X11

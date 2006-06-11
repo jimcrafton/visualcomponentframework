@@ -13,8 +13,10 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+// Common definitions
+#include "vcf/FoundationKit/FrameworkConfig.h"
 
-#ifdef _MSC_VER
+#ifdef VCF_MSC
 //disable warnings on 255 char debug symbols
 	#pragma warning (disable : 4786)
 //disable warnings on extern before template instantiation
@@ -32,12 +34,11 @@ where you installed the VCF.
 #include <typeinfo>
 
 
-
 #include <algorithm>
 #include <math.h>
 #ifdef VCF_GCC
-//#include <varargs.h>
-#include <stdarg.h>
+	//#include <varargs.h>
+	#include <stdarg.h>
 #endif //VCF_GCC
 
 
@@ -46,19 +47,15 @@ where you installed the VCF.
 	#include <extras.h>
 #endif
 
-#ifdef __BORLANDC__
+#ifdef VCF_BCC
   #include <string.h>
-#endif
-
-#ifdef WIN32
-  #include <process.h>
 #endif
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#ifndef __MWERKS__
+#ifndef VCF_CW
 	#include <memory.h>
 #else
 	#include <wchar.h>
@@ -68,7 +65,7 @@ where you installed the VCF.
 	#elif defined(VCF_CW_OSX)
 		#include <memory.h>
 	#endif
-#endif //__MWERKS__
+#endif //VCF_CW
 //#include <assert.h>
 #include <vector>
 #include <map>
@@ -77,9 +74,16 @@ where you installed the VCF.
 #include <exception>
 #include <list>
 
-//
 
-#include "vcf/FoundationKit/VCF.h"
+#ifdef VCF_WIN
+	#include <process.h>
+	//include std windoze headers for peers....
+	#include <windows.h>
+	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
+	#include <commctrl.h> //make sure to link with comctl32.lib
+	#include <shlobj.h>
+#endif //VCF_WIN
+
 
 #include "vcf/FoundationKit/FoundationKitSelectLib.h"
 

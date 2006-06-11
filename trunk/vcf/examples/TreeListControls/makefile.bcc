@@ -32,7 +32,7 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 TREELISTCONTROLS_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE_4) -tWM $(____OPTION_DEBUG_12_p) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src \
 	$(__FOUNDATIONKIT_DLL_p) -I..\..\src\thirdparty\common\agg\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
@@ -159,5 +159,5 @@ clean:
 	$(CXX) -q -c -P -o$@ $(TREELISTCONTROLS_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_treelist.res: .\treelist.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_12_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_12_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WIN32 -dWIN32 -i..\..\src $**
 

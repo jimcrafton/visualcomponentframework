@@ -15,10 +15,10 @@ include ../../build/bakefiles.gen/config.gcc
 CPPDEPS = -MT$@ -MF$@.d -MD
 OBJDIR = mingw$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 BLACKBOX_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_3) -mthreads \
-	$(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 \
-	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src -D_USRDLL -Iinclude \
-	-DBLACKBOX_DLL -DBLACKBOX_EXPORTS -DSTRICT -DWORK_AROUND_SRCLINE_BUG \
-	$(CPPFLAGS) $(CXXFLAGS)
+	$(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
+	-Wno-multichar -I..\..\src -D_USRDLL -Iinclude -DBLACKBOX_DLL \
+	-DBLACKBOX_EXPORTS -DSTRICT -DWORK_AROUND_SRCLINE_BUG $(CPPFLAGS) \
+	$(CXXFLAGS)
 BLACKBOX_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_AllocAndFillProcessModuleList.o \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.o \
@@ -146,7 +146,7 @@ clean:
 	$(CXX) -c -o $@ $(BLACKBOX_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox_rc.o: ./BlackBox.rc
-	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_9_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WINDOWS --define _WIN32 --define WIN32 --define VCF_MINGW --include-dir ..\..\src --define _USRDLL --include-dir include --define BLACKBOX_DLL --define BLACKBOX_EXPORTS --define STRICT --define WORK_AROUND_SRCLINE_BUG
+	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_9_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src --define _USRDLL --include-dir include --define BLACKBOX_DLL --define BLACKBOX_EXPORTS --define STRICT --define WORK_AROUND_SRCLINE_BUG
 
 .PHONY: all clean
 

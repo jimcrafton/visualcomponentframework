@@ -87,7 +87,7 @@ void StringUtils::trace( const String& text )
 {
 #ifdef _DEBUG
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	VCFWin32::Win32Utils::trace( text );
 #else
   #ifdef VCF_OSX
@@ -231,7 +231,7 @@ String StringUtils::lowerCase( const String& text )
 {
 	String result;
 
-#if defined(VCF_MSC) || defined(VCF_BCC)
+#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
 	VCFChar* copyText = new VCFChar[text.size()+1];
 	memset(copyText, 0, (text.size()+1)*sizeof(VCFChar) );
 	text.copy( copyText, text.size() );
@@ -265,7 +265,7 @@ String StringUtils::lowerCase( const String& text )
 String StringUtils::upperCase( const VCF::String& text )
 {
 	String result;
-#if defined(VCF_MSC) || defined(VCF_BCC)
+#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
 	VCFChar* copyText = new VCFChar[text.size()+1];
 	memset(copyText, 0, (text.size()+1)*sizeof(VCFChar) );
 	text.copy( copyText, text.size() );
@@ -319,7 +319,7 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 		break;
 	}
 
-#elif defined(WIN32)
+#elif defined(VCF_WIN)
 	int cmpRes = CSTR_EQUAL;
 	if ( System::isUnicodeEnabled() ) {
 		cmpRes = ::CompareStringW( GetThreadLocale(), NORM_IGNORECASE, str1.c_str(), str1.size(), str2.c_str(), str2.size() );
@@ -589,7 +589,7 @@ VCF::String StringUtils::toString( const bool& value )
 VCF::String StringUtils::newUUID()
 {
 	VCF::String result = "";
-#ifdef WIN32
+#ifdef VCF_WIN
 	UUID id;
 	if ( RPC_S_OK == ::UuidCreate( &id ) ){
 		if ( System::isUnicodeEnabled() ) {
@@ -702,7 +702,7 @@ VCF::String StringUtils::format( VCF::String formatText, ... )
 
 VCF::String StringUtils::toString( const std::type_info& typeInfo )
 {
-#if defined(WIN32) && !defined(VCF_MINGW)
+#if defined(VCF_WIN) && !defined(VCF_MINGW)
 	return StringUtils::getClassNameFromTypeInfo( typeInfo );
 #elif defined(VCF_GCC)
 	String result;
@@ -764,7 +764,7 @@ VCF::String StringUtils::toString( const std::type_info& typeInfo )
 VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInfo  )
 {
 	VCF::String result = "";
-#if defined(VCF_WIN32) && !defined(VCF_MINGW) //don't know if we really need this here
+#if defined(VCF_WIN) && !defined(VCF_MINGW) //don't know if we really need this here
 		std::string tmp = typeInfo.name();  //put back in when we find typeid
 		if ( tmp != "void *" ) {//void* is a special case!
 			//strip out the preceding "class" or "enum" or whatever
@@ -997,7 +997,7 @@ long StringUtils::fromStringAsLong( const VCF::String& value )
 			throw BasicException( L"StringUtils::fromStringAsLong() Overflow - Unable to convert: " + value );
 		}
 	#else
-		#ifdef _MSC_VER
+		#ifdef VCF_MSC
 			result = _wtol( value.c_str() );
 			if ( 0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), W_STR_LONG_CONVERSION, &result ) ) ) {

@@ -424,7 +424,7 @@ format so that more complex operations can be performed without repetitions.
 // inlines
 
 /*static*/ inline String FilePath::getDirectorySeparatorOSSpecific() {
-#ifdef WIN32
+#ifdef VCF_WIN
 	return L"\\";
 #else
 	return L"/";

@@ -105,7 +105,7 @@ void Application::init()
 I am turning this off completely. There is an MS DLL called blackbox, and 
 I'd like to revisit this later.
 JC
-#if defined( WIN32 ) && defined ( _MSC_VER )
+#if defined( VCF_WIN ) && defined ( VCF_MSC )
 	//load the BlacBox error trapper
 	try {
 		//at the moment this is only meaningful on Win32 platforms

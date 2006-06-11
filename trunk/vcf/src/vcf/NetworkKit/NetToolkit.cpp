@@ -7,7 +7,7 @@ where you installed the VCF.
 */
 
 
-#ifdef WIN32 //this is a hack - this will be removed when we redo sockets
+#ifdef VCF_WIN //this is a hack - this will be removed when we redo sockets
 			 //and add this to teh toolkit
 	#include <winsock2.h>
 #endif
@@ -37,7 +37,7 @@ NetToolkit* NetToolkit::getDefaultNetToolkit()
 
 SocketPeer* NetToolkit::createSocketPeer( Socket* socket, const VCF::String& host, const int& port )
 {
-#ifdef WIN32
+#ifdef VCF_WIN
 	return new Win32SocketPeer( socket, host, port );
 #else
 	return NULL;
@@ -47,7 +47,7 @@ SocketPeer* NetToolkit::createSocketPeer( Socket* socket, const VCF::String& hos
 VCF::String NetToolkit::getLocalMachineName()
 {
 	VCF::String result = "";
-#ifdef WIN32
+#ifdef VCF_WIN
 	result = Win32SocketPeer::getLocalMachineName();
 #endif
 
@@ -56,7 +56,7 @@ VCF::String NetToolkit::getLocalMachineName()
 
 SocketPeer* NetToolkit::createSocketPeer( Socket* socket, const int& socketPeerID, const VCF::String& host, const int& port )
 {
-#ifdef WIN32
+#ifdef VCF_WIN
 	return new Win32SocketPeer( socket, socketPeerID, host, port );
 #else
 	return NULL;

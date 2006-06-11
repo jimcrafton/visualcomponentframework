@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	#ifdef REMOTEKIT_DLL
 		#if defined(REMOTEKIT_EXPORTS)
 			#define REMOTEKIT_API __declspec(dllexport)

@@ -3,7 +3,7 @@
 #include "vcf/HTMLKit/HTMLKit.h"
 #include "vcf/HTMLKit/HTMLToolkit.h"
 
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
 #include "vcf/HTMLKit/Win32HTMLToolkit.h"
 #endif
 
@@ -16,7 +16,7 @@ HTMLToolkit* HTMLToolkit::toolkitInstance = NULL;
 
 void HTMLToolkit::create()
 {
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
 	HTMLToolkit::toolkitInstance = new Win32HTMLToolkit();
 #endif 	
 

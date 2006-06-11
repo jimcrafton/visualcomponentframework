@@ -23,8 +23,8 @@ GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 QTPLAYER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
-	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 \
-	-DWIN32 -DVCF_MINGW -Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
+	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
+	-Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
 	-I..\..\src\thirdparty\common\agg\include \
 	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
@@ -149,7 +149,7 @@ endif
 	$(CXX) -c -o $@ $(QTPLAYER_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile_rc.o: ./QTResFile.rc
-	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_8_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WINDOWS --define _WIN32 --define WIN32 --define VCF_MINGW --include-dir ..\..\src
+	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_8_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src
 
 .PHONY: all clean
 

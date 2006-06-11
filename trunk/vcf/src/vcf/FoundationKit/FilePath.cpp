@@ -41,7 +41,7 @@ FilePath::~FilePath()
 
 String FilePath::getDriveSeparator()
 {
-#ifdef WIN32
+#ifdef VCF_WIN
 	return L":";
 #else
 	return L"";
@@ -223,7 +223,7 @@ bool compareDirectoryComponent( const String& s1, const String& s2 )
 
 	bool result = false;
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	result = (StringUtils::lowerCase(s1) == StringUtils::lowerCase(s2));
 #else
 	result = (s1 == s2);
@@ -430,7 +430,7 @@ String FilePath::transformToNative( const String& filename )
 String FilePath::transformToOSSpecific( const String& filename )
 {
 	VCFChar convertChar = '/';
-#ifdef WIN32
+#ifdef VCF_WIN
 	convertChar = '\\';
 #endif
 

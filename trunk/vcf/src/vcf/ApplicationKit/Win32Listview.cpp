@@ -7,9 +7,9 @@ where you installed the VCF.
 */
 
 
-#ifdef __GNUWIN32__
+#ifdef VCF_CYGWIN
 #define _WIN32_IE   0x0400  //this may be a bogus thing to do !
-#endif//__GNUWIN32__
+#endif//VCF_CYGWIN
 
 
 
@@ -20,7 +20,7 @@ where you installed the VCF.
 
 
 
-#if defined(__GNUWIN32__) || defined(VCF_MINGW)
+#if defined(VCF_CYGWIN) || defined(VCF_MINGW)
 
 //add some stupid defines here since they seem to be missing from the mingw Win32 API headers
 #if (_WIN32_IE >= 0x0400)
@@ -56,7 +56,7 @@ typedef struct tagNMLVGETINFOTIPW
 #define LVN_GETINFOTIPA          (LVN_FIRST-57)
 #define LVN_GETINFOTIPW          (LVN_FIRST-58)
 
-#ifdef UNICODE
+#ifdef VCF_UNICODE
     #define LVN_GETINFOTIP          LVN_GETINFOTIPW
     #define NMLVGETINFOTIP          NMLVGETINFOTIPW
     #define LPNMLVGETINFOTIP        LPNMLVGETINFOTIPW
@@ -83,7 +83,7 @@ typedef struct tagNMLVGETINFOTIPW
 #define LVN_ITEMACTIVATE        (LVN_FIRST-14)
 #define LVN_ODSTATECHANGED      (LVN_FIRST-15)
 
-    #ifdef UNICODE
+    #ifdef VCF_UNICODE
         #define LVN_ODFINDITEM          LVN_ODFINDITEMW
     #else
         #define LVN_ODFINDITEM          LVN_ODFINDITEMA
@@ -190,7 +190,7 @@ typedef struct tagNMTTCUSTOMDRAW
 #endif
 */
 
-#endif //__GNUWIN32__
+#endif //VCF_CYGWIN
 
 using namespace VCFWin32;
 using namespace VCF;
