@@ -390,10 +390,10 @@ for you.
 */
 class GRAPHICSKIT_API ImageContext {
 public:
-	ImageContext():ctx_(NULL),img_(NULL){
+	ImageContext():img_(NULL),ctx_(NULL){
 	}
 
-	ImageContext(Image* img):ctx_(NULL),img_(NULL){
+	ImageContext(Image* img):img_(NULL),ctx_(NULL){
 		*this = img;
 	}
 

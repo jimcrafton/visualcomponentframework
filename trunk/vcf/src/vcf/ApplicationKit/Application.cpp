@@ -47,8 +47,8 @@ void terminateLoadedLibraryApplications()
 
 
 Application::Application( int argc, char** argv ):
-	mainWindow_(NULL),
-	autoLoadSaveAppState_(false)
+	autoLoadSaveAppState_(false),
+	mainWindow_(NULL)
 {
 	Application::appInstance_ = this;
 

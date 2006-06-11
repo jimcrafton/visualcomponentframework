@@ -46,17 +46,17 @@ enum MouseButtomMasks{
 class APPLICATIONKIT_API MouseEvent : public Event {
 public:
 	MouseEvent( Object* source ) : Event(source),
-		keyMask_(0),buttonMask_(0){}
+		buttonMask_(0), keyMask_(0){}
 
 	MouseEvent( Object* source, const unsigned long& eventType ): Event(source,eventType),
-		keyMask_(0),buttonMask_(0){}
+		buttonMask_(0),keyMask_(0){}
 
 	MouseEvent( Object* source, const unsigned long& eventType, const unsigned long& buttonMask,
 		        const unsigned long& keyMask, Point* point ): Event(source,eventType),
-		keyMask_(keyMask),buttonMask_(buttonMask),point_(*point){}
+		buttonMask_(buttonMask),keyMask_(keyMask),point_(*point){}
 
 	MouseEvent( const MouseEvent& rhs ):Event(rhs),
-		keyMask_(0),buttonMask_(0) {
+		buttonMask_(0),keyMask_(0) {
 		*this = rhs;
 	}
 
