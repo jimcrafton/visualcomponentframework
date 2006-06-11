@@ -58,7 +58,7 @@ public:
 
 	virtual Rect getContentBoundsForWidth(const double& width);
 
-	virtual void getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color );
+	virtual void getStyle( unsigned int start, unsigned int length, Dictionary& styles );
 
 	virtual void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
 

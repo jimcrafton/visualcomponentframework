@@ -64,10 +64,10 @@ OSXImage::~OSXImage()
 
 void OSXImage::init()
 {
-    ImageBits::Traits::setChannelType( flags_, ImageBits::Traits::getTraitsChannelType() );
-	ImageBits::Traits::setChannelSize( flags_, ImageBits::Traits::getTraitsChannelSize() );
-	ImageBits::Traits::setImageType( flags_, ImageBits::Traits::getTraitsImageType() );
-	ImageBits::Traits::setPixelLayoutOrder( flags_, Image::ploRGBA );
+    SysPixelTypeTraits::setChannelType( flags_, SysPixelTypeTraits::getTraitsChannelType() );
+	SysPixelTypeTraits::setChannelSize( flags_, SysPixelTypeTraits::getTraitsChannelSize() );
+	SysPixelTypeTraits::setImageType( flags_, SysPixelTypeTraits::getTraitsImageType() );
+	SysPixelTypeTraits::setPixelLayoutOrder( flags_, Image::ploRGBA );
 
     context_ = new GraphicsContext(0);
 }
@@ -76,7 +76,7 @@ void OSXImage::setAlpha( float val )
 {
 	uchar alphaVal = (uchar) (val * 255.0);
 	
-	SysPixelType* bits = imageBits_->pixels_;
+	SysPixelType* bits = (SysPixelType*)dataBuffer_;
 	
 	uint32 size = getWidth() * getHeight();
 	while ( size > 0 ) {
@@ -123,7 +123,7 @@ void OSXImage::createBMP()
                             NULL,
                             NULL,
                             0,
-                            (char*)imageBits_->pixels_,
+                            (char*)dataBuffer_,
                             bytesPerRow );
 							
 	//setAlpha( 0.67 );
@@ -134,7 +134,7 @@ void OSXImage::createBMP()
         grafPort_ = newGWorld;
         ulong32 imgSize = width * height * componentCount;
         CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
-                                                                    imageBits_->pixels_,
+                                                                    dataBuffer_,
                                                                     imgSize,
                                                                     NULL );
 
@@ -210,8 +210,8 @@ void OSXImage::loadFromURL( CFURLRef url, const String& ext )
 		int bitsPerPix = getChannelSize() * componentCount;
 		int bytesPerRow = (getWidth() * (bitsPerPix/componentCount) * componentCount) / 8;
 		CFRefObject<CGColorSpaceRef> colorSpace = CGColorSpaceCreateDeviceRGB();
-		
-		CFRefObject<CGContextRef> imgCtx = CGBitmapContextCreate( imageBits_->pixels_,
+
+		CFRefObject<CGContextRef> imgCtx = CGBitmapContextCreate( dataBuffer_,
 														getWidth(),
 														getHeight(),
 														bitsPerPix,

@@ -255,7 +255,7 @@ VCF::Rect OSXTextPeer::getContentBoundsForWidth(const double& width)
 	return result;
 }
 
-void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
+void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
 	ItemCount count = 0;
 	if ( noErr != TXNCountRunsInRange( txnObject_, start, start+length,&count ) ) {
@@ -302,12 +302,14 @@ void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary&
 	CFTextString tmp;
 	tmp = fontName;
 
+	
 	styles [Text::fsFontName] = (String)tmp;
 
-	styles [Text::fsColor] = &color;
-	color.setRed( (double)fontColor.red / 65535.0 );
-	color.setGreen( (double)fontColor.green / 65535.0 );
-	color.setBlue( (double)fontColor.blue / 65535.0 );
+	Color* color = new Color();
+	styles [Text::fsColor] = color;
+	color->setRed( (double)fontColor.red / 65535.0 );
+	color->setGreen( (double)fontColor.green / 65535.0 );
+	color->setBlue( (double)fontColor.blue / 65535.0 );
 
 	styles [Text::fsPointSize] = (double)size;
 

@@ -84,7 +84,9 @@ public:
 
 	virtual void finishedDrawing( long drawingOperation );
 
-	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image );
+	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode );
+	
+	virtual void bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image );
 
 	virtual void checkHandle();
 

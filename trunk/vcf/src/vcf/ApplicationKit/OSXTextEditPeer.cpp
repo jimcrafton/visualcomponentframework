@@ -403,9 +403,9 @@ void OSXTextEditPeer::setStyle( unsigned int start, unsigned int length, Diction
 	editState_ &= ~esStyleChanging;
 }
 
-void OSXTextEditPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color )
+void OSXTextEditPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
-	OSXTextPeer::getStyle( start, length, styles, color );
+	OSXTextPeer::getStyle( start, length, styles );
 }
 
 

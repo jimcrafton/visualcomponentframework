@@ -1060,7 +1060,6 @@ void renderScanlines( GraphicsContext& gc,
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator )
 {
-	typedef agg::span_interpolator_linear<> InterpolatorType;
 	typedef agg::renderer_base<pixfmt> RendererBase;
 
 	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;

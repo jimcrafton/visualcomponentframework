@@ -503,7 +503,7 @@ public:
 
 		return result;
 	}
-
+/*
 	virtual double getDefaultHeightFor( const UIMetricsManager::HeightType& type )  {
 		double result = 0.0;
 		switch ( type ) {
@@ -641,8 +641,8 @@ public:
 
 		return result;
 	}
-	
-	virtual double getValue( const MetricType& type, const String& text ) {
+	*/
+	virtual double getValue( const MetricType& type, const String& text, Font* font ) {
 		double result = 0;
 
 		switch ( type ) {
@@ -816,15 +816,16 @@ public:
 		return result;
 	}
 	
-	virtual VCF::Size getSize( const MetricType& type, const String& text ) {
+	virtual VCF::Size getSize( const MetricType& type, const String& text, Font* font ) {
 		Size result;
 		
 		switch ( type ) {
+		/*
 			case mtMenuSize : {
 				
 			}
 			break;
-
+*/
 			case mtVerticalSliderThumbSize : {
 				
 			}
@@ -870,7 +871,7 @@ public:
 
 	}
 	
-	virtual VCF::Rect getRect( const MetricType& type, VCF::Rect* rect ) {
+	virtual VCF::Rect getRect( const MetricType& type, VCF::Rect* rect, Font* font ) {
 		return VCF::Rect();
 	}
 };
