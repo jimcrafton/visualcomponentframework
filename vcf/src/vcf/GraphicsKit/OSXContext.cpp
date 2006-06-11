@@ -848,8 +848,12 @@ void OSXContext::finishLastPrimitive(const double & x, const double & y)
 }
 
 
+void OSXContext::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )
+{
 
-void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image )
+}
+
+void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode )
 {
     if ( (imageBounds->getWidth() > image->getWidth()) || (imageBounds->getHeight() > image->getHeight()) ) {
 		throw BasicException( MAKE_ERROR_MSG("Invalid image bounds requested"), __LINE__);
@@ -899,7 +903,8 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
                                    kCGRenderingIntentDefault );
 
         //copy over bits
-        SysPixelType* imageBuf = image->getImageBits()->pixels_;
+		ColorPixels pix(image);
+        SysPixelType* imageBuf = pix;
         SysPixelType* tmpBmpBuf = data;
 
         ulong32 incr = (ulong32)((imageBounds->top_ * image->getWidth()) + imageBounds->left_);
@@ -1840,7 +1845,8 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
                                    kCGRenderingIntentDefault );
 
         //copy over bits
-        SysPixelType* imageBuf = image->getImageBits()->pixels_;
+		ColorPixels pix(image);
+        SysPixelType* imageBuf = pix;
         SysPixelType* tmpBmpBuf = data;
 
         ulong32 incr = (ulong32)((rect->top_ * image->getWidth()) + rect->left_);

@@ -88,7 +88,7 @@ public:
 
 	virtual void setStyle( unsigned int start, unsigned int length, Dictionary& styles );
 
-	virtual void getStyle( unsigned int start, unsigned int length, Dictionary& styles, Color& color );
+	virtual void getStyle( unsigned int start, unsigned int length, Dictionary& styles );
 
 	virtual void setDefaultStyle( Dictionary& styles );
 
