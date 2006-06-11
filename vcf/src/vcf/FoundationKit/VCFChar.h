@@ -20,7 +20,7 @@ where you installed the VCF.
 namespace VCF{
 
 	/*
-#ifdef VCF_UNICODE_ENABLED
+#ifdef VCF_UNICODE
 	typedef wchar_t VCFChar;
 #else
 	typedef char VCFChar;
@@ -33,19 +33,21 @@ linux platforms - gcc doesn't like
 std::basic_string<unsigned short> on linux, but
 doesn't like std::basic_string<wchar_t> on OSX, go figure :(
 */
-#ifdef VCF_POSIX 
+#if defined( VCF_POSIX )
 	typedef wchar_t WideChar;
-#elif __GNUWIN32__ 
+#elif defined( VCF_CYGWIN )
     typedef wchar_t WideChar;
-#elif VCF_MINGW
+#elif defined( VCF_MINGW )
     typedef wchar_t WideChar;	
-#elif (__BORLANDC__)
+#elif defined( VCF_BCC )
     typedef wchar_t WideChar;
-#elif defined(VCF_CW_W32)
+#elif defined( VCF_CW_W32 )
 	typedef wchar_t WideChar;
-#elif defined(VCF_DMC)
+#elif defined( VCF_DMC )
 	typedef wchar_t WideChar;
-#elif defined(VCF_VC80)
+#elif defined( VCF_VC80 )
+    typedef wchar_t WideChar;
+#elif defined( VCF_ICL )
     typedef wchar_t WideChar;
 #else
 	typedef unsigned short WideChar;

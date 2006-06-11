@@ -11,7 +11,7 @@ where you installed the VCF.
 // DatagramSocketPeer.
 // -- Ning Ke
 
-#ifdef WIN32 //this is a hack - this will be removed when we redo sockets
+#ifdef VCF_WIN //this is a hack - this will be removed when we redo sockets
 			 //and add this to teh toolkit
 	#include <winsock2.h>
 #endif
@@ -27,7 +27,7 @@ DatagramSocket::DatagramSocket() {
 	port_ = 0;
 	host_ = "";
 	peer_ = NULL;
-#ifdef WIN32
+#ifdef VCF_WIN
 	peer_ = new Win32DatagramSocketPeer(this);
 #endif
 }
@@ -37,7 +37,7 @@ DatagramSocket::DatagramSocket(const int &port) {
 	port_ = port;
 	host_ = "";
 	peer_ = NULL;
-#ifdef WIN32
+#ifdef VCF_WIN
 	peer_ = new Win32DatagramSocketPeer(this, port);
 #endif
 }
@@ -47,7 +47,7 @@ DatagramSocket::DatagramSocket(const String &host, const int &port) {
 	host_ = host;
 	port_ = port;
 	peer_ = NULL;
-#ifdef WIN32
+#ifdef VCF_WIN
 	peer_ = new Win32DatagramSocketPeer(this, host, port);
 #endif
 }

@@ -24,55 +24,110 @@ where you installed the VCF.
 Common #defines for various compilers and platforms. Note that some of these are defined by the
 current compiler (i.e. _MSC_VER), but others must be defined in your build script.
 
-platforms:
-VCF_WIN32 - running on some version of 32 bit Windows
+Platforms:
 
-VCF_LINUX - running under a linux
+	VCF_WIN - running on some version of Windows
+	VCF_WIN32 - running on some version of 32 bit Windows
+	VCF_WIN64 - running on some version of 64 bit Windows
 
-VCF_SOLARIS - running under solaris
+	VCF_CYGWIN - running under a Cygwin
 
-VCF_X11 - runnning under the X11 windowing platform using the raw xlib library
+	VCF_OSX - running under some version of Macintosh OS X using the Cocoa Objective C libraries
 
-VCF_GTK - running on a platform that is supported by GTK and using the GTK2 libraries. Typically
-this is for linux(or *nix) platforms
-
-VCF_OSX - running under some version of Macintosh OS X using the Cocoa Objective C libraries
+	VCF_POSIX - running under a linux
 
 
-compilers
+Toolkits:
 
-_MSC_VER - compiling with Microsoft's Visual C++ compiler (at least version 6)
-VCF_MSC
-VCF_VC50
-VCF_VC60
-VCF_VC70
-VCF_VC71
-VCF_VC80
+	VCF_X11 - runnning under the X11 windowing platform using the raw xlib library
 
-VCF_GCC - compiling with GCC's C++ compiler
+	VCF_GTK - running on a platform that is supported by GTK and using 
+		the GTK2 libraries. Typically this is for linux(or *nix) platforms
 
-VCF_MINGW - compiling with MinGW version of GCC's C++ compiler
 
-VCF_DMC - compiling with Digital Mar's C++ compiler
+Compilers:
 
-VCF_BCC - compiling with Borland's C++ compiler
+	VCF_ICL - compiling with Intel's C++ compiler
+
+	VCF_MSC - compiling with Microsoft's Visual C++ compiler (at least version 6)
+	VCF_VC50
+	VCF_VC60
+	VCF_VC70
+	VCF_VC71
+	VCF_VC80
+
+	VCF_DMC - compiling with Digital Mar's C++ compiler
+
+	VCF_BCC - compiling with Borland's C++ compiler
+	VCF_BCC4
+	VCF_BCC5
+	VCF_BCC6
+	VCF_BCCKLX
+	VCF_BCC8
+
+	VCF_CW - compiling with CodeWarrior MetroWerks' C++ compiler
+	VCF_CW6
+	VCF_CW_OSX
+	VCF_CW_W32
+
+	VCF_GCC - compiling with GCC's C++ compiler
+
+	VCF_MINGW - compiling with MinGW version of GCC's C++ compiler
+
+
+Miscellaneous:
+
+	VCF_UNICODE - Unicode is default
+
 */
 
 
 /**
 Setup VCF_ operating system
 */
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 	#define VCF_WIN32
+
+	// Define both to be sure that the thirdpatry code will find appropriate one.
+	#ifndef _WIN32
+		#define _WIN32
+	#endif
+	#ifndef WIN32
+		#define WIN32
+	#endif
 #endif
+
+#if defined(WIN64) || defined(_WIN64)
+	#define VCF_WIN64
+
+	// Define both to be sure that the thirdpatry code will find appropriate one.
+	#ifndef _WIN64
+		#define _WIN64
+	#endif
+	#ifndef WIN64
+		#define WIN64
+	#endif
+#endif
+
+#if defined(VCF_WIN32) || defined(VCF_WIN64)
+	#define VCF_WIN
+#endif
+
+
+#ifdef __CYGWIN__
+	#define VCF_CYGWIN
+#endif
+
 
 #ifdef OSX
 	#define VCF_OSX
 #endif
 
+
 #ifdef __linux__
     #define VCF_POSIX
 #endif
+
 
 /**
 Setup compiler names, and some compiler-specific warnings
@@ -80,76 +135,93 @@ Setup compiler names, and some compiler-specific warnings
 #define VCF_COMPILER_NAME	""
 
 
+#ifdef __INTEL_COMPILER
+	#define VCF_ICL
+
+    // Intel compiler defines _MSC_VER either as it consider to be compatible.
+    // We undef it to keep separate their issues.
+	#undef _MSC_VER
+
+	#undef VCF_COMPILER_NAME
+	#define VCF_COMPILER_NAME	"ICL"
+#endif // __INTEL_COMPILER
+
+
 #ifdef _MSC_VER
 	#define VCF_MSC
-#endif
 
-#if (_MSC_VER >= 1400)
-#	define VCF_VC80
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC80"
-#elif (_MSC_VER >= 1310)
-#	define VCF_VC71
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC71"
-#elif (_MSC_VER >= 1300)
-#	define VCF_VC70
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC70"
-#elif (_MSC_VER >= 1200)
-#	define VCF_VC60
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC60"
-#elif (_MSC_VER >= 1100)
-#	define VCF_VC50
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"VC60"
+	#if (_MSC_VER >= 1400)
+		#define VCF_VC80
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC80"
+	#elif (_MSC_VER >= 1310)
+		#define VCF_VC71
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC71"
+	#elif (_MSC_VER >= 1300)
+		#define VCF_VC70
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC70"
+	#elif (_MSC_VER >= 1200)
+		#define VCF_VC60
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC60"
+	#elif (_MSC_VER >= 1100)
+		#define VCF_VC50
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC50"
+	#endif
+
+    // Disable some warnings
+	#include "vcf/FoundationKit/WarningsOffVc.h"
+
 #endif
 
 
 #ifdef __DMC__
-#	define VCF_DMC
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"DMC"
+	#define VCF_DMC
+
+	#undef VCF_COMPILER_NAME
+	#define VCF_COMPILER_NAME	"DMC"
 #endif
 
 
 #ifdef __BORLANDC__
 	#define VCF_BCC
 
-#if (__BORLANDC__ >= 0x0580 )
-	#define VCF_BCC8  //BDS 2006
-# undef VCF_COMPILER_NAME
-# define VCF_COMPILER_NAME	"BCC8"
-#elif (__BORLANDC__ == 0x0570)
-	#define VCF_BCCKLX  //Kylix
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"BCCKLX"
-#elif (__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570)
-	#define VCF_BCC6 //BCB 6
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"BCC6"
-#elif (__BORLANDC__ >= 0x0550) && (__BORLANDC__ < 0x0560)
-	#define VCF_BCC5 //BCB 5 - Free Compiler
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"BCC5"
-#elif (__BORLANDC__ >= 0x0540)
-	#define VCF_BCC4 //BCB 4
-#	undef VCF_COMPILER_NAME
-#	define VCF_COMPILER_NAME	"BCC4"
-#endif //bcc version
+	#if (__BORLANDC__ >= 0x0580 )
+		#define VCF_BCC8  //BDS 2006
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"BCC8"
+	#elif (__BORLANDC__ == 0x0570)
+		#define VCF_BCCKLX  //Kylix
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"BCCKLX"
+	#elif (__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570)
+		#define VCF_BCC6 //BCB 6
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"BCC6"
+	#elif (__BORLANDC__ >= 0x0550) && (__BORLANDC__ < 0x0560)
+		#define VCF_BCC5 //BCB 5 - Free Compiler
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"BCC5"
+	#elif (__BORLANDC__ >= 0x0540)
+		#define VCF_BCC4 //BCB 4
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"BCC4"
+	#endif //bcc version
 
-#if defined(VCF_BCC6) && !defined(_USE_OLD_RW_STL)
-#define __MINMAX_DEFINED
-#define NOMINMAX    
-	using std::min;
-	using std::max;
-	#define __max max
-	#define __min min
-#endif //minmax defined
+	#if defined(VCF_BCC6) && !defined(_USE_OLD_RW_STL)
+		#define __MINMAX_DEFINED
+		#define NOMINMAX    
+		using std::min;
+		using std::max;
+		#define __max max
+		#define __min min
+	#endif //minmax defined
 
-//Some pragmas now
-  #pragma warn -8026
+	//Some pragmas now
+	#pragma warn -8026
 	#pragma warn -inl
 	#pragma warn -aus
 	#pragma warn -ccc
@@ -160,22 +232,22 @@ Setup compiler names, and some compiler-specific warnings
 	#pragma warn -rch
 	#pragma warn -rng
 	#pragma warn -hid
-#if (__BORLANDC__ > 0x0551)
-	#pragma warn -8098
-#endif	
+	#if (__BORLANDC__ > 0x0551)
+		#pragma warn -8098
+	#endif	
 	#pragma warn -ngu
 	#pragma warn -lin
 #endif // __BORLANDC__
 
 
-
 #ifdef __MWERKS__
 	#define VCF_CW
+
 	#ifdef OSX
 		#define VCF_CW_OSX
-	#elif defined(WIN32)
+	#elif defined(VCF_WIN32)
 		#define VCF_CW_W32
-	#endif // OS
+	#endif // OSX
 	#if (__MWERKS__ == 0x2400)
 		#define VCF_CW6
 		#undef VCF_COMPILER_NAME
@@ -184,11 +256,11 @@ Setup compiler names, and some compiler-specific warnings
 #endif // __MWERKS__
 
 
-// This will discover the GCC compiler and it's version number (eg 3.4.2)
-// __GNUC_VERSION__ contains the version number in integer form (eg 30402) - ACH
 #ifdef __GNUC__
-	#undef VCF_GCC
 	#define VCF_GCC
+
+	// This will discover the GCC compiler and it's version number (eg 3.4.2)
+	// __GNUC_VERSION__ contains the version number in integer form (eg 30402) - ACH
 	#if defined(__GNU_PATCHLEVEL__)
 		#define __GNUC_VERSION__ (__GNUC__ * 10000 \
                             + __GNUC_MINOR__ * 100 \
@@ -205,60 +277,52 @@ Setup compiler names, and some compiler-specific warnings
 #endif // __GNUC__
 
 
+#ifdef __MINGW32__
+	#define VCF_MINGW
 
-#ifdef WIN32
-  #ifdef VCF_MSC
-	//disable warnings on 255 char debug symbols
-	#pragma warning (disable : 4786)
-	//disable warnings on extern before template instantiation
-	#pragma warning (disable : 4231)
-
-	//'identifier' : decorated name length exceeded, name was truncated
-	#pragma warning (disable:4503)
-
-	//disable C++ Exception Specification ignored
-	#pragma warning (disable : 4290)
-
-#include "vcf/FoundationKit/WarningsOffVc.h"
-
-	#ifdef VCF_VC80
-		#pragma message ( "VC8 compiler detected - deprecation warnings turned off for now." )
-		#pragma warning (disable : 4996)
-        #ifndef _CRT_SECURE_NO_DEPRECATE
-		    #define _CRT_SECURE_NO_DEPRECATE 1
-        #endif
-        #ifndef _CRT_NONSTDC_NO_DEPRECATE
-            #define _CRT_NONSTDC_NO_DEPRECATE 1
-        #endif
-		#pragma message ( "_CRT_SECURE_NO_DEPRECATE turned on for now." )
-	#endif 
-#endif
-  #if ( _MSC_VER < 1300 )
-	//disable warning on base class not declared with the __declspec(dllexport) keyword
-	#pragma warning (disable : 4251)
-
-	//disable warning on exported class derived from a class that was not exported.
-	#pragma warning (disable : 4275)
-  #endif //_MSC_VER < 1300  
-#endif //WIN32
+	#undef VCF_COMPILER_NAME
+	#define VCF_COMPILER_NAME	"MINGW"
+#endif // __MINGW32__
 
 
+/**
+Setup VCF_ miscellaneous macros
+*/
+#if defined(_UNICODE) || defined(UNICODE)
+	#define VCF_UNICODE
 
-#ifdef VCF_WIN32
-	#ifdef _UNICODE
-		#define VCF_UNICODE_ENABLED
+	// Define both to be sure that the thirdpatry code will find appropriate one.
+	#ifndef _UNICODE
+		#define _UNICODE
+	#endif
+	#ifndef UNICODE
+		#define UNICODE
 	#endif
 #endif
 
 
 
-
-
-
-
-
 namespace VCF {
 
+	typedef char           int8;
+	typedef short          int16;
+	typedef int            int32;
+	typedef long           long32;
+	typedef unsigned char  uchar;
+	typedef unsigned short ushort;
+	typedef unsigned char  uint8;
+	typedef unsigned short uint16;
+	typedef unsigned int   uint32;
+	typedef unsigned long  ulong32;
+
+	/**
+	This is used as a wrapper around some platform
+	object or handle. 
+	*/
+	typedef void*			OSHandleID;
+
+	
+	
 	template<typename T> inline const T& minVal(const T& x, const T& y) {
 		return x < y ? x : y;
 	};
@@ -266,12 +330,14 @@ namespace VCF {
 	template<typename T> inline const T& maxVal(const T& x, const T& y) {
 		return x > y ? x : y;
 	};
+
 };
 
 
+
 #define KEEP_NAMESPACE_IN_CLASSNAME
-//#define USE_GARBAGE_COLLECTION
-#ifdef _WIN32
+
+#ifdef VCF_WIN
 	#ifdef _DEBUG
 	//	#define USE_VCF_NEW
 	#endif
@@ -290,24 +356,14 @@ namespace VCF {
 #endif
 
 //apparently NULL may not always be 0 - this makes it so...
-
-#ifdef VCF_GCC
-	#undef NULL
-	#ifdef __GNUWIN32__
-		#define NULL		0
-	#endif
-#endif //VCF_GCC
-
-#ifndef __GNUWIN32__
+#ifndef VCF_CYGWIN
 	#undef NULL
 	#define NULL		0
-#endif //__GNUWIN32__
+#endif //VCF_CYGWIN
 
 
 
-
-
-#ifdef WIN32
+#ifdef VCF_WIN
 
 /**
 this define is to fix:
@@ -319,38 +375,67 @@ this define is to fix:
 //the wrong menu structs which cause problems in WinNT4
 
 
-#if !defined(__GNUWIN32__) && !defined(__BORLANDC__)  
-# ifdef WINVER
-#   undef WINVER
-# endif
-#define WINVER 0x0400
-# ifdef _WIN32_WINNT
-#   undef _WIN32_WINNT
-# endif
-#define _WIN32_WINNT 0x0400
+	#if !defined(VCF_CYGWIN) && !defined(VCF_BCC)  
+		#ifdef WINVER
+			#undef WINVER
+		#endif
+		#define WINVER 0x0400
+		#ifdef _WIN32_WINNT
+			#undef _WIN32_WINNT
+		#endif
+		#define _WIN32_WINNT 0x0400
+	#endif
+
+	#if defined(VCF_MINGW)  
+		#define _WIN32_IE 0x0500
+		#if defined(_WIN32_WINNT)
+			#undef _WIN32_WINNT
+		#endif
+		#define _WIN32_WINNT 0x0500
+	#endif
+
+	#define WIN32_LEAN_AND_MEAN
+
+#endif //VCF_WIN
+
+
+
+/**
+VCF code should use _typename_, and it gets set appropriately here
+*/
+#ifdef VCF_MSC
+
+	//don't define  _typename_ as a "typename" keyword because
+	//VC6 barfs on it's usage (despite it being part of the C++ standard)
+	//Note the new addition is due to better vc7.1 C++ compiler compliance,
+	//many thanks to Raghavendra Chandrashekara for finding this!
+	#if _MSC_VER < 1310
+		#define _typename_
+	#else
+		#define _typename_ typename
+	#endif
+
+#elif defined(VCF_DMC)
+
+	#define _typename_
+
+#else
+
+	#define _typename_ typename
+
+#endif //VCF_MSC
+
+
+
+/**
+special macro for handling multi-character constants like 'abcd' which GCC is unhappy with :(
+The same is with BCC.
+*/
+#if defined(VCF_GCC) || defined(VCF_BCC)
+	#define CHAR_CONST(x) (unsigned long) x
+#else
+	#define CHAR_CONST(x) x
 #endif
-
-#if defined(VCF_MINGW)  
-#	define _WIN32_IE 0x0500
-#	if defined(_WIN32_WINNT)
-#		undef _WIN32_WINNT
-#	endif
-#	define _WIN32_WINNT 0x0500
-#endif
-
-
-
-#define WIN32_LEAN_AND_MEAN
-//include std windoze headers for peers....
-#include <windows.h>
-//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
-
-#include <commctrl.h> //make sure to link with comctl32.lib
-#include <shlobj.h>
-
-#endif //WIN32
-
-
 
 
 
@@ -453,7 +538,7 @@ this define is to fix:
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #	endif
-#   ifdef __BORLANDC__
+#   ifdef VCF_BCC
 #     define _LIB_CPLVERNUM "bcc"
 #   endif
 # endif
@@ -467,7 +552,7 @@ link to the correct library! This does mean that our app that uses this
 kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 "VCF_USE_ALLIN1_LIB" defined to use the DLL or static libraries.
 */
-#if defined(_MSC_VER) || defined(__BORLANDC__)
+#if defined(VCF_MSC) || defined(VCF_BCC)
 
 	#ifdef VCF_USE_ALLIN1_DLL
 	//	using dynamic link library
@@ -490,11 +575,11 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	//	creating the static or dynamic link library
 	#endif
 
-#endif //_MSC_VER
+#endif //VCF_MSC
 
 
 
-#if defined (_MSC_VER) || defined (__DMC__) || defined (__GNUWIN32__) ||defined(__MINGW32__) || defined(__BORLANDC__) || defined(__MWERKS__)
+#if defined (VCF_MSC) || defined (VCF_DMC) || defined (VCF_CYGWIN) ||defined(VCF_MINGW) || defined(VCF_BCC) || defined(VCF_CW)
   // when we use USE_FOUNDATIONKIT_DLL we always want FOUNDATIONKIT_DLL
 	// and we save a MACRO defines at the same time.
 	// Nevertheless USE_FOUNDATIONKIT_DLL cannot replace FOUNDATIONKIT_DLL
@@ -682,54 +767,6 @@ kit needs to have either "VCF_USE_ALLIN1_DLL" defined or
 	
 #endif
 
-
-
-/**
-VCF code should use _typename_, and it gets set appropriately here
-*/
-#ifdef _MSC_VER //we are compiling with Microsoft's Visual C++ compiler
-
-	//don't define  _typename_ as a "typename" keyword because
-	//VC6 barfs on it's usage (despite it being part of the C++ standard)
-	//Note the new addition is due to better vc7.1 C++ compiler compliance,
-	//many thanks to Raghavendra Chandrashekara for finding this!
-	#if _MSC_VER < 1310
-		#define _typename_
-	#else
-		#define _typename_ typename
-	#endif
-
-#elif defined(__DMC__)
-
-	#define _typename_
-
-//#elif defined(__GNUWIN32__)
-
-#elif defined(VCF_GCC)
-
-	#define _typename_ typename
-
-#elif defined(VCF_BCC)
-
-	#define _typename_ typename
-
-#elif defined(VCF_CW)
-
-	#define _typename_ typename
-
-#endif //_MSC_VER
-
-
-
-/**
-special macro for handling multi-character constants like 'abcd' which GCC is unhappy with :(
-The same is with BCC.
-*/
-#if defined(VCF_GCC) || defined(VCF_BCC)
-	#define CHAR_CONST(x) (unsigned long) x
-#else
-	#define CHAR_CONST(x) x
-#endif
 
 
 #endif // _VCF_FOUNDATIONKITCONFIG_H__

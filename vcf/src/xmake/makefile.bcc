@@ -25,8 +25,8 @@ OBJDIR = borland$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 XMAKE_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.obj \
@@ -34,9 +34,8 @@ XMAKE_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.obj
 XMAKE_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
+	-DWIN32 -I..\..\src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.obj
 

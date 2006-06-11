@@ -63,7 +63,7 @@ void Win32CustomControl::registerWndClass()
 		wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 		wcex.hbrBackground	= NULL;//(HBRUSH)(COLOR_BTNFACE+1);
 		wcex.lpszMenuName	= NULL;
-#if defined(VCF_CW) && !defined(UNICODE)
+#if defined(VCF_CW) && !defined(VCF_UNICODE)
 		wcex.lpszClassName  = this->getClassName().ansi_c_str();
 #else
 		wcex.lpszClassName	= this->getClassName().c_str();

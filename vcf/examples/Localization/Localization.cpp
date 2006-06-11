@@ -21,7 +21,7 @@ where you installed the VCF.
 This is a simple wrapper around the Win32 QueryPerformanceCounter API
 to allow hi resolution timing
 */
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
 class HiResClock {
 public:
 

@@ -27,7 +27,7 @@ LibraryApplication::LibraryApplication():
 
 	applicationName_ = "";
 /*
-#if defined( WIN32 ) && defined ( _MSC_VER )
+#if defined( VCF_WIN ) && defined ( VCF_MSC )
 	//load the BlacBox error trapper
 	try {
 		Library lib( L"BlackBox.dll" );

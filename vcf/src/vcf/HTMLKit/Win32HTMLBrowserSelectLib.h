@@ -44,13 +44,13 @@ where you installed the VCF.
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #		endif
-#   ifdef __BORLANDC__
+#   ifdef VCF_BCC
 #   define _LIB_CPLVERNUM "bcc"
 #   endif
-#	ifdef __MWERKS__
+#	ifdef VCF_CW
 #	define _LIB_CPLVERNUM "cw"
 #	endif
-#	ifdef __MINGW32__
+#	ifdef VCF_MINGW
 #	define _LIB_CPLVERNUM "mingw"
 #	endif
 # endif

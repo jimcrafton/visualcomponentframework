@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-#ifdef WIN32
+#ifdef VCF_WIN
 #include "vcf/NetworkKit/Win32SocketPeer.h"
 #include "vcf/NetworkKit/Win32DatagramSocketPeer.h"
 #endif

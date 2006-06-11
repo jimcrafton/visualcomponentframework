@@ -40,7 +40,7 @@ Handle the extension based on the compiler
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #		endif
-#  ifdef __BORLANDC__
+#  ifdef VCF_BCC
 #     define _LIB_CPLVERNUM "bcc"
 #  endif
 # endif
@@ -48,7 +48,7 @@ Handle the extension based on the compiler
 
 
 //auto link stuff
-#if defined(_MSC_VER) || defined(__BORLANDC__)
+#if defined(VCF_MSC) || defined(VCF_BCC)
 	#ifdef USE_INTERNETKIT_DLL
 		#define INTERNETKIT_DLL
 		// using dynamic link library
@@ -68,7 +68,7 @@ Handle the extension based on the compiler
 
 	//make sure to link to the urlmon lib
 	#pragma comment(lib, "urlmon.lib")
-#endif //_MSC_VER
+#endif //VCF_MSC
 
 
 

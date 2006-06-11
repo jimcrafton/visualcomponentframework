@@ -481,7 +481,7 @@ void Win32Edit::setCaretPosition( const unsigned long& caretPos )
 }
 
 //Ugly hack for bcb6 w. Stlport w. fixed ctype.h header
-#if defined(__BORLANDC__) && defined(__SGI_STL_PORT) && ((__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570))
+#if defined(VCF_BCC) && defined(__SGI_STL_PORT) && ((__BORLANDC__ >= 0x0560) && (__BORLANDC__ < 0x0570))
 #define toupper std::_ltoupper
 #define tolower std::_ltolower
 #endif

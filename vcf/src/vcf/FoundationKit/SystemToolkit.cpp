@@ -18,7 +18,7 @@ SystemToolkit* SystemToolkit::create()
 {
 
 	if ( NULL == SystemToolkit::systemToolkitInstance ) {
-#if defined(VCF_WIN32) && !defined(VCF_DOTNET)
+#if defined(VCF_WIN) && !defined(VCF_DOTNET)
 		SystemToolkit::systemToolkitInstance = new Win32SystemToolkit();
 #elif defined(VCF_DOTNET)
 		SystemToolkit::systemToolkitInstance = new DotNetSystemToolkit();

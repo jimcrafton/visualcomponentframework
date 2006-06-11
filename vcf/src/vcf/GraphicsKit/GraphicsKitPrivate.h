@@ -14,19 +14,17 @@ where you installed the VCF.
 #endif
 
 
-#if defined (_MSC_VER) && (_MSC_VER >= 1020)
+#if defined (VCF_MSC) && (_MSC_VER >= 1020)
 #endif
 
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
-#ifdef WIN32
+#ifdef VCF_WIN
 #	include "vcf/GraphicsKit/Win32GraphicsToolkit.h"
 #	include "vcf/GraphicsKit/Win32Context.h"
 #	include "vcf/GraphicsKit/Win32Image.h"
 #	include "vcf/GraphicsKit/Win32Font.h"
 #	include "vcf/GraphicsKit/Win32FontManager.h"
-
-
 #endif
 
 #ifdef VCF_X11

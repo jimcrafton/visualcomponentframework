@@ -47,7 +47,7 @@ Handle the extension based on the compiler
 #   elif (_MSC_VER >= 1100)
 #     define _LIB_CPLVERNUM "vc5"
 #		endif
-#  ifdef __BORLANDC__
+#  ifdef VCF_BCC
 #     define _LIB_CPLVERNUM "bcc"
 #  endif
 # endif
@@ -60,7 +60,7 @@ link to the correct library! This does mean that our app that uses this
 kit needs to have either "USE_HTMLKIT_DLL" defined or "USE_HTMLKIT_LIB"
 defined to use the DLL or static libraries.
 */
-#if defined(_MSC_VER) || defined(__BORLANDC__)
+#if defined(VCF_MSC) || defined(VCF_BCC)
 	#ifdef USE_HTMLKIT_DLL
 		// using dynamic link library
 		#ifdef _DEBUG
@@ -79,7 +79,7 @@ defined to use the DLL or static libraries.
 
 	
 	
-#endif //_MSC_VER
+#endif //VCF_MSC
 
 
 #if defined(VCF_MINGW)

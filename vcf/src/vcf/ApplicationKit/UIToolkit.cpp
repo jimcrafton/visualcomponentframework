@@ -178,7 +178,7 @@ void UIToolkit::init()
 void UIToolkit::initToolKit()
 {
 	if ( NULL == UIToolkit::toolKitInstance ) {
-#ifdef WIN32
+#ifdef VCF_WIN
 		UIToolkit::toolKitInstance = new Win32ToolKit();
 #elif VCF_X11
 		UIToolkit::toolKitInstance = new X11UIToolkit();
@@ -1159,7 +1159,7 @@ VirtualKeyCode UIToolkit::internal_findMnemonic( const String& caption )
 {
 	VirtualKeyCode result = vkUndefined;
 
-#if (! defined _MSC_VER) || ( (_MSC_VER < 1300) || defined ( STLPORT ) )
+#if (! defined VCF_MSC) || ( (_MSC_VER < 1300) || defined ( STLPORT ) )
 	const VCFChar* P = caption.c_str();
 #else
 	const VCFChar* P = caption.c_str();

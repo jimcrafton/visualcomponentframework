@@ -144,7 +144,7 @@ struct BGRAPixel {
 	BitSizeType a;
 };
 
-#ifndef __GNUC__
+#ifndef VCF_GCC
 /**
 \class BGRAPixel Pixels.h "vcf/GraphicsKit/Pixels.h"
 floating point specialization
@@ -198,7 +198,7 @@ struct RGBAPixel {
 	BitSizeType a;
 };
 
-#ifndef __GNUC__
+#ifndef VCF_GCC
 /**
 \class RGBAPixel Pixels.h "vcf/GraphicsKit/Pixels.h"
 floating point specialization
@@ -248,7 +248,7 @@ struct ARGBPixel {
 	BitSizeType b;
 };
 
-#ifndef __GNUC__
+#ifndef VCF_GCC
 /**
 \class ARGBPixel Pixels.h "vcf/GraphicsKit/Pixels.h"
 floating point specialization
@@ -301,7 +301,7 @@ struct ABGRPixel {
 	BitSizeType r;
 };
 
-#ifndef __GNUC__
+#ifndef VCF_GCC
 /**
 \class ABGRPixel Pixels.h "vcf/GraphicsKit/Pixels.h"
 floating point specialization
@@ -352,7 +352,7 @@ struct GrayscalePixel {
 	BitSizeType value;
 };
 
-#ifndef __GNUC__
+#ifndef VCF_GCC
 /**
 \class GrayscalePixel Pixels.h "vcf/GraphicsKit/Pixels.h"
 turned off for GCC until I figure out the right syntax!
@@ -387,7 +387,7 @@ determine platform type
 which in turn defines the default pixel types and formats
 */
 
-#if defined(WIN32)
+#if defined(VCF_WIN)
 	/**
 	defines a default pixel format of BGR which is what win32 uses
 	*/
@@ -408,7 +408,7 @@ which in turn defines the default pixel types and formats
 namespace VCF {
 
 
-#if defined(WIN32)
+#if defined(VCF_WIN)
 	typedef BGRAPixel<unsigned char> SysPixelType;
 	typedef GrayscalePixel<unsigned char> SysGrayscalePixelType;
 

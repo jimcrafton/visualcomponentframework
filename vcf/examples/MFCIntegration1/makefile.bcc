@@ -26,7 +26,7 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 MFCINTEGRATION1_CXXFLAGS = $(__RUNTIME_LIBS_2) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE_4) -tWM $(____OPTION_DEBUG_12_p) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src \
 	$(__FOUNDATIONKIT_DLL_p) -D_AFXDLL -Hu \
 	-H=..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).csm \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -152,5 +152,5 @@ clean:
 	$(CXX) -q -c -P -o$@ $(MFCINTEGRATION1_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1_MFCIntegration1.res: .\MFCIntegration1.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_12_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_12_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WIN32 -dWIN32 -i..\..\src $**
 

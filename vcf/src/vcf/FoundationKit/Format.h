@@ -19,14 +19,14 @@ where you installed the VCF.
 #endif
 
 //JC Note: apparently VC71 needs to be added to this list as well.
-#if defined(VCF_GCC) || defined(VCF_DMC) || defined(VCF_VC60) || defined(VCF_VC70) || defined(VCF_VC71)  || defined (VCF_VC80) || defined(VCF_BCC)
+#if defined(VCF_GCC) || defined(VCF_DMC) || defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
 
 // these compilers do not want 'template <DataType>' specified before the specialization
 // JC - it appears GCC 3.3.3 doesn't like this - do we need to have this here at all!?
 #  define VCF_NO_TEMPLATE_SPECIFICATION_FOR_MEMBER_TEMPLATE_SPECIALIZATION
 #endif
 
-#if defined(_MSC_VER) || defined(VCF_MINGW) || defined(VCF_BCC) || defined(VCF_DMC)
+#if defined(VCF_MSC) || defined(VCF_MINGW) || defined(VCF_BCC) || defined(VCF_ICL) || defined(VCF_DMC)
 #  define snprintf _snprintf
 #  define vsnprintf(b,c,f,a) _vsnprintf(b,c,f,a)
 #endif

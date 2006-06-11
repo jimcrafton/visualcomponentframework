@@ -24,9 +24,9 @@ BCCDIR = $(MAKEDIR)\..
 OBJDIR = borland$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 BLACKBOX_DLL_CXXFLAGS = $(__RUNTIME_LIBS_3) -I$(BCCDIR)\include \
 	$(__DEBUG_INFO) $(__OPTIMIZE_5) -tWM $(____OPTION_DEBUG_13_p) \
-	-DVCF_DISABLE_PRAGMA_LINKING -D_WINDOWS -D_WIN32 -DWIN32 -I..\..\src \
-	-D_USRDLL -Iinclude -DBLACKBOX_DLL -DBLACKBOX_EXPORTS -DSTRICT \
-	-DWORK_AROUND_SRCLINE_BUG $(CPPFLAGS) $(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_USRDLL -Iinclude \
+	-DBLACKBOX_DLL -DBLACKBOX_EXPORTS -DSTRICT -DWORK_AROUND_SRCLINE_BUG \
+	$(CPPFLAGS) $(CXXFLAGS)
 BLACKBOX_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_AllocAndFillProcessModuleList.obj \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.obj \
@@ -181,5 +181,5 @@ clean:
 	$(CXX) -q -c -P -o$@ $(BLACKBOX_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.res: .\BlackBox.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_13_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WINDOWS -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -iinclude -dBLACKBOX_DLL -dBLACKBOX_EXPORTS -dSTRICT -dWORK_AROUND_SRCLINE_BUG $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include $(____OPTION_DEBUG_13_p_1) -dVCF_DISABLE_PRAGMA_LINKING -d_WIN32 -dWIN32 -i..\..\src -d_USRDLL -iinclude -dBLACKBOX_DLL -dBLACKBOX_EXPORTS -dSTRICT -dWORK_AROUND_SRCLINE_BUG $**
 

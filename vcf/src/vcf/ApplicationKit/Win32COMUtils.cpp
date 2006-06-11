@@ -30,7 +30,7 @@ HRESULT COMUtils::createCOMObject( const String& progID, IID interfaceID,
 
 	CLSID clsid;
 
-#if defined(__GNUWIN32__) || defined(VCF_CW_W32) || defined(VCF_MINGW)
+#if defined(VCF_CYGWIN) || defined(VCF_CW_W32) || defined(VCF_MINGW)
 	wchar_t* tmp = new wchar_t[progID.size()+1];
 	memset( tmp, 0 , (progID.size()+1)*sizeof(wchar_t) );
 	AnsiString id = progID;
@@ -94,7 +94,7 @@ HRESULT COMUtils::createCOMObject( CLSID clsid, IID interfaceID,
 HRESULT COMUtils::BSTRtoString( const BSTR src, String& dest )
 {
 	HRESULT result = E_FAIL;
-#if defined(__GNUWIN32__) || defined(VCF_CW_W32) || defined(VCF_MINGW)
+#if defined(VCF_CYGWIN) || defined(VCF_CW_W32) || defined(VCF_MINGW)
 	String tmpString;
 	SAFEARRAY* safeArray = NULL;
 	result = VectorFromBstr(src, &safeArray );
@@ -279,13 +279,13 @@ HRESULT COMUtils::StringtoBSTR( const String& src, BSTR& dest )
 {
 	HRESULT result = E_FAIL;
 
-/*#if defined(__GNUWIN32__) || defined(VCF_CW_W32)
+/*#if defined(VCF_CYGWIN) || defined(VCF_CW_W32)
     wchar_t* tmp = new wchar_t[src.size()+1];
 	memset( tmp, 0 , src.size()+1 );
 	AnsiString asrc = src;
 	if ( 0 == MultiByteToWideChar( CP_ACP, 0, asrc.c_str(), asrc.size(), tmp, src.size() ) ) {
 	    return result;*/
-#if defined(__GNUWIN32__) || defined(VCF_CW_W32)  || defined(VCF_MINGW)
+#if defined(VCF_CYGWIN) || defined(VCF_CW_W32)  || defined(VCF_MINGW)
 	wchar_t* tmp = new wchar_t[src.size()+1];
 	memset( tmp, 0 , (src.size()+1)*sizeof(wchar_t) );
 	AnsiString asrc = src;
@@ -949,7 +949,7 @@ VCF::DataObject* COMUtils::getDataObjectFromOLEDataObject( const VCF::String dat
 void COMUtils::registerDataTypes()
 {
 
-#if defined(VCF_CW) && defined(UNICODE)
+#if defined(VCF_CW) && defined(VCF_UNICODE)
 	VCFCOM::COMUtils::standardWin32DataTypes[STRING_DATA_TYPE] = CF_TEXT;
 	VCFCOM::COMUtils::standardWin32DataTypes[INTEGER_DATA_TYPE] = ::RegisterClipboardFormat( L"text/x-vcf-integer" );
 	VCFCOM::COMUtils::standardWin32DataTypes[OBJECT_DATA_TYPE] = ::RegisterClipboardFormat( L"application/x-vcf-object" );

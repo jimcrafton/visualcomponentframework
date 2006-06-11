@@ -48,7 +48,7 @@ unsigned long hi = num.hi(); //hi == 0x1234abcd
 class FOUNDATIONKIT_API ulong64 {
 public:
 
-#	if defined(_MSC_VER) || defined(__BORLANDC__)
+#	if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
 		typedef unsigned __int64 u64_t;
 		typedef __int64 int64_t;
 #	else
@@ -578,7 +578,7 @@ public:
 class FOUNDATIONKIT_API long64 {
 public:
 
-#	if defined(_MSC_VER) || defined(__BORLANDC__)
+#	if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
 		typedef __int64 int64_t;
 #	else
 		typedef long long int64_t;

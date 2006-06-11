@@ -7,9 +7,9 @@ where you installed the VCF.
 */
 
 
-#ifdef __GNUWIN32__
+#ifdef VCF_CYGWIN
 #define _WIN32_IE   0x0400  //this may be a bogus thing to do !
-#endif//__GNUWIN32__
+#endif//VCF_CYGWIN
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
@@ -49,7 +49,7 @@ typedef struct tagNMTVCUSTOMDRAW__ {
 
 
 
-#ifdef __GNUWIN32__
+#ifdef VCF_CYGWIN
 
 #if (_WIN32_IE >= 0x0300)
 #define LPTV_HITTESTINFO   LPTVHITTESTINFO
@@ -98,7 +98,7 @@ typedef struct tagNMTVGETINFOTIPW
 } NMTVGETINFOTIPW, *LPNMTVGETINFOTIPW;
 
 
-#ifdef UNICODE
+#ifdef VCF_UNICODE
 	#define TVN_GETINFOTIP          TVN_GETINFOTIPW
 	#define NMTVGETINFOTIP          NMTVGETINFOTIPW
 	#define LPNMTVGETINFOTIP        LPNMTVGETINFOTIPW
@@ -111,7 +111,7 @@ typedef struct tagNMTVGETINFOTIPW
 #endif //_WIN32_IE
 
 
-#endif //__GNUWIN32__
+#endif //VCF_CYGWIN
 
 
 

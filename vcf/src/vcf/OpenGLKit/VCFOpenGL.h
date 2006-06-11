@@ -23,7 +23,7 @@ where you installed the VCF.
 */
 
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	#ifndef _WINDOWS_
 		#include <windows.h>
 	#endif

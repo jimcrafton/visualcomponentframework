@@ -174,7 +174,7 @@ void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, 
 	}
 	else {
 
-	#ifdef VCF_WIN32
+	#ifdef VCF_WIN
 		int size = MultiByteToWideChar( CP_ACP, 0, str, stringLength, NULL, 0 );
 
 		if ( !(size > 0) ) {
@@ -233,7 +233,7 @@ UnicodeString::UniChar UnicodeString::transformAnsiCharToUnicodeChar( UnicodeStr
 {
 	UnicodeString::UniChar result = 0;
 
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
 	int err = MultiByteToWideChar( CP_ACP, 0, &c, 1, (LPWSTR)&result, 1 );
 
 	if ( !(err > 0) ) {
@@ -269,7 +269,7 @@ UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeSt
 {
 	AnsiChar result;
 
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
 	
 	if (  0 == ::WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)&c, 1,
 									&result, 1, NULL, NULL ) ) {
@@ -333,7 +333,7 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 	int size = 0;
 
 
-#ifdef VCF_WIN32
+#ifdef VCF_WIN
     int strLength = str.data_.size();
 	if ( str.empty() ) {
 		strLength = 1;

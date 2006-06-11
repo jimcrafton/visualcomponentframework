@@ -2622,7 +2622,7 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 
 	String typeName = StringUtils::toString(typeInfo);
 /*
-#ifdef WIN32 //don't know if we really need this here		
+#ifdef VCF_WIN //don't know if we really need this here		
 		//strip out the preceding "class" or "enum" or whatever
 		std::string::size_type idx = typeName.find( " " );
 		if ( idx != typeName.npos ) {

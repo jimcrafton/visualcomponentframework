@@ -26,7 +26,7 @@ void example1()
 
 	//create a process
 
-#if defined(VCF_WIN32)
+#if defined(VCF_WIN)
 	p1.createProcess( "XCOPY", "/?" );
 #elif defined(VCF_POSIX)
 	p1.createProcess( "ls", "--help" );

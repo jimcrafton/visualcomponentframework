@@ -2,7 +2,7 @@
 
 #include "vcf/InternetKit/InternetKit.h"
 
-#ifdef WIN32
+#ifdef VCF_WIN
 #include "vcf/InternetKit/Win32InternetToolkit.h"
 #endif
 
@@ -24,7 +24,7 @@ void InternetToolkit::create()
 {
 	InternetToolkit::inetKitInstance = NULL;
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	InternetToolkit::inetKitInstance = new Win32InternetToolkit();
 #endif
 }

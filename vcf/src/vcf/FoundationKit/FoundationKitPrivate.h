@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-#if defined(WIN32) && !defined(VCF_DOTNET)
+#if defined(VCF_WIN) && !defined(VCF_DOTNET)
 #	include "vcf/FoundationKit/Win32SystemToolkit.h"
 #	include "vcf/FoundationKit/Win32SemaphorePeer.h"
 #	include "vcf/FoundationKit/Win32LibraryPeer.h"

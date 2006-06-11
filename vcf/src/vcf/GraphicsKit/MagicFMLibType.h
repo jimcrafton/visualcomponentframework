@@ -28,7 +28,7 @@ where you installed the VCF.
 
 
 // Windows platform
-#ifdef WIN32
+#ifdef VCF_WIN
 
 // For the DLL library.
 #ifdef MAGICFMDLL_EXPORTS

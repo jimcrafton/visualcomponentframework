@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-#ifdef WIN32
+#ifdef VCF_WIN
 	#ifdef CONTROLSKITDLL_EXPORTS
 		#define CONTROLKIT_API __declspec(dllexport)
 	#else
@@ -22,7 +22,7 @@ where you installed the VCF.
 	#endif //CONTROLSKITDLL_EXPORTS
 #else
 	#define CONTROLKIT_API
-#endif //WIN32
+#endif //VCF_WIN
 
 
 /**
