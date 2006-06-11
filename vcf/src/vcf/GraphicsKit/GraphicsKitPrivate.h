@@ -41,6 +41,17 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/X11Font.h"
 #endif
 
+#ifdef VCF_XCB
+#	include <X11/XCB/xcb.h>
+#	include <X11/XCB/xcb_atom.h>
+extern "C"
+{
+	#include <X11/XCB/xcb_image.h>
+}
+#	include "vcf/GraphicsKit/XCBGraphicsToolkit.h"
+#endif
+
+
 #ifdef VCF_GTK
 	#include <gtk/gtk.h>
 	#include <pango/pango.h>

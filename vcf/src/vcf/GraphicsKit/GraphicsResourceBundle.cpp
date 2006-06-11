@@ -25,12 +25,12 @@ GraphicsResourceBundle::GraphicsResourceBundle():
 	delete peer_;
 	graphicsResPeer_ = GraphicsToolkit::createGraphicsResourceBundlePeer();
 	if ( NULL == graphicsResPeer_ ) {
-		//throw exception! Missing peer implementation!
+		throw NoPeerFoundException( MAKE_ERROR_MSG(NO_PEER), __LINE__ );
 	}
 
 	peer_ = dynamic_cast<ResourceBundlePeer*>( graphicsResPeer_ );
 	if ( NULL == peer_ ) {
-		//throw exception! Bad peer implementation!
+		throw InvalidPeer( MAKE_ERROR_MSG_2( "graphicsResPeer_ is not a ResourceBundlePeer." ) );
 	}
 }
 

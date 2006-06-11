@@ -392,7 +392,7 @@ which in turn defines the default pixel types and formats
 	defines a default pixel format of BGR which is what win32 uses
 	*/
 	#define AGG_BGRA32
-#elif defined(VCF_X11) || defined(VCF_GTK) || defined(VCF_OSX)
+#elif defined(VCF_X11) || defined(VCF_GTK) || defined(VCF_OSX) || defined(VCF_XCB)
 	/**
 	defines a default pixel format of RGB which is what x/gtk uses
 	*/
@@ -414,7 +414,7 @@ namespace VCF {
 
 	typedef GrayscalePixel<unsigned char> PixelFormatType;
 
-#elif defined(VCF_X11) || defined(VCF_GTK) || defined(VCF_OSX)
+#elif defined(VCF_X11) || defined(VCF_GTK) || defined(VCF_OSX) || defined(VCF_XCB)
 	typedef RGBAPixel<unsigned char> SysPixelType;
 	typedef GrayscalePixel<unsigned char> SysGrayscalePixelType;
 #endif
