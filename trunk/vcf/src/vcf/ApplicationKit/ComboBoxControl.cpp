@@ -695,6 +695,11 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 		}
 		break;
 
+	default:
+		break;
+
+
+
 	}
 }
 

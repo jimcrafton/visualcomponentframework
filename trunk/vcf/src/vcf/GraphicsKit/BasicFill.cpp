@@ -108,6 +108,10 @@ void BasicFill::render( Path* path )
 						fillPath.close_polygon();
 					}
 					break;
+				
+					case PathPoint::ptUnknown:
+						VCF_ASSERT(false);
+					break;
 				}
 				
 				pathIt ++;
