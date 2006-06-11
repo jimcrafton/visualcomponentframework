@@ -35,23 +35,30 @@ namespace
     };
 }
 
-LinuxLocalePeer::LinuxLocalePeer()
+LinuxLocalePeer::LinuxLocalePeer() :
+locale_(NULL)
 {
     // use C locale by default
-    locale_ = newlocale(LC_ALL_MASK, NULL, NULL);
+    locale_ = newlocale(LC_ALL_MASK, "C", NULL);
 }
 
 LinuxLocalePeer::~LinuxLocalePeer()
 {
-    freelocale(locale_);
+	if(locale_ != NULL && 
+	   locale_ != LC_GLOBAL_LOCALE)
+	{
+		freelocale(locale_);
+	}
 }
 
 void LinuxLocalePeer::setLocale( const UnicodeString& language,
                                  const UnicodeString& country,
                                  const UnicodeString& variant )
 {
-    if(locale_ != NULL) {
+    if(locale_ != NULL &&
+	   locale_ != LC_GLOBAL_LOCALE) {
         freelocale(locale_);
+		locale_ = NULL;
     }
 	if ( language.empty() && country.empty() ) {
         locale_ = newlocale(LC_ALL_MASK, "", NULL);
