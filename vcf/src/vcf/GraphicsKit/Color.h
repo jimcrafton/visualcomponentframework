@@ -895,6 +895,13 @@ inline Color::Color( const double& val1, const double& val2, const double& val3,
 			b_ = rgb.B;
 		}
 		break;
+	case ctHWB:
+	case ctYUV:
+	case ctLab:
+	case ctCMY:
+	default:
+		VCF_ASSERT(false);
+		break;
 	}
 }
 
@@ -936,6 +943,14 @@ inline Color::Color( const double& val1, const double& val2, const double& val3,
 			b_ = rgb.B;
 		}
 		break;
+	case ctHWB:
+	case ctYUV:
+	case ctLab:
+	case ctCMY:
+	default:
+		VCF_ASSERT(false);
+		break;
+
 	}
 }
 
@@ -976,6 +991,14 @@ inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, Co
 			b_ = rgb.B;
 		}
 		break;
+	case ctHWB:
+	case ctYUV:
+	case ctLab:
+	case ctCMY:
+	default:
+		VCF_ASSERT(false);
+		break;
+
 	}
 }
 
@@ -1016,6 +1039,14 @@ inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, co
 			b_ = rgb.B;
 		}
 		break;
+	case ctHWB:
+	case ctYUV:
+	case ctLab:
+	case ctCMY:
+	default:
+		VCF_ASSERT(false);
+		break;
+
 	}
 }
 
@@ -1056,6 +1087,14 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 			b_ = rgb.B;
 		}
 		break;
+	case ctHWB:
+	case ctYUV:
+	case ctLab:
+	case ctCMY:
+	default:
+		VCF_ASSERT(false);
+		break;
+
 	}
 }
 
@@ -1096,6 +1135,10 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 			b_ = rgb.B;
 		}
 		break;
+	default:
+		VCF_ASSERT(false);
+		break;
+
 	}
 }
 

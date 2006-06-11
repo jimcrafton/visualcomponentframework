@@ -118,6 +118,8 @@ void BasicStroke::render( Path * path )
 						strokePath.close_polygon();
 					}
 					break;
+					default:
+					break;
 				}
 				
 				pathIt++;
