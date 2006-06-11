@@ -195,7 +195,15 @@ void LinuxSystemPeer::setDateToLocalTime( DateTime* date )
 
 void LinuxSystemPeer::setCurrentThreadLocale( Locale* locale )
 {
-    uselocale( reinterpret_cast<locale_t>(locale->getPeer()->getHandleID()));
+// using boost::shared pointer might solve the leak.
+	static __thread locale_t prevLocale = NULL;
+
+	if(prevLocale != NULL &&
+	   prevLocale != LC_GLOBAL_LOCALE) {
+		freelocale(prevLocale);
+	}
+	locale_t loc = duplocale( reinterpret_cast<locale_t>(locale->getPeer()->getHandleID()) );
+    prevLocale = uselocale(loc);
 }
 
 DateTime LinuxSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
