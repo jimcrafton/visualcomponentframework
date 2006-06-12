@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 
 		DateTime dt = DateTime::now();
 
-		System::println( "The time is now: " + dt );
+		System::println( "The time is now: " + dt.toString() );
 
 		void* ptr = &dt;
 

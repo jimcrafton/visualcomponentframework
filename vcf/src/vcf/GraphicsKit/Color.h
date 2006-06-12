@@ -474,6 +474,15 @@ public:
 	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
+	this is a constructor helping us in the conversion from an ulong32 ( as in COLORREF )
+	into which the color components have been packed (4 x 8bits).
+	Under Win32 it is necessary to specify the cpsABGR parameter.
+	@param the system used to pack the color components.
+	@see ColorFormat
+	*/
+	Color( const ulong32& color, const ColorPackScheme& cps=cpsRGB );
+
+	/**
 	this is a constructor halping us in the conversion from an ulong64 ( similarly as in COLORREF)
 	into which the color components have been packed (4 x 16bits).
 	Under Win32 it is necessary to specify the cpsABGR parameter.
@@ -1151,6 +1160,11 @@ inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ) {
 	setRGBPack8( rgb, cps );
 }
 
+inline Color::Color(const ulong32& rgb, const ColorPackScheme& cps ) {
+	a_ = 1.0;
+	setRGBPack8( rgb, cps );
+}
+
 inline Color::Color(const ulong64& rgb, const ColorPackScheme& cps ) {
 	a_ = 1.0;
 	setRGBPack16( rgb, cps );
@@ -1271,32 +1285,32 @@ inline ulong64 Color::getRGBPack16( const ColorPackScheme& cps ) const {
 
 	switch ( cps ) {
 		case cpsARGB : {
-			((uint16*)(&rgb.data_))[2] = (uint16)(r_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[1] = (uint16)(g_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[0] = (uint16)(b_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[3] = (uint16)(a_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[2] = (uint16)(r_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[1] = (uint16)(g_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[0] = (uint16)(b_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[3] = (uint16)(a_ * xFFFF + 0.5);
 		}
 		break;
 
 		case cpsRGB : {
-			((uint16*)(&rgb.data_))[2] = (uint16)(r_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[1] = (uint16)(g_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[0] = (uint16)(b_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[2] = (uint16)(r_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[1] = (uint16)(g_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[0] = (uint16)(b_ * xFFFF + 0.5);
 		}
 		break;
 
 		case cpsBGR : {
-			((uint16*)(&rgb.data_))[0] = (uint16)(r_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[1] = (uint16)(g_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[2] = (uint16)(b_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[0] = (uint16)(r_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[1] = (uint16)(g_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[2] = (uint16)(b_ * xFFFF + 0.5);
 		}
 		break;
 
 		case cpsABGR : {
-			((uint16*)(&rgb.data_))[0] = (uint16)(r_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[1] = (uint16)(g_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[2] = (uint16)(b_ * xFFFF + 0.5);
-			((uint16*)(&rgb.data_))[3] = (uint16)(a_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[0] = (uint16)(r_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[1] = (uint16)(g_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[2] = (uint16)(b_ * xFFFF + 0.5);
+			((uint16*)(&rgb))[3] = (uint16)(a_ * xFFFF + 0.5);
 		}
 		break;
 	}
@@ -1392,34 +1406,34 @@ inline Color& Color::setRGBPack8( const uint32& rgb, const ColorPackScheme& cps 
 inline Color& Color::setRGBPack16( const ulong64& rgb, const ColorPackScheme& cps ) {
 	switch ( cps ) {
 		case cpsRGB : {
-			r_ = (double)((uint16*)&rgb.data_)[2] / xFFFF;
-			g_ = (double)((uint16*)&rgb.data_)[1] / xFFFF;
-			b_ = (double)((uint16*)&rgb.data_)[0] / xFFFF;
+			r_ = (double)((uint16*)&rgb)[2] / xFFFF;
+			g_ = (double)((uint16*)&rgb)[1] / xFFFF;
+			b_ = (double)((uint16*)&rgb)[0] / xFFFF;
 		}
 		break;
 
 		case cpsBGR : {
-			r_ = (double)((uint16*)&rgb.data_)[0] / xFFFF;
-			g_ = (double)((uint16*)&rgb.data_)[1] / xFFFF;
-			b_ = (double)((uint16*)&rgb.data_)[2] / xFFFF;
+			r_ = (double)((uint16*)&rgb)[0] / xFFFF;
+			g_ = (double)((uint16*)&rgb)[1] / xFFFF;
+			b_ = (double)((uint16*)&rgb)[2] / xFFFF;
 		}
 		break;
 
 		case cpsARGB : {
-			r_ = (double)((uint16*)&rgb.data_)[2] / xFFFF;
-			g_ = (double)((uint16*)&rgb.data_)[1] / xFFFF;
-			b_ = (double)((uint16*)&rgb.data_)[0] / xFFFF;
+			r_ = (double)((uint16*)&rgb)[2] / xFFFF;
+			g_ = (double)((uint16*)&rgb)[1] / xFFFF;
+			b_ = (double)((uint16*)&rgb)[0] / xFFFF;
 
-			a_ = (double)((uint16*)&rgb.data_)[3] / xFFFF;
+			a_ = (double)((uint16*)&rgb)[3] / xFFFF;
 		}
 		break;
 
 		case cpsABGR : {
-			r_ = (double)((uint16*)&rgb.data_)[0] / xFFFF;
-			g_ = (double)((uint16*)&rgb.data_)[1] / xFFFF;
-			b_ = (double)((uint16*)&rgb.data_)[2] / xFFFF;
+			r_ = (double)((uint16*)&rgb)[0] / xFFFF;
+			g_ = (double)((uint16*)&rgb)[1] / xFFFF;
+			b_ = (double)((uint16*)&rgb)[2] / xFFFF;
 
-			a_ = (double)((uint16*)&rgb.data_)[3] / xFFFF;
+			a_ = (double)((uint16*)&rgb)[3] / xFFFF;
 		}
 		break;
 	}
