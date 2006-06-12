@@ -809,15 +809,13 @@ void DateTime::loadFromStream( InputStream* stream )
 	stream->read( hi );
 	stream->read( lo );
 
-
-	time_.lo( (unsigned long)lo );
-	time_.hi( (unsigned long)hi );
+	time_ = makeULong64(hi,lo);
 }
 
 void DateTime::saveToStream( OutputStream* stream )
 {
-	long hi = time_.hi();
-	long lo = time_.lo();
+	long hi = getHi32(time_);
+	long lo = (long)getLo32(time_);
 
 	stream->write( hi );
 	stream->write( lo );
