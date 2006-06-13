@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\lib\libLibJPEG_mgcc_s.a" />
+				<Option output="../../../../lib/libLibJPEG_mgcc_s.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Release\" />
+				<Option object_output="mgcc/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -38,9 +38,9 @@
 				</Linker>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\lib\libLibJPEG_mgcc_sd.a" />
+				<Option output="../../../../lib/libLibJPEG_mgcc_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Debug\" />
+				<Option object_output="mgcc/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -65,45 +65,110 @@
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
 			</Target>
+			<Target title="linux_Debug">
+				<Option output="../../../../lib/libLibJPEG_$(COMPILER)$(COMPILER_VER)_sd.a" />
+				<Option working_dir="" />
+				<Option object_output="linux/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-fexceptions" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+				<Environment>
+					<Variable name="COMPILER" value="gcc" />
+					<Variable name="COMPILER_VER" value="4" />
+				</Environment>
+			</Target>
+			<Target title="linux_Release">
+				<Option output="../../../../lib/libLibJPEG_$(COMPILER)$(COMPILER_VER)_s.a" />
+				<Option working_dir="" />
+				<Option object_output="linux/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-w" />
+					<Add option="-pipe" />
+					<Add option="-fexceptions" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_NDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+				<Environment>
+					<Variable name="COMPILER_VER" value="4" />
+					<Variable name="COMPILER" value="gcc" />
+				</Environment>
+			</Target>
 			<Environment>
 				<Variable name="COMPILER" value="mgcc" />
 				<Variable name="COMPILER_VER" value="" />
 			</Environment>
 		</Build>
 		<Compiler>
-			<Add directory="..\LibJPEG" />
-			<Add directory="..\ZLib" />
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory="../LibJPEG" />
+			<Add directory="../ZLib" />
+			<Add directory="../../../../src" />
 		</Compiler>
 		<Unit filename="jcapimin.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcapistd.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jccoefct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jccolor.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcdctmgr.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jchuff.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jchuff.h">
 			<Option compilerVar="CPP" />
@@ -111,31 +176,43 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcinit.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcmainct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcmarker.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcmaster.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcomapi.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jconfig.h">
 			<Option compilerVar="CPP" />
@@ -143,61 +220,85 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcparam.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcphuff.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcprepct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jcsample.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jctrans.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdapimin.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdapistd.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdatadst.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdatasrc.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdcoefct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdcolor.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdct.h">
 			<Option compilerVar="CPP" />
@@ -205,16 +306,22 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jddctmgr.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdhuff.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdhuff.h">
 			<Option compilerVar="CPP" />
@@ -222,56 +329,78 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdinput.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdmainct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdmarker.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdmaster.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdmerge.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdphuff.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdpostct.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdsample.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jdtrans.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jerror.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jerror.h">
 			<Option compilerVar="CPP" />
@@ -279,41 +408,57 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jfdctflt.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jfdctfst.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jfdctint.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jidctflt.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jidctfst.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jidctint.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jidctred.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jinclude.h">
 			<Option compilerVar="CPP" />
@@ -321,16 +466,22 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jmemmgr.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jmemnobs.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jmemsys.h">
 			<Option compilerVar="CPP" />
@@ -338,6 +489,8 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jmorecfg.h">
 			<Option compilerVar="CPP" />
@@ -345,6 +498,8 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jpegint.h">
 			<Option compilerVar="CPP" />
@@ -352,6 +507,8 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jpeglib.h">
 			<Option compilerVar="CPP" />
@@ -359,21 +516,29 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jquant1.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jquant2.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jutils.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="jversion.h">
 			<Option compilerVar="CPP" />
@@ -381,6 +546,8 @@
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

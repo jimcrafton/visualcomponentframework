@@ -451,13 +451,20 @@ namespace VCF {
 	public:
 		typedef PixelType Type;
 
-		Pixels( Image* img ):buffer_(NULL),currentImage_(NULL),width_(0),height_(0) {
+        Pixels():buffer_(NULL),currentImage_(NULL),width_(0),height_(0) {
+
+        }
+
+
+        Pixels( Image* img ):buffer_(NULL),currentImage_(NULL),width_(0),height_(0) {
 			assign( img );
 		}
 
 		~Pixels() {
 			unLockImageBuffer( currentImage_ );
 		}
+
+        //Pixels& operator=(const Pixels&);
 
 		Pixels& operator=( Image* img ) {
 			assign( img );
@@ -510,7 +517,7 @@ namespace VCF {
 			}
 
 			if ( (Type::Traits::getTraitsImageType() != img->getType()) ||
-					(Type::ChannelSize != img->getChannelSize()) ) {
+					((Image::ImageChannelSize)Type::ChannelSize != img->getChannelSize()) ) {
 				throw PixelException( "Incompatible pixel type for this image. The image channel size doesn't match the pixel's expected size." );
 			}
 
@@ -550,9 +557,7 @@ namespace VCF {
 		uint32 height_;
 		agg::rendering_buffer renderBuffer_;
 	public:
-		Pixels();
-		Pixels(const Pixels&);
-		Pixels& operator=(const Pixels&);
+
 
 	};
 
@@ -605,7 +610,7 @@ namespace VCF {
 			height_ = pixels_.height();
 
 			ptr_ = pixels_;
-			endPtr_ = ptr_ + (width_ * height_) + 1;			
+			endPtr_ = ptr_ + (width_ * height_) + 1;
 		}
 
 		~Channel() {}
@@ -798,7 +803,7 @@ namespace VCF {
 		uint32 height_;
 	};
 
-	
+
 
 	template <typename PixelType, int ColorChannelVal>
 	class ChannelIterator {
@@ -844,10 +849,10 @@ namespace VCF {
 				break;
 			}
 
-			return ptr_->b; 
+			return ptr_->b;
 		}
-		
-		
+
+
 		ChannelIterator& operator++() {		// prefix
 			ptr_++;
 			return *this;
@@ -855,7 +860,7 @@ namespace VCF {
 
 		ChannelIterator operator++(int) {  // postfix
 			ChannelIterator before = *this;
-			
+
 			ptr_++;
 
 			return before;
@@ -884,7 +889,7 @@ namespace VCF {
 		return res;
 	}
 
-	template <typename PixelType, int ColorChannelVal> 
+	template <typename PixelType, int ColorChannelVal>
 	inline _typename_ Channel<PixelType, ColorChannelVal>::Iterator Channel<PixelType,ColorChannelVal>::end()
 	{
 		Iterator res;
@@ -892,13 +897,13 @@ namespace VCF {
 		return res;
 	}
 
-	template <typename PixelType, int ColorChannelVal> 
+	template <typename PixelType, int ColorChannelVal>
 	inline void ChannelIterator<PixelType, ColorChannelVal>::setToBegin( ChannelType& channel )
 	{
 		ptr_ = channel.ptr_;
 	}
 
-	template <typename PixelType, int ColorChannelVal> 
+	template <typename PixelType, int ColorChannelVal>
 	inline void ChannelIterator<PixelType, ColorChannelVal>::setToEnd( ChannelType& channel )
 	{
 		ptr_ = channel.endPtr_;
@@ -941,10 +946,10 @@ namespace VCF {
 		}
 
 		Type& operator*() {
-			return ptr_->r; 
+			return ptr_->r;
 		}
-		
-		
+
+
 		ChannelIterator& operator++() {		// prefix
 			ptr_++;
 			return *this;
@@ -952,7 +957,7 @@ namespace VCF {
 
 		ChannelIterator operator++(int) {  // postfix
 			ChannelIterator before = *this;
-			
+
 			ptr_++;
 
 			return before;
@@ -1001,10 +1006,10 @@ namespace VCF {
 		}
 
 		Type& operator*() {
-			return ptr_->g; 
+			return ptr_->g;
 		}
-		
-		
+
+
 		ChannelIterator& operator++() {		// prefix
 			ptr_++;
 			return *this;
@@ -1012,7 +1017,7 @@ namespace VCF {
 
 		ChannelIterator operator++(int) {  // postfix
 			ChannelIterator before = *this;
-			
+
 			ptr_++;
 
 			return before;
@@ -1061,10 +1066,10 @@ namespace VCF {
 		}
 
 		Type& operator*() {
-			return ptr_->b; 
+			return ptr_->b;
 		}
-		
-		
+
+
 		ChannelIterator& operator++() {		// prefix
 			ptr_++;
 			return *this;
@@ -1072,7 +1077,7 @@ namespace VCF {
 
 		ChannelIterator operator++(int) {  // postfix
 			ChannelIterator before = *this;
-			
+
 			ptr_++;
 
 			return before;
@@ -1122,10 +1127,10 @@ namespace VCF {
 		}
 
 		Type& operator*() {
-			return ptr_->a; 
+			return ptr_->a;
 		}
-		
-		
+
+
 		ChannelIterator& operator++() {		// prefix
 			ptr_++;
 			return *this;
@@ -1133,7 +1138,7 @@ namespace VCF {
 
 		ChannelIterator operator++(int) {  // postfix
 			ChannelIterator before = *this;
-			
+
 			ptr_++;
 
 			return before;

@@ -72,11 +72,11 @@ A class for managing all the color transformations between different color space
 
 
 ColorSpace interface
- 
+
  Hue Luminosity management
-	
-	WebPages: 
-	\li http://www.acm.org/jgt/papers/SmithLyons96/  
+
+	WebPages:
+	\li http://www.acm.org/jgt/papers/SmithLyons96/
 	\li	http://www.scottandmichelle.net/scott/code/index2.mv?codenum=045
 	\note
 		(google search advanced all words: hue saturation source code)
@@ -119,13 +119,13 @@ public:
 	HueCriticalMax is assigned ( 1.0 - 1.0 / 6.0 )
 	Hue > HueCriticalMax => rgb.R > 1;
 	*/
-	static const double HueCriticalMax;	// = ( 1.0 - 1.0 / 6.0 )	
+	static const double HueCriticalMax;	// = ( 1.0 - 1.0 / 6.0 )
 
 	enum {
 		RGBMax   = 0xFF,      // 255  When the max r/g/b value is 255
 		HSLMax   = 0xF0,      // 240  This is what Windows' Display Properties uses: it is not too much important an exact value: see how GetLuminosity() is used for.
 		RGBMax16 = 0xFFFF,    // Used when the max r/g/b value is 0xFFFF ( used for more precision )
-		HSLMax16 = 0xF0F0,    // ( 0xFFFF * 240 / 255 ) 
+		HSLMax16 = 0xF0F0,    // ( 0xFFFF * 240 / 255 )
 	};
 
 	enum {
@@ -266,23 +266,23 @@ public:
 
 	static double getChanged( const double& initialVal, const double& percent );
 
-	/**	
+	/**
 	It is suggested to call this function with colors: 0.0/ 0.0 / 0.71428571428571
-	
+
 	It is suggested to call this function with grays:  0.0/ 0.0 / 0.33333333333333
 	*/
 	static void changeHSV ( HSVtype& hsv, const double& percentH, const double& percentS, const double& percentV );
 
-	/**	
+	/**
 	It is suggested to call this function with colors: 0.0/ 0.0 / -0.71428571428571
-	
+
 	It is suggested to call this function with grays:  0.0/ 0.0 / -0.33333333333333
 	*/
 	static void changeHSL ( HSLtype& hsl, const double& percentH, const double& percentS, const double& percentL );
 
-	/**	
+	/**
 	It is suggested to call this function with colors: 0.0/ 0.0 / 0.71428571428571
-	
+
 	It is suggested to call this function with grays:  0.0/ 0.0 / 0.33333333333333
 	*/
 	static void changeHWB ( HWBtype& hsl, const double& percentH, const double& percentW, const double& percentB );
@@ -324,12 +324,12 @@ public:
 
 /**
 \class Color Color.h "vcf/GraphicsKit/Color.h"
-The Color class is used to represent a given color with 4 values, with 
-each value representing a separate red, green, blue, and alpha color 
-component (RGBA). Each value is stored as a double with a valid range 
+The Color class is used to represent a given color with 4 values, with
+each value representing a separate red, green, blue, and alpha color
+component (RGBA). Each value is stored as a double with a valid range
 of 0.0 to 1.0. A variety of functions a provided to convert the color
 to and from other color representations, such as CMY(K), HSL,
-and HSV. 
+and HSV.
 */
 class GRAPHICSKIT_API Color : public VCF::Object {
 public:
@@ -420,11 +420,11 @@ public:
 	Color( const Color& color );
 
 	/**
-	Initializes a color based on the double values (type: double) of its three components 
-	in a specified color coordinates sytem. The values, in double (4 bytes), are directly translated 
+	Initializes a color based on the double values (type: double) of its three components
+	in a specified color coordinates sytem. The values, in double (4 bytes), are directly translated
 	into the internal color components (in double).
 	Usage: Color color = Color( 1.0, 1.0, 0.5 );  Color color2 = Color( color.getRed(), color.getGreen(), color.getBlue() );
-	@param ColorType indicates the coordinates used in the color space. By default 
+	@param ColorType indicates the coordinates used in the color space. By default
 	the RGB (red, green, and blue) system is used.
 	@see ColorType
 	*/
@@ -433,12 +433,12 @@ public:
 	Color( const double& val1, const double& val2, const double& val3, const double& a, ColorType type=ctRGB );
 
 	/**
-	Initializes a color based on the integer values (called range values) of its three components 
+	Initializes a color based on the integer values (called range values) of its three components
 	in a specified color coordinates sytem. The values are divided by 0xFF (255 - 1 byte) before being
 	translated into the internal color components (in double). This conversion introduces a 'discreteness'
 	in the color values that can be perceived by the human eye when drawing a a color gradient.
 	Usage: Color color = Color( (uint8)255, 255, 128 );
-	@param ColorType indicates the coordinates used in the color space. By default 
+	@param ColorType indicates the coordinates used in the color space. By default
 	the RGB (red, green, and blue) system is used.
 	@see ColorType
 	*/
@@ -447,11 +447,11 @@ public:
 	Color( const uint8& val1, const uint8& val2, const uint8& val3, const uint8& a, ColorType type=ctRGB );
 
 	/**
-	Initializes a color based on the values (type: unsigned short) of its three components 
+	Initializes a color based on the values (type: unsigned short) of its three components
 	in a specified color coordinates sytem. The values are divided by 0xFFFF (65535 - 2 bytes)
 	before being translated into the internal color components (in double).
 	Usage: Color color = Color( (uint16)0xFFFF, 0xFFFF, 0x7FFF );
-	@param ColorType indicates the coordinates system used in the color space. By default 
+	@param ColorType indicates the coordinates system used in the color space. By default
 	the RGB (red, green, and blue) system is used.
 	@see ColorType
 	*/
@@ -563,7 +563,7 @@ public:
 	void setRGBA16( const uint16& r, const uint16& g, const uint16& b, const uint16& a);
 
 	/**
-	sets the color starting from the known color components 
+	sets the color starting from the known color components
 	that have been packed into a single uint32 integer (4 x 8bits).
 	*/
 	Color& setRGBPack8( const uint32& rgb, const ColorPackScheme& cps=cpsRGB );
@@ -639,8 +639,8 @@ public:
 						(clr.b_ < b_) ? false :
 						(g_ < clr.g_) ? true :
 						(clr.g_ < g_) ? false :
-						(r_ < clr.r_) ? true : 
-						(clr.r_ < r_) ? false : 
+						(r_ < clr.r_) ? true :
+						(clr.r_ < r_) ? false :
 						(a_ < clr.a_) ? true : false;	// whow !
 
 		#ifdef VCF_DEBUG_COLORS_COMPARISON_OPERATORS
@@ -672,8 +672,8 @@ public:
 						(clr.b_ > b_) ? false :
 						(g_ > clr.g_) ? true :
 						(clr.g_ > g_) ? false :
-						(r_ > clr.r_) ? true : 
-						(clr.r_ > r_) ? false : 
+						(r_ > clr.r_) ? true :
+						(clr.r_ > r_) ? false :
 						(a_ > clr.a_) ? true : false;	// whow !
 		#ifdef VCF_DEBUG_COLORS_COMPARISON_OPERATORS
 			// this compare is less precise: so we can have rgb1==rgb2
@@ -709,12 +709,12 @@ public:
 	};
 
 	/**
-	generates a String with the internal representation of the color 
+	generates a String with the internal representation of the color
 	in hexadecimal format with 8bits per component.
-	@param const ColorPackScheme& cps. With a value of cpsABGR we use an inverted scheme, 
+	@param const ColorPackScheme& cps. With a value of cpsABGR we use an inverted scheme,
 	as it is in the Intel architecture. The default is not inverted.
 	       Example: the scheme 0x00RRGGBB would appear as BBGGRR00 with Intel architecture.
-	@param const ColorType& ct. The color space used to extract the components. The default is ctRGB, 
+	@param const ColorType& ct. The color space used to extract the components. The default is ctRGB,
 	the RGB color space.
 	*/
 	String toHexCode8 ( const ColorPackScheme& cps=cpsRGB, const ColorType& ct=ctRGB );
@@ -829,7 +829,7 @@ private:
 	/**
 	Red component. Valid range is from 0.0 to 1.0
 	*/
-	double r_; 
+	double r_;
 
 	/**
 	Green component. Valid range is from 0.0 to 1.0
@@ -853,21 +853,21 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // inlines
 
-inline Color::Color() {
+inline Color::Color(): Object() {
 	r_ = 0.0;
 	g_ = 0.0;
 	b_ = 0.0;
 	a_ = 1.0;
 }
 
-inline Color::Color( const Color& color ) {
+inline Color::Color( const Color& color ) : Object() {
 	b_ = color.b_;
 	g_ = color.g_;
 	r_ = color.r_;
 	a_ = color.a_;;
 }
 
-inline Color::Color( const double& val1, const double& val2, const double& val3, ColorType type ) {
+inline Color::Color( const double& val1, const double& val2, const double& val3, ColorType type ): Object() {
 	a_ = 1.0;
 	switch ( type ) {
 		case ctRGB : {
@@ -915,7 +915,7 @@ inline Color::Color( const double& val1, const double& val2, const double& val3,
 }
 
 
-inline Color::Color( const double& val1, const double& val2, const double& val3, const double& a, ColorType type ) {
+inline Color::Color( const double& val1, const double& val2, const double& val3, const double& a, ColorType type ): Object() {
 	a_ = a;
 	switch ( type ) {
 		case ctRGB : {
@@ -963,7 +963,7 @@ inline Color::Color( const double& val1, const double& val2, const double& val3,
 	}
 }
 
-inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, ColorType type ) {
+inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, ColorType type ): Object() {
 	a_ = 1.0;
 	switch ( type ) {
 		case ctRGB : {
@@ -1011,7 +1011,7 @@ inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, Co
 	}
 }
 
-inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, const uint8& a, ColorType type ) {
+inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, const uint8& a, ColorType type ): Object() {
 	a_ = (double)a / xFF;
 	switch ( type ) {
 		case ctRGB : {
@@ -1059,7 +1059,7 @@ inline Color::Color( const uint8& val1, const uint8& val2, const uint8& val3, co
 	}
 }
 
-inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3, ColorType type ) {
+inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3, ColorType type ): Object() {
 	a_ = 1.0;
 	switch ( type ) {
 		case ctRGB : {
@@ -1107,7 +1107,7 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 	}
 }
 
-inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3, const uint16& a, ColorType type ) {
+inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3, const uint16& a, ColorType type ): Object() {
 	a_ = (double)a / xFFFF;
 	switch ( type ) {
 		case ctRGB : {
@@ -1155,17 +1155,13 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 //	throw NotImplementedException();
 //}
 
-inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ) {
+inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ): Object() {
 	a_ = 1.0;
 	setRGBPack8( rgb, cps );
 }
 
-inline Color::Color(const ulong32& rgb, const ColorPackScheme& cps ) {
-	a_ = 1.0;
-	setRGBPack8( rgb, cps );
-}
 
-inline Color::Color(const ulong64& rgb, const ColorPackScheme& cps ) {
+inline Color::Color(const ulong64& rgb, const ColorPackScheme& cps ): Object() {
 	a_ = 1.0;
 	setRGBPack16( rgb, cps );
 }

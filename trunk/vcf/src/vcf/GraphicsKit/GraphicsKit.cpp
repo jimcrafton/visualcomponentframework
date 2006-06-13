@@ -28,7 +28,6 @@ void GraphicsKit::init( int argc, char** argv )
 	FoundationKit::init( argc, argv );
 
 	REGISTER_CLASSINFO_EXTERNAL( Rect );
-//	REGISTER_CLASSINFO_EXTERNAL( ImageBits );
 	REGISTER_CLASSINFO_EXTERNAL( Color );
 	REGISTER_CLASSINFO_EXTERNAL( Font );
 
