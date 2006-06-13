@@ -121,7 +121,7 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="../../../bin/libFoundationKit_d.so" />
+				<Option output="../../../bin/libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.so" />
 				<Option object_output="linux/DebugDLL/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -141,8 +141,6 @@
 					<Add option="-Winvalid-pch" />
 					<Add option="-Wno-multichar" />
 					<Add option="-D_DEBUG" />
-					<Add option="-DVCF_GCC" />
-					<Add directory="/home/jim/code/vcfdev/dev/vcf/src" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl" />
@@ -153,20 +151,53 @@
 					<Variable name="GCH_DIR" value="../FoundationKit/$(COMPILER)$(COMPILER_VER)/DebugDLL/src" />
 				</Environment>
 			</Target>
+			<Target title="linux_Release">
+				<Option output="../../../bin/libFoundationKit_$(COMPILER)$(COMPILER_VER).so" />
+				<Option object_output="linux/ReleaseDLL/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option includeInTargetAll="1" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_NDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-Wl" />
+					<Add library="pthread" />
+					<Add library="dl" />
+				</Linker>
+				<Environment>
+					<Variable name="GCH_DIR" value="../FoundationKit/$(COMPILER)$(COMPILER_VER)/ReleaseDLL/src" />
+				</Environment>
+			</Target>
 			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
+				<Variable name="COMPILER" value="gcc" />
+				<Variable name="COMPILER_VER" value="4" />
 			</Environment>
 		</Build>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
-			<Add directory="$(VCF_ROOT)/src" />
+			<Add directory="../../../src" />
 		</Compiler>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicException.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicException.h">
 			<Option compilerVar="CPP" />
@@ -175,6 +206,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicFileError.h">
 			<Option compilerVar="CPP" />
@@ -183,12 +215,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicInputStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicInputStream.h">
 			<Option compilerVar="CPP" />
@@ -197,12 +231,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicOutputStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/BasicOutputStream.h">
 			<Option compilerVar="CPP" />
@@ -211,6 +247,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/CantCreateObjectException.h">
 			<Option compilerVar="CPP" />
@@ -219,12 +256,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Class.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Class.h">
 			<Option compilerVar="CPP" />
@@ -233,6 +272,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ClassInfo.h">
 			<Option compilerVar="CPP" />
@@ -241,6 +281,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ClassNotFound.h">
 			<Option compilerVar="CPP" />
@@ -249,12 +290,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ClassRegistry.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ClassRegistry.h">
 			<Option compilerVar="CPP" />
@@ -263,12 +306,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/CommandLine.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/CommandLine.h">
 			<Option compilerVar="CPP" />
@@ -277,6 +322,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/CommonDefines.h">
 			<Option compilerVar="CPP" />
@@ -285,12 +331,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Condition.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Condition.h">
 			<Option compilerVar="CPP" />
@@ -299,6 +347,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ConditionPeer.h">
 			<Option compilerVar="CPP" />
@@ -307,12 +356,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/DateTime.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/DateTime.h">
 			<Option compilerVar="CPP" />
@@ -321,6 +372,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Delegate.h">
 			<Option compilerVar="CPP" />
@@ -329,12 +381,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Dictionary.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Dictionary.h">
 			<Option compilerVar="CPP" />
@@ -343,12 +397,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Directory.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Directory.h">
 			<Option compilerVar="CPP" />
@@ -357,6 +413,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Enum.h">
 			<Option compilerVar="CPP" />
@@ -365,6 +422,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Enumerator.h">
 			<Option compilerVar="CPP" />
@@ -373,12 +431,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ErrorLog.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ErrorLog.h">
 			<Option compilerVar="CPP" />
@@ -387,6 +447,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ErrorStrings.h">
 			<Option compilerVar="CPP" />
@@ -395,12 +456,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Event.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Event.h">
 			<Option compilerVar="CPP" />
@@ -409,12 +472,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/EventHandler.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/EventHandler.h">
 			<Option compilerVar="CPP" />
@@ -423,6 +488,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Field.h">
 			<Option compilerVar="CPP" />
@@ -431,12 +497,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/File.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/File.h">
 			<Option compilerVar="CPP" />
@@ -445,6 +513,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FileIOError.h">
 			<Option compilerVar="CPP" />
@@ -453,6 +522,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FileNotFound.h">
 			<Option compilerVar="CPP" />
@@ -461,12 +531,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FilePath.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FilePath.h">
 			<Option compilerVar="CPP" />
@@ -475,6 +547,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FilePeer.h">
 			<Option compilerVar="CPP" />
@@ -483,12 +556,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FileStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FileStream.h">
 			<Option compilerVar="CPP" />
@@ -497,6 +572,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FileStreamPeer.h">
 			<Option compilerVar="CPP" />
@@ -505,6 +581,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Format.h">
 			<Option compilerVar="CPP" />
@@ -513,12 +590,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FoundationKit.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FoundationKit.h">
 			<Option compilerVar="CPP" />
@@ -527,6 +606,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FoundationKitPrivate.h">
 			<Option compilerVar="CPP" />
@@ -535,6 +615,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FoundationKitRTTI.inl">
 			<Option compilerVar="CPP" />
@@ -543,6 +624,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FoundationKitSelectLib.h">
 			<Option compilerVar="CPP" />
@@ -551,6 +633,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/FrameworkConfig.h">
 			<Option compilerVar="CPP" />
@@ -559,6 +642,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Interface.h">
 			<Option compilerVar="CPP" />
@@ -567,12 +651,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/InterfaceClass.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/InterfaceClass.h">
 			<Option compilerVar="CPP" />
@@ -581,6 +667,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/InvalidPeer.h">
 			<Option compilerVar="CPP" />
@@ -589,6 +676,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/InvalidPointerException.h">
 			<Option compilerVar="CPP" />
@@ -597,6 +685,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/InvalidStateException.h">
 			<Option compilerVar="CPP" />
@@ -605,12 +694,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Library.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Library.h">
 			<Option compilerVar="CPP" />
@@ -619,6 +710,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LibraryPeer.h">
 			<Option compilerVar="CPP" />
@@ -627,136 +719,163 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxFilePeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxFilePeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxFileStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxFileStream.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxLibraryPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxLibraryPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxLocalePeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxLocalePeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxProcessIORedirector.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxProcessIORedirector.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxProcessPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxProcessPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxRegistry.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxRegistry.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxResourceBundle.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxResourceBundle.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxRunLoopPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSemaphorePeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSystemPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSystemPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSystemToolkit.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LinuxSystemToolkit.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/LocalePeer.h">
 			<Option compilerVar="CPP" />
@@ -765,12 +884,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Locales.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Locales.h">
 			<Option compilerVar="CPP" />
@@ -779,6 +900,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Lock.h">
 			<Option compilerVar="CPP" />
@@ -787,12 +909,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MIMEType.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MIMEType.h">
 			<Option compilerVar="CPP" />
@@ -801,6 +925,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MemStreamUtils.h">
 			<Option compilerVar="CPP" />
@@ -809,12 +934,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MemoryStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MemoryStream.h">
 			<Option compilerVar="CPP" />
@@ -823,12 +950,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MessageLoader.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MessageLoader.h">
 			<Option compilerVar="CPP" />
@@ -837,6 +966,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Method.h">
 			<Option compilerVar="CPP" />
@@ -845,12 +975,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Mutex.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Mutex.h">
 			<Option compilerVar="CPP" />
@@ -859,6 +991,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/MutexPeer.h">
 			<Option compilerVar="CPP" />
@@ -867,6 +1000,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NoFreeMemException.h">
 			<Option compilerVar="CPP" />
@@ -875,6 +1009,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NoPeerFoundException.h">
 			<Option compilerVar="CPP" />
@@ -883,6 +1018,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NoSuchElementException.h">
 			<Option compilerVar="CPP" />
@@ -891,6 +1027,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NoToolKitFoundException.h">
 			<Option compilerVar="CPP" />
@@ -899,6 +1036,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NotImplementedException.h">
 			<Option compilerVar="CPP" />
@@ -907,6 +1045,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/NotifyEvent.h">
 			<Option compilerVar="CPP" />
@@ -915,12 +1054,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Object.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Object.h">
 			<Option compilerVar="CPP" />
@@ -929,12 +1070,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ObjectWithEvents.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ObjectWithEvents.h">
 			<Option compilerVar="CPP" />
@@ -943,6 +1086,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/OutOfBoundsException.h">
 			<Option compilerVar="CPP" />
@@ -951,6 +1095,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/OutputReadyEvent.h">
 			<Option compilerVar="CPP" />
@@ -959,12 +1104,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PackageInfo.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PackageInfo.h">
 			<Option compilerVar="CPP" />
@@ -973,12 +1120,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Parser.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Parser.h">
 			<Option compilerVar="CPP" />
@@ -987,6 +1136,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Persistable.h">
 			<Option compilerVar="CPP" />
@@ -995,46 +1145,55 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixCondition.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixCondition.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixMutex.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixMutex.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixThread.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixThread.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixThreadManagerPeer.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PosixThreadManagerPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProcessException.h">
 			<Option compilerVar="CPP" />
@@ -1043,6 +1202,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProcessIORedirectionPeer.h">
 			<Option compilerVar="CPP" />
@@ -1051,6 +1211,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProcessPeer.h">
 			<Option compilerVar="CPP" />
@@ -1059,12 +1220,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProcessWithRedirectedIO.h">
 			<Option compilerVar="CPP" />
@@ -1073,6 +1236,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ProgramInfo.h">
 			<Option compilerVar="CPP" />
@@ -1081,6 +1245,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Property.h">
 			<Option compilerVar="CPP" />
@@ -1089,12 +1254,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PropertyChangeEvent.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PropertyChangeEvent.h">
 			<Option compilerVar="CPP" />
@@ -1103,6 +1270,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/PropertyChangeException.h">
 			<Option compilerVar="CPP" />
@@ -1111,6 +1279,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RTTIMacros.h">
 			<Option compilerVar="CPP" />
@@ -1119,12 +1288,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Registry.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Registry.h">
 			<Option compilerVar="CPP" />
@@ -1133,6 +1304,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RegistryPeer.h">
 			<Option compilerVar="CPP" />
@@ -1141,12 +1313,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Resource.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Resource.h">
 			<Option compilerVar="CPP" />
@@ -1155,12 +1329,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ResourceBundle.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ResourceBundle.h">
 			<Option compilerVar="CPP" />
@@ -1169,6 +1345,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ResourceBundlePeer.h">
 			<Option compilerVar="CPP" />
@@ -1177,6 +1354,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ResourceException.h">
 			<Option compilerVar="CPP" />
@@ -1185,12 +1363,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RunLoop.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RunLoop.h">
 			<Option compilerVar="CPP" />
@@ -1199,6 +1379,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RunLoopPeer.h">
 			<Option compilerVar="CPP" />
@@ -1207,6 +1388,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RunLoopSource.h">
 			<Option compilerVar="CPP" />
@@ -1215,6 +1397,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Runnable.h">
 			<Option compilerVar="CPP" />
@@ -1223,6 +1406,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/RuntimeException.h">
 			<Option compilerVar="CPP" />
@@ -1231,12 +1415,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Semaphore.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Semaphore.h">
 			<Option compilerVar="CPP" />
@@ -1245,6 +1431,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/SemaphorePeer.h">
 			<Option compilerVar="CPP" />
@@ -1253,12 +1440,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Stream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Stream.h">
 			<Option compilerVar="CPP" />
@@ -1267,6 +1456,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/StringTokenizer.h">
 			<Option compilerVar="CPP" />
@@ -1275,12 +1465,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/StringUtils.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/StringUtils.h">
 			<Option compilerVar="CPP" />
@@ -1289,12 +1481,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/StringsMessageLoader.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/StringsMessageLoader.h">
 			<Option compilerVar="CPP" />
@@ -1303,6 +1497,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/SynchObject.h">
 			<Option compilerVar="CPP" />
@@ -1311,12 +1506,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/System.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/System.h">
 			<Option compilerVar="CPP" />
@@ -1325,6 +1522,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/SystemPeer.h">
 			<Option compilerVar="CPP" />
@@ -1333,12 +1531,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/SystemToolkit.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/SystemToolkit.h">
 			<Option compilerVar="CPP" />
@@ -1347,12 +1547,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextCodec.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextCodec.h">
 			<Option compilerVar="CPP" />
@@ -1361,12 +1563,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextInputStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextInputStream.h">
 			<Option compilerVar="CPP" />
@@ -1375,12 +1579,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextOutputStream.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TextOutputStream.h">
 			<Option compilerVar="CPP" />
@@ -1389,12 +1595,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Thread.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Thread.h">
 			<Option compilerVar="CPP" />
@@ -1403,12 +1611,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadEvent.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadEvent.h">
 			<Option compilerVar="CPP" />
@@ -1417,6 +1627,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadKit.h">
 			<Option compilerVar="CPP" />
@@ -1425,12 +1636,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadManager.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadManager.h">
 			<Option compilerVar="CPP" />
@@ -1439,6 +1652,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadManagerPeer.h">
 			<Option compilerVar="CPP" />
@@ -1447,6 +1661,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/ThreadPeer.h">
 			<Option compilerVar="CPP" />
@@ -1455,6 +1670,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/TypeCastException.h">
 			<Option compilerVar="CPP" />
@@ -1463,6 +1679,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCF.h">
 			<Option compilerVar="CPP" />
@@ -1471,6 +1688,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFChar.h">
 			<Option compilerVar="CPP" />
@@ -1479,12 +1697,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFMath.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFMath.h">
 			<Option compilerVar="CPP" />
@@ -1493,12 +1713,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFProcess.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFProcess.h">
 			<Option compilerVar="CPP" />
@@ -1507,6 +1729,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFRTTIImpl.h">
 			<Option compilerVar="CPP" />
@@ -1515,12 +1738,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFString.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFString.h">
 			<Option compilerVar="CPP" />
@@ -1529,6 +1754,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VCFulong64.h">
 			<Option compilerVar="CPP" />
@@ -1537,12 +1763,14 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VariantData.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VariantData.h">
 			<Option compilerVar="CPP" />
@@ -1551,6 +1779,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/VariantDataStream.h">
 			<Option compilerVar="CPP" />
@@ -1559,6 +1788,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Waitable.h">
 			<Option compilerVar="CPP" />
@@ -1567,6 +1797,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/WarningsOffVc.h">
 			<Option compilerVar="CPP" />
@@ -1575,6 +1806,7 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="../../../src/vcf/FoundationKit/Win32Condition.cpp">
 			<Option compilerVar="CPP" />
