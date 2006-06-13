@@ -51,14 +51,14 @@ class GraphicsContext;
 
 
 template<typename SpanAllocT, typename SpanGenT>
-void renderScanlines( GraphicsContext& gc, 
-										agg::rendering_buffer& renderingBuffer, 
-										agg::rasterizer_scanline_aa<>& rasterizer, 
+void renderScanlines( GraphicsContext& gc,
+										agg::rendering_buffer& renderingBuffer,
+										agg::rasterizer_scanline_aa<>& rasterizer,
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator );
 
 
-void renderScanlinesSolid( GraphicsContext& gc, 
+void renderScanlinesSolid( GraphicsContext& gc,
 							agg::rasterizer_scanline_aa<>& rasterizer,
 							const agg::rgba& color );
 
@@ -173,40 +173,40 @@ public:
 
 	/**
 	These are the set of standard compositing
-	or "blend" modes that the GraphicsContext 
-	supports. The last mode, cmCustom, is for 
+	or "blend" modes that the GraphicsContext
+	supports. The last mode, cmCustom, is for
 	future use, and will allow some custom
 	compositing function to be used. The blend/compositing
-	modes below are the same as used in AGG and 
+	modes below are the same as used in AGG and
 	in the PDF specification.
 	[todo]
-	We should have some little pictures of what each blend 
+	We should have some little pictures of what each blend
 	mode looks like...
 	[/todo]
 	*/
 	enum CompositingMode {
 		cmNone = 0xFF,
 		cmClear = 0,
-		cmSource,		
+		cmSource,
 		cmDestination,
 		cmSrcOver,
 		cmDestOver,
 		cmSrcIn,
 		cmDestIn,
 		cmSrcOut,
-		cmDestOut,		
+		cmDestOut,
 		cmSrcATop,
 		cmDestATop,
 		cmXOR,
-		cmPlus,		
+		cmPlus,
 		cmMinus,
 		cmMultiply,
 		cmScreen,
-		cmOverlay,		
+		cmOverlay,
 		cmDarken,
-		cmLighten,	
-		cmColorDodge,	
-		cmColorBurn,		
+		cmLighten,
+		cmColorDodge,
+		cmColorBurn,
 		cmHardLight,
 		cmSoftLight,
 		cmExclusion,
@@ -216,8 +216,8 @@ public:
 	};
 
 	/**
-	The set of enum values define the 
-	standard line cap style. These are the same 
+	The set of enum values define the
+	standard line cap style. These are the same
 	line cap styles that the PDF spec and Win32
 	uses.
 	*/
@@ -241,31 +241,31 @@ public:
 
 	/**
 	Describes the state of the alpha channel.
-	The state is used to check whether or not 
-	the render area's alpha values have been 
+	The state is used to check whether or not
+	the render area's alpha values have been
 	accidentally overwritten by native GDI calls.
-	If they have, we can then reset them back to 
-	255, which is the default value. 
-	
+	If they have, we can then reset them back to
+	255, which is the default value.
+
 	The default state is rasDefault, which means
-	that all the render area's alpha values 
-	are at 0xFF (255). 
-	
-	When the graphics context's drawing routine's 
+	that all the render area's alpha values
+	are at 0xFF (255).
+
+	When the graphics context's drawing routine's
 	are called they may, depending on the platform,
 	overwrite the render area's alpha values. If
-	this happens then the state must be set to 
-	rasDirty, indicating that the graphics 
+	this happens then the state must be set to
+	rasDirty, indicating that the graphics
 	context needs to reset the alpha values
 	back to the original state before any drawing
 	gets done that depends on accurate alpha
-	values being present in the render area's 
+	values being present in the render area's
 	buffer.
 
-	If the alpha values of the render area have been 
-	modified by the programmer and need to be retained, 
+	If the alpha values of the render area have been
+	modified by the programmer and need to be retained,
 	then the default state should be changed from
-	rasDefault to rasNonDefaultAlphaVals.  
+	rasDefault to rasNonDefaultAlphaVals.
 	*/
 	enum RenderAreaAlphaState {
 		rasDefault = 0,
@@ -279,7 +279,7 @@ public:
 
 public:
 	void init( );
-	
+
 	ContextPeer* getPeer( );
 
 	bool isAntiAliasingOn( );
@@ -334,16 +334,16 @@ public:
 
 	/**
 	This method sets the image bounds for the drawing
-	area image. This gets called by the framework to designate 
-	an image that should be used to draw on, essectially a 
-	"back buffer" that can be used to draw on, and then blitted 
-	back onto the GraphicsContext. This is used to draw on 
+	area image. This gets called by the framework to designate
+	an image that should be used to draw on, essectially a
+	"back buffer" that can be used to draw on, and then blitted
+	back onto the GraphicsContext. This is used to draw on
 	for anti-aliased graphics.
 	*/
 	void setRenderArea( Rect bounds );
 
 	/**
-	This deletes the drawing area, and frees any resources 
+	This deletes the drawing area, and frees any resources
 	associated with it.
 	*/
 	void deleteRenderArea( );
@@ -380,9 +380,9 @@ public:
 	It allows you to save the state of the DC (device context) at a given point in time,
 	and then make a whole bunch of changes to it, and when you're all done
 	just call RestoreDC() and everything is set back.
-		
+
 	This prevents all sorts of extra SelectObject() calls and is more efficent.
-	
+
 	Similarly this makes it easy to guarantee that the
 	state of the GraphicsContext is reset correctly.
 	@return int, the index of the newly saved graphics state.
@@ -414,7 +414,7 @@ public:
 
 	LineJoinStyle getLineJoinStyle();
 	void setLineJoinStyle( LineJoinStyle val );
-	
+
 	/**
 	Returns the current miter limit. The default
 	value for this is 1.0 (for now).
@@ -423,27 +423,27 @@ public:
 
 	/**
 	Sets the current miter limit. The miter limit is the amount to
-	extend a miter join between two angled lines. 
+	extend a miter join between two angled lines.
 	*/
 	void setMiterLimit( double val );
-	
+
 
 	/**
 	Sets the current compositing mode. The default value
 	for the compositing mode is cmSource. When drawing without
 	anti-aliasing support, most of these modes will be ignored
 	with the exception of cmXOR. Setting the composite mode to cmXOR
-	takes the place of calling setXORModeOn(true), while setting 
-	the composite mode to cmSource is the same as setXORModeOn( false ).	
+	takes the place of calling setXORModeOn(true), while setting
+	the composite mode to cmSource is the same as setXORModeOn( false ).
 
-	When anti-aliased drawing is used, then the compositing value is 
+	When anti-aliased drawing is used, then the compositing value is
 	checked when drawing with a Stroke or Fill class.
 
 	The composite value effects how colors for new graphic elements
 	are blended with colors of existing graphic elements.
 	*/
 	void setCompositingMode( CompositingMode compositeMode );
-	
+
 	/**
 	Returns the current composite mode.
 	*/
@@ -469,7 +469,7 @@ public:
 
 	void setAlphaMask( Image* alphaMask );
 
-	
+
 	/**
 	Sets the context's origin for drawing. The default is 0,0 in the top, left of the corner of
 	screen real estate the context represents
@@ -547,7 +547,7 @@ public:
 	bool isXORModeOn( );
 
 	/**
-	@deprecated use setCompositingMode and pass in 
+	@deprecated use setCompositingMode and pass in
 	GraphicsContext::cmXOR for the current composite mode.
 	*/
 	void setXORModeOn( const bool& XORModeOn );
@@ -580,9 +580,9 @@ public:
 
 
 	/**
-	"Blits" the image to the underlying graphics context. No attempt is 
-	made to transform the image. The image is blitted to the coordinates 
-	specified by the x and y arguments, and the image's width and height 
+	"Blits" the image to the underlying graphics context. No attempt is
+	made to transform the image. The image is blitted to the coordinates
+	specified by the x and y arguments, and the image's width and height
 	are used to determine the bounds.
 	*/
 	void bitBlit( const double& x, const double& y, Image* image );
@@ -591,7 +591,7 @@ public:
 	void bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image );
 	void bitBlit( const Point & pt, Rect* imageBounds, Image* image );
 
-	
+
 
 
 	/**
@@ -847,7 +847,7 @@ public:
 
 	void drawThemeText( Rect* rect, TextState& state );
 
-	
+
 protected:
 
 	void buildArc( double centerX,  double centerY,
@@ -908,7 +908,7 @@ protected:
 		double ctxAlpha;
 	};
 
-	
+
 
 
 	ContextPeer* contextPeer_;
@@ -1054,9 +1054,9 @@ inline void GraphicsContext::setOrigin( const Point & pt ) {
 
 
 template<typename SpanAllocT, typename SpanGenT>
-void renderScanlines( GraphicsContext& gc, 
-										agg::rendering_buffer& renderingBuffer, 
-										agg::rasterizer_scanline_aa<>& rasterizer, 
+void renderScanlines( GraphicsContext& gc,
+										agg::rendering_buffer& renderingBuffer,
+										agg::rasterizer_scanline_aa<>& rasterizer,
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator )
 {
@@ -1065,7 +1065,7 @@ void renderScanlines( GraphicsContext& gc,
 	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-	
+
 	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
 
 
@@ -1077,19 +1077,19 @@ void renderScanlines( GraphicsContext& gc,
 	else {
 		pixfmt_type pix(renderingBuffer);
 		pix.comp_op( gc.getCompositingMode() );
-		
+
 		comp_renderer_type crb(pix);
 		agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
 	}
 }
 
-inline void renderScanlinesSolid( GraphicsContext& gc, 
+inline void renderScanlinesSolid( GraphicsContext& gc,
 										agg::rasterizer_scanline_aa<>& rasterizer,
 										const agg::rgba& color )
 {
 	typedef agg::renderer_base<pixfmt> RendererBase;
-	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;	
-			
+	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
+
 	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
@@ -1102,18 +1102,17 @@ inline void renderScanlinesSolid( GraphicsContext& gc,
 		pixfmt pixf(renderingBuffer);
 		RendererBase renb(pixf);
 		RendererSolid renderer( renb );
-		
+
 		renderer.color(color);
-		
-		
+
+
 		agg::render_scanlines(rasterizer, scanline, renderer);
 	}
 	else {
 		pixfmt_type pixf(renderingBuffer);
 		pixf.comp_op( gc.getCompositingMode() );
 		comp_renderer_type renb(pixf);
-		
-		
+
 		agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
 	}
 }
