@@ -8,9 +8,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_mgcc_s.a" />
+				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -38,11 +38,15 @@
 				<Linker>
 					<Add option="-s" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_mgcc_sd.a" />
+				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -67,11 +71,11 @@
 					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
-			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
