@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\bin\NetworkKit_mgcc.dll" />
-				<Option object_output="mgcc\Release\" />
+				<Option output="..\..\..\bin\NetworkKit_$(COMPILER)$(COMPILER_VER).dll" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
 				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -64,15 +64,17 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
-					<Add after="cmd /c move ..\..\..\bin\libNetworkKit_mgcc.a ..\..\..\lib\libNetworkKit_mgcc.a" />
+					<Add after="cmd /c move ..\..\..\bin\libNetworkKit_$(COMPILER)$(COMPILER_VER).a ..\..\..\lib\libNetworkKit_$(COMPILER)$(COMPILER_VER).a" />
 				</ExtraCommands>
 				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
 					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="..\FoundationKit\$(COMPILER)$(COMPILER_VER)\ReleaseDLL\src" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\bin\NetworkKit_mgcc_d.dll" />
-				<Option object_output="mgcc\DebugDLL\" />
+				<Option output="..\..\..\bin\NetworkKit_$(COMPILER)$(COMPILER_VER)_d.dll" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugDLL\" />
 				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -127,16 +129,14 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
-					<Add after="cmd /c move ..\..\..\bin\libNetworkKit_mgcc_d.a ..\..\..\lib\libNetworkKit_mgcc_d.a" />
+					<Add after="cmd /c move ..\..\..\bin\libNetworkKit_$(COMPILER)$(COMPILER_VER)_d.a ..\..\..\lib\libNetworkKit_$(COMPILER)$(COMPILER_VER)_d.a" />
 				</ExtraCommands>
 				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
 					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="..\FoundationKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
 				</Environment>
 			</Target>
-			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />

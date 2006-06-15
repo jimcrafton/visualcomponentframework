@@ -73,6 +73,7 @@
 		<Project filename="..\..\examples\Variants\Variants_cb.cbp" />
 		<Project filename="..\..\examples\VisualFormFiles\VisualFormFiles_cb.cbp" />
 		<Project filename="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_cb.cbp" />
+		<Project filename="..\..\examples\Gradients\Gradients_cb.cbp" />
 		<Project filename="..\..\examples\Pixels\Pixels_cb.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

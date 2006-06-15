@@ -281,6 +281,7 @@
 		<Project filename="..\..\src\createbundle\CreateBundle_cb.cbp" />
 		<Project filename="..\..\src\createinfo\createinfo_cb.cbp" />
 		<Project filename="..\..\src\xmake\libXmake_cb.cbp" />
+		<Project filename="..\..\examples\Gradients\Gradients_cb.cbp" />
 		<Project filename="..\..\src\xmake\xmake_cb.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

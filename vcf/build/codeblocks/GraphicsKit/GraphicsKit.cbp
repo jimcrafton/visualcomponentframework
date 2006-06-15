@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\lib\libGraphicsKit_mgcc_s.a" />
+				<Option output="..\..\..\lib\libGraphicsKit_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\ReleaseS\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseS\" />
 				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_s.a;$(VCF_LIB)\libLibAGG_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -44,13 +44,15 @@
 					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_s" />
 				</Linker>
 				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="GCH_DIR" value="..\GraphicsKit\$(COMPILER)$(COMPILER_VER)\ReleaseS\src" />
+					<Variable name="COMPILER_VER" value="" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\lib\libGraphicsKit_mgcc_sd.a" />
+				<Option output="..\..\..\lib\libGraphicsKit_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\DebugS\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugS\" />
 				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_sd.a;$(VCF_LIB)\libLibAGG_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -84,13 +86,11 @@
 					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_sd" />
 				</Linker>
 				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="GCH_DIR" value="..\GraphicsKit\$(COMPILER)$(COMPILER_VER)\DebugS\src" />
+					<Variable name="COMPILER_VER" value="" />
 				</Environment>
 			</Target>
-			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />

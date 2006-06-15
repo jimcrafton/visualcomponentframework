@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\lib\libRemoteObjectKit_mgcc_s.a" />
+				<Option output="..\..\..\lib\libRemoteObjectKit_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\ReleaseS\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseS\" />
 				<Option external_deps="$(VCF_LIB)\libNetworkKit_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -40,11 +40,15 @@
 				<Linker>
 					<Add library="NetworkKit_$(COMPILER)$(COMPILER_VER)_s" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\lib\libRemoteObjectKit_mgcc_sd.a" />
+				<Option output="..\..\..\lib\libRemoteObjectKit_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\DebugS\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugS\" />
 				<Option external_deps="$(VCF_LIB)\libNetworkKit_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -74,11 +78,11 @@
 				<Linker>
 					<Add library="NetworkKit_$(COMPILER)$(COMPILER_VER)_sd" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
-			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />

@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\..\..\lib\libpaintlib_mgcc_sd.a" />
+				<Option output="..\..\..\..\..\..\lib\libpaintlib_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -49,11 +49,15 @@
 					<Add library="winmm" />
 					<Add directory="$(VCF_LIB)\" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\..\..\lib\libpaintlib_mgcc_s.a" />
+				<Option output="..\..\..\..\..\..\lib\libpaintlib_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="mgcc\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -93,11 +97,11 @@
 					<Add library="winmm" />
 					<Add directory="$(VCF_LIB)\" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
-			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
-				<Variable name="COMPILER_VER" value="" />
-			</Environment>
 		</Build>
 		<Unit filename="..\..\common\Filter\PLFilterContrast.cpp">
 			<Option compilerVar="CPP" />
