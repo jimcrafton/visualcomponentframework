@@ -41,7 +41,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_s" />
+					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_s" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="mgcc" />
@@ -83,7 +83,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_sd" />
+					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_sd" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="mgcc" />

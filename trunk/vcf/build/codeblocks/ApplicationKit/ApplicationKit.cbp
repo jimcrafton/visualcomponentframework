@@ -492,6 +492,11 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
+		<Unit filename="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
@@ -1216,6 +1221,11 @@
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
+		<Unit filename="..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\ApplicationKit\LibraryApplication.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
@@ -1289,6 +1299,11 @@
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\ApplicationKit\Menu.cpp">
+			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
@@ -1713,6 +1728,11 @@
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\ApplicationKit\ToggledButton.cpp">
+			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
