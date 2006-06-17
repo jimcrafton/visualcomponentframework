@@ -48,7 +48,7 @@
 					<Add library="LibPNG_$(COMPILER)$(COMPILER_VER)_s" />
 					<Add library="LibJPEG_$(COMPILER)$(COMPILER_VER)_s" />
 					<Add library="ZLIB_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_s" />
+					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_s" />
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)" />
 					<Add library="uuid" />
 					<Add library="oleaut32" />
@@ -113,7 +113,7 @@
 					<Add library="LibPNG_$(COMPILER)$(COMPILER_VER)_sd" />
 					<Add library="LibJPEG_$(COMPILER)$(COMPILER_VER)_sd" />
 					<Add library="ZLIB_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="libAGG_$(COMPILER)$(COMPILER_VER)_sd" />
+					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_sd" />
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_d" />
 					<Add library="uuid" />
 					<Add library="oleaut32" />
