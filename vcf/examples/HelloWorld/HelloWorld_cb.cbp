@@ -8,7 +8,7 @@
 			<Target title="mingw_Release">
 				<Option output="mgcc\Release\HelloWorld_$(COMPILER)$(COMPILER_VER).exe" />
 				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
-				<Option external_deps="$(VCF_ROOT)/lib/libApplicationKit_$(COMPILER)$(COMPILER_VER)_s.a;" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_$(COMPILER)$(COMPILER_VER)_s.a;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -86,29 +86,36 @@
 					<Add option="-D_WINDOWS" />
 					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
-					<Add option="-DUSE_FOUNDATIONKIT_DLL" />
-					<Add option="-DUSE_GRAPHICSKIT_DLL" />
-					<Add option="-DUSE_APPLICATIONKIT_DLL" />
+					<Add option="-DUSE_FOUNDATIONKIT_LIB" />
+					<Add option="-DUSE_GRAPHICSKIT_LIB" />
+					<Add option="-DUSE_APPLICATIONKIT_LIB" />
 				</Compiler>
 				<Linker>
-					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
-					<Add library="ApplicationKit_mgcc_d" />
-					<Add library="GraphicsKit_mgcc_d" />
-					<Add library="FoundationKit_mgcc_d" />
+					<Add library="ApplicationKit_mgcc_sd" />
+					<Add library="GraphicsKit_mgcc_sd" />
+					<Add library="AGG_mgcc_sd" />
+					<Add library="FoundationKit_mgcc_sd" />
+					<Add library="rpcrt4" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+					<Add library="version" />
 					<Add library="kernel32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="winspool" />
 					<Add library="comdlg32" />
+					<Add library="comctl32" />
 					<Add library="advapi32" />
 					<Add library="shell32" />
 					<Add library="ole32" />
 					<Add library="oleaut32" />
 					<Add library="uuid" />
-					<Add library="odbc32" />
-					<Add library="odbccp32" />
 					<Add library="ws2_32" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 		</Build>
 		<Compiler>
