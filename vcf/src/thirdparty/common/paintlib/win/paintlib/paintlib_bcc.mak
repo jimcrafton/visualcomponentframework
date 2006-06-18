@@ -29,10 +29,12 @@ CPPFLAGS=$(CPPFLAGS) -w-8057 -w-8012 -w-8002 -w-8022 -w-8075
 !if $(BMODE) == RELEASE
 	USERDEFINES=NDEBUG
 	OBJDIR=bcc\Release$(TDIR)
+	LPARAM=/P2048
 	!message Building release version of project
 !else
 	USERDEFINES=_DEBUG
 	OBJDIR=bcc\Debug$(TDIR)
+	LPARAM=/P4096
 	!message Building debug version of project
 !endif
 
