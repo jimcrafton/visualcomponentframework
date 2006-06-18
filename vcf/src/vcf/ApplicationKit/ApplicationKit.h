@@ -13,6 +13,7 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include "vcf/FoundationKit/FoundationKit.h"
 
 #include "vcf/ApplicationKit/ApplicationKitSelectLib.h"
 
