@@ -1277,7 +1277,7 @@ nmake -f makefile.vc
 					</listitem>
 					
 					<listitem>
-					OPTION_LIBAGG - Compile AGG? Default: 1.
+					OPTION_AGG - Compile AGG? Default: 1.
 					</listitem>
 					
 					<listitem>
@@ -1387,7 +1387,7 @@ nmake -f makefile.vc OPTION_SELECTLIB=_vc71 OPTION_DEBUG=0
 				There are the following make targets that can be built independently:
 				<itemizedlist>	
 					<listitem>ZLib</listitem>					
-					<listitem>libAGG</listitem>					
+					<listitem>AGG</listitem>					
 					<listitem>LibJPEG</listitem>					
 					<listitem>LibPNG</listitem>					
 					<listitem>LibMNG</listitem>					
@@ -1763,7 +1763,7 @@ int main( int argc, char** argv )
 					For every library there is a certain tag.
 					<itemizedlist>
 						<listitem>
-						&lt;vcf-use-libAGG&gt;
+						&lt;vcf-use-AGG&gt;
 						</listitem>
 
 						<listitem>
@@ -1805,7 +1805,7 @@ int main( int argc, char** argv )
 						</listitem>
 
 						<listitem>
-						&lt;vcf-include-libAGG&gt;
+						&lt;vcf-include-AGG&gt;
 						</listitem>
 
 						<listitem>
