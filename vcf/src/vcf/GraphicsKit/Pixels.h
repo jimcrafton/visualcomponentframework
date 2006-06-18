@@ -421,7 +421,7 @@ namespace VCF {
 
 
 
-#if (__BORLANDC__ < 0x0560)
+#if (__BORLANDC__ < 0x0560) || (__BORLANDC__ >= 0x0580)
 #  define IMTRAITS SysPixelType::Traits
 #  define SysPixelTypeTraits SysPixelType::Traits
 #  define GrayPixelTypeTraits SysGrayscalePixelType::Traits
