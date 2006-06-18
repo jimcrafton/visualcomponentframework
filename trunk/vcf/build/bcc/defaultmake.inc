@@ -1,6 +1,6 @@
 
 #tools
-BCROOT=c:\Borland\BCC55\bin
+BCROOT=C:\Borland\BCC55\bin
 ILINK32=$(BCROOT)\ilink32
 LB=$(BCROOT)\tlib
 CC=$(BCROOT)\bcc32
@@ -31,6 +31,9 @@ DBGDLL=_d
 
 .c.obj:
       @$(CC) $(CFLAGS) -I$(INCDIR) -n$(OBJ) /c $<
+
+.cxx.obj:
+      @$(CC) $(CPPFLAGS) -I$(INCDIR) -n$(OBJ) /c $<
 
 #This include sequence is added because of some visual studio
 #generated rc scripts

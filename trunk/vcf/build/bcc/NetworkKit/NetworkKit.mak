@@ -122,7 +122,7 @@ $(PROJECT1): $(OBJFILES)
 $(PROJECT2):: $(OBJFILES)
     @echo Linking $(<F) dynamic library
     @$(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS) 
+    $(LINKFLAGS) $(BCC32STARTUP) $(?: = ^)
     $<,$*
     $(ALLLIBS)
     $(DEFFILE)
