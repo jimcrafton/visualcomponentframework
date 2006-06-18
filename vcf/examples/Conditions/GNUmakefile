@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(CONDITIONS_OBJECTS)
-	$(CXX) -o $@ $(CONDITIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Conditions_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(CONDITIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Conditions_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Conditions/Conditions_Conditions.o: ./Conditions.cpp

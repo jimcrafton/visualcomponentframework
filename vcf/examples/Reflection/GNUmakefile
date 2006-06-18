@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Reflection$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(REFLECTION_OBJECTS)
-	$(CXX) -o $@ $(REFLECTION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Reflection_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(REFLECTION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Reflection_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Reflection/Reflection_Reflection.o: ./Reflection.cpp

@@ -97,15 +97,10 @@
         </if>
 
         
-        <set var="ALLIN1_ZLIB_LIB">
-            <if cond="OPTION_ZLIB=='1'">ZLib_lib</if>
+        <set var="ALLIN1_AGG_LIB">
+            <if cond="OPTION_AGG=='1'">AGG_lib</if>
         </set>
-        <library>$(ALLIN1_ZLIB_LIB)</library>
-
-        <set var="ALLIN1_LIBAGG_LIB">
-            <if cond="OPTION_LIBAGG=='1'">libAGG_lib</if>
-        </set>
-        <library>$(ALLIN1_LIBAGG_LIB)</library>
+        <library>$(ALLIN1_AGG_LIB)</library>
 
         <set var="ALLIN1_LIBJPEG_LIB">
             <if cond="OPTION_LIBJPEG=='1'">LibJPEG_lib</if>
@@ -131,6 +126,11 @@
             <if cond="OPTION_PAINTLIB=='1'">paintlib_lib</if>
         </set>
         <library>$(ALLIN1_PAINTLIB_LIB)</library>
+
+        <set var="ALLIN1_ZLIB_LIB">
+            <if cond="OPTION_ZLIB=='1'">ZLib_lib</if>
+        </set>
+        <library>$(ALLIN1_ZLIB_LIB)</library>
 
 
         <vcf-include-thirdparty/>

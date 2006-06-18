@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Strings$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(STRINGS_OBJECTS)
-	$(CXX) -o $@ $(STRINGS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Strings_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(STRINGS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Strings_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Strings/Strings_Strings.o: ./Strings.cpp

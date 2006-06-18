@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(VARIANTS_OBJECTS)
-	$(CXX) -o $@ $(VARIANTS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Variants_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(VARIANTS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Variants_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Variants/Variants_Variants.o: ./Variants.cpp

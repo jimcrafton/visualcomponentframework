@@ -2,7 +2,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 # WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
 
 ###############################################################################
-Project: "libAGG_lib"=VCF_libAGG_lib.dsp - Package Owner=<4>
+Project: "AGG_lib"=VCF_AGG_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -95,7 +95,7 @@ Package=<5>
 Package=<4>
 {{{
 Begin Project Dependency
-Project_Dep_Name libAGG_lib
+Project_Dep_Name AGG_lib
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name LibJPEG_lib
@@ -236,7 +236,7 @@ Package=<5>
 Package=<4>
 {{{
 Begin Project Dependency
-Project_Dep_Name libAGG_lib
+Project_Dep_Name AGG_lib
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name ZLib_lib

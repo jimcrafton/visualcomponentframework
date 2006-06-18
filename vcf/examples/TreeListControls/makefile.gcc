@@ -14,7 +14,7 @@ include ../../build/bakefiles.gen/config.gcc
 
 CPPDEPS = -MT$@ -MF$@.d -MD
 OBJDIR = mingw$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-LIBAGG_FILENAME = libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+AGG_FILENAME = AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 ZLIB_FILENAME = ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBJPEG_FILENAME = LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBPNG_FILENAME = LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
@@ -24,11 +24,11 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 TREELISTCONTROLS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
-	-Wno-multichar -I..\..\src $(__FOUNDATIONKIT_DLL_p) \
-	-I..\..\src\thirdparty\common\agg\include \
-	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibJPEG \
-	-I..\..\src\thirdparty\common\LibPNG $(__GRAPHICSKIT_DLL_p) \
-	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+	-Wno-multichar -I..\..\src -I..\..\src\thirdparty\common\ZLib \
+	-I..\..\src\thirdparty\common\LibPNG \
+	-I..\..\src\thirdparty\common\LibJPEG \
+	-I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
+	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TREELISTCONTROLS_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_TreeListControls.o \
 	..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_treelist_rc.o
@@ -119,7 +119,7 @@ clean:
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
 .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TREELISTCONTROLS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_treelist_rc.o
-	$(CXX) -o $@ $(TREELISTCONTROLS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____TreeListControls_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TreeListControls_GRAPHICSKIT_p) $(____TreeListControls_APPLICATIONKIT_p)
+	$(CXX) -o $@ $(TREELISTCONTROLS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows $(____TreeListControls_APPLICATIONKIT_p) $(____TreeListControls_GRAPHICSKIT_p) $(____TreeListControls_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
 ..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_TreeListControls.o: ./TreeListControls.cpp

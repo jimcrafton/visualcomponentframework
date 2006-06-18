@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Localization: $(LOCALIZATION_OBJECTS)
-	$(CXX) -o $@ $(LOCALIZATION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Localization_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(LOCALIZATION_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Localization_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Localization/Localization_Localization.o: ./Localization.cpp

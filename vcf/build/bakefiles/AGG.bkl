@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="AGGFiles.bkl"/>
+
+    <template id="AGG_base">
+        <set var="LIBRARY_NAME">$(AGG_NAME)</set>
+
+        <headers>$(AGG_HDR)</headers>
+        <sources>$(AGG_SRC)</sources>
+
+        <vcf-include-AGG/>
+    </template>
+
+    <lib id="AGG_lib" template="AGG_base,vcf_lib"
+            cond="OPTION_AGG=='1'">
+    </lib>
+</makefile>
+
+<!--
+$Id$
+-->

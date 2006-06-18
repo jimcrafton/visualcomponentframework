@@ -96,7 +96,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 .\Resources.exe: $(RESOURCES_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Resources\Resources_Resources_rc.o
-	$(CXX) -o $@ $(RESOURCES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____Resources_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(RESOURCES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib  $(____Resources_FOUNDATIONKIT_p)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
 ..\..\lib\$(OBJDIR)\examples\Resources\Resources_Resources.o: ./Resources.cpp

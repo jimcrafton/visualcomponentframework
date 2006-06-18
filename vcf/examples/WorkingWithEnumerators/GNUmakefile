@@ -95,7 +95,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(WORKINGWITHENUMERATORS_OBJECTS)
-	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____WorkingWithEnumerators_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____WorkingWithEnumerators_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp

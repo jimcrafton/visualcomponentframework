@@ -104,7 +104,7 @@ clean:
 	$(RANLIB) $@
 
 ../../bin/xmake: $(XMAKE_OBJECTS) ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____xmake_FOUNDATIONKIT_p) ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____xmake_FOUNDATIONKIT_p)  -ldl -luuid -lrt ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
 ../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<

@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(EVENTBASICS_OBJECTS)
-	$(CXX) -o $@ $(EVENTBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____EventBasics_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(EVENTBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____EventBasics_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/EventBasics/EventBasics_EventBasics.o: ./EventBasics.cpp

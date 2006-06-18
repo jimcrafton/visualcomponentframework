@@ -2,7 +2,7 @@
 
 <makefile>
 
-    <set var="LIBAGG_HDR" hints="files">
+    <set var="AGG_HDR" hints="files">
         thirdparty/common/agg/src/agg_alpha_mask_u8.h
         thirdparty/common/agg/src/agg_arc.h
         thirdparty/common/agg/src/agg_array.h
@@ -127,7 +127,7 @@
         thirdparty/common/agg/src/agg_vpgen_segmentator.h
     </set>
 
-    <set var="LIBAGG_SRC" hints="files">
+    <set var="AGG_SRC" hints="files">
         thirdparty/common/agg/src/agg_arc.cpp
         thirdparty/common/agg/src/agg_arrowhead.cpp
         thirdparty/common/agg/src/agg_bezier_arc.cpp

@@ -94,7 +94,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(DICTIONARIES_OBJECTS)
-	$(CXX) -o $@ $(DICTIONARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Dictionaries_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(DICTIONARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Dictionaries_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Dictionaries/Dictionaries_Dictionaries.o: ./Dictionaries.cpp

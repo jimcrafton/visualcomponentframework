@@ -89,7 +89,7 @@ clean:
 	rm -f ../../bin/CreateBundle
 
 ../../bin/CreateBundle: $(CREATEBUNDLE_OBJECTS)
-	$(CXX) -o $@ $(CREATEBUNDLE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____CreateBundle_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(CREATEBUNDLE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____CreateBundle_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 
 ../../lib/$(OBJDIR)/utilities/CreateBundle/CreateBundle_CreateBundle.o: ./CreateBundle.cpp
 	$(CXX) -c -o $@ $(CREATEBUNDLE_CXXFLAGS) $(CPPDEPS) $<

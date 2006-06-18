@@ -101,7 +101,7 @@ clean:
 
 ifeq ($(OPTION_INTERNETKIT),1)
 ./InetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(INETKIT_OBJECTS)
-	$(CXX) -o $@ $(INETKIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____InetKit_FOUNDATIONKIT_p) $(____InetKit_INTERNETKIT_p)
+	$(CXX) -o $@ $(INETKIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____InetKit_INTERNETKIT_p) $(____InetKit_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/InetKit/InetKit_InetKit.o: ./InetKit.cpp

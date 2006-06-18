@@ -54,7 +54,7 @@ OPTION_ALLIN1 = 0
 OPTION_ZLIB = 1
 
 # Compile the AGG library: [0,1]
-OPTION_LIBAGG = 1
+OPTION_AGG = 1
 
 # Compile the JPEG library: [0,1]
 OPTION_LIBJPEG = 1
@@ -80,7 +80,7 @@ OPTION_FOUNDATIONKIT = 1
 
 # Depends on:
 #     OPTION_FOUNDATIONKIT
-#     OPTION_LIBAGG
+#     OPTION_AGG
 #     OPTION_ZLIB
 # Compile GraphicsKit: [0,1]
 OPTION_GRAPHICSKIT = 1

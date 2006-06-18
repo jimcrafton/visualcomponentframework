@@ -107,7 +107,7 @@ endif
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SHAREDLIBRARIES_OBJECTS) $(__SimpleDLL___depname)
-	$(CXX) -o $@ $(SHAREDLIBRARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____SharedLibraries_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(SHAREDLIBRARIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____SharedLibraries_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/SharedLibraries/SimpleDLL_SimpleDLL.o: ./SimpleDLL.cpp
