@@ -68,10 +68,13 @@ clean::
 	-@$(MK) -fLibMNG_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) clean
 	-@cd $(VCFBIN)\..\src\thirdparty\common\LibPNG
 	-@$(MK) -fLibPNG_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) clean
-	-@cd $(VCFBIN)\..\src\thirdparty\common\FreeImage\Source\LibTIFF
+	-@cd $(VCFBIN)\..\src\thirdparty\common\LibTIFF
 	-@$(MK) -fLibTIFF_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) clean
 	-@cd $(VCFBIN)\..\src\thirdparty\common\ZLib
 	-@$(MK) -fZLib_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) clean
+	-@cd $(VCFBUILDROOT)
+	-@cd $(VCFBIN)\..\src\thirdparty\common\paintlib\win\paintlib	                  
+	-@$(MK) -fpaintlib_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) clean
 	-@cd $(VCFBUILDROOT)
 
 ApplicationKit:: FoundationKit GraphicsKit
@@ -161,7 +164,7 @@ HTMLKit_stat::
 
 thirdparty: FreeImageLib
 
-FreeImageLib:: LibJPEG LibMNG LibPNG LibTIFF ZLib
+FreeImageLib:: LibJPEG LibMNG LibPNG LibTIFF ZLib PaintLib
 	@cd $(VCFBIN)\..\src\thirdparty\common\FreeImage\Source\FreeImageLib
 	@$(MK) -fFreeImageLib_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE)
 	@cd $(VCFBUILDROOT)
@@ -181,11 +184,16 @@ LibPNG::
 	@cd $(VCFBUILDROOT)
 
 LibTIFF::
-	@cd $(VCFBIN)\..\src\thirdparty\common\FreeImage\Source\LibTIFF
+	@cd $(VCFBIN)\..\src\thirdparty\common\LibTIFF
 	@$(MK) -fLibTIFF_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE)
 	@cd $(VCFBUILDROOT)
 
 ZLib::
 	@cd $(VCFBIN)\..\src\thirdparty\common\ZLib
 	@$(MK) -fZLib_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE)
+	@cd $(VCFBUILDROOT)
+
+PaintLib:
+	@cd $(VCFBIN)\..\src\thirdparty\common\paintlib\win\paintlib
+	@$(MK) -fpaintlib_bcc.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE)
 	@cd $(VCFBUILDROOT)
