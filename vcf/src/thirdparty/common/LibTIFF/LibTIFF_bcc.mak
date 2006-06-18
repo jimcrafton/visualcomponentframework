@@ -16,7 +16,7 @@ BMODE = RELEASE
 !  error Illegal value for BMODE option
 !endif
 
-!include <..\..\..\..\..\..\build\bcc\defaultmake.inc>
+!include <..\..\..\..\build\bcc\defaultmake.inc>
 
 PROJECT=$(PROJECT1)
 SYSDEFINES=_LIB;BUILD_LIBTIFF_LIB
@@ -114,7 +114,7 @@ clean: cleanobj cleantgt
 
 dirs::
 	-@echo Creating output directory
-	-@if not exist bcc md bcc
+	-@if not exist bcc mkdir bcc
 	-@if not exist $(OBJ) md $(OBJ)
 	-@if not exist $(BIN) md $(BIN)
 	
