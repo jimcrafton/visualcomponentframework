@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(RUNLOOPS_OBJECTS)
-	$(CXX) -o $@ $(RUNLOOPS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____RunLoops_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(RUNLOOPS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____RunLoops_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/RunLoops/RunLoops_RunLoops.o: ./RunLoops.cpp

@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(DIRECTORIES_OBJECTS)
-	$(CXX) -o $@ $(DIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Directories_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(DIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Directories_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Directories/Directories_Directories.o: ./Directories.cpp

@@ -94,7 +94,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(DATESANDTIME_OBJECTS)
-	$(CXX) -o $@ $(DATESANDTIME_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____DatesAndTime_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(DATESANDTIME_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____DatesAndTime_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/DatesAndTime/DatesAndTime_DatesAndTime.o: ./DatesAndTime.cpp

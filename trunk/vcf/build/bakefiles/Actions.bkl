@@ -63,9 +63,9 @@
             <depends>ZLib_lib</depends>
         </action>
 
-        <action id="libAGG" cond="OPTION_LIBAGG=='1'">
+        <action id="AGG" cond="OPTION_AGG=='1'">
             <is-phony>1</is-phony>
-            <depends>libAGG_lib</depends>
+            <depends>AGG_lib</depends>
         </action>
 
         <action id="LibJPEG" cond="OPTION_LIBJPEG=='1'">

@@ -85,7 +85,7 @@ clean:
 	-if exist ..\..\bin\createinfo.exe del ..\..\bin\createinfo.exe
 
 ..\..\bin\createinfo.exe: $(CREATEINFO_OBJECTS)
-	$(CXX) -o $@ $(CREATEINFO_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib   -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 $(____createinfo_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(CREATEINFO_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib  $(____createinfo_FOUNDATIONKIT_p)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 
 ..\..\lib\$(OBJDIR)\utilities\createinfo\createinfo_createinfo.o: ./createinfo.cpp
 	$(CXX) -c -o $@ $(CREATEINFO_CXXFLAGS) $(CPPDEPS) $<

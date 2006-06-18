@@ -19,7 +19,7 @@
         <dependency-of>all</dependency-of>
     </mkdir>
 
-    <include file="libAGG.bkl"/>
+    <include file="AGG.bkl"/>
     <include file="ZLib.bkl"/>
     <include file="LibJPEG.bkl"/>
     <include file="LibMNG.bkl"/>

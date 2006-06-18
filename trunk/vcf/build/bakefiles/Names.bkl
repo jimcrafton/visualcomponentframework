@@ -2,9 +2,9 @@
 
 <makefile>
 
-    <set var="LIBAGG_NAME">libAGG</set>
-    <set var="LIBAGG_FILENAME" make_var="1">
-        $(vcf.getLibFilename( LIBAGG_NAME ))
+    <set var="AGG_NAME">AGG</set>
+    <set var="AGG_FILENAME" make_var="1">
+        $(vcf.getLibFilename( AGG_NAME ))
     </set>
 
     <set var="ZLIB_NAME">ZLib</set>

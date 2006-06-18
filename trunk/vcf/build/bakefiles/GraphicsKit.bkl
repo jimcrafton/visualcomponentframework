@@ -13,7 +13,7 @@
 
         <vcf-use-FoundationKit/>
 
-        <library>libAGG_lib</library>
+        <library>AGG_lib</library>
         <library>LibJPEG_lib</library>
         <library>LibPNG_lib</library>
         <library>ZLib_lib</library>

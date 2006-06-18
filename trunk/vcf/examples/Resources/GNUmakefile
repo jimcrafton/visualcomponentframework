@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Resources: $(RESOURCES_OBJECTS)
-	$(CXX) -o $@ $(RESOURCES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Resources_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(RESOURCES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Resources_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Resources/Resources_Resources.o: ./Resources.cpp

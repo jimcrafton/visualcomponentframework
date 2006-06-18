@@ -14,7 +14,7 @@ include ../../build/bakefiles.gen/config.gnu
 
 CPPDEPS = -MT$@ -MF`echo $@ | sed -e 's,\.o$$,.d,'` -MD
 OBJDIR = gnu$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-LIBAGG_FILENAME = libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+AGG_FILENAME = AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 ZLIB_FILENAME = ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBJPEG_FILENAME = LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBPNG_FILENAME = LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
@@ -24,11 +24,11 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 TEXLABEL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -D_THREAD_SAFE -pthread \
 	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
-	-I../../src $(__FOUNDATIONKIT_DLL_p) \
-	-I../../src\thirdparty/common/agg/include \
-	-I../../src\thirdparty/common/ZLib -I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/LibPNG $(__GRAPHICSKIT_DLL_p) \
-	$(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+	-I../../src -I../../src\thirdparty/common/ZLib \
+	-I../../src\thirdparty/common/LibPNG \
+	-I../../src\thirdparty/common/LibJPEG \
+	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 TEXLABEL_OBJECTS =  \
 	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.o \
 	../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.scan.o \
@@ -118,7 +118,7 @@ clean:
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ./TeXLabel$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(TEXLABEL_OBJECTS)
-	$(CXX) -o $@ $(TEXLABEL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____TeXLabel_FOUNDATIONKIT_p) -l$(LIBAGG_FILENAME) -l$(ZLIB_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) $(____TeXLabel_GRAPHICSKIT_p) $(____TeXLabel_APPLICATIONKIT_p)
+	$(CXX) -o $@ $(TEXLABEL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____TeXLabel_APPLICATIONKIT_p) $(____TeXLabel_GRAPHICSKIT_p) $(____TeXLabel_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/TeXLabel/TeXLabel_TeXLabel.o: ./TeXLabel.cpp

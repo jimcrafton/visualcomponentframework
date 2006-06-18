@@ -89,7 +89,7 @@ clean:
 	rm -f ../../bin/createinfo
 
 ../../bin/createinfo: $(CREATEINFO_OBJECTS)
-	$(CXX) -o $@ $(CREATEINFO_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____createinfo_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(CREATEINFO_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____createinfo_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 
 ../../lib/$(OBJDIR)/utilities/createinfo/createinfo_createinfo.o: ./createinfo.cpp
 	$(CXX) -c -o $@ $(CREATEINFO_CXXFLAGS) $(CPPDEPS) $<

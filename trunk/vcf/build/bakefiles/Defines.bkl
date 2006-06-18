@@ -13,6 +13,23 @@
 
 
     <!--
+    It is the same as <sys-lib> except this one prepends the given value.
+    Prepending allows us to pass libraries to mingw in the correct order.
+    This trick makes mingw happy when it links the static libraries,
+    -->
+    <define-tag name="vcf-lib" rules="dll,lib,exe,module">
+        <if cond="COMPILER=='gcc'">
+            <set var="__ldlibs" prepend="1">
+                $(formatIfNotEmpty( '-l%s', value ))
+            </set>
+        </if>
+        <if cond="COMPILER!='gcc'">
+            <sys-lib>$(value)</sys-lib>
+        </if>
+    </define-tag>
+
+
+    <!--
     Inclusions.
     -->
     <define-tag name="vcf-include-thirdparty" rules="dll,lib,exe,module">
@@ -30,7 +47,7 @@
         </include>
     </define-tag>
 
-    <define-tag name="vcf-include-libAGG" rules="dll,lib,exe,module">
+    <define-tag name="vcf-include-AGG" rules="dll,lib,exe,module">
         <include>
             $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/agg/include' ))
         </include>
@@ -82,34 +99,34 @@
     <!--
     Using libraries.
     -->
-    <define-tag name="vcf-use-libAGG" rules="dll,lib,exe,module">
-        <vcf-include-libAGG/>
-        <sys-lib>$(LIBAGG_FILENAME)</sys-lib>
+    <define-tag name="vcf-use-AGG" rules="dll,lib,exe,module">
+        <vcf-include-AGG/>
+        <vcf-lib>$(AGG_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-ZLib" rules="dll,lib,exe,module">
         <vcf-include-ZLib/>
-        <sys-lib>$(ZLIB_FILENAME)</sys-lib>
+        <vcf-lib>$(ZLIB_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-LibJPEG" rules="dll,lib,exe,module">
         <vcf-include-LibJPEG/>
-        <sys-lib>$(LIBJPEG_FILENAME)</sys-lib>
+        <vcf-lib>$(LIBJPEG_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-LibPNG" rules="dll,lib,exe,module">
         <vcf-include-LibPNG/>
-        <sys-lib>$(LIBPNG_FILENAME)</sys-lib>
+        <vcf-lib>$(LIBPNG_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-LibMNG" rules="dll,lib,exe,module">
         <vcf-include-LibMNG/>
-        <sys-lib>$(LIBMNG_FILENAME)</sys-lib>
+        <vcf-lib>$(LIBMNG_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-LibTIFF" rules="dll,lib,exe,module">
         <vcf-include-LibTIFF/>
-        <sys-lib>$(LIBTIFF_FILENAME)</sys-lib>
+        <vcf-lib>$(LIBTIFF_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-paintlib" rules="dll,lib,exe,module">
@@ -117,7 +134,7 @@
         <vcf-use-LibJPEG/>
         <vcf-use-LibTIFF/>
         <vcf-use-LibPNG/>
-        <sys-lib>$(PAINTLIB_FILENAME)</sys-lib>
+        <vcf-lib>$(PAINTLIB_FILENAME)</vcf-lib>
     </define-tag>
 
 
@@ -132,7 +149,7 @@
             <if cond="OPTION_ALLIN1=='1'">$(ALLIN1_FILENAME)</if>
             <if cond="OPTION_ALLIN1=='0'">$(FOUNDATIONKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(FOUNDATIONKIT)</sys-lib>
+        <vcf-lib>$(FOUNDATIONKIT)</vcf-lib>
         <define>$(FOUNDATIONKIT_DLL)</define>
     </define-tag>
 
@@ -140,16 +157,15 @@
         <if cond="OPTION_SHARED=='1'">GRAPHICSKIT_DLL</if>
     </set>
     <define-tag name="vcf-use-GraphicsKit" rules="dll,lib,exe,module">
-        <vcf-use-FoundationKit/>
-        <vcf-use-libAGG/>
         <vcf-use-ZLib/>
-        <vcf-use-LibJPEG/>
         <vcf-use-LibPNG/>
-
+        <vcf-use-LibJPEG/>
+        <vcf-use-AGG/>
+        <vcf-use-FoundationKit/>
         <set var="GRAPHICSKIT">
             <if cond="OPTION_ALLIN1=='0'">$(GRAPHICSKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(GRAPHICSKIT)</sys-lib>
+        <vcf-lib>$(GRAPHICSKIT)</vcf-lib>
         <define>$(GRAPHICSKIT_DLL)</define>
     </define-tag>
 
@@ -161,7 +177,7 @@
         <set var="APPLICATIONKIT">
             <if cond="OPTION_ALLIN1=='0'">$(APPLICATIONKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(APPLICATIONKIT)</sys-lib>
+        <vcf-lib>$(APPLICATIONKIT)</vcf-lib>
         <define>$(APPLICATIONKIT_DLL)</define>
     </define-tag>
 
@@ -173,7 +189,7 @@
         <set var="HTMLKIT">
             <if cond="OPTION_ALLIN1=='0'">$(HTMLKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(HTMLKIT)</sys-lib>
+        <vcf-lib>$(HTMLKIT)</vcf-lib>
         <define>$(HTMLKIT_DLL)</define>
     </define-tag>
 
@@ -185,7 +201,7 @@
         <set var="OPENGLKIT">
             <if cond="OPTION_ALLIN1=='0'">$(OPENGLKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(OPENGLKIT)</sys-lib>
+        <vcf-lib>$(OPENGLKIT)</vcf-lib>
         <define>$(OPENGLKIT_DLL)</define>
     </define-tag>
 
@@ -197,7 +213,7 @@
         <set var="NETWORKKIT">
             <if cond="OPTION_ALLIN1=='0'">$(NETWORKKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(NETWORKKIT)</sys-lib>
+        <vcf-lib>$(NETWORKKIT)</vcf-lib>
         <define>$(NETWORKKIT_DLL)</define>
     </define-tag>
 
@@ -209,7 +225,7 @@
         <set var="REMOTEOBJECTKIT">
             <if cond="OPTION_ALLIN1=='0'">$(REMOTEOBJECTKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(REMOTEOBJECTKIT)</sys-lib>
+        <vcf-lib>$(REMOTEOBJECTKIT)</vcf-lib>
         <define>$(REMOTEOBJECTKIT_DLL)</define>
     </define-tag>
 
@@ -221,7 +237,7 @@
         <set var="INTERNETKIT">
             <if cond="OPTION_ALLIN1=='0'">$(INTERNETKIT_FILENAME)</if>
         </set>
-        <sys-lib>$(INTERNETKIT)</sys-lib>
+        <vcf-lib>$(INTERNETKIT)</vcf-lib>
         <define>$(INTERNETKIT_DLL)</define>
     </define-tag>
 
@@ -233,7 +249,7 @@
         <set var="IMAGEFORMATS">
             <if cond="OPTION_ALLIN1=='0'">$(IMAGEFORMATS_FILENAME)</if>
         </set>
-        <sys-lib>$(IMAGEFORMATS)</sys-lib>
+        <vcf-lib>$(IMAGEFORMATS)</vcf-lib>
         <define>$(IMAGEFORMATS_DLL)</define>
     </define-tag>
 

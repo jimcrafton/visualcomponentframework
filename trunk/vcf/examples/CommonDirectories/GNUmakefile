@@ -94,7 +94,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./CommonDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(COMMONDIRECTORIES_OBJECTS)
-	$(CXX) -o $@ $(COMMONDIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____CommonDirectories_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(COMMONDIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____CommonDirectories_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/CommonDirectories/CommonDirectories_CommonDirectories.o: ./CommonDirectories.cpp

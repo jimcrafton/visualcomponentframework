@@ -93,7 +93,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(PROCESSES_OBJECTS)
-	$(CXX) -o $@ $(PROCESSES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____Processes_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(PROCESSES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____Processes_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/Processes/Processes_Processes.o: ./Processes.cpp

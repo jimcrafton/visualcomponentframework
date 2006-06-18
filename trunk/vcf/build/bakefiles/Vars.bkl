@@ -14,7 +14,7 @@
         <set var="OPTION_REMOTEOBJECTKIT">1</set>
         <set var="OPTION_INTERNETKIT">1</set>
         <set var="OPTION_ZLIB">1</set>
-        <set var="OPTION_LIBAGG">1</set>
+        <set var="OPTION_AGG">1</set>
         <set var="OPTION_LIBJPEG">1</set>
         <set var="OPTION_LIBPNG">1</set>
         <set var="OPTION_LIBMNG">1</set>

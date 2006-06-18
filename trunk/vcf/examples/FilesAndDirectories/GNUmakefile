@@ -94,7 +94,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./FilesAndDirectories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(FILESANDDIRECTORIES_OBJECTS)
-	$(CXX) -o $@ $(FILESANDDIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____FilesAndDirectories_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(FILESANDDIRECTORIES_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____FilesAndDirectories_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/FilesAndDirectories/FilesAndDirectories_FilesAndDirectories.o: ./FilesAndDirectories.cpp

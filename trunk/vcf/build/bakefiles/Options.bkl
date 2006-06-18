@@ -87,14 +87,14 @@ The type of runtime libraries.
         </description>
     </option>
 
-    <set var="OPTION_LIBAGG_DEFAULT">
+    <set var="OPTION_AGG_DEFAULT">
         <if cond="FORMAT=='gnu'">0</if>
         <if cond="FORMAT!='gnu'">1</if>
     </set>
-    <option name="OPTION_LIBAGG">
+    <option name="OPTION_AGG">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_LIBAGG', OPTION_LIBAGG_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_AGG', OPTION_AGG_DEFAULT ))
         </default-value>
         <description>
             Compile the AGG library:
@@ -190,7 +190,7 @@ Compile the paintlib library:
         <description>
 Depends on:
     OPTION_FOUNDATIONKIT
-    OPTION_LIBAGG
+    OPTION_AGG
     OPTION_ZLIB
 Compile GraphicsKit:
         </description>

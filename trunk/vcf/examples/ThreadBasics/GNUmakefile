@@ -94,7 +94,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(THREADBASICS_OBJECTS)
-	$(CXX) -o $@ $(THREADBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib   -ldl -luuid -lrt $(____ThreadBasics_FOUNDATIONKIT_p)
+	$(CXX) -o $@ $(THREADBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____ThreadBasics_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/ThreadBasics/ThreadBasics_ThreadBasics.o: ./ThreadBasics.cpp
