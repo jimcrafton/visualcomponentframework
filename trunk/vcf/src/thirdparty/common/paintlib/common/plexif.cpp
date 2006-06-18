@@ -2157,7 +2157,7 @@ const string & PLExifTag::GetShortName() const
 
 const string PLExifTag::GetDescription() const
 {
-  return m_Tag ? m_Tag->Desc : Nullstring;
+  return m_Tag ? string(m_Tag->Desc) : Nullstring;
 }
 
   // Format is basic as stored in the raw EXIF data
