@@ -2,7 +2,7 @@
 # MAKEFILE for building ImageFormats_bcc_(d).dll      #
 #                                                     #
 #                                                     #
-# (c) 2004 by Darko Miletic                           #
+# (c) 2004-2006 by Darko Miletic                      #
 # e-mail: kiklop@fibertel.com.ar                      # 
 #######################################################
 .autodepend
@@ -28,13 +28,13 @@ BMODE = RELEASE
 !endif
 
 PROJECT=$(PROJECT2)
-SYSDEFINES=_WINDOWS;_USRDLL;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;FREEIMAGE_LIB;USE_FREEIMAGE_LIB;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL;BUILD_IMAGEFORMATS_LIB
+SYSDEFINES=_WINDOWS;_USRDLL;IMAGEFORMATS_DLL;IMAGEFORMATS_EXPORTS;PAINTLIB_LIB;USE_PAINTLIB_LIB;USE_APPLICATIONKIT_DLL;BUILD_IMAGEFORMATS_LIB
 OUTDIR=..\..\..\bin
 TDIR=S
       
 LIBNAME=
 DLLNAME=ImageFormats_bcc$(DBGDLL).dll
-INCDIR=..\..\..\src
+INCDIR=..\..\..\src;..\..\..\thirdparty\common\paintlib\common
 LIBDIR=..\..\..\lib
 SRC=..\..\..\src\ImageFormats
 OBJ=.\$(OBJDIR)
@@ -52,7 +52,7 @@ PROJECT2=$(BIN)\$(DLLNAME)
 CPPFILES=ImageFormats.cpp
 OBJFILES=$(CPPFILES:.cpp=.obj^ )
 
-LIBFILES=ODBC32.LIB UUID.LIB
+LIBFILES=odbc32.lib comctl32.lib rpcrt4.lib opengl32.lib glu32.lib uuid.lib
 DEFFILE=
 BCC32STARTUP=c0d32.obj
 ALLOBJS=$(BCC32STARTUP) $(OBJFILES)
@@ -98,7 +98,7 @@ $(PROJECT1):: $(OBJFILES)
 $(PROJECT2):: $(OBJFILES)
     @echo Linking $(<F) dynamic library
     @$(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS) 
+    $(LINKFLAGS) $(BCC32STARTUP) $(?: = ^)  
     $<,$*
     $(ALLLIBS)
     $(DEFFILE)

@@ -90,7 +90,11 @@ CPPFILES=GraphicsKit.cpp \
          Win32Image.cpp \
          Win32PrintSession.cpp\
          JPEGLoader.cpp\
-         PNGLoader.cpp
+         PNGLoader.cpp \
+         GrayScaleImage.cpp \
+         GraphicsToolKit.cpp \
+         Win32GraphicsToolkit.cpp
+         
 
 OBJFILES=$(CPPFILES:.cpp=.obj^ )         
 LIBFILES=ODBC32.LIB UUID.LIB 
@@ -139,7 +143,7 @@ $(PROJECT1):: $(OBJFILES)
 $(PROJECT2):: $(OBJFILES)
     @echo Linking $(<F) dynamic library
     @$(ILINK32) @&&|
-    $(LINKFLAGS) $(ALLOBJS) 
+    $(LINKFLAGS) $(BCC32STARTUP) $(?: = ^)  
     $<,$*
     $(ALLLIBS)
     $(DEFFILE)
