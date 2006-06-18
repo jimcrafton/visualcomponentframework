@@ -376,40 +376,38 @@ void XCBUIToolkit::consoleQuitHandler( int sig )
 bool XCBUIToolkit::handleError( const XCBGenericError& err )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	StringUtils::trace(Format("Error Code : %i\n") % err.error_code);
 	return false;
 }
 
 void XCBUIToolkit::handleClientMessage( XCBConnection* connection, const XCBClientMessageEvent& event )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	XCBDestroyWindow( connection,  event.window );
-	return;
+	XCBWindowPeer::internal_handleClientMessageEvent(event);
 }
 
-void XCBUIToolkit::handleConfigureNotify(const XCBConfigureNotifyEvent& event)
+void XCBUIToolkit::handleConfigureNotify( const XCBConfigureNotifyEvent& event )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBWindowPeer::internal_handleConfigureNotifyEvent(event);
 }
 
-void XCBUIToolkit::handleExpose(const XCBExposeEvent& event)
+void XCBUIToolkit::handleExpose( const XCBExposeEvent& event )
 {
-	paintEvents_[event.window.xid] = event.window;
+	exposeEvents_[event.window.xid] = event;
 }
 
 void XCBUIToolkit::handleExposes()
 {
-	PaintUpdateVector::iterator it =  paintEvents_.begin();
-	while ( it != paintEvents_.end() ) {
-		XCBWINDOW& window = it->second;
-		XCBAbstractControl::handlePaintEventFor(window);
+	ExposeEventXIDMap::iterator it =  exposeEvents_.begin();
+	while ( it != exposeEvents_.end() ) {
+		XCBWindowPeer::internal_handleExposeEvent(it->second);
 		it ++;
 	}
-	paintEvents_.clear();
+	exposeEvents_.clear();
 }
 
-void XCBUIToolkit::handleDestroyNotify(const XCBDestroyNotifyEvent& event)
+void XCBUIToolkit::handleDestroyNotify( const XCBDestroyNotifyEvent& event )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBWindowPeer::internal_handleDestroyNotify(event);
 }
 
 void XCBUIToolkit::handleDefault( const XCBGenericEvent& event )

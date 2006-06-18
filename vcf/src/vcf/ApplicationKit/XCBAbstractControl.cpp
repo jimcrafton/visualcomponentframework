@@ -9,9 +9,12 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/XCBAbstractControl.h"
+//#include "vcf/ApplicationKit/XCBControlContextPeer.h"
+
+//#include <sys/shm.h>
 
 using namespace VCF;
-
+/*
 class XCBAbstractControl::XCBControlMapImpl
 {
 public:
@@ -35,43 +38,38 @@ public:
 		return control;
 	}
 
+protected:
 	XCBDrawableControlMap map_;
 };
 
 VCF::SmartPtr<XCBAbstractControl::XCBControlMapImpl>::Scoped XCBAbstractControl::controlMap_;
+*/
 
 XCBAbstractControl::XCBAbstractControl( Control* control ) :
 control_(control)
 {
-	if( controlMap_ == NULL ) {
-		controlMap_.reset(new XCBControlMapImpl);
-	}
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 XCBAbstractControl::~XCBAbstractControl()
 {
-	controlMap_->unRegisterControl( drawable_.window );
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 void XCBAbstractControl::create( Control* owningControl )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-	XCBSCREEN*     screen     = XCBGraphicsToolkit::getScreen();
-
-	createImpl( connection, screen );
-
-	controlMap_->registerControl( drawable_.window, this );
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 void XCBAbstractControl::destroyControl()
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-	XCBDestroyWindow(connection, drawable_.window);
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 OSHandleID XCBAbstractControl::getHandleID()
 {
-	return reinterpret_cast<OSHandleID>(&drawable_);
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	return 0;
 }
 
 String XCBAbstractControl::getText()
@@ -82,30 +80,12 @@ String XCBAbstractControl::getText()
 
 void XCBAbstractControl::setText( const String& text )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-
-	if(connection != NULL)
-	{
-		XCBChangeProperty(connection, PropModeReplace, drawable_.window,
-				  WM_NAME, STRING, 8,
-				  text.length(), text.ansi_c_str());
-	
-		XCBChangeProperty(connection, PropModeReplace, drawable_.window,
-				  WM_ICON_NAME, STRING, 8,
-				  text.length(), text.ansi_c_str());
-	}
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 void XCBAbstractControl::setBounds( Rect* rect )
 {
-	VCF_ASSERT(rect != NULL);
-
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-	if(connection != NULL)
-	{
-		const CARD32 values[] = { rect->getLeft(), rect->getTop(), rect->getWidth(), rect->getHeight() };
-		XCBConfigureWindow(connection, drawable_.window, CWX | CWY | CWWidth | CWHeight, values);
-	}
+	bounds_ = *rect;
 }
 
 bool XCBAbstractControl::beginSetBounds( const ulong32& numberOfChildren )
@@ -121,24 +101,12 @@ void XCBAbstractControl::endSetBounds()
 
 Rect XCBAbstractControl::getBounds()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return Rect();
+	return bounds_;
 }
 
 void XCBAbstractControl::setVisible( const bool& visible )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-	if(connection != NULL)
-	{
-		if(visible)
-		{
-			XCBMapWindow(connection, drawable_.window);
-		}
-		else
-		{
-			XCBUnmapWindow(connection, drawable_.window);
-		}
-	}
+	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
 bool XCBAbstractControl::getVisible()
@@ -239,15 +207,6 @@ void XCBAbstractControl::preChildPaint( GraphicsContext* graphicsContext, Contro
 void XCBAbstractControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-}
-
-void XCBAbstractControl::handlePaintEventFor(XCBWINDOW& window)
-{
-	XCBAbstractControl* control = controlMap_->getControl(window);
-	if(control != NULL) {
-		GraphicsContext* gc = control->control_->getContext();
-		control->control_->paint(gc);
-	}
 }
 
 /**

@@ -47,6 +47,7 @@ where you installed the VCF.
 extern "C"
 {
 	#include <X11/XCB/xcb_image.h>
+	#include <X11/XCB/xcb_aux.h>
 }
 #	include "vcf/GraphicsKit/XCBGraphicsToolkit.h"
 #endif

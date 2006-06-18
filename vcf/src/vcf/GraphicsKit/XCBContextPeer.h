@@ -145,10 +145,12 @@ public:
 
 	virtual void drawThemeText( Rect* rect, TextState& state );
 
+	////////////////////////////////////
+	void internal_setImage(XCBImage *image);
 protected:
-	GraphicsContext* context_;
-    XCBGCONTEXT      xcbContext_;
-	XCBImage        *image;
+	GraphicsContext *context_;
+	XCBImage        *image_;
+
 
 };
 

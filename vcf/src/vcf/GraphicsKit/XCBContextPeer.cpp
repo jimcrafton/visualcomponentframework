@@ -12,18 +12,23 @@ where you installed the VCF.
 using namespace VCF;
 
 XCBContextPeer::XCBContextPeer() :
-context_(NULL)
+context_(NULL),
+image_(NULL)
 {
 	init();
 }
 
-XCBContextPeer::XCBContextPeer( const unsigned long& width, const unsigned long& height )
+XCBContextPeer::XCBContextPeer( const unsigned long& width, const unsigned long& height ) :
+context_(NULL),
+image_(NULL)
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	init();
 }
 
-XCBContextPeer::XCBContextPeer( OSHandleID contextID )
+XCBContextPeer::XCBContextPeer( OSHandleID contextID ) :
+context_(NULL),
+image_(NULL)
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	init();
@@ -31,19 +36,6 @@ XCBContextPeer::XCBContextPeer( OSHandleID contextID )
 
 void XCBContextPeer::init()
 {
-	XCBConnection   *connection = XCBGraphicsToolkit::getConnection();
-	XCBSCREEN       *screen     = XCBGraphicsToolkit::getScreen();
-	XCBDRAWABLE      win;
-
-	xcbContext_ = XCBGCONTEXTNew( connection );
-
-	win.window = screen->root;
-
-	CARD32 mask = XCBGCForeground | XCBGCGraphicsExposures;
-    CARD32 values[2];
-	values[0] = screen->black_pixel;
-	values[1] = 0;
-	XCBCreateGC( connection, xcbContext_, win, mask, values );
 }
 
 void XCBContextPeer::checkHandle()
@@ -69,7 +61,7 @@ GraphicsContext* XCBContextPeer::getContext()
 OSHandleID XCBContextPeer::getContextID() 
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0;
+	return NULL;
 }
 
 void XCBContextPeer::setContextID( OSHandleID contextID ) 
@@ -80,7 +72,7 @@ void XCBContextPeer::setContextID( OSHandleID contextID )
 bool XCBContextPeer::prepareForDrawing( long drawingOperation ) 
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return true;
 }
 
 void XCBContextPeer::finishedDrawing( long drawingOperation ) 
@@ -348,6 +340,11 @@ void XCBContextPeer::drawThemeMenuItemText( Rect* rect, MenuState& state )
 void XCBContextPeer::drawThemeText( Rect* rect, TextState& state ) 
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+}
+
+void XCBContextPeer::internal_setImage(XCBImage *image)
+{
+	image_ = image;
 }
 
 /**

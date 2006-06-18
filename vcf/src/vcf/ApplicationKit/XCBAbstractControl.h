@@ -73,20 +73,12 @@ namespace VCF {
 
 		virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 
-		static void handlePaintEventFor(XCBWINDOW& window);
-
 	protected:
 		XCBAbstractControl( Control* control );
 
-		virtual void createImpl( XCBConnection* connection, XCBSCREEN* screen ) = 0;
-
-		XCBDRAWABLE	drawable_;
-		Control*	control_;
-
+		Control* control_;
+        Rect 	 bounds_;
 	private:
-		class XCBControlMapImpl;
-		friend class XCBControlMapImpl;
-		static VCF::SmartPtr<XCBControlMapImpl>::Scoped controlMap_;
 	};
 };
 
