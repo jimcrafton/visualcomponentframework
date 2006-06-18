@@ -471,7 +471,7 @@ public:
 	@param the system used to pack the color components.
 	@see ColorFormat
 	*/
-	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
+//	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
 	this is a constructor helping us in the conversion from an ulong32 ( as in COLORREF )
@@ -1155,7 +1155,7 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 //	throw NotImplementedException();
 //}
 
-inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ): Object() {
+inline Color::Color(const ulong32& rgb, const ColorPackScheme& cps ): Object() {
 	a_ = 1.0;
 	setRGBPack8( rgb, cps );
 }
