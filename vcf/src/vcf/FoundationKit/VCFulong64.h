@@ -20,7 +20,7 @@ namespace VCF {
 \typedef ulong64 VCFulong64.h "vcf/FoundationKit/VCFulong64.h"
 Unsigned 64 bit integer type
 */
-#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+#if defined(VCF_MSC) || ( defined(VCF_BCC) && !defined(VCF_BCC8)) || defined(VCF_ICL)
 	typedef unsigned __int64 ulong64;
 #else
 	typedef unsigned long long ulong64;
@@ -31,7 +31,7 @@ Unsigned 64 bit integer type
 \typedef long64 VCFulong64.h "vcf/FoundationKit/VCFulong64.h"
 Signed 64 bit integer type
 */
-#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+#if defined(VCF_MSC) || ( defined(VCF_BCC) && !defined(VCF_BCC8)) || defined(VCF_ICL)
 	typedef __int64 long64;
 #else
 	typedef long long long64;
@@ -48,7 +48,7 @@ Usage example:
 ulong64 x = VCF_LIT64(0xffffffffffffffff);
 \endcode
 */
-#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+#if defined(VCF_MSC) || ( defined(VCF_BCC) && !defined(VCF_BCC8)) || defined(VCF_ICL)
 	#define VCF_LIT64(x) (x)	// not suffix needed
 #else
 	#define VCF_LIT64(x) (x##LL)
