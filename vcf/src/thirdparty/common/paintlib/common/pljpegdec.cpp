@@ -32,6 +32,11 @@
 #endif
 #endif
 
+#ifdef __BORLANDC__
+#include <algorithm>
+using std::min;
+using std::max;
+#endif
 
 /////////////////////////////////////////////////////////////////////
 // Error handling.

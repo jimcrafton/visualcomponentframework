@@ -18,6 +18,12 @@
 #include "plpixel24.h"
 #include "plpixel16.h"
 
+#ifdef __BORLANDC__
+#include <memory.h>
+#define wcsupr _wcsupr
+#define wcsdup _wcsdup
+#endif
+
 class PLFilter;
 
 //! Device- and OS-independent bitmap class. Manipulates uncompressed
