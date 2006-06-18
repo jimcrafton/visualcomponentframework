@@ -51,6 +51,10 @@
 					<Add library="odbccp32" />
 					<Add library="ws2_32" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
 				<Option output="mgcc\Debug\Dictionaries_mgcc_d.exe" />
@@ -98,6 +102,10 @@
 					<Add library="odbccp32" />
 					<Add library="ws2_32" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 			</Target>
 		</Build>
 		<Compiler>

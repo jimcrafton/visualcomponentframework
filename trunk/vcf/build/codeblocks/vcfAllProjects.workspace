@@ -149,7 +149,7 @@
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
 		</Project>
 		<Project filename="..\..\examples\HelloWorld\HelloWorld_cb.cbp">
-			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
+			<Depends filename="ApplicationKit\ApplicationKit.cbp" />
 		</Project>
 		<Project filename="..\..\examples\HelloWorld2\HelloWorld2_cb.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />

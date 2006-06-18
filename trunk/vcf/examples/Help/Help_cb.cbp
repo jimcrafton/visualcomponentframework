@@ -53,6 +53,10 @@
 					<Add library="odbccp32" />
 					<Add library="ws2_32" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 				<ExtraCommands>
 					<Add before="cmd /c BuildHelp.bat" />
 					<Mode after="always" />
@@ -106,6 +110,10 @@
 					<Add library="odbccp32" />
 					<Add library="ws2_32" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 				<ExtraCommands>
 					<Add before="cmd /c BuildHelp.bat" />
 					<Mode after="always" />

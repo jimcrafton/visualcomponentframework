@@ -52,6 +52,10 @@
 					<Add library="ws2_32" />
 					<Add directory="mgcc\Release" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 				<ExtraCommands>
 					<Add before="cmd /c IF NOT EXIST mgcc\Release MKDIR mgcc\Release" />
 					<Add before="cmd /c mingw32-g++.exe -O2 -W -pipe -frtti -fexceptions -mthreads -Wno-multichar  -I- -I. -c SimpleDLL.cpp -o mgcc\Release\SimpleDLL.o" />
@@ -105,6 +109,10 @@
 					<Add library="ws2_32" />
 					<Add directory="mgcc\Debug" />
 				</Linker>
+				<Environment>
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="COMPILER_VER" value="" />
+				</Environment>
 				<ExtraCommands>
 					<Add before="cmd /c IF NOT EXIST mgcc\Debug MKDIR mgcc\Debug" />
 					<Add before="cmd /c mingw32-g++.exe -O2 -W -pipe -frtti -fexceptions -mthreads -Wno-multichar  -I- -I. -c SimpleDLL.cpp -o mgcc\Debug\SimpleDLL.o" />
