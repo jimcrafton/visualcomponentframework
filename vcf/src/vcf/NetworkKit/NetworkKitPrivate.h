@@ -15,6 +15,9 @@ where you installed the VCF.
 
 
 #ifdef VCF_WIN
+//this makes sence to be here since all files include this header
+//and we make chaneg only in one place
+#include <winsock2.h>
 #include "vcf/NetworkKit/Win32SocketPeer.h"
 #include "vcf/NetworkKit/Win32DatagramSocketPeer.h"
 #endif

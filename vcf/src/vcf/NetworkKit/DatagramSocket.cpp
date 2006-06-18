@@ -11,11 +11,6 @@ where you installed the VCF.
 // DatagramSocketPeer.
 // -- Ning Ke
 
-#ifdef VCF_WIN //this is a hack - this will be removed when we redo sockets
-			 //and add this to teh toolkit
-	#include <winsock2.h>
-#endif
-
 #include "vcf/NetworkKit/NetworkKit.h"
 #include "vcf/NetworkKit/NetworkKitPrivate.h"
 
