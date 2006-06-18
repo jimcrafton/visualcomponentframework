@@ -27,6 +27,11 @@
 
 #include <stdio.h>
 
+#ifdef __BORLANDC__
+#include <algorithm>
+using std::min;
+using std::max;
+#endif
 
 #if defined(__MINGW32__)
 #ifndef max
