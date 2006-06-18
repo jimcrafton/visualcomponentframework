@@ -10,6 +10,8 @@ where you installed the VCF.
 namespace VCF
 {
 
+class XCBWindowPeer;
+
 class XCBUIToolkit : public UIToolkit
 {
 public:
@@ -132,8 +134,8 @@ private:
 	void handleExposes();
 
 private:
-	typedef std::map<CARD32, XCBWINDOW> PaintUpdateVector;
-	PaintUpdateVector paintEvents_;
+	typedef std::map<CARD32, XCBExposeEvent> ExposeEventXIDMap;
+	ExposeEventXIDMap exposeEvents_;
 
 	bool consoleQuitHandlerCalled_;
 
