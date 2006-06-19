@@ -281,7 +281,7 @@ void XCBUIToolkit::internal_runEventLoop()
 					break;
 
 				case XCBConfigureNotify:
-					handleConfigureNotify( *(XCBConfigureNotifyEvent*)event );
+					handleConfigureNotify( connection, *(XCBConfigureNotifyEvent*)event );
 					break;
 
 				case XCBExpose:
@@ -289,7 +289,7 @@ void XCBUIToolkit::internal_runEventLoop()
 					break;
 
 				case XCBDestroyNotify:
-					handleDestroyNotify( *(XCBDestroyNotifyEvent*)event);
+					handleDestroyNotify( connection, *(XCBDestroyNotifyEvent*)event);
 					done = true;
 					break;
 
@@ -306,7 +306,7 @@ void XCBUIToolkit::internal_runEventLoop()
 				done = handlePollForEventError();
 			}
 			if(!done) {
-				handleExposes();
+				handleExposes(connection);
 			}
 		}
 	}
@@ -373,21 +373,45 @@ void XCBUIToolkit::consoleQuitHandler( int sig )
 	}
 }
 
+namespace
+{
+	struct SequenceFind
+	{
+		explicit SequenceFind(CARD16 sq) : sequence_(sq) {}
+		bool operator()(const XCBUIToolkit::XCBCookieInfo &info) const
+		{
+			return info.cookie.sequence == sequence_;
+		}
+
+		CARD16 sequence_;
+	};
+}
+
 bool XCBUIToolkit::handleError( const XCBGenericError& err )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	StringUtils::trace(Format("Error Code : %i\n") % err.error_code);
+	XCBCookieInfoVector::iterator it = std::find_if(cookieInfos_.begin(), cookieInfos_.end(), SequenceFind(err.sequence));
+	if(it != cookieInfos_.end()) {
+		StringUtils::trace(Format("Error Code      : %i\n"
+								  "Sequence Number : %i\n"
+								  "Extra Info : %s\n") % err.error_code % err.sequence % it->extraInfo);
+
+	}
+	else {
+		StringUtils::trace(Format("Error Code      : %i\n"
+								  "Sequence Number : %i\n") % err.error_code % err.sequence);
+		StringUtils::trace("NO EXTRA INFO\n");
+	}
 	return false;
 }
 
 void XCBUIToolkit::handleClientMessage( XCBConnection* connection, const XCBClientMessageEvent& event )
 {
-	XCBWindowPeer::internal_handleClientMessageEvent(event);
+	XCBWindowPeer::internal_handleClientMessageEvent(*connection, event);
 }
 
-void XCBUIToolkit::handleConfigureNotify( const XCBConfigureNotifyEvent& event )
+void XCBUIToolkit::handleConfigureNotify( XCBConnection* connection, const XCBConfigureNotifyEvent& event )
 {
-	XCBWindowPeer::internal_handleConfigureNotifyEvent(event);
+	XCBWindowPeer::internal_handleConfigureNotifyEvent(*connection, event);
 }
 
 void XCBUIToolkit::handleExpose( const XCBExposeEvent& event )
@@ -395,19 +419,19 @@ void XCBUIToolkit::handleExpose( const XCBExposeEvent& event )
 	exposeEvents_[event.window.xid] = event;
 }
 
-void XCBUIToolkit::handleExposes()
+void XCBUIToolkit::handleExposes(XCBConnection* connection)
 {
 	ExposeEventXIDMap::iterator it =  exposeEvents_.begin();
 	while ( it != exposeEvents_.end() ) {
-		XCBWindowPeer::internal_handleExposeEvent(it->second);
+		XCBWindowPeer::internal_handleExposeEvent(*connection, it->second);
 		it ++;
 	}
 	exposeEvents_.clear();
 }
 
-void XCBUIToolkit::handleDestroyNotify( const XCBDestroyNotifyEvent& event )
+void XCBUIToolkit::handleDestroyNotify( XCBConnection* connection, const XCBDestroyNotifyEvent& event )
 {
-	XCBWindowPeer::internal_handleDestroyNotify(event);
+	XCBWindowPeer::internal_handleDestroyNotify(*connection, event);
 }
 
 void XCBUIToolkit::handleDefault( const XCBGenericEvent& event )
@@ -421,6 +445,11 @@ bool XCBUIToolkit::handlePollForEventError()
 	return true;
 }
 
+void XCBUIToolkit::internal_addVoidCookie( const XCBVoidCookie &cookie, const String &extraInfo )
+{
+	XCBCookieInfo info = { cookie, extraInfo };
+	cookieInfos_.push_back(info);
+}
 
 /**
 $Id$

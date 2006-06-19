@@ -100,20 +100,24 @@ namespace VCF {
 		virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 
 		/////////////////////////////////////////////////////////////////////
-		static void internal_handleClientMessageEvent(const XCBClientMessageEvent& event);
-		static void internal_handleConfigureNotifyEvent(const XCBConfigureNotifyEvent& event);
-		static void internal_handleExposeEvent(const XCBExposeEvent& event);
-		static void internal_handleDestroyNotify(const XCBDestroyNotifyEvent& event);
+		static void internal_handleClientMessageEvent(XCBConnection &connection, const XCBClientMessageEvent& event);
+		static void internal_handleConfigureNotifyEvent(XCBConnection &connection, const XCBConfigureNotifyEvent& event);
+		static void internal_handleExposeEvent(XCBConnection &connection, const XCBExposeEvent& event);
+		static void internal_handleDestroyNotify(XCBConnection &connection, const XCBDestroyNotifyEvent& event);
 
 	private:
-		void paint();
+		void paint(XCBConnection &connection);
+		void destroyImage(XCBConnection &connection);
+		void createImage(XCBConnection &connection, int width, int height);
 
 	private:
-		XCBDRAWABLE	drawable_;
-		XCBGCONTEXT context_;
-        XCBATOM     deleteWindowAtom_;
-		Rect 	 	clientBounds_;
-		Control*    control_;
+		XCBDRAWABLE	      drawable_;
+		XCBGCONTEXT       context_;
+		XCBImage         *image_;
+		XCBShmSegmentInfo shminfo_;
+        XCBATOM           deleteWindowAtom_;
+		Rect 	 	      clientBounds_;
+		Control*          control_;
 
 		typedef std::map<CARD32, XCBWindowPeer*> XIDWindowPeerMap;
 		static XIDWindowPeerMap XIDWindowPeerMap_;
