@@ -17,6 +17,13 @@ class XCBUIToolkit : public UIToolkit
 public:
 	XCBUIToolkit();
 
+	struct XCBCookieInfo
+	{
+		XCBVoidCookie cookie;
+		String        extraInfo;
+	};
+	void internal_addVoidCookie( const XCBVoidCookie &cookie, const String &extraInfo );
+
 protected:
 	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType=CT_DEFAULT );
 
@@ -122,22 +129,26 @@ private:
     */
 	bool handleError( const XCBGenericError& err );
 	void handleClientMessage( XCBConnection* connection, const XCBClientMessageEvent& event );
-	void handleConfigureNotify( const XCBConfigureNotifyEvent& event );
+	void handleConfigureNotify( XCBConnection* connection, const XCBConfigureNotifyEvent& event );
 	void handleExpose( const XCBExposeEvent& event );
-	void handleDestroyNotify( const XCBDestroyNotifyEvent& event );
+	void handleDestroyNotify( XCBConnection* connection, const XCBDestroyNotifyEvent& event );
 	void handleDefault( const XCBGenericEvent& event );
 
 	/**
 	 * returns whether event loop should exit.
 	*/
 	bool handlePollForEventError();
-	void handleExposes();
+	void handleExposes(XCBConnection* connection);
 
 private:
 	typedef std::map<CARD32, XCBExposeEvent> ExposeEventXIDMap;
 	ExposeEventXIDMap exposeEvents_;
 
 	bool consoleQuitHandlerCalled_;
+
+
+	typedef std::vector<XCBCookieInfo> XCBCookieInfoVector;
+	XCBCookieInfoVector cookieInfos_;
 
 };
 
