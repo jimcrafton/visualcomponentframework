@@ -20,7 +20,7 @@ where you installed the VCF.
 using namespace VCF;
 
 
-#define VCF_RGB(r,g,b) ((ulong32)(((uchar)(r)|((ushort)((uchar)(g))<<8))|(((ulong32)(uchar)(b))<<16)))
+#define VCF_RGB(r,g,b) ((uint32)(((uchar)(r)|((ushort)((uchar)(g))<<8))|(((uint32)(uchar)(b))<<16)))
 
 
 
@@ -447,15 +447,15 @@ ColorSpace::RGBtype ColorSpace::RGBRangeToRGB(const RGBrangetype& rgbRange)
 	return rgb;
 }
 
-ulong32 ColorSpace::RGBToColorLong (const RGBtype& rgb)
+uint32 ColorSpace::RGBToColorLong (const RGBtype& rgb)
 {
 	return VCF_RGB( rgb.R * ColorSpace::RGBMax, rgb.G * ColorSpace::RGBMax, rgb.B * ColorSpace::RGBMax );
 }
 
-ColorSpace::RGBtype ColorSpace::ColorLongToRGB ( const ulong32 color )
+ColorSpace::RGBtype ColorSpace::ColorLongToRGB ( const uint32 color )
 {
 	RGBtype rgb;
-	Color c((uint32)color);
+	Color c(color);
 	//the casting is necessary
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
@@ -463,7 +463,7 @@ ColorSpace::RGBtype ColorSpace::ColorLongToRGB ( const ulong32 color )
 	return rgb;
 }
 
-ulong32 ColorSpace::HSLToColorLong (const HSLtype& hsl)
+uint32 ColorSpace::HSLToColorLong (const HSLtype& hsl)
 {
 	RGBtype rgb;
 	rgb = HSLToRGB (hsl);
@@ -471,11 +471,11 @@ ulong32 ColorSpace::HSLToColorLong (const HSLtype& hsl)
 	return VCF_RGB(rgb.R * ColorSpace::RGBMax, rgb.G * ColorSpace::RGBMax, rgb.B * ColorSpace::RGBMax);
 }
 
-ColorSpace::HSLtype ColorSpace::ColorLongToHSL ( const ulong32 color )
+ColorSpace::HSLtype ColorSpace::ColorLongToHSL ( const uint32 color )
 {
 	RGBtype rgb;
 	//the casting is necessary
-	Color c((uint32)color);
+	Color c(color);
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.B = (double) (c.b_ * Color::xFF) / ColorSpace::RGBMax;
@@ -498,16 +498,16 @@ ColorSpace::HSLrangetype ColorSpace::RGBToHSLRange ( const RGBtype& rgb )
 	return hslRange;
 }
 
-ulong32 ColorSpace::HSLRangeToColorLong ( const HSLrangetype& hslRange )
+uint32 ColorSpace::HSLRangeToColorLong ( const HSLrangetype& hslRange )
 {
 	RGBtype rgb = HSLRangeToRGB (hslRange);
 	return VCF_RGB(rgb.R, rgb.G, rgb.B);
 }
 
-ColorSpace::HSLrangetype ColorSpace::ColorLongToHSLRange ( ulong32 color )
+ColorSpace::HSLrangetype ColorSpace::ColorLongToHSLRange ( uint32 color )
 {
 	RGBtype rgb;
-	Color c((uint32)color);
+	Color c(color);
 	//the casting is necessary
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF)/ ColorSpace::RGBMax;
