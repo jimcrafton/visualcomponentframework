@@ -8,15 +8,51 @@ where you installed the VCF.
 */
 
 
+
+#include "thirdparty/common/agg/include/agg_renderer_scanline.h"
+
+
+
 namespace VCF  {
+
+/**
+This represents the struct that we need to build a VCF graphics context 
+peer. We will need the xcb image, almost certainly the window/drawable,
+and probably the GC. We also define a specific type of pixel format for 
+this surface - all we care about is the RGB components, we don't need the
+alpha channel for this level.
+*/
+struct XCBSurface {
+    XCBGCONTEXT* context;
+    XCBDRAWABLE* drawable;
+    XCBImage* drawableImage;
+
+	typedef agg::pixfmt_argb32 PixFmt;
+	typedef agg::pixfmt_argb32_pre PixFmtPre;
+	typedef agg::rgba8 ColorType;
+	typedef agg::order_argb ComponentOrder;
+};
+
+
+struct FontStruct;
 
 class XCBContextPeer : public ContextPeer {
 public:
+	
+
+
 	XCBContextPeer();
 
 	XCBContextPeer( const unsigned long& width, const unsigned long& height );
 
+    /**
+    In this case the OSHandleID will be a vaild pointer to a XCBSurface
+    struct. The XCBSurface pointer will have valid values set for all it's
+    members.
+    */
 	XCBContextPeer( OSHandleID contextID );
+
+	virtual ~XCBContextPeer();
 
 	void init();
 
@@ -84,11 +120,7 @@ public:
 							  ContextPeer* sourceContext );
 
 	virtual bool isMemoryContext();
-
-	virtual bool isXORModeOn();
-
-	virtual void setXORModeOn( const bool& XORModeOn );
-
+	
 	virtual bool isAntiAliasingOn();
 
 	virtual void setAntiAliasingOn( bool antiAliasingOn );
@@ -151,6 +183,18 @@ protected:
 	GraphicsContext *context_;
 	XCBImage        *image_;
 
+    XCBSurface* drawingSurface_;
+
+
+    agg::rendering_buffer renderBuffer_;
+    agg::scanline_u8 scanline_;
+
+    Rect currentClipRect_;
+    agg::path_storage currentPath_;
+    FontStruct* fonts_;
+    
+    void resetPath();
+	void renderScanlinesSolid( agg::rasterizer_scanline_aa<>& rasterizer, const agg::rgba& color  );
 
 };
 

@@ -455,7 +455,7 @@ ulong32 ColorSpace::RGBToColorLong (const RGBtype& rgb)
 ColorSpace::RGBtype ColorSpace::ColorLongToRGB ( const ulong32 color )
 {
 	RGBtype rgb;
-	Color c(color);
+	Color c((uint32)color);
 	//the casting is necessary
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
@@ -475,7 +475,7 @@ ColorSpace::HSLtype ColorSpace::ColorLongToHSL ( const ulong32 color )
 {
 	RGBtype rgb;
 	//the casting is necessary
-	Color c(color);
+	Color c((uint32)color);
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.B = (double) (c.b_ * Color::xFF) / ColorSpace::RGBMax;
@@ -507,7 +507,7 @@ ulong32 ColorSpace::HSLRangeToColorLong ( const HSLrangetype& hslRange )
 ColorSpace::HSLrangetype ColorSpace::ColorLongToHSLRange ( ulong32 color )
 {
 	RGBtype rgb;
-	Color c(color);
+	Color c((uint32)color);
 	//the casting is necessary
 	rgb.R = (double) (c.r_ * Color::xFF) / ColorSpace::RGBMax;
 	rgb.G = (double) (c.g_ * Color::xFF)/ ColorSpace::RGBMax;

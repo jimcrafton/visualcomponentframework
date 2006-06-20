@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/DateTime.h"
 
-#if defined(VCF_OSX) || defined(VCF_MINGW) 
+#if defined(VCF_OSX) || defined(VCF_MINGW)
     #include <cxxabi.h>  //add this so we can demangle the GCC typeinfo names
 #endif
 
@@ -239,7 +239,7 @@ String StringUtils::lowerCase( const String& text )
 
 	result = copyText;
 	delete [] copyText;
-	
+
 #elif defined(VCF_CW_W32) || defined(VCF_GCC)
 	VCFChar* copyText = new VCFChar[text.size()+1];
 	memset(copyText, 0, (text.size()+1)*sizeof(VCFChar) );
@@ -248,7 +248,7 @@ String StringUtils::lowerCase( const String& text )
 	{
 		copyText[n] = std::towlower(copyText[n]);
 	}
-	
+
 	result = copyText;
 	delete [] copyText;
 
@@ -282,7 +282,7 @@ String StringUtils::upperCase( const VCF::String& text )
 	{
 		copyText[n] = std::towupper(copyText[n]);
 	}
-	
+
 	result = copyText;
 	delete [] copyText;
 
@@ -299,7 +299,7 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 {
 	int result = 0;
 #if defined(VCF_OSX)
-	CFTextString tmp1(str1);	
+	CFTextString tmp1(str1);
 	CFTextString tmp2(str2);
 	CFComparisonResult cmpRes = CFStringCompare( tmp1, tmp2, kCFCompareCaseInsensitive );
 	switch ( cmpRes ) {
@@ -307,12 +307,12 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 			result = -1;
 		}
 		break;
-		
+
 		case kCFCompareEqualTo : {
 			result = 0;
 		}
 		break;
-		
+
 		case kCFCompareGreaterThan : {
 			result = 1;
 		}
@@ -323,7 +323,7 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 	int cmpRes = CSTR_EQUAL;
 	if ( System::isUnicodeEnabled() ) {
 		cmpRes = ::CompareStringW( GetThreadLocale(), NORM_IGNORECASE, str1.c_str(), str1.size(), str2.c_str(), str2.size() );
-		
+
 	}
 	else {
 		AnsiString tmp1 = str1;
@@ -336,12 +336,12 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 			result = -1;
 		}
 		break;
-		
+
 		case CSTR_EQUAL : {
 			result = 0;
 		}
 		break;
-		
+
 		case CSTR_GREATER_THAN : {
 			result = 1;
 		}
@@ -350,7 +350,7 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 #else
 	String s1 = StringUtils::upperCase(str1);
 	String s2 = StringUtils::upperCase(str2);
-	
+
 	if ( s1 < s2 ) {
 		result = -1;
 	}
@@ -481,7 +481,7 @@ VCF::String StringUtils::toString( const VCF::long64& value )
 		// if ( 0 != valHi )
 		// swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%lu%lu", value.hi(), value.lo() );
 		// would be a wrong implementation
-		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)value.lo() );
+		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)getLo32(value) );
 	#else
 		swprintf( tmp, L"%I64d", (__int64)value );
 	#endif
@@ -508,7 +508,7 @@ VCF::String StringUtils::toString( const VCF::ulong64& value )
 		// if ( 0 != valHi )
 		// swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, L"%lu%lu", value.hi(), value.lo() );
 		// would be a wrong implementation
-		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)value.lo() );
+		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)getLo32(value) );
 	#else
 		swprintf( tmp, L"%I64u", (unsigned __int64)value );
 	#endif
@@ -595,23 +595,23 @@ VCF::String StringUtils::newUUID()
 		if ( System::isUnicodeEnabled() ) {
 			WideChar* tmpid = NULL;
 			RPC_STATUS rpcresult = UuidToStringW(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
-			
+
 			if ( RPC_S_OUT_OF_MEMORY != rpcresult ) {
 				result = VCF::String( tmpid );
-				
+
 				RpcStringFreeW( reinterpret_cast<unsigned short**>(&tmpid) );
 			}
 		}
 		else {
 			char* tmpid = NULL;
 			RPC_STATUS rpcresult = UuidToStringA(  &id, (unsigned char**)&tmpid );
-			
+
 			if ( RPC_S_OUT_OF_MEMORY != rpcresult ) {
 				result = VCF::String( tmpid );
-				
+
 				RpcStringFreeA( (unsigned char**)&tmpid );
 			}
-		}		
+		}
 	}
 #elif defined(VCF_OSX)
 	CFUUIDRef uuidRef = CFUUIDCreate( kCFAllocatorDefault );
@@ -706,19 +706,19 @@ VCF::String StringUtils::toString( const std::type_info& typeInfo )
 	return StringUtils::getClassNameFromTypeInfo( typeInfo );
 #elif defined(VCF_GCC)
 	String result;
-	
+
 	int status = 0;
 	char* nameBuf;
 	const char* c_name = 0;
 
 	nameBuf = abi::__cxa_demangle( typeInfo.name(), 0, 0, &status );
 	c_name = nameBuf;
-	
-		
+
+
 	if ( NULL == c_name ) {
 		//try typeinfo.name() without the C++ de-mangler
 		c_name = typeInfo.name();
-		
+
 		if ( -2 == status && (strlen(c_name) == 1) ) { //built-in type
 			switch (c_name[0])
 			{
@@ -743,22 +743,22 @@ VCF::String StringUtils::toString( const std::type_info& typeInfo )
 				case 'e': c_name = "long double"; break;
 				case 'g': c_name = "__float128"; break;
 				case 'z': c_name = "..."; break;
-			} 
-		}		
+			}
+		}
 	}
-	
-	
+
+
 	if ( NULL != c_name ) {
 		result = c_name;
 	}
-	
+
 	if ( NULL != nameBuf ) {
 		::free( nameBuf );
 	}
 	return result;
 #else
 	return typeInfo.name();
-#endif	
+#endif
 }
 
 VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInfo  )
@@ -808,12 +808,12 @@ VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInf
 
 	nameBuf = abi::__cxa_demangle( typeInfo.name(), 0, 0, &status );
 	c_name = nameBuf;
-	
-		
+
+
 	if ( NULL == c_name ) {
 		//try typeinfo.name() without the C++ de-mangler
 		c_name = typeInfo.name();
-		
+
 		if ( -2 == status && (strlen(c_name) == 1) ) { //built-in type
 			switch (c_name[0])
 			{
@@ -838,15 +838,15 @@ VCF::String StringUtils::getClassNameFromTypeInfo( const std::type_info& typeInf
 				case 'e': c_name = "long double"; break;
 				case 'g': c_name = "__float128"; break;
 				case 'z': c_name = "..."; break;
-			} 
-		}		
+			}
+		}
 	}
-	
-	
+
+
 	if ( NULL != c_name ) {
 		result = c_name;
 	}
-	
+
 	if ( NULL != nameBuf ) {
 		::free( nameBuf );
 	}
@@ -1051,7 +1051,7 @@ VCF::long64 StringUtils::fromStringAsLong64( const VCF::String& value )
 		result = CFStringGetIntValue( tmp );
 		/*if ( result == 0 ) {
 			//check_true_error( tmp );
-		} 
+		}
 		else */
 		if ( (INT_MIN == (int)result) || (INT_MAX == (int)result) ) {
 			throw BasicException( L"StringUtils::fromStringAsLong64() Overflow - Unable to convert: " + value );
@@ -1090,7 +1090,7 @@ VCF::ulong64 StringUtils::fromStringAsULong64( const VCF::String& value )
 			#if ( _MSC_VER >= 1300 )
 				result = _wcstoui64( value.c_str(), NULL, 10 );
 			#else
-				/* we risk overflow, but that's the best we can do 
+				/* we risk overflow, but that's the best we can do
 				if reported problems we need to use swscanf */
 				result = _wtoi64( value.c_str() );
 			#endif
@@ -1887,82 +1887,82 @@ VCF::String StringUtils::translateVKCodeToString( VirtualKeyCode code )
 	VCF::String result;
 
 	switch ( code ) {
-		case vkF1: {			
+		case vkF1: {
 			result = "F1";
 		}
 		break;
-		
-		case vkF2: {			
+
+		case vkF2: {
 			result = "F2";
 		}
 		break;
 
-		case vkF3: {			
+		case vkF3: {
 			result = "F3";
 		}
 		break;
 
-		case vkF4: {			
+		case vkF4: {
 			result = "F4";
 		}
 		break;
 
-		case vkF5: {			
+		case vkF5: {
 			result = "F5";
 		}
 		break;
 
-		case vkF6: {			
+		case vkF6: {
 			result = "F6";
 		}
 		break;
 
-		case vkF7: {			
+		case vkF7: {
 			result = "F7";
 		}
 		break;
 
-		case vkF8: {			
+		case vkF8: {
 			result = "F8";
 		}
 		break;
 
-		case vkF9: {			
+		case vkF9: {
 			result = "F9";
 		}
 		break;
 
-		case vkF10: {			
+		case vkF10: {
 			result = "F10";
 		}
 		break;
 
-		case vkF11: {			
+		case vkF11: {
 			result = "F11";
 		}
 		break;
 
-		case vkF12: {			
+		case vkF12: {
 			result = "F12";
 		}
 		break;
 
-		case vkUpArrow: {			
+		case vkUpArrow: {
 			result = "Up";
 		}
 		break;
 
-		case vkDownArrow: {			
+		case vkDownArrow: {
 			result = "Down";
 		}
 		break;
 
-		case vkLeftArrow: {			
+		case vkLeftArrow: {
 			result = "Left";
 		}
 		break;
 
-		case vkRightArrow: {			
+		case vkRightArrow: {
 			result = "Right";
 		}
 		break;
@@ -2081,7 +2081,7 @@ VCF::String StringUtils::translateVKCodeToString( VirtualKeyCode code )
 			result = "F";
 		}
 		break;
-			
+
 		case vkLetterG: {
 			result = "G";
 		}
