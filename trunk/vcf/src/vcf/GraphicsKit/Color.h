@@ -474,15 +474,6 @@ public:
 //	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
-	this is a constructor helping us in the conversion from an ulong32 ( as in COLORREF )
-	into which the color components have been packed (4 x 8bits).
-	Under Win32 it is necessary to specify the cpsABGR parameter.
-	@param the system used to pack the color components.
-	@see ColorFormat
-	*/
-	Color( const ulong32& color, const ColorPackScheme& cps=cpsRGB );
-
-	/**
 	this is a constructor halping us in the conversion from an ulong64 ( similarly as in COLORREF)
 	into which the color components have been packed (4 x 16bits).
 	Under Win32 it is necessary to specify the cpsABGR parameter.
