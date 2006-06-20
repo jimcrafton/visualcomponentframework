@@ -229,11 +229,11 @@ public:
 	static HSLtype HSLRangeToHSL (const HSLrangetype& hslRange);
 	static HSLrangetype HSLToHSLRange (const HSLtype& hsl);
 
-	static ulong32 RGBToColorLong (const RGBtype& rgb);
-	static RGBtype ColorLongToRGB (const ulong32 color);
+	static uint32 RGBToColorLong (const RGBtype& rgb);
+	static RGBtype ColorLongToRGB (const uint32 color);
 
-	static ulong32 HSLToColorLong (const HSLtype& hsl);
-	static HSLtype ColorLongToHSL (const ulong32 color);
+	static uint32 HSLToColorLong (const HSLtype& hsl);
+	static HSLtype ColorLongToHSL (const uint32 color);
 
 	static RGBrangetype RGBToRGBRange(const RGBtype& rgb);
 	static RGBtype RGBRangeToRGB(const RGBrangetype& rgbRange);
@@ -241,14 +241,14 @@ public:
 	static RGBtype HSLRangeToRGB (const HSLrangetype& hslRange);
 	static HSLrangetype RGBToHSLRange (const RGBtype& rgb);
 
-	static ulong32 HSLRangeToColorLong (const HSLrangetype& hsl);
-	static HSLrangetype ColorLongToHSLRange (const ulong32 color);
+	static uint32 HSLRangeToColorLong (const HSLrangetype& hsl);
+	static HSLrangetype ColorLongToHSLRange (const uint32 color);
 
 
 	// the HSV-Color conversion pair
 	static Color RGBToColor (const RGBtype& rgb);
 	static RGBtype ColorToRGB (const Color& color);
-	static ulong32 ColorToColorLong (const Color& color);
+	static uint32 ColorToColorLong (const Color& color);
 
 	// the HSV-Color conversion pair
 	static Color HSVToColor (const HSVtype& hsl);
@@ -312,7 +312,7 @@ public:
 	static HSLtype	changeHue ( const HSLtype& hsl, const double& deltaH );
 	static Color	changeHue ( const Color& color, const double& deltaH );
 	static RGBtype	changeHue ( const RGBtype& color, const double& deltaH );
-	static ulong32	changeHue ( const ulong32& color, const double& deltaH );
+	static uint32	changeHue ( const uint32& color, const double& deltaH );
 };
 
 
@@ -471,7 +471,16 @@ public:
 	@param the system used to pack the color components.
 	@see ColorFormat
 	*/
-//	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
+	Color( const uint32& color, const ColorPackScheme& cps=cpsRGB );
+
+	/**
+	this is a constructor helping us in the conversion from an unsigned long ( as in COLORREF )
+	into which the color components have been packed (4 x 8bits).
+	Under Win32 it is necessary to specify the cpsABGR parameter.
+	@param the system used to pack the color components.
+	@see ColorFormat
+	*/
+	Color( const unsigned long& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
 	this is a constructor halping us in the conversion from an ulong64 ( similarly as in COLORREF)
@@ -1146,7 +1155,13 @@ inline Color::Color( const uint16& val1, const uint16& val2, const uint16& val3,
 //	throw NotImplementedException();
 //}
 
-inline Color::Color(const ulong32& rgb, const ColorPackScheme& cps ): Object() {
+inline Color::Color(const uint32& rgb, const ColorPackScheme& cps ): Object() {
+	a_ = 1.0;
+	setRGBPack8( rgb, cps );
+}
+
+
+inline Color::Color(const unsigned long& rgb, const ColorPackScheme& cps ): Object() {
 	a_ = 1.0;
 	setRGBPack8( rgb, cps );
 }
@@ -2424,7 +2439,7 @@ inline ColorSpace::RGBtype ColorSpace::ColorToRGB (const Color& color) {
 	return rgb;
 }
 
-inline ulong32 ColorSpace::ColorToColorLong (const Color& color) {
+inline uint32 ColorSpace::ColorToColorLong (const Color& color) {
 	RGBtype rgb = ColorSpace::ColorToRGB ( color );
 	return ColorSpace::RGBToColorLong ( rgb );
 }
@@ -2529,14 +2544,14 @@ inline ColorSpace::RGBtype ColorSpace::changeHue( const RGBtype& color, const do
 	return clr;
 }
 
-inline ulong32 ColorSpace::changeHue( const ulong32& color, const double& deltaH ) {
+inline uint32 ColorSpace::changeHue( const uint32& color, const double& deltaH ) {
 	RGBtype rgb = ColorSpace::ColorLongToRGB(color);
 
 	HSLtype hsl = ColorSpace::RGBToHSL(rgb);
 	ColorSpace::changeHue( hsl, deltaH );
 
 	rgb = ColorSpace::HSLToRGB(hsl);
-	ulong32 color2 = ColorSpace::RGBToColorLong (rgb);
+	uint32 color2 = ColorSpace::RGBToColorLong (rgb);
 
 	return color2;
 }
