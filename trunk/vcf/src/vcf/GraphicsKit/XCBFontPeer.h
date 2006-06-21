@@ -57,6 +57,16 @@ public:
 
 	virtual void setFont( Font* font );
 
+	String getHashcode();
+protected:
+	String fontName_;
+	bool bold_;
+	bool underlined_;
+	bool italic_;
+	bool strikeOut_;
+	double pointSize_;
+	
+
 };
 
 }; //end of namespace VCF

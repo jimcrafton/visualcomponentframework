@@ -11,9 +11,15 @@ where you installed the VCF.
 
 using namespace VCF;
 
-XCBFontPeer::XCBFontPeer( const String& fontName )
+XCBFontPeer::XCBFontPeer( const String& fontName ):
+	fontName_(fontName),
+	bold_(false),
+	underlined_(false),
+	italic_(false),
+	strikeOut_(false),
+	pointSize_(12.0)
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 OSHandleID XCBFontPeer::getFontHandleID()
@@ -24,13 +30,12 @@ OSHandleID XCBFontPeer::getFontHandleID()
 
 String XCBFontPeer::getName()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return "";
+	return fontName_;
 }
 
 void XCBFontPeer::setName( const String& name )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	fontName_ = name;
 }
 
 bool XCBFontPeer::isTrueType()
@@ -41,13 +46,12 @@ bool XCBFontPeer::isTrueType()
 
 double XCBFontPeer::getPointSize()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	return pointSize_;
 }
 
 void XCBFontPeer::setPointSize( const double pointSize )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	pointSize_ = pointSize;
 }
 
 double XCBFontPeer::getPixelSize()
@@ -63,46 +67,42 @@ void XCBFontPeer::setPixelSize( const double pixelSize )
 
 void XCBFontPeer::setBold( const bool& bold )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	bold_ = bold;
 }
 
 bool XCBFontPeer::getBold()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return bold_;
 }
 
 bool XCBFontPeer::getItalic()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return italic_;
 }
 
 void XCBFontPeer::setItalic( const bool& italic )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	italic_ = italic;
 }
 
 bool XCBFontPeer::getUnderlined()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return underlined_;
 }
 
 void XCBFontPeer::setUnderlined( const bool& underlined )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	underlined_ = underlined;
 }
 
 bool XCBFontPeer::getStrikeOut()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return strikeOut_;
 }
 
 void XCBFontPeer::setStrikeOut( const bool& strikeout )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	strikeOut_ = strikeout;
 }
 
 void XCBFontPeer::setAttributes( const double& pointSize, const bool& bold, const bool& italic,
@@ -132,6 +132,21 @@ bool XCBFontPeer::isFixedPitch()
 void XCBFontPeer::setFont( Font* font )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+}
+
+String XCBFontPeer::getHashcode()
+{
+	String result;
+	
+	result = fontName_;
+	result += Format("%.3f") % pointSize_;
+	result += Format("%d") % bold_;
+	result += Format("%d") % underlined_;
+	result += Format("%d") % italic_;
+	result += Format("%d") % strikeOut_;
+	
+	
+	return result;
 }
 
 /**
