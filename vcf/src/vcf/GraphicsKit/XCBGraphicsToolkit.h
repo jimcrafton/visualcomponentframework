@@ -11,6 +11,8 @@ where you installed the VCF.
 
 namespace VCF  {
 
+class XCBFontPeer;
+
 /**
 *Class XCBGraphicsToolkit documentation
 */
@@ -22,7 +24,7 @@ public:
 
 	static XCBConnection* getConnection();
 	static XCBSCREEN*     getScreen();
-
+	static FcPattern* getFontPatternForFont( XCBFontPeer* fontPeer );
 protected:
 	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
 
@@ -47,6 +49,7 @@ protected:
 private:
 	XCBConnection *connection_;
 	XCBSCREEN     *screen_;
+	std::map<String,FcPattern*> fontPatternCache_;
 };
 
 }; //end of namespace VCF

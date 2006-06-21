@@ -28,6 +28,12 @@ screen_(NULL)
 XCBGraphicsToolkit::~XCBGraphicsToolkit()
 {
     XCBDisconnect(connection_);
+    
+    std::map<String,FcPattern*>::iterator it = fontPatternCache_.begin();
+	while (  it != fontPatternCache_.end() ) {
+		FcPatternDestroy( it->second );
+		++it;
+	}
 }
 
 XCBConnection* XCBGraphicsToolkit::getConnection()
@@ -108,6 +114,44 @@ void XCBGraphicsToolkit::internal_systemSettingsChanged()
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
+
+
+FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
+{	
+	FcPattern* result = NULL;
+	GraphicsToolkit* graphicsToolkit = GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+	XCBGraphicsToolkit* xcbGraphicsToolkit = dynamic_cast<XCBGraphicsToolkit*>(graphicsToolkit);
+	
+	
+	String hash = fontPeer->getHashcode();
+	std::map<String,FcPattern*>::iterator found = xcbGraphicsToolkit->fontPatternCache_.find( hash );
+	if (  found != xcbGraphicsToolkit->fontPatternCache_.end() ) {
+		result = found->second;
+	}
+	else {
+		FcPattern* pattern = FcPatternCreate();
+		FcValue name;
+		name.type = FcTypeString;
+		name.u.s = (const FcChar8*)fontPeer->getName().ansi_c_str();
+		FcPatternAdd (pattern, FC_FAMILY, name, true);
+		
+		if ( FcConfigSubstitute (0, pattern, FcMatchPattern) ) {
+
+			FcDefaultSubstitute (pattern); 
+			FcResult rlt = FcResultMatch;    
+			FcPattern* matchPattern = FcFontMatch (0, pattern, &rlt);
+			if ( NULL != matchPattern ) {
+				result = matchPattern;
+				xcbGraphicsToolkit->fontPatternCache_[hash] = result;
+			}
+		}
+		
+		FcPatternDestroy( pattern );
+	}
+	
+	return result;
+}
+
 
 /**
 $Id$
