@@ -7,10 +7,10 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\lib\libNetworkKit_$(COMPILER)$(COMPILER_VER)_s.a" />
+				<Option output="../../../lib/libNetworkKit_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseS\" />
-				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_s.a;" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/ReleaseS/" />
+				<Option external_deps="$(VCF_LIB)/libFoundationKit_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -46,10 +46,10 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\lib\libNetworkKit_$(COMPILER)$(COMPILER_VER)_sd.a" />
+				<Option output="../../../lib/libNetworkKit_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugS\" />
-				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_sd.a;" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/DebugS/" />
+				<Option external_deps="$(VCF_LIB)/libFoundationKit_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -85,148 +85,148 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
 		</Linker>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp">
+		<Unit filename="../../../src/vcf/NetworkKit/DatagramSocket.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\DatagramSocket.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\NetToolkit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\NetToolkit.h">
+		<Unit filename="../../../src/vcf/NetworkKit/DatagramSocket.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkKit.h">
+		<Unit filename="../../../src/vcf/NetworkKit/NetToolkit.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/NetToolkit.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkKitSelectLib.h">
+		<Unit filename="../../../src/vcf/NetworkKit/NetworkKit.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\ServerSocketEvent.h">
+		<Unit filename="../../../src/vcf/NetworkKit/NetworkKitSelectLib.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Socket.cpp">
+		<Unit filename="../../../src/vcf/NetworkKit/ServerSocketEvent.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Socket.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketEvent.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketEvent.h">
+		<Unit filename="../../../src/vcf/NetworkKit/ServerSocketEvent.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketException.h">
+		<Unit filename="../../../src/vcf/NetworkKit/Socket.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/Socket.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketListener.h">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketEvent.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/SocketEvent.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketListeningLoop.h">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketException.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\SocketPeer.h">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketListener.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\URL.cpp">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketListeningLoop.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\URL.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.h">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketListeningLoop.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp">
+		<Unit filename="../../../src/vcf/NetworkKit/SocketPeer.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/URL.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Release" />
 			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.h">
+		<Unit filename="../../../src/vcf/NetworkKit/URL.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/Win32DatagramSocketPeer.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/Win32SocketPeer.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Release" />
+			<Option target="mingw_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/NetworkKit/Win32SocketPeer.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
