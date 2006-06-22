@@ -25,6 +25,7 @@ public:
 	static XCBConnection* getConnection();
 	static XCBSCREEN*     getScreen();
 	static FcPattern* getFontPatternForFont( XCBFontPeer* fontPeer );
+	static String getFontFileNameForFont( XCBFontPeer* fontPeer );  
 protected:
 	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
 

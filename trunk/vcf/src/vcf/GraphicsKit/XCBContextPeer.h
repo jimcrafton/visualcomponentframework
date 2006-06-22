@@ -10,11 +10,13 @@ where you installed the VCF.
 
 
 #include "thirdparty/common/agg/include/agg_renderer_scanline.h"
-
-
+#include "thirdparty/common/agg/include/agg_font_cache_manager.h"
 
 namespace VCF  {
 
+	
+	
+	
 /**
 This represents the struct that we need to build a VCF graphics context 
 peer. We will need the xcb image, almost certainly the window/drawable,
@@ -35,7 +37,8 @@ struct XCBSurface {
 
 
 struct FontStruct;
-
+struct CachedGlyph;
+	
 class XCBContextPeer : public ContextPeer {
 public:
 	
@@ -192,10 +195,14 @@ protected:
     Rect currentClipRect_;
     agg::path_storage currentPath_;
     FontStruct* fonts_;
+	std::vector<CachedGlyph*> cachedFontGlyphs_;
+	String prevFontHash_;
     
     void resetPath();
 	void renderScanlinesSolid( agg::rasterizer_scanline_aa<>& rasterizer, const agg::rgba& color  );
+	void clearGlyphs();
 
+	const agg::glyph_cache* glyph( int character, double& x, double& y );
 };
 
 }; //end of namespace VCF
