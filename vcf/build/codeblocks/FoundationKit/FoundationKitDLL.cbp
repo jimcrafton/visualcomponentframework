@@ -125,7 +125,7 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="../../../bin/libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.so" />
+				<Option output="../../../bin/libFoundationKit_d.so" />
 				<Option object_output="linux/DebugDLL/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -160,7 +160,7 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Release">
-				<Option output="../../../bin/libFoundationKit_$(COMPILER)$(COMPILER_VER).so" />
+				<Option output="../../../bin/libFoundationKit.so" />
 				<Option object_output="linux/ReleaseDLL/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
