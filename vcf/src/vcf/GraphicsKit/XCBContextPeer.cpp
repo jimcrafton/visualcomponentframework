@@ -8,6 +8,8 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 #include "vcf/GraphicsKit/XCBContextPeer.h"
+#include "vcf/GraphicsKit/XCBFontPeer.h"
+
 #include "thirdparty/common/agg/include/agg_font_freetype.h"
 
 
@@ -21,7 +23,17 @@ struct FontStruct {
 	
 	XCBFontEngineType engine;
 	XCBFontManagerType mgr;
+	bool fontLoaded;
+	agg::glyph_rendering glyphRendering;
+	double currentPointSize;		
+	agg::rgba color;
 };	
+
+struct CachedGlyph {		
+	const agg::glyph_cache* glyph;
+	double kernX;
+	double kernY;
+};
 	
 };
 
@@ -65,6 +77,14 @@ void XCBContextPeer::init()
 XCBContextPeer::~XCBContextPeer()
 {
 	delete fonts_;
+	std::vector<CachedGlyph*>::iterator it = cachedFontGlyphs_.begin();
+	while ( it != cachedFontGlyphs_.end() ) {
+		if ( NULL != *it ) {
+			delete *it;
+		}
+		it ++;
+	}
+	cachedFontGlyphs_.clear();
 }
 
 void XCBContextPeer::checkHandle()
@@ -114,6 +134,71 @@ void XCBContextPeer::resetPath()
 	currentPath_.remove_all();
 	currentPath_.free_all();
 	currentPath_.rewind(0);
+}
+
+void XCBContextPeer::clearGlyphs()
+{
+	std::vector<CachedGlyph*>::iterator it = cachedFontGlyphs_.begin();
+	while ( it != cachedFontGlyphs_.end() ) {
+		if ( NULL != *it ) {
+			delete *it;
+		}
+		it ++;
+	}
+	cachedFontGlyphs_.clear();
+	cachedFontGlyphs_.resize(256,0);
+}
+
+const agg::glyph_cache* XCBContextPeer::glyph( int character, double& x, double& y )
+{
+	CachedGlyph* cg = NULL;
+
+	//check to see if we need to resize over 256
+	if ( character > cachedFontGlyphs_.size()-1 ) {
+		cachedFontGlyphs_.resize( cachedFontGlyphs_.size() + (character - (cachedFontGlyphs_.size()-1)), 0 );
+	}
+	
+	if ( NULL != cachedFontGlyphs_[character] ) {
+		cg = cachedFontGlyphs_[character];
+		x += cg->kernX;
+		y += cg->kernY;
+	}
+	else {
+		const agg::glyph_cache* glyph = NULL;
+
+		if ( (character == '\n') || (character == '\r') ) {
+			glyph = fonts_->mgr.glyph(character);
+			if ( NULL != glyph ) {
+				double x1 = x;
+				double y1 = y;
+		
+				cg = new CachedGlyph();
+				cachedFontGlyphs_[character] = cg;
+				
+				cg->glyph = glyph;
+				cg->kernX = x - x1;
+				cg->kernY = y - y1;
+			}
+		}
+		else {
+			glyph = fonts_->mgr.glyph(character);
+			if ( NULL != glyph ) {				
+				double x1 = x;
+				double y1 = y;
+
+				fonts_->mgr.add_kerning(&x1, &y1);
+
+				cg = new CachedGlyph();
+				cachedFontGlyphs_[character] = cg;
+				
+				cg->glyph = glyph;
+				cg->kernX = x - x1;
+				cg->kernY = y -y1;
+			}
+		}
+	}
+
+	return cg->glyph;
 }
 
 bool XCBContextPeer::prepareForDrawing( long drawingOperation )
@@ -167,8 +252,47 @@ bool XCBContextPeer::prepareForDrawing( long drawingOperation )
 		break;
 
 		case GraphicsContext::doText : {
-				
+			
+			
+			Font* font = context_->getCurrentFont();
+			XCBFontPeer* fontPeer = (XCBFontPeer*)font->getFontPeer();			
+			
+			String fontHash = fontPeer->getHashcode();
+			
+			
+			FcPattern* pattern = XCBGraphicsToolkit::getFontPatternForFont( fontPeer );
+	
+			
+			VCF_ASSERT( NULL != pattern );
+			
+			//this check to see if the font's changed - if it 
+			//has we need to clear the glyph cache
+			if ( prevFontHash_ != fontHash ) { 
+				clearGlyphs();
+			}
+	
+			prevFontHash_ = fontHash;
+			
+			FcChar8 * filename;
+			FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???	
 
+			Color c = *context_->getCurrentFont()->getColor();
+			printf( "color: %.2f, %.2f, %.2f, %.2f\n",
+						c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha() );
+			fonts_->color = agg::rgba(c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha());
+			fonts_->glyphRendering = agg::glyph_ren_agg_gray8;
+			fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, fonts_->glyphRendering );
+			if ( fonts_->fontLoaded ) {
+				fonts_->engine.hinting( false );
+				fonts_->engine.height( fontPeer->getPointSize() );
+				fonts_->engine.width( fontPeer->getPointSize() );
+				fonts_->engine.flip_y( true );
+				
+				fonts_->currentPointSize = fontPeer->getPointSize();
+				
+				agg::trans_affine mtx = *context_->getCurrentTransform();
+				fonts_->engine.transform(mtx);
+			}
 		}
 		break;
 
@@ -330,20 +454,125 @@ bool XCBContextPeer::isTextAlignedToBaseline()
 }
 
 void XCBContextPeer::textAt( const Rect& bounds, const String & text, const long& drawOptions )
-{
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+{	
+	VCF_ASSERT( fonts_->fontLoaded );
+	
+	double x1 = bounds.left_; 
+	double y1 = renderBuffer_.height() - bounds.bottom_;
+	
+	agg::rect_d charBounds;
+	charBounds.x1 = 0;
+	charBounds.y1 = 0;
+	charBounds.x2 = 0;
+	charBounds.y2 = 0;
+	
+	int character = 0;
+	const agg::glyph_cache* glyphPtr = NULL;
+	size_t size = text.size();
+	const VCFChar* textPtr = text.c_str();
+	
+	bool crlfChar = false;
+	
+	typedef agg::renderer_base<XCBSurface::PixFmt> RendererBase;
+	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
+
+	typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
+	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+	XCBSurface::PixFmt pixfSrc( renderBuffer_ );
+	RendererBase renbSrc(pixfSrc);
+	RendererSolid rendererSrc( renbSrc );
+	rendererSrc.color(fonts_->color);
+	
+	//pixfmt_type pixf( renderBuffer_ );
+	//pixf.comp_op( context_->getCompositingMode() );
+	//comp_renderer_type renb(pixf);
+	
+	bool doSrcRender = (GraphicsContext::cmSource == context_->getCompositingMode()) ? true : false;
+	
+	for ( size_t i=0;i<size;i++ ) {
+		character = textPtr[i];
+		
+		crlfChar = (character == '\n') || (character == '\r');
+		
+		if ( crlfChar ) {
+			glyphPtr = glyph(character, x1, y1 );
+			if ( NULL != glyphPtr ) {
+				
+
+				x1 = bounds.left_;
+				y1 -= fonts_->currentPointSize; 
+				
+				fonts_->mgr.init_embedded_adaptors(glyphPtr, x1, y1);
+			}
+		}
+		else {
+			glyphPtr = glyph(character, x1, y1 );
+			fonts_->mgr.init_embedded_adaptors(glyphPtr, x1, y1);
+			
+			if ( glyphPtr->bounds.is_valid() ) {
+
+				agg::rect_d adjustedGlyphBounds;
+				adjustedGlyphBounds.x1 = glyphPtr->bounds.x1 + x1;
+				adjustedGlyphBounds.x2 = glyphPtr->bounds.x2 + x1;
+				
+				adjustedGlyphBounds.y1 = glyphPtr->bounds.y1 + y1;
+				adjustedGlyphBounds.y2 = glyphPtr->bounds.y2 + y1;
+				
+				charBounds.x1 = (charBounds.x1 < adjustedGlyphBounds.x1) ? charBounds.x1 : adjustedGlyphBounds.x1;
+				charBounds.y1 = (charBounds.y1 < adjustedGlyphBounds.y1) ? charBounds.y1 : adjustedGlyphBounds.y1;
+				
+				charBounds.x2 = (charBounds.x2 > adjustedGlyphBounds.x2) ? charBounds.x2 : adjustedGlyphBounds.x2;
+				charBounds.y2 = (charBounds.y2 > adjustedGlyphBounds.y2) ? charBounds.y2 : adjustedGlyphBounds.y2;
+				
+			}
+			
+			switch( glyphPtr->data_type ) {
+				case agg::glyph_data_mono: {
+//						agg::render_scanlines(aggFontManager_.mono_adaptor(),
+//												aggFontManager_.mono_scanline(), 
+//												renderBin);
+				}
+				break;
+
+				case agg::glyph_data_gray8: {
+					//if ( doSrcRender ) {
+						agg::render_scanlines(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(), rendererSrc);
+					//}
+					//else {
+					//	agg::render_scanlines_aa_solid(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(), 
+					//									renb, fonts_->color);
+					//}
+				}
+				break;
+
+				case agg::glyph_data_outline: {
+					//rasterizer.reset();                        
+					//rasterizer.add_path(contour);
+					//agg::render_scanlines(rasterizer, scanLine, renderSolid);
+				}
+				break;
+			}
+			
+			x1 += glyphPtr->advance_x;
+			y1 += glyphPtr->advance_y;
+		}
+	}
+	
+	//agg::render_scanlines(rasterizer, scanline_, renderer);
 }
 
 double XCBContextPeer::getTextWidth( const String& text )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	//LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	return 100.0;
 }
 
 double XCBContextPeer::getTextHeight( const String& text )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	//LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	return 25.0;
 }
 
 void XCBContextPeer::rectangle( const double & x1, const double & y1,

@@ -135,6 +135,22 @@ FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
 		name.u.s = (const FcChar8*)fontPeer->getName().ansi_c_str();
 		FcPatternAdd (pattern, FC_FAMILY, name, true);
 		
+		
+		FcValue bold;
+		bold.type = FcTypeInteger;
+		bold.u.i =  fontPeer->getBold() ? FC_WEIGHT_BOLD : FC_WEIGHT_NORMAL;
+		FcPatternAdd (pattern, FC_WEIGHT, bold, true);
+		
+		FcValue italic;
+		italic.type = FcTypeInteger;
+		italic.u.i = fontPeer->getItalic() ? FC_SLANT_ITALIC : FC_SLANT_ROMAN;
+		FcPatternAdd (pattern, FC_SLANT, italic, true);
+		
+		FcValue trueTypeOnly;
+		trueTypeOnly.type = FcTypeString;
+		trueTypeOnly.u.s = (const FcChar8*)"TrueType";
+		FcPatternAdd (pattern, FC_FONTFORMAT, trueTypeOnly, true);
+			
 		if ( FcConfigSubstitute (0, pattern, FcMatchPattern) ) {
 
 			FcDefaultSubstitute (pattern); 
