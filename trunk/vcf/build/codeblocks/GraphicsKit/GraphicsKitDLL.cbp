@@ -3,7 +3,7 @@
 	<FileVersion major="1" minor="4" />
 	<Project>
 		<Option title="GraphicsKitDLL" />
-		<Option default_target="-1" />
+		<Option default_target="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
@@ -140,9 +140,9 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="../../../bin/libGraphicsKit_$(COMPILER)$(COMPILER_VER)_d.so" />
+				<Option output="../../../bin/libGraphicsKit_d.so" />
 				<Option object_output="linux/DebugDLL/" />
-				<Option external_deps="$(VCF_LIB)/libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.so;$(VCF_LIB)/libLibJPEG_$(COMPILER)$(COMPILER_VER)_sd.a;$(VCF_LIB)/libLibPNG_$(COMPILER)$(COMPILER_VER)_sd.a;$(VCF_LIB)/libAGG_$(COMPILER)$(COMPILER_VER)_sd.a;" />
+				<Option external_deps="$(VCF_LIB)/libFoundationKit_d.so;$(VCF_LIB)/libLibJPEG_sd.a;$(VCF_LIB)/libLibPNG_sd.a;$(VCF_LIB)/libAGG_sd.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -172,6 +172,7 @@
 					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_sd" />
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_d" />
 					<Add library="freetype" />
+					<Add library="fontconfig" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="gcc" />
@@ -180,9 +181,9 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Release">
-				<Option output="../../../bin/libGraphicsKit_$(COMPILER)$(COMPILER_VER).so" />
+				<Option output="../../../bin/libGraphicsKit.so" />
 				<Option object_output="linux/ReleaseDLL/" />
-				<Option external_deps="$(VCF_LIB)/libFoundationKit_$(COMPILER)$(COMPILER_VER).so;$(VCF_LIB)/libLibJPEG_$(COMPILER)$(COMPILER_VER)_s.a;$(VCF_LIB)/libLibPNG_$(COMPILER)$(COMPILER_VER)_s.a;$(VCF_LIB)/libAGG_$(COMPILER)$(COMPILER_VER)_s.a;" />
+				<Option external_deps="$(VCF_LIB)/libFoundationKit.so;$(VCF_LIB)/libLibJPEG_s.a;$(VCF_LIB)/libLibPNG_s.a;$(VCF_LIB)/libAGG_s.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -211,6 +212,7 @@
 					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_s" />
 					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)" />
 					<Add library="freetype" />
+					<Add library="fontconfig" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="gcc" />
