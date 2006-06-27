@@ -357,9 +357,7 @@ public:
 
 	void resetRenderAreaAlpha();
 
-	bool hasRenderArea() {
-		return NULL != renderArea_;
-	}
+	bool hasRenderArea();
 
 	void renderAreaAlphaOverwritten();
 

@@ -1,6 +1,6 @@
 #ifndef _VCF_GRADIENTFILLS_H__
 #define _VCF_GRADIENTFILLS_H__
-//Matrix2D.h
+//GradientFills.h
 
 /*
 Copyright 2000-2004 The VCF Project.
@@ -13,10 +13,21 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#ifndef AGG_SPAN_INTERPOLATOR_LINEAR_INCLUDED
 #include "thirdparty/common/agg/include/agg_span_interpolator_linear.h"
+#endif
+
+#ifndef AGG_SPAN_GRADIENT_INCLUDED
 #include "thirdparty/common/agg/include/agg_span_gradient.h"
+#endif 
+
+#ifndef AGG_SPAN_ALLOCATOR_INCLUDED
 #include "thirdparty/common/agg/include/agg_span_allocator.h"
+#endif
+
+#ifndef AGG_SCANLINE_U_INCLUDED
 #include "thirdparty/common/agg/include/agg_scanline_u.h"
+#endif
 
 
 namespace VCF  {
