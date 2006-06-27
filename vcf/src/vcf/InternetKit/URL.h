@@ -384,7 +384,7 @@ namespace VCF {
 
 	class URLEvent : public Event {
 	public:
-		URLEvent( URL* source, ulong32 eventType ): 
+		URLEvent( URL* source, uint32 eventType ): 
 		  Event(source,eventType),
 			  bytesRecvd_(0),
 			  cancelDataTransfer_(false){}
