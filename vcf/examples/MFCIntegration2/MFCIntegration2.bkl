@@ -22,10 +22,6 @@
         <win32-res>MFCIntegration2.rc</win32-res>
         <vcf-use-GraphicsKit/>
         <define>_AFXDLL</define>
-
-        <precomp-headers>on</precomp-headers>
-        <precomp-headers-header>StdAfx.h</precomp-headers-header>
-        <precomp-headers-file>$(EXE_FILENAME)</precomp-headers-file>
     </exe>
 </makefile>
 

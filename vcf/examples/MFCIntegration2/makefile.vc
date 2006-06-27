@@ -28,9 +28,7 @@ MFCINTEGRATION2_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/I..\..\src\thirdparty\common\ZLib /I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
-	$(__GRAPHICSKIT_DLL_p) /D_AFXDLL /GR /EHsc /YX"StdAfx.h" \
-	/Fp"..\..\lib\$(OBJDIR)\examples\MFCIntegration2\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pch" \
-	$(CPPFLAGS) $(CXXFLAGS)
+	$(__GRAPHICSKIT_DLL_p) /D_AFXDLL /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 MFCINTEGRATION2_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\MFCIntegration2\MFCIntegration2_ChildView.obj \
 	..\..\lib\$(OBJDIR)\examples\MFCIntegration2\MFCIntegration2_MainFrm.obj \
