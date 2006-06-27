@@ -97,7 +97,7 @@ void DropTarget::handleEvent( Event* event )
 {
 
 	if ( NULL != event ){
-		unsigned long eventType = event->getType();
+		uint32 eventType = event->getType();
 		switch ( eventType ){
 			case DropTarget::DRAG_ENTERED : {
 				DropTargetEntered.fireEvent( event );

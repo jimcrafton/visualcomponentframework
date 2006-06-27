@@ -103,14 +103,14 @@ public:
 	
 	virtual PrintInfoHandle getPrintInfo() = 0;
 
-	virtual void setNumberOfCopies( const ulong32& val ) = 0;
-	virtual ulong32 getNumberOfCopies() = 0;
+	virtual void setNumberOfCopies( const uint32& val ) = 0;
+	virtual uint32 getNumberOfCopies() = 0;
 	
-	virtual void setStartPage( const ulong32& val ) = 0;
-	virtual ulong32 getStartPage() = 0;
+	virtual void setStartPage( const uint32& val ) = 0;
+	virtual uint32 getStartPage() = 0;
 
-	virtual void setEndPage( const ulong32& val ) = 0;
-	virtual ulong32 getEndPage() = 0;
+	virtual void setEndPage( const uint32& val ) = 0;
+	virtual uint32 getEndPage() = 0;
 
 	virtual void setPrintJobType( PrintSession::PrintJob val ) = 0;
 	virtual PrintSession::PrintJob getPrintJobType() = 0;

@@ -40,7 +40,7 @@ public:
 	/**
 	* constructors
 	*/
-	UndoRedoEvent( Object* source, const unsigned long& eventType, Command* command=NULL ):
+	UndoRedoEvent( Object* source, const uint32& eventType, Command* command=NULL ):
 		Event(source,eventType), command_(command),allowUndo_(true),allowRedo_(true),allowExecute_(true){
 
 	}

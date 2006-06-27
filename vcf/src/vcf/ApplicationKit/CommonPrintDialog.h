@@ -49,14 +49,14 @@ public:
 	Sets the number of copies of the document you'd like 
 	to make. This value may be changed by the user.
 	*/
-	void setNumberOfCopies( const ulong32& val );
-	ulong32 getNumberOfCopies();
+	void setNumberOfCopies( const uint32& val );
+	uint32 getNumberOfCopies();
 	
 	/**
 	Sets the start page for the print dialog
 	*/
-	void setStartPage( const ulong32& val );
-	ulong32 getStartPage();
+	void setStartPage( const uint32& val );
+	uint32 getStartPage();
 
 	/**
 	Sets the end page for the print dialog. If you
@@ -64,8 +64,8 @@ public:
 	set to 1, and the end to 10, then only pages
 	1 through 10 will be printed.
 	*/
-	void setEndPage( const ulong32& val );
-	ulong32 getEndPage();
+	void setEndPage( const uint32& val );
+	uint32 getEndPage();
 	
 	
 	void setPrintJobType( PrintSession::PrintJob val );

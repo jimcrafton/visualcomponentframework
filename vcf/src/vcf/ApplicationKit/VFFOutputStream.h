@@ -166,11 +166,11 @@ public:
 
 	virtual ~VFFOutputStream(){};
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom) {
 		stream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize() {
+	virtual uint32 getSize() {
 		return stream_->getSize();
 	}
 
@@ -178,11 +178,11 @@ public:
 		return stream_->getBuffer();
 	}
 
-	virtual ulong32 getCurrentSeekPos() {
+	virtual uint32 getCurrentSeekPos() {
 		return stream_->getCurrentSeekPos();
 	}
 
-	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes ) {
+	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) {
 		return stream_->write( bytesToWrite, sizeOfBytes );
 	}
 
@@ -195,7 +195,7 @@ public:
 	}
 protected:
 	OutputStream* stream_;
-	long tabLevel_;
+	int32 tabLevel_;
 	bool saveUnNamedComponents_;
 
 	String binToHex( Persistable* persistableObject );

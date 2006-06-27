@@ -115,7 +115,7 @@ void ToolbarItem::setPressed( bool val )
 		return;
 	}
 
-	long state = itemState_;
+	int32 state = itemState_;
 	if ( val ) {
 		state |= tisPressed;
 	}
@@ -136,7 +136,7 @@ void ToolbarItem::setEnabled( const bool& val )
 		return;
 	}
 
-	long state = itemState_;
+	int32 state = itemState_;
 	if ( val ) {
 		state |= ToolbarItem::tisEnabled;
 	}
@@ -147,7 +147,7 @@ void ToolbarItem::setEnabled( const bool& val )
 	setState( state );
 }
 
-void ToolbarItem::setState( const long& state )
+void ToolbarItem::setState( const int32& state )
 {
 	if ( itemState_ == state ) {
 		return ;
@@ -160,7 +160,7 @@ void ToolbarItem::setState( const long& state )
 	}
 }
 
-void ToolbarItem::setStateImageIndex( const long& index )
+void ToolbarItem::setStateImageIndex( const int32& index )
 {
 	imageStateIndex_ = index;
 	if ( NULL != model_ ) {
@@ -168,12 +168,12 @@ void ToolbarItem::setStateImageIndex( const long& index )
 	}
 }
 
-ulong32 ToolbarItem::getIndex()
+uint32 ToolbarItem::getIndex()
 {
 	return ((ToolbarModel*)model_)->getItemIndex(this);
 }
 
-void ToolbarItem::setImageIndex( const long& imageIndex )
+void ToolbarItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 	if ( NULL != model_ ) {
@@ -181,7 +181,7 @@ void ToolbarItem::setImageIndex( const long& imageIndex )
 	}
 }
 
-void ToolbarItem::setIndex( const unsigned long& index )
+void ToolbarItem::setIndex( const uint32& index )
 {
 	//no-op
 }
@@ -335,7 +335,7 @@ void ToolbarModel::addItem( ToolbarItem* item )
 	itemChanged( ToolbarItem::tbAdded, item );
 }
 
-void ToolbarModel::insertItem( ToolbarItem* item, const ulong32& index )
+void ToolbarModel::insertItem( ToolbarItem* item, const uint32& index )
 {
 	toolbarItems_.insert( toolbarItems_.begin() + index, item );
 	item->setModel( this );
@@ -353,7 +353,7 @@ void ToolbarModel::removeItem( ToolbarItem* item )
 	}
 }
 
-void ToolbarModel::itemChanged( const ulong32& eventType, ToolbarItem* item )
+void ToolbarModel::itemChanged( const uint32& eventType, ToolbarItem* item )
 {
 	ToolbarModelEvent e(this, eventType);
 	e.setItem( item );
@@ -361,7 +361,7 @@ void ToolbarModel::itemChanged( const ulong32& eventType, ToolbarItem* item )
 	ModelChanged.fireEvent( &e );
 }
 
-ulong32 ToolbarModel::getItemIndex( ToolbarItem* item )
+uint32 ToolbarModel::getItemIndex( ToolbarItem* item )
 {
 	std::vector<ToolbarItem*>::iterator found = std::find( toolbarItems_.begin(), toolbarItems_.end(), item );
 	if ( found != toolbarItems_.end() ) {
@@ -370,7 +370,7 @@ ulong32 ToolbarModel::getItemIndex( ToolbarItem* item )
 	return 0;
 }
 
-void ToolbarModel::setItemIndex( ToolbarItem* item, const ulong32& newIndex )
+void ToolbarModel::setItemIndex( ToolbarItem* item, const uint32& newIndex )
 {
 	std::vector<ToolbarItem*>::iterator found = std::find( toolbarItems_.begin(), toolbarItems_.end(), item );
 	if ( found != toolbarItems_.end() ) {

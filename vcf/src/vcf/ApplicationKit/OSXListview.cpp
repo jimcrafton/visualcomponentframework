@@ -192,7 +192,7 @@ void OSXListview::addItem( ListItem * item )
 	AddDataBrowserItems( hiView_, kDataBrowserNoItem, 1, &dbItem, kDataBrowserItemNoProperty );
 }
 
-void OSXListview::insertItem( const unsigned long& index, ListItem * item )
+void OSXListview::insertItem( const uint32& index, ListItem * item )
 {
 
 }
@@ -332,7 +332,7 @@ void OSXListview::addHeaderColumn( const String& columnName, const double& width
 	insertHeaderColumn( columnCount, columnName, width );
 }
 
-void OSXListview::insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width )
+void OSXListview::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
 {
 	if ( index == 0 ) {
 	
@@ -365,7 +365,7 @@ void OSXListview::insertHeaderColumn( const unsigned long& index, const String& 
 	}
 }
 
-void OSXListview::deleteHeaderColumn( const unsigned long& index )
+void OSXListview::deleteHeaderColumn( const uint32& index )
 {
 	//ListModel* listModel = listviewControl_->getListModel();
 	//ListItem* item = listModel->getItemFromIndex( index );
@@ -431,13 +431,13 @@ void OSXListview::setAllowLabelEditing( const bool& allowLabelEditing )
 
 
 
-void OSXListview::setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type )
+void OSXListview::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
 {
 	DataBrowserTableViewColumnID columnId = OSX_LISTVIEW_CTRL_PRIMARY_COL + index;
 	SetDataBrowserTableViewNamedColumnWidth( hiView_, columnId, (UInt16)width );
 }
 
-double OSXListview::getColumnWidth( const unsigned long& index )
+double OSXListview::getColumnWidth( const uint32& index )
 {
 	double result = 0.0;
 	
@@ -450,7 +450,7 @@ double OSXListview::getColumnWidth( const unsigned long& index )
 	return result;
 }
 
-void OSXListview::setColumnName( const unsigned long& index, const String& columnName )
+void OSXListview::setColumnName( const uint32& index, const String& columnName )
 {
 	DataBrowserTableViewColumnID columnId = OSX_LISTVIEW_CTRL_PRIMARY_COL + index;
 	DataBrowserListViewHeaderDesc col;	
@@ -464,7 +464,7 @@ void OSXListview::setColumnName( const unsigned long& index, const String& colum
 	}	
 }
 
-String OSXListview::getColumnName( const unsigned long& index )
+String OSXListview::getColumnName( const uint32& index )
 {
 	String result;	
 
@@ -520,15 +520,15 @@ VCF::Rect OSXListview::getItemImageRect( ListItem* item )
 	return result;
 }
 
-long OSXListview::getDisplayOptions()
+int32 OSXListview::getDisplayOptions()
 {
-	long result = lvdoDefault;
+	int32 result = lvdoDefault;
 	
 
 	return result;
 }
 
-void OSXListview::setDisplayOptions( const long& displayOptions )
+void OSXListview::setDisplayOptions( const int32& displayOptions )
 {
 	
 }
@@ -537,7 +537,7 @@ void OSXListview::addListItems()
 {
 	ListModel* listModel = listviewControl_->getListModel();
 	
-	unsigned long count = listModel->getCount();
+	uint32 count = listModel->getCount();
 	int i = 0;
 	DataBrowserItemID* dbItems = new DataBrowserItemID[count];
 	

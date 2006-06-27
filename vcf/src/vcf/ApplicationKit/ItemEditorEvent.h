@@ -37,7 +37,7 @@ public:
 		Event( source, ITEMEDITOR_VALIDATION ){
 		setUserData( dataToValidate );
 	}
-	ItemEditorEvent( Object* source, const unsigned long& eventType  ) :
+	ItemEditorEvent( Object* source, const uint32& eventType  ) :
 		Event( source, eventType ){
 	}
 

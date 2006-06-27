@@ -71,7 +71,7 @@ class TableItemEditor;
 */
 class APPLICATIONKIT_API TableCellClickEvent : public Event {
 public:
-	TableCellClickEvent( Object* source, const ulong32& type, const CellID& cell ):
+	TableCellClickEvent( Object* source, const uint32& type, const CellID& cell ):
 		Event(source,type), cell_(cell) {
 
 	}

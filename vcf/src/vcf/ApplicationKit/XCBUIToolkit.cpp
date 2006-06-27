@@ -233,7 +233,7 @@ void XCBUIToolkit::internal_postEvent( EventHandler* eventHandler, Event* event,
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
-void XCBUIToolkit::internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void XCBUIToolkit::internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }

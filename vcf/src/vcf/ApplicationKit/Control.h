@@ -33,7 +33,7 @@ class Container;
 class Frame;
 class ControlEvent;
 
-typedef unsigned long AnchorTypes;
+typedef uint32 AnchorTypes;
 
 #define CONTROL_CLASSID		"B91B1828-3639-4bcf-9882-342F16C90E21"
 
@@ -1309,12 +1309,12 @@ public:
 	*identifies a Cursor object to be used to for controling the display of the
 	*mouse cursor. To access the Cursor object directly call the CursorManager::getCursor()
 	*method.
-	*@return long the id of the cursor
+	*@return int32 the id of the cursor
 	*@see CursorManager
 	*@see CursorManager::getCursor()
 	*@see Cursor
 	*/
-	long getCursorID() {
+	int32 getCursorID() {
 		return cursorID_;
 	}
 
@@ -1322,7 +1322,7 @@ public:
 	*sets the cursor ID for the control. This will change the
 	*cursor appearance whenever the mouse is over the control.
 	*/
-	void setCursorID( const long& cursorID );
+	void setCursorID( const int32& cursorID );
 
 	/**
 	*returns the anchor mask value for this control.
@@ -1487,14 +1487,14 @@ public:
 	*Container.
 	*@return
 	*/
-	long getTabOrder() {
+	int32 getTabOrder() {
 		return tabOrder_;
 	}
 
 	/**
 	*
 	*/
-	void setTabOrder( const long& tabOrder );
+	void setTabOrder( const int32& tabOrder );
 
 
 	/**
@@ -1504,18 +1504,18 @@ public:
 	@param VirtualKeyCode the key code that represents this AcceleratorKey. For
 	example, vkLetterV is used to indicated an accelerator that is triggered whenever
 	the "V" key is pressed.
-	@param ulong32 a mask of special keys that can be pressed together with the
+	@param uint32 a mask of special keys that can be pressed together with the
 	specified key code, such as Shift, Alt or Ctrl.
 	@see AcceleratorKey
 	*/
-	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	/**
 	Associates a new AcceleratorKey with the Control.
 	The key code, modifier mask and event handler
 	all become the attributes of the new AcceleratorKey
 	*/
-	void addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler );
+	void addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler );
 
 	/**
 	Associates a new AcceleratorKey with the Control.
@@ -1523,7 +1523,7 @@ public:
 	accelerator event handler all become the attributes
 	of the new AcceleratorKey instance.
 	*/
-	void addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Action* action );
+	void addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, Action* action );
 
 	/**
 	This should generally not be called. It's for framework usage only at this
@@ -1732,7 +1732,7 @@ protected:
 	ControlGraphicsContext* context_;
 	Control * parent_;
 	AlignmentType aligment_;
-	unsigned long anchor_;
+	uint32 anchor_;
 	Rect* bounds_;
 	Rect* clientBounds_;
 	Border* border_;
@@ -1747,11 +1747,11 @@ protected:
 	Scrollable* scrollable_;
 	String whatThisHelpString_;
 	String toolTip_;
-	long cursorID_;
+	int32 cursorID_;
 	Cursor* cursor_;
 	float anchorDeltas_[4];
 	//bool tabStop_;
-	long tabOrder_;
+	int32 tabOrder_;
 	Point clickPt_;
 	//bool useRenderBuffer_;
 	Container* container_;

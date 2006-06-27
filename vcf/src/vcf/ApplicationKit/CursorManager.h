@@ -32,15 +32,15 @@ public:
 
 	virtual ~CursorManager();
 
-	Cursor* getCursor( const long& cursorID );
+	Cursor* getCursor( const int32& cursorID );
 
 	void registerCursor( Cursor* cursor );
 
 	static CursorManager* getCursorManager();
 protected:
 	static CursorManager* cursorMgrInstance;
-	std::map<long,Cursor*> cursorMap_;
-	long cursorIDCount_;
+	std::map<int32,Cursor*> cursorMap_;
+	int32 cursorIDCount_;
 
 };
 

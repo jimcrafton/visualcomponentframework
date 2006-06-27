@@ -475,14 +475,14 @@ void GTKUIToolkit::internal_postEvent( EventHandler* eventHandler, Event* event,
 
 	clientEvent.type = GDK_CLIENT_EVENT;
 	clientEvent.message_type = gdk_atom_intern( VCF_GTK_POST_EVENT, FALSE );
-	clientEvent.data.l[ 0 ] = ( unsigned long ) eventHandler;
-	clientEvent.data.l[ 1 ] = ( unsigned long ) event->clone();
+	clientEvent.data.l[ 0 ] = ( uint32 ) eventHandler;
+	clientEvent.data.l[ 1 ] = ( uint32 ) event->clone();
 	clientEvent.data.l[ 2 ] = deleteHandler ? TRUE : FALSE;
 
 	gdk_event_put( ( GdkEvent* ) & clientEvent );
 }
 
-void GTKUIToolkit::internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void GTKUIToolkit::internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 
 
@@ -584,8 +584,8 @@ bool GTKUIToolkit::handleGdkEvent( GdkEvent* gdkEvent )
 
 						result = false;
 
-						EventHandler* eventHandler = ( EventHandler* ) ( unsigned long ) clientEvent->data.l[ 0 ];
-						Event* event = ( Event* ) ( unsigned long ) clientEvent->data.l[ 1 ];
+						EventHandler* eventHandler = ( EventHandler* ) ( uint32 ) clientEvent->data.l[ 0 ];
+						Event* event = ( Event* ) ( uint32 ) clientEvent->data.l[ 1 ];
 						bool deleteHandler = ( clientEvent->data.l[ 2 ] == TRUE ) ? true : false;
 
 						if ( NULL != eventHandler ) {
@@ -716,7 +716,7 @@ VCF::Event* GTKUIToolkit::internal_createEventFromNativeOSEventData( void* event
 
 				VCF::Point pt( gdkBtnEvent->x, gdkBtnEvent->y );
 
-				ulong32 buttonMask = 0;
+				uint32 buttonMask = 0;
 				if ( 1 == gdkBtnEvent->button ) {
 					buttonMask |= VCF::mbmLeftButton;
 				}
@@ -757,7 +757,7 @@ VCF::Event* GTKUIToolkit::internal_createEventFromNativeOSEventData( void* event
 		case GDK_LEAVE_NOTIFY : {
 				GdkEventCrossing* gdkCrossingEvent = ( GdkEventCrossing * ) eventMsg->gdkEvent_;
 				VCF::Point pt( gdkCrossingEvent->x, gdkCrossingEvent->y );
-				ulong32 eventType = ( gdkCrossingEvent->type == GDK_ENTER_NOTIFY ) ? Control::MOUSE_ENTERED : Control::MOUSE_LEAVE;
+				uint32 eventType = ( gdkCrossingEvent->type == GDK_ENTER_NOTIFY ) ? Control::MOUSE_ENTERED : Control::MOUSE_LEAVE;
 				//the peer will fill out the button and key masks
 				event = new VCF::MouseEvent ( eventMsg->control_, eventType,
 				                              translateButtonMask( ( GdkModifierType ) gdkCrossingEvent->state ),
@@ -1302,9 +1302,9 @@ VirtualKeyCode GTKUIToolkit::translateKeyCode( guint code )
 
 
 
-ulong32 GTKUIToolkit::translateButtonMask( GdkModifierType buttonState )
+uint32 GTKUIToolkit::translateButtonMask( GdkModifierType buttonState )
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	if ( buttonState & GDK_BUTTON1_MASK ) {
 		result |= VCF::mbmLeftButton;
@@ -1321,9 +1321,9 @@ ulong32 GTKUIToolkit::translateButtonMask( GdkModifierType buttonState )
 
 
 
-ulong32 GTKUIToolkit::translateKeyMask( GdkModifierType keyState )
+uint32 GTKUIToolkit::translateKeyMask( GdkModifierType keyState )
 {
-	ulong32 result = VCF::kmUndefined;
+	uint32 result = VCF::kmUndefined;
 
 	if ( keyState & GDK_SHIFT_MASK ) {
 		result |= VCF::kmShift;

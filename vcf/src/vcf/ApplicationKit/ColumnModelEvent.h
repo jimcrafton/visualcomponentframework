@@ -37,14 +37,14 @@ public:
 	ColumnModelEvent( Object* source ):
 	  Event( source ), columnItem_(NULL){ }
 
-	ColumnModelEvent( Object* source, const unsigned long& eventType ):
+	ColumnModelEvent( Object* source, const uint32& eventType ):
 	  Event( source, eventType ), columnItem_(NULL){}
 
 	ColumnModelEvent( Object* source, ColumnItem* item ):
 		Event( source ), columnItem_(item){}
 
 
-	ColumnModelEvent( Object* source, const unsigned long& eventType, ColumnItem* item ):
+	ColumnModelEvent( Object* source, const uint32& eventType, ColumnItem* item ):
 		Event( source, eventType ), columnItem_(item){}
 
 

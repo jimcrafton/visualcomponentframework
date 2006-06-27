@@ -106,19 +106,19 @@ public:
 
     virtual void deleteItem(ListItem * item);
 
-    virtual void deleteItemAtIndex(const unsigned long & index);
+    virtual void deleteItemAtIndex(const uint32 & index);
 
-    virtual void insertItem(const unsigned long & index, ListItem * item);
+    virtual void insertItem(const uint32 & index, ListItem * item);
 
     virtual void addItem(ListItem * item);
 
-	virtual ListItem* getItemFromIndex( const unsigned long& index );
+	virtual ListItem* getItemFromIndex( const uint32& index );
 
-	virtual ulong32 getItemIndex( ListItem* item );
+	virtual uint32 getItemIndex( ListItem* item );
 
 	virtual Enumerator<ListItem*>* getItems();
 
-	virtual unsigned long getCount();
+	virtual uint32 getCount();
 
 	/**
 	*Write the object to the specified output stream

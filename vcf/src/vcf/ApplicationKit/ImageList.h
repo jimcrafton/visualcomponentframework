@@ -50,7 +50,7 @@ public:
 	*Creates a new imagelist from a Image and the
 	*appropriate width and height.
 	*/
-	//ImageList( Image* listOfImages, const unsigned long& imageWidth, const unsigned long& imageHeight );
+	//ImageList( Image* listOfImages, const uint32& imageWidth, const uint32& imageHeight );
 
 	virtual ~ImageList();
 
@@ -89,17 +89,17 @@ public:
 	*the width of the list itself. All images in the list
 	*will have the same width and height.
 	*/
-	unsigned long getImageWidth();
+	uint32 getImageWidth();
 
 	/**
 	*returns the height of an image in the list.
 	*All images in the list will have the same width and height.
 	*/
-	unsigned long getImageHeight();
+	uint32 getImageHeight();
 
-	void setImageWidth( const unsigned long& width );
+	void setImageWidth( const uint32& width );
 
-	void setImageHeight( const unsigned long& height );
+	void setImageHeight( const uint32& height );
 
 	void setTransparentColor( Color* color );
 
@@ -107,22 +107,22 @@ public:
 
 	void addImage( Image* newImage );
 
-	void insertImage( const unsigned long & index, Image* newImage );
+	void insertImage( const uint32 & index, Image* newImage );
 
-	void deleteImage( const unsigned long & index );
+	void deleteImage( const uint32 & index );
 
-	virtual void draw( GraphicsContext* context, const unsigned long& index, Point* pt );
+	virtual void draw( GraphicsContext* context, const uint32& index, Point* pt );
 
 	/**
 	*Draws the image within the bounds specified in bounds. Where the bounds->left_ and top_
 	*represent the upper left and top coords. If the boudns width or height is less than the
 	*images, then clipping occurs
 	*/
-	virtual void draw( GraphicsContext* context, const unsigned long& index, Rect* bounds );
+	virtual void draw( GraphicsContext* context, const uint32& index, Rect* bounds );
 
-	void copyImage( Image* imageToCopyTo, const unsigned long& index );
+	void copyImage( Image* imageToCopyTo, const uint32& index );
 
-	void setResizeIncrement( const ulong32& resizeIncrement ) {
+	void setResizeIncrement( const uint32& resizeIncrement ) {
 		resizeIncrement_ = resizeIncrement;
 	}
 
@@ -140,8 +140,8 @@ private:
 	void changed();
 
 private:
-	unsigned long imageWidth_;
-	unsigned long imageHeight_;
+	uint32 imageWidth_;
+	uint32 imageHeight_;
 	Color transparentColor_;
 
 	/**
@@ -156,7 +156,7 @@ private:
 	*/
 	uint32 totalImageCount_;
 	Image* masterImage_;
-	ulong32 resizeIncrement_;
+	uint32 resizeIncrement_;
 };
 
 

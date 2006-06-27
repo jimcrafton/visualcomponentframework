@@ -166,7 +166,7 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 
 	Rect textRect( x, y, paintRect->right_, paintRect->bottom_ );
 	textRect.inflate( -1, -1 );
-	long options = GraphicsContext::tdoCenterVertAlign;
+	int32 options = GraphicsContext::tdoCenterVertAlign;
 	if ( isFixed() ){
 		options |= GraphicsContext::tdoCenterHorzAlign;
 	}
@@ -291,7 +291,7 @@ void DefaultTableCellItem::setCaption( const String& caption )
 	ItemChanged.fireEvent( &event );
 }
 
-void DefaultTableCellItem::setImageIndex( const long& imageIndex )
+void DefaultTableCellItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 }

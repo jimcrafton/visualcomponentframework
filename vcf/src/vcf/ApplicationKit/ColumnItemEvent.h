@@ -30,7 +30,7 @@ namespace VCF  {
 */
 class ColumnItemEvent : public Event {
 public:
-	ColumnItemEvent( Object* source, const unsigned long& eventType ):
+	ColumnItemEvent( Object* source, const uint32& eventType ):
 	  Event(source, eventType ){}
 
 

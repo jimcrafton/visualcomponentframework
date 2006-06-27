@@ -59,7 +59,7 @@ void Win32CursorPeer::createSystemCursor( const Cursor::SystemCursorType& system
 {
 	LPCTSTR win32SystemCursor = NULL;
 	isSharedCursor_ = true;
-	cursorID_ = (long)systemCursor;
+	cursorID_ = (int32)systemCursor;
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
 			win32SystemCursor = IDC_ARROW;
@@ -150,8 +150,8 @@ void Win32CursorPeer::createFromImage( Image* cursorImage, Point* hotSpot )
 	iconInfo.fIcon = FALSE;
 	iconInfo.hbmColor = imgHBMP;
 	iconInfo.hbmMask = hbmMono;
-	iconInfo.xHotspot = (long)hotSpot->x_;
-	iconInfo.yHotspot = (long)hotSpot->y_;
+	iconInfo.xHotspot = (int32)hotSpot->x_;
+	iconInfo.yHotspot = (int32)hotSpot->y_;
 
 	hCursor_ = CreateIconIndirect( &iconInfo );
 

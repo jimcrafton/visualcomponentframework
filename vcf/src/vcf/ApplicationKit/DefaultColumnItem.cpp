@@ -38,17 +38,17 @@ bool DefaultColumnItem::containsPoint( Point * pt )
 	return false;
 }
 
-unsigned long DefaultColumnItem::getIndex()
+uint32 DefaultColumnItem::getIndex()
 {
 	return index_;
 }
 
-void DefaultColumnItem::setIndex( const unsigned long& index )
+void DefaultColumnItem::setIndex( const uint32& index )
 {
 	index_ = index;
 }
 
-void DefaultColumnItem::setImageIndex( const long& imageIndex )
+void DefaultColumnItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 }

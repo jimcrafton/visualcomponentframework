@@ -87,7 +87,7 @@ void StandardContainer::alignFixed( Control* initialControl, const bool& control
 	std::vector< Control* > alignmentList;
 
 	std::vector< Control* >::iterator it = controls_.begin();
-	ulong32 index=0;
+	uint32 index=0;
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
@@ -297,12 +297,12 @@ void StandardContainer::doAlign( Control* initialControl, const bool& controlJus
 	}
 
 	std::vector< Control* >::iterator it = controls_.begin();
-	ulong32 index=0;
+	uint32 index=0;
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
 		if ( (child->getAlignment() == alignment) && (child->getVisible()) && !child->isIgnoredForLayout() ){
-			ulong32 insertIndex = 0;
+			uint32 insertIndex = 0;
 			if ( NULL != initialControl && initialControl == child ) {
 				it ++;
 				index ++;
@@ -378,7 +378,7 @@ void StandardContainer::doAnchors( Control* initialControl, const bool& controlJ
 		}
 
 		if ( AnchorNone != child->getAnchor() ) {
-			long anchorType = child->getAnchor();
+			int32 anchorType = child->getAnchor();
 
 			Rect anchorBounds = child->getBounds();
 			double h = anchorBounds.getHeight();
@@ -438,12 +438,12 @@ void StandardContainer::calcAlignmentList( const AlignmentType& alignment, std::
 	}
 
 	std::vector< Control* >::iterator it = controls_.begin();
-	ulong32 index=0;
+	uint32 index=0;
 	while ( it != controls_.end() ){
 		Control* child = *it;
 
 		if ( (child->getAlignment() == alignment) && (child->getVisible()) && !child->isIgnoredForLayout() ){
-			ulong32 insertIndex = 0;
+			uint32 insertIndex = 0;
 			if ( NULL != initialControl && initialControl == child ) {
 				it ++;
 				index ++;

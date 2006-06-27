@@ -36,14 +36,14 @@ public:
 	
 	virtual PrintInfoHandle getPrintInfo();
 
-	virtual void setNumberOfCopies( const ulong32& val );
-	virtual ulong32 getNumberOfCopies();
+	virtual void setNumberOfCopies( const uint32& val );
+	virtual uint32 getNumberOfCopies();
 	
-	virtual void setStartPage( const ulong32& val );
-	virtual ulong32 getStartPage();
+	virtual void setStartPage( const uint32& val );
+	virtual uint32 getStartPage();
 
-	virtual void setEndPage( const ulong32& val );
-	virtual ulong32 getEndPage();
+	virtual void setEndPage( const uint32& val );
+	virtual uint32 getEndPage();
 
 	virtual void setPrintJobType( PrintSession::PrintJob val );
 	virtual PrintSession::PrintJob getPrintJobType();

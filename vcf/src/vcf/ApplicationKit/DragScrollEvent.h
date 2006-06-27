@@ -23,7 +23,7 @@ namespace VCF{
 
 class APPLICATIONKIT_API DragScrollEvent : public Event {
 public:
-    DragScrollEvent( Object* source, ulong32 eventType ): Event( source, eventType ) {}
+    DragScrollEvent( Object* source, uint32 eventType ): Event( source, eventType ) {}
 };
 
 };

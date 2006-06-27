@@ -149,9 +149,9 @@ using namespace VCFWin32;
 
 
 
-unsigned long Win32UIUtils::translateKeyMask( UINT win32KeyMask )
+uint32 Win32UIUtils::translateKeyMask( UINT win32KeyMask )
 {
-	unsigned long result = VCF::kmUndefined;
+	uint32 result = VCF::kmUndefined;
 
 	if ( (win32KeyMask & MK_CONTROL) != 0 ){
 		result |= VCF::kmCtrl;
@@ -168,9 +168,9 @@ unsigned long Win32UIUtils::translateKeyMask( UINT win32KeyMask )
 	return result;
 }
 
-unsigned long Win32UIUtils::translateButtonMask( UINT win32ButtonMask )
+uint32 Win32UIUtils::translateButtonMask( UINT win32ButtonMask )
 {
-	unsigned long result = VCF::mbmUndefined;
+	uint32 result = VCF::mbmUndefined;
 
 	if ( (win32ButtonMask & MK_LBUTTON) != 0 ){
 		result |= VCF::mbmLeftButton;
@@ -187,7 +187,7 @@ unsigned long Win32UIUtils::translateButtonMask( UINT win32ButtonMask )
 	return result;
 }
 
-DWORD Win32UIUtils::translateStyle( unsigned long style )
+DWORD Win32UIUtils::translateStyle( uint32 style )
 {
 	DWORD result = 0;
 	//if ( (style & ) > 0 ){
@@ -196,7 +196,7 @@ DWORD Win32UIUtils::translateStyle( unsigned long style )
 	return result;
 }
 
-DWORD Win32UIUtils::translateExStyle( unsigned long style )
+DWORD Win32UIUtils::translateExStyle( uint32 style )
 {
 	DWORD result = 0;
 
@@ -286,9 +286,9 @@ int Win32UIUtils::getYFromLParam( LPARAM lParam )
 	return (int)(short) HIWORD(lParam);
 }
 
-VCF::ulong32 Win32UIUtils::translateVKCode( UINT vkCode )
+VCF::uint32 Win32UIUtils::translateVKCode( UINT vkCode )
 {
-	VCF::ulong32 result = 0;
+	VCF::uint32 result = 0;
 
 	switch ( vkCode ){
 		case VK_F1 :{
@@ -2425,7 +2425,7 @@ public:
 
 		ctx->setCurrentFont( getFont() );
 
-		long drawingOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
+		int32 drawingOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &r, getCaption(), drawingOptions );
 	}
@@ -2713,7 +2713,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			if ( changeStyle ) {
 				
-				long style = ::GetWindowLong( toolkit->dummyParentWnd_, GWL_STYLE );
+				int32 style = ::GetWindowLong( toolkit->dummyParentWnd_, GWL_STYLE );
 				if ( style & WS_POPUP ) {
 					style &= ~WS_POPUP;
 					style |= WS_CHILD;
@@ -3388,7 +3388,7 @@ void Win32ToolKit::internal_postEvent( EventHandler* eventHandler, Event* event,
 	}
 }
 
-void Win32ToolKit::internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void Win32ToolKit::internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 	std::map<UINT,TimerRec*>::iterator found = timerMap_.begin();
 	while ( found != timerMap_.end() ) {
@@ -3612,10 +3612,10 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 			KeyboardData keyData = Win32UIUtils::translateKeyData( msg->msg_.hwnd, msg->msg_.lParam );
 			
 
-			unsigned long eventType = 0;
-			unsigned long repeatCount = keyData.repeatCount;
+			uint32 eventType = 0;
+			uint32 repeatCount = keyData.repeatCount;
 
-			unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
+			uint32 keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
 			VCFChar keyVal = 0;
 			

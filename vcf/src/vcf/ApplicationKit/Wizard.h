@@ -51,17 +51,17 @@ namespace VCF {
 		*/
 		virtual String getName() = 0;
 
-		virtual unsigned long getNumberOfSteps() = 0;
+		virtual uint32 getNumberOfSteps() = 0;
 
 		/**
 		*Returns a string used in the Title area
 		*/
-		virtual String getStepTitle( const unsigned long& step ) = 0;
+		virtual String getStepTitle( const uint32& step ) = 0;
 
 		/**
 		*Returns a string used in the Description area
 		*/
-		virtual String getStepDescription( const unsigned long& step ) = 0;
+		virtual String getStepDescription( const uint32& step ) = 0;
 
 		/**
 		*returns a new Image object for the Image area - callers
@@ -70,14 +70,14 @@ namespace VCF {
 		dimensions parameter
 		@param Size dimensions the maximum dimensions of the image
 		*/
-		virtual Image* getStepImage( const unsigned long& step, const Size& dimensions ) = 0;
+		virtual Image* getStepImage( const uint32& step, const Size& dimensions ) = 0;
 
 		/**
 		*returns a page to display
 		*/
-		virtual Control* getStepPage( const unsigned long& step ) = 0;
+		virtual Control* getStepPage( const uint32& step ) = 0;
 
-		virtual Size getStepPreferredDimensions( const unsigned long& step ) = 0;
+		virtual Size getStepPreferredDimensions( const uint32& step ) = 0;
 
 		virtual void finish() = 0;
 

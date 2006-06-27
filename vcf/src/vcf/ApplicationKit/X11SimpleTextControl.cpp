@@ -98,7 +98,7 @@ void X11SimpleTextControl::handleEvent( XEvent* x11Event )
 					String text = tm->getText();
 
 					text.erase( selectionStart_, 1 );
-					selectionStart_ = minVal<ulong32>( selectionStart_, text.size() );
+					selectionStart_ = minVal<uint32>( selectionStart_, text.size() );
 
 					tm->setText( text );
 				}
@@ -210,9 +210,9 @@ void X11SimpleTextControl::setLeftMargin( const double & leftMargin )
 	repaint();
 }
 
-unsigned long X11SimpleTextControl::getLineCount()
+uint32 X11SimpleTextControl::getLineCount()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	const VCFChar* P = text_.c_str();
 	const VCFChar* start = P;
@@ -240,7 +240,7 @@ unsigned long X11SimpleTextControl::getLineCount()
 	return result;
 }
 
-unsigned long X11SimpleTextControl::getCurrentLinePosition()
+uint32 X11SimpleTextControl::getCurrentLinePosition()
 {
 	return currentLinePos_;
 }
@@ -255,7 +255,7 @@ double X11SimpleTextControl::getRightMargin()
 	return rightMargin_;
 }
 
-Point* X11SimpleTextControl::getPositionFromCharIndex( const unsigned long& index )
+Point* X11SimpleTextControl::getPositionFromCharIndex( const uint32& index )
 {
 	GraphicsContext* gc = control_->getContext();
 
@@ -270,7 +270,7 @@ Point* X11SimpleTextControl::getPositionFromCharIndex( const unsigned long& inde
 
 	if ( clientRect.getWidth() > 0.0 ) {
 
-		ulong32 pos = 0;
+		uint32 pos = 0;
 
 		const VCFChar* P = text_.c_str();
 		const VCFChar* start = P;
@@ -336,9 +336,9 @@ Point* X11SimpleTextControl::getPositionFromCharIndex( const unsigned long& inde
 	return &posAtChar_;
 }
 
-unsigned long X11SimpleTextControl::getCharIndexFromPosition( Point* point )
+uint32 X11SimpleTextControl::getCharIndexFromPosition( Point* point )
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	GraphicsContext* gc = control_->getContext();
 
@@ -412,29 +412,29 @@ unsigned long X11SimpleTextControl::getCharIndexFromPosition( Point* point )
 	return result;
 }
 
-unsigned long X11SimpleTextControl::getCaretPosition()
+uint32 X11SimpleTextControl::getCaretPosition()
 {
 	return selectionStart_;
 }
 
-void X11SimpleTextControl::setCaretPosition( const unsigned long& caretPos )
+void X11SimpleTextControl::setCaretPosition( const uint32& caretPos )
 {
 	selectionStart_ = caretPos;
 	selectionEnd_ = selectionStart_;
 }
 
-unsigned long X11SimpleTextControl::getSelectionStart()
+uint32 X11SimpleTextControl::getSelectionStart()
 {
 	return selectionStart_;
 }
 
-unsigned long X11SimpleTextControl::getSelectionCount()
+uint32 X11SimpleTextControl::getSelectionCount()
 {
 	return selectionEnd_ - selectionStart_;
 }
 
 
-void X11SimpleTextControl::setSelectionMark( const unsigned long& start, const unsigned long& count )
+void X11SimpleTextControl::setSelectionMark( const uint32& start, const uint32& count )
 {
 	selectionStart_ = start;
 	selectionEnd_ = selectionStart_ + count;
@@ -453,7 +453,7 @@ void X11SimpleTextControl::setParagraphAlignment( const TextAlignmentType& align
 }
 
 
-void X11SimpleTextControl::scrollToLine( const ulong32& lineIndex )
+void X11SimpleTextControl::scrollToLine( const uint32& lineIndex )
 {
 
 }

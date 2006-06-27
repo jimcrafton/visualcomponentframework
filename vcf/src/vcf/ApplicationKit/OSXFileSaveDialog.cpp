@@ -215,7 +215,7 @@ bool OSXFileSaveDialog::execute()
 		fileName = NavDialogGetSaveFileName( saveDlg );
 		if ( fileName.length() > 0 ) {
 			
-			long numItems;
+			int32 numItems;
 			AEKeyword   theKeyword;
 			DescType    actualType;
 			::Size        actualSize;

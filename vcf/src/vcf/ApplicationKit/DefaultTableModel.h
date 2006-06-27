@@ -142,7 +142,7 @@ public:
 	virtual CellID getCellIDForItem( TableCellItem* item );
 protected:
 	/**
-	*defines the a vector of TableCellItem's, or one row of data columnCount_ long
+	*defines the a vector of TableCellItem's, or one row of data columnCount_ int32
 	*/
 	typedef std::vector<TableCellItem*> TTableColumn;
 private:
@@ -161,8 +161,8 @@ private:
 
 	EnumeratorContainer<std::vector<TableCellItem*>,TableCellItem*> rowEnumContainer_;
 
-	std::map<ulong32,TableCellItem*> selectionMap_;
-	EnumeratorMapContainer<std::map<ulong32,TableCellItem*>,TableCellItem*> selectionContainer_;
+	std::map<uint32,TableCellItem*> selectionMap_;
+	EnumeratorMapContainer<std::map<uint32,TableCellItem*>,TableCellItem*> selectionContainer_;
 
 	TableCellItem* focusedCell_;
 };

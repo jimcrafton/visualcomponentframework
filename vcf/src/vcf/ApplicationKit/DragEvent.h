@@ -36,7 +36,7 @@ public:
 	}
 
 	DragSourceEvent( Object* source, VCF::DataObject* data,
-		       const unsigned long& keyMask, const unsigned long& buttonMask,
+		       const uint32& keyMask, const uint32& buttonMask,
 			   const DragActionType& action ):
 		Event( source ){
 		data_ = data;
@@ -73,19 +73,19 @@ public:
 		return data_;
 	}
 
-	unsigned long getButtonMask() {
+	uint32 getButtonMask() {
 		return buttonMask_;
 	}
 
-	void setButtonMask( const unsigned long& buttonMask ) {
+	void setButtonMask( const uint32& buttonMask ) {
 		buttonMask_ = buttonMask;
 	}
 
-    unsigned long getKeyMask() {
+    uint32 getKeyMask() {
 		return keyMask_;
 	}
 
-	void setKeyMask( const unsigned long& keyMask ) {
+	void setKeyMask( const uint32& keyMask ) {
 		keyMask_ = keyMask;
 	}
 
@@ -104,8 +104,8 @@ public:
 
 private:
     VCF::DataObject* data_;
-	unsigned long keyMask_;
-    unsigned long buttonMask_;
+	uint32 keyMask_;
+    uint32 buttonMask_;
 	DragActionType action_;
 };
 

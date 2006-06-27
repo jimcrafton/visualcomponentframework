@@ -55,7 +55,7 @@ public:
 	/**
 	*advanced function for changing the size of multiple child windows
 	*/
-	virtual bool beginSetBounds( const ulong32& numberOfChildren );
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 	virtual void endSetBounds();
 
@@ -76,7 +76,7 @@ public:
 	virtual bool getVisible();
 
 	/**
-	* returns a bit-masked unsigned long that contains style constants.
+	* returns a bit-masked uint32 that contains style constants.
 	*  These style constants are defined in the VCF, and must
 	* be translated to the particular windowing system being used.
 	*/

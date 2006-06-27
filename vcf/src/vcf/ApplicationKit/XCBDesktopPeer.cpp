@@ -61,13 +61,13 @@ void XCBDesktopPeer::desktopSetDesktop( Desktop* desktop )
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
-ulong32 XCBDesktopPeer::desktopGetWidth()
+uint32 XCBDesktopPeer::desktopGetWidth()
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return 0;
 }
 
-ulong32 XCBDesktopPeer::desktopGetHeight()
+uint32 XCBDesktopPeer::desktopGetHeight()
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return 0;

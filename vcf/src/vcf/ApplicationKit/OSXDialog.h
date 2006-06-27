@@ -42,7 +42,7 @@ public:
 	virtual void setVisible( const bool& visible );
 
 	virtual UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-													const long& messageButtons,	const Dialog::MessageStyle& messageStyle );
+													const int32& messageButtons,	const Dialog::MessageStyle& messageStyle );
 
 	void init();
 

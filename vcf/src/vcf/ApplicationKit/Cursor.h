@@ -49,9 +49,9 @@ public:
 
 	virtual ~Cursor();
 
-	long getCursorID();
+	int32 getCursorID();
 
-	void setCursorFromID( const long& cursorID );
+	void setCursorFromID( const int32& cursorID );
 
 	CursorPeer* getPeer();
 

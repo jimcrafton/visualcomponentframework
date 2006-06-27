@@ -88,7 +88,7 @@ void XCBAbstractControl::setBounds( Rect* rect )
 	bounds_ = *rect;
 }
 
-bool XCBAbstractControl::beginSetBounds( const ulong32& numberOfChildren )
+bool XCBAbstractControl::beginSetBounds( const uint32& numberOfChildren )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return true;

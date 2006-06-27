@@ -42,33 +42,33 @@ void CommonPrintDialog::setTitle( const String& title )
 	peer_->setTitle( title );
 }
 
-void CommonPrintDialog::setNumberOfCopies( const ulong32& val )
+void CommonPrintDialog::setNumberOfCopies( const uint32& val )
 {
 	peer_->setNumberOfCopies( val );
 }
 
-ulong32 CommonPrintDialog::getNumberOfCopies()
+uint32 CommonPrintDialog::getNumberOfCopies()
 {
 	return peer_->getNumberOfCopies();
 }
 
-void CommonPrintDialog::setStartPage( const ulong32& val )
+void CommonPrintDialog::setStartPage( const uint32& val )
 {
 	peer_->setStartPage( val );
 }
 
-ulong32 CommonPrintDialog::getStartPage()
+uint32 CommonPrintDialog::getStartPage()
 {
 	return peer_->getStartPage();
 }
 
 
-void CommonPrintDialog::setEndPage( const ulong32& val )
+void CommonPrintDialog::setEndPage( const uint32& val )
 {
 	peer_->setEndPage( val );
 }
 
-ulong32 CommonPrintDialog::getEndPage()
+uint32 CommonPrintDialog::getEndPage()
 {
 	return peer_->getEndPage();
 }

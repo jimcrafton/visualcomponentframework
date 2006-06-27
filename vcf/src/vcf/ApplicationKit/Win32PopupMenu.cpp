@@ -75,8 +75,8 @@ MenuItem* Win32PopupMenu::popup( Point* pt )
 			
 			POINT tmpPt;
 			memset(&tmpPt,0,sizeof(tmpPt));
-			tmpPt.x = (long)pt->x_;
-			tmpPt.y = (long)pt->y_;
+			tmpPt.x = (int32)pt->x_;
+			tmpPt.y = (int32)pt->y_;
 			ClientToScreen( wnd, &tmpPt );
 
 			initPopupMenu( wnd, menuHandle );			

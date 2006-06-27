@@ -123,7 +123,7 @@ public:
 		};
 		Value(): val_(0){};
 
-		Value(const ulong32& modifierMask, const VirtualKeyCode& keyCode): val_(0){
+		Value(const uint32& modifierMask, const VirtualKeyCode& keyCode): val_(0){
 			val_ = modifierMask | (keyCode << Value::ShiftBy);
 		}
 
@@ -151,16 +151,16 @@ public:
 			val_ = (keyCode << Value::ShiftBy) | (val_ & Value::MaskBy);
 		}
 		
-		ulong32 getModifierMask() const {
+		uint32 getModifierMask() const {
 			return val_ & Value::MaskBy;
 		}
 
-		void setModifierMask( const ulong32& modifierMask ) {
+		void setModifierMask( const uint32& modifierMask ) {
 			val_ = modifierMask | (val_ & (Value::MaskBy<< Value::ShiftBy));
 		}
 
 
-		Value& operator= ( const ulong32& val ) {
+		Value& operator= ( const uint32& val ) {
 			val_ = val;
 			return *this;
 		}
@@ -175,12 +175,8 @@ public:
 			return *this;
 		}
 
-		operator ulong32() const {
-			return val_;
-		}
-
 		operator uint32() const {
-			return uint32(val_);
+			return val_;
 		}
 
 		bool operator == ( const Value& rhs ) const {
@@ -191,19 +187,19 @@ public:
 			return val_ != rhs.val_;
 		}
 	protected:
-		ulong32 val_;
+		uint32 val_;
 	};
 
 	AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
-					const ulong32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic=false );
 
 	AcceleratorKey( MenuItem* associatedMenuItem, const VirtualKeyCode& keyCode,
-					const ulong32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic=false );
 
 	AcceleratorKey( Object* associatedObject, const VirtualKeyCode& keyCode,
-					const ulong32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic=false );
 
 	virtual ~AcceleratorKey();
@@ -232,9 +228,9 @@ public:
 	/**
 	*gets the virtual key code that represents the
 	*specific alpha numeric key, like "V", or "1" or "F1"
-	*@return ulong32 the keycode for this AcceleratorKey
+	*@return uint32 the keycode for this AcceleratorKey
 	*/
-	ulong32 getKeyCode() const {
+	uint32 getKeyCode() const {
 		return keyCode_;
 	}
 
@@ -243,7 +239,7 @@ public:
 	*modifier mask may be made up of any combination
 	*of the Ctrl, Shift, and Alt keys.
 	*/
-	ulong32 getModifierMask() const {
+	uint32 getModifierMask() const {
 		return modifierMask_;
 	}
 
@@ -320,7 +316,7 @@ public:
 	virtual Object* clone( bool deep=false );
 protected:
 	VirtualKeyCode keyCode_;
-	ulong32 modifierMask_;
+	uint32 modifierMask_;
 	Control* associatedControl_;
 	MenuItem* associatedMenuItem_;
 	Object* associatedObject_;

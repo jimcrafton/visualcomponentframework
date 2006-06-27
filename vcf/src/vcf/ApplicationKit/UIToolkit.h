@@ -174,7 +174,7 @@ public:
 	This simply	calls the GraphicsToolkit's createContextPeer().
 	@see GraphicsToolkit::createContextPeer
 	*/
-	static ContextPeer* createContextPeer( const unsigned long& width, const unsigned long& height );
+	static ContextPeer* createContextPeer( const uint32& width, const uint32& height );
 
 	/**
 	This creates a peer that implements the ListviewPeer interface. A ListviewPeer allows you to
@@ -322,7 +322,7 @@ public:
 	*/
 	static void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
 
-	static void registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	static void registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	static void unregisterTimerHandler( EventHandler* handler );
 
@@ -374,7 +374,7 @@ public:
 
 	static void registerAccelerator( AcceleratorKey* accelerator );
 
-	static void removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+	static void removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
 	static Button* getDefaultButton();
 
@@ -382,7 +382,7 @@ public:
 
 	static void removeDefaultButton( Button* defaultButton );
 
-	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
 	/**
 	Finds all the matching accelerators and store them in a list.
@@ -552,14 +552,14 @@ public:
 
 	static void addToUpdateList( Component* component );
 	static void removeFromUpdateList( Component* component );
-	static void setUpdateTimerSpeed( const unsigned long& milliseconds );
+	static void setUpdateTimerSpeed( const uint32& milliseconds );
 
 	static void systemSettingsChanged();
 protected:
 	static UIToolkit* toolKitInstance;
 
 	std::map<String,ComponentInfo*> componentInfoMap_;
-	std::multimap<ulong32,AcceleratorKey*> acceleratorMap_;
+	std::multimap<uint32,AcceleratorKey*> acceleratorMap_;
 	std::vector<Control*> visitedContainers_;
 	Clipboard* systemClipboard_;
     GraphicsToolkit * graphicsToolKit_;
@@ -592,7 +592,7 @@ protected:
 
 	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID );
 
-	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
+	virtual ContextPeer* internal_createContextPeer( const uint32& width, const uint32& height );
 
     virtual ListviewPeer* internal_createListViewPeer( ListViewControl* component) = 0;
 
@@ -665,7 +665,7 @@ protected:
 
 	virtual void internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true ) = 0;
 
-	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds ) = 0;
+	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds ) = 0;
 
 	virtual void internal_unregisterTimerHandler( EventHandler* handler ) = 0;
 
@@ -736,7 +736,7 @@ protected:
 
 	void internal_registerAccelerator( AcceleratorKey* accelerator );
 
-	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
 	Button* internal_getDefaultButton();
 
@@ -744,7 +744,7 @@ protected:
 
 	void internal_removeDefaultButton( Button* defaultButton );
 
-	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
 	void internal_removeAcceleratorKeysForControl( Control* control );
 
@@ -771,7 +771,7 @@ protected:
 
 	void internal_addToUpdateList( Component* component );
 	void internal_removeFromUpdateList( Component* component );
-	void internal_setUpdateTimerSpeed( const unsigned long& milliseconds );
+	void internal_setUpdateTimerSpeed( const uint32& milliseconds );
 
 	void onUpdateComponentsTimer( TimerEvent* e );
 

@@ -28,7 +28,7 @@ public:
 	/**
 	* returns a ID that identifies this control. On Win32 this corresponds to an HWND.
 	*/
-	virtual long getHandleID();
+	virtual int32 getHandleID();
 
 	/**
 	* returns a text associated with the component. This usually gets used in the Component::getCaption() method.
@@ -62,17 +62,17 @@ public:
 	virtual bool getVisible();
 
 	/**
-	* returns a bit-masked unsigned long that contains style constants.
+	* returns a bit-masked uint32 that contains style constants.
 	*  These style constants are defined in the VCF, and must
 	* be translated to the particular windowing system being used.
 	*/
-	virtual unsigned long getStyleMask();
+	virtual uint32 getStyleMask();
 
 	/**
 	* sets the current style mask.
 	*  Should cause a repaint of the component, if neccessary.
 	*/
-	virtual void setStyleMask( const unsigned long& styleMask );
+	virtual void setStyleMask( const uint32& styleMask );
 
 	/**
 	* returns the component that this Peer is attached to.

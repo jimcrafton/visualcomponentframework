@@ -509,7 +509,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 			if ( style & LVS_REPORT ) {
 				ColumnModel* colModel = listviewControl_->getColumnModel();
 				if ( NULL != colModel ) {
-					ulong32 colIndex = 0;
+					uint32 colIndex = 0;
 					Enumerator<ColumnItem*>* columns = colModel->getItems();
 					Enumerator<ListItem::SubItem*>* subItems = item->getSubItems();
 					Rect subItemRect = itemRect;
@@ -589,7 +589,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			DRAWITEMSTRUCT* drawItem = (DRAWITEMSTRUCT*)lParam;
 			if ( ODT_HEADER == drawItem->CtlType ) {
 
-				ulong32 index = drawItem->itemID;
+				uint32 index = drawItem->itemID;
 				ColumnItem* item = NULL;
 
 				if ( listviewControl_->getColumnModel()->getCount() > 0 ) {
@@ -787,7 +787,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case LVN_COLUMNCLICK:{
 
 			NMLISTVIEW* nmlistView = (NMLISTVIEW*)lParam;
-			ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (ulong32)nmlistView->iSubItem );
+			ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmlistView->iSubItem );
 			if ( NULL != item ) {
 				POINT pt = {0,0};
 				::GetCursorPos( &pt );
@@ -817,7 +817,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				NMHEADERW* nmHeader = (NMHEADERW*)lParam;
 
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
-					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (ulong32)nmHeader->iItem );
+					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 					if ( NULL != item ) {
 						item->setWidth( nmHeader->pitem->cxy );
 						InvalidateRect( hwnd_, NULL, TRUE );
@@ -835,7 +835,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				NMHEADERA* nmHeader = (NMHEADERA*)lParam;
 
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
-					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (ulong32)nmHeader->iItem );
+					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 					if ( NULL != item ) {
 						item->setWidth( nmHeader->pitem->cxy );
 						InvalidateRect( hwnd_, NULL, TRUE );
@@ -854,7 +854,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
-				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (ulong32)nmHeader->iItem );
+				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
@@ -874,7 +874,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
-				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (ulong32)nmHeader->iItem );
+				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
@@ -1148,7 +1148,7 @@ void Win32Listview::addItem( ListItem * item )
 	}
 }
 
-void Win32Listview::insertItem( const unsigned long& index, ListItem * item )
+void Win32Listview::insertItem( const uint32& index, ListItem * item )
 {
 	if ( NULL != item ){
 		int itemIndex = index;
@@ -1436,8 +1436,8 @@ ListItem* Win32Listview::isPtOverItem( Point* point )
 
 	LVHITTESTINFO hitTestInfo;
 	memset( &hitTestInfo, 0, sizeof(LVHITTESTINFO) );
-	hitTestInfo.pt.x = (long)point->x_;
-	hitTestInfo.pt.y = (long)point->y_;
+	hitTestInfo.pt.x = (int32)point->x_;
+	hitTestInfo.pt.y = (int32)point->y_;
 
 	int index = ListView_HitTest( hwnd_, &hitTestInfo );
 	if ( index > -1 ) {
@@ -1631,13 +1631,13 @@ void Win32Listview::addHeaderColumn( const String& columnName, const double& wid
 	insertHeaderColumn( index, columnName, width );
 }
 
-void Win32Listview::insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width )
+void Win32Listview::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
 {
 	if ( System::isUnicodeEnabled() ) {
 		LVCOLUMNW column;
 		memset( &column, 0, sizeof(column) );
 		column.mask = LVCF_TEXT | LVCF_FMT | LVCF_WIDTH;
-		column.cx = (long)width;
+		column.cx = (int32)width;
 		column.fmt = LVCFMT_LEFT;
 
 		VCFChar* tmp = new VCFChar[columnName.size()+1];
@@ -1678,7 +1678,7 @@ void Win32Listview::insertHeaderColumn( const unsigned long& index, const String
 
 		memset( &column, 0, sizeof(column) );
 		column.mask = LVCF_TEXT | LVCF_FMT | LVCF_WIDTH;
-		column.cx = (long)width;
+		column.cx = (int32)width;
 		column.fmt = LVCFMT_LEFT;
 
 		char* tmp = new char[tmpColName.size()+1];
@@ -1714,7 +1714,7 @@ void Win32Listview::insertHeaderColumn( const unsigned long& index, const String
 
 }
 
-void Win32Listview::deleteHeaderColumn( const unsigned long& index )
+void Win32Listview::deleteHeaderColumn( const uint32& index )
 {
 	int err = ListView_DeleteColumn( hwnd_, index );
 
@@ -1988,7 +1988,7 @@ void Win32Listview::onItemDeleted( ItemEvent* event )
 
 }
 
-void Win32Listview::setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type )
+void Win32Listview::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
 {
 	//don't do this if we are tracking
 	if ( false == headerControlIsTracking_ ) {
@@ -1996,25 +1996,25 @@ void Win32Listview::setColumnWidth( const unsigned long& index, const double& wi
 		int err = 0;
 		switch ( type ) {
 		case ListViewControl::lcatAutoSizeNone:
-			err = ListView_SetColumnWidth( hwnd_, index, (long)width );
+			err = ListView_SetColumnWidth( hwnd_, index, (int32)width );
 			break;
 		case ListViewControl::lcatAutoSizeColumns:
-			err = ListView_SetColumnWidth( hwnd_, index, (long)LVSCW_AUTOSIZE );
+			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE );
 			break;
 		case ListViewControl::lcatAutoSizeHeaders:
-			err = ListView_SetColumnWidth( hwnd_, index, (long)LVSCW_AUTOSIZE_USEHEADER  );
+			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE_USEHEADER  );
 			break;
 		case ListViewControl::lcatAutoSizeColumnsAndHeaders:
-			err = ListView_SetColumnWidth( hwnd_, index, (long)LVSCW_AUTOSIZE_USEHEADER );
+			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE_USEHEADER );
 			break;
 		default:
-			err = ListView_SetColumnWidth( hwnd_, index, (long)LVSCW_AUTOSIZE_USEHEADER );
+			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE_USEHEADER );
 			break;
 		}
 	}
 }
 
-double Win32Listview::getColumnWidth( const unsigned long& index )
+double Win32Listview::getColumnWidth( const uint32& index )
 {
 	double result = 0.0;
 
@@ -2038,7 +2038,7 @@ double Win32Listview::getColumnWidth( const unsigned long& index )
 	return result;
 }
 
-void Win32Listview::setColumnName( const unsigned long& index, const String& columnName )
+void Win32Listview::setColumnName( const uint32& index, const String& columnName )
 {
 	if ( System::isUnicodeEnabled() ) {
 		LVCOLUMNW columnInfo;
@@ -2085,7 +2085,7 @@ void Win32Listview::setColumnName( const unsigned long& index, const String& col
 
 }
 
-String Win32Listview::getColumnName( const unsigned long& index )
+String Win32Listview::getColumnName( const uint32& index )
 {
 	String result;
 
@@ -2396,9 +2396,9 @@ Rect Win32Listview::getItemImageRect( ListItem* item )
 	return result;
 }
 
-long Win32Listview::getDisplayOptions()
+int32 Win32Listview::getDisplayOptions()
 {
-	long result = lvdoDefault;
+	int32 result = lvdoDefault;
 	DWORD style = ListView_GetExtendedListViewStyle( hwnd_ );
 	if ( style & LVS_EX_FULLROWSELECT ) {
 		result |= lvdoFullRowSelect;
@@ -2415,7 +2415,7 @@ long Win32Listview::getDisplayOptions()
 	return result;
 }
 
-void Win32Listview::setDisplayOptions( const long& displayOptions )
+void Win32Listview::setDisplayOptions( const int32& displayOptions )
 {
 	DWORD style = 0;
 

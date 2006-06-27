@@ -619,8 +619,8 @@ void Win32Window::close()
 
 void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 {
-	long style = ::GetWindowLong( hwnd_, GWL_STYLE );
-	long exStyle = ::GetWindowLong( hwnd_, GWL_EXSTYLE );
+	int32 style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	int32 exStyle = ::GetWindowLong( hwnd_, GWL_EXSTYLE );
 	bool needsParent = false;
 	switch ( frameStyle ){
 		case fstSizeable :{

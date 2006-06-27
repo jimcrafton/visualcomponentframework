@@ -37,13 +37,13 @@ void XCBCursorPeer::createFromResourceName( const String& cursorName, OSHandleID
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
-long XCBCursorPeer::getCursorID()
+int32 XCBCursorPeer::getCursorID()
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return 0;
 }
 
-void XCBCursorPeer::setCursorID( const long& cursorID )
+void XCBCursorPeer::setCursorID( const int32& cursorID )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }

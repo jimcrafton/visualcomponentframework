@@ -35,11 +35,11 @@ public:
 
 	virtual ~VFFInputStream();
 
-	virtual void seek(const unsigned long& offset, const VCF::SeekType& offsetFrom) {
+	virtual void seek(const uint32& offset, const VCF::SeekType& offsetFrom) {
 		stream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize() {
+	virtual uint32 getSize() {
 		return stream_->getSize();
 	}
 
@@ -47,11 +47,11 @@ public:
 		return stream_->getBuffer();
 	}
 
-	virtual VCF::ulong32 getCurrentSeekPos() {
+	virtual VCF::uint32 getCurrentSeekPos() {
 		return stream_->getCurrentSeekPos();
 	}
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) {
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) {
 		return stream_->read( bytesToRead, sizeOfBytes );
 	}
 
@@ -131,7 +131,7 @@ protected:
 	std::vector<DeferredPropertySetter*> deferredProperties_;
 	VCF::Component* topLevelComponent_;
 	bool atTopLevel_;
-	long componentInputLevel_;
+	int32 componentInputLevel_;
 	bool topLevelControlVisibility_;
 	bool setDesignMode_;
 };

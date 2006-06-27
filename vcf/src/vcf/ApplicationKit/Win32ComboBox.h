@@ -29,7 +29,7 @@ public:
 	/**
 	* returns a ID that identifies this control. On Win32 this corresponds to an HWND.
 	*/
-	virtual long getHandleID(){
+	virtual int32 getHandleID(){
 		return AbstractWin32Component::getHandleID();
 	};
 
@@ -75,11 +75,11 @@ public:
 	};
 
 	/**
-	* returns a bit-masked unsigned long that contains style constants.
+	* returns a bit-masked uint32 that contains style constants.
 	*  These style constants are defined in the VCF, and must
 	* be translated to the particular windowing system being used.
 	*/
-	virtual unsigned long getStyleMask(){
+	virtual uint32 getStyleMask(){
 		return AbstractWin32Component::getStyleMask();
 	};
 
@@ -87,7 +87,7 @@ public:
 	* sets the current style mask.
 	*  Should cause a repaint of the component, if neccessary.
 	*/
-	virtual void setStyleMask( const unsigned long& styleMask ){
+	virtual void setStyleMask( const uint32& styleMask ){
 		AbstractWin32Component::setStyleMask( styleMask );
 	};
 
@@ -131,7 +131,7 @@ public:
 
 	virtual void addItem( ListItem * item );
 
-	virtual void insertItem( const unsigned long& index, ListItem * item );
+	virtual void insertItem( const uint32& index, ListItem * item );
 
 	virtual void createParams();
 

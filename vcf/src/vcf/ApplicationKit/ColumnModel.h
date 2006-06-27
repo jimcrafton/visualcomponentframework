@@ -82,18 +82,18 @@ public:
 	*deletes the item from the model's collection of items.
 	*Causes a notification to be sent to all listeners of the models ItemDeleted
 	*events and the model's ContentsChanged event.
-	*@param unsigned long the index of the item to delete.
+	*@param uint32 the index of the item to delete.
 	*/
-	virtual void deleteItem(const unsigned long & index) = 0;
+	virtual void deleteItem(const uint32 & index) = 0;
 
 	/**
 	*Inserts an item into the model's collection of items.
 	*Causes a notification to be sent to all listeners of the models ItemAdded
 	*events and the model's ContentsChanged event.
-	*@param unsigned long the insertion index for the item
+	*@param uint32 the insertion index for the item
 	*@param ColumnItem the item to insert
 	*/
-	virtual void insertItem(const unsigned long & index, ColumnItem* item) = 0;
+	virtual void insertItem(const uint32 & index, ColumnItem* item) = 0;
 
 	/**
 	*Adds an item into the model's collection of items.
@@ -105,12 +105,12 @@ public:
 
 	/**
 	*Returns the item with the specified index in the model's collection.
-	*@param unsigned long teh index of the requested item to return
+	*@param uint32 teh index of the requested item to return
 	*@return ColumnItem the item at the position specified in index. This
 	*may be NULL if the index is out of bounds, or the model collection is
 	*empty
 	*/
-	virtual ColumnItem* getItemFromIndex( const unsigned long& index ) = 0;
+	virtual ColumnItem* getItemFromIndex( const uint32& index ) = 0;
 
 	/**
 	*Returns an Enumerator of all the items in the model's collection.
@@ -133,9 +133,9 @@ public:
 
 	/**
 	*returns the number of the items in the model
-	*@return unsigned long the count of items
+	*@return uint32 the count of items
 	*/
-	virtual unsigned long getCount() = 0;
+	virtual uint32 getCount() = 0;
 
 protected:
 

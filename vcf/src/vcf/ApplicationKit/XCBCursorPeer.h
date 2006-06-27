@@ -23,9 +23,9 @@ namespace VCF {
 
 		virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=NULL );
 
-		virtual long getCursorID();
+		virtual int32 getCursorID();
 
-		virtual void setCursorID( const long& cursorID );
+		virtual void setCursorID( const int32& cursorID );
 
 		virtual Cursor* getCursor();
 

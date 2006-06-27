@@ -95,10 +95,10 @@ void AbstractX11Control::setBounds( Rect* rect )
 	X11GraphicsToolkit* grafToolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 
 	bounds_ = *rect;
-	int l = (long)bounds_.left_;
-	int t = (long)bounds_.top_;
-	int w = (long)maxVal<double>(bounds_.getWidth(), 1.0 );
-	int h = (long)maxVal<double>(bounds_.getHeight(), 1.0 );
+	int l = (int32)bounds_.left_;
+	int t = (int32)bounds_.top_;
+	int w = (int32)maxVal<double>(bounds_.getWidth(), 1.0 );
+	int h = (int32)maxVal<double>(bounds_.getHeight(), 1.0 );
 
 	XMoveResizeWindow( grafToolkit->getX11Display(), wndHandle_, l, t, w, h );
 
@@ -107,7 +107,7 @@ void AbstractX11Control::setBounds( Rect* rect )
 /**
 *advanced function for changing the size of multiple child windows
 */
-bool AbstractX11Control::beginSetBounds( const ulong32& numberOfChildren )
+bool AbstractX11Control::beginSetBounds( const uint32& numberOfChildren )
 {
 	//X11GraphicsToolkit* grafToolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	//XSync( grafToolkit->getX11Display(), False );
@@ -181,11 +181,11 @@ bool AbstractX11Control::getVisible()
 }
 
 /**
- * returns a bit-masked unsigned long that contains style constants.
+ * returns a bit-masked uint32 that contains style constants.
  *  These style constants are defined in the VCF, and must
  * be translated to the particular windowing system being used.
  */
-unsigned long AbstractX11Control::getStyleMask()
+uint32 AbstractX11Control::getStyleMask()
 {
 	return 0;
 }
@@ -194,7 +194,7 @@ unsigned long AbstractX11Control::getStyleMask()
  * sets the current style mask.
  *  Should cause a repaint of the component, if neccessary.
  */
-void AbstractX11Control::setStyleMask( const unsigned long& styleMask )
+void AbstractX11Control::setStyleMask( const uint32& styleMask )
 {
 
 }
@@ -235,7 +235,7 @@ void AbstractX11Control::setParent( Control* parent )
 		parent_ = NULL;
 
 		XReparentWindow( grafToolkit->getX11Display(), wndHandle_, NULL,
-						(long)bounds_.left_, (long)bounds_.top_ );
+						(int32)bounds_.left_, (int32)bounds_.top_ );
 	}
 	else {
 		parent_ = dynamic_cast<AbstractX11Control*>( parent->getPeer() );
@@ -244,7 +244,7 @@ void AbstractX11Control::setParent( Control* parent )
 		}
 
 		XReparentWindow( grafToolkit->getX11Display(), wndHandle_, parent_->wndHandle_,
-						(long)bounds_.left_, (long)bounds_.top_ );
+						(int32)bounds_.left_, (int32)bounds_.top_ );
 	}
 
 

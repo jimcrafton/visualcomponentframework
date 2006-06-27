@@ -90,16 +90,16 @@ void TableControl::paint( GraphicsContext * context )
 	}
 
 	TableModel* tm = getTableModel();
-	ulong32 rowCount = tm->getRowCount();
-	ulong32 columnCount = tm->getColumnCount();
+	uint32 rowCount = tm->getRowCount();
+	uint32 columnCount = tm->getColumnCount();
 
 	if ( (rowCount > 0) && (columnCount > 0) ) {
 
 		int gcs = context->saveState();
 
 
-		ulong32 fixedRowCount = tm->getFixedRowsCount();
-		ulong32 fixedColumnCount = tm->getFixedColumnsCount();
+		uint32 fixedRowCount = tm->getFixedRowsCount();
+		uint32 fixedColumnCount = tm->getFixedColumnsCount();
 
 
 
@@ -117,11 +117,11 @@ void TableControl::paint( GraphicsContext * context )
 
 		Rect rect;
 		rect.bottom_ = -1;
-		ulong32 rowHeight = 0;
-		ulong32 colWidth = 0;
+		uint32 rowHeight = 0;
+		uint32 colWidth = 0;
 		TableCellItem* cellItem = NULL;
 
-		ulong32 row, col;
+		uint32 row, col;
 
 		Rect clipRect = context->getViewableBounds();
 		//getClippingRect();
@@ -517,7 +517,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 
 			uint32 rowCount = tm->getRowCount();
-			for ( ulong32 row=0;row<rowCount;row++){
+			for ( uint32 row=0;row<rowCount;row++){
 
 				for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
 
@@ -738,7 +738,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 				getVisibleNonFixedCellRange( &visibleRect );
 
 
-				if ( abs( (long)((event->getPoint()->x_ - visibleRect.right_ ) < resizeCaptureRange_)) ) {
+				if ( abs( (int32)((event->getPoint()->x_ - visibleRect.right_ ) < resizeCaptureRange_)) ) {
 
 					clickCell_.column = tm->getColumnCount()-1;
 				}
@@ -754,7 +754,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 			if ( !hiddenColumnUnhide_ ) {
 				//  ignore columns that are hidden and look left towards first visible column
 				bool lookForVisible = true;
-				bool isCellRightBorder = abs((long)(event->getPoint()->x_ - start.x_)) >= resizeCaptureRange_;
+				bool isCellRightBorder = abs((int32)(event->getPoint()->x_ - start.x_)) >= resizeCaptureRange_;
 
 				if( isCellRightBorder && ((clickCell_.column + 1) >= tm->getColumnCount()) ) {
 					// clicked on last column's right border
@@ -838,7 +838,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 				Rect visibleRect;
 				getVisibleNonFixedCellRange( &visibleRect );
 
-				if ( abs((long)(event->getPoint()->y_ - visibleRect.bottom_)) < resizeCaptureRange_ ) {
+				if ( abs((int32)(event->getPoint()->y_ - visibleRect.bottom_)) < resizeCaptureRange_ ) {
 					clickCell_.row = tm->getRowCount()-1;
 				}
 			}
@@ -851,7 +851,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 			if( !hiddenRowUnhide_ )  {
 				//  ignore rows that are hidden and look up towards first visible row
 				bool lookForVisible = true;
-				bool isCellBottomBorder = abs((long)(event->getPoint()->y_ - start.y_)) >= resizeCaptureRange_;
+				bool isCellBottomBorder = abs((int32)(event->getPoint()->y_ - start.y_)) >= resizeCaptureRange_;
 
 				if( isCellBottomBorder && ( clickCell_.row + 1 >= tm->getRowCount()) ) {
 					// clicked on last row's bottom border
@@ -903,7 +903,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 			// If we clicked below the row divide, then reset the click-down cell
 			// as the cell above the row divide - UNLESS we clicked on the last row
 			// and the last row is teensy (kludge fix)
-			if ( abs((long)(event->getPoint()->y_ - start.y_)) < resizeCaptureRange_ ) {  // clicked below border
+			if ( abs((int32)(event->getPoint()->y_ - start.y_)) < resizeCaptureRange_ ) {  // clicked below border
 				if ( clickCell_.row < tm->getRowCount()-1 ||
 					rowHeights_[tm->getRowCount()-1] >= resizeCaptureRange_ ) {
 
@@ -1414,7 +1414,7 @@ void TableControl::setColumnWidth( const uint32& column, const uint32& width )
 	if ( (true == autoResizeColumns_) && (colCount>1) ) {
 		double w = getWidth();
 		int32 totwidth = 0;
-		for ( ulong32 i=0;i<colCount-1;i++) {
+		for ( uint32 i=0;i<colCount-1;i++) {
 			totwidth += columnWidths_[i];
 		}
 		if ( totwidth < w ){

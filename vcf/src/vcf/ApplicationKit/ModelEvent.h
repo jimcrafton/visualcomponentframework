@@ -21,7 +21,7 @@ namespace VCF {
 */
 class APPLICATIONKIT_API ModelEvent : public Event {
 public:
-	ModelEvent( Object* source, const ulong32& type ) :
+	ModelEvent( Object* source, const uint32& type ) :
 	  Event( source, type ) {
 
 	  }

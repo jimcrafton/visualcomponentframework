@@ -31,7 +31,7 @@ public:
 
 	virtual void addItem( ListItem * item ) = 0;
 
-	virtual void insertItem( const unsigned long& index, ListItem * item ) = 0;
+	virtual void insertItem( const uint32& index, ListItem * item ) = 0;
 
 	virtual void clear() = 0;
 
@@ -59,17 +59,17 @@ public:
 
 	virtual void addHeaderColumn( const String& columnName, const double& width ) = 0;
 
-	virtual void insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width ) = 0;
+	virtual void insertHeaderColumn( const uint32& index, const String& columnName, const double& width ) = 0;
 
-	virtual void deleteHeaderColumn( const unsigned long& index ) = 0;
+	virtual void deleteHeaderColumn( const uint32& index ) = 0;
 
-	virtual void setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone ) = 0;
+	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone ) = 0;
 
-	virtual double getColumnWidth( const unsigned long& index ) = 0;
+	virtual double getColumnWidth( const uint32& index ) = 0;
 
-	virtual void setColumnName( const unsigned long& index, const String& columnName ) = 0;
+	virtual void setColumnName( const uint32& index, const String& columnName ) = 0;
 
-	virtual String getColumnName( const unsigned long& index ) = 0;
+	virtual String getColumnName( const uint32& index ) = 0;
 
 	virtual void sort( ItemSort* itemSortFunctor ) = 0;
 
@@ -95,9 +95,9 @@ public:
 
 	virtual Rect getItemImageRect( ListItem* item ) = 0;
 
-	virtual long getDisplayOptions() = 0;
+	virtual int32 getDisplayOptions() = 0;
 
-	virtual void setDisplayOptions( const long& displayOptions ) = 0;
+	virtual void setDisplayOptions( const int32& displayOptions ) = 0;
 };
 
 }

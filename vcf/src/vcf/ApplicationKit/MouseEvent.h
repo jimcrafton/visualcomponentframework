@@ -48,11 +48,11 @@ public:
 	MouseEvent( Object* source ) : Event(source),
 		buttonMask_(0), keyMask_(0){}
 
-	MouseEvent( Object* source, const unsigned long& eventType ): Event(source,eventType),
+	MouseEvent( Object* source, const uint32& eventType ): Event(source,eventType),
 		buttonMask_(0),keyMask_(0){}
 
-	MouseEvent( Object* source, const unsigned long& eventType, const unsigned long& buttonMask,
-		        const unsigned long& keyMask, Point* point ): Event(source,eventType),
+	MouseEvent( Object* source, const uint32& eventType, const uint32& buttonMask,
+		        const uint32& keyMask, Point* point ): Event(source,eventType),
 		buttonMask_(buttonMask),keyMask_(keyMask),point_(*point){}
 
 	MouseEvent( const MouseEvent& rhs ):Event(rhs),
@@ -87,11 +87,11 @@ public:
 		point_.y_ = point->y_;
 	}
 
-    unsigned long getKeyMask(){
+    uint32 getKeyMask(){
 		return keyMask_;
 	}
 
-    unsigned long getButtonMask(){
+    uint32 getButtonMask(){
 		return buttonMask_;
 	}
 	
@@ -182,8 +182,8 @@ public:
 	}
 
 private:
-    unsigned long buttonMask_;
-    unsigned long keyMask_;
+    uint32 buttonMask_;
+    uint32 keyMask_;
     Point point_;
 };
 

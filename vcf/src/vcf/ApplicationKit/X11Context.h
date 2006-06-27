@@ -58,12 +58,12 @@ struct PointOperation {
 
 struct TextOperation {
 	TextOperation( const double& ax=0.0, const double& ay=0.0 ) {
-		x = (long)ax;
-		y = (long)ay;
+		x = (int32)ax;
+		y = (int32)ay;
 	};
 
-	long x;
-	long y;
+	int32 x;
+	int32 y;
 	String text;
 };
 
@@ -98,15 +98,15 @@ public:
 	/**
 	*Creates a new HDC from scratch
 	*/
-	X11Context( const unsigned long& width, const unsigned long& heigh );
+	X11Context( const uint32& width, const uint32& heigh );
 
 	/**
 	Thius will initialize the context from a X11GraphicsDevice object
-	@param long the contextID is a pointer to a X11GraphicsDevice, which
+	@param int32 the contextID is a pointer to a X11GraphicsDevice, which
 	in turn holds the actual Visual and GC values
 	*/
 
-	X11Context( const long& contextID );
+	X11Context( const int32& contextID );
 
 	virtual ~X11Context();
 
@@ -119,17 +119,17 @@ public:
 	/**
 	Will return the contextID which represents the GC value for the
 	Context
-	@return long the contextID is the value of the GC for the Context
+	@return int32 the contextID is the value of the GC for the Context
 	*/
-	virtual long getContextID();
+	virtual int32 getContextID();
 
 	/**
 	Sets the value of the interna X11GraphicsDevice object
-	@param long the contextID is a pointer to a X11GraphicsDevice, which
+	@param int32 the contextID is a pointer to a X11GraphicsDevice, which
 	in turn holds the actual Visual and GC values
 	@see X11GraphicsDevice
 	*/
-	virtual void setContextID( const long& handle );
+	virtual void setContextID( const int32& handle );
 
 	virtual void setCurrentFontState(VCF::FontState * state);
 
@@ -143,9 +143,9 @@ public:
 
 	virtual void drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image );
 
-    virtual void textAt(const double & x, const double & y, const String & text, const long& drawOptions );
+    virtual void textAt(const double & x, const double & y, const String & text, const int32& drawOptions );
 
-	virtual void textBoundedBy( Rect* bounds, const String& text, const long& drawOptions );
+	virtual void textBoundedBy( Rect* bounds, const String& text, const int32& drawOptions );
 
 	virtual double getTextWidth( const String& text );
 
@@ -216,7 +216,7 @@ public:
 
 	virtual void drawVerticalScrollButtonRect( Rect* rect, const bool& topButton, const bool& isPressed );
 
-	virtual void drawDisclosureButton( Rect* rect, const long& state );
+	virtual void drawDisclosureButton( Rect* rect, const int32& state );
 
 	virtual void drawHorizontalScrollButtonRect( Rect* rect, const bool& leftButton, const bool& isPressed );
 
@@ -232,7 +232,7 @@ public:
 
 	virtual void drawHeader( Rect* rect );
 
-	virtual void drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle );
+	virtual void drawEdge( Rect* rect, const int32& edgeSides, const int32& edgeStyle );
 
 	virtual void drawSizeGripper( Rect* rect );
 
@@ -268,8 +268,8 @@ protected:
 
 
 	bool isMemoryCtx_;
-	unsigned long pixmapHeight_;
-	unsigned long pixmapWidth_;
+	uint32 pixmapHeight_;
+	uint32 pixmapWidth_;
 
 
 	bool pathStarted_;
@@ -298,16 +298,16 @@ protected:
 	void clearTextBuffer();
 	void testBuffer();
 
-	long translateFillStyle( const FillStyle& fillState );
-	long translateStrokeStyle( const StrokeStyle& strokeStyle );
-	long translateHatch( const FillStyle& fillState );
+	int32 translateFillStyle( const FillStyle& fillState );
+	int32 translateStrokeStyle( const StrokeStyle& strokeStyle );
+	int32 translateHatch( const FillStyle& fillState );
 	void execPathOperations();
 
 	/**
 	*Utility function to draw a transparent bitmap
 	*/
-	static void drawTransparentBitmap(int hdc, int hBitmap, long xStart,
-                           long yStart, ulong32 cTransparentColor);
+	static void drawTransparentBitmap(int hdc, int hBitmap, int32 xStart,
+                           int32 yStart, uint32 cTransparentColor);
 
 
 

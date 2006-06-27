@@ -25,9 +25,9 @@ public:
 
 	virtual ~X11GraphicsToolkit();
 
-	virtual ContextPeer* createContextPeer( const unsigned long& width, const unsigned long& height );
+	virtual ContextPeer* createContextPeer( const uint32& width, const uint32& height );
 
-	virtual ContextPeer* createContextPeer( const long& contextID );
+	virtual ContextPeer* createContextPeer( const int32& contextID );
 
 	virtual FontPeer* createFontPeer( const String& fontName );
 
@@ -35,7 +35,7 @@ public:
 
 	virtual OpenGLPeer* createOpenGLPeer( GraphicsContext* glContext );
 
-	virtual Image* createImage( const unsigned long& width, const unsigned long& height );
+	virtual Image* createImage( const uint32& width, const uint32& height );
 
 	virtual Image* createImage( GraphicsContext* context, Rect* rect );
 
@@ -55,7 +55,7 @@ public:
 		return X11ScreenID_;
 	}
 
-	ulong32 getPixelForColor( Color* color );
+	uint32 getPixelForColor( Color* color );
 
 	/**
 	this should return a path that represents the common font directory available to
@@ -79,7 +79,7 @@ protected:
 	Display* X11Display_;
 	int X11ScreenID_;
 
-	std::map<ulong32,ulong32> colorLookupMap_;
+	std::map<uint32,uint32> colorLookupMap_;
 private:
 };
 

@@ -28,7 +28,7 @@ public:
 
 	virtual gboolean handleEvent( GdkEvent* gtkEvent );
 
-	void insertToolbarButton( const ulong32& index,
+	void insertToolbarButton( const uint32& index,
 	                          ToolbarItem* item,
 	                          bool showCaption = false );
 

@@ -26,7 +26,7 @@ public:
 
 	virtual void addItem( ListItem * item );
 
-	virtual void insertItem( const unsigned long& index, ListItem * item );
+	virtual void insertItem( const uint32& index, ListItem * item );
 
 	virtual void clear();
 
@@ -54,9 +54,9 @@ public:
 
 	virtual void addHeaderColumn( const String& columnName, const double& width );
 
-	virtual void insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width );
+	virtual void insertHeaderColumn( const uint32& index, const String& columnName, const double& width );
 
-	virtual void deleteHeaderColumn( const unsigned long& index );
+	virtual void deleteHeaderColumn( const uint32& index );
 
 	virtual IconStyleType getIconStyle();
 
@@ -74,13 +74,13 @@ public:
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
 
-	virtual void setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
+	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
 
-	virtual double getColumnWidth( const unsigned long& index );
+	virtual double getColumnWidth( const uint32& index );
 
-	virtual void setColumnName( const unsigned long& index, const String& columnName );
+	virtual void setColumnName( const uint32& index, const String& columnName );
 
-	virtual String getColumnName( const unsigned long& index );
+	virtual String getColumnName( const uint32& index );
 
 	virtual void sort( ItemSort* itemSortFunctor );
 
@@ -90,9 +90,9 @@ public:
 
 	virtual Rect getItemImageRect( ListItem* item );
 
-	virtual long getDisplayOptions();
+	virtual int32 getDisplayOptions();
 
-	virtual void setDisplayOptions( const long& displayOptions );
+	virtual void setDisplayOptions( const int32& displayOptions );
 
 	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 protected:	

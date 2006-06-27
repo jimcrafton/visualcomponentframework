@@ -61,40 +61,40 @@ public:
 
 	TextModel* getTextModel();
 
-	unsigned long getCaretPosition() ;
+	uint32 getCaretPosition() ;
 
-	void setCaretPosition( const unsigned long& caretPos );
+	void setCaretPosition( const uint32& caretPos );
 
 	void setRightMargin( const double & rightMargin );
 
 	void setLeftMargin( const double & leftMargin );
 
-	unsigned long getLineCount();
+	uint32 getLineCount();
 
-	unsigned long getCurrentLinePosition();
+	uint32 getCurrentLinePosition();
 
 	double getLeftMargin();
 
 	double getRightMargin();
 
-	Point* getPositionFromCharIndex( const unsigned long& index );
+	Point* getPositionFromCharIndex( const uint32& index );
 
-	unsigned long getCharIndexFromPosition( Point* point );
+	uint32 getCharIndexFromPosition( Point* point );
 
 	/**
 	*returns the zero based index that indicates where the current selection begins.
 	*It may be the same index that getCaretPosition() returns
 	*/
-	unsigned long getSelectionStart();
+	uint32 getSelectionStart();
 
 	/**
 	gives the number of characters selected.
-	@return unsigned long, the number of characters selected, a return value
+	@return uint32, the number of characters selected, a return value
 	of 0 indicates that no characters are currently selected.
 	*/
-	unsigned long getSelectionCount();
+	uint32 getSelectionCount();
 
-	void setSelectionMark( const unsigned long& start, const unsigned long& count );
+	void setSelectionMark( const uint32& start, const uint32& count );
 
 	void selectAll();
 

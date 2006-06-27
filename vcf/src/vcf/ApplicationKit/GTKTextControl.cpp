@@ -84,20 +84,20 @@ void GTKTextControl::setLeftMargin( const double & leftMargin )
 	}
 }
 
-unsigned long GTKTextControl::getLineCount()
+uint32 GTKTextControl::getLineCount()
 {
-	unsigned long result = 1;
+	uint32 result = 1;
 	if ( isMultiLineControl_ ) {
 		GtkTextBuffer * buff = gtk_text_view_get_buffer( multiLine_ );
-		result = ( unsigned long ) gtk_text_buffer_get_line_count( buff );
+		result = ( uint32 ) gtk_text_buffer_get_line_count( buff );
 	}
 	return result;
 }
 
-unsigned long GTKTextControl::getCurrentLinePosition()
+uint32 GTKTextControl::getCurrentLinePosition()
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( isMultiLineControl_ ) {
 		//result = gtk_text_view_get_left_margin( multiLine_ );
 	}
@@ -122,7 +122,7 @@ double GTKTextControl::getRightMargin()
 	return result;
 }
 
-Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
+Point* GTKTextControl::getPositionFromCharIndex( const uint32& index )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
@@ -130,7 +130,7 @@ Point* GTKTextControl::getPositionFromCharIndex( const unsigned long& index )
 	return NULL;
 }
 
-unsigned long GTKTextControl::getCharIndexFromPosition( Point* point )
+uint32 GTKTextControl::getCharIndexFromPosition( Point* point )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
@@ -138,9 +138,9 @@ unsigned long GTKTextControl::getCharIndexFromPosition( Point* point )
 	return 0;
 }
 
-unsigned long GTKTextControl::getCaretPosition()
+uint32 GTKTextControl::getCaretPosition()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( isMultiLineControl_ ) {
 	}
 	else {
@@ -151,7 +151,7 @@ unsigned long GTKTextControl::getCaretPosition()
 	return result;
 }
 
-void GTKTextControl::setCaretPosition( const unsigned long& caretPos )
+void GTKTextControl::setCaretPosition( const uint32& caretPos )
 {
 	if ( isMultiLineControl_ ) {
 	}
@@ -161,24 +161,24 @@ void GTKTextControl::setCaretPosition( const unsigned long& caretPos )
 	}
 }
 
-unsigned long GTKTextControl::getSelectionStart()
+uint32 GTKTextControl::getSelectionStart()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( isMultiLineControl_ ) {
 	}
 	else {
 		GtkEditable * editable = GTK_EDITABLE( singleLine_ );
 		int start = 0;
 		gtk_editable_get_selection_bounds( editable, &start, NULL );
-		result = ( unsigned long ) start;
+		result = ( uint32 ) start;
 	}
 
 	return result;
 }
 
-unsigned long GTKTextControl::getSelectionCount()
+uint32 GTKTextControl::getSelectionCount()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	if ( isMultiLineControl_ ) {
 	}
@@ -187,13 +187,13 @@ unsigned long GTKTextControl::getSelectionCount()
 		int start = 0;
 		int end = 0;
 		gtk_editable_get_selection_bounds( editable, &start, &end );
-		result = ( unsigned long ) ( end - start );
+		result = ( uint32 ) ( end - start );
 	}
 
 	return result;
 }
 
-void GTKTextControl::setSelectionMark( const unsigned long& start, const unsigned long& count )
+void GTKTextControl::setSelectionMark( const uint32& start, const uint32& count )
 {
 	if ( isMultiLineControl_ ) {
 	}
@@ -217,7 +217,7 @@ void GTKTextControl::setParagraphAlignment( const TextAlignmentType& alignment )
 	}
 }
 
-void GTKTextControl::scrollToLine( const ulong32& lineIndex )
+void GTKTextControl::scrollToLine( const uint32& lineIndex )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	if ( isMultiLineControl_ ) {
@@ -308,12 +308,12 @@ void GTKTextControl::setBorder( Border* border )
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-ulong32 GTKTextControl::getTotalPrintablePageCount( PrintContext* context )
+uint32 GTKTextControl::getTotalPrintablePageCount( PrintContext* context )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-void GTKTextControl::print( PrintContext* context, const long& page )
+void GTKTextControl::print( PrintContext* context, const int32& page )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }

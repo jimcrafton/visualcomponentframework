@@ -76,7 +76,7 @@ void TimerComponent::setActivated( const bool& isActive )
 
 }
 
-void TimerComponent::setTimeoutInterval( const long& interval )
+void TimerComponent::setTimeoutInterval( const int32& interval )
 {
 	setActivated( false );
 

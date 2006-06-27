@@ -63,7 +63,7 @@ void Win32ControlContext::checkHandle()
 			double originX = bounds.left_;
 			double originY = bounds.top_;
 			POINT oldOrigin = {0,0};
-			BOOL result = ::SetViewportOrgEx( dc_, (long)originX, (long)originY, &oldOrigin );
+			BOOL result = ::SetViewportOrgEx( dc_, (int32)originX, (int32)originY, &oldOrigin );
 			if ( FALSE == result ) {
 				throw RuntimeException( MAKE_ERROR_MSG_2("SetViewportOrgEx() failed for win32 Context") );
 			}
@@ -81,7 +81,7 @@ void Win32ControlContext::releaseHandle()
 		Control* owningControl = owningControlCtx_->getOwningControl();
 		ControlPeer* peer = owningControl->getPeer();
 		if ( true == owningControl->isLightWeight() ) {
-			BOOL result = ::SetViewportOrgEx( dc_, (long)oldOrigin_.x_, (long)oldOrigin_.y_, NULL );
+			BOOL result = ::SetViewportOrgEx( dc_, (int32)oldOrigin_.x_, (int32)oldOrigin_.y_, NULL );
 			if ( FALSE == result ) {
 				throw RuntimeException( MAKE_ERROR_MSG_2("SetViewportOrgEx() failed for win32 Context") );
 			}

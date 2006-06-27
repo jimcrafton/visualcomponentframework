@@ -39,7 +39,7 @@ public:
 	ItemEvent( Object* source ):Event(source),
 		paintContext_(NULL){}
 
-	ItemEvent( Object* source, const unsigned long& eventType ):Event(source,eventType),
+	ItemEvent( Object* source, const uint32& eventType ):Event(source,eventType),
 		paintContext_(NULL){}
 
 	ItemEvent( Object* source, GraphicsContext* context ):Event(source),

@@ -37,7 +37,7 @@ void GTKCursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor
 {
 	GdkCursorType id = ( GdkCursorType ) 0;
 
-	cursorID_ = ( long ) systemCursor;
+	cursorID_ = ( int32 ) systemCursor;
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
 				id = GDK_LEFT_PTR;

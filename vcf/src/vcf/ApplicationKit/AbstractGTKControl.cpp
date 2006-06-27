@@ -74,7 +74,7 @@ void AbstractGTKControl::setBounds( Rect* rect )
 
 }
 
-bool AbstractGTKControl::beginSetBounds( const ulong32& numberOfChildren )
+bool AbstractGTKControl::beginSetBounds( const uint32& numberOfChildren )
 {
 	return true;
 }
@@ -246,7 +246,7 @@ String GTK_EventToString( GdkEvent* gtkEvent )
 {
 	String result;
 
-	static unsigned long count = 0;
+	static uint32 count = 0;
 
 	switch ( gtkEvent->type ) {
 		case GDK_NOTHING : {

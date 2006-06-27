@@ -25,7 +25,7 @@ namespace VCF {
 
 		EtchedBorder();
 
-		EtchedBorder( long sidesToPaint, long style );
+		EtchedBorder( int32 sidesToPaint, int32 style );
 
 		EtchedBorder( Component* owner );
 
@@ -37,24 +37,24 @@ namespace VCF {
 
 		virtual Rect getClientRect( Rect* initialBounds, Control* control );
 
-		void setSidesToPaint( const long& sidesToPaint ) {
+		void setSidesToPaint( const int32& sidesToPaint ) {
 			sidesToPaint_ = sidesToPaint;
 		}
 
-		long getSidesToPaint() {
+		int32 getSidesToPaint() {
 			return sidesToPaint_;
 		}
 
-		long getEdgeStyle() {
+		int32 getEdgeStyle() {
 			return style_;
 		}
 
-		void setEdgeStyle( const long& val ) {
+		void setEdgeStyle( const int32& val ) {
 			style_ = val;
 		}
 	protected:
-		long sidesToPaint_;
-		long style_;
+		int32 sidesToPaint_;
+		int32 style_;
 	};
 };
 

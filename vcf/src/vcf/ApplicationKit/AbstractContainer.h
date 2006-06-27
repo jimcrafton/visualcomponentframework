@@ -69,21 +69,21 @@ public:
 
 	virtual Enumerator<Control*>* getChildren();
 
-	virtual unsigned long getChildCount();
+	virtual uint32 getChildCount();
 
 	virtual Control* findControl( const String& controlName );
 
-	virtual Control* getControlAtIndex( const ulong32& index );
+	virtual Control* getControlAtIndex( const uint32& index );
 
-	virtual long getControlIndex( Control* control );
+	virtual int32 getControlIndex( Control* control );
 
-	virtual void updateTabOrder( Control* child, ulong32& newTabOrder );
+	virtual void updateTabOrder( Control* child, uint32& newTabOrder );
 
 	virtual void getTabList( std::vector<Control*>& tabList );
 
 	virtual void insertBeforeControl( Control * child, const AlignmentType& alignment, Control* afterControl );
 
-	virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const ulong32& index );
+	virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const uint32& index );
 
 	virtual void clear();
 
@@ -99,8 +99,8 @@ public:
 protected:
 	std::vector<Control*> controls_;
 	EnumeratorContainer<std::vector<Control*>, Control*> controlsContainer_;
-	std::map<long,Control*> tabOrderMap_;
-	long currentTabControlIndex_;
+	std::map<int32,Control*> tabOrderMap_;
+	int32 currentTabControlIndex_;
 	Control* controlContainer_;
 	EventHandler* controlHandler_;
 	EventHandler* mouseHandler_;

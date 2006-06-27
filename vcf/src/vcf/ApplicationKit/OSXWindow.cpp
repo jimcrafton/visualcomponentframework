@@ -260,7 +260,7 @@ void OSXWindow::setBounds( Rect* rect )
 	*/
 }
 
-bool OSXWindow::beginSetBounds( const ulong32& numberOfChildren )
+bool OSXWindow::beginSetBounds( const uint32& numberOfChildren )
 {
 	return true;
 }
@@ -1008,7 +1008,7 @@ OSStatus OSXWindow::handleContentViewDraw( EventHandlerCallRef nextHandler, Even
 	
 	VCF::Rect clientBounds = getClientBounds();
 	
-	//ctx->getPeer()->setContextID( (VCF::ulong32)port );	
+	//ctx->getPeer()->setContextID( (VCF::uint32)port );	
 	OSXContext* osxCtx =  (OSXContext*)ctx->getPeer();
 	osxCtx->setCGContext( context, port, clientBounds );
 

@@ -166,7 +166,7 @@ bool OSXMenuItem::isParentMenuItemRoot()
 
 void OSXMenuItem::addChild( MenuItem* child )
 {
-	unsigned long index = child->getIndex();// maxVal<unsigned long>( menuItem_->getChildCount()-1, 0 );
+	uint32 index = child->getIndex();// maxVal<uint32>( menuItem_->getChildCount()-1, 0 );
 	
 	insertChild( index, child );
 }
@@ -187,7 +187,7 @@ void OSXMenuItem::fixChildren( MenuItem* child )
 	}
 }
 
-void OSXMenuItem::insertChild( const unsigned long& index, MenuItem* child )
+void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 {
 	child->setIndex( index );
 	
@@ -263,7 +263,7 @@ void OSXMenuItem::deleteChild( MenuItem* child )
 	DeleteMenuItem( handle, index + 1 );
 }
 
-void OSXMenuItem::deleteChild( const unsigned long& index )
+void OSXMenuItem::deleteChild( const uint32& index )
 {
 	MenuItem* child = menuItem_->getChildAt(index);
 	deleteChild( child );
@@ -318,7 +318,7 @@ MenuItem* OSXMenuItem::getParent()
 	return menuItem_->getParent();
 }
 
-MenuItem* OSXMenuItem::getChildAt( const unsigned long& index )
+MenuItem* OSXMenuItem::getChildAt( const uint32& index )
 {
 	return NULL;
 }

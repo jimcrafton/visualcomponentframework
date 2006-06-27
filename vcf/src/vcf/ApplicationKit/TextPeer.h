@@ -174,7 +174,7 @@ public:
 
 	virtual double getBottomMargin() = 0;	
 
-	virtual unsigned long getLineCount() = 0;	
+	virtual uint32 getLineCount() = 0;	
 	
 	virtual Rect getContentBoundsForWidth( const double& width ) = 0;
 	
@@ -229,46 +229,46 @@ public:
 class APPLICATIONKIT_API TextEditPeer : public TextPeer {
 public:
 
-	virtual Point* getPositionFromCharIndex( const unsigned long& index ) = 0;
+	virtual Point* getPositionFromCharIndex( const uint32& index ) = 0;
 
-	virtual unsigned long getCharIndexFromPosition( Point* point ) = 0;
+	virtual uint32 getCharIndexFromPosition( Point* point ) = 0;
 
 	/**
 	*returns the current caret position with in the text control
 	*this is specified by a zero based number representing the
 	*insertion point with the text control's text (stored in the text
 	*control's Model).
-	*@return long the index of the current insertion point in the Model's text
+	*@return uint32 the index of the current insertion point in the Model's text
 	*/
-	virtual unsigned long getCaretPosition() = 0;
+	virtual uint32 getCaretPosition() = 0;
 
-	virtual void setCaretPosition( const unsigned long& caretPos ) = 0;
+	virtual void setCaretPosition( const uint32& caretPos ) = 0;
 
-	virtual unsigned long getCurrentLinePosition() = 0;
+	virtual uint32 getCurrentLinePosition() = 0;
 
 	/**
 	*returns the zero based index that indicates where the current selection begins
 	*may be the same index that getCaretPosition() returns
 	*/
-	virtual unsigned long getSelectionStart() = 0;
+	virtual uint32 getSelectionStart() = 0;
 
 	/**
 	*returns the number of characters selected
-	*@return unsigned long the number of characters selected, a return value of 0
+	*@return uint32 the number of characters selected, a return value of 0
 	*indicates that no characters are currently selected
 	*/
-	virtual unsigned long getSelectionCount() = 0;
+	virtual uint32 getSelectionCount() = 0;
 
 	/**
-	*@param long the starting point. The index is zero based.
-	*@param long the number of characters selected.
+	*@param uint32 the starting point. The index is zero based.
+	*@param uint32 the number of characters selected.
 	*/
-	virtual void setSelectionMark( const unsigned long& start, const unsigned long& count ) = 0;
+	virtual void setSelectionMark( const uint32& start, const uint32& count ) = 0;
 	
 	virtual void clearSelection() = 0;
 	
 
-	virtual void scrollToLine( const ulong32& lineIndex ) = 0;
+	virtual void scrollToLine( const uint32& lineIndex ) = 0;
 
 	virtual void scrollToSelection( const bool& showEndSel = false ) = 0;
 
@@ -321,7 +321,7 @@ public:
 	
 	
 	//printing
-	virtual ulong32 getTotalPrintablePageCount( PrintContext* context ) = 0;
+	virtual uint32 getTotalPrintablePageCount( PrintContext* context ) = 0;
 	
 	/**
 	This attempts to print a single page and render in to the 
@@ -331,7 +331,7 @@ public:
 	support varies widely. It will work on Win32, and should work on
 	Mac OS X as well.
 	*/
-	virtual void print( PrintContext* context, const long& page ) = 0;
+	virtual void print( PrintContext* context, const int32& page ) = 0;
 
 	virtual void finishPrinting() = 0;	
 

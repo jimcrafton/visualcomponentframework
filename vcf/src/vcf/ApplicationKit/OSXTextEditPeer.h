@@ -82,7 +82,7 @@ public:
 
 	virtual double getBottomMargin();
 
-	virtual unsigned long getLineCount();
+	virtual uint32 getLineCount();
 
 	virtual Rect getContentBoundsForWidth(const double& width);
 
@@ -97,27 +97,27 @@ public:
 
 
 
-	virtual Point* getPositionFromCharIndex( const unsigned long& index );
+	virtual Point* getPositionFromCharIndex( const uint32& index );
 
-	virtual unsigned long getCharIndexFromPosition( Point* point );
+	virtual uint32 getCharIndexFromPosition( Point* point );
 
-	virtual unsigned long getCaretPosition();
+	virtual uint32 getCaretPosition();
 
-	virtual void setCaretPosition( const unsigned long& caretPos );
+	virtual void setCaretPosition( const uint32& caretPos );
 
-	virtual unsigned long getCurrentLinePosition();
+	virtual uint32 getCurrentLinePosition();
 
 
 
-	virtual unsigned long getSelectionStart();
+	virtual uint32 getSelectionStart();
 
-	virtual unsigned long getSelectionCount();
+	virtual uint32 getSelectionCount();
 
-	virtual void setSelectionMark( const unsigned long& start, const unsigned long& count );
+	virtual void setSelectionMark( const uint32& start, const uint32& count );
 
 	virtual void clearSelection();
 
-	virtual void scrollToLine( const ulong32& lineIndex );
+	virtual void scrollToLine( const uint32& lineIndex );
 
 	virtual void scrollToSelection( const bool& _showEndSel = false );
 
@@ -125,11 +125,11 @@ public:
 
 
 
-	virtual void print( PrintContext* context, const long& page );
+	virtual void print( PrintContext* context, const int32& page );
 
 	virtual void finishPrinting();
 
-	virtual ulong32 getTotalPrintablePageCount( PrintContext* context );
+	virtual uint32 getTotalPrintablePageCount( PrintContext* context );
 
 	virtual void cut();
 

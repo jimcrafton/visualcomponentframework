@@ -32,7 +32,7 @@ class WindowPeer;
 */
 class DialogEvent : public Event {
 public:
-	DialogEvent( Object* source, const ulong32& eventType ) : Event(source,eventType),
+	DialogEvent( Object* source, const uint32& eventType ) : Event(source,eventType),
 		returnValue_(UIToolkit::mrNone){
 	
 	}
@@ -212,7 +212,7 @@ public:
 	static void showMessage( const String& message, const String& caption="" );
 
 	static UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-											const long& messageButtons = mbOKCancel,
+											const int32& messageButtons = mbOKCancel,
 											const MessageStyle& messageStyle=msDefault );
 
 	virtual void setFrameStyle( const FrameStyleType& frameStyle );

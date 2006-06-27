@@ -80,12 +80,12 @@ void AbstractApplication::postEvent( EventHandler* eventHandler, Event* event, c
 	UIToolkit::postEvent( eventHandler, event, deleteHandler );
 }
 
-AcceleratorKey* AbstractApplication::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
+AcceleratorKey* AbstractApplication::getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
 	return UIToolkit::getAccelerator( keyCode, modifierMask, src );
 }
 
-void AbstractApplication::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler )
+void AbstractApplication::addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler )
 {
 	if ( NULL == eventHandler ) {
 		throw InvalidPointerException( MAKE_ERROR_MSG_2("The Event handler passed in is NULL!") );

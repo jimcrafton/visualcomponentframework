@@ -57,20 +57,20 @@ String X11Desktop::desktopGetDirectory()
 	return "";
 }
 
-ulong32 X11Desktop::desktopGetHandleID()
+uint32 X11Desktop::desktopGetHandleID()
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	Display* display = toolkit->getX11Display();
-	result = (ulong32) DefaultRootWindow( display );
+	result = (uint32) DefaultRootWindow( display );
 
 	return result;
 }
 
-ulong32 X11Desktop::desktopGetGraphicsContextHandleID()
+uint32 X11Desktop::desktopGetGraphicsContextHandleID()
 {
-	ulong32 result = desktopGetHandleID();
+	uint32 result = desktopGetHandleID();
 	//printf( "desktopGetHandleID(): %d\n", result );
 	return result;
 }
@@ -88,7 +88,7 @@ void X11Desktop::desktopTranslateToScreenCoords( Control* control, Point* pt )
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	Display* display = toolkit->getX11Display();
-	xLib::Window rootWnd = (ulong32) DefaultRootWindow( display );
+	xLib::Window rootWnd = (uint32) DefaultRootWindow( display );
 	xLib::Window controlWnd = (xLib::Window)control->getPeer()->getHandleID();
 	int x = pt->x_;
 	int y = pt->y_;
@@ -113,7 +113,7 @@ void X11Desktop::desktopTranslateFromScreenCoords( Control* control, Point* pt )
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	Display* display = toolkit->getX11Display();
-	xLib::Window rootWnd = (ulong32) DefaultRootWindow( display );
+	xLib::Window rootWnd = (uint32) DefaultRootWindow( display );
 	xLib::Window controlWnd = (xLib::Window)control->getPeer()->getHandleID();
 	int x = pt->x_;
 	int y = pt->y_;
@@ -130,9 +130,9 @@ void X11Desktop::desktopTranslateFromScreenCoords( Control* control, Point* pt )
 	}
 }
 
-ulong32 X11Desktop::desktopGetWidth()
+uint32 X11Desktop::desktopGetWidth()
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	Display* display = toolkit->getX11Display();
@@ -142,9 +142,9 @@ ulong32 X11Desktop::desktopGetWidth()
 	return result;
 }
 
-ulong32 X11Desktop::desktopGetHeight()
+uint32 X11Desktop::desktopGetHeight()
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 	Display* display = toolkit->getX11Display();

@@ -28,7 +28,7 @@ MultilineTextControl::~MultilineTextControl()
 
 }
 
-String MultilineTextControl::getTextForLine( const ulong32& lineIndex )
+String MultilineTextControl::getTextForLine( const uint32& lineIndex )
 {
 	String result;
 	result = getTextModel()->getText();
@@ -36,8 +36,8 @@ String MultilineTextControl::getTextForLine( const ulong32& lineIndex )
 	const VCFChar* P = result.c_str();
 	const VCFChar* start = P;
 	const VCFChar* lineStart = P;
-	long count = result.size();
-	ulong32 lineCount = 0;
+	int32 count = result.size();
+	uint32 lineCount = 0;
 
 	bool lineMatchFound = false;
 	bool lineFound = false;
@@ -85,7 +85,7 @@ String MultilineTextControl::getTextForLine( const ulong32& lineIndex )
 	return result;
 }
 
-void MultilineTextControl::scrollToLine( const ulong32& lineIndex )
+void MultilineTextControl::scrollToLine( const uint32& lineIndex )
 {
 	textPeer_->scrollToLine( lineIndex );
 }

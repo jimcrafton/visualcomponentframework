@@ -83,7 +83,7 @@ void GTKToolbar::onModelChanged( ModelEvent* e )
 	}
 }
 
-void GTKToolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption )
+void GTKToolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, bool showCaption )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }

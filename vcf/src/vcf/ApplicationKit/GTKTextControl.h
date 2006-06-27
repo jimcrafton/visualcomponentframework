@@ -33,11 +33,11 @@ public:
 
 	virtual void setLeftMargin( const double & leftMargin );
 
-	virtual unsigned long getLineCount();
+	virtual uint32 getLineCount();
 
 	virtual Rect getContentBoundsForWidth( const double& width );
 
-	virtual unsigned long getCurrentLinePosition();
+	virtual uint32 getCurrentLinePosition();
 
 	virtual double getLeftMargin();
 
@@ -47,42 +47,42 @@ public:
 
 	virtual double getBottomMargin();	
 
-	virtual Point* getPositionFromCharIndex( const unsigned long& index );
+	virtual Point* getPositionFromCharIndex( const uint32& index );
 
-	virtual unsigned long getCharIndexFromPosition( Point* point );
+	virtual uint32 getCharIndexFromPosition( Point* point );
 
 	/**
 	*returns the current caret position with in the text control
 	*this is specified by a zero based number representing the
 	*insertion point with the text control's text (stored in the text
 	*control's Model).
-	*@return long the index of the current insertion point in the Model's text
+	*@return uint32 the index of the current insertion point in the Model's text
 	*/
-	virtual unsigned long getCaretPosition();
+	virtual uint32 getCaretPosition();
 
-	virtual void setCaretPosition( const unsigned long& caretPos );
+	virtual void setCaretPosition( const uint32& caretPos );
 
 	/**
 	*returns the zero based index that indicates where the current selection begins
 	*may be the same index that getCaretPosition() returns
 	*/
-	virtual unsigned long getSelectionStart();
+	virtual uint32 getSelectionStart();
 
 	/**
 	*returns the number of characters selected
-	*@return unsigned long the number of characters selected, a return value of 0
+	*@return uint32 the number of characters selected, a return value of 0
 	*indicates that no characters are currently selected
 	*/
-	virtual unsigned long getSelectionCount();
+	virtual uint32 getSelectionCount();
 
-	virtual void setSelectionMark( const unsigned long& start,
-	                               const unsigned long& count );
+	virtual void setSelectionMark( const uint32& start,
+	                               const uint32& count );
 
 	virtual void setSelectionFont( Font* font );
 
 	virtual void setParagraphAlignment( const TextAlignmentType& alignment );
 
-	virtual void scrollToLine( const ulong32& lineIndex );
+	virtual void scrollToLine( const uint32& lineIndex );
 
 	virtual gboolean handleEvent( GdkEvent* gtkEvent );
 
@@ -96,9 +96,9 @@ public:
 
 	virtual void setBorder( Border* border );
 
-	virtual ulong32 getTotalPrintablePageCount( PrintContext* context );
+	virtual uint32 getTotalPrintablePageCount( PrintContext* context );
 
-	virtual void print( PrintContext* context, const long& page );
+	virtual void print( PrintContext* context, const int32& page );
 
 	virtual void finishPrinting();
 

@@ -47,8 +47,8 @@ public:
 
 	}
 
-	KeyboardEvent( Object* source, const unsigned long& eventType,
-		           const unsigned long& repeatCount, const unsigned long& keyMask,
+	KeyboardEvent( Object* source, const uint32& eventType,
+		           const uint32& repeatCount, const uint32& keyMask,
 				   const VCFChar& keyValue,
 				   const VirtualKeyCode& virtKeyValue ): Event(source,eventType),
 		keyMask_(keyMask), keyValue_(keyValue), repeatCount_(repeatCount),
@@ -71,7 +71,7 @@ public:
 		return *this;
 	}
 	
-    unsigned long getKeyMask() {
+    uint32 getKeyMask() {
 		return keyMask_;
 	}
 	
@@ -79,7 +79,7 @@ public:
 		return keyValue_;
 	}
 	
-	unsigned long getRepeatCount() {
+	uint32 getRepeatCount() {
 		return repeatCount_;
 	}
 	
@@ -103,9 +103,9 @@ public:
 		return new KeyboardEvent(*this);
 	}
 private:
-    unsigned long keyMask_;
+    uint32 keyMask_;
 	VCFChar keyValue_;
-	unsigned long repeatCount_;
+	uint32 repeatCount_;
 	VirtualKeyCode virtualKeyCode_;
 };
 

@@ -14,7 +14,7 @@ using namespace VCF;
 
 /*
 DataObject::DataObject( const char* dataToInitWith,
-										 const unsigned long& dataSize,
+										 const uint32& dataSize,
 										 const String& dataType )
 {
 	dataSize_ = dataSize;

@@ -148,7 +148,7 @@ void Win32ScrollPeer::scrollTo( const double& xPosition, const double& yPosition
 
 			si.cbSize = sizeof(SCROLLINFO);
 			si.fMask = SIF_POS;
-			si.nPos = (long)yPosition;
+			si.nPos = (int32)yPosition;
 			SetScrollInfo( vScrollHWnd_, SB_CTL, &si, TRUE );
 		}
 
@@ -159,7 +159,7 @@ void Win32ScrollPeer::scrollTo( const double& xPosition, const double& yPosition
 			memset( &si, 0, sizeof(si) );
 			si.cbSize = sizeof(SCROLLINFO);
 			si.fMask = SIF_POS ;
-			si.nPos = (long)xPosition;
+			si.nPos = (int32)xPosition;
 			SetScrollInfo( hScrollHWnd_, SB_CTL, &si, TRUE );
 		}
 
@@ -276,37 +276,37 @@ void Win32ScrollPeer::recalcScrollPositions( Scrollable* scrollable )
 	memset(&scrollInfoVert,0,sizeof(scrollInfoVert));
 	scrollInfoVert.cbSize = sizeof(SCROLLINFO);
 	scrollInfoVert.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
-	scrollInfoVert.nPage = (long)( needVertSB ? bounds.getHeight() : 0);	
-	scrollInfoVert.nPos =  (long)scrollable->getVerticalPosition();
+	scrollInfoVert.nPage = (int32)( needVertSB ? bounds.getHeight() : 0);	
+	scrollInfoVert.nPos =  (int32)scrollable->getVerticalPosition();
 	scrollInfoVert.nMin = 0;
-	scrollInfoVert.nMax = (long) ( showVertSB  ? virtViewHeight : scrollInfoVert.nMin );	
+	scrollInfoVert.nMax = (int32) ( showVertSB  ? virtViewHeight : scrollInfoVert.nMin );	
 	if ( showHorzSB && (scrollInfoVert.nMax > 0)) {
-		scrollInfoVert.nMax += (long)( horzSBWidth + 1 ); 
+		scrollInfoVert.nMax += (int32)( horzSBWidth + 1 ); 
 	}
 
 	SCROLLINFO scrollInfoHorz;
 	memset(&scrollInfoHorz,0,sizeof(scrollInfoHorz));
 	scrollInfoHorz.cbSize = sizeof(SCROLLINFO);
 	scrollInfoHorz.fMask = SIF_PAGE | SIF_POS | SIF_RANGE | SIF_DISABLENOSCROLL;
-	scrollInfoHorz.nPage = (long)( needHorzSB ? bounds.getWidth() : 0 );
-	scrollInfoHorz.nPos =  (long)scrollable->getHorizontalPosition();
+	scrollInfoHorz.nPage = (int32)( needHorzSB ? bounds.getWidth() : 0 );
+	scrollInfoHorz.nPos =  (int32)scrollable->getHorizontalPosition();
 	scrollInfoHorz.nMin = 0;
-	scrollInfoHorz.nMax = (long)( showHorzSB ? virtViewWidth : scrollInfoHorz.nMin );
+	scrollInfoHorz.nMax = (int32)( showHorzSB ? virtViewWidth : scrollInfoHorz.nMin );
 	if ( showVertSB && (scrollInfoHorz.nMax > 0) ) {
-		scrollInfoHorz.nMax += (long)( vertSBWidth + 1 );
+		scrollInfoHorz.nMax += (int32)( vertSBWidth + 1 );
 	}
 	
 
 	// dimensions of the vertical scrollbar
-	int x1 = (long)( bounds.left_ + ( bounds.getWidth() - vertSBWidth ) );
-	int y1 = (long)( bounds.top_ + scrollable->getVerticalTopScrollSpace() );
+	int x1 = (int32)( bounds.left_ + ( bounds.getWidth() - vertSBWidth ) );
+	int y1 = (int32)( bounds.top_ + scrollable->getVerticalTopScrollSpace() );
 	int w1 = vertSBWidth;
-	int h1 = (long)( bounds.getHeight() - ( scrollable->getVerticalTopScrollSpace() + scrollable->getVerticalBottomScrollSpace() ) );
+	int h1 = (int32)( bounds.getHeight() - ( scrollable->getVerticalTopScrollSpace() + scrollable->getVerticalBottomScrollSpace() ) );
 
 	// dimensions of the horizontal scrollbar
-	int x2 = (long)( bounds.left_ + scrollable->getHorizontalLeftScrollSpace() );
-	int y2 = (long)( bounds.top_ + ( bounds.getHeight() - horzSBWidth ) );
-	int w2 = (long)( bounds.getWidth() - ( scrollable->getHorizontalLeftScrollSpace() + scrollable->getHorizontalRightScrollSpace() ) );
+	int x2 = (int32)( bounds.left_ + scrollable->getHorizontalLeftScrollSpace() );
+	int y2 = (int32)( bounds.top_ + ( bounds.getHeight() - horzSBWidth ) );
+	int w2 = (int32)( bounds.getWidth() - ( scrollable->getHorizontalLeftScrollSpace() + scrollable->getHorizontalRightScrollSpace() ) );
 	int h2 = horzSBWidth;
 
 	if ( showHorzSB && showVertSB ) {

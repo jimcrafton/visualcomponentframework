@@ -33,12 +33,12 @@ bool DefaultTabPage::containsPoint( Point * pt )
 	return bounds_.containsPt( pt );
 }
 
-unsigned long DefaultTabPage::getIndex()
+uint32 DefaultTabPage::getIndex()
 {
 	return index_;
 }
 
-void DefaultTabPage::setIndex( const unsigned long& index )
+void DefaultTabPage::setIndex( const uint32& index )
 {
 	index_ = index;
 }
@@ -112,18 +112,18 @@ void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )
 	bounds_.setRect( paintRect->left_, paintRect->top_, paintRect->right_, paintRect->bottom_ );
 }
 
-ulong32 DefaultTabPage::getPreferredHeight()
+uint32 DefaultTabPage::getPreferredHeight()
 {
-	ulong32 result = preferredHeight_;
+	uint32 result = preferredHeight_;
 	Control* control = getPageComponent();
 	if ( NULL != control ) {
-		result = (ulong32)control->getContext()->getTextHeight( "EM" );
+		result = (uint32)control->getContext()->getTextHeight( "EM" );
 	}
 	return result;
 }
 
 
-void DefaultTabPage::setImageIndex( const long& imageIndex )
+void DefaultTabPage::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 }

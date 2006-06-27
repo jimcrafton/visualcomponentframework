@@ -35,7 +35,7 @@ namespace VCF {
 class APPLICATIONKIT_API TableModelEvent : public Event {
 public:
 
-	TableModelEvent( Object* source, const ulong32& eventType,
+	TableModelEvent( Object* source, const uint32& eventType,
 		             const int& startRow =-1, const int& rowCount=0,
 					 const int& startColumn =-1, const int& columnCount =0):
 		Event(source,eventType),

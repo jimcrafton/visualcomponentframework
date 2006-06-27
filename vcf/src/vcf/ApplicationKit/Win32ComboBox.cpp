@@ -70,7 +70,7 @@ void Win32ComboBox::addItem( ListItem * item )
 	delete [] tmp;
 }
 
-void Win32ComboBox::insertItem( const unsigned long& index, ListItem * item )
+void Win32ComboBox::insertItem( const uint32& index, ListItem * item )
 {
 
 }

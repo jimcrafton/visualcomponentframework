@@ -25,7 +25,7 @@ Splitter::Splitter( const AlignmentType& alignment/*=AlignLeft*/ ):
 void Splitter::init()
 {
 	attachedControl_ = NULL;
-	//setCursorID( (long)Cursor::SCT_SPLIT_VERT );
+	//setCursorID( (int32)Cursor::SCT_SPLIT_VERT );
 	//setAlignment( AlignLeft );
 	dragPoint_.x_ = 0.0;
 	dragPoint_.y_ = 0.0;
@@ -49,9 +49,9 @@ void Splitter::setAlignment( const AlignmentType& alignment )
 {
 	Control::setAlignment( alignment );
 	if ( AlignTop == alignment || AlignBottom == alignment ) {
-		this->setCursorID( (long)Cursor::SCT_SPLIT_HORZ );
+		this->setCursorID( (int32)Cursor::SCT_SPLIT_HORZ );
 	} else {
-		this->setCursorID( (long)Cursor::SCT_SPLIT_VERT );
+		this->setCursorID( (int32)Cursor::SCT_SPLIT_VERT );
 	}
 }
 

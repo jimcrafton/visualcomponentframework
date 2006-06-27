@@ -107,7 +107,7 @@ public:
 
 	virtual void internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler );
 
-	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	virtual void internal_unregisterTimerHandler( EventHandler* handler );
 
@@ -169,8 +169,8 @@ public:
 
 protected:
 	VirtualKeyCode translateKeyCode( guint code );
-	ulong32 translateKeyMask( GdkModifierType keyState );
-	ulong32 translateButtonMask( GdkModifierType buttonState );
+	uint32 translateKeyMask( GdkModifierType keyState );
+	uint32 translateButtonMask( GdkModifierType buttonState );
 
 	bool handleGdkEvent( GdkEvent* gdkEvent );
 	void createDefaultParentWnd();

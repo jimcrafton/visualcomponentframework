@@ -55,25 +55,25 @@ public:
 
 	virtual void addTabPage( TabPage* page ) = 0;
 
-	virtual void insertTabPage( const ulong32& index, TabPage* page ) = 0;
+	virtual void insertTabPage( const uint32& index, TabPage* page ) = 0;
 
 	virtual void deleteTabPage( TabPage* page ) = 0;
 
-	virtual void deleteTabPage( const ulong32& index ) = 0;
+	virtual void deleteTabPage( const uint32& index ) = 0;
 
 	virtual void clearTabPages() = 0;
 
 	virtual TabPage* getPageFromPageName( const String& pageName ) = 0;
 
-	virtual TabPage* getPageAt( const ulong32& index ) = 0;
+	virtual TabPage* getPageAt( const uint32& index ) = 0;
 
-	virtual ulong32 getItemIndex( TabPage* item ) = 0;
+	virtual uint32 getItemIndex( TabPage* item ) = 0;
 
 	virtual TabPage* getSelectedPage() = 0;
 
 	virtual void setSelectedPage( TabPage* page ) = 0;
 
-	virtual void setSelectedPage( const ulong32& index ) = 0;
+	virtual void setSelectedPage( const uint32& index ) = 0;
 
 	virtual Enumerator<TabPage*>* getPages() = 0;
 

@@ -30,9 +30,9 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
 
 	char* buffer = bos.getBuffer();
 	char* tmpBuffer = buffer;
-	long size = 0;//bos.getSize();
-	long bufSize = bos.getSize();
-	long inc =  sizeof( char );
+	int32 size = 0;//bos.getSize();
+	int32 bufSize = bos.getSize();
+	int32 inc =  sizeof( char );
 	VCFChar hexBytes[3];
 	memset( hexBytes, 0, 3*sizeof(VCFChar) );
 	//this is slow, we might want to figure out a better way !

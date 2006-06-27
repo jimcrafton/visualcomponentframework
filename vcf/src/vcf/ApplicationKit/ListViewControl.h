@@ -143,29 +143,29 @@ public:
 
 	void addHeaderColumn( ColumnItem* column );
 
-	virtual ColumnItem* insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width=100.0 );
+	virtual ColumnItem* insertHeaderColumn( const uint32& index, const String& columnName, const double& width=100.0 );
 
-	void insertHeaderColumn( const unsigned long& index, ColumnItem* column );
+	void insertHeaderColumn( const uint32& index, ColumnItem* column );
 
-	void deleteHeaderColumn( const unsigned long& index );
+	void deleteHeaderColumn( const uint32& index );
 
-	String getColumnName( const unsigned long& index );
+	String getColumnName( const uint32& index );
 
-	void setColumnName( const unsigned long& index, const String& columnName );
+	void setColumnName( const uint32& index, const String& columnName );
 
-	double getColumnWidth( const unsigned long& index );
+	double getColumnWidth( const uint32& index );
 
-	void setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
+	void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
 
 	void setColumnsWidth( const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
 
-	virtual ListItem* addItem( const String& caption, const ulong32 imageIndex=0 );
+	virtual ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
 	void addItem( ListItem* item );
 
-	virtual ListItem* insertItem( const ulong32& index, const String& caption, const ulong32 imageIndex=0 );
+	virtual ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );
 
-	void insertItem( const ulong32& index, ListItem* item );
+	void insertItem( const uint32& index, ListItem* item );
 
 	IconStyleType getIconStyle();
 
@@ -225,9 +225,9 @@ public:
 
 	Rect getItemImageRect( ListItem* item );
 
-	long getDisplayOptions();
+	int32 getDisplayOptions();
 
-	void setDisplayOptions( const long& displayOptions );
+	void setDisplayOptions( const int32& displayOptions );
 
 	Rect getItemRect( ListItem* item );
 

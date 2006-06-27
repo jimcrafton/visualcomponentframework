@@ -36,7 +36,7 @@ namespace VCF{
 */
 class APPLICATIONKIT_API BinaryPersistable : public Object, public Persistable {
 public:
-	BinaryPersistable( const unsigned char* dataToInitWith, const unsigned long& dataSize ):
+	BinaryPersistable( const unsigned char* dataToInitWith, const uint32& dataSize ):
 		data_(NULL), dataSize_(dataSize) {
 
 		if ( 0 == dataSize_ ) {
@@ -65,12 +65,12 @@ public:
 		return data_;
 	}
 
-	unsigned long getSize() {
+	uint32 getSize() {
 		return dataSize_;
 	}
 protected:
 	unsigned char* data_;
-	unsigned long dataSize_;
+	uint32 dataSize_;
 };
 
 /**
@@ -81,7 +81,7 @@ protected:
 class APPLICATIONKIT_API DataObject : public Object {
 
 public:
-	//DataObject( const char* dataToInitWith, const unsigned long& dataSize, const String& dataType );
+	//DataObject( const char* dataToInitWith, const uint32& dataSize, const String& dataType );
 
 	DataObject();
 

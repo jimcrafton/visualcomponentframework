@@ -70,7 +70,7 @@ public:
 	/**
 	Returns the time out interval in milliseconds.
 	*/
-	long getTimeoutInterval() {
+	int32 getTimeoutInterval() {
 		return timeoutInterval_;
 	}
 
@@ -79,11 +79,11 @@ public:
 	TimerPulse will fire an event, ever interval number of 
 	milliseconds.
 	*/
-	void setTimeoutInterval( const long& interval );
+	void setTimeoutInterval( const int32& interval );
 
 protected:
 	bool isActive_;
-	long timeoutInterval_;
+	int32 timeoutInterval_;
 	void onInternalTimerPulse( TimerEvent* event );
 
 	EventHandler* getTimerHandler();

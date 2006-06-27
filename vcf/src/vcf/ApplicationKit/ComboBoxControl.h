@@ -138,9 +138,9 @@ public:
 	/**
 	*sets the currently selected item as specified by the index.
 	*Causes a SelectionChanged event to be fired.
-	@param ulong32 the index of the item to be selected
+	@param uint32 the index of the item to be selected
 	*/
-	void setSelectedItemIndex( const ulong32& selectedIndex );
+	void setSelectedItemIndex( const uint32& selectedIndex );
 
 	/**
 	*returns the combo box style.
@@ -164,10 +164,10 @@ public:
 	*method and returns the newly created ListItem. Currently the default implementation
 	*creates a DefaultListItem to add.
 	*@param String the caption of the new item
-	*@param ulong32 th image index of the new item. The default value is 0
+	*@param uint32 th image index of the new item. The default value is 0
 	*@return ListItem the newly added item
 	*/
-	ListItem* addItem( const String& caption, const ulong32 imageIndex=0 );
+	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
 	/**
 	*adds a new ListItem. This method simply calls the models ListModel::addItem()
@@ -180,14 +180,14 @@ public:
 	*sets the drop down count. This is used to specify how many
 	*items are visible in the drop down list before scrollbars
 	*become neccessary
-	*@param ulong32 the new drop down count
+	*@param uint32 the new drop down count
 	*/
-	void setDropDownCount( const ulong32& dropDownCount );
+	void setDropDownCount( const uint32& dropDownCount );
 
 	/**
 	*returns the current drop down count
 	*/
-	ulong32 getDropDownCount() {
+	uint32 getDropDownCount() {
 		return dropDownCount_;
 	}
 
@@ -195,15 +195,15 @@ public:
 	*sets the drop down width. This is used to specify the width
 	*of the drop down list if the user prefers it bigger then
 	*the ComboBoxControl's width itself
-	*@param ulong32 the new drop down witdh
+	*@param uint32 the new drop down witdh
 	*/
-	void setDropDownWidth( const ulong32& dropDownCount );
+	void setDropDownWidth( const uint32& dropDownCount );
 
 	/**
 	*returns the current drop down witdh
 	*/
-	ulong32 getDropDownWidth() {
-		return (ulong32)dropDownWidth_;
+	uint32 getDropDownWidth() {
+		return (uint32)dropDownWidth_;
 	}
 
 	/**
@@ -314,7 +314,7 @@ protected:
 	Window* dropDown_;
 	ListModel* listModel_;
 	ListItem* selectedItem_;
-	ulong32 selectedIndex_;
+	uint32 selectedIndex_;
 	bool arrowPressed_;
 	//Rect arrowRect_;
 	Rect viewRect_;
@@ -322,7 +322,7 @@ protected:
 	ComboBoxStyleType comboBoxStyle_;
 	TextControl* edit_;
 	void updateEditBounds();
-	ulong32 dropDownCount_;
+	uint32 dropDownCount_;
 	double dropDownWidth_;
 	bool dropDownExtendFullScreen_;
 	bool discreteScroll_;

@@ -30,7 +30,7 @@ class APPLICATIONKIT_API MenuItemEvent : public Event {
 public:
 	MenuItemEvent( Object * source): Event( source ){}
 
-	MenuItemEvent( Object* source, const unsigned long& eventType ):
+	MenuItemEvent( Object* source, const uint32& eventType ):
 		Event( source, eventType ){}
 
 	virtual ~MenuItemEvent(){}

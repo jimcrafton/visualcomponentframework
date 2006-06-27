@@ -440,7 +440,7 @@ public:
 	/**
 	* the total number of newly created documents
 	*/
-	long documentCount_;
+	int32 documentCount_;
 };
 
 }; // namespace VCF

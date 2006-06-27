@@ -44,7 +44,7 @@ public:
 
 	virtual void setBounds( Rect* rect );
 
-	virtual bool beginSetBounds( const ulong32& numberOfChildren );
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 	virtual void endSetBounds();
 
@@ -133,7 +133,7 @@ public:
 	
 	ControlRef getRootControl();
 	
-	unsigned long getCurrentMouseBtn() {
+	uint32 getCurrentMouseBtn() {
 		return currentMouseBtn_;
 	}
 	
@@ -150,7 +150,7 @@ protected:
 	EventHandlerRef contentViewHandlerRef_;	
 	//RgnHandle mouseTrackRgn_;
 	MouseTrackingRef mouseTrackRef_;	
-	unsigned long currentMouseBtn_;
+	uint32 currentMouseBtn_;
 	bool internalClose_;	
 
 	RgnHandle determineUnobscuredClientRgn();

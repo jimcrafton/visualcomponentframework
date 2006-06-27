@@ -43,12 +43,12 @@ public:
 
 	virtual void setCurrentDirectory( const String& currentDirectory );
 
-	virtual long getHandleID();
+	virtual int32 getHandleID();
 
-	virtual void setHandleID( const long& handleID );
+	virtual void setHandleID( const int32& handleID );
 protected:
 	VCF::AbstractApplication* app_;
-	long handleID_;
+	int32 handleID_;
 };
 
 }; //end of namespace VCF

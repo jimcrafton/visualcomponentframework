@@ -28,7 +28,7 @@ namespace VCF  {
 */
 class APPLICATIONKIT_API TimerEvent : public VCF::Event {
 public:
-	TimerEvent( Object* source, const unsigned long& eventType ): Event(source,eventType){}
+	TimerEvent( Object* source, const uint32& eventType ): Event(source,eventType){}
 
 	virtual ~TimerEvent(){}
 

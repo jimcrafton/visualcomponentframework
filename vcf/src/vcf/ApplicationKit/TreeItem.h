@@ -112,7 +112,7 @@ public:
 
 	virtual String getCaption() = 0;
 
-	virtual ulong32 getLevel() = 0;
+	virtual uint32 getLevel() = 0;
 
 	virtual void setCaption( const String& caption ) = 0;
 
@@ -122,33 +122,33 @@ public:
 
 	virtual void addChild( TreeItem* child ) = 0;
 
-	virtual void insertChild( const unsigned long& index, TreeItem* child ) = 0;
+	virtual void insertChild( const uint32& index, TreeItem* child ) = 0;
 
 	virtual void deleteChild( TreeItem* child ) = 0;
 
-	virtual void deleteChildAtIndex( const unsigned long& index ) = 0;
+	virtual void deleteChildAtIndex( const uint32& index ) = 0;
 
 	virtual void clearChildren() = 0;
 
-	virtual long getSelectedImageIndex() = 0;
+	virtual int32 getSelectedImageIndex() = 0;
 
-	virtual void setSelectedImageIndex( const long& selectedImageIndex ) = 0;
+	virtual void setSelectedImageIndex( const int32& selectedImageIndex ) = 0;
 
-	virtual long getExpandedImageIndex() = 0;
+	virtual int32 getExpandedImageIndex() = 0;
 
-	virtual void setExpandedImageIndex( const long& expandedImageIndex ) = 0;
+	virtual void setExpandedImageIndex( const int32& expandedImageIndex ) = 0;
 
 	virtual void addSubItem( const String& caption, void* data ) = 0;
 
 	virtual void addSubItem( SubItem* subItem ) = 0;
 
-	virtual void removeSubItem( const ulong32& index ) = 0;
+	virtual void removeSubItem( const uint32& index ) = 0;
 
 	virtual Enumerator<SubItem*>* getSubItems() = 0;
 
-	virtual SubItem* getSubItem( const ulong32& index ) = 0;
+	virtual SubItem* getSubItem( const uint32& index ) = 0;
 
-	virtual ulong32 getSubItemCount() = 0;
+	virtual uint32 getSubItemCount() = 0;
 
 	virtual void subItemChanged( SubItem* item ) = 0;
 };

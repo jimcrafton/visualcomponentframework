@@ -73,7 +73,7 @@ OSHandleID GTKApplication::getHandleID()
 
 void GTKApplication::setHandleID( OSHandleID handleID )
 {
-	handleID_ = reinterpret_cast<long>( handleID );
+	handleID_ = reinterpret_cast<int32>( handleID );
 }
 
 

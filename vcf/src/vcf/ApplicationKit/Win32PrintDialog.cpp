@@ -172,7 +172,7 @@ PrintInfoHandle Win32PrintDialog::getPrintInfo()
 	return (PrintInfoHandle)&printInfo_;
 }
 
-void Win32PrintDialog::setNumberOfCopies( const ulong32& val )
+void Win32PrintDialog::setNumberOfCopies( const uint32& val )
 {
 	if ( System::isUnicodeEnabled() ) {
 		printInfo_.getPrintDlgW().nCopies = val;
@@ -182,7 +182,7 @@ void Win32PrintDialog::setNumberOfCopies( const ulong32& val )
 	}	
 }
 
-ulong32 Win32PrintDialog::getNumberOfCopies()
+uint32 Win32PrintDialog::getNumberOfCopies()
 {
 	if ( System::isUnicodeEnabled() ) {
 		return printInfo_.getPrintDlgW().nCopies;
@@ -194,7 +194,7 @@ ulong32 Win32PrintDialog::getNumberOfCopies()
 	return 0;
 }
 
-void Win32PrintDialog::setStartPage( const ulong32& val )
+void Win32PrintDialog::setStartPage( const uint32& val )
 {
 	if ( System::isUnicodeEnabled() ) {
 		printInfo_.getPrintDlgW().nFromPage = val;
@@ -206,7 +206,7 @@ void Win32PrintDialog::setStartPage( const ulong32& val )
 	printInfo_.setStartPage( val );
 }
 
-ulong32 Win32PrintDialog::getStartPage()
+uint32 Win32PrintDialog::getStartPage()
 {
 	if ( System::isUnicodeEnabled() ) {
 		return printInfo_.getPrintDlgW().nFromPage;
@@ -218,7 +218,7 @@ ulong32 Win32PrintDialog::getStartPage()
 	return 0;
 }
 
-void Win32PrintDialog::setEndPage( const ulong32& val )
+void Win32PrintDialog::setEndPage( const uint32& val )
 {
 	if ( System::isUnicodeEnabled() ) {
 		printInfo_.getPrintDlgW().nToPage = val;
@@ -230,7 +230,7 @@ void Win32PrintDialog::setEndPage( const ulong32& val )
 	printInfo_.setEndPage( val );
 }
 
-ulong32 Win32PrintDialog::getEndPage()
+uint32 Win32PrintDialog::getEndPage()
 {
 	if ( System::isUnicodeEnabled() ) {
 		return printInfo_.getPrintDlgW().nToPage;

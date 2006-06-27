@@ -82,8 +82,8 @@ std::vector<String> EnumPropertyEditor::getStringValues(){
 class EnumSetItemPropertyEditor : public BoolPropertyEditor {
 public:
 	EnumSetItemPropertyEditor( const String& itemName, 
-								const unsigned long& enumSetElement,
-								const unsigned long& enumVal,
+								const uint32& enumSetElement,
+								const uint32& enumVal,
 								PropertyEditor* parent ) {
 		attributes_ |= PropertyEditor::paCompositeValue | PropertyEditor::paOverridePropertyName;
 		propertyName_ = itemName;
@@ -133,8 +133,8 @@ public:
 	}
 	
 protected:
-	unsigned long enumSetElement_;
-	unsigned long enumVal_;
+	uint32 enumSetElement_;
+	uint32 enumVal_;
 	PropertyEditor* parent_;
 };
 
@@ -158,13 +158,13 @@ String EnumSetPropertyEditor::getValueAsText()
 			EnumSetProperty* enumSetProp = (EnumSetProperty*)property_;
 
 			std::vector<String> names;
-			std::vector<unsigned long> values;
+			std::vector<uint32> values;
 
 			
 			if ( enumSetProp->getNameValuesAsSet( names, values ) ) {
-				unsigned long val = *getValue();
+				uint32 val = *getValue();
 				std::vector<String>::iterator it = names.begin();
-				std::vector<unsigned long>::iterator it2 = values.begin();
+				std::vector<uint32>::iterator it2 = values.begin();
 				VariantData boolVal;
 
 				while ( it != names.end() ) {
@@ -194,14 +194,14 @@ std::vector<PropertyEditor*> EnumSetPropertyEditor::getSubProperties()
 			EnumSetProperty* enumSetProp = (EnumSetProperty*)property_;
 
 			std::vector<String> names;
-			std::vector<unsigned long> values;
+			std::vector<uint32> values;
 
 			
 			if ( enumSetProp->getNameValuesAsSet( names, values ) ) {
-				unsigned long val = *getValue();
+				uint32 val = *getValue();
 
 				std::vector<String>::iterator it = names.begin();
-				std::vector<unsigned long>::iterator it2 = values.begin();
+				std::vector<uint32>::iterator it2 = values.begin();
 				VariantData boolVal;
 
 				while ( it != names.end() ) {
@@ -263,13 +263,13 @@ std::vector<String> CursorPropertyEditor::getStringValues()
 
 void CursorPropertyEditor::setValueAsText( const String& textValue )
 {
-	data_ = (long)(Cursor::SCT_DEFAULT);
+	data_ = (int32)(Cursor::SCT_DEFAULT);
 
 	int len = sizeof(cursorNames)/sizeof(String);
 	for (int i=0;i<len;i++ ) {
 		if ( cursorNames[i] == textValue ) {
 
-			data_ = (long)(Cursor::SCT_DEFAULT) + i;
+			data_ = (int32)(Cursor::SCT_DEFAULT) + i;
 			break;
 		}
 	}
@@ -279,8 +279,8 @@ String CursorPropertyEditor::getValueAsText()
 {
 	String result;
 
-	long val = data_;
-	val = val - (long)(Cursor::SCT_DEFAULT);
+	int32 val = data_;
+	val = val - (int32)(Cursor::SCT_DEFAULT);
 	if ( (val >=0) && (val < sizeof(cursorNames)/sizeof(String)) ) {
 		result = cursorNames[val];
 	}

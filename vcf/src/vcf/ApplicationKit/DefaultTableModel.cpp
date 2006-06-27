@@ -104,7 +104,7 @@ void DefaultTableModel::insertRow( const uint32& afterRow )
 
 	rowCount_ ++;
 	TTableColumn* newRow = new TTableColumn();
-	for ( ulong32 i=0;i<columnCount_;i++){
+	for ( uint32 i=0;i<columnCount_;i++){
 		TableCellItem* newItem = createCell( afterRow, i );
 		newItem->setModel( this );
 		newRow->push_back( newItem );
@@ -129,7 +129,7 @@ void DefaultTableModel::addRows( const uint32& count )
 
 		newRow->resize( columnCount_, NULL );
 
-		for ( ulong32 i=0;i<columnCount_;i++){
+		for ( uint32 i=0;i<columnCount_;i++){
 			TableCellItem* newItem = createCell( row, i );
 
 			newItem->setModel( this );
@@ -156,7 +156,7 @@ void DefaultTableModel::addRows( const uint32& count )
 
 		rowCount_ ++;
 		TTableColumn* newRow = new TTableColumn();
-		for ( ulong32 i=0;i<columnCount_;i++){
+		for ( uint32 i=0;i<columnCount_;i++){
 			TableCellItem* newItem = createCell( rowCount_-1, i );
 			newItem->setColumn( i );
 			newItem->setRow( rowCount_ -1 );
@@ -340,13 +340,13 @@ TableCellItem* DefaultTableModel::setSelectedCell( const bool& val, const uint32
 
 	selectedCell->setSelected( val );
 
-	ulong32 key = (row << 16) | column;
+	uint32 key = (row << 16) | column;
 
 	if ( true == val ) {
 		selectionMap_[key] = selectedCell;
 	}
 	else {
-		std::map<ulong32,TableCellItem*>::iterator found = selectionMap_.find( key );
+		std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
 		if ( found != selectionMap_.end() ) {
 			selectionMap_.erase( found );
 		}
@@ -371,13 +371,13 @@ void DefaultTableModel::setSelectedRange( const bool& val, const uint32& startRo
 
 			selectedCell->setSelected( val );
 
-			ulong32 key = (i << 16) | j;
+			uint32 key = (i << 16) | j;
 
 			if ( true == val ) {
 				selectionMap_[key] = selectedCell;
 			}
 			else {
-				std::map<ulong32,TableCellItem*>::iterator found = selectionMap_.find( key );
+				std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
 				if ( found != selectionMap_.end() ) {
 					selectionMap_.erase( found );
 				}

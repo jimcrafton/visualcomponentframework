@@ -591,7 +591,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	return doc;
 }
 
-Action* DocumentManager::getAction( ulong32 tag )
+Action* DocumentManager::getAction( uint32 tag )
 {
 	Action* result = NULL;
 
@@ -603,7 +603,7 @@ Action* DocumentManager::getAction( ulong32 tag )
 	return result;
 }
 
-void DocumentManager::addAction( ulong32 tag, Action* action )
+void DocumentManager::addAction( uint32 tag, Action* action )
 {
 	actionsMap_[tag] = action;
 	action->setTag( tag );

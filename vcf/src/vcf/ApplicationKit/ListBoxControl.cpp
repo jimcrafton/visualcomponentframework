@@ -289,9 +289,9 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 
 		ListModel* lm = getListModel();
 		if ( NULL != lm ) {
-			ulong32 start = first->getIndex();
-			ulong32 end = last->getIndex();
-			for ( ulong32 i=start;i<=end;i++) {
+			uint32 start = first->getIndex();
+			uint32 end = last->getIndex();
+			for ( uint32 i=start;i<=end;i++) {
 				ListItem* item = lm->getItemFromIndex( i );
 				if ( NULL != item ) {
 					item->setSelected( isSelected );
@@ -364,7 +364,7 @@ void ListBoxControl::paintItemState( GraphicsContext* ctx, Rect& itemRect, ListI
 		
 		itemRect.left_ = stateRect.right_;
 
-		long state = item->getState();
+		int32 state = item->getState();
 
 		ButtonState buttonState;
 		buttonState.setActive( true );
@@ -390,7 +390,7 @@ void ListBoxControl::paintItemImage( GraphicsContext* ctx, Rect& itemRect, ListI
 	imageRect.left_ += leftGutter_;
 	imageRect.right_ = imageRect.left_ + imageList_->getImageWidth();
 
-	ulong32 index = item->getImageIndex();	
+	uint32 index = item->getImageIndex();	
 
 	imageRect.top_ = itemRect.top_ + (itemRect.getHeight()/2.0 - imageList_->getImageHeight()/2.0);
 	imageRect.bottom_ = imageRect.top_ + imageList_->getImageHeight();
@@ -583,7 +583,7 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 			//check state hit test first!
 			if ( foundItem->getState() != Item::idsNone ) {
 				if ( stateHitTest( event->getPoint(), foundItem ) ) {
-					long state = foundItem->getState();
+					int32 state = foundItem->getState();
 					if ( Item::idsChecked == state ) {
 						state = Item::idsUnChecked;
 					}
@@ -611,7 +611,7 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 			if ( true == allowsMultiSelect_ && true == allowsExtendedSelect_ ) {
 				if( event->hasShiftKey() ){
 					if( foundItem == singleSelectedItem_ ){
-						for( ulong32 j=0;j<selectedItems_.size();j++ ){
+						for( uint32 j=0;j<selectedItems_.size();j++ ){
 							selectedItems_[j]->setSelected(false);
 						}
 						selectedItems_.clear();
@@ -620,9 +620,9 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 						selectionChanged( foundItem );
 					}
 					else if( NULL != singleSelectedItem_ ){
-						ulong32 foundItemPos = foundItem->getIndex();
-						ulong32 singlePos = singleSelectedItem_->getIndex();
-						for( ulong32 j=0;j<selectedItems_.size();j++ ){
+						uint32 foundItemPos = foundItem->getIndex();
+						uint32 singlePos = singleSelectedItem_->getIndex();
+						for( uint32 j=0;j<selectedItems_.size();j++ ){
 							selectedItems_[j]->setSelected(false);
 						}
 						if(foundItemPos < singlePos){// rangeSelect clears selectedItems_
@@ -659,7 +659,7 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 
 					if( !(selectedItems_.empty()) ) {
 
-						for( ulong32 j=0;j<selectedItems_.size();j++ ){
+						for( uint32 j=0;j<selectedItems_.size();j++ ){
 							selectedItems_[j]->setSelected(false);
 						}
 
@@ -753,7 +753,7 @@ void ListBoxControl::keyDown( KeyboardEvent* event )
 			ListItem* item = this->getSelectedItem();
 			ListModel* lm = getListModel();
 			if ( (NULL != item) && (NULL != lm) ) {
-				ulong32 index = item->getIndex();
+				uint32 index = item->getIndex();
 
 				if ( vkUpArrow == event->getVirtualCode() ) {
 					index --;
@@ -811,7 +811,7 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 		
 		if( !(selectedItems_.empty()) ) {
 
-			for( ulong32 j=0;j<selectedItems_.size();j++ ){
+			for( uint32 j=0;j<selectedItems_.size();j++ ){
 				selectedItems_[j]->setSelected(false);
 			}
 
@@ -833,7 +833,7 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 
 void ListBoxControl::deselectAllItems()
 {
-	for( ulong32 j=0;j<selectedItems_.size();j++ ){
+	for( uint32 j=0;j<selectedItems_.size();j++ ){
 		selectedItems_[j]->setSelected(false);
 	}
 

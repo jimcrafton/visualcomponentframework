@@ -22,7 +22,7 @@ namespace VCF {
 	public:
 		FrameEvent( Object* source ) : Event(source),okToClose_(true) {};
 
-		FrameEvent( Object* source, const unsigned long& eventType ):Event(source, eventType),okToClose_(true) {};
+		FrameEvent( Object* source, const uint32& eventType ):Event(source, eventType),okToClose_(true) {};
 
 		FrameEvent( const FrameEvent& rhs ):Event(rhs) {
 			*this = rhs;

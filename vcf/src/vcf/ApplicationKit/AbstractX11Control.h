@@ -29,8 +29,8 @@ public:
 
 	virtual ~AbstractX11Control();
 
-	virtual long getHandleID() {
-		return (long)wndHandle_;
+	virtual int32 getHandleID() {
+		return (int32)wndHandle_;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public:
 	/**
 	*advanced function for changing the size of multiple child windows
 	*/
-	virtual bool beginSetBounds( const ulong32& numberOfChildren );
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 	virtual void endSetBounds();
 
@@ -72,17 +72,17 @@ public:
 	virtual bool getVisible();
 
 	/**
-	* returns a bit-masked unsigned long that contains style constants.
+	* returns a bit-masked uint32 that contains style constants.
 	*  These style constants are defined in the VCF, and must
 	* be translated to the particular windowing system being used.
 	*/
-	virtual unsigned long getStyleMask();
+	virtual uint32 getStyleMask();
 
 	/**
 	* sets the current style mask.
 	*  Should cause a repaint of the component, if neccessary.
 	*/
-	virtual void setStyleMask( const unsigned long& styleMask );
+	virtual void setStyleMask( const uint32& styleMask );
 
 	/**
 	* returns the component that this Peer is attached to.
@@ -148,8 +148,8 @@ protected:
 	Rect bounds_;
 	bool visible_;
 	bool enabled_;
-	ulong32 currentKeyState_;
-	ulong32 currentButtonState_;
+	uint32 currentKeyState_;
+	uint32 currentButtonState_;
 };
 
 

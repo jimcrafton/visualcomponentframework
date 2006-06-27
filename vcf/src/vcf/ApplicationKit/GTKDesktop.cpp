@@ -70,12 +70,12 @@ void GTKDesktop::desktopSetDesktop( Desktop* desktop )
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-ulong32 GTKDesktop::desktopGetWidth()
+uint32 GTKDesktop::desktopGetWidth()
 {
 	return gdk_screen_get_width( gdk_screen_get_default() );
 }
 
-ulong32 GTKDesktop::desktopGetHeight()
+uint32 GTKDesktop::desktopGetHeight()
 {
 	return gdk_screen_get_height( gdk_screen_get_default() );
 }

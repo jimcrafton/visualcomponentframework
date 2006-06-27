@@ -69,7 +69,7 @@ public:
 			return false;
 		}
 
-		virtual void paint( GraphicsContext* context, Rect* rect, const ulong32& column ){
+		virtual void paint( GraphicsContext* context, Rect* rect, const uint32& column ){
 
 		}
 
@@ -148,13 +148,13 @@ public:
 
 	virtual void addSubItem( SubItem* subItem ) = 0;
 
-	virtual void removeSubItem( const ulong32& index ) = 0;
+	virtual void removeSubItem( const uint32& index ) = 0;
 
 	virtual Enumerator<SubItem*>* getSubItems() = 0;
 
-	virtual SubItem* getSubItem( const ulong32& index ) = 0;
+	virtual SubItem* getSubItem( const uint32& index ) = 0;
 
-	virtual ulong32 getSubItemCount() = 0;
+	virtual uint32 getSubItemCount() = 0;
 
 	virtual void subItemChanged( SubItem* item ) = 0;
 };

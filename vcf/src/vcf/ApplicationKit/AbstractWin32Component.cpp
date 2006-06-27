@@ -178,7 +178,7 @@ void AbstractWin32Component::setBounds( VCF::Rect* rect )
 
 
 
-bool AbstractWin32Component::beginSetBounds( const ulong32& numberOfChildren )
+bool AbstractWin32Component::beginSetBounds( const uint32& numberOfChildren )
 {
 	
 	//JEC - I commented this out to simplify/speed up some resize/repaint issues
@@ -944,8 +944,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 						}
 						else {
-							measureInfo->itemHeight = (long)bounds->getHeight();
-							measureInfo->itemWidth = (long)bounds->getWidth();
+							measureInfo->itemHeight = (int32)bounds->getHeight();
+							measureInfo->itemWidth = (int32)bounds->getWidth();
 						}
 					}
 				}
@@ -1057,11 +1057,11 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 						}
 						
 						if ( zDelta < 0 ) {
-							pos = VCF::minVal<long>((scrollable->getVerticalPosition() + 10 ),
-												abs((long)(scrollable->getVirtualViewHeight() - actualViewHeight )) );
+							pos = VCF::minVal<int32>((scrollable->getVerticalPosition() + 10 ),
+												abs((int32)(scrollable->getVirtualViewHeight() - actualViewHeight )) );
 						}
 						else if ( zDelta > 0 ) {
-							pos = VCF::maxVal<long>((scrollable->getVerticalPosition() - 10 ), 0 );
+							pos = VCF::maxVal<int32>((scrollable->getVerticalPosition() - 10 ), 0 );
 						}
 
 						scrollable->setVerticalPosition( pos );
@@ -1077,11 +1077,11 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 						}
 						
 						if ( zDelta < 0 ) {
-							pos = VCF::minVal<long>((scrollable->getHorizontalPosition() + 10),
-												abs((long)(scrollable->getVirtualViewWidth() - actualViewWidth )) );
+							pos = VCF::minVal<int32>((scrollable->getHorizontalPosition() + 10),
+												abs((int32)(scrollable->getVirtualViewWidth() - actualViewWidth )) );
 						}
 						else if ( zDelta > 0 ) {
-							pos = VCF::maxVal<long>((scrollable->getHorizontalPosition() - 10), 0 );
+							pos = VCF::maxVal<int32>((scrollable->getHorizontalPosition() - 10), 0 );
 						}
 
 						scrollable->setHorizontalPosition( pos );
@@ -1150,7 +1150,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 									}
 								}
 
-								//pos = min( pos, abs((long)(scrollable->getVirtualViewHeight() - height)) );
+								//pos = min( pos, abs((int32)(scrollable->getVirtualViewHeight() - height)) );
 								pos = VCF::minVal ( pos, si.nMax );
 								//si.nPos += step;
 								//si.nPos = min ( si.nPos, si.nMax );
@@ -1194,7 +1194,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 									}
 								}
 
-								//pos = min( pos, abs((long)(scrollable->getVirtualViewHeight() - height)) );
+								//pos = min( pos, abs((int32)(scrollable->getVirtualViewHeight() - height)) );
 								pos = VCF::minVal ( pos, si.nMax );
 								scrollable->setVerticalPosition( pos );
 							}
@@ -1316,7 +1316,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 									}
 								}
 
-								//pos = min( pos, abs((long)(scrollable->getVirtualViewWidth() - width)) );
+								//pos = min( pos, abs((int32)(scrollable->getVirtualViewWidth() - width)) );
 								pos = VCF::minVal ( pos, si.nMax );
 								//si.nPos += step;
 								//si.nPos = min ( si.nPos, si.nMax );
@@ -1359,7 +1359,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 									}
 								}
 
-								//pos = min( pos, abs((long)(scrollable->getVirtualViewWidth() - width)) );
+								//pos = min( pos, abs((int32)(scrollable->getVirtualViewWidth() - width)) );
 								pos = VCF::minVal ( pos, si.nMax );
 								scrollable->setHorizontalPosition( pos );
 
@@ -1450,10 +1450,10 @@ void AbstractWin32Component::repaint( Rect* repaintRect, const bool& immediately
 	}
 	else {
 		RECT rect = {0,0,0,0};
-		rect.left = (long)repaintRect->left_;
-		rect.top = (long)repaintRect->top_;
-		rect.right = (long)repaintRect->right_;
-		rect.bottom = (long)repaintRect->bottom_;
+		rect.left = (int32)repaintRect->left_;
+		rect.top = (int32)repaintRect->top_;
+		rect.right = (int32)repaintRect->right_;
+		rect.bottom = (int32)repaintRect->bottom_;
 		::InvalidateRect( hwnd_, &rect, TRUE );
 	}
 
@@ -1505,7 +1505,7 @@ void AbstractWin32Component::setCursor( Cursor* cursor )
 void AbstractWin32Component::translateToScreenCoords( Point* pt )
 {
 	VCF_ASSERT(NULL != hwnd_);
-	POINT aPt = { (long)pt->x_, (long)pt->y_ };
+	POINT aPt = { (int32)pt->x_, (int32)pt->y_ };
 	ClientToScreen( hwnd_, &aPt );
 	pt->x_ = aPt.x;
 	pt->y_ = aPt.y;
@@ -1514,7 +1514,7 @@ void AbstractWin32Component::translateToScreenCoords( Point* pt )
 void AbstractWin32Component::translateFromScreenCoords( Point* pt )
 {
 	VCF_ASSERT(NULL != hwnd_);
-	POINT aPt = { (long)pt->x_, (long)pt->y_ };
+	POINT aPt = { (int32)pt->x_, (int32)pt->y_ };
 	ScreenToClient( hwnd_, &aPt );
 	pt->x_ = aPt.x;
 	pt->y_ = aPt.y;

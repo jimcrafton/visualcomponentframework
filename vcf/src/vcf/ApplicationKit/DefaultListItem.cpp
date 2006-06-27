@@ -70,12 +70,12 @@ bool DefaultListItem::containsPoint( Point * pt )
 	return bounds_.containsPt( pt );
 }
 
-unsigned long DefaultListItem::getIndex()
+uint32 DefaultListItem::getIndex()
 {
 	return index_;
 }
 
-void DefaultListItem::setIndex( const unsigned long& index )
+void DefaultListItem::setIndex( const uint32& index )
 {
 	index_ = index;
 }
@@ -127,7 +127,7 @@ void DefaultListItem::setSelected( const bool& selected )
 	ItemSelected.fireEvent( &event );
 }
 
-void DefaultListItem::setImageIndex( const long& imageIndex )
+void DefaultListItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
@@ -150,7 +150,7 @@ void DefaultListItem::addSubItem( ListItem::SubItem* subItem )
 	SubItemAdded.fireEvent( &event );
 }
 
-void DefaultListItem::removeSubItem( const ulong32& index )
+void DefaultListItem::removeSubItem( const uint32& index )
 {
 	std::vector<SubItem*>::iterator found = subItems_.begin() + index;
 	if ( found != subItems_.end() ) {
@@ -171,7 +171,7 @@ Enumerator<ListItem::SubItem*>* DefaultListItem::getSubItems()
 	return subItemsContainer_.getEnumerator();
 }
 
-ListItem::SubItem* DefaultListItem::getSubItem( const ulong32& index )
+ListItem::SubItem* DefaultListItem::getSubItem( const uint32& index )
 {
     ListItem::SubItem* result = NULL;
     if ( index < subItems_.size() ) {
@@ -180,7 +180,7 @@ ListItem::SubItem* DefaultListItem::getSubItem( const ulong32& index )
 	return result;
 }
 
-ulong32 DefaultListItem::getSubItemCount()
+uint32 DefaultListItem::getSubItemCount()
 {
 	return subItems_.size();
 }

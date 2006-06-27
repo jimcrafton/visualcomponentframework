@@ -87,12 +87,12 @@ void OSXDesktopPeer::desktopSetDesktop( Desktop* desktop )
 
 }
 
-ulong32 OSXDesktopPeer::desktopGetWidth()
+uint32 OSXDesktopPeer::desktopGetWidth()
 {
 	return CGDisplayPixelsWide( CGMainDisplayID() );
 }
 
-ulong32 OSXDesktopPeer::desktopGetHeight()
+uint32 OSXDesktopPeer::desktopGetHeight()
 {
 
 	return CGDisplayPixelsHigh( CGMainDisplayID() );

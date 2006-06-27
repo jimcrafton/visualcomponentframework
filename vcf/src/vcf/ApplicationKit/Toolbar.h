@@ -102,21 +102,21 @@ public:
 
 	virtual void setBounds( Rect* bounds );
 	
-	virtual long getStateImageIndex() {
+	virtual int32 getStateImageIndex() {
 		return imageStateIndex_;
 	}
 
-	virtual void setStateImageIndex( const long& index );
+	virtual void setStateImageIndex( const int32& index );
 
-    virtual ulong32 getIndex();
+    virtual uint32 getIndex();
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );
+	virtual void setImageIndex( const int32& imageIndex );
 
-	virtual void setIndex( const unsigned long& index ) ;
+	virtual void setIndex( const uint32& index ) ;
 
     virtual void* getData() {
 		return data_;
@@ -126,7 +126,7 @@ public:
 		data_ = data;
 	}
 	
-	virtual void setState( const long& state );
+	virtual void setState( const int32& state );
 
 	virtual bool canPaint() {
 		return false;
@@ -190,8 +190,8 @@ public:
 protected:
 	Control* itemControl_;	
 	void* data_;
-	long imageIndex_;
-	long imageStateIndex_;
+	int32 imageIndex_;
+	int32 imageStateIndex_;
 	Rect bounds_;
 	String caption_;
 	String tooltip_;
@@ -210,7 +210,7 @@ class ToolbarModel;
 class APPLICATIONKIT_API ToolbarModelEvent : public ModelEvent {
 public:
 
-	ToolbarModelEvent( Object* source, ulong32 type ): ModelEvent(source,type),item_(NULL) {
+	ToolbarModelEvent( Object* source, uint32 type ): ModelEvent(source,type),item_(NULL) {
 
 	}
 
@@ -242,16 +242,16 @@ public:
 	virtual ~ToolbarModel();
 
 	void addItem( ToolbarItem* item );
-	void insertItem( ToolbarItem* item, const ulong32& index );
+	void insertItem( ToolbarItem* item, const uint32& index );
 	void removeItem( ToolbarItem* item );
 
 
-	void itemChanged( const ulong32& eventType, ToolbarItem* item );
+	void itemChanged( const uint32& eventType, ToolbarItem* item );
 
-	ulong32 getItemIndex( ToolbarItem* item );
-	void setItemIndex( ToolbarItem* item, const ulong32& newIndex );
+	uint32 getItemIndex( ToolbarItem* item );
+	void setItemIndex( ToolbarItem* item, const uint32& newIndex );
 
-	ToolbarItem* getItemAtIndex( const ulong32& index ) {
+	ToolbarItem* getItemAtIndex( const uint32& index ) {
 		return toolbarItems_[index];
 	}
 

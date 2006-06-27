@@ -54,20 +54,20 @@ public:
 
 	virtual void deleteItem(ListItem * item) = 0;
 
-	virtual void deleteItemAtIndex(const unsigned long & index) = 0;
+	virtual void deleteItemAtIndex(const uint32 & index) = 0;
 
-	virtual void insertItem(const unsigned long & index, ListItem * item) = 0;
+	virtual void insertItem(const uint32 & index, ListItem * item) = 0;
 
     virtual void addItem(ListItem * item) = 0;
 
-	virtual ListItem* getItemFromIndex( const unsigned long& index ) = 0;
+	virtual ListItem* getItemFromIndex( const uint32& index ) = 0;
 
 	virtual Enumerator<ListItem*>* getItems() = 0;
 
 	/**
 	*returns the number of the items in the model
 	*/
-	virtual unsigned long getCount() = 0;
+	virtual uint32 getCount() = 0;
 };
 
 }

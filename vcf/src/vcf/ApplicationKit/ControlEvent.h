@@ -35,7 +35,7 @@ public:
 
 	}
 
-	ControlEvent( Object* source, const ulong32& eventType ):Event( source,eventType ),
+	ControlEvent( Object* source, const uint32& eventType ):Event( source,eventType ),
 		newParent_(NULL),gc_(NULL) {
 
 	}
@@ -68,7 +68,7 @@ public:
 	*use this constructor for creating BEFORE_CONTROL_PAINTED or
 	AFTER_CONTROL_PAINTED events
 	*/
-	ControlEvent( Object* source, const ulong32& eventType, GraphicsContext* gc ):Event( source, eventType ),
+	ControlEvent( Object* source, const uint32& eventType, GraphicsContext* gc ):Event( source, eventType ),
 		newParent_(NULL),gc_(gc) {
 
 	}
@@ -132,7 +132,7 @@ protected:
 */
 class APPLICATIONKIT_API ControlPopupMenuMenuEvent : public Event {
 public:
-	ControlPopupMenuMenuEvent( Object* source, const ulong32& eventType ): 
+	ControlPopupMenuMenuEvent( Object* source, const uint32& eventType ): 
 	  Event(source,eventType), popupMenu(NULL), cancelPopup(false){
 		
 	}

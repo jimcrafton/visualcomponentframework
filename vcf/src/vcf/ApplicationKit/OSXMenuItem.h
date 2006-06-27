@@ -40,11 +40,11 @@ public:
 
 	virtual void addChild( MenuItem* child );
 
-	virtual void insertChild( const unsigned long& index, MenuItem* child );
+	virtual void insertChild( const uint32& index, MenuItem* child );
 
 	virtual void deleteChild( MenuItem* child );
 
-	virtual void deleteChild( const unsigned long& index );
+	virtual void deleteChild( const uint32& index );
 
 	virtual void clearChildren();
 
@@ -56,7 +56,7 @@ public:
 
 	virtual bool hasParent();
 
-	virtual MenuItem* getChildAt( const unsigned long& index );
+	virtual MenuItem* getChildAt( const uint32& index );
 
 	virtual bool isEnabled();
 

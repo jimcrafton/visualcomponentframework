@@ -21,7 +21,7 @@ EtchedBorder::EtchedBorder():
 
 }
 
-EtchedBorder::EtchedBorder( long sidesToPaint, long style ):
+EtchedBorder::EtchedBorder( int32 sidesToPaint, int32 style ):
 	sidesToPaint_(sidesToPaint),
 	style_(style)
 {

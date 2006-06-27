@@ -159,9 +159,9 @@ public:
 	virtual void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
 
 
-	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src );
+	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
-	void addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler );
+	void addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler );
 
 	void addAcceleratorKey( AcceleratorKey* accelerator );
 

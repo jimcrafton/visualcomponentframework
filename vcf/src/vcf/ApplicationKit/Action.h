@@ -132,7 +132,7 @@ public:
 	/**
 	returns a count of the number of targets attached to this action.
 	*/
-	unsigned long getTargetCount();
+	uint32 getTargetCount();
 
 	/**
 	\p
@@ -148,7 +148,7 @@ public:
 	more details.
 	@see setAcceleratorKey
 	*/
-	void setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	/**
 	\p

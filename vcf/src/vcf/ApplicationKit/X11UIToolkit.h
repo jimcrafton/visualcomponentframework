@@ -76,7 +76,7 @@ public:
 		resetCurrentTime();
 	}
 
-	TimerEntry( ulong32 frequency ):frequency_(frequency)  {
+	TimerEntry( uint32 frequency ):frequency_(frequency)  {
 		//sets the current time of the TimerEntry
 		resetCurrentTime();
 	}
@@ -101,7 +101,7 @@ public:
 					|| (current_.tv_usec != rhs.current_.tv_usec);
 	}
 
-	ulong32 getMillisecondsDifference( struct timeval* val ) const {
+	uint32 getMillisecondsDifference( struct timeval* val ) const {
 		double t1, t2;
 
 		t1 =  (double)(current_.tv_sec * 1000.0) +
@@ -109,7 +109,7 @@ public:
 
 		t2 =  (double)(val->tv_sec * 1000.0) + (double)val->tv_usec/(1000.0); //convert to Milliseconds
 
-		return (ulong32)(t2 - t1);
+		return (uint32)(t2 - t1);
 	}
 
 	void resetCurrentTime() {
@@ -117,14 +117,14 @@ public:
 		::gettimeofday( &current_, &timeZone );
 	}
 
-	ulong32 getFrequency() const {
+	uint32 getFrequency() const {
 		return frequency_;
 	}
 protected:
 
 	//time, in milliseconds, before this
 	//entry should be fired
-	ulong32 frequency_;
+	uint32 frequency_;
 
 	//the current time
 	struct timeval current_;
@@ -203,7 +203,7 @@ public:
 
 	virtual void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler );
 
-	virtual void registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	virtual void registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	virtual void unregisterTimerHandler( EventHandler* handler );
 
@@ -227,9 +227,9 @@ public:
 
 	VirtualKeyCode translateKeyCode( KeySym code );
 
-	ulong32 translateKeyMask( ulong32 xKeyState );
+	uint32 translateKeyMask( uint32 xKeyState );
 
-	ulong32 translateButtonMask( ulong32 xButtonState );
+	uint32 translateButtonMask( uint32 xButtonState );
 
 	Atom getQuitEventLoopMsg() {
 		return quitEventLoopMsg_;

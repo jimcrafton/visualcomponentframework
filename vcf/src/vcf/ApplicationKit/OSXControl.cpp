@@ -218,7 +218,7 @@ void OSXControl::setBounds( Rect* rect )
 	HIViewSetFrame( hiView_, r );
 }
 
-bool OSXControl::beginSetBounds( const ulong32& numberOfChildren )
+bool OSXControl::beginSetBounds( const uint32& numberOfChildren )
 {
 	return true;
 }
@@ -487,7 +487,7 @@ OSStatus OSXControl::handleWrappedControlTrackDone( EventRef theEvent )
 	OSXWindow* osxWnd = OSXWindow::getWindowFromWindowRef( wnd );
 	
 	
-	unsigned long buttonVal = osxWnd->getCurrentMouseBtn();
+	uint32 buttonVal = osxWnd->getCurrentMouseBtn();
 	
 	//LocalToGlobal( &lastMousePt_ );
 	VCF::Point pt( lastMousePt_.h , lastMousePt_.v );
@@ -516,13 +516,13 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 {
 	OSStatus result = noErr;
 	
-	unsigned long buttonDown = VCF::mbmUndefined;
+	uint32 buttonDown = VCF::mbmUndefined;
 	
 	WindowRef wnd = GetControlOwner(hiView_);
 	OSXWindow* osxWnd = OSXWindow::getWindowFromWindowRef( wnd );
 	
 	
-	unsigned long buttonDownVal = osxWnd->getCurrentMouseBtn();
+	uint32 buttonDownVal = osxWnd->getCurrentMouseBtn();
 	
 	//first fire off a mouse down event!
 	OSXEventMsg msg( theEvent, control_ );
@@ -554,7 +554,7 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 			break;
 		}
 		else if ( (trackMouseRes == kMouseTrackingMouseMoved) || (trackMouseRes == kMouseTrackingMouseDragged) ) {
-			unsigned long mouseBtnDown = 0;
+			uint32 mouseBtnDown = 0;
 			if ( trackMouseRes == kMouseTrackingMouseMoved ) {
 				mouseBtnDown = buttonDown;
 			}

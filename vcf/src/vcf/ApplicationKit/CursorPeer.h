@@ -34,9 +34,9 @@ public:
 
 	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=NULL ) = 0;
 
-	virtual long getCursorID() = 0;
+	virtual int32 getCursorID() = 0;
 
-	virtual void setCursorID( const long& cursorID ) = 0;
+	virtual void setCursorID( const int32& cursorID ) = 0;
 
 	virtual Cursor* getCursor() = 0;
 

@@ -49,7 +49,7 @@ public:
 	virtual void showMessage( const String& message, const String& caption );
 
 	virtual UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-													const long& messageButtons,	const Dialog::MessageStyle& messageStyle );
+													const int32& messageButtons,	const Dialog::MessageStyle& messageStyle );
 
 protected:
 	virtual DWORD generateStyleForSetParent(VCF::Control* parent);

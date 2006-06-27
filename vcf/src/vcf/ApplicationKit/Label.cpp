@@ -35,7 +35,7 @@ void Label::paint( GraphicsContext * context )
 	double y = 0.0;//getBounds()->getHeight() / 4;
 	double x = 0.0;
 
-	long drawOptions = GraphicsContext::tdoNone;
+	int32 drawOptions = GraphicsContext::tdoNone;
 
 	switch ( textAlignment_ ) {
 		case taTextLeft : {

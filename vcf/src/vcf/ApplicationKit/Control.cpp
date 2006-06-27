@@ -48,7 +48,7 @@ Control::Control():
 	clientBounds_ = new Rect();
 	color_ = new Color;
 
-	setCursorID( (long)Cursor::SCT_DEFAULT );
+	setCursorID( (int32)Cursor::SCT_DEFAULT );
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_FACE ) );
 
@@ -521,7 +521,7 @@ void Control::handleEvent( Event* event )
 {
 	Component::handleEvent( event );
 	if ( NULL != event ){
-		unsigned long eventType = event->getType();
+		uint32 eventType = event->getType();
 
 		switch ( eventType ){
 			case Action::UpdateEvent : {
@@ -1244,13 +1244,13 @@ void Control::setToolTipText( const String& tooltip )
 	toolTip_ = tooltip;
 }
 
-void Control::setCursorID( const long& cursorID )
+void Control::setCursorID( const int32& cursorID )
 {
 	cursorID_ = cursorID;
 	cursor_ = CursorManager::getCursorManager()->getCursor( cursorID_ );
 }
 
-void Control::setAnchor( const unsigned long& anchor )
+void Control::setAnchor( const uint32& anchor )
 {
 	anchor_ = anchor;
 	aligment_ = AlignNone;
@@ -1285,12 +1285,12 @@ void Control::updateAnchorDeltas() {
 	}
 }
 
-AcceleratorKey* Control::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+AcceleratorKey* Control::getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
 	return UIToolkit::getAccelerator( keyCode, modifierMask, this );
 }
 
-void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, EventHandler* eventHandler )
+void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler )
 {
 	if ( NULL == eventHandler ) {
 		throw InvalidPointerException( MAKE_ERROR_MSG_2("The Event handler passed in for the accelerator is NULL!") );
@@ -1301,7 +1301,7 @@ void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& m
 	addAcceleratorKey( newAccelKey );
 }
 
-void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Action* action )
+void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, Action* action )
 {
 	if ( NULL == action ) {
 		throw InvalidPointerException( MAKE_ERROR_MSG_2("The action instance passed in for the accelerator is NULL!") );
@@ -1325,7 +1325,7 @@ void Control::setTabStop( const bool& tabStop )
 	}
 }
 
-void Control::setTabOrder( const long& tabOrder )
+void Control::setTabOrder( const int32& tabOrder )
 {
 	if ( tabOrder_ == tabOrder ) {
 		return ;
@@ -1335,7 +1335,7 @@ void Control::setTabOrder( const long& tabOrder )
 	if ( NULL != parent ) {
 		Container* container = parent->getContainer();
 		if ( NULL != container ) {
-			ulong32 tmp = tabOrder;
+			uint32 tmp = tabOrder;
 			container->updateTabOrder( this, tmp );
 
 			tabOrder_ = tmp;

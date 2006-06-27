@@ -36,9 +36,9 @@ public:
 
 	virtual ~MultilineTextControl();
 
-	String getTextForLine( const ulong32& lineIndex );
+	String getTextForLine( const uint32& lineIndex );
 
-	void scrollToLine( const ulong32& lineIndex );
+	void scrollToLine( const uint32& lineIndex );
 
 	void scrollToSelection( const bool& _showEndSel = false );
 

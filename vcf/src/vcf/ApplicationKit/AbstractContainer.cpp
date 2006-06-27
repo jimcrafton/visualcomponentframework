@@ -256,7 +256,7 @@ void AbstractContainer::remove( Control* child )
 
 		resizeChildren(NULL);
 
-		std::map<long,Control*>::iterator it = tabOrderMap_.begin();
+		std::map<int32,Control*>::iterator it = tabOrderMap_.begin();
 		while ( it != tabOrderMap_.end() ) {
 			if ( child == it->second ) {
 				tabOrderMap_.erase( it );
@@ -366,7 +366,7 @@ Enumerator<Control*>* AbstractContainer::getChildren()
 	return controlsContainer_.getEnumerator();
 }
 
-unsigned long AbstractContainer::getChildCount()
+uint32 AbstractContainer::getChildCount()
 {
 	return controls_.size();
 }
@@ -390,9 +390,9 @@ Control* AbstractContainer::findControl( const String& controlName )
 	return result;
 }
 
-void AbstractContainer::updateTabOrder( Control* child, ulong32& newTabOrder )
+void AbstractContainer::updateTabOrder( Control* child, uint32& newTabOrder )
 {
-	long currentTabOrder = child->getTabOrder();
+	int32 currentTabOrder = child->getTabOrder();
 	if ( newTabOrder >= 0 ) {
 
 		if ( newTabOrder > tabOrderMap_.size() ) {
@@ -401,7 +401,7 @@ void AbstractContainer::updateTabOrder( Control* child, ulong32& newTabOrder )
 		else if ( newTabOrder < 0 ) {
 			newTabOrder = 0;
 		}
-		std::map<long,Control*>::iterator found = tabOrderMap_.find( currentTabOrder );
+		std::map<int32,Control*>::iterator found = tabOrderMap_.find( currentTabOrder );
 		if ( found != tabOrderMap_.end() ) {
 			tabOrderMap_.erase( found );
 		}
@@ -412,7 +412,7 @@ void AbstractContainer::updateTabOrder( Control* child, ulong32& newTabOrder )
 
 void AbstractContainer::getTabList( std::vector<Control*>& tabList )
 {
-	std::map<long,Control*>::iterator it = tabOrderMap_.begin();
+	std::map<int32,Control*>::iterator it = tabOrderMap_.begin();
 	while ( it != tabOrderMap_.end() ) {
 		Control::buildTabList( it->second, tabList );
 		it ++;
@@ -420,7 +420,7 @@ void AbstractContainer::getTabList( std::vector<Control*>& tabList )
 }
 
 
-Control* AbstractContainer::getControlAtIndex( const ulong32& index )
+Control* AbstractContainer::getControlAtIndex( const uint32& index )
 {
 	Control* result = NULL;
 
@@ -434,9 +434,9 @@ Control* AbstractContainer::getControlAtIndex( const ulong32& index )
 	return result;
 }
 
-long AbstractContainer::getControlIndex( Control* control )
+int32 AbstractContainer::getControlIndex( Control* control )
 {
-	long result = -1;
+	int32 result = -1;
 
 	std::vector<Control*>::iterator found = std::find( controls_.begin(), controls_.end(), control );
 	if ( found != controls_.end() ) {
@@ -486,7 +486,7 @@ void AbstractContainer::insertBeforeControl( Control * child, const AlignmentTyp
 	}
 }
 
-void AbstractContainer::insertAtIndex( Control * child, const AlignmentType& alignment, const ulong32& index )
+void AbstractContainer::insertAtIndex( Control * child, const AlignmentType& alignment, const uint32& index )
 {
 	if ( NULL == controlContainer_ ){
 		throw InvalidPointerException(MAKE_ERROR_MSG(INVALID_POINTER_ERROR), __LINE__);

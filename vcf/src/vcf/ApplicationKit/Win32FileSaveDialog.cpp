@@ -182,7 +182,7 @@ bool Win32FileSaveDialog::executeW()
 
 	}
 	else {
-		 ulong32 err = CommDlgExtendedError();
+		 uint32 err = CommDlgExtendedError();
 		 if ( 0 != err ) {
 			String msg = Format( "Unable to open the FileSaveDialog. Error code: %u\r\n" ) % err;
 			StringUtils::trace( msg );
@@ -336,7 +336,7 @@ bool Win32FileSaveDialog::executeA()
 
 	}
 	else {
-		 ulong32 err = CommDlgExtendedError();
+		 uint32 err = CommDlgExtendedError();
 		 if ( 0 != err ) {
 			String msg = Format( "Unable to open the FileSaveDialog. Error code: %u\r\n" ) % err;
 			StringUtils::trace( msg );

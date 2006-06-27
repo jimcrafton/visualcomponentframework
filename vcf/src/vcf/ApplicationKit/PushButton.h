@@ -187,12 +187,12 @@ public:
 	not a valid number, the return value is -1.
 	If no images are used, then the return value is -1.
 	*/
-	long getBtnImageIndex( const ImageState& imgState );
+	int32 getBtnImageIndex( const ImageState& imgState );
 
 	/**
 	sets which image index is used for an image inside the ImageList,
 	in order to display the specified ImageState(s)
-	@param const long& btnImageIndex, the desired index in the ImageList
+	@param const int32& btnImageIndex, the desired index in the ImageList
 	@param ImageState imgStates, tells which image states are going to be displayed
 	with the given image index. The user can specify more than one image state at
 	the same time for the given index. If this function is called only once
@@ -200,13 +200,13 @@ public:
 	@param const bool& redraw, repaint the button once changed the image. The default is true
 	but the user may want this false in some cases.
 	*/
-	void setBtnImageIndex( const long& btnImageIndex, ImageState imgStates=bisNormal, const bool& redraw=false );
+	void setBtnImageIndex( const int32& btnImageIndex, ImageState imgStates=bisNormal, const bool& redraw=false );
 
 	/**
 	helper to write less and more clear code.
 	For the button image is assumed the bisNormal ImageState.
 	*/
-	void setBtnImageIndex( ImageList* imageList, const long& btnImageIndex, const CaptionAlignment& captionAlignment=bcaRight, const double& separationImageCaption=5.0 );
+	void setBtnImageIndex( ImageList* imageList, const int32& btnImageIndex, const CaptionAlignment& captionAlignment=bcaRight, const double& separationImageCaption=5.0 );
 
 	/**
 	Tells if the button's caption needs to be aligned on the left, right,
@@ -376,11 +376,11 @@ protected:
 	ImageList* imageList_;
 	double separationImageCaption_;
 	CaptionAlignment captionAlignment_;
-	std::map< long, ulong32 > imageIndexes_;
+	std::map< int32, uint32 > imageIndexes_;
 	bool moveImageWhenPressed_;
 	bool drawFocusRectWhenFocus_;
 	bool drawFocusRectWhenFocusDown_;
-	long imageStateSpecified_; // the image states explicitely specified
+	int32 imageStateSpecified_; // the image states explicitely specified
 
 private:
 };

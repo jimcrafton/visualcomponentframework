@@ -55,9 +55,9 @@ public:
 
 	virtual void desktopSetDesktop( Desktop* desktop ) = 0;
 
-	virtual ulong32 desktopGetWidth() = 0;
+	virtual uint32 desktopGetWidth() = 0;
 
-	virtual ulong32 desktopGetHeight() = 0;
+	virtual uint32 desktopGetHeight() = 0;
 
 	virtual Rect desktopGetUsableBounds() = 0;
 

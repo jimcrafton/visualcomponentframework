@@ -42,9 +42,9 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-    virtual unsigned long getIndex();
+    virtual uint32 getIndex();
 
-	virtual void setIndex( const unsigned long& index );
+	virtual void setIndex( const uint32& index );
 
     virtual void* getData() {
 		return data_;
@@ -74,11 +74,11 @@ public:
 
 	virtual void setSelected( const bool& selected );
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );
+	virtual void setImageIndex( const int32& imageIndex );
 
 	virtual Rect* getBounds() {
 		return &bounds_;
@@ -94,23 +94,23 @@ public:
 	/**
 	*not supported
 	*/
-	virtual long getStateImageIndex(){
+	virtual int32 getStateImageIndex(){
 		return -1;
 	};
 
 	/**
 	*not supported
 	*/
-	virtual void setStateImageIndex( const long& index ){}
+	virtual void setStateImageIndex( const int32& index ){}
 
 
 protected:
 	String caption_;
 	void* data_;
-	unsigned long index_;
+	uint32 index_;
 	Rect bounds_;	
 	bool selected_;
-	long imageIndex_;
+	int32 imageIndex_;
 	double width_;
 	TextAlignmentType textAlignment_;
 };

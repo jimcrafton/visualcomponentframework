@@ -232,7 +232,7 @@ void XCBWindowPeer::setBounds( Rect* rect )
     }
 }
 
-bool XCBWindowPeer::beginSetBounds( const ulong32& numberOfChildren )
+bool XCBWindowPeer::beginSetBounds( const uint32& numberOfChildren )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return true;

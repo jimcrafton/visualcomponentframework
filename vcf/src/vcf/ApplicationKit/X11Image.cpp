@@ -22,7 +22,7 @@ X11Image::X11Image():
 	init();
 }
 
-X11Image::X11Image( const unsigned long& width, const unsigned long& height ):
+X11Image::X11Image( const uint32& width, const uint32& height ):
 	AbstractImage(false),
 	x11ImagePixmap_(0),
 	x11AlphaMask_(0),
@@ -70,16 +70,16 @@ X11Image::~X11Image()
 void X11Image::init()
 {
 
-	context_ = NULL;//new GraphicsContext(0);//(long)dc_ );
+	context_ = NULL;//new GraphicsContext(0);//(int32)dc_ );
 }
 
-void X11Image::setWidth( const unsigned long & width )
+void X11Image::setWidth( const uint32 & width )
 {
 	AbstractImage::setWidth( width );
 	createBitmap();
 }
 
-void X11Image::setHeight( const unsigned long & height )
+void X11Image::setHeight( const uint32 & height )
 {
 	AbstractImage::setHeight( height );
 	createBitmap();
@@ -105,8 +105,8 @@ void X11Image::createBitmap()
 
 	imageBits_->bits_ = NULL;
 
-	ulong32 width = getWidth();
-	ulong32 height = getHeight();
+	uint32 width = getWidth();
+	uint32 height = getHeight();
 
 
 	if ( (width > 0) && (height > 0) ) {
@@ -145,7 +145,7 @@ void X11Image::createBitmap()
 			throw RuntimeException( MAKE_ERROR_MSG_2( "The peer associated with this image's GraphicsContext is NOT an X11Context instance" ) );
 		}
 
-		ctxPeer->setContextID( (long) x11ImagePixmap_ );
+		ctxPeer->setContextID( (int32) x11ImagePixmap_ );
 		ctxPeer->setParentImage( this );
 	}
 }

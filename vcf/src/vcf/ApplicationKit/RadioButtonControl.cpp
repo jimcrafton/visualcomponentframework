@@ -90,7 +90,7 @@ void RadioButtonControl::setUseFixedRadioButtonSize( const bool& fixedRadioButto
 	repaint();
 }
 
-void RadioButtonControl::setGroupID( const long& groupID )
+void RadioButtonControl::setGroupID( const int32& groupID )
 {
 	groupID_ = groupID;
 }

@@ -292,7 +292,7 @@ public:
 	UI events, while a Control with it's state set to
 	CS_DESTROYING, will not respond to any pending UI events.
 	*/
-	ulong32 getComponentState();
+	uint32 getComponentState();
 
 	/**
 	queries the component state to check if it's
@@ -339,7 +339,7 @@ public:
 	/**
 	Sets the component's state
 	*/
-	void setComponentState( const ulong32& componentState );
+	void setComponentState( const uint32& componentState );
 
 	/**
 	convenience fundtions for setting the component state
@@ -379,7 +379,7 @@ public:
 	/**
 	returns the number of components owned by this component
 	*/
-	virtual unsigned long getComponentCount();
+	virtual uint32 getComponentCount();
 
 	/**
 	finds a particular component as specified by the componentName
@@ -414,17 +414,17 @@ public:
 	They offer a convenient alternative to such methods of object identification
 	as fetching an object's title.  (What if the object't title changes while the
 	application is running, or the object has no title?)"
-	@return long the tag value of the Component
+	@return int32 the tag value of the Component
 	*/
-	long getTag() {
+	int32 getTag() {
 		return tag_;
 	}
 
 	/**
 	Sets the tag value
-	@param long - represents the new value of the component's tag will be set to.
+	@param int32 - represents the new value of the component's tag will be set to.
 	*/
-	void setTag( const long& tag ) {
+	void setTag( const int32& tag ) {
 		tag_ = tag;
 	}
 
@@ -621,9 +621,9 @@ protected:
 	*
 	*/
 	Component* owner_;
-	ulong32 componentState_;
+	uint32 componentState_;
 	String name_;
-	long tag_;
+	int32 tag_;
 	Action* action_;
 	std::vector<Component*> components_;
 	EnumeratorContainer<std::vector<Component*>, Component*> componentContainer_;

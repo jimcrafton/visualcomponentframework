@@ -38,7 +38,7 @@ namespace VCF  {
 class APPLICATIONKIT_API HeaderView : public View {
 public:
 
-	//virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const ulong32& index );
+	//virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const uint32& index );
 };
 */
 
@@ -73,19 +73,19 @@ public:
 
 	void addColumn( ColumnItem* column );
 
-	virtual ColumnItem* insertColumn( const unsigned long& index, const String& columnName, const double& width=100.0 );
+	virtual ColumnItem* insertColumn( const uint32& index, const String& columnName, const double& width=100.0 );
 
-	void insertColumn( const unsigned long& index, ColumnItem* column );
+	void insertColumn( const uint32& index, ColumnItem* column );
 
-	void deleteColumn( const unsigned long& index );
+	void deleteColumn( const uint32& index );
 
-	String getColumnName( const unsigned long& index );
+	String getColumnName( const uint32& index );
 
-	void setColumnName( const unsigned long& index, const String& columnName );
+	void setColumnName( const uint32& index, const String& columnName );
 
-	double getColumnWidth( const unsigned long& index );
+	double getColumnWidth( const uint32& index );
 
-	void setColumnWidth( const unsigned long& index, const double& width );
+	void setColumnWidth( const uint32& index, const double& width );
 
 	inline ImageList* getImageList() {
 		return imageList_;
@@ -115,7 +115,7 @@ public:
 
 	virtual void handleEvent( Event* event );
 protected:
-	virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const ulong32& index, ColumnItem* item );
+	virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const uint32& index, ColumnItem* item );
 	ColumnModel* columnModel_;
 	ImageList* imageList_;
 	TextAlignmentType textAlignment_;
