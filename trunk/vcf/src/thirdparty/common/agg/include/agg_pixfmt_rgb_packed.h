@@ -849,7 +849,7 @@ namespace agg
         }
 
         //--------------------------------------------------------------------
-        row_data row(int x, int y) const
+        row_data row(int y) const
         {
             return m_rbuf->row(y);
         }
@@ -1008,6 +1008,20 @@ namespace agg
             do 
             {
                 *p++ = m_blender.make_pix(colors->r, colors->g, colors->b);
+                ++colors;
+            }
+            while(--len);
+        }
+
+        //--------------------------------------------------------------------
+        void copy_color_vspan(int x, int y,
+                              unsigned len, 
+                              const color_type* colors)
+        {
+            do 
+            {
+                pixel_type* p = (pixel_type*)m_rbuf->row_ptr(x, y++, 1) + x;
+                *p = m_blender.make_pix(colors->r, colors->g, colors->b);
                 ++colors;
             }
             while(--len);

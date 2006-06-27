@@ -256,7 +256,7 @@ namespace agg
         }
 
         //--------------------------------------------------------------------
-        row_data row(int x, int y) const
+        row_data row(int y) const
         {
             return m_rbuf->row(y);
         }
@@ -480,6 +480,24 @@ namespace agg
                 p[order_type::B] = colors->b;
                 ++colors;
                 p += 3;
+            }
+            while(--len);
+        }
+
+
+        //--------------------------------------------------------------------
+        void copy_color_vspan(int x, int y,
+                              unsigned len, 
+                              const color_type* colors)
+        {
+            do 
+            {
+                value_type* p = (value_type*)
+                    m_rbuf->row_ptr(x, y++, 1) + x + x + x;
+                p[order_type::R] = colors->r;
+                p[order_type::G] = colors->g;
+                p[order_type::B] = colors->b;
+                ++colors;
             }
             while(--len);
         }
