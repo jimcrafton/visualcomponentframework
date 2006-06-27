@@ -58,23 +58,23 @@ void GTKPrintSession::setStandardPageSize( const PrintSession::PageSize& pageSiz
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-void GTKPrintSession::setStartPage( const ulong32& startPage )
+void GTKPrintSession::setStartPage( const uint32& startPage )
 {	
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-ulong32 GTKPrintSession::getStartPage()
+uint32 GTKPrintSession::getStartPage()
 {	
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
 }
 
-void GTKPrintSession::setEndPage( const ulong32& endPage )
+void GTKPrintSession::setEndPage( const uint32& endPage )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-ulong32 GTKPrintSession::getEndPage()
+uint32 GTKPrintSession::getEndPage()
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 	return 0;
@@ -136,14 +136,14 @@ void GTKPrintSession::endPage( PrintContext* context )
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }
 
-std::vector<ulong32> GTKPrintSession::getPrintablePages()
+std::vector<uint32> GTKPrintSession::getPrintablePages()
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
-	std::vector<ulong32> result;
+	std::vector<uint32> result;
 	return result;
 }
 
-void GTKPrintSession::setPrintablePages( const std::vector<ulong32>& printablePages )
+void GTKPrintSession::setPrintablePages( const std::vector<uint32>& printablePages )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }

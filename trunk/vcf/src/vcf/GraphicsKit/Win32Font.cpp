@@ -434,7 +434,7 @@ void Win32Font::setPointSize( const double pointSize )
 	}
 
 	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-	long lfHeight = (pointSize / 72) * ppi;
+	int32 lfHeight = (pointSize / 72) * ppi;
 
 	if ( releaseDC ) {
 		ReleaseDC( ::GetDesktopWindow(), dc );
@@ -844,7 +844,7 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 	}
 
 	double ppi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-	long lfHeight = ((pointSize / 72.0) * ppi) + 0.5;
+	int32 lfHeight = ((pointSize / 72.0) * ppi) + 0.5;
 
 
 	bool trueTypeFont = false;

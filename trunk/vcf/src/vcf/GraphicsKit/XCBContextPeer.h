@@ -46,7 +46,7 @@ public:
 
 	XCBContextPeer();
 
-	XCBContextPeer( const unsigned long& width, const unsigned long& height );
+	XCBContextPeer( const uint32& width, const uint32& height );
 
     /**
     In this case the OSHandleID will be a vaild pointer to a XCBSurface
@@ -71,9 +71,9 @@ public:
 
 	virtual void setContextID( OSHandleID contextID );
 
-	virtual bool prepareForDrawing( long drawingOperation );
+	virtual bool prepareForDrawing( int32 drawingOperation );
 
-	virtual void finishedDrawing( long drawingOperation );
+	virtual void finishedDrawing( int32 drawingOperation );
 
 	virtual void setClippingPath( Path* clippingPath );
 
@@ -83,7 +83,7 @@ public:
 
 	virtual bool isTextAlignedToBaseline();
 
-	virtual void textAt( const Rect& bounds, const String & text, const long& drawOptions=0 );
+	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 );
 
 	virtual double getTextWidth( const String& text );
 
@@ -168,7 +168,7 @@ public:
 
 	virtual void drawThemeHeader( Rect* rect, ButtonState& state );
 
-	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle );
+	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
 	virtual void drawThemeSizeGripper( Rect* rect, DrawUIState& state );
 

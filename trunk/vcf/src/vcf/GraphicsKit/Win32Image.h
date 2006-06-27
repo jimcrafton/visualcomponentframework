@@ -204,7 +204,7 @@ public:
 
 	Win32Image( const String& fileName );
 
-	Win32Image( const unsigned long& width, const unsigned long& height );
+	Win32Image( const uint32& width, const uint32& height );
 
 	Win32Image( GraphicsContext* context, Rect* rect );
 
@@ -218,7 +218,7 @@ public:
 
 	void init();
 
-	virtual void setSize( const unsigned long & width, const unsigned long & height );
+	virtual void setSize( const uint32 & width, const uint32 & height );
 
 	void createBMP();
 
@@ -261,7 +261,7 @@ public:
 
 	Win32GrayScaleImage( const String& fileName );
 
-	Win32GrayScaleImage( const unsigned long& width, const unsigned long& height );
+	Win32GrayScaleImage( const uint32& width, const uint32& height );
 
 	Win32GrayScaleImage( GraphicsContext* context, Rect* rect );
 
@@ -274,7 +274,7 @@ public:
 
 	void init();
 
-	virtual void setSize( const unsigned long & width, const unsigned long & height );
+	virtual void setSize( const uint32 & width, const uint32 & height );
 
 	void createBMP();
 

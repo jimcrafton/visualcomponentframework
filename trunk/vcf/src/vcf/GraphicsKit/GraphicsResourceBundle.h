@@ -32,7 +32,7 @@ public:
 	GraphicsResourceBundle();
 	virtual ~GraphicsResourceBundle();
 
-	Image* getImage( const ulong32& resourceID );
+	Image* getImage( const uint32& resourceID );
 
 	/**
 	*returns an Image based on a given resource name

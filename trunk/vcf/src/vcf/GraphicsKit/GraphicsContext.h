@@ -100,7 +100,7 @@ public:
 	/**
 	Creates a new blank graphics context of the specified width and height
 	*/
-	GraphicsContext( const unsigned long& width, const unsigned long& height );
+	GraphicsContext( const uint32& width, const uint32& height );
 
 	/**
 	Create a new context based on a context ID. See ContextPeer getContextID()
@@ -651,8 +651,8 @@ public:
 	void textAt( const double & x, const double & y, const String & text );
 	void textAt( const Point & pt, const String & text );
 
-	void textAt( const double & x, const double & y, const String& text, const long drawOptions );
-	void textAt( const Point & pt, const String& text, const long drawOptions );
+	void textAt( const double & x, const double & y, const String& text, const int32 drawOptions );
+	void textAt( const Point & pt, const String& text, const int32 drawOptions );
 
 	void textWithStateAt( const double& x, const double& y, const String& text, const bool& enabled );
 	void textWithStateAt( const Point & pt, const String& text, const bool& enabled );
@@ -672,7 +672,7 @@ public:
 	*/
 	void textBoundedBy( Rect* bounds, const String& text, const bool& wordWrap=true );
 
-	void textBoundedBy( Rect* bounds, const String& text, const long drawOptions );
+	void textBoundedBy( Rect* bounds, const String& text, const int32 drawOptions );
 
 	double getTextWidth( const String& text );
 
@@ -815,7 +815,7 @@ public:
 	use a mask or 1 or more values of type ContextPeer::EdgeType
 	to indicate which sides of the rect to draw an edge on
 	*/
-	void drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle );
+	void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
 	/**
 	Draws a size gripper for resizing a control/window that is compliant
@@ -989,7 +989,7 @@ inline void GraphicsContext::textAt( const Point & pt, const String & text) {
 	textAt( pt.x_, pt.y_, text );
 }
 
-inline void GraphicsContext::textAt( const Point & pt, const String& text, const long drawOptions ) {
+inline void GraphicsContext::textAt( const Point & pt, const String& text, const int32 drawOptions ) {
 	textAt( pt.x_, pt.y_, text, drawOptions );
 }
 

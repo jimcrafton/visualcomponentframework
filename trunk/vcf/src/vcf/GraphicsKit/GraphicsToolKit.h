@@ -113,7 +113,7 @@ public:
 
 	virtual ~GraphicsToolkit();
 
-	static ContextPeer* createContextPeer( const unsigned long& width, const unsigned long& height ) ;
+	static ContextPeer* createContextPeer( const uint32& width, const uint32& height ) ;
 
 	static ContextPeer* createContextPeer( OSHandleID contextID );
 
@@ -121,7 +121,7 @@ public:
 
 	static FontPeer* createFontPeer( const String& fontName, const double& pointSize );
 
-	static Image* createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType = Image::itColor );
+	static Image* createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType = Image::itColor );
 
 	static Image* createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType = Image::itColor );
 
@@ -147,7 +147,7 @@ public:
 
 	static ImageLoader* getImageLoaderForFileName( const String& fileName );
 
-	static Color* getSystemColor( const unsigned long& systemColor );
+	static Color* getSystemColor( const uint32& systemColor );
 
 	static String getSystemColorNameFromMap( Color& color ) ;
 
@@ -193,7 +193,7 @@ public:
 	*/
 	static void systemSettingsChanged();
 protected:
-	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height ) = 0;
+	virtual ContextPeer* internal_createContextPeer( const uint32& width, const uint32& height ) = 0;
 
 	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID ) = 0;
 
@@ -201,7 +201,7 @@ protected:
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize )  = 0;
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType ) = 0;
+	virtual Image* internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType ) = 0;
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType ) = 0;
 
@@ -225,7 +225,7 @@ protected:
 
 	void internal_registerImageLoader( const String& name, ImageLoader* imageLoader );
 
-	virtual Color* internal_getSystemColor( const unsigned long& systemColor );
+	virtual Color* internal_getSystemColor( const uint32& systemColor );
 
 	virtual String internal_getSystemColorNameFromMap( Color& color ) const ;
 
@@ -276,7 +276,7 @@ protected:
 	void initColorNameMapItem( const VCF::String& colorName, const uint8& r, const uint8& g, const uint8& b );
 	void destroyColorMaps();
 
-	std::map<unsigned long,Color*> systemColors_;
+	std::map<uint32,Color*> systemColors_;
 	MapStringColorName* systemColorNameMap_;
 	void destroySystemColorNameMap();
 

@@ -15,7 +15,7 @@ namespace VCF {
 
 		virtual ~GrayScaleImage();
 
-		virtual void setSize( const unsigned long & width, const unsigned long & height );
+		virtual void setSize( const uint32 & width, const uint32 & height );
 
 		virtual ImageBits* getImageBits() {
 			return NULL;

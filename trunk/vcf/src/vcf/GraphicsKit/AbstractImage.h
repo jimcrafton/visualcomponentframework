@@ -40,11 +40,11 @@ public:
 	virtual ~AbstractImage();
 
 
-	virtual void setSize( const unsigned long & width, const unsigned long & height );
+	virtual void setSize( const uint32 & width, const uint32 & height );
 
-    virtual unsigned long getWidth();
+    virtual uint32 getWidth();
 
-    virtual unsigned long getHeight();
+    virtual uint32 getHeight();
 
 	/**
 	@delegate ImageSizeChanged this is fired when the image's dimensions are changed

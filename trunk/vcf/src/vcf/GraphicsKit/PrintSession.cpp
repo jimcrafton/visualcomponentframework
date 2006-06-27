@@ -130,32 +130,32 @@ void PrintSession::setStandardPageSize( const PageSize& pageSize )
 	peer_->setStandardPageSize(pageSize);
 }
 
-void PrintSession::setStartPage( const ulong32& startPage )
+void PrintSession::setStartPage( const uint32& startPage )
 {
 	peer_->setStartPage(startPage);
 }
 
-ulong32 PrintSession::getStartPage()
+uint32 PrintSession::getStartPage()
 {
 	return peer_->getStartPage();
 }
 
-void PrintSession::setEndPage( const ulong32& endPage )
+void PrintSession::setEndPage( const uint32& endPage )
 {
 	peer_->setEndPage(endPage);
 }
 
-ulong32 PrintSession::getEndPage()
+uint32 PrintSession::getEndPage()
 {
 	return peer_->getEndPage();
 }
 
-std::vector<ulong32> PrintSession::getPrintablePages()
+std::vector<uint32> PrintSession::getPrintablePages()
 {
 	return peer_->getPrintablePages();
 }
 
-void PrintSession::setPrintablePages( const std::vector<ulong32>& printablePages )
+void PrintSession::setPrintablePages( const std::vector<uint32>& printablePages )
 {
 	peer_->setPrintablePages( printablePages );
 }

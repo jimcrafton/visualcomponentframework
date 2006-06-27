@@ -82,7 +82,7 @@ void Win32GraphicsToolkit::internal_systemSettingsChanged()
 	
 	systemColorNameMap_->clear();
 
-	std::map<unsigned long,Color*>::iterator it = systemColors_.begin();
+	std::map<uint32,Color*>::iterator it = systemColors_.begin();
 	while ( it != systemColors_.end() ){
 		delete it->second;
 		it++;
@@ -133,7 +133,7 @@ ContextPeer* Win32GraphicsToolkit::internal_createContextPeer( OSHandleID contex
 	return result;
 }
 
-ContextPeer* Win32GraphicsToolkit::internal_createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* Win32GraphicsToolkit::internal_createContextPeer( const uint32& width, const uint32& height )
 {
 	return new Win32Context( width, height );
 }
@@ -149,7 +149,7 @@ FontPeer* Win32GraphicsToolkit::internal_createFontPeer( const String& fontName,
 }
 
 
-Image* Win32GraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
+Image* Win32GraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
 	Image* result = NULL;
 

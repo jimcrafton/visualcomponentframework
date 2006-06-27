@@ -22,11 +22,11 @@ namespace VCF {
 		virtual void setPageSize( const Size& pageSize );
 		virtual void setStandardPageSize( const PrintSession::PageSize& pageSize );
 
-		virtual void setStartPage( const ulong32& startPage );
-		virtual ulong32 getStartPage();
+		virtual void setStartPage( const uint32& startPage );
+		virtual uint32 getStartPage();
 
-		virtual void setEndPage( const ulong32& endPage );
-		virtual ulong32 getEndPage();
+		virtual void setEndPage( const uint32& endPage );
+		virtual uint32 getEndPage();
 
 		virtual Rect getPageDrawingRect();
 		virtual void setPageDrawingRect( const Rect& drawingRect );
@@ -43,8 +43,8 @@ namespace VCF {
 		virtual void beginPage( PrintContext* context );
 		virtual void endPage( PrintContext* context );	
 		
-		virtual std::vector<ulong32> getPrintablePages();
-		virtual void setPrintablePages( const std::vector<ulong32>& printablePages );
+		virtual std::vector<uint32> getPrintablePages();
+		virtual void setPrintablePages( const std::vector<uint32>& printablePages );
 		
 	};
 

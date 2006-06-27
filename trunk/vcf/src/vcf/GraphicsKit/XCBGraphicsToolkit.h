@@ -27,7 +27,7 @@ public:
 	static FcPattern* getFontPatternForFont( XCBFontPeer* fontPeer );
 	static String getFontFileNameForFont( XCBFontPeer* fontPeer );  
 protected:
-	virtual ContextPeer* internal_createContextPeer( const unsigned long& width, const unsigned long& height );
+	virtual ContextPeer* internal_createContextPeer( const uint32& width, const uint32& height );
 
 	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID );
 
@@ -35,7 +35,7 @@ protected:
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize );
 
-	virtual Image* internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType );
+	virtual Image* internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType );
 
 	virtual Image* internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType );
 

@@ -83,18 +83,18 @@ namespace VCF {
 			return *this;
 		}
 
-		void setStartPage( const ulong32& startPage ) {
+		void setStartPage( const uint32& startPage ) {
 			if ( pages_.empty() ) {
 				pages_.push_back( 0 );
 			}
 			pages_[0] = startPage;
 		}
 
-		void setEndPage( const ulong32& endPage ) {
-			ulong32 start = pages_[0];
+		void setEndPage( const uint32& endPage ) {
+			uint32 start = pages_[0];
 			if ( endPage - start > 1 ) {
 				pages_.resize( (endPage - start)+1 );
-				for ( ulong32 i=0;i<=(endPage - start);i++ ) {
+				for ( uint32 i=0;i<=(endPage - start);i++ ) {
 					pages_[i] = start + i;
 				}
 			}
@@ -108,11 +108,11 @@ namespace VCF {
 			VCF_ASSERT( pages_.back() == endPage );
 		}
 
-		ulong32 getStartPage() const {
+		uint32 getStartPage() const {
 			return pages_.front();
 		}
 
-		ulong32 getEndPage() const {
+		uint32 getEndPage() const {
 			return pages_.back();
 		}
 
@@ -136,7 +136,7 @@ namespace VCF {
 		
 		Size pageSize_;
 		Rect pageDrawingRect_;
-		std::vector<ulong32> pages_;
+		std::vector<uint32> pages_;
 
 		protected:
 			void* docInfoPtr_;
@@ -159,11 +159,11 @@ namespace VCF {
 		virtual void setPageSize( const Size& pageSize );
 		virtual void setStandardPageSize( const PrintSession::PageSize& pageSize );
 
-		virtual void setStartPage( const ulong32& startPage );
-		virtual ulong32 getStartPage();
+		virtual void setStartPage( const uint32& startPage );
+		virtual uint32 getStartPage();
 
-		virtual void setEndPage( const ulong32& endPage );
-		virtual ulong32 getEndPage();
+		virtual void setEndPage( const uint32& endPage );
+		virtual uint32 getEndPage();
 
 		virtual Rect getPageDrawingRect();
 		virtual void setPageDrawingRect( const Rect& drawingRect );
@@ -180,8 +180,8 @@ namespace VCF {
 		virtual void beginPage( PrintContext* context );
 		virtual void endPage( PrintContext* context );	
 		
-		virtual std::vector<ulong32> getPrintablePages();
-		virtual void setPrintablePages( const std::vector<ulong32>& printablePages );
+		virtual std::vector<uint32> getPrintablePages();
+		virtual void setPrintablePages( const std::vector<uint32>& printablePages );
 
 		static BOOL CALLBACK AbortProc( HDC hdc, int iError );
 

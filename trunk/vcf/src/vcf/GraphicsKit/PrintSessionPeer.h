@@ -25,14 +25,14 @@ public:
 	virtual void setPageSize( const Size& pageSize ) = 0;
 	virtual void setStandardPageSize( const PrintSession::PageSize& pageSizeType ) = 0;
 	
-	virtual void setStartPage( const ulong32& startPage ) = 0;
-	virtual ulong32 getStartPage() = 0;
+	virtual void setStartPage( const uint32& startPage ) = 0;
+	virtual uint32 getStartPage() = 0;
 	
-	virtual void setEndPage( const ulong32& endPage ) = 0;
-	virtual ulong32 getEndPage() = 0;
+	virtual void setEndPage( const uint32& endPage ) = 0;
+	virtual uint32 getEndPage() = 0;
 	
-	virtual std::vector<ulong32> getPrintablePages() = 0;
-	virtual void setPrintablePages( const std::vector<ulong32>& printablePages ) = 0;
+	virtual std::vector<uint32> getPrintablePages() = 0;
+	virtual void setPrintablePages( const std::vector<uint32>& printablePages ) = 0;
 
 	virtual Rect getPageDrawingRect() = 0;
 	virtual void setPageDrawingRect( const Rect& drawingRect ) = 0;

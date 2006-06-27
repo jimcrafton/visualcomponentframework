@@ -162,7 +162,7 @@ void OSXGraphicsToolkit::internal_systemSettingsChanged()
 
 }
 
-ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* OSXGraphicsToolkit::internal_createContextPeer( const uint32& width, const uint32& height )
 {
 	return new OSXContext( width, height );
 }
@@ -182,7 +182,7 @@ FontPeer* OSXGraphicsToolkit::internal_createFontPeer( const String& fontName, c
 	return new OSXFont( fontName, pointSize );
 }
 
-Image* OSXGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
+Image* OSXGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
 	return new OSXImage(width, height);
 }

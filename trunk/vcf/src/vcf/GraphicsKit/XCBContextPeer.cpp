@@ -49,7 +49,7 @@ fonts_(NULL)
 	init();
 }
 
-XCBContextPeer::XCBContextPeer( const unsigned long& width, const unsigned long& height ) :
+XCBContextPeer::XCBContextPeer( const uint32& width, const uint32& height ) :
 context_(NULL),
 image_(NULL),
 drawingSurface_(NULL),
@@ -201,7 +201,7 @@ const agg::glyph_cache* XCBContextPeer::glyph( int character, double& x, double&
 	return cg->glyph;
 }
 
-bool XCBContextPeer::prepareForDrawing( long drawingOperation )
+bool XCBContextPeer::prepareForDrawing( int32 drawingOperation )
 {
 	resetPath();
 	
@@ -305,7 +305,7 @@ bool XCBContextPeer::prepareForDrawing( long drawingOperation )
 	return true;
 }
 
-void XCBContextPeer::finishedDrawing( long drawingOperation )
+void XCBContextPeer::finishedDrawing( int32 drawingOperation )
 {
 	Matrix2D& currentXFrm = *context_->getCurrentTransform();
 	agg::trans_affine mat = currentXFrm;
@@ -453,7 +453,7 @@ bool XCBContextPeer::isTextAlignedToBaseline()
 	return false;
 }
 
-void XCBContextPeer::textAt( const Rect& bounds, const String & text, const long& drawOptions )
+void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int32& drawOptions )
 {	
 	VCF_ASSERT( fonts_->fontLoaded );
 	
@@ -775,7 +775,7 @@ void XCBContextPeer::drawThemeHeader( Rect* rect, ButtonState& state )
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
-void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle )
+void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }

@@ -304,7 +304,7 @@ bool BezierCurve::intersects( const Rect& rect)
 Rect BezierCurve::getBounds()
 {
 	Rect result;
-	ulong32 count = points_.size();
+	uint32 count = points_.size();
 
 	if ( count < 2 ){
 		result.setRect( points_[0].point_.x_,
@@ -342,7 +342,7 @@ Rect BezierCurve::getBounds()
 			result.bottom_ = points_[0].point_.y_;
 		}
 
-		for (ulong32 i=2;i<count;i++){//we start on 2 since the first segment
+		for (uint32 i=2;i<count;i++){//we start on 2 since the first segment
                                   //is already assigned
 			if ( result.left_ > points_[i].point_.x_ ){
 				result.left_ = points_[i].point_.x_;

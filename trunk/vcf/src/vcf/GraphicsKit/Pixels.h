@@ -112,7 +112,7 @@ public:
 	typedef PixTraits Traits;
 
 
-	static typename Traits::ChannelType* allocate( unsigned long width, unsigned long height ) {
+	static typename Traits::ChannelType* allocate( uint32 width, uint32 height ) {
 
 		return new typename Traits::ChannelType[ (height * width) * Traits::getTraitsImageType() ];
 	}

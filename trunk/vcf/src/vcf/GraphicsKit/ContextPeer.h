@@ -86,9 +86,9 @@ public:
 	to any of the drawing primitive functions in the above list, allowing the peer to initialize
 	whatever graphics resources need to be as specified by the GraphicsContext.
 	*/
-	virtual bool prepareForDrawing( long drawingOperation ) = 0;
+	virtual bool prepareForDrawing( int32 drawingOperation ) = 0;
 
-	virtual void finishedDrawing( long drawingOperation ) = 0;
+	virtual void finishedDrawing( int32 drawingOperation ) = 0;
 
 	/**
 	*sets the current clipping path to be used for the duration of the Contexts lifetime or
@@ -115,7 +115,7 @@ public:
 
 	virtual bool isTextAlignedToBaseline() = 0;
 
-	virtual void textAt( const Rect& bounds, const String & text, const long& drawOptions=0 ) = 0;
+	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 ) = 0;
 
 	virtual double getTextWidth( const String& text ) = 0;
 
@@ -276,7 +276,7 @@ public:
 	use a mask or 1 or more values of type ContextPeer::EdgeType
 	to indicate which sides of the rect to draw an edge on
 	*/
-	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle ) = 0;
+	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle ) = 0;
 
 	/**
 	Draws a size gripper for resizing a control/window that is compliant
