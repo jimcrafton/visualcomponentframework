@@ -193,7 +193,7 @@ namespace agg
         }
 
         //--------------------------------------------------------------------
-        row_data row(int x, int y) const
+        row_data row(int y) const
         {
             return m_rbuf->row(y);
         }
@@ -207,7 +207,7 @@ namespace agg
         //--------------------------------------------------------------------
         AGG_INLINE color_type pixel(int x, int y) const
         {
-            value_type* p = (value_type*)m_rbuf->row(y) + x * Step + Offset;
+			value_type* p = (value_type*)m_rbuf->row_ptr(y) + x * Step + Offset;
             return color_type(*p);
         }
 
@@ -406,6 +406,21 @@ namespace agg
             while(--len);
         }
 
+
+        //--------------------------------------------------------------------
+        void copy_color_vspan(int x, int y,
+                              unsigned len, 
+                              const color_type* colors)
+        {
+            do 
+            {
+                value_type* p = (value_type*)
+                    m_rbuf->row_ptr(x, y++, 1) + x * Step + Offset;
+                *p = colors->v;
+                ++colors;
+            }
+            while(--len);
+        }
 
 
         //--------------------------------------------------------------------

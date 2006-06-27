@@ -40,9 +40,6 @@ namespace agg
             m_ren(&ren),
             m_clip_box(0, 0, ren.width() - 1, ren.height() - 1)
         {}
-
-		~renderer_base(){}
-
         void attach(pixfmt_type& ren)
         {
             m_ren = &ren;
@@ -329,6 +326,30 @@ namespace agg
             }
             m_ren->copy_color_hspan(x, y, len, colors);
         }
+
+
+        //--------------------------------------------------------------------
+        void copy_color_vspan(int x, int y, int len, const color_type* colors)
+        {
+            if(x > xmax()) return;
+            if(x < xmin()) return;
+
+            if(y < ymin())
+            {
+                int d = ymin() - y;
+                len -= d;
+                if(len <= 0) return;
+                colors += d;
+                y = ymin();
+            }
+            if(y + len > ymax())
+            {
+                len = ymax() - y + 1;
+                if(len <= 0) return;
+            }
+            m_ren->copy_color_vspan(x, y, len, colors);
+        }
+
 
         //--------------------------------------------------------------------
         void blend_color_hspan(int x, int y, int len, 
