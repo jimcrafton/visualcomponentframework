@@ -86,7 +86,7 @@ all: ../../lib/$(OBJDIR)/utilities/Xmake
 
 ### Targets: ###
 
-all: ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../bin/xmake
+all: ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../bin/xmake
 
 install: all
 
@@ -95,16 +95,16 @@ uninstall:
 clean: 
 	rm -f ../../lib/$(OBJDIR)/utilities/Xmake/*.o
 	rm -f ../../lib/$(OBJDIR)/utilities/Xmake/*.d
-	rm -f ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../bin/xmake
 
-../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(XMAKE_LIB_OBJECTS)
+../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(XMAKE_LIB_OBJECTS)
 	rm -f $@
 	$(AR) rcu $@ $(XMAKE_LIB_OBJECTS)
 	$(RANLIB) $@
 
-../../bin/xmake: $(XMAKE_OBJECTS) ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____xmake_FOUNDATIONKIT_p)  -ldl -luuid -lrt ../../lib/liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+../../bin/xmake: $(XMAKE_OBJECTS) ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____xmake_FOUNDATIONKIT_p)  -ldl -luuid -lrt ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
 ../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
